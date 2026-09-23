@@ -1,0 +1,36 @@
+{
+  "disclaimer": "These short answers and notes are original structure examples for practice only. They are not model band scores and should not be memorised for an exam.",
+  "byId": {
+    "sample-sp1-neighbourhood": {
+      "samples": [
+        "Yes, I quite like it. It is mostly residential, so evenings are quiet, but there is a small high street within a ten-minute walk, which is convenient for groceries.",
+        "There is a park, a clinic, and two bus stops nearby. The nearest supermarket is a short walk away, and a community centre runs weekend classes for residents.",
+        "It has become a bit denser. A few apartment blocks replaced older houses, and more cafés opened, though the main park is still the same.",
+        "I prefer something in between. I want shops and transport nearby, but I do not want constant traffic noise outside my window at night."
+      ]
+    },
+    "sample-sp1-reading-habits": {
+      "samples": [
+        "I try to read a few evenings each week, usually for twenty or thirty minutes before bed. On busy weeks I manage less, but I still keep a book on my desk.",
+        "I prefer paper for novels because it is easier on my eyes, but I use an e-reader when I travel so I can carry several titles without extra weight.",
+        "As a child I liked adventure stories and simple science books with diagrams. I reread a few favourites many times instead of always buying new ones.",
+        "People may read fewer long books, but they still read a lot on screens. The form has changed more than the total amount of reading, in my view."
+      ]
+    },
+    "sample-sp2-helpful-stranger": {
+      "sampleNotes": [
+        "Who: older woman at the station",
+        "Where/when: last winter, missed last bus",
+        "Help: called a taxi and waited with me",
+        "Feeling: relieved, wanted to repay kindness"
+      ],
+      "sampleAnswer": "I want to talk about a winter evening last year when I missed the last bus home. I was standing at the bus stop with a heavy bag, checking the timetable again and again, when an older woman who had also been waiting noticed I looked upset. She asked what was wrong, and when I explained, she used her phone to call a taxi company and stayed with me until the car arrived so I would not wait alone in the dark. She even refused money for the call and just said she hoped someone would do the same for her grandchildren one day. Afterwards I felt relieved and a little embarrassed that I had needed help, but mostly grateful. The short conversation reminded me that small acts of kindness from strangers can change a stressful moment completely, and I try to notice when other people might need the same kind of support.",
+      "part3Samples": [
+        "Some people worry about safety or feel unsure whether help is welcome. Others are simply busy and do not want to get involved in a situation they do not understand.",
+        "Yes, within reason. Organised volunteering can strengthen trust and give people practical ways to contribute, but it should not replace basic public services that everyone relies on.",
+        "Apps and messaging make it easier to request help quickly, from ride-hailing to neighbourhood groups. The downside is that face-to-face offers of help may feel less natural than before.",
+        "Not always. Small towns can feel closer, but large cities also have strong local networks. Kindness depends more on culture and individual habits than on city size alone."
+      ]
+    }
+  }
+}

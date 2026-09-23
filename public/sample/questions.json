@@ -1,0 +1,36 @@
+[
+  {
+    "id": "sample-t1-line-commute",
+    "type": "1",
+    "task": "Task 1",
+    "name": "Average one-way commute time",
+    "format": "line",
+    "prompt": "The line graph below shows the average one-way commute time (in minutes) for workers in four fictional cities — Northport, Riverton, Hillside, and Lakeside — from 2000 to 2020.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+    "image": "sample/assets/commute-times.svg"
+  },
+  {
+    "id": "sample-t1-bar-library",
+    "type": "1",
+    "task": "Task 1",
+    "name": "Library visits by age group",
+    "format": "bar",
+    "prompt": "The bar chart below shows the number of visits (in thousands) to a city library by five age groups in 2015 and 2025.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+    "image": "sample/assets/library-visits.svg"
+  },
+  {
+    "id": "sample-t2-remote-work",
+    "type": "2",
+    "task": "Task 2",
+    "name": "Remote work and city centres",
+    "format": "essay",
+    "prompt": "Some people say that working from home will empty city centres and harm local businesses. Others argue that remote work improves quality of life and should be encouraged.\n\nDiscuss both these views and give your own opinion.\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words."
+  },
+  {
+    "id": "sample-t2-public-art",
+    "type": "2",
+    "task": "Task 2",
+    "name": "Funding for public art",
+    "format": "essay",
+    "prompt": "Local governments often spend money on public art, such as sculptures and murals in parks and streets. Some people think this money should instead be spent on practical needs like roads, schools, and hospitals.\n\nTo what extent do you agree or disagree?\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words."
+  }
+]

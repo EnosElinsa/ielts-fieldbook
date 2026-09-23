@@ -1,0 +1,48 @@
+{
+  "disclaimer": "These are original practice topics written for this app. They are not official IELTS questions and are not taken from any exam board or candidate-report bank.",
+  "topics": [
+    {
+      "id": "sample-sp1-neighbourhood",
+      "part": 1,
+      "kind": "part1",
+      "title": "Your neighbourhood",
+      "questions": [
+        "Do you like the neighbourhood where you live? Why or why not?",
+        "What facilities are available near your home?",
+        "Has your neighbourhood changed much in recent years?",
+        "Would you prefer to live in a quieter or a busier area?"
+      ]
+    },
+    {
+      "id": "sample-sp1-reading-habits",
+      "part": 1,
+      "kind": "part1",
+      "title": "Reading habits",
+      "questions": [
+        "How often do you read for pleasure?",
+        "Do you prefer paper books or digital books?",
+        "What kinds of books did you enjoy as a child?",
+        "Do you think people read less nowadays than in the past?"
+      ]
+    },
+    {
+      "id": "sample-sp2-helpful-stranger",
+      "part": 2,
+      "kind": "part2",
+      "title": "A time a stranger helped you",
+      "cueCard": "Describe a time when a stranger helped you.",
+      "bullets": [
+        "who the person was",
+        "where and when it happened",
+        "what they did to help you",
+        "and explain how you felt afterwards"
+      ],
+      "part3": [
+        "Why do some people hesitate to help strangers?",
+        "Should cities encourage more community volunteering? Why or why not?",
+        "How has technology changed the way people ask for help?",
+        "Do you think people are kinder in small towns than in large cities?"
+      ]
+    }
+  ]
+}
