@@ -1,0 +1,28 @@
+# Dependencies and build output
+node_modules/
+dist/
+
+# Legacy snapshot (kept on disk, not for the public repo)
+legacy/
+
+# Private / third-party question banks (keep locally; not for GitHub)
+# Anchored to repo root so public/sample/* stays publishable.
+/questions.json
+/question-assets/
+/speaking-questions.json
+/speaking-samples.json
+/build-speaking-samples.js
+
+# Personal scores and assessment request drafts
+/assessment-*.md
+/ielts-assessment-request-*.md
+
+# Third-party PDF
+/The-Complete-IELTS-Preparation-Guide.pdf
+
+# Internal notes / one-off scripts
+/docs/superpowers/
+/_en.js
+
+# Backup JSON dumps
+*backup*.json

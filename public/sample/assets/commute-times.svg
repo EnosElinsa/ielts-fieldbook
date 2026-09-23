@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">Average one-way commute time, 20002020</title>
+  <desc id="desc">Line chart of commute minutes for Northport, Riverton, Hillside, and Lakeside.</desc>
+  <rect width="640" height="420" fill="#fafaf8"/>
+  <text x="320" y="28" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#1a1a1a">Average one-way commute time (minutes), 20002020</text>
+
+  <!-- axes -->
+  <line x1="72" y1="60" x2="72" y2="340" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="340" x2="580" y2="340" stroke="#333" stroke-width="1.5"/>
+
+  <!-- y grid and labels: 060 -->
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#555">
+    <line x1="72" y1="340" x2="580" y2="340" stroke="#ddd" stroke-width="1"/>
+    <text x="64" y="344" text-anchor="end">0</text>
+    <line x1="72" y1="293" x2="580" y2="293" stroke="#eee" stroke-width="1"/>
+    <text x="64" y="297" text-anchor="end">10</text>
+    <line x1="72" y1="247" x2="580" y2="247" stroke="#eee" stroke-width="1"/>
+    <text x="64" y="251" text-anchor="end">20</text>
+    <line x1="72" y1="200" x2="580" y2="200" stroke="#eee" stroke-width="1"/>
+    <text x="64" y="204" text-anchor="end">30</text>
+    <line x1="72" y1="153" x2="580" y2="153" stroke="#eee" stroke-width="1"/>
+    <text x="64" y="157" text-anchor="end">40</text>
+    <line x1="72" y1="107" x2="580" y2="107" stroke="#eee" stroke-width="1"/>
+    <text x="64" y="111" text-anchor="end">50</text>
+    <line x1="72" y1="60" x2="580" y2="60" stroke="#eee" stroke-width="1"/>
+    <text x="64" y="64" text-anchor="end">60</text>
+  </g>
+
+  <!-- x labels: 2000, 2005, 2010, 2015, 2020 -->
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#555" text-anchor="middle">
+    <text x="72" y="358">2000</text>
+    <text x="199" y="358">2005</text>
+    <text x="326" y="358">2010</text>
+    <text x="453" y="358">2015</text>
+    <text x="580" y="358">2020</text>
+  </g>
+  <text x="20" y="200" transform="rotate(-90 20 200)" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">Minutes</text>
+
+  <!--
+    y = 340 - value * 4.666... (60 -> 60)
+    Northport: 22, 24, 28, 32, 35
+    Riverton: 35, 38, 42, 45, 48
+    Hillside: 18, 20, 19, 21, 22
+    Lakeside: 40, 36, 30, 26, 24
+  -->
+  <polyline fill="none" stroke="#1f6feb" stroke-width="2.5"
+    points="72,237.3 199,228 326,209.3 453,190.7 580,176.7"/>
+  <polyline fill="none" stroke="#cf222e" stroke-width="2.5"
+    points="72,176.7 199,162.7 326,144 453,130 580,116"/>
+  <polyline fill="none" stroke="#1a7f37" stroke-width="2.5"
+    points="72,256 199,246.7 326,251.3 453,242 580,237.3"/>
+  <polyline fill="none" stroke="#9a6700" stroke-width="2.5"
+    points="72,153.3 199,172 326,200 453,218.7 580,228"/>
+
+  <!-- legend -->
+  <g font-family="system-ui, sans-serif" font-size="12" fill="#222">
+    <line x1="100" y1="388" x2="130" y2="388" stroke="#1f6feb" stroke-width="2.5"/>
+    <text x="138" y="392">Northport</text>
+    <line x1="230" y1="388" x2="260" y2="388" stroke="#cf222e" stroke-width="2.5"/>
+    <text x="268" y="392">Riverton</text>
+    <line x1="350" y1="388" x2="380" y2="388" stroke="#1a7f37" stroke-width="2.5"/>
+    <text x="388" y="392">Hillside</text>
+    <line x1="470" y1="388" x2="500" y2="388" stroke="#9a6700" stroke-width="2.5"/>
+    <text x="508" y="392">Lakeside</text>
+  </g>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">Library visits by age group, 2015 and 2025</title>
+  <desc id="desc">Grouped bar chart of library visits in thousands for five age groups in 2015 and 2025.</desc>
+  <rect width="640" height="420" fill="#fafaf8"/>
+  <text x="320" y="28" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#1a1a1a">Library visits by age group (thousands)</text>
+
+  <line x1="72" y1="60" x2="72" y2="340" stroke="#333" stroke-width="1.5"/>
+  <line x1="72" y1="340" x2="580" y2="340" stroke="#333" stroke-width="1.5"/>
+
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#555">
+    <text x="64" y="344" text-anchor="end">0</text>
+    <line x1="72" y1="293" x2="580" y2="293" stroke="#eee"/>
+    <text x="64" y="297" text-anchor="end">20</text>
+    <line x1="72" y1="247" x2="580" y2="247" stroke="#eee"/>
+    <text x="64" y="251" text-anchor="end">40</text>
+    <line x1="72" y1="200" x2="580" y2="200" stroke="#eee"/>
+    <text x="64" y="204" text-anchor="end">60</text>
+    <line x1="72" y1="153" x2="580" y2="153" stroke="#eee"/>
+    <text x="64" y="157" text-anchor="end">80</text>
+    <line x1="72" y1="107" x2="580" y2="107" stroke="#eee"/>
+    <text x="64" y="111" text-anchor="end">100</text>
+    <line x1="72" y1="60" x2="580" y2="60" stroke="#eee"/>
+    <text x="64" y="64" text-anchor="end">120</text>
+  </g>
+  <text x="20" y="200" transform="rotate(-90 20 200)" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">Visits (thousands)</text>
+
+  <!--
+    groups at x centers: 120, 220, 320, 420, 520
+    bar width 28, gap 6 between pair
+    scale: value * 2.333 (120 -> 280px from baseline)
+    Under 18: 45, 62
+    1830: 70, 88
+    3145: 55, 60
+    4660: 80, 72
+    61+: 95, 110
+  -->
+  <!-- Under 18 -->
+  <rect x="93" y="235" width="28" height="105" fill="#1f6feb"/>
+  <rect x="127" y="195.3" width="28" height="144.7" fill="#8b949e"/>
+  <!-- 18-30 -->
+  <rect x="193" y="176.7" width="28" height="163.3" fill="#1f6feb"/>
+  <rect x="227" y="134.7" width="28" height="205.3" fill="#8b949e"/>
+  <!-- 31-45 -->
+  <rect x="293" y="211.7" width="28" height="128.3" fill="#1f6feb"/>
+  <rect x="327" y="200" width="28" height="140" fill="#8b949e"/>
+  <!-- 46-60 -->
+  <rect x="393" y="153.3" width="28" height="186.7" fill="#1f6feb"/>
+  <rect x="427" y="172" width="28" height="168" fill="#8b949e"/>
+  <!-- 61+ -->
+  <rect x="493" y="118.3" width="28" height="221.7" fill="#1f6feb"/>
+  <rect x="527" y="83.3" width="28" height="256.7" fill="#8b949e"/>
+
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#333" text-anchor="middle">
+    <text x="124" y="358">Under 18</text>
+    <text x="224" y="358">1830</text>
+    <text x="324" y="358">3145</text>
+    <text x="424" y="358">4660</text>
+    <text x="524" y="358">61+</text>
+  </g>
+
+  <g font-family="system-ui, sans-serif" font-size="12" fill="#222">
+    <rect x="230" y="378" width="14" height="14" fill="#1f6feb"/>
+    <text x="250" y="390">2015</text>
+    <rect x="310" y="378" width="14" height="14" fill="#8b949e"/>
+    <text x="330" y="390">2025</text>
+  </g>
+</svg>
