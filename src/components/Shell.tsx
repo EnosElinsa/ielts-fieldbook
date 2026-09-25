@@ -11,6 +11,7 @@ import { HistoryModal } from '../features/modals/HistoryModal';
 import { LexiconModal } from '../features/modals/LexiconModal';
 import { StoryModal } from '../features/modals/StoryModal';
 import { BackupModal } from '../features/modals/BackupModal';
+import { diskStoreAvailable } from '../storage';
 
 const writingLinks = [
   { to: '/', end: true, label: 'Today', icon: NavIcons.today },
@@ -268,6 +269,11 @@ export function Shell() {
                           2,
                         ),
                         'application/json',
+                      );
+                      fb.toast(
+                        diskStoreAvailable()
+                          ? 'Backup exported. Recordings stay in local/audio and are not in the JSON.'
+                          : 'Backup exported. Recordings stay in this browser and are not in the JSON.',
                       );
                     }}
                   >
