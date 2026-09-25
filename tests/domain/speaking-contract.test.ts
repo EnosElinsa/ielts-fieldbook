@@ -21,7 +21,14 @@ test('builds a speaking assessment request with the speaking-1 contract', () => 
   assert.match(request, /part: 2/);
   assert.match(request, /session_id: sp-1/);
   assert.match(request, /question_id: 2026q4-p2-save-time/);
+  assert.match(request, /audio_present: false/);
   assert.match(request, /unscored \(transcript only\)/);
+  const withAudio = core.buildSpeakingAssessmentRequest(
+    { id: 'sp-audio', questionId: topic.id, part: '2', essay: 'Said aloud.', audioId: 'audio-1' },
+    topic,
+  );
+  assert.match(withAudio, /audio_present: true/);
+  assert.match(withAudio, /unscored \(transcript only\)/);
   assert.match(request, /Describe a way you saved time\./);
   assert.match(request, /- what it was/);
   assert.match(request, /Why do people want to save time\?/);

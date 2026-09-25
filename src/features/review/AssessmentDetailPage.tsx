@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { reconstructAssessmentMarkdown } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { formatDate, lexiconLabels, markdownLines, sessionSkill } from '../../lib/format';
+import { SessionAudioPlayer } from '../../components/SessionAudioPlayer';
 
 function Lines({ text }: { text: string }) {
   return (
@@ -49,17 +50,13 @@ export function AssessmentDetailPage() {
   return (
     <section className="view active">
       <div className="assessment-page">
-        <div className="assessment-page-head">
-          <div>
-            <p className="kicker">Score</p>
-            <h2>Score report</h2>
-            <p>
-              {assessment.overall
-                ? `Overall ${assessment.overall}${estimated ? ' · estimated, no audio' : ''} · `
-                : ''}
-              {formatDate(assessment.date, true)}
-            </p>
-          </div>
+        <div className="page-tools">
+          <p>
+            {assessment.overall
+              ? `Overall ${assessment.overall}${estimated ? ' · estimated, no audio' : ''} · `
+              : ''}
+            {formatDate(assessment.date, true)}
+          </p>
           <Link className="btn line" to="/review">
             ← Back to review
           </Link>
@@ -242,6 +239,9 @@ export function AssessmentDetailPage() {
           <aside className="assessment-aside">
             <section>
               <h4>Your script</h4>
+              {session && sessionSkill(session) === 'speaking' && session.audioId ? (
+                <SessionAudioPlayer audioId={session.audioId} label="Playback" />
+              ) : null}
               <pre className="history-copy">
                 {session
                   ? session.essay

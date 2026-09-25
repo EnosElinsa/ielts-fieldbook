@@ -4,7 +4,7 @@ import { normalizeStory, dedupeStories } from './stories';
 import { dedupeLexicon } from './lexicon';
 import { wordCount, hashText, dateKey, makeId, nowIso, clone } from './utils';
 
-export const STATE_VERSION = 7;
+export const STATE_VERSION = 8;
 export const BANK_CACHE_KEY = 'ielts-fieldbook-bank-cache';
 export const LEGACY_STORES = ['ielts-writing-fieldbook-v3', 'ielts-writing-fieldbook-v2', 'ielts-writing-fieldbook-v1'];
 export const DEFAULT_SETTINGS = {
@@ -160,6 +160,7 @@ export function migrateState(raw) {
       const part = String(session.part ?? '');
       session.part = ['1', '2', '3'].includes(part) ? part : '';
       session.notes = String(session.notes ?? '');
+      session.audioId = session.audioId || null;
     }
     return session;
   }) : [];
@@ -264,6 +265,7 @@ export function createAttempt(state, input, deps) {
     skill: input.skill === 'speaking' ? 'speaking' : 'writing',
     part: ['1', '2', '3'].includes(String(input.part ?? '')) ? String(input.part) : '',
     notes: String(input.notes ?? ''),
+    audioId: input.audioId || null,
   };
   state.sessions.push(attempt);
   return attempt;
