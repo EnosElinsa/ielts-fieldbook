@@ -12,6 +12,7 @@ import { SpeakingBankPage } from './features/speaking/SpeakingBankPage';
 import { SpeakingTopicPage } from './features/speaking/SpeakingTopicPage';
 import { SpeakingDeskPage } from './features/speaking/SpeakingDeskPage';
 import { StoriesPage } from './features/speaking/StoriesPage';
+import { AccountPage } from './features/account/AccountPage';
 
 export function AppRoutes() {
   return (
@@ -29,6 +30,7 @@ export function AppRoutes() {
           <Route path="speak/questions" element={<SpeakingBankPage />} />
           <Route path="speak/topics/:id" element={<SpeakingTopicPage />} />
           <Route path="stories" element={<StoriesPage />} />
+          <Route path="account" element={<AccountPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

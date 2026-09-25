@@ -313,4 +313,10 @@ export const NavIcons = {
       <path d="M3 3.2h4.2A2 2 0 0 1 9 4.6V13a2 2 0 0 0-1.8-1.2H3zM13 3.2H8.8A2 2 0 0 0 7 4.6V13a2 2 0 0 1 1.8-1.2H13z" />
     </svg>
   ),
+  account: (
+    <svg viewBox="0 0 16 16" width="16" height="16">
+      <circle cx="8" cy="5.2" r="2.3" />
+      <path d="M3.2 13.2c.7-2.2 2.4-3.3 4.8-3.3s4.1 1.1 4.8 3.3" />
+    </svg>
+  ),
 };

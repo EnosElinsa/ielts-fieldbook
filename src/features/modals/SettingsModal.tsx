@@ -14,22 +14,6 @@ export function SettingsModal() {
   const [skillMix, setSkillMix] = useState('mixed');
   const [speakingFocus, setSpeakingFocus] = useState('balanced');
   const [days, setDays] = useState([1, 2, 3, 4, 5, 6]);
-  const [sharedFile, setSharedFile] = useState(false);
-
-  useEffect(() => {
-    if (!open) return;
-    let cancelled = false;
-    fetch('/api/state', { cache: 'no-store' })
-      .then((response) => {
-        if (!cancelled) setSharedFile(response.ok);
-      })
-      .catch(() => {
-        if (!cancelled) setSharedFile(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -146,9 +130,7 @@ export function SettingsModal() {
           </div>
         </div>
         <div className="rule-note">
-          {sharedFile
-            ? 'This study file is in the project local folder. localhost and 127.0.0.1 share it. Recordings are in local/audio. You do not need to export to switch address. A backup is still how you move to another computer, and that JSON does not include recordings.'
-            : 'Your data stays with this browser address. localhost and 127.0.0.1 keep separate copies. Export a backup before you switch, then import it at the new address.'}
+          Study records and recordings are stored on your account. A new account starts empty. A backup JSON does not include recordings.
         </div>
         <div className="modal-foot">
           <button className="btn line" type="button" onClick={() => fb.closeModal()}>

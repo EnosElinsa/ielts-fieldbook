@@ -2,6 +2,11 @@
 node_modules/
 dist/
 
+# Local secrets
+.env
+.env.local
+.env.*.local
+
 # Legacy snapshot (kept on disk, not for the public repo)
 legacy/
 

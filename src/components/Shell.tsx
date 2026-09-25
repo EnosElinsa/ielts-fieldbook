@@ -11,7 +11,6 @@ import { HistoryModal } from '../features/modals/HistoryModal';
 import { LexiconModal } from '../features/modals/LexiconModal';
 import { StoryModal } from '../features/modals/StoryModal';
 import { BackupModal } from '../features/modals/BackupModal';
-import { diskStoreAvailable } from '../storage';
 
 const writingLinks = [
   { to: '/', end: true, label: 'Today', icon: NavIcons.today },
@@ -47,6 +46,7 @@ function chromeFor(pathname: string, activeSkill: string, deskName: string, topi
   if (pathname.startsWith('/review')) return { kicker: 'Review', title: speaking ? 'Attempts and scores' : 'Essays and scores' };
   if (pathname.startsWith('/phrases')) return { kicker: 'Phrases', title: 'Words, phrases, patterns' };
   if (pathname.startsWith('/progress')) return { kicker: 'Progress', title: 'The last four weeks' };
+  if (pathname.startsWith('/account')) return { kicker: 'Account', title: 'Your account' };
   return { kicker: skillLabel, title: 'Today' };
 }
 
@@ -214,6 +214,12 @@ export function Shell() {
                 <span className="nav-label">{link.label}</span>
               </NavLink>
             ))}
+            <NavLink to="/account" className={({ isActive }) => (isActive ? 'active' : undefined)}>
+              <span className="nav-icon" aria-hidden="true">
+                {NavIcons.account}
+              </span>
+              <span className="nav-label">Account</span>
+            </NavLink>
           </nav>
           <button
             type="button"
@@ -270,11 +276,7 @@ export function Shell() {
                         ),
                         'application/json',
                       );
-                      fb.toast(
-                        diskStoreAvailable()
-                          ? 'Backup exported. Recordings stay in local/audio and are not in the JSON.'
-                          : 'Backup exported. Recordings stay in this browser and are not in the JSON.',
-                      );
+                      fb.toast('Backup exported. Recordings stay in your account and are not in the JSON.');
                     }}
                   >
                     Export backup

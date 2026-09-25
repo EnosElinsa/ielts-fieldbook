@@ -1,6 +1,6 @@
 # IELTS Fieldbook
 
-Local-first IELTS writing and speaking practice notebook. No account. Scoring stays in a markdown file you mark outside the app and import back.
+IELTS writing and speaking practice notebook. Sign in with an email account. Scoring stays in a markdown file you mark outside the app and import back.
 
 Public repository: [EnosElinsa/ielts-fieldbook](https://github.com/EnosElinsa/ielts-fieldbook).
 
@@ -17,12 +17,16 @@ Public repository: [EnosElinsa/ielts-fieldbook](https://github.com/EnosElinsa/ie
 
 ## Stack
 
-- React, TypeScript, Vite
+- React, TypeScript, Vite, Supabase
 - Study records use schema **v8**
 
-With `npm run dev` or `npm run preview`, the study file is `local/fieldbook-state.json` and recordings are files in `local/audio/`. `http://localhost:8000` and `http://127.0.0.1:8000` share those files because both hit the same process. The browser also keeps a `localStorage` copy under `ielts-writing-fieldbook`.
+Copy `.env.example` to `.env` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. Apply `supabase/migrations/20260925120000_fieldbook.sql` in the Supabase SQL editor, then seed the shared question catalog:
 
-Open the address that already has your work once so that copy is merged into the file. After that, the other address sees it. If the dev server is not running, the app uses only that browser’s `localStorage`, and recordings fall back to IndexedDB on that address.
+```bash
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key npm run seed:bank
+```
+
+The service role key stays on the machine that runs the seed. The browser only receives the anon key. Sign in with email. Each account has its own attempts, drafts, phrases, plans, stories, scores, and recordings. The question catalog is shared and read-only in the app.
 
 ## Getting started
 
@@ -40,21 +44,9 @@ npm run build
 
 ## Data layout
 
-`public/sample` is the original sample bank shipped with this repo. A fresh clone can run against that bank alone.
+`public/sample` is the public question catalog. `npm run seed:bank` writes it into the shared tables. Question images under `public/sample` are served with the app.
 
-If any of these files exist on your machine, they are **gitignored** and preferred over the sample bank when the app loads:
-
-- `local/questions.json`
-- `local/question-assets/`
-- `local/speaking-questions.json`
-- `local/speaking-samples.json`
-
-The study file and recordings are also gitignored:
-
-- `local/fieldbook-state.json`
-- `local/audio/`
-
-Personal score files, assessment drafts, and reference PDFs live under `local/` (`assessments/`, `reference/`). Do **not** commit Cambridge papers, third-party PDFs, or personal score files.
+Personal score files and reference notes can still live under gitignored `local/`. Do not commit `.env`.
 
 ## Scoring flow
 
@@ -75,10 +67,9 @@ Speaking pronunciation is **not** scored from a transcript or a recording inside
 ## What this version does not do
 
 - Service worker / offline install
-- User accounts
-- Multi-device sync
+- Live collaboration on the same row
 
-Changing computers still needs the in-app backup. That JSON does not include recordings. Copy `local/audio/` yourself if you need the files.
+Two devices on one account each write their own rows. If both edit the same row, the later `updated_at` is kept. A new account starts empty. A backup JSON still omits recordings; the audio stays in the account’s storage bucket.
 
 ## License
 

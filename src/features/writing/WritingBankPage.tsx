@@ -89,7 +89,7 @@ export function WritingBankPage() {
             }}
           />
         ) : (
-          <Empty message="The question bank did not load. Check that local/questions.json is present, then refresh." />
+          <Empty message="The question bank did not load. Sign in again after the question catalog has been seeded." />
         )}
       </div>
     </section>

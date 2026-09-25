@@ -185,7 +185,7 @@ export function SpeakingDeskPage() {
   if (!topic) {
     return (
       <section className="view active">
-        <Empty message="The speaking bank did not load. Check that local/speaking-questions.json is present, then refresh." />
+          <Empty message="The speaking bank did not load. Sign in again after the question catalog has been seeded." />
       </section>
     );
   }
