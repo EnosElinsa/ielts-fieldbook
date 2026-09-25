@@ -1,4 +1,3 @@
-// @ts-nocheck
 export {
   STATE_VERSION,
   DEFAULT_SETTINGS,
