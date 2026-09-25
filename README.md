@@ -1,23 +1,28 @@
 # IELTS Fieldbook
 
-Local-first IELTS writing and speaking practice notebook. It runs entirely in the browser: no account, no server, and no audio recording.
+Local-first IELTS writing and speaking practice notebook. No account. Scoring stays in a markdown file you mark outside the app and import back.
 
 Public repository: [EnosElinsa/ielts-fieldbook](https://github.com/EnosElinsa/ielts-fieldbook).
 
 ## Features
 
-- **Today** — a daily plan based on exam date, study days, and skill focus
-- **Writing desk** — timed practice with live word count, local drafts, and rewrite history
-- **Speaking practice** — timed Part 1 / 2 / 3 sessions; you type a transcript (no microphone, no recording)
-- **Phrase review** — vocabulary, phrases, and sentence patterns with spaced flip cards
-- **Progress** — band trends and study-day streaks, not just attempt counts
-- **Backup merge** — export/import a full archive; import previews, writes a rollback copy, then merges instead of overwriting
-- **Score files** — save and export a markdown scoring request, score it outside the app, then import the markdown back
+- **Today** — a daily plan from exam date, minutes per day, and skill focus. Within two weeks of the exam, more days are timed practice or review. At 60 minutes or more, writing and speaking slots are full timed tasks.
+- **Writing desk** — the plan decides the desk. Overview, outline, comparison, and body tasks use short fields with word limits. Timed and full essays require the checklist. Drafts and rewrite history stay on the question.
+- **Speaking practice** — timed Part 1 / 2 / 3, plus a three-part mock. You can record; the app stores the audio and you still type the transcript. Blind practice hides notes, sample answers, stories, and earlier transcripts.
+- **Stories** — a story plan can attach an unused Part 2 card.
+- **Phrase review** — words, phrases, and sentence patterns. Due cards hide the answer; sentence patterns ask you to write them first.
+- **Progress** — recent criterion scores, a target-band line when you set one, and study-day streaks.
+- **Backup merge** — export/import a JSON archive. Import previews, then merges instead of overwriting. The JSON does not include recordings.
+- **Score files** — save and export a markdown scoring request, score it outside the app, then import the markdown back.
 
 ## Stack
 
 - React, TypeScript, Vite
-- All user data stays in `localStorage` under the key `ielts-writing-fieldbook` (schema **v7**)
+- Study records use schema **v8**
+
+With `npm run dev` or `npm run preview`, the study file is `local/fieldbook-state.json` and recordings are files in `local/audio/`. `http://localhost:8000` and `http://127.0.0.1:8000` share those files because both hit the same process. The browser also keeps a `localStorage` copy under `ielts-writing-fieldbook`.
+
+Open the address that already has your work once so that copy is merged into the file. After that, the other address sees it. If the dev server is not running, the app uses only that browser’s `localStorage`, and recordings fall back to IndexedDB on that address.
 
 ## Getting started
 
@@ -26,7 +31,7 @@ npm install
 npm run dev
 ```
 
-The Vite dev server runs at `http://localhost:8000` (same port as the old local server, so existing `localStorage` stays available). Other common commands:
+The Vite dev server runs at `http://localhost:8000`. Other common commands:
 
 ```bash
 npm test
@@ -39,12 +44,17 @@ npm run build
 
 If any of these files exist on your machine, they are **gitignored** and preferred over the sample bank when the app loads:
 
-- `questions.json`
-- `question-assets/`
-- `speaking-questions.json`
-- `speaking-samples.json`
+- `local/questions.json`
+- `local/question-assets/`
+- `local/speaking-questions.json`
+- `local/speaking-samples.json`
 
-Do **not** commit Cambridge papers, third-party PDFs, or personal score files. Keep private banks and assessments on disk only.
+The study file and recordings are also gitignored:
+
+- `local/fieldbook-state.json`
+- `local/audio/`
+
+Personal score files, assessment drafts, and reference PDFs live under `local/` (`assessments/`, `reference/`). Do **not** commit Cambridge papers, third-party PDFs, or personal score files.
 
 ## Scoring flow
 
@@ -53,24 +63,22 @@ Do **not** commit Cambridge papers, third-party PDFs, or personal score files. K
 3. Score that file outside the app (any process you choose).
 4. Import the scored markdown back into Fieldbook.
 
-Import linking order for writing:
+Import linking order:
 
 1. Match `session_id` in the file to an existing attempt.
 2. Else match on body hash.
 3. Else create a new attempt from the import.
 4. Else report `missing_essay`.
 
-Speaking pronunciation is **not** scored from a transcript. You can still save transcripts and import other scored dimensions when present.
+Speaking pronunciation is **not** scored from a transcript or a recording inside the app. A speaking request includes `audio_present: true` or `false`. Pronunciation stays `unscored (transcript only)` unless you hand the audio to whatever scores the file outside the app.
 
 ## What this version does not do
 
-- IndexedDB
 - Service worker / offline install
-- Microphone recording
 - User accounts
 - Multi-device sync
 
-Data lives in this browser’s `localStorage`. Back up with the in-app export if you change machines or clear site data.
+Changing computers still needs the in-app backup. That JSON does not include recordings. Copy `local/audio/` yourself if you need the files.
 
 ## License
 
