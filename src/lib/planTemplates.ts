@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { practiceFromWeakness, rewritePlanDescription, syncPendingPlan, dateKey, dueErrors, dueLexicon, examPressure } from '../domain';
+import { practiceFromWeakness, rewritePlanDescription, syncPendingPlan, dateKey, dueErrors, dueLexicon, examPressure, assignStoryPlanTarget } from '../domain';
 import { sessionSkill, speakingKinds } from './format';
 
 export const planTemplates = {
@@ -160,6 +160,138 @@ const planDescriptionFixes = {
   '根据反馈重写最近一篇作文。': 'Rewrite the last essay from the feedback.',
 };
 
+function skillFromKind(kind, mix) {
+  if (kind === '1' || kind === '2' || kind === 'writing-mock') return 'writing';
+  if (String(kind).startsWith('speaking') || kind === 'stories') return 'speaking';
+  return mix === 'speaking' ? 'speaking' : 'writing';
+}
+
+function reviewMistakesTemplate(count) {
+  return {
+    kind: 'review',
+    title: 'Review · Mistakes',
+    description: count === 1 ? 'Review 1 mistake that is due.' : `Review ${count} mistakes that are due.`,
+    deskMode: 'full',
+  };
+}
+
+function reviewUnresolvedTemplate(count) {
+  return {
+    kind: 'review',
+    title: 'Review · Mistakes',
+    description: count === 1 ? 'Review 1 mistake you have not fixed.' : `Review ${count} mistakes you have not fixed.`,
+    deskMode: 'full',
+  };
+}
+
+function lexiconDueTemplate(count) {
+  return {
+    kind: 'lexicon',
+    title: 'Phrases due',
+    description: count === 1 ? '1 phrase to recall today.' : `${count} phrases to recall today.`,
+    deskMode: 'full',
+  };
+}
+
+function reviewWaitingTemplate(count) {
+  return {
+    kind: 'review',
+    title: 'Review · Waiting scores',
+    description: count === 1 ? '1 attempt still waiting for a score.' : `${count} attempts still waiting for a score.`,
+    deskMode: 'full',
+  };
+}
+
+function examReviewTemplate() {
+  return {
+    kind: 'review',
+    title: 'Review · Mistakes',
+    description: 'Go back over mistakes you have not fixed.',
+    deskMode: 'full',
+  };
+}
+
+export function promoteToTimed(template) {
+  if (!template) return template;
+  const kind = template.kind;
+  if (kind === '1') {
+    return {
+      kind: '1',
+      title: 'Task 1 · Timed',
+      description: '20 minutes for a full Task 1.',
+      deskMode: 'timed',
+      driver: template.driver || null,
+      questionId: template.questionId || null,
+    };
+  }
+  if (kind === '2') {
+    return {
+      kind: '2',
+      title: 'Task 2 · Timed',
+      description: '40 minutes for a full Task 2.',
+      deskMode: 'timed',
+      driver: template.driver || null,
+      questionId: template.questionId || null,
+    };
+  }
+  if (String(kind).startsWith('speaking')) {
+    return Object.assign({}, template, {
+      deskMode: 'timed',
+      title: /Timed|限时/i.test(template.title || '') ? template.title : String(template.title || 'Speaking').replace(/\s·\s.*$/, '') + ' · Timed',
+      description: template.description || 'Use the exam timing.',
+    });
+  }
+  return template;
+}
+
+/**
+ * Choose today's plan template from rotation, daily minutes, and exam pressure.
+ * Sequence 0 still prefers due errors, due lexicon, and unscored attempts.
+ */
+export function pickTemplate({ settings, sequence, signals, templates }) {
+  const opts = signals || {};
+  const list = templates && templates.length ? templates : mixedPlanTemplates;
+  const base = list[sequence % list.length];
+  const examSoon = Boolean(opts.examSoon);
+  const dueErr = Number(opts.dueErr) || 0;
+  const dueLex = Number(opts.dueLex) || 0;
+  const unassessed = Number(opts.unassessed) || 0;
+  const longSession = Number(settings && settings.dailyMinutes) >= 60;
+
+  if (sequence === 0) {
+    if (opts.recommendation) return opts.recommendation;
+    if (examSoon && (dueErr || dueLex)) {
+      return dueErr ? reviewMistakesTemplate(dueErr) : lexiconDueTemplate(dueLex);
+    }
+    if (dueErr) return reviewUnresolvedTemplate(dueErr);
+    if (dueLex) return lexiconDueTemplate(dueLex);
+    if (unassessed) return reviewWaitingTemplate(unassessed);
+  }
+
+  if (opts.rewrite && (sequence === 2 || sequence === 3)) return opts.rewrite;
+
+  let template = base;
+
+  if (examSoon) {
+    if (sequence % 2 === 1) return examReviewTemplate();
+    const timed = promoteToTimed(base);
+    if (timed && timed.deskMode === 'timed') template = timed;
+    else {
+      const skill = skillFromKind(base.kind, settings && settings.skillMix);
+      template = promoteToTimed(
+        skill === 'speaking'
+          ? { kind: 'speaking-p2', title: 'Part 2 · Timed', description: 'Use the exam timing.' }
+          : settings && settings.focus === 'task2'
+            ? { kind: '2' }
+            : { kind: '1' },
+      );
+    }
+  }
+
+  if (longSession) template = promoteToTimed(template);
+  return template;
+}
+
 export function inferredDeskMode(plan) {
   if (plan && plan.deskMode) return plan.deskMode;
   const blob = `${(plan && plan.title) || ''}${(plan && plan.description) || ''}`;
@@ -239,6 +371,8 @@ function rewriteTemplate(state, latest) {
 export function planMatchesSkill(plan, activeSkill) {
   if (!plan) return false;
   if (plan.kind === 'review' || plan.kind === 'lexicon') return true;
+  if (plan.kind === 'writing-mock') return activeSkill === 'writing';
+  if (plan.kind === 'speaking-mock') return activeSkill === 'speaking';
   if (activeSkill === 'speaking') return speakingKinds().includes(plan.kind);
   return !speakingKinds().includes(plan.kind);
 }
@@ -273,51 +407,22 @@ export function ensurePlans(state, activeSkill, persistIfChanged) {
       const id = `plan-${key}`;
       let plan = state.plans.find((item) => item.id === id);
       if (!plan) {
-        let template = templates[sequence % templates.length];
-        const templateSkill =
-          template.kind === '1' || template.kind === '2'
-            ? 'writing'
-            : String(template.kind).startsWith('speaking') || template.kind === 'stories'
-              ? 'speaking'
-              : mix === 'speaking'
-                ? 'speaking'
-                : 'writing';
-        const recommendation = sequence === 0 ? practiceFromWeakness(state, templateSkill) : null;
-        if (recommendation) template = recommendation;
-        else if (sequence === 0 && examSoon && (dueErr || dueLex)) {
-          template = dueErr
-            ? { kind: 'review', title: 'Review · Mistakes', description: `Review ${dueErr} mistakes that are due.`, deskMode: 'full' }
-            : {
-                kind: 'lexicon',
-                title: 'Phrases due',
-                description: dueLex === 1 ? '1 phrase to recall today.' : `${dueLex} phrases to recall today.`,
-                deskMode: 'full',
-              };
-        } else if (sequence === 0 && dueErr) {
-          template = {
-            kind: 'review',
-            title: 'Review · Mistakes',
-            description: `Review ${dueErr} mistakes you have not fixed.`,
-            deskMode: 'full',
-          };
-        } else if (sequence === 0 && dueLex) {
-          template = {
-            kind: 'lexicon',
-            title: 'Phrases due',
-            description: dueLex === 1 ? '1 phrase to recall today.' : `${dueLex} phrases to recall today.`,
-            deskMode: 'full',
-          };
-        } else if (sequence === 0 && unassessed) {
-          template = {
-            kind: 'review',
-            title: 'Review · Waiting scores',
-            description: unassessed === 1 ? '1 attempt still waiting for a score.' : `${unassessed} attempts still waiting for a score.`,
-            deskMode: 'full',
-          };
-        }
+        const baseTemplate = templates[sequence % templates.length];
+        const templateSkill = skillFromKind(baseTemplate.kind, mix);
         const latest = state.sessions[state.sessions.length - 1];
-        const rewrite = rewriteTemplate(state, latest);
-        if (rewrite && (sequence === 2 || sequence === 3)) template = rewrite;
+        const template = pickTemplate({
+          settings: state.settings,
+          sequence,
+          templates,
+          signals: {
+            recommendation: sequence === 0 ? practiceFromWeakness(state, templateSkill) : null,
+            rewrite: rewriteTemplate(state, latest),
+            dueErr,
+            dueLex,
+            unassessed,
+            examSoon,
+          },
+        });
         plan = {
           id,
           dateKey: key,
@@ -336,17 +441,17 @@ export function ensurePlans(state, activeSkill, persistIfChanged) {
           completedAt: null,
           driver: template.driver || null,
         };
+        if (template.kind === 'stories') {
+          const assignment = assignStoryPlanTarget(state);
+          if (assignment) {
+            plan.storyId = assignment.storyId;
+            plan.questionId = assignment.questionId;
+          }
+        }
         state.plans.push(plan);
       } else if (refreshPlanCopy(plan)) copyChanged = true;
       if (plan.status === 'pending' && key === dateKey(new Date())) {
-        const pendingSkill =
-          plan.kind === '1' || plan.kind === '2'
-            ? 'writing'
-            : String(plan.kind).startsWith('speaking') || plan.kind === 'stories'
-              ? 'speaking'
-              : mix === 'speaking'
-                ? 'speaking'
-                : 'writing';
+        const pendingSkill = skillFromKind(plan.kind, mix);
         if (syncPendingPlan(plan, practiceFromWeakness(state, pendingSkill))) copyChanged = true;
       }
       generated.push(plan);
