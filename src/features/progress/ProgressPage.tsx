@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import {
   criterionBands,
   criterionLabel,
+  criterionSeries,
   numericOveralls,
   speakingCoverageCounts,
   weakestCriterion,
@@ -10,7 +11,7 @@ import {
 import { useFieldbook } from '../../context/FieldbookContext';
 import { formatDate, sessionSkill } from '../../lib/format';
 import { planMatchesSkill as matchPlan } from '../../lib/planTemplates';
-import { Empty } from '../../components/ui';
+import { Empty, FilterMenu } from '../../components/ui';
 
 export function ProgressPage() {
   const fb = useFieldbook();
@@ -38,9 +39,13 @@ export function ProgressPage() {
 
   const max = Math.max(1, ...bars.map((bar) => bar.count));
   const scores = numericOveralls(fb.state, fb.activeSkill, 8);
+  const series = criterionSeries(fb.state, fb.activeSkill, 8);
   const bands = criterionBands(fb.state, fb.activeSkill, 5);
   const weak = weakestCriterion(fb.state, fb.activeSkill);
   const keys = Object.keys(bands.bands);
+  const targetBand = Number(fb.state.settings.targetBand);
+  const hasTarget = Number.isFinite(targetBand) && targetBand >= 1 && targetBand <= 9;
+  const seriesKeys = speaking ? ['FC', 'LR', 'GRA'] : ['TA', 'TR', 'CC', 'LR', 'GRA'];
   const focus = speaking
     ? fb.state.settings.speakingFocus === 'part1'
       ? 'Part 1 first'
@@ -72,12 +77,8 @@ export function ProgressPage() {
 
   return (
     <section className="view active">
-      <div className="section-head">
-        <div>
-          <p className="kicker">Progress</p>
-          <h3>The last four weeks</h3>
-          <p>Score trend, and your current settings.</p>
-        </div>
+      <div className="page-tools">
+        <p>Score trend, and your current settings.</p>
       </div>
       <div className="evidence-grid">
         <div className="panel">
@@ -88,6 +89,9 @@ export function ProgressPage() {
                 <div className="week-bar" key={index}>
                   <span>{item.estimated ? 'No audio' : 'Overall'}</span>
                   <div className="track">
+                    {hasTarget ? (
+                      <span className="target-line" style={{ left: `${(targetBand / 9) * 100}%` }} title={`Target ${targetBand}`} />
+                    ) : null}
                     <div className="fill" style={{ width: `${(Number(item.overall) / 9) * 100}%` }} />
                   </div>
                   <strong>{item.overall}</strong>
@@ -97,6 +101,35 @@ export function ProgressPage() {
               <div className="empty">No band scores yet.</div>
             )}
           </div>
+          {series.length ? (
+            <div className="mt-16">
+              <h4 className="series-title">Criteria by attempt</h4>
+              {hasTarget ? <p className="rule-note">Target band {targetBand}</p> : null}
+              <div className="criteria-series">
+                {series.map((item) => (
+                  <div className="series-attempt" key={item.id}>
+                    <div className="series-date">{formatDate(item.date, true)}</div>
+                    {seriesKeys.map((key) => {
+                      const score = item.scores[key];
+                      if (score == null) return null;
+                      return (
+                        <div className="week-bar" key={key}>
+                          <span>{criterionLabel(key)}</span>
+                          <div className="track">
+                            {hasTarget ? (
+                              <span className="target-line" style={{ left: `${(targetBand / 9) * 100}%` }} />
+                            ) : null}
+                            <div className="fill" style={{ width: `${(Number(score) / 9) * 100}%` }} />
+                          </div>
+                          <strong>{score}</strong>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
           <div className="mt-16">
             {!keys.length ? (
               <div className="empty">
@@ -165,6 +198,9 @@ export function ProgressPage() {
               Focus: <strong>{focus}</strong>
             </p>
             <p>
+              Target band: <strong>{fb.state.settings.targetBand || 'Not set'}</strong>
+            </p>
+            <p>
               Exam date: <strong>{fb.state.settings.examDate || 'Not set'}</strong>
             </p>
             <p>
@@ -184,13 +220,18 @@ export function ProgressPage() {
         <div className="panel">
           <h3>Plans</h3>
           <p>What you have done shows up here.</p>
-          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <option value="all">Any status</option>
-            <option value="pending">Not started</option>
-            <option value="in_progress">In progress</option>
-            <option value="completed">Done</option>
-          </select>
-          <div>
+          <FilterMenu
+            label="Plan status"
+            value={filter}
+            onChange={setFilter}
+            options={[
+              { value: 'all', label: 'Any status' },
+              { value: 'pending', label: 'Not started' },
+              { value: 'in_progress', label: 'In progress' },
+              { value: 'completed', label: 'Done' },
+            ]}
+          />
+          <div className="plan-list">
             {plans.length ? (
               plans.map((plan) => (
                 <div className="work-row" key={plan.id}>

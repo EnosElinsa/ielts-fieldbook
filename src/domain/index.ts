@@ -25,6 +25,7 @@ export {
   importAssessmentText,
   syncAssessmentErrors,
   numericOveralls,
+  criterionSeries,
   latestCriteriaScores,
   criterionLabel,
   criterionBands,
