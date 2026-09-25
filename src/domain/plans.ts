@@ -28,6 +28,19 @@ export function planMatchesAttempt(plan, attempt) {
   const kind = String(plan.kind || '');
   if (kind === 'review' || kind === 'lexicon' || kind === 'stories') return false;
   const speaking = attempt.skill === 'speaking';
+  if (kind === 'writing-mock') {
+    if (speaking) return false;
+    const stage = plan.stage || 'task1';
+    if (stage === 'task1') return String(attempt.type) === '1';
+    if (stage === 'task2') return String(attempt.type) === '2';
+    return false;
+  }
+  if (kind === 'speaking-mock') {
+    if (!speaking) return false;
+    const stage = plan.stage || 'p1';
+    const part = stage === 'p1' ? '1' : stage === 'p2' ? '2' : stage === 'p3' ? '3' : '';
+    return String(attempt.part) === part;
+  }
   if (kind === '1' || kind === '2') return !speaking && String(attempt.type) === kind;
   if (kind === 'speaking-p1') return speaking && String(attempt.part) === '1';
   if (kind === 'speaking-p2') return speaking && String(attempt.part) === '2';
@@ -38,6 +51,32 @@ export function planMatchesAttempt(plan, attempt) {
 export function completePlanIfMatched(state, planId, attempt) {
   const plan = (state.plans || []).find(item => item.id === planId);
   if (!plan || !planMatchesAttempt(plan, attempt)) return null;
+  if (plan.kind === 'writing-mock') {
+    const stage = plan.stage || 'task1';
+    if (stage === 'task1') {
+      plan.stage = 'task2';
+      plan.status = 'in_progress';
+      plan.linkedSessionId = attempt && attempt.id || plan.linkedSessionId;
+      return plan;
+    }
+    return completePlan(state, planId, { linkedSessionId: attempt && attempt.id });
+  }
+  if (plan.kind === 'speaking-mock') {
+    const stage = plan.stage || 'p1';
+    if (stage === 'p1') {
+      plan.stage = 'p2';
+      plan.status = 'in_progress';
+      plan.linkedSessionId = attempt && attempt.id || plan.linkedSessionId;
+      return plan;
+    }
+    if (stage === 'p2') {
+      plan.stage = 'p3';
+      plan.status = 'in_progress';
+      plan.linkedSessionId = attempt && attempt.id || plan.linkedSessionId;
+      return plan;
+    }
+    return completePlan(state, planId, { linkedSessionId: attempt && attempt.id });
+  }
   return completePlan(state, planId, { linkedSessionId: attempt && attempt.id });
 }
 
@@ -158,6 +197,62 @@ export function selectSpeakingTopic(state, part, topics, now) {
   return pickFrom(fresh.length ? fresh : pool);
 }
 
+/** Part 2 cards that are not yet linked on any story. */
+export function pickUnusedPart2ForStory(state, topics) {
+  const used = new Set();
+  (state.stories || []).forEach((story) => {
+    (story.topicIds || []).forEach((id) => used.add(String(id)));
+  });
+  const pool = (Array.isArray(topics) ? topics : state.speakingTopics || [])
+    .filter((topic) => String(topic.part) === '2' && !topic.incomplete && !used.has(String(topic.id)));
+  return pickFrom(pool);
+}
+
+/**
+ * When stories exist, bind a stories plan to one unused Part 2 and a story.
+ * Returns null when there is no story yet (caller should open the stories page).
+ */
+export function assignStoryPlanTarget(state, topics) {
+  const stories = state.stories || [];
+  if (!stories.length) return null;
+  const topic = pickUnusedPart2ForStory(state, topics || state.speakingTopics);
+  if (!topic) return null;
+  const story = pickFrom(stories);
+  return { storyId: story.id, questionId: String(topic.id) };
+}
+
+export function ensureMockPlan(state, kind, details) {
+  const wanted = kind === 'speaking-mock' ? 'speaking-mock' : 'writing-mock';
+  const key = dateKey(details && details.now ? details.now : new Date());
+  const existing = (state.plans || []).find(
+    (plan) => plan.kind === wanted && plan.dateKey === key && plan.status !== 'completed',
+  );
+  if (existing) {
+    if (!existing.stage) existing.stage = wanted === 'writing-mock' ? 'task1' : 'p1';
+    return existing;
+  }
+  const plan = {
+    id: `plan-${wanted}-${key}`,
+    dateKey: key,
+    kind: wanted,
+    title: wanted === 'writing-mock' ? 'Writing mock' : 'Speaking mock',
+    description:
+      wanted === 'writing-mock'
+        ? 'Task 1 then Task 2 under exam timing.'
+        : 'Part 1, Part 2, then Part 3 under exam timing.',
+    deskMode: 'timed',
+    stage: wanted === 'writing-mock' ? 'task1' : 'p1',
+    status: 'pending',
+    linkedSessionId: null,
+    questionId: null,
+    startedAt: null,
+    completedAt: null,
+    driver: null,
+  };
+  state.plans.push(plan);
+  return plan;
+}
+
 export function studyStreak(state, now) {
   const scheduled = new Set(((state.settings && state.settings.days) || []).map(Number));
   if (!scheduled.size) return 0;
@@ -272,7 +367,8 @@ export function todaySession(state, now, skill) {
 export function syncPendingPlan(plan, recommendation) {
   if (!plan || plan.status !== 'pending' || !recommendation || !recommendation.driver) return false;
   const kind = String(plan.kind || '');
-  const currentSkill = kind === '1' || kind === '2'
+  if (kind === 'writing-mock' || kind === 'speaking-mock') return false;
+  const currentSkill = kind === '1' || kind === '2' || kind === 'writing-mock'
     ? 'writing'
     : (kind.startsWith('speaking') || kind === 'stories' ? 'speaking' : null);
   if (currentSkill && currentSkill !== recommendation.skill) return false;

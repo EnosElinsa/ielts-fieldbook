@@ -37,6 +37,7 @@ import {
   reviewLexiconItem,
   selectSpeakingTopic,
   selectWritingQuestion,
+  ensureMockPlan,
   startPlan as domainStartPlan,
   syncAssessmentErrors,
   updateLexiconItem,
@@ -90,7 +91,6 @@ function useFieldbookValue() {
   const [deskPart, setDeskPart] = useState('2');
   const [questionIndex, setQuestionIndex] = useState(0);
   const [activeDeskMode, setActiveDeskMode] = useState<string | null>(null);
-  const [mockExam, setMockExam] = useState<string | null>(null);
   const [lexiconDueOnly, setLexiconDueOnly] = useState(false);
   const [lexiconDueAtVisit, setLexiconDueAtVisit] = useState(0);
   const [revealedLexicon, setRevealedLexicon] = useState<Record<string, boolean>>({});
@@ -413,7 +413,7 @@ function useFieldbookValue() {
       domainStartPlan(draft, planId);
       persistNow(draft);
       setActiveDeskMode(inferredDeskMode(plan));
-      if (plan.deskMode === 'timed' || inferredDeskMode(plan) === 'timed') {
+      if (plan.deskMode === 'timed' || inferredDeskMode(plan) === 'timed' || plan.kind === 'writing-mock' || plan.kind === 'speaking-mock') {
         toast('Use the exam time. Start the timer.');
       }
       if (plan.kind === 'review') {
@@ -429,7 +429,26 @@ function useFieldbookValue() {
       if (plan.kind === 'stories') {
         draft.settings.activeSkill = 'speaking';
         persistNow(draft);
+        if (plan.storyId && plan.questionId) {
+          startSpeakingPractice(plan.questionId, '2', plan.storyId);
+          return;
+        }
         navigate('/stories');
+        return;
+      }
+      if (plan.kind === 'speaking-mock') {
+        draft.settings.activeSkill = 'speaking';
+        persistNow(draft);
+        const stage = plan.stage || 'p1';
+        const part = stage === 'p1' ? '1' : stage === 'p3' ? '3' : '2';
+        const topic = plan.questionId
+          ? (draft.speakingTopics || []).find((item) => String(item.id) === String(plan.questionId))
+          : selectSpeakingTopic(draft, part === '3' ? '2' : part, draft.speakingTopics);
+        if (topic && !plan.questionId) {
+          plan.questionId = String(topic.id);
+          persistNow(draft);
+        }
+        startSpeakingPractice(topic && topic.id, part);
         return;
       }
       if (String(plan.kind).startsWith('speaking')) {
@@ -444,9 +463,14 @@ function useFieldbookValue() {
       }
       draft.settings.activeSkill = 'writing';
       persistNow(draft);
-      const picked = plan.questionId
+      let wantedKind = plan.kind;
+      if (plan.kind === 'writing-mock') {
+        setActiveDeskMode('timed');
+        wantedKind = (plan.stage || 'task1') === 'task2' ? '2' : '1';
+      }
+      const picked = plan.questionId && plan.kind !== 'writing-mock'
         ? draft.questions.find((q) => String(q.id) === String(plan.questionId))
-        : selectWritingQuestion(draft, plan.kind, draft.questions);
+        : selectWritingQuestion(draft, wantedKind, draft.questions);
       chooseQuestion((picked || draft.questions[0] || FALLBACK_QUESTIONS[0]).id);
     },
     [chooseQuestion, navigate, persistNow, startSpeakingPractice, toast],
@@ -472,6 +496,7 @@ function useFieldbookValue() {
           skill: speaking ? 'speaking' : 'writing',
           part: speaking ? pendingAttempt.part : '',
           notes: speaking ? pendingAttempt.notes : '',
+          audioId: speaking ? pendingAttempt.audioId || null : null,
         },
         { id: () => pendingAttempt.id, now: () => new Date().toISOString() },
       );
@@ -527,8 +552,11 @@ function useFieldbookValue() {
         }
       }
       persistNow(draft);
-      if (mockExam === 'task1') {
-        setMockExam('task2');
+
+      const activePlan = pendingAttempt.planId
+        ? draft.plans.find((item) => item.id === pendingAttempt.planId)
+        : null;
+      if (activePlan && activePlan.kind === 'writing-mock' && activePlan.status === 'in_progress' && activePlan.stage === 'task2') {
         setActiveDeskMode('timed');
         const next =
           selectWritingQuestion(draft, '2', draft.questions) ||
@@ -538,32 +566,39 @@ function useFieldbookValue() {
         toast('Task 1 is saved. Task 2 is next, 40 minutes.');
         return;
       }
-      if (mockExam === 'task2') setMockExam(null);
+      if (activePlan && activePlan.kind === 'speaking-mock' && activePlan.status === 'in_progress') {
+        setActiveDeskMode('timed');
+        const part = activePlan.stage === 'p2' ? '2' : '3';
+        const topicId = activePlan.questionId || question.id;
+        startSpeakingPractice(topicId, part);
+        toast(
+          part === '2'
+            ? 'Part 1 is saved. Part 2 is next.'
+            : 'Part 2 is saved. Part 3 is next.',
+        );
+        return;
+      }
+
       navigate('/review');
       toast(
-        checklistToastNeeded
-          ? exportForReview
-            ? 'Saved and exported. The checklist is still open. Check it next time.'
-            : 'Saved. The checklist is still open. Check it next time.'
-          : exportForReview
-            ? speaking
-              ? 'Saved, and the score request was exported.'
-              : 'Essay saved, and the score request was exported.'
-            : speaking
-              ? 'Saved.'
-              : 'Essay saved.',
+        exportForReview
+          ? speaking
+            ? 'Saved, and the score request was exported.'
+            : 'Essay saved, and the score request was exported.'
+          : speaking
+            ? 'Saved.'
+            : 'Essay saved.',
       );
       setChecklistToastNeeded(false);
     },
     [
-      checklistToastNeeded,
       chooseQuestion,
       closeModal,
-      mockExam,
       navigate,
       pendingAttempt,
       persistNow,
       selectedQuestion,
+      startSpeakingPractice,
       toast,
     ],
   );
@@ -597,8 +632,6 @@ function useFieldbookValue() {
       activeDeskMode,
       setActiveDeskMode,
       currentDeskMode,
-      mockExam,
-      setMockExam,
       modal,
       openModal,
       closeModal,
@@ -667,6 +700,7 @@ function useFieldbookValue() {
       mergeBackup,
       selectWritingQuestion,
       selectSpeakingTopic,
+      ensureMockPlan,
       buildAssessmentRequest,
       buildSpeakingAssessmentRequest,
       sessionSkill,
@@ -687,7 +721,6 @@ function useFieldbookValue() {
       lexiconDueAtVisit,
       lexiconDueOnly,
       lexiconSeed,
-      mockExam,
       modal,
       navigate,
       openModal,

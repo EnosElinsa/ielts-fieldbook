@@ -13,6 +13,12 @@ import { useFieldbook } from '../../context/FieldbookContext';
 import { dayLabel, displayName, formatDate, planPillClass, sessionSkill, typeName } from '../../lib/format';
 import { Empty } from '../../components/ui';
 
+function planLabel(title: string) {
+  const parts = String(title || '').split('·');
+  if (parts.length < 2) return { tag: '', name: title || '' };
+  return { tag: parts[0].trim(), name: parts.slice(1).join('·').trim() };
+}
+
 export function TodayPage() {
   const fb = useFieldbook();
   const navigate = useNavigate();
@@ -100,6 +106,7 @@ export function TodayPage() {
                     <h3>{step.title}</h3>
                     <p>{step.detail}</p>
                   </div>
+                  {step.id === 'practice' ? null : (
                   <button
                     type="button"
                     className={`btn ${tone}`}
@@ -120,6 +127,7 @@ export function TodayPage() {
                   >
                     {label}
                   </button>
+                  )}
                 </li>
               );
             })}
@@ -140,20 +148,28 @@ export function TodayPage() {
                 className="btn line"
                 type="button"
                 onClick={() => {
-                  fb.setMockExam('task1');
-                  fb.setActiveDeskMode('timed');
-                  fb.setSkill('writing');
-                  const question =
-                    fb.selectWritingQuestion(fb.state, '1', fb.state.questions) ||
-                    fb.state.questions.find((item) => item.type === '1') ||
-                    fb.state.questions[0];
-                  fb.chooseQuestion(question.id);
-                  fb.toast('Writing mock: Task 1 first, 20 minutes. Start the timer.');
+                  const draft = fb.stateRef.current;
+                  const plan = fb.ensureMockPlan(draft, 'writing-mock');
+                  fb.persistNow(draft);
+                  fb.startPlan(plan.id);
                 }}
               >
                 Writing mock
               </button>
-            ) : null}
+            ) : (
+              <button
+                className="btn line"
+                type="button"
+                onClick={() => {
+                  const draft = fb.stateRef.current;
+                  const plan = fb.ensureMockPlan(draft, 'speaking-mock');
+                  fb.persistNow(draft);
+                  fb.startPlan(plan.id);
+                }}
+              >
+                Speaking mock
+              </button>
+            )}
           </div>
         </div>
         <div className="quiet">
@@ -229,16 +245,18 @@ export function TodayPage() {
       </div>
       <div className="plan">
         {plans.length ? (
-          plans.map((plan, index) => (
+          plans.map((plan, index) => {
+            const label = planLabel(plan.title);
+            return (
             <div key={plan.id} className={`plan-card${index === 0 && plan.status !== 'completed' ? ' next' : ''}`}>
               <div>
                 <div className="plan-top">
                   <span className="date">
                     {dayLabel(`${plan.dateKey}T00:00:00`)} · {fb.state.settings.dailyMinutes} min
                   </span>
-                  <span className={`pill ${planPillClass(plan.kind)}`}>{plan.title}</span>
+                  {label.tag ? <span className={`pill ${planPillClass(plan.kind)}`}>{label.tag}</span> : null}
                 </div>
-                <h4>{plan.title.replace(/^.*?· /, '')}</h4>
+                <h4>{label.name}</h4>
                 <p>{plan.description}</p>
               </div>
               <div className="plan-foot">
@@ -252,7 +270,8 @@ export function TodayPage() {
                 </button>
               </div>
             </div>
-          ))
+            );
+          })
         ) : (
           <Empty message="No plan yet." label="Open settings" onAction={() => fb.openModal('settings')} />
         )}
