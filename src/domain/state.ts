@@ -26,12 +26,21 @@ export function normalizeDraft(raw) {
     return { text: String(raw), transcript: '', notes: '', parentSessionId: null };
   }
   const source = typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
-  return {
+  const draft = {
     text: String(source.text || ''),
     transcript: String(source.transcript || ''),
     notes: String(source.notes || ''),
     parentSessionId: source.parentSessionId || null,
   };
+  if (source.sections != null && typeof source.sections === 'object' && !Array.isArray(source.sections)) {
+    const keys = ['intro', 'overview', 'position', 'pointA', 'pointB', 'paragraph'];
+    const sections = {};
+    keys.forEach((key) => {
+      sections[key] = String(source.sections[key] || '');
+    });
+    draft.sections = sections;
+  }
+  return draft;
 }
 
 export function draftText(draft, skill) {
