@@ -45,7 +45,7 @@ import {
   validateBackup,
   wordCount,
 } from '../domain';
-import { downloadFile, loadState, saveState, writeBankCache } from '../storage';
+import { downloadFile, hydrateState, loadState, saveState, writeBankCache } from '../storage';
 import { ensurePlans, inferredDeskMode } from '../lib/planTemplates';
 import { sessionSkill } from '../lib/format';
 
@@ -269,7 +269,8 @@ function useFieldbookValue() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const draft = structuredClone(stateRef.current);
+      const draft = await hydrateState();
+      if (cancelled) return;
       try {
         const response = await fetch(`/questions.json?v=${STATE_VERSION}`);
         if (!response.ok) throw new Error('questions');

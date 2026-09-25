@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
+import { ModalFrame } from '../../components/ModalFrame';
+import { DateField, FilterMenu } from '../../components/ui';
 
 export function SettingsModal() {
   const fb = useFieldbook();
@@ -12,6 +14,22 @@ export function SettingsModal() {
   const [skillMix, setSkillMix] = useState('mixed');
   const [speakingFocus, setSpeakingFocus] = useState('balanced');
   const [days, setDays] = useState([1, 2, 3, 4, 5, 6]);
+  const [sharedFile, setSharedFile] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    fetch('/api/state', { cache: 'no-store' })
+      .then((response) => {
+        if (!cancelled) setSharedFile(response.ok);
+      })
+      .catch(() => {
+        if (!cancelled) setSharedFile(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -25,17 +43,15 @@ export function SettingsModal() {
     setDays(s.days || [1]);
   }, [open, fb.state.settings]);
 
-  if (!open) return null;
-
   return (
-    <div className="modal-bg show" role="dialog" aria-modal="true" onClick={(e) => e.target === e.currentTarget && fb.closeModal()}>
+    <ModalFrame open={open} onClose={() => fb.closeModal()}>
       <div className="modal">
         <h3>Study settings</h3>
         <p>Exam date, target, and how long you study.</p>
         <div className="form">
           <div className="field">
             <label htmlFor="examDate">Exam date (optional)</label>
-            <input id="examDate" type="date" value={examDate} onChange={(e) => setExamDate(e.target.value)} />
+            <DateField id="examDate" label="Exam date" value={examDate} onChange={setExamDate} />
           </div>
           <div className="field">
             <label htmlFor="targetBand">Target band (optional)</label>
@@ -63,28 +79,43 @@ export function SettingsModal() {
             />
           </div>
           <div className="field">
-            <label htmlFor="focus">Writing focus</label>
-            <select id="focus" value={focus} onChange={(e) => setFocus(e.target.value)}>
-              <option value="balanced">Task 1 and Task 2</option>
-              <option value="task1">Task 1 first</option>
-              <option value="task2">Task 2 first</option>
-            </select>
+            <label id="focus-label">Writing focus</label>
+            <FilterMenu
+              label="Writing focus"
+              value={focus}
+              onChange={setFocus}
+              options={[
+                { value: 'balanced', label: 'Task 1 and Task 2' },
+                { value: 'task1', label: 'Task 1 first' },
+                { value: 'task2', label: 'Task 2 first' },
+              ]}
+            />
           </div>
           <div className="field">
-            <label htmlFor="skillMix">What to practise</label>
-            <select id="skillMix" value={skillMix} onChange={(e) => setSkillMix(e.target.value)}>
-              <option value="writing">Writing only</option>
-              <option value="speaking">Speaking only</option>
-              <option value="mixed">Writing and speaking</option>
-            </select>
+            <label id="skillMix-label">What to practise</label>
+            <FilterMenu
+              label="What to practise"
+              value={skillMix}
+              onChange={setSkillMix}
+              options={[
+                { value: 'writing', label: 'Writing only' },
+                { value: 'speaking', label: 'Speaking only' },
+                { value: 'mixed', label: 'Writing and speaking' },
+              ]}
+            />
           </div>
           <div className="field">
-            <label htmlFor="speakingFocus">Speaking focus</label>
-            <select id="speakingFocus" value={speakingFocus} onChange={(e) => setSpeakingFocus(e.target.value)}>
-              <option value="balanced">Part 1 and Part 2</option>
-              <option value="part1">Part 1 first</option>
-              <option value="part2">Part 2 first</option>
-            </select>
+            <label id="speakingFocus-label">Speaking focus</label>
+            <FilterMenu
+              label="Speaking focus"
+              value={speakingFocus}
+              onChange={setSpeakingFocus}
+              options={[
+                { value: 'balanced', label: 'Part 1 and Part 2' },
+                { value: 'part1', label: 'Part 1 first' },
+                { value: 'part2', label: 'Part 2 first' },
+              ]}
+            />
           </div>
           <div className="field full">
             <label>Study days</label>
@@ -115,8 +146,9 @@ export function SettingsModal() {
           </div>
         </div>
         <div className="rule-note">
-          Your data stays with this browser address. localhost and 127.0.0.1 keep separate copies. Export a backup before
-          you switch, then import it at the new address.
+          {sharedFile
+            ? 'This study file is in the project local folder. localhost and 127.0.0.1 share it. Recordings are in local/audio. You do not need to export to switch address. A backup is still how you move to another computer, and that JSON does not include recordings.'
+            : 'Your data stays with this browser address. localhost and 127.0.0.1 keep separate copies. Export a backup before you switch, then import it at the new address.'}
         </div>
         <div className="modal-foot">
           <button className="btn line" type="button" onClick={() => fb.closeModal()}>
@@ -150,6 +182,6 @@ export function SettingsModal() {
           </button>
         </div>
       </div>
-    </div>
+    </ModalFrame>
   );
 }

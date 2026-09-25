@@ -2,6 +2,7 @@
 import {
   BANK_CACHE_KEY,
   LEGACY_STORES,
+  STATE_VERSION,
   bankCacheShape,
   clearLegacyStores,
   compactAssessmentsForQuota,
@@ -13,6 +14,63 @@ import {
 } from '../domain';
 
 export const STORE_KEY = 'ielts-writing-fieldbook';
+
+let diskAvailable = false;
+
+export function diskStoreAvailable() {
+  return diskAvailable;
+}
+
+function studyRecordCount(state) {
+  const drafts = state && state.drafts && typeof state.drafts === 'object' ? Object.keys(state.drafts).length : 0;
+  return (
+    drafts +
+    ['sessions', 'assessments', 'lexicon', 'errors', 'plans', 'stories'].reduce(
+      (sum, key) => sum + (Array.isArray(state && state[key]) ? state[key].length : 0),
+      0,
+    )
+  );
+}
+
+async function putDisk(state) {
+  const response = await fetch('/api/state', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(persistShape(state)),
+  });
+  if (!response.ok) throw new Error('Could not write the study file');
+}
+
+export async function hydrateState() {
+  const local = loadState();
+  try {
+    const response = await fetch('/api/state', { cache: 'no-store' });
+    if (!response.ok) throw new Error('state api');
+    const body = await response.json();
+    diskAvailable = true;
+    if (!body || body.stored !== true || !body.state) {
+      if (studyRecordCount(local) > 0) await putDisk(local);
+      return local;
+    }
+    const fileState = migrateState(body.state);
+    applyBankCache(fileState, readBankCache());
+    if (!fileState.questions.length && local.questions.length) fileState.questions = local.questions;
+    if (!fileState.speakingTopics.length && local.speakingTopics.length) fileState.speakingTopics = local.speakingTopics;
+    const merged = mergeBackup(fileState, local, { includeSettings: false });
+    merged.questions = fileState.questions.length ? fileState.questions : local.questions;
+    merged.speakingTopics = fileState.speakingTopics.length ? fileState.speakingTopics : local.speakingTopics;
+    if (studyRecordCount(local) > 0) await putDisk(merged);
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify(persistShape(merged)));
+    } catch {
+      /* the file is the copy that both addresses share */
+    }
+    return merged;
+  } catch {
+    diskAvailable = false;
+    return local;
+  }
+}
 
 export function readBankCache() {
   try {
@@ -89,7 +147,7 @@ export function loadState() {
 
 export function saveState(state, onQuotaToast) {
   try {
-    state.schemaVersion = 7;
+    state.schemaVersion = STATE_VERSION;
     localStorage.setItem(STORE_KEY, JSON.stringify(persistShape(state)));
     clearLegacyStores(localStorage);
     return true;
@@ -103,6 +161,12 @@ export function saveState(state, onQuotaToast) {
     } catch {
       if (onQuotaToast) onQuotaToast('Export a backup now');
       return false;
+    }
+  } finally {
+    if (diskAvailable) {
+      void putDisk(state).catch(() => {
+        diskAvailable = false;
+      });
     }
   }
 }
