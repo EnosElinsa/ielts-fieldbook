@@ -1,0 +1,16 @@
+.account{display:grid;gap:14px}
+.account .metrics{grid-template-columns:1.4fr .8fr .8fr}
+.account .metric strong{font-size:18px;overflow-wrap:anywhere}
+.account .panel{display:grid;gap:0;align-content:start}
+.account-note{font-size:13px;color:var(--muted);line-height:1.55;margin:0 0 14px}
+.account .field{margin-bottom:11px}
+.account .field input{width:100%;border:1px solid var(--rule);background:#fffefa;border-radius:5px;padding:9px 10px;font-size:13px}
+.account .modal-foot{margin-top:4px;justify-content:flex-start}
+.account .account-leave{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.account-leave h3{margin-bottom:6px}
+.account-leave .account-note{margin:0}
+.account-leave .btn{width:auto}
+@media(max-width:900px){
+  .account .metrics,.account .split{grid-template-columns:1fr}
+  .account .account-leave{display:grid}
+}

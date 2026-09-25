@@ -9,7 +9,6 @@ import {
   writeAudioFile,
   writeStateFile,
 } from '../../server/fieldbook-files';
-import { hydrateState } from '../../src/storage';
 
 const roots: string[] = [];
 
@@ -53,58 +52,5 @@ describe('study file on disk', () => {
     writeAudioFile(root, id, Buffer.from('audio-bytes'), 'audio/webm;codecs=opus');
     expect(readAudioMeta(root, id)).toMatchObject({ mime: 'audio/webm' });
     expect(fs.readFileSync(readAudioMeta(root, id)!.filePath).toString()).toBe('audio-bytes');
-  });
-});
-
-describe('hydrateState', () => {
-  test('falls back to localStorage when the study file API is missing', async () => {
-    localStorage.setItem(
-      'ielts-writing-fieldbook',
-      JSON.stringify({ schemaVersion: 8, sessions: [{ id: 'local-1', essay: 'kept' }], settings: {} }),
-    );
-    const fetchMock = async () => {
-      throw new Error('no server');
-    };
-    vi.stubGlobal('fetch', fetchMock);
-    const state = await hydrateState();
-    expect(state.sessions.map((session) => session.id)).toContain('local-1');
-  });
-
-  test('merges local records into the shared file and writes them back', async () => {
-    localStorage.setItem(
-      'ielts-writing-fieldbook',
-      JSON.stringify({
-        schemaVersion: 8,
-        sessions: [{ id: 'local-only', essay: 'from this address' }],
-        settings: { dailyMinutes: 30 },
-      }),
-    );
-    let written: string | null = null;
-    vi.stubGlobal(
-      'fetch',
-      vi.fn(async (_url: string, init?: RequestInit) => {
-        if (init && init.method === 'PUT') {
-          written = String(init.body);
-          return { ok: true } as Response;
-        }
-        return {
-          ok: true,
-          json: async () => ({
-            stored: true,
-            state: {
-              schemaVersion: 8,
-              sessions: [{ id: 'on-disk', essay: 'from the other address' }],
-              settings: { dailyMinutes: 60 },
-            },
-          }),
-        } as Response;
-      }),
-    );
-    const state = await hydrateState();
-    const ids = state.sessions.map((session) => session.id);
-    expect(ids).toContain('on-disk');
-    expect(ids).toContain('local-only');
-    expect(written).toContain('local-only');
-    expect(written).toContain('on-disk');
   });
 });

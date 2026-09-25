@@ -45,7 +45,7 @@ import {
   validateBackup,
   wordCount,
 } from '../domain';
-import { downloadFile, hydrateState, loadState, saveState, writeBankCache } from '../storage';
+import { downloadFile, hydrateState, loadState, saveState } from '../storage';
 import { ensurePlans, inferredDeskMode } from '../lib/planTemplates';
 import { sessionSkill } from '../lib/format';
 
@@ -271,43 +271,13 @@ function useFieldbookValue() {
     (async () => {
       const draft = await hydrateState();
       if (cancelled) return;
-      try {
-        const response = await fetch(`/questions.json?v=${STATE_VERSION}`);
-        if (!response.ok) throw new Error('questions');
-        const questions = await response.json();
-        if (Array.isArray(questions) && questions.length) {
-          draft.questions = questions.map((q) => Object.assign({}, q, { id: String(q.id) }));
-        }
-      } catch {
-        if (!draft.questions.length) draft.questions = FALLBACK_QUESTIONS;
-        if (!cancelled) toast('The writing bank did not load. Showing a spare question.');
+      if (!draft.questions.length) {
+        draft.questions = FALLBACK_QUESTIONS;
+        toast('The writing bank did not load. Showing a spare question.');
       }
-      try {
-        const response = await fetch(`/speaking-questions.json?v=${STATE_VERSION}`);
-        if (!response.ok) throw new Error('speaking');
-        const payload = await response.json();
-        const list = Array.isArray(payload) ? payload : (payload && payload.topics) || [];
-        let samplesById = {};
-        try {
-          const sampleResponse = await fetch(`/speaking-samples.json?v=${STATE_VERSION}`);
-          if (sampleResponse.ok) {
-            const samples = await sampleResponse.json();
-            samplesById = samples && samples.byId ? samples.byId : samples || {};
-          }
-        } catch {
-          /* optional */
-        }
-        if (list.length) {
-          draft.speakingTopics = list.map((topic) =>
-            Object.assign({}, topic, samplesById[topic.id] || {}, { id: String(topic.id) }),
-          );
-        }
-      } catch {
-        if (!draft.speakingTopics.length && !cancelled) {
-          toast('The speaking bank did not load. Refresh and try again.');
-        }
+      if (!draft.speakingTopics.length) {
+        toast('The speaking bank did not load. Refresh and try again.');
       }
-      writeBankCache(draft);
       repairAssessments(draft);
       ensurePlans(draft, draft.settings.activeSkill === 'speaking' ? 'speaking' : 'writing', null);
       if (!cancelled) {

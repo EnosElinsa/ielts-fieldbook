@@ -1,7 +1,7 @@
 {
   "name": "ielts-fieldbook",
   "version": "1.0.0",
-  "description": "Local-first IELTS writing and speaking practice notebook (React + Vite).",
+  "description": "IELTS writing and speaking practice notebook (React + Vite + Supabase).",
   "license": "MIT",
   "author": "Zhiyuan Cai",
   "repository": {
@@ -13,7 +13,7 @@
     "react",
     "typescript",
     "vite",
-    "local-first",
+    "supabase",
     "writing",
     "speaking"
   ],
@@ -21,9 +21,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "seed:bank": "node scripts/seed-bank.mjs",
     "test": "vitest run"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.117.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.0"
