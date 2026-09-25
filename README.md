@@ -20,13 +20,19 @@ Public repository: [EnosElinsa/ielts-fieldbook](https://github.com/EnosElinsa/ie
 - React, TypeScript, Vite, Supabase
 - Study records use schema **v8**
 
-Copy `.env.example` to `.env` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. Apply `supabase/migrations/20260925120000_fieldbook.sql` in the Supabase SQL editor, then seed the shared question catalog:
+Copy `.env.example` to `.env` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. Apply the SQL files in `supabase/migrations` in order, then seed the shared question catalog and upload chart images:
 
 ```bash
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key npm run seed:bank
+npm run seed:bank
 ```
 
-The service role key stays on the machine that runs the seed. The browser only receives the anon key. Sign in with email. Each account has its own attempts, drafts, phrases, plans, stories, scores, and recordings. The question catalog is shared and read-only in the app.
+The service role key stays on the machine that runs the seed. The browser only receives the anon key. Sign in with email. Each account has its own attempts, drafts, phrases, plans, stories, scores, and recordings. The question catalog is shared and read-only in the app. Forgot-password mail returns to the site origin, so that origin must be listed under Authentication redirect URLs.
+
+## Deploy
+
+Cloudflare Pages builds this repo with `npm run build` and publishes `dist`. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as build variables. `public/_redirects` sends every path back to `index.html`. After the Pages hostname exists, add `https://<project>.pages.dev` to the Supabase site URL and redirect allow list, then run `npm run deploy:pages` from a machine that is logged in with Wrangler.
+
+Question charts live in the public `question-assets` storage bucket. `npm run seed:bank` uploads `local/question-assets` and stores those public URLs on the writing questions.
 
 ## Getting started
 
@@ -44,7 +50,7 @@ npm run build
 
 ## Data layout
 
-`public/sample` is the public question catalog. `npm run seed:bank` writes it into the shared tables. Question images under `public/sample` are served with the app.
+`public/sample` is the fallback question catalog when `local/` is absent. `npm run seed:bank` prefers `local/*.json`, uploads chart images, and writes the shared tables. `public/_redirects` is the Cloudflare Pages route fallback.
 
 Personal score files and reference notes can still live under gitignored `local/`. Do not commit `.env`.
 
