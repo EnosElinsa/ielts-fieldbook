@@ -43,7 +43,7 @@ test('migrates legacy data without losing essays or arrays', () => {
     assessments: [{ id: 'a1', text: 'legacy' }],
     settings: { dailyMinutes: 45 },
   });
-  assert.equal(migrated.schemaVersion, 7);
+  assert.equal(migrated.schemaVersion, 8);
   assert.equal(migrated.sessions[0].essay, essay);
   assert.equal(migrated.sessions[0].questionId, '1342');
   assert.equal(migrated.assessments.length, 1);
@@ -60,7 +60,7 @@ test('migrates a v5 writing session to skill writing without losing the essay', 
     settings: { dailyMinutes: 40, focus: 'task2' },
     drafts: { '1342': 'draft text' },
   });
-  assert.equal(migrated.schemaVersion, 7);
+  assert.equal(migrated.schemaVersion, 8);
   assert.equal(migrated.sessions[0].skill, 'writing');
   assert.equal(migrated.sessions[0].essay, essay);
   assert.equal(migrated.sessions[0].questionId, '1342');

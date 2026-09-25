@@ -1,8 +1,9 @@
 // @ts-nocheck
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { formatClock, formatDate } from '../../lib/format';
 import { Empty } from '../../components/ui';
+import { putAudio } from '../../storage/audio';
 
 function speakSecondsFor(part) {
   if (String(part) === '1') return 30;
@@ -59,6 +60,35 @@ export function SpeakingDeskPage() {
   const [speakSeconds, setSpeakSeconds] = useState(speakSecondsFor(part));
   const [noteRunning, setNoteRunning] = useState(false);
   const [speakRunning, setSpeakRunning] = useState(false);
+  const [recording, setRecording] = useState(false);
+  const [audioBlob, setAudioBlob] = useState(null);
+  const [audioUrl, setAudioUrl] = useState(null);
+  const [micError, setMicError] = useState(null);
+  const mediaRecorderRef = useRef(null);
+  const chunksRef = useRef([]);
+  const streamRef = useRef(null);
+
+  const clearRecording = () => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      try {
+        mediaRecorderRef.current.stop();
+      } catch {
+        /* ignore */
+      }
+    }
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+    }
+    mediaRecorderRef.current = null;
+    chunksRef.current = [];
+    setRecording(false);
+    setAudioBlob(null);
+    setAudioUrl((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return null;
+    });
+  };
 
   useEffect(() => {
     if (!topic) return;
@@ -69,7 +99,11 @@ export function SpeakingDeskPage() {
     setSpeakSeconds(speakSecondsFor(fb.deskPart));
     setNoteRunning(false);
     setSpeakRunning(false);
+    clearRecording();
+    setMicError(null);
   }, [topic?.id, fb.deskPart]);
+
+  useEffect(() => () => clearRecording(), []);
 
   useEffect(() => {
     if (!noteRunning) return undefined;
@@ -103,6 +137,11 @@ export function SpeakingDeskPage() {
 
   const mode = fb.currentDeskMode();
   const blind = mode === 'speak-blind';
+  const activePlan = fb.state.activePlanId
+    ? fb.state.plans.find((plan) => plan.id === fb.state.activePlanId)
+    : null;
+  const mockMode = activePlan && activePlan.kind === 'speaking-mock';
+  const hideAids = blind || mockMode;
   const questions =
     part === '1'
       ? (topic?.questions || [topic?.title]).filter(Boolean)
@@ -146,40 +185,50 @@ export function SpeakingDeskPage() {
   if (!topic) {
     return (
       <section className="view active">
-        <Empty message="The speaking bank did not load. Check that speaking-questions.json opens, then refresh." />
+        <Empty message="The speaking bank did not load. Check that local/speaking-questions.json is present, then refresh." />
       </section>
     );
   }
 
   return (
     <section className="view active">
-      <div className="section-head">
-        <div>
-          <p className="kicker">Speaking</p>
-          <h3>Practice</h3>
-          <p>Timed. No recording. Write what you said on the right.</p>
-        </div>
-        <div className="actions">
-          {['1', '2', '3'].map((p) => (
-            <button
-              key={p}
-              className={`btn ${part === p ? 'primary' : 'line'}`}
-              type="button"
-              onClick={() => {
-                fb.setDeskPart(p);
-                if (p === '1' || p === '3') fb.setQuestionIndex(0);
-                setSpeakSeconds(speakSecondsFor(p));
-                setNoteSeconds(60);
-                setNoteRunning(false);
-                setSpeakRunning(false);
-              }}
-            >
-              Part {p}
+      <div className="page-tools desk-tools">
+        <p>
+          {mockMode
+            ? 'Timed mock. Record if you can, then write what you said.'
+            : 'One minute of notes, then speak. The recording stays in this browser.'}
+        </p>
+        <div className="desk-controls">
+          {mockMode ? (
+            <span className="pill blue">Part {part}</span>
+          ) : (
+            <div className="segment" role="tablist" aria-label="Speaking part">
+              {['1', '2', '3'].map((p) => (
+                <button
+                  key={p}
+                  className={`btn ${part === p ? 'primary' : 'line'}`}
+                  type="button"
+                  role="tab"
+                  aria-selected={part === p}
+                  onClick={() => {
+                    fb.setDeskPart(p);
+                    if (p === '1' || p === '3') fb.setQuestionIndex(0);
+                    setSpeakSeconds(speakSecondsFor(p));
+                    setNoteSeconds(60);
+                    setNoteRunning(false);
+                    setSpeakRunning(false);
+                  }}
+                >
+                  Part {p}
+                </button>
+              ))}
+            </div>
+          )}
+          {!mockMode ? (
+            <button className="btn line" type="button" onClick={randomTopic}>
+              Another question
             </button>
-          ))}
-          <button className="btn line" type="button" onClick={randomTopic}>
-            Another question
-          </button>
+          ) : null}
         </div>
       </div>
       <div className="desk-grid">
@@ -215,18 +264,20 @@ export function SpeakingDeskPage() {
                 ) : null}
               </div>
             )}
-            {!blind && part === '2' && !speakRunning ? <SampleInline topic={topic} part={part} /> : null}
+            {!hideAids && part === '2' && !speakRunning ? <SampleInline topic={topic} part={part} /> : null}
           </div>
           <div className="prompt-tip">
             {part === '1'
               ? 'Part 1: about 20–30 seconds each. The timer restarts on the next question.'
               : part === '3'
                 ? 'Part 3: about a minute each.'
-                : blind
-                  ? 'No notes this time.'
+                : hideAids
+                  ? mockMode
+                    ? 'Mock exam. No samples or earlier answers on this side.'
+                    : 'No notes this time.'
                   : 'Part 2: one minute for notes, then two minutes to speak.'}
           </div>
-          {stories.length ? (
+          {!hideAids && stories.length ? (
             <div className="question-history history-flush">
               <div className="history-head">
                 <h4>Stories</h4>
@@ -254,7 +305,7 @@ export function SpeakingDeskPage() {
                         {session.words} words · Part {session.part || ''} · {attempts.length - index}
                       </span>
                     </div>
-                    <p>{session.essay}</p>
+                    {!hideAids ? <p>{session.essay}</p> : null}
                     <div className="history-actions">
                       <button
                         className="btn line"
@@ -266,22 +317,24 @@ export function SpeakingDeskPage() {
                       >
                         View
                       </button>
-                      <button
-                        className="btn line"
-                        type="button"
-                        onClick={() => {
-                          setTranscript(session.essay);
-                          liveSave({
-                            transcript: session.essay,
-                            notes: session.notes || notes,
-                            parentSessionId: session.id,
-                          });
-                          fb.persistNow();
-                          fb.toast('Copied into a new draft.');
-                        }}
-                      >
-                        Continue
-                      </button>
+                      {!hideAids ? (
+                        <button
+                          className="btn line"
+                          type="button"
+                          onClick={() => {
+                            setTranscript(session.essay);
+                            liveSave({
+                              transcript: session.essay,
+                              notes: session.notes || notes,
+                              parentSessionId: session.id,
+                            });
+                            fb.persistNow();
+                            fb.toast('Copied into a new draft.');
+                          }}
+                        >
+                          Continue
+                        </button>
+                      ) : null}
                       {session.assessmentId ? (
                         <button
                           className="btn line"
@@ -300,16 +353,16 @@ export function SpeakingDeskPage() {
             </div>
           </div>
         </div>
-        <div className="editor">
-          {part === '2' && !blind ? (
-            <div>
+        <div className={`editor${recording ? ' is-recording' : ''}`}>
+          {part === '2' && !hideAids ? (
+            <div className="editor-block">
               <div className="editor-head">
                 <h3>One-minute notes</h3>
-                <span className="timer">{formatClock(noteSeconds)}</span>
+                <span className={`timer${noteRunning ? ' is-live' : ''}`}>{formatClock(noteSeconds)}</span>
               </div>
               <div className="editor-bar">
-                <span className="count">Notes you can glance at</span>
-                <div>
+                <span className="count">Glance at these while you speak</span>
+                <div className="btn-row">
                   <button className="btn line" type="button" onClick={() => setNoteRunning((r) => !r)}>
                     {noteRunning ? 'Pause notes' : 'Start notes'}
                   </button>
@@ -358,11 +411,11 @@ export function SpeakingDeskPage() {
           ) : null}
           <div className="editor-head">
             <h3>What you said</h3>
-            <span className="timer">{formatClock(speakSeconds)}</span>
+            <span className={`timer${speakRunning ? ' is-live' : ''}`}>{formatClock(speakSeconds)}</span>
           </div>
           <div className="editor-bar">
             <span className="count">{fb.wordCount(transcript)} words</span>
-            <div>
+            <div className="btn-row">
               <button className="btn line" type="button" onClick={() => setSpeakRunning((r) => !r)}>
                 {speakRunning ? 'Pause' : 'Start timer'}
               </button>
@@ -376,12 +429,90 @@ export function SpeakingDeskPage() {
                   setSpeakSeconds(speakSecondsFor(part));
                 }}
               >
-                Reset timer
+                Reset
               </button>
             </div>
           </div>
+          <div className={`rec-strip${recording ? ' is-live' : ''}${audioBlob ? ' is-ready' : ''}`} role="status">
+            <span className="rec-dot" aria-hidden="true" />
+            <span className="rec-label">
+              {recording ? 'Recording' : audioBlob ? 'Recording ready' : 'Microphone off'}
+            </span>
+            <div className="btn-row">
+              {!recording ? (
+                <button
+                  className="btn line"
+                  type="button"
+                  onClick={async () => {
+                    setMicError(null);
+                    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                      setMicError('This browser cannot record. You can still type the transcript.');
+                      return;
+                    }
+                    try {
+                      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                      streamRef.current = stream;
+                      chunksRef.current = [];
+                      const recorder = new MediaRecorder(stream);
+                      mediaRecorderRef.current = recorder;
+                      recorder.ondataavailable = (event) => {
+                        if (event.data && event.data.size) chunksRef.current.push(event.data);
+                      };
+                      recorder.onstop = () => {
+                        const blob = new Blob(chunksRef.current, { type: recorder.mimeType || 'audio/webm' });
+                        setAudioBlob(blob);
+                        setAudioUrl((prev) => {
+                          if (prev) URL.revokeObjectURL(prev);
+                          return URL.createObjectURL(blob);
+                        });
+                        if (streamRef.current) {
+                          streamRef.current.getTracks().forEach((track) => track.stop());
+                          streamRef.current = null;
+                        }
+                        setRecording(false);
+                      };
+                      recorder.start();
+                      setRecording(true);
+                      setAudioBlob(null);
+                      setAudioUrl((prev) => {
+                        if (prev) URL.revokeObjectURL(prev);
+                        return null;
+                      });
+                    } catch {
+                      setMicError('Microphone permission was denied. You can still type the transcript.');
+                    }
+                  }}
+                >
+                  {audioBlob ? 'Re-record' : 'Record'}
+                </button>
+              ) : (
+                <button
+                  className="btn warn"
+                  type="button"
+                  onClick={() => {
+                    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+                      mediaRecorderRef.current.stop();
+                    }
+                  }}
+                >
+                  Stop
+                </button>
+              )}
+              {audioBlob ? (
+                <button className="btn line" type="button" onClick={clearRecording}>
+                  Clear audio
+                </button>
+              ) : null}
+            </div>
+          </div>
+          {micError ? <p className="file-hint warn-note">{micError}</p> : null}
+          {audioUrl ? <audio controls src={audioUrl} preload="metadata" /> : null}
           <textarea
-            placeholder="Write what you said. There is no recording, so pronunciation cannot be scored."
+            placeholder={
+              audioBlob
+                ? 'Write what you said. Pronunciation stays unscored in the Markdown score request.'
+                : 'Write what you said. Without a recording, pronunciation cannot be scored.'
+            }
             value={transcript}
             onChange={(e) => {
               setTranscript(e.target.value);
@@ -389,7 +520,7 @@ export function SpeakingDeskPage() {
             }}
           />
           <div className="editor-foot">
-            <p>The draft saves itself. A transcript cannot score pronunciation.</p>
+            <p>The draft saves itself. Recordings stay in this browser only.</p>
             <div>
               <button
                 className="btn line"
@@ -405,7 +536,7 @@ export function SpeakingDeskPage() {
               <button
                 className="btn primary"
                 type="button"
-                onClick={() => {
+                onClick={async () => {
                   liveSave({ transcript, notes });
                   const text = String(transcript || '').trim();
                   if (!text) {
@@ -413,8 +544,19 @@ export function SpeakingDeskPage() {
                     return;
                   }
                   const d = fb.speakingDraft(topic.id);
+                  const attemptId = crypto.randomUUID();
+                  let audioId = null;
+                  if (audioBlob) {
+                    audioId = attemptId;
+                    try {
+                      await putAudio(audioId, audioBlob);
+                    } catch {
+                      fb.toast('Could not store the recording in this browser. Saving the transcript only.');
+                      audioId = null;
+                    }
+                  }
                   fb.setPendingAttempt({
-                    id: crypto.randomUUID(),
+                    id: attemptId,
                     essay: text,
                     notes,
                     part,
@@ -422,6 +564,7 @@ export function SpeakingDeskPage() {
                     parentSessionId: d.parentSessionId || null,
                     planId: fb.state.activePlanId,
                     skill: 'speaking',
+                    audioId,
                   });
                   fb.openModal('save');
                 }}

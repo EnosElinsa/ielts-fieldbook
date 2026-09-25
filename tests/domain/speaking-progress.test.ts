@@ -65,7 +65,7 @@ test('migrate preserves stories, essays, and speaking session fields', () => {
       { id: 'st2', title: 'Market', place: 'street' },
     ],
   });
-  assert.equal(migrated.schemaVersion, 7);
+  assert.equal(migrated.schemaVersion, 8);
   assert.equal(migrated.sessions.find(item => item.id === 'w1').skill, 'writing');
   assert.equal(migrated.sessions.find(item => item.id === 'w1').essay, 'keep this essay');
   const speaking = migrated.sessions.find(item => item.id === 's1');
