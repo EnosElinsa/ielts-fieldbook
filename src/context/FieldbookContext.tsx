@@ -195,14 +195,21 @@ function useFieldbookValue() {
   const setWritingDraft = useCallback(
     (id: string, text: string, extra?: object) => {
       const current = normalizeDraft(stateRef.current.drafts[id]);
-      stateRef.current.drafts[id] = Object.assign({}, current, extra || {}, {
-        text: text == null ? current.text : String(text),
-      });
+      const patch = Object.assign({}, extra || {});
+      if (Object.prototype.hasOwnProperty.call(patch, 'sections') && patch.sections != null) {
+        patch.sections = normalizeDraft({ sections: patch.sections }).sections;
+      }
+      const next = normalizeDraft(
+        Object.assign({}, current, patch, {
+          text: text == null ? current.text : String(text),
+        }),
+      );
+      stateRef.current.drafts[id] = next;
       setState((prev) => ({
         ...prev,
         drafts: {
           ...prev.drafts,
-          [id]: stateRef.current.drafts[id],
+          [id]: next,
         },
       }));
     },
@@ -492,7 +499,7 @@ function useFieldbookValue() {
       if (speaking) draft.drafts[question.id] = normalizeDraft({ transcript: '', notes: '' });
       else {
         const current = normalizeDraft(draft.drafts[selectedQuestion.id]);
-        draft.drafts[selectedQuestion.id] = Object.assign({}, current, { text: '', parentSessionId: null });
+        draft.drafts[selectedQuestion.id] = Object.assign({}, current, { text: '', parentSessionId: null, sections: undefined });
       }
       setPendingAttempt(null);
       closeModal();

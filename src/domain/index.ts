@@ -75,3 +75,12 @@ export {
 } from './plans';
 
 export { wordCount, dateKey, hashText, firstSentence } from './utils';
+
+export {
+  composeEssay,
+  writingSaveBlockers,
+  writingWordSoftConfirm,
+  fragmentFieldsFilled,
+  normalizeSections,
+  emptySections,
+} from './desk';
