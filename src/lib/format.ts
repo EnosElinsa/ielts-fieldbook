@@ -55,6 +55,14 @@ export function safeSource(value) {
 export function safeImage(value) {
   const text = String(value || '');
   if (/^(question-assets|sample\/assets)\/[A-Za-z0-9._-]+$/.test(text)) return `/${text}`;
+  try {
+    const url = new URL(text);
+    const allowedHost = url.hostname === '127.0.0.1' || url.hostname.endsWith('.supabase.co');
+    const publicAsset = url.pathname.startsWith('/storage/v1/object/public/question-assets/');
+    if (allowedHost && publicAsset && /^https?:$/.test(url.protocol)) return url.href;
+  } catch {
+    /* relative paths are handled above */
+  }
   return '';
 }
 
