@@ -36,8 +36,8 @@ test('A1: v6 state migrates to v7 without dropping essays, assessments, or lexic
     lexicon: [{ id: 'l1', term: 'overall', meaning: '总体上' }],
     drafts: { '1342': 'still here', 'topic-1:notes': 'cue notes', 'topic-1': 'spoken draft' },
   });
-  assert.equal(migrated.schemaVersion, 7);
-  assert.equal(core.STATE_VERSION, 7);
+  assert.equal(migrated.schemaVersion, 8);
+  assert.equal(core.STATE_VERSION, 8);
   assert.equal(migrated.sessions.length, 1);
   assert.equal(migrated.sessions[0].essay, essay);
   assert.equal(migrated.assessments.length, 1);
@@ -69,7 +69,7 @@ test('A2: persistShape omits questions, speaking samples, and structured rawText
     sessions: [{ id: 's1', questionId: '1342', essay }],
   });
   const payload = core.persistShape(state);
-  assert.equal(payload.schemaVersion, 7);
+  assert.equal(payload.schemaVersion, 8);
   assert.equal(payload.questions, undefined);
   assert.equal(payload.speakingTopics, undefined);
   assert.equal(payload.assessments[0].rawText, undefined);
@@ -557,7 +557,181 @@ test('syncPendingPlan rewrites only a pending same-skill plan and keeps driver o
   assert.equal(core.syncPendingPlan(running, recommendation), false);
   assert.equal(running.title, '进行中');
   const migrated = core.migrateState({ plans: [{ id: 'keep', status: 'completed', driver: 'criterion:CC', title: '留着' }] });
-  assert.equal(migrated.schemaVersion, 7);
+  assert.equal(migrated.schemaVersion, 8);
   assert.equal(migrated.plans[0].driver, 'criterion:CC');
   assert.equal(migrated.plans[0].title, '留着');
+});
+
+test('pickTemplate keeps fragments under 60 minutes and promotes timed at 60+', async () => {
+  const { pickTemplate, planTemplates } = await import('../../src/lib/planTemplates');
+  const templates = planTemplates.balanced;
+  const fragment = pickTemplate({
+    settings: { dailyMinutes: 30, focus: 'balanced' },
+    sequence: 0,
+    templates,
+    signals: { dueErr: 0, dueLex: 0, unassessed: 0, examSoon: false },
+  });
+  assert.equal(fragment.deskMode, 'overview');
+  assert.equal(fragment.kind, '1');
+  const timed = pickTemplate({
+    settings: { dailyMinutes: 60, focus: 'balanced' },
+    sequence: 0,
+    templates,
+    signals: { dueErr: 0, dueLex: 0, unassessed: 0, examSoon: false },
+  });
+  assert.equal(timed.deskMode, 'timed');
+  assert.equal(timed.kind, '1');
+  const speakingTimed = pickTemplate({
+    settings: { dailyMinutes: 60, skillMix: 'speaking' },
+    sequence: 0,
+    templates: [{ kind: 'speaking-p1', title: 'Part 1 · Short answers', description: 'About 20–30 seconds each.', deskMode: 'full' }],
+    signals: { dueErr: 0, dueLex: 0, unassessed: 0, examSoon: false },
+  });
+  assert.equal(speakingTimed.deskMode, 'timed');
+});
+
+test('pickTemplate exam-soon alternates timed and review; completed plans stay put', async () => {
+  const { pickTemplate, planTemplates, ensurePlans } = await import('../../src/lib/planTemplates');
+  const templates = planTemplates.balanced;
+  const day0 = pickTemplate({
+    settings: { dailyMinutes: 30, focus: 'balanced' },
+    sequence: 0,
+    templates,
+    signals: { examSoon: true, dueErr: 0, dueLex: 0, unassessed: 0 },
+  });
+  assert.equal(day0.deskMode, 'timed');
+  const day1 = pickTemplate({
+    settings: { dailyMinutes: 30, focus: 'balanced' },
+    sequence: 1,
+    templates,
+    signals: { examSoon: true, dueErr: 0, dueLex: 0, unassessed: 0 },
+  });
+  assert.equal(day1.kind, 'review');
+  const day0Due = pickTemplate({
+    settings: { dailyMinutes: 30 },
+    sequence: 0,
+    templates,
+    signals: { examSoon: true, dueErr: 2, dueLex: 0, unassessed: 0 },
+  });
+  assert.equal(day0Due.kind, 'review');
+  assert.match(day0Due.description, /2 mistakes/);
+
+  const state = core.migrateState({
+    settings: {
+      examDate: '2026-09-25',
+      dailyMinutes: 30,
+      days: [1, 2, 3, 4, 5, 6, 7],
+      focus: 'balanced',
+      skillMix: 'writing',
+    },
+    plans: [{
+      id: 'plan-done',
+      dateKey: '2026-09-18',
+      kind: '1',
+      title: 'Keep me',
+      description: 'already finished',
+      deskMode: 'overview',
+      status: 'completed',
+      driver: null,
+    }],
+  });
+  ensurePlans(state, 'writing');
+  assert.equal(state.plans.find((p) => p.id === 'plan-done').title, 'Keep me');
+  assert.equal(state.plans.find((p) => p.id === 'plan-done').status, 'completed');
+});
+
+test('criterionSeries returns per-attempt scores and ignores pronunciation', () => {
+  const state = core.migrateState({
+    assessments: [
+      {
+        id: 'a1', date: '2026-09-01T00:00:00.000Z', skill: 'writing', overall: '6.0',
+        summary: 'writing score', rawText: 'writing-series-a1',
+        criteria: [
+          { name: 'Task Achievement', score: '6' },
+          { name: 'Coherence and Cohesion', score: '5' },
+          { name: 'Lexical Resource', score: '6' },
+          { name: 'Grammatical Range and Accuracy', score: '6' },
+          { name: 'Pronunciation', score: '9' },
+        ],
+      },
+      {
+        id: 'a2', date: '2026-09-10T00:00:00.000Z', skill: 'speaking', overall: '6.5',
+        summary: 'speaking score', rawText: 'speaking-series-a2',
+        criteria: [
+          { name: 'Fluency and Coherence', score: '6' },
+          { name: 'Lexical Resource', score: '6.5' },
+          { name: 'Grammatical Range and Accuracy', score: '7' },
+          { name: 'Pronunciation', score: 'unscored (transcript only)' },
+        ],
+      },
+    ],
+  });
+  const writing = core.criterionSeries(state, 'writing', 8);
+  assert.equal(writing.length, 1);
+  assert.equal(writing[0].scores.TA, 6);
+  assert.equal(writing[0].scores.CC, 5);
+  assert.equal(writing[0].scores.Pronunciation, undefined);
+  const speaking = core.criterionSeries(state, 'speaking', 8);
+  assert.equal(speaking[0].scores.FC, 6);
+  assert.equal(speaking[0].scores.Pronunciation, undefined);
+  assert.equal(Object.prototype.hasOwnProperty.call(speaking[0].scores, 'Pronunciation'), false);
+});
+
+test('writing-mock advances stage on Task 1 and completes on Task 2; speaking-mock walks p1-p3', () => {
+  const state = core.migrateState({
+    plans: [{ id: 'wm', kind: 'writing-mock', stage: 'task1', status: 'in_progress' }],
+    activePlanId: 'wm',
+  });
+  const task1 = core.createAttempt(state, { questionId: '1', type: '1', essay }, { id: () => 's1' });
+  assert.equal(core.planMatchesAttempt(state.plans[0], task1), true);
+  assert.ok(core.completePlanIfMatched(state, 'wm', task1));
+  assert.equal(state.plans[0].status, 'in_progress');
+  assert.equal(state.plans[0].stage, 'task2');
+  assert.equal(state.activePlanId, 'wm');
+  const task2 = core.createAttempt(state, { questionId: '2', type: '2', essay }, { id: () => 's2' });
+  assert.ok(core.completePlanIfMatched(state, 'wm', task2));
+  assert.equal(state.plans[0].status, 'completed');
+  assert.equal(state.activePlanId, null);
+
+  const speak = core.migrateState({
+    plans: [{ id: 'sm', kind: 'speaking-mock', stage: 'p1', status: 'in_progress' }],
+    activePlanId: 'sm',
+  });
+  const p1 = core.createAttempt(speak, { questionId: 't', skill: 'speaking', part: '1', essay: 'hi' }, { id: () => 'sp1' });
+  core.completePlanIfMatched(speak, 'sm', p1);
+  assert.equal(speak.plans[0].stage, 'p2');
+  const p2 = core.createAttempt(speak, { questionId: 't', skill: 'speaking', part: '2', essay: 'long' }, { id: () => 'sp2' });
+  core.completePlanIfMatched(speak, 'sm', p2);
+  assert.equal(speak.plans[0].stage, 'p3');
+  const p3 = core.createAttempt(speak, { questionId: 't', skill: 'speaking', part: '3', essay: 'deep' }, { id: () => 'sp3' });
+  core.completePlanIfMatched(speak, 'sm', p3);
+  assert.equal(speak.plans[0].status, 'completed');
+});
+
+test('assignStoryPlanTarget picks an unused Part 2; planMatchesSkill treats mocks by skill', async () => {
+  const { planMatchesSkill } = await import('../../src/lib/planTemplates');
+  assert.equal(planMatchesSkill({ kind: 'writing-mock' }, 'writing'), true);
+  assert.equal(planMatchesSkill({ kind: 'writing-mock' }, 'speaking'), false);
+  assert.equal(planMatchesSkill({ kind: 'speaking-mock' }, 'speaking'), true);
+  assert.equal(planMatchesSkill({ kind: 'speaking-mock' }, 'writing'), false);
+
+  const state = core.migrateState({
+    stories: [{ id: 'st1', title: 'Library', topicIds: ['used'] }],
+    speakingTopics: [
+      { id: 'used', part: 2, title: 'Used', incomplete: false },
+      { id: 'free', part: 2, title: 'Free', incomplete: false },
+      { id: 'p1', part: 1, title: 'Part1', incomplete: false },
+    ],
+  });
+  const unused = core.pickUnusedPart2ForStory(state);
+  assert.equal(unused.id, 'free');
+  const assignment = core.assignStoryPlanTarget(state);
+  assert.equal(assignment.storyId, 'st1');
+  assert.equal(assignment.questionId, 'free');
+  assert.equal(core.assignStoryPlanTarget(core.migrateState({ stories: [] })), null);
+
+  const mock = core.ensureMockPlan(state, 'writing-mock', { now: '2026-09-19T12:00:00.000Z' });
+  assert.equal(mock.kind, 'writing-mock');
+  assert.equal(mock.stage, 'task1');
+  assert.equal(core.ensureMockPlan(state, 'writing-mock', { now: '2026-09-19T12:00:00.000Z' }).id, mock.id);
 });

@@ -282,6 +282,30 @@ export function numericOveralls(state, skill, limit) {
     .map(item => ({ overall: item.overall, estimated: overallIsEstimated(item), date: item.date, id: item.id }));
 }
 
+/** Per-assessment criterion scores for the progress chart. Skips non-numeric and pronunciation. */
+export function criterionSeries(state, skill, limit) {
+  const wanted = skill === 'speaking' ? 'speaking' : 'writing';
+  const order = wanted === 'speaking' ? ['FC', 'LR', 'GRA'] : ['TA', 'TR', 'CC', 'LR', 'GRA'];
+  return assessmentsForSkill(state, wanted, limit || 8).map((assessment) => {
+    const scores = {};
+    order.forEach((key) => {
+      scores[key] = null;
+    });
+    (assessment.criteria || []).forEach((criterion) => {
+      if (!isBandScore(criterion.score)) return;
+      const key = criterionBucket(criterion.name);
+      if (key && Object.prototype.hasOwnProperty.call(scores, key)) scores[key] = Number(criterion.score);
+    });
+    return {
+      id: assessment.id,
+      date: assessment.date,
+      overall: assessment.overall,
+      estimated: overallIsEstimated(assessment),
+      scores,
+    };
+  });
+}
+
 export function latestCriteriaScores(state, skill) {
   const wanted = skill === 'speaking' ? 'speaking' : 'writing';
   const last = (state.assessments || []).filter(item => assessmentSkill(state, item) === wanted)
