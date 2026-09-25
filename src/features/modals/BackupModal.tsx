@@ -2,6 +2,7 @@
 import { useMemo, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { migrateState } from '../../domain';
+import { ModalFrame } from '../../components/ModalFrame';
 
 export function BackupModal() {
   const fb = useFieldbook();
@@ -17,10 +18,8 @@ export function BackupModal() {
     };
   }, [fb.pendingBackup, fb]);
 
-  if (!open) return null;
-
   return (
-    <div className="modal-bg show" role="dialog" aria-modal="true" onClick={(e) => e.target === e.currentTarget && fb.closeModal()}>
+    <ModalFrame open={open} onClose={() => fb.closeModal()}>
       <div className="modal">
         <h3>Import a backup</h3>
         <p>This merges with what you already have. Essays and transcripts stay.</p>
@@ -96,6 +95,6 @@ export function BackupModal() {
           </button>
         </div>
       </div>
-    </div>
+    </ModalFrame>
   );
 }

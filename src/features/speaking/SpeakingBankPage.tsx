@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { speakingCoverage } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { coverageClass, coverageLabel, safeSource } from '../../lib/format';
-import { Empty } from '../../components/ui';
+import { Empty, FilterMenu } from '../../components/ui';
 
 function topicPreview(topic) {
   if (Number(topic.part) === 1) return (topic.questions || []).slice(0, 2).join(' / ') || topic.title;
@@ -23,7 +23,7 @@ export function SpeakingBankPage() {
     const q = search.toLowerCase();
     return topics.filter((topic) => {
       const haystack =
-        `${topic.title} ${topic.titleZh || ''} ${topic.cueCard || ''} ${(topic.questions || []).join(' ')} ${(topic.part3 || []).join(' ')}`.toLowerCase();
+        `${topic.title} ${topic.cueCard || ''} ${(topic.questions || []).join(' ')} ${(topic.part3 || []).join(' ')}`.toLowerCase();
       const statusValue = speakingCoverage(fb.state, topic.id);
       return (
         (part === 'all' || String(topic.part) === part) &&
@@ -45,15 +45,11 @@ export function SpeakingBankPage() {
 
   return (
     <section className="view active">
-      <div className="section-head">
-        <div>
-          <p className="kicker">Speaking bank</p>
-          <h3>Sep–Dec 2026</h3>
-          <p>
-            {topics.length} topics. Not seen {counts.unseen}, has a story {counts.prepared}, practised{' '}
-            {counts.practiced}, marked {counts.assessed}.
-          </p>
-        </div>
+      <div className="page-tools">
+        <p>
+          {topics.length} topics. Not seen {counts.unseen}, has a story {counts.prepared}, practised{' '}
+          {counts.practiced}, marked {counts.assessed}.
+        </p>
       </div>
       <div className="toolbar">
         <input
@@ -63,18 +59,28 @@ export function SpeakingBankPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <select aria-label="Part" value={part} onChange={(e) => setPart(e.target.value)}>
-          <option value="all">All parts</option>
-          <option value="1">Part 1</option>
-          <option value="2">Part 2</option>
-        </select>
-        <select aria-label="Progress" value={filter} onChange={(e) => setFilter(e.target.value)}>
-          <option value="all">Any progress</option>
-          <option value="unseen">Not seen</option>
-          <option value="prepared">Has a story</option>
-          <option value="practiced">Practised</option>
-          <option value="assessed">Marked</option>
-        </select>
+        <FilterMenu
+          label="Part"
+          value={part}
+          onChange={setPart}
+          options={[
+            { value: 'all', label: 'All parts' },
+            { value: '1', label: 'Part 1' },
+            { value: '2', label: 'Part 2' },
+          ]}
+        />
+        <FilterMenu
+          label="Progress"
+          value={filter}
+          onChange={setFilter}
+          options={[
+            { value: 'all', label: 'Any progress' },
+            { value: 'unseen', label: 'Not seen' },
+            { value: 'prepared', label: 'Has a story' },
+            { value: 'practiced', label: 'Practised' },
+            { value: 'assessed', label: 'Marked' },
+          ]}
+        />
       </div>
       <div>
         {groups.length ? (
@@ -96,11 +102,8 @@ export function SpeakingBankPage() {
                           <span className={`pill ${coverageClass(statusValue)}`}>{coverageLabel(statusValue)}</span>
                         </div>
                         <h4>{topic.title}</h4>
-                        <p>
-                          {topic.titleZh || ''}
-                          {topic.incomplete ? ' · Incomplete' : ''}
-                        </p>
                         <p>{topicPreview(topic)}</p>
+                        {topic.incomplete ? <p className="file-hint">Some questions for this topic are still missing.</p> : null}
                         <div className="q-bottom">
                           <button
                             className="btn primary"
@@ -140,7 +143,7 @@ export function SpeakingBankPage() {
             </div>
           ))
         ) : (
-          <Empty message="The speaking bank did not load. Check the question file in this folder, then refresh." />
+          <Empty message="The speaking bank did not load. Check that local/speaking-questions.json is present, then refresh." />
         )}
       </div>
     </section>

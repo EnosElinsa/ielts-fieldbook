@@ -6,7 +6,7 @@ import {
   lexiconLabels,
   lexiconStatusLabels,
 } from '../../lib/format';
-import { Empty } from '../../components/ui';
+import { Empty, FilterMenu } from '../../components/ui';
 import { lexiconSentenceMatches } from '../../domain';
 
 function lexiconIsDue(item) {
@@ -57,12 +57,8 @@ export function LexiconPage() {
 
   return (
     <section className="view active">
-      <div className="section-head">
-        <div>
-          <p className="kicker">Phrases</p>
-          <h3>Words, phrases, patterns</h3>
-          <p>Keep the language from a score that you want to use again.</p>
-        </div>
+      <div className="page-tools">
+        <p>Keep the language from a score that you want to use again.</p>
         <div className="actions">
           {activePlan ? (
             <button
@@ -101,23 +97,38 @@ export function LexiconPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <select aria-label="Type" value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option value="all">All types</option>
-          <option value="word">Word</option>
-          <option value="phrase">Phrase</option>
-          <option value="sentence">Pattern</option>
-        </select>
-        <select aria-label="Status" value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option value="all">Any status</option>
-          <option value="new">New</option>
-          <option value="learning">Learning</option>
-          <option value="mastered">Known</option>
-        </select>
-        <select aria-label="Skill" value={skill} onChange={(e) => setSkill(e.target.value)}>
-          <option value="all">Both skills</option>
-          <option value="writing">Writing</option>
-          <option value="speaking">Speaking</option>
-        </select>
+        <FilterMenu
+          label="Type"
+          value={category}
+          onChange={setCategory}
+          options={[
+            { value: 'all', label: 'All types' },
+            { value: 'word', label: 'Word' },
+            { value: 'phrase', label: 'Phrase' },
+            { value: 'sentence', label: 'Pattern' },
+          ]}
+        />
+        <FilterMenu
+          label="Status"
+          value={status}
+          onChange={setStatus}
+          options={[
+            { value: 'all', label: 'Any status' },
+            { value: 'new', label: 'New' },
+            { value: 'learning', label: 'Learning' },
+            { value: 'mastered', label: 'Known' },
+          ]}
+        />
+        <FilterMenu
+          label="Skill"
+          value={skill}
+          onChange={setSkill}
+          options={[
+            { value: 'all', label: 'Both skills' },
+            { value: 'writing', label: 'Writing' },
+            { value: 'speaking', label: 'Speaking' },
+          ]}
+        />
         <button
           className={`btn ${fb.lexiconDueOnly ? 'primary' : 'line'}`}
           type="button"

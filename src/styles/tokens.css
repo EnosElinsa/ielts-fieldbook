@@ -8,5 +8,57 @@
 @font-face{font-family:'Source Serif 4';font-style:normal;font-weight:700;font-display:swap;src:url('../../fonts/SourceSerif4-700.woff2') format('woff2')}
 @font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:swap;src:url('../../fonts/DMMono-400.woff2') format('woff2')}
 @font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:swap;src:url('../../fonts/DMMono-500.woff2') format('woff2')}
-:root{--bg:#efeae2;--sheet:#faf8f4;--ink:#1c282d;--muted:#3e4c52;--rule:#d7d2c8;--blue:#245b72;--blue-dark:#173e50;--red:#b75a43;--gold:#c49b4c;--soft-blue:#e5eef1;--soft-red:#f3e5df;--soft-green:#e2eee7;--shadow:0 18px 40px rgba(30,42,47,.07);--text:15px;--ui:13px;--label:11px}
-*{box-sizing:border-box}html{background:var(--bg);color:var(--ink)}body{margin:0;font-family:Manrope,Arial,sans-serif;font-size:var(--text);min-height:100vh;background-image:linear-gradient(rgba(30,42,47,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(30,42,47,.025) 1px,transparent 1px);background-size:32px 32px}button,input,select,textarea{font:inherit}button{cursor:pointer}
+:root{
+  --bg:#e8e1d4;
+  --sheet:#fbf8f2;
+  --ink:#1a262b;
+  --muted:#46555b;
+  --rule:#d4cec2;
+  --blue:#245b72;
+  --blue-dark:#143848;
+  --red:#b75a43;
+  --gold:#c49b4c;
+  --soft-blue:#e5eef1;
+  --soft-red:#f3e5df;
+  --soft-green:#e2eee7;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --shadow:0 1px 2px rgba(28,40,45,.04);
+  --shadow-lift:0 8px 20px rgba(28,40,45,.06);
+  --text:15px;
+  --ui:13px;
+  --label:11px;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{
+  margin:0;
+  font-family:Manrope,Arial,sans-serif;
+  font-size:var(--text);
+  min-height:100vh;
+  background:#ebe6dc;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.28;
+  background-image:
+    linear-gradient(rgba(28,40,45,.028) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(28,40,45,.028) 1px,transparent 1px);
+  background-size:28px 28px;
+  mask-image:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 78%);
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.12;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.55'/></svg>");
+}
+#root{position:relative;z-index:1}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}

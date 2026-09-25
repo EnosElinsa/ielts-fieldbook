@@ -1,8 +1,9 @@
 // @ts-nocheck
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { studyStreak } from '../domain';
 import { useFieldbook } from '../context/FieldbookContext';
+import { displayName } from '../lib/format';
 import { NavIcons, Toast } from './ui';
 import { SettingsModal } from '../features/modals/SettingsModal';
 import { SaveModal } from '../features/modals/SaveModal';
@@ -19,6 +20,8 @@ const writingLinks = [
   { to: '/phrases', label: 'Phrases', icon: NavIcons.phrases },
   { to: '/progress', label: 'Progress', icon: NavIcons.progress },
 ];
+
+const RAIL_KEY = 'ielts-fieldbook-rail';
 
 const speakingLinks = [
   { to: '/', end: true, label: 'Today', icon: NavIcons.today },
@@ -52,10 +55,17 @@ export function Shell() {
   const navigate = useNavigate();
   const assessmentInput = useRef(null);
   const backupInput = useRef(null);
+  const [collapsed, setCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem(RAIL_KEY) === 'collapsed';
+    } catch {
+      return false;
+    }
+  });
   const speaking = fb.activeSkill === 'speaking';
   const links = speaking ? speakingLinks : writingLinks;
   const streak = studyStreak(fb.state);
-  const deskName = fb.selectedQuestion?.name || 'Writing';
+  const deskName = displayName(fb.selectedQuestion?.name) || 'Writing';
   const topicName = fb.selectedTopic?.title || 'Speaking practice';
   const chrome = useMemo(
     () => chromeFor(location.pathname, fb.activeSkill, deskName, topicName),
@@ -66,10 +76,17 @@ export function Shell() {
     document.title = `${chrome.title} · IELTS Fieldbook`;
   }, [chrome.title]);
 
-  useEffect(() => {
-    const focus = location.pathname === '/write' || location.pathname === '/speak';
-    document.querySelector('.shell')?.classList.toggle('is-focus', focus);
-  }, [location.pathname]);
+  const toggleRail = () => {
+    setCollapsed((current) => {
+      const next = !current;
+      try {
+        localStorage.setItem(RAIL_KEY, next ? 'collapsed' : 'open');
+      } catch {
+        /* keep the choice for this visit */
+      }
+      return next;
+    });
+  };
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -147,7 +164,7 @@ export function Shell() {
 
   return (
     <>
-      <div className="shell">
+      <div className={collapsed ? 'shell is-collapsed' : 'shell'}>
         <aside className="rail">
           <div className="mark">
             <div className="mark-box">{speaking ? 'S' : 'W'}</div>
@@ -161,21 +178,25 @@ export function Shell() {
               type="button"
               role="tab"
               aria-selected={!speaking}
+              aria-label="Writing"
               className={!speaking ? 'active' : undefined}
               data-skill="writing"
               onClick={() => switchSkill('writing')}
             >
-              Writing
+              <span className="skill-long">Writing</span>
+              <span className="skill-short">W</span>
             </button>
             <button
               type="button"
               role="tab"
               aria-selected={speaking}
+              aria-label="Speaking"
               className={speaking ? 'active' : undefined}
               data-skill="speaking"
               onClick={() => switchSkill('speaking')}
             >
-              Speaking
+              <span className="skill-long">Speaking</span>
+              <span className="skill-short">S</span>
             </button>
           </div>
           <nav className="nav" aria-label={speaking ? 'Speaking' : 'Writing'}>
@@ -193,6 +214,20 @@ export function Shell() {
               </NavLink>
             ))}
           </nav>
+          <button
+            type="button"
+            className="rail-toggle"
+            aria-expanded={!collapsed}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            onClick={toggleRail}
+          >
+            <span className="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="16" height="16">
+                {collapsed ? <path d="M6 3.5 10.5 8 6 12.5" /> : <path d="M10 3.5 5.5 8 10 12.5" />}
+              </svg>
+            </span>
+            <span className="rail-toggle-label">{collapsed ? 'Expand' : 'Collapse'}</span>
+          </button>
           <div className="rail-foot">
             <span>Streak</span>
             <strong>{streak} days</strong>
@@ -200,7 +235,7 @@ export function Shell() {
         </aside>
         <main className="main">
           <header className="top">
-            <div>
+            <div className="page-title" key={`${chrome.kicker}-${chrome.title}`}>
               <p className="kicker">{chrome.kicker}</p>
               <h1 className="title">{chrome.title}</h1>
             </div>
@@ -276,7 +311,9 @@ export function Shell() {
               />
             </div>
           </header>
-          <Outlet />
+          <div className="page" key={location.pathname}>
+            <Outlet />
+          </div>
         </main>
       </div>
       <SettingsModal />

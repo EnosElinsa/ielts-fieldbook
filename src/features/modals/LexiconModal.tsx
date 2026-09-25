@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
+import { ModalFrame } from '../../components/ModalFrame';
+import { FilterMenu } from '../../components/ui';
 
 export function LexiconModal() {
   const fb = useFieldbook();
@@ -29,10 +31,8 @@ export function LexiconModal() {
     setSource(item.source || '');
   }, [open, editing, seed, fb.activeSkill]);
 
-  if (!open) return null;
-
   return (
-    <div className="modal-bg show" role="dialog" aria-modal="true" onClick={(e) => e.target === e.currentTarget && fb.closeModal()}>
+    <ModalFrame open={open} onClose={() => fb.closeModal()}>
       <div className="modal lexicon-modal">
         <h3>{editing ? 'Edit phrase' : 'Add a phrase'}</h3>
         <p>
@@ -42,12 +42,17 @@ export function LexiconModal() {
         </p>
         <div className="form">
           <div className="field">
-            <label htmlFor="lexiconItemCategory">Type</label>
-            <select id="lexiconItemCategory" value={category} onChange={(e) => setCategory(e.target.value)}>
-              <option value="word">Word</option>
-              <option value="phrase">Phrase</option>
-              <option value="sentence">Pattern</option>
-            </select>
+            <label id="lexiconItemCategory-label">Type</label>
+            <FilterMenu
+              label="Type"
+              value={category}
+              onChange={setCategory}
+              options={[
+                { value: 'word', label: 'Word' },
+                { value: 'phrase', label: 'Phrase' },
+                { value: 'sentence', label: 'Pattern' },
+              ]}
+            />
           </div>
           <div className="field">
             <label htmlFor="lexiconItemTerm">Phrase</label>
@@ -76,11 +81,16 @@ export function LexiconModal() {
             <input id="lexiconItemTags" value={tags} onChange={(e) => setTags(e.target.value)} placeholder="Task 1; trend; link" />
           </div>
           <div className="field">
-            <label htmlFor="lexiconItemSkill">Skill</label>
-            <select id="lexiconItemSkill" value={skill} onChange={(e) => setSkill(e.target.value)}>
-              <option value="writing">Writing</option>
-              <option value="speaking">Speaking</option>
-            </select>
+            <label id="lexiconItemSkill-label">Skill</label>
+            <FilterMenu
+              label="Skill"
+              value={skill}
+              onChange={setSkill}
+              options={[
+                { value: 'writing', label: 'Writing' },
+                { value: 'speaking', label: 'Speaking' },
+              ]}
+            />
           </div>
           <div className="field">
             <label htmlFor="lexiconItemSource">Source</label>
@@ -137,6 +147,6 @@ export function LexiconModal() {
           </button>
         </div>
       </div>
-    </div>
+    </ModalFrame>
   );
 }

@@ -17,3 +17,35 @@
 .linked-story{border:1px solid var(--rule);padding:10px;margin-top:8px;background:#fffefa}
 .linked-story h4{font-size:13px;margin:0 0 4px}
 .linked-story p{font-size:12px;color:var(--muted);line-height:1.5;margin:0}
+.audio-bar{margin-top:8px}.audio-player{display:grid;gap:6px;margin:10px 0}.audio-player audio{width:100%}
+.desk-tools{flex-direction:column;align-items:stretch;gap:12px}
+.desk-tools p{max-width:none}
+.desk-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.desk-controls>.btn:only-child{margin-left:auto}
+.segment{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--rule);border-radius:12px;background:rgba(255,252,246,.82)}
+.segment .btn{border-color:transparent;background:transparent;box-shadow:none;min-width:72px;border-radius:9px}
+.segment .btn.primary{background:var(--blue-dark);border-color:transparent;color:#fff;box-shadow:none}
+.editor-block{margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.btn-row{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.timer.is-live{animation:timer-pulse 1.6s ease-out infinite}
+@keyframes timer-pulse{
+  0%{box-shadow:0 0 0 0 rgba(183,90,67,.38)}
+  70%{box-shadow:0 0 0 8px rgba(183,90,67,0)}
+  100%{box-shadow:0 0 0 0 rgba(183,90,67,0)}
+}
+.rec-strip{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:8px 10px 8px 12px;border:1px solid var(--rule);border-radius:12px;background:#fffefa}
+.rec-strip .btn-row{margin-left:auto}
+.rec-dot{width:10px;height:10px;border-radius:50%;background:#c8c1b6;flex:none}
+.rec-label{font:600 13px Manrope,Arial,sans-serif;color:var(--muted)}
+.rec-strip.is-live{border-color:#e4b2a6;background:#f8ebe6}
+.rec-strip.is-live .rec-dot{background:#c4452f;animation:rec-ping 1.25s ease-out infinite}
+.rec-strip.is-live .rec-label{color:#8d3a2c}
+.rec-strip.is-ready{border-color:#b7d0c4;background:var(--soft-green)}
+.rec-strip.is-ready .rec-dot{background:#3c6d58}
+.rec-strip.is-ready .rec-label{color:#2f5646}
+.editor.is-recording{box-shadow:0 0 0 1px rgba(196,69,47,.35)}
+.editor.is-recording textarea{border-color:#e4b2a6}
+@keyframes rec-ping{
+  0%{box-shadow:0 0 0 0 rgba(196,69,47,.55)}
+  100%{box-shadow:0 0 0 9px rgba(196,69,47,0)}
+}
+.editor audio{width:100%;margin:0 0 12px;border-radius:10px}
