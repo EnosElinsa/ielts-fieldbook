@@ -55,7 +55,12 @@ export function AuthGate({ children }: { children: ReactNode }) {
       mode === 'signup' ? await supabase.auth.signUp(credentials) : await supabase.auth.signInWithPassword(credentials);
     setBusy(false);
     if (result.error) {
-      setError(result.error.message);
+      const message = result.error.message || '';
+      if (mode === 'signin' && /invalid login credentials/i.test(message)) {
+        setError('That email has no account yet, or the password is wrong. Create an account, or confirm the email if you already registered.');
+      } else {
+        setError(message);
+      }
       return;
     }
     if (mode === 'signup' && !result.data.session) {
