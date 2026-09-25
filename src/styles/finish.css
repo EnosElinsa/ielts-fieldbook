@@ -92,9 +92,9 @@
 .lexicon-card,
 .lexicon-stat,
 .q-card {
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--sheet);
-  box-shadow: var(--shadow);
+  box-shadow: none;
 }
 
 .metric strong,
@@ -104,9 +104,55 @@
 }
 
 .plan-card.next {
-  box-shadow: var(--shadow), inset 0 3px 0 var(--red);
+  box-shadow: inset 0 2px 0 var(--red);
   border-top: 0;
   padding-top: 16px;
+}
+
+.metric strong {
+  font: 700 16px/1.2 Manrope, Arial, sans-serif;
+  letter-spacing: 0;
+  margin-top: 4px;
+}
+
+.fact strong,
+.rail-foot strong,
+.band-row strong {
+  font-size: 20px;
+  letter-spacing: 0;
+}
+
+.kicker,
+.date,
+.metric label {
+  color: #6d7a80;
+}
+
+.btn.text,
+.btn.text:visited {
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+  box-shadow: none;
+}
+
+.btn.text:hover {
+  background: rgba(28, 40, 45, 0.05);
+  color: var(--ink);
+  transform: none;
+}
+
+.empty {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  padding: 2px 0 8px;
+}
+
+.block-title {
+  font: 600 22px 'Source Serif 4', serif;
+  letter-spacing: -0.03em;
+  margin: 0 0 10px;
 }
 
 textarea,

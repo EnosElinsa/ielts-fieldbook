@@ -61,43 +61,45 @@ export function ReviewPage() {
   return (
     <section className="view active">
       <div className="review-grid">
-        <div className="panel">
-          <h3>Attempts</h3>
+        <div>
+          <h3 className="block-title">Attempts</h3>
           {sessions.length ? (
-            sessions
-              .slice()
-              .reverse()
-              .map((session) => (
-                <div className="assessment" key={session.id}>
-                  <strong>{displayName(session.name)}</strong>
-                  <span className={`pill${session.attemptKind === 'rewrite' ? ' blue' : ''} ml-8`}>
-                    {attemptLabel(session)}
-                  </span>
-                  <small>
-                    {formatDate(session.date)} · {session.words} words ·{' '}
-                    {session.assessmentId ? 'Marked' : 'Not marked'}
-                  </small>
-                  {session.focus ? <p>Focus: {session.focus}</p> : null}
-                  {session.next ? <p>Next: {session.next}</p> : null}
-                  <div className="history-actions">
-                    <button className="btn line" type="button" onClick={() => openHistory(session, false)}>
-                      {speaking ? 'Transcript' : 'Essay'}
-                    </button>
-                    <button className="btn line" type="button" onClick={() => openHistory(session, true)}>
-                      Continue
-                    </button>
-                    {session.assessmentId ? (
-                      <button
-                        className="btn line"
-                        type="button"
-                        onClick={() => navigate(`/review/${session.assessmentId}`)}
-                      >
-                        Score
+            <div className="panel">
+              {sessions
+                .slice()
+                .reverse()
+                .map((session) => (
+                  <div className="assessment" key={session.id}>
+                    <strong>{displayName(session.name)}</strong>
+                    <span className={`pill${session.attemptKind === 'rewrite' ? ' blue' : ''} ml-8`}>
+                      {attemptLabel(session)}
+                    </span>
+                    <small>
+                      {formatDate(session.date)} · {session.words} words ·{' '}
+                      {session.assessmentId ? 'Marked' : 'Not marked'}
+                    </small>
+                    {session.focus ? <p>Focus: {session.focus}</p> : null}
+                    {session.next ? <p>Next: {session.next}</p> : null}
+                    <div className="history-actions">
+                      <button className="btn line" type="button" onClick={() => openHistory(session, false)}>
+                        {speaking ? 'Transcript' : 'Essay'}
                       </button>
-                    ) : null}
+                      <button className="btn line" type="button" onClick={() => openHistory(session, true)}>
+                        Continue
+                      </button>
+                      {session.assessmentId ? (
+                        <button
+                          className="btn line"
+                          type="button"
+                          onClick={() => navigate(`/review/${session.assessmentId}`)}
+                        >
+                          Score
+                        </button>
+                      ) : null}
+                    </div>
                   </div>
-                </div>
-              ))
+                ))}
+            </div>
           ) : (
             <Empty
               message={speaking ? 'No speaking attempts yet.' : 'No essays yet.'}
@@ -106,32 +108,31 @@ export function ReviewPage() {
             />
           )}
         </div>
-        <div className="panel">
-          <h3>Scores</h3>
+        <div>
+          <h3 className="block-title">Scores</h3>
           {assessments.length ? (
-            assessments
-              .slice()
-              .reverse()
-              .map((assessment) => (
-                <div className="assessment" key={assessment.id}>
-                  <strong>Score</strong>
-                  {assessment.overall ? (
-                    <span className="pill blue ml-8">Overall {assessment.overall}</span>
-                  ) : null}
-                  <small>
-                    {formatDate(assessment.date)} · {assessment.sessionId ? 'Linked' : 'No script'}
-                  </small>
-                  <p>{assessment.nextExercise || 'Score saved'}</p>
-                  <button className="btn line" type="button" onClick={() => navigate(`/review/${assessment.id}`)}>
-                    Open
-                  </button>
-                </div>
-              ))
-          ) : (
-            <div className="empty">
-              <p>No scores yet.</p>
-              <p>Use Import score in the header.</p>
+            <div className="panel">
+              {assessments
+                .slice()
+                .reverse()
+                .map((assessment) => (
+                  <div className="assessment" key={assessment.id}>
+                    <strong>Score</strong>
+                    {assessment.overall ? (
+                      <span className="pill blue ml-8">Overall {assessment.overall}</span>
+                    ) : null}
+                    <small>
+                      {formatDate(assessment.date)} · {assessment.sessionId ? 'Linked' : 'No script'}
+                    </small>
+                    <p>{assessment.nextExercise || 'Score saved'}</p>
+                    <button className="btn line" type="button" onClick={() => navigate(`/review/${assessment.id}`)}>
+                      Open
+                    </button>
+                  </div>
+                ))}
             </div>
+          ) : (
+            <Empty message="No scores yet. Use Import score in the header." />
           )}
         </div>
       </div>
@@ -146,7 +147,7 @@ export function ReviewPage() {
         </div>
         <button
           type="button"
-          className="btn line"
+          className="btn text"
           onClick={() => {
             const draft = structuredClone(fb.stateRef.current);
             if (fb.completeReview(draft)) fb.persistNow(draft);
@@ -156,9 +157,9 @@ export function ReviewPage() {
           Mark review done
         </button>
       </div>
-      <div className="panel">
-        {errors.length ? (
-          errors
+      {errors.length ? (
+        <div className="panel">
+          {errors
             .slice()
             .reverse()
             .map((error) => (
@@ -208,11 +209,11 @@ export function ReviewPage() {
                   </button>
                 </div>
               </div>
-            ))
-        ) : (
-          <Empty message="No mistakes saved yet. After you import a score, the corrections show up here." />
-        )}
-      </div>
+            ))}
+        </div>
+      ) : (
+        <Empty message="No mistakes saved yet. After you import a score, the corrections show up here." />
+      )}
     </section>
   );
 }

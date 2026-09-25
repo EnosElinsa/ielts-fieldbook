@@ -70,8 +70,9 @@
 .plan-card:hover,
 .lexicon-card:hover,
 .metric-link:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-lift);
+  transform: none;
+  box-shadow: none;
+  border-color: #b7c5cb;
 }
 
 .btn:active,

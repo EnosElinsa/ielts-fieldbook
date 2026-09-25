@@ -239,7 +239,7 @@ export function TodayPage() {
             {fb.state.settings.days.length} {dayWord} a week · {fb.state.settings.dailyMinutes} min a day
           </p>
         </div>
-        <Link className="btn line" to="/progress">
+        <Link className="btn text" to="/progress">
           Open progress →
         </Link>
       </div>
@@ -281,13 +281,13 @@ export function TodayPage() {
           <h3>Recent work</h3>
           <p>{speaking ? 'Recent attempts and scores.' : 'Recent essays and scores.'}</p>
         </div>
-        <Link className="btn line" to="/review">
+        <Link className="btn text" to="/review">
           Open review →
         </Link>
       </div>
-      <div className="panel">
-        {skillSessions.length ? (
-          skillSessions
+      {skillSessions.length ? (
+        <div className="panel">
+          {skillSessions
             .slice()
             .reverse()
             .slice(0, 5)
@@ -311,15 +311,15 @@ export function TodayPage() {
                         : 'First draft'}
                 </span>
               </div>
-            ))
-        ) : (
-          <Empty
-            message={speaking ? 'No speaking attempts yet.' : 'No essays yet.'}
-            label={speaking ? 'Practise' : 'Write one'}
-            onAction={() => navigate(speaking ? '/speak' : '/write')}
-          />
-        )}
-      </div>
+            ))}
+        </div>
+      ) : (
+        <Empty
+          message={speaking ? 'No speaking attempts yet.' : 'No essays yet.'}
+          label={speaking ? 'Practise' : 'Write one'}
+          onAction={() => navigate(speaking ? '/speak' : '/write')}
+        />
+      )}
     </section>
   );
 }

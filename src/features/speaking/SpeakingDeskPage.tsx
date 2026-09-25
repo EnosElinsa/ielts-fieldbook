@@ -225,7 +225,7 @@ export function SpeakingDeskPage() {
             </div>
           )}
           {!mockMode ? (
-            <button className="btn line" type="button" onClick={randomTopic}>
+            <button className="btn text" type="button" onClick={randomTopic}>
               Another question
             </button>
           ) : null}
