@@ -142,7 +142,7 @@ export function WritingDeskPage() {
         </p>
         <div className="desk-controls">
           <button
-            className="btn line"
+            className="btn text"
             type="button"
             onClick={() => {
               const next =

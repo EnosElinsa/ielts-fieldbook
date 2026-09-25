@@ -247,12 +247,12 @@ export function Shell() {
               <h1 className="title">{chrome.title}</h1>
             </div>
             <div className="actions">
-              <button className="btn line" type="button" onClick={() => fb.openModal('settings')}>
+              <button className="btn text" type="button" onClick={() => fb.openModal('settings')}>
                 Settings
               </button>
               <div className="menu">
                 <button
-                  className="btn line"
+                  className="btn text"
                   type="button"
                   aria-expanded={fb.backupMenuOpen}
                   aria-controls="backupMenu"
