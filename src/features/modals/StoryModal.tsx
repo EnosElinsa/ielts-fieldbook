@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
+import { ModalFrame } from '../../components/ModalFrame';
 
 export function StoryModal() {
   const fb = useFieldbook();
@@ -41,10 +42,8 @@ export function StoryModal() {
     }
   }, [open, editing, fb.storyPresetTopicIds]);
 
-  if (!open) return null;
-
   return (
-    <div className="modal-bg show" role="dialog" aria-modal="true" onClick={(e) => e.target === e.currentTarget && fb.closeModal()}>
+    <ModalFrame open={open} onClose={() => fb.closeModal()}>
       <div className="modal lexicon-modal">
         <h3>{editing ? 'Edit this story' : 'Write a story'}</h3>
         <p>Who, where, when, and what happened.</p>
@@ -111,10 +110,7 @@ export function StoryModal() {
                         );
                       }}
                     />
-                    <span>
-                      {topic.title}
-                      {topic.titleZh ? ` · ${topic.titleZh}` : ''}
-                    </span>
+                    <span>{topic.title}</span>
                   </label>
                 ))
               ) : (
@@ -156,6 +152,6 @@ export function StoryModal() {
           </button>
         </div>
       </div>
-    </div>
+    </ModalFrame>
   );
 }

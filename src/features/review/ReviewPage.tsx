@@ -60,24 +60,6 @@ export function ReviewPage() {
 
   return (
     <section className="view active">
-      <div className="section-head">
-        <div>
-          <p className="kicker">Review</p>
-          <h3>Attempts and scores</h3>
-          <p>{speaking ? 'Attempts and scores.' : 'Essays and scores.'}</p>
-        </div>
-        <button
-          type="button"
-          className="btn line"
-          onClick={() => {
-            const draft = structuredClone(fb.stateRef.current);
-            if (fb.completeReview(draft)) fb.persistNow(draft);
-            fb.toast('Review done.');
-          }}
-        >
-          Mark review done
-        </button>
-      </div>
       <div className="review-grid">
         <div className="panel">
           <h3>Attempts</h3>
@@ -162,6 +144,17 @@ export function ReviewPage() {
               : 'Tags such as TA-DATA, TA-OVERVIEW, CC-ORG, LR-COL, and GRA-PREP.'}
           </p>
         </div>
+        <button
+          type="button"
+          className="btn line"
+          onClick={() => {
+            const draft = structuredClone(fb.stateRef.current);
+            if (fb.completeReview(draft)) fb.persistNow(draft);
+            fb.toast('Review done.');
+          }}
+        >
+          Mark review done
+        </button>
       </div>
       <div className="panel">
         {errors.length ? (

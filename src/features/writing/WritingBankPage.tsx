@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { useMemo, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { displayName, formatLabel, safeImage, safeSource, typeName } from '../../lib/format';
-import { Empty } from '../../components/ui';
+import { chartLabels, displayName, formatLabel, safeImage, safeSource, typeName } from '../../lib/format';
+import { Empty, FilterMenu } from '../../components/ui';
 
 export function WritingBankPage() {
   const fb = useFieldbook();
@@ -21,12 +21,8 @@ export function WritingBankPage() {
 
   return (
     <section className="view active">
-      <div className="section-head">
-        <div>
-          <p className="kicker">Question bank</p>
-          <h3>Writing questions</h3>
-          <p>{questions.length === 1 ? '1 question' : `${questions.length} questions`}</p>
-        </div>
+      <div className="page-tools">
+        <p>{questions.length === 1 ? '1 question' : `${questions.length} questions`}</p>
       </div>
       <div className="toolbar">
         <input
@@ -36,20 +32,25 @@ export function WritingBankPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <select aria-label="Task" value={task} onChange={(e) => setTask(e.target.value)}>
-          <option value="all">All tasks</option>
-          <option value="1">Task 1</option>
-          <option value="2">Task 2</option>
-        </select>
-        <select aria-label="Chart type" value={format} onChange={(e) => setFormat(e.target.value)}>
-          <option value="all">All types</option>
-          <option value="折线图">Line graph</option>
-          <option value="柱状图">Bar chart</option>
-          <option value="表格">Table</option>
-          <option value="地图">Map</option>
-          <option value="流程图">Process</option>
-          <option value="混合图">Mixed charts</option>
-        </select>
+        <FilterMenu
+          label="Task"
+          value={task}
+          onChange={setTask}
+          options={[
+            { value: 'all', label: 'All tasks' },
+            { value: '1', label: 'Task 1' },
+            { value: '2', label: 'Task 2' },
+          ]}
+        />
+        <FilterMenu
+          label="Chart type"
+          value={format}
+          onChange={setFormat}
+          options={[
+            { value: 'all', label: 'All types' },
+            ...Object.entries(chartLabels).map(([value, label]) => ({ value, label })),
+          ]}
+        />
       </div>
       <div className="questions">
         {questions.length ? (
@@ -88,7 +89,7 @@ export function WritingBankPage() {
             }}
           />
         ) : (
-          <Empty message="The question bank did not load. Check that questions.json is in this folder, then refresh." />
+          <Empty message="The question bank did not load. Check that local/questions.json is present, then refresh." />
         )}
       </div>
     </section>

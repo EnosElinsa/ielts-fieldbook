@@ -1,9 +1,10 @@
 // @ts-nocheck
+import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { speakingCoverage } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { coverageClass, coverageLabel } from '../../lib/format';
-import { Empty } from '../../components/ui';
+import { Empty, FilterMenu } from '../../components/ui';
 
 function SampleBlock({ topic, part }) {
   const wanted = String(part || topic.part);
@@ -85,6 +86,7 @@ export function SpeakingTopicPage() {
   const { id } = useParams();
   const fb = useFieldbook();
   const navigate = useNavigate();
+  const [attachStoryId, setAttachStoryId] = useState('');
   const topic =
     fb.state.speakingTopics.find((t) => String(t.id) === String(id)) ||
     fb.selectedTopic ||
@@ -107,15 +109,11 @@ export function SpeakingTopicPage() {
 
   return (
     <section className="view active">
-      <div className="section-head">
-        <div>
-          <p className="kicker">Speaking topic</p>
-          <h3>{topic.title}</h3>
-          <p>
-            {coverageLabel(statusValue)}
-            {topic.incomplete ? ' · incomplete' : ''}
-          </p>
-        </div>
+      <div className="page-tools">
+        <p>
+          {coverageLabel(statusValue)}
+          {topic.incomplete ? ' · incomplete' : ''}
+        </p>
         <Link className="btn line" to="/speak/questions">
           ← Back to questions
         </Link>
@@ -192,36 +190,30 @@ export function SpeakingTopicPage() {
             <div className="empty">No story for this topic yet.</div>
           )}
           <div className="topic-actions">
-            <select
-              id="attachStorySelect"
-              defaultValue=""
-              onChange={() => undefined}
-              ref={(node) => {
-                if (node) node.dataset.topicId = topic.id;
-              }}
-            >
-              {(fb.state.stories || []).length ? (
-                (fb.state.stories || []).map((story) => (
-                  <option key={story.id} value={story.id}>
-                    {story.title || 'Untitled story'}
-                  </option>
-                ))
-              ) : (
-                <option value="">No stories yet</option>
-              )}
-            </select>
+            <FilterMenu
+              label="Story to attach"
+              value={attachStoryId}
+              onChange={setAttachStoryId}
+              options={
+                (fb.state.stories || []).length
+                  ? (fb.state.stories || []).map((story) => ({
+                      value: story.id,
+                      label: story.title || 'Untitled story',
+                    }))
+                  : [{ value: '', label: 'No stories yet' }]
+              }
+            />
             <button
               className="btn line"
               type="button"
               disabled={!fb.state.stories.length}
               onClick={() => {
-                const select = document.getElementById('attachStorySelect');
-                if (!select || !select.value) {
+                if (!attachStoryId) {
                   fb.toast('Choose a story first.');
                   return;
                 }
                 const draftState = structuredClone(fb.stateRef.current);
-                const story = (draftState.stories || []).find((item) => item.id === select.value);
+                const story = (draftState.stories || []).find((item) => item.id === attachStoryId);
                 if (!story) return;
                 fb.updateStory(draftState, story.id, {
                   topicIds: Array.from(new Set((story.topicIds || []).concat([topic.id]))),

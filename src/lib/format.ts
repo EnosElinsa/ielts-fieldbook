@@ -2,17 +2,23 @@
 export const chartLabels = {
   折线图: 'Line graph',
   柱状图: 'Bar chart',
+  饼状图: 'Pie chart',
   表格: 'Table',
   地图: 'Map',
   流程图: 'Process',
   混合图: 'Mixed charts',
+  '文化/生活类': 'Culture and lifestyle',
+  社会类: 'Society',
+  教育类: 'Education',
+  环境类: 'Environment',
+  技术类: 'Technology',
+  政府类: 'Government',
 };
 
 export function displayName(value) {
-  return Object.keys(chartLabels).reduce(
-    (text, key) => text.split(key).join(chartLabels[key]),
-    String(value || ''),
-  );
+  return Object.keys(chartLabels)
+    .sort((a, b) => b.length - a.length)
+    .reduce((text, key) => text.split(key).join(chartLabels[key]), String(value || ''));
 }
 
 export function formatLabel(value) {
@@ -47,7 +53,9 @@ export function safeSource(value) {
 }
 
 export function safeImage(value) {
-  return /^question-assets\/[A-Za-z0-9._-]+$/.test(String(value || '')) ? value : '';
+  const text = String(value || '');
+  if (/^(question-assets|sample\/assets)\/[A-Za-z0-9._-]+$/.test(text)) return `/${text}`;
+  return '';
 }
 
 export function sessionSkill(session) {
@@ -69,7 +77,7 @@ export function lexiconItemSkill(item) {
 }
 
 export function speakingKinds() {
-  return ['speaking-p1', 'speaking-p2', 'speaking-p3', 'stories'];
+  return ['speaking-p1', 'speaking-p2', 'speaking-p3', 'stories', 'speaking-mock'];
 }
 
 export function planPillClass(kind) {

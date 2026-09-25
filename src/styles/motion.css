@@ -1,0 +1,105 @@
+.page,
+.page-title {
+  animation: page-in 0.48s var(--ease) both;
+}
+
+.page > .view > * {
+  animation: rise-in 0.55s var(--ease) both;
+}
+
+.page > .view > *:nth-child(1) { animation-delay: 0.04s; }
+.page > .view > *:nth-child(2) { animation-delay: 0.1s; }
+.page > .view > *:nth-child(3) { animation-delay: 0.16s; }
+.page > .view > *:nth-child(4) { animation-delay: 0.22s; }
+.page > .view > *:nth-child(5) { animation-delay: 0.28s; }
+.page > .view > *:nth-child(n + 6) { animation-delay: 0.32s; }
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.nav a,
+.rail-toggle,
+.skill-switch button,
+.btn,
+.btn:visited {
+  transition:
+    background-color 0.28s var(--ease),
+    color 0.28s var(--ease),
+    border-color 0.28s var(--ease),
+    box-shadow 0.32s var(--ease),
+    transform 0.32s var(--ease),
+    gap 0.42s var(--ease);
+}
+
+.q-card,
+.plan-card,
+.lexicon-card,
+.metric,
+.panel,
+.quiet,
+.prompt,
+.editor,
+.history-item {
+  transition:
+    transform 0.45s var(--ease),
+    box-shadow 0.45s var(--ease),
+    border-color 0.35s var(--ease),
+    background-color 0.35s var(--ease);
+}
+
+.q-card:hover,
+.plan-card:hover,
+.lexicon-card:hover,
+.metric-link:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lift);
+}
+
+.btn:active,
+.nav a:active,
+.skill-switch button:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+.menu-pop:not([hidden]) {
+  transform-origin: top right;
+  animation: menu-in 0.28s var(--ease);
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+.toast {
+  transition:
+    opacity 0.32s var(--ease),
+    transform 0.42s var(--ease);
+}

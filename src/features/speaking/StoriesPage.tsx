@@ -29,12 +29,8 @@ export function StoriesPage() {
 
   return (
     <section className="view active">
-      <div className="section-head">
-        <div>
-          <p className="kicker">Stories</p>
-          <h3>Things that happened to you</h3>
-          <p>A few real stories. The same one can cover more than one Part 2.</p>
-        </div>
+      <div className="page-tools">
+        <p>A few real stories. The same one can cover more than one Part 2.</p>
         <button
           className="btn primary"
           type="button"

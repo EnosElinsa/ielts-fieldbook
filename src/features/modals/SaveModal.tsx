@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
+import { ModalFrame } from '../../components/ModalFrame';
 
 export function SaveModal() {
   const fb = useFieldbook();
@@ -8,16 +9,15 @@ export function SaveModal() {
   const [focus, setFocus] = useState('');
   const [next, setNext] = useState('');
   const [errors, setErrors] = useState('');
-  if (!open) return null;
   const speaking = fb.pendingAttempt?.skill === 'speaking';
 
   return (
-    <div className="modal-bg show" role="dialog" aria-modal="true" onClick={(e) => e.target === e.currentTarget && fb.closeModal()}>
+    <ModalFrame open={open} onClose={() => fb.closeModal()}>
       <div className="modal">
         <h3>Finished</h3>
         <p>
           {speaking
-            ? 'Save what you said. A transcript cannot score pronunciation.'
+            ? 'Save what you said. Recordings stay in this browser and are not in the score Markdown. Pronunciation stays unscored.'
             : 'Save this attempt. You can also export it for a score.'}
         </p>
         <div className="form">
@@ -65,6 +65,6 @@ export function SaveModal() {
           </button>
         </div>
       </div>
-    </div>
+    </ModalFrame>
   );
 }
