@@ -4,11 +4,18 @@ import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { AuthGate } from './AuthGate';
 
-const { signUp, resend, resetPasswordForEmail } = vi.hoisted(() => ({
-  signUp: vi.fn(),
-  resend: vi.fn(),
-  resetPasswordForEmail: vi.fn(),
-}));
+const { signUp, resend, resetPasswordForEmail, onAuthStateChange } = vi.hoisted(() => {
+  type AuthListener = (event: string, session: unknown) => void;
+  return {
+    signUp: vi.fn(),
+    resend: vi.fn(),
+    resetPasswordForEmail: vi.fn(),
+    onAuthStateChange: vi.fn((callback: AuthListener) => {
+      void callback;
+      return { data: { subscription: { unsubscribe: () => undefined } } };
+    }),
+  };
+});
 
 vi.mock('../lib/supabase', () => ({
   supabaseConfigured: () => true,
@@ -20,7 +27,7 @@ vi.mock('../lib/supabase', () => ({
       signInWithPassword: vi.fn(),
       updateUser: vi.fn(),
       getSession: async () => ({ data: { session: null } }),
-      onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => undefined } } }),
+      onAuthStateChange,
     },
   }),
 }));
@@ -30,6 +37,7 @@ afterEach(() => {
   signUp.mockReset();
   resend.mockReset();
   resetPasswordForEmail.mockReset();
+  onAuthStateChange.mockClear();
   window.location.hash = '';
 });
 
@@ -90,4 +98,24 @@ test('an expired signup link keeps the sign-in card and the confirmation sentenc
   await renderGate();
   expect(screen.getByRole('heading', { name: 'Sign in' })).toBeInTheDocument();
   expect(screen.getByText('This link no longer works. Send another confirmation email.')).toBeInTheDocument();
+});
+
+test('an expired recovery link opens the reset form', async () => {
+  window.location.hash =
+    '#error_description=Email+link+is+invalid+or+has+expired&error_code=otp_expired&type=recovery';
+  render(
+    <AuthGate>
+      <p>Notebook</p>
+    </AuthGate>,
+  );
+  expect(await screen.findByRole('heading', { name: 'Reset password' })).toBeInTheDocument();
+  expect(screen.getByText('This link no longer works. Send another reset email.')).toBeInTheDocument();
+});
+
+test('the notebook opens when a session exists', async () => {
+  await renderGate();
+  const listener = onAuthStateChange.mock.calls[0][0];
+  listener('SIGNED_IN', { user: { id: 'u' } });
+  expect(await screen.findByText('Notebook')).toBeInTheDocument();
+  expect(screen.queryByText('Confirm this address')).not.toBeInTheDocument();
 });
