@@ -557,8 +557,8 @@ function useFieldbookValue() {
       toast(
         exportForReview
           ? speaking
-            ? 'Saved, and the score request was exported.'
-            : 'Essay saved, and the score request was exported.'
+            ? 'Saved, and the score request was exported. Score it outside Fieldbook, then import the scored file.'
+            : 'Essay saved, and the score request was exported. Score it outside Fieldbook, then import the scored file.'
           : speaking
             ? 'Saved.'
             : 'Essay saved.',

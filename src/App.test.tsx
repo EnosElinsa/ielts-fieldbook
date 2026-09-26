@@ -210,6 +210,11 @@ describe('Fieldbook UI', () => {
     await user.click(screen.getByTestId('writing-finished'));
     expect(await screen.findByRole('heading', { name: 'Finished' })).toBeTruthy();
     await user.click(screen.getByRole('button', { name: 'Save and export' }));
+    expect(
+      await screen.findByText(
+        'Essay saved, and the score request was exported. Score it outside Fieldbook, then import the scored file.',
+      ),
+    ).toBeTruthy();
 
     await waitFor(() => expect(downloads.length).toBe(1));
     expect(downloads[0].text).toMatch(/session_id:\s+\S+/);
