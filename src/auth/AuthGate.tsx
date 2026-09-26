@@ -26,13 +26,19 @@ export function AuthGate({ children }: { children: ReactNode }) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [sent, setSent] = useState(false);
   const [recovery, setRecovery] = useState(false);
 
   useEffect(() => {
     if (!supabaseConfigured()) return undefined;
     const hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
-    const hashError = hash.get('error_description');
-    if (hashError) setError(hashError.replace(/\+/g, ' '));
+    const hashError = [hash.get('error_description'), hash.get('error_code')].filter(Boolean).join(' ');
+    const hashType = hash.get('type');
+    if (hashError) {
+      const linkMode = hashType === 'signup' ? 'signup' : hashType === 'recovery' ? 'reset' : 'signin';
+      setError(authError(hashError.replace(/\+/g, ' '), linkMode));
+      if (linkMode === 'reset') setMode('reset');
+    }
     const supabase = getSupabase();
     let cancelled = false;
     supabase.auth.getSession().then(({ data }) => {
@@ -51,6 +57,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
   function clearStatus() {
     setError('');
     setMailbox(null);
+    setSent(false);
   }
 
   async function onSubmit(event: FormEvent) {
@@ -74,7 +81,11 @@ export function AuthGate({ children }: { children: ReactNode }) {
     }
     const result =
       mode === 'signup'
-        ? await supabase.auth.signUp({ email: address, password })
+        ? await supabase.auth.signUp({
+            email: address,
+            password,
+            options: { emailRedirectTo: window.location.origin },
+          })
         : await supabase.auth.signInWithPassword({ email: address, password });
     setBusy(false);
     if (result.error) {
@@ -94,7 +105,11 @@ export function AuthGate({ children }: { children: ReactNode }) {
       options: { emailRedirectTo: window.location.origin },
     });
     setBusy(false);
-    if (resendError) setError(authError(resendError.message, 'signup'));
+    if (resendError) {
+      setError(authError(resendError.message, 'signup'));
+      return;
+    }
+    setSent(true);
   }
 
   if (!supabaseConfigured()) {
@@ -203,7 +218,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
               <>
                 <li>Open the message from Supabase.</li>
                 <li>Click the confirmation link.</li>
-                <li>Come back here and sign in with the same password.</li>
+                <li>The notebook opens in that tab.</li>
               </>
             ) : (
               <>
@@ -215,21 +230,14 @@ export function AuthGate({ children }: { children: ReactNode }) {
           </ol>
           {error ? <p className="auth-error">{error}</p> : null}
           {confirming ? (
-            <button className="btn line" type="button" onClick={() => void resend()} disabled={busy}>
-              {busy ? 'Sending…' : 'Resend confirmation'}
-            </button>
+            sent ? (
+              <p>Confirmation sent.</p>
+            ) : (
+              <button className="btn line" type="button" onClick={() => void resend()} disabled={busy}>
+                {busy ? 'Sending…' : 'Resend confirmation'}
+              </button>
+            )
           ) : null}
-          <button
-            className="btn primary"
-            type="button"
-            onClick={() => {
-              setMode('signin');
-              clearStatus();
-              setPassword('');
-            }}
-          >
-            I confirmed it. Sign in
-          </button>
           <button
             className="btn text"
             type="button"
