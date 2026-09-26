@@ -2,20 +2,57 @@ import { FormEvent, useEffect, useState, type ReactNode } from 'react';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
 
 type SessionState = 'loading' | 'in' | 'out';
+type Mode = 'signin' | 'signup' | 'reset';
+type Mailbox = 'confirm' | 'reset' | null;
+
+function authError(message: string, mode: Mode) {
+  const text = message || 'Something went wrong. Try again.';
+  if (mode === 'signin' && /invalid login credentials/i.test(text)) {
+    return 'That email has no account yet, or the password is wrong. Create an account, or open the confirmation email if you already registered.';
+  }
+  if (/already registered|already been registered|user already exists/i.test(text)) {
+    return 'That email already has an account. Sign in, or reset the password.';
+  }
+  if (/email not confirmed/i.test(text)) {
+    return 'Confirm the email first. Open the message we sent, then sign in.';
+  }
+  if (/password should be at least|weak password/i.test(text)) {
+    return 'Use at least 6 characters.';
+  }
+  if (/rate limit|too many requests/i.test(text)) {
+    return 'Too many attempts. Wait a minute, then try again.';
+  }
+  return text;
+}
+
+function Aside({ title }: { title: string }) {
+  return (
+    <section className="auth-aside">
+      <div className="mark-box">F</div>
+      <p className="kicker">Fieldbook</p>
+      <h1>{title}</h1>
+    </section>
+  );
+}
 
 export function AuthGate({ children }: { children: ReactNode }) {
   const [sessionState, setSessionState] = useState<SessionState>(supabaseConfigured() ? 'loading' : 'out');
-  const [mode, setMode] = useState<'signin' | 'signup' | 'reset'>('signin');
+  const [mode, setMode] = useState<Mode>('signin');
+  const [mailbox, setMailbox] = useState<Mailbox>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [nextPassword, setNextPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const [notice, setNotice] = useState('');
   const [busy, setBusy] = useState(false);
   const [recovery, setRecovery] = useState(false);
 
   useEffect(() => {
     if (!supabaseConfigured()) return undefined;
+    const hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+    const hashError = hash.get('error_description');
+    if (hashError) setError(hashError.replace(/\+/g, ' '));
     const supabase = getSupabase();
     let cancelled = false;
     supabase.auth.getSession().then(({ data }) => {
@@ -31,50 +68,63 @@ export function AuthGate({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  function clearStatus() {
+    setError('');
+    setMailbox(null);
+  }
+
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
     if (!supabaseConfigured()) return;
     setBusy(true);
     setError('');
-    setNotice('');
     const supabase = getSupabase();
+    const address = email.trim();
     if (mode === 'reset') {
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(address, {
         redirectTo: window.location.origin,
       });
       setBusy(false);
       if (resetError) {
-        setError(resetError.message);
+        setError(authError(resetError.message, mode));
         return;
       }
-      setNotice('Check your email for a link to choose a new password.');
+      setMailbox('reset');
       return;
     }
-    const credentials = { email: email.trim(), password };
     const result =
-      mode === 'signup' ? await supabase.auth.signUp(credentials) : await supabase.auth.signInWithPassword(credentials);
+      mode === 'signup'
+        ? await supabase.auth.signUp({ email: address, password })
+        : await supabase.auth.signInWithPassword({ email: address, password });
     setBusy(false);
     if (result.error) {
-      const message = result.error.message || '';
-      if (mode === 'signin' && /invalid login credentials/i.test(message)) {
-        setError('That email has no account yet, or the password is wrong. Create an account, or confirm the email if you already registered.');
-      } else {
-        setError(message);
-      }
+      setError(authError(result.error.message, mode));
       return;
     }
-    if (mode === 'signup' && !result.data.session) {
-      setNotice('Check your email to confirm the account, then sign in.');
-    }
+    if (mode === 'signup' && !result.data.session) setMailbox('confirm');
+  }
+
+  async function resend() {
+    if (!supabaseConfigured() || !email.trim()) return;
+    setBusy(true);
+    setError('');
+    const { error: resendError } = await getSupabase().auth.resend({
+      type: 'signup',
+      email: email.trim(),
+      options: { emailRedirectTo: window.location.origin },
+    });
+    setBusy(false);
+    if (resendError) setError(authError(resendError.message, 'signup'));
   }
 
   if (!supabaseConfigured()) {
     return (
       <main className="auth-screen">
+        <Aside title="Add the project URL and anon key, then restart." />
         <form className="auth-card">
-          <p className="kicker">Fieldbook</p>
-          <h1>Add your Supabase keys</h1>
-          <p>Copy .env.example to .env and set the project URL and anon key, then restart the dev server.</p>
+          <p className="kicker">Setup</p>
+          <h2>Supabase is not configured</h2>
+          <p>Copy .env.example to .env and set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.</p>
         </form>
       </main>
     );
@@ -83,7 +133,12 @@ export function AuthGate({ children }: { children: ReactNode }) {
   if (sessionState === 'loading') {
     return (
       <main className="auth-screen">
-        <p className="kicker">Fieldbook</p>
+        <Aside title="Opening your notebook." />
+        <section className="auth-card">
+          <p className="kicker">Fieldbook</p>
+          <h2>Checking this browser</h2>
+          <p>Looking for a saved sign-in.</p>
+        </section>
       </main>
     );
   }
@@ -91,42 +146,61 @@ export function AuthGate({ children }: { children: ReactNode }) {
   if (sessionState === 'in' && recovery) {
     return (
       <main className="auth-screen">
-        <section className="auth-aside">
-          <div className="mark-box">F</div>
-          <p className="kicker">Fieldbook</p>
-          <h1>Choose a new password for this account.</h1>
-        </section>
+        <Aside title="Choose a new password for this account." />
         <form
           className="auth-card"
           onSubmit={async (event) => {
             event.preventDefault();
+            if (nextPassword.length < 6) {
+              setError('Use at least 6 characters.');
+              return;
+            }
+            if (nextPassword !== confirmPassword) {
+              setError('The two passwords do not match.');
+              return;
+            }
             setBusy(true);
             setError('');
             const { error: updateError } = await getSupabase().auth.updateUser({ password: nextPassword });
             setBusy(false);
             if (updateError) {
-              setError(updateError.message);
+              setError(authError(updateError.message, 'reset'));
               return;
             }
             setRecovery(false);
             setNextPassword('');
+            setConfirmPassword('');
           }}
         >
           <p className="kicker">Password reset</p>
           <h2>New password</h2>
+          <p>This replaces the old password. You stay signed in on this browser.</p>
           <label htmlFor="auth-next-password">New password</label>
           <input
             id="auth-next-password"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             autoComplete="new-password"
             minLength={6}
             value={nextPassword}
             required
             onChange={(event) => setNextPassword(event.target.value)}
           />
+          <label htmlFor="auth-confirm-password">Confirm password</label>
+          <input
+            id="auth-confirm-password"
+            type={showPassword ? 'text' : 'password'}
+            autoComplete="new-password"
+            minLength={6}
+            value={confirmPassword}
+            required
+            onChange={(event) => setConfirmPassword(event.target.value)}
+          />
+          <button className="btn text" type="button" onClick={() => setShowPassword((current) => !current)}>
+            {showPassword ? 'Hide password' : 'Show password'}
+          </button>
           {error ? <p className="auth-error">{error}</p> : null}
           <button className="btn primary" type="submit" disabled={busy}>
-            Save password
+            {busy ? 'Saving…' : 'Save password'}
           </button>
         </form>
       </main>
@@ -135,16 +209,73 @@ export function AuthGate({ children }: { children: ReactNode }) {
 
   if (sessionState === 'in') return children;
 
+  if (mailbox) {
+    const confirming = mailbox === 'confirm';
+    return (
+      <main className="auth-screen">
+        <Aside title={confirming ? 'Confirm the email, then the notebook opens.' : 'The reset link is in your inbox.'} />
+        <section className="auth-card">
+          <p className="kicker">{confirming ? 'Check email' : 'Reset sent'}</p>
+          <h2>{confirming ? 'Confirm this address' : 'Choose a new password'}</h2>
+          <p className="auth-address">{email.trim()}</p>
+          <ol className="auth-steps">
+            {confirming ? (
+              <>
+                <li>Open the message from Supabase.</li>
+                <li>Click the confirmation link.</li>
+                <li>Come back here and sign in with the same password.</li>
+              </>
+            ) : (
+              <>
+                <li>Open the message from Supabase.</li>
+                <li>Click the reset link. It returns to this site.</li>
+                <li>Enter a new password on the page that opens.</li>
+              </>
+            )}
+          </ol>
+          {error ? <p className="auth-error">{error}</p> : null}
+          {confirming ? (
+            <button className="btn line" type="button" onClick={() => void resend()} disabled={busy}>
+              {busy ? 'Sending…' : 'Resend confirmation'}
+            </button>
+          ) : null}
+          <button
+            className="btn primary"
+            type="button"
+            onClick={() => {
+              setMode('signin');
+              clearStatus();
+              setPassword('');
+            }}
+          >
+            I confirmed it. Sign in
+          </button>
+          <button
+            className="btn text"
+            type="button"
+            onClick={() => {
+              setMode(confirming ? 'signup' : 'reset');
+              clearStatus();
+            }}
+          >
+            Use a different email
+          </button>
+        </section>
+      </main>
+    );
+  }
+
+  const heading = mode === 'signup' ? 'Create an account' : mode === 'reset' ? 'Reset password' : 'Sign in';
+  const kicker = mode === 'signup' ? 'New account' : mode === 'reset' ? 'Password' : 'Welcome back';
+
   return (
     <main className="auth-screen">
-      <section className="auth-aside">
-        <div className="mark-box">F</div>
-        <p className="kicker">Fieldbook</p>
-        <h1>One account for the essays, the recordings, and the plan.</h1>
-      </section>
+      <Aside title="One account for the essays, the recordings, and the plan." />
       <form className="auth-card" onSubmit={onSubmit}>
-        <p className="kicker">{mode === 'signup' ? 'New account' : 'Welcome back'}</p>
-        <h2>{mode === 'signup' ? 'Create an account' : mode === 'reset' ? 'Reset password' : 'Sign in'}</h2>
+        <p className="kicker">{kicker}</p>
+        <h2>{heading}</h2>
+        {mode === 'signup' ? <p>Use an inbox you can open. We send one confirmation message before the first sign-in.</p> : null}
+        {mode === 'reset' ? <p>We email a link that brings you back to this site to choose a new password.</p> : null}
         <label htmlFor="auth-email">Email</label>
         <input id="auth-email" type="email" autoComplete="email" value={email} required onChange={(event) => setEmail(event.target.value)} />
         {mode === 'reset' ? null : (
@@ -152,19 +283,22 @@ export function AuthGate({ children }: { children: ReactNode }) {
             <label htmlFor="auth-password">Password</label>
             <input
               id="auth-password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
               minLength={6}
               value={password}
               required
               onChange={(event) => setPassword(event.target.value)}
             />
+            <button className="btn text" type="button" onClick={() => setShowPassword((current) => !current)}>
+              {showPassword ? 'Hide password' : 'Show password'}
+            </button>
+            {mode === 'signup' ? <p className="auth-hint">At least 6 characters. You can change it later from Account.</p> : null}
           </>
         )}
         {error ? <p className="auth-error">{error}</p> : null}
-        {notice ? <p className="auth-notice">{notice}</p> : null}
         <button className="btn primary" type="submit" disabled={busy}>
-          {mode === 'signup' ? 'Create account' : mode === 'reset' ? 'Send reset link' : 'Sign in'}
+          {busy ? 'Please wait…' : mode === 'signup' ? 'Create account' : mode === 'reset' ? 'Send reset link' : 'Sign in'}
         </button>
         {mode === 'signin' ? (
           <button
@@ -172,8 +306,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
             type="button"
             onClick={() => {
               setMode('reset');
-              setError('');
-              setNotice('');
+              clearStatus();
             }}
           >
             Forgot password
@@ -184,8 +317,8 @@ export function AuthGate({ children }: { children: ReactNode }) {
           type="button"
           onClick={() => {
             setMode((current) => (current === 'signin' ? 'signup' : 'signin'));
-            setError('');
-            setNotice('');
+            clearStatus();
+            setPassword('');
           }}
         >
           {mode === 'signup' ? 'I already have an account' : mode === 'reset' ? 'Back to sign in' : 'Create an account'}
