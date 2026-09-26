@@ -1,4 +1,8 @@
-# Auth entry
+# Auth entry, practice loop, and publish
+
+Account identity is already live. This spec is the rest of the update, in three parts: auth entry, the practice loop, and publish. Each part can be implemented and checked on its own.
+
+## Auth entry
 
 Sign-up confirmation opens the notebook from the email link. Password reset still stops to set a new password, then opens the notebook. Error and resend sentences stay the same list the account page already uses. The paper sign-in screen stays as it is.
 
@@ -62,6 +66,30 @@ Update `tests/auth/errors.test.ts` for the new unconfirmed sentence and the thre
 
 A render test of the confirm mailbox shows the new third step, shows `Confirmation sent.` after a successful resend, and does not contain `I confirmed it. Sign in`. The reset mailbox does not contain that button either.
 
+Auth entry does not redesign the paper card, change the email address, or add magic-link sign-in.
+
+## Practice loop
+
+Today, Write, Speak, Review, and Phrases already load from `hydrateState` and write through `saveState`. A reload shows the account's drafts, attempts, scores, phrases, plans, and stories. Empty lists keep the sentences they already have, including "No essays yet.", "No speaking attempts yet.", "No scores yet.", "Nothing saved yet.", "No earlier attempts.", "Nothing spoken yet.", "No band scores yet.", and "Score not found."
+
+`Draft saved.` is shown only after `saveState` returns true. The state update stays synchronous. The account write is awaited after that update, and `persist` / `persistNow` return its boolean. The writing desk and the speaking desk use that result for the Save draft button. A failed write shows only `Could not save to your account. Try again.` The autosave every 350ms stays quiet when it succeeds, and uses that same failure sentence when it does not.
+
+A speaking recording still goes to the `recordings` bucket through `putAudio`. If that upload throws, the transcript is still saved and the toast is `Could not store the recording. Saving the transcript only.` The desk line is `Recordings stay on this account.` An attempt with an `audioId` loads that recording again through `getAudio` after a refresh.
+
+`Copied into a new draft.` follows the same rule: it is shown only after the save returns true.
+
+A test with `saveState` returning false does not toast `Draft saved.` A test with it returning true does.
+
+## Publish
+
+Production updates when `master` is pushed. Cloudflare Pages project `ielts-fieldbook` builds with `npm run build`, publishes `dist`, and serves [https://ielts-fieldbook.pages.dev](https://ielts-fieldbook.pages.dev). Releasing does not upload `dist` with Wrangler.
+
+The Pages project gets `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as build environment variables. The build command is `npm run build`. The anon key is not written into the repository. If a push still produces a bundle without the Supabase host, the build command may prefix those two variables for that one project, and the README says why.
+
+The README deploy section tells the next person to push `master`. It does not present `npm run deploy:pages` as the way to release. A test reads `README.md` and asserts that.
+
+A release is done when the Cloudflare Pages check for that commit says the deploy succeeded and the production site loads.
+
 ## Out of scope
 
-Practice-loop save failures, empty states, the Pages build environment variables, a visual redesign of the auth card, changing the email address, and magic-link sign-in.
+A visual redesign of the auth card, changing the email address, magic-link sign-in, a custom domain, and a new empty-state illustration set.
