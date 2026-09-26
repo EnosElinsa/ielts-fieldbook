@@ -99,6 +99,9 @@ export function TodayPage() {
           ) : (
             <p>The exam date is not set. Set it and the daily tasks follow the exam.</p>
           )}
+          {skillSessions.length ? null : (
+            <p>Finish one task. Export the file, score it outside Fieldbook, then import the scored file.</p>
+          )}
           <ol className="session-steps">
             {session.steps.map((step, index) => {
               const label = step.id === 'recall' ? 'Recall' : step.id === 'correction' ? 'Use this' : 'Start this';
