@@ -76,6 +76,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
         setError(authError(resetError.message, mode));
         return;
       }
+      setSent(false);
       setMailbox('reset');
       return;
     }
@@ -92,7 +93,10 @@ export function AuthGate({ children }: { children: ReactNode }) {
       setError(authError(result.error.message, mode));
       return;
     }
-    if (mode === 'signup' && !result.data.session) setMailbox('confirm');
+    if (mode === 'signup' && !result.data.session) {
+      setSent(false);
+      setMailbox('confirm');
+    }
   }
 
   async function resend() {
