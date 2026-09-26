@@ -104,6 +104,7 @@ function useFieldbookValue() {
   const [checklistToastNeeded, setChecklistToastNeeded] = useState(false);
   const [backupMenuOpen, setBackupMenuOpen] = useState(false);
   const [booted, setBooted] = useState(false);
+  const [saveFailed, setSaveFailed] = useState(false);
   const stateRef = useRef(state);
   stateRef.current = state;
 
@@ -120,7 +121,10 @@ function useFieldbookValue() {
       if (mutate) mutate(next);
       stateRef.current = next;
       setState(next);
-      return saveState(next, options?.silent ? undefined : toast);
+      return Promise.resolve(saveState(next, options?.silent ? undefined : toast)).then((saved) => {
+        setSaveFailed(!saved);
+        return saved;
+      });
     },
     [toast],
   );
@@ -131,7 +135,10 @@ function useFieldbookValue() {
       next.schemaVersion = STATE_VERSION;
       stateRef.current = next;
       setState({ ...next });
-      return saveState(next, toast);
+      return Promise.resolve(saveState(next, toast)).then((saved) => {
+        setSaveFailed(!saved);
+        return saved;
+      });
     },
     [toast],
   );
@@ -576,6 +583,7 @@ function useFieldbookValue() {
       setState,
       stateRef,
       booted,
+      saveFailed,
       toast,
       toastMessage,
       toastVisible,
@@ -679,6 +687,7 @@ function useFieldbookValue() {
       booted,
       checklistToastNeeded,
       chooseQuestion,
+      saveFailed,
       closeModal,
       currentDeskMode,
       deskPart,
