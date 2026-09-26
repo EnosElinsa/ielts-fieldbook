@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { AccountPage } from './AccountPage';
 
-const { state, resend } = vi.hoisted(() => ({
+const { state, resend, updateUser, rpc } = vi.hoisted(() => ({
   state: {
     user: {
       id: 'user-1',
@@ -24,6 +24,8 @@ const { state, resend } = vi.hoisted(() => ({
     },
   },
   resend: vi.fn(),
+  updateUser: vi.fn(),
+  rpc: vi.fn(),
 }));
 
 vi.mock('../../auth/useAuthUser', () => ({
@@ -31,13 +33,15 @@ vi.mock('../../auth/useAuthUser', () => ({
 }));
 
 vi.mock('../../lib/supabase', () => ({
-  getSupabase: () => ({ auth: { resend, updateUser: vi.fn(), signOut: vi.fn() } }),
+  getSupabase: () => ({ auth: { resend, updateUser, signOut: vi.fn() }, rpc }),
   supabaseConfigured: () => true,
 }));
 
 afterEach(() => {
   cleanup();
   resend.mockReset();
+  updateUser.mockReset();
+  rpc.mockReset();
   state.user.email_confirmed_at = '2026-09-25T12:05:00';
 });
 
@@ -82,5 +86,18 @@ describe('AccountPage identity', () => {
     renderPage();
     await userEvent.click(screen.getByRole('button', { name: 'Resend' }));
     expect(await screen.findByText('Too many attempts. Wait a minute, then try again.')).toBeInTheDocument();
+  });
+
+  test('delete stays disabled until the typed email matches', async () => {
+    renderPage();
+    const button = screen.getByRole('button', { name: 'Delete account' });
+    expect(button).toBeDisabled();
+    await userEvent.type(screen.getByLabelText('Type your email'), 'other@gmail.com');
+    expect(screen.getByText('Type the email shown above.')).toBeInTheDocument();
+    expect(button).toBeDisabled();
+    expect(rpc).not.toHaveBeenCalled();
+    await userEvent.clear(screen.getByLabelText('Type your email'));
+    await userEvent.type(screen.getByLabelText('Type your email'), ' ENOSElinsa@gmail.com ');
+    expect(button).toBeEnabled();
   });
 });
