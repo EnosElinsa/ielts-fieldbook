@@ -16,3 +16,6 @@ legacy/
 
 # Backup JSON dumps
 *backup*.json
+
+# Brainstorm mockups
+.superpowers/
