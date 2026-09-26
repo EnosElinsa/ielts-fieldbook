@@ -112,10 +112,10 @@ export function AccountPage() {
     }
     setBusy('email');
     setEmailError('');
-    const { error } = await getSupabase().auth.updateUser({
-      email: next,
-      options: { emailRedirectTo: window.location.origin },
-    });
+    const { error } = await getSupabase().auth.updateUser(
+      { email: next },
+      { emailRedirectTo: window.location.origin },
+    );
     setBusy(null);
     if (error) {
       setEmailError(authError(error.message, 'signup'));

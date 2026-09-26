@@ -100,4 +100,15 @@ describe('AccountPage identity', () => {
     await userEvent.type(screen.getByLabelText('Type your email'), ' ENOSElinsa@gmail.com ');
     expect(button).toBeEnabled();
   });
+
+  test('saves a new email with redirect options', async () => {
+    updateUser.mockResolvedValue({ error: null, data: { user: state.user } });
+    renderPage();
+    await userEvent.type(screen.getByLabelText('New email'), 'next@example.com');
+    await userEvent.click(screen.getByRole('button', { name: 'Save email' }));
+    expect(updateUser).toHaveBeenCalledWith(
+      { email: 'next@example.com' },
+      { emailRedirectTo: window.location.origin },
+    );
+  });
 });
