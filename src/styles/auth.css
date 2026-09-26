@@ -17,5 +17,10 @@
 .auth-card label{font:11px 'DM Mono',monospace;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:8px}
 .auth-card input{width:100%;border:1px solid var(--rule);background:#fffefa;border-radius:5px;padding:10px 12px;font-size:14px}
 .auth-card .btn{margin-top:8px}
-.auth-error{color:var(--red)!important}
+.auth-card .btn.text{justify-self:start;margin-top:0;padding-left:0}
+.auth-hint{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+.auth-address{margin:0;font:600 18px 'Source Serif 4',serif;color:var(--blue-dark);word-break:break-all}
+.auth-steps{margin:4px 0 8px;padding-left:18px;color:var(--ink);font-size:14px;line-height:1.55}
+.auth-steps li{margin:4px 0}
+.auth-error{color:var(--red)!important;margin:0}
 .auth-notice{color:var(--blue)!important}
