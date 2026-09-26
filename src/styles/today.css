@@ -10,6 +10,8 @@
 .session-step h3{margin:0;font:600 18px/1.2 'Source Serif 4',serif;color:#fff}
 .session-step p{margin:4px 0 0;max-width:none;font-size:13px;line-height:1.45;color:#d7e4e6}
 .session-index{font:600 22px 'Source Serif 4',serif;color:var(--gold)}
+.quiet-meta{display:flex;flex-wrap:wrap;gap:4px 0;margin:14px 0 0;font:12px/1.5 'DM Mono',monospace;color:var(--muted)}
+.quiet-meta span:not(:last-child)::after{content:'·';margin:0 8px;color:#b7aea0}
 .band-list{display:grid;margin-top:8px}
 .band-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:8px 0;border-top:1px solid var(--rule);font-size:13px}
 .band-row strong{font:600 26px/1 'Source Serif 4',serif;color:var(--blue-dark)}
