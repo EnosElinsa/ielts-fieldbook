@@ -19,3 +19,6 @@ legacy/
 
 # Brainstorm mockups
 .superpowers/
+
+# Isolated worktrees
+.worktrees/
