@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from '../../auth/AuthGate';
+import { emailsMatch } from '../../auth/email';
 import { authError } from '../../auth/errors';
 import { useAuthUser } from '../../auth/useAuthUser';
 import { displayNameOf } from '../../lib/identity';
@@ -20,8 +21,15 @@ export function AccountPage() {
   const [passwordError, setPasswordError] = useState('');
   const [resendError, setResendError] = useState('');
   const [sent, setSent] = useState(false);
-  const [busy, setBusy] = useState<'name' | 'password' | 'out' | 'resend' | null>(null);
+  const [nextEmail, setNextEmail] = useState('');
+  const [pendingEmail, setPendingEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [deleteEmail, setDeleteEmail] = useState('');
+  const [deleteError, setDeleteError] = useState('');
+  const [busy, setBusy] = useState<'name' | 'password' | 'out' | 'resend' | 'email' | 'delete' | null>(null);
   const confirmed = Boolean(user?.email_confirmed_at);
+  const deleteReady = emailsMatch(deleteEmail, user?.email);
+  const pendingVisible = Boolean(pendingEmail) && !emailsMatch(user?.email, pendingEmail);
 
   const storedName = displayNameOf(user);
 
@@ -88,6 +96,46 @@ export function AccountPage() {
       return;
     }
     setSent(true);
+  }
+
+  async function saveEmail(event: FormEvent) {
+    event.preventDefault();
+    const next = nextEmail.trim();
+    if (!next) {
+      setEmailError('Enter an email.');
+      return;
+    }
+    if (emailsMatch(next, user?.email)) {
+      setEmailError('');
+      setPendingEmail('');
+      return;
+    }
+    setBusy('email');
+    setEmailError('');
+    const { error } = await getSupabase().auth.updateUser({
+      email: next,
+      options: { emailRedirectTo: window.location.origin },
+    });
+    setBusy(null);
+    if (error) {
+      setEmailError(authError(error.message, 'signup'));
+      return;
+    }
+    setPendingEmail(next);
+  }
+
+  async function removeAccount() {
+    if (!deleteReady) return;
+    setBusy('delete');
+    setDeleteError('');
+    const { error } = await getSupabase().rpc('delete_own_account');
+    if (error) {
+      setBusy(null);
+      setDeleteError('Could not delete this account. Try again.');
+      return;
+    }
+    await signOut();
+    navigate('/');
   }
 
   async function leave() {
@@ -186,6 +234,43 @@ export function AccountPage() {
             </button>
           </div>
         </form>
+      </div>
+
+      <form className="panel" onSubmit={saveEmail}>
+        <h3>Email address</h3>
+        <p className="account-note">The address above keeps working until the new one is confirmed.</p>
+        <div className="field">
+          <label htmlFor="account-email">New email</label>
+          <input id="account-email" type="email" value={nextEmail} onChange={(event) => setNextEmail(event.target.value)} />
+        </div>
+        {emailError ? <p className="auth-error">{emailError}</p> : null}
+        {pendingVisible ? <p className="auth-notice">Confirmation sent. {pendingEmail}</p> : null}
+        <div className="modal-foot">
+          <button className="btn primary" type="submit" disabled={busy === 'email'}>
+            Save email
+          </button>
+        </div>
+      </form>
+
+      <div className="panel">
+        <h3>Delete account</h3>
+        <p className="account-note">Essays, recordings, and the login are removed. This email can be used to register again.</p>
+        <div className="field">
+          <label htmlFor="account-delete-email">Type your email</label>
+          <input
+            id="account-delete-email"
+            type="email"
+            value={deleteEmail}
+            onChange={(event) => setDeleteEmail(event.target.value)}
+          />
+        </div>
+        {deleteEmail.trim() && !deleteReady ? <p className="auth-error">Type the email shown above.</p> : null}
+        {deleteError ? <p className="auth-error">{deleteError}</p> : null}
+        <div className="modal-foot">
+          <button className="btn warn" type="button" onClick={() => void removeAccount()} disabled={!deleteReady || busy === 'delete'}>
+            Delete account
+          </button>
+        </div>
       </div>
 
       <div className="panel account-leave">
