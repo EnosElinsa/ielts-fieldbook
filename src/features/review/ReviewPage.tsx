@@ -22,7 +22,7 @@ export function ReviewPage() {
     return sessionSkill(sess) === fb.activeSkill;
   });
 
-  const openHistory = (session, reuse) => {
+  const openHistory = async (session, reuse) => {
     if (sessionSkill(session) === 'speaking') {
       fb.setSkill('speaking', false);
       if (reuse) {
@@ -35,9 +35,9 @@ export function ReviewPage() {
             notes: session.notes || fb.speakingDraft(topic.id).notes,
             parentSessionId: session.id,
           });
-          fb.persistNow();
+          const saved = await fb.persistNow();
           navigate('/speak');
-          fb.toast('Copied into a new draft.');
+          if (saved) fb.toast('Copied into a new draft.');
           return;
         }
       }
@@ -49,9 +49,9 @@ export function ReviewPage() {
       const q = fb.state.questions.find((question) => String(question.id) === String(session.questionId));
       if (q) fb.setSelectedQuestionId(String(q.id));
       fb.setWritingDraft(q?.id || session.questionId, session.essay, { parentSessionId: session.id });
-      fb.persistNow();
+      const saved = await fb.persistNow();
       navigate('/write');
-      fb.toast('Copied into a new draft.');
+      if (saved) fb.toast('Copied into a new draft.');
       return;
     }
     fb.setViewedSession(session);
