@@ -17,8 +17,8 @@ export function SaveModal() {
         <h3>Finished</h3>
         <p>
           {speaking
-            ? 'Save what you said. Recordings stay in this browser and are not in the score Markdown. Pronunciation stays unscored.'
-            : 'Save this attempt. You can also export it for a score.'}
+            ? 'This file is what you said. The recording is not inside the file. Score it outside Fieldbook, then import the scored file.'
+            : 'This file is the essay to score. Score it outside Fieldbook, then import the scored file.'}
         </p>
         <div className="form">
           <div className="field full">
