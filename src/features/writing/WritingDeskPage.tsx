@@ -244,15 +244,15 @@ export function WritingDeskPage() {
                       <button
                         className="btn line"
                         type="button"
-                        onClick={() => {
+                        onClick={async () => {
                           fb.setWritingDraft(selected.id, session.essay, {
                             parentSessionId: session.id,
                             sections: emptySections(),
                           });
                           setEssay(session.essay);
                           setSections(emptySections());
-                          fb.persistNow();
-                          fb.toast('Copied into a new draft.');
+                          const saved = await fb.persistNow();
+                          if (saved) fb.toast('Copied into a new draft.');
                         }}
                       >
                         Continue
@@ -348,10 +348,11 @@ export function WritingDeskPage() {
               <button
                 className="btn line"
                 type="button"
-                onClick={() => {
+                onClick={async () => {
                   fb.setWritingDraft(selected.id, composed, { sections });
-                  if (!fb.flushDraftPersist()) fb.persistNow();
-                  fb.toast('Draft saved.');
+                  const pending = fb.flushDraftPersist();
+                  const saved = await (pending ?? fb.persistNow());
+                  if (saved) fb.toast('Draft saved.');
                 }}
               >
                 Save draft

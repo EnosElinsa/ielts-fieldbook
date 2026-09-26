@@ -116,13 +116,11 @@ function useFieldbookValue() {
 
   const persist = useCallback(
     (mutate?: (draft: any) => void, options?: { silent?: boolean }) => {
-      setState((prev) => {
-        const next = structuredClone(prev);
-        if (mutate) mutate(next);
-        saveState(next, options?.silent ? undefined : toast);
-        stateRef.current = next;
-        return next;
-      });
+      const next = structuredClone(stateRef.current);
+      if (mutate) mutate(next);
+      stateRef.current = next;
+      setState(next);
+      return saveState(next, options?.silent ? undefined : toast);
     },
     [toast],
   );
@@ -131,10 +129,9 @@ function useFieldbookValue() {
     (draft?: any) => {
       const next = draft || stateRef.current;
       next.schemaVersion = STATE_VERSION;
-      saveState(next, toast);
-      setState({ ...next });
       stateRef.current = next;
-      return true;
+      setState({ ...next });
+      return saveState(next, toast);
     },
     [toast],
   );
@@ -148,11 +145,10 @@ function useFieldbookValue() {
   }, [persistNow]);
 
   const flushDraftPersist = useCallback(() => {
-    if (!draftTimer.current) return false;
+    if (!draftTimer.current) return null;
     window.clearTimeout(draftTimer.current);
     draftTimer.current = null;
-    persistNow();
-    return true;
+    return persistNow();
   }, [persistNow]);
 
   useEffect(() => {
