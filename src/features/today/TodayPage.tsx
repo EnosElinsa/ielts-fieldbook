@@ -88,13 +88,22 @@ export function TodayPage() {
             <span>{dayLabel(new Date())}</span>
           </p>
           <h2>Today</h2>
-          <p>
-            {session.weakest
-              ? `Practise ${criterionLabel(session.weakest.key).toLowerCase()} first. Work through the steps below.`
-              : speaking
-                ? 'Today’s speaking is below.'
-                : 'Today’s writing is below.'}
-          </p>
+          {fb.state.settings.examDate ? (
+            <p>
+              {session.weakest
+                ? `Practise ${criterionLabel(session.weakest.key).toLowerCase()} first. Work through the steps below.`
+                : speaking
+                  ? 'Today’s speaking is below.'
+                  : 'Today’s writing is below.'}
+            </p>
+          ) : (
+            <>
+              <p>The exam date is not set. Set it and the daily tasks follow the exam.</p>
+              <button type="button" className="btn primary" onClick={() => fb.openModal('settings')}>
+                Set exam date
+              </button>
+            </>
+          )}
           <ol className="session-steps">
             {session.steps.map((step, index) => {
               const label = step.id === 'recall' ? 'Recall' : step.id === 'correction' ? 'Use this' : 'Start this';
