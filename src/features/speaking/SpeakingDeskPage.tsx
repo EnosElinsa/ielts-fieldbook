@@ -196,7 +196,7 @@ export function SpeakingDeskPage() {
         <p>
           {mockMode
             ? 'Timed mock. Record if you can, then write what you said.'
-            : 'One minute of notes, then speak. The recording stays in this browser.'}
+            : 'One minute of notes, then speak. The recording stays on this account.'}
         </p>
         <div className="desk-controls">
           {mockMode ? (
@@ -321,15 +321,15 @@ export function SpeakingDeskPage() {
                         <button
                           className="btn line"
                           type="button"
-                          onClick={() => {
+                          onClick={async () => {
                             setTranscript(session.essay);
                             liveSave({
                               transcript: session.essay,
                               notes: session.notes || notes,
                               parentSessionId: session.id,
                             });
-                            fb.persistNow();
-                            fb.toast('Copied into a new draft.');
+                            const saved = await fb.persistNow();
+                            if (saved) fb.toast('Copied into a new draft.');
                           }}
                         >
                           Continue
@@ -520,15 +520,16 @@ export function SpeakingDeskPage() {
             }}
           />
           <div className="editor-foot">
-            <p>The draft saves itself. Recordings stay in this browser only.</p>
+            <p>The draft saves itself. Recordings stay on this account.</p>
             <div>
               <button
                 className="btn line"
                 type="button"
-                onClick={() => {
+                onClick={async () => {
                   liveSave({ transcript, notes });
-                  if (!fb.flushDraftPersist()) fb.persistNow();
-                  fb.toast('Draft saved.');
+                  const pending = fb.flushDraftPersist();
+                  const saved = await (pending ?? fb.persistNow());
+                  if (saved) fb.toast('Draft saved.');
                 }}
               >
                 Save draft
@@ -551,7 +552,7 @@ export function SpeakingDeskPage() {
                     try {
                       await putAudio(audioId, audioBlob);
                     } catch {
-                      fb.toast('Could not store the recording in this browser. Saving the transcript only.');
+                      fb.toast('Could not store the recording. Saving the transcript only.');
                       audioId = null;
                     }
                   }

@@ -30,7 +30,7 @@ export function HistoryModal() {
           <button
             className="btn primary"
             type="button"
-            onClick={() => {
+            onClick={async () => {
               fb.closeModal();
               if (sessionSkill(session) === 'speaking') {
                 const topic = fb.state.speakingTopics.find((t) => String(t.id) === String(session.questionId));
@@ -42,18 +42,18 @@ export function HistoryModal() {
                     notes: session.notes || fb.speakingDraft(topic.id).notes,
                     parentSessionId: session.id,
                   });
-                  fb.persistNow();
+                  const saved = await fb.persistNow();
                   fb.navigate('/speak');
-                  fb.toast('Copied into a new draft.');
+                  if (saved) fb.toast('Copied into a new draft.');
                 }
                 return;
               }
               const q = fb.state.questions.find((question) => String(question.id) === String(session.questionId));
               if (q) fb.setSelectedQuestionId(String(q.id));
               fb.setWritingDraft(q?.id || session.questionId, session.essay, { parentSessionId: session.id });
-              fb.persistNow();
+              const saved = await fb.persistNow();
               fb.navigate('/write');
-              fb.toast('Copied into a new draft.');
+              if (saved) fb.toast('Copied into a new draft.');
             }}
           >
             Continue in a new draft
