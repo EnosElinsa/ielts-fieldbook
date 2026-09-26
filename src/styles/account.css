@@ -14,3 +14,12 @@
   .account .metrics,.account .split{grid-template-columns:1fr}
   .account .account-leave{display:grid}
 }
+.account-id{display:flex;align-items:center;gap:12px}
+.account-id h2{margin:0;font:600 28px/1.1 'Source Serif 4',serif;color:var(--ink)}
+.avatar{width:44px;height:44px;border-radius:50%;background:var(--red);color:var(--sheet);display:grid;place-items:center;font:600 16px 'Source Serif 4',serif;flex:none}
+.avatar-nav{width:16px;height:16px;font-size:8px;line-height:1}
+.account-email-status{display:block;margin-top:6px;font:11px/1.4 'DM Mono',monospace;letter-spacing:.04em}
+.account-email-status.is-confirmed{color:#2f5646}
+.account-email-status.is-pending{color:var(--red)}
+.account-resend{margin-left:8px;padding:0;border:0;background:none;color:var(--red);font:inherit;letter-spacing:inherit;text-decoration:underline;cursor:pointer}
+.account-resend:disabled{cursor:wait;opacity:.6}
