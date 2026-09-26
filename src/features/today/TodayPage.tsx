@@ -97,12 +97,7 @@ export function TodayPage() {
                   : 'Today’s writing is below.'}
             </p>
           ) : (
-            <>
-              <p>The exam date is not set. Set it and the daily tasks follow the exam.</p>
-              <button type="button" className="btn primary" onClick={() => fb.openModal('settings')}>
-                Set exam date
-              </button>
-            </>
+            <p>The exam date is not set. Set it and the daily tasks follow the exam.</p>
           )}
           <ol className="session-steps">
             {session.steps.map((step, index) => {
@@ -142,6 +137,11 @@ export function TodayPage() {
             })}
           </ol>
           <div className="lead-actions">
+            {!fb.state.settings.examDate ? (
+              <button className="btn line" type="button" onClick={() => fb.openModal('settings')}>
+                Set exam date
+              </button>
+            ) : null}
             <button
               className="btn primary"
               type="button"
@@ -206,10 +206,15 @@ export function TodayPage() {
             <strong>{week.length}</strong>
             <span>this week</span>
           </div>
-          <p>
-            {fb.state.settings.days.length} {dayWord} a week · {fb.state.settings.dailyMinutes} min a day · {mix} ·{' '}
-            {focus} · Exam {exam}
-            {fb.state.settings.targetBand ? ` · Target ${fb.state.settings.targetBand}` : ''}
+          <p className="quiet-meta">
+            <span>
+              {fb.state.settings.days.length} {dayWord} a week
+            </span>
+            <span>{fb.state.settings.dailyMinutes} min a day</span>
+            <span>{mix}</span>
+            <span>{focus}</span>
+            <span>Exam {exam}</span>
+            {fb.state.settings.targetBand ? <span>Target {fb.state.settings.targetBand}</span> : null}
           </p>
           <div className="rule-note">{studyStreak(fb.state)}-day streak</div>
         </div>

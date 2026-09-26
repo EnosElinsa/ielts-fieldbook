@@ -252,7 +252,7 @@ export function AccountPage() {
         </div>
       </form>
 
-      <div className="panel">
+      <div className="panel account-danger">
         <h3>Delete account</h3>
         <p className="account-note">Essays, recordings, and the login are removed. This email can be used to register again.</p>
         <div className="field">
