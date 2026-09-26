@@ -11,6 +11,8 @@ import { HistoryModal } from '../features/modals/HistoryModal';
 import { LexiconModal } from '../features/modals/LexiconModal';
 import { StoryModal } from '../features/modals/StoryModal';
 import { BackupModal } from '../features/modals/BackupModal';
+import { useAuthUser } from '../auth/useAuthUser';
+import { AccountMark } from '../features/account/AccountMark';
 
 const writingLinks = [
   { to: '/', end: true, label: 'Today', icon: NavIcons.today },
@@ -52,6 +54,7 @@ function chromeFor(pathname: string, activeSkill: string, deskName: string, topi
 
 export function Shell() {
   const fb = useFieldbook();
+  const accountUser = useAuthUser();
   const location = useLocation();
   const navigate = useNavigate();
   const assessmentInput = useRef(null);
@@ -215,8 +218,8 @@ export function Shell() {
               </NavLink>
             ))}
             <NavLink to="/account" className={({ isActive }) => (isActive ? 'active' : undefined)}>
-              <span className="nav-icon" aria-hidden="true">
-                {NavIcons.account}
+              <span className="nav-icon">
+                <AccountMark user={accountUser} size="nav" />
               </span>
               <span className="nav-label">Account</span>
             </NavLink>
