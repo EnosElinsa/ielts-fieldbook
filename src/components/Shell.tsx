@@ -13,6 +13,7 @@ import { StoryModal } from '../features/modals/StoryModal';
 import { BackupModal } from '../features/modals/BackupModal';
 import { useAuthUser } from '../auth/useAuthUser';
 import { AccountMark } from '../features/account/AccountMark';
+import { SaveFailure } from './SaveFailure';
 
 const writingLinks = [
   { to: '/', end: true, label: 'Today', icon: NavIcons.today },
@@ -322,6 +323,7 @@ export function Shell() {
               />
             </div>
           </header>
+          <SaveFailure failed={fb.saveFailed} />
           <div className="page" key={location.pathname}>
             <Outlet />
           </div>

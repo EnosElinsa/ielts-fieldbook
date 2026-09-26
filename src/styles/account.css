@@ -23,3 +23,4 @@
 .account-email-status.is-pending{color:var(--red)}
 .account-resend{margin-left:8px;padding:0;border:0;background:none;color:var(--red);font:inherit;letter-spacing:inherit;text-decoration:underline;cursor:pointer}
 .account-resend:disabled{cursor:wait;opacity:.6}
+.save-failure{margin:0 0 16px;padding:10px 12px;border-left:3px solid var(--red);background:var(--soft-red);color:var(--red);font-size:13px}
