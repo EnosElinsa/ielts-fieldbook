@@ -13,9 +13,19 @@ test('authError maps the sign-in failures the account page can also hit', () => 
   );
   assert.equal(
     authError('Email not confirmed', 'signin'),
-    'Confirm the email first. Open the message we sent, then sign in.',
+    'Confirm the email first. Open the message we sent. The notebook opens from that link.',
   );
   assert.equal(authError('Password should be at least 6 characters', 'signup'), 'Use at least 6 characters.');
-  assert.equal(authError('For security purposes, you can only request this after 60 seconds. Rate limit.', 'signup'), 'Too many attempts. Wait a minute, then try again.');
+  assert.equal(
+    authError('For security purposes, you can only request this after 60 seconds. Rate limit.', 'signup'),
+    'Too many attempts. Wait a minute, then try again.',
+  );
   assert.equal(authError('', 'signin'), 'Something went wrong. Try again.');
+});
+
+test('authError maps an expired or used link', () => {
+  const expired = 'Email link is invalid or has expired otp_expired';
+  assert.equal(authError(expired, 'signup'), 'This link no longer works. Send another confirmation email.');
+  assert.equal(authError(expired, 'reset'), 'This link no longer works. Send another reset email.');
+  assert.equal(authError(expired, 'signin'), 'This link no longer works. Request a new email below.');
 });
