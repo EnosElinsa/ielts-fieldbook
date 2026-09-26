@@ -9,7 +9,12 @@ export function authError(message: string, mode: Mode) {
     return 'That email already has an account. Sign in, or reset the password.';
   }
   if (/email not confirmed/i.test(text)) {
-    return 'Confirm the email first. Open the message we sent, then sign in.';
+    return 'Confirm the email first. Open the message we sent. The notebook opens from that link.';
+  }
+  if (/otp_expired|email link is invalid|has expired|already been used/i.test(text)) {
+    if (mode === 'signup') return 'This link no longer works. Send another confirmation email.';
+    if (mode === 'reset') return 'This link no longer works. Send another reset email.';
+    return 'This link no longer works. Request a new email below.';
   }
   if (/password should be at least|weak password/i.test(text)) {
     return 'Use at least 6 characters.';
