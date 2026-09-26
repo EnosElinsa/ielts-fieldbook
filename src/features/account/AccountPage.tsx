@@ -1,24 +1,16 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { User } from '@supabase/supabase-js';
 import { signOut } from '../../auth/AuthGate';
+import { authError } from '../../auth/errors';
+import { useAuthUser } from '../../auth/useAuthUser';
+import { displayNameOf } from '../../lib/identity';
+import { formatAccountDate } from '../../lib/format';
 import { getSupabase } from '../../lib/supabase';
-
-function displayNameOf(user: User | null) {
-  const stored = user?.user_metadata?.display_name;
-  if (typeof stored === 'string' && stored.trim()) return stored.trim();
-  const email = user?.email || '';
-  return email.split('@')[0] || 'Account';
-}
-
-function formatJoined(value: string | undefined) {
-  if (!value) return '—';
-  return new Date(value).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
-}
+import { AccountMark } from './AccountMark';
 
 export function AccountPage() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
+  const user = useAuthUser();
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -26,21 +18,16 @@ export function AccountPage() {
   const [passwordNote, setPasswordNote] = useState('');
   const [nameError, setNameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [busy, setBusy] = useState<'name' | 'password' | 'out' | null>(null);
+  const [resendError, setResendError] = useState('');
+  const [sent, setSent] = useState(false);
+  const [busy, setBusy] = useState<'name' | 'password' | 'out' | 'resend' | null>(null);
+  const confirmed = Boolean(user?.email_confirmed_at);
+
+  const storedName = displayNameOf(user);
 
   useEffect(() => {
-    let cancelled = false;
-    getSupabase()
-      .auth.getUser()
-      .then(({ data }) => {
-        if (cancelled) return;
-        setUser(data.user);
-        setName(displayNameOf(data.user));
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    setName(storedName);
+  }, [storedName]);
 
   async function saveName(event: FormEvent) {
     event.preventDefault();
@@ -52,13 +39,12 @@ export function AccountPage() {
     setBusy('name');
     setNameError('');
     setNameNote('');
-    const { data, error } = await getSupabase().auth.updateUser({ data: { display_name: next } });
+    const { error } = await getSupabase().auth.updateUser({ data: { display_name: next } });
     setBusy(null);
     if (error) {
       setNameError(error.message);
       return;
     }
-    setUser(data.user);
     setNameNote('Name saved.');
   }
 
@@ -86,6 +72,24 @@ export function AccountPage() {
     setPasswordNote('Password updated.');
   }
 
+  async function resendConfirmation() {
+    const address = user?.email?.trim();
+    if (!address || confirmed) return;
+    setBusy('resend');
+    setResendError('');
+    const { error } = await getSupabase().auth.resend({
+      type: 'signup',
+      email: address,
+      options: { emailRedirectTo: window.location.origin },
+    });
+    setBusy(null);
+    if (error) {
+      setResendError(authError(error.message, 'signup'));
+      return;
+    }
+    setSent(true);
+  }
+
   async function leave() {
     setBusy('out');
     await signOut();
@@ -94,18 +98,41 @@ export function AccountPage() {
 
   return (
     <div className="account">
+      <div className="account-id">
+        <AccountMark user={user} />
+        <h2>{displayNameOf(user)}</h2>
+      </div>
+
       <div className="metrics">
         <div className="metric">
           <label>Email</label>
           <strong>{user?.email || '—'}</strong>
+          <span className={confirmed ? 'account-email-status is-confirmed' : 'account-email-status is-pending'}>
+            <span>{confirmed ? 'Confirmed' : 'Not confirmed'}</span>
+            {!confirmed && user?.email ? (
+              sent ? (
+                ' · Confirmation sent.'
+              ) : (
+                <button
+                  className="account-resend"
+                  type="button"
+                  onClick={() => void resendConfirmation()}
+                  disabled={busy === 'resend'}
+                >
+                  Resend
+                </button>
+              )
+            ) : null}
+          </span>
+          {resendError ? <p className="auth-error">{resendError}</p> : null}
         </div>
         <div className="metric">
           <label>Joined</label>
-          <strong>{formatJoined(user?.created_at)}</strong>
+          <strong>{formatAccountDate(user?.created_at)}</strong>
         </div>
         <div className="metric">
           <label>Last sign-in</label>
-          <strong>{formatJoined(user?.last_sign_in_at)}</strong>
+          <strong>{formatAccountDate(user?.last_sign_in_at)}</strong>
         </div>
       </div>
 
