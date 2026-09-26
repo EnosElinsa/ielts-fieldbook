@@ -30,7 +30,11 @@ The service role key stays on the machine that runs the seed. The browser only r
 
 ## Deploy
 
-Cloudflare Pages builds this repo with `npm run build` and publishes `dist`. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as build variables. `public/_redirects` sends every path back to `index.html`. After the Pages hostname exists, add `https://<project>.pages.dev` to the Supabase site URL and redirect allow list, then run `npm run deploy:pages` from a machine that is logged in with Wrangler.
+Push `master`. Cloudflare Pages project `ielts-fieldbook` builds with `npm run build`, publishes `dist`, and serves https://ielts-fieldbook.pages.dev. `public/_redirects` sends every path back to `index.html`.
+
+Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as Pages build environment variables. The build command is `npm run build`. Do not upload `dist` with Wrangler to release.
+
+After the hostname exists, add `https://ielts-fieldbook.pages.dev` to the Supabase site URL and redirect allow list.
 
 Question charts live in the public `question-assets` storage bucket. `npm run seed:bank` uploads `local/question-assets` and stores those public URLs on the writing questions.
 
