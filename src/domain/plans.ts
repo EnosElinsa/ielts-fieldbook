@@ -1,8 +1,78 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { weakestCriterion } from './assessment';
+import { weakestCriterion, criterionBucket, isBandScore } from './assessment';
 import { firstSentence, daysUntilExam, addLocalDays, dateKey, nowIso } from './utils';
 import { dueLexicon } from './lexicon';
+
+export function recommendationFromAssessment(state, assessment) {
+  if (!assessment) return null;
+  const skill = assessment.skill === 'speaking' ? 'speaking' : 'writing';
+  const mode = String(assessment.practiceMode || 'unknown');
+  if (mode === 'full' || mode === 'timed') {
+    const weakness = practiceFromWeakness(state, skill);
+    if (weakness) return weakness;
+  }
+  const currentScores = (assessment.criteria || []).filter(item => isBandScore(item.score) && criterionBucket(item.name))
+    .map(item => ({ key: criterionBucket(item.name), score: Number(item.score), skill }))
+    .sort((a, b) => a.score - b.score);
+  if (currentScores.length && mode === 'unknown') return practiceForCriterion(state, currentScores[0]);
+  if (skill === 'writing' && ['overview', 'outline', 'compare', 'body'].includes(mode)) {
+    const labels = {
+      overview: ['Task 1 · Read the chart', 'Check the figures, then write only the introduction and overview.', 'overview'],
+      outline: ['Task 2 · Plan', 'Question, position, and two main points.', 'outline'],
+      compare: ['Task 1 · Compare', 'Write one body paragraph with at least two real comparisons.', 'compare'],
+      body: ['Task 2 · Body', 'Write one full body paragraph and add an example.', 'body'],
+    }[mode];
+    return { skill, kind: mode === 'outline' || mode === 'body' ? '2' : '1', title: labels[0], description: labels[1], deskMode: labels[2], driver: 'assessment:focused', questionId: assessment.questionId || null };
+  }
+  if (skill === 'speaking' && ['1', '2', '3'].includes(String(assessment.part || ''))) {
+    const part = String(assessment.part);
+    return { skill, kind: `speaking-p${part}`, title: `Part ${part} · Again`, description: firstSentence(assessment.nextExercise) || 'Use the last feedback and say it again.', deskMode: part === '2' ? 'speak-blind' : 'timed', driver: 'assessment:focused', questionId: assessment.questionId || null };
+  }
+  if (assessment.nextExercise) {
+    const session = (state.sessions || []).find(item => item.id === assessment.sessionId);
+    return { skill, kind: skill === 'speaking' ? `speaking-p${assessment.part || '2'}` : String(session && session.type || (assessment.task === 'Task 1' ? '1' : '2')), title: 'Use the feedback', description: firstSentence(assessment.nextExercise), deskMode: 'full', driver: 'assessment:focused', questionId: assessment.questionId || null };
+  }
+  return null;
+}
+
+export function syncNearestPendingPlan(state, recommendation, now) {
+  if (!recommendation) return null;
+  const today = dateKey(now || new Date());
+  const candidates = (state.plans || []).filter(plan => {
+    if (!plan || plan.status !== 'pending') return false;
+    if (plan.kind === 'writing-mock' || plan.kind === 'speaking-mock' || plan.kind === 'review' || plan.kind === 'lexicon' || plan.kind === 'stories') return false;
+    const skill = String(plan.kind).startsWith('speaking') ? 'speaking' : (plan.kind === '1' || plan.kind === '2' ? 'writing' : null);
+    if (skill !== recommendation.skill) return false;
+    return String(plan.dateKey || '') >= today;
+  }).sort((a, b) => String(a.dateKey || '').localeCompare(String(b.dateKey || '')));
+  const plan = candidates[0];
+  if (!plan) return null;
+  plan.kind = recommendation.kind;
+  plan.title = recommendation.title;
+  plan.description = recommendation.description;
+  plan.deskMode = recommendation.deskMode || 'full';
+  plan.driver = recommendation.driver;
+  plan.targetErrorIds = (recommendation.targetErrorIds || []).slice();
+  plan.sourceAssessmentId = recommendation.sourceAssessmentId || null;
+  plan.questionId = recommendation.questionId || null;
+  return plan;
+}
+
+export function latestPracticeRecommendation(state, skill) {
+  const wanted = skill === 'speaking' ? 'speaking' : 'writing';
+  const latest = (state.assessments || []).filter(item => {
+    const session = (state.sessions || []).find(attempt => attempt.id === item.sessionId);
+    return (session && session.skill === 'speaking' || item.skill === 'speaking' ? 'speaking' : 'writing') === wanted;
+  }).slice().sort((a, b) => String(a.date || '').localeCompare(String(b.date || ''))).pop();
+  const recommendation = latest && recommendationFromAssessment(state, latest);
+  if (recommendation) {
+    recommendation.targetErrorIds = (state.errors || []).filter(error => error.sourceAssessmentId === latest.id && !error.resolved).map(error => error.id);
+    recommendation.sourceAssessmentId = latest.id;
+    return recommendation;
+  }
+  return practiceFromWeakness(state, wanted);
+}
 
 export function startPlan(state, planId, startedAt) {
   const plan = state.plans.find(item => item.id === planId);
@@ -277,6 +347,10 @@ export function studyStreak(state, now) {
 
 export function practiceFromWeakness(state, skill) {
   const weakest = weakestCriterion(state, skill);
+  return practiceForCriterion(state, weakest);
+}
+
+function practiceForCriterion(state, weakest) {
   if (!weakest) return null;
   if (weakest.skill === 'speaking') {
     if (weakest.key === 'FC') {
@@ -342,7 +416,7 @@ export function todaySession(state, now, skill) {
       count: dueWords.length,
     });
   }
-  const practice = practiceFromWeakness(state, wanted);
+  const practice = latestPracticeRecommendation(state, wanted);
   steps.push({
     id: 'practice',
     title: practice ? practice.title : "Today's main task",
@@ -372,12 +446,14 @@ export function syncPendingPlan(plan, recommendation) {
     ? 'writing'
     : (kind.startsWith('speaking') || kind === 'stories' ? 'speaking' : null);
   if (currentSkill && currentSkill !== recommendation.skill) return false;
-  if (plan.driver && !String(plan.driver).startsWith('criterion:')) return false;
+  if (plan.driver && !String(plan.driver).startsWith('criterion:') && !String(plan.driver).startsWith('assessment:')) return false;
   const same = plan.driver === recommendation.driver
     && plan.kind === recommendation.kind
     && plan.deskMode === recommendation.deskMode
     && plan.title === recommendation.title
-    && plan.description === recommendation.description;
+    && plan.description === recommendation.description
+    && JSON.stringify(plan.targetErrorIds || []) === JSON.stringify(recommendation.targetErrorIds || [])
+    && (plan.sourceAssessmentId || null) === (recommendation.sourceAssessmentId || null);
   if (same) return false;
   const previousDriver = plan.driver;
   plan.kind = recommendation.kind;
@@ -385,6 +461,8 @@ export function syncPendingPlan(plan, recommendation) {
   plan.description = recommendation.description;
   plan.deskMode = recommendation.deskMode || 'full';
   plan.driver = recommendation.driver;
-  if (previousDriver !== recommendation.driver) plan.questionId = null;
+  plan.targetErrorIds = (recommendation.targetErrorIds || []).slice();
+  plan.sourceAssessmentId = recommendation.sourceAssessmentId || null;
+  if (previousDriver !== recommendation.driver || recommendation.sourceAssessmentId) plan.questionId = recommendation.questionId || null;
   return true;
 }

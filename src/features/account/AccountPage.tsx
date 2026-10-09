@@ -140,8 +140,7 @@ export function AccountPage() {
 
   async function leave() {
     setBusy('out');
-    await signOut();
-    navigate('/');
+    try { await signOut(); navigate('/'); } catch { setDeleteError('Could not sign out. Try again.'); setBusy(null); }
   }
 
   return (

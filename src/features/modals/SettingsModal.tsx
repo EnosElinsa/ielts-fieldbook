@@ -42,7 +42,7 @@ export function SettingsModal() {
             <input
               id="targetBand"
               type="number"
-              min={0}
+              min={1}
               max={9}
               step={0.5}
               placeholder="None"
@@ -139,7 +139,8 @@ export function SettingsModal() {
           <button
             className="btn primary"
             type="button"
-            onClick={() => {
+            onClick={async () => {
+              if (targetBand && (!Number.isFinite(Number(targetBand)) || Number(targetBand) < 1 || Number(targetBand) > 9 || !Number.isInteger(Number(targetBand) * 2))) { fb.toast('Use a target band from 1 to 9 in half-band steps.'); return; }
               const draft = structuredClone(fb.stateRef.current);
               draft.settings = Object.assign({}, draft.settings, {
                 examDate,
@@ -154,7 +155,8 @@ export function SettingsModal() {
               if (draft.activePlanId && !draft.plans.some((plan) => plan.id === draft.activePlanId)) {
                 draft.activePlanId = null;
               }
-              fb.persistNow(draft);
+              const saved = await fb.persistNow(draft);
+              if (!saved) return;
               fb.ensurePlansForSkill();
               fb.closeModal();
               fb.toast('Settings saved. Plans you have not started were rebuilt.');

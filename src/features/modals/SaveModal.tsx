@@ -9,14 +9,17 @@ export function SaveModal() {
   const [focus, setFocus] = useState('');
   const [next, setNext] = useState('');
   const [errors, setErrors] = useState('');
+  const [saving, setSaving] = useState(false);
+  const save = async (exportForReview) => { setSaving(true); try { await fb.saveAttempt(exportForReview, { focus, next, errors }); } finally { setSaving(false); } };
   const speaking = fb.pendingAttempt?.skill === 'speaking';
+  const focused = ['overview', 'outline', 'compare', 'body'].includes(fb.pendingAttempt?.practiceMode);
 
   return (
     <ModalFrame open={open} onClose={() => fb.closeModal()}>
       <div className="modal">
         <h3>Finished</h3>
         <p>
-          {speaking
+          {focused ? 'This file requests feedback on your focused exercise. Export it to your marker, then import the feedback.' : speaking
             ? 'This file is what you said. The recording is not inside the file. Score it outside Fieldbook, then import the scored file.'
             : 'This file is the essay to score. Score it outside Fieldbook, then import the scored file.'}
         </p>
@@ -47,9 +50,11 @@ export function SaveModal() {
           </div>
         </div>
         <div className="modal-foot">
+          {fb.saveFailed ? <p className="inline-error" role="alert">Your work is still here. Retry saving when your connection returns.</p> : null}
           <button
             className="btn line"
             type="button"
+            disabled={saving}
             onClick={() => {
               fb.setPendingAttempt(null);
               fb.closeModal();
@@ -57,11 +62,11 @@ export function SaveModal() {
           >
             Cancel
           </button>
-          <button className="btn line" type="button" onClick={() => fb.saveAttempt(false, { focus, next, errors })}>
+          <button className="btn line" disabled={saving} type="button" onClick={() => void save(false)}>
             Save only
           </button>
-          <button className="btn primary" type="button" onClick={() => fb.saveAttempt(true, { focus, next, errors })}>
-            Save and export
+          <button className="btn primary" disabled={saving} type="button" onClick={() => void save(true)}>
+            {saving ? 'Saving…' : 'Save and export'}
           </button>
         </div>
       </div>

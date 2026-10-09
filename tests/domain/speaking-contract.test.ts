@@ -11,12 +11,12 @@ const topic = {
   part3: ['Why do people want to save time?'],
 };
 
-test('builds a speaking assessment request with the speaking-1 contract', () => {
+test('builds a speaking assessment request with the speaking-2 contract', () => {
   const request = core.buildSpeakingAssessmentRequest(
     { id: 'sp-1', questionId: topic.id, part: '2', essay: 'I saved time by planning the week.', notes: 'method, last year', words: 7 },
     topic,
   );
-  assert.match(request, /review_contract_version: speaking-1/);
+  assert.match(request, /review_contract_version: speaking-2/);
   assert.match(request, /skill: speaking/);
   assert.match(request, /part: 2/);
   assert.match(request, /session_id: sp-1/);
@@ -40,13 +40,13 @@ test('builds a speaking assessment request with the speaking-1 contract', () => 
   assert.match(request, /Pronunciation/);
   assert.match(request, /https:\/\/ielts\.org\/cdn\/ielts-guides\/ielts-speaking-band-descriptors\.pdf/);
   assert.match(request, /estimated/);
-  assert.match(request, /## 四项评分/);
-  assert.match(request, /## 总体判断/);
-  assert.match(request, /## 最高优先级修改/);
-  assert.match(request, /## 原文问题与修改说明/);
-  assert.match(request, /## 完整改写稿/);
-  assert.match(request, /## 语言积累建议/);
-  assert.match(request, /## 下一次 30 分钟练习/);
+  assert.match(request, /## Criteria/);
+  assert.match(request, /## Summary/);
+  assert.match(request, /## Priorities/);
+  assert.match(request, /## Edits/);
+  assert.match(request, /## Full rewrite/);
+  assert.match(request, /## Vocabulary suggestions/);
+  assert.match(request, /## Next practice/);
   assert.match(request, /FC-HES/);
   assert.match(request, /FC-DEV/);
   assert.match(request, /LR-COL/);
@@ -60,8 +60,7 @@ test('builds a speaking assessment request with the speaking-1 contract', () => 
   assert.match(part1, /2\. What do you do when you feel bored\?/);
   assert.doesNotMatch(part1, /cue card/i);
 });
-
-test('parses a speaking result when Pronunciation is unscored', () => {
+test('parses a legacy speaking result when Pronunciation is unscored', () => {
   const text = `review_contract_version: speaking-1
 skill: speaking
 part: 2

@@ -29,7 +29,6 @@ test('derives speaking coverage, with the highest status winning', () => {
     sessions: [{ id: 's1', questionId: topicId, skill: 'speaking', part: 2, notes: 'cue', essay: 'transcript', assessmentId: 'a1' }],
   }), topicId), 'assessed');
 });
-
 test('addStory dedupes by id and updates the existing story', () => {
   const state = core.migrateState({});
   const first = core.addStory(state, {
@@ -65,7 +64,7 @@ test('migrate preserves stories, essays, and speaking session fields', () => {
       { id: 'st2', title: 'Market', place: 'street' },
     ],
   });
-  assert.equal(migrated.schemaVersion, 8);
+  assert.equal(migrated.schemaVersion, 9);
   assert.equal(migrated.sessions.find(item => item.id === 'w1').skill, 'writing');
   assert.equal(migrated.sessions.find(item => item.id === 'w1').essay, 'keep this essay');
   const speaking = migrated.sessions.find(item => item.id === 's1');

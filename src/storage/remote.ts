@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { emptyState, migrateState, persistShape } from '../domain';
+import { emptyState, migrateState, persistShape, STATE_VERSION } from '../domain';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import { USER_LISTS, diffDrafts, diffList, profileStamp, rowsToDrafts, rowsToList, type UserListKey } from './sync';
 
@@ -13,6 +13,10 @@ type Snapshot = {
 
 let snapshot: Snapshot | null = null;
 let accountReady = false;
+let currentAccountId: string | null = null;
+let hydrationGeneration = 0;
+export function accountId() { return currentAccountId; }
+export function resetAccountStore() { hydrationGeneration += 1; currentAccountId = null; snapshot = null; accountReady = false; }
 
 export function accountStoreAvailable() {
   return accountReady;
@@ -34,7 +38,7 @@ function emptySnapshot(): Snapshot {
 }
 
 function takeSnapshot(state): Snapshot {
-  const shaped = persistShape(state);
+  const shaped = structuredClone(persistShape(state));
   return {
     lists: {
       sessions: shaped.sessions || [],
@@ -74,7 +78,9 @@ async function selectCatalog(table: string) {
 }
 
 export async function hydrateState() {
+  const generation = ++hydrationGeneration;
   if (!supabaseConfigured()) {
+    currentAccountId = null;
     accountReady = false;
     snapshot = emptySnapshot();
     return emptyState();
@@ -83,6 +89,8 @@ export async function hydrateState() {
   const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
   if (sessionError) throw sessionError;
   const session = sessionData.session;
+  if (generation !== hydrationGeneration) throw new Error('Account load superseded');
+  currentAccountId = session?.user.id || null;
   if (!session) {
     accountReady = false;
     snapshot = emptySnapshot();
@@ -102,7 +110,7 @@ export async function hydrateState() {
     samplesById[String(row.id)] = row.payload || {};
   });
   const raw = {
-    schemaVersion: 8,
+    schemaVersion: STATE_VERSION,
     questions: writing.map((row) => Object.assign({}, row.payload, { id: String(row.id) })),
     speakingTopics: topics.map((row) =>
       Object.assign({}, row.payload, samplesById[String(row.id)] || {}, { id: String(row.id) }),
@@ -117,6 +125,7 @@ export async function hydrateState() {
   });
   raw.drafts = rowsToDrafts(await selectAll('drafts'));
   const state = migrateState(raw);
+  if (generation !== hydrationGeneration || currentAccountId !== session.user.id) throw new Error('Account load superseded');
   snapshot = takeSnapshot(state);
   accountReady = true;
   return state;
@@ -144,6 +153,7 @@ async function pushDiff(table: string, userId: string, diff: { upserts: { id: st
 }
 
 export async function saveState(state, onQuotaToast?: (message: string) => void) {
+  const expectedAccount = currentAccountId;
   if (!supabaseConfigured()) {
     if (onQuotaToast) onQuotaToast('Add Supabase keys before study records can be saved.');
     return false;
@@ -151,7 +161,7 @@ export async function saveState(state, onQuotaToast?: (message: string) => void)
   const supabase = getSupabase();
   const { data: sessionData } = await supabase.auth.getSession();
   const session = sessionData.session;
-  if (!session) {
+  if (!session || (expectedAccount && session.user.id !== expectedAccount)) {
     if (onQuotaToast) onQuotaToast('Sign in to save.');
     return false;
   }
@@ -160,8 +170,10 @@ export async function saveState(state, onQuotaToast?: (message: string) => void)
   const now = new Date().toISOString();
   try {
     for (const key of USER_LISTS) {
+      if (currentAccountId !== expectedAccount) return false;
       await pushDiff(key, session.user.id, diffList(previous.lists[key], next.lists[key]), now);
     }
+    if (currentAccountId !== expectedAccount) return false;
     await pushDiff('drafts', session.user.id, diffDrafts(previous.drafts, next.drafts), now);
     if (previous.profile !== next.profile) {
       const shaped = persistShape(state);
@@ -176,6 +188,7 @@ export async function saveState(state, onQuotaToast?: (message: string) => void)
         .eq('id', session.user.id);
       if (error) throw error;
     }
+    if (currentAccountId !== expectedAccount) return false;
     snapshot = next;
     accountReady = true;
     return true;

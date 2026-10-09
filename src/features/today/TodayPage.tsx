@@ -12,6 +12,7 @@ import {
 import { useFieldbook } from '../../context/FieldbookContext';
 import { dayLabel, displayName, formatDate, planPillClass, sessionSkill, typeName } from '../../lib/format';
 import { Empty } from '../../components/ui';
+import { ArrowRight, FileCheck2 } from 'lucide-react';
 
 function planLabel(title: string) {
   const parts = String(title || '').split('·');
@@ -66,6 +67,8 @@ export function TodayPage() {
         : 'Writing and speaking';
   const dayWord = fb.state.settings.days.length === 1 ? 'day' : 'days';
   const statusText = { pending: 'Not started', in_progress: 'In progress', completed: 'Done' };
+  const nextPlan = plans.find((plan) => plan.status === 'in_progress') || plans.find((plan) => plan.status === 'pending');
+  const pendingFeedback = skillSessions.filter((item) => !item.assessmentId).length;
 
   const assessmentMatches = (assessment) => {
     if (assessment && assessment.skill === 'speaking') return fb.activeSkill === 'speaking';
@@ -87,7 +90,8 @@ export function TodayPage() {
           <p className="kicker">
             <span>{dayLabel(new Date())}</span>
           </p>
-          <h2>Today</h2>
+          <h2 className="sr-only">Today</h2>
+          <h2>{nextPlan?.status === 'in_progress' ? 'Pick up where you left off' : 'Your next study session'}</h2>
           {fb.state.settings.examDate ? (
             <p>
               {session.weakest
@@ -124,7 +128,10 @@ export function TodayPage() {
                         return;
                       }
                       if (step.id === 'correction') {
-                        fb.setSkill('writing', '/write');
+                        const error = fb.state.errors.find((item) => item.id === step.errorId);
+                        const source = error && fb.state.sessions.find((item) => item.id === error.sourceSessionId);
+                        if (source) fb.startTargetedPractice(source, error.id);
+                        else fb.setSkill(fb.activeSkill, speaking ? '/speak' : '/write');
                         return;
                       }
                       const first = plans.find((item) => item.status !== 'completed') || plans[0];
@@ -149,11 +156,12 @@ export function TodayPage() {
               className="btn primary"
               type="button"
               onClick={() => {
-                const first = plans.find((item) => item.status !== 'completed') || plans[0];
+                const first = nextPlan;
                 if (first) fb.startPlan(first.id);
+                else navigate(speaking ? '/speak' : '/write');
               }}
             >
-              Start
+              {nextPlan?.status === 'in_progress' ? 'Continue' : 'Start'} <ArrowRight size={16} />
             </button>
             {!speaking ? (
               <button
@@ -205,10 +213,7 @@ export function TodayPage() {
               </>
             )}
           </div>
-          <div className="fact">
-            <strong>{week.length}</strong>
-            <span>this week</span>
-          </div>
+          {pendingFeedback ? <button className="today-feedback" onClick={() => navigate('/review')}><FileCheck2 size={17} /><span>{pendingFeedback} {pendingFeedback === 1 ? 'attempt needs' : 'attempts need'} feedback</span><ArrowRight size={15} /></button> : null}
           <p className="quiet-meta">
             <span>
               {fb.state.settings.days.length} {dayWord} a week
@@ -309,7 +314,7 @@ export function TodayPage() {
             .reverse()
             .slice(0, 5)
             .map((sess) => (
-              <div className="work-row" key={sess.id}>
+              <div className="work-row" key={sess.id} role="button" tabIndex={0} onClick={() => { if (sess.assessmentId) navigate(`/review/${sess.assessmentId}`); else { fb.setViewedSession(sess); fb.openModal('history'); } }} onKeyDown={(event) => { if (event.key === 'Enter') { if (sess.assessmentId) navigate(`/review/${sess.assessmentId}`); else { fb.setViewedSession(sess); fb.openModal('history'); } } }}>
                 <div className="work-name">
                   {displayName(sess.name)}
                   <small>

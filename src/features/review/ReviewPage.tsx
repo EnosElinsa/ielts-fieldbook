@@ -1,20 +1,39 @@
 // @ts-nocheck
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Copy, Download, FileInput, ArrowUpRight, RotateCcw } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
+import { isBandScore } from '../../domain';
 import { attemptLabel, displayName, formatDate, sessionSkill } from '../../lib/format';
-import { Empty } from '../../components/ui';
+import { Empty, FilterMenu } from '../../components/ui';
 
 export function ReviewPage() {
   const fb = useFieldbook();
   const navigate = useNavigate();
+  const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState('');
   const speaking = fb.activeSkill === 'speaking';
-  const sessions = fb.state.sessions.filter((s) => sessionSkill(s) === fb.activeSkill);
+  const allSessions = fb.state.sessions.filter((s) => sessionSkill(s) === fb.activeSkill);
+  const sessions = allSessions.filter((session) => (filter === 'all' || (filter === 'pending' && !session.assessmentId) || (filter === 'assessed' && session.assessmentId) || (filter === 'rewrite' && session.parentSessionId)) && `${session.name} ${session.focus || ''}`.toLowerCase().includes(search.toLowerCase()));
   const assessments = fb.state.assessments.filter((assessment) => {
     if (assessment && assessment.skill === 'speaking') return speaking;
     const sess = assessment?.sessionId ? fb.state.sessions.find((item) => item.id === assessment.sessionId) : null;
     if (sess) return sessionSkill(sess) === fb.activeSkill;
     return !speaking;
   });
+
+  const requestFor = (session) => {
+    const question = (sessionSkill(session) === 'speaking' ? fb.state.speakingTopics : fb.state.questions).find((item) => String(item.id) === String(session.questionId));
+    if (!question) { fb.toast('The source question is unavailable.'); return null; }
+    return sessionSkill(session) === 'speaking' ? fb.buildSpeakingAssessmentRequest(session, question) : fb.buildAssessmentRequest(session, question);
+  };
+  const exportRequest = async (session, copy = false) => {
+    const request = requestFor(session);
+    if (!request) return;
+    if (!copy) { fb.downloadFile(`ielts-assessment-request-${session.id}.md`, request, 'text/markdown'); return; }
+    try { await navigator.clipboard.writeText(request); fb.toast('Assessment request copied.'); }
+    catch { fb.toast('Clipboard unavailable. Download the request instead.'); }
+  };
   const errors = fb.state.errors.filter((error) => {
     if (!error?.sourceSessionId) return true;
     const sess = fb.state.sessions.find((item) => item.id === error.sourceSessionId);
@@ -60,6 +79,8 @@ export function ReviewPage() {
 
   return (
     <section className="view active">
+      <div className="page-tools"><p>{allSessions.length} attempts · {allSessions.filter((session) => !session.assessmentId).length} awaiting feedback</p><button type="button" className="btn primary" onClick={() => fb.openFeedbackImport()}><FileInput size={16} /> Import feedback</button></div>
+      <div className="toolbar"><input className="search" aria-label="Search attempts" placeholder="Search your attempts" value={search} onChange={(event) => setSearch(event.target.value)} /><FilterMenu label="Attempt status" value={filter} onChange={setFilter} options={[{ value: 'all', label: 'All attempts' }, { value: 'pending', label: 'Awaiting feedback' }, { value: 'assessed', label: 'With feedback' }, { value: 'rewrite', label: 'Rewrites & retakes' }]} /></div>
       <div className="review-grid">
         <div>
           <h3 className="block-title">Attempts</h3>
@@ -85,8 +106,13 @@ export function ReviewPage() {
                         {speaking ? 'Transcript' : 'Essay'}
                       </button>
                       <button className="btn line" type="button" onClick={() => openHistory(session, true)}>
-                        Continue
+                        <RotateCcw size={15} /> Continue
                       </button>
+                      {!session.assessmentId ? <>
+                        <button className="btn line" type="button" onClick={() => exportRequest(session, true)}><Copy size={15} /> Copy request</button>
+                        <button className="btn line" type="button" onClick={() => exportRequest(session)}><Download size={15} /> Download</button>
+                        <button className="btn line" type="button" onClick={() => fb.openFeedbackImport()}><FileInput size={15} /> Add feedback</button>
+                      </> : null}
                       {session.assessmentId ? (
                         <button
                           className="btn line"
@@ -118,7 +144,7 @@ export function ReviewPage() {
                 .map((assessment) => (
                   <div className="assessment" key={assessment.id}>
                     <strong>Score</strong>
-                    {assessment.overall ? (
+                    {isBandScore(assessment.overall) ? (
                       <span className="pill blue ml-8">Overall {assessment.overall}</span>
                     ) : null}
                     <small>
@@ -132,7 +158,7 @@ export function ReviewPage() {
                 ))}
             </div>
           ) : (
-            <Empty message="No scores yet. Use Import score in the header." />
+            <Empty message="No feedback yet." label="Import feedback" onAction={() => fb.openFeedbackImport()} />
           )}
         </div>
       </div>
@@ -142,16 +168,15 @@ export function ReviewPage() {
           <p>
             {speaking
               ? 'Tags such as FC-HES, FC-DEV, LR-COL, and GRA-TENSE.'
-              : 'Tags such as TA-DATA, TA-OVERVIEW, CC-ORG, LR-COL, and GRA-PREP.'}
+              : 'Your next opportunities to improve.'}
           </p>
         </div>
         <button
           type="button"
           className="btn text"
-          onClick={() => {
+          onClick={async () => {
             const draft = structuredClone(fb.stateRef.current);
-            if (fb.completeReview(draft)) fb.persistNow(draft);
-            fb.toast('Review done.');
+            if (fb.completeReview(draft) && await fb.persistNow(draft)) fb.toast('Review done.');
           }}
         >
           Mark review done
@@ -174,17 +199,19 @@ export function ReviewPage() {
                   {error.next ? ` · Next: ${error.next}` : ''}
                 </small>
                 <div className="history-actions">
+                  {error.sourceSessionId && fb.state.sessions.some((session) => session.id === error.sourceSessionId) ? <button className="btn primary" type="button" onClick={() => fb.startTargetedPractice(fb.state.sessions.find((session) => session.id === error.sourceSessionId), error.id)}>Practise this <ArrowUpRight size={15} /></button> : null}
                   <button
                     className="btn line"
                     type="button"
-                    onClick={() => {
+                    onClick={async () => {
                       const draft = structuredClone(fb.stateRef.current);
                       const item = draft.errors.find((e) => e.id === error.id);
                       if (!item) return;
                       const session =
                         item.sourceSessionId && draft.sessions.find((entry) => entry.id === item.sourceSessionId);
                       fb.reviewError(draft, item.id);
-                      fb.persistNow(draft);
+                      const saved = await fb.persistNow(draft);
+                      if (!saved) return;
                       if (!session) {
                         fb.toast('No matching attempt. The review was still saved.');
                         return;
@@ -205,7 +232,7 @@ export function ReviewPage() {
                       fb.persistNow(draft);
                     }}
                   >
-                    {error.resolved ? 'Reopen' : 'Mark fixed'}
+                    {error.resolved ? 'Reopen' : 'Mark corrected myself'}
                   </button>
                 </div>
               </div>

@@ -22,6 +22,7 @@ function structuredAssessment(overrides) {
     sessionId: 's1',
     questionId: '1342',
     overall: '6.0',
+    practiceMode: 'full',
     criteria: [{ name: 'Task Achievement', score: '6', evidence: 'ok' }],
     summary: 'Main issue is data.',
     rawText: '# full markdown that can be rebuilt',
@@ -36,8 +37,8 @@ test('A1: v6 state migrates to v7 without dropping essays, assessments, or lexic
     lexicon: [{ id: 'l1', term: 'overall', meaning: '总体上' }],
     drafts: { '1342': 'still here', 'topic-1:notes': 'cue notes', 'topic-1': 'spoken draft' },
   });
-  assert.equal(migrated.schemaVersion, 8);
-  assert.equal(core.STATE_VERSION, 8);
+  assert.equal(migrated.schemaVersion, 9);
+  assert.equal(core.STATE_VERSION, 9);
   assert.equal(migrated.sessions.length, 1);
   assert.equal(migrated.sessions[0].essay, essay);
   assert.equal(migrated.assessments.length, 1);
@@ -49,16 +50,15 @@ test('A1: v6 state migrates to v7 without dropping essays, assessments, or lexic
   assert.equal(core.draftText(migrated.drafts['topic-1'], 'speaking'), 'spoken draft');
   assert.equal(migrated.drafts['topic-1:notes'], undefined);
 });
-
 test('A1: normalizeDraft accepts strings and speaking objects', () => {
   assert.deepEqual(core.normalizeDraft('hello'), {
-    text: 'hello', transcript: '', notes: '', parentSessionId: null,
+    text: 'hello', transcript: '', notes: '', parentSessionId: null, practiceMode: 'unknown', targetErrorIds: [],
   });
   assert.equal(core.draftText({ transcript: 'said this', text: 'ignored' }, 'speaking'), 'said this');
   assert.equal(core.draftText({ text: 'written' }, 'writing'), 'written');
 });
 
-test('A2: persistShape omits questions, speaking samples, and structured rawText', () => {
+test('A2: persistShape omits question banks and preserves structured rawText', () => {
   const state = core.migrateState({
     questions: [{ id: '1342', type: '1', prompt: 'chart' }],
     speakingTopics: [{
@@ -69,10 +69,10 @@ test('A2: persistShape omits questions, speaking samples, and structured rawText
     sessions: [{ id: 's1', questionId: '1342', essay }],
   });
   const payload = core.persistShape(state);
-  assert.equal(payload.schemaVersion, 8);
+  assert.equal(payload.schemaVersion, 9);
   assert.equal(payload.questions, undefined);
   assert.equal(payload.speakingTopics, undefined);
-  assert.equal(payload.assessments[0].rawText, undefined);
+  assert.equal(payload.assessments[0].rawText, state.assessments[0].rawText);
   assert.equal(payload.assessments[0].overall, '6.0');
   assert.equal(payload.assessments[0].summary, 'Main issue is data.');
   assert.ok(state.assessments[0].rawText);
@@ -333,7 +333,7 @@ test('A5: reconstructs markdown when rawText was omitted', () => {
   assert.match(markdown, /overall: 6\.0/);
   assert.match(markdown, /## Candidate response\n\nA complete candidate response kept for history\./);
   assert.match(markdown, /Task Achievement/);
-  assert.match(markdown, /## 总体判断\n\nMain issue is data\./);
+  assert.match(markdown, /## Summary\n\nMain issue is data\./);
 });
 
 test('B1: unresolved errors are immediately due; review uses local calendar intervals', () => {
@@ -433,7 +433,7 @@ test('B4: numeric overalls skip invented pronunciation in criteria averages', ()
         ],
       }),
       {
-        id: 'a-speak', date: '2026-07-01T00:00:00.000Z', overall: '6.5', skill: 'speaking',
+        id: 'a-speak', date: '2026-07-01T00:00:00.000Z', overall: '6.5', skill: 'speaking', practiceMode: 'full',
         inventedPronunciation: true,
         criteria: [
           { name: 'Fluency and Coherence', score: '6', evidence: 'ok' },
@@ -454,7 +454,7 @@ test('weakest writing criterion is the lowest recent band, and pronunciation is 
   const state = core.migrateState({
     assessments: [
       {
-        id: 'a1', date: '2026-09-01T00:00:00.000Z', skill: 'writing', rawText: 'band-set-a',
+        id: 'a1', date: '2026-09-01T00:00:00.000Z', skill: 'writing', rawText: 'band-set-a', practiceMode: 'full',
         criteria: [
           { name: 'Task Achievement', score: '6' },
           { name: 'Coherence and Cohesion', score: '5' },
@@ -463,7 +463,7 @@ test('weakest writing criterion is the lowest recent band, and pronunciation is 
         ],
       },
       {
-        id: 'a2', date: '2026-09-10T00:00:00.000Z', skill: 'writing', rawText: 'band-set-b',
+        id: 'a2', date: '2026-09-10T00:00:00.000Z', skill: 'writing', rawText: 'band-set-b', practiceMode: 'timed',
         criteria: [
           { name: 'Task Response', score: '7' },
           { name: 'Coherence and Cohesion', score: '5.5' },
@@ -489,7 +489,7 @@ test('weakest writing criterion is the lowest recent band, and pronunciation is 
 test('speaking weakest criterion skips unscored pronunciation', () => {
   const state = core.migrateState({
     assessments: [{
-      id: 's', date: '2026-09-02T00:00:00.000Z', skill: 'speaking',
+      id: 's', date: '2026-09-02T00:00:00.000Z', skill: 'speaking', practiceMode: 'full',
       criteria: [
         { name: 'Fluency and Coherence', score: '5' },
         { name: 'Lexical Resource', score: '6' },
@@ -506,9 +506,9 @@ test('today session orders recall, practice, then the due correction', () => {
   const state = core.migrateState({
     lexicon: [{ id: 'l1', term: 'overall', skill: 'writing', meaning: '总体上', nextReviewAt: '2020-01-01T00:00:00.000Z' }],
     errors: [{ id: 'e1', code: 'GRA-PREP', text: 'Use account for once.', resolved: false, sourceSessionId: 's1', nextReviewAt: '2020-01-01T00:00:00.000Z' }],
-    sessions: [{ id: 's1', skill: 'writing', questionId: '1', essay }],
+    sessions: [{ id: 's1', skill: 'writing', questionId: '1', essay, practiceMode: 'full' }],
     assessments: [{
-      id: 'a1', date: '2026-09-01T00:00:00.000Z', skill: 'writing', sessionId: 's1',
+      id: 'a1', date: '2026-09-01T00:00:00.000Z', skill: 'writing', sessionId: 's1', practiceMode: 'full',
       criteria: [
         { name: 'Task Achievement', score: '7' },
         { name: 'Coherence and Cohesion', score: '6' },
@@ -557,7 +557,7 @@ test('syncPendingPlan rewrites only a pending same-skill plan and keeps driver o
   assert.equal(core.syncPendingPlan(running, recommendation), false);
   assert.equal(running.title, '进行中');
   const migrated = core.migrateState({ plans: [{ id: 'keep', status: 'completed', driver: 'criterion:CC', title: '留着' }] });
-  assert.equal(migrated.schemaVersion, 8);
+  assert.equal(migrated.schemaVersion, 9);
   assert.equal(migrated.plans[0].driver, 'criterion:CC');
   assert.equal(migrated.plans[0].title, '留着');
 });
@@ -644,7 +644,7 @@ test('criterionSeries returns per-attempt scores and ignores pronunciation', () 
   const state = core.migrateState({
     assessments: [
       {
-        id: 'a1', date: '2026-09-01T00:00:00.000Z', skill: 'writing', overall: '6.0',
+        id: 'a1', date: '2026-09-01T00:00:00.000Z', skill: 'writing', overall: '6.0', practiceMode: 'full',
         summary: 'writing score', rawText: 'writing-series-a1',
         criteria: [
           { name: 'Task Achievement', score: '6' },
@@ -655,7 +655,7 @@ test('criterionSeries returns per-attempt scores and ignores pronunciation', () 
         ],
       },
       {
-        id: 'a2', date: '2026-09-10T00:00:00.000Z', skill: 'speaking', overall: '6.5',
+        id: 'a2', date: '2026-09-10T00:00:00.000Z', skill: 'speaking', overall: '6.5', practiceMode: 'full',
         summary: 'speaking score', rawText: 'speaking-series-a2',
         criteria: [
           { name: 'Fluency and Coherence', score: '6' },

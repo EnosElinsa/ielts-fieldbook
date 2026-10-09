@@ -4,6 +4,10 @@ import { useFieldbook } from '../../context/FieldbookContext';
 import { formatClock, formatDate } from '../../lib/format';
 import { Empty } from '../../components/ui';
 import { putAudio } from '../../storage/audio';
+import { RecordingPlayer } from '../../components/SessionAudioPlayer';
+import { deletePendingAudio, readPendingAudio, writePendingAudio } from '../../storage/pendingAudio';
+import { accountId } from '../../storage/remote';
+import { Mic, Square, Play, Pause, RotateCcw, Save, ArrowRight, Shuffle, Download } from 'lucide-react';
 
 function speakSecondsFor(part) {
   if (String(part) === '1') return 30;
@@ -53,6 +57,7 @@ export function SpeakingDeskPage() {
   const fb = useFieldbook();
   const topic = fb.selectedTopic;
   const part = String(fb.deskPart);
+  const owner = accountId();
   const draft = topic ? fb.speakingDraft(topic.id) : { transcript: '', notes: '' };
   const [transcript, setTranscript] = useState(draft.transcript || '');
   const [notes, setNotes] = useState(draft.notes || '');
@@ -64,13 +69,24 @@ export function SpeakingDeskPage() {
   const [audioBlob, setAudioBlob] = useState(null);
   const [audioUrl, setAudioUrl] = useState(null);
   const [micError, setMicError] = useState(null);
+  const [phase, setPhase] = useState(part === '2' ? 'prepare' : 'answer');
+  const [uploadError, setUploadError] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [audioSaved, setAudioSaved] = useState(false);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
   const streamRef = useRef(null);
+  const activeCapture = useRef(null);
 
-  const clearRecording = () => {
+  const resetRecording = () => {
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       try {
+        const recorder = mediaRecorderRef.current;
+        const capture = activeCapture.current;
+        const chunks = chunksRef.current;
+        recorder.onstop = () => {
+          if (capture && chunks.length) void writePendingAudio(capture.owner, capture.topicId, capture.part, new Blob(chunks, { type: recorder.mimeType || 'audio/webm' }));
+        };
         mediaRecorderRef.current.stop();
       } catch {
         /* ignore */
@@ -82,12 +98,20 @@ export function SpeakingDeskPage() {
     }
     mediaRecorderRef.current = null;
     chunksRef.current = [];
+    activeCapture.current = null;
     setRecording(false);
     setAudioBlob(null);
+    setAudioSaved(false);
+    setUploadError(false);
     setAudioUrl((prev) => {
       if (prev) URL.revokeObjectURL(prev);
       return null;
     });
+  };
+
+  const clearRecording = () => {
+    if (topic) void deletePendingAudio(owner, topic.id, part);
+    resetRecording();
   };
 
   useEffect(() => {
@@ -99,11 +123,54 @@ export function SpeakingDeskPage() {
     setSpeakSeconds(speakSecondsFor(fb.deskPart));
     setNoteRunning(false);
     setSpeakRunning(false);
-    clearRecording();
+    resetRecording();
     setMicError(null);
-  }, [topic?.id, fb.deskPart]);
+    setPhase(String(fb.deskPart) === '2' ? 'prepare' : 'answer');
+    let active = true;
+    void readPendingAudio(owner, topic.id, String(fb.deskPart)).then((blob) => {
+      if (!active || !blob || owner !== accountId()) return;
+      setAudioBlob(blob);
+      setAudioUrl((previous) => {
+        if (previous) URL.revokeObjectURL(previous);
+        return URL.createObjectURL(blob);
+      });
+      setAudioSaved(false);
+      setPhase('playback');
+    });
+    return () => { active = false; };
+  }, [topic?.id, fb.deskPart, owner]);
 
-  useEffect(() => () => clearRecording(), []);
+  useEffect(() => {
+    if (!topic) return;
+    const recovered = fb.speakingDraft(topic.id);
+    setTranscript(recovered.transcript || '');
+    setNotes(recovered.notes || '');
+  }, [fb.draftRevision]);
+
+  useEffect(() => () => resetRecording(), []);
+
+  useEffect(() => {
+    if (!recording && !audioBlob) return undefined;
+    const warn = (event) => {
+      event.preventDefault();
+      event.returnValue = 'Your recording has not been uploaded yet.';
+      return event.returnValue;
+    };
+    window.addEventListener('beforeunload', warn);
+    const guardLink = (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+      if (!link || link.hasAttribute('download') || link.target === '_blank') return;
+      const destination = new URL(link.href, window.location.href);
+      if (destination.protocol === 'blob:' || destination.pathname === window.location.pathname && destination.search === window.location.search) return;
+      if (!window.confirm('This recording has not been uploaded. Leave this practice and discard it?')) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+    document.addEventListener('click', guardLink, true);
+    return () => { window.removeEventListener('beforeunload', warn); document.removeEventListener('click', guardLink, true); };
+  }, [audioBlob, audioSaved, recording]);
 
   useEffect(() => {
     if (!noteRunning) return undefined;
@@ -111,6 +178,7 @@ export function SpeakingDeskPage() {
       setNoteSeconds((s) => {
         if (s <= 1) {
           setNoteRunning(false);
+          setPhase('answer');
           fb.toast('Note time is up.');
           return 0;
         }
@@ -126,6 +194,8 @@ export function SpeakingDeskPage() {
       setSpeakSeconds((s) => {
         if (s <= 1) {
           setSpeakRunning(false);
+          setPhase(audioBlob ? 'playback' : 'answer');
+          if (mediaRecorderRef.current?.state === 'recording') mediaRecorderRef.current.stop();
           fb.toast('Time is up. Write what you said.');
           return 0;
         }
@@ -133,7 +203,7 @@ export function SpeakingDeskPage() {
       });
     }, 1000);
     return () => window.clearInterval(id);
-  }, [speakRunning, fb]);
+  }, [speakRunning, fb, audioBlob]);
 
   const mode = fb.currentDeskMode();
   const blind = mode === 'speak-blind';
@@ -163,11 +233,12 @@ export function SpeakingDeskPage() {
 
   const liveSave = (patch) => {
     if (!topic) return;
-    fb.setSpeakingDraft(topic.id, patch);
+    fb.setSpeakingDraft(topic.id, { ...patch, practiceMode: mode, targetErrorIds: draft.targetErrorIds || [] });
     fb.scheduleDraftPersist();
   };
 
   const randomTopic = () => {
+    if (audioBlob && !window.confirm('This recording has not been uploaded. Change question and discard it?')) return;
     const topics = fb.state.speakingTopics || [];
     const wanted = part === '3' ? '2' : part;
     const pool =
@@ -182,6 +253,33 @@ export function SpeakingDeskPage() {
     fb.setQuestionIndex(0);
   };
 
+  const finishAttempt = async (transcriptOnly = false) => {
+    if (recording || uploading) return;
+    const text = String(transcript || '').trim();
+    if (!text) { fb.toast('Nothing written yet.'); return; }
+    liveSave({ transcript, notes });
+    const attemptId = crypto.randomUUID();
+    let audioId = null;
+    if (audioBlob && !transcriptOnly) {
+      setUploading(true);
+      setUploadError(false);
+      try { await writePendingAudio(owner, topic.id, part, audioBlob); await putAudio(attemptId, audioBlob); audioId = attemptId; setAudioSaved(true); }
+      catch {
+        setUploadError(true);
+        fb.toast('Recording upload failed. Your recording is still available here.');
+        return;
+      } finally { setUploading(false); }
+    }
+    const currentDraft = fb.speakingDraft(topic.id);
+    fb.setPendingAttempt({
+      id: attemptId, essay: text, notes, part, question: topic,
+      parentSessionId: currentDraft.parentSessionId || null,
+      planId: fb.state.activePlanId, skill: 'speaking', audioId,
+      practiceMode: mode, targetErrorIds: currentDraft.targetErrorIds || [],
+    });
+    fb.openModal('save');
+  };
+
   if (!topic) {
     return (
       <section className="view active">
@@ -191,12 +289,12 @@ export function SpeakingDeskPage() {
   }
 
   return (
-    <section className="view active">
+    <section className="view active speaking-workspace">
       <div className="page-tools desk-tools">
         <p>
           {mockMode
             ? 'Timed mock. Record if you can, then write what you said.'
-            : 'One minute of notes, then speak. The recording stays on this account.'}
+            : part === '2' ? 'One minute to prepare, then two minutes to answer.' : 'Answer the question, then review your transcript.'}
         </p>
         <div className="desk-controls">
           {mockMode ? (
@@ -210,7 +308,9 @@ export function SpeakingDeskPage() {
                   type="button"
                   role="tab"
                   aria-selected={part === p}
+                  disabled={recording || uploading}
                   onClick={() => {
+                    if (p !== part && audioBlob && !window.confirm('This recording has not been uploaded. Change part and discard it?')) return;
                     fb.setDeskPart(p);
                     if (p === '1' || p === '3') fb.setQuestionIndex(0);
                     setSpeakSeconds(speakSecondsFor(p));
@@ -225,12 +325,15 @@ export function SpeakingDeskPage() {
             </div>
           )}
           {!mockMode ? (
-            <button className="btn text" type="button" onClick={randomTopic}>
-              Another question
+            <button className="btn text" type="button" onClick={randomTopic} disabled={recording || uploading}>
+              <Shuffle size={16} /> Another question
             </button>
           ) : null}
         </div>
       </div>
+      <ol className="speaking-phases" aria-label="Speaking practice phase">
+        {['prepare', 'answer', 'record', 'playback'].map((item, index) => <li key={item} aria-current={phase === item ? 'step' : undefined}><span>{index + 1}</span>{item === 'prepare' ? 'Prepare' : item === 'answer' ? 'Answer' : item === 'record' ? 'Record' : 'Playback'}</li>)}
+      </ol>
       <div className="desk-grid">
         <div className="prompt">
           <span className="pill blue">Part {part}</span>
@@ -239,9 +342,12 @@ export function SpeakingDeskPage() {
             {part === '1' || part === '3' ? (
               (questions.length ? questions : part === '3' ? ['Take the long turn a step further.'] : [topic.title]).map(
                 (item, index) => (
-                  <div
+                  <button
                     key={index}
                     className={`speak-q${index === qIndex ? ' current' : ''}`}
+                    type="button"
+                    aria-pressed={index === qIndex}
+                    disabled={recording || uploading}
                     onClick={() => {
                       fb.setQuestionIndex(index);
                       setSpeakSeconds(speakSecondsFor(part));
@@ -249,7 +355,7 @@ export function SpeakingDeskPage() {
                     }}
                   >
                     {index + 1}. {item}
-                  </div>
+                  </button>
                 ),
               )
             ) : (
@@ -339,7 +445,10 @@ export function SpeakingDeskPage() {
                         <button
                           className="btn line"
                           type="button"
-                          onClick={() => fb.navigate(`/review/${session.assessmentId}`)}
+                          onClick={() => {
+                            if (audioBlob && !window.confirm('This recording has not been uploaded. Leave this practice and discard it?')) return;
+                            fb.navigate(`/review/${session.assessmentId}`);
+                          }}
                         >
                           Score
                         </button>
@@ -363,7 +472,7 @@ export function SpeakingDeskPage() {
               <div className="editor-bar">
                 <span className="count">Glance at these while you speak</span>
                 <div className="btn-row">
-                  <button className="btn line" type="button" onClick={() => setNoteRunning((r) => !r)}>
+                  <button className="btn line" type="button" disabled={recording} onClick={() => { setPhase('prepare'); setSpeakRunning(false); setNoteRunning((r) => !r); }}>
                     {noteRunning ? 'Pause notes' : 'Start notes'}
                   </button>
                   <button
@@ -407,6 +516,7 @@ export function SpeakingDeskPage() {
                   liveSave({ notes: e.target.value, transcript });
                 }}
               />
+              <button className="btn line prepare-complete" type="button" onClick={() => { setNoteRunning(false); setPhase('answer'); setSpeakRunning(true); }} disabled={recording}><Play size={16} /> Start answer</button>
             </div>
           ) : null}
           <div className="editor-head">
@@ -416,8 +526,8 @@ export function SpeakingDeskPage() {
           <div className="editor-bar">
             <span className="count">{fb.wordCount(transcript)} words</span>
             <div className="btn-row">
-              <button className="btn line" type="button" onClick={() => setSpeakRunning((r) => !r)}>
-                {speakRunning ? 'Pause' : 'Start timer'}
+              <button className="btn line" type="button" disabled={recording} onClick={() => { setNoteRunning(false); setPhase('answer'); setSpeakRunning((r) => !r); }}>
+                {speakRunning ? <Pause size={16} /> : <Play size={16} />}{speakRunning ? 'Pause' : 'Start timer'}
               </button>
               <button
                 className="btn line"
@@ -427,9 +537,11 @@ export function SpeakingDeskPage() {
                   setSpeakRunning(false);
                   setNoteSeconds(60);
                   setSpeakSeconds(speakSecondsFor(part));
+                  setPhase(part === '2' ? 'prepare' : 'answer');
                 }}
+                disabled={recording}
               >
-                Reset
+                <RotateCcw size={16} /> Reset
               </button>
             </div>
           </div>
@@ -443,24 +555,32 @@ export function SpeakingDeskPage() {
                 <button
                   className="btn line"
                   type="button"
+                  disabled={uploading}
                   onClick={async () => {
+                    if (audioBlob && !window.confirm('This recording has not been uploaded. Replace it with a new recording?')) return;
+                    if (audioBlob) await deletePendingAudio(accountId(), topic.id, part);
+                    resetRecording();
                     setMicError(null);
                     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                       setMicError('This browser cannot record. You can still type the transcript.');
                       return;
                     }
                     try {
+                      const captureOwner = owner;
                       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                       streamRef.current = stream;
                       chunksRef.current = [];
                       const recorder = new MediaRecorder(stream);
+                      activeCapture.current = { owner: captureOwner, topicId: topic.id, part };
+                      const chunks = chunksRef.current;
                       mediaRecorderRef.current = recorder;
                       recorder.ondataavailable = (event) => {
-                        if (event.data && event.data.size) chunksRef.current.push(event.data);
+                        if (event.data && event.data.size) chunks.push(event.data);
                       };
                       recorder.onstop = () => {
                         const blob = new Blob(chunksRef.current, { type: recorder.mimeType || 'audio/webm' });
                         setAudioBlob(blob);
+                        void writePendingAudio(captureOwner, topic.id, part, blob);
                         setAudioUrl((prev) => {
                           if (prev) URL.revokeObjectURL(prev);
                           return URL.createObjectURL(blob);
@@ -470,20 +590,22 @@ export function SpeakingDeskPage() {
                           streamRef.current = null;
                         }
                         setRecording(false);
+                        setSpeakRunning(false);
+                        setPhase('playback');
                       };
                       recorder.start();
                       setRecording(true);
-                      setAudioBlob(null);
-                      setAudioUrl((prev) => {
-                        if (prev) URL.revokeObjectURL(prev);
-                        return null;
-                      });
+                      setPhase('record');
+                      setNoteRunning(false);
+                      setSpeakRunning(true);
+                      setUploadError(false);
+                      setAudioSaved(false);
                     } catch {
                       setMicError('Microphone permission was denied. You can still type the transcript.');
                     }
                   }}
                 >
-                  {audioBlob ? 'Re-record' : 'Record'}
+                  <Mic size={16} />{audioBlob ? 'Re-record' : 'Record'}
                 </button>
               ) : (
                 <button
@@ -495,19 +617,21 @@ export function SpeakingDeskPage() {
                     }
                   }}
                 >
-                  Stop
+                  <Square size={16} /> Stop
                 </button>
               )}
               {audioBlob ? (
-                <button className="btn line" type="button" onClick={clearRecording}>
+                <button className="btn line" type="button" onClick={() => { clearRecording(); setPhase('answer'); }} disabled={uploading}>
                   Clear audio
                 </button>
               ) : null}
             </div>
           </div>
           {micError ? <p className="file-hint warn-note">{micError}</p> : null}
-          {audioUrl ? <audio controls src={audioUrl} preload="metadata" /> : null}
+          {audioUrl ? <RecordingPlayer src={audioUrl} label="Current recording" onPlaybackChange={() => setPhase('playback')} /> : null}
+          {uploadError ? <div className="recording-upload-error" role="alert"><p>The recording could not upload. It remains available until you leave this practice.</p><div className="btn-row"><button className="btn line" disabled={uploading} onClick={() => finishAttempt()}><RotateCcw size={16} /> Retry upload</button>{audioUrl ? <a className="btn line" href={audioUrl} download="ielts-recording.webm"><Download size={16} /> Download recording</a> : null}<button className="btn line" disabled={uploading} onClick={() => finishAttempt(true)}>Continue with transcript only</button></div></div> : null}
           <textarea
+            aria-label="Speaking transcript"
             placeholder={
               audioBlob
                 ? 'Write what you said. Pronunciation stays unscored in the Markdown score request.'
@@ -520,7 +644,7 @@ export function SpeakingDeskPage() {
             }}
           />
           <div className="editor-foot">
-            <p>The draft saves itself. Recordings stay on this account.</p>
+            <p role="status">{uploading ? 'Uploading recording...' : fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Failed.' : fb.saveStatus === 'saving' ? 'Saving...' : fb.saveStatus === 'saved' ? 'Saved.' : 'Autosave on.'} {audioBlob && !audioSaved ? 'Recording not uploaded.' : 'Saved recordings are stored on your account.'}</p>
             <div>
               <button
                 className="btn line"
@@ -532,45 +656,15 @@ export function SpeakingDeskPage() {
                   if (saved) fb.toast('Draft saved.');
                 }}
               >
-                Save draft
+                <Save size={16} /> {fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Retry save' : 'Save draft'}
               </button>
               <button
                 className="btn primary"
                 type="button"
-                onClick={async () => {
-                  liveSave({ transcript, notes });
-                  const text = String(transcript || '').trim();
-                  if (!text) {
-                    fb.toast('Nothing written yet.');
-                    return;
-                  }
-                  const d = fb.speakingDraft(topic.id);
-                  const attemptId = crypto.randomUUID();
-                  let audioId = null;
-                  if (audioBlob) {
-                    audioId = attemptId;
-                    try {
-                      await putAudio(audioId, audioBlob);
-                    } catch {
-                      fb.toast('Could not store the recording. Saving the transcript only.');
-                      audioId = null;
-                    }
-                  }
-                  fb.setPendingAttempt({
-                    id: attemptId,
-                    essay: text,
-                    notes,
-                    part,
-                    question: topic,
-                    parentSessionId: d.parentSessionId || null,
-                    planId: fb.state.activePlanId,
-                    skill: 'speaking',
-                    audioId,
-                  });
-                  fb.openModal('save');
-                }}
+                disabled={recording || uploading}
+                onClick={() => finishAttempt()}
               >
-                Finished
+                {uploading ? 'Uploading...' : 'Finished'} <ArrowRight size={16} />
               </button>
             </div>
           </div>
