@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { studyStreak } from '../domain';
 import { useFieldbook } from '../context/FieldbookContext';
@@ -14,6 +14,13 @@ import { BackupModal } from '../features/modals/BackupModal';
 import { useAuthUser } from '../auth/useAuthUser';
 import { AccountMark } from '../features/account/AccountMark';
 import { SaveFailure } from './SaveFailure';
+import { Search, PanelLeftClose, PanelLeftOpen, Upload, BookOpen } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
+import { IconButton } from './IconButton';
+import { AccountMenu, CommandSearch, MobileNavigation } from './WorkbenchNavigation';
+import { ModalFrame } from './ModalFrame';
+import { AssessmentImportModal } from '../features/modals/AssessmentImportModal';
+import { LegalModal } from '../features/modals/LegalModal';
 
 const writingLinks = [
   { to: '/', end: true, label: 'Today', icon: NavIcons.today },
@@ -48,7 +55,7 @@ function chromeFor(pathname: string, activeSkill: string, deskName: string, topi
   if (pathname === '/speak') return { kicker: 'Practice', title: topicName || 'Speaking practice' };
   if (pathname.startsWith('/review')) return { kicker: 'Review', title: speaking ? 'Attempts and scores' : 'Essays and scores' };
   if (pathname.startsWith('/phrases')) return { kicker: 'Phrases', title: 'Words, phrases, patterns' };
-  if (pathname.startsWith('/progress')) return { kicker: 'Progress', title: 'The last four weeks' };
+  if (pathname.startsWith('/progress')) return { kicker: skillLabel, title: 'Progress' };
   if (pathname.startsWith('/account')) return { kicker: 'Account', title: 'Your account' };
   return { kicker: skillLabel, title: 'Today' };
 }
@@ -67,6 +74,10 @@ export function Shell() {
       return false;
     }
   });
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const [legalView, setLegalView] = useState<string | null>(null);
+  const reduced = useReducedMotion();
   const speaking = fb.activeSkill === 'speaking';
   const links = speaking ? speakingLinks : writingLinks;
   const streak = studyStreak(fb.state);
@@ -95,6 +106,10 @@ export function Shell() {
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        setSearchOpen((current) => !current);
+      }
       if (event.key === 'Escape') {
         if (fb.backupMenuOpen) {
           fb.setBackupMenuOpen(false);
@@ -118,6 +133,11 @@ export function Shell() {
       if (path === '/speak' || path === '/stories') next = '/write';
     }
     fb.setSkill(skill, next);
+  };
+
+  const exportBackup = () => {
+    fb.downloadFile(`ielts-fieldbook-backup-${fb.dateKey(new Date())}.json`, JSON.stringify(Object.assign({}, fb.persistShape(fb.state), { backupMeta: { origin: location.origin, exportedAt: new Date().toISOString() } }), null, 2), 'application/json');
+    fb.toast('Backup exported. Recordings stay in your account and are not in the JSON.');
   };
 
   const importAssessment = (file: File) => {
@@ -169,10 +189,10 @@ export function Shell() {
 
   return (
     <>
-      <div className={collapsed ? 'shell is-collapsed' : 'shell'}>
+      <div className={`${collapsed ? 'shell is-collapsed' : 'shell'}${speaking ? ' skill-speaking' : ''}`}>
         <aside className="rail">
           <div className="mark">
-            <div className="mark-box">{speaking ? 'S' : 'W'}</div>
+            <div className="mark-box"><BookOpen size={20} /></div>
             <div>
               <div className="mark-name">IELTS Fieldbook</div>
               <span className="mark-sub">{speaking ? 'Speaking' : 'Writing'}</span>
@@ -233,9 +253,7 @@ export function Shell() {
             onClick={toggleRail}
           >
             <span className="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 16 16" width="16" height="16">
-                {collapsed ? <path d="M6 3.5 10.5 8 6 12.5" /> : <path d="M10 3.5 5.5 8 10 12.5" />}
-              </svg>
+              {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
             </span>
             <span className="rail-toggle-label">{collapsed ? 'Expand' : 'Collapse'}</span>
           </button>
@@ -251,10 +269,12 @@ export function Shell() {
               <h1 className="title">{chrome.title}</h1>
             </div>
             <div className="actions">
-              <button className="btn text" type="button" onClick={() => fb.openModal('settings')}>
+              <IconButton label="Search workspace" onClick={() => setSearchOpen(true)}><Search size={18} /></IconButton>
+              <AccountMenu user={accountUser} onImportBackup={() => backupInput.current?.click()} onExportBackup={exportBackup} onLegal={setLegalView} />
+              <button className="btn text legacy-header-action" type="button" onClick={() => fb.openModal('settings')}>
                 Settings
               </button>
-              <div className="menu">
+              <div className="menu legacy-header-action">
                 <button
                   className="btn text"
                   type="button"
@@ -296,8 +316,8 @@ export function Shell() {
                   </button>
                 </div>
               </div>
-              <button className="btn primary" type="button" onClick={() => assessmentInput.current?.click()}>
-                Import score
+              <button className="btn primary import-score" type="button" onClick={() => fb.openFeedbackImport()}>
+                <Upload size={16} />Import score
               </button>
               <input
                 ref={backupInput}
@@ -324,11 +344,19 @@ export function Shell() {
             </div>
           </header>
           <SaveFailure failed={fb.saveFailed} />
-          <div className="page" key={location.pathname}>
-            <Outlet />
-          </div>
+          {fb.loadError ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
+          {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
+          {!fb.booted && !fb.loadError ? <div className="workspace-skeleton" aria-label="Loading workspace"><div /><div /><div /></div> : null}
+          <motion.div className="page" key={location.pathname} initial={reduced ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.24 }}>
+            <Suspense fallback={<div className="workspace-skeleton" aria-label="Loading page"><div /><div /></div>}>{fb.booted || fb.state.questions.length ? <Outlet /> : null}</Suspense>
+          </motion.div>
         </main>
       </div>
+      <MobileNavigation onMore={() => setMoreOpen(true)} />
+      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More"><div className="modal more-modal"><h3>Workspace</h3><div className="mobile-more-links">{links.map((link) => <NavLink key={link.to} to={link.to} onClick={() => setMoreOpen(false)}>{link.icon}{link.label}</NavLink>)}<button onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><NavLink to="/account" onClick={() => setMoreOpen(false)}>Account</NavLink></div><div className="skill-switch"><button aria-pressed={!speaking} onClick={() => switchSkill('writing')}>Writing</button><button aria-pressed={speaking} onClick={() => switchSkill('speaking')}>Speaking</button></div></div></ModalFrame>
+      <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <AssessmentImportModal />
+      <LegalModal view={legalView} onClose={() => setLegalView(null)} />
       <SettingsModal />
       <SaveModal />
       <HistoryModal />

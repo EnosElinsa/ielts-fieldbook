@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { practiceFromWeakness, rewritePlanDescription, syncPendingPlan, dateKey, dueErrors, dueLexicon, examPressure, assignStoryPlanTarget } from '../domain';
+import { latestPracticeRecommendation, rewritePlanDescription, syncPendingPlan, dateKey, dueErrors, dueLexicon, examPressure, assignStoryPlanTarget } from '../domain';
 import { sessionSkill, speakingKinds } from './format';
 
 export const planTemplates = {
@@ -359,6 +359,10 @@ function rewriteTemplate(state, latest) {
       questionId: latest.questionId,
     };
   }
+  if (['overview', 'outline', 'compare', 'body'].includes(latest.practiceMode)) {
+    return { kind: latest.type, title: 'Use the correction', description: rewritePlanDescription(linked, 'Revise the last practice from the feedback.'), deskMode: latest.practiceMode, questionId: latest.questionId, targetErrorIds: latest.targetErrorIds || [] };
+  }
+  if (latest.practiceMode === 'unknown') return null;
   return {
     kind: latest.type,
     title: 'Rewrite · Last essay',
@@ -415,7 +419,7 @@ export function ensurePlans(state, activeSkill, persistIfChanged) {
           sequence,
           templates,
           signals: {
-            recommendation: sequence === 0 ? practiceFromWeakness(state, templateSkill) : null,
+            recommendation: sequence === 0 ? latestPracticeRecommendation(state, templateSkill) : null,
             rewrite: rewriteTemplate(state, latest),
             dueErr,
             dueLex,
@@ -440,6 +444,8 @@ export function ensurePlans(state, activeSkill, persistIfChanged) {
           startedAt: null,
           completedAt: null,
           driver: template.driver || null,
+          targetErrorIds: (template.targetErrorIds || []).slice(),
+          sourceAssessmentId: template.sourceAssessmentId || null,
         };
         if (template.kind === 'stories') {
           const assignment = assignStoryPlanTarget(state);
@@ -452,7 +458,7 @@ export function ensurePlans(state, activeSkill, persistIfChanged) {
       } else if (refreshPlanCopy(plan)) copyChanged = true;
       if (plan.status === 'pending' && key === dateKey(new Date())) {
         const pendingSkill = skillFromKind(plan.kind, mix);
-        if (syncPendingPlan(plan, practiceFromWeakness(state, pendingSkill))) copyChanged = true;
+        if (syncPendingPlan(plan, latestPracticeRecommendation(state, pendingSkill))) copyChanged = true;
       }
       generated.push(plan);
       sequence += 1;

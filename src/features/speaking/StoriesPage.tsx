@@ -3,6 +3,8 @@ import { useMemo, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { formatDate } from '../../lib/format';
 import { Empty } from '../../components/ui';
+import { FilterMenu } from '../../components/ui';
+import { ArrowUpRight, Pencil, Plus, Trash2 } from 'lucide-react';
 
 function storySummary(story) {
   return [
@@ -18,14 +20,18 @@ function storySummary(story) {
 export function StoriesPage() {
   const fb = useFieldbook();
   const [search, setSearch] = useState('');
+  const [tag, setTag] = useState('all');
+  const [topic, setTopic] = useState('all');
+  const tags = [...new Set((fb.state.stories || []).flatMap((story) => story.tags || []))].sort();
+  const linkedTopics = fb.state.speakingTopics.filter((entry) => fb.state.stories.some((story) => (story.topicIds || []).map(String).includes(String(entry.id))));
   const items = useMemo(() => {
     const q = search.toLowerCase();
     return (fb.state.stories || []).filter((story) => {
       const haystack =
         `${story.title} ${story.people} ${story.place} ${story.time} ${story.event} ${story.feeling} ${(story.tags || []).join(' ')}`.toLowerCase();
-      return !q || haystack.includes(q);
+      return (!q || haystack.includes(q)) && (tag === 'all' || (story.tags || []).includes(tag)) && (topic === 'all' || (story.topicIds || []).map(String).includes(topic));
     });
-  }, [fb.state.stories, search]);
+  }, [fb.state.stories, search, tag, topic]);
 
   return (
     <section className="view active">
@@ -40,7 +46,7 @@ export function StoriesPage() {
             fb.openModal('story');
           }}
         >
-          Write a story
+          <Plus size={16} /> Write a story
         </button>
       </div>
       <div className="toolbar">
@@ -51,6 +57,8 @@ export function StoriesPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <FilterMenu label="Story theme" value={tag} onChange={setTag} options={[{ value: 'all', label: 'All themes' }, ...tags.map((value) => ({ value, label: value }))]} />
+        <FilterMenu label="Linked topic" value={topic} onChange={setTopic} options={[{ value: 'all', label: 'All topics' }, ...linkedTopics.map((entry) => ({ value: String(entry.id), label: entry.title }))]} />
       </div>
       <div className="lexicon-list">
         {items.length ? (
@@ -70,10 +78,8 @@ export function StoriesPage() {
                 </div>
                 {story.event ? <p className="lexicon-example">{story.event}</p> : null}
                 <div className="lexicon-tags">
-                  {names.map((name) => (
-                    <span className="pill" key={name}>
-                      {name}
-                    </span>
+                  {names.map((name, index) => (
+                    <button type="button" className="story-topic-link" key={`${name}-${index}`} onClick={() => fb.startSpeakingPractice(story.topicIds[index], '2', story.id)}>{name}<ArrowUpRight size={13} /></button>
                   ))}
                 </div>
                 <div className="lexicon-card-foot">
@@ -93,7 +99,7 @@ export function StoriesPage() {
                         fb.startSpeakingPractice(topicId, '2', story.id);
                       }}
                     >
-                      Practise
+                      Practise <ArrowUpRight size={15} />
                     </button>
                     <button
                       className="btn line"
@@ -104,21 +110,20 @@ export function StoriesPage() {
                         fb.openModal('story');
                       }}
                     >
-                      Edit
+                      <Pencil size={14} /> Edit
                     </button>
                     <button
                       className="btn line"
                       type="button"
-                      onClick={() => {
+                      onClick={async () => {
                         if (window.confirm(`Delete “${story.title}”?`)) {
                           const draft = structuredClone(fb.stateRef.current);
                           fb.removeStory(draft, story.id);
-                          fb.persistNow(draft);
-                          fb.toast('Story deleted.');
+                          if (await fb.persistNow(draft)) fb.toast('Story deleted.');
                         }
                       }}
                     >
-                      Delete
+                      <Trash2 size={14} /> Delete
                     </button>
                   </div>
                 </div>
@@ -127,9 +132,10 @@ export function StoriesPage() {
           })
         ) : (
           <Empty
-            message="No stories yet."
-            label="Write a story"
+            message={fb.state.stories.length ? 'No stories match your filters.' : 'No stories yet.'}
+            label={fb.state.stories.length ? 'Clear filters' : 'Write a story'}
             onAction={() => {
+              if (fb.state.stories.length) { setSearch(''); setTag('all'); setTopic('all'); return; }
               fb.setEditingStoryId(null);
               fb.setStoryPresetTopicIds([]);
               fb.openModal('story');

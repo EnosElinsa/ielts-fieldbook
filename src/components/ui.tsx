@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react';
+import { House, Library, PencilLine, RotateCcw, BookOpen, ChartNoAxesCombined, NotebookTabs, CircleUserRound, ChevronDown } from 'lucide-react';
 
 export function FilterMenu({
   label,
@@ -22,7 +23,14 @@ export function FilterMenu({
       if (!root.current?.contains(event.target as Node)) setOpen(false);
     };
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false);
+      const buttons = root.current?.querySelectorAll<HTMLButtonElement>('[role="option"]');
+      if (event.key === 'Escape') { setOpen(false); root.current?.querySelector('button')?.focus(); }
+      if ((event.key === 'ArrowDown' || event.key === 'ArrowUp') && buttons?.length) {
+        event.preventDefault();
+        const index = Array.from(buttons).indexOf(document.activeElement as HTMLButtonElement);
+        const next = event.key === 'ArrowDown' ? (index + 1) % buttons.length : (index - 1 + buttons.length) % buttons.length;
+        buttons[next].focus();
+      }
     };
     const onOther = (event: Event) => {
       if ((event as CustomEvent).detail !== listId) setOpen(false);
@@ -53,11 +61,10 @@ export function FilterMenu({
             return next;
           });
         }}
+        onKeyDown={(event) => { if (event.key === 'ArrowDown' && !open) { event.preventDefault(); setOpen(true); requestAnimationFrame(() => root.current?.querySelector<HTMLButtonElement>('[role="option"]')?.focus()); } }}
       >
         <span>{current?.label}</span>
-        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-          <path d="M4 6.2 8 10.2 12 6.2" />
-        </svg>
+        <ChevronDown size={14} aria-hidden="true" />
       </button>
       {open ? (
         <div className="filter-pop" id={listId} role="listbox" aria-label={label}>
@@ -273,50 +280,12 @@ export function Toast({ message, visible }: { message: string; visible: boolean 
 }
 
 export const NavIcons = {
-  today: (
-    <svg viewBox="0 0 16 16" width="16" height="16">
-      <path d="M2.5 7.2 8 2.8l5.5 4.4V13.2H10V9.2H6v4H2.5z" />
-    </svg>
-  ),
-  questions: (
-    <svg viewBox="0 0 16 16" width="16" height="16">
-      <rect x="2.2" y="2.2" width="4.6" height="4.6" />
-      <rect x="9.2" y="2.2" width="4.6" height="4.6" />
-      <rect x="2.2" y="9.2" width="4.6" height="4.6" />
-      <rect x="9.2" y="9.2" width="4.6" height="4.6" />
-    </svg>
-  ),
-  write: (
-    <svg viewBox="0 0 16 16" width="16" height="16">
-      <path d="M9.2 3.2 12.8 6.8 6 13.5H2.5V10z" />
-      <path d="M8.2 4.2 11.8 7.8" />
-    </svg>
-  ),
-  review: (
-    <svg viewBox="0 0 16 16" width="16" height="16">
-      <path d="M13 8a5 5 0 1 1-1.4-3.4" />
-      <path d="M12.2 2.2v3.2H9" />
-    </svg>
-  ),
-  phrases: (
-    <svg viewBox="0 0 16 16" width="16" height="16">
-      <path d="M8 1.8 9.1 6.2 13.4 8 9.1 9.8 8 14.2 6.9 9.8 2.6 8 6.9 6.2z" />
-    </svg>
-  ),
-  progress: (
-    <svg viewBox="0 0 16 16" width="16" height="16">
-      <path d="M3 13V8M8 13V3M13 13V6" />
-    </svg>
-  ),
-  stories: (
-    <svg viewBox="0 0 16 16" width="16" height="16">
-      <path d="M3 3.2h4.2A2 2 0 0 1 9 4.6V13a2 2 0 0 0-1.8-1.2H3zM13 3.2H8.8A2 2 0 0 0 7 4.6V13a2 2 0 0 1 1.8-1.2H13z" />
-    </svg>
-  ),
-  account: (
-    <svg viewBox="0 0 16 16" width="16" height="16">
-      <circle cx="8" cy="5.2" r="2.3" />
-      <path d="M3.2 13.2c.7-2.2 2.4-3.3 4.8-3.3s4.1 1.1 4.8 3.3" />
-    </svg>
-  ),
+  today: <House size={18} />,
+  questions: <Library size={18} />,
+  write: <PencilLine size={18} />,
+  review: <RotateCcw size={18} />,
+  phrases: <BookOpen size={18} />,
+  progress: <ChartNoAxesCombined size={18} />,
+  stories: <NotebookTabs size={18} />,
+  account: <CircleUserRound size={18} />,
 };

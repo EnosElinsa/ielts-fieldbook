@@ -1,5 +1,6 @@
 export {
   STATE_VERSION,
+  PRACTICE_MODES,
   DEFAULT_SETTINGS,
   BANK_CACHE_KEY,
   LEGACY_STORES,
@@ -20,6 +21,8 @@ export {
   reconstructAssessmentMarkdown,
   isBandScore,
   scoredCriteria,
+  assessmentPracticeMode,
+  assessmentIsComparable,
   resolveAssessmentEssay,
   importAssessmentText,
   syncAssessmentErrors,
@@ -75,6 +78,9 @@ export {
   practiceFromWeakness,
   todaySession,
   syncPendingPlan,
+  recommendationFromAssessment,
+  latestPracticeRecommendation,
+  syncNearestPendingPlan,
 } from './plans';
 
 export { wordCount, dateKey, hashText, firstSentence } from './utils';

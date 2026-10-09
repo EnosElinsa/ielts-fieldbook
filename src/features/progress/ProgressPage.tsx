@@ -1,259 +1,81 @@
 // @ts-nocheck
 import { useMemo, useState } from 'react';
-import {
-  criterionBands,
-  criterionLabel,
-  criterionSeries,
-  numericOveralls,
-  speakingCoverageCounts,
-  weakestCriterion,
-} from '../../domain';
+import { Link } from 'react-router-dom';
+import { CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { ArrowUpRight, CheckCheck, FileCheck2, PenLine } from 'lucide-react';
+import { criterionBands, criterionLabel, criterionSeries, numericOveralls } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { formatDate, sessionSkill } from '../../lib/format';
-import { planMatchesSkill as matchPlan } from '../../lib/planTemplates';
+import { planMatchesSkill } from '../../lib/planTemplates';
 import { Empty, FilterMenu } from '../../components/ui';
 
 export function ProgressPage() {
   const fb = useFieldbook();
-  const [filter, setFilter] = useState('all');
-  const speaking = fb.activeSkill === 'speaking';
-  const skillSessions = fb.state.sessions.filter((s) => sessionSkill(s) === fb.activeSkill);
-
-  const bars = useMemo(() => {
-    const now = new Date();
-    const list = [];
-    for (let index = 3; index >= 0; index -= 1) {
-      const end = new Date(now);
-      end.setHours(23, 59, 59, 999);
-      end.setDate(end.getDate() - index * 7);
-      const start = new Date(end);
-      start.setDate(start.getDate() - 6);
-      list.push({
-        label: `${start.getMonth() + 1}/${start.getDate()}`,
-        count: skillSessions.filter((session) => new Date(session.date) >= start && new Date(session.date) <= end)
-          .length,
-      });
-    }
-    return list;
-  }, [skillSessions]);
-
-  const max = Math.max(1, ...bars.map((bar) => bar.count));
-  const scores = numericOveralls(fb.state, fb.activeSkill, 8);
-  const series = criterionSeries(fb.state, fb.activeSkill, 8);
-  const bands = criterionBands(fb.state, fb.activeSkill, 5);
-  const weak = weakestCriterion(fb.state, fb.activeSkill);
-  const keys = Object.keys(bands.bands);
-  const targetBand = Number(fb.state.settings.targetBand);
-  const hasTarget = Number.isFinite(targetBand) && targetBand >= 1 && targetBand <= 9;
-  const seriesKeys = speaking ? ['FC', 'LR', 'GRA'] : ['TA', 'TR', 'CC', 'LR', 'GRA'];
-  const focus = speaking
-    ? fb.state.settings.speakingFocus === 'part1'
-      ? 'Part 1 first'
-      : fb.state.settings.speakingFocus === 'part2'
-        ? 'Part 2 first'
-        : 'Part 1 and Part 2'
-    : fb.state.settings.focus === 'task1'
-      ? 'Task 1 first'
-      : fb.state.settings.focus === 'task2'
-        ? 'Task 2 first'
-        : 'Task 1 and Task 2';
-  const mix =
-    fb.state.settings.skillMix === 'speaking'
-      ? 'Speaking only'
-      : fb.state.settings.skillMix === 'writing'
-        ? 'Writing only'
-        : 'Writing and speaking';
-  const plans = fb.state.plans
-    .slice()
-    .sort((a, b) => b.dateKey.localeCompare(a.dateKey))
-    .filter((plan) => (filter === 'all' || plan.status === filter) && matchPlan(plan, fb.activeSkill));
-  const names = { pending: 'Not started', in_progress: 'In progress', completed: 'Done' };
-  const assessmentMatches = (assessment) => {
-    if (assessment && assessment.skill === 'speaking') return speaking;
-    const sess = assessment?.sessionId ? fb.state.sessions.find((item) => item.id === assessment.sessionId) : null;
-    if (sess) return sessionSkill(sess) === fb.activeSkill;
-    return !speaking;
-  };
-
+  const [skill, setSkill] = useState(fb.activeSkill);
+  const [range, setRange] = useState('30');
+  const [task, setTask] = useState('all');
+  const [status, setStatus] = useState('all');
+  const speaking = skill === 'speaking';
+  const since = range === 'all' ? 0 : Date.now() - Number(range) * 86400000;
+  const inRange = (date) => new Date(date).getTime() >= since;
+  const sessions = fb.state.sessions.filter((session) => sessionSkill(session) === skill && inRange(session.date) &&
+    (task === 'all' || String(speaking ? session.part || session.type : session.type) === task));
+  const sessionIds = new Set(sessions.map((session) => session.id));
+  const assessments = fb.state.assessments.filter((assessment) => {
+    const source = fb.state.sessions.find((session) => session.id === assessment.sessionId);
+    return inRange(assessment.date) && (source ? sessionIds.has(source.id) : task === 'all' && (assessment.skill || 'writing') === skill);
+  });
+  const filteredState = { ...fb.state, sessions, assessments };
+  const scores = numericOveralls(filteredState, skill, 100);
+  const series = criterionSeries(filteredState, skill, 100);
+  const bands = criterionBands(filteredState, skill, 100);
+  const rewrites = sessions.filter((session) => session.parentSessionId);
+  const completedLoops = new Set(rewrites.filter((session) => fb.state.sessions.find((original) => original.id === session.parentSessionId)?.assessmentId).map((session) => session.parentSessionId)).size;
+  const target = Number(fb.state.settings.targetBand);
+  const hasTarget = Number.isFinite(target) && target >= 1 && target <= 9;
+  const keys = speaking ? ['FC', 'LR', 'GRA'] : ['TA', 'TR', 'CC', 'LR', 'GRA'];
+  const colors = { TA: '#2563eb', TR: '#2563eb', CC: '#0d9488', FC: '#0d9488', LR: '#c08417', GRA: '#dc526d' };
+  const chartData = scores.map((item, index) => {
+    const assessment = assessments.find((entry) => entry.id === item.id);
+    const source = sessions.find((entry) => entry.id === assessment?.sessionId);
+    const group = String(speaking ? source?.part || assessment?.part || '' : source?.type || assessment?.task?.replace('Task ', '') || '');
+    return { ...item, attempt: index + 1, overall: Number(item.overall), label: formatDate(item.date, true), group,
+      [`group${group}`]: Number(item.overall), ...(series.find((entry) => entry.id === item.id)?.scores || {}) };
+  });
+  const scoreGroups = [...new Set(chartData.map((item) => item.group))].filter(Boolean);
+  const weeks = useMemo(() => Array.from({ length: 4 }, (_, index) => {
+    const end = new Date(); end.setHours(23, 59, 59, 999); end.setDate(end.getDate() - (3 - index) * 7);
+    const start = new Date(end); start.setDate(start.getDate() - 6); start.setHours(0, 0, 0, 0);
+    return { label: start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }), count: sessions.filter((session) => new Date(session.date) >= start && new Date(session.date) <= end).length };
+  }), [sessions]);
+  const max = Math.max(1, ...weeks.map((week) => week.count));
+  const plans = fb.state.plans.filter((plan) => planMatchesSkill(plan, skill) && inRange(plan.dateKey) && (status === 'all' || status === plan.status)).slice().sort((a, b) => b.dateKey.localeCompare(a.dateKey));
+  const statusNames = { pending: 'Not started', in_progress: 'In progress', completed: 'Completed' };
   return (
-    <section className="view active">
-      <div className="page-tools">
-        <p>Score trend, and your current settings.</p>
+    <section className="view active progress-view">
+      <div className="page-tools"><p>Your practice, feedback and progress.</p><Link to="/review" className="btn line">Review attempts <ArrowUpRight size={16} /></Link></div>
+      <div className="toolbar">
+        <FilterMenu label="Progress skill" value={skill} onChange={(value) => { setSkill(value); setTask('all'); }} options={[{ value: 'writing', label: 'Writing' }, { value: 'speaking', label: 'Speaking' }]} />
+        <FilterMenu label="Time range" value={range} onChange={setRange} options={[{ value: '7', label: 'Last 7 days' }, { value: '30', label: 'Last 30 days' }, { value: '90', label: 'Last 90 days' }, { value: 'all', label: 'All time' }]} />
+        <FilterMenu label="Task or part" value={task} onChange={setTask} options={speaking ? [{ value: 'all', label: 'All parts' }, { value: '1', label: 'Part 1' }, { value: '2', label: 'Part 2' }, { value: '3', label: 'Part 3' }] : [{ value: 'all', label: 'All tasks' }, { value: '1', label: 'Task 1' }, { value: '2', label: 'Task 2' }]} />
+      </div>
+      <div className="progress-metrics">
+        {[{ label: 'Practice attempts', value: sessions.length, icon: PenLine }, { label: 'Feedback received', value: assessments.length, icon: FileCheck2 }, { label: 'Rewrites & retakes', value: rewrites.length, icon: CheckCheck }, { label: 'Feedback followed by practice', value: completedLoops, icon: ArrowUpRight }].map(({ label, value, icon: Icon }) => <div className="progress-metric" key={label}><Icon size={18} /><strong>{value}</strong><span>{label}</span></div>)}
+      </div>
+      <div className="progress-score-section">
+        <div className="section-head"><div><h3>Band trend</h3><p>{scores.length} comparable {scores.length === 1 ? 'sample' : 'samples'}{hasTarget ? ` · Target ${target}` : ''}</p></div></div>
+        {chartData.length ? <>
+          <div className="progress-chart" role="img" aria-label={`Band score trend: ${scores.map((score) => score.overall).join(', ')}`}>
+            <ResponsiveContainer width="100%" height="100%"><LineChart data={chartData} margin={{ top: 18, right: 18, bottom: 8, left: -18 }}><CartesianGrid stroke="var(--rule)" vertical={false} /><XAxis dataKey="attempt" tickLine={false} axisLine={false} tick={{ fill: 'var(--muted)', fontSize: 12 }} /><YAxis domain={[0, 9]} ticks={[0, 3, 5, 7, 9]} tickLine={false} axisLine={false} tick={{ fill: 'var(--muted)', fontSize: 12 }} /><Tooltip contentStyle={{ background: 'var(--sheet)', border: '1px solid var(--rule)', borderRadius: 6, color: 'var(--ink)' }} labelFormatter={(value) => chartData.find((entry) => entry.attempt === value)?.label || value} />{hasTarget ? <ReferenceLine y={target} stroke="var(--muted)" strokeDasharray="4 4" /> : null}{task === 'all' ? scoreGroups.map((group, index) => <Line key={group} type="linear" dataKey={`group${group}`} name={`${speaking ? 'Part' : 'Task'} ${group} overall`} stroke={['#2563eb', '#0d9488', '#dc526d'][index % 3]} strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} connectNulls isAnimationActive={false} />) : <Line type="linear" dataKey="overall" name="Overall" stroke="var(--blue)" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} isAnimationActive={false} />}{task !== 'all' ? keys.map((key) => <Line key={key} type="linear" dataKey={key} name={criterionLabel(key)} stroke={colors[key]} strokeWidth={1.5} dot={false} connectNulls={false} isAnimationActive={false} />) : null}</LineChart></ResponsiveContainer>
+          </div>
+          <div className="progress-legend">{task === 'all' ? scoreGroups.map((group, index) => <span key={group}><i style={{ background: ['#2563eb', '#0d9488', '#dc526d'][index % 3] }} />{speaking ? 'Part' : 'Task'} {group} · {chartData.filter((item) => item.group === group).length} samples</span>) : <><span><i style={{ background: 'var(--blue)' }} />Overall</span>{keys.filter((key) => bands.bands[key] != null).map((key) => <span key={key}><i style={{ background: colors[key] }} />{criterionLabel(key)} <strong>{bands.bands[key]}</strong></span>)}</>}</div>
+          <div className="progress-score-table"><table><caption className="sr-only">Comparable scores by attempt</caption><thead><tr><th>Date</th><th>Overall</th><th>Feedback</th></tr></thead><tbody>{scores.slice().reverse().map((score) => <tr key={score.id}><td>{formatDate(score.date, true)}</td><td>{score.overall}{score.estimated ? ' · estimated' : ''}</td><td><Link to={`/review/${score.id}`}>View feedback</Link></td></tr>)}</tbody></table></div>
+        </> : <Empty message="No comparable scores in this range." label="Import feedback" onAction={() => fb.openFeedbackImport()} />}
+        <p className="rule-note">Short exercises and historical attempts with an unknown training mode are excluded from band trends.{speaking ? ' Transcription-only feedback does not include pronunciation.' : ''}</p>
       </div>
       <div className="evidence-grid">
-        <div className="panel">
-          <h3>Recent scores</h3>
-          <div className="week-bars">
-            {scores.length ? (
-              scores.map((item, index) => (
-                <div className="week-bar" key={index}>
-                  <span>{item.estimated ? 'No audio' : 'Overall'}</span>
-                  <div className="track">
-                    {hasTarget ? (
-                      <span className="target-line" style={{ left: `${(targetBand / 9) * 100}%` }} title={`Target ${targetBand}`} />
-                    ) : null}
-                    <div className="fill" style={{ width: `${(Number(item.overall) / 9) * 100}%` }} />
-                  </div>
-                  <strong>{item.overall}</strong>
-                </div>
-              ))
-            ) : (
-              <div className="empty">No band scores yet.</div>
-            )}
-          </div>
-          {series.length ? (
-            <div className="mt-16">
-              <h4 className="series-title">Criteria by attempt</h4>
-              {hasTarget ? <p className="rule-note">Target band {targetBand}</p> : null}
-              <div className="criteria-series">
-                {series.map((item) => (
-                  <div className="series-attempt" key={item.id}>
-                    <div className="series-date">{formatDate(item.date, true)}</div>
-                    {seriesKeys.map((key) => {
-                      const score = item.scores[key];
-                      if (score == null) return null;
-                      return (
-                        <div className="week-bar" key={key}>
-                          <span>{criterionLabel(key)}</span>
-                          <div className="track">
-                            {hasTarget ? (
-                              <span className="target-line" style={{ left: `${(targetBand / 9) * 100}%` }} />
-                            ) : null}
-                            <div className="fill" style={{ width: `${(Number(score) / 9) * 100}%` }} />
-                          </div>
-                          <strong>{score}</strong>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : null}
-          <div className="mt-16">
-            {!keys.length ? (
-              <div className="empty">
-                <p>Import a score and this will show which criterion to practise first.</p>
-              </div>
-            ) : (
-              <div className="band-list">
-                {keys.map((key) => (
-                  <div key={key} className={`band-row${weak && weak.key === key ? ' is-low' : ''}`}>
-                    <span>
-                      {criterionLabel(key)}
-                      {weak && weak.key === key ? ' · first' : ''}
-                    </span>
-                    <strong>{bands.bands[key]}</strong>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          {speaking ? (
-            <div className="evidence-note">
-              {(() => {
-                const counts = speakingCoverageCounts(fb.state, fb.state.speakingTopics);
-                return (
-                  <p>
-                    Not seen {counts.unseen} · Has a story {counts.prepared} · Practised {counts.practiced} · Marked{' '}
-                    {counts.assessed}
-                  </p>
-                );
-              })()}
-            </div>
-          ) : null}
-        </div>
-        <div className="panel">
-          <h3>How much you practised</h3>
-          <div className="week-bars">
-            {bars.map((bar) => (
-              <div className="week-bar" key={bar.label}>
-                <span>{bar.label}</span>
-                <div className="track">
-                  <div className="fill" style={{ width: `${(bar.count / max) * 100}%` }} />
-                </div>
-                <strong>{bar.count}</strong>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className="evidence-grid mt-14">
-        <div className="panel">
-          <h3>Settings</h3>
-          <div className="evidence-note">
-            <p>
-              Skill: <strong>{speaking ? 'Speaking' : 'Writing'}</strong>
-            </p>
-            <p>
-              Mix: <strong>{mix}</strong>
-            </p>
-            <p>
-              Study days: <strong>{fb.state.settings.days.length} a week</strong>
-            </p>
-            <p>
-              Daily time: <strong>{fb.state.settings.dailyMinutes} min</strong>
-            </p>
-            <p>
-              Focus: <strong>{focus}</strong>
-            </p>
-            <p>
-              Target band: <strong>{fb.state.settings.targetBand || 'Not set'}</strong>
-            </p>
-            <p>
-              Exam date: <strong>{fb.state.settings.examDate || 'Not set'}</strong>
-            </p>
-            <p>
-              Attempts: <strong>{skillSessions.length}</strong>
-            </p>
-            <p>
-              Scores: <strong>{fb.state.assessments.filter(assessmentMatches).length}</strong>
-            </p>
-            <p>
-              Phrases: <strong>{fb.state.lexicon.length}</strong>
-            </p>
-            <p>
-              Stories: <strong>{(fb.state.stories || []).length}</strong>
-            </p>
-          </div>
-        </div>
-        <div className="panel">
-          <h3>Plans</h3>
-          <p>What you have done shows up here.</p>
-          <FilterMenu
-            label="Plan status"
-            value={filter}
-            onChange={setFilter}
-            options={[
-              { value: 'all', label: 'Any status' },
-              { value: 'pending', label: 'Not started' },
-              { value: 'in_progress', label: 'In progress' },
-              { value: 'completed', label: 'Done' },
-            ]}
-          />
-          <div className="plan-list">
-            {plans.length ? (
-              plans.map((plan) => (
-                <div className="work-row" key={plan.id}>
-                  <div className="work-name">
-                    {plan.title}
-                    <small>
-                      {plan.dateKey}
-                      {plan.completedAt ? ` · done ${formatDate(plan.completedAt, true)}` : ''}
-                    </small>
-                  </div>
-                  <span
-                    className={`pill ${plan.status === 'completed' ? 'green' : plan.status === 'in_progress' ? 'blue' : ''}`}
-                  >
-                    {names[plan.status]}
-                  </span>
-                </div>
-              ))
-            ) : (
-              <Empty message="No plans in this filter." />
-            )}
-          </div>
-        </div>
+        <section className="progress-section"><h3>Weekly practice</h3><div className="week-bars">{weeks.map((week) => <div className="week-bar" key={week.label}><span>{week.label}</span><div className="track"><div className="fill" style={{ width: `${week.count / max * 100}%` }} /></div><strong>{week.count}</strong></div>)}</div></section>
+        <section className="progress-section"><div className="section-head"><h3>Study plans</h3><FilterMenu label="Plan status" value={status} onChange={setStatus} options={[{ value: 'all', label: 'Any status' }, { value: 'pending', label: 'Not started' }, { value: 'in_progress', label: 'In progress' }, { value: 'completed', label: 'Completed' }]} /></div>{plans.length ? <div className="plan-list">{plans.map((plan) => <div className="work-row" key={plan.id}><div className="work-name">{plan.title}<small>{plan.dateKey}</small></div><span className={`pill ${plan.status === 'completed' ? 'green' : ''}`}>{statusNames[plan.status]}</span></div>)}</div> : <Empty message="No plans in this range." />}</section>
       </div>
     </section>
   );

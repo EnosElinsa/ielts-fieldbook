@@ -8,6 +8,7 @@ import {
 } from '../../lib/format';
 import { Empty, FilterMenu } from '../../components/ui';
 import { lexiconSentenceMatches } from '../../domain';
+import { Check, Eye, Pencil, Plus, Trash2, X } from 'lucide-react';
 
 function lexiconIsDue(item) {
   return !item.nextReviewAt || new Date(item.nextReviewAt) <= new Date();
@@ -28,6 +29,9 @@ export function LexiconPage() {
   const [status, setStatus] = useState('all');
   const [skill, setSkill] = useState('all');
   const [guesses, setGuesses] = useState({});
+  const [selected, setSelected] = useState(new Set());
+  const [study, setStudy] = useState(false);
+  const [studyIndex, setStudyIndex] = useState(0);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLocaleLowerCase();
@@ -51,6 +55,13 @@ export function LexiconPage() {
 
   const due = fb.state.lexicon.filter(lexiconIsDue).length;
   const mastered = fb.state.lexicon.filter((item) => item.status === 'mastered').length;
+  const studyItems = filtered.filter(lexiconIsDue);
+  const visibleItems = study ? studyItems.slice(Math.min(studyIndex, Math.max(0, studyItems.length - 1)), Math.min(studyIndex, Math.max(0, studyItems.length - 1)) + 1) : filtered;
+  const bulkStatus = async (status) => {
+    const draft = structuredClone(fb.stateRef.current);
+    draft.lexicon.forEach((item) => { if (selected.has(item.id)) { item.status = status; item.updatedAt = new Date().toISOString(); } });
+    if (await fb.persistNow(draft)) { setSelected(new Set()); fb.toast('Selected phrases updated.'); }
+  };
   const activePlan = fb.state.plans.find(
     (item) => item.id === fb.state.activePlanId && item.kind === 'lexicon' && item.status === 'in_progress',
   );
@@ -85,7 +96,7 @@ export function LexiconPage() {
               fb.openModal('lexicon');
             }}
           >
-            Add a phrase
+            <Plus size={16} /> Add a phrase
           </button>
         </div>
       </div>
@@ -148,9 +159,14 @@ export function LexiconPage() {
           <strong>{mastered}</strong> known
         </div>
       </div>
+      <div className="phrase-study-tools">
+        <button type="button" className={`btn ${study ? 'primary' : 'line'}`} disabled={!study && !studyItems.length} onClick={() => { setStudy(!study); setStudyIndex(0); setSelected(new Set()); }}><Eye size={16} />{study ? 'Exit review' : `Review due phrases (${studyItems.length})`}</button>
+        {study ? <span>{studyItems.length ? 'Current due phrase' : 'All phrases reviewed'}</span> : <label className="phrase-select-all"><input type="checkbox" checked={filtered.length > 0 && filtered.every((item) => selected.has(item.id))} onChange={(event) => setSelected(event.target.checked ? new Set(filtered.map((item) => item.id)) : new Set())} />Select visible</label>}
+        {selected.size ? <><span>{selected.size} selected</span><button className="btn line" type="button" onClick={() => bulkStatus('learning')}>Set learning</button><button className="btn line" type="button" onClick={() => bulkStatus('mastered')}><Check size={15} /> Set known</button><button className="btn text icon-btn" type="button" aria-label="Clear selection" title="Clear selection" onClick={() => setSelected(new Set())}><X size={16} /></button></> : null}
+      </div>
       <div className="lexicon-list">
-        {filtered.length ? (
-          filtered.map((item) => {
+        {visibleItems.length ? (
+          visibleItems.map((item) => {
             const revealed = Boolean(fb.revealedLexicon[item.id]);
             const sentence = item.category === 'sentence';
             const isDue = lexiconIsDue(item);
@@ -158,6 +174,7 @@ export function LexiconPage() {
             return (
               <article className={`lexicon-card${isDue ? ' is-due' : ''}`} key={item.id}>
                 <div className="lexicon-card-head">
+                  {!study ? <input type="checkbox" aria-label={`Select ${item.term}`} checked={selected.has(item.id)} onChange={(event) => setSelected((current) => { const next = new Set(current); if (event.target.checked) next.add(item.id); else next.delete(item.id); return next; })} /> : null}
                   <div>
                     <span className={`pill ${item.category === 'sentence' ? 'red' : item.category === 'phrase' ? 'blue' : ''}`}>
                       {lexiconLabels[item.category]}
@@ -184,6 +201,7 @@ export function LexiconPage() {
                     <input
                       className="search"
                       placeholder="Write the pattern"
+                      aria-label={`Recall pattern: ${item.meaning || item.term}`}
                       value={guesses[item.id] || ''}
                       onChange={(e) => setGuesses((g) => ({ ...g, [item.id]: e.target.value }))}
                     />
@@ -216,18 +234,19 @@ export function LexiconPage() {
                     {item.source ? ` · ${item.source}` : ''}
                   </span>
                   <div className="lexicon-actions">
-                    {isDue && !sentence && hideAnswer ? (
+                    {isDue && !sentence && revealed ? (
                       <>
                         {['again', 'good', 'easy'].map((grade) => (
                           <button
                             key={grade}
                             className={`btn ${grade === 'easy' ? 'primary' : 'line'}`}
                             type="button"
-                            onClick={() => {
+                            onClick={async () => {
                               const draft = structuredClone(fb.stateRef.current);
                               fb.reviewLexiconItem(draft, item.id, grade);
                               fb.setRevealedLexicon((r) => ({ ...r, [item.id]: true }));
-                              fb.persistNow(draft);
+                              const saved = await fb.persistNow(draft);
+                              if (!saved) return;
                               fb.toast(
                                 grade === 'again'
                                   ? 'Back in 1 day.'
@@ -259,21 +278,20 @@ export function LexiconPage() {
                         fb.openModal('lexicon');
                       }}
                     >
-                      Edit
+                      <Pencil size={14} /> Edit
                     </button>
                     <button
                       className="btn line"
                       type="button"
-                      onClick={() => {
+                      onClick={async () => {
                         if (window.confirm(`Delete “${item.term}”?`)) {
                           const draft = structuredClone(fb.stateRef.current);
                           fb.removeLexiconItem(draft, item.id);
-                          fb.persistNow(draft);
-                          fb.toast('Phrase deleted.');
+                          if (await fb.persistNow(draft)) fb.toast('Phrase deleted.');
                         }
                       }}
                     >
-                      Delete
+                      <Trash2 size={14} /> Delete
                     </button>
                   </div>
                 </div>
@@ -282,7 +300,7 @@ export function LexiconPage() {
           })
         ) : fb.state.lexicon.length ? (
           <Empty
-            message="Nothing matches."
+            message={study ? 'All due phrases have been reviewed.' : 'Nothing matches.'}
             label="Clear filters"
             onAction={() => {
               setSearch('');
@@ -290,6 +308,7 @@ export function LexiconPage() {
               setStatus('all');
               setSkill('all');
               fb.setLexiconDueOnly(false);
+              setStudy(false);
             }}
           />
         ) : (

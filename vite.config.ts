@@ -98,6 +98,18 @@ function privateBankPlugin(): Plugin {
 
 export default defineConfig({
   plugins: [react(), privateBankPlugin()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/wavesurfer.js')) return 'audio';
+          if (id.includes('node_modules/@supabase/')) return 'supabase';
+          if (id.includes('node_modules/motion') || id.includes('node_modules/framer-motion')) return 'motion';
+          if (id.includes('node_modules/@radix-ui/')) return 'radix';
+        },
+      },
+    },
+  },
   server: {
     port: 8000,
     strictPort: true,

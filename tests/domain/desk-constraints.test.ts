@@ -15,7 +15,6 @@ test('composeEssay stitches overview columns', () => {
     'The chart shows X.\n\nOverall, Y rose.',
   );
 });
-
 test('composeEssay stitches outline columns', () => {
   assert.equal(
     composeEssay(
@@ -40,6 +39,8 @@ test('normalizeDraft keeps optional sections and leaves string drafts alone', ()
     transcript: '',
     notes: '',
     parentSessionId: null,
+    practiceMode: 'unknown',
+    targetErrorIds: [],
   });
   const withSections = normalizeDraft({
     text: '',

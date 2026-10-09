@@ -18,7 +18,7 @@ Public repository: [EnosElinsa/ielts-fieldbook](https://github.com/EnosElinsa/ie
 ## Stack
 
 - React, TypeScript, Vite, Supabase
-- Study records use schema **v8**
+- Study records use schema **v9**. Historical attempts with an unknown training mode stay available but are excluded from comparative band trends.
 
 Copy `.env.example` to `.env` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. Apply the SQL files in `supabase/migrations` in order, then seed the shared question catalog and upload chart images:
 
@@ -39,6 +39,10 @@ After the hostname exists, add `https://ielts-fieldbook.pages.dev` to the Supaba
 Question charts live in the public `question-assets` storage bucket. `npm run seed:bank` uploads `local/question-assets` and stores those public URLs on the writing questions.
 
 ## Getting started
+
+The workbench supports Light, Dark, and System appearance from the account menu, mobile navigation, workspace search, question favourites, focused writing, audio playback, and feedback-driven practice. Appearance and writing split preferences stay in the browser; question favourites sync through account settings.
+
+Draft recovery is scoped to the signed-in account. Failed saves keep the draft and completion dialog open. Pending recordings are kept in IndexedDB when browser storage is available, and can be restored by returning to the same topic and part. Pending local audio is not included in JSON backups.
 
 ```bash
 npm install

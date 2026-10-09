@@ -11,7 +11,7 @@ async function objectPath(audioId: string) {
 }
 
 export async function putAudio(audioId: string, blob: Blob): Promise<void> {
-  if (!audioId || !blob || !supabaseConfigured()) return;
+  if (!audioId || !blob || !supabaseConfigured()) throw new Error('Recording storage is unavailable');
   const supabase = getSupabase();
   const path = await objectPath(audioId);
   const { error } = await supabase.storage.from(BUCKET).upload(path, blob, {

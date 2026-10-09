@@ -1,5 +1,9 @@
 // @ts-nocheck
 import { useEffect, useMemo, useState } from 'react';
+import * as Dialog from '@radix-ui/react-dialog';
+import * as Tooltip from '@radix-ui/react-tooltip';
+import { Expand, Minimize2, Undo2, Redo2, X, ZoomIn, Pause, Play, RotateCcw, Save, ArrowRight, Shuffle } from 'lucide-react';
+import { useDraftHistory } from './useDraftHistory';
 import { todaySession, composeEssay, writingSaveBlockers, writingWordSoftConfirm, normalizeSections, emptySections } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { attemptLabel, displayName, formatClock, formatDate, safeImage, typeName } from '../../lib/format';
@@ -20,6 +24,20 @@ export function WritingDeskPage() {
   const [timerSeconds, setTimerSeconds] = useState(selected.type === '1' ? 1200 : 2400);
   const [running, setRunning] = useState(false);
   const [checks, setChecks] = useState({});
+  const [focused, setFocused] = useState(false);
+  const [mobileTab, setMobileTab] = useState('answer');
+  const [split, setSplit] = useState(() => {
+    try { return Math.max(30, Math.min(55, Number(localStorage.getItem('fieldbook.writingSplit')) || 40)); }
+    catch { return 40; }
+  });
+  const history = useDraftHistory({ essay, sections });
+
+  useEffect(() => {
+    if (!focused) return;
+    const exit = (event) => { if (event.key === 'Escape' && !document.querySelector('[role="dialog"]')) setFocused(false); };
+    window.addEventListener('keydown', exit);
+    return () => window.removeEventListener('keydown', exit);
+  }, [focused]);
 
   useEffect(() => {
     const draft = fb.state.drafts[selected.id];
@@ -28,7 +46,8 @@ export function WritingDeskPage() {
     setTimerSeconds(selected.type === '1' ? 1200 : 2400);
     setRunning(false);
     setChecks({});
-  }, [selected.id]);
+    history.reset({ essay: fb.writingDraft(selected.id), sections: normalizeSections(draft && draft.sections) });
+  }, [selected.id, fb.draftRevision]);
 
   useEffect(() => {
     if (!running) return undefined;
@@ -57,6 +76,7 @@ export function WritingDeskPage() {
         : 'Task 2: answer every part, state your position, and develop two points with examples.',
   };
   const correction = todaySession(fb.state, null, 'writing').steps.find((step) => step.id === 'correction');
+  const targetErrorIds = [...new Set([...(fb.state.drafts[selected.id]?.targetErrorIds || []), ...(correction?.errorId ? [correction.errorId] : [])])];
   const attempts = useMemo(
     () =>
       fb.state.sessions
@@ -77,20 +97,46 @@ export function WritingDeskPage() {
 
   const persistDraft = (nextEssay, nextSections) => {
     const text = fragment ? composeEssay(mode, nextSections, nextEssay) : nextEssay;
-    fb.setWritingDraft(selected.id, text, { sections: nextSections });
+    fb.setWritingDraft(selected.id, text, { sections: nextSections, practiceMode: mode, targetErrorIds });
     fb.scheduleDraftPersist();
   };
 
   const onEssayChange = (value) => {
+    history.push({ essay: value, sections });
     setEssay(value);
     persistDraft(value, sections);
   };
 
   const onSectionChange = (key, value) => {
     const next = { ...sections, [key]: value };
+    history.push({ essay, sections: next });
     setSections(next);
     persistDraft(essay, next);
   };
+
+  const restore = (direction) => {
+    const value = direction === 'undo' ? history.undo() : history.redo();
+    if (!value) return;
+    setEssay(value.essay);
+    setSections(value.sections);
+    persistDraft(value.essay, value.sections);
+  };
+  const keyboardHistory = (event) => {
+    if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
+    if (event.key.toLowerCase() === 'z') {
+      event.preventDefault();
+      restore(event.shiftKey ? 'redo' : 'undo');
+    } else if (event.key.toLowerCase() === 'y') {
+      event.preventDefault();
+      restore('redo');
+    }
+  };
+  const iconButton = (label, Icon, action, disabled = false) => (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild><button className="btn line icon-btn" type="button" aria-label={label} onClick={action} disabled={disabled}><Icon size={17} /></button></Tooltip.Trigger>
+      <Tooltip.Portal><Tooltip.Content className="tool-tooltip" sideOffset={6}>{label}</Tooltip.Content></Tooltip.Portal>
+    </Tooltip.Root>
+  );
 
   const openSave = () => {
     const text = String(composed || '').trim();
@@ -106,16 +152,18 @@ export function WritingDeskPage() {
     const soft = writingWordSoftConfirm(mode, selected.type, text);
     if (soft && !window.confirm(soft)) return;
     fb.setChecklistToastNeeded(false);
-    fb.setWritingDraft(selected.id, text, { sections: fragment ? sections : emptySections() });
+    fb.setWritingDraft(selected.id, text, { sections: fragment ? sections : emptySections(), practiceMode: mode, targetErrorIds });
     if (!fb.flushDraftPersist()) fb.persistNow();
     fb.setPendingAttempt({
       id: crypto.randomUUID(),
       essay: text,
       question: selected,
-      parentSessionId: fb.speakingDraft(selected.id).parentSessionId || null,
+      parentSessionId: fb.state.drafts[selected.id]?.parentSessionId || null,
       planId: fb.state.activePlanId,
       skill: 'writing',
       reviewErrorId: correction ? correction.errorId : null,
+      practiceMode: mode,
+      targetErrorIds,
     });
     fb.openModal('save');
   };
@@ -128,19 +176,21 @@ export function WritingDeskPage() {
         style={{ minHeight }}
         placeholder={placeholder}
         value={sections[key] || ''}
+        onKeyDown={keyboardHistory}
         onChange={(e) => onSectionChange(key, e.target.value)}
       />
     </label>
   );
 
   return (
-    <section className="view active">
+    <Tooltip.Provider delayDuration={250}><section className={`view active writing-workspace${focused ? ' focus-workspace' : ''}`}>
       <div className="page-tools desk-tools">
         <p>
           {selected.type === '1' ? 'Task 1 · at least 150 words · 20 minutes.' : 'Task 2 · at least 250 words · 40 minutes.'}{' '}
-          The draft saves itself.
+          <span className="draft-status" role="status">{fb.saveStatus === 'saving' ? 'Saving...' : fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Failed' : fb.saveStatus === 'saved' ? 'Saved' : 'Autosave on'}</span>
         </p>
         <div className="desk-controls">
+          {iconButton(focused ? 'Exit focus mode' : 'Enter focus mode', focused ? Minimize2 : Expand, () => setFocused((value) => !value))}
           <button
             className="btn text"
             type="button"
@@ -151,19 +201,28 @@ export function WritingDeskPage() {
               fb.chooseQuestion(next.id);
             }}
           >
-            Another question
+            <Shuffle size={16} /> Another question
           </button>
         </div>
       </div>
-      <div className="desk-stack">
-        <div className="prompt">
+      <div className="workspace-layout-tools">
+        <div className="mobile-desk-tabs" role="tablist" aria-label="Writing workspace">
+          {['prompt', 'answer'].map((tab) => <button key={tab} className={mobileTab === tab ? 'active' : ''} role="tab" aria-selected={mobileTab === tab} aria-controls={`writing-${tab}`} onClick={() => setMobileTab(tab)}>{tab === 'prompt' ? 'Prompt' : 'Answer'}</button>)}
+        </div>
+        <label className="split-control">Prompt width<input type="range" aria-label="Prompt panel width" min="30" max="55" value={split} onChange={(event) => { const value = Number(event.target.value); setSplit(value); try { localStorage.setItem('fieldbook.writingSplit', String(value)); } catch { /* Browser preference is optional. */ } }} /><span>{split}%</span></label>
+      </div>
+      <div className="desk-stack" style={{ '--prompt-share': `${split}fr`, '--answer-share': `${100 - split}fr` }}>
+        <div className={`prompt${mobileTab === 'prompt' ? ' mobile-active' : ''}`} id="writing-prompt">
           <span className="pill blue">{typeName(selected)}</span>
           <h3>{displayName(selected.name)}</h3>
           <div className={image ? 'prompt-with-figure' : 'prompt-body'}>
             <div className="prompt-copy">{selected.prompt}</div>
             {image ? (
               <figure className="prompt-figure">
-                <img src={image} alt="Task chart" />
+                <Dialog.Root>
+                  <Dialog.Trigger asChild><button type="button" className="figure-zoom" aria-label="Zoom task chart"><img src={image} alt="Task chart" /><span><ZoomIn size={16} /> Zoom</span></button></Dialog.Trigger>
+                  <Dialog.Portal><Dialog.Overlay className="chart-dialog-overlay" /><Dialog.Content className="chart-dialog-content"><div className="chart-dialog-head"><Dialog.Title>Task chart</Dialog.Title><Dialog.Close asChild><button className="btn line icon-btn" aria-label="Close task chart"><X size={20} /></button></Dialog.Close></div><Dialog.Description className="sr-only">Full-size chart for the current writing prompt.</Dialog.Description><div className="chart-dialog-image"><img src={image} alt="Task chart enlarged" /></div></Dialog.Content></Dialog.Portal>
+                </Dialog.Root>
               </figure>
             ) : null}
           </div>
@@ -251,6 +310,7 @@ export function WritingDeskPage() {
                           });
                           setEssay(session.essay);
                           setSections(emptySections());
+                          history.reset({ essay: session.essay, sections: emptySections() });
                           const saved = await fb.persistNow();
                           if (saved) fb.toast('Copied into a new draft.');
                         }}
@@ -275,7 +335,7 @@ export function WritingDeskPage() {
             </div>
           </div>
         </div>
-        <div className={`editor${running ? ' is-writing' : ''}`}>
+        <div className={`editor${running ? ' is-writing' : ''}${mobileTab === 'answer' ? ' mobile-active' : ''}`} id="writing-answer">
           <div className="editor-head">
             <h3>{fragment ? 'Fragment draft' : 'Draft'}</h3>
             <span className={`timer${running ? ' is-live' : ''}`}>{formatClock(timerSeconds)}</span>
@@ -294,8 +354,10 @@ export function WritingDeskPage() {
               ) : null}
             </div>
             <div className="btn-row">
+              {iconButton('Undo', Undo2, () => restore('undo'), !history.canUndo)}
+              {iconButton('Redo', Redo2, () => restore('redo'), !history.canRedo)}
               <button className="btn line" type="button" onClick={() => setRunning((r) => !r)}>
-                {running ? 'Pause' : 'Start timer'}
+                {running ? <Pause size={15} /> : <Play size={15} />}{running ? 'Pause' : 'Start timer'}
               </button>
               <button
                 className="btn line"
@@ -305,7 +367,7 @@ export function WritingDeskPage() {
                   setTimerSeconds(selected.type === '1' ? 1200 : 2400);
                 }}
               >
-                Reset
+                <RotateCcw size={15} /> Reset
               </button>
             </div>
           </div>
@@ -338,6 +400,8 @@ export function WritingDeskPage() {
                 data-testid="essay-input"
                 placeholder="Write your answer here…"
                 value={essay}
+                aria-label="Writing answer"
+                onKeyDown={keyboardHistory}
                 onChange={(e) => onEssayChange(e.target.value)}
               />
             </div>
@@ -349,21 +413,21 @@ export function WritingDeskPage() {
                 className="btn line"
                 type="button"
                 onClick={async () => {
-                  fb.setWritingDraft(selected.id, composed, { sections });
+                  fb.setWritingDraft(selected.id, composed, { sections, practiceMode: mode, targetErrorIds });
                   const pending = fb.flushDraftPersist();
                   const saved = await (pending ?? fb.persistNow());
                   if (saved) fb.toast('Draft saved.');
                 }}
               >
-                Save draft
+                <Save size={16} /> {fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Retry save' : 'Save draft'}
               </button>
               <button className="btn primary" type="button" onClick={openSave} data-testid="writing-finished">
-                Finished
+                Finished <ArrowRight size={16} />
               </button>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </section></Tooltip.Provider>
   );
 }

@@ -43,7 +43,7 @@ test('migrates legacy data without losing essays or arrays', () => {
     assessments: [{ id: 'a1', text: 'legacy' }],
     settings: { dailyMinutes: 45 },
   });
-  assert.equal(migrated.schemaVersion, 8);
+  assert.equal(migrated.schemaVersion, 9);
   assert.equal(migrated.sessions[0].essay, essay);
   assert.equal(migrated.sessions[0].questionId, '1342');
   assert.equal(migrated.assessments.length, 1);
@@ -51,7 +51,6 @@ test('migrates legacy data without losing essays or arrays', () => {
   assert.ok(Array.isArray(migrated.plans));
   assert.ok(Array.isArray(migrated.lexicon));
 });
-
 test('migrates a v5 writing session to skill writing without losing the essay', () => {
   const migrated = core.migrateState({
     schemaVersion: 5,
@@ -60,7 +59,7 @@ test('migrates a v5 writing session to skill writing without losing the essay', 
     settings: { dailyMinutes: 40, focus: 'task2' },
     drafts: { '1342': 'draft text' },
   });
-  assert.equal(migrated.schemaVersion, 8);
+  assert.equal(migrated.schemaVersion, 9);
   assert.equal(migrated.sessions[0].skill, 'writing');
   assert.equal(migrated.sessions[0].essay, essay);
   assert.equal(migrated.sessions[0].questionId, '1342');
@@ -175,14 +174,14 @@ test('builds a versioned assessment request with the complete rewrite contract',
     { id: 'session-1', essay: 'Candidate essay.', words: 2 },
     { id: '1342', type: '1', prompt: 'Describe the chart.', image: 'question-assets/1342.png' },
   );
-  assert.match(request, /review_contract_version: 2/);
+  assert.match(request, /review_contract_version: writing3/);
   assert.match(request, /visual_attachment_required: true/);
   assert.match(request, /visual_filename: 1342\.png/);
   assert.match(request, /## Candidate response\n\nCandidate essay\./);
-  assert.match(request, /## 原文问题与修改说明/);
-  assert.match(request, /## 完整改写稿/);
-  assert.match(request, /## 语言积累建议\n\nSelect 3–8 reusable/);
-  assert.doesNotMatch(request, /语言积累建议\\n/);
+  assert.match(request, /## Edits/);
+  assert.match(request, /## Full rewrite/);
+  assert.match(request, /## Vocabulary suggestions\n\nSelect 3-8 reusable/);
+  assert.doesNotMatch(request, /Vocabulary suggestions\\n/);
   assert.match(request, /at least 150 words for Task 1/);
   assert.match(request, /Do not return only an Overview/);
 });

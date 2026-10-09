@@ -4,7 +4,8 @@ import { normalizeStory, dedupeStories } from './stories';
 import { dedupeLexicon } from './lexicon';
 import { wordCount, hashText, dateKey, makeId, nowIso, clone } from './utils';
 
-export const STATE_VERSION = 8;
+export const STATE_VERSION = 9;
+export const PRACTICE_MODES = ['unknown', 'overview', 'outline', 'compare', 'body', 'timed', 'full', 'speak-blind'];
 export const BANK_CACHE_KEY = 'ielts-fieldbook-bank-cache';
 export const LEGACY_STORES = ['ielts-writing-fieldbook-v3', 'ielts-writing-fieldbook-v2', 'ielts-writing-fieldbook-v1'];
 export const DEFAULT_SETTINGS = {
@@ -20,10 +21,10 @@ export const DEFAULT_SETTINGS = {
 
 export function normalizeDraft(raw) {
   if (raw == null || typeof raw === 'boolean') {
-    return { text: raw == null ? '' : String(raw), transcript: '', notes: '', parentSessionId: null };
+    return { text: raw == null ? '' : String(raw), transcript: '', notes: '', parentSessionId: null, practiceMode: 'unknown', targetErrorIds: [] };
   }
   if (typeof raw === 'string' || typeof raw === 'number') {
-    return { text: String(raw), transcript: '', notes: '', parentSessionId: null };
+    return { text: String(raw), transcript: '', notes: '', parentSessionId: null, practiceMode: 'unknown', targetErrorIds: [] };
   }
   const source = typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
   const draft = {
@@ -31,6 +32,10 @@ export function normalizeDraft(raw) {
     transcript: String(source.transcript || ''),
     notes: String(source.notes || ''),
     parentSessionId: source.parentSessionId || null,
+    practiceMode: PRACTICE_MODES.includes(source.practiceMode) ? source.practiceMode : 'unknown',
+    targetErrorIds: Array.isArray(source.targetErrorIds)
+      ? source.targetErrorIds.map(value => String(value)).filter(Boolean)
+      : [],
   };
   if (source.sections != null && typeof source.sections === 'object' && !Array.isArray(source.sections)) {
     const keys = ['intro', 'overview', 'position', 'pointA', 'pointB', 'paragraph'];
@@ -78,7 +83,6 @@ export function persistShape(state) {
   payload.assessments = (state.assessments || []).map(item => {
     if (!assessmentHasStructure(item)) return item;
     const copy = Object.assign({}, item);
-    delete copy.rawText;
     return copy;
   });
   return payload;
@@ -155,6 +159,10 @@ export function migrateState(raw) {
     session.attemptKind = session.attemptKind || (session.parentSessionId ? 'rewrite' : 'original');
     session.parentSessionId = session.parentSessionId || null;
     session.assessmentId = session.assessmentId || null;
+    session.practiceMode = PRACTICE_MODES.includes(session.practiceMode) ? session.practiceMode : 'unknown';
+    session.targetErrorIds = Array.isArray(session.targetErrorIds)
+      ? session.targetErrorIds.map(value => String(value)).filter(Boolean)
+      : [];
     session.skill = session.skill === 'speaking' ? 'speaking' : 'writing';
     if (session.skill === 'speaking') {
       const part = String(session.part ?? '');
@@ -174,7 +182,11 @@ export function migrateState(raw) {
     criteria: [],
     rawText: item && item.text ? item.text : '',
     missingEssay: false,
-  }, item, { rawText: item && (item.rawText || item.text) || '' })).map(item => Object.assign(item, { contentHash: item.contentHash || hashText(item.rawText || '') })) : [];
+  }, item, { rawText: item && (item.rawText || item.text) || '' })).map(item => Object.assign(item, {
+    contentHash: item.contentHash || hashText(item.rawText || ''),
+    practiceMode: PRACTICE_MODES.includes(item.practiceMode) ? item.practiceMode : 'unknown',
+    targetErrorIds: Array.isArray(item.targetErrorIds) ? item.targetErrorIds.map(value => String(value)).filter(Boolean) : [],
+  })) : [];
   const assessmentsByContent = new Map();
   state.assessments.forEach(assessment => {
     const key = assessment.contentHash || assessment.id;
@@ -233,6 +245,7 @@ export function migrateState(raw) {
     startedAt: null,
     completedAt: null,
     driver: null,
+    targetErrorIds: [],
   }, item)) : [];
   state.drafts = migrateDrafts(source.drafts);
   state.stories = dedupeStories(Array.isArray(source.stories) ? source.stories.map(normalizeStory) : []);
@@ -266,6 +279,10 @@ export function createAttempt(state, input, deps) {
     part: ['1', '2', '3'].includes(String(input.part ?? '')) ? String(input.part) : '',
     notes: String(input.notes ?? ''),
     audioId: input.audioId || null,
+    practiceMode: PRACTICE_MODES.includes(input.practiceMode) ? input.practiceMode : 'full',
+    targetErrorIds: Array.isArray(input.targetErrorIds)
+      ? input.targetErrorIds.map(value => String(value)).filter(Boolean)
+      : [],
   };
   state.sessions.push(attempt);
   return attempt;

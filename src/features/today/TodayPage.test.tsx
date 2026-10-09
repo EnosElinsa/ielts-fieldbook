@@ -17,7 +17,7 @@ function renderPage() {
 const { openModal, examDate, fieldbookState, activeSkill } = vi.hoisted(() => ({
   openModal: vi.fn(),
   examDate: { value: '' },
-  fieldbookState: { current: null as ReturnType<typeof emptyState> | null },
+  fieldbookState: { current: null as (Omit<ReturnType<typeof emptyState>, 'sessions'> & { sessions: Record<string, unknown>[] }) | null },
   activeSkill: { value: 'writing' },
 }));
 

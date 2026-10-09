@@ -1,6 +1,11 @@
 import { FormEvent, useEffect, useState, type ReactNode } from 'react';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import { authError, type Mode } from './errors';
+import { accountId, resetAccountStore } from '../storage/remote';
+import { discardDraftRecovery } from '../storage/recovery';
+import { BookOpen, Moon, Sun } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { LegalModal } from '../features/modals/LegalModal';
 
 type SessionState = 'loading' | 'in' | 'out';
 type Mailbox = 'confirm' | 'reset' | null;
@@ -8,9 +13,9 @@ type Mailbox = 'confirm' | 'reset' | null;
 function Aside({ title }: { title: string }) {
   return (
     <section className="auth-aside">
-      <div className="mark-box">F</div>
-      <p className="kicker">Fieldbook</p>
-      <h1>{title}</h1>
+      <div className="mark-box"><BookOpen size={20} /></div>
+      <h1>IELTS Fieldbook</h1>
+      <p>{title}</p>
     </section>
   );
 }
@@ -28,6 +33,8 @@ export function AuthGate({ children }: { children: ReactNode }) {
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
   const [recovery, setRecovery] = useState(false);
+  const [legalView, setLegalView] = useState<string | null>(null);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     if (!supabaseConfigured()) return undefined;
@@ -316,11 +323,16 @@ export function AuthGate({ children }: { children: ReactNode }) {
           {mode === 'signup' ? 'I already have an account' : mode === 'reset' ? 'Back to sign in' : 'Create an account'}
         </button>
       </form>
+      <footer className="auth-footer"><button type="button" onClick={() => setLegalView('privacy')}>Privacy & terms</button><button type="button" onClick={() => setLegalView('feedback')}>Feedback</button><button type="button" aria-label={theme === 'dark' ? 'Use light theme' : 'Use dark theme'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>{theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}</button></footer>
+      <LegalModal view={legalView} onClose={() => setLegalView(null)} />
     </main>
   );
 }
 
 export async function signOut() {
   if (!supabaseConfigured()) return;
-  await getSupabase().auth.signOut();
+  const { error } = await getSupabase().auth.signOut();
+  if (error) throw error;
+  discardDraftRecovery(accountId());
+  resetAccountStore();
 }

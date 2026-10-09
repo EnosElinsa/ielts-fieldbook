@@ -1,6 +1,8 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { parseLexiconSuggestions } from './lexicon';
+import { PRACTICE_MODES } from './state';
+import { recommendationFromAssessment, syncNearestPendingPlan } from './plans';
 import { wordCount, hashText, dateKey, makeId, nowIso } from './utils';
 
 export function headingSection(text, heading) {
@@ -17,7 +19,7 @@ export function headingSection(text, heading) {
 
 export function metadata(text, key) {
   const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const match = String(text || '').match(new RegExp(`^${escaped}:\\s*(.+)$`, 'im'));
+  const match = String(text || '').match(new RegExp(`^${escaped}:[ \\t]*(.*)$`, 'im'));
   return match ? match[1].trim() : '';
 }
 
@@ -33,12 +35,12 @@ export function isUnscoredPronunciation(name, score) {
   return /pronunciation/i.test(String(name || '')) && /unscored|not scored|transcript only|no audio|not applicable|n\/a/i.test(String(score || ''));
 }
 
-export function parseCriteria(text) {
+export function parseCriteria(text, focused) {
   return String(text || '').split(/\r?\n/).map(line => line.trim()).filter(line => line.startsWith('|')).map(line => line.split('|').slice(1, -1).map(cell => cell.trim())).filter(cells => {
-    return cells.length >= 3 && !/^(项目|criterion)$/i.test(cells[0]) && (isBandScore(cells[1]) || isUnscoredPronunciation(cells[0], cells[1]));
+    return cells.length >= 3 && !/^(项目|criterion)$/i.test(cells[0]) && !/^[-:]+$/.test(cells[0]) && (focused ? Boolean(cells[1]) : isBandScore(cells[1]) || isUnscoredPronunciation(cells[0], cells[1]));
   }).map(cells => ({
     name: cells[0],
-    score: isBandScore(cells[1]) ? cells[1] : 'unscored (transcript only)',
+    score: isUnscoredPronunciation(cells[0], cells[1]) ? 'unscored (transcript only)' : cells[1],
     evidence: cells.slice(2).join(' | '),
   }));
 }
@@ -68,38 +70,49 @@ export function reconstructAssessmentMarkdown(assessment) {
     item.skill ? `skill: ${item.skill}` : '',
     item.part ? `part: ${item.part}` : '',
     item.task ? `task: ${item.task}` : '',
+    item.practiceMode ? `practice_mode: ${item.practiceMode}` : '',
+    item.targetErrorIds && item.targetErrorIds.length ? `target_error_ids: ${item.targetErrorIds.join(', ')}` : '',
     item.overall ? `overall: ${item.overall}` : '',
     '',
     '## Candidate response',
     '',
     item.candidateResponse || '',
     '',
-    '## 四项评分',
+    '## Criteria',
     '',
-    '| 项目 | 分数 | 依据 |',
+    '| Criterion | Score / Feedback | Evidence |',
     '|---|---:|---|',
     rows,
     '',
-    '## 总体判断',
+    '## Summary',
     '',
     item.summary || '',
   ];
-  if (item.priorities) blocks.push('', '## 最高优先级修改', '', item.priorities);
-  if (item.nextExercise) blocks.push('', '## 下一次 30 分钟练习', '', item.nextExercise);
+  if (item.priorities) blocks.push('', '## Priorities', '', item.priorities);
+  if (item.editNotes) blocks.push('', '## Edits', '', item.editNotes);
+  if (item.rewrittenResponse) blocks.push('', '## Full rewrite', '', item.rewrittenResponse);
+  if (item.vocabularySuggestions) blocks.push('', '## Vocabulary suggestions', '', item.vocabularySuggestions);
+  if (item.nextExercise) blocks.push('', '## Next practice', '', item.nextExercise);
   return blocks.filter((line, index) => line !== '' || blocks[index - 1] !== '').join('\n').trim() + '\n';
 }
 
 export function parseAssessmentFile(text, filename) {
   const rawText = String(text || '');
   const candidateResponse = headingSection(rawText, 'Candidate response');
-  const nextExercise = headingSection(rawText, '下一次 30 分钟练习') || metadata(rawText, 'next step');
-  const rewrittenResponse = headingSection(rawText, '完整改写稿') || headingSection(rawText, '完整修改稿');
+  const nextExercise = headingSection(rawText, 'Next practice') || headingSection(rawText, '下一次 30 分钟练习') || metadata(rawText, 'next step');
+  const rewrittenResponse = headingSection(rawText, 'Full rewrite') || headingSection(rawText, '完整改写稿') || headingSection(rawText, '完整修改稿');
+  const incomingMode = metadata(rawText, 'practice_mode') || metadata(rawText, 'practiceMode');
+  const practiceMode = PRACTICE_MODES.includes(incomingMode) ? incomingMode : 'unknown';
+  const focused = ['overview', 'outline', 'compare', 'body'].includes(practiceMode);
+  const targetErrorIds = metadata(rawText, 'target_error_ids').split(/[,;]/).map(value => value.trim()).filter(Boolean);
   const task = metadata(rawText, 'task');
   const skill = metadata(rawText, 'skill').toLowerCase() === 'speaking' ? 'speaking' : 'writing';
   const part = metadata(rawText, 'part');
-  const rewriteMinimum = skill === 'speaking' ? 0 : (task === 'Task 2' ? 250 : 150);
-  const lexiconSuggestions = parseLexiconSuggestions(headingSection(rawText, '语言积累建议'));
-  const criteria = parseCriteria(headingSection(rawText, '四项评分') || rawText);
+  const rewriteMinimum = focused || skill === 'speaking' ? 0 : (task === 'Task 2' ? 250 : 150);
+  const vocabularySuggestions = headingSection(rawText, 'Vocabulary suggestions') || headingSection(rawText, '语言积累建议');
+  const lexiconSuggestions = parseLexiconSuggestions(vocabularySuggestions.replace(/^\|\s*type\s*\|/gim, '| Category |'));
+  const criteria = parseCriteria(headingSection(rawText, 'Criteria') || headingSection(rawText, '四项评分') || rawText, focused);
+  const editNotes = headingSection(rawText, 'Edits') || headingSection(rawText, '原文问题与修改说明') || headingSection(rawText, '修改说明');
   const inventedPronunciation = criteria.some(item => /pronunciation/i.test(item.name) && isBandScore(item.score));
   return {
     filename: filename || 'score.md',
@@ -110,21 +123,24 @@ export function parseAssessmentFile(text, filename) {
     skill,
     part,
     task,
+    practiceMode,
+    targetErrorIds,
     reviewContractVersion: metadata(rawText, 'review_contract_version'),
     inventedPronunciation,
     overall: metadata(rawText, 'overall') || metadata(rawText, 'estimated_task_band'),
     candidateResponse,
     criteria,
-    summary: headingSection(rawText, '总体判断'),
-    priorities: headingSection(rawText, '最高优先级修改'),
-    editNotes: headingSection(rawText, '原文问题与修改说明') || headingSection(rawText, '修改说明'),
+    summary: headingSection(rawText, 'Summary') || headingSection(rawText, '总体判断'),
+    priorities: headingSection(rawText, 'Priorities') || headingSection(rawText, '最高优先级修改'),
+    editNotes,
     rewrittenResponse,
     rewriteWordCount: wordCount(rewrittenResponse),
     rewriteTooShort: Boolean(rewrittenResponse) && wordCount(rewrittenResponse) < rewriteMinimum,
-    editRows: parseEditRows(headingSection(rawText, '原文问题与修改说明') || headingSection(rawText, '修改说明')),
+    editRows: parseEditRows(editNotes),
     lexiconSuggestions,
+    vocabularySuggestions,
     // Keep the old field for imported assessments written against the
-    // previous contract. New requests must use 完整改写稿 instead.
+    // previous contract. New requests use the Full rewrite section.
     rewriteExample: headingSection(rawText, '改写示例'),
     nextExercise,
   };
@@ -132,24 +148,107 @@ export function parseAssessmentFile(text, filename) {
 
 export function buildAssessmentRequest(session, question) {
   const task = String(question && question.type) === '1' ? 'Task 1' : 'Task 2';
+  const mode = PRACTICE_MODES.includes(session.practiceMode) ? session.practiceMode : 'full';
+  const focused = ['overview', 'outline', 'compare', 'body', 'unknown'].includes(mode);
+  const targetErrors = (session.targetErrorIds || []).join(', ');
   const image = String(question && question.image || '');
-  const imageFilename = image.split('/').pop() || '';
-  const visual = image ? `visual_file: ${image}\nvisual_attachment_required: true\nvisual_filename: ${imageFilename}\n` : '';
-  return `# IELTS Writing assessment request\n\nreview_contract_version: 2\nsession_id: ${session.id}\nquestion_id: ${question.id}\ntask: ${task}\nword_count: ${session.words}\n${visual}\n## Task prompt\n\n${question.prompt}\n\n## Candidate response\n\n${session.essay}\n\n## Review instructions\n\nFollow these steps in order:\n1. Preserve session_id, question_id, task, and the Candidate response exactly.\n2. Assess Task Achievement/Task Response, Coherence and Cohesion, Lexical Resource, and Grammatical Range and Accuracy using the official IELTS Writing Band Descriptors.\n3. Quote or identify evidence from the Candidate response for important deductions.\n4. For Task 1, verify every trend, comparison, year, unit, and number against the attached visual. Never invent a number that is not shown.\n5. For Task 2, check that the response answers every part of the question, states a clear position, develops the main ideas, and includes a conclusion.\n6. Produce a complete rewritten answer based on the Candidate response. Do not return only an Overview, one paragraph, an outline, a list of replacement sentences, or an unrelated model answer.\n7. The rewrite must be ready to submit in an IELTS exam: at least 150 words for Task 1 and at least 250 words for Task 2.\n8. If the visual is unavailable, say so explicitly and do not guess Task 1 data.\n\nReturn only Markdown with the exact structure below.\n\nsession_id: <same session_id>\nquestion_id: <same question_id>\ntask: <same task>\noverall: <band>\n\n## Candidate response\n\n<full response verbatim>\n\n## 四项评分\n\n| 项目 | 分数 | 依据 |\n|---|---:|---|\n| Task Achievement / Task Response | | |\n| Coherence and Cohesion | | |\n| Lexical Resource | | |\n| Grammatical Range and Accuracy | | |\n\n## 总体判断\n\nExplain the main score-limiting issues and cite evidence from the Candidate response.\n\n## 最高优先级修改\n\nList the 3–8 highest-priority changes.\n\n## 原文问题与修改说明\n\n| 原文问题 | 修改后 | 原因 | 错误标签 |\n|---|---|---|---|\n| | | | TA-DATA / TA-OVERVIEW / CC-ORG / LR-COL / GRA-PREP |\n\n## 完整改写稿\n\nWrite the complete revised answer from beginning to end, based on the Candidate response. It must not be only a partial example.\n\n## 下一次 30 分钟练习\n\nOfficial criteria: https://ielts.org/cdn/ielts-guides/ielts-writing-key-assessment-criteria.pdf\n`;
+  const visual = image ? `visual_file: ${image}\nvisual_attachment_required: true\nvisual_filename: ${image.split('/').pop() || ''}\n` : '';
+  const scope = {
+    overview: 'Review the introduction and overview: accurate paraphrase, key trends, and a clear overview.',
+    outline: 'Review the position and two main points: coverage of the question, a clear position, and distinct support.',
+    compare: 'Review this comparison paragraph: accurate figures, meaningful comparisons, grouping, and cohesion.',
+    body: 'Review this body paragraph: a clear main idea, explanation, a relevant example, and cohesion.',
+    unknown: 'Review the submitted practice only; its original practice scope is unknown.',
+  };
+  const instructions = focused
+    ? `${scope[mode]} Do not assign an overall IELTS band or numeric criterion bands. Do not penalize missing sections of an entire essay or apply an entire-essay word minimum. Give focused feedback and revise only the submitted practice. Full rewrite is optional and, if supplied, must stay within this practice scope.`
+    : 'Assess all four writing criteria using the official IELTS Writing Band Descriptors. For Task 2, check every part of the question, a clear position, developed ideas, and a conclusion. Produce a complete rewritten answer based on the Candidate response. Do not return only an Overview, one paragraph, an outline, a list of replacement sentences, or an unrelated model answer. The rewrite must be ready to submit in an IELTS exam: at least 150 words for Task 1 and at least 250 words for Task 2.';
+  return `# IELTS Writing assessment request
+
+review_contract_version: writing3
+session_id: ${session.id}
+question_id: ${question.id}
+skill: writing
+task: ${task}
+practice_mode: ${mode}
+target_error_ids: ${targetErrors}
+word_count: ${session.words}
+${visual}
+## Task prompt
+
+${question.prompt}
+
+## Candidate response
+
+${session.essay}
+
+## Review instructions
+
+Preserve session_id, question_id, task, practice_mode, target_error_ids, and the Candidate response exactly.
+${instructions}
+Quote evidence from the Candidate response for important deductions. Check the targeted errors when target_error_ids are provided.
+For Task 1, verify every trend, comparison, year, unit, and number against the attached visual. Never invent a number that is not shown. If the visual is unavailable, say so explicitly and do not guess Task 1 data.
+
+Return only Markdown with the exact structure below.
+
+review_contract_version: writing3
+session_id: <same session_id>
+question_id: <same question_id>
+skill: writing
+task: <same task>
+practice_mode: <same practice_mode>
+target_error_ids: <same target_error_ids>
+overall: ${focused ? 'unscored (focused practice)' : '<band>'}
+
+## Candidate response
+
+<full response verbatim>
+
+## Criteria
+
+| Criterion | ${focused ? 'Feedback' : 'Score'} | Evidence |
+|---|---|---|
+| Task Achievement / Task Response | | |
+| Coherence and Cohesion | | |
+| Lexical Resource | | |
+| Grammatical Range and Accuracy | | |
+
+## Summary
+
+Explain the main issues and cite evidence from the Candidate response.
+
+## Priorities
+
+List the 3-8 highest-priority changes.
+
+## Edits
+
+| Original issue | Revised | Reason | Error tag |
+|---|---|---|---|
+| | | | TA-DATA / TA-OVERVIEW / CC-ORG / LR-COL / GRA-PREP |
+
+## Full rewrite
+
+${focused ? 'Optional: revise only the submitted practice, with no entire-essay minimum.' : 'Write the complete revised answer from beginning to end, based on the Candidate response.'}
+
+## Vocabulary suggestions
+
+Select 3-8 reusable words, phrases, or sentence patterns from the corrections. Do not invent expressions unrelated to this response.
+
+| Category | Expression | Meaning / Usage | Example | Tags |
+|---|---|---|---|---|
+| word / phrase / sentence | | | | |
+
+## Next practice
+
+Give one focused practice task based on this feedback.
+
+Official criteria: https://ielts.org/cdn/ielts-guides/ielts-writing-key-assessment-criteria.pdf
+`;
 }
 
 export function buildAssessmentRequestWithLexicon(session, question) {
-  const base = buildAssessmentRequest(session, question);
-  const lexiconSection = `## 语言积累建议
-
-Select 3–8 reusable words, phrases, or sentence patterns from the corrections and complete rewrite. Do not invent expressions unrelated to this response.
-
-| 类型 | 表达 | 释义/用法 | 例句 | 标签 |
-|---|---|---|---|---|
-| 词汇 / 词组 / 句式 | | | | |
-
-## 下一次 30 分钟练习`;
-  return base.replace('## 下一次 30 分钟练习', lexiconSection);
+  return buildAssessmentRequest(session, question);
 }
 
 export function resolveAssessmentEssay(state, parsed, deps) {
@@ -190,6 +289,8 @@ export function resolveAssessmentEssay(state, parsed, deps) {
       attemptKind: 'original',
       parentSessionId: null,
       assessmentId: null,
+      practiceMode: parsed.practiceMode || 'unknown',
+      targetErrorIds: (parsed.targetErrorIds || []).slice(),
     };
     state.sessions.push(session);
     return { session, created: true, reason: 'candidate_response' };
@@ -226,7 +327,7 @@ export function syncAssessmentErrors(state, assessment, linkedSession) {
 export function importAssessmentText(state, text, filename, deps) {
   const services = Object.assign({ id: () => makeId('assessment'), now: nowIso }, deps || {});
   const parsed = parseAssessmentFile(text, filename);
-  if (!parsed.overall && !parsed.criteria.length && !parsed.summary && !parsed.nextExercise) {
+  if (/^##\s+Review instructions\s*$/im.test(parsed.rawText) || (!parsed.overall && !parsed.criteria.length && !parsed.summary && !parsed.nextExercise)) {
     return { assessment: null, session: null, duplicate: false, invalid: true, reason: 'This file has no overall score, criteria, or summary. It looks like a request, not a marked script.' };
   }
   const duplicate = state.assessments.find(item => item.contentHash === parsed.contentHash);
@@ -255,10 +356,25 @@ export function importAssessmentText(state, text, filename, deps) {
     sessionId: resolution.session ? resolution.session.id : null,
     missingEssay: !resolution.session,
   });
+  if (resolution.session) {
+    assessment.skill = resolution.session.skill === 'speaking' ? 'speaking' : 'writing';
+    if (assessment.skill === 'speaking') assessment.part = resolution.session.part || assessment.part;
+  }
+  if (resolution.session && resolution.session.practiceMode && resolution.session.practiceMode !== 'unknown') {
+    assessment.practiceMode = resolution.session.practiceMode;
+    if (resolution.session.targetErrorIds && resolution.session.targetErrorIds.length) assessment.targetErrorIds = resolution.session.targetErrorIds.slice();
+    if (['overview', 'outline', 'compare', 'body'].includes(assessment.practiceMode)) assessment.rewriteTooShort = false;
+  }
   state.assessments.push(assessment);
   if (resolution.session) resolution.session.assessmentId = assessment.id;
   syncAssessmentErrors(state, assessment, resolution.session);
-  return { assessment, session: resolution.session, duplicate: false, resolution: resolution.reason };
+  const recommendation = recommendationFromAssessment(state, assessment);
+  if (recommendation) {
+    recommendation.targetErrorIds = state.errors.filter(error => error.sourceAssessmentId === assessment.id && !error.resolved).map(error => error.id);
+    recommendation.sourceAssessmentId = assessment.id;
+  }
+  const updatedPlan = recommendation ? syncNearestPendingPlan(state, recommendation, assessment.date) : null;
+  return { assessment, session: resolution.session, duplicate: false, resolution: resolution.reason, ...(recommendation ? { recommendation, updatedPlan } : {}) };
 }
 
 export function assessmentSkill(state, assessment) {
@@ -273,9 +389,19 @@ export function overallIsEstimated(assessment) {
   return (assessment.criteria || []).some(item => /pronunciation/i.test(item.name) && /unscored/i.test(String(item.score || '')));
 }
 
+export function assessmentPracticeMode(state, assessment) {
+  const session = assessment && assessment.sessionId ? (state.sessions || []).find(item => item.id === assessment.sessionId) : null;
+  if (session) return PRACTICE_MODES.includes(session.practiceMode) ? session.practiceMode : 'unknown';
+  return assessment && PRACTICE_MODES.includes(assessment.practiceMode) ? assessment.practiceMode : 'unknown';
+}
+
+export function assessmentIsComparable(state, assessment) {
+  return ['full', 'timed'].includes(assessmentPracticeMode(state, assessment));
+}
+
 export function numericOveralls(state, skill, limit) {
   const wanted = skill === 'speaking' ? 'speaking' : 'writing';
-  return (state.assessments || []).filter(item => assessmentSkill(state, item) === wanted && isBandScore(item.overall))
+  return (state.assessments || []).filter(item => assessmentSkill(state, item) === wanted && assessmentIsComparable(state, item) && isBandScore(item.overall))
     .slice()
     .sort((left, right) => String(left.date || '').localeCompare(String(right.date || '')))
     .slice(-(limit || 8))
@@ -286,7 +412,7 @@ export function numericOveralls(state, skill, limit) {
 export function criterionSeries(state, skill, limit) {
   const wanted = skill === 'speaking' ? 'speaking' : 'writing';
   const order = wanted === 'speaking' ? ['FC', 'LR', 'GRA'] : ['TA', 'TR', 'CC', 'LR', 'GRA'];
-  return assessmentsForSkill(state, wanted, limit || 8).map((assessment) => {
+  return assessmentsForSkill(state, wanted, limit || 8, true).map((assessment) => {
     const scores = {};
     order.forEach((key) => {
       scores[key] = null;
@@ -308,7 +434,7 @@ export function criterionSeries(state, skill, limit) {
 
 export function latestCriteriaScores(state, skill) {
   const wanted = skill === 'speaking' ? 'speaking' : 'writing';
-  const last = (state.assessments || []).filter(item => assessmentSkill(state, item) === wanted)
+  const last = (state.assessments || []).filter(item => assessmentSkill(state, item) === wanted && assessmentIsComparable(state, item))
     .slice()
     .sort((left, right) => String(left.date || '').localeCompare(String(right.date || '')))
     .slice(-1)[0];
@@ -340,9 +466,9 @@ export function criterionBucket(name) {
   return null;
 }
 
-export function assessmentsForSkill(state, skill, limit) {
+export function assessmentsForSkill(state, skill, limit, comparableOnly) {
   const wanted = skill === 'speaking' ? 'speaking' : 'writing';
-  return (state.assessments || []).filter(item => assessmentSkill(state, item) === wanted)
+  return (state.assessments || []).filter(item => assessmentSkill(state, item) === wanted && (!comparableOnly || assessmentIsComparable(state, item)))
     .slice()
     .sort((left, right) => String(left.date || '').localeCompare(String(right.date || '')))
     .slice(-(limit || 5));
@@ -353,7 +479,7 @@ export function criterionBands(state, skill, limit) {
   const order = wanted === 'speaking' ? ['FC', 'LR', 'GRA'] : ['TA', 'TR', 'CC', 'LR', 'GRA'];
   const buckets = {};
   order.forEach(key => { buckets[key] = []; });
-  const recent = assessmentsForSkill(state, wanted, limit || 5);
+  const recent = assessmentsForSkill(state, wanted, limit || 5, true);
   recent.forEach(assessment => {
     (assessment.criteria || []).forEach(criterion => {
       if (!isBandScore(criterion.score)) return;
