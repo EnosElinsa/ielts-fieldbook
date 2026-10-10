@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter, Link, useLocation } from "react-router-dom";
+import { MemoryRouter, Link, useLocation, Routes, Route } from "react-router-dom";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { VocabularyPracticePage } from "./VocabularyPracticePage";
@@ -280,7 +280,7 @@ test("submits the complete attempt once and retries the same frozen commit after
     id,
   ]);
   expect(screen.getByRole("table")).toBeInTheDocument();
-  expect(screen.getByText("Session complete")).toBeInTheDocument();
+  expect(screen.getByRole('heading', {name: '1 of 2 correct'})).toBeInTheDocument();
   await user.click(screen.getByRole("button", { name: "Retry mistakes" }));
   expect(screen.getAllByRole("textbox")).toHaveLength(1);
   await user.type(
@@ -633,4 +633,13 @@ await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBe
 await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'my answer');await user.click(screen.getByRole('link',{name:'Leave for words'}));
 expect(screen.getByRole('dialog',{name:'Exit practice session'})).toBeInTheDocument();await user.click(screen.getByRole('button',{name:'Cancel'}));expect(screen.getByText('/vocabulary/review')).toBeInTheDocument();
 await user.click(screen.getByRole('link',{name:'Leave for words'}));await user.click(screen.getByRole('button',{name:'Keep progress'}));expect(screen.getByText('/vocabulary/words')).toBeInTheDocument();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+});
+
+test('submitted group stays on history across refresh and word-detail return',async()=>{
+const user=userEvent.setup();groupFixture(2);fb.current.state.settings={vocabulary:{mode:'production'}};
+const view=render(<MemoryRouter initialEntries={['/vocabulary/study?bookId=test-book&unitId=test-group&dueOnly=false']}><Routes><Route path='/vocabulary/study' element={<VocabularyPracticePage/>}/><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes><CurrentRoute/></MemoryRouter>);
+await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());expect(screen.getByRole('button',{name:'Review mode'})).toHaveTextContent('Dictation');await user.click(screen.getByRole('button',{name:'Start session'}));await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'word0');await user.type(screen.getByRole('textbox',{name:'Answer 2'}),'word1');await user.click(screen.getByRole('button',{name:'Submit session'}));
+const state=fb.current.persistVocabularySession.mock.calls[0][0];const id=state.vocabularySessions[0].id;expect(await screen.findByRole('table')).toBeInTheDocument();expect(screen.getByText(`/vocabulary/history/${id}`)).toBeInTheDocument();
+const returnTo=new URL(screen.getAllByRole('link',{name:/Details/})[0].getAttribute('href')!,'https://test.test').searchParams.get('returnTo')!;expect(returnTo).toContain(`/vocabulary/history/${id}`);expect(returnTo).toContain('bookId=test-book');view.unmount();fb.current.state=state;
+render(<MemoryRouter initialEntries={[returnTo]}><Routes><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes><CurrentRoute/></MemoryRouter>);expect(await screen.findByRole('table')).toBeInTheDocument();expect(screen.getByText(`/vocabulary/history/${id}`)).toBeInTheDocument();expect(screen.queryByRole('button',{name:'Start session'})).not.toBeInTheDocument();
 });
