@@ -6,7 +6,6 @@ import {
   ArrowRight,
   BookOpen,
   Check,
-  Download,
   Pencil,
   Plus,
   RotateCcw,
@@ -1109,38 +1108,10 @@ export function VocabularyProgressPage() {
   const entries = fb.state.vocabulary || [];
   const evidence = fb.state.vocabularyEvidence || [];
   const reviews = fb.state.vocabularyReviews || [];
-  const exportProgress = () => {
-    const content = JSON.stringify(
-      {
-        exportedAt: new Date().toISOString(),
-        vocabulary: entries,
-        vocabularyStates: states,
-        vocabularyReviews: reviews,
-        vocabularyEvidence: evidence,
-        vocabularyActivities: fb.state.vocabularyActivities || [],
-        vocabularySessions: fb.state.vocabularySessions || [],
-        wordbookProgress: fb.state.wordbookProgress || [],
-      },
-      null,
-      2,
-    );
-    const url = URL.createObjectURL(
-      new Blob([content], { type: "application/json" }),
-    );
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "vocabulary-progress.json";
-    a.click();
-    URL.revokeObjectURL(url);
-  };
   return (
     <VocabularyLayout>
       <div className="page-tools">
         <h2>Vocabulary progress</h2>
-        <button type="button" className="btn line" onClick={exportProgress}>
-          <Download size={16} />
-          Export progress
-        </button>
       </div>
       <VocabularyStats
         values={[

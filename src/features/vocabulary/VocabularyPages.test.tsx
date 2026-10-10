@@ -220,3 +220,5 @@ test("history links submitted sessions to independent result routes", () => {
 });
 
 test("wordbooks have no progress import action",()=>{fixture();showBook();expect(screen.queryByRole('button',{name:/Import wordbook progress/})).not.toBeInTheDocument();});
+
+test("vocabulary progress keeps backup export out of the page",()=>{render(<MemoryRouter><VocabularyProgressPage/></MemoryRouter>);expect(screen.queryByRole('button',{name:/Export progress/})).not.toBeInTheDocument();});
