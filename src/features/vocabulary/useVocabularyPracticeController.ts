@@ -58,6 +58,7 @@ export function useVocabularyPracticeController() {
   const [incompleteOpen, setIncompleteOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [recovering, setRecovering] = useState(false);
+  const [retryPreparing, setRetryPreparing] = useState(false);
   const [error, setError] = useState("");
   const [audioStatus, setAudioStatus] = useState("");
   const [audioBusy, setAudioBusy] = useState(false);
@@ -78,6 +79,10 @@ export function useVocabularyPracticeController() {
   const pendingCommit = useRef<Prepared | null>(null);
   const savingRef = useRef(false);
   const recoveringRef = useRef(false);
+  const retryGeneration = useRef(0);
+  const retryPreparingRef = useRef(false);
+  const resultsRef = useRef(results);
+  const routeKeyRef = useRef(location.key);
   const audioGeneration = useRef(0);
   const loopGeneration = useRef(0);
   const loopGap = useRef<{ timer: number; resolve: () => void } | null>(null);
@@ -93,6 +98,8 @@ export function useVocabularyPracticeController() {
   if (!playback.current) playback.current = createVocabularyPlayback();
   preferencesRef.current = preferences;
   cardsRef.current = cards;
+  resultsRef.current = results;
+  routeKeyRef.current = location.key;
 
   useEffect(() => {
     if (legacyStudy && location.pathname !== '/vocabulary/study') navigate(`/vocabulary/study?${params}`, { replace: true });
@@ -139,6 +146,7 @@ export function useVocabularyPracticeController() {
     document.addEventListener("visibilitychange", hidden);
     return () => {
       mounted.current = false;
+      retryGeneration.current += 1;
       audioGeneration.current += 1;
       loopGeneration.current += 1;
       if (loopGap.current) {
@@ -156,6 +164,9 @@ export function useVocabularyPracticeController() {
     stopAudio();
     clearVocabularyDraft(owner.current);
     owner.current = currentOwner;
+    retryGeneration.current += 1;
+    retryPreparingRef.current = false;
+    setRetryPreparing(false);
     sessionRef.current = null;
     pendingCommit.current = null;
     savingRef.current = false;
@@ -790,6 +801,9 @@ export function useVocabularyPracticeController() {
     const origin = params.get("returnTo"); if (origin) navigate(safeVocabularyReturn(origin));
   }
   function resetResults() {
+    retryGeneration.current += 1;
+    retryPreparingRef.current = false;
+    setRetryPreparing(false);
     stopAudio();
     setResults(null);
     setCards([]);
@@ -848,20 +862,43 @@ export function useVocabularyPracticeController() {
       play: () => replayCard(), pause: pauseSession,
     });
   }
-  function retryMistakes() {
-    if (!results) return;
-    const retryFilter: ReviewQueueFilter = results.selection?.kind === 'unit' || results.selection?.kind === 'specialist'
-      ? { ...results.filter, bookId: results.selection.bookId, unitId: results.selection.unitId, dueOnly: false }
-      : { ...results.filter, dueOnly: false };
-    const retry = resolveVocabularyRetry(fb.stateRef.current, results, cards);
-    if (retry.unavailable.length) {
-      setError(`Retry is unavailable for ${retry.unavailable.length} saved ${retry.unavailable.length === 1 ? 'question' : 'questions'}: ${retry.unavailable.map(row => row.term).join(', ')}. The original word, sense, or task could not be restored. No retry has started; the saved results are unchanged.`);
-      return;
+  async function retryMistakes() {
+    if (!results || !owned() || retryPreparingRef.current || sessionRef.current) return;
+    const retryOwner = owner.current;
+    const routeKey = location.key;
+    const generation = ++retryGeneration.current;
+    const active = () => owned() && retryOwner === accountId() && generation === retryGeneration.current && routeKey === routeKeyRef.current && resultsRef.current?.id === results.id && !sessionRef.current;
+    retryPreparingRef.current = true;
+    setRetryPreparing(true);
+    setError('');
+    try {
+      const sourceBook = results.selection?.kind === 'unit' || results.selection?.kind === 'specialist' ? results.selection.bookId : results.filter.bookId;
+      const books = new Set([sourceBook, ...results.results.filter(row => row.result === 'failure' || row.result === 'partial').map(row => row.context?.bookId)].filter((book): book is string => Boolean(book && book !== 'all')));
+      for (const book of books) {
+        await fb.loadVocabularyCatalog?.(book);
+        if (!active()) return;
+      }
+      if (!active()) return;
+      const retryFilter: ReviewQueueFilter = results.selection?.kind === 'unit' || results.selection?.kind === 'specialist'
+        ? { ...results.filter, bookId: results.selection.bookId, unitId: results.selection.unitId, dueOnly: false }
+        : { ...results.filter, dueOnly: false };
+      const retry = resolveVocabularyRetry(fb.stateRef.current, results, cards);
+      if (retry.unavailable.length) {
+        setError(`Retry is unavailable for ${retry.unavailable.length} saved ${retry.unavailable.length === 1 ? 'question' : 'questions'}: ${retry.unavailable.map(row => row.term).join(', ')}. The original word, sense, or task could not be restored. No retry has started; the saved results are unchanged.`);
+        return;
+      }
+      begin(retry.cards, results.mode, { kind: "retry" }, {
+        filter: retryFilter,
+        preferences: results.preferences,
+      });
+    } catch {
+      if (active()) setError('The saved wordbook could not be loaded. Your saved results are unchanged. Select Retry mistakes to try again when the connection is available.');
+    } finally {
+      if (mounted.current && generation === retryGeneration.current) {
+        retryPreparingRef.current = false;
+        setRetryPreparing(false);
+      }
     }
-    begin(retry.cards, results.mode, { kind: "retry" }, {
-      filter: retryFilter,
-      preferences: results.preferences,
-    });
   }
 
   return {
@@ -869,7 +906,7 @@ export function useVocabularyPracticeController() {
     sourceType, setSource, skill, setSkill, dimension, setDimension,
     dueOnly, setDue, wrongOnly, setWrong, session, cards, resume, results,
     settingsOpen, setSettingsOpen, exitOpen, setExitOpen, incompleteOpen, setIncompleteOpen,
-    saving, recovering, error, audioStatus, audioBusy, looping, storageError, catalogStatus,
+    saving, recovering, retryPreparing, error, audioStatus, audioBusy, looping, storageError, catalogStatus,
     resultFilter, setResultFilter, resultReturnTo, queue, unitQueue, books, units, selectedUnit,
     selectedBook, chapter, catalogReady, leafUnits, studyReady, answered, flagged,
     count, locked, currentIndex, pageStart, visibleCards, resultRows, nextGroup, recent,
