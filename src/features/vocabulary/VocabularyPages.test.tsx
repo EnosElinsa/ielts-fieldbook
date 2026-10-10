@@ -108,7 +108,7 @@ test("entry details omit raw source context and retain review history", async ()
   fb.current.state.vocabulary[0].sources[0].context = "A source passage.";
   const fetchStub = vi.spyOn(globalThis, "fetch").mockResolvedValue({ ok: true, json: async () => ({ entries: [] }) } as Response);
   render(<MemoryRouter initialEntries={["/vocabulary/entry/one"]}><Routes><Route path="/vocabulary/entry/:id" element={<VocabularyEntryPage />} /></Routes></MemoryRouter>);
-  expect(screen.getByRole("link", { name: /Practise this word/ })).toHaveAttribute("href", "/vocabulary/review?entryId=one&dueOnly=false");
+  expect(screen.getByRole("link", { name: /Practise this word/ })).toHaveAttribute("href", "/vocabulary/review?returnTo=%2Fvocabulary&entryId=one&dueOnly=false");
   expect(screen.queryByText("Source context")).not.toBeInTheDocument();
   expect(screen.queryByText("A source passage.")).not.toBeInTheDocument();
   expect(screen.getByText("Review history").closest("details")).not.toHaveAttribute("open");
