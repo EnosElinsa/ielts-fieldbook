@@ -26,7 +26,16 @@ beforeEach(() => {
   };
 });
 afterEach(cleanup);
-const mount = () => render(<MemoryRouter><ReviewPage /></MemoryRouter>);
+const mount = (route = '/review') => render(<MemoryRouter initialEntries={[route]}><ReviewPage /></MemoryRouter>);
+
+test('route skill selects speaking attempts when the saved skill is writing', () => {
+  mockFieldbook.current.state.sessions.push({ id: 'speaking', name: 'Part two answer', skill: 'speaking', questionId: 'topic', date: '2026-10-10T12:00:00Z', essay: 'Answer', words: 85 });
+  mockFieldbook.current.state.speakingTopics.push({ id: 'topic', title: 'A trip' });
+  mount('/review?skill=speaking');
+  expect(screen.getByText('Part two answer')).toBeInTheDocument();
+  expect(screen.queryByText('Cities essay')).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Transcript' })).toBeInTheDocument();
+});
 
 test('filtering awaiting feedback hides assessed attempts while keeping feedback actions available', async () => {
   mount();

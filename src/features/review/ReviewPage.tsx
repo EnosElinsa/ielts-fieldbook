@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Copy, Download, FileInput, ArrowUpRight, RotateCcw } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { isBandScore } from '../../domain';
@@ -10,15 +10,18 @@ import { Empty, FilterMenu } from '../../components/ui';
 export function ReviewPage() {
   const fb = useFieldbook();
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const requestedSkill = params.get('skill');
+  const reviewSkill = requestedSkill === 'writing' || requestedSkill === 'speaking' ? requestedSkill : fb.activeSkill;
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
-  const speaking = fb.activeSkill === 'speaking';
-  const allSessions = fb.state.sessions.filter((s) => sessionSkill(s) === fb.activeSkill);
+  const speaking = reviewSkill === 'speaking';
+  const allSessions = fb.state.sessions.filter((s) => sessionSkill(s) === reviewSkill);
   const sessions = allSessions.filter((session) => (filter === 'all' || (filter === 'pending' && !session.assessmentId) || (filter === 'assessed' && session.assessmentId) || (filter === 'rewrite' && session.parentSessionId)) && `${session.name} ${session.focus || ''}`.toLowerCase().includes(search.toLowerCase()));
   const assessments = fb.state.assessments.filter((assessment) => {
     if (assessment && assessment.skill === 'speaking') return speaking;
     const sess = assessment?.sessionId ? fb.state.sessions.find((item) => item.id === assessment.sessionId) : null;
-    if (sess) return sessionSkill(sess) === fb.activeSkill;
+    if (sess) return sessionSkill(sess) === reviewSkill;
     return !speaking;
   });
 
@@ -38,7 +41,7 @@ export function ReviewPage() {
     if (!error?.sourceSessionId) return true;
     const sess = fb.state.sessions.find((item) => item.id === error.sourceSessionId);
     if (!sess) return true;
-    return sessionSkill(sess) === fb.activeSkill;
+    return sessionSkill(sess) === reviewSkill;
   });
 
   const openHistory = async (session, reuse) => {

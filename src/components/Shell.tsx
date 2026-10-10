@@ -42,13 +42,13 @@ const studyLinks = {
   writing: [
     { to: '/write/questions', label: 'Questions', icon: NavIcons.questions },
     { to: '/write', label: 'Practice', icon: NavIcons.write },
-    { to: '/review', label: 'Review', icon: NavIcons.review },
+    { to: '/review?skill=writing', label: 'Review', icon: NavIcons.review },
   ],
   speaking: [
     { to: '/speak/questions', label: 'Questions', icon: NavIcons.questions },
     { to: '/stories', label: 'Stories', icon: NavIcons.stories },
     { to: '/speak', label: 'Practice', icon: NavIcons.speaking },
-    { to: '/review', label: 'Review', icon: NavIcons.review },
+    { to: '/review?skill=speaking', label: 'Review', icon: NavIcons.review },
   ],
 };
 
@@ -62,8 +62,10 @@ function moduleFor(pathname: string, search: string, fallbackSkill: string) {
   return 'today';
 }
 
-function chromeFor(pathname: string, activeSkill: string, deskName: string, topicName: string) {
-  const speaking = activeSkill === 'speaking';
+function chromeFor(pathname: string, activeSkill: string, deskName: string, topicName: string, search = '') {
+  const reviewSkill = new URLSearchParams(search).get('skill');
+  const effectiveSkill = reviewSkill === 'speaking' || reviewSkill === 'writing' ? reviewSkill : activeSkill;
+  const speaking = effectiveSkill === 'speaking';
   const skillLabel = speaking ? 'Speaking' : 'Writing';
   if (pathname.startsWith('/review/') && pathname !== '/review') return { kicker: 'Score', title: 'Score report' };
   if (pathname.startsWith('/speak/topics/')) return { kicker: 'Speaking topic', title: topicName || 'Speaking topic' };
@@ -105,8 +107,8 @@ export function Shell() {
   const deskName = displayName(fb.selectedQuestion?.name) || 'Writing';
   const topicName = fb.selectedTopic?.title || 'Speaking practice';
   const chrome = useMemo(
-    () => chromeFor(location.pathname, fb.activeSkill, deskName, topicName),
-    [location.pathname, fb.activeSkill, deskName, topicName],
+    () => chromeFor(location.pathname, fb.activeSkill, deskName, topicName, location.search),
+    [location.pathname, location.search, fb.activeSkill, deskName, topicName],
   );
 
   useEffect(() => {
