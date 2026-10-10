@@ -32,7 +32,9 @@ describe('whole source unit selection', () => {
     expect(commit.state.vocabulary).toHaveLength(total);
     expect(commit.state.vocabularyReviews).toHaveLength(total);
     expect(commit.summary.total).toBe(total);
-    expect(commit.state.wordbookProgress[0].completedEntryIds).toHaveLength(total);
+    expect(commit.state.wordbookProgress).toHaveLength(0);
+    expect(commit.summary.incorrect).toBe(total);
+    expect(commit.sessionRecord.results.every(result => result.response === '')).toBe(true);
     expect(state).toEqual(before);
     const retry = buildVocabularySessionCommit(commit.state, session, queue.cards);
     expect(retry.state.vocabularyReviews).toHaveLength(total);
