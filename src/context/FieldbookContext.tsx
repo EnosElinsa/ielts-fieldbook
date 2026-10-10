@@ -12,40 +12,41 @@ import {
 import { useNavigate } from 'react-router-dom';
 import {
   STATE_VERSION,
-  addLexiconItem,
+  addVocabularyItem,
   addStory,
   buildAssessmentRequest,
   buildSpeakingAssessmentRequest,
-  completeLexiconPlan,
+  completeVocabularyPlan,
   completePlanIfMatched,
   completeReview,
   completeStoriesPlan,
   createAttempt,
   dateKey,
   draftText,
-  dueLexicon,
+  dueVocabulary,
   importAssessmentText,
   mergeBackup,
   normalizeDraft,
   parseAssessmentFile,
   persistShape,
-  removeLexiconItem,
+  removeVocabularyItem,
   removeStory,
   resolveAssessmentEssay,
   resolveError,
   reviewError,
-  reviewLexiconItem,
   selectSpeakingTopic,
   selectWritingQuestion,
   ensureMockPlan,
   startPlan as domainStartPlan,
   syncAssessmentErrors,
-  updateLexiconItem,
+  updateVocabularyItem,
   updateStory,
   validateBackup,
   wordCount,
 } from '../domain';
-import { downloadFile, hydrateState, loadState, saveState } from '../storage';
+import { downloadFile, hydrateState, loadState, saveState, saveVocabularyImport, loadVocabularyCatalog as readVocabularyCatalog } from '../storage';
+import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
+import { vocabularyLists } from '../domain/vocabulary';
 import { ensurePlans, inferredDeskMode } from '../lib/planTemplates';
 import { sessionSkill } from '../lib/format';
 import { accountId } from '../storage/remote';
@@ -69,7 +70,8 @@ type ModalName =
   | 'settings'
   | 'save'
   | 'history'
-  | 'lexicon'
+  | 'vocabulary'
+  | 'vocabularyImport'
   | 'story'
   | 'backup'
   | 'assessment'
@@ -95,14 +97,14 @@ function useFieldbookValue() {
   const [deskPart, setDeskPart] = useState('2');
   const [questionIndex, setQuestionIndex] = useState(0);
   const [activeDeskMode, setActiveDeskMode] = useState<string | null>(null);
-  const [lexiconDueOnly, setLexiconDueOnly] = useState(false);
-  const [lexiconDueAtVisit, setLexiconDueAtVisit] = useState(0);
-  const [revealedLexicon, setRevealedLexicon] = useState<Record<string, boolean>>({});
+  const [vocabularyDueOnly, setVocabularyDueOnly] = useState(false);
+  const [vocabularyDueAtVisit, setVocabularyDueAtVisit] = useState(0);
+  const [revealedVocabulary, setRevealedVocabulary] = useState<Record<string, boolean>>({});
   const [pendingAttempt, setPendingAttempt] = useState(null);
   const [pendingBackup, setPendingBackup] = useState(null);
   const [viewedSession, setViewedSession] = useState(null);
-  const [editingLexiconId, setEditingLexiconId] = useState(null);
-  const [lexiconSeed, setLexiconSeed] = useState(null);
+  const [editingVocabularyId, setEditingVocabularyId] = useState(null);
+  const [vocabularySeed, setVocabularySeed] = useState(null);
   const [editingStoryId, setEditingStoryId] = useState(null);
   const [storyPresetTopicIds, setStoryPresetTopicIds] = useState([]);
   const [checklistToastNeeded, setChecklistToastNeeded] = useState(false);
@@ -114,6 +116,9 @@ function useFieldbookValue() {
   const [loadGeneration, setLoadGeneration] = useState(0);
   const [recoveryDrafts, setRecoveryDrafts] = useState(null);
   const [draftRevision, setDraftRevision] = useState(0);
+  const [vocabularyCatalogRevision, setVocabularyCatalogRevision] = useState(0);
+  const vocabularyCatalogReads = useRef(new Map());
+  const committedVocabularyImports = useRef([]);
   const saveQueue = useRef(Promise.resolve());
   const completingAttempt = useRef(false);
   const saveGeneration = useRef(0);
@@ -150,6 +155,7 @@ function useFieldbookValue() {
     setSaveStatus('saving');
     const operation = saveQueue.current.catch(() => {}).then(async () => {
       if (!alive.current || accountId() !== owner) return false;
+      applyCommittedVocabulary(frozen, owner);
       let saved = false;
       try { saved = await saveState(frozen, silent ? undefined : toast); } catch { saved = false; }
       if (saved) lastSaved.current = frozen;
@@ -174,6 +180,86 @@ function useFieldbookValue() {
     },
     [toast],
   );
+
+  function applyCommittedVocabulary(target, owner) {
+    committedVocabularyImports.current.filter(change => change.owner === owner).forEach(change => {
+      const rows = target[change.key] || (target[change.key] = []);
+      const index = rows.findIndex(row => row.id === change.after.id);
+      if (index < 0) rows.push(structuredClone(change.after));
+      else if (JSON.stringify(rows[index]) === change.before) rows[index] = structuredClone(change.after);
+    });
+  }
+
+  const persistVocabularyImport = useCallback((draft, batchId) => {
+    const owner = accountId();
+    const before = structuredClone(stateRef.current);
+    const frozen = structuredClone(draft);
+    setSaveStatus('saving');
+    const operation = saveQueue.current.catch(() => {}).then(async () => {
+      if (!alive.current || accountId() !== owner) return false;
+      applyCommittedVocabulary(frozen, owner);
+      const saved = await saveVocabularyImport(frozen, batchId, toast);
+      if (alive.current && accountId() === owner) {
+        setSaveFailed(!saved); setSaveStatus(saved ? 'saved' : 'failed');
+        if (saved) {
+          vocabularyLists.forEach(key => {
+            const prior = new Map((before[key] || []).map(row => [row.id, JSON.stringify(row)]));
+            frozen[key].forEach(row => {
+              if (prior.get(row.id) !== JSON.stringify(row)) committedVocabularyImports.current.push({ owner, key, before: prior.get(row.id), after: structuredClone(row) });
+            });
+          });
+          const next = structuredClone(stateRef.current);
+          applyCommittedVocabulary(next, owner);
+          stateRef.current = next; setState(next);
+        }
+      }
+      return saved;
+    });
+    saveQueue.current = operation;
+    return operation;
+  }, [toast]);
+
+  const loadVocabularyCatalog = useCallback((bookId) => {
+    const key = bookId || 'metadata';
+    if (vocabularyCatalogReads.current.has(key)) return vocabularyCatalogReads.current.get(key);
+    const read = (async () => {
+      const merge = (key, values) => {
+        const identity = item => key === 'units' ? `${item.bookId}:${item.id}` : item.id;
+        const rows = new Map(VOCABULARY_CATALOG[key].map(item => [identity(item), item]));
+        values.forEach(item => rows.set(identity(item), item));
+        VOCABULARY_CATALOG[key] = [...rows.values()];
+      };
+      let releasedCatalogue;
+      try {
+        const response=await fetch('/vocabulary-catalog.json');
+        if(response.ok) {
+          const data=await response.json();
+          if(Array.isArray(data.entries)&&Array.isArray(data.books)&&Array.isArray(data.units)&&Array.isArray(data.memberships))releasedCatalogue=data;
+        }
+      } catch {}
+      if(releasedCatalogue) {
+        const completeBooks=new Set(releasedCatalogue.books.filter(book=>book.contentStatus==='complete').map(book=>book.id));
+        VOCABULARY_CATALOG.memberships=VOCABULARY_CATALOG.memberships.filter(member=>!(completeBooks.has(member.bookId) && member.unitId?.startsWith('starter:')));
+        VOCABULARY_CATALOG.units=VOCABULARY_CATALOG.units.filter(unit=>!(completeBooks.has(unit.bookId) && unit.kind==='starter'));
+        merge('books',releasedCatalogue.books);
+        if(bookId) {
+          const memberships=releasedCatalogue.memberships.filter(row=>row.bookId===bookId);
+          const entryIds=new Set(memberships.map(row=>row.entryId));
+          merge('memberships',memberships);merge('entries',releasedCatalogue.entries.filter(row=>entryIds.has(row.id)));merge('units',releasedCatalogue.units.filter(row=>row.bookId===bookId));
+        }
+      }
+      let offset = 0;
+      do {
+        const result = await readVocabularyCatalog({ bookId, offset, limit: 500 });
+        merge('entries', result.entries); merge('books', result.books); merge('units', result.units); merge('memberships', result.memberships);
+        offset = result.nextOffset;
+      } while (offset !== null);
+      setVocabularyCatalogRevision(revision => revision + 1);
+      return true;
+    })().catch(error => { vocabularyCatalogReads.current.delete(key); throw error; });
+    vocabularyCatalogReads.current.set(key, read);
+    return read;
+  }, []);
 
   const scheduleDraftPersist = useCallback(() => {
     if (draftTimer.current) window.clearTimeout(draftTimer.current);
@@ -455,10 +541,10 @@ function useFieldbookValue() {
         navigate('/review');
         return;
       }
-      if (plan.kind === 'lexicon') {
-        setLexiconDueOnly(true);
-        setLexiconDueAtVisit(dueLexicon(draft).length);
-        navigate('/phrases');
+      if (plan.kind === 'vocabulary') {
+        setVocabularyDueOnly(true);
+        setVocabularyDueAtVisit(dueVocabulary(draft).length);
+        navigate('/vocabulary/review');
         return;
       }
       if (plan.kind === 'stories') {
@@ -751,20 +837,20 @@ function useFieldbookValue() {
       setPendingBackup,
       viewedSession,
       setViewedSession,
-      editingLexiconId,
-      setEditingLexiconId,
-      lexiconSeed,
-      setLexiconSeed,
+      editingVocabularyId,
+      setEditingVocabularyId,
+      vocabularySeed,
+      setVocabularySeed,
       editingStoryId,
       setEditingStoryId,
       storyPresetTopicIds,
       setStoryPresetTopicIds,
-      lexiconDueOnly,
-      setLexiconDueOnly,
-      lexiconDueAtVisit,
-      setLexiconDueAtVisit,
-      revealedLexicon,
-      setRevealedLexicon,
+      vocabularyDueOnly,
+      setVocabularyDueOnly,
+      vocabularyDueAtVisit,
+      setVocabularyDueAtVisit,
+      revealedVocabulary,
+      setRevealedVocabulary,
       checklistToastNeeded,
       setChecklistToastNeeded,
       backupMenuOpen,
@@ -792,16 +878,18 @@ function useFieldbookValue() {
       persistShape,
       dateKey,
       // domain passthroughs used by features
-      addLexiconItem,
-      updateLexiconItem,
-      removeLexiconItem,
-      reviewLexiconItem,
-      dueLexicon,
+      addVocabularyItem,
+      updateVocabularyItem,
+      removeVocabularyItem,
+      dueVocabulary,
+      persistVocabularyImport,
+      loadVocabularyCatalog,
+      vocabularyCatalogRevision,
       addStory,
       updateStory,
       removeStory,
       completeStoriesPlan,
-      completeLexiconPlan,
+      completeVocabularyPlan,
       completeReview,
       reviewError,
       resolveError,
@@ -818,6 +906,7 @@ function useFieldbookValue() {
     [
       activeDeskMode,
       activeSkill,
+      vocabularyCatalogRevision,
       backupMenuOpen,
       booted,
       checklistToastNeeded,
@@ -834,12 +923,12 @@ function useFieldbookValue() {
       closeModal,
       currentDeskMode,
       deskPart,
-      editingLexiconId,
+      editingVocabularyId,
       editingStoryId,
       flushDraftPersist,
-      lexiconDueAtVisit,
-      lexiconDueOnly,
-      lexiconSeed,
+      vocabularyDueAtVisit,
+      vocabularyDueOnly,
+      vocabularySeed,
       modal,
       navigate,
       openModal,
@@ -848,7 +937,7 @@ function useFieldbookValue() {
       persist,
       persistNow,
       questionIndex,
-      revealedLexicon,
+      revealedVocabulary,
       saveAttempt,
       scheduleDraftPersist,
       selectedQuestion,

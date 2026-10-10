@@ -87,7 +87,7 @@ export function attemptLabel(session) {
   return session.attemptKind === 'rewrite' ? 'Rewrite' : 'First draft';
 }
 
-export function lexiconItemSkill(item) {
+export function vocabularyItemSkill(item) {
   return item && item.skill === 'speaking' ? 'speaking' : 'writing';
 }
 
@@ -101,8 +101,8 @@ export function planPillClass(kind) {
   return 'green';
 }
 
-export const lexiconLabels = { word: 'Word', phrase: 'Phrase', sentence: 'Pattern' };
-export const lexiconStatusLabels = { new: 'New', learning: 'Learning', mastered: 'Known' };
+export const vocabularyLabels = { word: 'Word', phrase: 'Phrase', sentence: 'Pattern' };
+export const vocabularyStatusLabels = { new: 'New', learning: 'Learning', mastered: 'Known' };
 
 export function coverageLabel(status) {
   return { unseen: 'Not seen', prepared: 'Has a story', practiced: 'Practised', assessed: 'Marked' }[status] || status;

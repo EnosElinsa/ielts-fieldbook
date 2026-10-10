@@ -43,13 +43,13 @@ test('migrates legacy data without losing essays or arrays', () => {
     assessments: [{ id: 'a1', text: 'legacy' }],
     settings: { dailyMinutes: 45 },
   });
-  assert.equal(migrated.schemaVersion, 9);
+  assert.equal(migrated.schemaVersion, 10);
   assert.equal(migrated.sessions[0].essay, essay);
   assert.equal(migrated.sessions[0].questionId, '1342');
   assert.equal(migrated.assessments.length, 1);
   assert.equal(migrated.settings.dailyMinutes, 45);
   assert.ok(Array.isArray(migrated.plans));
-  assert.ok(Array.isArray(migrated.lexicon));
+  assert.ok(Array.isArray(migrated.vocabulary));
 });
 test('migrates a v5 writing session to skill writing without losing the essay', () => {
   const migrated = core.migrateState({
@@ -59,7 +59,7 @@ test('migrates a v5 writing session to skill writing without losing the essay', 
     settings: { dailyMinutes: 40, focus: 'task2' },
     drafts: { '1342': 'draft text' },
   });
-  assert.equal(migrated.schemaVersion, 9);
+  assert.equal(migrated.schemaVersion, 10);
   assert.equal(migrated.sessions[0].skill, 'writing');
   assert.equal(migrated.sessions[0].essay, essay);
   assert.equal(migrated.sessions[0].questionId, '1342');
@@ -74,66 +74,58 @@ test('migrates a v5 writing session to skill writing without losing the essay', 
   assert.deepEqual(migrated.speakingTopics, []);
 });
 
-test('creates and deduplicates language accumulation items', () => {
+test('creates a unified entry across writing and speaking sources', () => {
   const state = core.migrateState({});
-  const first = core.addLexiconItem(state, {
+  const first = core.addVocabularyItem(state, {
     category: 'phrase', term: 'account for', meaning: '占据；解释', example: 'Online sales account for half of revenue.',
     tags: 'Task 1; trend', source: 'C21T1',
   }, { id: () => 'l1', now: () => '2026-09-16T00:00:00.000Z' });
-  const duplicate = core.addLexiconItem(state, { category: 'phrase', term: ' Account For ', meaning: '占据；解释' });
-  const otherSkill = core.addLexiconItem(state, { category: 'phrase', term: 'account for', meaning: '占据；解释', skill: 'speaking' }, { id: () => 'l2' });
+  const duplicate = core.addVocabularyItem(state, { category: 'phrase', term: ' Account For ', meaning: '占据；解释' });
+  const otherSkill = core.addVocabularyItem(state, { category: 'phrase', term: 'account for', meaning: '占据；解释', skill: 'speaking' }, { id: () => 'l2' });
   assert.equal(first.duplicate, false);
-  assert.equal(first.item.id, 'l1');
+  assert.ok(first.item.id);
   assert.deepEqual(first.item.tags, ['Task 1', 'trend']);
   assert.equal(duplicate.duplicate, true);
-  assert.equal(otherSkill.duplicate, false);
-  assert.equal(state.lexicon.length, 2);
+  assert.equal(otherSkill.duplicate, true);
+  assert.equal(state.vocabulary.length, 1);
+  assert.ok(first.item.sources.some(source => source.skill === 'speaking'));
 });
 
-test('reviews accumulation items with spaced next-review dates', () => {
+test('reviews vocabulary using FSRS without overwriting manual familiarity', () => {
   const state = core.migrateState({});
-  const added = core.addLexiconItem(state, { category: 'sentence', term: 'Overall, ...', meaning: '概述句式' }, { id: () => 'l1', now: () => '2026-09-16T00:00:00.000Z' });
-  const first = core.reviewLexiconItem(state, added.item.id, true, '2026-09-16T00:00:00.000Z');
-  const plus = (iso, days) => {
-    const date = new Date(iso);
-    date.setDate(date.getDate() + days);
-    return date.toISOString();
-  };
+  const added = core.addVocabularyItem(state, { category: 'sentence', term: 'Overall, ...', meaning: '概述句式' }, { id: () => 'l1', now: () => '2026-09-16T00:00:00.000Z' });
+  const first = core.recordVocabularyReview(state, {entryId: added.item.id, mode: 'dictation', result: 'success', occurredAt: '2026-09-16T00:00:00.000Z'});
   const firstReviewCount = first.reviewCount;
-  const firstStatus = first.status;
-  const second = core.reviewLexiconItem(state, added.item.id, true, '2026-09-17T00:00:00.000Z');
+  const firstStatus = first.manualStatus;
+  const second = core.recordVocabularyReview(state, {entryId: added.item.id, mode: 'dictation', result: 'success', occurredAt: '2026-09-17T00:00:00.000Z'});
   assert.equal(firstReviewCount, 1);
-  assert.equal(firstStatus, 'learning');
+  assert.equal(firstStatus, 'new');
   assert.equal(second.reviewCount, 2);
-  assert.equal(second.nextReviewAt, plus('2026-09-17T00:00:00.000Z', 3));
-  const forgotAt = plus('2026-09-17T00:00:00.000Z', 3);
-  const forgot = core.reviewLexiconItem(state, added.item.id, false, forgotAt);
-  assert.equal(forgot.status, 'learning');
-  assert.equal(forgot.successStreak, 0);
-  assert.equal(forgot.nextReviewAt, plus(forgotAt, 1));
-  const relearned = core.reviewLexiconItem(state, added.item.id, true, plus(forgotAt, 1));
-  assert.equal(relearned.successStreak, 1);
-  assert.equal(relearned.nextReviewAt, plus(plus(forgotAt, 1), 1));
+  assert.ok(Date.parse(second.nextReviewAt) > Date.parse('2026-09-17T00:00:00.000Z'));
+  const forgot = core.recordVocabularyReview(state, {entryId: added.item.id, mode: 'dictation', result: 'failure', occurredAt: '2026-09-20T00:00:00.000Z'});
+  assert.equal(forgot.wrong.active, true);
+  assert.equal(forgot.wrong.modes.dictation.successesSinceFailure, 0);
+  assert.equal(forgot.cards.dictation.lapses, 1);
 });
 
 test('updates and removes accumulation items safely', () => {
   const state = core.migrateState({});
-  const added = core.addLexiconItem(state, { category: 'word', term: 'robust', meaning: '稳健的' }, { id: () => 'l1' });
-  const updated = core.updateLexiconItem(state, 'l1', { example: 'A robust method.', tags: ['methods'] }, { now: () => '2026-09-16T00:00:00.000Z' });
+  const added = core.addVocabularyItem(state, { category: 'word', term: 'robust', meaning: '稳健的' }, { id: () => 'l1' });
+  const updated = core.updateVocabularyItem(state, added.item.id, { example: 'A robust method.', tags: ['methods'] });
   assert.equal(updated.example, 'A robust method.');
   assert.deepEqual(updated.tags, ['methods']);
-  assert.equal(core.removeLexiconItem(state, 'l1'), true);
-  assert.equal(core.removeLexiconItem(state, 'missing'), false);
-  assert.equal(state.lexicon.length, 0);
+  assert.equal(core.removeVocabularyItem(state, added.item.id), true);
+  assert.equal(core.removeVocabularyItem(state, 'missing'), false);
+  assert.ok(state.vocabulary[0].tags.includes('archived'));
 });
 
 test('rejects editing an accumulation item into an existing term', () => {
   const state = core.migrateState({});
-  core.addLexiconItem(state, { term: 'account for' }, { id: () => 'l1' });
-  core.addLexiconItem(state, { term: 'by contrast' }, { id: () => 'l2' });
-  const result = core.updateLexiconItem(state, 'l2', { term: 'account for' });
+  core.addVocabularyItem(state, { term: 'account for' }, { id: () => 'l1' });
+  const second = core.addVocabularyItem(state, { term: 'by contrast' }, { id: () => 'l2' });
+  const result = core.updateVocabularyItem(state, second.item.id, { term: 'account for' });
   assert.equal(result, null);
-  assert.equal(state.lexicon[1].term, 'by contrast');
+  assert.equal(state.vocabulary[1].term, 'by contrast');
 });
 
 test('parses the standardized assessment contract', () => {
@@ -166,7 +158,7 @@ test('parses language accumulation suggestions from an assessment', () => {
 
 ## 下一次 30 分钟练习`);
   const parsed = core.parseAssessmentFile(text, 'assessment.md');
-  assert.deepEqual(parsed.lexiconSuggestions, [{ category: 'phrase', term: 'account for', meaning: '占据；解释', example: 'Online sales account for half of revenue.', tags: ['Task 1', 'trend'] }]);
+  assert.deepEqual(parsed.vocabularySuggestionsList, [{ category: 'phrase', term: 'account for', meaning: '', example: 'Online sales account for half of revenue.', tags: ['Task 1', 'trend'] }]);
 });
 
 test('builds a versioned assessment request with the complete rewrite contract', () => {
@@ -324,9 +316,9 @@ test('includes language accumulation in backup validation and merge', () => {
   const current = core.migrateState({ lexicon: [{ id: 'l1', term: 'account for' }] });
   const incoming = core.migrateState({ lexicon: [{ id: 'l2', term: 'by contrast' }] });
   assert.equal(core.validateBackup({ lexicon: [] }).valid, true);
-  assert.equal(core.validateBackup({ lexicon: [] }).counts.lexicon, 0);
+  assert.equal(core.validateBackup({ lexicon: [] }).counts.vocabulary, 0);
   const merged = core.mergeBackup(current, incoming, { includeSettings: false });
-  assert.deepEqual(merged.lexicon.map(item => item.id).sort(), ['l1', 'l2']);
+  assert.deepEqual(merged.vocabulary.map(item => item.term).sort(), ['account for', 'by contrast']);
 });
 
 test('deduplicates legacy language entries while preserving richer fields', () => {
@@ -334,10 +326,10 @@ test('deduplicates legacy language entries while preserving richer fields', () =
     { id: 'old', term: 'by contrast', meaning: '', tags: ['Task 1'] },
     { id: 'new', term: ' By Contrast ', meaning: '相比之下', example: 'By contrast, retail rose.', tags: ['comparison'], reviewCount: 2, status: 'learning' },
   ] });
-  assert.equal(migrated.lexicon.length, 1);
-  assert.equal(migrated.lexicon[0].meaning, '相比之下');
-  assert.equal(migrated.lexicon[0].example, 'By contrast, retail rose.');
-  assert.deepEqual(migrated.lexicon[0].tags.slice().sort(), ['Task 1', 'comparison']);
+  assert.equal(migrated.vocabulary.length, 1);
+  assert.doesNotMatch(migrated.vocabulary[0].meaning, /[\u3400-\u9fff]/);
+  assert.equal(migrated.vocabulary[0].example, 'By contrast, retail rose.');
+  assert.deepEqual(migrated.vocabulary[0].tags.slice().sort(), ['Task 1', 'comparison']);
 });
 
 test('keeps original and rewrite attempts as separate versions', () => {
@@ -372,19 +364,19 @@ test('tracks error review and resolution', () => {
   assert.equal(state.errors[0].resolved, true);
 });
 
-test('migrates lexicon skill and stores it on new items', () => {
+test('migrates source skills and adds a new speaking source', () => {
   const migrated = core.migrateState({
     lexicon: [
       { id: 'l1', term: 'anyway', skill: 'speaking' },
       { id: 'l2', term: 'overall' },
     ],
   });
-  assert.equal(migrated.lexicon.find(item => item.id === 'l1').skill, 'speaking');
-  assert.equal(migrated.lexicon.find(item => item.id === 'l2').skill, 'writing');
-  const added = core.addLexiconItem(migrated, { term: 'in advance', skill: 'speaking' }, { id: () => 'l3' });
-  assert.equal(added.item.skill, 'speaking');
-  const updated = core.updateLexiconItem(migrated, 'l2', { skill: 'speaking' });
-  assert.equal(updated.skill, 'speaking');
+  assert.equal(migrated.vocabulary.find(item => item.term === 'anyway').sources[0].skill, 'speaking');
+  assert.equal(migrated.vocabulary.find(item => item.term === 'overall').sources[0].skill, 'writing');
+  const added = core.addVocabularyItem(migrated, { term: 'in advance', skill: 'speaking' }, { id: () => 'l3' });
+  assert.equal(added.item.sources[0].skill, 'speaking');
+  const updated = core.addVocabularyItem(migrated, { term: 'overall', skill: 'speaking' });
+  assert.ok(updated.item.sources.some(source => source.skill === 'speaking'));
 });
 
 test('names a reconstructed speaking session from speakingTopics', () => {

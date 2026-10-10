@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { emptyState, migrateState, persistShape, STATE_VERSION } from '../domain';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
-import { USER_LISTS, diffDrafts, diffList, profileStamp, rowsToDrafts, rowsToList, type UserListKey } from './sync';
+import { USER_LISTS, USER_TABLES, VOCABULARY_LISTS, diffDrafts, diffList, profileStamp, rowsToDrafts, rowsToList, type UserListKey } from './sync';
 
 const PAGE = 1000;
 
@@ -24,14 +24,7 @@ export function accountStoreAvailable() {
 
 function emptySnapshot(): Snapshot {
   return {
-    lists: {
-      sessions: [],
-      assessments: [],
-      lexicon: [],
-      errors: [],
-      plans: [],
-      stories: [],
-    },
+    lists: Object.fromEntries(USER_LISTS.map(key => [key, []])),
     drafts: {},
     profile: profileStamp({}),
   };
@@ -40,14 +33,7 @@ function emptySnapshot(): Snapshot {
 function takeSnapshot(state): Snapshot {
   const shaped = structuredClone(persistShape(state));
   return {
-    lists: {
-      sessions: shaped.sessions || [],
-      assessments: shaped.assessments || [],
-      lexicon: shaped.lexicon || [],
-      errors: shaped.errors || [],
-      plans: shaped.plans || [],
-      stories: shaped.stories || [],
-    },
+    lists: Object.fromEntries(USER_LISTS.map(key => [key, shaped[key] || []])),
     drafts: shaped.drafts || {},
     profile: profileStamp(shaped),
   };
@@ -77,6 +63,44 @@ async function selectCatalog(table: string) {
   return rows;
 }
 
+export async function loadVocabularyCatalog(options: { bookId?: string; term?: string; limit?: number; offset?: number } = {}) {
+  if (!supabaseConfigured()) throw new Error('Vocabulary catalog is unavailable offline.');
+  const supabase = getSupabase();
+  const limit = Math.min(1000, Math.max(1, Math.floor(Number(options.limit) || 100)));
+  const offset = Math.max(0, Math.floor(Number(options.offset) || 0));
+  async function page(table: string, filter?: (query) => unknown) {
+    let query = supabase.from(table).select('id, payload').order('id', { ascending: true });
+    if (filter) query = filter(query);
+    const { data, error } = await query.range(offset, offset + limit - 1);
+    if (error) throw new Error(`Could not load vocabulary catalog (${table}): ${error.message || 'request failed'}`);
+    return (data || []).map(row => Object.assign({}, row.payload, { id: String(row.id) }));
+  }
+  if (options.term?.trim()) {
+    const term = options.term.normalize('NFKC').trim().toLocaleLowerCase('en').replace(/\s+/g, ' ');
+    const entries = await page('word_entries', query => query.eq('payload->>term', term));
+    return { entries, books: [], units: [], memberships: [], nextOffset: entries.length === limit ? offset + limit : null };
+  }
+  if (options.bookId) {
+    const bookId = String(options.bookId);
+    const [books, units, memberships] = await Promise.all([
+      page('wordbooks', query => query.eq('id', bookId)),
+      page('wordbook_units', query => query.eq('payload->>bookId', bookId)),
+      page('wordbook_memberships', query => query.eq('payload->>bookId', bookId)),
+    ]);
+    const ids = [...new Set(memberships.map(row => row.entryId).filter(Boolean))];
+    // The membership page bounds the entry fetch; the whole public catalogue is never loaded.
+    const entries = ids.length ? (await Promise.all(Array.from({length:Math.ceil(ids.length/80)},async(_,index)=>{
+      const chunk=ids.slice(index*80,index*80+80);
+      const { data, error } = await supabase.from('word_entries').select('id, payload').in('id', chunk).order('id', { ascending: true }).range(0, chunk.length - 1);
+      if (error) throw new Error(`Could not load vocabulary catalog (word_entries): ${error.message || 'request failed'}`);
+      return (data || []).map(row => Object.assign({}, row.payload, { id: String(row.id) }));
+    }))).flat() : [];
+    return { entries, books, units: units.map(unit => ({ ...unit, id: unit.sourceUnitId || unit.id })), memberships, nextOffset: memberships.length === limit ? offset + limit : null };
+  }
+  const books = await page('wordbooks');
+  return { entries: [], books, units: [], memberships: [], nextOffset: books.length === limit ? offset + limit : null };
+}
+
 export async function hydrateState() {
   const generation = ++hydrationGeneration;
   if (!supabaseConfigured()) {
@@ -96,12 +120,13 @@ export async function hydrateState() {
     snapshot = emptySnapshot();
     return emptyState();
   }
-  const [profileResult, writing, topics, samples, ...lists] = await Promise.all([
+  const [profileResult, writing, topics, samples, legacyLexicon, ...lists] = await Promise.all([
     supabase.from('profiles').select('settings, active_plan_id, reviewed_at').eq('id', session.user.id).maybeSingle(),
     selectCatalog('writing_questions'),
     selectCatalog('speaking_topics'),
     selectCatalog('speaking_samples'),
-    ...USER_LISTS.map((table) => selectAll(table)),
+    selectAll('lexicon'),
+    ...USER_LISTS.map((key) => selectAll(USER_TABLES[key])),
   ]);
   if (profileResult.error) throw profileResult.error;
   const profile = profileResult.data;
@@ -119,6 +144,7 @@ export async function hydrateState() {
     activePlanId: profile ? profile.active_plan_id : null,
     reviewedAt: profile ? profile.reviewed_at : null,
     drafts: {},
+    lexicon: rowsToList(legacyLexicon),
   };
   USER_LISTS.forEach((key, index) => {
     raw[key] = rowsToList(lists[index]);
@@ -126,7 +152,7 @@ export async function hydrateState() {
   raw.drafts = rowsToDrafts(await selectAll('drafts'));
   const state = migrateState(raw);
   if (generation !== hydrationGeneration || currentAccountId !== session.user.id) throw new Error('Account load superseded');
-  snapshot = takeSnapshot(state);
+  snapshot = takeSnapshot({ ...state, ...Object.fromEntries(VOCABULARY_LISTS.map(key=>[key,raw[key]||[]])) });
   accountReady = true;
   return state;
 }
@@ -171,7 +197,7 @@ export async function saveState(state, onQuotaToast?: (message: string) => void)
   try {
     for (const key of USER_LISTS) {
       if (currentAccountId !== expectedAccount) return false;
-      await pushDiff(key, session.user.id, diffList(previous.lists[key], next.lists[key]), now);
+      await pushDiff(USER_TABLES[key], session.user.id, diffList(previous.lists[key], next.lists[key]), now);
     }
     if (currentAccountId !== expectedAccount) return false;
     await pushDiff('drafts', session.user.id, diffDrafts(previous.drafts, next.drafts), now);
@@ -194,6 +220,41 @@ export async function saveState(state, onQuotaToast?: (message: string) => void)
     return true;
   } catch {
     if (onQuotaToast) onQuotaToast('Could not save to your account. Try again.');
+    return false;
+  }
+}
+
+export async function saveVocabularyImport(state, batchId: string, onError?: (message: string) => void) {
+  const expectedAccount = currentAccountId;
+  const generation = hydrationGeneration;
+  if (!supabaseConfigured() || !expectedAccount || !accountReady) {
+    onError?.('Sign in to import vocabulary.');
+    return false;
+  }
+  const supabase = getSupabase();
+  try {
+    const { data, error: sessionError } = await supabase.auth.getSession();
+    if (sessionError) throw sessionError;
+    if (!data.session || data.session.user.id !== expectedAccount || currentAccountId !== expectedAccount || generation !== hydrationGeneration) return false;
+    const next = takeSnapshot(state);
+    const previous = snapshot || emptySnapshot();
+    const importBatch = next.lists.vocabularyImportBatches.find(row => row.id === batchId);
+    if (!batchId || !importBatch) throw new Error('Missing import batch');
+    const lists = Object.fromEntries(VOCABULARY_LISTS.map(key => [key, diffList(previous.lists[key], next.lists[key]).upserts]));
+    const { data: commitResult, error } = await supabase.rpc('commit_vocabulary_import', {
+      batch: { id: batchId, lists, importBatch, updatedAt: new Date().toISOString() },
+    });
+    if (error) throw error;
+    if (currentAccountId !== expectedAccount || generation !== hydrationGeneration) return false;
+    // A replay acknowledges the earlier transaction, not edits added since it.
+    if (commitResult?.alreadyCommitted) return true;
+    // Other edits in this state have not been saved by the vocabulary transaction.
+    const updated = snapshot || emptySnapshot();
+    VOCABULARY_LISTS.forEach(key => { updated.lists[key] = next.lists[key]; });
+    snapshot = updated;
+    return true;
+  } catch {
+    onError?.('Could not import vocabulary to your account. Try again.');
     return false;
   }
 }

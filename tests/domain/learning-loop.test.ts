@@ -37,12 +37,12 @@ test('A1: v6 state migrates to v7 without dropping essays, assessments, or lexic
     lexicon: [{ id: 'l1', term: 'overall', meaning: '总体上' }],
     drafts: { '1342': 'still here', 'topic-1:notes': 'cue notes', 'topic-1': 'spoken draft' },
   });
-  assert.equal(migrated.schemaVersion, 9);
-  assert.equal(core.STATE_VERSION, 9);
+  assert.equal(migrated.schemaVersion, 10);
+  assert.equal(core.STATE_VERSION, 10);
   assert.equal(migrated.sessions.length, 1);
   assert.equal(migrated.sessions[0].essay, essay);
   assert.equal(migrated.assessments.length, 1);
-  assert.equal(migrated.lexicon.length, 1);
+  assert.equal(migrated.vocabulary.length, 1);
   assert.equal(core.draftText(migrated.drafts['1342'], 'writing'), 'still here');
   assert.equal(migrated.drafts['1342'].text, 'still here');
   assert.equal(migrated.drafts['1342'].parentSessionId, null);
@@ -69,7 +69,7 @@ test('A2: persistShape omits question banks and preserves structured rawText', (
     sessions: [{ id: 's1', questionId: '1342', essay }],
   });
   const payload = core.persistShape(state);
-  assert.equal(payload.schemaVersion, 9);
+  assert.equal(payload.schemaVersion, 10);
   assert.equal(payload.questions, undefined);
   assert.equal(payload.speakingTopics, undefined);
   assert.equal(payload.assessments[0].rawText, state.assessments[0].rawText);
@@ -171,7 +171,7 @@ test('A4: saving Task 1 only completes kind 1, and stories are not completed by 
   assert.equal(state.plans[2].status, 'completed');
 });
 
-test('A4: lexiconComplete only when due count dropped or nothing is due', () => {
+test('A4: vocabularyComplete only when due count dropped or nothing is due', () => {
   const state = core.migrateState({
     plans: [{ id: 'plx', kind: 'lexicon', status: 'in_progress' }],
     activePlanId: 'plx',
@@ -180,10 +180,10 @@ test('A4: lexiconComplete only when due count dropped or nothing is due', () => 
       nextReviewAt: '2020-01-01T00:00:00.000Z', status: 'learning',
     }],
   });
-  assert.equal(core.completeLexiconPlan(state, 1, '2026-09-19T00:00:00.000Z'), null);
+  assert.equal(core.completeVocabularyPlan(state, 1, '2026-09-19T00:00:00.000Z'), null);
   assert.equal(state.plans[0].status, 'in_progress');
-  core.reviewLexiconItem(state, 'l1', true, '2026-09-19T00:00:00.000Z');
-  assert.ok(core.completeLexiconPlan(state, 1, '2026-09-19T00:00:00.000Z'));
+  core.getVocabularyReviewQueue(state, { now: '2026-09-19T00:00:00.000Z' }).forEach(card => core.recordVocabularyReview(state, { entryId: card.entryId, senseId: card.senseId, mode: card.mode, result: 'success', occurredAt: '2026-09-19T00:00:00.000Z' }));
+  assert.ok(core.completeVocabularyPlan(state, 1, '2026-09-19T00:00:00.000Z'));
   assert.equal(state.plans[0].status, 'completed');
 });
 
@@ -399,10 +399,10 @@ test('B1: rewrite hint uses the first sentence of nextExercise', () => {
   assert.equal(core.examPressure({ settings: { examDate: '2026-10-20' } }, '2026-09-19T00:00:00'), false);
 });
 
-test('B2: lexicon key keeps same term in different skills, and sentence compare ignores punctuation', () => {
-  assert.notEqual(core.lexiconKey('account for', 'writing', '占据'), core.lexiconKey('account for', 'speaking', '占据'));
-  assert.equal(core.lexiconSentenceMatches('Overall, sales rose.', 'overall sales rose'), true);
-  assert.equal(core.lexiconSentenceMatches('Overall, sales rose.', 'sales fell'), false);
+test('B2: vocabulary keys share a term across skills and normalize English input', () => {
+  assert.equal(core.vocabularyKey('account for', 'writing'), core.vocabularyKey(' Account For ', 'speaking'));
+  assert.equal(core.normalizeAnswer(' Overall, sales rose. '), 'overall, sales rose.');
+  assert.notEqual(core.normalizeAnswer('Overall, sales rose.'), core.normalizeAnswer('sales fell'));
 });
 
 test('B4: study streak counts consecutive scheduled days and resets after a miss', () => {
@@ -524,16 +524,14 @@ test('today session orders recall, practice, then the due correction', () => {
   assert.match(session.steps[2].detail, /GRA-PREP/);
 });
 
-test('easy skips one review rung and again resets the streak', () => {
+test('a failed vocabulary review starts relearning and activates the error state', () => {
   const state = core.migrateState({});
-  core.addLexiconItem(state, { term: 'robust', meaning: '稳健' }, { id: () => 'l1', now: () => '2026-09-16T00:00:00.000Z' });
-  const easy = core.reviewLexiconItem(state, 'l1', 'easy', '2026-09-16T00:00:00.000Z');
-  assert.equal(easy.successStreak, 2);
-  assert.equal(easy.nextReviewAt, localPlus('2026-09-16T00:00:00.000Z', 3));
-  const again = core.reviewLexiconItem(state, 'l1', 'again', '2026-09-19T00:00:00.000Z');
-  assert.equal(again.successStreak, 0);
-  assert.equal(again.status, 'learning');
-  assert.equal(again.nextReviewAt, localPlus('2026-09-19T00:00:00.000Z', 1));
+  const added = core.addVocabularyItem(state, { term: 'robust', meaning: 'Strong and able to withstand stress.' }, { now: () => '2026-09-16T00:00:00.000Z' });
+  core.recordVocabularyReview(state, { entryId: added.item.id, mode: 'definition', result: 'success', occurredAt: '2026-09-16T00:00:00.000Z' });
+  const again = core.recordVocabularyReview(state, { entryId: added.item.id, mode: 'definition', result: 'failure', occurredAt: '2026-09-19T00:00:00.000Z' });
+  assert.equal(again.wrong.modes.definition.successesSinceFailure, 0);
+  assert.equal(again.wrong.active, true);
+  assert.ok(Date.parse(again.nextReviewAt) > Date.parse('2026-09-19T00:00:00.000Z'));
 });
 
 test('syncPendingPlan rewrites only a pending same-skill plan and keeps driver on migrate', () => {
@@ -557,7 +555,7 @@ test('syncPendingPlan rewrites only a pending same-skill plan and keeps driver o
   assert.equal(core.syncPendingPlan(running, recommendation), false);
   assert.equal(running.title, '进行中');
   const migrated = core.migrateState({ plans: [{ id: 'keep', status: 'completed', driver: 'criterion:CC', title: '留着' }] });
-  assert.equal(migrated.schemaVersion, 9);
+  assert.equal(migrated.schemaVersion, 10);
   assert.equal(migrated.plans[0].driver, 'criterion:CC');
   assert.equal(migrated.plans[0].title, '留着');
 });

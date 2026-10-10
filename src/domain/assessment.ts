@@ -1,6 +1,6 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { parseLexiconSuggestions } from './lexicon';
+import { parseVocabularySuggestions, syncProductionVocabularyEvidence } from './vocabulary';
 import { PRACTICE_MODES } from './state';
 import { recommendationFromAssessment, syncNearestPendingPlan } from './plans';
 import { wordCount, hashText, dateKey, makeId, nowIso } from './utils';
@@ -110,7 +110,8 @@ export function parseAssessmentFile(text, filename) {
   const part = metadata(rawText, 'part');
   const rewriteMinimum = focused || skill === 'speaking' ? 0 : (task === 'Task 2' ? 250 : 150);
   const vocabularySuggestions = headingSection(rawText, 'Vocabulary suggestions') || headingSection(rawText, '语言积累建议');
-  const lexiconSuggestions = parseLexiconSuggestions(vocabularySuggestions.replace(/^\|\s*type\s*\|/gim, '| Category |'));
+  const vocabularySuggestionsList = parseVocabularySuggestions(vocabularySuggestions.replace(/^\|\s*type\s*\|/gim, '| Category |'));
+  const vocabularyEvidenceRows = headingSection(rawText, 'Vocabulary evidence').split(/\r?\n/).filter(line => line.trim().startsWith('|')).map(line => line.split('|').slice(1, -1).map(cell => cell.trim())).filter(cells => cells.length >= 3 && ['success', 'partial', 'failure'].includes(cells[1])).map(cells => ({ term: cells[0], result: cells[1], evidence: cells[2] }));
   const criteria = parseCriteria(headingSection(rawText, 'Criteria') || headingSection(rawText, '四项评分') || rawText, focused);
   const editNotes = headingSection(rawText, 'Edits') || headingSection(rawText, '原文问题与修改说明') || headingSection(rawText, '修改说明');
   const inventedPronunciation = criteria.some(item => /pronunciation/i.test(item.name) && isBandScore(item.score));
@@ -137,8 +138,9 @@ export function parseAssessmentFile(text, filename) {
     rewriteWordCount: wordCount(rewrittenResponse),
     rewriteTooShort: Boolean(rewrittenResponse) && wordCount(rewrittenResponse) < rewriteMinimum,
     editRows: parseEditRows(editNotes),
-    lexiconSuggestions,
     vocabularySuggestions,
+    vocabularySuggestionsList,
+    vocabularyEvidenceRows,
     // Keep the old field for imported assessments written against the
     // previous contract. New requests use the Full rewrite section.
     rewriteExample: headingSection(rawText, '改写示例'),
@@ -234,6 +236,7 @@ ${focused ? 'Optional: revise only the submitted practice, with no entire-essay 
 ## Vocabulary suggestions
 
 Select 3-8 reusable words, phrases, or sentence patterns from the corrections. Do not invent expressions unrelated to this response.
+Use English only for definitions, usage explanations, examples, and tags.
 
 | Category | Expression | Meaning / Usage | Example | Tags |
 |---|---|---|---|---|
@@ -247,8 +250,10 @@ Official criteria: https://ielts.org/cdn/ielts-guides/ielts-writing-key-assessme
 `;
 }
 
-export function buildAssessmentRequestWithLexicon(session, question) {
-  return buildAssessmentRequest(session, question);
+export function buildAssessmentRequestWithVocabulary(session, question) {
+  const request = buildAssessmentRequest(session, question);
+  if (!session.vocabularyTargets?.length) return request;
+  return request + `\n## Vocabulary practice targets\n\n${session.vocabularyTargets.map(target => `${target.term}: ${target.definition}`).join('\n')}\n\nAssess only these tracked expressions as used in the Candidate response. Include a Vocabulary evidence section in the returned score file. Quote an exact, unmodified substring of the response that contains the expression. Use success, partial, or failure; do not infer correct usage merely from its presence. All explanations must be English.\n\n| Expression | Result | Evidence |\n|---|---|---|\n`;
 }
 
 export function resolveAssessmentEssay(state, parsed, deps) {
@@ -347,6 +352,7 @@ export function importAssessmentText(state, text, filename, deps) {
     });
     duplicate.rawText = duplicate.rawText || parsed.rawText;
     syncAssessmentErrors(state, duplicate, resolution.session);
+    if (resolution.session) syncProductionVocabularyEvidence(state, duplicate, resolution.session);
     return { assessment: duplicate, session: resolution.session || null, duplicate: true, resolution: resolution.reason };
   }
   const resolution = resolveAssessmentEssay(state, parsed, services);
@@ -368,6 +374,7 @@ export function importAssessmentText(state, text, filename, deps) {
   state.assessments.push(assessment);
   if (resolution.session) resolution.session.assessmentId = assessment.id;
   syncAssessmentErrors(state, assessment, resolution.session);
+  if (resolution.session) syncProductionVocabularyEvidence(state, assessment, resolution.session);
   const recommendation = recommendationFromAssessment(state, assessment);
   if (recommendation) {
     recommendation.targetErrorIds = state.errors.filter(error => error.sourceAssessmentId === assessment.id && !error.resolved).map(error => error.id);

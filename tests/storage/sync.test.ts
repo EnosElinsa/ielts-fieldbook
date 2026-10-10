@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { hydrateState } from '../../src/storage';
-import { diffDrafts, diffList, profileStamp, rowsToDrafts, rowsToList } from '../../src/storage/sync';
+import { USER_LISTS, USER_TABLES, diffDrafts, diffList, profileStamp, rowsToDrafts, rowsToList } from '../../src/storage/sync';
 
 describe('account hydrate', () => {
   test('starts empty and ignores an older browser copy', async () => {
@@ -14,6 +14,12 @@ describe('account hydrate', () => {
 });
 
 describe('row diff', () => {
+  test('personal vocabulary collections map to owned tables and legacy lexicon is read only', () => {
+    expect(USER_LISTS).not.toContain('lexicon');
+    expect(USER_LISTS).toContain('vocabularyStates');
+    expect(USER_TABLES.vocabularyStates).toBe('vocabulary_states');
+    expect(USER_TABLES.wordbookProgress).toBe('wordbook_progress');
+  });
   test('upserts changed rows and deletes missing ids', () => {
     const diff = diffList(
       [

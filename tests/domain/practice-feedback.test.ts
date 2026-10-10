@@ -59,7 +59,7 @@ test('v9 migration preserves lineage and target errors while old modes stay unkn
     sessions: [{ id: 'old', mode: 'full', parentSessionId: 'parent', essay: 'Old response.' }],
     drafts: { old: { text: 'Draft.', mode: 'timed', parentSessionId: 'parent' }, modern: { text: 'Modern.', practiceMode: 'body', targetErrorIds: ['e1'] } },
   });
-  assert.equal(state.schemaVersion, 9);
+  assert.equal(state.schemaVersion, 10);
   assert.equal(state.sessions[0].practiceMode, 'unknown');
   assert.equal(state.sessions[0].parentSessionId, 'parent');
   assert.equal(state.drafts.old.practiceMode, 'unknown');
@@ -94,7 +94,7 @@ test('English focused feedback parses corrections without full rewrite minimum',
   assert.equal(parsed.editRows[0].tag, 'TA-OVERVIEW');
   assert.equal(parsed.rewriteTooShort, false);
   assert.equal(parsed.rewrittenResponse, 'Overall, sales rose while cycling fell.');
-  assert.equal(parsed.lexiconSuggestions[0].term, 'in contrast');
+  assert.equal(parsed.vocabularySuggestionsList[0].term, 'in contrast');
 });
 
 test('score trends include full and timed responses only while unknown history survives', () => {

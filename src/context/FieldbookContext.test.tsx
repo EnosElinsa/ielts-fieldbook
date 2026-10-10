@@ -6,11 +6,13 @@ import { emptyState, normalizeDraft } from '../domain';
 import { readDraftRecovery } from '../storage/recovery';
 import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 
-const mocks = vi.hoisted(() => ({ initial: null, saveState: vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
+const mocks = vi.hoisted(() => ({ initial: null, saveState: vi.fn(), saveVocabularyImport: vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
 vi.mock('../storage', () => ({
   loadState: () => structuredClone(mocks.initial),
   hydrateState: async () => structuredClone(mocks.initial),
   saveState: (...args) => mocks.saveState(...args),
+  saveVocabularyImport: (...args) => mocks.saveVocabularyImport(...args),
+  loadVocabularyCatalog: vi.fn(async () => ({ entries: [], books: [], units: [], memberships: [], nextOffset: null })),
   downloadFile: (...args) => mocks.downloadFile(...args),
 }));
 vi.mock('../storage/remote', () => ({ accountId: () => mocks.owner }));
@@ -39,6 +41,7 @@ beforeEach(() => {
   mocks.owner = 'account-1';
   mocks.saveState.mockReset().mockResolvedValue(true);
   mocks.downloadFile.mockReset();
+  mocks.saveVocabularyImport.mockReset().mockResolvedValue(true);
   mocks.initial = emptyState();
   mocks.initial.questions = [{ id: 'q1', type: '1', name: 'Chart', prompt: 'Describe the chart.' }];
   mocks.initial.speakingTopics = [{ id: 'sp1', part: '2', title: 'A trip', cueCard: 'Describe a trip.' }];
@@ -149,3 +152,19 @@ test('restoring a recovery draft increments the visible draft revision signal', 
 function writeRecovery(owner, drafts) {
   localStorage.setItem(`fieldbook-drafts-v1:${owner}`, JSON.stringify({ drafts, savedAt: new Date().toISOString() }));
 }
+
+test('a delayed vocabulary import preserves concurrent drafts and queued saves', async () => {
+  await mount();
+  const pending = defer();
+  mocks.saveVocabularyImport.mockImplementationOnce(() => pending.promise);
+  const imported = structuredClone(fieldbook.stateRef.current);
+  imported.vocabularyImportBatches.push({ id: 'import-1' });
+  imported.vocabulary.push({ id: 'word-1', term: 'mitigate', senses: [], sources: [] });
+  let completion;
+  await act(async () => { completion = fieldbook.persistVocabularyImport(imported, 'import-1'); await Promise.resolve(); });
+  await act(async () => { fieldbook.persist(draft => { draft.drafts.q1.text = 'Work written during import.'; }); await Promise.resolve(); });
+  await act(async () => { pending.resolve(true); await completion; });
+  await waitFor(() => expect(mocks.saveState).toHaveBeenCalled());
+  expect(fieldbook.state.drafts.q1.text).toBe('Work written during import.');
+  expect(mocks.saveState.mock.calls.at(-1)[0].vocabulary[0].term).toBe('mitigate');
+});

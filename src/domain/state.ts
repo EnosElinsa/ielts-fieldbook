@@ -1,10 +1,14 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { normalizeStory, dedupeStories } from './stories';
-import { dedupeLexicon } from './lexicon';
+import { collectVocabularyProduction, migrateLegacyVocabulary } from './vocabulary';
 import { wordCount, hashText, dateKey, makeId, nowIso, clone } from './utils';
 
-export const STATE_VERSION = 9;
+export const STATE_VERSION = 10;
+export const VOCABULARY_COLLECTIONS = [
+  'vocabulary', 'vocabularyStates', 'vocabularyEvidence', 'vocabularyReviews',
+  'vocabularyActivities', 'wordbookProgress', 'wordbookEnrollments', 'vocabularyImportBatches',
+];
 export const PRACTICE_MODES = ['unknown', 'overview', 'outline', 'compare', 'body', 'timed', 'full', 'speak-blind'];
 export const BANK_CACHE_KEY = 'ielts-fieldbook-bank-cache';
 export const LEGACY_STORES = ['ielts-writing-fieldbook-v3', 'ielts-writing-fieldbook-v2', 'ielts-writing-fieldbook-v1'];
@@ -76,15 +80,27 @@ export function assessmentHasStructure(item) {
   return Boolean(item && item.overall && item.summary && Array.isArray(item.criteria) && item.criteria.length);
 }
 
+function migrateAssessmentVocabulary(item) {
+  const source = item || {};
+  const suggestions = Array.isArray(source.vocabularySuggestionsList) ? source.vocabularySuggestionsList : Array.isArray(source.lexiconSuggestions) ? source.lexiconSuggestions : [];
+  const english = value => typeof value === 'string' && !/[\u3400-\u9fff\uf900-\ufaff]/u.test(value) ? value.trim() : '';
+  const result = Object.assign({}, source, {
+    vocabularySuggestionsList: suggestions.map(row => ({
+      category: ['word', 'phrase', 'sentence'].includes(row.category) ? row.category : 'phrase',
+      term: english(row.term), meaning: english(row.meaning), example: english(row.example),
+      tags: Array.isArray(row.tags) ? row.tags.map(english).filter(Boolean) : [],
+    })).filter(row => row.term),
+  });
+  delete result.lexiconSuggestions;
+  return result;
+}
+
 export function persistShape(state) {
   const payload = Object.assign({}, state, { schemaVersion: STATE_VERSION });
+  delete payload.lexicon;
   delete payload.questions;
   delete payload.speakingTopics;
-  payload.assessments = (state.assessments || []).map(item => {
-    if (!assessmentHasStructure(item)) return item;
-    const copy = Object.assign({}, item);
-    return copy;
-  });
+  payload.assessments = (state.assessments || []).map(migrateAssessmentVocabulary);
   return payload;
 }
 
@@ -133,7 +149,14 @@ export function emptyState() {
     drafts: {},
     errors: [],
     assessments: [],
-    lexicon: [],
+    vocabulary: [],
+    vocabularyStates: [],
+    vocabularyEvidence: [],
+    vocabularyReviews: [],
+    vocabularyActivities: [],
+    wordbookProgress: [],
+    wordbookEnrollments: [],
+    vocabularyImportBatches: [],
     plans: [],
     stories: [],
     speakingTopics: [],
@@ -146,6 +169,8 @@ export function emptyState() {
 export function migrateState(raw) {
   const source = raw && typeof raw === 'object' ? raw : {};
   const state = Object.assign(emptyState(), source);
+  Object.assign(state, migrateLegacyVocabulary(source));
+  delete state.lexicon;
   state.schemaVersion = STATE_VERSION;
   state.questions = Array.isArray(source.questions) ? source.questions.map(q => Object.assign({}, q, { id: String(q.id) })) : [];
   state.sessions = Array.isArray(source.sessions) ? source.sessions.map((item, index) => {
@@ -186,7 +211,7 @@ export function migrateState(raw) {
     contentHash: item.contentHash || hashText(item.rawText || ''),
     practiceMode: PRACTICE_MODES.includes(item.practiceMode) ? item.practiceMode : 'unknown',
     targetErrorIds: Array.isArray(item.targetErrorIds) ? item.targetErrorIds.map(value => String(value)).filter(Boolean) : [],
-  })) : [];
+  })).map(migrateAssessmentVocabulary) : [];
   const assessmentsByContent = new Map();
   state.assessments.forEach(assessment => {
     const key = assessment.contentHash || assessment.id;
@@ -194,36 +219,6 @@ export function migrateState(raw) {
     if (!existing || (!existing.sessionId && assessment.sessionId) || Boolean(existing.sessionId) === Boolean(assessment.sessionId)) assessmentsByContent.set(key, assessment);
   });
   state.assessments = Array.from(assessmentsByContent.values());
-  state.lexicon = Array.isArray(source.lexicon) ? source.lexicon.map((item, index) => {
-    const entry = Object.assign({
-      id: `legacy-lexicon-${index}`,
-      category: 'word',
-      term: '',
-      meaning: '',
-      example: '',
-      tags: [],
-      source: '',
-      status: 'new',
-      reviewCount: 0,
-      successStreak: 0,
-      lastReviewedAt: null,
-      nextReviewAt: null,
-      createdAt: nowIso(),
-      updatedAt: nowIso(),
-    }, item || {});
-    entry.id = entry.id || `legacy-lexicon-${index}`;
-    entry.category = ['word', 'phrase', 'sentence'].includes(entry.category) ? entry.category : 'word';
-    entry.term = String(entry.term || '').trim();
-    entry.meaning = String(entry.meaning || '').trim();
-    entry.example = String(entry.example || '').trim();
-    entry.tags = Array.isArray(entry.tags) ? entry.tags.map(value => String(value).trim()).filter(Boolean) : String(entry.tags || '').split(/[;,；，]/).map(value => value.trim()).filter(Boolean);
-    entry.reviewCount = Number(entry.reviewCount) || 0;
-    entry.successStreak = Number(entry.successStreak) || (entry.status === 'mastered' ? 5 : 0);
-    entry.status = ['new', 'learning', 'mastered'].includes(entry.status) ? entry.status : 'new';
-    entry.skill = entry.skill === 'speaking' ? 'speaking' : 'writing';
-    return entry;
-  }) : [];
-  state.lexicon = dedupeLexicon(state.lexicon);
   state.errors = Array.isArray(source.errors) ? source.errors.map((item, index) => {
     const error = Object.assign({
       id: `legacy-error-${index}`,
@@ -246,7 +241,7 @@ export function migrateState(raw) {
     completedAt: null,
     driver: null,
     targetErrorIds: [],
-  }, item)) : [];
+  }, item, item && item.kind === 'lexicon' ? { kind: 'vocabulary' } : {})) : [];
   state.drafts = migrateDrafts(source.drafts);
   state.stories = dedupeStories(Array.isArray(source.stories) ? source.stories.map(normalizeStory) : []);
   state.speakingTopics = Array.isArray(source.speakingTopics) ? source.speakingTopics.map(item => Object.assign({}, item)) : [];
@@ -285,5 +280,6 @@ export function createAttempt(state, input, deps) {
       : [],
   };
   state.sessions.push(attempt);
+  collectVocabularyProduction(state, attempt);
   return attempt;
 }

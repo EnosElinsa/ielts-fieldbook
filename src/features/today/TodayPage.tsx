@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   criterionBands,
   criterionLabel,
-  dueLexicon,
+  dueVocabulary,
   studyStreak,
   todaySession,
   weakestCriterion,
@@ -123,8 +123,8 @@ export function TodayPage() {
                     className={`btn ${tone}`}
                     onClick={() => {
                       if (step.id === 'recall') {
-                        fb.setLexiconDueOnly(true);
-                        navigate('/phrases');
+                        fb.setVocabularyDueOnly(true);
+                        navigate('/vocabulary/review');
                         return;
                       }
                       if (step.id === 'correction') {
@@ -248,9 +248,9 @@ export function TodayPage() {
           <strong>{fb.state.assessments.filter(assessmentMatches).length}</strong>
           <small>imported</small>
         </div>
-        <button className="metric metric-link" type="button" onClick={() => navigate('/phrases')}>
-          <label>Due phrases</label>
-          <strong>{dueLexicon(fb.state, null, fb.activeSkill).length}</strong>
+        <button className="metric metric-link" type="button" onClick={() => navigate('/vocabulary')}>
+          <label>Due vocabulary</label>
+          <strong>{dueVocabulary(fb.state, null, fb.activeSkill).length}</strong>
           <small>due today</small>
         </button>
       </div>

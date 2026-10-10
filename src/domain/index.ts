@@ -33,18 +33,10 @@ export {
   criterionBands,
   weakestCriterion,
   overallIsEstimated,
-  buildAssessmentRequestWithLexicon as buildAssessmentRequest,
+  buildAssessmentRequestWithVocabulary as buildAssessmentRequest,
 } from './assessment';
 
-export {
-  addLexiconItem,
-  updateLexiconItem,
-  removeLexiconItem,
-  reviewLexiconItem,
-  lexiconKey,
-  dueLexicon,
-  lexiconSentenceMatches,
-} from './lexicon';
+export * from './vocabulary';
 
 export { validateBackup, mergeBackup } from './backup';
 
@@ -62,7 +54,7 @@ export {
   planMatchesAttempt,
   completePlanIfMatched,
   completeStoriesPlan,
-  completeLexiconPlan,
+  completeVocabularyPlan,
   completeReview,
   reviewError,
   resolveError,

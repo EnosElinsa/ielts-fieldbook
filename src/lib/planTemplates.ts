@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { latestPracticeRecommendation, rewritePlanDescription, syncPendingPlan, dateKey, dueErrors, dueLexicon, examPressure, assignStoryPlanTarget } from '../domain';
+import { latestPracticeRecommendation, rewritePlanDescription, syncPendingPlan, dateKey, dueErrors, dueVocabulary, examPressure, assignStoryPlanTarget } from '../domain';
 import { sessionSkill, speakingKinds } from './format';
 
 export const planTemplates = {
@@ -61,7 +61,7 @@ export const mixedPlanTemplates = [
   { kind: 'speaking-p1', title: 'Part 1 · Short answers', description: 'About 20–30 seconds each.', deskMode: 'full' },
   { kind: '2', title: 'Task 2 · Plan', description: 'Question, position, and two main points.', deskMode: 'outline' },
   { kind: 'speaking-p2', title: 'Part 2 · Long turn', description: 'One minute of notes, then two minutes of speaking.', deskMode: 'full' },
-  { kind: 'review', title: 'Review · Mistakes', description: 'Due phrases, or attempts still waiting for a score.', deskMode: 'full' },
+  { kind: 'review', title: 'Review · Mistakes', description: 'Due vocabulary, or attempts still waiting for a score.', deskMode: 'full' },
   { kind: 'stories', title: 'A story', description: 'Write down something that actually happened to you.', deskMode: 'full' },
 ];
 
@@ -78,8 +78,8 @@ const planCopyFixes = {
   '写一段经历': ['A story', 'Write down something that actually happened to you.'],
   '复盘 · 转写回放': ['Review · Last attempt', 'Look at attempts that have not been marked.'],
   '看看上次说的': ['Review · Last attempt', 'Look at attempts that have not been marked.'],
-  '语言积累 · 到期复习': ['Phrases due', 'Phrases to recall today.'],
-  '词句到期了': ['Phrases due', 'Phrases to recall today.'],
+  '语言积累 · 到期复习': ['Vocabulary due', 'Vocabulary to recall today.'],
+  '词句到期了': ['Vocabulary due', 'Vocabulary to recall today.'],
   '重练 · 最近转写': ['Say it again', 'Use the last feedback and say it again.'],
   '再练一遍': ['Say it again', 'Use the last feedback and say it again.'],
   'Task 1 · 读图': ['Task 1 · Read the chart', 'Check the figures, then write only the introduction and overview.'],
@@ -136,12 +136,12 @@ const planDescriptionFixes = {
   '复习尚未评分的转写。': 'Look at attempts that have not been marked.',
   '把还没批的口述稿过一遍。': 'Look at attempts that have not been marked.',
   '看还没批的练习。': 'Look at attempts that have not been marked.',
-  '处理到期词汇或尚未评分的记录。': 'Due phrases, or attempts still waiting for a score.',
-  '处理到期词汇或还没批的记录。': 'Due phrases, or attempts still waiting for a score.',
-  '处理到期词汇，或还没批的记录。': 'Due phrases, or attempts still waiting for a score.',
+  '处理到期词汇或尚未评分的记录。': 'Due vocabulary, or attempts still waiting for a score.',
+  '处理到期词汇或还没批的记录。': 'Due vocabulary, or attempts still waiting for a score.',
+  '处理到期词汇，或还没批的记录。': 'Due vocabulary, or attempts still waiting for a score.',
   '按上次的反馈，把最近一次再说一遍。': 'Use the last feedback and say it again.',
   '按上次的反馈再说一遍。': 'Use the last feedback and say it again.',
-  '今天有该看的说法。': 'Phrases to recall today.',
+  '今天有该看的说法。': 'Vocabulary to recall today.',
   '完成数据核对表，只写 Introduction + Overview。': 'Check the figures, then write only the introduction and overview.',
   '审题、立场、两个主体段论点。': 'Question, position, and two main points.',
   '写一个主体段，至少完成两次有效比较。': 'Write one body paragraph with at least two real comparisons.',
@@ -184,11 +184,11 @@ function reviewUnresolvedTemplate(count) {
   };
 }
 
-function lexiconDueTemplate(count) {
+function vocabularyDueTemplate(count) {
   return {
-    kind: 'lexicon',
-    title: 'Phrases due',
-    description: count === 1 ? '1 phrase to recall today.' : `${count} phrases to recall today.`,
+    kind: 'vocabulary',
+    title: 'Vocabulary due',
+    description: count === 1 ? '1 entry to review today.' : `${count} entries to review today.`,
     deskMode: 'full',
   };
 }
@@ -246,7 +246,7 @@ export function promoteToTimed(template) {
 
 /**
  * Choose today's plan template from rotation, daily minutes, and exam pressure.
- * Sequence 0 still prefers due errors, due lexicon, and unscored attempts.
+ * Sequence 0 still prefers due errors, due vocabulary, and unscored attempts.
  */
 export function pickTemplate({ settings, sequence, signals, templates }) {
   const opts = signals || {};
@@ -261,10 +261,10 @@ export function pickTemplate({ settings, sequence, signals, templates }) {
   if (sequence === 0) {
     if (opts.recommendation) return opts.recommendation;
     if (examSoon && (dueErr || dueLex)) {
-      return dueErr ? reviewMistakesTemplate(dueErr) : lexiconDueTemplate(dueLex);
+      return dueErr ? reviewMistakesTemplate(dueErr) : vocabularyDueTemplate(dueLex);
     }
     if (dueErr) return reviewUnresolvedTemplate(dueErr);
-    if (dueLex) return lexiconDueTemplate(dueLex);
+    if (dueLex) return vocabularyDueTemplate(dueLex);
     if (unassessed) return reviewWaitingTemplate(unassessed);
   }
 
@@ -325,7 +325,7 @@ function refreshPlanCopy(plan) {
       : counted[2]
         ? `Review ${count} mistakes you have not fixed.`
         : counted[3]
-          ? `${count} phrases to recall today.`
+          ? `${count} entries to review today.`
           : `${count} attempts still waiting for a score.`;
     changed = true;
   }
@@ -374,7 +374,7 @@ function rewriteTemplate(state, latest) {
 
 export function planMatchesSkill(plan, activeSkill) {
   if (!plan) return false;
-  if (plan.kind === 'review' || plan.kind === 'lexicon') return true;
+  if (plan.kind === 'review' || plan.kind === 'vocabulary') return true;
   if (plan.kind === 'writing-mock') return activeSkill === 'writing';
   if (plan.kind === 'speaking-mock') return activeSkill === 'speaking';
   if (activeSkill === 'speaking') return speakingKinds().includes(plan.kind);
@@ -395,7 +395,7 @@ export function ensurePlans(state, activeSkill, persistIfChanged) {
   const unassessed = state.sessions.filter(
     (session) => !session.assessmentId && (!mixSkill || sessionSkill(session) === mixSkill),
   ).length;
-  const dueLex = dueLexicon(state).length;
+  const dueLex = dueVocabulary(state).length;
   const examSoon = examPressure(state);
   const now = new Date();
   now.setHours(0, 0, 0, 0);

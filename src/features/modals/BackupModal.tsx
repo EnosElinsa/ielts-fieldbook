@@ -38,7 +38,7 @@ export function BackupModal() {
                 Scores: <strong>{preview.counts.assessments}</strong>
               </p>
               <p>
-                Phrases: <strong>{preview.counts.lexicon}</strong>
+                Vocabulary: <strong>{preview.counts.vocabulary}</strong>
               </p>
               <p>
                 Stories: <strong>{preview.counts.stories}</strong>
