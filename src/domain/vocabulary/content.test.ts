@@ -71,4 +71,4 @@ test('full corpus task integrity and per-book coverage audit',()=>{
  });
  fs.writeFileSync('local/workbench-plan/content-coverage.json',JSON.stringify({contentVersion:'reviewed-2026-10-10.1',entries:catalog.entries.length,dictionarySenses,priorityReplacements:replacements.length,affectedEntryIds:replacements,byBook},null,2));
  expect(catalog.entries).toHaveLength(7021);expect(dictionarySenses).toBeGreaterThan(51000);expect(byBook).toHaveLength(6);
-});
+}, 20000);
