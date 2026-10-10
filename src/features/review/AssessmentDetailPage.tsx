@@ -2,7 +2,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { reconstructAssessmentMarkdown, isBandScore } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { formatDate, lexiconLabels, markdownLines, sessionSkill } from '../../lib/format';
+import { formatDate, vocabularyLabels, markdownLines, sessionSkill } from '../../lib/format';
 import { SessionAudioPlayer } from '../../components/SessionAudioPlayer';
 import { ArrowUpRight, Download, ArrowLeft, RotateCcw } from 'lucide-react';
 
@@ -44,10 +44,10 @@ export function AssessmentDetailPage() {
   const rewrites = session ? fb.state.sessions.filter((item) => item.parentSessionId === session.id).slice().sort((left, right) => String(left.date).localeCompare(String(right.date))) : [];
   const hasOverall = isBandScore(assessment.overall);
 
-  const quickLexicon = (seed) => {
-    fb.setEditingLexiconId(null);
-    fb.setLexiconSeed(seed);
-    fb.openModal('lexicon');
+  const quickVocabulary = (seed) => {
+    fb.setEditingVocabularyId(null);
+    fb.setVocabularySeed({ ...seed, sourceId: assessment.id, sourceType: 'assessment', sessionId: session?.id, context: session?.essay });
+    fb.openModal('vocabulary');
   };
 
   return (
@@ -143,7 +143,7 @@ export function AssessmentDetailPage() {
                                 className="btn line"
                                 type="button"
                                 onClick={() =>
-                                  quickLexicon({
+                                  quickVocabulary({
                                     category: 'phrase',
                                     term: row.revised,
                                     meaning: row.reason,
@@ -194,14 +194,14 @@ export function AssessmentDetailPage() {
               </div>
             </section>
             <section className="assessment-section">
-              <h4>Phrases to keep</h4>
+              <h4>Vocabulary to keep</h4>
               <div>
-                {assessment.lexiconSuggestions && assessment.lexiconSuggestions.length ? (
-                  <div className="lexicon-tags">
-                    {assessment.lexiconSuggestions.map((item, index) => (
-                      <div className="lexicon-suggestion" key={index}>
+                {assessment.vocabularySuggestionsList && assessment.vocabularySuggestionsList.length ? (
+                  <div className="vocabulary-tags">
+                    {assessment.vocabularySuggestionsList.map((item, index) => (
+                      <div className="vocabulary-suggestion" key={index}>
                         <div>
-                          <span className="pill blue">{lexiconLabels[item.category] || 'Phrase'}</span>
+                          <span className="pill blue">{vocabularyLabels[item.category] || 'Phrase'}</span>
                           <strong>{item.term}</strong>
                           <p>{item.meaning}</p>
                           {item.example ? <small>{item.example}</small> : null}
@@ -210,7 +210,7 @@ export function AssessmentDetailPage() {
                           className="btn line"
                           type="button"
                           onClick={() =>
-                            quickLexicon({
+                            quickVocabulary({
                               category: item.category,
                               term: item.term,
                               meaning: item.meaning,
@@ -227,7 +227,7 @@ export function AssessmentDetailPage() {
                     ))}
                   </div>
                 ) : (
-                  <p>This score has no phrases worth keeping.</p>
+                  <p>No vocabulary suggestions in this score.</p>
                 )}
               </div>
             </section>

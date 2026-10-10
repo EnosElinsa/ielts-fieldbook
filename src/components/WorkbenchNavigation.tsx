@@ -45,14 +45,14 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
   const items = useMemo(() => {
     const navigation = [
       ['Today', '/', House], ['Writing questions', '/write/questions', Library], ['Writing desk', '/write', PencilLine],
-      ['Speaking questions', '/speak/questions', Library], ['Speaking practice', '/speak', PencilLine], ['Review', '/review', BookOpen], ['Phrases', '/phrases', BookOpen], ['Progress', '/progress', ChartNoAxesCombined],
+      ['Speaking questions', '/speak/questions', Library], ['Speaking practice', '/speak', PencilLine], ['Review', '/review', BookOpen], ['Vocabulary', '/vocabulary', BookOpen], ['Progress', '/progress', ChartNoAxesCombined],
     ].map(([title, path, Icon]) => ({ id: path, title, kind: 'Page', Icon, run: () => { if (path.startsWith('/write')) fb.setSkill('writing', path); else if (path.startsWith('/speak')) fb.setSkill('speaking', path); else navigate(path); } }));
     const questions = fb.state.questions.map((q) => ({ id: `w:${q.id}`, title: q.name, kind: 'Writing question', Icon: PencilLine, run: () => { fb.setSkill('writing', '/write'); fb.chooseQuestion(q.id); } }));
     const topics = fb.state.speakingTopics.map((q) => ({ id: `s:${q.id}`, title: q.title, kind: 'Speaking topic', Icon: Library, run: () => { fb.setSelectedTopicId(q.id); fb.setSkill('speaking', `/speak/topics/${q.id}`); } }));
     const attempts = fb.state.sessions.map((s) => ({ id: `a:${s.id}`, title: s.name, kind: 'Your attempt', Icon: BookOpen, run: () => { fb.setViewedSession(s); fb.openModal('history'); } }));
-    const phrases = fb.state.lexicon.map((p) => ({ id: `p:${p.id}`, title: p.term, kind: 'Phrase', Icon: BookOpen, run: () => { fb.setEditingLexiconId(p.id); fb.openModal('lexicon'); } }));
+    const vocabularyEntries = fb.state.vocabulary.filter(p => !p.tags?.includes('archived')).map((p) => ({ id: `v:${p.id}`, title: p.term, kind: 'Vocabulary entry', Icon: BookOpen, run: () => navigate(`/vocabulary/entry/${p.id}`) }));
     const search = query.trim().toLowerCase();
-    return [...navigation, ...questions, ...topics, ...attempts, ...phrases].filter((item) => !search || `${item.title} ${item.kind}`.toLowerCase().includes(search)).slice(0, 12);
+    return [...navigation, ...questions, ...topics, ...attempts, ...vocabularyEntries].filter((item) => !search || `${item.title} ${item.kind}`.toLowerCase().includes(search)).slice(0, 12);
   }, [query, fb.state, navigate]);
   const choose = (item) => { onClose(); item.run(); };
   return <ModalFrame open={open} onClose={onClose} title="Search Fieldbook"><div className="modal command-modal">

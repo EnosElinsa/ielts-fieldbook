@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { weakestCriterion, criterionBucket, isBandScore } from './assessment';
 import { firstSentence, daysUntilExam, addLocalDays, dateKey, nowIso } from './utils';
-import { dueLexicon } from './lexicon';
+import { dueVocabulary } from './vocabulary';
 
 export function recommendationFromAssessment(state, assessment) {
   if (!assessment) return null;
@@ -41,7 +41,7 @@ export function syncNearestPendingPlan(state, recommendation, now) {
   const today = dateKey(now || new Date());
   const candidates = (state.plans || []).filter(plan => {
     if (!plan || plan.status !== 'pending') return false;
-    if (plan.kind === 'writing-mock' || plan.kind === 'speaking-mock' || plan.kind === 'review' || plan.kind === 'lexicon' || plan.kind === 'stories') return false;
+    if (plan.kind === 'writing-mock' || plan.kind === 'speaking-mock' || plan.kind === 'review' || plan.kind === 'vocabulary' || plan.kind === 'stories') return false;
     const skill = String(plan.kind).startsWith('speaking') ? 'speaking' : (plan.kind === '1' || plan.kind === '2' ? 'writing' : null);
     if (skill !== recommendation.skill) return false;
     return String(plan.dateKey || '') >= today;
@@ -96,7 +96,7 @@ export function completePlan(state, planId, details) {
 export function planMatchesAttempt(plan, attempt) {
   if (!plan || !attempt) return false;
   const kind = String(plan.kind || '');
-  if (kind === 'review' || kind === 'lexicon' || kind === 'stories') return false;
+  if (kind === 'review' || kind === 'vocabulary' || kind === 'stories') return false;
   const speaking = attempt.skill === 'speaking';
   if (kind === 'writing-mock') {
     if (speaking) return false;
@@ -156,10 +156,10 @@ export function completeStoriesPlan(state, details) {
   return completePlan(state, plan.id, details);
 }
 
-export function completeLexiconPlan(state, previousDueCount, now) {
-  const plan = (state.plans || []).find(item => item.id === state.activePlanId && item.kind === 'lexicon');
+export function completeVocabularyPlan(state, previousDueCount, now) {
+  const plan = (state.plans || []).find(item => item.id === state.activePlanId && item.kind === 'vocabulary');
   if (!plan) return null;
-  const due = dueLexicon(state, now).length;
+  const due = dueVocabulary(state, now).length;
   if (due > 0 && !(typeof previousDueCount === 'number' && due < previousDueCount)) return null;
   return completePlan(state, plan.id, { completedAt: now });
 }
@@ -407,12 +407,12 @@ export function errorsForSkill(state, skill, now) {
 export function todaySession(state, now, skill) {
   const wanted = skill === 'speaking' ? 'speaking' : 'writing';
   const steps = [];
-  const dueWords = dueLexicon(state, now, wanted);
+  const dueWords = dueVocabulary(state, now, wanted);
   if (dueWords.length) {
     steps.push({
       id: 'recall',
-      title: 'Recall due phrases',
-      detail: dueWords.length === 1 ? '1 phrase to recall today.' : `${dueWords.length} phrases to recall today.`,
+      title: 'Recall due vocabulary',
+      detail: dueWords.length === 1 ? '1 entry to review today.' : `${dueWords.length} entries to review today.`,
       count: dueWords.length,
     });
   }

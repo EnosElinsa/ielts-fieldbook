@@ -60,7 +60,7 @@ export function StoriesPage() {
         <FilterMenu label="Story theme" value={tag} onChange={setTag} options={[{ value: 'all', label: 'All themes' }, ...tags.map((value) => ({ value, label: value }))]} />
         <FilterMenu label="Linked topic" value={topic} onChange={setTopic} options={[{ value: 'all', label: 'All topics' }, ...linkedTopics.map((entry) => ({ value: String(entry.id), label: entry.title }))]} />
       </div>
-      <div className="lexicon-list">
+      <div className="story-list">
         {items.length ? (
           items.map((story) => {
             const names = (story.topicIds || []).map((id) => {
@@ -68,23 +68,23 @@ export function StoriesPage() {
               return topic ? topic.title : id;
             });
             return (
-              <article className="lexicon-card" key={story.id}>
-                <div className="lexicon-card-head">
+              <article className="story-card" key={story.id}>
+                <div className="story-card-head">
                   <div>
                     <span className="pill blue">Fits {(story.topicIds || []).length} topics</span>
-                    <h4 className="lexicon-term">{story.title || 'Untitled story'}</h4>
-                    <p className="lexicon-meaning">{storySummary(story) || 'No notes yet'}</p>
+                    <h4 className="story-term">{story.title || 'Untitled story'}</h4>
+                    <p className="story-meaning">{storySummary(story) || 'No notes yet'}</p>
                   </div>
                 </div>
-                {story.event ? <p className="lexicon-example">{story.event}</p> : null}
-                <div className="lexicon-tags">
+                {story.event ? <p className="story-example">{story.event}</p> : null}
+                <div className="story-tags">
                   {names.map((name, index) => (
                     <button type="button" className="story-topic-link" key={`${name}-${index}`} onClick={() => fb.startSpeakingPractice(story.topicIds[index], '2', story.id)}>{name}<ArrowUpRight size={13} /></button>
                   ))}
                 </div>
-                <div className="lexicon-card-foot">
-                  <span className="lexicon-meta">{formatDate(story.updatedAt || story.createdAt)}</span>
-                  <div className="lexicon-actions">
+                <div className="story-card-foot">
+                  <span className="story-meta">{formatDate(story.updatedAt || story.createdAt)}</span>
+                  <div className="story-actions">
                     <button
                       className="btn line"
                       type="button"

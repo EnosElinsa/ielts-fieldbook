@@ -54,6 +54,7 @@ export function ProgressPage() {
   return (
     <section className="view active progress-view">
       <div className="page-tools"><p>Your practice, feedback and progress.</p><Link to="/review" className="btn line">Review attempts <ArrowUpRight size={16} /></Link></div>
+      <div className="page-tools"><Link to="/vocabulary/progress" className="btn line">Vocabulary progress <ArrowUpRight size={16} /></Link><Link to="/vocabulary/review" className="btn line">Review vocabulary <ArrowUpRight size={16} /></Link></div>
       <div className="toolbar">
         <FilterMenu label="Progress skill" value={skill} onChange={(value) => { setSkill(value); setTask('all'); }} options={[{ value: 'writing', label: 'Writing' }, { value: 'speaking', label: 'Speaking' }]} />
         <FilterMenu label="Time range" value={range} onChange={setRange} options={[{ value: '7', label: 'Last 7 days' }, { value: '30', label: 'Last 30 days' }, { value: '90', label: 'Last 90 days' }, { value: 'all', label: 'All time' }]} />

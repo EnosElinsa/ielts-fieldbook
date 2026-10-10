@@ -8,7 +8,8 @@ import { NavIcons, Toast } from './ui';
 import { SettingsModal } from '../features/modals/SettingsModal';
 import { SaveModal } from '../features/modals/SaveModal';
 import { HistoryModal } from '../features/modals/HistoryModal';
-import { LexiconModal } from '../features/modals/LexiconModal';
+import { VocabularyModal } from '../features/vocabulary/VocabularyModal';
+import { VocabularyImportModal } from '../features/vocabulary/VocabularyImportModal';
 import { StoryModal } from '../features/modals/StoryModal';
 import { BackupModal } from '../features/modals/BackupModal';
 import { useAuthUser } from '../auth/useAuthUser';
@@ -27,7 +28,7 @@ const writingLinks = [
   { to: '/write/questions', label: 'Questions', icon: NavIcons.questions },
   { to: '/write', end: true, label: 'Write', icon: NavIcons.write },
   { to: '/review', label: 'Review', icon: NavIcons.review },
-  { to: '/phrases', label: 'Phrases', icon: NavIcons.phrases },
+  { to: '/vocabulary', label: 'Vocabulary', icon: NavIcons.vocabulary },
   { to: '/progress', label: 'Progress', icon: NavIcons.progress },
 ];
 
@@ -39,7 +40,7 @@ const speakingLinks = [
   { to: '/stories', label: 'Stories', icon: NavIcons.stories },
   { to: '/speak', end: true, label: 'Practice', icon: NavIcons.write },
   { to: '/review', label: 'Review', icon: NavIcons.review },
-  { to: '/phrases', label: 'Phrases', icon: NavIcons.phrases },
+  { to: '/vocabulary', label: 'Vocabulary', icon: NavIcons.vocabulary },
   { to: '/progress', label: 'Progress', icon: NavIcons.progress },
 ];
 
@@ -54,7 +55,7 @@ function chromeFor(pathname: string, activeSkill: string, deskName: string, topi
   if (pathname === '/stories') return { kicker: 'Stories', title: 'Your stories' };
   if (pathname === '/speak') return { kicker: 'Practice', title: topicName || 'Speaking practice' };
   if (pathname.startsWith('/review')) return { kicker: 'Review', title: speaking ? 'Attempts and scores' : 'Essays and scores' };
-  if (pathname.startsWith('/phrases')) return { kicker: 'Phrases', title: 'Words, phrases, patterns' };
+  if (pathname.startsWith('/vocabulary')) return { kicker: 'Vocabulary', title: 'Words, phrases, patterns' };
   if (pathname.startsWith('/progress')) return { kicker: skillLabel, title: 'Progress' };
   if (pathname.startsWith('/account')) return { kicker: 'Account', title: 'Your account' };
   return { kicker: skillLabel, title: 'Today' };
@@ -360,7 +361,8 @@ export function Shell() {
       <SettingsModal />
       <SaveModal />
       <HistoryModal />
-      <LexiconModal />
+      <VocabularyModal />
+      <VocabularyImportModal />
       <StoryModal />
       <BackupModal />
       <Toast message={fb.toastMessage} visible={fb.toastVisible} />

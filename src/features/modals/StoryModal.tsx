@@ -44,7 +44,7 @@ export function StoryModal() {
 
   return (
     <ModalFrame open={open} onClose={() => fb.closeModal()}>
-      <div className="modal lexicon-modal">
+      <div className="modal story-modal">
         <h3>{editing ? 'Edit this story' : 'Write a story'}</h3>
         <p>Who, where, when, and what happened.</p>
         <div className="form">

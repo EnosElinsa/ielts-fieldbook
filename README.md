@@ -1,90 +1,90 @@
 # IELTS Fieldbook
 
-IELTS writing and speaking practice notebook. Sign in with an email account. Scoring stays in a markdown file you mark outside the app and import back.
+An English-only IELTS study workspace for writing, speaking and vocabulary. Practise with a plan, collect useful language from feedback, and review it across skills without losing its original context.
 
-Public repository: [EnosElinsa/ielts-fieldbook](https://github.com/EnosElinsa/ielts-fieldbook).
+[Open the app](https://ielts-fieldbook.pages.dev) · [Report an issue](https://github.com/EnosElinsa/ielts-fieldbook/issues/new)
 
-## Features
+## Study Workflow
 
-- **Today** — a daily plan from exam date, minutes per day, and skill focus. Within two weeks of the exam, more days are timed practice or review. At 60 minutes or more, writing and speaking slots are full timed tasks.
-- **Writing desk** — the plan decides the desk. Overview, outline, comparison, and body tasks use short fields with word limits. Timed and full essays require the checklist. Drafts and rewrite history stay on the question.
-- **Speaking practice** — timed Part 1 / 2 / 3, plus a three-part mock. You can record; the app stores the audio and you still type the transcript. Blind practice hides notes, sample answers, stories, and earlier transcripts.
-- **Stories** — a story plan can attach an unused Part 2 card.
-- **Phrase review** — words, phrases, and sentence patterns. Due cards hide the answer; sentence patterns ask you to write them first.
-- **Progress** — recent criterion scores, a target-band line when you set one, and study-day streaks.
-- **Backup merge** — export/import a JSON archive. Import previews, then merges instead of overwriting. The JSON does not include recordings.
-- **Score files** — save and export a markdown scoring request, score it outside the app, then import the markdown back.
+1. Set an exam date, target band, study days and daily time.
+2. Complete a writing or speaking task. Save drafts, outlines, transcripts, recordings and rewrites to your account.
+3. Export a Markdown scoring request, have it assessed outside Fieldbook, and import the feedback.
+4. Save expressions from the feedback to your vocabulary. Review meanings, listening, spelling and usage separately.
+5. Use the next practice task to apply corrections, then follow progress over time.
 
-## Stack
+Fieldbook does not issue official IELTS scores. Pronunciation remains unscored without an external assessment using the recording.
 
-- React, TypeScript, Vite, Supabase
-- Study records use schema **v9**. Historical attempts with an unknown training mode stay available but are excluded from comparative band trends.
+## Vocabulary
 
-Copy `.env.example` to `.env` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. Apply the SQL files in `supabase/migrations` in order, then seed the shared question catalog and upload chart images:
+Words, phrases and sentence patterns share a single vocabulary model across wordbooks and personal collections. Each meaning has its own learning state; writing and speaking occurrences retain their source task. Reading and listening evidence use the same contract for future practice modules.
+
+- Dictation with UK/US audio when available and clearly identified browser speech fallback.
+- English definition recall, contextual cloze, synonym and confusing-word practice.
+- Audio loops and sentence production. Playback does not count as a successful review; unassessed production remains pending.
+- FSRS review scheduling with separate meaning, listening, spelling and usage evidence.
+- Manual familiarity labels independent of system evidence.
+- Permanent answer history and current wrong-word tracking. Recovery requires three successful reviews in the failed mode, including a delay of at least 24 hours.
+- Wordbook chapter progress independent of vocabulary mastery.
+- Import previews, repeated-import detection, and transactional JSON/CSV migration.
+- English Wiktionary definitions and examples with attribution and licensing per sense, alongside original IELTS teaching material.
+
+The public catalogue covers six source wordbooks: IELTS Vocabulary (Liu Hongbo), IELTS Reading 538 Key Words, IELTS Listening Corpus (Core Chapters), IELTS Listening 179 Key Words, and Cambridge IELTS 20/21 Listening. Source membership counts, dictionary coverage and unavailable content are shown separately. Personal learning records are never included in the shared catalogue.
+
+See [vocabulary content and provenance](docs/vocabulary-content.md) for source data, licensing and import formats.
+
+## Writing And Speaking
+
+Writing includes Task 1/2 question banks, chart assets, short exercises, timed/full essays, focused editing and draft history. Speaking includes Part 1/2/3 banks, blind practice, story planning, recording and three-part mocks.
+
+Feedback links back to the original attempt. Vocabulary occurrences are initially pending; imported feedback can confirm correct usage only with an exact quotation from that attempt. Short exercises and historical attempts with unknown modes are excluded from comparable band trends.
+
+The workspace includes Today, questions, practice, review, vocabulary, progress, account settings, search, favourites and light/dark/system appearance.
+
+## Development
+
+Requires Node.js 22 or newer.
 
 ```bash
-npm run seed:bank
-```
-
-The service role key stays on the machine that runs the seed. The browser only receives the anon key. Sign in with email. Each account has its own attempts, drafts, phrases, plans, stories, scores, and recordings. The question catalog is shared and read-only in the app. Forgot-password mail returns to the site origin, so that origin must be listed under Authentication redirect URLs.
-
-## Deploy
-
-Push `master`. Cloudflare Pages project `ielts-fieldbook` builds with `npm run build`, publishes `dist`, and serves https://ielts-fieldbook.pages.dev. `public/_redirects` sends every path back to `index.html`.
-
-Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as Pages build environment variables. The build command is `npm run build`. Do not upload `dist` with Wrangler to release.
-
-After the hostname exists, add `https://ielts-fieldbook.pages.dev` to the Supabase site URL and redirect allow list.
-
-Question charts live in the public `question-assets` storage bucket. `npm run seed:bank` uploads `local/question-assets` and stores those public URLs on the writing questions.
-
-## Getting started
-
-The workbench supports Light, Dark, and System appearance from the account menu, mobile navigation, workspace search, question favourites, focused writing, audio playback, and feedback-driven practice. Appearance and writing split preferences stay in the browser; question favourites sync through account settings.
-
-Draft recovery is scoped to the signed-in account. Failed saves keep the draft and completion dialog open. Pending recordings are kept in IndexedDB when browser storage is available, and can be restored by returning to the same topic and part. Pending local audio is not included in JSON backups.
-
-```bash
-npm install
+npm ci
 npm run dev
 ```
 
-The Vite dev server runs at `http://localhost:8000`. Other common commands:
+The development server uses `http://localhost:8000`. Configure `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` using `.env.example`. A Supabase account is required to save learning data.
 
 ```bash
 npm test
 npm run build
 ```
 
-## Data layout
+Stack: React 19, TypeScript, Vite, Supabase, FSRS, Radix UI and Cloudflare Pages. Study records use schema **v10**. Historical backups migrate to the current model; the old Phrases route is removed.
 
-`public/sample` is the fallback question catalog when `local/` is absent. `npm run seed:bank` prefers `local/*.json`, uploads chart images, and writes the shared tables. `public/_redirects` is the Cloudflare Pages route fallback.
+## Data And Privacy
 
-Personal score files and reference notes can still live under gitignored `local/`. Do not commit `.env`.
+Shared question and vocabulary catalogues are read-only to signed-in users. Attempts, drafts, feedback, vocabulary learning states, review history, plans, stories and recordings belong to the signed-in account and are protected by Supabase row-level security.
 
-## Scoring flow
+JSON backups include study data but omit recordings. Recordings remain in private account storage and can be downloaded separately. Account deletion removes owned records and recordings. Draft recovery and pending audio are scoped to the account in the current browser.
 
-1. Finish a writing or speaking attempt in the app.
-2. Save and export a markdown scoring request.
-3. Score that file outside the app (any process you choose).
-4. Import the scored markdown back into Fieldbook.
+`local/` is gitignored and holds personal exports, source snapshots and deployment backups. Never commit `.env`, service credentials, login sessions or personal learning history. Code uses the MIT license; dictionary and other content retain their own source licenses.
 
-Import linking order:
+## Deploy
 
-1. Match `session_id` in the file to an existing attempt.
-2. Else match on body hash.
-3. Else create a new attempt from the import.
-4. Else report `missing_essay`.
+Apply SQL migrations in `supabase/migrations` in timestamp order before releasing a frontend that depends on the new schema. Seed shared data with administrator credentials kept outside browser builds:
 
-Speaking pronunciation is **not** scored from a transcript or a recording inside the app. A speaking request includes `audio_present: true` or `false`. Pronunciation stays `unscored (transcript only)` unless you hand the audio to whatever scores the file outside the app.
+```bash
+npm run seed:bank
+npm run seed:vocabulary
+```
 
-## What this version does not do
+Push `master`. The connected Cloudflare Pages project `ielts-fieldbook` builds with `npm run build`, publishes `dist`, and serves https://ielts-fieldbook.pages.dev. The GitHub Check workflow runs tests and a production build. Deployments are verified through the Cloudflare Pages check for the exact commit.
 
-- Service worker / offline install
-- Live collaboration on the same row
+Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in Pages build settings. Configure the production origin in Supabase authentication site/redirect URLs. `public/_redirects` serves application routes through `index.html`. Do not upload `dist` with Wrangler for routine releases.
 
-Two devices on one account each write their own rows. If both edit the same row, the later `updated_at` is kept. A new account starts empty. A backup JSON still omits recordings; the audio stays in the account’s storage bucket.
+See the [deployment runbook](docs/deployment.md) for migration, catalogue seeding, verification and recovery.
+
+## Limits
+
+Reading and listening practice modules are not yet implemented. There is no offline installation or concurrent editing of the same record. Open-dictionary coverage varies by term; missing definitions remain visible instead of being presented as verified content.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+Application code: [MIT](LICENSE). English Wiktionary content: CC-BY-SA-4.0 with contributors and source URLs. Original Fieldbook teaching content: CC-BY-4.0. Source wordbook names identify their providers and are not an endorsement or claim of ownership.

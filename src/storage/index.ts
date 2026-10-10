@@ -1,10 +1,10 @@
 // @ts-nocheck
 import { emptyState } from '../domain';
-import { accountStoreAvailable, hydrateState, saveState } from './remote';
+import { accountStoreAvailable, hydrateState, saveState, saveVocabularyImport, loadVocabularyCatalog } from './remote';
 
 export const STORE_KEY = 'ielts-writing-fieldbook';
 
-export { accountStoreAvailable, hydrateState, saveState };
+export { accountStoreAvailable, hydrateState, saveState, saveVocabularyImport, loadVocabularyCatalog };
 
 export function loadState() {
   return emptyState();

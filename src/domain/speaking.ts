@@ -123,6 +123,8 @@ Write the complete spoken rewrite from beginning to end, based on the Candidate 
 
 ## Vocabulary suggestions
 
+Use English only for definitions, usage explanations, examples, and tags.
+
 Select 3-8 reusable words, phrases, or sentence patterns from the corrections and spoken rewrite. Do not invent expressions unrelated to this response.
 
 | Category | Expression | Meaning / Usage | Example | Tags |
@@ -134,6 +136,7 @@ Select 3-8 reusable words, phrases, or sentence patterns from the corrections an
 Give one 30-minute speaking practice task for this part.
 
 Official criteria: https://ielts.org/cdn/ielts-guides/ielts-speaking-band-descriptors.pdf
+${session.vocabularyTargets?.length ? `\n## Vocabulary practice targets\n\n${session.vocabularyTargets.map(target => `${target.term}: ${target.definition}`).join('\n')}\n\nReturn a Vocabulary evidence section for these tracked expressions. Quote an exact substring of the Candidate response containing each expression. Use success, partial or failure only when the use is supported by that evidence.\n\n| Expression | Result | Evidence |\n|---|---|---|\n` : ''}
 `;
 }
 
