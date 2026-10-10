@@ -623,7 +623,6 @@ export function VocabularyWordbooksPage() {
   };
   return <VocabularyLayout>
     <div className="page-tools"><div><h2>Wordbook study</h2><p className="vocabulary-muted">One group at a time. Clear progress through every chapter.</p></div>
-      <button type="button" className="btn line" onClick={() => fb.openModal("vocabularyImport")}><Upload size={16} />Import wordbook progress</button>
     </div>
     {catalogBusy ? <p role="status" className="vocabulary-muted">Loading catalog...</p> : null}
     {catalogError ? <div className="vocabulary-catalog-error"><p role="alert" className="vocabulary-error">{catalogError}</p><button type="button" className="btn line" disabled={catalogBusy} onClick={() => loadCatalog(selectedBook)}><RotateCcw size={15} />Retry catalog</button></div> : null}

@@ -49,6 +49,8 @@ export function useVocabularyPracticeController() {
   const [results, setResults] = useState<SessionLog | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [exitOpen, setExitOpen] = useState(false);
+  const departure = useRef<string | null>(null);
+  useEffect(() => { if (!exitOpen) departure.current = null; }, [exitOpen]);
   const [incompleteOpen, setIncompleteOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [recovering, setRecovering] = useState(false);
@@ -249,7 +251,7 @@ export function useVocabularyPracticeController() {
   const chapter = units.find(unit => unit.id === selectedUnit?.parentId);
   const catalogReady = catalogStatus.bookId === (bookId === 'all' ? '' : bookId) && catalogStatus.status === 'ready';
   const leafUnits = units.filter(unit => unit.kind !== 'chapter' && !units.some(child => child.parentId === unit.id));
-  const studyReady = !study || (catalogReady && Boolean(selectedUnit && leafUnits.includes(selectedUnit)) && Boolean(unitQueue?.complete));
+  const studyReady = !study ? catalogReady : (catalogReady && Boolean(selectedUnit && leafUnits.includes(selectedUnit)) && Boolean(unitQueue?.complete));
   const answered = session
     ? cards.filter((card) => session.answers[card.id]?.response.trim()).length
     : 0;
@@ -737,9 +739,24 @@ export function useVocabularyPracticeController() {
     setAudioStatus(next.volume === 0 ? "Audio is muted" : "");
     return true;
   }
+  useEffect(() => {
+    if (!session) return;
+    const leave = (event: MouseEvent) => {
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || savingRef.current) return;
+      const anchor = (event.target as HTMLElement)?.closest<HTMLAnchorElement>('a[href]');
+      if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download') || anchor.closest('[role="dialog"],dialog')) return;
+      const url = new URL(anchor.href, window.location.href);
+      if (url.origin !== window.location.origin || !url.pathname.startsWith('/')) return;
+      event.preventDefault(); event.stopPropagation();
+      departure.current = url.pathname + url.search + url.hash; stopAudio(); setExitOpen(true);
+    };
+    document.addEventListener('click', leave, true);
+    return () => document.removeEventListener('click',leave,true);
+  }, [session,stopAudio]);
   function exit(keep: boolean) {
     if (!owned() || saving) return;
     stopAudio();
+    const target = departure.current; departure.current = null;
     setExitOpen(false);
     if (keep && sessionRef.current) {
       const paused = { ...sessionRef.current, status: "paused" as const };
@@ -755,6 +772,7 @@ export function useVocabularyPracticeController() {
     setCards([]);
     setError("");
     setAudioStatus("");
+    if (target) { navigate(target); return; }
     const origin = params.get("returnTo"); if (origin && /^\/vocabulary(?:\/|\?|$)/.test(origin) && !/[\r\n\\]/.test(origin)) navigate(origin);
   }
   function resetResults() {

@@ -218,3 +218,5 @@ test("history links submitted sessions to independent result routes", () => {
   render(<MemoryRouter><VocabularyHistoryPage/></MemoryRouter>);
   expect(screen.getByRole('link',{name:/Dictation/})).toHaveAttribute('href','/vocabulary/history/session');
 });
+
+test("wordbooks have no progress import action",()=>{fixture();showBook();expect(screen.queryByRole('button',{name:/Import wordbook progress/})).not.toBeInTheDocument();});

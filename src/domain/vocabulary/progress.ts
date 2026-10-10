@@ -29,9 +29,9 @@ export function vocabularyGroupProgress(state: Partial<VocabularyStore>, group: 
 }
 export function getLearnedVocabularyIds(state: Partial<VocabularyStore>): Set<string> {
   const learned = new Set<string>();
-  (state.vocabularyReviews || []).filter(review => review.result !== 'pending' || String(review.response || '').trim()).forEach(review => learned.add(review.entryId));
+  (state.vocabularyReviews || []).filter(review => String(review.response || '').trim() || (review.imported && review.result !== 'pending')).forEach(review => learned.add(review.entryId));
   (state.vocabularyStates || []).filter(item => item.manualStatus && item.manualStatus !== 'new').forEach(item => learned.add(item.entryId));
-  (state.vocabularyEvidence || []).filter(item => item.mode && item.verification !== 'pending').forEach(item => learned.add(item.entryId));
+  (state.vocabularyEvidence || []).filter(item => item.mode && item.verification !== 'pending' && (String(item.response || '').trim() || item.imported || (item.verification === 'objective' && !('response' in item)))).forEach(item => learned.add(item.entryId));
   (state.vocabularySessions || []).filter(session => session.status === 'submitted' && session.mode !== 'audio').forEach(session => (session.results || []).filter(result => String(result.response || '').trim()).forEach(result => learned.add(result.entryId)));
   const attemptedGroups = new Set<string>();
   (state.wordbookProgress || []).forEach(row => {
