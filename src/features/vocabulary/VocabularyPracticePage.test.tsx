@@ -121,6 +121,37 @@ test("235-word group submits one frozen full-group attempt beyond the old cap", 
   expect(prepared.vocabularySessions[0].selection).toEqual({ kind: 'unit', bookId: 'test-book', unitId: 'test-group' });
 });
 
+test("catalog-only draft recovery waits for the saved book and retains answers when loading fails", async () => {
+  const user = userEvent.setup();
+  groupFixture(235);
+  const savedCatalog = { ...VOCABULARY_CATALOG };
+  const view = mount('?bookId=test-book&unitId=test-group&dueOnly=false');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
+  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(screen.getByRole('textbox', { name: 'Answer 1' }));
+  await user.paste('saved-answer');
+  await user.click(screen.getByRole('button', { name: 'Exit session' }));
+  await user.click(screen.getByRole('button', { name: 'Keep progress' }));
+  view.unmount();
+  fb.current.state.vocabulary = [];
+  Object.assign(VOCABULARY_CATALOG, originalCatalog);
+  fb.current.loadVocabularyCatalog.mockRejectedValue(new Error('offline'));
+  mount();
+  await user.click(screen.getByRole('button', { name: 'Resume session' }));
+  expect(screen.getByText(/The saved wordbook could not be loaded/)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Resume session' })).toBeEnabled();
+  let release: () => void;
+  fb.current.loadVocabularyCatalog.mockImplementationOnce(() => new Promise<void>(resolve => {
+    release = () => { Object.assign(VOCABULARY_CATALOG, savedCatalog); resolve(); };
+  }));
+  await user.click(screen.getByRole('button', { name: 'Resume session' }));
+  expect(screen.getByRole('button', { name: 'Loading session…' })).toBeDisabled();
+  expect(fb.current.loadVocabularyCatalog).toHaveBeenLastCalledWith('test-book');
+  release!();
+  await waitFor(() => expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('saved-answer'));
+  expect(screen.getByText('1–50 of 235')).toBeInTheDocument();
+});
+
 test("dictation shortcuts navigate without stealing answer text and pause with Escape", async () => {
   const user = userEvent.setup();
   mount();

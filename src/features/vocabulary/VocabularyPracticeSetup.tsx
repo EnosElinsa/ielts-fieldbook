@@ -247,13 +247,14 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
             </span>
           </div>
           <div className="actions">
-            <button className="btn primary" type="button" onClick={recover}>
+            <button className="btn primary" type="button" disabled={controller.recovering} onClick={() => void recover()}>
               <Play size={15} />
-              Resume session
+              {controller.recovering ? 'Loading session…' : 'Resume session'}
             </button>
             <button
               className="btn line"
               type="button"
+              disabled={controller.recovering}
               onClick={discardResume}
             >
               Discard session
