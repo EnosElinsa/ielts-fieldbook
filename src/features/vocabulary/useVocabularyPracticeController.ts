@@ -13,6 +13,7 @@ import { createVocabularyPlayback } from "./playback";
 import { practiceKeyboard } from "./practiceKeyboard";
 import { presentVocabularySession } from '../../domain/vocabulary/sessionPresentation';
 import { MODES, senseFor } from "./practicePresentation";
+import { type PracticeNavigationRequest } from '../../lib/practiceNavigation';
 
 type Session = VocabularyPracticeSession;
 type Prepared = ReturnType<typeof buildVocabularySessionCommit>;
@@ -49,7 +50,7 @@ export function useVocabularyPracticeController() {
   const [results, setResults] = useState<SessionLog | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [exitOpen, setExitOpen] = useState(false);
-  const departure = useRef<string | null>(null);
+  const departure = useRef<PracticeNavigationRequest | null>(null);
   useEffect(() => { if (!exitOpen) departure.current = null; }, [exitOpen]);
   const [incompleteOpen, setIncompleteOpen] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -731,18 +732,30 @@ export function useVocabularyPracticeController() {
   }
   useEffect(() => {
     if (!session) return;
+    const requested = (event: Event) => {
+      if (savingRef.current) { event.preventDefault(); return; }
+      const request = (event as CustomEvent<PracticeNavigationRequest>).detail;
+      if (!request || typeof request.proceed !== 'function') return;
+      event.preventDefault();
+      departure.current = request;
+      stopAudio();
+      setExitOpen(true);
+    };
     const leave = (event: MouseEvent) => {
       if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || savingRef.current) return;
       const anchor = (event.target as HTMLElement)?.closest<HTMLAnchorElement>('a[href]');
       if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download')) return;
+      if (anchor.hasAttribute('data-practice-navigation')) return;
       const url = new URL(anchor.href, window.location.href);
       if (url.origin !== window.location.origin || !url.pathname.startsWith('/')) return;
       event.preventDefault(); event.stopPropagation();
-      departure.current = url.pathname + url.search + url.hash; stopAudio(); setExitOpen(true);
+      const path = url.pathname + url.search + url.hash;
+      departure.current = { path, proceed: () => navigate(path) }; stopAudio(); setExitOpen(true);
     };
+    document.addEventListener('fieldbook:before-navigate', requested);
     document.addEventListener('click', leave, true);
-    return () => document.removeEventListener('click',leave,true);
-  }, [session,stopAudio]);
+    return () => { document.removeEventListener('fieldbook:before-navigate', requested); document.removeEventListener('click',leave,true); };
+  }, [session,stopAudio,navigate]);
   function exit(keep: boolean) {
     if (!owned() || saving) return;
     stopAudio();
@@ -762,7 +775,7 @@ export function useVocabularyPracticeController() {
     setCards([]);
     setError("");
     setAudioStatus("");
-    if (target) { navigate(target); return; }
+    if (target) { target.proceed(); return; }
     const origin = params.get("returnTo"); if (origin && /^\/vocabulary(?:\/|\?|$)/.test(origin) && !/[\r\n\\]/.test(origin)) navigate(origin);
   }
   function resetResults() {
