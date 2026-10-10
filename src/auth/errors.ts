@@ -2,6 +2,9 @@ export type Mode = 'signin' | 'signup' | 'reset';
 
 export function authError(message: string, mode: Mode) {
   const text = message || 'Something went wrong. Try again.';
+  if (/failed to fetch|fetch failed|networkerror|network request failed|load failed|err_connection|failed to load resource|timed?\s*out/i.test(text)) {
+    return 'Could not reach the sign-in service. Check your connection and try again. The service may be temporarily unavailable.';
+  }
   if (mode === 'signin' && /invalid login credentials/i.test(text)) {
     return 'That email has no account yet, or the password is wrong. Create an account, or open the confirmation email if you already registered.';
   }

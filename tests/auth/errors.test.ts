@@ -29,3 +29,9 @@ test('authError maps an expired or used link', () => {
   assert.equal(authError(expired, 'reset'), 'This link no longer works. Send another reset email.');
   assert.equal(authError(expired, 'signin'), 'This link no longer works. Request a new email below.');
 });
+
+test('connection failures explain service availability without suggesting a password reset', () => {
+  for (const message of ['Failed to fetch', 'NetworkError when attempting to fetch resource.', 'Load failed', 'fetch failed', 'ERR_CONNECTION_CLOSED']) {
+    assert.equal(authError(message, 'signin'), 'Could not reach the sign-in service. Check your connection and try again. The service may be temporarily unavailable.');
+  }
+});

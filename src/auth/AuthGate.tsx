@@ -10,6 +10,12 @@ import { LegalModal } from '../features/modals/LegalModal';
 type SessionState = 'loading' | 'in' | 'out';
 type Mailbox = 'confirm' | 'reset' | null;
 
+function errorMessage(error: unknown) {
+  return error && typeof error === 'object' && 'message' in error && typeof error.message === 'string'
+    ? error.message
+    : 'Something went wrong. Try again.';
+}
+
 function Aside({ title }: { title: string }) {
   return (
     <section className="auth-aside">
@@ -33,6 +39,8 @@ export function AuthGate({ children }: { children: ReactNode }) {
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
   const [recovery, setRecovery] = useState(false);
+  const [sessionCheck, setSessionCheck] = useState(0);
+  const [sessionCheckFailed, setSessionCheckFailed] = useState(false);
   const [legalView, setLegalView] = useState<string | null>(null);
   const { theme, setTheme } = useTheme();
 
@@ -48,9 +56,20 @@ export function AuthGate({ children }: { children: ReactNode }) {
     }
     const supabase = getSupabase();
     let cancelled = false;
-    supabase.auth.getSession().then(({ data }) => {
-      if (!cancelled) setSessionState(data.session ? 'in' : 'out');
-    });
+    void (async () => {
+      try {
+        const { data, error: sessionError } = await supabase.auth.getSession();
+        if (cancelled) return;
+        if (sessionError) throw sessionError;
+        setSessionCheckFailed(false);
+        setSessionState(data.session ? 'in' : 'out');
+      } catch (cause) {
+        if (cancelled) return;
+        setError(authError(errorMessage(cause), 'signin'));
+        setSessionCheckFailed(true);
+        setSessionState('out');
+      }
+    })();
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') setRecovery(true);
       setSessionState(session ? 'in' : 'out');
@@ -59,7 +78,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
       cancelled = true;
       data.subscription.unsubscribe();
     };
-  }, []);
+  }, [sessionCheck]);
 
   function clearStatus() {
     setError('');
@@ -69,40 +88,45 @@ export function AuthGate({ children }: { children: ReactNode }) {
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
-    if (!supabaseConfigured()) return;
+    if (!supabaseConfigured() || busy) return;
     setBusy(true);
     setError('');
-    const supabase = getSupabase();
-    const address = email.trim();
-    if (mode === 'reset') {
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(address, {
-        redirectTo: window.location.origin,
-      });
-      setBusy(false);
-      if (resetError) {
-        setError(authError(resetError.message, mode));
+    setSessionCheckFailed(false);
+    try {
+      const supabase = getSupabase();
+      const address = email.trim();
+      if (mode === 'reset') {
+        const { error: resetError } = await supabase.auth.resetPasswordForEmail(address, {
+          redirectTo: window.location.origin,
+        });
+        if (resetError) {
+          setError(authError(resetError.message, mode));
+          return;
+        }
+        setSent(false);
+        setMailbox('reset');
         return;
       }
-      setSent(false);
-      setMailbox('reset');
-      return;
-    }
-    const result =
-      mode === 'signup'
-        ? await supabase.auth.signUp({
-            email: address,
-            password,
-            options: { emailRedirectTo: window.location.origin },
-          })
-        : await supabase.auth.signInWithPassword({ email: address, password });
-    setBusy(false);
-    if (result.error) {
-      setError(authError(result.error.message, mode));
-      return;
-    }
-    if (mode === 'signup' && !result.data.session) {
-      setSent(false);
-      setMailbox('confirm');
+      const result =
+        mode === 'signup'
+          ? await supabase.auth.signUp({
+              email: address,
+              password,
+              options: { emailRedirectTo: window.location.origin },
+            })
+          : await supabase.auth.signInWithPassword({ email: address, password });
+      if (result.error) {
+        setError(authError(result.error.message, mode));
+        return;
+      }
+      if (mode === 'signup' && !result.data.session) {
+        setSent(false);
+        setMailbox('confirm');
+      }
+    } catch (cause) {
+      setError(authError(errorMessage(cause), mode));
+    } finally {
+      setBusy(false);
     }
   }
 
@@ -110,17 +134,22 @@ export function AuthGate({ children }: { children: ReactNode }) {
     if (!supabaseConfigured() || !email.trim()) return;
     setBusy(true);
     setError('');
-    const { error: resendError } = await getSupabase().auth.resend({
-      type: 'signup',
-      email: email.trim(),
-      options: { emailRedirectTo: window.location.origin },
-    });
-    setBusy(false);
-    if (resendError) {
-      setError(authError(resendError.message, 'signup'));
-      return;
+    try {
+      const { error: resendError } = await getSupabase().auth.resend({
+        type: 'signup',
+        email: email.trim(),
+        options: { emailRedirectTo: window.location.origin },
+      });
+      if (resendError) {
+        setError(authError(resendError.message, 'signup'));
+        return;
+      }
+      setSent(true);
+    } catch (cause) {
+      setError(authError(errorMessage(cause), 'signup'));
+    } finally {
+      setBusy(false);
     }
-    setSent(true);
   }
 
   if (!supabaseConfigured()) {
@@ -167,15 +196,20 @@ export function AuthGate({ children }: { children: ReactNode }) {
             }
             setBusy(true);
             setError('');
-            const { error: updateError } = await getSupabase().auth.updateUser({ password: nextPassword });
-            setBusy(false);
-            if (updateError) {
-              setError(authError(updateError.message, 'reset'));
-              return;
+            try {
+              const { error: updateError } = await getSupabase().auth.updateUser({ password: nextPassword });
+              if (updateError) {
+                setError(authError(updateError.message, 'reset'));
+                return;
+              }
+              setRecovery(false);
+              setNextPassword('');
+              setConfirmPassword('');
+            } catch (cause) {
+              setError(authError(errorMessage(cause), 'reset'));
+            } finally {
+              setBusy(false);
             }
-            setRecovery(false);
-            setNextPassword('');
-            setConfirmPassword('');
           }}
         >
           <p className="kicker">Password reset</p>
@@ -295,7 +329,8 @@ export function AuthGate({ children }: { children: ReactNode }) {
             {mode === 'signup' ? <p className="auth-hint">At least 6 characters. You can change it later from Account.</p> : null}
           </>
         )}
-        {error ? <p className="auth-error">{error}</p> : null}
+        {error ? <p className="auth-error" role="alert">{error}</p> : null}
+        {sessionCheckFailed ? <button className="btn line" type="button" onClick={() => { setError(''); setSessionState('loading'); setSessionCheck((value) => value + 1); }}>Retry connection</button> : null}
         <button className="btn primary" type="submit" disabled={busy}>
           {busy ? 'Please wait…' : mode === 'signup' ? 'Create account' : mode === 'reset' ? 'Send reset link' : 'Sign in'}
         </button>
