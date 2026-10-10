@@ -155,6 +155,102 @@ function writeRecovery(owner, drafts) {
   localStorage.setItem(`fieldbook-drafts-v1:${owner}`, JSON.stringify({ drafts, savedAt: new Date().toISOString() }));
 }
 
+test('study settings failure keeps live settings and pending plans unchanged', async () => {
+  mocks.initial.plans = [{ id: 'old-pending', status: 'pending', kind: '1' }, { id: 'started', status: 'in_progress', kind: '2' }];
+  await mount();
+  const original = structuredClone(fieldbook.state.settings);
+  const originalPlans = structuredClone(fieldbook.state.plans);
+  mocks.saveState.mockResolvedValueOnce(false);
+  await act(async () => { expect(await fieldbook.saveStudySettings({ dailyMinutes: 45, vocabulary: { accent: 'us' } })).toBe(false); });
+  expect(fieldbook.state.settings).toEqual(original);
+  expect(fieldbook.state.plans).toEqual(originalPlans);
+});
+
+test('queued study edits merge current preferences and preserve untouched settings', async () => {
+  await mount();
+  const pending = defer();
+  mocks.saveState.mockImplementationOnce(() => pending.promise);
+  let preferenceSave;
+  let studySave;
+  await act(async () => {
+    preferenceSave = fieldbook.saveVocabularyPreferences({ accent: 'us' });
+    await Promise.resolve();
+    studySave = fieldbook.saveStudySettings({ dailyMinutes: 45 });
+  });
+  await act(async () => { pending.resolve(true); await preferenceSave; await studySave; });
+  expect(mocks.saveState.mock.calls.at(-1)[0].settings).toMatchObject({ dailyMinutes: 45, vocabulary: { accent: 'us' } });
+  expect(fieldbook.state.settings.vocabulary.accent).toBe('us');
+});
+
+test('combined settings commit survives a queued writing autosave and preserves live drafts', async () => {
+  await mount();
+  const pending = defer();
+  mocks.saveState.mockImplementationOnce(() => pending.promise);
+  let settingsSave;
+  let draftSave;
+  await act(async () => { settingsSave = fieldbook.saveStudySettings({ dailyMinutes: 45, vocabulary: { accent: 'us' } }); await Promise.resolve(); });
+  await act(async () => { draftSave = fieldbook.persist((draft) => { draft.drafts.q1.text = 'Written during settings save.'; }); await Promise.resolve(); });
+  await act(async () => { pending.resolve(true); await settingsSave; await draftSave; });
+  expect(mocks.saveState.mock.calls.at(-1)[0].settings).toMatchObject({ dailyMinutes: 45, vocabulary: { accent: 'us' } });
+  expect(fieldbook.state.settings).toMatchObject({ dailyMinutes: 45, vocabulary: { accent: 'us' } });
+  expect(fieldbook.state.drafts.q1.text).toBe('Written during settings save.');
+});
+
+test('later edits to rebuilt pending plans survive settings replay and reload', async () => {
+  await mount();
+  await act(async () => { expect(await fieldbook.saveStudySettings({ dailyMinutes: 45 })).toBe(true); });
+  const planId = fieldbook.state.plans.find(plan => plan.status === 'pending').id;
+  await act(async () => {
+    const next = structuredClone(fieldbook.stateRef.current);
+    const plan = next.plans.find(row => row.id === planId);
+    plan.title = 'Updated after assessment';
+    plan.driver = { type: 'assessment', id: 'feedback-1' };
+    expect(await fieldbook.persistNow(next)).toBe(true);
+  });
+  const saved = mocks.saveState.mock.calls.at(-1)[0];
+  expect(saved.plans.find(plan => plan.id === planId)).toMatchObject({ title: 'Updated after assessment', driver: { type: 'assessment', id: 'feedback-1' } });
+  mocks.initial = structuredClone(saved);
+  cleanup();
+  await mount();
+  expect(fieldbook.state.plans.find(plan => plan.id === planId)).toMatchObject({ title: 'Updated after assessment', driver: { type: 'assessment', id: 'feedback-1' } });
+});
+
+test('same-id plans started while settings save is pending retain their progress', async () => {
+  await mount();
+  const planId = fieldbook.state.plans.find(plan => plan.status === 'pending').id;
+  const pending = defer();
+  mocks.saveState.mockImplementationOnce(() => pending.promise);
+  let settingsSave;
+  await act(async () => { settingsSave = fieldbook.saveStudySettings({ dailyMinutes: 45 }); await Promise.resolve(); });
+  await act(async () => { fieldbook.persist(draft => { const plan = draft.plans.find(row => row.id === planId); plan.status = 'in_progress'; plan.title = 'Started task'; draft.activePlanId = planId; }); await Promise.resolve(); });
+  await act(async () => { pending.resolve(true); await settingsSave; });
+  await waitFor(() => expect(mocks.saveState).toHaveBeenCalledTimes(2));
+  expect(mocks.saveState.mock.calls.at(-1)[0].plans.find(plan => plan.id === planId)).toMatchObject({ status: 'in_progress', title: 'Started task' });
+  expect(fieldbook.state.activePlanId).toBe(planId);
+});
+
+test('settings save finishing after account change cannot commit or report success', async () => {
+  await mount();
+  const original = structuredClone(fieldbook.state.settings);
+  const pending = defer();
+  mocks.saveState.mockImplementationOnce(() => pending.promise);
+  let settingsSave;
+  await act(async () => { settingsSave = fieldbook.saveStudySettings({ dailyMinutes: 45 }); await Promise.resolve(); });
+  mocks.owner = 'account-2';
+  await act(async () => { pending.resolve(true); expect(await settingsSave).toBe(false); });
+  expect(fieldbook.state.settings).toEqual(original);
+});
+
+test('vocabulary settings save finishing after account change cannot report success', async () => {
+  await mount();
+  const pending = defer();
+  mocks.saveState.mockImplementationOnce(() => pending.promise);
+  let preferenceSave;
+  await act(async () => { preferenceSave = fieldbook.saveVocabularyPreferences({ accent: 'us' }); await Promise.resolve(); });
+  mocks.owner = 'account-2';
+  await act(async () => { pending.resolve(true); expect(await preferenceSave).toBe(false); });
+});
+
 test('a delayed vocabulary import preserves concurrent drafts and queued saves', async () => {
   await mount();
   const pending = defer();

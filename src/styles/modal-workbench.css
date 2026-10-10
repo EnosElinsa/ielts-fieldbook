@@ -1,0 +1,41 @@
+.dialog-content.modal-workbench { overflow: hidden; display: flex; flex-direction: column; }
+.dialog-content.modal-workbench-sm { width: min(440px, calc(100% - 24px)); }
+.dialog-content.modal-workbench-md { width: min(640px, calc(100% - 24px)); }
+.dialog-content.modal-workbench-lg { width: min(820px, calc(100% - 24px)); }
+.modal-workbench-shell { width: 100%; min-height: 0; display: flex; flex-direction: column; max-height: calc(100dvh - 48px); }
+.modal-workbench-header { padding: 24px 64px 18px 24px; border-bottom: 1px solid var(--rule); flex: none; }
+.modal-workbench-header-copy { min-width: 0; }
+.modal-workbench-eyebrow { color: var(--muted); font-size: 11px; letter-spacing: .11em; text-transform: uppercase; margin-bottom: 5px; }
+.modal-workbench-title { margin: 0; color: var(--ink); font: 650 22px/1.3 Manrope, Arial, sans-serif; }
+.modal-workbench-description { margin: 7px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.modal-workbench-body { overflow: auto; min-height: 0; padding: 22px 24px; overscroll-behavior: contain; }
+.modal-workbench-footer { flex: none; padding: 16px 24px max(18px, env(safe-area-inset-bottom)); border-top: 1px solid var(--rule); background: var(--sheet); display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
+.modal-workbench-footer > * { margin-top: 0; }
+.modal-workbench-legacy .modal-workbench-body { padding: 24px; }
+.modal-workbench-legacy .modal { padding: 0; }
+.modal-workbench-legacy .practice-confirm-dialog { padding: 0; }
+.modal-workbench-legacy .modal > h3, .modal-workbench-legacy .practice-confirm-dialog > h2 { padding-right: 30px; }
+.modal-workbench-structured .practice-settings-dialog { padding: 0; }
+.modal-workbench .practice-preferences fieldset { margin: 0 0 26px; padding: 0 0 22px; border: 0; border-bottom: 1px solid var(--rule); min-width: 0; }
+.modal-workbench .practice-preferences fieldset:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+.modal-workbench .practice-preferences legend { font-size: 14px; margin-bottom: 18px; }
+.modal-workbench .practice-preference-grid { gap: 18px 20px; }
+.modal-workbench .practice-preference-grid > label, .modal-workbench .practice-layout-field { font-size: 12px; }
+.modal-workbench .practice-preference-grid select { min-height: 42px; font-size: 13px; }
+.modal-workbench .practice-shortcut-hint { color: var(--muted); font-size: 12px; line-height: 1.6; margin: 12px 0 0; }
+.modal-workbench .practice-field-hint { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.modal-workbench .settings-tabs { margin: 0 0 24px; }
+.modal-workbench .settings-form { padding: 0; border: 0; margin: 0; min-width: 0; }
+.modal-workbench .settings-form .form { margin: 0 0 20px; gap: 18px; }
+.modal-workbench .settings-form:disabled { opacity: .6; }
+.modal-workbench .rule-note { font-size: 12px; line-height: 1.7; }
+.modal-workbench .practice-error, .modal-workbench .vocabulary-error { margin-top: 18px; }
+@media (max-width: 740px) {
+  .modal-workbench-shell { max-height: calc(100dvh - 32px); }
+  .modal-workbench-header { padding: 20px 64px 16px 20px; }
+  .modal-workbench-body { padding: 20px; }
+  .modal-workbench-legacy .modal-workbench-body { padding: 20px; }
+  .modal-workbench-footer { padding: 14px 20px max(16px, env(safe-area-inset-bottom)); }
+  .modal-workbench-footer .btn { min-height: 44px; }
+  .modal-workbench .practice-preference-grid { grid-template-columns: minmax(0, 1fr); }
+}

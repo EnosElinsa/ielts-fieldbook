@@ -1,41 +1,33 @@
 // @ts-nocheck
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, NavLink, useParams, useSearchParams } from "react-router-dom";
+import { Link, NavLink, useParams, useSearchParams, useLocation } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
   BookOpen,
   Check,
   Download,
-  Eye,
-  Pause,
   Pencil,
-  Play,
   Plus,
   RotateCcw,
-  Save,
   Trash2,
   Upload,
   Volume2,
 } from "lucide-react";
 import { useFieldbook } from "../../context/FieldbookContext";
 import { Empty, FilterMenu } from "../../components/ui";
-import { accountId } from "../../storage/remote";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import {
   deriveVocabularyStatus,
   enrollWordbook,
   getActiveWrongWords,
   getVocabularyReviewQueue,
-  markWordbookUnitComplete,
-  normalizeAnswer,
-  recordAudioActivity,
-  recordVocabularyReview,
   removeVocabularyItem,
   resolveWrongWord,
   setVocabularyManualStatus,
 } from "../../domain/vocabulary";
 import "../../styles/vocabulary.css";
+import "../../styles/vocabulary-workbench.css";
 import { DictionarySenses } from './DictionarySenses';
 
 const STATUS = [
@@ -45,14 +37,6 @@ const STATUS = [
   "active",
   "familiar",
   "mastered",
-];
-const MODES = [
-  { value: "dictation", label: "Dictation" },
-  { value: "definition", label: "Definition recall" },
-  { value: "cloze", label: "Cloze" },
-  { value: "distinction", label: "Synonym / distinction" },
-  { value: "audio", label: "Audio loop" },
-  { value: "production", label: "Sentence production" },
 ];
 const DIMENSIONS = ["meaning", "listening", "spelling", "usage"];
 const label = (value = "") =>
@@ -77,44 +61,76 @@ const books = (state = {}) =>
       ]),
     ],
   }));
-const units = (state = {}) =>
-  (VOCABULARY_CATALOG.units || []).map((unit) => ({
-    ...unit,
-    entryIds: [
-      ...new Set([
-        ...(unit.entryIds || []),
-        ...(VOCABULARY_CATALOG.memberships || [])
-          .filter(
-            (item) => item.bookId === unit.bookId && item.unitId === unit.id,
-          )
-          .map((item) => item.entryId),
-        ...(state.vocabulary || [])
-          .filter((entry) =>
-            (entry.sources || []).some(
-              (source) =>
-                source.bookId === unit.bookId && source.unitId === unit.id,
-            ),
-          )
-          .map((entry) => entry.id),
-      ]),
-    ],
+function units(state = {}) {
+  const entries = new Map([...(VOCABULARY_CATALOG.entries || []), ...(state.vocabulary || [])].map(entry => [entry.id, entry]));
+  const memberships = new Map();
+  [...(VOCABULARY_CATALOG.memberships || [])].sort((a, b) => (a.order || 0) - (b.order || 0)).forEach(item => {
+    const key = `${item.bookId}:${item.unitId}`;
+    memberships.set(key, [...(memberships.get(key) || []), item.entryId]);
+  });
+  const personal = new Map();
+  (state.vocabulary || []).forEach(entry => (entry.sources || []).forEach(source => {
+    const key = `${source.bookId}:${source.unitId}`;
+    personal.set(key, [...(personal.get(key) || []), entry.id]);
   }));
-function bookHierarchy(state, bookId) {
-  const rows = units(state).filter((unit) => unit.bookId === bookId);
-  const roots = rows
-    .filter((unit) => !unit.parentId)
-    .sort((a, b) => (a.order || 0) - (b.order || 0));
-  const ordered = roots.flatMap((root) => [
-    root,
-    ...rows
-      .filter((unit) => unit.parentId === root.id)
-      .sort((a, b) => (a.order || 0) - (b.order || 0)),
-  ]);
-  return [
-    ...ordered,
-    ...rows.filter((unit) => !ordered.some((item) => item.id === unit.id)),
-  ];
+  return (VOCABULARY_CATALOG.units || []).map(unit => {
+    const entryIds = [...new Set([
+      ...(memberships.get(`${unit.bookId}:${unit.id}`) || []), ...(unit.entryIds || []), ...(personal.get(`${unit.bookId}:${unit.id}`) || []),
+    ])];
+    const studyEntryIds = entryIds.filter(id => !(entries.get(id)?.tags || []).includes('archived'));
+    return { ...unit, entryIds, studyEntryIds, archivedCount: entryIds.length - studyEntryIds.length };
+  });
 }
+function bookHierarchy(state, bookId) {
+  const rows = units(state).filter(unit => unit.bookId === bookId);
+  const byParent = new Map();
+  rows.forEach(unit => byParent.set(unit.parentId || '', [...(byParent.get(unit.parentId || '') || []), unit]));
+  byParent.forEach(children => children.sort((a, b) => (a.order || 0) - (b.order || 0)));
+  const visited = new Set();
+  const ordered = [];
+  const visit = unit => {
+    if (visited.has(unit.id)) return;
+    visited.add(unit.id); ordered.push(unit);
+    (byParent.get(unit.id) || []).forEach(visit);
+  };
+  (byParent.get('') || []).forEach(visit);
+  rows.forEach(visit);
+  return ordered;
+}
+function groupStudied(state, unit) {
+  if (!unit.studyEntryIds.length) return false;
+  return (state.vocabularySessions || []).some(session => {
+    const selection = session.selection;
+    const selected = selection ? selection.kind === 'unit' && selection.bookId === unit.bookId && selection.unitId === unit.id
+      : session.filter?.bookId === unit.bookId && session.filter?.unitId === unit.id && session.filter?.dueOnly === false && !session.filter?.wrongOnly;
+    if (!selected || session.status !== 'submitted' || session.mode === 'audio') return false;
+    const answered = new Set((session.results || []).filter(result => String(result.response || '').trim()).map(result => result.entryId));
+    return unit.studyEntryIds.every(id => answered.has(id));
+  });
+}
+function bookStudy(state, bookId) {
+  const hierarchy = bookHierarchy(state, bookId);
+  const groups = hierarchy.filter(unit => !hierarchy.some(child => child.parentId === unit.id) && unit.kind !== 'chapter');
+  const available = groups.filter(unit => unit.studyEntryIds.length);
+  const studied = available.filter(unit => groupStudied(state, unit));
+  const studiedIds = new Set(studied.flatMap(unit => unit.studyEntryIds));
+  return { hierarchy, groups, available, studied, studiedIds, next: available.find(unit => !groupStudied(state, unit)) || available[0] };
+}
+function unitPath(book, unit, hierarchy) {
+  const names = [unit.title]; const visited = new Set([unit.id]); let parent = unit.parentId;
+  while (parent && !visited.has(parent)) {
+    visited.add(parent); const row = hierarchy.find(item => item.id === parent);
+    if (!row) break;
+    names.unshift(row.title); parent = row.parentId;
+  }
+  return [book.title, ...names].join(' / ');
+}
+function descendants(unit, hierarchy) {
+  const ids = new Set([unit.id]); let grew = true;
+  while (grew) { grew = false; hierarchy.forEach(row => { if (ids.has(row.parentId) && !ids.has(row.id)) { ids.add(row.id); grew = true; } }); }
+  return hierarchy.filter(row => ids.has(row.id));
+}
+const studyLink = unit => `/vocabulary/study?bookId=${encodeURIComponent(unit.bookId)}&unitId=${encodeURIComponent(unit.id)}&dueOnly=false`;
 const learning = (state, entryId) =>
   (state.vocabularyStates || []).filter((item) => item.entryId === entryId);
 function statusOf(state, id) {
@@ -155,15 +171,19 @@ function safeQueue(state, filter) {
 }
 
 export function VocabularyNavigation() {
+  const { pathname } = useLocation();
+  const inStudy = pathname === "/vocabulary/study";
   return (
     <nav className="vocabulary-tabs" aria-label="Vocabulary views">
       {[
-        ["/vocabulary", "My vocabulary"],
-        ["/vocabulary/wordbooks", "Wordbooks"],
-        ["/vocabulary/review", "Review"],
+        ["/vocabulary", "Overview"],
+        ["/vocabulary/wordbooks", "Wordbook study"],
+        ["/vocabulary/review", "Vocabulary review"],
         ["/vocabulary/wrong", "Wrong words"],
         ["/vocabulary/progress", "Progress"],
-      ].map(([path, title]) => (
+      ].map(([path, title]) => inStudy && path === "/vocabulary/wordbooks" ? (
+        <Link key={path} to={path} aria-current="page" className="is-active">{title}</Link>
+      ) : (
         <NavLink
           key={path}
           to={path}
@@ -179,7 +199,7 @@ export function VocabularyNavigation() {
 
 function VocabularyLayout({ children }) {
   return (
-    <section className="view active vocabulary-view">
+    <section className="view active vocabulary-view vocabulary-workbench">
       <VocabularyNavigation />
       {children}
     </section>
@@ -273,7 +293,7 @@ export function VocabularyPage() {
   return (
     <VocabularyLayout>
       <div className="page-tools">
-        <h2>My vocabulary</h2>
+        <h2>Vocabulary workspace</h2>
         <div className="actions">
           <button
             type="button"
@@ -293,6 +313,19 @@ export function VocabularyPage() {
           </button>
         </div>
       </div>
+      <div className="vocabulary-entryways">
+        <article className="vocabulary-entryway">
+          <BookOpen size={22} /><span className="vocabulary-eyebrow">Follow a wordbook</span>
+          <h3>Wordbook study</h3><p>Work through one complete group at a time, in the book's original order.</p>
+          <Link className="btn primary" to="/vocabulary/wordbooks">Study wordbooks <ArrowRight size={16} /></Link>
+        </article>
+        <article className="vocabulary-entryway">
+          <RotateCcw size={22} /><span className="vocabulary-eyebrow">Keep words ready</span>
+          <h3>Vocabulary review</h3><p>Practise due cards, recover wrong words, or build a focused review session.</p>
+          <Link className="btn primary" to="/vocabulary/review">Review vocabulary <ArrowRight size={16} /></Link>
+        </article>
+      </div>
+      <h3 className="vocabulary-section-title">My vocabulary</h3>
       <VocabularyStats
         values={[
           ["Entries", entries.length],
@@ -537,223 +570,75 @@ export function VocabularyWordbooksPage() {
       const draft = structuredClone(fb.stateRef.current);
       enrollWordbook(draft, id);
       if (await fb.persistNow(draft)) fb.toast("Wordbook added.");
+      else setCatalogError("Wordbook could not be saved. Retry adding it.");
     } catch {
       setCatalogError("Wordbook could not be saved. Retry adding it.");
     } finally {
       setJoining("");
     }
   };
-  const complete = async (unit) => {
-    const draft = structuredClone(fb.stateRef.current);
-    const result = markWordbookUnitComplete(draft, unit.bookId, unit.id);
-    if (!result) {
-      fb.toast(
-        "Review every available entry before marking this unit studied.",
-      );
-      return;
-    }
-    if (await fb.persistNow(draft)) fb.toast("Study progress updated.");
-  };
-  return (
-    <VocabularyLayout>
-      <div className="page-tools">
-        <h2>Wordbooks</h2>
-        <button
-          type="button"
-          className="btn line"
-          onClick={() => fb.openModal("vocabularyImport")}
-        >
-          <Upload size={16} />
-          Import wordbook progress
-        </button>
+  const study = book ? bookStudy(fb.state, book.id) : null;
+  const groupRow = (unit) => {
+    const studied = groupStudied(fb.state, unit);
+    const mastered = unit.studyEntryIds.filter(id => statusOf(fb.state, id) === "mastered").length;
+    return <article className="vocabulary-study-group" key={unit.id}>
+      <div><h4>{unit.title}</h4><p className="vocabulary-group-path">{unitPath(book, unit, study.hierarchy)}</p>
+        {unit.entryIds.length ? <><p>{unit.entryIds.length} words · {unit.studyEntryIds.length ? `${studied ? "Studied" : "Not studied"} · ${mastered} mastered` : "Archived · Excluded from study"}</p>{unit.archivedCount && unit.studyEntryIds.length ? <p className="vocabulary-muted">{unit.archivedCount} archived {unit.archivedCount === 1 ? "word" : "words"} excluded from study</p> : null}</>
+          : <p className="vocabulary-muted">{unit.totalSourceWords ? `${unit.totalSourceWords} source words | ` : ""}Content pending</p>}
       </div>
-      {catalogBusy ? (
-        <p role="status" className="vocabulary-muted">
-          Loading catalog...
-        </p>
-      ) : null}
-      {catalogError ? (
-        <div className="vocabulary-catalog-error">
-          <p role="alert" className="vocabulary-error">
-            {catalogError}
-          </p>
-          <button
-            type="button"
-            className="btn line"
-            disabled={catalogBusy}
-            onClick={() => loadCatalog(selectedBook)}
-          >
-            <RotateCcw size={15} />
-            Retry catalog
-          </button>
-        </div>
-      ) : null}
-      {book ? (
-        <>
-          <button
-            type="button"
-            className="btn text"
-            onClick={() => setSelectedBook("")}
-          >
-            <ArrowLeft size={16} />
-            All wordbooks
-          </button>
-          <div className="vocabulary-book-heading">
-            <h3>{book.title}</h3>
-            <p>{book.description}</p>
-            <span className="pill">
-              {book.entryIds?.length || 0} available entries
-            </span>
-            {book.totalSourceWords ? (
-              <span className="pill">{book.totalSourceWords} source words</span>
-            ) : null}
-            <span className="pill">{label(book.contentStatus)} content</span>
-            <div className="actions">
-              {enrolled(book.id) ? (
-                <Link
-                  className="btn primary"
-                  to={`/vocabulary/review?bookId=${book.id}&dueOnly=false`}
-                >
-                  Study book
-                  <ArrowRight size={15} />
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  className="btn primary"
-                  disabled={Boolean(joining) || catalogBusy}
-                  onClick={() => join(book.id)}
-                >
-                  <Plus size={15} />
-                  Add wordbook
-                </button>
-              )}
-            </div>
-          </div>
-          <div className="vocabulary-unit-list">
-            {bookHierarchy(fb.state, book.id).map((unit) => {
-              const progress = (fb.state.wordbookProgress || []).find(
-                (item) => item.bookId === book.id && item.unitId === unit.id,
-              );
-              const studied = progress?.completedEntryIds?.length || 0;
-              const mastery = (unit.entryIds || []).filter(
-                (id) => statusOf(fb.state, id) === "mastered",
-              ).length;
-              return (
-                <article
-                  className={`vocabulary-unit${unit.parentId ? " vocabulary-unit-child" : ""}`}
-                  key={unit.id}
-                >
-                  <div>
-                    <h4>
-                      {unit.parentId
-                        ? `${units(fb.state).find((parent) => parent.id === unit.parentId)?.title || "Chapter"} / ${unit.title}`
-                        : unit.title}
-                    </h4>
-                    <p>
-                      {unit.entryIds.length
-                        ? `Studied ${studied}/${unit.entryIds.length} | Mastered ${mastery}/${unit.entryIds.length}`
-                        : `${unit.totalSourceWords ? `${unit.totalSourceWords} source words | ` : ""}Content pending`}
-                    </p>
-                    {unit.entryIds.length ? (
-                      <progress
-                        aria-label={`${unit.title} study progress`}
-                        value={studied}
-                        max={unit.entryIds.length || 1}
-                      />
-                    ) : null}
-                  </div>
-                  <div className="actions">
-                    {unit.entryIds.length && enrolled(book.id) ? (
-                      <Link
-                        className="btn line"
-                        to={`/vocabulary/review?bookId=${book.id}&unitId=${unit.id}&dueOnly=false`}
-                      >
-                        Study unit
-                        <ArrowRight size={15} />
-                      </Link>
-                    ) : null}
-                    <button
-                      type="button"
-                      className="btn line"
-                      disabled={
-                        !enrolled(book.id) ||
-                        !unit.entryIds.length ||
-                        studied < unit.entryIds.length ||
-                        progress?.status === "completed"
-                      }
-                      onClick={() => complete(unit)}
-                    >
-                      <Check size={15} />
-                      {progress?.status === "completed"
-                        ? "Studied"
-                        : "Mark studied"}
-                    </button>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-          <p className="vocabulary-muted">
-            Source: {book.source || book.sourceTitle || "Public catalog"}
-            {book.license ? ` | ${book.license}` : ""}
-          </p>
-        </>
-      ) : (
-        <div className="vocabulary-books">
-          {books(fb.state).map((item) => {
-            const progress = (fb.state.wordbookProgress || []).filter(
-              (row) => row.bookId === item.id,
-            );
-            const completed = new Set(
-              progress.flatMap((row) => row.completedEntryIds || []),
-            ).size;
-            return (
-              <article className="vocabulary-book" key={item.id}>
-                <BookOpen size={22} />
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                <div className="vocabulary-muted">
-                  {item.entryIds?.length || 0} available entries |{" "}
-                  {label(item.contentStatus)} content
-                </div>
-                {enrolled(item.id) ? (
-                  <div className="vocabulary-muted">{completed} studied</div>
-                ) : null}
-                <div className="actions">
-                  <button
-                    type="button"
-                    className="btn line"
-                    onClick={() => setSelectedBook(item.id)}
-                  >
-                    Open
-                    <ArrowRight size={15} />
-                  </button>
-                  {!enrolled(item.id) ? (
-                    <button
-                      type="button"
-                      className="btn primary"
-                      disabled={
-                        !item.entryIds?.length ||
-                        Boolean(joining) ||
-                        catalogBusy
-                      }
-                      onClick={() => join(item.id)}
-                    >
-                      <Plus size={15} />
-                      Add
-                    </button>
-                  ) : (
-                    <span className="pill green">Added</span>
-                  )}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      )}
-    </VocabularyLayout>
-  );
+      {unit.studyEntryIds.length && enrolled(book.id) ? <Link className="btn line" to={studyLink(unit)} aria-label={`${studied ? "Restudy" : "Study"} group: ${unitPath(book, unit, study.hierarchy)}`}>{studied ? "Restudy group" : "Study group"}<ArrowRight size={15} /></Link> : null}
+    </article>;
+  };
+  const chapter = (unit) => {
+    const children = study.hierarchy.filter(row => row.parentId === unit.id);
+    if (!children.length) return groupRow(unit);
+    const rows = descendants(unit, study.hierarchy);
+    const ids = new Set(rows.flatMap(row => row.entryIds));
+    const groups = study.groups.filter(group => group.studyEntryIds.length && rows.some(row => row.id === group.id));
+    const completed = groups.filter(group => groupStudied(fb.state, group)).length;
+    const nextInside = groups.some(group => group.id === study.next?.id);
+    const next = groups.find(group => !groupStudied(fb.state, group)) || groups[0];
+    return <details className="vocabulary-study-chapter" key={unit.id} open={nextInside || undefined}>
+      <summary><span><strong>{unit.title}</strong><small>{ids.size ? `${ids.size} words · ${completed}/${groups.length} groups studied` : `${unit.totalSourceWords ? `${unit.totalSourceWords} source words | ` : ""}Content pending`}</small></span><span className="vocabulary-chapter-chevron" aria-hidden="true">⌄</span></summary>
+      <div className="vocabulary-chapter-body">
+        {next && enrolled(book.id) ? <Link className="btn text" to={studyLink(next)}>Continue chapter <ArrowRight size={15} /></Link> : null}
+        {children.map(chapter)}
+      </div>
+    </details>;
+  };
+  return <VocabularyLayout>
+    <div className="page-tools"><div><h2>Wordbook study</h2><p className="vocabulary-muted">One group at a time. Clear progress through every chapter.</p></div>
+      <button type="button" className="btn line" onClick={() => fb.openModal("vocabularyImport")}><Upload size={16} />Import wordbook progress</button>
+    </div>
+    {catalogBusy ? <p role="status" className="vocabulary-muted">Loading catalog...</p> : null}
+    {catalogError ? <div className="vocabulary-catalog-error"><p role="alert" className="vocabulary-error">{catalogError}</p><button type="button" className="btn line" disabled={catalogBusy} onClick={() => loadCatalog(selectedBook)}><RotateCcw size={15} />Retry catalog</button></div> : null}
+    {book ? <>
+      <button type="button" className="btn text" onClick={() => setSelectedBook("")}><ArrowLeft size={16} />All wordbooks</button>
+      <div className="vocabulary-study-heading"><div><span className="vocabulary-eyebrow">Your wordbook</span><h3>{book.title}</h3><p>{book.description}</p>
+        <p className="vocabulary-muted">{book.entryIds.length} available words{book.totalSourceWords ? ` · ${book.totalSourceWords} source words` : ""} · {label(book.contentStatus)} content</p>
+        <p>{study.studied.length}/{study.available.length} available groups studied</p>
+      </div><div className="vocabulary-continue">
+        {enrolled(book.id) ? study.next ? <><p className="vocabulary-group-path">{unitPath(book, study.next, study.hierarchy)}</p><Link className="btn primary" to={studyLink(study.next)}>{study.studied.length === study.available.length ? "Study again" : study.studied.length ? "Continue study" : "Start first group"}<ArrowRight size={16} /></Link><small>{study.next.studyEntryIds.length} words to practise · Complete group</small></> : <p className="vocabulary-muted">{study.groups.some(group => group.entryIds.length) ? "All available words are archived. Restore a word to study this book." : "Study will be available when group content is loaded."}</p>
+          : <button type="button" className="btn primary" disabled={Boolean(joining) || catalogBusy || !study.available.length} onClick={() => join(book.id)}><Plus size={15} />Add wordbook</button>}
+      </div></div>
+      <p className="vocabulary-muted">Studied means a saved attempt with every nonarchived word answered. Mastery comes from review evidence.</p>
+      <div className="vocabulary-study-chapters">{study.hierarchy.filter(unit => !unit.parentId || !study.hierarchy.some(parent => parent.id === unit.parentId)).map(chapter)}</div>
+      {!study.hierarchy.length ? <Empty message="No chapters available yet." /> : null}
+      <details className="vocabulary-secondary"><summary>Wordbook source</summary><p>Source: {book.source || book.sourceTitle || "Public catalog"}{book.license ? ` | ${book.license}` : ""}</p></details>
+    </> : <>
+      <div className="vocabulary-books">{books(fb.state).map(item => {
+        const progress = bookStudy(fb.state, item.id);
+        return <article className="vocabulary-book" key={item.id}><BookOpen size={22} /><h3>{item.title}</h3><p>{item.description}</p>
+          <div className="vocabulary-muted">{item.entryIds.length} available words · {label(item.contentStatus)} content</div>
+          {enrolled(item.id) ? <div className="vocabulary-muted">{progress.studied.length}/{progress.available.length} groups studied</div> : null}
+          <div className="actions"><button type="button" className="btn line" onClick={() => setSelectedBook(item.id)}>Open chapters<ArrowRight size={15} /></button>
+            {!enrolled(item.id) ? <button type="button" className="btn primary" disabled={!item.entryIds.length || Boolean(joining) || catalogBusy} onClick={() => join(item.id)}><Plus size={15} />Add</button>
+              : progress.next ? <Link className="btn primary" to={studyLink(progress.next)}>{progress.studied.length ? "Continue study" : "Start study"}<ArrowRight size={15} /></Link> : <span className="pill">{progress.groups.some(group => group.entryIds.length) ? "Words archived" : "Content pending"}</span>}
+          </div></article>;
+      })}</div>
+      {!books(fb.state).length && !catalogBusy ? <Empty message="No wordbooks available yet." /> : null}
+    </>}
+  </VocabularyLayout>;
 }
 
 function speechEngine() {
@@ -915,7 +800,7 @@ export function VocabularyEntryPage() {
           ? `${accent.toUpperCase()} audio, with browser speech fallback`
           : `${accent.toUpperCase()} browser speech`}
       </p>
-      <Sources entry={entry} />
+      <div className="vocabulary-entry-practice"><Link className="btn primary" to={`/vocabulary/review?entryId=${encodeURIComponent(entry.id)}&dueOnly=false`}>Practise this word<ArrowRight size={16} /></Link>{entry.enrichmentPending ? <span className="vocabulary-muted">Definition enrichment pending</span> : null}</div>
       {(entry.senses?.length
         ? entry.senses
         : [{ id: "", definition: entry.meaning, example: entry.example }]
@@ -972,6 +857,7 @@ export function VocabularyEntryPage() {
                 </div>
               ) : null,
             )}
+            <details className="vocabulary-secondary"><summary>Learning evidence for sense {index + 1}</summary>
             <div className="vocabulary-dimensions">
               {DIMENSIONS.map((dimension) => (
                 <div key={dimension}>
@@ -994,6 +880,7 @@ export function VocabularyEntryPage() {
                 recovery successes
               </p>
             ) : null}
+            </details>
             {sense.source || sense.license ? (
               <p className="vocabulary-muted">
                 {sense.source}
@@ -1006,7 +893,7 @@ export function VocabularyEntryPage() {
         );
       })}
       <DictionarySenses entry={entry} />
-      <h3 className="vocabulary-section-title">Source context</h3>
+      <details className="vocabulary-secondary"><summary>Source context</summary><Sources entry={entry} />
       {(entry.sources || []).map((source, index) => (
         <div className="vocabulary-source-context" key={index}>
           <strong>{sourceLabel(source)}</strong>
@@ -1018,7 +905,8 @@ export function VocabularyEntryPage() {
           ) : null}
         </div>
       ))}
-      <h3 className="vocabulary-section-title">Review evidence</h3>
+      </details>
+      <details className="vocabulary-secondary"><summary>Review history</summary>
       {(fb.state.vocabularyReviews || []).filter(review=>review.entryId===entry.id && review.imported).length ? <section className="vocabulary-evidence"><h4>Imported answer history</h4>{(fb.state.vocabularyReviews || []).filter(review=>review.entryId===entry.id && review.imported).slice(-30).reverse().map(review=><div key={review.id}><span>{review.sourceLabel || 'Source dictation'}</span><span>{label(review.result)}</span><p>{review.response || 'No answer recorded'}</p><small>{review.occurredAt ? dateLabel(review.occurredAt) : 'Source date unavailable'}</small></div>)}</section> : null}
       <div className="vocabulary-evidence">
         {(fb.state.vocabularyEvidence || [])
@@ -1034,6 +922,7 @@ export function VocabularyEntryPage() {
             </div>
           ))}
       </div>
+      </details>
     </VocabularyLayout>
   );
 }
@@ -1070,15 +959,9 @@ export function VocabularyWrongPage() {
   };
   return (
     <VocabularyLayout>
-      <div className="page-tools">
-        <h2>Wrong words</h2>
-        <Link
-          className="btn primary"
-          to="/vocabulary/review?wrongOnly=true&dueOnly=false"
-        >
-          <RotateCcw size={16} />
-          Review
-        </Link>
+      <div className="page-tools"><h2>Wrong words</h2></div>
+      <div className="vocabulary-recovery"><div><span className="vocabulary-eyebrow">Recovery practice</span><h3>{wrong.length ? `${wrong.length} words to recover` : "Your recovery queue"}</h3><p>Give these words another attempt. Repeated successful reviews rebuild confidence.</p></div>
+        <Link className="btn primary" to={`/vocabulary/review?${new URLSearchParams({ wrongOnly: 'true', dueOnly: 'false', ...(source !== 'all' ? { sourceType: source } : {}), ...(bookId !== 'all' ? { bookId } : {}), ...(skill !== 'all' ? { skill } : {}), ...(dimension !== 'all' ? { dimension } : {}) }).toString()}`}><RotateCcw size={16} />Recover wrong words<ArrowRight size={15} /></Link>
       </div>
       <div className="toolbar">
         <SelectField
@@ -1229,6 +1112,7 @@ export function VocabularyProgressPage() {
         vocabularyReviews: reviews,
         vocabularyEvidence: evidence,
         vocabularyActivities: fb.state.vocabularyActivities || [],
+        vocabularySessions: fb.state.vocabularySessions || [],
         wordbookProgress: fb.state.wordbookProgress || [],
       },
       null,
@@ -1255,7 +1139,8 @@ export function VocabularyProgressPage() {
       <VocabularyStats
         values={[
           ["Entries", entries.length],
-          ["Review evidence", reviews.length],
+          ["Mastered words", entries.filter(entry => statusOf(fb.state, entry.id) === "mastered").length],
+          ["Due cards", safeQueue(fb.state, { dueOnly: true }).length],
           ["Active wrong words", getActiveWrongWords(fb.state).length],
           [
             "Awaiting verification",
@@ -1266,6 +1151,7 @@ export function VocabularyProgressPage() {
           ],
         ]}
       />
+      <p className="vocabulary-muted">Studied tracks complete saved group attempts. Mastered tracks learning evidence; due cards show what needs review.</p>
       <h3 className="vocabulary-section-title">Familiarity</h3>
       <div className="vocabulary-status-breakdown">
         {STATUS.map((status) => (
@@ -1324,12 +1210,8 @@ export function VocabularyProgressPage() {
             ),
           )
           .map((book) => {
-            const progress = (fb.state.wordbookProgress || []).filter(
-              (item) => item.bookId === book.id,
-            );
-            const completed = new Set(
-              progress.flatMap((item) => item.completedEntryIds || []),
-            ).size;
+            const progress = bookStudy(fb.state, book.id);
+            const completed = progress.studiedIds.size;
             const mastered = (book.entryIds || []).filter(
               (id) => statusOf(fb.state, id) === "mastered",
             ).length;
@@ -1339,10 +1221,10 @@ export function VocabularyProgressPage() {
                   {book.title}
                 </Link>
                 <span>
-                  Studied {completed}/{book.entryIds.length}
+                  Studied {completed}/{book.entryIds.length} words · {progress.studied.length}/{progress.available.length} groups
                 </span>
                 <span>
-                  Mastered {mastered}/{book.entryIds.length}
+                  Mastered {mastered}/{book.entryIds.length} words
                 </span>
               </div>
             );
