@@ -9,6 +9,7 @@ import { normalizeVocabularyPreferences, type VocabularyPracticeMode, type Vocab
 import { buildVocabularySessionCommit, createVocabularySession, evaluateVocabularySessionAnswer, updateVocabularySessionAnswer, type VocabularyPracticeSession, type VocabularySessionSelection } from "../../domain/vocabulary/session";
 import { getLearnedVocabularyIds, vocabularyGroupProgress } from "../../domain/vocabulary/progress";
 import { buildUnitPracticeQueue } from "../../domain/vocabulary/selection";
+import { resolveVocabularyRetry } from "../../domain/vocabulary/retry";
 import { createVocabularyPlayback } from "./playback";
 import { playbackMessage } from "./Pronunciation";
 import { safeVocabularyReturn } from "./vocabularyNavigation";
@@ -446,7 +447,7 @@ export function useVocabularyPracticeController() {
     playedIndex.current = -1;
     const ordered = [...selected];
     const chosenSelection = selection || (study ? { kind: (unitQueue && unitQueue.unavailableWords > 0 ? 'specialist' : 'unit') as 'specialist' | 'unit', bookId, unitId } : { kind: 'batch' as const });
-    const chosenPreferences = { ...(options.preferences || preferences), ...(study && chosenSelection.kind === 'unit' ? { order: 'source' as const } : {}), mode: chosenMode };
+    const chosenPreferences = { ...normalizeVocabularyPreferences(options.preferences || preferences), ...(study && chosenSelection.kind === 'unit' ? { order: 'source' as const } : {}), mode: chosenMode };
     if (chosenPreferences.order === "source" && chosenSelection.kind !== 'unit') {
       const order = new Map(
         (fb.state.vocabulary || []).map(
@@ -849,17 +850,15 @@ export function useVocabularyPracticeController() {
   }
   function retryMistakes() {
     if (!results) return;
-    const failedIds = new Set(results.results
-      .filter(row => row.result === "failure" || row.result === "partial")
-      .map(row => row.cardId));
-    const retryFilter: ReviewQueueFilter = results.selection?.kind === 'unit'
+    const retryFilter: ReviewQueueFilter = results.selection?.kind === 'unit' || results.selection?.kind === 'specialist'
       ? { ...results.filter, bookId: results.selection.bookId, unitId: results.selection.unitId, dueOnly: false }
       : { ...results.filter, dueOnly: false };
-    const retryCards = cards.length
-      ? cards.filter(card => failedIds.has(card.id))
-      : getVocabularyReviewQueue(fb.state, { ...retryFilter, mode: results.mode === 'audio' ? 'dictation' : results.mode })
-          .filter(card => failedIds.has(card.id));
-    begin(retryCards, results.mode, { kind: "retry" }, {
+    const retry = resolveVocabularyRetry(fb.stateRef.current, results, cards);
+    if (retry.unavailable.length) {
+      setError(`Retry is unavailable for ${retry.unavailable.length} saved ${retry.unavailable.length === 1 ? 'question' : 'questions'}: ${retry.unavailable.map(row => row.term).join(', ')}. The original word, sense, or task could not be restored. No retry has started; the saved results are unchanged.`);
+      return;
+    }
+    begin(retry.cards, results.mode, { kind: "retry" }, {
       filter: retryFilter,
       preferences: results.preferences,
     });

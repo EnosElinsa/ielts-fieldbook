@@ -9,6 +9,7 @@ import { VocabularyPracticePage } from "./VocabularyPracticePage";
 import { getVocabularyReviewQueue } from "../../domain/vocabulary";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
+import { createVocabularySession, evaluateVocabularySessionAnswer } from '../../domain/vocabulary/session';
 
 const { fb, player, owner } = vi.hoisted(() => ({
   fb: { current: null as any },
@@ -717,4 +718,58 @@ test('direct historical route loads the frozen session source book without a boo
   fb.current.loadVocabularyCatalog=vi.fn(async()=>true);fb.current.state.vocabularySessions=[{id:'history-book',mode:'dictation',status:'submitted',filter:{},selection:{kind:'unit',bookId:'source-book',unitId:'source-group'},preferences:{},results:[{cardId:'historic-card',entryId:'historic-word',senseId:'historic-sense',term:'peel',response:'peal',expectedAnswer:'peel',definition:'Old meaning.',example:'',result:'failure'}],entryIds:['historic-word'],summary:{total:1,correct:0,incorrect:1,pending:0},submittedAt:'2025-01-01',startedAt:'2025-01-01'}];
   render(<MemoryRouter initialEntries={['/vocabulary/history/history-book']}><Routes><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes></MemoryRouter>);
   expect(await screen.findByRole('table')).toBeInTheDocument();await waitFor(()=>expect(fb.current.loadVocabularyCatalog).toHaveBeenCalledWith('source-book'));expect(screen.getByRole('button',{name:'Play UK pronunciation of peel'})).toBeInTheDocument();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+});
+
+test.each([false, true])('historical food core retry retains changed-sense dictation with mixed failures=%s', async mixed => {
+  const released = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+  Object.assign(VOCABULARY_CATALOG, released);
+  const raw = released.entries.find((entry: any) => entry.term === 'core');
+  const old = {cardId:'ve-7c70dbbe:kaikki:846f18ca02f7f1d01c:dictation',entryId:raw.id,senseId:'kaikki:846f18ca02f7f1d01c',term:'core',expectedAnswer:'core',response:'cor',result:'failure',definition:'Old core definition.',example:''};
+  const rows = mixed ? [old, {cardId:'entry-0:sense-0:dictation',entryId:'entry-0',senseId:'sense-0',term:'resilient',expectedAnswer:'resilient',response:'wrong',result:'failure',definition:'Definition 0',example:'A resilient community.'}] : [old];
+  // A legacy record can refer to public words absent from the learner's active list.
+  fb.current.state.vocabularySessions = [{id:'legacy-food',mode:'dictation',status:'submitted',selection:{kind:'unit',bookId:'guixue:10174',unitId:'21840'},filter:{},preferences:{order:'source'},results:rows,entryIds:rows.map(row=>row.entryId),summary:{total:rows.length,correct:0,incorrect:rows.length,pending:0},startedAt:'2025-01-01',submittedAt:'2025-01-01'}];
+  if (mixed) fb.current.state.vocabulary[0].sources.push({type:'wordbook',id:'old-food-member',bookId:'guixue:10174',unitId:'21840'});
+  fb.current.loadVocabularyCatalog = vi.fn(async()=>true);
+  const before = JSON.stringify(fb.current.state);
+  render(<MemoryRouter initialEntries={['/vocabulary/history/legacy-food']}><Routes><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes></MemoryRouter>);
+  await userEvent.setup().click(await screen.findByRole('button',{name:'Retry mistakes'}));
+  expect(screen.getAllByRole('textbox')).toHaveLength(rows.length);
+  const draft = JSON.parse(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')!).session;
+  expect(draft.cardIds).toContainEqual({id:'ve-7c70dbbe:editorial:core:fruit-centre:dictation',entryId:'ve-7c70dbbe',senseId:'editorial:core:fruit-centre',mode:'dictation'});
+  expect(JSON.stringify(fb.current.state)).toBe(before);
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+});
+
+test('historical retry uses the frozen non-dictation task and preserves stored history', async () => {
+  const card = getVocabularyReviewQueue(fb.current.state, {mode:'definition',dueOnly:false})[0];
+  card.task = {prompt:'Original money meaning.',acceptedAnswers:['original-answer'],explanation:'Original explanation.'};
+  const frozen = createVocabularySession([card], 'definition', {order:'source'});
+  const row = evaluateVocabularySessionAnswer(card, 'wrong');
+  const record = {...frozen,status:'submitted',results:[row],entryIds:[card.entryId],reviewIds:[],summary:{total:1,correct:0,incorrect:1,pending:0},submittedAt:'2025-01-01'};
+  fb.current.state.vocabularySessions = [record];
+  fb.current.state.vocabulary[0].senses[0].definition = 'Current different sense meaning.';
+  const before = JSON.stringify(fb.current.state);
+  mount(`?sessionId=${record.id}`);
+  const user = userEvent.setup();
+  await user.click(await screen.findByRole('button',{name:'Retry mistakes'}));
+  expect(screen.getByText('Original money meaning.')).toBeInTheDocument();
+  await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'original-answer');
+  await user.click(screen.getByRole('button',{name:'Submit session'}));
+  const submitted = fb.current.persistVocabularySession.mock.calls[0][0];
+  expect(submitted.vocabularySessions[1].results[0]).toMatchObject({result:'success',senseId:card.senseId,expectedAnswer:'original-answer',prompt:'Original money meaning.'});
+  expect(submitted.vocabularySessions[0]).toEqual(record);
+  expect(JSON.stringify(fb.current.state)).toBe(before);
+});
+
+test('historical retry visibly blocks unavailable tasks instead of silently retrying a subset', async () => {
+  const card = getVocabularyReviewQueue(fb.current.state,{mode:'definition',dueOnly:false})[0];
+  const row = evaluateVocabularySessionAnswer(card,'wrong');
+  fb.current.state.vocabularySessions = [{id:'unavailable-retry',mode:'definition',status:'submitted',filter:{},preferences:{},results:[row,{...row,cardId:'removed:lost:synonym',entryId:'removed',senseId:'lost',term:'lost word'}],entryIds:[card.entryId,'removed'],summary:{total:2,correct:0,incorrect:2,pending:0},startedAt:'2025-01-01',submittedAt:'2025-01-01'}];
+  const before = JSON.stringify(fb.current.state);
+  mount('?sessionId=unavailable-retry');
+  await userEvent.setup().click(await screen.findByRole('button',{name:'Retry mistakes'}));
+  expect(screen.getByRole('alert')).toHaveTextContent(/unavailable.*lost word/i);
+  expect(screen.getByRole('table')).toBeInTheDocument();
+  expect(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')).toBeNull();
+  expect(JSON.stringify(fb.current.state)).toBe(before);
 });
