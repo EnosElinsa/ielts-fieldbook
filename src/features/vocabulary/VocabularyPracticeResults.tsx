@@ -51,11 +51,11 @@ export function VocabularyPracticeResults({ controller, results }: {
             {modeLabel(results.mode)} ·{" "}
             {dateLabel(results.submittedAt || results.startedAt)}
           </span>
-          <h3>
+          <h2>
             {results.mode === "audio"
               ? "Listening activity saved"
               : `${results.summary.correct} of ${results.summary.total} correct`}
-          </h3>
+          </h2>
         </div>
         <Check size={26} />
       </div>

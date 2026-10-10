@@ -20,10 +20,10 @@ export function VocabularyPracticePage() {
     <section className="view active vocabulary-view vocabulary-practice-view">
       <VocabularyNavigation />
       <header className="practice-heading">
-        <div>
+        {!results && !session ? <div>
           <span className="eyebrow">Vocabulary</span>
           <h2>{results ? "Session complete" : study ? "Wordbook study" : "Vocabulary review"}</h2>
-        </div>
+        </div> : session ? <div><span className="eyebrow">{study ? 'Wordbook study' : 'Vocabulary review'}</span></div> : null}
         <div className="actions">
           <IconButton
             label="Practice settings"
