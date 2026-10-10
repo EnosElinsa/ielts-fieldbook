@@ -1,10 +1,11 @@
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { VocabularyPracticePage } from "./VocabularyPracticePage";
 import { getVocabularyReviewQueue } from "../../domain/vocabulary";
+import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 
 const { fb, player, owner } = vi.hoisted(() => ({
   fb: { current: null as any },
@@ -65,7 +66,135 @@ beforeEach(() => {
     persistVocabularySession: vi.fn(async () => true),
   };
 });
-afterEach(cleanup);
+const originalCatalog = { books: [...VOCABULARY_CATALOG.books], units: [...VOCABULARY_CATALOG.units], entries: [...VOCABULARY_CATALOG.entries], memberships: [...VOCABULARY_CATALOG.memberships] };
+afterEach(() => { cleanup(); Object.assign(VOCABULARY_CATALOG, originalCatalog); });
+function groupFixture(count: number) {
+  const vocabulary = Array.from({ length: count }, (_, index) => ({
+    ...fb.current.state.vocabulary[0], id: `group-entry-${index}`, term: `word${index}`,
+    senses: [{ ...fb.current.state.vocabulary[0].senses[0], id: `group-sense-${index}` }],
+    sources: [{ type: 'wordbook', id: `source-${index}`, bookId: 'test-book', unitId: 'test-group' }],
+  }));
+  fb.current.state.vocabulary = [...vocabulary].reverse();
+  fb.current.loadVocabularyCatalog = vi.fn(async () => true);
+  VOCABULARY_CATALOG.books = [...originalCatalog.books, { id: 'test-book', title: 'Test book', contentStatus: 'complete' } as any];
+  VOCABULARY_CATALOG.units = [...originalCatalog.units, { id: 'test-chapter', bookId: 'test-book', title: 'Natural geography', kind: 'chapter' }, { id: 'test-group', bookId: 'test-book', title: 'Group 1', parentId: 'test-chapter', kind: 'group', contentStatus: 'complete', totalSourceWords: count } as any];
+  VOCABULARY_CATALOG.entries = [...originalCatalog.entries, ...vocabulary];
+  VOCABULARY_CATALOG.memberships = [...originalCatalog.memberships, ...vocabulary.map((entry, order) => ({ id: `membership-${order}`, entryId: entry.id, bookId: 'test-book', unitId: 'test-group', order })) as any];
+}
+
+test("whole group uses all 55 words in source order and preserves answers across pages and recovery", async () => {
+  const user = userEvent.setup();
+  groupFixture(55);
+  const view = mount('?bookId=test-book&unitId=test-group&dueOnly=false');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
+  expect(screen.queryByRole('button', { name: 'Session size' })).not.toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  expect(screen.getAllByRole('textbox')).toHaveLength(50);
+  await waitFor(() => expect(player.play).toHaveBeenCalledWith(expect.objectContaining({ term: 'word0' }), expect.anything()));
+  await user.click(screen.getByRole('textbox', { name: 'Answer 1' }));
+  await user.paste('river 2');
+  await user.click(screen.getByRole('button', { name: 'Next page' }));
+  expect(screen.getAllByRole('textbox')).toHaveLength(5);
+  await user.click(screen.getByRole('textbox', { name: 'Answer 51' }));
+  await user.paste('word50');
+  await user.click(screen.getByRole('button', { name: 'Exit session' }));
+  await user.click(screen.getByRole('button', { name: 'Keep progress' }));
+  view.unmount();
+  mount('?bookId=test-book&unitId=test-group&dueOnly=false');
+  await user.click(screen.getByRole('button', { name: 'Resume session' }));
+  expect(screen.getByRole('textbox', { name: 'Answer 51' })).toHaveValue('word50');
+  await user.click(screen.getByRole('button', { name: 'Previous page' }));
+  expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('river 2');
+});
+
+test("235-word group submits one frozen full-group attempt beyond the old cap", async () => {
+  const user = userEvent.setup();
+  groupFixture(235);
+  mount('?bookId=test-book&unitId=test-group&dueOnly=false');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
+  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(screen.getByRole('button', { name: 'Submit session' }));
+  await user.click(screen.getByRole('button', { name: 'Submit anyway' }));
+  expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1);
+  const [prepared] = fb.current.persistVocabularySession.mock.calls[0];
+  expect(prepared.vocabularyReviews).toHaveLength(235);
+  expect(prepared.vocabularySessions[0].selection).toEqual({ kind: 'unit', bookId: 'test-book', unitId: 'test-group' });
+});
+
+test("dictation shortcuts navigate without stealing answer text and pause with Escape", async () => {
+  const user = userEvent.setup();
+  mount();
+  await user.click(screen.getByRole("button", { name: "Start session" }));
+  const first = screen.getByRole("textbox", { name: "Answer 1" });
+  await user.type(first, "river 2");
+  expect(first).toHaveValue("river 2");
+  fireEvent.keyDown(first, { key: "ArrowDown" });
+  await waitFor(() => expect(screen.getByRole("textbox", { name: "Answer 2" })).toHaveFocus());
+  const second = screen.getByRole("textbox", { name: "Answer 2" });
+  player.play.mockClear();
+  fireEvent.keyDown(second, { key: "Enter", ctrlKey: true });
+  await waitFor(() => expect(player.play).toHaveBeenCalled());
+  expect(second).toHaveFocus();
+  fireEvent.keyDown(second, { key: "ArrowUp", isComposing: true });
+  expect(second).toHaveFocus();
+  fireEvent.keyDown(second, { key: "Escape" });
+  expect(screen.getByRole("dialog")).toHaveTextContent("Keep");
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+});
+
+test("production textarea retains multiline editing on Enter and arrows", async () => {
+  const user = userEvent.setup();
+  mount("?mode=production");
+  await user.click(screen.getByRole("button", { name: "Start session" }));
+  const first = screen.getByRole("textbox", { name: "Answer 1" });
+  await user.type(first, "A river.{enter}Second line");
+  expect(first).toHaveValue("A river.\nSecond line");
+  fireEvent.keyDown(first, { key: "ArrowDown" });
+  expect(first).toHaveFocus();
+});
+
+test("self-review selects retain their native arrow-key interaction", async () => {
+  const user = userEvent.setup();
+  mount('?mode=production');
+  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.type(screen.getByRole('textbox', { name: 'Answer 1' }), 'A resilient community.');
+  const rating = screen.getByRole('combobox', { name: 'Self review 1' });
+  rating.focus();
+  const prevented = !fireEvent.keyDown(rating, { key: 'ArrowDown', cancelable: true });
+  expect(prevented).toBe(false);
+  await waitFor(() => expect(rating).toHaveFocus());
+});
+
+test("distinction choice focus targets the correct word and preserves radio navigation", async () => {
+  const user = userEvent.setup();
+  fb.current.state.vocabulary.forEach((entry: any) => { entry.senses[0].distinctionTask = { prompt: 'Choose a synonym', options: ['A', 'B'], answer: 'A', explanation: 'A is correct.' }; });
+  mount('?mode=distinction');
+  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  const radio = screen.getAllByRole('radio')[2];
+  await user.click(radio);
+  expect(fireEvent.keyDown(radio, { key: 'ArrowDown', cancelable: true })).toBe(true);
+  player.play.mockClear();
+  fireEvent.keyDown(radio, { key: 'Enter', ctrlKey: true });
+  await waitFor(() => expect(player.play).toHaveBeenLastCalledWith(expect.objectContaining({ term: 'sustainable' }), expect.anything()));
+});
+
+test("result filters preserve marked rows and mistake retry ignores the review batch size", async () => {
+  const user = userEvent.setup();
+  fb.current.state.settings.vocabulary = { sessionSize: 1 };
+  groupFixture(55);
+  mount('?bookId=test-book&unitId=test-group&dueOnly=false');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
+  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(screen.getByRole('button', { name: 'Flag word 1' }));
+  await user.click(screen.getByRole('button', { name: 'Submit session' }));
+  await user.click(screen.getByRole('button', { name: 'Submit anyway' }));
+  await user.click(screen.getByRole('button', { name: 'Result filter' }));
+  await user.click(screen.getByRole('option', { name: 'Flagged' }));
+  expect(screen.getAllByRole('row')).toHaveLength(2);
+  await user.click(screen.getByRole('button', { name: 'Retry mistakes' }));
+  expect(screen.getAllByRole('textbox')).toHaveLength(50);
+  expect(screen.getByText('1–50 of 55')).toBeInTheDocument();
+});
 function mount(query = "") {
   return render(
     <MemoryRouter initialEntries={[`/vocabulary/review${query}`]}>
