@@ -9,9 +9,7 @@ import {
   Pencil,
   Plus,
   RotateCcw,
-  Trash2,
   Upload,
-  Volume2,
 } from "lucide-react";
 import { useFieldbook } from "../../context/FieldbookContext";
 import { Empty, FilterMenu } from "../../components/ui";
@@ -26,11 +24,12 @@ import {
   setVocabularyManualStatus,
 } from "../../domain/vocabulary";
 import { accountId } from '../../storage/remote';
-import { reviewedEntry } from "../../domain/vocabulary/content";
+import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
+import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
+import { Pronunciation } from './Pronunciation';
 import { vocabularyGroupProgress } from "../../domain/vocabulary/progress";
 import "../../styles/vocabulary.css";
 import "../../styles/vocabulary-workbench.css";
-import { DictionarySenses } from './DictionarySenses';
 import { isRegionalSpellingDifference } from '../../domain/vocabulary/spelling';
 
 const STATUS = [
@@ -154,11 +153,6 @@ function editEntry(fb, entry = null) {
   fb.setVocabularySeed(entry || {});
   fb.openModal("vocabulary");
 }
-function sourceLabel(source) {
-  return source.type === "wordbook"
-    ? books().find((book) => book.id === source.bookId)?.title || "Wordbook"
-    : label(source.type || "personal");
-}
 function dateLabel(value) {
   return value && !Number.isNaN(new Date(value).getTime())
     ? new Date(value).toLocaleDateString("en-GB", {
@@ -217,17 +211,6 @@ function VocabularyStats({ values }) {
         </div>
       ))}
     </dl>
-  );
-}
-function Sources({ entry }) {
-  return (
-    <div className="vocabulary-sources">
-      {(entry.sources || []).map((source, index) => (
-        <span className="pill" key={`${source.type}:${source.id}:${index}`}>
-          {sourceLabel(source)}
-        </span>
-      ))}
-    </div>
   );
 }
 function SelectField({ label: title, value, onChange, options }) {
@@ -463,11 +446,9 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
                     {entry.term}
                   </Link>
                   <p>
-                    {entry.senses?.[0]?.definition ||
-                      entry.meaning ||
-                      "Definition pending"}
+                    {resolveVocabularyLearningContext(entry).sense?.definition || 'Definition not available yet'}
                   </p>
-                  <Sources entry={entry} />
+                  <Pronunciation compact entry={entry} accent={normalizeVocabularyPreferences(fb.state.settings?.vocabulary).accent} />
                 </div>
                 <div className="vocabulary-row-meta">
                   <span
@@ -595,12 +576,12 @@ export function VocabularyWordbooksPage() {
   const groupRow = (unit) => {
     const studied = groupStudied(fb.state, unit);
     const mastered = unit.studyEntryIds.filter(id => statusOf(fb.state, id) === "mastered").length;
-    return <article className="vocabulary-study-group" key={unit.id}>
+    return <article className="vocabulary-study-group" key={unit.id} id={`group-${unit.id}`}>
       <div><h4>{unit.title}</h4><p className="vocabulary-group-path">{unitPath(book, unit, study.hierarchy)}</p>
         {unit.entryIds.length ? <><p>{unit.entryIds.length} words · {unit.studyEntryIds.length ? `${vocabularyGroupProgress(fb.state, unit)} · ${mastered} mastered` : "Archived · Excluded from study"}</p>{unit.archivedCount && unit.studyEntryIds.length ? <p className="vocabulary-muted">{unit.archivedCount} archived {unit.archivedCount === 1 ? "word" : "words"} excluded from study</p> : null}</>
           : <p className="vocabulary-muted">{unit.totalSourceWords ? `${unit.totalSourceWords} source words | ` : ""}Content pending</p>}
       </div>
-      {unit.studyEntryIds.length && enrolled(book.id) ? <Link className="btn line" to={studyLink(unit)} aria-label={`${studied ? "Restudy" : "Study"} group: ${unitPath(book, unit, study.hierarchy)}`}>{studied ? "Restudy group" : "Study group"}<ArrowRight size={15} /></Link> : null}
+      <div className="actions"><Link className="btn line" to={`/vocabulary/wordbooks/${encodeURIComponent(book.id)}/groups/${encodeURIComponent(unit.id)}/words`}>View words</Link>{unit.studyEntryIds.length && enrolled(book.id) ? <Link className="btn line" to={studyLink(unit)} aria-label={`${studied ? "Restudy" : "Study"} group: ${unitPath(book, unit, study.hierarchy)}`}>{studied ? "Restudy group" : "Study group"}<ArrowRight size={15} /></Link> : null}</div>
     </article>;
   };
   const chapter = (unit) => {
@@ -654,282 +635,7 @@ export function VocabularyWordbooksPage() {
   </VocabularyLayout>;
 }
 
-function speechEngine() {
-  let audio = null;
-  let stop = null;
-  let generation = 0;
-  const cancel = () => {
-    generation++;
-    if (audio) {
-      audio.pause();
-      audio.src = "";
-      audio = null;
-    }
-    window.speechSynthesis?.cancel();
-    if (stop) {
-      stop();
-      stop = null;
-    }
-  };
-  const speak = (entry, accent = "uk", example = false) =>
-    new Promise((resolve) => {
-      cancel();
-      const current = generation;
-      let settled = false;
-      const finish = (success = true) => {
-        if (!settled) {
-          settled = true;
-          stop = null;
-          resolve(success && current === generation);
-        }
-      };
-      stop = () => {
-        settled = true;
-        resolve(false);
-      };
-      const text = example
-        ? entry.senses?.[0]?.example || entry.example
-        : entry.term;
-      if (!text) {
-        finish();
-        return;
-      }
-      const fallback = () => {
-        if (current !== generation) return;
-        if (
-          !window.speechSynthesis ||
-          typeof SpeechSynthesisUtterance === "undefined"
-        ) {
-          finish(false);
-          return;
-        }
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = accent === "us" ? "en-US" : "en-GB";
-        utterance.voice =
-          window.speechSynthesis
-            .getVoices()
-            .find(
-              (voice) =>
-                voice.lang.toLowerCase() === utterance.lang.toLowerCase(),
-            ) || null;
-        utterance.onend = () => finish();
-        utterance.onerror = () => finish(false);
-        window.speechSynthesis.speak(utterance);
-      };
-      const url = !example && entry.pronunciation?.[accent];
-      if (typeof url === "string" && /^https?:\/\//.test(url)) {
-        audio = new Audio(url);
-        audio.onended = () => finish();
-        audio.onerror = fallback;
-        audio.play().catch(fallback);
-      } else fallback();
-    });
-  return { cancel, speak };
-}
-
-export function VocabularyEntryPage() {
-  const fb = useFieldbook();
-  const [params] = useSearchParams();
-  const requestedReturn = params.get('returnTo');
-  const returnTo = requestedReturn && /^\/vocabulary(?:\/(?:review|study|words|wrong|history|wordbooks)(?:\/[^?]*)?)?(?:\?|$)/.test(requestedReturn) && !/[\r\n\\]/.test(requestedReturn) ? requestedReturn : '/vocabulary';
-  const returnLabel = returnTo === '/vocabulary' ? 'My vocabulary' : /^\/vocabulary\/(review|study|history)/.test(returnTo) ? 'Back to session word list' : 'Back to vocabulary';
-  const { id, entryId } = useParams();
-  const rawEntry =
-    (fb.state.vocabulary || []).find((item) => item.id === (id || entryId)) ||
-    (VOCABULARY_CATALOG.entries || []).find(
-      (item) => item.id === (id || entryId),
-    );
-  const entry = rawEntry ? reviewedEntry(rawEntry) : null;
-  const engine = useRef(null);
-  if (!engine.current) engine.current = speechEngine();
-  const [accent, setAccent] = useState("uk");
-  useEffect(() => () => engine.current.cancel(), []);
-  if (!entry)
-    return (
-      <VocabularyLayout>
-        <Empty message="Vocabulary entry not found." />
-        <Link to={returnTo} className="btn line">
-          <ArrowLeft size={15} />
-          {returnLabel}
-        </Link>
-      </VocabularyLayout>
-    );
-  const changeStatus = async (status, senseId) => {
-    const draft = structuredClone(fb.stateRef.current);
-    setVocabularyManualStatus(draft, entry.id, status, senseId);
-    if (await fb.persistNow(draft)) fb.toast("Familiarity updated.");
-  };
-  return (
-    <VocabularyLayout>
-      <Link to={returnTo} className="btn text">
-        <ArrowLeft size={15} />
-        {returnLabel}
-      </Link>
-      <div className="page-tools">
-        <div>
-          <h2>{entry.term}</h2>
-          {entry.pronunciation?.ipa ? <p>{entry.pronunciation.ipa}</p> : null}
-        </div>
-        <div className="actions">
-          <SelectField
-            label="Pronunciation accent"
-            value={accent}
-            onChange={setAccent}
-            options={[
-              { value: "uk", label: "UK" },
-              { value: "us", label: "US" },
-            ]}
-          />
-          <button
-            type="button"
-            className="icon-button"
-            aria-label="Play pronunciation"
-            title="Play pronunciation"
-            onClick={() => engine.current.speak(entry, accent)}
-          >
-            <Volume2 size={18} />
-          </button>
-          <button
-            type="button"
-            className="btn line"
-            onClick={() => editEntry(fb, entry)}
-          >
-            <Pencil size={16} />
-            Edit
-          </button>
-          <button
-            type="button"
-            className="icon-button"
-            aria-label="Archive vocabulary"
-            title="Archive vocabulary"
-            onClick={async () => {
-              if (!window.confirm(`Archive ${entry.term}?`)) return;
-              const draft = structuredClone(fb.stateRef.current);
-              removeVocabularyItem(draft, entry.id);
-              if (await fb.persistNow(draft)) fb.toast("Vocabulary archived.");
-            }}
-          >
-            <Trash2 size={16} />
-          </button>
-        </div>
-      </div>
-      <p className="vocabulary-muted">
-        {entry.pronunciation?.[accent]
-          ? `${accent.toUpperCase()} audio, with browser speech fallback`
-          : `${accent.toUpperCase()} browser speech`}
-      </p>
-      <div className="vocabulary-entry-practice"><Link className="btn primary" to={`/vocabulary/review?returnTo=${encodeURIComponent(returnTo)}&entryId=${encodeURIComponent(entry.id)}&dueOnly=false`}>Practise this word<ArrowRight size={16} /></Link>{entry.enrichmentPending ? <span className="vocabulary-muted">Definition enrichment pending</span> : null}</div>
-      {(entry.senses?.length
-        ? entry.senses
-        : [{ id: "", definition: entry.meaning, example: entry.example }]
-      ).map((sense, index) => {
-        const state = learning(fb.state, entry.id).find(
-          (item) => item.senseId === sense.id,
-        );
-        return (
-          <section className="vocabulary-sense" key={sense.id || index}>
-            <div className="vocabulary-sense-head">
-              <h3>
-                Sense {index + 1}
-                {sense.pos ? ` | ${sense.pos}` : ""}
-              </h3>
-              <SelectField
-                label={`Familiarity for sense ${index + 1}`}
-                value={state?.manualStatus || "new"}
-                onChange={(value) => changeStatus(value, sense.id)}
-                options={STATUS.map((value) => ({
-                  value,
-                  label: label(value),
-                }))}
-              />
-            </div>
-            <p className="vocabulary-definition">
-              {sense.definition || "Definition pending"}
-            </p>
-            {sense.example ? <blockquote>{sense.example}</blockquote> : null}
-            {[
-              "collocations",
-              "usage",
-              "synonyms",
-              "antonyms",
-              "distinctions",
-              "wordFamily",
-              "register",
-            ].map((key) =>
-              sense[key]?.length ? (
-                <div className="vocabulary-detail" key={key}>
-                  <h4>{label(key)}</h4>
-                  <p>
-                    {Array.isArray(sense[key])
-                      ? sense[key]
-                          .map((value) =>
-                            typeof value === "string"
-                              ? value
-                              : value.term ||
-                                value.description ||
-                                JSON.stringify(value),
-                          )
-                          .join("; ")
-                      : String(sense[key])}
-                  </p>
-                </div>
-              ) : null,
-            )}
-            <details className="vocabulary-secondary"><summary>Learning evidence for sense {index + 1}</summary>
-            <div className="vocabulary-dimensions">
-              {DIMENSIONS.map((dimension) => (
-                <div key={dimension}>
-                  <strong>{label(dimension)}</strong>
-                  <span>
-                    {state?.dimensions?.[dimension]?.successes || 0} successes /{" "}
-                    {state?.dimensions?.[dimension]?.failures || 0} failures
-                  </span>
-                  <small>
-                    {state?.dimensions?.[dimension]?.nextReviewAt
-                      ? `Review ${dateLabel(state.dimensions[dimension].nextReviewAt)}`
-                      : "Not reviewed"}
-                  </small>
-                </div>
-              ))}
-            </div>
-            {state?.wrong?.active ? (
-              <p className="vocabulary-error">
-                Active wrong word | {state.wrong.successesSinceFailure || 0}{" "}
-                recovery successes
-              </p>
-            ) : null}
-            </details>
-            {sense.source || sense.license ? (
-              <p className="vocabulary-muted">
-                {sense.source}
-                {sense.license ? ` | ${sense.license}` : ""}
-                {sense.attribution ? ` | ${sense.attribution}` : ""}
-              </p>
-            ) : null}
-          </section>
-        );
-      })}
-      <DictionarySenses entry={entry} />
-      <details className="vocabulary-secondary"><summary>Review history</summary>
-      {(fb.state.vocabularyReviews || []).filter(review=>review.entryId===entry.id && review.imported).length ? <section className="vocabulary-evidence"><h4>Dictation history</h4>{(fb.state.vocabularyReviews || []).filter(review=>review.entryId===entry.id && review.imported).slice(-30).reverse().map(review=><div key={review.id}><span>{review.sourceLabel || 'Dictation'}</span><span>{review.mode === 'dictation' && review.result === 'failure' && isRegionalSpellingDifference(entry.term, review.response) ? 'UK/US spelling accepted' : label(review.result)}</span><p>{review.response || 'No answer recorded'}</p><small>{review.occurredAt ? dateLabel(review.occurredAt) : 'Date unavailable'}</small></div>)}</section> : null}
-      <div className="vocabulary-evidence">
-        {(fb.state.vocabularyEvidence || [])
-          .filter((item) => item.entryId === entry.id)
-          .slice(-10)
-          .reverse()
-          .map((item) => (
-            <div key={item.id}>
-              <span>{label(item.mode || item.dimension || "Usage")}</span>
-              <span>{label(item.verification || item.result)}</span>
-              {item.response ? <p>{item.response}</p> : null}
-              <small>{dateLabel(item.occurredAt)}</small>
-            </div>
-          ))}
-      </div>
-      </details>
-    </VocabularyLayout>
-  );
-}
+export { VocabularyEntryPage } from './VocabularyEntryPage';
 
 export function VocabularyWrongPage() {
   const fb = useFieldbook();
@@ -1044,7 +750,7 @@ export function VocabularyWrongPage() {
                     {entry.senses?.find((sense) => sense.id === state.senseId)
                       ?.definition || entry.meaning}
                   </p>
-                  <Sources entry={entry} />
+                  <Pronunciation compact entry={entry} accent={normalizeVocabularyPreferences(fb.state.settings?.vocabulary).accent} />
                   <span className="vocabulary-muted">
                     Last failure {dateLabel(state.wrong?.lastFailureAt)} |{" "}
                     {state.wrong?.successesSinceFailure || 0} recovery successes

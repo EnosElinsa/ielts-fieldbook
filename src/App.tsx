@@ -18,6 +18,7 @@ const VocabularyWordsPage = lazy(() => import('./features/vocabulary/VocabularyP
 const VocabularyWordbooksPage = lazy(() => import('./features/vocabulary/VocabularyPages').then(module => ({ default: module.VocabularyWordbooksPage })));
 const VocabularyHistoryPage = lazy(() => import('./features/vocabulary/VocabularyPages').then(module => ({ default: module.VocabularyHistoryPage })));
 const VocabularyEntryPage = lazy(() => import('./features/vocabulary/VocabularyPages').then(module => ({ default: module.VocabularyEntryPage })));
+const VocabularyGroupWordsPage = lazy(() => import('./features/vocabulary/VocabularyGroupWordsPage').then(module => ({ default: module.VocabularyGroupWordsPage })));
 const VocabularyReviewPage = lazy(() => import('./features/vocabulary/VocabularyPracticePage').then(module => ({ default: module.VocabularyPracticePage })));
 
 function LegacyWrongWordsRedirect() {
@@ -43,6 +44,7 @@ export function AppRoutes() {
           <Route path="vocabulary/words" element={<VocabularyWordsPage />} />
           <Route path="vocabulary/wordbooks" element={<VocabularyWordbooksPage />} />
           <Route path="vocabulary/wordbooks/:bookId" element={<VocabularyWordbooksPage />} />
+          <Route path="vocabulary/wordbooks/:bookId/groups/:unitId/words" element={<VocabularyGroupWordsPage />} />
           <Route path="vocabulary/history" element={<VocabularyHistoryPage />} />
           <Route path="vocabulary/history/:sessionId" element={<VocabularyReviewPage />} />
           <Route path="vocabulary/entry/:id" element={<VocabularyEntryPage />} />

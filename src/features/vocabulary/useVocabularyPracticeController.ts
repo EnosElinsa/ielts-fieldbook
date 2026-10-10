@@ -10,6 +10,8 @@ import { buildVocabularySessionCommit, createVocabularySession, evaluateVocabula
 import { getLearnedVocabularyIds, vocabularyGroupProgress } from "../../domain/vocabulary/progress";
 import { buildUnitPracticeQueue } from "../../domain/vocabulary/selection";
 import { createVocabularyPlayback } from "./playback";
+import { playbackMessage } from "./Pronunciation";
+import { safeVocabularyReturn } from "./vocabularyNavigation";
 import { practiceKeyboard } from "./practiceKeyboard";
 import { presentVocabularySession } from '../../domain/vocabulary/sessionPresentation';
 import { MODES, senseFor } from "./practicePresentation";
@@ -193,7 +195,7 @@ export function useVocabularyPracticeController() {
         ...(params.get("entryId") ? { entryId: params.get("entryId")! } : {}),
         ...(params.get("senseId") ? { senseId: params.get("senseId")! } : {}),
         ...(bookId !== "all" ? { bookId } : {}),
-        ...(study && unitId !== "all" ? { unitId } : {}),
+        ...((study || params.has("entryId")) && unitId !== "all" ? { unitId } : {}),
         ...(study && sourceType !== "all" ? { sourceType } : {}),
         ...(study && skill !== "all" ? { skill } : {}),
         ...(dimension !== "all" && mode !== "audio" ? { dimension } : {}),
@@ -211,13 +213,19 @@ export function useVocabularyPracticeController() {
       dueOnly,
     ],
   );
+  const explicitEntry = Boolean(params.get("entryId"));
   const unitQueue = useMemo(() => study ? buildUnitPracticeQueue(fb.state, bookId, unitId, mode) : null, [study, fb.state, bookId, unitId, mode, catalogStatus]);
   const queue = useMemo(() => {
     if (unitQueue) return unitQueue.cards;
     const learned = getLearnedVocabularyIds(fb.state);
-    let available = getVocabularyReviewQueue(fb.state, filter).filter(
+    const explicit = Boolean(filter.entryId);
+    const raw = explicit ? ((fb.state.vocabulary as VocabularyEntry[]) || []).find(entry => entry.id === filter.entryId) || (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).find(entry => entry.id === filter.entryId) : undefined;
+    const member = raw && filter.bookId && filter.unitId && VOCABULARY_CATALOG.memberships.some(item => item.entryId === raw.id && item.bookId === filter.bookId && item.unitId === filter.unitId);
+    const virtualEntry = raw && member && !raw.sources.some(source => source.bookId === filter.bookId && source.unitId === filter.unitId) ? { ...raw, sources: [...raw.sources, { type: 'wordbook' as const, id: `${filter.bookId}:${filter.unitId}:${raw.id}`, bookId: filter.bookId, unitId: filter.unitId }] } : raw;
+    const queueState = explicit && virtualEntry ? { ...fb.state, vocabulary: [virtualEntry] } : fb.state;
+    let available = getVocabularyReviewQueue(queueState, filter).filter(
       (card) =>
-        learned.has(card.entryId) && (!wrongOnly ||
+        (explicit || learned.has(card.entryId)) && (!wrongOnly ||
         ((fb.state.vocabularyStates as VocabularyState[]) || []).some(
           (item) =>
             item.entryId === card.entryId &&
@@ -242,7 +250,7 @@ export function useVocabularyPracticeController() {
         ...new Map(available.map((card) => [card.entryId, card])).values(),
       ];
     return available;
-  }, [fb.state, filter, wrongOnly, mode, preferences.order, unitQueue]);
+  }, [fb.state, filter, wrongOnly, mode, preferences.order, unitQueue, catalogStatus]);
   const books = VOCABULARY_CATALOG.books || [];
   const units = (VOCABULARY_CATALOG.units || []).filter(
     (unit) => bookId === "all" || unit.bookId === bookId,
@@ -288,7 +296,11 @@ export function useVocabularyPracticeController() {
     const id = historySessionId || params.get('sessionId');
     if (!id) { setResults(null); return; }
     const record = ((fb.state.vocabularySessions || []) as SessionLog[]).find(record => record.id === id);
-    if (record) { setResults(presentVocabularySession(record)); setCards([]); setError(''); }
+    if (record) {
+      setResults(presentVocabularySession(record)); setCards([]); setError('');
+      const sourceBook = record.selection && (record.selection.kind === 'unit' || record.selection.kind === 'specialist') ? record.selection.bookId : record.filter?.bookId;
+      if (sourceBook && sourceBook !== 'all') void fb.loadVocabularyCatalog?.(sourceBook).catch(() => { /* historical view remains available from frozen rows */ });
+    }
     else if (fb.booted) { setResults(null); setError('This saved session is unavailable for this account.'); }
   }, [historySessionId, params.get('sessionId'), fb.state.vocabularySessions, fb.booted]);
 
@@ -348,13 +360,11 @@ export function useVocabularyPracticeController() {
               outcome.reason === "click-blocked" ||
               outcome.reason === "clickBlocked"
             ? "Select Play to enable audio"
-            : "Audio unavailable. Select Play to try again.",
+            : playbackMessage(outcome),
       );
       return false;
     }
-    setAudioStatus(
-      outcome.source === "speech" ? "Browser voice" : "Recorded pronunciation",
-    );
+    setAudioStatus(playbackMessage(outcome));
     if (sessionRef.current?.mode === "audio") {
       const next = updateVocabularySessionAnswer(
         sessionRef.current,
@@ -776,7 +786,7 @@ export function useVocabularyPracticeController() {
     setError("");
     setAudioStatus("");
     if (target) { target.proceed(); return; }
-    const origin = params.get("returnTo"); if (origin && /^\/vocabulary(?:\/|\?|$)/.test(origin) && !/[\r\n\\]/.test(origin)) navigate(origin);
+    const origin = params.get("returnTo"); if (origin) navigate(safeVocabularyReturn(origin));
   }
   function resetResults() {
     stopAudio();
@@ -786,7 +796,7 @@ export function useVocabularyPracticeController() {
     const next = new URLSearchParams(params);
     next.delete('sessionId'); next.delete('resultFilter');
     const origin = params.get("returnTo");
-    if (origin && /^\/vocabulary(?:\/|\?|$)/.test(origin) && !/[\r\n\\]/.test(origin)) navigate(origin);
+    if (origin) navigate(safeVocabularyReturn(origin));
     else if (historySessionId) navigate(`/vocabulary/review?${next}`, {replace:true}); else setParams(next, { replace: true });
   }
   function discardResume() {
@@ -856,7 +866,7 @@ export function useVocabularyPracticeController() {
   }
 
   return {
-    state: fb.state, study, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit,
+    state: fb.state, study, explicitEntry, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit,
     sourceType, setSource, skill, setSkill, dimension, setDimension,
     dueOnly, setDue, wrongOnly, setWrong, session, cards, resume, results,
     settingsOpen, setSettingsOpen, exitOpen, setExitOpen, incompleteOpen, setIncompleteOpen,
