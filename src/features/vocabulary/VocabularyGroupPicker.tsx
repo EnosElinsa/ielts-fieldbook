@@ -15,7 +15,7 @@ export function VocabularyGroupPicker({ state, bookId, currentUnitId, onSelect, 
   const groups = units.filter(unit => unit.kind !== 'chapter' && !units.some(child => child.parentId === unit.id));
   const within = (group, id) => { let current = group; const seen = new Set(); while (current && !seen.has(current.id)) { if (current.id === id) return true; seen.add(current.id); current = units.find(unit => unit.id === current.parentId); } return false; };
   const path = group => { const titles = [group.title]; let parent = group.parentId; const seen = new Set(); while (parent && !seen.has(parent)) { seen.add(parent); const unit = units.find(unit => unit.id === parent); if (!unit) break; titles.unshift(unit.title); parent = unit.parentId; } return [book?.title, ...titles].filter(Boolean).join(' / '); };
-  useEffect(() => { const previous = document.activeElement; dialog.current?.showModal?.(); return () => previous?.focus?.(); }, []);
+  useEffect(() => { const previous = document.activeElement; dialog.current?.showModal?.(); requestAnimationFrame(() => dialog.current?.querySelector('[aria-current=true]')?.scrollIntoView?.({block:'nearest'})); return () => previous?.focus?.(); }, []);
   const shown = groups.filter(group => (search.trim() || !chapterId || chapterId === '*' || within(group, chapterId)) && path(group).toLowerCase().includes(search.toLowerCase().trim()));
   return <dialog className="vocabulary-group-picker" ref={dialog} aria-labelledby="group-picker-title" onCancel={event => { event.preventDefault(); onClose(); }}>
     <header><div><h2 id="group-picker-title">Choose a group</h2><p>{book?.title}</p></div><button className="btn line" type="button" onClick={onClose}>Close</button></header>
