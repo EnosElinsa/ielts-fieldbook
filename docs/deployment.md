@@ -10,6 +10,7 @@ Browser builds use `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. Administrat
 
 1. Back up affected personal tables and the current public catalogue into gitignored `local/`.
 2. Apply the timestamped SQL migrations in one transaction. Verify tables, policies and RPCs before frontend deployment.
+   Register applied versions in `supabase_migrations.schema_migrations` when migrations are executed through the database management API. An empty history causes the Supabase GitHub integration to recreate existing tables. Verify each migration's objects before registering it; never mark an unexecuted migration as applied.
 3. Seed the public question/vocabulary catalogue. Never publish personal source snapshots or answer history.
 4. Import personal vocabulary through `commit_vocabulary_import` as the destination account. The batch ID makes retries idempotent and every row is committed in one transaction.
 5. Commit reviewed source changes, merge to `master` and push.
