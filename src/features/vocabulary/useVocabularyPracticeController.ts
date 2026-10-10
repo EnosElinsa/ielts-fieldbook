@@ -48,6 +48,7 @@ export function useVocabularyPracticeController() {
   const [exitOpen, setExitOpen] = useState(false);
   const [incompleteOpen, setIncompleteOpen] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [recovering, setRecovering] = useState(false);
   const [error, setError] = useState("");
   const [audioStatus, setAudioStatus] = useState("");
   const [audioBusy, setAudioBusy] = useState(false);
@@ -62,6 +63,7 @@ export function useVocabularyPracticeController() {
   const preferencesRef = useRef(preferences);
   const pendingCommit = useRef<Prepared | null>(null);
   const savingRef = useRef(false);
+  const recoveringRef = useRef(false);
   const audioGeneration = useRef(0);
   const loopGeneration = useRef(0);
   const loopGap = useRef<{ timer: number; resolve: () => void } | null>(null);
@@ -446,11 +448,26 @@ export function useVocabularyPracticeController() {
     if (chosenMode === "audio" && chosenPreferences.autoPlay) void runAudioLoop(0);
     requestAnimationFrame(() => answerFields.current[0]?.focus());
   }
-  function recover() {
-    if (!resume || !owned()) return;
+  async function recover() {
+    if (!resume || !owned() || recoveringRef.current) return;
+    const recoveryOwner = owner.current;
+    recoveringRef.current = true;
+    setRecovering(true);
+    setError('');
+    try {
+    if (resume.selection?.kind === 'unit') {
+      try {
+        await fb.loadVocabularyCatalog?.(resume.selection.bookId);
+      } catch {
+        if (owned() && recoveryOwner === accountId()) setError('The saved wordbook could not be loaded. Your answers are still here. Retry resuming when the connection is available.');
+        return;
+      }
+      if (!owned() || recoveryOwner !== accountId()) return;
+    }
+    const recoveryState = fb.stateRef.current;
     const all = resume.selection?.kind === 'unit'
-      ? buildUnitPracticeQueue(fb.state, resume.selection.bookId, resume.selection.unitId, resume.mode).cards
-      : getVocabularyReviewQueue(fb.state, {
+      ? buildUnitPracticeQueue(recoveryState, resume.selection.bookId, resume.selection.unitId, resume.mode).cards
+      : getVocabularyReviewQueue(recoveryState, {
       mode:
         resume.mode === "audio" ? "dictation" : (resume.mode as VocabularyMode),
       dueOnly: false,
@@ -461,7 +478,7 @@ export function useVocabularyPracticeController() {
           all.find((card) => card.id === identity.id) ||
           (() => {
             const entry = (
-              (fb.state.vocabulary as VocabularyEntry[]) || []
+              (recoveryState.vocabulary as VocabularyEntry[]) || []
             ).find((item) => item.id === identity.entryId);
             return entry &&
               !entry.tags.includes("archived") &&
@@ -514,6 +531,10 @@ export function useVocabularyPracticeController() {
     );
     replaceSession(next);
     requestAnimationFrame(() => answerFields.current[next.index]?.focus());
+    } finally {
+      recoveringRef.current = false;
+      if (mounted.current) setRecovering(false);
+    }
   }
   function updateAnswer(index: number, response: string) {
     if (locked || !sessionRef.current || !owned()) return;
@@ -787,7 +808,7 @@ export function useVocabularyPracticeController() {
     sourceType, setSource, skill, setSkill, dimension, setDimension,
     dueOnly, setDue, wrongOnly, setWrong, session, cards, resume, results,
     settingsOpen, setSettingsOpen, exitOpen, setExitOpen, incompleteOpen, setIncompleteOpen,
-    saving, error, audioStatus, audioBusy, looping, storageError, catalogStatus,
+    saving, recovering, error, audioStatus, audioBusy, looping, storageError, catalogStatus,
     resultFilter, setResultFilter, queue, unitQueue, books, units, selectedUnit,
     selectedBook, chapter, catalogReady, leafUnits, studyReady, answered, flagged,
     count, locked, currentIndex, pageStart, visibleCards, resultRows, nextGroup, recent,
