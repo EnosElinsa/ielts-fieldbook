@@ -5,13 +5,19 @@ import json,re,html,urllib.parse,urllib.request,urllib.error,time,argparse
 from pathlib import Path
 from collections import Counter
 ROOT=Path(__file__).resolve().parents[1]
-VERSION='media-2026-10-10.1'
+VERSION='media-2026-10-11.2'
 def read(p):return json.loads((ROOT/p).read_text(encoding='utf8'))
 def clean(v):return re.sub(r'\s+',' ',re.sub(r'<[^>]+>','',html.unescape(v or ''))).strip()
 def file_title(url):
  parts=urllib.parse.unquote(urllib.parse.urlsplit(url).path).split('/')
  return 'File:'+(parts[-2] if 'transcoded' in parts else parts[-1]).replace('_',' ')
-def bare(url):return urllib.parse.urlsplit(url)._replace(query='',fragment='').geturl()
+def bare(url):
+ parts=urllib.parse.urlsplit(url)
+ def keep(parameter):
+  name=urllib.parse.unquote_plus(parameter.split('=',1)[0]).lower()
+  return not name.startswith('utm_') and name not in ['fbclid','gclid','dclid','msclkid','_ga','_gl','mc_cid','mc_eid']
+ query='&'.join(parameter for parameter in parts.query.split('&') if keep(parameter))
+ return parts._replace(query=query,fragment='').geturl()
 def target(title,meta):
  cats=clean(meta.get('Categories',{}).get('value','')).lower()
  regions=[a for a,c in [('uk','british english pronunciation'),('us','u.s. english pronunciation'),('other','australian english pronunciation'),('other','canadian english pronunciation'),('other','new zealand english pronunciation')] if c in cats]
@@ -49,7 +55,7 @@ def run(probe=False):
    except Exception as error:http[original]={'error':type(error).__name__,'availability':'network-unverified'}
    probe_path.write_text(json.dumps(http,indent=2),encoding='utf8');time.sleep(4.5)
   availability=http.get(original,{}).get('availability',availability)
-  r={'url':original,'title':title,'accent':accent,'status':status,'availability':availability,'reason':reason,'author':author,'license':license,'licenseUrl':license_url,'sourceUrl':source,'changes':'Original Commons recording; no media edits.','wordformConfirmed':matches}
+  r={'url':original,'aliases':[bare(url)] if requested else [],'title':title,'accent':accent,'status':status,'availability':availability,'reason':reason,'author':author,'license':license,'licenseUrl':license_url,'sourceUrl':source,'changes':'Original Commons recording; no media edits.','wordformConfirmed':matches}
   if requested:r['legacyAccent']=requested
   rows.append({'entryId':e['id'],'term':e['term'],**r,'supplement':supplement,'metadataPresent':bool(page),'wordformConfirmed':matches,'mime':mime or 'unknown','listeningReviewed':False});return r
  probe_state=[probe]

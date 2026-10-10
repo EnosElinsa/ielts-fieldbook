@@ -77,6 +77,17 @@ describe('vocabulary playback', () => {
     expect(utterances[0]).toMatchObject({ text: 'A significant change.', lang: 'en-US', rate: 1.1, volume: 0.8 });
     utterances[0].onend!();
     await expect(result).resolves.toMatchObject({ ok: true, source: 'speech' });
+    expect((await result).fallbackReason).toBeUndefined();
+  });
+
+  test.each([{ deviceOnly: true }, { example: true }])('intentional speech does not report a missing recording: %j', async options => {
+    const controller = controllerFor();
+    const result = controller.play(entry, options);
+    await vi.advanceTimersByTimeAsync(0);
+    expect(FakeAudio.instances).toHaveLength(0);
+    utterances[0].onend!();
+    expect(await result).toMatchObject({ ok: true, source: 'speech' });
+    expect((await result).fallbackReason).toBeUndefined();
   });
 
   test('stopping playback resolves its promise and prevents a delayed repeated word', async () => {
