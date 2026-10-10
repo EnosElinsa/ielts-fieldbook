@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { ModalFrame } from '../../components/ModalFrame';
 import { DateField, FilterMenu } from '../../components/ui';
+import { VocabularyPreferencesFields } from '../vocabulary/VocabularyPreferences';
+import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
 
 export function SettingsModal() {
   const fb = useFieldbook();
@@ -14,10 +16,15 @@ export function SettingsModal() {
   const [skillMix, setSkillMix] = useState('mixed');
   const [speakingFocus, setSpeakingFocus] = useState('balanced');
   const [days, setDays] = useState([1, 2, 3, 4, 5, 6]);
+  const [tab,setTab]=useState('study');
+  const [vocabulary,setVocabulary]=useState(()=>normalizeVocabularyPreferences(null));
+  const [saving,setSaving]=useState(false);
+  const [saveError,setSaveError]=useState('');
 
   useEffect(() => {
     if (!open) return;
     const s = fb.state.settings;
+    setVocabulary(normalizeVocabularyPreferences(s.vocabulary));setSaveError('');setSaving(false);
     setExamDate(s.examDate || '');
     setTargetBand(s.targetBand || '');
     setDailyMinutes(s.dailyMinutes);
@@ -31,8 +38,8 @@ export function SettingsModal() {
     <ModalFrame open={open} onClose={() => fb.closeModal()}>
       <div className="modal">
         <h3>Study settings</h3>
-        <p>Exam date, target, and how long you study.</p>
-        <div className="form">
+        <div className="settings-tabs" role="tablist" aria-label="Study settings"><button type="button" role="tab" aria-selected={tab==='study'} onClick={()=>setTab('study')}>Study plan</button><button type="button" role="tab" aria-selected={tab==='vocabulary'} onClick={()=>setTab('vocabulary')}>Vocabulary practice</button></div>
+        {tab==='study' ? <div className="form">
           <div className="field">
             <label htmlFor="examDate">Exam date (optional)</label>
             <DateField id="examDate" label="Exam date" value={examDate} onChange={setExamDate} />
@@ -128,18 +135,25 @@ export function SettingsModal() {
               ))}
             </div>
           </div>
-        </div>
+        </div> : <VocabularyPreferencesFields value={vocabulary} onChange={setVocabulary} disabled={saving}/>}
         <div className="rule-note">
           Study records and recordings are stored on your account. A new account starts empty. A backup JSON does not include recordings.
         </div>
         <div className="modal-foot">
-          <button className="btn line" type="button" onClick={() => fb.closeModal()}>
+          <button className="btn line" type="button" disabled={saving} onClick={() => fb.closeModal()}>
             Cancel
           </button>
           <button
             className="btn primary"
             type="button"
+            disabled={saving}
             onClick={async () => {
+              if(saving)return;
+              if(tab==='vocabulary'){
+                setSaving(true);setSaveError('');
+                try{if(await fb.saveVocabularyPreferences(vocabulary)){fb.closeModal();fb.toast('Practice settings saved.');}else setSaveError('Settings could not be saved. Your changes are still here.');}catch{setSaveError('Settings could not be saved. Try again.');}finally{setSaving(false);}
+                return;
+              }
               if (targetBand && (!Number.isFinite(Number(targetBand)) || Number(targetBand) < 1 || Number(targetBand) > 9 || !Number.isInteger(Number(targetBand) * 2))) { fb.toast('Use a target band from 1 to 9 in half-band steps.'); return; }
               const draft = structuredClone(fb.stateRef.current);
               draft.settings = Object.assign({}, draft.settings, {
@@ -162,9 +176,10 @@ export function SettingsModal() {
               fb.toast('Settings saved. Plans you have not started were rebuilt.');
             }}
           >
-            Save settings
+            {saving?'Saving...':'Save settings'}
           </button>
         </div>
+        {saveError ? <p className="vocabulary-error" role="alert">{saveError}</p>:null}
       </div>
     </ModalFrame>
   );

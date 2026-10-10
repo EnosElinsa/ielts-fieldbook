@@ -6,12 +6,13 @@ import { emptyState, normalizeDraft } from '../domain';
 import { readDraftRecovery } from '../storage/recovery';
 import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 
-const mocks = vi.hoisted(() => ({ initial: null, saveState: vi.fn(), saveVocabularyImport: vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
+const mocks = vi.hoisted(() => ({ initial: null, saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
 vi.mock('../storage', () => ({
   loadState: () => structuredClone(mocks.initial),
   hydrateState: async () => structuredClone(mocks.initial),
   saveState: (...args) => mocks.saveState(...args),
   saveVocabularyImport: (...args) => mocks.saveVocabularyImport(...args),
+  saveVocabularySession: (...args) => mocks.saveVocabularySession(...args),
   loadVocabularyCatalog: vi.fn(async () => ({ entries: [], books: [], units: [], memberships: [], nextOffset: null })),
   downloadFile: (...args) => mocks.downloadFile(...args),
 }));
@@ -42,6 +43,7 @@ beforeEach(() => {
   mocks.saveState.mockReset().mockResolvedValue(true);
   mocks.downloadFile.mockReset();
   mocks.saveVocabularyImport.mockReset().mockResolvedValue(true);
+  mocks.saveVocabularySession.mockReset().mockResolvedValue(true);
   mocks.initial = emptyState();
   mocks.initial.questions = [{ id: 'q1', type: '1', name: 'Chart', prompt: 'Describe the chart.' }];
   mocks.initial.speakingTopics = [{ id: 'sp1', part: '2', title: 'A trip', cueCard: 'Describe a trip.' }];
@@ -167,4 +169,45 @@ test('a delayed vocabulary import preserves concurrent drafts and queued saves',
   await waitFor(() => expect(mocks.saveState).toHaveBeenCalled());
   expect(fieldbook.state.drafts.q1.text).toBe('Work written during import.');
   expect(mocks.saveState.mock.calls.at(-1)[0].vocabulary[0].term).toBe('mitigate');
+});
+
+test('a failed session commit keeps live learning unchanged and can retry the prepared batch',async()=>{
+  await mount();
+  const draft=structuredClone(fieldbook.stateRef.current);
+  draft.vocabularySessions.push({id:'session-batch',status:'submitted'});
+  mocks.saveVocabularySession.mockResolvedValueOnce(false).mockResolvedValueOnce(true);
+  await act(async()=>{expect(await fieldbook.persistVocabularySession(draft,'session-batch')).toBe(false)});
+  expect(fieldbook.state.vocabularySessions).toHaveLength(0);
+  await act(async()=>{expect(await fieldbook.persistVocabularySession(draft,'session-batch')).toBe(true)});
+  expect(fieldbook.state.vocabularySessions).toHaveLength(1);
+  expect(mocks.saveVocabularySession.mock.calls[0][1]).toBe(mocks.saveVocabularySession.mock.calls[1][1]);
+});
+
+test('practice preference save retains an in-progress writing draft and pending plans',async()=>{
+  await mount();const pending=structuredClone(fieldbook.state.plans);
+  await act(async()=>{expect(await fieldbook.saveVocabularyPreferences({layout:'cards',volume:0.6})).toBe(true)});
+  expect(fieldbook.state.settings.vocabulary.layout).toBe('cards');
+  expect(fieldbook.state.settings.vocabulary.volume).toBe(0.6);
+  expect(fieldbook.state.drafts.q1.text).toBe('A response that must survive.');
+  expect(fieldbook.state.plans).toEqual(pending);
+});
+
+test('queued writing autosave retains newly committed practice preferences', async () => {
+  await mount();
+  const pending = defer();
+  mocks.saveState.mockImplementationOnce(() => pending.promise).mockResolvedValue(true);
+  let saving;
+  await act(async () => { saving = fieldbook.saveVocabularyPreferences({ accent: 'us' }); await Promise.resolve(); });
+  await act(async () => { fieldbook.persist(draft => { draft.drafts.q1.text = 'Written during settings save.'; }); await Promise.resolve(); });
+  await act(async () => { pending.resolve(true); await saving; });
+  await waitFor(() => expect(mocks.saveState).toHaveBeenCalledTimes(2));
+  expect(mocks.saveState.mock.calls[1][0].settings.vocabulary.accent).toBe('us');
+  expect(mocks.saveState.mock.calls[1][0].drafts.q1.text).toBe('Written during settings save.');
+});
+
+test('an explicit preference change can restore the original accent', async () => {
+  await mount();
+  await act(async () => { await fieldbook.saveVocabularyPreferences({ accent: 'us' }); });
+  await act(async () => { await fieldbook.saveVocabularyPreferences({ accent: 'uk' }); });
+  expect(mocks.saveState.mock.calls.at(-1)[0].settings.vocabulary.accent).toBe('uk');
 });

@@ -5,6 +5,8 @@
   margin: 0 0 24px;
   overflow-x: auto;
 }
+.vocabulary-file-picker{display:flex;align-items:center;gap:12px;width:100%;padding:12px;border:1px dashed var(--rule);border-radius:8px;background:var(--paper)}
+.vocabulary-file-picker>span{font-size:13px;color:var(--muted);min-width:0;overflow-wrap:anywhere}
 .vocabulary-tabs a {
   padding: 12px 14px;
   white-space: nowrap;

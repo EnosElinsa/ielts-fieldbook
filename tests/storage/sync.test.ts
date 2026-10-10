@@ -19,6 +19,8 @@ describe('row diff', () => {
     expect(USER_LISTS).toContain('vocabularyStates');
     expect(USER_TABLES.vocabularyStates).toBe('vocabulary_states');
     expect(USER_TABLES.wordbookProgress).toBe('wordbook_progress');
+    expect(USER_LISTS).toContain('vocabularySessions');
+    expect(USER_TABLES.vocabularySessions).toBe('vocabulary_sessions');
   });
   test('upserts changed rows and deletes missing ids', () => {
     const diff = diffList(

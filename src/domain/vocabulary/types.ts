@@ -1,4 +1,5 @@
 import type { CardInput } from 'ts-fsrs';
+import type { VocabularySessionRecord } from './session';
 
 export type VocabularySkill = 'writing' | 'speaking' | 'listening' | 'reading';
 export type VocabularyMode = 'dictation' | 'definition' | 'cloze' | 'distinction' | 'production';
@@ -50,8 +51,10 @@ export type VocabularyStore = {
   wordbookProgress: { id: string; bookId: string; unitId: string; completedEntryIds: string[]; status: string; updatedAt: string }[];
   wordbookEnrollments: { id: string; bookId: string; updatedAt: string }[];
   vocabularyImportBatches: { id: string; [key: string]: unknown }[];
+  vocabularySessions?: VocabularySessionRecord[];
 };
 export type ReviewQueueFilter = {
+  wrongOnly?: boolean;
   entryId?: string; senseId?: string;
   bookId?: string; unitId?: string; skill?: VocabularySkill; sourceType?: string;
   dimension?: VocabularyDimension; mode?: VocabularyMode; dueOnly?: boolean; now?: string | Date;

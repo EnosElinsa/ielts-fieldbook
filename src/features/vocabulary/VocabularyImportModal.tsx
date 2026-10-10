@@ -156,9 +156,11 @@ export function VocabularyImportModal() {
             id="vocabulary-import-file"
             type="file"
             accept=".json,.csv,application/json,text/csv"
+            hidden
             disabled={saving}
             onChange={readFile}
           />
+          <div className="vocabulary-file-picker"><button type="button" className="btn line" disabled={saving} onClick={()=>fileInput.current?.click()}><Upload size={15}/>{text ? 'Change file' : 'Choose file'}</button><span aria-live="polite">{text ? filename : 'No file selected'}</span></div>
           <a href="/guixue-exporter.js" className="btn line" download>
             <Download size={15} />
             Guixue exporter
