@@ -98,11 +98,8 @@ test("dictionary reports deduplicated credits to the parent and explicit study p
     ),
   ).toBe(true);
   expect(save.mock.calls[0][0].vocabularyEvidence).toHaveLength(0);
-  const url = new URL(
-    screen.getByRole("status", { hidden: true })?.textContent ||
-      screen.getByText(/\/vocabulary\/review\?/).textContent!,
-    "https://test.test",
-  );
+  const route = await screen.findByText(/^\/vocabulary\/review\?/);
+  const url = new URL(route.textContent!, "https://test.test");
   expect(url.searchParams.get("returnTo")).toBe(
     "/vocabulary/entry/original?returnTo=%2Fvocabulary%2Fwords%3Fsearch%3Dmit",
   );
