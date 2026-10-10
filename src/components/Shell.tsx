@@ -23,6 +23,7 @@ import { ModalFrame } from './ModalFrame';
 import { AssessmentImportModal } from '../features/modals/AssessmentImportModal';
 import { LegalModal } from '../features/modals/LegalModal';
 import * as Tooltip from '@radix-ui/react-tooltip';
+import { navigateWithPracticeGuard } from '../lib/practiceNavigation';
 
 function RailHint({ label, enabled, children }) {
   return <Tooltip.Root><Tooltip.Trigger asChild>{children}</Tooltip.Trigger>{enabled ? <Tooltip.Portal><Tooltip.Content className="tooltip rail-tooltip" side="right" sideOffset={10}>{label}<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal> : null}</Tooltip.Root>;
@@ -148,6 +149,11 @@ export function Shell() {
   const selectModule = (path: string) => {
     if (path === '/write') fb.setSkill('writing', path);
     else if (path === '/speak') fb.setSkill('speaking', path);
+    else navigate(path);
+  };
+  const goFromMore = (path: string) => {
+    setMoreOpen(false);
+    navigateWithPracticeGuard(path, () => navigate(path));
   };
 
   const exportBackup = () => {
@@ -220,7 +226,8 @@ export function Shell() {
                 to={link.to}
                 end={link.end}
                 aria-label={link.label}
-                onClick={() => selectModule(link.to)}
+                data-practice-navigation
+                onClick={(event) => { event.preventDefault(); navigateWithPracticeGuard(link.to, () => selectModule(link.to)); }}
                 className={module === (link.to === '/' ? 'today' : link.to.slice(1) === 'write' ? 'writing' : link.to.slice(1) === 'speak' ? 'speaking' : link.to.slice(1)) ? 'active' : undefined}
               >
                 <span className="nav-icon" aria-hidden="true">
@@ -352,7 +359,7 @@ export function Shell() {
         </main>
       </div>
       <MobileNavigation onMore={() => setMoreOpen(true)} />
-      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More"><div className="modal more-modal"><div className="mobile-more-links"><NavLink to="/progress" onClick={() => setMoreOpen(false)}>{NavIcons.progress}Progress</NavLink>{secondaryLinks.map((link) => <NavLink key={link.to} to={link.to} onClick={() => setMoreOpen(false)}>{link.icon}{link.label}</NavLink>)}<button onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><NavLink to="/account" onClick={() => setMoreOpen(false)}>Account</NavLink></div></div></ModalFrame>
+      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More"><div className="modal more-modal"><div className="mobile-more-links"><button type="button" onClick={() => goFromMore('/progress')}>{NavIcons.progress}Progress</button>{secondaryLinks.map((link) => <button type="button" key={link.to} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}<button onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><button type="button" onClick={() => goFromMore('/account')}>Account</button></div></div></ModalFrame>
       <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
       <AssessmentImportModal />
       <LegalModal view={legalView} onClose={() => setLegalView(null)} />
