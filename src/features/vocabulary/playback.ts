@@ -128,6 +128,7 @@ export function createVocabularyPlayback(loadMedia = getVocabularyMedia): { play
     const accent = options.accent === 'us' ? 'us' : 'uk';
     const example = typeof options.example === 'string' ? options.example : options.example ? entry.example : undefined;
     const text = (options.text || example || entry.term || '').trim();
+    const recordingEligible = !options.text && !example && !options.deviceOnly;
 
     return new Promise(resolve => {
       let settled = false;
@@ -142,7 +143,7 @@ export function createVocabularyPlayback(loadMedia = getVocabularyMedia): { play
       cancelPlay = cancel;
       const run = async () => {
         if (!text) { finish({ ok: false, source: 'none', reason: 'unavailable' }); return; }
-        const media = !options.text && !example && !options.deviceOnly ? await loadMedia(entry) : { recordings: [] };
+        const media = recordingEligible ? await loadMedia(entry) : { recordings: [] };
         if (token !== generation) { finish(cancelled()); return; }
         const selected = options.recording || media.recordings.find(item => item.accent === accent && item.status === 'verified' && item.availability !== 'failed');
         const url = selected?.url;
@@ -152,8 +153,8 @@ export function createVocabularyPlayback(loadMedia = getVocabularyMedia): { play
           last = url ? await recording(url, rate, volume, token) : { ok: false, source: 'none', reason: 'unavailable' };
           if (last.ok) last = { ...last, accent: selected?.accent, recording: selected };
           else if (!['cancelled', 'blocked'].includes(last.reason || '')) {
-            const fallbackReason = url ? `recording-${last.reason}` : 'target-recording-unavailable';
-            last = { ...await speech(text, accent, rate, volume, token), fallbackReason };
+            const fallbackReason = url ? `recording-${last.reason}` : recordingEligible ? 'target-recording-unavailable' : undefined;
+            last = { ...await speech(text, accent, rate, volume, token), ...(fallbackReason ? { fallbackReason } : {}) };
           }
           if (!last.ok) { finish(last); return; }
           if (index + 1 < count && !await gap(repeatGapMs, token)) { finish(cancelled()); return; }

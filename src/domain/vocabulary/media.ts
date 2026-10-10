@@ -3,23 +3,36 @@ import type { ResolvedVocabularyLearningContext } from './context';
 import imageManifest from './illustrations.json';
 export type VocabularyAccent = 'uk' | 'us';
 export type MediaCredit = { sourceUrl: string; author: string; license: string; licenseUrl: string; changes: string };
-export type VocabularyRecording = MediaCredit & { url: string; title: string; accent: VocabularyAccent | 'other' | 'unknown'; status: 'verified' | 'unknown' | 'rejected' | 'missing'; availability: 'http-audio' | 'metadata-only' | 'network-unverified' | 'failed'; reason: string; wordformConfirmed?: boolean };
+export type VocabularyRecording = MediaCredit & { url: string; aliases?: string[]; title: string; accent: VocabularyAccent | 'other' | 'unknown'; status: 'verified' | 'unknown' | 'rejected' | 'missing'; availability: 'http-audio' | 'metadata-only' | 'network-unverified' | 'failed'; reason: string; wordformConfirmed?: boolean };
 export type VocabularyIllustrationAsset = MediaCredit & { entryId: string; senseId: string; bookId?: string; unitId?: string; src: string; alt: string; caption: string; width: number; height: number };
 export type VocabularyMedia = { version: string; recordings: VocabularyRecording[]; loadError?: boolean };
+/** Remove recognized tracking only, preserving functional/signed query bytes and order. */
+export function sanitizeVocabularyMediaUrl(value: string): string | undefined {
+  try {
+    const url = new URL(value);
+    if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return undefined;
+    const query = url.search.slice(1).split('&').filter(parameter => {
+      let name: string;
+      try { name = decodeURIComponent(parameter.split('=', 1)[0].replace(/\+/g, ' ')).toLowerCase(); }
+      catch { return true; }
+      return !name.startsWith('utm_') && !['fbclid', 'gclid', 'dclid', 'msclkid', '_ga', '_gl', 'mc_cid', 'mc_eid'].includes(name);
+    }).join('&');
+    url.search = query; url.hash = '';
+    return url.href;
+  } catch { return undefined; }
+}
 export function legacyVocabularyRecordings(entry: VocabularyEntry): VocabularyRecording[] {
   return (['uk', 'us'] as const).flatMap(accent => {
     const value = entry.pronunciation?.[accent];
     if (!value) return [];
-    try {
-      const url = new URL(value);
-      if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return [];
-      url.search = ''; url.hash = '';
-      return [{ url: url.href, title: `Legacy ${accent.toUpperCase()} label (unverified)`, accent: 'unknown' as const, status: 'unknown' as const, availability: 'network-unverified' as const, reason: `Imported ${accent.toUpperCase()} label has not been independently verified.`, author: 'Unverified legacy recording', license: 'Unknown', licenseUrl: '', sourceUrl: url.href, changes: 'Legacy URL retained; accent and redistribution license unverified.' }];
-    } catch { return []; }
+    const url = sanitizeVocabularyMediaUrl(value);
+    if (!url) return [];
+    return [{ url, title: `Legacy ${accent.toUpperCase()} label (unverified)`, accent: 'unknown' as const, status: 'unknown' as const, availability: 'network-unverified' as const, reason: `Imported ${accent.toUpperCase()} label has not been independently verified.`, author: 'Unverified legacy recording', license: 'Unknown', licenseUrl: '', sourceUrl: url, changes: 'Legacy URL retained; accent and redistribution license unverified.' }];
   });
 }
 function withLegacy(entry: VocabularyEntry, media: VocabularyMedia): VocabularyMedia {
-  const known = new Set(media.recordings.map(item => item.url));
+  // An alias shares the canonical file's rejection/wordform evidence, never a new candidate.
+  const known = new Set(media.recordings.flatMap(item => [item.url, ...(item.aliases || [])]).map(sanitizeVocabularyMediaUrl).filter(Boolean));
   return { ...media, recordings: [...media.recordings, ...legacyVocabularyRecordings(entry).filter(item => !known.has(item.url))] };
 }
 const shards = new Map<string, Promise<Record<string, VocabularyMedia>>>();
@@ -32,8 +45,8 @@ export async function getVocabularyMedia(entry: VocabularyEntry): Promise<Vocabu
     request = fetch(`/vocabulary-media/audio/${shard}.json`).then(async response => { if (!response.ok) throw new Error('Media metadata unavailable'); return await response.json() as Record<string, VocabularyMedia>; });
     shards.set(shard, request); request.catch(() => { if (shards.get(shard) === request) shards.delete(shard); });
   }
-  try { return withLegacy(entry, (await request)[entry.id] || { version: 'media-2026-10-10.1', recordings: [] }); }
-  catch { return withLegacy(entry, { version: 'media-2026-10-10.1', recordings: [], loadError: true }); }
+  try { return withLegacy(entry, (await request)[entry.id] || { version: 'media-2026-10-11.2', recordings: [] }); }
+  catch { return withLegacy(entry, { version: 'media-2026-10-11.2', recordings: [], loadError: true }); }
 }
 export function getVocabularyIllustration(resolved: ResolvedVocabularyLearningContext): VocabularyIllustrationAsset | undefined {
   if (!resolved.sense || !resolved.contentReviewed) return undefined;
