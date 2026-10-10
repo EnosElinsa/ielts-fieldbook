@@ -48,13 +48,14 @@ describe('vocabulary sessions', () => {
     const many = Array.from({ length: 10001 }, (_, index) => ({ ...cards[0], id: `word-${index}`, entryId: `word-${index}` }));
     expect(() => createVocabularySession(many, 'dictation', {}, {}, { kind: 'retry' })).toThrow();
   });
-  test('takes a bounded ID-only snapshot and deduplicates dictation across senses', () => {
+  test('takes a bounded versioned content snapshot and deduplicates dictation across senses', () => {
     const { cards } = fixture();
     const session = createVocabularySession(cards.concat(cards), 'dictation', { sessionSize: 100 }, { bookId: 'book' });
     expect(session.cardIds).toHaveLength(2);
     expect(new Set(session.cardIds.map(card => card.entryId)).size).toBe(2);
     expect(session).toMatchObject({ status: 'active', index: 0, answers: {}, filter: { bookId: 'book' } });
-    expect(JSON.stringify(session)).not.toContain('An institution');
+    expect(session.cardSnapshots?.[0].entry.senses[0].definition).toBe('An institution that holds money.');
+    expect(session.contentVersion).toBeTruthy();
     expect(createVocabularySession(cards, 'dictation', { sessionSize: 1 }).cardIds).toHaveLength(1);
   });
 
