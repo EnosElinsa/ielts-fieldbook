@@ -12,6 +12,19 @@ const fresh = (): VocabularyStore => ({ vocabulary: [], vocabularyStates: [], vo
 beforeEach(() => { Object.assign(VOCABULARY_CATALOG, structuredClone(released)); localStorage.clear(); });
 afterEach(() => { Object.assign(VOCABULARY_CATALOG, structuredClone(original)); });
 
+describe('reviewed priority senses in whole groups', () => {
+ test('treat and recipe use reviewed medical and culinary senses', () => {
+  const state = fresh();
+  for (const term of ['treat','recipe']) {
+   const entry = (VOCABULARY_CATALOG.entries as any[]).find(item => item.term === term); expect(entry).toBeTruthy();
+   const bookId = 'guixue:10174'; const unitId = 'starter:10174';
+   (VOCABULARY_CATALOG.memberships as any[]).push({id:`test:${term}`,entryId:entry.id,bookId,unitId,order:0});
+   const queue = buildUnitPracticeQueue(state,bookId,unitId,'definition');
+   const card = queue.cards.find(item=>item.entry.term===term); expect(card?.entry.senses[0].definition).toMatch(term==='treat'?/medical|care|condition/i:/dish|ingredient|prepar/i);
+  }
+ });
+});
+
 describe('whole source unit selection', () => {
   test.each([
     ['guixue:10174', '21795', 55, 'atmosphere'],
