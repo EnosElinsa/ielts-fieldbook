@@ -15,8 +15,8 @@ const reviewed: Record<string, { definition: string; example: string; answers: s
  adapt: {definition:'To change something to suit new conditions.',example:'We need to adapt the plan to local conditions.',answers:['adjust'],explanation:'Adjust means change the plan to fit the conditions; adopt means begin using it.'},
  economical: {definition:'Using little money, fuel or other resources.',example:'This car is economical to run.',answers:['inexpensive'],explanation:'Inexpensive to run describes low running costs; economic concerns the economy.'},
  increase: {definition:'To become greater in amount or number.',example:'Prices increase when demand exceeds supply.',answers:['rise'],explanation:'Rise fits this intransitive description of prices becoming higher.',forms:['increase','increases','increased','increasing']},
- reduce: {definition:'To make something smaller in amount or degree.',example:'The new equipment reduced energy consumption.',answers:['decreased','lowered'],explanation:'Decrease and lower mean make consumption smaller.',forms:['reduced']},
- improve: {definition:'To make or become better.',example:'Regular practice improves pronunciation.',answers:['enhances'],explanation:'Enhance fits the transitive sense of making pronunciation better.',forms:['improves']},
+ reduce: {definition:'To make something smaller in amount or degree.',example:'The new equipment reduced energy consumption.',answers:['decreased','lowered'],explanation:'Decreased and lowered are past-tense replacements for reduced, meaning made consumption smaller.',forms:['reduced']},
+ improve: {definition:'To make or become better.',example:'Regular practice improves pronunciation.',answers:['enhances'],explanation:'Enhances keeps the third-person singular form of improves and means makes pronunciation better.',forms:['improves']},
 };
 reviewed['abandon'] = {definition:'To leave a place or thing behind.',example:'They had to abandon the damaged ship.',answers:['leave'],explanation:'In this context, leave expresses the meaning of abandon.'};
 reviewed['accurate'] = {definition:'Correct and free from errors.',example:'The report provides accurate measurements.',answers:['precise'],explanation:'In this context, precise expresses the meaning of accurate.'};
@@ -57,7 +57,7 @@ reviewed['sufficient'] = {definition:'Enough for a purpose.',example:'There is s
 reviewed['utilise'] = {definition:'To use something.',example:'The system can utilise solar energy.',answers:['use'],explanation:'In this context, use expresses the meaning of utilise.'};
 reviewed['utilize'] = {definition:'To use something.',example:'The system can utilize solar energy.',answers:['use'],explanation:'In this context, use expresses the meaning of utilize.'};
 reviewed['vital'] = {definition:'Extremely important or necessary.',example:'Accurate information is vital for planning.',answers:['essential'],explanation:'In this context, essential expresses the meaning of vital.'};
-reviewed['begin'] = {definition:'To start an event or action.',example:'The conference began on Monday.',answers:['start'],explanation:'In this context, start expresses the meaning of begin.',forms:['began']};
+reviewed['begin'] = {definition:'To start an event or action.',example:'The conference began on Monday.',answers:['started'],explanation:'Started is the past-tense replacement for began in this completed event.',forms:['began']};
 export function escapePattern(text: string) { return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 export function concealWord(text: string, answer: string) { return text.replace(new RegExp(`(?<![\\p{L}\\p{N}_])${escapePattern(answer)}(?![\\p{L}\\p{N}_])`, 'giu'), '_____'); }
 export function reviewedEntry(entry: VocabularyEntry): VocabularyEntry {
