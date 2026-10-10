@@ -32,6 +32,9 @@ vi.mock('./storage', async () => {
       errors: [],
       assessments: [],
       lexicon: [],
+      vocabulary: [],
+      vocabularyStates: [],
+      vocabularySessions: [],
       plans: [
         {
           id: 'plan-timed',
@@ -88,6 +91,7 @@ vi.mock('./storage', async () => {
 
 beforeEach(() => {
   downloads.length = 0;
+  vi.stubGlobal('scrollTo', vi.fn());
   localStorage.removeItem('ielts-fieldbook-rail');
   vi.stubGlobal(
     'confirm',
@@ -161,6 +165,17 @@ describe('Fieldbook UI', () => {
     expect(within(rail).getByText('Stories')).toBeTruthy();
     expect(within(rail).getByText('Practice')).toBeTruthy();
     expect(within(rail).queryByRole('navigation', { name: 'Writing study' })).toBeNull();
+  });
+
+  it('keeps Speaking review selected after a direct Speaking question visit', async () => {
+    const user = userEvent.setup();
+    renderAt('/speak/questions');
+    const rail = document.querySelector('.rail') as HTMLElement;
+    const review = within(rail).getByRole('link', { name: 'Review' });
+    expect(review.getAttribute('href')).toBe('/review?skill=speaking');
+    await user.click(review);
+    expect(screen.getByRole('heading', { level: 1, name: 'Attempts and scores' })).toBeTruthy();
+    expect(within(rail).getByRole('navigation', { name: 'Speaking study' })).toBeTruthy();
   });
 
   it('keeps the sidebar open until the user collapses it', async () => {
