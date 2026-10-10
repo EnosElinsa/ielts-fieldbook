@@ -7,7 +7,7 @@ import { getVocabularyReviewQueue, type ReviewCard, type ReviewQueueFilter, type
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { normalizeVocabularyPreferences, type VocabularyPracticeMode, type VocabularyPreferences } from "../../domain/vocabulary/preferences";
 import { buildVocabularySessionCommit, createVocabularySession, evaluateVocabularySessionAnswer, updateVocabularySessionAnswer, type VocabularyPracticeSession, type VocabularySessionSelection } from "../../domain/vocabulary/session";
-import { getLearnedVocabularyIds } from "../../domain/vocabulary/progress";
+import { getLearnedVocabularyIds, vocabularyGroupProgress } from "../../domain/vocabulary/progress";
 import { buildUnitPracticeQueue } from "../../domain/vocabulary/selection";
 import { createVocabularyPlayback } from "./playback";
 import { practiceKeyboard } from "./practiceKeyboard";
@@ -272,7 +272,10 @@ export function useVocabularyPracticeController() {
     return (parents.find(unit => unit.id === a.parentId && unit.bookId === a.bookId)?.order || 0) - (parents.find(unit => unit.id === b.parentId && unit.bookId === b.bookId)?.order || 0) || (a.order || 0) - (b.order || 0);
   });
   const resultGroupIndex = orderedGroups.findIndex(unit => unit.id === resultUnitId);
-  const nextGroup = resultGroupIndex >= 0 ? orderedGroups[resultGroupIndex + 1] : null;
+  const nextGroup = resultGroupIndex >= 0 ? orderedGroups.slice(resultGroupIndex + 1).find(unit => {
+    const ids = VOCABULARY_CATALOG.memberships.filter(item => item.bookId === unit.bookId && item.unitId === unit.id).map(item => item.entryId);
+    return vocabularyGroupProgress(fb.state, { ...unit, studyEntryIds: ids }) !== 'Studied';
+  }) : null;
   const recent = ((fb.state.vocabularySessions || []) as SessionLog[])
     .slice(-5)
     .reverse().map(presentVocabularySession);
@@ -483,7 +486,7 @@ export function useVocabularyPracticeController() {
     setRecovering(true);
     setError('');
     try {
-    if (resume.selection?.kind === 'unit') {
+    if (resume.selection?.kind === 'unit' || resume.selection?.kind === 'specialist') {
       try {
         await fb.loadVocabularyCatalog?.(resume.selection.bookId);
       } catch {
@@ -493,7 +496,7 @@ export function useVocabularyPracticeController() {
       if (!owned() || recoveryOwner !== accountId()) return;
     }
     const recoveryState = fb.stateRef.current;
-    const all = resume.selection?.kind === 'unit'
+    const all = resume.selection?.kind === 'unit' || resume.selection?.kind === 'specialist'
       ? buildUnitPracticeQueue(recoveryState, resume.selection.bookId, resume.selection.unitId, resume.mode).cards
       : getVocabularyReviewQueue(recoveryState, {
       mode:
@@ -752,6 +755,7 @@ export function useVocabularyPracticeController() {
     setCards([]);
     setError("");
     setAudioStatus("");
+    const origin = params.get("returnTo"); if (origin && /^\/vocabulary(?:\/|\?|$)/.test(origin) && !/[\r\n\\]/.test(origin)) navigate(origin);
   }
   function resetResults() {
     stopAudio();
@@ -760,7 +764,9 @@ export function useVocabularyPracticeController() {
     setError("");
     const next = new URLSearchParams(params);
     next.delete('sessionId'); next.delete('resultFilter');
-    if (historySessionId) navigate(`/vocabulary/review?${next}`, {replace:true}); else setParams(next, { replace: true });
+    const origin = params.get("returnTo");
+    if (origin && /^\/vocabulary(?:\/|\?|$)/.test(origin) && !/[\r\n\\]/.test(origin)) navigate(origin);
+    else if (historySessionId) navigate(`/vocabulary/review?${next}`, {replace:true}); else setParams(next, { replace: true });
   }
   function discardResume() {
     clearVocabularyDraft(owner.current);
