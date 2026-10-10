@@ -498,21 +498,11 @@ export function useVocabularyPracticeController() {
       if (!owned() || recoveryOwner !== accountId()) return;
     }
     const recoveryState = fb.stateRef.current;
-    const all = resume.selection?.kind === 'unit' || resume.selection?.kind === 'specialist'
-      ? buildUnitPracticeQueue(recoveryState, resume.selection.bookId, resume.selection.unitId, resume.mode).cards
-      : getVocabularyReviewQueue(recoveryState, {
-      mode:
-        resume.mode === "audio" ? "dictation" : (resume.mode as VocabularyMode),
-      dueOnly: false,
-    });
     const frozen = resume.cardSnapshots || resume.cardIds
       .map(
         (identity) =>
-          all.find((card) => card.id === identity.id) ||
           (() => {
-            const entry = (
-              (recoveryState.vocabulary as VocabularyEntry[]) || []
-            ).find((item) => item.id === identity.entryId);
+            const entry = ((recoveryState.vocabulary as VocabularyEntry[]) || []).find((item) => item.id === identity.entryId) || (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).find(item => item.id === identity.entryId);
             return entry &&
               !entry.tags.includes("archived") &&
               entry.senses.some((sense) => sense.id === identity.senseId)
@@ -744,7 +734,7 @@ export function useVocabularyPracticeController() {
     const leave = (event: MouseEvent) => {
       if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || savingRef.current) return;
       const anchor = (event.target as HTMLElement)?.closest<HTMLAnchorElement>('a[href]');
-      if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download') || anchor.closest('[role="dialog"],dialog')) return;
+      if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download')) return;
       const url = new URL(anchor.href, window.location.href);
       if (url.origin !== window.location.origin || !url.pathname.startsWith('/')) return;
       event.preventDefault(); event.stopPropagation();

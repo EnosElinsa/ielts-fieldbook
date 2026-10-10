@@ -20,7 +20,9 @@ describe('reviewed priority senses in whole groups', () => {
    const bookId = 'guixue:10174'; const unitId = 'starter:10174';
    (VOCABULARY_CATALOG.memberships as any[]).push({id:`test:${term}`,entryId:entry.id,bookId,unitId,order:0});
    const queue = buildUnitPracticeQueue(state,bookId,unitId,'definition');
-   const card = queue.cards.find(item=>item.entry.term===term); expect(card?.entry.senses[0].definition).toMatch(term==='treat'?/medical|care|condition/i:/dish|ingredient|prepar/i);
+   const card = queue.cards.find(item=>item.entry.term===term); expect(card?.senseId).toBe(card?.entry.senses[0].id); expect(card?.entry.senses[0].definition).toMatch(term==='treat'?/medical|care|condition/i:/dish|ingredient|prepar/i);
+   const cloze = buildUnitPracticeQueue(state,bookId,unitId,'cloze').cards.find(item=>item.entryId===entry.id); expect(cloze?.task?.prompt).toContain('_____');
+   if(term==='recipe') { const distinction = buildUnitPracticeQueue(state,bookId,unitId,'distinction').cards.find(item=>item.entryId===entry.id); expect(distinction?.task?.acceptedAnswers).toEqual(['recipe']); }
   }
  });
 });
