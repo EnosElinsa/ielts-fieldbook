@@ -13,3 +13,5 @@ describe('device voice controls', () => {
   fireEvent.change(screen.getByLabelText('UK device voice'), { target: { value: 'uk-b' } }); expect(localStorage.getItem('fieldbook.deviceVoice.uk')).toBe('uk-b'); expect((screen.getByLabelText('US device voice') as HTMLSelectElement).disabled).toBe(true);
  });
 });
+
+ test('disables selectors and trials while an enclosing save is pending', async()=>{vi.stubGlobal('speechSynthesis',{getVoices:()=>[{lang:'en-GB',name:'Device UK',voiceURI:'uk'}],addEventListener:()=>{},removeEventListener:()=>{},cancel:()=>{}});const view=render(<DeviceVoicePreferences disabled/>);expect((screen.getByLabelText('UK device voice') as HTMLSelectElement).disabled).toBe(true);expect((screen.getByRole('button',{name:'Try UK voice'}) as HTMLButtonElement).disabled).toBe(true);view.rerender(<DeviceVoicePreferences/>);await waitFor(()=>expect((screen.getByLabelText('UK device voice') as HTMLSelectElement).disabled).toBe(false));});

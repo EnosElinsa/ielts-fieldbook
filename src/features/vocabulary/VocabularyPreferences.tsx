@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { List, Square, Volume2 } from "lucide-react";
+import { DeviceVoicePreferences } from './DeviceVoicePreferences';
 import { ModalFrame } from "../../components/ModalFrame";
 import {
   normalizeVocabularyPreferences,
@@ -257,6 +258,7 @@ export function VocabularyPreferencesFields({
             Examples in audio loop
           </label>
         </div>
+        <DeviceVoicePreferences disabled={disabled} />
       </fieldset>
       <fieldset disabled={locked}>
         <legend>Shortcuts</legend>

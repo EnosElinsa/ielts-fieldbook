@@ -9,14 +9,14 @@ import { MODES, dateLabel, modeLabel } from "./practicePresentation";
 import type { VocabularyPracticeController } from "./useVocabularyPracticeController";
 
 export function VocabularyPracticeSetup({ controller }: { controller: VocabularyPracticeController }) {
-  const { study, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit, dueOnly, setDue, wrongOnly, setWrong, catalogStatus, queue, unitQueue, books, selectedUnit, selectedBook, chapter, catalogReady, studyReady, resume, recent, changeFilter, changeMode, begin, recover, discardResume, showRecentSession, retryCatalog } = controller;
+  const { study, explicitEntry, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit, dueOnly, setDue, wrongOnly, setWrong, catalogStatus, queue, unitQueue, books, selectedUnit, selectedBook, chapter, catalogReady, studyReady, resume, recent, changeFilter, changeMode, begin, recover, discardResume, showRecentSession, retryCatalog } = controller;
   const [pickerOpen, setPickerOpen] = useState(false);
   return (
     <>
       <div className="practice-context-card">
-        <span className="eyebrow">{study ? 'One complete group' : 'A focused review batch'}</span>
-        <h3>{study ? selectedBook?.title || 'Choose a wordbook' : 'Keep your vocabulary ready'}</h3>
-        <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : 'Review learned words that are due, recover mistakes, or create a custom batch.'}</p>
+        <span className="eyebrow">{study ? 'One complete group' : explicitEntry ? 'A single word' : 'A focused review batch'}</span>
+        <h3>{study ? selectedBook?.title || 'Choose a wordbook' : explicitEntry ? queue[0]?.entry.term || 'Practise this word' : 'Keep your vocabulary ready'}</h3>
+        <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : explicitEntry ? queue[0]?.entry.senses.find(sense => sense.id === queue[0]?.senseId)?.definition || 'This selected meaning is unavailable.' : 'Review learned words that are due, recover mistakes, or create a custom batch.'}</p>
         {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
         {study && unitQueue ? <strong>{unitQueue.totalWords} words in this group · {unitQueue.eligibleWords} ready for {modeLabel(mode).toLowerCase()}</strong> : null}
         <Link to={study ? '/vocabulary/review' : '/vocabulary/wordbooks'}>{study ? 'Switch to vocabulary review' : 'Study a complete wordbook group'} <ArrowRight size={14} /></Link>
@@ -44,7 +44,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
             changeFilter("bookId", value);
           }}
         />
-        {study ? <button className="btn line" type="button" disabled={bookId === 'all'} onClick={() => setPickerOpen(true)}>{selectedUnit?.title || 'Choose a group'}</button> : <FilterMenu label="Review preset" value={wrongOnly ? 'wrong' : dueOnly ? 'due' : 'custom'} options={[{value:'due',label:'Due learned words'},{value:'wrong',label:'Wrong learned words'},{value:'custom',label:'Custom learned words'}]} onChange={value => { setDue(value === 'due'); setWrong(value === 'wrong'); controller.setReviewPreset(value); }} />}
+        {study ? <button className="btn line" type="button" disabled={bookId === 'all'} onClick={() => setPickerOpen(true)}>{selectedUnit?.title || 'Choose a group'}</button> : explicitEntry ? null : <FilterMenu label="Review preset" value={wrongOnly ? 'wrong' : dueOnly ? 'due' : 'custom'} options={[{value:'due',label:'Due learned words'},{value:'wrong',label:'Wrong learned words'},{value:'custom',label:'Custom learned words'}]} onChange={value => { setDue(value === 'due'); setWrong(value === 'wrong'); controller.setReviewPreset(value); }} />}
         {pickerOpen ? <VocabularyGroupPicker state={controller.state} bookId={bookId} currentUnitId={unitId} onClose={() => setPickerOpen(false)} onSelect={(value: string) => { setUnit(value); changeFilter('unitId',value); }} /> : null}
       </div>
       <details className="practice-setup-details" open={!study || undefined}><summary>{study ? 'Practice options' : 'Review options'}</summary>

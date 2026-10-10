@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useState } from 'react';
 import userEvent from "@testing-library/user-event";
@@ -27,7 +28,7 @@ beforeEach(() => {
   localStorage.clear();
   sessionStorage.clear();
   owner.current = "account-one";
-  player.play.mockReset().mockResolvedValue({ ok: true, source: "speech" });
+  player.play.mockReset().mockResolvedValue({ ok: true, source: "speech", accent: "uk", voice: "Test UK voice" });
   player.stop.mockReset();
   const vocabulary = ["resilient", "sustainable"].map((term, index) => ({
     id: `entry-${index}`,
@@ -465,7 +466,7 @@ test("blocked automatic audio asks for a gesture and manual replay recovers", as
   const user = userEvent.setup();
   player.play
     .mockResolvedValueOnce({ ok: false, source: "none", reason: "blocked" })
-    .mockResolvedValue({ ok: true, source: "speech" });
+    .mockResolvedValue({ ok: true, source: "speech", accent: "uk", voice: "Test UK voice" });
   mount();
   await user.click(screen.getByRole("button", { name: "Start session" }));
   await waitFor(() =>
@@ -475,7 +476,7 @@ test("blocked automatic audio asks for a gesture and manual replay recovers", as
   );
   await user.click(screen.getByRole("button", { name: "Replay current word" }));
   await waitFor(() =>
-    expect(screen.getByRole("status")).toHaveTextContent("Browser voice"),
+    expect(screen.getByRole("status")).toHaveTextContent("UK device voice: Test UK voice"),
   );
 });
 
@@ -699,4 +700,21 @@ test('legacy identity-only distinction draft keeps the old accepted synonym', as
  await user.click(screen.getByRole('button',{name:'Submit session'}));
  await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalled());
  expect(fb.current.persistVocabularySession.mock.calls[0][0].vocabularySessions[0].results[0].result).toBe('success');
+});
+
+
+test('explicit unlearned catalog drill keeps its group sense and makes no preparation writes', async()=>{
+  const released=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'));Object.assign(VOCABULARY_CATALOG,released);
+  const raw=released.entries.find((entry:any)=>entry.term==='core');fb.current.state.vocabulary=[];fb.current.state.vocabularyEvidence=[];fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
+  const before=JSON.stringify(fb.current.state);const view=mount(`?entryId=${raw.id}&senseId=editorial%3Acore%3Afruit-centre&bookId=guixue%3A10174&unitId=21840&dueOnly=false&returnTo=%2Fvocabulary%2Fentry%2F${raw.id}`);
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());expect(screen.getByText(/containing its seeds/)).toBeInTheDocument();
+  await userEvent.setup().click(screen.getByRole('button',{name:'Start session'}));expect(screen.getAllByRole('textbox')).toHaveLength(1);
+  const draft=JSON.parse(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')!).session;expect(draft.cardSnapshots[0].context).toMatchObject({bookId:'guixue:10174',unitId:'21840',senseId:'editorial:core:fruit-centre'});expect(draft.cardSnapshots[0].entry.senses[0].definition).toContain('seeds');expect(JSON.stringify(fb.current.state)).toBe(before);expect(fb.current.persistNow).not.toHaveBeenCalled();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();view.unmount();
+  mount('?dueOnly=false');expect(await screen.findByText('No words match these filters.')).toBeInTheDocument();expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
+});
+
+test('direct historical route loads the frozen session source book without a book query', async()=>{
+  fb.current.loadVocabularyCatalog=vi.fn(async()=>true);fb.current.state.vocabularySessions=[{id:'history-book',mode:'dictation',status:'submitted',filter:{},selection:{kind:'unit',bookId:'source-book',unitId:'source-group'},preferences:{},results:[{cardId:'historic-card',entryId:'historic-word',senseId:'historic-sense',term:'peel',response:'peal',expectedAnswer:'peel',definition:'Old meaning.',example:'',result:'failure'}],entryIds:['historic-word'],summary:{total:1,correct:0,incorrect:1,pending:0},submittedAt:'2025-01-01',startedAt:'2025-01-01'}];
+  render(<MemoryRouter initialEntries={['/vocabulary/history/history-book']}><Routes><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes></MemoryRouter>);
+  expect(await screen.findByRole('table')).toBeInTheDocument();await waitFor(()=>expect(fb.current.loadVocabularyCatalog).toHaveBeenCalledWith('source-book'));expect(screen.getByRole('button',{name:'Play UK pronunciation of peel'})).toBeInTheDocument();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
 });
