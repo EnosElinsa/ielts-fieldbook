@@ -1,6 +1,7 @@
 import learningSenses from './learningSenseOverlay.json';
 import { VOCABULARY_CATALOG } from './catalog';
 import taskSenseBindings from './taskSenseBindings.json';
+import contextSenses from './contextSenseOverlay.json';
 import type { VocabularyEntry, VocabularySense } from './types';
 export const VOCABULARY_CONTENT_VERSION = 'reviewed-2026-10-10.1';
 export type VocabularyLearningTask = { prompt: string; acceptedAnswers: string[]; explanation: string; options?: string[] };
@@ -113,6 +114,12 @@ reviewed['tremendous'] = {definition:'Very great in amount or degree.',example:'
 reviewed['unbiased'] = {definition:'Not favouring any particular side.',example:'The panel must provide an unbiased assessment.',answers:['impartial'],explanation:'In this context, impartial expresses the meaning of unbiased.'};
 export function escapePattern(text: string) { return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 export function concealWord(text: string, answer: string) { return text.replace(new RegExp(`(?<![\\p{L}\\p{N}_])${escapePattern(answer)}(?![\\p{L}\\p{N}_])`, 'giu'), '_____'); }
+const editableSenseFields = ['definition', 'example', 'pos', 'collocations', 'usage', 'synonyms', 'antonyms', 'distinctions', 'distinctionTask', 'wordFamily', 'register'] as const;
+/** Provenance survives editing; compare actual learner-editable content to known baselines. */
+export function hasVocabularySenseEdits(sense: VocabularySense, baselines: (VocabularySense | undefined | null)[]): boolean {
+ const known = baselines.filter((item): item is VocabularySense => Boolean(item));
+ return sense.source === 'Personal note' || Boolean(known.length && editableSenseFields.some(field => !known.some(item => JSON.stringify(item[field] ?? (Array.isArray(sense[field]) ? [] : '')) === JSON.stringify(sense[field] ?? (Array.isArray(item[field]) ? [] : '')))));
+}
 export function reviewedEntry(entry: VocabularyEntry): VocabularyEntry {
  if (!entry.id.startsWith('vocab:') && !entry.id.startsWith('guixue:') && !entry.senses.some(sense => sense.source?.includes('Kaikki') || sense.source === 'Fieldbook editorial')) return entry;
  const item = reviewed[entry.term.toLowerCase()];
@@ -150,7 +157,9 @@ export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mod
  const catalogEntry = VOCABULARY_CATALOG.entries.find(item => item.id === entry.id) as unknown as VocabularyEntry | undefined;
  const dictionarySense = (learningSenses as Record<string, VocabularySense>)[entry.term.toLowerCase()];
  const originalSense = catalogEntry?.senses.find(item => item.id === sense.id) || (dictionarySense?.id === sense.id ? dictionarySense : undefined);
- const customContent = sense.source === 'Personal note' || !sense.editorial && originalSense && (sense.definition !== originalSense.definition || sense.example !== originalSense.example);
+ const manifestSenses = [...contextSenses.bindings, ...contextSenses.defaults].filter(item => item.entryId === entry.id && item.sense.id === sense.id).flatMap(item => [item.sense, item.originalSense]) as unknown as (VocabularySense | null)[];
+ const reviewedOriginal = catalogEntry ? reviewedEntry(catalogEntry).senses.find(item => item.id === sense.id) : undefined;
+ const customContent = hasVocabularySenseEdits(sense, [originalSense, reviewedOriginal, ...manifestSenses]);
  const item = eligible && !customContent ? reviewed[entry.term.toLowerCase()] : undefined;
  // Reordering a group-specific sense must never retarget a term's reviewed task.
  const canonical = (learningSenses as Record<string, VocabularySense>)[entry.term.toLowerCase()];
