@@ -25,7 +25,7 @@ export function useVocabularyPracticeController() {
   const location = useLocation();
   const { sessionId: historySessionId } = useParams();
   const navigate = useNavigate();
-  const legacyStudy = Boolean(params.get('bookId') && params.get('unitId') && params.get('dueOnly') === 'false' && params.get('wrongOnly') !== 'true' && !['entryId', 'senseId', 'sourceType', 'dimension', 'skill'].some(key => params.has(key)));
+  const legacyStudy = location.pathname === '/vocabulary/review' && Boolean(params.get('bookId') && params.get('unitId') && params.get('dueOnly') === 'false' && params.get('wrongOnly') !== 'true' && !['entryId', 'senseId', 'sourceType', 'dimension', 'skill'].some(key => params.has(key)));
   const study = location.pathname === '/vocabulary/study' || legacyStudy;
   const initialPreferences = normalizeVocabularyPreferences(
     fb.state.settings?.vocabulary,
@@ -34,7 +34,7 @@ export function useVocabularyPracticeController() {
   const [mode, setMode] = useState<VocabularyPracticeMode>(() =>
     MODES.some((item) => item.value === params.get("mode"))
       ? (params.get("mode") as VocabularyPracticeMode)
-      : initialPreferences.mode,
+      : (study ? "dictation" : initialPreferences.mode),
   );
   const [bookId, setBook] = useState(params.get("bookId") || "all");
   const [unitId, setUnit] = useState(params.get("unitId") || "all");
