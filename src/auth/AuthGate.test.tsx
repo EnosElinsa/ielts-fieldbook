@@ -4,10 +4,12 @@ import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { AuthGate } from './AuthGate';
 
-const { signUp, resend, resetPasswordForEmail, onAuthStateChange } = vi.hoisted(() => {
+const { signUp, signInWithPassword, getSession, resend, resetPasswordForEmail, onAuthStateChange } = vi.hoisted(() => {
   type AuthListener = (event: string, session: unknown) => void;
   return {
     signUp: vi.fn(),
+    signInWithPassword: vi.fn(),
+    getSession: vi.fn(async () => ({ data: { session: null }, error: null })),
     resend: vi.fn(),
     resetPasswordForEmail: vi.fn(),
     onAuthStateChange: vi.fn((callback: AuthListener) => {
@@ -24,9 +26,9 @@ vi.mock('../lib/supabase', () => ({
       signUp,
       resend,
       resetPasswordForEmail,
-      signInWithPassword: vi.fn(),
+      signInWithPassword,
       updateUser: vi.fn(),
-      getSession: async () => ({ data: { session: null } }),
+      getSession,
       onAuthStateChange,
     },
   }),
@@ -35,6 +37,9 @@ vi.mock('../lib/supabase', () => ({
 afterEach(() => {
   cleanup();
   signUp.mockReset();
+  signInWithPassword.mockReset();
+  getSession.mockReset();
+  getSession.mockResolvedValue({ data: { session: null }, error: null });
   resend.mockReset();
   resetPasswordForEmail.mockReset();
   onAuthStateChange.mockClear();
@@ -118,4 +123,44 @@ test('the notebook opens when a session exists', async () => {
   listener('SIGNED_IN', { user: { id: 'u' } });
   expect(await screen.findByText('Notebook')).toBeInTheDocument();
   expect(screen.queryByText('Confirm this address')).not.toBeInTheDocument();
+});
+
+const connectionError = 'Could not reach the sign-in service. Check your connection and try again. The service may be temporarily unavailable.';
+
+test('a returned connection error leaves sign-in available and preserves the input', async () => {
+  signInWithPassword.mockResolvedValue({ data: { session: null }, error: { message: 'Failed to fetch' } });
+  await renderGate();
+  await userEvent.type(screen.getByLabelText('Email'), 'learner@example.test');
+  await userEvent.type(screen.getByLabelText('Password'), 'test-password');
+  await userEvent.click(screen.getByRole('button', { name: /^Sign in$/ }));
+  expect(await screen.findByText(connectionError)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /^Sign in$/ })).toBeEnabled();
+  expect(screen.getByLabelText('Email')).toHaveValue('learner@example.test');
+  expect(screen.getByLabelText('Password')).toHaveValue('test-password');
+});
+
+test('a thrown sign-in connection failure releases the busy state', async () => {
+  signInWithPassword.mockRejectedValue(new TypeError('Failed to fetch'));
+  await renderGate();
+  await userEvent.type(screen.getByLabelText('Email'), 'learner@example.test');
+  await userEvent.type(screen.getByLabelText('Password'), 'test-password');
+  await userEvent.click(screen.getByRole('button', { name: /^Sign in$/ }));
+  expect(await screen.findByText(connectionError)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /^Sign in$/ })).toBeEnabled();
+});
+
+test('a failed saved-session check shows a retry and recovers without clearing the session', async () => {
+  getSession.mockRejectedValueOnce(new TypeError('Failed to fetch'));
+  await renderGate();
+  expect(await screen.findByText(connectionError)).toBeInTheDocument();
+  getSession.mockResolvedValueOnce({ data: { session: { user: { id: 'u' } } }, error: null } as never);
+  await userEvent.click(screen.getByRole('button', { name: 'Retry connection' }));
+  expect(await screen.findByText('Notebook')).toBeInTheDocument();
+});
+
+test('a returned saved-session error offers the same connection retry', async () => {
+  getSession.mockResolvedValueOnce({ data: { session: null }, error: { message: 'Failed to fetch' } } as never);
+  await renderGate();
+  expect(screen.getByText(connectionError)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Retry connection' })).toBeEnabled();
 });
