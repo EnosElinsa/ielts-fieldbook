@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 
 test('release catalogue contains full source membership without personal history',()=>{
   const catalogue=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'));
+  expect(catalogue.books.map((book: {title: string}) => book.title)).toEqual(['IELTS Vocabulary', 'IELTS Reading Keywords', 'IELTS Listening Vocabulary', 'IELTS Listening Essentials', 'IELTS Listening Practice 21', 'IELTS Listening Practice 20']);
   expect(catalogue.books.map((book:{importedEntryCount:number})=>book.importedEntryCount)).toEqual([3632,376,3051,1399,361,386]);
   expect(catalogue.memberships).toHaveLength(9205);
   expect(catalogue.entries).toHaveLength(7021);

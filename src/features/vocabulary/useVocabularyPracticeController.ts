@@ -10,7 +10,8 @@ import { buildVocabularySessionCommit, createVocabularySession, evaluateVocabula
 import { buildUnitPracticeQueue } from "../../domain/vocabulary/selection";
 import { createVocabularyPlayback } from "./playback";
 import { practiceKeyboard } from "./practiceKeyboard";
-import { MODES, senseFor, titleCase } from "./practicePresentation";
+import { presentVocabularySession } from '../../domain/vocabulary/sessionPresentation';
+import { MODES, senseFor } from "./practicePresentation";
 
 type Session = VocabularyPracticeSession;
 type Prepared = ReturnType<typeof buildVocabularySessionCommit>;
@@ -56,7 +57,12 @@ export function useVocabularyPracticeController() {
   const [storageError, setStorageError] = useState(false);
   const [catalogStatus, setCatalogStatus] = useState<{ bookId: string; status: 'loading' | 'ready' | 'error' }>({ bookId: '', status: 'loading' });
   const [catalogRetry, setCatalogRetry] = useState(0);
-  const [resultFilter, setResultFilter] = useState('all');
+  const resultFilter = ['all', 'incorrect', 'unanswered', 'pending', 'flagged'].includes(params.get('resultFilter') || '') ? params.get('resultFilter')! : 'all';
+  function setResultFilter(value: string) {
+    const next = new URLSearchParams(params);
+    if (value === 'all') next.delete('resultFilter'); else next.set('resultFilter', value);
+    setParams(next, { replace: true });
+  }
   const owner = useRef(accountId());
   const sessionRef = useRef<Session | null>(null);
   const cardsRef = useRef<ReviewCard[]>([]);
@@ -264,9 +270,22 @@ export function useVocabularyPracticeController() {
   });
   const resultGroupIndex = orderedGroups.findIndex(unit => unit.id === resultUnitId);
   const nextGroup = resultGroupIndex >= 0 ? orderedGroups[resultGroupIndex + 1] : null;
-  const recent = (fb.state.vocabularySessions || [])
+  const recent = ((fb.state.vocabularySessions || []) as SessionLog[])
     .slice(-5)
-    .reverse() as SessionLog[];
+    .reverse().map(presentVocabularySession);
+
+  useEffect(() => {
+    if (sessionRef.current || savingRef.current) return;
+    const id = params.get('sessionId');
+    if (!id) { setResults(null); return; }
+    const record = ((fb.state.vocabularySessions || []) as SessionLog[]).find(record => record.id === id);
+    if (record) { setResults(presentVocabularySession(record)); setCards([]); setError(''); }
+    else if (fb.booted) { setResults(null); setError('This saved session is unavailable for this account.'); }
+  }, [params.get('sessionId'), fb.state.vocabularySessions, fb.booted]);
+
+  const resultReturnParams = new URLSearchParams(params);
+  if (results) resultReturnParams.set('sessionId', results.id);
+  const resultReturnTo = `${location.pathname}?${resultReturnParams}`;
 
   function changeFilter(key: string, value: string) {
     const next = new URLSearchParams(params);
@@ -436,7 +455,9 @@ export function useVocabularyPracticeController() {
     cardsRef.current = frozen;
     setCards(frozen);
     setResults(null);
-    setResultFilter('all');
+    const setupParams = new URLSearchParams(params);
+    setupParams.delete('sessionId'); setupParams.delete('resultFilter');
+    setParams(setupParams, { replace: true });
     setResume(null);
     setError("");
     setAudioStatus("");
@@ -674,6 +695,10 @@ export function useVocabularyPracticeController() {
       clearVocabularyDraft(owner.current);
       setResume(null);
       setResults(prepared.sessionRecord);
+      const resultParams = new URLSearchParams(params);
+      resultParams.set('sessionId', prepared.sessionRecord.id);
+      resultParams.delete('resultFilter');
+      setParams(resultParams, { replace: true });
       sessionRef.current = null;
       setSession(null);
       pendingCommit.current = null;
@@ -725,22 +750,10 @@ export function useVocabularyPracticeController() {
     setResults(null);
     setCards([]);
     setError("");
+    const next = new URLSearchParams(params);
+    next.delete('sessionId'); next.delete('resultFilter');
+    setParams(next, { replace: true });
   }
-  function resultSource(entryId: string) {
-    const entry = (fb.state.vocabulary as VocabularyEntry[]).find(
-      (item) => item.id === entryId,
-    );
-    const source =
-      entry?.sources.find((item) => item.bookId === results?.filter.bookId) ||
-      entry?.sources[0];
-    if (source?.bookId)
-      return String(
-        books.find((book) => book.id === source.bookId)?.title || "Wordbook",
-      );
-    return source ? titleCase(source.type) : "Vocabulary";
-  }
-
-
   function discardResume() {
     clearVocabularyDraft(owner.current);
     setResume(null);
@@ -749,6 +762,9 @@ export function useVocabularyPracticeController() {
   function showRecentSession(log: SessionLog) {
     setResults(log);
     setCards([]);
+    const next = new URLSearchParams(params);
+    next.set('sessionId', log.id); next.delete('resultFilter');
+    setParams(next);
   }
   function retryCatalog() {
     setCatalogRetry(value => value + 1);
@@ -809,12 +825,12 @@ export function useVocabularyPracticeController() {
     dueOnly, setDue, wrongOnly, setWrong, session, cards, resume, results,
     settingsOpen, setSettingsOpen, exitOpen, setExitOpen, incompleteOpen, setIncompleteOpen,
     saving, recovering, error, audioStatus, audioBusy, looping, storageError, catalogStatus,
-    resultFilter, setResultFilter, queue, unitQueue, books, units, selectedUnit,
+    resultFilter, setResultFilter, resultReturnTo, queue, unitQueue, books, units, selectedUnit,
     selectedBook, chapter, catalogReady, leafUnits, studyReady, answered, flagged,
     count, locked, currentIndex, pageStart, visibleCards, resultRows, nextGroup, recent,
     changeFilter, changeMode, playCard, begin, recover, updateAnswer, finalizeAnswer,
     focusCard, advance, toggleFlag, reportProduction, submit, savePreferences, exit,
-    resetResults, resultSource, discardResume, showRecentSession, retryCatalog,
+    resetResults, discardResume, showRecentSession, retryCatalog,
     registerAnswerField, pauseSession, replayCard, toggleCurrentAudio, toggleAudioLoop,
     handleWorkbenchKeyDown, retryMistakes,
     submissionPending: Boolean(pendingCommit.current),

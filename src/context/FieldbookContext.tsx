@@ -46,6 +46,8 @@ import {
 } from '../domain';
 import { downloadFile, hydrateState, loadState, saveState, saveVocabularyImport, saveVocabularySession, loadVocabularyCatalog as readVocabularyCatalog } from '../storage';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
+import { genericWordbook } from '../domain/vocabulary/wordbookNames';
+import { resolveRegionalSpellingWrongWords } from '../domain/vocabulary/regionalWrongWords';
 import { vocabularyLists } from '../domain/vocabulary';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
@@ -342,7 +344,7 @@ function useFieldbookValue() {
       const merge = (key, values) => {
         const identity = item => key === 'units' ? `${item.bookId}:${item.id}` : item.id;
         const rows = new Map(VOCABULARY_CATALOG[key].map(item => [identity(item), item]));
-        values.forEach(item => rows.set(identity(item), item));
+        values.forEach(item => rows.set(identity(item), key === 'books' ? genericWordbook(item) : item));
         VOCABULARY_CATALOG[key] = [...rows.values()];
       };
       let releasedCatalogue;
@@ -525,6 +527,7 @@ function useFieldbookValue() {
       }
       if (cancelled) return;
       lastSaved.current = structuredClone(draft);
+      const correctedSpellings = resolveRegionalSpellingWrongWords(draft);
       const recovery = readDraftRecovery(accountId());
       const changedDrafts = recovery ? differentDrafts(recovery.drafts, draft.drafts) : {};
       if (Object.keys(changedDrafts).length) setRecoveryDrafts(changedDrafts);
@@ -543,6 +546,7 @@ function useFieldbookValue() {
         stateRef.current = draft;
         setState(draft);
         setBooted(true);
+        if (correctedSpellings.length) void persistNow(draft);
         const params = new URLSearchParams(location.search);
         const filename = params.get('assessmentFile');
         if (filename && /^assessment-[A-Za-z0-9._-]+\.md$/.test(filename)) {

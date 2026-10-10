@@ -103,16 +103,15 @@ test("explicit unit sessions count answered production without treating pending 
   expect(screen.getByRole("link", { name: /Continue study/ })).toHaveAttribute("href", expect.stringContaining("unitId=later"));
 });
 
-test("entry practice stays focused on the word and source history is secondary", async () => {
+test("entry details omit raw source context and retain review history", async () => {
   fixture();
   fb.current.state.vocabulary[0].sources[0].context = "A source passage.";
   const fetchStub = vi.spyOn(globalThis, "fetch").mockResolvedValue({ ok: true, json: async () => ({ entries: [] }) } as Response);
   render(<MemoryRouter initialEntries={["/vocabulary/entry/one"]}><Routes><Route path="/vocabulary/entry/:id" element={<VocabularyEntryPage />} /></Routes></MemoryRouter>);
   expect(screen.getByRole("link", { name: /Practise this word/ })).toHaveAttribute("href", "/vocabulary/review?entryId=one&dueOnly=false");
-  expect(screen.getByText("Source context").closest("details")).not.toHaveAttribute("open");
+  expect(screen.queryByText("Source context")).not.toBeInTheDocument();
+  expect(screen.queryByText("A source passage.")).not.toBeInTheDocument();
   expect(screen.getByText("Review history").closest("details")).not.toHaveAttribute("open");
-  fireEvent.click(screen.getByText("Source context"));
-  expect(screen.getByText("Source context").closest("details")).toHaveAttribute("open");
   await screen.findByText("No additional dictionary senses available.");
   fetchStub.mockRestore();
 });
@@ -123,6 +122,20 @@ test("wrong word recovery preserves active source filters in its practice link",
   fireEvent.click(screen.getByRole("button", { name: "Wrong word book" }));
   fireEvent.click(screen.getByRole("option", { name: "IELTS source book" }));
   expect(screen.getByRole("link", { name: /Recover wrong words/ })).toHaveAttribute("href", "/vocabulary/review?wrongOnly=true&dueOnly=false&bookId=book");
+});
+
+test.each([
+  ['/vocabulary/review?sessionId=saved&resultFilter=incorrect', 'Back to session word list'],
+  ['https://example.com', 'My vocabulary'],
+  ['//example.com/vocabulary/review', 'My vocabulary'],
+  ['/vocabulary/review\\evil', 'My vocabulary'],
+])('entry return link preserves a safe session context: %s', async (returnTo, title) => {
+  fixture();
+  const fetchStub = vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: true, json: async () => ({ entries: [] }) } as Response);
+  render(<MemoryRouter initialEntries={[`/vocabulary/entry/one?returnTo=${encodeURIComponent(returnTo)}`]}><Routes><Route path="/vocabulary/entry/:id" element={<VocabularyEntryPage />} /></Routes></MemoryRouter>);
+  expect(screen.getByRole('link', { name: title })).toHaveAttribute('href', title === 'My vocabulary' ? '/vocabulary' : returnTo);
+  await screen.findByText('No additional dictionary senses available.');
+  fetchStub.mockRestore();
 });
 
 

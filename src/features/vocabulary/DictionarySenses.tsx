@@ -58,7 +58,7 @@ export function DictionarySenses({ entry }: { entry: VocabularyEntry }) {
     {senses.map((sense, index) => <section className="vocabulary-sense" key={sense.id}>
       <div className="vocabulary-sense-head"><h4>{index + 1}. {sense.pos}</h4><button type="button" className="btn line" disabled={saving !== null} onClick={() => void studySense(sense)}><BookOpen size={15} />{saving === sense.id ? 'Saving...' : 'Practise this sense'}</button></div>
       <p>{sense.definition}</p>{sense.example ? <blockquote>{sense.example}</blockquote> : null}
-      <p className="vocabulary-muted">{sense.attribution} | {sense.license} | <a href={sense.sourceUrl} target="_blank" rel="noopener noreferrer">Source</a></p>
+      <p className="vocabulary-muted">{[sense.attribution, sense.license].filter(Boolean).join(' | ')}</p>
     </section>)}
   </section>;
 }

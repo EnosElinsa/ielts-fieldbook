@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from 'react';
+import { accountId } from '../../storage/remote';
+import { isRegionalSpellingDifference } from '../../domain/vocabulary/spelling';
 import { ArrowRight, Check, RotateCcw } from "lucide-react";
 import { FilterMenu } from "../../components/ui";
 import type { VocabularySessionRecord } from "../../domain/vocabulary/session";
@@ -9,7 +12,25 @@ export function VocabularyPracticeResults({ controller, results }: {
   controller: VocabularyPracticeController;
   results: VocabularySessionRecord;
 }) {
-  const { resultFilter, setResultFilter, resultRows, nextGroup, resetResults, resultSource, retryMistakes } = controller;
+  const { resultFilter, setResultFilter, resultRows, nextGroup, resetResults, resultReturnTo, retryMistakes } = controller;
+  const table = useRef<HTMLDivElement>(null);
+  const positionKey = `fieldbook:session-position:${accountId()}:${results.id}:${resultFilter}`;
+  useEffect(() => {
+    let frame = 0;
+    try {
+      const position = JSON.parse(sessionStorage.getItem(positionKey) || 'null');
+      if (position) frame = requestAnimationFrame(() => {
+        window.scrollTo(0, position.y);
+        if (table.current) table.current.scrollLeft = position.x;
+        if (position.entryId) document.getElementById(`session-row-${position.entryId}`)?.querySelector<HTMLAnchorElement>('a')?.focus({ preventScroll: true });
+      });
+    } catch { /* Browser storage may be disabled. */ }
+    return () => cancelAnimationFrame(frame);
+  }, [positionKey]);
+  const rememberPosition = (entryId: string) => {
+    try { sessionStorage.setItem(positionKey, JSON.stringify({ y: window.scrollY, x: table.current?.scrollLeft || 0, entryId })); } catch { /* Navigation works without storage. */ }
+  };
+  const detailLink = (entryId: string) => `/vocabulary/entry/${encodeURIComponent(entryId)}?returnTo=${encodeURIComponent(resultReturnTo)}`;
   const hasMistakes = results.mode !== "audio" && results.results.some(row => row.result === "failure" || row.result === "partial");
   return (
     <section className="practice-results">
@@ -62,7 +83,7 @@ export function VocabularyPracticeResults({ controller, results }: {
         <span>{resultRows.length} of {results.results.length} results</span>
         {results.selection?.kind === 'unit' ? <p>Group practice saved. Mastery is tracked separately across reviews.</p> : null}
       </div>
-      <div className="practice-result-table-wrap">
+      <div className="practice-result-table-wrap" ref={table}>
         <table>
           <thead>
             <tr>
@@ -70,15 +91,15 @@ export function VocabularyPracticeResults({ controller, results }: {
               <th>Your response</th>
               <th>Answer</th>
               <th>Result</th>
-              <th>Source</th>
+              <th>Details</th>
             </tr>
           </thead>
           <tbody>
             {resultRows.map((row, index) => (
-              <tr key={`${row.cardId}:${index}`}>
+              <tr key={`${row.cardId}:${index}`} id={`session-row-${row.entryId}`}>
                 <th scope="row">
                   <Link
-                    to={`/vocabulary/entry/${encodeURIComponent(row.entryId)}`}
+                    to={detailLink(row.entryId)} onClick={() => rememberPosition(row.entryId)}
                   >
                     {row.term}
                   </Link>
@@ -100,13 +121,11 @@ export function VocabularyPracticeResults({ controller, results }: {
                         : "Unplayed"
                       : resultName(row.result)}
                   </span>
+                  {results.mode === 'dictation' && row.result === 'success' && isRegionalSpellingDifference(row.expectedAnswer || row.term, row.response) ? <small>UK/US spelling accepted</small> : null}
                 </td>
                 <td>
-                  <span className="practice-result-source">
-                    {resultSource(row.entryId)}
-                  </span>
                   <Link
-                    to={`/vocabulary/entry/${encodeURIComponent(row.entryId)}`}
+                    to={detailLink(row.entryId)} onClick={() => rememberPosition(row.entryId)}
                   >
                     Details
                     <ArrowRight size={12} />
