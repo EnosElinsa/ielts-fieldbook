@@ -20,7 +20,7 @@ export function VocabularyPracticeResults({ controller, results }: {
   controller: VocabularyPracticeController;
   results: VocabularySessionRecord;
 }) {
-  const { resultFilter, setResultFilter, resultRows, nextGroup, resetResults, resultReturnTo, retryMistakes } = controller;
+  const { resultFilter, setResultFilter, resultRows, nextGroup, resetResults, resultReturnTo, retryMistakes, retryPreparing } = controller;
   const table = useRef<HTMLDivElement>(null);
   const positionKey = `fieldbook:session-position:${accountId()}:${results.id}:${resultFilter}`;
   useEffect(() => {
@@ -172,10 +172,12 @@ export function VocabularyPracticeResults({ controller, results }: {
           <button
             className="btn primary"
             type="button"
-            onClick={retryMistakes}
+            disabled={retryPreparing}
+            aria-busy={retryPreparing}
+            onClick={() => void retryMistakes()}
           >
             <RotateCcw size={15} />
-            Retry mistakes
+            {retryPreparing ? 'Preparing retry…' : 'Retry mistakes'}
           </button>
         ) : null}
         {nextGroup ? <Link className={`btn ${hasMistakes ? "line" : "primary"}`} to={`/vocabulary/study?bookId=${encodeURIComponent(nextGroup.bookId)}&unitId=${encodeURIComponent(nextGroup.id)}&dueOnly=false`} onClick={resetResults}>Next group <ArrowRight size={15} /></Link> : null}

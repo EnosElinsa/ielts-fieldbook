@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useState } from 'react';
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Link, useLocation, useNavigate, Routes, Route } from "react-router-dom";
@@ -772,4 +772,75 @@ test('historical retry visibly blocks unavailable tasks instead of silently retr
   expect(screen.getByRole('table')).toBeInTheDocument();
   expect(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')).toBeNull();
   expect(JSON.stringify(fb.current.state)).toBe(before);
+});
+
+function delayedHistoryFixture() {
+  const released=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'));
+  const raw=released.entries.find((entry:any)=>entry.term==='core');
+  const row={cardId:'ve-7c70dbbe:kaikki:846f18ca02f7f1d01c:dictation',entryId:raw.id,senseId:'kaikki:846f18ca02f7f1d01c',term:'core',expectedAnswer:'core',response:'cor',result:'failure',definition:'Old core definition.',example:''};
+  fb.current.state.vocabularySessions=[{id:'delayed-history',mode:'dictation',status:'submitted',selection:{kind:'unit',bookId:'guixue:10174',unitId:'21840'},filter:{},preferences:{},results:[row],entryIds:[raw.id],summary:{total:1,correct:0,incorrect:1,pending:0},startedAt:'2025-01-01',submittedAt:'2025-01-01'}];
+  VOCABULARY_CATALOG.entries=originalCatalog.entries.filter(entry=>entry.id!==raw.id);
+  VOCABULARY_CATALOG.memberships=originalCatalog.memberships.filter(member=>member.entryId!==raw.id);
+  let complete!:()=>void;
+  let fail!:(error:Error)=>void;
+  const pending=new Promise<void>((resolve,reject)=>{complete=()=>{Object.assign(VOCABULARY_CATALOG,released);resolve();};fail=reject;});
+  fb.current.loadVocabularyCatalog=vi.fn((book?:string)=>book==='guixue:10174'?pending:Promise.resolve());
+  return {complete,fail,before:JSON.stringify(fb.current.state)};
+}
+
+test('historical retry waits for delayed source catalog and prevents duplicate retry clicks',async()=>{
+  const {complete,before}=delayedHistoryFixture();
+  mount('?sessionId=delayed-history');
+  const button=await screen.findByRole('button',{name:'Retry mistakes'});
+  fireEvent.click(button);fireEvent.click(button);
+  expect(screen.getByRole('button',{name:/Preparing retry/i})).toBeDisabled();
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  expect(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')).toBeNull();
+  expect(fb.current.loadVocabularyCatalog.mock.calls.filter(([book]:[string])=>book==='guixue:10174')).toHaveLength(2); // one background load, one guarded retry wait
+  await act(async()=>complete());
+  expect(await screen.findByRole('textbox',{name:'Answer 1'})).toBeInTheDocument();
+  expect(JSON.stringify(fb.current.state)).toBe(before);
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+});
+
+test('historical retry load failure keeps results and supports a successful second click',async()=>{
+  const {complete,fail,before}=delayedHistoryFixture();
+  mount('?sessionId=delayed-history');
+  fireEvent.click(await screen.findByRole('button',{name:'Retry mistakes'}));
+  await act(async()=>fail(new Error('Offline')));
+  expect(await screen.findByRole('alert')).toHaveTextContent(/wordbook.*could not be loaded/i);
+  expect(screen.getByRole('button',{name:'Retry mistakes'})).toBeEnabled();
+  expect(screen.getByRole('table')).toBeInTheDocument();
+  expect(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')).toBeNull();
+  fb.current.loadVocabularyCatalog.mockImplementation(async()=>complete());
+  await userEvent.setup().click(screen.getByRole('button',{name:'Retry mistakes'}));
+  expect(await screen.findByRole('textbox',{name:'Answer 1'})).toBeInTheDocument();
+  expect(JSON.stringify(fb.current.state)).toBe(before);
+});
+
+test('historical retry ignores a delayed catalog completion after account changes',async()=>{
+  const {complete}=delayedHistoryFixture();
+  const view=mount('?sessionId=delayed-history');
+  fireEvent.click(await screen.findByRole('button',{name:'Retry mistakes'}));
+  expect(screen.getByRole('button',{name:/Preparing retry/i})).toBeDisabled();
+  owner.current='account-two';
+  fb.current.state={...fb.current.state,vocabularySessions:[]};fb.current.stateRef.current=fb.current.state;
+  view.rerender(<MemoryRouter><VocabularyPracticePage/></MemoryRouter>);
+  await act(async()=>complete());
+  expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+  expect(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')).toBeNull();
+  expect(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-two')).toBeNull();
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+});
+
+test('historical retry does not start after leaving the results while the catalog loads',async()=>{
+  const {complete}=delayedHistoryFixture();
+  mount('?sessionId=delayed-history');
+  fireEvent.click(await screen.findByRole('button',{name:'Retry mistakes'}));
+  expect(screen.getByRole('button',{name:/Preparing retry/i})).toBeDisabled();
+  await userEvent.setup().click(screen.getByRole('button',{name:'New session'}));
+  await act(async()=>complete());
+  expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+  expect(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')).toBeNull();
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
 });
