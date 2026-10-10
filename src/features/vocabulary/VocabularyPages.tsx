@@ -26,6 +26,7 @@ import {
   resolveWrongWord,
   setVocabularyManualStatus,
 } from "../../domain/vocabulary";
+import { accountId } from '../../storage/remote';
 import { reviewedEntry } from "../../domain/vocabulary/content";
 import { vocabularyGroupProgress } from "../../domain/vocabulary/progress";
 import "../../styles/vocabulary.css";
@@ -252,11 +253,11 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
   const [source, setSource] = useState(wordParams.get("source") || "all");
   const [skill, setSkill] = useState(wordParams.get("skill") || "all");
   const [selected, setSelected] = useState(new Set());
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(Number(wordParams.get("page") || 0));
   const [bulk, setBulk] = useState("familiar");
-  useEffect(() => { const next = new URLSearchParams(wordParams); [['search', search], ['status', status], ['source', source], ['skill', skill]].forEach(([key,value]) => value && value !== 'all' ? next.set(key,value) : next.delete(key)); if (next.toString() !== wordParams.toString()) setWordParams(next, {replace:true}); }, [search,status,source,skill]);
-  useEffect(() => { const saved = vocabularyReturnPositions.get(location.pathname + location.search); if (saved) requestAnimationFrame(() => { window.scrollTo?.(0,saved.scroll); document.getElementById(saved.focus)?.focus(); }); }, []);
-  const rememberReturn = entryId => vocabularyReturnPositions.set(location.pathname + location.search, {scroll:window.scrollY,focus:`vocabulary-word-${entryId}`});
+  useEffect(() => { const next = new URLSearchParams(wordParams); [['search', search], ['status', status], ['source', source], ['skill', skill], ['page', String(page)]].forEach(([key,value]) => value && value !== 'all' ? next.set(key,value) : next.delete(key)); if (next.toString() !== wordParams.toString()) setWordParams(next, {replace:true}); }, [search,status,source,skill,page]);
+  useEffect(() => { const saved = vocabularyReturnPositions.get(`${accountId()}:${location.pathname + location.search}`); if (saved) requestAnimationFrame(() => { window.scrollTo?.(0,saved.scroll); document.getElementById(saved.focus)?.focus(); }); }, []);
+  const rememberReturn = entryId => vocabularyReturnPositions.set(`${accountId()}:${location.pathname + location.search}`, {scroll:window.scrollY,focus:`vocabulary-word-${entryId}`});
   const entries = (fb.state.vocabulary || []).filter(
     (entry) => !(entry.tags || []).includes("archived"),
   );
@@ -731,7 +732,7 @@ export function VocabularyEntryPage() {
   const [params] = useSearchParams();
   const requestedReturn = params.get('returnTo');
   const returnTo = requestedReturn && /^\/vocabulary(?:\/(?:review|study|words|wrong|history|wordbooks)(?:\/[^?]*)?)?(?:\?|$)/.test(requestedReturn) && !/[\r\n\\]/.test(requestedReturn) ? requestedReturn : '/vocabulary';
-  const returnLabel = returnTo === '/vocabulary' ? 'My vocabulary' : /^\/vocabulary\/(review|study)/.test(returnTo) ? 'Back to session word list' : 'Back to vocabulary';
+  const returnLabel = returnTo === '/vocabulary' ? 'My vocabulary' : /^\/vocabulary\/(review|study|history)/.test(returnTo) ? 'Back to session word list' : 'Back to vocabulary';
   const { id, entryId } = useParams();
   const rawEntry =
     (fb.state.vocabulary || []).find((item) => item.id === (id || entryId)) ||
@@ -817,7 +818,7 @@ export function VocabularyEntryPage() {
           ? `${accent.toUpperCase()} audio, with browser speech fallback`
           : `${accent.toUpperCase()} browser speech`}
       </p>
-      <div className="vocabulary-entry-practice"><Link className="btn primary" to={`/vocabulary/review?entryId=${encodeURIComponent(entry.id)}&dueOnly=false`}>Practise this word<ArrowRight size={16} /></Link>{entry.enrichmentPending ? <span className="vocabulary-muted">Definition enrichment pending</span> : null}</div>
+      <div className="vocabulary-entry-practice"><Link className="btn primary" to={`/vocabulary/review?returnTo=${encodeURIComponent(returnTo)}&entryId=${encodeURIComponent(entry.id)}&dueOnly=false`}>Practise this word<ArrowRight size={16} /></Link>{entry.enrichmentPending ? <span className="vocabulary-muted">Definition enrichment pending</span> : null}</div>
       {(entry.senses?.length
         ? entry.senses
         : [{ id: "", definition: entry.meaning, example: entry.example }]
