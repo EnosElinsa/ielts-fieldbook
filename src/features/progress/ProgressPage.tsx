@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { ArrowUpRight, CheckCheck, FileCheck2, PenLine } from 'lucide-react';
 import { criterionBands, criterionLabel, criterionSeries, numericOveralls } from '../../domain';
@@ -12,7 +12,11 @@ import { VocabularyProgressPage } from '../vocabulary/VocabularyPages';
 
 export function ProgressPage() {
   const fb = useFieldbook();
-  const [skill, setSkill] = useState(fb.activeSkill);
+  const [params, setParams] = useSearchParams();
+  const category = ['writing','speaking','vocabulary'].includes(params.get('category')) ? params.get('category') : fb.activeSkill;
+  const [skill, setSkill] = useState(category);
+  useEffect(() => { setSkill(category); setTask('all'); }, [category]);
+  function selectCategory(value) { setSkill(value); setTask('all'); const next = new URLSearchParams(params); next.set('category',value); setParams(next,{replace:true}); }
   const [range, setRange] = useState('30');
   const [task, setTask] = useState('all');
   const [status, setStatus] = useState('all');
@@ -57,7 +61,7 @@ export function ProgressPage() {
       <div className="page-tools"><p>Your practice, feedback and progress.</p><Link to="/review" className="btn line">Review attempts <ArrowUpRight size={16} /></Link></div>
       <div className="page-tools"><Link to="/vocabulary/progress" className="btn line">Vocabulary progress <ArrowUpRight size={16} /></Link><Link to="/vocabulary/review" className="btn line">Review vocabulary <ArrowUpRight size={16} /></Link></div>
       <div className="toolbar">
-        <FilterMenu label="Progress skill" value={skill} onChange={(value) => { setSkill(value); setTask('all'); }} options={[{ value: 'writing', label: 'Writing' }, { value: 'speaking', label: 'Speaking' }, { value: 'vocabulary', label: 'Vocabulary' }]} />
+        <FilterMenu label="Progress skill" value={skill} onChange={selectCategory} options={[{ value: 'writing', label: 'Writing' }, { value: 'speaking', label: 'Speaking' }, { value: 'vocabulary', label: 'Vocabulary' }]} />
         <FilterMenu label="Time range" value={range} onChange={setRange} options={[{ value: '7', label: 'Last 7 days' }, { value: '30', label: 'Last 30 days' }, { value: '90', label: 'Last 90 days' }, { value: 'all', label: 'All time' }]} />
         <FilterMenu label="Task or part" value={task} onChange={setTask} options={speaking ? [{ value: 'all', label: 'All parts' }, { value: '1', label: 'Part 1' }, { value: '2', label: 'Part 2' }, { value: '3', label: 'Part 3' }] : [{ value: 'all', label: 'All tasks' }, { value: '1', label: 'Task 1' }, { value: '2', label: 'Task 2' }]} />
       </div>

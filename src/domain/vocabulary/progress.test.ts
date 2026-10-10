@@ -24,3 +24,5 @@ describe('account-scoped vocabulary learning evidence', () => {
     expect(vocabularyGroupProgress(state, group)).toBe('Studied');
   });
 });
+
+it('blank objective submissions do not manufacture learned evidence',()=>{const state:any={vocabularyReviews:[{entryId:'one',response:'',result:'failure'}],vocabularyEvidence:[{entryId:'one',response:'',mode:'dictation',verification:'objective'}],vocabularySessions:[{status:'submitted',mode:'dictation',results:[{entryId:'one',response:''}]}]};expect(getLearnedVocabularyIds(state).size).toBe(0);expect(vocabularyGroupProgress(state,group)).toBe('Not started');});

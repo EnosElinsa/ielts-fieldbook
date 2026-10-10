@@ -225,7 +225,7 @@ export function recordVocabularyReview(state: VocabularyStore, input: { entryId:
   const expected = normalizeAnswer(entry.term); const actual = normalizeAnswer(response);
   const errorType = input.mode === 'dictation' && result === 'failure' ? actual.length < expected.length ? 'missing letters' : actual.length > expected.length ? 'extra letters' : 'wrong letters or word form' : undefined;
   state.vocabularyReviews.push({ id, entryId: entry.id, senseId: learning.senseId, mode: input.mode, result, response, occurredAt: at, durationMs: input.durationMs, errorType, verification: input.verification, bookId: input.bookId, unitId: input.unitId, updatedAt: at });
-  if (input.bookId && input.unitId) {
+  if (input.bookId && input.unitId && response.trim()) {
     let progress = state.wordbookProgress.find(p => p.bookId === input.bookId && p.unitId === input.unitId);
     if (!progress) { progress = { id: `wp-${hashText(`${input.bookId}:${input.unitId}`)}`, bookId: input.bookId, unitId: input.unitId, completedEntryIds: [], status: 'in_progress', updatedAt: at }; state.wordbookProgress.push(progress); }
     progress.completedEntryIds = [...new Set(progress.completedEntryIds.concat(entry.id))]; progress.updatedAt = at;

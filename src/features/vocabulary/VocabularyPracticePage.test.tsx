@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Link, useLocation } from "react-router-dom";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { VocabularyPracticePage } from "./VocabularyPracticePage";
@@ -624,4 +624,13 @@ test("recent history opens a result log without starting a completed attempt", a
   expect(screen.getByText('No results in this view.')).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'New session' }));
   expect(await screen.findByRole('button', { name: 'Start session' })).toBeInTheDocument();
+});
+
+function CurrentRoute(){return <output>{useLocation().pathname}</output>}
+test('active internal navigation lets learners cancel or keep their draft before departure',async()=>{
+const user=userEvent.setup();render(<MemoryRouter initialEntries={['/vocabulary/review?dueOnly=false']}><Link to='/vocabulary/words'>Leave for words</Link><VocabularyPracticePage/><CurrentRoute/></MemoryRouter>);
+await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());await user.click(screen.getByRole('button',{name:'Start session'}));
+await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'my answer');await user.click(screen.getByRole('link',{name:'Leave for words'}));
+expect(screen.getByRole('dialog',{name:'Exit practice session'})).toBeInTheDocument();await user.click(screen.getByRole('button',{name:'Cancel'}));expect(screen.getByText('/vocabulary/review')).toBeInTheDocument();
+await user.click(screen.getByRole('link',{name:'Leave for words'}));await user.click(screen.getByRole('button',{name:'Keep progress'}));expect(screen.getByText('/vocabulary/words')).toBeInTheDocument();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
 });
