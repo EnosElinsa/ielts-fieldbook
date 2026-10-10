@@ -69,6 +69,10 @@ test('full corpus task integrity and per-book coverage audit',()=>{
   const ids=[...new Set<string>(catalog.memberships.filter((m:{bookId:string})=>m.bookId===book.id).map((m:{entryId:string})=>m.entryId))];
   return {id:book.id,title:book.title,total:ids.length,...Object.fromEntries(['definition','cloze','synonym','distinction'].map(mode=>[mode,ids.reduce((sum,id)=>sum+(counts.get(id)?.[mode]||0),0)]))};
  });
- fs.writeFileSync('local/workbench-plan/content-coverage.json',JSON.stringify({contentVersion:'reviewed-2026-10-10.1',entries:catalog.entries.length,dictionarySenses,priorityReplacements:replacements.length,affectedEntryIds:replacements,byBook},null,2));
+ expect(replacements.length).toBeGreaterThan(100);
+ for (const book of byBook) {
+  expect(book.synonym).toBeGreaterThan(0);
+  for (const mode of ['definition','cloze','synonym','distinction']) expect(book[mode]).toBeLessThanOrEqual(book.total);
+ }
  expect(catalog.entries).toHaveLength(7021);expect(dictionarySenses).toBeGreaterThan(51000);expect(byBook).toHaveLength(6);
 }, 20000);
