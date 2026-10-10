@@ -376,6 +376,7 @@ test("edited learner notes remain visible as notes without a context-reviewed he
       usage: "My geology note.",
       collocations: ["my own core phrase"],
       synonyms: ["my synonym note"],
+      register: "My note: formal geology reports only.",
     },
   ];
   mocks.fb.state.vocabulary = [raw];
@@ -387,7 +388,227 @@ test("edited learner notes remain visible as notes without a context-reviewed he
   expect(screen.getByText("Your collocation notes")).toBeInTheDocument();
   expect(screen.getByText("my own core phrase")).toBeInTheDocument();
   expect(screen.getByText("my synonym note")).toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", { name: "Your register note" }),
+  ).toBeInTheDocument();
+  expect(
+    screen.getByText("My note: formal geology reports only."),
+  ).toBeInTheDocument();
+  expect(
+    screen.queryByRole("heading", { name: "Reviewed register" }),
+  ).not.toBeInTheDocument();
   expect(screen.queryByRole("img")).not.toBeInTheDocument();
+});
+test("raw evidence without a review retains response, verification, result and date under entry and matching sense", () => {
+  const raw = core();
+  mocks.fb.state.vocabularyEvidence = [
+    {
+      id: "pending-production",
+      entryId: raw.id,
+      senseId: "editorial:core:fruit-centre",
+      sourceType: "personal",
+      sourceId: "production",
+      mode: "production",
+      dimension: "usage",
+      response: "I removed the core from the apple.",
+      result: "pending",
+      verification: "self-reported",
+      occurredAt: "2026-10-10T10:00:00Z",
+    },
+    {
+      id: "original-sense",
+      entryId: raw.id,
+      senseId: raw.senses[0].id,
+      sourceType: "personal",
+      sourceId: "manual",
+      mode: "definition",
+      dimension: "meaning",
+      response: "My earlier meaning answer.",
+      result: "partial",
+      verification: "assessed",
+      occurredAt: "2026-10-09T10:00:00Z",
+    },
+    {
+      id: "legacy-entry",
+      entryId: raw.id,
+      sourceType: "personal",
+      sourceId: "legacy",
+      mode: "production",
+      dimension: "usage",
+      response: "A saved entry-level response.",
+      result: "pending",
+      verification: "pending",
+      occurredAt: "2026-10-08T10:00:00Z",
+    },
+    {
+      id: "other-entry",
+      entryId: "different-word",
+      sourceType: "personal",
+      sourceId: "other",
+      mode: "production",
+      dimension: "usage",
+      response: "An unrelated response.",
+      result: "success",
+      verification: "objective",
+      occurredAt: "2026-10-07T10:00:00Z",
+    },
+  ];
+  const before = JSON.stringify(mocks.fb.state);
+  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840`);
+  const history = screen.getByText("Review history").closest("details")!;
+  expect(history).not.toHaveAttribute("open");
+  const historyView = within(history);
+  expect(
+    historyView.getByText("I removed the core from the apple."),
+  ).toBeInTheDocument();
+  expect(
+    historyView.getByText("Verification: Self-reported"),
+  ).toBeInTheDocument();
+  expect(historyView.getAllByText("Result: Pending")).toHaveLength(2);
+  expect(historyView.getByText("10/10/2026")).toBeInTheDocument();
+  expect(
+    historyView.getByText("My earlier meaning answer."),
+  ).toBeInTheDocument();
+  expect(
+    historyView.getByText("A saved entry-level response."),
+  ).toBeInTheDocument();
+  expect(
+    historyView.queryByText("An unrelated response."),
+  ).not.toBeInTheDocument();
+  const mainSense = screen
+    .getByRole("heading", { name: "Meaning in this group" })
+    .closest("section")!;
+  const meaningEvidence = within(mainSense)
+    .getByText("Learning evidence for this meaning")
+    .closest("details")!;
+  expect(meaningEvidence).not.toHaveAttribute("open");
+  expect(
+    within(meaningEvidence).getByText("I removed the core from the apple."),
+  ).toBeInTheDocument();
+  expect(
+    within(meaningEvidence).queryByText("My earlier meaning answer."),
+  ).not.toBeInTheDocument();
+  expect(
+    within(meaningEvidence).queryByText("A saved entry-level response."),
+  ).not.toBeInTheDocument();
+  expect(JSON.stringify(mocks.fb.state)).toBe(before);
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+test("confirmed register content is labelled reviewed while raw public register is not promoted", () => {
+  const raw = core();
+  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840`);
+  const main = screen
+    .getByRole("heading", { name: "Meaning in this group" })
+    .closest("section")!;
+  expect(
+    within(main).getByRole("heading", { name: "Reviewed register" }),
+  ).toBeInTheDocument();
+  expect(within(main).getByText("General modern English")).toBeInTheDocument();
+  const other = screen
+    .getByText("Other learning meanings · 1")
+    .closest("details")!;
+  expect(
+    within(other).queryByRole("heading", { name: "Reviewed register" }),
+  ).not.toBeInTheDocument();
+  expect(
+    within(other).queryByRole("heading", { name: "Your register note" }),
+  ).not.toBeInTheDocument();
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+test("a register-only learner edit retains a personal label and does not claim context review", () => {
+  const raw = structuredClone(core());
+  raw.senses = [
+    {
+      ...resolveVocabularyLearningContext(raw, {
+        bookId: book,
+        unitId: "21795",
+      }).sense!,
+      register: "My register-only edit.",
+    },
+  ];
+  mocks.fb.state.vocabulary = [raw];
+  const before = JSON.stringify(mocks.fb.state);
+  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21795`);
+  expect(
+    screen.getByRole("heading", { name: "Your register note" }),
+  ).toBeInTheDocument();
+  expect(screen.getByText("My register-only edit.")).toBeInTheDocument();
+  expect(
+    screen.queryByRole("heading", { name: "Meaning in this group" }),
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("heading", { name: "Reviewed register" }),
+  ).not.toBeInTheDocument();
+  expect(JSON.stringify(mocks.fb.state)).toBe(before);
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+test("failed familiarity saving remains distinct from evidence and allows retry without changing stored records", async () => {
+  const raw = structuredClone(core());
+  mocks.fb.state.vocabulary = [raw];
+  mocks.fb.state.vocabularyEvidence = [
+    {
+      entryId: raw.id,
+      senseId: "editorial:core:fruit-centre",
+      sourceType: "personal",
+      sourceId: "production",
+      mode: "production",
+      dimension: "usage",
+      response: "A previously submitted response.",
+      result: "pending",
+      verification: "pending",
+      occurredAt: "2026-10-10T10:00:00Z",
+    },
+  ];
+  const before = JSON.stringify(mocks.fb.state);
+  let finishSave!: (value: boolean) => void;
+  mocks.fb.persistNow
+    .mockImplementationOnce(
+      () =>
+        new Promise<boolean>((resolve) => {
+          finishSave = resolve;
+        }),
+    )
+    .mockResolvedValueOnce(true);
+  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840`);
+  const user = userEvent.setup();
+  await user.click(
+    screen.getByRole("button", { name: "Familiarity for this meaning" }),
+  );
+  await user.click(screen.getByRole("option", { name: "Familiar" }));
+  expect(
+    screen.queryByText("Familiarity could not be saved. Try again."),
+  ).not.toBeInTheDocument();
+  await user.click(
+    screen.getByRole("button", { name: "Familiarity for this meaning" }),
+  );
+  await user.click(screen.getByRole("option", { name: "Mastered" }));
+  expect(mocks.fb.persistNow).toHaveBeenCalledTimes(1);
+  finishSave(false);
+  expect(await screen.findByRole("alert")).toHaveTextContent(
+    "Familiarity could not be saved. Try again.",
+  );
+  const history = screen.getByText("Review history").closest("details")!;
+  expect(
+    within(history).getByText("A previously submitted response."),
+  ).toBeInTheDocument();
+  expect(
+    within(history).getByText("Verification: Pending"),
+  ).toBeInTheDocument();
+  expect(within(history).getByText("Result: Pending")).toBeInTheDocument();
+  expect(JSON.stringify(mocks.fb.state)).toBe(before);
+  await user.click(
+    screen.getByRole("button", { name: "Familiarity for this meaning" }),
+  );
+  await user.click(screen.getByRole("option", { name: "Familiar" }));
+  await waitFor(() =>
+    expect(
+      screen.queryByText("Familiarity could not be saved. Try again."),
+    ).not.toBeInTheDocument(),
+  );
+  expect(mocks.fb.persistNow).toHaveBeenCalledTimes(2);
+  expect(mocks.fb.persistNow.mock.calls[1][0].vocabularyEvidence).toEqual(
+    mocks.fb.state.vocabularyEvidence,
+  );
 });
 test("a deliberate familiarity save targets the displayed new stable sense without retargeting the original", async () => {
   const raw = structuredClone(core());

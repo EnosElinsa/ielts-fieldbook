@@ -19,6 +19,7 @@ import type {
   VocabularyStore,
   VocabularyDimension,
   VocabularyStatus,
+  VocabularyEvidence,
 } from "../../domain/vocabulary/types";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { hasVocabularySenseEdits } from "../../domain/vocabulary/content";
@@ -51,6 +52,31 @@ const statuses = [
 ];
 const label = (value: string) =>
   value.replace(/^./, (char) => char.toUpperCase());
+function EvidenceRecords({ records }: { records: VocabularyEvidence[] }) {
+  return (
+    <div className="vocabulary-evidence">
+      {records
+        .slice()
+        .reverse()
+        .map((item, index) => (
+          <div key={item.id || `${item.occurredAt}:${index}`}>
+            <span>{label(item.mode || item.dimension || "Usage")}</span>
+            <span>
+              Verification:{" "}
+              {item.verification ? label(item.verification) : "Not recorded"}
+            </span>
+            <span>Result: {label(item.result)}</span>
+            <p>{item.response || "No answer recorded"}</p>
+            <small>
+              {item.occurredAt
+                ? new Date(item.occurredAt).toLocaleDateString("en-GB")
+                : "Date unavailable"}
+            </small>
+          </div>
+        ))}
+    </div>
+  );
+}
 export function VocabularyEntryPage() {
   const fb = useFieldbook();
   const state = fb.state as unknown as VocabularyStore & {
@@ -128,6 +154,9 @@ export function VocabularyEntryPage() {
   const primary = resolved?.sense;
   const image = resolved ? getVocabularyIllustration(resolved) : undefined;
   const saved = state.vocabulary?.some((item) => item.id === entry?.id);
+  const evidence = (state.vocabularyEvidence || []).filter(
+    (item) => item.entryId === entry?.id,
+  );
   const others =
     entry?.senses.filter(
       (sense) =>
@@ -237,6 +266,15 @@ export function VocabularyEntryPage() {
             <p>{sense.usage}</p>
           </div>
         ) : null}
+        {((main && resolved?.contentReviewed) || personalNotes) &&
+        sense.register ? (
+          <div className="vocabulary-detail">
+            <h4>
+              {personalNotes ? "Your register note" : "Reviewed register"}
+            </h4>
+            <p>{sense.register}</p>
+          </div>
+        ) : null}
         {personalNotes &&
         [
           sense.synonyms,
@@ -297,6 +335,9 @@ export function VocabularyEntryPage() {
               </div>
             ))}
           </div>
+          <EvidenceRecords
+            records={evidence.filter((item) => item.senseId === sense.id)}
+          />
         </details>
       </section>
     );
@@ -478,6 +519,12 @@ export function VocabularyEntryPage() {
           />
           <details className="vocabulary-secondary">
             <summary>Review history</summary>
+            {evidence.length ? (
+              <section>
+                <h4>Saved learning evidence</h4>
+                <EvidenceRecords records={evidence} />
+              </section>
+            ) : null}
             <div className="vocabulary-evidence">
               {state.vocabularyReviews
                 ?.filter((review) => review.entryId === entry.id)
