@@ -8,6 +8,8 @@ import { normalizeVocabularyPreferences } from './preferences';
 import { isVocabularySessionSelection } from './selection';
 import type { VocabularySessionSelection } from './selection';
 import { VOCABULARY_CATALOG } from './catalog';
+import { isVocabularyLearningContext } from './context';
+import type { VocabularyLearningContext } from './context';
 export type { VocabularySessionSelection } from './selection';
 
 export type VocabularySessionAnswer = {
@@ -26,6 +28,7 @@ export type VocabularySessionSnapshot = VocabularyPracticeSession;
 export type VocabularySessionResult = {
   cardId: string; entryId: string; senseId: string; term: string; expectedAnswer: string;
   prompt?: string; explanation?: string; contentVersion?: string; response: string; result: VocabularyResult; definition: string; example: string; errorType?: string; flagged?: boolean;
+  context?: VocabularyLearningContext;
 };
 export type VocabularySessionSummary = { total: number; correct: number; incorrect: number; pending: number; listened?: number };
 export type VocabularySessionRecord = {
@@ -39,6 +42,7 @@ export function createVocabularySession(cards: ReviewCard[], mode: VocabularyPra
   const id = makeId('vocab-session');
   const unique = new Map<string, ReviewCard>();
   cards.forEach(card => {
+    if (card.entry?.id === card.entryId && card.context !== undefined && !isVocabularyLearningContext(card.context, card)) throw new Error('Invalid vocabulary card context.');
     const id = card.id;
     if (!unique.has(id)) unique.set(id, card);
   });
@@ -55,7 +59,7 @@ export function createVocabularySession(cards: ReviewCard[], mode: VocabularyPra
   return {
     id, mode, preferences: normalized, filter: { ...filter },
     cardIds: selected.map(card => ({ id: card.id, entryId: card.entryId, senseId: card.senseId, mode })),
-    ...(selected.every(card => card.entry?.id === card.entryId && Array.isArray(card.entry.senses)) ? {contentVersion: VOCABULARY_CONTENT_VERSION, cardSnapshots: structuredClone(selected)} : {}), answers: {}, index: 0, status: 'active', startedAt, ...(selection ? { selection: structuredClone(selection) } : {}),
+    ...(selected.every(card => card.entry?.id === card.entryId && Array.isArray(card.entry.senses)) ? {contentVersion: selected[0]?.contentVersion || VOCABULARY_CONTENT_VERSION, cardSnapshots: structuredClone(selected)} : {}), answers: {}, index: 0, status: 'active', startedAt, ...(selection ? { selection: structuredClone(selection) } : {}),
   };
 }
 export function updateVocabularySessionAnswer(session: VocabularyPracticeSession, cardId: string, response: string, options: Partial<Pick<VocabularySessionAnswer, 'durationMs' | 'result' | 'verification'>> = {}): VocabularyPracticeSession {
@@ -95,7 +99,7 @@ export function evaluateVocabularySessionAnswer(card: ReviewCard, response: stri
       errorType = actual.length < expected.length ? 'missing letters' : actual.length > expected.length ? 'extra letters' : 'wrong letters or word form';
     }
   }
-  return { cardId: card.id, entryId: card.entryId, senseId: card.senseId, term: entry.term, expectedAnswer, response: text, result, ...(card.task ? {prompt:card.task.prompt,explanation:card.task.explanation} : {}), ...(card.contentVersion ? {contentVersion:card.contentVersion} : {}), definition: sense?.definition || entry.meaning || '', example: sense?.example || entry.example || '', ...(errorType ? { errorType } : {}) };
+  return { cardId: card.id, entryId: card.entryId, senseId: card.senseId, term: entry.term, expectedAnswer, response: text, result, ...(card.task ? {prompt:card.task.prompt,explanation:card.task.explanation} : {}), ...(card.contentVersion ? {contentVersion:card.contentVersion} : {}), ...(card.context ? {context:structuredClone(card.context)} : {}), definition: sense?.definition || entry.meaning || '', example: sense?.example || entry.example || '', ...(errorType ? { errorType } : {}) };
 }
 export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S, session: VocabularyPracticeSession, cards: ReviewCard[]): { state: S; sessionRecord: VocabularySessionRecord; results: VocabularySessionResult[]; summary: VocabularySessionSummary } {
   const targetState = structuredClone(state);
@@ -114,6 +118,7 @@ export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S
     if (seen.has(ref.id)) throw new Error('Vocabulary session contains duplicate cards.');
     seen.add(ref.id);
     const card = byId.get(ref.id);
+    if (card?.context !== undefined && (!isVocabularyLearningContext(card.context, ref) || selection && card.context.bookId !== undefined && (card.context.bookId !== selection.bookId || card.context.unitId !== selection.unitId))) throw new Error('Invalid vocabulary card context.');
     let entry = entriesById.get(ref.entryId);
     if (!entry) {
       const catalogEntry = catalogById.get(ref.entryId);
@@ -123,8 +128,8 @@ export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S
         entriesById.set(entry.id, entry);
       }
     }
-    if (!card || card.entryId !== ref.entryId || card.senseId !== ref.senseId || !entry || entry.tags.includes('archived') || !(entry.senses.some(sense => sense.id === ref.senseId) || session.cardSnapshots?.some(snapshot => snapshot.entryId === ref.entryId && snapshot.senseId === ref.senseId && snapshot.entry.senses.some(sense => sense.id === ref.senseId && sense.id.startsWith('kaikki:')))) || normalizeAnswer(card.entry.term) !== normalizeAnswer(entry.term) || ref.mode !== session.mode || (session.mode !== 'audio' && card.mode !== session.mode)) throw new Error('Vocabulary session card is stale.');
-    if (!entry.senses.some(sense => sense.id === ref.senseId) && session.cardSnapshots) { const sense = card?.entry.senses.find(item => item.id === ref.senseId); if (sense) entry.senses.push(structuredClone(sense)); }
+    if (!card || card.entryId !== ref.entryId || card.senseId !== ref.senseId || !entry || entry.tags.includes('archived') || !(entry.senses.some(sense => sense.id === ref.senseId) || (session.cardSnapshots || cards).some(snapshot => snapshot.entryId === ref.entryId && snapshot.senseId === ref.senseId && snapshot.entry.senses.some(sense => sense.id === ref.senseId && (sense.id.startsWith('kaikki:') || sense.id.startsWith('editorial:') && sense.source === 'Fieldbook editorial' && isVocabularyLearningContext(snapshot.context, snapshot))))) || normalizeAnswer(card.entry.term) !== normalizeAnswer(entry.term) || ref.mode !== session.mode || (session.mode !== 'audio' && card.mode !== session.mode)) throw new Error('Vocabulary session card is stale.');
+    if (!entry.senses.some(sense => sense.id === ref.senseId) ) { const sense = card?.entry.senses.find(item => item.id === ref.senseId); if (sense) entry.senses.push(structuredClone(sense)); }
     if (selection && !entry.sources.some(source => source.bookId === selection.bookId && source.unitId === selection.unitId)) entry.sources.push({ type: 'wordbook', id: `${selection.bookId}:${selection.unitId}:${entry.id}`, bookId: selection.bookId, unitId: selection.unitId });
   });
   const submittedAt = session.submittedAt || nowIso();

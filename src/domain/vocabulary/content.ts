@@ -1,4 +1,6 @@
 import learningSenses from './learningSenseOverlay.json';
+import { VOCABULARY_CATALOG } from './catalog';
+import taskSenseBindings from './taskSenseBindings.json';
 import type { VocabularyEntry, VocabularySense } from './types';
 export const VOCABULARY_CONTENT_VERSION = 'reviewed-2026-10-10.1';
 export type VocabularyLearningTask = { prompt: string; acceptedAnswers: string[]; explanation: string; options?: string[] };
@@ -145,13 +147,21 @@ const confusion: Record<string, VocabularyLearningTask> = {
 };
 export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mode: string): VocabularyLearningTask | undefined {
  const eligible = entry.id.startsWith('vocab:') || entry.id.startsWith('guixue:') || entry.senses.some(sense => sense.source?.includes('Kaikki') || sense.source === 'Fieldbook editorial');
- const item = eligible ? reviewed[entry.term.toLowerCase()] : undefined;
- const primary = sense.id === entry.senses[0]?.id;
+ const catalogEntry = VOCABULARY_CATALOG.entries.find(item => item.id === entry.id) as unknown as VocabularyEntry | undefined;
+ const dictionarySense = (learningSenses as Record<string, VocabularySense>)[entry.term.toLowerCase()];
+ const originalSense = catalogEntry?.senses.find(item => item.id === sense.id) || (dictionarySense?.id === sense.id ? dictionarySense : undefined);
+ const customContent = sense.source === 'Personal note' || !sense.editorial && originalSense && (sense.definition !== originalSense.definition || sense.example !== originalSense.example);
+ const item = eligible && !customContent ? reviewed[entry.term.toLowerCase()] : undefined;
+ // Reordering a group-specific sense must never retarget a term's reviewed task.
+ const canonical = (learningSenses as Record<string, VocabularySense>)[entry.term.toLowerCase()];
+ const catalogPrimary = VOCABULARY_CATALOG.entries.find(item => item.id === entry.id)?.senses[0]?.id;
+ const boundTaskSense = catalogPrimary ? (taskSenseBindings.senseIds as Record<string, string>)[entry.term.toLowerCase()] : undefined;
+ const primary = sense.id === (boundTaskSense || canonical?.id || catalogPrimary || entry.senses[0]?.id);
  if (mode === 'synonym') {
   if (!item || !primary || !item.answers.length) return;
   return {prompt:`Replace “${item.forms?.[0] || entry.term}” with a synonym in this context: ${item.example}`,acceptedAnswers:item.answers,explanation:item.explanation};
  }
- if (mode === 'distinction' && eligible && primary && confusion[entry.term.toLowerCase()]) return confusion[entry.term.toLowerCase()];
+ if (mode === 'distinction' && eligible && !customContent && primary && confusion[entry.term.toLowerCase()]) return confusion[entry.term.toLowerCase()];
  if (mode === 'distinction' && sense.distinctionTask) return {prompt:sense.distinctionTask.prompt,acceptedAnswers:[sense.distinctionTask.answer],options:sense.distinctionTask.options,explanation:sense.distinctionTask.explanation};
  if (mode === 'cloze') {
   const context = item && primary ? item.example : sense.example;

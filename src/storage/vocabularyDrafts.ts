@@ -3,6 +3,7 @@ import type { VocabularyPracticeMode } from '../domain/vocabulary/preferences';
 import type { VocabularyPracticeSession, VocabularySessionAnswer } from '../domain/vocabulary/session';
 import type { ReviewQueueFilter } from '../domain/vocabulary/types';
 import { isVocabularySessionSelection } from '../domain/vocabulary/selection';
+import { isVocabularyLearningContext } from '../domain/vocabulary/context';
 
 const key = (owner: string) => `fieldbook-vocabulary-draft-v1:${owner}`;
 const modes: VocabularyPracticeMode[] = ['dictation', 'definition', 'cloze', 'synonym', 'distinction', 'production', 'audio'];
@@ -33,6 +34,9 @@ function snapshot(value: unknown): VocabularyPracticeSession | null {
       const entry = raw && object(raw.entry);
       if (!raw || raw.mode !== (input.mode === 'audio' ? 'dictation' : input.mode) || !['meaning','listening','spelling','usage'].includes(String(raw.dimension)) || !time(raw.dueAt) || !Array.isArray(raw.sources) || raw.id !== ref.id || raw.entryId !== ref.entryId || raw.senseId !== ref.senseId || !entry || entry.id !== ref.entryId || typeof entry.term !== 'string' || entry.term.length > 500 || !Array.isArray(entry.senses) || !Array.isArray(entry.sources) || !Array.isArray(entry.tags)) return null;
       if (!entry.senses.some(value => { const sense = object(value); return sense?.id === ref.senseId && typeof sense.definition === 'string' && typeof sense.example === 'string'; })) return null;
+      if (raw.context !== undefined && (!isVocabularyLearningContext(raw.context, ref) || (input.selection && (input.selection as Record<string, unknown>).bookId && (raw.context.bookId !== (input.selection as Record<string, unknown>).bookId || raw.context.unitId !== (input.selection as Record<string, unknown>).unitId)))) return null;
+      const contextFilter = object(input.filter);
+      if (raw.context !== undefined && contextFilter && ((contextFilter.bookId !== undefined && raw.context.bookId !== contextFilter.bookId) || (contextFilter.unitId !== undefined && raw.context.unitId !== contextFilter.unitId))) return null;
       if (raw.task !== undefined) {
         const task = object(raw.task);
         if (!task || typeof task.prompt !== 'string' || task.prompt.length > 10000 || typeof task.explanation !== 'string' || task.explanation.length > 10000 || !Array.isArray(task.acceptedAnswers) || !task.acceptedAnswers.length || task.acceptedAnswers.length > 100 || task.acceptedAnswers.some(answer => typeof answer !== 'string' || !answer.trim() || answer.length > 500) || (task.options !== undefined && (!Array.isArray(task.options) || task.options.some(option => typeof option !== 'string' || option.length > 500)))) return null;

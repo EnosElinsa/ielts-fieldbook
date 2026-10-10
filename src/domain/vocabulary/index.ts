@@ -1,4 +1,7 @@
-import { learningTask, reviewedEntry, VOCABULARY_CONTENT_VERSION } from './content';
+import { learningTask } from './content';
+import { resolveVocabularyLearningContext } from './context';
+export { resolveVocabularyLearningContext, VOCABULARY_CONTEXT_VERSION } from './context';
+export type { VocabularyLearningContext, VocabularyContextRequest, ResolvedVocabularyLearningContext } from './context';
 import { createEmptyCard, fsrs, Rating } from 'ts-fsrs';
 import { hashText, makeId, nowIso } from '../utils';
 import { VOCABULARY_CATALOG } from './catalog';
@@ -240,10 +243,14 @@ function supportsMode(entry: VocabularyEntry, sense: VocabularySense, mode: Voca
   return true;
 }
 export function getVocabularyReviewQueue(state: Partial<VocabularyStore>, filter: ReviewQueueFilter = {}): ReviewCard[] {
-  ensureStore(state);
   const at = new Date(filter.now || new Date()).getTime(); const cards: ReviewCard[] = [];
-  const learningBySense = new Map(state.vocabularyStates.map(learning => [`${learning.entryId}:${learning.senseId}`, learning]));
-  state.vocabulary.map(reviewedEntry).filter(entry => !entry.tags.includes('archived') && (!filter.entryId || entry.id === filter.entryId)).forEach(entry => entry.senses.forEach(sense => {
+  const learningBySense = new Map((state.vocabularyStates || []).map(learning => [`${learning.entryId}:${learning.senseId}`, learning]));
+  (state.vocabulary || []).filter(entry => !entry.tags.includes('archived') && (!filter.entryId || entry.id === filter.entryId)).forEach(raw => {
+    const resolved = resolveVocabularyLearningContext(raw, filter);
+    const entry = resolved.entry;
+    const selectedOnly = Boolean(filter.senseId || filter.bookId && filter.unitId);
+    const senses = selectedOnly ? (resolved.sense ? [resolved.sense] : []) : entry.senses;
+    senses.forEach(sense => {
     if (filter.senseId && sense.id !== filter.senseId) return;
     const sources = entry.sources.filter(s => (!s.senseId || s.senseId === sense.id) && (!filter.bookId || s.bookId === filter.bookId) && (!filter.unitId || s.unitId === filter.unitId) && (!filter.skill || s.skill === filter.skill) && (!filter.sourceType || s.type === filter.sourceType));
     if ((filter.bookId || filter.unitId || filter.skill || filter.sourceType) && !sources.length) return;
@@ -253,9 +260,11 @@ export function getVocabularyReviewQueue(state: Partial<VocabularyStore>, filter
       if (!supportsMode(entry, sense, mode) || (filter.dimension && !modeDimensions[mode].includes(filter.dimension))) return;
       const dueAt = validTime(learning?.cards[mode]?.due || learning?.legacyProgress?.nextReviewAt || entry.createdAt);
       if (filter.dueOnly !== false && new Date(dueAt).getTime() > at) return;
-      cards.push({ id: `${entry.id}:${sense.id}:${mode}`, entryId: entry.id, senseId: sense.id, entry, mode, dimension: modeDimensions[mode][0], dueAt, sources, task: learningTask(entry, sense, mode), contentVersion: VOCABULARY_CONTENT_VERSION });
+      const cardContext = sense.id === resolved.sense?.id ? resolved.context : resolveVocabularyLearningContext(raw, { ...filter, senseId: sense.id }).context;
+      cards.push({ id: `${entry.id}:${sense.id}:${mode}`, entryId: entry.id, senseId: sense.id, entry, mode, dimension: modeDimensions[mode][0], dueAt, sources, task: learningTask(entry, sense, mode), contentVersion: resolved.contentVersion, context: cardContext });
     });
-  }));
+    });
+  });
   return cards.sort((a, b) => a.dueAt.localeCompare(b.dueAt) || a.id.localeCompare(b.id));
 }
 export function dueVocabulary(state: VocabularyStore, now?: string | Date, skill?: VocabularySource['skill']) {
