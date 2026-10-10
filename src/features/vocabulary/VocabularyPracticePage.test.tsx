@@ -614,4 +614,14 @@ test("recent history opens a result log without starting a completed attempt", a
   );
   expect(screen.getByRole("table")).toBeInTheDocument();
   expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
+  const detail = screen.getAllByRole('link', { name: /Details/ })[0];
+  const href = detail.getAttribute('href')!;
+  const returnTo = new URL(href, 'https://fieldbook.test').searchParams.get('returnTo')!;
+  expect(returnTo).toContain(`sessionId=${persisted.vocabularySessions[0].id}`);
+  cleanup();
+  mount(returnTo.slice(returnTo.indexOf('?')) + '&resultFilter=flagged');
+  expect(await screen.findByRole('table')).toBeInTheDocument();
+  expect(screen.getByText('No results in this view.')).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'New session' }));
+  expect(await screen.findByRole('button', { name: 'Start session' })).toBeInTheDocument();
 });

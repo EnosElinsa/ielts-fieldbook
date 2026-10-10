@@ -3,6 +3,7 @@ import { act, cleanup, render, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { emptyState, normalizeDraft } from '../domain';
+import { addVocabularyItem, recordVocabularyReview } from '../domain/vocabulary';
 import { readDraftRecovery } from '../storage/recovery';
 import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 
@@ -50,6 +51,20 @@ beforeEach(() => {
   mocks.initial.drafts = { q1: normalizeDraft({ text: 'A response that must survive.', practiceMode: 'full' }), sp1: normalizeDraft({ transcript: 'A response that must survive.', practiceMode: 'full' }) };
 });
 afterEach(() => { cleanup(); vi.useRealTimers(); fieldbook = null; });
+
+test('hydration persists proven regional wrong corrections and keeps failed-save recovery', async () => {
+  const entry = addVocabularyItem(mocks.initial, { term: 'colour' }).item;
+  recordVocabularyReview(mocks.initial, { entryId: entry.id, mode: 'dictation', result: 'failure', response: 'color' });
+  const originalReviews = JSON.stringify(mocks.initial.vocabularyReviews);
+  mocks.saveState.mockResolvedValueOnce(false).mockResolvedValueOnce(true);
+  await mount();
+  await waitFor(() => expect(fieldbook.saveFailed).toBe(true));
+  expect(fieldbook.state.vocabularyStates[0].wrong.active).toBe(false);
+  expect(JSON.stringify(fieldbook.state.vocabularyReviews)).toBe(originalReviews);
+  await act(async () => { expect(await fieldbook.persistNow()).toBe(true); });
+  expect(fieldbook.saveFailed).toBe(false);
+  expect(mocks.saveState).toHaveBeenCalledTimes(2);
+});
 
 test('failed completion preserves the modal, live draft, and recovery, and retries stable error ids', async () => {
   await mount();

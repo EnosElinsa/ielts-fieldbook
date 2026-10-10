@@ -29,6 +29,7 @@ import {
 import "../../styles/vocabulary.css";
 import "../../styles/vocabulary-workbench.css";
 import { DictionarySenses } from './DictionarySenses';
+import { isRegionalSpellingDifference } from '../../domain/vocabulary/spelling';
 
 const STATUS = [
   "new",
@@ -716,6 +717,10 @@ function speechEngine() {
 
 export function VocabularyEntryPage() {
   const fb = useFieldbook();
+  const [params] = useSearchParams();
+  const requestedReturn = params.get('returnTo');
+  const returnTo = requestedReturn && /^\/vocabulary\/(review|study)(?:\?|$)/.test(requestedReturn) && !/[\r\n\\]/.test(requestedReturn) ? requestedReturn : '/vocabulary';
+  const returnLabel = returnTo === '/vocabulary' ? 'My vocabulary' : 'Back to session word list';
   const { id, entryId } = useParams();
   const entry =
     (fb.state.vocabulary || []).find((item) => item.id === (id || entryId)) ||
@@ -730,9 +735,9 @@ export function VocabularyEntryPage() {
     return (
       <VocabularyLayout>
         <Empty message="Vocabulary entry not found." />
-        <Link to="/vocabulary" className="btn line">
+        <Link to={returnTo} className="btn line">
           <ArrowLeft size={15} />
-          My vocabulary
+          {returnLabel}
         </Link>
       </VocabularyLayout>
     );
@@ -743,9 +748,9 @@ export function VocabularyEntryPage() {
   };
   return (
     <VocabularyLayout>
-      <Link to="/vocabulary" className="btn text">
+      <Link to={returnTo} className="btn text">
         <ArrowLeft size={15} />
-        My vocabulary
+        {returnLabel}
       </Link>
       <div className="page-tools">
         <div>
@@ -886,28 +891,14 @@ export function VocabularyEntryPage() {
                 {sense.source}
                 {sense.license ? ` | ${sense.license}` : ""}
                 {sense.attribution ? ` | ${sense.attribution}` : ""}
-                {sense.sourceUrl && /^https?:\/\//.test(sense.sourceUrl) ? <> | <a href={sense.sourceUrl} target="_blank" rel="noopener noreferrer">Source</a></> : null}
               </p>
             ) : null}
           </section>
         );
       })}
       <DictionarySenses entry={entry} />
-      <details className="vocabulary-secondary"><summary>Source context</summary><Sources entry={entry} />
-      {(entry.sources || []).map((source, index) => (
-        <div className="vocabulary-source-context" key={index}>
-          <strong>{sourceLabel(source)}</strong>
-          {source.context ? <p>{source.context}</p> : null}
-          {source.bookId ? (
-            <Link to={`/vocabulary/wordbooks?bookId=${source.bookId}`}>
-              Open wordbook
-            </Link>
-          ) : null}
-        </div>
-      ))}
-      </details>
       <details className="vocabulary-secondary"><summary>Review history</summary>
-      {(fb.state.vocabularyReviews || []).filter(review=>review.entryId===entry.id && review.imported).length ? <section className="vocabulary-evidence"><h4>Imported answer history</h4>{(fb.state.vocabularyReviews || []).filter(review=>review.entryId===entry.id && review.imported).slice(-30).reverse().map(review=><div key={review.id}><span>{review.sourceLabel || 'Source dictation'}</span><span>{label(review.result)}</span><p>{review.response || 'No answer recorded'}</p><small>{review.occurredAt ? dateLabel(review.occurredAt) : 'Source date unavailable'}</small></div>)}</section> : null}
+      {(fb.state.vocabularyReviews || []).filter(review=>review.entryId===entry.id && review.imported).length ? <section className="vocabulary-evidence"><h4>Dictation history</h4>{(fb.state.vocabularyReviews || []).filter(review=>review.entryId===entry.id && review.imported).slice(-30).reverse().map(review=><div key={review.id}><span>{review.sourceLabel || 'Dictation'}</span><span>{review.mode === 'dictation' && review.result === 'failure' && isRegionalSpellingDifference(entry.term, review.response) ? 'UK/US spelling accepted' : label(review.result)}</span><p>{review.response || 'No answer recorded'}</p><small>{review.occurredAt ? dateLabel(review.occurredAt) : 'Date unavailable'}</small></div>)}</section> : null}
       <div className="vocabulary-evidence">
         {(fb.state.vocabularyEvidence || [])
           .filter((item) => item.entryId === entry.id)

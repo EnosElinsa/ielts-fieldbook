@@ -19,6 +19,7 @@ test('open dictionary senses retain attribution and enter study without fabricat
   render(<MemoryRouter><DictionarySenses entry={entry}/></MemoryRouter>);
   expect(await screen.findByText('To lessen severity.')).toBeInTheDocument();
   expect(screen.getByText(/English Wiktionary contributors/)).toHaveTextContent('CC-BY-SA-4.0');
+  expect(screen.queryByRole('link', { name: 'Source' })).not.toBeInTheDocument();
   await userEvent.setup().click(screen.getByRole('button',{name:'Practise this sense'}));
   const saved=save.mock.calls[0][0];
   expect(saved.vocabulary[0].senses.some((s: {definition:string;license:string})=>s.definition==='To lessen severity.' && s.license==='CC-BY-SA-4.0')).toBe(true);

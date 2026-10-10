@@ -14,6 +14,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
         <span className="eyebrow">{study ? 'One complete group' : 'A focused review batch'}</span>
         <h3>{study ? selectedBook?.title || 'Choose a wordbook' : 'Keep your vocabulary ready'}</h3>
         <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : 'Review due cards, recover mistakes, or choose a source.'}</p>
+        {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
         {study && unitQueue ? <strong>{unitQueue.totalWords} words in this group · {unitQueue.eligibleWords} ready for {modeLabel(mode).toLowerCase()}</strong> : null}
         <Link to={study ? '/vocabulary/review' : '/vocabulary/wordbooks'}>{study ? 'Switch to vocabulary review' : 'Study a complete wordbook group'} <ArrowRight size={14} /></Link>
       </div>

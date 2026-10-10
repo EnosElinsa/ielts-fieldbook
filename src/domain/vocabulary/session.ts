@@ -1,5 +1,6 @@
 import { hashText, makeId, nowIso } from '../utils';
 import { normalizeAnswer, recordAudioActivity, recordVocabularyReview } from './index';
+import { matchesDictationSpelling } from './spelling';
 import type { ReviewCard, ReviewQueueFilter, VocabularyResult, VocabularyStore } from './types';
 import type { VocabularyPracticeMode, VocabularyPreferences } from './preferences';
 import { normalizeVocabularyPreferences } from './preferences';
@@ -82,7 +83,7 @@ export function evaluateVocabularySessionAnswer(card: ReviewCard, response: stri
     result = accepted.includes(normalizeAnswer(text)) ? 'success' : 'failure';
     if (!normalizeAnswer(text)) errorType = 'unanswered';
   } else {
-    result = normalizeAnswer(text) === normalizeAnswer(expectedAnswer) && Boolean(normalizeAnswer(text)) ? 'success' : 'failure';
+    result = (card.mode === 'dictation' ? matchesDictationSpelling(expectedAnswer, text) : normalizeAnswer(text) === normalizeAnswer(expectedAnswer) && Boolean(normalizeAnswer(text))) ? 'success' : 'failure';
     if (!normalizeAnswer(text)) errorType = 'unanswered';
     else if (result === 'failure' && card.mode === 'dictation') {
       const expected = normalizeAnswer(expectedAnswer); const actual = normalizeAnswer(text);
