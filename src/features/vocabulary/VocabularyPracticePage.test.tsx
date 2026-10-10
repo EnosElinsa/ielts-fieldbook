@@ -643,3 +643,20 @@ const state=fb.current.persistVocabularySession.mock.calls[0][0];const id=state.
 const returnTo=new URL(screen.getAllByRole('link',{name:/Details/})[0].getAttribute('href')!,'https://test.test').searchParams.get('returnTo')!;expect(returnTo).toContain(`/vocabulary/history/${id}`);expect(returnTo).toContain('bookId=test-book');view.unmount();fb.current.state=state;
 render(<MemoryRouter initialEntries={[returnTo]}><Routes><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes><CurrentRoute/></MemoryRouter>);expect(await screen.findByRole('table')).toBeInTheDocument();expect(screen.getByText(`/vocabulary/history/${id}`)).toBeInTheDocument();expect(screen.queryByRole('button',{name:'Start session'})).not.toBeInTheDocument();
 });
+
+test('mobile More dialog links still protect an active vocabulary draft',async()=>{
+const user=userEvent.setup();render(<MemoryRouter initialEntries={['/vocabulary/review?dueOnly=false']}><div role='dialog' aria-label='More navigation'><Link to='/vocabulary/words'>My words from More</Link></div><VocabularyPracticePage/><CurrentRoute/></MemoryRouter>);
+await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());await user.click(screen.getByRole('button',{name:'Start session'}));await user.click(screen.getByRole('link',{name:'My words from More'}));expect(screen.getByRole('dialog',{name:'Exit practice session'})).toBeInTheDocument();await user.click(screen.getByRole('button',{name:'Cancel'}));expect(screen.getByText('/vocabulary/review')).toBeInTheDocument();
+});
+
+test('legacy identity-only distinction draft keeps the old accepted synonym', async () => {
+ const user=userEvent.setup();const entry=fb.current.state.vocabulary[0];
+ entry.term='affect';entry.senses[0].synonyms=['influence'];entry.senses[0].distinctions=['Affect is a verb.'];
+ const now=new Date().toISOString();
+ localStorage.setItem('fieldbook-vocabulary-draft-v1:account-one',JSON.stringify({version:1,savedAt:now,session:{id:'legacy-distinction',mode:'distinction',status:'paused',startedAt:now,index:0,preferences:{},filter:{},cardIds:[{id:`${entry.id}:${entry.senses[0].id}:distinction`,entryId:entry.id,senseId:entry.senses[0].id,mode:'distinction'}],answers:{}}}));
+ mount('?mode=distinction');await user.click(await screen.findByRole('button',{name:'Resume session'}));
+ await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'influence');
+ await user.click(screen.getByRole('button',{name:'Submit session'}));
+ await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalled());
+ expect(fb.current.persistVocabularySession.mock.calls[0][0].vocabularySessions[0].results[0].result).toBe('success');
+});
