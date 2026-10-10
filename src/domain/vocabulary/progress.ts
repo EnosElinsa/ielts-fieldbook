@@ -33,12 +33,14 @@ export function getLearnedVocabularyIds(state: Partial<VocabularyStore>): Set<st
   (state.vocabularyStates || []).filter(item => item.manualStatus && item.manualStatus !== 'new').forEach(item => learned.add(item.entryId));
   (state.vocabularyEvidence || []).filter(item => item.mode && item.verification !== 'pending').forEach(item => learned.add(item.entryId));
   (state.vocabularySessions || []).filter(session => session.status === 'submitted' && session.mode !== 'audio').forEach(session => (session.results || []).filter(result => String(result.response || '').trim()).forEach(result => learned.add(result.entryId)));
+  const attemptedGroups = new Set<string>();
   (state.wordbookProgress || []).forEach(row => {
     (row.completedEntryIds || []).forEach(id => learned.add(id));
-    if (historicalAttempt(row)) {
-      VOCABULARY_CATALOG.memberships.filter(item => item.bookId === row.bookId && String(item.unitId) === String(row.unitId)).forEach(item => learned.add(item.entryId));
-      (state.vocabulary || []).filter(entry => (entry.sources || []).some(source => source.bookId === row.bookId && String(source.unitId) === String(row.unitId))).forEach(entry => learned.add(entry.id));
-    }
+    if (historicalAttempt(row)) attemptedGroups.add(`${row.bookId}:${row.unitId}`);
   });
+  if (attemptedGroups.size) {
+    VOCABULARY_CATALOG.memberships.filter(item => attemptedGroups.has(`${item.bookId}:${item.unitId}`)).forEach(item => learned.add(item.entryId));
+    (state.vocabulary || []).filter(entry => (entry.sources || []).some(source => attemptedGroups.has(`${source.bookId}:${source.unitId}`))).forEach(entry => learned.add(entry.id));
+  }
   return learned;
 }
