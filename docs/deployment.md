@@ -22,6 +22,8 @@ Schema 10 adds public `word_entries`, `word_senses`, `word_relations`, `word_enr
 
 History tables are immutable. Mutable state uses the newer row timestamp. The legacy `lexicon` table remains readable only for migration and is not written by new clients. Every private table cascades with account deletion.
 
+The practice upgrade adds `vocabulary_sessions` and `commit_vocabulary_session(jsonb)` through `20261010170000_vocabulary_sessions.sql`. Apply this additive migration before deploying the new client: account hydration reads the new table. Submission commits the session marker, reviews, evidence, activities and wordbook progress together; a retry uses the same session ID and immutable payload. Practice preferences are stored in profile settings, while unfinished responses remain in account-scoped browser recovery.
+
 ## Verification
 
 Verify source membership totals per book, public English content/provenance, the number of private imported answers, batch identity and wrong-word counts. Test account isolation with authenticated credentials. For UI checks, verify dictionary details, concealed dictation, review save/retry, wordbook chapter progress and mobile overflow.

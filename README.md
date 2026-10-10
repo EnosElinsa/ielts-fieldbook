@@ -18,7 +18,10 @@ Fieldbook does not issue official IELTS scores. Pronunciation remains unscored w
 
 Words, phrases and sentence patterns share a single vocabulary model across wordbooks and personal collections. Each meaning has its own learning state; writing and speaking occurrences retain their source task. Reading and listening evidence use the same contract for future practice modules.
 
-- Dictation with UK/US audio when available and clearly identified browser speech fallback.
+- List or focused dictation with automatic UK/US audio and clearly identified browser speech fallback.
+- Submit a whole session once, then see responses and answers together. Immediate feedback remains optional.
+- Account-scoped answer recovery, exit/resume, saved session history and retrying mistakes.
+- Practice preferences for session size, order, layout, feedback, accent, speed, volume and repetitions.
 - English definition recall, contextual cloze, synonym and confusing-word practice.
 - Audio loops and sentence production. Playback does not count as a successful review; unassessed production remains pending.
 - FSRS review scheduling with separate meaning, listening, spelling and usage evidence.

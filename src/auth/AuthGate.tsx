@@ -3,6 +3,7 @@ import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import { authError, type Mode } from './errors';
 import { accountId, resetAccountStore } from '../storage/remote';
 import { discardDraftRecovery } from '../storage/recovery';
+import { clearVocabularyDraft } from '../storage/vocabularyDrafts';
 import { BookOpen, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { LegalModal } from '../features/modals/LegalModal';
@@ -366,8 +367,10 @@ export function AuthGate({ children }: { children: ReactNode }) {
 
 export async function signOut() {
   if (!supabaseConfigured()) return;
+  const owner=accountId();
   const { error } = await getSupabase().auth.signOut();
   if (error) throw error;
   discardDraftRecovery(accountId());
+  clearVocabularyDraft(owner);
   resetAccountStore();
 }

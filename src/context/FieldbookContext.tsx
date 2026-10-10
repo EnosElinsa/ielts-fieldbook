@@ -44,9 +44,11 @@ import {
   validateBackup,
   wordCount,
 } from '../domain';
-import { downloadFile, hydrateState, loadState, saveState, saveVocabularyImport, loadVocabularyCatalog as readVocabularyCatalog } from '../storage';
+import { downloadFile, hydrateState, loadState, saveState, saveVocabularyImport, saveVocabularySession, loadVocabularyCatalog as readVocabularyCatalog } from '../storage';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { vocabularyLists } from '../domain/vocabulary';
+import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
+import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
 import { ensurePlans, inferredDeskMode } from '../lib/planTemplates';
 import { sessionSkill } from '../lib/format';
 import { accountId } from '../storage/remote';
@@ -119,6 +121,7 @@ function useFieldbookValue() {
   const [vocabularyCatalogRevision, setVocabularyCatalogRevision] = useState(0);
   const vocabularyCatalogReads = useRef(new Map());
   const committedVocabularyImports = useRef([]);
+  const committedVocabularyPreferences = useRef([]);
   const saveQueue = useRef(Promise.resolve());
   const completingAttempt = useRef(false);
   const saveGeneration = useRef(0);
@@ -182,6 +185,11 @@ function useFieldbookValue() {
   );
 
   function applyCommittedVocabulary(target, owner) {
+    committedVocabularyPreferences.current.filter(change => change.owner === owner).forEach(change => {
+      if (JSON.stringify(target.settings.vocabulary) === change.before) {
+        target.settings.vocabulary = structuredClone(change.after);
+      }
+    });
     committedVocabularyImports.current.filter(change => change.owner === owner).forEach(change => {
       const rows = target[change.key] || (target[change.key] = []);
       const index = rows.findIndex(row => row.id === change.after.id);
@@ -218,6 +226,41 @@ function useFieldbookValue() {
     saveQueue.current = operation;
     return operation;
   }, [toast]);
+
+  const persistVocabularySession = useCallback((draft, sessionId) => {
+    const owner=accountId();const before=structuredClone(stateRef.current);const frozen=structuredClone(draft);
+    const generation=++saveGeneration.current;setSaveStatus('saving');
+    const keys=[...vocabularyLists,'vocabularySessions'];
+    const operation=saveQueue.current.catch(()=>{}).then(async()=>{
+      if(!alive.current || accountId()!==owner)return false;
+      applyCommittedVocabulary(frozen,owner);
+      let saved=false;try{saved=await saveVocabularySession(frozen,sessionId,toast);}catch{saved=false;}
+      if(alive.current&&accountId()===owner){
+        if(generation===saveGeneration.current){setSaveFailed(!saved);setSaveStatus(saved?'saved':'failed');}
+        if(saved){
+          keys.forEach(key=>{const previous=new Map((before[key]||[]).map(row=>[row.id,JSON.stringify(row)]));(frozen[key]||[]).forEach(row=>{if(previous.get(row.id)!==JSON.stringify(row))committedVocabularyImports.current.push({owner,key,before:previous.get(row.id),after:structuredClone(row)});});});
+          const next=structuredClone(stateRef.current);applyCommittedVocabulary(next,owner);stateRef.current=next;setState(next);if(readVocabularyDraft(owner)?.id===sessionId)clearVocabularyDraft(owner);
+          const plan=next.plans.find(plan=>plan.id===next.activePlanId&&plan.kind==='vocabulary'&&plan.status==='in_progress');
+          if(plan){plan.status='completed';plan.completedAt=frozen.vocabularySessions?.find(row=>row.id===sessionId)?.submittedAt||new Date().toISOString();next.activePlanId=null;void queueSave(next);}
+        }
+      }
+      return saved;
+    });saveQueue.current=operation;return operation;
+  },[toast]);
+
+  const saveVocabularyPreferences = useCallback(async(input)=>{
+    const owner=accountId();const preferences=normalizeVocabularyPreferences({...stateRef.current.settings.vocabulary,...input});
+    const draft=structuredClone(stateRef.current);draft.settings.vocabulary=preferences;
+    const generation=++saveGeneration.current;setSaveStatus('saving');
+    const operation=saveQueue.current.catch(()=>{}).then(async()=>{
+      if(!alive.current || accountId()!==owner)return false;
+      const current=structuredClone(stateRef.current);applyCommittedVocabulary(current,owner);current.settings.vocabulary=preferences;
+      const previousPreferences=JSON.stringify(stateRef.current.settings.vocabulary);
+      let saved=false;try{saved=await saveState(current,toast);}catch{saved=false;}
+      if(alive.current&&accountId()===owner){if(generation===saveGeneration.current){setSaveFailed(!saved);setSaveStatus(saved?'saved':'failed');}if(saved){committedVocabularyPreferences.current.push({owner,before:previousPreferences,after:structuredClone(preferences)});const next=structuredClone(stateRef.current);next.settings.vocabulary=preferences;stateRef.current=next;setState(next);}}
+      return saved;
+    });saveQueue.current=operation;return operation;
+  },[toast]);
 
   const loadVocabularyCatalog = useCallback((bookId) => {
     const key = bookId || 'metadata';
@@ -883,6 +926,8 @@ function useFieldbookValue() {
       removeVocabularyItem,
       dueVocabulary,
       persistVocabularyImport,
+      persistVocabularySession,
+      saveVocabularyPreferences,
       loadVocabularyCatalog,
       vocabularyCatalogRevision,
       addStory,

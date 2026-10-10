@@ -16,7 +16,7 @@ const SpeakingDeskPage = lazy(() => import('./features/speaking/SpeakingDeskPage
 const VocabularyPage = lazy(() => import('./features/vocabulary/VocabularyPages').then(module => ({ default: module.VocabularyPage })));
 const VocabularyWordbooksPage = lazy(() => import('./features/vocabulary/VocabularyPages').then(module => ({ default: module.VocabularyWordbooksPage })));
 const VocabularyEntryPage = lazy(() => import('./features/vocabulary/VocabularyPages').then(module => ({ default: module.VocabularyEntryPage })));
-const VocabularyReviewPage = lazy(() => import('./features/vocabulary/VocabularyPages').then(module => ({ default: module.VocabularyReviewPage })));
+const VocabularyReviewPage = lazy(() => import('./features/vocabulary/VocabularyPracticePage').then(module => ({ default: module.VocabularyPracticePage })));
 const VocabularyWrongPage = lazy(() => import('./features/vocabulary/VocabularyPages').then(module => ({ default: module.VocabularyWrongPage })));
 const VocabularyProgressPage = lazy(() => import('./features/vocabulary/VocabularyPages').then(module => ({ default: module.VocabularyProgressPage })));
 

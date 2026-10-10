@@ -2,12 +2,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { normalizeStory, dedupeStories } from './stories';
 import { collectVocabularyProduction, migrateLegacyVocabulary } from './vocabulary';
+import { DEFAULT_VOCABULARY_PREFERENCES, normalizeVocabularyPreferences } from './vocabulary/preferences';
 import { wordCount, hashText, dateKey, makeId, nowIso, clone } from './utils';
 
 export const STATE_VERSION = 10;
 export const VOCABULARY_COLLECTIONS = [
   'vocabulary', 'vocabularyStates', 'vocabularyEvidence', 'vocabularyReviews',
   'vocabularyActivities', 'wordbookProgress', 'wordbookEnrollments', 'vocabularyImportBatches',
+  'vocabularySessions',
 ];
 export const PRACTICE_MODES = ['unknown', 'overview', 'outline', 'compare', 'body', 'timed', 'full', 'speak-blind'];
 export const BANK_CACHE_KEY = 'ielts-fieldbook-bank-cache';
@@ -21,6 +23,7 @@ export const DEFAULT_SETTINGS = {
   activeSkill: 'writing',
   skillMix: 'mixed',
   speakingFocus: 'balanced',
+  vocabulary: { ...DEFAULT_VOCABULARY_PREFERENCES },
 };
 
 export function normalizeDraft(raw) {
@@ -157,6 +160,7 @@ export function emptyState() {
     wordbookProgress: [],
     wordbookEnrollments: [],
     vocabularyImportBatches: [],
+    vocabularySessions: [],
     plans: [],
     stories: [],
     speakingTopics: [],
@@ -246,6 +250,7 @@ export function migrateState(raw) {
   state.stories = dedupeStories(Array.isArray(source.stories) ? source.stories.map(normalizeStory) : []);
   state.speakingTopics = Array.isArray(source.speakingTopics) ? source.speakingTopics.map(item => Object.assign({}, item)) : [];
   state.settings = Object.assign({}, DEFAULT_SETTINGS, source.settings || {});
+  state.settings.vocabulary = normalizeVocabularyPreferences(source.settings?.vocabulary);
   state.settings.days = Array.isArray(state.settings.days) && state.settings.days.length ? state.settings.days.map(Number) : clone(DEFAULT_SETTINGS.days);
   if (!['writing', 'speaking'].includes(state.settings.activeSkill)) state.settings.activeSkill = 'writing';
   if (!['writing', 'speaking', 'mixed'].includes(state.settings.skillMix)) state.settings.skillMix = 'mixed';

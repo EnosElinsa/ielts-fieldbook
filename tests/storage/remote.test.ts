@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { beforeEach, expect, test, vi } from 'vitest';
 
-const mocks = vi.hoisted(() => ({ rows: {}, upserts: [], rpcCalls: [], rpcError: null, rpcResult: null, reads: [], failTable: null, profile: { settings: {}, active_plan_id: null, reviewed_at: null }, user: 'account-1', sessions: [] }));
+const mocks = vi.hoisted(() => ({ rows: {}, upserts: [], deletes: [], rpcCalls: [], rpcError: null, rpcResult: null, rpcPromise: null, reads: [], failTable: null, profile: { settings: {}, active_plan_id: null, reviewed_at: null }, user: 'account-1', sessions: [] }));
 vi.mock('../../src/lib/supabase', () => ({
   supabaseConfigured: () => true,
   getSupabase: () => ({
@@ -11,7 +11,7 @@ vi.mock('../../src/lib/supabase', () => ({
       if (next && next.promise) await next.promise;
       return { data: { session: { user: { id } } }, error: null };
     } },
-    rpc: async (name, args) => { mocks.rpcCalls.push({ name, args: structuredClone(args) }); return { error: mocks.rpcError, data: mocks.rpcResult }; },
+    rpc: async (name, args) => { mocks.rpcCalls.push({ name, args: structuredClone(args) }); if (mocks.rpcPromise) await mocks.rpcPromise; return { error: mocks.rpcError, data: mocks.rpcResult }; },
     from: (table) => ({
       select: () => {
         let rows = mocks.rows[table] || [];
@@ -28,7 +28,7 @@ vi.mock('../../src/lib/supabase', () => ({
         mocks.upserts.push({ table, rows: structuredClone(rows) });
         return { error: mocks.failTable === table ? new Error('Network failure') : null };
       },
-      delete: () => ({ eq: () => ({ in: async () => ({ error: null }) }) }),
+      delete: () => ({ eq: (_key, userId) => ({ in: async (_field, ids) => { mocks.deletes.push({ table, userId, ids: [...ids] }); return { error: null }; } }) }),
       update: () => ({ eq: async () => ({ error: null }) }),
     }),
   }),
@@ -38,9 +38,11 @@ beforeEach(() => {
   vi.resetModules();
   mocks.rows = { plans: [{ id: 'p1', payload: { id: 'p1', kind: '1', status: 'pending', title: 'Practice', targetErrorIds: ['target-1'] } }], drafts: [{ id: 'q1', payload: { text: 'Before', practiceMode: 'overview', targetErrorIds: ['target-1'] } }] };
   mocks.upserts = [];
+  mocks.deletes = [];
   mocks.rpcCalls = [];
   mocks.rpcError = null;
   mocks.rpcResult = null;
+  mocks.rpcPromise = null;
   mocks.reads = [];
   mocks.failTable = null;
   mocks.user = 'account-1';
@@ -191,4 +193,179 @@ test('lazy vocabulary catalog loads bounded selected book memberships and exact 
   mocks.reads = [];
   expect((await loadVocabularyCatalog()).entries).toEqual([]);
   expect(mocks.reads).toEqual(['wordbooks']);
+});
+
+function completedVocabularySession(id = 'practice-1') {
+  return { id, status: 'submitted', mode: 'learn', submittedAt: '2026-10-10T01:00:00.000Z', summary: { completed: 1, correct: 1 } };
+}
+
+test('session completion uses one atomic RPC and retries every row after failure', async () => {
+  const { hydrateState, saveVocabularySession } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  state.vocabularySessions = [completedVocabularySession()];
+  state.vocabulary.push({ id: 'word-1', term: 'mitigate' });
+  state.vocabularyStates.push({ id: 'word-1', vocabularyId: 'word-1', recognition: 1 });
+  state.vocabularyReviews.push({ id: 'practice-1:word-1', sessionId: 'practice-1', vocabularyId: 'word-1', rating: 'good' });
+  state.plans[0].status = 'completed';
+  mocks.rpcError = new Error('Rejected transaction');
+  const onError = vi.fn();
+  expect(typeof saveVocabularySession).toBe('function');
+  expect(await saveVocabularySession(state, 'practice-1', onError)).toBe(false);
+  expect(onError).toHaveBeenCalledOnce();
+  expect(mocks.upserts).toEqual([]);
+  mocks.rpcError = null;
+  mocks.rpcResult = { id: 'practice-1', alreadyCommitted: false };
+  expect(await saveVocabularySession(state, 'practice-1')).toBe(true);
+  const { name, args } = mocks.rpcCalls[1];
+  expect(name).toBe('commit_vocabulary_session');
+  expect(args.batch).toMatchObject({ id: 'practice-1', session: { id: 'practice-1', status: 'submitted' } });
+  expect(args.batch.lists.vocabulary).toEqual([{ id: 'word-1', payload: { id: 'word-1', term: 'mitigate' } }]);
+  expect(args.batch.lists.vocabularyReviews).toHaveLength(1);
+  expect(args.batch.lists).not.toHaveProperty('plans');
+  expect(args.batch.lists).not.toHaveProperty('vocabularyImportBatches');
+});
+
+test('session commit acknowledges its upserts without acknowledging drafts, plans, or list deletions', async () => {
+  mocks.rows.vocabulary = [{ id: 'kept-word', payload: { id: 'kept-word', term: 'adapt' } }];
+  const { hydrateState, saveVocabularySession, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  state.vocabularySessions = [completedVocabularySession()];
+  state.vocabulary = [{ id: 'new-word', term: 'mitigate' }];
+  state.plans[0].status = 'completed';
+  state.drafts.q1.text = 'Live writing draft';
+  mocks.rpcResult = { id: 'practice-1', alreadyCommitted: false };
+  expect(await saveVocabularySession(state, 'practice-1')).toBe(true);
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.upserts.some(call => call.table === 'vocabulary')).toBe(false);
+  expect(mocks.upserts.some(call => call.table === 'vocabulary_sessions')).toBe(false);
+  expect(mocks.upserts.find(call => call.table === 'plans').rows[0].payload.status).toBe('completed');
+  expect(mocks.upserts.find(call => call.table === 'drafts').rows[0].payload.text).toBe('Live writing draft');
+  expect(mocks.deletes).toEqual([{ table: 'vocabulary', userId: 'account-1', ids: ['kept-word'] }]);
+});
+
+test('session completion never runs after authentication is superseded even by the same account', async () => {
+  const { hydrateState, saveVocabularySession, resetAccountStore } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  state.vocabularySessions = [completedVocabularySession()];
+  const pending = { promise: null, resolve: null };
+  pending.promise = new Promise(resolve => { pending.resolve = resolve; });
+  mocks.sessions.push({ user: 'account-1', promise: pending.promise });
+  const saving = saveVocabularySession(state, 'practice-1');
+  resetAccountStore();
+  await hydrateState();
+  await actResolve(pending, true);
+  expect(await saving).toBe(false);
+  expect(mocks.rpcCalls).toEqual([]);
+});
+
+test('a completed session response cannot acknowledge a replacement account snapshot', async () => {
+  const { hydrateState, saveVocabularySession, resetAccountStore, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  state.vocabularySessions = [completedVocabularySession()];
+  const pending = { promise: null, resolve: null };
+  pending.promise = new Promise(resolve => { pending.resolve = resolve; });
+  mocks.rpcPromise = pending.promise;
+  mocks.rpcResult = { id: 'practice-1', alreadyCommitted: false };
+  const saving = saveVocabularySession(state, 'practice-1');
+  await Promise.resolve();
+  await Promise.resolve();
+  resetAccountStore();
+  mocks.user = 'account-2';
+  const replacement = await hydrateState();
+  await actResolve(pending, true);
+  expect(await saving).toBe(false);
+  replacement.vocabulary.push({ id: 'account-2-word', term: 'adapt' });
+  expect(await saveState(replacement)).toBe(true);
+  expect(mocks.upserts.find(call => call.table === 'vocabulary').rows[0]).toMatchObject({ user_id: 'account-2', id: 'account-2-word' });
+});
+
+test('session replay does not acknowledge later vocabulary edits', async () => {
+  const { hydrateState, saveVocabularySession, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  state.vocabularySessions = [completedVocabularySession()];
+  state.vocabulary.push({ id: 'later-word', term: 'mitigate' });
+  mocks.rpcResult = { id: 'practice-1', alreadyCommitted: true };
+  expect(await saveVocabularySession(state, 'practice-1')).toBe(true);
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.upserts.find(call => call.table === 'vocabulary').rows[0].id).toBe('later-word');
+});
+
+test('a replay followed by a new session never resends another session history', async () => {
+  const { hydrateState, saveVocabularySession } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  state.vocabularySessions = [completedVocabularySession()];
+  for (const key of ['vocabularyReviews', 'vocabularyEvidence', 'vocabularyActivities']) {
+    state[key].push({ id: `practice-1:${key}`, sessionId: 'practice-1' });
+  }
+  mocks.rpcError = { message: 'Response lost after commit' };
+  expect(await saveVocabularySession(state, 'practice-1')).toBe(false);
+  mocks.rpcError = null;
+  mocks.rpcResult = { id: 'practice-1', alreadyCommitted: true };
+  expect(await saveVocabularySession(state, 'practice-1')).toBe(true);
+  state.vocabularySessions.push({ ...completedVocabularySession(), id: 'practice-2' });
+  for (const key of ['vocabularyReviews', 'vocabularyEvidence', 'vocabularyActivities']) {
+    state[key].push({ id: `practice-2:${key}`, sessionId: 'practice-2' });
+  }
+  mocks.rpcResult = { id: 'practice-2', alreadyCommitted: false };
+  expect(await saveVocabularySession(state, 'practice-2')).toBe(true);
+  for (const key of ['vocabularyReviews', 'vocabularyEvidence', 'vocabularyActivities']) {
+    expect(mocks.rpcCalls.at(-1).args.batch.lists[key].map(row => row.payload.sessionId)).toEqual(['practice-2']);
+  }
+});
+
+test('session completion rejects missing or unfinished session records before an RPC', async () => {
+  const { hydrateState, saveVocabularySession } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  state.vocabularySessions = [{ id: 'practice-1', status: 'active', summary: null }];
+  expect(await saveVocabularySession(state, 'missing')).toBe(false);
+  expect(await saveVocabularySession(state, 'practice-1')).toBe(false);
+  expect(mocks.rpcCalls).toEqual([]);
+});
+
+test('adding session storage does not change the vocabulary import RPC collections', async () => {
+  const { hydrateState, saveVocabularyImport } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  state.vocabularyImportBatches.push({ id: 'batch-1' });
+  state.vocabularySessions = [completedVocabularySession()];
+  expect(await saveVocabularyImport(state, 'batch-1')).toBe(true);
+  expect(mocks.rpcCalls[0].args.batch.lists).not.toHaveProperty('vocabularySessions');
+});
+
+test('hydration loads submitted vocabulary history without rewriting it on an unchanged save', async () => {
+  mocks.rows.vocabulary_sessions = [{ id: 'practice-1', payload: completedVocabularySession() }];
+  const { hydrateState, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  expect(state.vocabularySessions).toEqual([completedVocabularySession()]);
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.upserts.some(call => call.table === 'vocabulary_sessions')).toBe(false);
+});
+
+test('an invalid session acknowledgement does not advance the account snapshot', async () => {
+  const { hydrateState, saveVocabularySession, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  state.vocabularySessions = [completedVocabularySession()];
+  state.vocabulary.push({ id: 'not-acknowledged', term: 'adapt' });
+  mocks.rpcResult = { id: 'different-session', alreadyCommitted: false };
+  expect(await saveVocabularySession(state, 'practice-1')).toBe(false);
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.upserts.find(call => call.table === 'vocabulary').rows[0].id).toBe('not-acknowledged');
+});
+
+test('edits made while the session RPC is pending remain available for a later save', async () => {
+  const { hydrateState, saveVocabularySession, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  state.vocabularySessions = [completedVocabularySession()];
+  state.vocabulary.push({ id: 'word-1', term: 'adapt' });
+  const pending = { promise: null, resolve: null };
+  pending.promise = new Promise(resolve => { pending.resolve = resolve; });
+  mocks.rpcPromise = pending.promise;
+  mocks.rpcResult = { id: 'practice-1', alreadyCommitted: false };
+  const saving = saveVocabularySession(state, 'practice-1');
+  await Promise.resolve();
+  await Promise.resolve();
+  state.vocabulary[0].term = 'later edit';
+  await actResolve(pending, true);
+  expect(await saving).toBe(true);
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.upserts.find(call => call.table === 'vocabulary').rows[0].payload.term).toBe('later edit');
 });

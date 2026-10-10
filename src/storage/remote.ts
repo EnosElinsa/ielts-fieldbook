@@ -4,6 +4,8 @@ import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import { USER_LISTS, USER_TABLES, VOCABULARY_LISTS, diffDrafts, diffList, profileStamp, rowsToDrafts, rowsToList, type UserListKey } from './sync';
 
 const PAGE = 1000;
+const VOCABULARY_IMPORT_LISTS = VOCABULARY_LISTS.filter(key => key !== 'vocabularySessions');
+const VOCABULARY_SESSION_LISTS = VOCABULARY_LISTS.filter(key => key !== 'vocabularyImportBatches');
 
 type Snapshot = {
   lists: Record<UserListKey, unknown[]>;
@@ -240,7 +242,7 @@ export async function saveVocabularyImport(state, batchId: string, onError?: (me
     const previous = snapshot || emptySnapshot();
     const importBatch = next.lists.vocabularyImportBatches.find(row => row.id === batchId);
     if (!batchId || !importBatch) throw new Error('Missing import batch');
-    const lists = Object.fromEntries(VOCABULARY_LISTS.map(key => [key, diffList(previous.lists[key], next.lists[key]).upserts]));
+    const lists = Object.fromEntries(VOCABULARY_IMPORT_LISTS.map(key => [key, diffList(previous.lists[key], next.lists[key]).upserts]));
     const { data: commitResult, error } = await supabase.rpc('commit_vocabulary_import', {
       batch: { id: batchId, lists, importBatch, updatedAt: new Date().toISOString() },
     });
@@ -250,11 +252,60 @@ export async function saveVocabularyImport(state, batchId: string, onError?: (me
     if (commitResult?.alreadyCommitted) return true;
     // Other edits in this state have not been saved by the vocabulary transaction.
     const updated = snapshot || emptySnapshot();
-    VOCABULARY_LISTS.forEach(key => { updated.lists[key] = next.lists[key]; });
+    VOCABULARY_IMPORT_LISTS.forEach(key => { updated.lists[key] = next.lists[key]; });
     snapshot = updated;
     return true;
   } catch {
     onError?.('Could not import vocabulary to your account. Try again.');
+    return false;
+  }
+}
+
+export async function saveVocabularySession(state, sessionId: string, onError?: (message: string) => void) {
+  const expectedAccount = currentAccountId;
+  const generation = hydrationGeneration;
+  if (!supabaseConfigured() || !expectedAccount || !accountReady) {
+    onError?.('Sign in to save vocabulary practice.');
+    return false;
+  }
+  const supabase = getSupabase();
+  try {
+    const { data, error: sessionError } = await supabase.auth.getSession();
+    if (sessionError) throw sessionError;
+    if (!data.session || data.session.user.id !== expectedAccount || currentAccountId !== expectedAccount || generation !== hydrationGeneration) return false;
+    const next = takeSnapshot(state);
+    const previous = snapshot || emptySnapshot();
+    const completedSession = next.lists.vocabularySessions.find(row => row.id === sessionId);
+    if (!sessionId || !completedSession || completedSession.status !== 'submitted' || !completedSession.summary || typeof completedSession.summary !== 'object' || Array.isArray(completedSession.summary)) {
+      throw new Error('Missing completed vocabulary session');
+    }
+    const lists = Object.fromEntries(VOCABULARY_SESSION_LISTS.map(key => [key, diffList(previous.lists[key], next.lists[key]).upserts]));
+    // Only this session is acknowledged by the transaction's completion marker.
+    lists.vocabularySessions = lists.vocabularySessions.filter(row => row.id === sessionId);
+    // A replay can leave older immutable rows outside the local snapshot. They
+    // belong to their own completion marker and must not enter this session RPC.
+    for (const key of ['vocabularyReviews', 'vocabularyEvidence', 'vocabularyActivities']) {
+      lists[key] = lists[key].filter(row => !row.payload.sessionId || row.payload.sessionId === sessionId);
+    }
+    const { data: commitResult, error } = await supabase.rpc('commit_vocabulary_session', {
+      batch: { id: sessionId, session: completedSession, lists, updatedAt: new Date().toISOString() },
+    });
+    if (error) throw error;
+    if (currentAccountId !== expectedAccount || generation !== hydrationGeneration) return false;
+    if (commitResult?.id !== sessionId || typeof commitResult.alreadyCommitted !== 'boolean') throw new Error('Invalid vocabulary session acknowledgement');
+    // A replay confirms the earlier transaction, not the new diff supplied now.
+    if (commitResult.alreadyCommitted) return true;
+    const updated = snapshot || emptySnapshot();
+    VOCABULARY_SESSION_LISTS.forEach(key => {
+      const rows = new Map((updated.lists[key] || []).map(row => [row.id, row]));
+      lists[key].forEach(row => { rows.set(row.id, row.payload); });
+      if (key === 'vocabularySessions') rows.set(sessionId, completedSession);
+      updated.lists[key] = Array.from(rows.values());
+    });
+    snapshot = updated;
+    return true;
+  } catch {
+    onError?.('Could not save vocabulary practice to your account. Try again.');
     return false;
   }
 }
