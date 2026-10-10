@@ -7,6 +7,25 @@ const card = { id: 'entry:sense:dictation', entryId: 'entry', senseId: 'sense', 
 beforeEach(() => { localStorage.clear(); vi.restoreAllMocks(); });
 
 describe('vocabulary draft recovery', () => {
+  test('roundtrips all 235 whole-unit references and flags without exposing entry content', () => {
+    const cards = Array.from({ length: 235 }, (_, index) => ({ ...card, id: `word-${index}:sense:dictation`, entryId: `word-${index}` }));
+    const session = createVocabularySession(cards, 'dictation', { sessionSize: 20 }, {}, { kind: 'unit', bookId: 'guixue:11320', unitId: '35028' });
+    session.answers[cards[234].id] = { response: 'last answer', answeredAt: session.startedAt, durationMs: 3, flagged: true };
+    session.index = 234;
+    expect(writeVocabularyDraft('alice', session)).toBe(true);
+    expect(readVocabularyDraft('alice')?.cardIds).toHaveLength(235);
+    expect(readVocabularyDraft('alice')?.selection).toEqual({ kind: 'unit', bookId: 'guixue:11320', unitId: '35028' });
+    expect(readVocabularyDraft('alice')?.answers[cards[234].id].flagged).toBe(true);
+    expect(localStorage.getItem(localStorage.key(0)!)).not.toContain('secret answer');
+  });
+
+  test('accepts legacy drafts and rejects malformed selection identities', () => {
+    const session = createVocabularySession([card], 'dictation', {});
+    expect(writeVocabularyDraft('alice', session)).toBe(true);
+    expect(readVocabularyDraft('alice')?.selection).toBeUndefined();
+    expect(writeVocabularyDraft('alice', { ...session, selection: { kind: 'unit', bookId: 'book', unitId: '' } })).toBe(false);
+    expect(writeVocabularyDraft('alice', { ...session, selection: { kind: 'unexpected' } } as any)).toBe(false);
+  });
   test('keeps answers by owner and clears only the requested account', () => {
     const session = updateVocabularySessionAnswer(createVocabularySession([card], 'dictation', {}), card.id, 'unfinished answer');
     expect(writeVocabularyDraft('alice', session)).toBe(true);

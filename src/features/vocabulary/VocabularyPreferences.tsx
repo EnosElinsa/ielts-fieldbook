@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { List, Square, Volume2 } from "lucide-react";
 import { ModalFrame } from "../../components/ModalFrame";
 import {
@@ -54,9 +54,9 @@ export function VocabularyPreferencesFields({
             </select>
           </label>
           <label>
-            Session size
+            Review batch size
             <select
-              aria-label="Session size"
+              aria-label="Review batch size"
               value={value.sessionSize}
               onChange={(event) =>
                 update({ sessionSize: Number(event.target.value) })
@@ -68,6 +68,7 @@ export function VocabularyPreferencesFields({
                 </option>
               ))}
             </select>
+            <span className="practice-field-hint">Used for review batches. Whole groups use their actual word count.</span>
           </label>
           <label>
             Feedback
@@ -131,14 +132,6 @@ export function VocabularyPreferencesFields({
             </div>
           </div>
         </div>
-        <label className="practice-switch">
-          <input
-            type="checkbox"
-            checked={value.autoAdvance}
-            onChange={(event) => update({ autoAdvance: event.target.checked })}
-          />
-          Advance with Enter
-        </label>
       </fieldset>
       <fieldset disabled={disabled}>
         <legend>
@@ -264,6 +257,11 @@ export function VocabularyPreferencesFields({
           </label>
         </div>
       </fieldset>
+      <fieldset disabled={locked}>
+        <legend>Shortcuts</legend>
+        <label className="practice-switch"><input type="checkbox" checked={value.autoAdvance} onChange={(event) => update({ autoAdvance: event.target.checked })} />Advance with Enter</label>
+        <p className="practice-shortcut-hint">Use Tab to move between answers. Enter advances when enabled. Use the audio controls to replay a word.</p>
+      </fieldset>
     </div>
   );
 }
@@ -289,41 +287,50 @@ export function VocabularyPreferencesDialog({
     normalizeVocabularyPreferences(preferences),
   );
   const [saving, setSaving] = useState(false);
+  const savingRef = useRef(false);
+  const baseline = useRef(normalizeVocabularyPreferences(preferences));
   const [error, setError] = useState("");
   useEffect(() => {
     if (open) {
-      setDraft(normalizeVocabularyPreferences(preferences));
+      const next = normalizeVocabularyPreferences(preferences);
+      baseline.current = next;
+      setDraft(next);
       setError("");
     }
   }, [open]);
+  function close() {
+    if (savingRef.current || busy) return;
+    if (JSON.stringify(draft) !== JSON.stringify(baseline.current) && !window.confirm('Discard your unsaved practice settings changes?')) return;
+    onClose();
+  }
   async function save() {
-    if (saving || busy) return;
+    if (savingRef.current || busy) return;
+    savingRef.current = true;
     setSaving(true);
     setError("");
     try {
       const saved = await onSave(draft);
       if (saved === false)
         setError("Preferences could not be saved. Try again.");
-      else onClose();
+      else { baseline.current = draft; onClose(); }
     } catch {
       setError("Preferences could not be saved. Try again.");
     } finally {
+      savingRef.current = false;
       setSaving(false);
     }
   }
   return (
     <ModalFrame
       open={open}
-      onClose={() => {
-        if (!saving && !busy) onClose();
-      }}
+      onClose={close}
       title="Practice settings"
+      header="Vocabulary"
+      description="Choose your practice, audio and shortcut preferences."
+      busy={busy || saving}
+      footer={<><button className="btn line" type="button" disabled={busy || saving} onClick={close}>Cancel</button><button className="btn primary" type="button" disabled={busy || saving} onClick={save}>{saving ? 'Saving…' : 'Save preferences'}</button></>}
     >
       <div className="practice-settings-dialog">
-        <div className="practice-dialog-heading">
-          <span className="eyebrow">Vocabulary</span>
-          <h2>Practice settings</h2>
-        </div>
         <VocabularyPreferencesFields
           value={draft}
           onChange={setDraft}
@@ -335,24 +342,6 @@ export function VocabularyPreferencesDialog({
             {error}
           </p>
         ) : null}
-        <div className="actions practice-dialog-actions">
-          <button
-            className="btn line"
-            type="button"
-            disabled={busy || saving}
-            onClick={onClose}
-          >
-            Cancel
-          </button>
-          <button
-            className="btn primary"
-            type="button"
-            disabled={busy || saving}
-            onClick={save}
-          >
-            {saving ? "Saving…" : "Save preferences"}
-          </button>
-        </div>
       </div>
     </ModalFrame>
   );

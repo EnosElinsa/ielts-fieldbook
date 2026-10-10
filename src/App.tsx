@@ -34,6 +34,7 @@ export function AppRoutes() {
           <Route path="vocabulary/wordbooks" element={<VocabularyWordbooksPage />} />
           <Route path="vocabulary/entry/:id" element={<VocabularyEntryPage />} />
           <Route path="vocabulary/review" element={<VocabularyReviewPage />} />
+          <Route path="vocabulary/study" element={<VocabularyReviewPage />} />
           <Route path="vocabulary/wrong" element={<VocabularyWrongPage />} />
           <Route path="vocabulary/progress" element={<VocabularyProgressPage />} />
           <Route path="progress" element={<ProgressPage />} />

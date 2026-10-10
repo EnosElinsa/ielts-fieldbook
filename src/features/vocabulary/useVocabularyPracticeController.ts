@@ -1,0 +1,803 @@
+import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useFieldbook } from "../../context/FieldbookContext";
+import { accountId } from "../../storage/remote";
+import { clearVocabularyDraft, readVocabularyDraft, writeVocabularyDraft } from "../../storage/vocabularyDrafts";
+import { getVocabularyReviewQueue, type ReviewCard, type ReviewQueueFilter, type VocabularyEntry, type VocabularyMode, type VocabularyResult, type VocabularyState } from "../../domain/vocabulary";
+import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
+import { normalizeVocabularyPreferences, type VocabularyPracticeMode, type VocabularyPreferences } from "../../domain/vocabulary/preferences";
+import { buildVocabularySessionCommit, createVocabularySession, evaluateVocabularySessionAnswer, updateVocabularySessionAnswer, type VocabularyPracticeSession, type VocabularySessionSelection } from "../../domain/vocabulary/session";
+import { buildUnitPracticeQueue } from "../../domain/vocabulary/selection";
+import { createVocabularyPlayback } from "./playback";
+import { practiceKeyboard } from "./practiceKeyboard";
+import { MODES, senseFor, titleCase } from "./practicePresentation";
+
+type Session = VocabularyPracticeSession;
+type Prepared = ReturnType<typeof buildVocabularySessionCommit>;
+type SessionLog = Prepared["sessionRecord"];
+const clone = <T,>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
+
+export function useVocabularyPracticeController() {
+  const fb = useFieldbook();
+  const [params, setParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const legacyStudy = Boolean(params.get('bookId') && params.get('unitId') && params.get('dueOnly') === 'false' && params.get('wrongOnly') !== 'true' && !['entryId', 'senseId', 'sourceType', 'dimension', 'skill'].some(key => params.has(key)));
+  const study = location.pathname === '/vocabulary/study' || legacyStudy;
+  const initialPreferences = normalizeVocabularyPreferences(
+    fb.state.settings?.vocabulary,
+  );
+  const [preferences, setPreferences] = useState(initialPreferences);
+  const [mode, setMode] = useState<VocabularyPracticeMode>(() =>
+    MODES.some((item) => item.value === params.get("mode"))
+      ? (params.get("mode") as VocabularyPracticeMode)
+      : initialPreferences.mode,
+  );
+  const [bookId, setBook] = useState(params.get("bookId") || "all");
+  const [unitId, setUnit] = useState(params.get("unitId") || "all");
+  const [sourceType, setSource] = useState(params.get("sourceType") || "all");
+  const [skill, setSkill] = useState(params.get("skill") || "all");
+  const [dimension, setDimension] = useState(params.get("dimension") || "all");
+  const [dueOnly, setDue] = useState(params.get("dueOnly") !== "false");
+  const [wrongOnly, setWrong] = useState(params.get("wrongOnly") === "true");
+  const [session, setSession] = useState<Session | null>(null);
+  const [cards, setCards] = useState<ReviewCard[]>([]);
+  const [resume, setResume] = useState(() => readVocabularyDraft(accountId()));
+  const [results, setResults] = useState<SessionLog | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [exitOpen, setExitOpen] = useState(false);
+  const [incompleteOpen, setIncompleteOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
+  const [audioStatus, setAudioStatus] = useState("");
+  const [audioBusy, setAudioBusy] = useState(false);
+  const [looping, setLooping] = useState(false);
+  const [storageError, setStorageError] = useState(false);
+  const [catalogStatus, setCatalogStatus] = useState<{ bookId: string; status: 'loading' | 'ready' | 'error' }>({ bookId: '', status: 'loading' });
+  const [catalogRetry, setCatalogRetry] = useState(0);
+  const [resultFilter, setResultFilter] = useState('all');
+  const owner = useRef(accountId());
+  const sessionRef = useRef<Session | null>(null);
+  const cardsRef = useRef<ReviewCard[]>([]);
+  const preferencesRef = useRef(preferences);
+  const pendingCommit = useRef<Prepared | null>(null);
+  const savingRef = useRef(false);
+  const audioGeneration = useRef(0);
+  const loopGeneration = useRef(0);
+  const loopGap = useRef<{ timer: number; resolve: () => void } | null>(null);
+  const playedIndex = useRef(-1);
+  const startedAt = useRef(Date.now());
+  const mounted = useRef(true);
+  const answerFields = useRef<
+    (HTMLInputElement | HTMLTextAreaElement | null)[]
+  >([]);
+  const playback = useRef<ReturnType<typeof createVocabularyPlayback> | null>(
+    null,
+  );
+  if (!playback.current) playback.current = createVocabularyPlayback();
+  preferencesRef.current = preferences;
+  cardsRef.current = cards;
+
+  useEffect(() => {
+    if (legacyStudy && location.pathname !== '/vocabulary/study') navigate(`/vocabulary/study?${params}`, { replace: true });
+  }, [legacyStudy, location.pathname]);
+  useEffect(() => {
+    if (sessionRef.current) return;
+    setBook(params.get('bookId') || 'all'); setUnit(params.get('unitId') || 'all');
+    setSource(params.get('sourceType') || 'all'); setSkill(params.get('skill') || 'all');
+    setDimension(params.get('dimension') || 'all');
+    setDue(params.get('dueOnly') !== 'false'); setWrong(params.get('wrongOnly') === 'true');
+    if (params.get('mode') && MODES.some(item => item.value === params.get('mode'))) setMode(params.get('mode') as VocabularyPracticeMode);
+  }, [location.pathname, params.toString(), session === null]);
+  useEffect(() => {
+    let active = true;
+    const target = bookId === 'all' ? '' : bookId;
+    setCatalogStatus({ bookId: target, status: 'loading' });
+    Promise.resolve(fb.loadVocabularyCatalog?.(target || undefined)).then(() => {
+      if (active) setCatalogStatus({ bookId: target, status: 'ready' });
+    }).catch(() => { if (active) setCatalogStatus({ bookId: target, status: 'error' }); });
+    return () => { active = false; };
+  }, [bookId, catalogRetry, fb.loadVocabularyCatalog]);
+
+  const owned = () => mounted.current && owner.current === accountId();
+  const stopAudio = useCallback(() => {
+    audioGeneration.current += 1;
+    loopGeneration.current += 1;
+    if (loopGap.current) {
+      window.clearTimeout(loopGap.current.timer);
+      loopGap.current.resolve();
+      loopGap.current = null;
+    }
+    playback.current?.stop();
+    setAudioBusy(false);
+    setLooping(false);
+  }, []);
+  useEffect(() => {
+    mounted.current = true;
+    const hidden = () => {
+      if (document.hidden) {
+        stopAudio();
+        setAudioStatus("Audio paused");
+      }
+    };
+    document.addEventListener("visibilitychange", hidden);
+    return () => {
+      mounted.current = false;
+      audioGeneration.current += 1;
+      loopGeneration.current += 1;
+      if (loopGap.current) {
+        window.clearTimeout(loopGap.current.timer);
+        loopGap.current.resolve();
+        loopGap.current = null;
+      }
+      playback.current?.stop();
+      document.removeEventListener("visibilitychange", hidden);
+    };
+  }, [stopAudio]);
+  useEffect(() => {
+    const currentOwner = accountId();
+    if (currentOwner === owner.current) return;
+    stopAudio();
+    clearVocabularyDraft(owner.current);
+    owner.current = currentOwner;
+    sessionRef.current = null;
+    pendingCommit.current = null;
+    savingRef.current = false;
+    setSession(null);
+    setCards([]);
+    setResults(null);
+    setResume(readVocabularyDraft(currentOwner));
+    setError("");
+    setSaving(false);
+    setSettingsOpen(false);
+    setExitOpen(false);
+    setIncompleteOpen(false);
+    setAudioStatus("");
+    setPreferences(
+      normalizeVocabularyPreferences(fb.state.settings?.vocabulary),
+    );
+  }, [fb.state, stopAudio]);
+  useEffect(() => {
+    if (!session)
+      setPreferences(
+        normalizeVocabularyPreferences(fb.state.settings?.vocabulary),
+      );
+  }, [fb.state.settings?.vocabulary, session === null]);
+
+  const replaceSession = useCallback((next: Session | null) => {
+    if (owner.current !== accountId()) return;
+    sessionRef.current = next;
+    setSession(next);
+    if (next) {
+      const written = writeVocabularyDraft(owner.current, next);
+      setStorageError(!written);
+    }
+  }, []);
+
+  const filter = useMemo(
+    () =>
+      ({
+        ...(params.get("entryId") ? { entryId: params.get("entryId")! } : {}),
+        ...(params.get("senseId") ? { senseId: params.get("senseId")! } : {}),
+        ...(bookId !== "all" ? { bookId } : {}),
+        ...(unitId !== "all" ? { unitId } : {}),
+        ...(sourceType !== "all" ? { sourceType } : {}),
+        ...(skill !== "all" ? { skill } : {}),
+        ...(dimension !== "all" && mode !== "audio" ? { dimension } : {}),
+        mode: mode === "audio" ? "dictation" : mode,
+        dueOnly,
+      }) as ReviewQueueFilter,
+    [
+      params.toString(),
+      bookId,
+      unitId,
+      sourceType,
+      skill,
+      dimension,
+      mode,
+      dueOnly,
+    ],
+  );
+  const unitQueue = useMemo(() => study ? buildUnitPracticeQueue(fb.state, bookId, unitId, mode) : null, [study, fb.state, bookId, unitId, mode, catalogStatus]);
+  const queue = useMemo(() => {
+    if (unitQueue) return unitQueue.cards;
+    let available = getVocabularyReviewQueue(fb.state, filter).filter(
+      (card) =>
+        !wrongOnly ||
+        ((fb.state.vocabularyStates as VocabularyState[]) || []).some(
+          (item) =>
+            item.entryId === card.entryId &&
+            item.senseId === card.senseId &&
+            item.wrong?.active &&
+            (item.wrong.modes?.[card.mode]?.active ?? true),
+        ),
+    );
+    if (preferences.order === "source") {
+      const entryOrder = new Map(
+        ((fb.state.vocabulary as VocabularyEntry[]) || []).map(
+          (entry, index) => [entry.id, index],
+        ),
+      );
+      available.sort(
+        (a, b) =>
+          (entryOrder.get(a.entryId) ?? 0) - (entryOrder.get(b.entryId) ?? 0),
+      );
+    }
+    if (mode === "audio" || mode === "dictation")
+      available = [
+        ...new Map(available.map((card) => [card.entryId, card])).values(),
+      ];
+    return available;
+  }, [fb.state, filter, wrongOnly, mode, preferences.order, unitQueue]);
+  const books = VOCABULARY_CATALOG.books || [];
+  const units = (VOCABULARY_CATALOG.units || []).filter(
+    (unit) => bookId === "all" || unit.bookId === bookId,
+  );
+  const selectedUnit = units.find(unit => unit.id === unitId);
+  const selectedBook = books.find(book => book.id === bookId);
+  const chapter = units.find(unit => unit.id === selectedUnit?.parentId);
+  const catalogReady = catalogStatus.bookId === (bookId === 'all' ? '' : bookId) && catalogStatus.status === 'ready';
+  const leafUnits = units.filter(unit => unit.kind !== 'chapter' && !units.some(child => child.parentId === unit.id));
+  const studyReady = !study || (catalogReady && Boolean(selectedUnit && leafUnits.includes(selectedUnit)) && Boolean(unitQueue?.complete));
+  const answered = session
+    ? cards.filter((card) => session.answers[card.id]?.response.trim()).length
+    : 0;
+  const flagged = session
+    ? cards.filter((card) => session.answers[card.id]?.flagged).length
+    : 0;
+  const count = session?.cardIds.length || 0;
+  const locked = saving || Boolean(pendingCommit.current);
+  const currentIndex = session?.index || 0;
+  const pageStart = Math.floor(currentIndex / 50) * 50;
+  const visibleCards = cards.slice(pageStart, pageStart + 50).map((card, offset) => ({ card, index: pageStart + offset }));
+  const resultRows = results?.results.filter(row => resultFilter === 'all' ||
+    (resultFilter === 'incorrect' && (row.result === 'failure' || row.result === 'partial')) ||
+    (resultFilter === 'unanswered' && !row.response.trim()) ||
+    (resultFilter === 'pending' && row.result === 'pending') ||
+    (resultFilter === 'flagged' && row.flagged)) || [];
+  const resultUnitId = results?.selection?.kind === 'unit' ? results.selection.unitId : null;
+  const orderedGroups = [...(VOCABULARY_CATALOG.units || [])].filter(unit => unit.bookId === results?.filter.bookId && unit.kind !== 'chapter' && !(VOCABULARY_CATALOG.units || []).some(child => child.bookId === unit.bookId && child.parentId === unit.id)).sort((a, b) => {
+    const parents = VOCABULARY_CATALOG.units;
+    return (parents.find(unit => unit.id === a.parentId && unit.bookId === a.bookId)?.order || 0) - (parents.find(unit => unit.id === b.parentId && unit.bookId === b.bookId)?.order || 0) || (a.order || 0) - (b.order || 0);
+  });
+  const resultGroupIndex = orderedGroups.findIndex(unit => unit.id === resultUnitId);
+  const nextGroup = resultGroupIndex >= 0 ? orderedGroups[resultGroupIndex + 1] : null;
+  const recent = (fb.state.vocabularySessions || [])
+    .slice(-5)
+    .reverse() as SessionLog[];
+
+  function changeFilter(key: string, value: string) {
+    const next = new URLSearchParams(params);
+    next.set(key, value);
+    if (key === "bookId") next.delete("unitId");
+    setParams(next, { replace: true });
+  }
+  function changeMode(value: string) {
+    setMode(value as VocabularyPracticeMode);
+    changeFilter("mode", value);
+    setAudioStatus("");
+  }
+
+  async function playCard(
+    index: number,
+    options: { automatic?: boolean; example?: boolean } = {},
+  ) {
+    const card = cardsRef.current[index];
+    if (!card || !owned()) return false;
+    const p = preferencesRef.current;
+    if (p.volume === 0) {
+      setAudioStatus("Audio is muted");
+      return false;
+    }
+    if (options.automatic && !p.autoPlay) return false;
+    const generation = ++audioGeneration.current;
+    playback.current?.stop();
+    setAudioBusy(true);
+    setAudioStatus("Playing audio");
+    const outcome = await playback.current!.play(card.entry, {
+      accent: p.accent,
+      rate: p.speechRate,
+      volume: p.volume,
+      repeatCount: p.repeatCount,
+      repeatGapMs: p.repeatGapMs,
+      ...(options.example
+        ? { example: true, text: senseFor(card)?.example || card.entry.example }
+        : {}),
+    });
+    if (!owned() || generation !== audioGeneration.current) return false;
+    setAudioBusy(false);
+    if (!outcome.ok) {
+      setAudioStatus(
+        outcome.reason === "cancelled"
+          ? "Audio paused"
+          : outcome.reason === "blocked" ||
+              outcome.reason === "click-blocked" ||
+              outcome.reason === "clickBlocked"
+            ? "Select Play to enable audio"
+            : "Audio unavailable. Select Play to try again.",
+      );
+      return false;
+    }
+    setAudioStatus(
+      outcome.source === "speech" ? "Browser voice" : "Recorded pronunciation",
+    );
+    if (sessionRef.current?.mode === "audio") {
+      const next = updateVocabularySessionAnswer(
+        sessionRef.current,
+        card.id,
+        "Listened",
+        { durationMs: Date.now() - startedAt.current },
+      );
+      replaceSession(next);
+    }
+    return true;
+  }
+  const playCardRef = useRef(playCard);
+  playCardRef.current = playCard;
+  useEffect(() => {
+    if (
+      !session ||
+      session.mode !== "dictation" ||
+      !preferences.autoPlay ||
+      playedIndex.current === session.index
+    )
+      return;
+    playedIndex.current = session.index;
+    void playCardRef.current(session.index, { automatic: true });
+  }, [session?.id, session?.index, preferences.autoPlay]);
+
+  async function runAudioLoop(index = sessionRef.current?.index || 0) {
+    if (!owned() || sessionRef.current?.mode !== "audio") return;
+    stopAudio();
+    const generation = ++loopGeneration.current;
+    setLooping(true);
+    for (let cursor = index; cursor < cardsRef.current.length; cursor += 1) {
+      if (
+        !owned() ||
+        generation !== loopGeneration.current ||
+        !sessionRef.current
+      )
+        return;
+      replaceSession({ ...sessionRef.current, index: cursor });
+      const ok = await playCardRef.current(cursor);
+      if (!ok || generation !== loopGeneration.current) break;
+      if (
+        preferencesRef.current.audioExamples &&
+        senseFor(cardsRef.current[cursor])?.example
+      ) {
+        const exampleOk = await playCardRef.current(cursor, { example: true });
+        if (!exampleOk || generation !== loopGeneration.current) break;
+      }
+      if (cursor < cardsRef.current.length - 1)
+        await new Promise<void>((resolve) => {
+          const timer = window.setTimeout(
+            () => {
+              loopGap.current = null;
+              resolve();
+            },
+            Math.min(5000, preferencesRef.current.audioGapMs),
+          );
+          loopGap.current = { timer, resolve };
+        });
+    }
+    if (owned() && generation === loopGeneration.current) {
+      setLooping(false);
+      setAudioStatus("Audio loop complete");
+    }
+  }
+
+  type BeginOptions = {
+    filter?: ReviewQueueFilter;
+    preferences?: VocabularyPreferences;
+  };
+  function begin(
+    selected = queue,
+    chosenMode = mode,
+    selection?: VocabularySessionSelection,
+    options: BeginOptions = {},
+  ) {
+    if (!owned() || !selected.length || (!selection && !studyReady)) return;
+    stopAudio();
+    pendingCommit.current = null;
+    playedIndex.current = -1;
+    const ordered = [...selected];
+    const chosenSelection = selection || (study ? { kind: 'unit' as const, bookId, unitId } : { kind: 'batch' as const });
+    const chosenPreferences = { ...(options.preferences || preferences), ...(study && chosenSelection.kind === 'unit' ? { order: 'source' as const } : {}), mode: chosenMode };
+    if (chosenPreferences.order === "source" && chosenSelection.kind !== 'unit') {
+      const order = new Map(
+        (fb.state.vocabulary || []).map(
+          (entry: VocabularyEntry, index: number) => [entry.id, index],
+        ),
+      );
+      ordered.sort(
+        (a, b) => (order.get(a.entryId) ?? 0) - (order.get(b.entryId) ?? 0),
+      );
+    } else if (chosenPreferences.order === "due")
+      ordered.sort((a, b) => a.dueAt.localeCompare(b.dueAt));
+    else if (chosenPreferences.order === 'random')
+      for (let i = ordered.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [ordered[i], ordered[j]] = [ordered[j], ordered[i]];
+      }
+    const candidates = clone(ordered);
+    const next = createVocabularySession(
+      candidates,
+      chosenMode,
+      chosenPreferences,
+      chosenSelection.kind === 'unit' ? { bookId, unitId, dueOnly: false } : options.filter || Object.assign({ ...filter }, { wrongOnly }),
+      chosenSelection,
+    );
+    const frozen = next.cardIds.map((identity) =>
+      candidates.find((card) => card.id === identity.id)!,
+    );
+    startedAt.current = Date.now();
+    cardsRef.current = frozen;
+    setCards(frozen);
+    setResults(null);
+    setResultFilter('all');
+    setResume(null);
+    setError("");
+    setAudioStatus("");
+    if (options.preferences) {
+      preferencesRef.current = chosenPreferences;
+      setPreferences(chosenPreferences);
+    }
+    replaceSession(next);
+    if (chosenMode === "audio" && chosenPreferences.autoPlay) void runAudioLoop(0);
+    requestAnimationFrame(() => answerFields.current[0]?.focus());
+  }
+  function recover() {
+    if (!resume || !owned()) return;
+    const all = resume.selection?.kind === 'unit'
+      ? buildUnitPracticeQueue(fb.state, resume.selection.bookId, resume.selection.unitId, resume.mode).cards
+      : getVocabularyReviewQueue(fb.state, {
+      mode:
+        resume.mode === "audio" ? "dictation" : (resume.mode as VocabularyMode),
+      dueOnly: false,
+    });
+    const frozen = resume.cardIds
+      .map(
+        (identity) =>
+          all.find((card) => card.id === identity.id) ||
+          (() => {
+            const entry = (
+              (fb.state.vocabulary as VocabularyEntry[]) || []
+            ).find((item) => item.id === identity.entryId);
+            return entry &&
+              !entry.tags.includes("archived") &&
+              entry.senses.some((sense) => sense.id === identity.senseId)
+              ? ({
+                  ...identity,
+                  mode:
+                    resume.mode === "audio"
+                      ? "dictation"
+                      : (identity.mode as VocabularyMode),
+                  entry,
+                  sources: entry.sources,
+                  dimension: "meaning",
+                  dueAt: entry.createdAt,
+                } as ReviewCard)
+              : null;
+          })(),
+      )
+      .filter((card): card is ReviewCard => Boolean(card));
+    if (frozen.length !== resume.cardIds.length) {
+      setError(
+        "This saved session includes words that are no longer available. Discard it to start a new session.",
+      );
+      return;
+    }
+    playedIndex.current = -1;
+    pendingCommit.current = null;
+    startedAt.current = Date.now();
+    const next = {
+      ...resume,
+      status: "active" as const,
+      index: Math.min(resume.index, frozen.length - 1),
+    };
+    if (next.submittedAt)
+      pendingCommit.current = buildVocabularySessionCommit(
+        fb.stateRef.current,
+        next,
+        frozen,
+      );
+    cardsRef.current = clone(frozen);
+    setCards(cardsRef.current);
+    setResults(null);
+    setPreferences(normalizeVocabularyPreferences(resume.preferences));
+    setMode(resume.mode);
+    setResume(null);
+    setError(
+      next.submittedAt
+        ? "This session still needs to be saved. Retry your submission."
+        : "",
+    );
+    replaceSession(next);
+    requestAnimationFrame(() => answerFields.current[next.index]?.focus());
+  }
+  function updateAnswer(index: number, response: string) {
+    if (locked || !sessionRef.current || !owned()) return;
+    replaceSession(
+      updateVocabularySessionAnswer(
+        sessionRef.current,
+        cards[index].id,
+        response,
+        { durationMs: Date.now() - startedAt.current },
+      ),
+    );
+  }
+  function finalizeAnswer(index: number) {
+    const current = sessionRef.current;
+    if (
+      locked ||
+      !current ||
+      current.preferences.feedback !== "immediate" ||
+      current.mode === "audio" ||
+      !owned()
+    )
+      return;
+    const card = cards[index];
+    const answer = current.answers[card.id];
+    if (!answer?.response.trim() || answer.revealed) return;
+    const evaluation = evaluateVocabularySessionAnswer(card, answer.response, {
+      result: answer.result,
+      verification: answer.verification as "pending" | "self-reported",
+    });
+    replaceSession({
+      ...current,
+      answers: {
+        ...current.answers,
+        [card.id]: { ...answer, result: evaluation.result, revealed: true },
+      },
+    });
+  }
+  function focusCard(index: number, forcePlayback = false) {
+    if (
+      !sessionRef.current ||
+      locked ||
+      index < 0 ||
+      index >= cards.length ||
+      !owned()
+    )
+      return;
+    if (index !== sessionRef.current.index) {
+      finalizeAnswer(sessionRef.current.index);
+      stopAudio();
+      replaceSession({ ...sessionRef.current!, index });
+    }
+    if (forcePlayback) {
+      playedIndex.current = index;
+      void playCardRef.current(index);
+    }
+    requestAnimationFrame(() => {
+      const field = answerFields.current[index];
+      field?.focus();
+      field?.closest('.practice-answer-row')?.scrollIntoView?.({ block: 'nearest' });
+    });
+  }
+  function advance(index: number) {
+    finalizeAnswer(index);
+    if (index < cards.length - 1) focusCard(index + 1);
+  }
+  function toggleFlag(index: number) {
+    const current = sessionRef.current;
+    if (!current || locked || !owned()) return;
+    const card = cards[index];
+    const answer = current.answers[card.id] || {
+      response: "",
+      answeredAt: new Date().toISOString(),
+      durationMs: 0,
+    };
+    replaceSession({
+      ...current,
+      answers: {
+        ...current.answers,
+        [card.id]: { ...answer, flagged: !answer.flagged },
+      },
+    });
+  }
+  function reportProduction(index: number, result: VocabularyResult) {
+    const current = sessionRef.current;
+    if (!current || locked || !owned()) return;
+    const card = cards[index];
+    const answer = current.answers[card.id];
+    if (!answer) return;
+    replaceSession(
+      updateVocabularySessionAnswer(current, card.id, answer.response, {
+        result,
+        verification: result === "pending" ? "pending" : "self-reported",
+      }),
+    );
+  }
+  async function submit(force = false) {
+    const current = sessionRef.current;
+    if (!current || savingRef.current || !owned()) return;
+    if (
+      !force &&
+      !pendingCommit.current &&
+      cards.some((card) => !current.answers[card.id]?.response.trim())
+    ) {
+      setIncompleteOpen(true);
+      return;
+    }
+    setIncompleteOpen(false);
+    stopAudio();
+    setError("");
+    setSaving(true);
+    savingRef.current = true;
+    const submittingOwner = owner.current;
+    try {
+      if (!pendingCommit.current)
+        pendingCommit.current = buildVocabularySessionCommit(
+          fb.stateRef.current,
+          current,
+          cardsRef.current,
+        );
+      const prepared = pendingCommit.current;
+      if (!current.submittedAt)
+        replaceSession({
+          ...current,
+          submittedAt: prepared.sessionRecord.submittedAt,
+        });
+      const saved = await fb.persistVocabularySession(
+        prepared.state,
+        current.id,
+      );
+      if (!owned() || owner.current !== submittingOwner) return;
+      if (!saved) {
+        setError(
+          "This session could not be saved. Your responses are still here.",
+        );
+        return;
+      }
+      clearVocabularyDraft(owner.current);
+      setResume(null);
+      setResults(prepared.sessionRecord);
+      sessionRef.current = null;
+      setSession(null);
+      pendingCommit.current = null;
+      setStorageError(false);
+    } catch {
+      if (owned() && owner.current === submittingOwner)
+        setError(
+          "This session could not be saved. Your responses are still here.",
+        );
+    } finally {
+      if (owned() && owner.current === submittingOwner) {
+        savingRef.current = false;
+        setSaving(false);
+      }
+    }
+  }
+  async function savePreferences(next: VocabularyPreferences) {
+    if (!owned()) return false;
+    const savingOwner = owner.current;
+    const saved = await fb.saveVocabularyPreferences(next);
+    if (!saved || !owned() || savingOwner !== owner.current) return false;
+    setPreferences(normalizeVocabularyPreferences(next));
+    stopAudio();
+    playedIndex.current = -1;
+    setAudioStatus(next.volume === 0 ? "Audio is muted" : "");
+    return true;
+  }
+  function exit(keep: boolean) {
+    if (!owned() || saving) return;
+    stopAudio();
+    setExitOpen(false);
+    if (keep && sessionRef.current) {
+      const paused = { ...sessionRef.current, status: "paused" as const };
+      writeVocabularyDraft(owner.current, paused);
+      setResume(paused);
+    } else {
+      clearVocabularyDraft(owner.current);
+      setResume(null);
+    }
+    pendingCommit.current = null;
+    sessionRef.current = null;
+    setSession(null);
+    setCards([]);
+    setError("");
+    setAudioStatus("");
+  }
+  function resetResults() {
+    stopAudio();
+    setResults(null);
+    setCards([]);
+    setError("");
+  }
+  function resultSource(entryId: string) {
+    const entry = (fb.state.vocabulary as VocabularyEntry[]).find(
+      (item) => item.id === entryId,
+    );
+    const source =
+      entry?.sources.find((item) => item.bookId === results?.filter.bookId) ||
+      entry?.sources[0];
+    if (source?.bookId)
+      return String(
+        books.find((book) => book.id === source.bookId)?.title || "Wordbook",
+      );
+    return source ? titleCase(source.type) : "Vocabulary";
+  }
+
+
+  function discardResume() {
+    clearVocabularyDraft(owner.current);
+    setResume(null);
+    setError("");
+  }
+  function showRecentSession(log: SessionLog) {
+    setResults(log);
+    setCards([]);
+  }
+  function retryCatalog() {
+    setCatalogRetry(value => value + 1);
+  }
+  function registerAnswerField(index: number, element: HTMLInputElement | HTMLTextAreaElement | null) {
+    answerFields.current[index] = element;
+  }
+  function pauseSession() {
+    stopAudio();
+    setExitOpen(true);
+  }
+  function replayCard(index = currentIndex) {
+    playedIndex.current = index;
+    void playCard(index);
+  }
+  function toggleCurrentAudio() {
+    if (audioBusy || looping) {
+      stopAudio();
+      setAudioStatus("Audio paused");
+    } else replayCard();
+  }
+  function toggleAudioLoop() {
+    if (looping) {
+      stopAudio();
+      setAudioStatus("Audio paused");
+    } else void runAudioLoop();
+  }
+  function handleWorkbenchKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (!session || locked || settingsOpen || exitOpen || incompleteOpen) return;
+    practiceKeyboard(event, {
+      index: currentIndex, count, pageStart,
+      autoAdvance: session.preferences.autoAdvance,
+      move: focusCard, finalize: finalizeAnswer,
+      play: () => replayCard(), pause: pauseSession,
+    });
+  }
+  function retryMistakes() {
+    if (!results) return;
+    const failedIds = new Set(results.results
+      .filter(row => row.result === "failure" || row.result === "partial")
+      .map(row => row.cardId));
+    const retryFilter: ReviewQueueFilter = results.selection?.kind === 'unit'
+      ? { ...results.filter, bookId: results.selection.bookId, unitId: results.selection.unitId, dueOnly: false }
+      : { ...results.filter, dueOnly: false };
+    const retryCards = cards.length
+      ? cards.filter(card => failedIds.has(card.id))
+      : getVocabularyReviewQueue(fb.state, { ...retryFilter, mode: results.mode === 'audio' ? 'dictation' : results.mode })
+          .filter(card => failedIds.has(card.id));
+    begin(retryCards, results.mode, { kind: "retry" }, {
+      filter: retryFilter,
+      preferences: results.preferences,
+    });
+  }
+
+  return {
+    study, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit,
+    sourceType, setSource, skill, setSkill, dimension, setDimension,
+    dueOnly, setDue, wrongOnly, setWrong, session, cards, resume, results,
+    settingsOpen, setSettingsOpen, exitOpen, setExitOpen, incompleteOpen, setIncompleteOpen,
+    saving, error, audioStatus, audioBusy, looping, storageError, catalogStatus,
+    resultFilter, setResultFilter, queue, unitQueue, books, units, selectedUnit,
+    selectedBook, chapter, catalogReady, leafUnits, studyReady, answered, flagged,
+    count, locked, currentIndex, pageStart, visibleCards, resultRows, nextGroup, recent,
+    changeFilter, changeMode, playCard, begin, recover, updateAnswer, finalizeAnswer,
+    focusCard, advance, toggleFlag, reportProduction, submit, savePreferences, exit,
+    resetResults, resultSource, discardResume, showRecentSession, retryCatalog,
+    registerAnswerField, pauseSession, replayCard, toggleCurrentAudio, toggleAudioLoop,
+    handleWorkbenchKeyDown, retryMistakes,
+    submissionPending: Boolean(pendingCommit.current),
+  };
+}
+
+export type VocabularyPracticeController = ReturnType<typeof useVocabularyPracticeController>;
