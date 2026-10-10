@@ -20,6 +20,16 @@ describe('reviewed learning content',()=>{
   expect(evaluateVocabularySessionAnswer(cards[0],'sequence').result).toBe('success');
   expect(evaluateVocabularySessionAnswer(cards[0],'order').result).toBe('failure');
  });
+ test.each([
+  ['begin','began','started','start'],
+  ['reduce','reduced','lowered','lower'],
+  ['improve','improves','enhances','enhance'],
+ ])('synonym preserves the grammatical form for %s', (term,target,accepted,rejected)=>{
+  const e=entry(term);const card=getVocabularyReviewQueue(store(e),{mode:'synonym',dueOnly:false})[0];
+  expect(card.task?.prompt).toContain(`Replace “${target}”`);
+  expect(evaluateVocabularySessionAnswer(card,accepted).result).toBe('success');
+  expect(evaluateVocabularySessionAnswer(card,rejected).result).toBe('failure');
+ });
  test('freezes task and score after the current content changes',()=>{
   const e=entry('begin');const state=store(e);const cards=getVocabularyReviewQueue(state,{mode:'cloze',dueOnly:false});
   const session=createVocabularySession(cards,'cloze',{}); session.answers[cards[0].id]={response:'began',answeredAt:'2026-10-10',durationMs:1};
