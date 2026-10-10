@@ -149,16 +149,18 @@ function renderAt(path: string) {
 const longEssay = Array.from({ length: 160 }, (_, i) => `word${i}`).join(' ');
 
 describe('Fieldbook UI', () => {
-  it('switches the rail when skill changes', async () => {
+  it('shows global modules and route-specific study links', async () => {
     const user = userEvent.setup();
-    renderAt('/');
+    renderAt('/write');
     const rail = document.querySelector('.rail') as HTMLElement;
-    expect(within(rail).getByText('Write')).toBeTruthy();
-    expect(within(rail).queryByText('Stories')).toBeNull();
-    await user.click(screen.getByRole('tab', { name: 'Speaking' }));
+    for (const label of ['Today', 'Writing', 'Speaking', 'Vocabulary', 'Progress']) {
+      expect(within(rail).getByRole('link', { name: label })).toBeTruthy();
+    }
+    expect(within(rail).getByRole('navigation', { name: 'Writing study' })).toBeTruthy();
+    await user.click(within(rail).getByRole('link', { name: 'Speaking' }));
     expect(within(rail).getByText('Stories')).toBeTruthy();
     expect(within(rail).getByText('Practice')).toBeTruthy();
-    expect(within(rail).queryByText('Write')).toBeNull();
+    expect(within(rail).queryByRole('navigation', { name: 'Writing study' })).toBeNull();
   });
 
   it('keeps the sidebar open until the user collapses it', async () => {
@@ -166,13 +168,13 @@ describe('Fieldbook UI', () => {
     renderAt('/write');
     const rail = document.querySelector('.rail') as HTMLElement;
     expect(document.querySelector('.shell')?.className).not.toContain('is-collapsed');
-    expect(within(rail).getByText('Write')).toBeTruthy();
+    expect(within(rail).getByText('Writing')).toBeTruthy();
     await user.click(screen.getByRole('button', { name: 'Collapse sidebar' }));
     expect(document.querySelector('.shell')?.className).toContain('is-collapsed');
     expect(screen.getByRole('button', { name: 'Expand sidebar' })).toBeTruthy();
     await user.click(screen.getByRole('button', { name: 'Expand sidebar' }));
     expect(document.querySelector('.shell')?.className).not.toContain('is-collapsed');
-    expect(within(rail).getByText('Write')).toBeTruthy();
+    expect(within(rail).getByText('Writing')).toBeTruthy();
   });
 
   it('renders Today', () => {

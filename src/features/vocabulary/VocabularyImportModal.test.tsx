@@ -55,7 +55,7 @@ test("previews first and closes only after the atomic import save completes", as
     screen.getByRole("button", { name: "Import vocabulary" }),
   ).toBeDisabled();
   await user.type(
-    screen.getByRole("textbox", { name: "Export contents" }),
+    screen.getByRole("textbox", { name: "CSV contents" }),
     "term\nresilient",
   );
   await user.click(screen.getByRole("button", { name: "Preview import" }));
@@ -80,7 +80,7 @@ test("failed atomic import can retry the same batch without merging twice", asyn
   render(<VocabularyImportModal />);
   const user = userEvent.setup();
   await user.type(
-    screen.getByRole("textbox", { name: "Export contents" }),
+    screen.getByRole("textbox", { name: "CSV contents" }),
     "term\nresilient",
   );
   await user.click(screen.getByRole("button", { name: "Preview import" }));
@@ -97,7 +97,7 @@ test("parser validation errors remain in the import dialog", async () => {
   render(<VocabularyImportModal />);
   const user = userEvent.setup();
   await user.type(
-    screen.getByRole("textbox", { name: "Export contents" }),
+    screen.getByRole("textbox", { name: "CSV contents" }),
     "invalid",
   );
   await user.click(screen.getByRole("button", { name: "Preview import" }));
@@ -107,4 +107,15 @@ test("parser validation errors remain in the import dialog", async () => {
   expect(
     screen.getByRole("button", { name: "Import vocabulary" }),
   ).toBeDisabled();
+});
+
+test("public import accepts CSV and does not offer the legacy exporter", async () => {
+  render(<VocabularyImportModal />);
+  expect(screen.getByLabelText('CSV vocabulary file')).toHaveAttribute('accept', '.csv,text/csv');
+  expect(screen.queryByRole('link', { name: /exporter/i })).not.toBeInTheDocument();
+  const user = userEvent.setup();
+  await user.click(screen.getByRole('textbox', { name: 'CSV contents' }));
+  await user.paste('{"records":[]}');
+  await user.click(screen.getByRole('button', { name: 'Preview import' }));
+  expect(screen.getByRole('alert')).toHaveTextContent('Paste CSV vocabulary data.');
 });

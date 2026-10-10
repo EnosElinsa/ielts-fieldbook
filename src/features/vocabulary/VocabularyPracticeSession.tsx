@@ -13,6 +13,7 @@ export function VocabularyPracticeSession({ controller, session }: {
   function prompt(card: ReviewCard, compact = false) {
     const sense = senseFor(card);
     const currentMode = session?.mode || mode;
+    if (card.task) return <p className="practice-prompt-text">{card.task.prompt}</p>;
     if (currentMode === "dictation")
       return (
         <span className="practice-dictation-label">
@@ -56,6 +57,7 @@ export function VocabularyPracticeSession({ controller, session }: {
     return (
       <div className={`practice-feedback is-${evaluation.result}`}>
         <span>{resultName(evaluation.result)}</span>
+        {card.task?.explanation ? <p>{card.task.explanation}</p> : null}
         {session.mode !== "production" ? (
           <strong>{evaluation.expectedAnswer}</strong>
         ) : null}
@@ -87,12 +89,12 @@ export function VocabularyPracticeSession({ controller, session }: {
     };
     if (
       session!.mode === "distinction" &&
-      senseFor(card)?.distinctionTask?.options?.length
+      (card.task?.options || senseFor(card)?.distinctionTask?.options)?.length
     )
       return (
         <fieldset className="practice-options" disabled={readOnly}>
           <legend className="sr-only">Answer {index + 1}</legend>
-          {senseFor(card)!.distinctionTask!.options.map(
+          {(card.task?.options || senseFor(card)!.distinctionTask!.options).map(
             (option, optionIndex) => (
               <label key={optionIndex}>
                 <input

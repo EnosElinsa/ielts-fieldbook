@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useEffect, useRef, useState } from "react";
-import { Download, Eye, Upload } from "lucide-react";
+import { Eye, Upload } from "lucide-react";
 import { useFieldbook } from "../../context/FieldbookContext";
 import { ModalFrame } from "../../components/ModalFrame";
 import {
@@ -14,7 +14,7 @@ export function VocabularyImportModal() {
   const fb = useFieldbook();
   const open = fb.modal === "vocabularyImport";
   const [text, setText] = useState("");
-  const [filename, setFilename] = useState("vocabulary.json");
+  const [filename, setFilename] = useState("vocabulary.csv");
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
@@ -23,7 +23,7 @@ export function VocabularyImportModal() {
   useEffect(() => {
     if (open) {
       setText("");
-      setFilename("vocabulary.json");
+      setFilename("vocabulary.csv");
       setPreview(null);
       setError("");
       setSaving(false);
@@ -39,6 +39,10 @@ export function VocabularyImportModal() {
     const file = event.target.files?.[0];
     if (!file) return;
     resetPreview();
+    if (!file.name.toLowerCase().endsWith('.csv')) {
+      setError('Choose a CSV vocabulary file.');
+      return;
+    }
     if (file.size > 10 * 1024 * 1024) {
       setError("Choose a file smaller than 10 MB.");
       return;
@@ -53,13 +57,13 @@ export function VocabularyImportModal() {
   const inspect = () => {
     setError("");
     pending.current = null;
+    if (/^\s*[\[{]/.test(text)) {
+      setPreview(null);
+      setError('Paste CSV vocabulary data.');
+      return;
+    }
     try {
-      const parsed = parseVocabularyImport(
-        text,
-        filename.toLowerCase().endsWith(".csv") && !/^\s*[\[{]/.test(text)
-          ? "csv"
-          : "auto",
-      );
+      const parsed = parseVocabularyImport(text, "csv");
       if (parsed.valid === false) {
         setPreview(null);
         setError(
@@ -148,25 +152,20 @@ export function VocabularyImportModal() {
       }}
     >
       <div className="modal vocabulary-modal">
-        <h3>Import vocabulary</h3>
         <div className="vocabulary-import-file">
-          <label htmlFor="vocabulary-import-file">JSON or CSV export</label>
+          <label htmlFor="vocabulary-import-file">CSV vocabulary file</label>
           <input
             ref={fileInput}
             id="vocabulary-import-file"
             type="file"
-            accept=".json,.csv,application/json,text/csv"
+            accept=".csv,text/csv"
             hidden
             disabled={saving}
             onChange={readFile}
           />
           <div className="vocabulary-file-picker"><button type="button" className="btn line" disabled={saving} onClick={()=>fileInput.current?.click()}><Upload size={15}/>{text ? 'Change file' : 'Choose file'}</button><span aria-live="polite">{text ? filename : 'No file selected'}</span></div>
-          <a href="/guixue-exporter.js" className="btn line" download>
-            <Download size={15} />
-            Guixue exporter
-          </a>
         </div>
-        <label htmlFor="vocabulary-import-text">Export contents</label>
+        <label htmlFor="vocabulary-import-text">CSV contents</label>
         <textarea
           id="vocabulary-import-text"
           className="vocabulary-import-text"

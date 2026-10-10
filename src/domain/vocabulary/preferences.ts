@@ -25,7 +25,7 @@ export function normalizeVocabularyPreferences(value: unknown): VocabularyPrefer
     return Math.min(max, Math.max(min, integer ? Math.floor(raw) : raw));
   };
   return {
-    mode: choice('mode', ['dictation', 'definition', 'cloze', 'distinction', 'production', 'audio'], defaults.mode),
+    mode: choice('mode', ['dictation', 'definition', 'cloze', 'synonym', 'distinction', 'production', 'audio'], defaults.mode),
     layout: choice('layout', ['list', 'cards'], defaults.layout),
     feedback: choice('feedback', ['end', 'immediate'], defaults.feedback),
     order: choice('order', ['source', 'due', 'random'], defaults.order),

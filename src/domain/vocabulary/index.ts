@@ -1,3 +1,4 @@
+import { learningTask, reviewedEntry, VOCABULARY_CONTENT_VERSION } from './content';
 import { createEmptyCard, fsrs, Rating } from 'ts-fsrs';
 import { hashText, makeId, nowIso } from '../utils';
 import { VOCABULARY_CATALOG } from './catalog';
@@ -5,11 +6,11 @@ import type { DimensionState, ReviewCard, ReviewQueueFilter, VocabularyDimension
 export type * from './types';
 
 export const vocabularyLists = ['vocabulary', 'vocabularyStates', 'vocabularyEvidence', 'vocabularyReviews', 'vocabularyActivities', 'wordbookProgress', 'wordbookEnrollments', 'vocabularyImportBatches'] as const;
-export const VOCABULARY_MODES: VocabularyMode[] = ['dictation', 'definition', 'cloze', 'distinction', 'production'];
+export const VOCABULARY_MODES: VocabularyMode[] = ['dictation', 'definition', 'cloze', 'synonym', 'distinction', 'production'];
 export const VOCABULARY_DIMENSIONS: VocabularyDimension[] = ['meaning', 'listening', 'spelling', 'usage'];
 export const VOCABULARY_STATUSES: VocabularyStatus[] = ['new', 'unfamiliar', 'unstable', 'active', 'familiar', 'mastered'];
 const modeDimensions: Record<VocabularyMode, VocabularyDimension[]> = {
-  dictation: ['listening', 'spelling'], definition: ['meaning'], cloze: ['meaning', 'usage'], distinction: ['meaning', 'usage'], production: ['usage'],
+  dictation: ['listening', 'spelling'], definition: ['meaning'], cloze: ['meaning', 'usage'], synonym: ['meaning'], distinction: ['meaning', 'usage'], production: ['usage'],
 };
 const scheduler = fsrs({ request_retention: 0.9, maximum_interval: 365, enable_fuzz: false });
 const han = /[\u3400-\u9fff\uf900-\ufaff]/u;
@@ -234,15 +235,15 @@ export function recordVocabularyReview(state: VocabularyStore, input: { entryId:
 
 function supportsMode(entry: VocabularyEntry, sense: VocabularySense, mode: VocabularyMode) {
   if (mode === 'definition') return Boolean(sense.definition);
-  if (mode === 'cloze') return Boolean(sense.example && termOccurs(sense.example, entry.term));
-  if (mode === 'distinction') return Boolean(sense.distinctionTask?.options.length || (sense.definition && sense.synonyms?.length && sense.distinctions?.length));
+  if (mode === 'cloze' || mode === 'synonym') return Boolean(learningTask(entry, sense, mode));
+  if (mode === 'distinction') return Boolean(learningTask(entry, sense, mode) || (sense.source === 'Personal note' && sense.synonyms?.length && sense.distinctions?.length));
   return true;
 }
 export function getVocabularyReviewQueue(state: Partial<VocabularyStore>, filter: ReviewQueueFilter = {}): ReviewCard[] {
   ensureStore(state);
   const at = new Date(filter.now || new Date()).getTime(); const cards: ReviewCard[] = [];
   const learningBySense = new Map(state.vocabularyStates.map(learning => [`${learning.entryId}:${learning.senseId}`, learning]));
-  state.vocabulary.filter(entry => !entry.tags.includes('archived') && (!filter.entryId || entry.id === filter.entryId)).forEach(entry => entry.senses.forEach(sense => {
+  state.vocabulary.map(reviewedEntry).filter(entry => !entry.tags.includes('archived') && (!filter.entryId || entry.id === filter.entryId)).forEach(entry => entry.senses.forEach(sense => {
     if (filter.senseId && sense.id !== filter.senseId) return;
     const sources = entry.sources.filter(s => (!s.senseId || s.senseId === sense.id) && (!filter.bookId || s.bookId === filter.bookId) && (!filter.unitId || s.unitId === filter.unitId) && (!filter.skill || s.skill === filter.skill) && (!filter.sourceType || s.type === filter.sourceType));
     if ((filter.bookId || filter.unitId || filter.skill || filter.sourceType) && !sources.length) return;
@@ -252,7 +253,7 @@ export function getVocabularyReviewQueue(state: Partial<VocabularyStore>, filter
       if (!supportsMode(entry, sense, mode) || (filter.dimension && !modeDimensions[mode].includes(filter.dimension))) return;
       const dueAt = validTime(learning?.cards[mode]?.due || learning?.legacyProgress?.nextReviewAt || entry.createdAt);
       if (filter.dueOnly !== false && new Date(dueAt).getTime() > at) return;
-      cards.push({ id: `${entry.id}:${sense.id}:${mode}`, entryId: entry.id, senseId: sense.id, entry, mode, dimension: modeDimensions[mode][0], dueAt, sources });
+      cards.push({ id: `${entry.id}:${sense.id}:${mode}`, entryId: entry.id, senseId: sense.id, entry, mode, dimension: modeDimensions[mode][0], dueAt, sources, task: learningTask(entry, sense, mode), contentVersion: VOCABULARY_CONTENT_VERSION });
     });
   }));
   return cards.sort((a, b) => a.dueAt.localeCompare(b.dueAt) || a.id.localeCompare(b.id));

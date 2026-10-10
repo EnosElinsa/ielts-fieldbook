@@ -43,7 +43,8 @@ export function VocabularyPreferencesFields({
                 { value: "dictation", label: "Dictation" },
                 { value: "definition", label: "Definition recall" },
                 { value: "cloze", label: "Cloze" },
-                { value: "distinction", label: "Synonym / distinction" },
+                { value: "synonym", label: "Synonyms" },
+                { value: "distinction", label: "Confusing words" },
                 { value: "audio", label: "Audio loop" },
                 { value: "production", label: "Sentence production" },
               ].map((mode) => (
