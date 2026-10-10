@@ -65,6 +65,58 @@ test('same-ID learner edits and personal notes survive a public content suppleme
   expect(resolveVocabularyLearningContext(peel, { bookId: 'guixue:10174', unitId: '21868' }).sense).toEqual(peel.senses[0]);
 });
 
+test('committed editorial provenance cannot authorize a canned task after learner editing', () => {
+  const state = fresh([entry('stable')]);
+  const cards = getVocabularyReviewQueue(state, { mode: 'synonym', dueOnly: false });
+  const session = createVocabularySession(cards, 'synonym', {});
+  const committed = buildVocabularySessionCommit(state, session, cards).state;
+  const saved = committed.vocabulary[0];
+  const selected = saved.senses.find(sense => sense.id === cards[0].senseId)!;
+  expect(selected.editorial).toBeTruthy();
+  selected.definition = 'My note about a stable arrangement.';
+  selected.example = 'A stable arrangement helps our team.';
+  const result = resolveVocabularyLearningContext(saved);
+  expect(result.reviewed).toBe(false);
+  expect(result.sense?.definition).toBe(selected.definition);
+  expect(learningTask(result.entry, result.sense!, 'definition')).toBeUndefined();
+  expect(learningTask(result.entry, result.sense!, 'synonym')).toBeUndefined();
+  expect(learningTask(result.entry, result.sense!, 'cloze')?.prompt).toBe('A _____ arrangement helps our team.');
+});
+
+test.each([
+  ['pos', 'expression'], ['usage', 'My usage note.'], ['collocations', ['my chosen core phrase']],
+  ['synonyms', ['my core synonym']], ['antonyms', ['my core antonym']],
+  ['distinctions', ['My distinction note.']], ['wordFamily', ['my word family']], ['register', 'My register note.'],
+] as const)('preserves learner edits to %s even when definition and example are unchanged', (field, value) => {
+  const raw = entry('core'); const reviewed = resolveVocabularyLearningContext(raw, { bookId: 'guixue:10174', unitId: '21795' });
+  raw.senses = [structuredClone(reviewed.sense!)];
+  Object.assign(raw.senses[0], { [field]: value });
+  const result = resolveVocabularyLearningContext(raw, { bookId: 'guixue:10174', unitId: '21795' });
+  expect(result.sense?.[field]).toEqual(value);
+  expect(result).toMatchObject({ reviewed: false, contentReviewed: false });
+});
+
+test.each([
+  ['courtship', /attracts a mate/], ['Mandarin', /standard form of Chinese/], ['bull', /adult male bovine/],
+  ['cock', /male chicken/], ['appliance', /electrical device/], ['temple', /religious worship/],
+  ['rock', /hard natural material/], ['paste', /mixture/], ['democracy', /voting/],
+  ['warn', /possible danger/], ['commitment', /promise/], ['heaven', /sky/],
+])('repairs concrete known archaic or fragmented content for %s without discarding original senses', (term, definition) => {
+  const raw = entry(term); const resolved = resolveVocabularyLearningContext(raw);
+  expect(resolved.sense?.definition).toMatch(definition);
+  expect(resolved.sense?.definition).not.toMatch(/(?:especially|specifically|such as|in particular)\s*:?$/i);
+  expect(resolved.sense?.example).toMatch(/[.!?]$/);
+  expect(raw.senses.every(sense => resolved.entry.senses.some(item => item.id === sense.id))).toBe(true);
+});
+
+test('known fragment review keeps explicit dictionary IDs and honest uncertain group status', () => {
+  expect(resolve('rock', '21829').sense?.id).toBe('kaikki:2f15f9e0d26b9cc74f');
+  expect(resolve('courtship', '21804').sense?.id).toBe('editorial:courtship:animal-mating');
+  expect(resolveVocabularyLearningContext(entry('Mandarin'), { bookId: 'guixue:10177', unitId: '23796' })).toMatchObject({ status: 'unresolved', contentReviewed: true });
+  expect(resolveVocabularyLearningContext(entry('heaven')).sense?.usage).toContain('dated');
+  expect(resolveVocabularyLearningContext(entry('gizmo')).sense?.definition).toBe(entry('gizmo').senses[0].definition);
+});
+
 test('explicit sense route overrides group binding and missing explicit identity does not fall back', () => {
   const geo = resolve('core', '21795');
   expect(resolveVocabularyLearningContext(entry('core'), { bookId: 'guixue:10174', unitId: '21840', senseId: geo.sense!.id }).sense?.id).toBe(geo.sense!.id);

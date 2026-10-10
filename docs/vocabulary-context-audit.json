@@ -1,6 +1,6 @@
 {
   "summary": {
-    "version": "context-2026-10-10.1",
+    "version": "context-2026-10-10.2",
     "entriesScanned": 7021,
     "membershipsScanned": 9205,
     "groupsScanned": 165,
@@ -11,16 +11,16 @@
       "multiple-groups": 1632,
       "missing-example": 2527,
       "marked-primary": 151,
-      "incomplete-definition-candidate": 38,
+      "incomplete-definition-candidate": 40,
       "missing-definition": 1168,
       "reviewed-task-sense-mismatch": 21
     },
-    "editoriallyAuditedMemberships": 44,
-    "contentCorrectedMemberships": 34,
-    "contextResolvedMemberships": 15,
-    "contextUnresolvedAuditedMemberships": 29,
-    "unresolvedRiskMemberships": 8896,
-    "commonModernDefaultsReviewed": 23,
+    "editoriallyAuditedMemberships": 60,
+    "contentCorrectedMemberships": 50,
+    "contextResolvedMemberships": 25,
+    "contextUnresolvedAuditedMemberships": 35,
+    "unresolvedRiskMemberships": 8886,
+    "commonModernDefaultsReviewed": 35,
     "preexistingEditorialTaskSenseBindings": 99,
     "taskSenseMismatchesSuppressed": 21,
     "byBook": [
@@ -28,17 +28,17 @@
         "bookId": "guixue:10174",
         "title": "IELTS Vocabulary",
         "membershipsScanned": 3632,
-        "editoriallyAuditedMemberships": 15,
-        "contentCorrectedMemberships": 15,
-        "contextResolvedMemberships": 15,
-        "unresolvedRiskMemberships": 3527
+        "editoriallyAuditedMemberships": 25,
+        "contentCorrectedMemberships": 25,
+        "contextResolvedMemberships": 25,
+        "unresolvedRiskMemberships": 3517
       },
       {
         "bookId": "guixue:10176",
         "title": "IELTS Reading Keywords",
         "membershipsScanned": 376,
-        "editoriallyAuditedMemberships": 5,
-        "contentCorrectedMemberships": 4,
+        "editoriallyAuditedMemberships": 7,
+        "contentCorrectedMemberships": 6,
         "contextResolvedMemberships": 0,
         "unresolvedRiskMemberships": 366
       },
@@ -46,8 +46,8 @@
         "bookId": "guixue:11320",
         "title": "IELTS Listening Vocabulary",
         "membershipsScanned": 3051,
-        "editoriallyAuditedMemberships": 8,
-        "contentCorrectedMemberships": 5,
+        "editoriallyAuditedMemberships": 11,
+        "contentCorrectedMemberships": 8,
         "contextResolvedMemberships": 0,
         "unresolvedRiskMemberships": 2955
       },
@@ -55,8 +55,8 @@
         "bookId": "guixue:10177",
         "title": "IELTS Listening Essentials",
         "membershipsScanned": 1399,
-        "editoriallyAuditedMemberships": 5,
-        "contentCorrectedMemberships": 3,
+        "editoriallyAuditedMemberships": 6,
+        "contentCorrectedMemberships": 4,
         "contextResolvedMemberships": 0,
         "unresolvedRiskMemberships": 1331
       },
@@ -11819,7 +11819,8 @@
       "entryId": "ve-76239589",
       "term": "victim",
       "flags": [
-        "polysemy"
+        "polysemy",
+        "incomplete-definition-candidate"
       ],
       "dictionarySenses": 4,
       "allSenseIds": [
@@ -22445,7 +22446,8 @@
       "term": "appliance",
       "flags": [
         "polysemy",
-        "multiple-groups"
+        "multiple-groups",
+        "incomplete-definition-candidate"
       ],
       "dictionarySenses": 5,
       "allSenseIds": [
@@ -132355,11 +132357,11 @@
         "marked-primary",
         "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
-      "contextResolved": false,
-      "contentReviewed": false,
-      "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "editorialAudit": true,
+      "contextResolved": true,
+      "contentReviewed": true,
+      "remainingRisk": false,
+      "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity."
     },
     {
       "bookId": "guixue:10174",
@@ -136797,11 +136799,11 @@
         "multiple-groups",
         "marked-primary"
       ],
-      "editorialAudit": false,
-      "contextResolved": false,
-      "contentReviewed": false,
-      "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "editorialAudit": true,
+      "contextResolved": true,
+      "contentReviewed": true,
+      "remainingRisk": false,
+      "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity."
     },
     {
       "bookId": "guixue:10174",
@@ -137487,11 +137489,11 @@
         "missing-example",
         "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
-      "contextResolved": false,
-      "contentReviewed": false,
-      "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "editorialAudit": true,
+      "contextResolved": true,
+      "contentReviewed": true,
+      "remainingRisk": false,
+      "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity."
     },
     {
       "bookId": "guixue:10174",
@@ -137738,11 +137740,11 @@
         "polysemy",
         "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
-      "contextResolved": false,
-      "contentReviewed": false,
-      "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "editorialAudit": true,
+      "contextResolved": true,
+      "contentReviewed": true,
+      "remainingRisk": false,
+      "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity."
     },
     {
       "bookId": "guixue:10174",
@@ -138519,7 +138521,8 @@
       "entryId": "ve-76239589",
       "term": "victim",
       "flags": [
-        "polysemy"
+        "polysemy",
+        "incomplete-definition-candidate"
       ],
       "editorialAudit": false,
       "contextResolved": false,
@@ -146056,13 +146059,14 @@
       "term": "appliance",
       "flags": [
         "polysemy",
-        "multiple-groups"
+        "multiple-groups",
+        "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
-      "contextResolved": false,
-      "contentReviewed": false,
-      "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "editorialAudit": true,
+      "contextResolved": true,
+      "contentReviewed": true,
+      "remainingRisk": false,
+      "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity."
     },
     {
       "bookId": "guixue:10174",
@@ -147990,11 +147994,11 @@
         "multiple-groups",
         "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
-      "contextResolved": false,
-      "contentReviewed": false,
-      "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "editorialAudit": true,
+      "contextResolved": true,
+      "contentReviewed": true,
+      "remainingRisk": false,
+      "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity."
     },
     {
       "bookId": "guixue:10174",
@@ -150463,11 +150467,11 @@
         "multiple-groups",
         "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
-      "contextResolved": false,
-      "contentReviewed": false,
-      "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "editorialAudit": true,
+      "contextResolved": true,
+      "contentReviewed": true,
+      "remainingRisk": false,
+      "reason": "Entertainment and sport chapter and neighbouring music words establish music context; dictionary music sense reused."
     },
     {
       "bookId": "guixue:10174",
@@ -157226,11 +157230,11 @@
         "missing-example",
         "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
-      "contextResolved": false,
-      "contentReviewed": false,
-      "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "editorialAudit": true,
+      "contextResolved": true,
+      "contentReviewed": true,
+      "remainingRisk": false,
+      "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity."
     },
     {
       "bookId": "guixue:10174",
@@ -162359,11 +162363,11 @@
         "polysemy",
         "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
-      "contextResolved": false,
-      "contentReviewed": false,
-      "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "editorialAudit": true,
+      "contextResolved": true,
+      "contentReviewed": true,
+      "remainingRisk": false,
+      "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity."
     },
     {
       "bookId": "guixue:10174",
@@ -170312,11 +170316,11 @@
         "polysemy",
         "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
-      "contextResolved": false,
-      "contentReviewed": false,
-      "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "editorialAudit": true,
+      "contextResolved": true,
+      "contentReviewed": true,
+      "remainingRisk": false,
+      "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity."
     },
     {
       "bookId": "guixue:10174",
@@ -184261,11 +184265,11 @@
         "missing-example",
         "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
+      "editorialAudit": true,
       "contextResolved": false,
-      "contentReviewed": false,
+      "contentReviewed": true,
       "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "reason": "Common content reviewed; group lacks evidence of original intended sense. No context certainty claimed."
     },
     {
       "bookId": "guixue:10176",
@@ -184483,11 +184487,11 @@
         "multiple-groups",
         "marked-primary"
       ],
-      "editorialAudit": false,
+      "editorialAudit": true,
       "contextResolved": false,
-      "contentReviewed": false,
+      "contentReviewed": true,
       "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "reason": "Common content reviewed; group lacks evidence of original intended sense. No context certainty claimed."
     },
     {
       "bookId": "guixue:10176",
@@ -197725,11 +197729,11 @@
         "multiple-groups",
         "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
+      "editorialAudit": true,
       "contextResolved": false,
-      "contentReviewed": false,
+      "contentReviewed": true,
       "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "reason": "Common content reviewed; group lacks evidence of original intended sense. No context certainty claimed."
     },
     {
       "bookId": "guixue:11320",
@@ -205538,11 +205542,11 @@
         "multiple-groups",
         "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
+      "editorialAudit": true,
       "contextResolved": false,
-      "contentReviewed": false,
+      "contentReviewed": true,
       "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "reason": "Common content reviewed; group lacks evidence of original intended sense. No context certainty claimed."
     },
     {
       "bookId": "guixue:11320",
@@ -231107,13 +231111,14 @@
       "term": "appliance",
       "flags": [
         "polysemy",
-        "multiple-groups"
+        "multiple-groups",
+        "incomplete-definition-candidate"
       ],
-      "editorialAudit": false,
+      "editorialAudit": true,
       "contextResolved": false,
-      "contentReviewed": false,
+      "contentReviewed": true,
       "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "reason": "Common content reviewed; group lacks evidence of original intended sense. No context certainty claimed."
     },
     {
       "bookId": "guixue:11320",
@@ -245708,11 +245713,11 @@
         "polysemy",
         "marked-primary"
       ],
-      "editorialAudit": false,
+      "editorialAudit": true,
       "contextResolved": false,
-      "contentReviewed": false,
+      "contentReviewed": true,
       "remainingRisk": true,
-      "reason": "Automated candidate only; editorial contextual review outstanding."
+      "reason": "Common content reviewed; group lacks evidence of original intended sense. No context certainty claimed."
     },
     {
       "bookId": "guixue:10177",
