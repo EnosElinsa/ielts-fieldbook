@@ -30,7 +30,7 @@ Words, phrases and sentence patterns share a single vocabulary model across word
 - Manual familiarity labels independent of system evidence.
 - Permanent answer history and current wrong-word tracking. Recovery requires three successful reviews in the failed mode, including a delay of at least 24 hours.
 - Wordbook chapter progress independent of vocabulary mastery.
-- Import previews, repeated-import detection, and transactional JSON/CSV migration.
+- CSV import previews, repeated-import detection, and atomic saves.
 - English Wiktionary definitions and examples with attribution and licensing per sense, alongside original IELTS teaching material.
 
 The public catalogue covers six source wordbooks: IELTS Vocabulary (Liu Hongbo), IELTS Reading 538 Key Words, IELTS Listening Corpus (Core Chapters), IELTS Listening 179 Key Words, and Cambridge IELTS 20/21 Listening. Source membership counts, dictionary coverage and unavailable content are shown separately. Personal learning records are never included in the shared catalogue.
