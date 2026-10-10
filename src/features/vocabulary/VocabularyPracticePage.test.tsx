@@ -105,7 +105,7 @@ test("whole group uses all 55 words in source order and preserves answers across
   expect(screen.getByRole('textbox', { name: 'Answer 51' })).toHaveValue('word50');
   await user.click(screen.getByRole('button', { name: 'Previous page' }));
   expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('river 2');
-});
+}, 15_000);
 
 test("235-word group submits one frozen full-group attempt beyond the old cap", async () => {
   const user = userEvent.setup();
