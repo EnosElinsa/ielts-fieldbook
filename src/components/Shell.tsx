@@ -22,6 +22,11 @@ import { AccountMenu, CommandSearch, MobileNavigation } from './WorkbenchNavigat
 import { ModalFrame } from './ModalFrame';
 import { AssessmentImportModal } from '../features/modals/AssessmentImportModal';
 import { LegalModal } from '../features/modals/LegalModal';
+import * as Tooltip from '@radix-ui/react-tooltip';
+
+function RailHint({ label, enabled, children }) {
+  return <Tooltip.Root><Tooltip.Trigger asChild>{children}</Tooltip.Trigger>{enabled ? <Tooltip.Portal><Tooltip.Content className="tooltip rail-tooltip" side="right" sideOffset={10}>{label}<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal> : null}</Tooltip.Root>;
+}
 
 const writingLinks = [
   { to: '/', end: true, label: 'Today', icon: NavIcons.today },
@@ -191,15 +196,16 @@ export function Shell() {
   return (
     <>
       <div className={`${collapsed ? 'shell is-collapsed' : 'shell'}${speaking ? ' skill-speaking' : ''}`}>
-        <aside className="rail">
+        <Tooltip.Provider delayDuration={350}><aside className="rail">
           <div className="mark">
-            <div className="mark-box"><BookOpen size={20} /></div>
-            <div>
+            <div className="mark-box" aria-hidden="true"><BookOpen size={20} /></div>
+            <div className="mark-copy">
               <div className="mark-name">IELTS Fieldbook</div>
               <span className="mark-sub">{speaking ? 'Speaking' : 'Writing'}</span>
             </div>
           </div>
           <div className="skill-switch" role="tablist" aria-label="Skill">
+            <RailHint label="Writing" enabled={collapsed}>
             <button
               type="button"
               role="tab"
@@ -212,6 +218,8 @@ export function Shell() {
               <span className="skill-long">Writing</span>
               <span className="skill-short">W</span>
             </button>
+            </RailHint>
+            <RailHint label="Speaking" enabled={collapsed}>
             <button
               type="button"
               role="tab"
@@ -224,29 +232,31 @@ export function Shell() {
               <span className="skill-long">Speaking</span>
               <span className="skill-short">S</span>
             </button>
+            </RailHint>
           </div>
           <nav className="nav" aria-label={speaking ? 'Speaking' : 'Writing'}>
             {links.map((link) => (
-              <NavLink
+              <RailHint key={link.to + link.label} label={link.label} enabled={collapsed}><NavLink
                 key={link.to + link.label}
                 to={link.to}
                 end={link.end}
+                aria-label={link.label}
                 className={({ isActive }) => (isActive ? 'active' : undefined)}
               >
                 <span className="nav-icon" aria-hidden="true">
                   {link.icon}
                 </span>
                 <span className="nav-label">{link.label}</span>
-              </NavLink>
+              </NavLink></RailHint>
             ))}
-            <NavLink to="/account" className={({ isActive }) => (isActive ? 'active' : undefined)}>
+            <RailHint label="Account" enabled={collapsed}><NavLink to="/account" aria-label="Account" className={({ isActive }) => (isActive ? 'active' : undefined)}>
               <span className="nav-icon">
                 <AccountMark user={accountUser} size="nav" />
               </span>
               <span className="nav-label">Account</span>
-            </NavLink>
+            </NavLink></RailHint>
           </nav>
-          <button
+          <RailHint label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} enabled={collapsed}><button
             type="button"
             className="rail-toggle"
             aria-expanded={!collapsed}
@@ -257,12 +267,12 @@ export function Shell() {
               {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
             </span>
             <span className="rail-toggle-label">{collapsed ? 'Expand' : 'Collapse'}</span>
-          </button>
+          </button></RailHint>
           <div className="rail-foot">
             <span>Streak</span>
             <strong>{streak} days</strong>
           </div>
-        </aside>
+        </aside></Tooltip.Provider>
         <main className="main">
           <header className="top">
             <div className="page-title" key={`${chrome.kicker}-${chrome.title}`}>
