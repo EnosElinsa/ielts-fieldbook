@@ -285,7 +285,9 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
       }),
     [entries, fb.state.vocabularyStates, search, status, source, skill],
   );
-  useEffect(() => { setPage(0); setSelected(new Set()); }, [search, status, source, skill]);
+  const filterKey = [search,status,source,skill].join('|');
+  const previousFilters = useRef(filterKey);
+  useEffect(() => { if (previousFilters.current !== filterKey) setPage(0); previousFilters.current = filterKey; setSelected(new Set()); }, [filterKey]);
   const visibleEntries = filtered.slice(page * 100, page * 100 + 100);
   const applyBulk = async () => {
     const draft = structuredClone(fb.stateRef.current);
