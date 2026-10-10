@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams, useParams } from "react-router-dom";
 import { useFieldbook } from "../../context/FieldbookContext";
 import { accountId } from "../../storage/remote";
 import { clearVocabularyDraft, readVocabularyDraft, writeVocabularyDraft } from "../../storage/vocabularyDrafts";
@@ -7,6 +7,7 @@ import { getVocabularyReviewQueue, type ReviewCard, type ReviewQueueFilter, type
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { normalizeVocabularyPreferences, type VocabularyPracticeMode, type VocabularyPreferences } from "../../domain/vocabulary/preferences";
 import { buildVocabularySessionCommit, createVocabularySession, evaluateVocabularySessionAnswer, updateVocabularySessionAnswer, type VocabularyPracticeSession, type VocabularySessionSelection } from "../../domain/vocabulary/session";
+import { getLearnedVocabularyIds } from "../../domain/vocabulary/progress";
 import { buildUnitPracticeQueue } from "../../domain/vocabulary/selection";
 import { createVocabularyPlayback } from "./playback";
 import { practiceKeyboard } from "./practiceKeyboard";
@@ -22,6 +23,7 @@ export function useVocabularyPracticeController() {
   const fb = useFieldbook();
   const [params, setParams] = useSearchParams();
   const location = useLocation();
+  const { sessionId: historySessionId } = useParams();
   const navigate = useNavigate();
   const legacyStudy = Boolean(params.get('bookId') && params.get('unitId') && params.get('dueOnly') === 'false' && params.get('wrongOnly') !== 'true' && !['entryId', 'senseId', 'sourceType', 'dimension', 'skill'].some(key => params.has(key)));
   const study = location.pathname === '/vocabulary/study' || legacyStudy;
@@ -188,9 +190,9 @@ export function useVocabularyPracticeController() {
         ...(params.get("entryId") ? { entryId: params.get("entryId")! } : {}),
         ...(params.get("senseId") ? { senseId: params.get("senseId")! } : {}),
         ...(bookId !== "all" ? { bookId } : {}),
-        ...(unitId !== "all" ? { unitId } : {}),
-        ...(sourceType !== "all" ? { sourceType } : {}),
-        ...(skill !== "all" ? { skill } : {}),
+        ...(study && unitId !== "all" ? { unitId } : {}),
+        ...(study && sourceType !== "all" ? { sourceType } : {}),
+        ...(study && skill !== "all" ? { skill } : {}),
         ...(dimension !== "all" && mode !== "audio" ? { dimension } : {}),
         mode: mode === "audio" ? "dictation" : mode,
         dueOnly,
@@ -209,16 +211,17 @@ export function useVocabularyPracticeController() {
   const unitQueue = useMemo(() => study ? buildUnitPracticeQueue(fb.state, bookId, unitId, mode) : null, [study, fb.state, bookId, unitId, mode, catalogStatus]);
   const queue = useMemo(() => {
     if (unitQueue) return unitQueue.cards;
+    const learned = getLearnedVocabularyIds(fb.state);
     let available = getVocabularyReviewQueue(fb.state, filter).filter(
       (card) =>
-        !wrongOnly ||
+        learned.has(card.entryId) && (!wrongOnly ||
         ((fb.state.vocabularyStates as VocabularyState[]) || []).some(
           (item) =>
             item.entryId === card.entryId &&
             item.senseId === card.senseId &&
             item.wrong?.active &&
             (item.wrong.modes?.[card.mode]?.active ?? true),
-        ),
+        )),
     );
     if (preferences.order === "source") {
       const entryOrder = new Map(
@@ -276,22 +279,26 @@ export function useVocabularyPracticeController() {
 
   useEffect(() => {
     if (sessionRef.current || savingRef.current) return;
-    const id = params.get('sessionId');
+    const id = historySessionId || params.get('sessionId');
     if (!id) { setResults(null); return; }
     const record = ((fb.state.vocabularySessions || []) as SessionLog[]).find(record => record.id === id);
     if (record) { setResults(presentVocabularySession(record)); setCards([]); setError(''); }
     else if (fb.booted) { setResults(null); setError('This saved session is unavailable for this account.'); }
-  }, [params.get('sessionId'), fb.state.vocabularySessions, fb.booted]);
+  }, [historySessionId, params.get('sessionId'), fb.state.vocabularySessions, fb.booted]);
 
   const resultReturnParams = new URLSearchParams(params);
-  if (results) resultReturnParams.set('sessionId', results.id);
-  const resultReturnTo = `${location.pathname}?${resultReturnParams}`;
+  resultReturnParams.delete('sessionId');
+  const resultReturnTo = results ? `/vocabulary/history/${encodeURIComponent(results.id)}?sessionId=${encodeURIComponent(results.id)}${resultReturnParams.toString() ? `&${resultReturnParams}` : ""}` : `${location.pathname}?${resultReturnParams}`;
 
   function changeFilter(key: string, value: string) {
     const next = new URLSearchParams(params);
     next.set(key, value);
     if (key === "bookId") next.delete("unitId");
     setParams(next, { replace: true });
+  }
+  function setReviewPreset(value: string) {
+    setDue(value === 'due'); setWrong(value === 'wrong');
+    const next = new URLSearchParams(params); next.set('dueOnly',String(value === 'due')); next.set('wrongOnly',String(value === 'wrong')); next.delete('unitId'); setParams(next,{replace:true});
   }
   function changeMode(value: string) {
     setMode(value as VocabularyPracticeMode);
@@ -422,7 +429,7 @@ export function useVocabularyPracticeController() {
     pendingCommit.current = null;
     playedIndex.current = -1;
     const ordered = [...selected];
-    const chosenSelection = selection || (study ? { kind: 'unit' as const, bookId, unitId } : { kind: 'batch' as const });
+    const chosenSelection = selection || (study ? { kind: (unitQueue && unitQueue.unavailableWords > 0 ? 'specialist' : 'unit') as 'specialist' | 'unit', bookId, unitId } : { kind: 'batch' as const });
     const chosenPreferences = { ...(options.preferences || preferences), ...(study && chosenSelection.kind === 'unit' ? { order: 'source' as const } : {}), mode: chosenMode };
     if (chosenPreferences.order === "source" && chosenSelection.kind !== 'unit') {
       const order = new Map(
@@ -445,7 +452,7 @@ export function useVocabularyPracticeController() {
       candidates,
       chosenMode,
       chosenPreferences,
-      chosenSelection.kind === 'unit' ? { bookId, unitId, dueOnly: false } : options.filter || Object.assign({ ...filter }, { wrongOnly }),
+      (chosenSelection.kind === 'unit' || chosenSelection.kind === 'specialist') ? { bookId, unitId, dueOnly: false } : options.filter || Object.assign({ ...filter }, { wrongOnly }),
       chosenSelection,
     );
     const frozen = next.cardIds.map((identity) =>
@@ -493,7 +500,7 @@ export function useVocabularyPracticeController() {
         resume.mode === "audio" ? "dictation" : (resume.mode as VocabularyMode),
       dueOnly: false,
     });
-    const frozen = resume.cardIds
+    const frozen = resume.cardSnapshots || resume.cardIds
       .map(
         (identity) =>
           all.find((card) => card.id === identity.id) ||
@@ -698,7 +705,8 @@ export function useVocabularyPracticeController() {
       const resultParams = new URLSearchParams(params);
       resultParams.set('sessionId', prepared.sessionRecord.id);
       resultParams.delete('resultFilter');
-      setParams(resultParams, { replace: true });
+      resultParams.delete("sessionId");
+      navigate(`/vocabulary/history/${encodeURIComponent(prepared.sessionRecord.id)}?${resultParams}`, { replace: true });
       sessionRef.current = null;
       setSession(null);
       pendingCommit.current = null;
@@ -752,7 +760,7 @@ export function useVocabularyPracticeController() {
     setError("");
     const next = new URLSearchParams(params);
     next.delete('sessionId'); next.delete('resultFilter');
-    setParams(next, { replace: true });
+    if (historySessionId) navigate(`/vocabulary/review?${next}`, {replace:true}); else setParams(next, { replace: true });
   }
   function discardResume() {
     clearVocabularyDraft(owner.current);
@@ -764,7 +772,8 @@ export function useVocabularyPracticeController() {
     setCards([]);
     const next = new URLSearchParams(params);
     next.set('sessionId', log.id); next.delete('resultFilter');
-    setParams(next);
+    next.delete("sessionId");
+    navigate(`/vocabulary/history/${encodeURIComponent(log.id)}?${next}`);
   }
   function retryCatalog() {
     setCatalogRetry(value => value + 1);
@@ -820,7 +829,7 @@ export function useVocabularyPracticeController() {
   }
 
   return {
-    study, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit,
+    state: fb.state, study, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit,
     sourceType, setSource, skill, setSkill, dimension, setDimension,
     dueOnly, setDue, wrongOnly, setWrong, session, cards, resume, results,
     settingsOpen, setSettingsOpen, exitOpen, setExitOpen, incompleteOpen, setIncompleteOpen,
@@ -828,7 +837,7 @@ export function useVocabularyPracticeController() {
     resultFilter, setResultFilter, resultReturnTo, queue, unitQueue, books, units, selectedUnit,
     selectedBook, chapter, catalogReady, leafUnits, studyReady, answered, flagged,
     count, locked, currentIndex, pageStart, visibleCards, resultRows, nextGroup, recent,
-    changeFilter, changeMode, playCard, begin, recover, updateAnswer, finalizeAnswer,
+    setReviewPreset, changeFilter, changeMode, playCard, begin, recover, updateAnswer, finalizeAnswer,
     focusCard, advance, toggleFlag, reportProduction, submit, savePreferences, exit,
     resetResults, discardResume, showRecentSession, retryCatalog,
     registerAnswerField, pauseSession, replayCard, toggleCurrentAudio, toggleAudioLoop,

@@ -50,7 +50,7 @@ beforeEach(() => {
     vocabulary,
     vocabularyStates: [],
     vocabularyReviews: [],
-    vocabularyEvidence: [],
+    vocabularyEvidence: vocabulary.map(entry => ({entryId:entry.id,mode:'dictation',verification:'objective',result:'success'})),
     vocabularySessions: [],
     vocabularyActivities: [],
     wordbookProgress: [],
