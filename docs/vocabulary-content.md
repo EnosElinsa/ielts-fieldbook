@@ -20,3 +20,18 @@ node scripts/enrich-vocabulary.mjs --input dictionary.jsonl --terms guixue-snaps
 ```
 
 `scripts/seed-vocabulary.mjs` seeds the released JSON catalogue when present, otherwise the TypeScript editorial fallback. Set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` only in the deployment environment after applying the vocabulary migration. Keys never appear in output. The script checks content licenses, rejects personal history in the public catalogue, and seeds entries, senses, relations, enrichment provenance, books, units and memberships in repeatable upsert batches. It never seeds an authenticated personal snapshot.
+
+The `reviewed-2026-10-10.1` learning supplement is applied at read time. It preserves original entry and dictionary sense identities, learner notes, historical marks and scheduling. Its dictionary priority audit checks all 7,021 catalogue terms and 51,354 dictionary senses; conservative automated ranking corrects 143 default senses, including medical care for *treat* and cooking instructions for *recipe*. Automated ranking is not an exhaustive human review. Dictionary-derived additions retain their CC-BY-SA-4.0 license and attribution. Original contextual exercises are Fieldbook editorial material under CC-BY-4.0.
+
+Synonym/paraphrase and confusing-word exercises use explicit contextual answers, independently of raw dictionary synonym lists. Cloze tasks use complete word boundaries and explicit sentence forms, such as *began*. Counts below describe primary learning content before personal edits or archival; the application reports the actual available subset for each group.
+
+| Wordbook | Unique words | Cloze | Synonym/paraphrase | Confusing words |
+| --- | ---: | ---: | ---: | ---: |
+| IELTS Vocabulary | 3,592 | 2,210 | 68 | 8 |
+| IELTS Reading Keywords | 376 | 240 | 59 | 1 |
+| IELTS Listening Vocabulary | 3,012 | 1,217 | 26 | 6 |
+| IELTS Listening Essentials | 1,351 | 591 | 16 | 4 |
+| IELTS Listening Practice 21 | 344 | 224 | 10 | 2 |
+| IELTS Listening Practice 20 | 375 | 218 | 6 | 2 |
+
+Authored task coverage is incomplete. Unsupported words remain available for dictation; an explicitly started specialist subset never completes the whole group. New sessions freeze prompts, accepted answers, explanations and content version. Legacy drafts retain their original scoring behavior.
