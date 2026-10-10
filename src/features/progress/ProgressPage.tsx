@@ -8,6 +8,7 @@ import { useFieldbook } from '../../context/FieldbookContext';
 import { formatDate, sessionSkill } from '../../lib/format';
 import { planMatchesSkill } from '../../lib/planTemplates';
 import { Empty, FilterMenu } from '../../components/ui';
+import { VocabularyProgressPage } from '../vocabulary/VocabularyPages';
 
 export function ProgressPage() {
   const fb = useFieldbook();
@@ -56,10 +57,11 @@ export function ProgressPage() {
       <div className="page-tools"><p>Your practice, feedback and progress.</p><Link to="/review" className="btn line">Review attempts <ArrowUpRight size={16} /></Link></div>
       <div className="page-tools"><Link to="/vocabulary/progress" className="btn line">Vocabulary progress <ArrowUpRight size={16} /></Link><Link to="/vocabulary/review" className="btn line">Review vocabulary <ArrowUpRight size={16} /></Link></div>
       <div className="toolbar">
-        <FilterMenu label="Progress skill" value={skill} onChange={(value) => { setSkill(value); setTask('all'); }} options={[{ value: 'writing', label: 'Writing' }, { value: 'speaking', label: 'Speaking' }]} />
+        <FilterMenu label="Progress skill" value={skill} onChange={(value) => { setSkill(value); setTask('all'); }} options={[{ value: 'writing', label: 'Writing' }, { value: 'speaking', label: 'Speaking' }, { value: 'vocabulary', label: 'Vocabulary' }]} />
         <FilterMenu label="Time range" value={range} onChange={setRange} options={[{ value: '7', label: 'Last 7 days' }, { value: '30', label: 'Last 30 days' }, { value: '90', label: 'Last 90 days' }, { value: 'all', label: 'All time' }]} />
         <FilterMenu label="Task or part" value={task} onChange={setTask} options={speaking ? [{ value: 'all', label: 'All parts' }, { value: '1', label: 'Part 1' }, { value: '2', label: 'Part 2' }, { value: '3', label: 'Part 3' }] : [{ value: 'all', label: 'All tasks' }, { value: '1', label: 'Task 1' }, { value: '2', label: 'Task 2' }]} />
       </div>
+      {skill === 'vocabulary' ? <VocabularyProgressPage /> : <>
       <div className="progress-metrics">
         {[{ label: 'Practice attempts', value: sessions.length, icon: PenLine }, { label: 'Feedback received', value: assessments.length, icon: FileCheck2 }, { label: 'Rewrites & retakes', value: rewrites.length, icon: CheckCheck }, { label: 'Feedback followed by practice', value: completedLoops, icon: ArrowUpRight }].map(({ label, value, icon: Icon }) => <div className="progress-metric" key={label}><Icon size={18} /><strong>{value}</strong><span>{label}</span></div>)}
       </div>
@@ -78,6 +80,7 @@ export function ProgressPage() {
         <section className="progress-section"><h3>Weekly practice</h3><div className="week-bars">{weeks.map((week) => <div className="week-bar" key={week.label}><span>{week.label}</span><div className="track"><div className="fill" style={{ width: `${week.count / max * 100}%` }} /></div><strong>{week.count}</strong></div>)}</div></section>
         <section className="progress-section"><div className="section-head"><h3>Study plans</h3><FilterMenu label="Plan status" value={status} onChange={setStatus} options={[{ value: 'all', label: 'Any status' }, { value: 'pending', label: 'Not started' }, { value: 'in_progress', label: 'In progress' }, { value: 'completed', label: 'Completed' }]} /></div>{plans.length ? <div className="plan-list">{plans.map((plan) => <div className="work-row" key={plan.id}><div className="work-name">{plan.title}<small>{plan.dateKey}</small></div><span className={`pill ${plan.status === 'completed' ? 'green' : ''}`}>{statusNames[plan.status]}</span></div>)}</div> : <Empty message="No plans in this range." />}</section>
       </div>
+      </>}
     </section>
   );
 }

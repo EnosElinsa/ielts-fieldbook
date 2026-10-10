@@ -1,19 +1,22 @@
+import { useState } from "react";
+import { VocabularyGroupPicker } from "./VocabularyGroupPicker";
 import { Link } from "react-router-dom";
 import { ArrowRight, Headphones, List, Play, Square } from "lucide-react";
 import { FilterMenu } from "../../components/ui";
 import { IconButton } from "../../components/IconButton";
 import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
-import { MODES, dateLabel, modeLabel, titleCase } from "./practicePresentation";
+import { MODES, dateLabel, modeLabel } from "./practicePresentation";
 import type { VocabularyPracticeController } from "./useVocabularyPracticeController";
 
 export function VocabularyPracticeSetup({ controller }: { controller: VocabularyPracticeController }) {
-  const { study, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit, sourceType, setSource, skill, setSkill, dimension, setDimension, dueOnly, setDue, wrongOnly, setWrong, catalogStatus, queue, unitQueue, books, units, selectedUnit, selectedBook, chapter, catalogReady, leafUnits, studyReady, resume, recent, changeFilter, changeMode, begin, recover, discardResume, showRecentSession, retryCatalog } = controller;
+  const { study, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit, dueOnly, setDue, wrongOnly, setWrong, catalogStatus, queue, unitQueue, books, selectedUnit, selectedBook, chapter, catalogReady, studyReady, resume, recent, changeFilter, changeMode, begin, recover, discardResume, showRecentSession, retryCatalog } = controller;
+  const [pickerOpen, setPickerOpen] = useState(false);
   return (
     <>
       <div className="practice-context-card">
         <span className="eyebrow">{study ? 'One complete group' : 'A focused review batch'}</span>
         <h3>{study ? selectedBook?.title || 'Choose a wordbook' : 'Keep your vocabulary ready'}</h3>
-        <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : 'Review due cards, recover mistakes, or choose a source.'}</p>
+        <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : 'Review learned words that are due, recover mistakes, or create a custom batch.'}</p>
         {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
         {study && unitQueue ? <strong>{unitQueue.totalWords} words in this group · {unitQueue.eligibleWords} ready for {modeLabel(mode).toLowerCase()}</strong> : null}
         <Link to={study ? '/vocabulary/review' : '/vocabulary/wordbooks'}>{study ? 'Switch to vocabulary review' : 'Study a complete wordbook group'} <ArrowRight size={14} /></Link>
@@ -41,76 +44,8 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
             changeFilter("bookId", value);
           }}
         />
-        <FilterMenu
-          label={study ? "Group" : "Chapter / group"}
-          value={unitId}
-          options={[
-            { value: "all", label: study ? "Choose a group" : "All chapters / groups" },
-            ...(study ? leafUnits : units).map((unit) => ({
-              value: unit.id,
-              label: [units.find(parent => parent.id === unit.parentId)?.title, unit.title].filter(Boolean).join(' / '),
-            })),
-          ]}
-          onChange={(value) => {
-            setUnit(value);
-            changeFilter("unitId", value);
-          }}
-        />
-        {!study ? <details className="practice-advanced"><summary>More filters</summary><div className="practice-advanced-controls">
-        <FilterMenu
-          label="Review skill"
-          value={skill}
-          options={[
-            "all",
-            "writing",
-            "speaking",
-            "listening",
-            "reading",
-          ].map((value) => ({
-            value,
-            label: value === "all" ? "All skills" : titleCase(value),
-          }))}
-          onChange={(value) => {
-            setSkill(value);
-            changeFilter("skill", value);
-          }}
-        />
-        <FilterMenu
-          label="Review source"
-          value={sourceType}
-          options={[
-            "all",
-            "personal",
-            "wordbook",
-            "assessment",
-            "writing",
-            "speaking",
-            "listening",
-            "reading",
-          ].map((value) => ({
-            value,
-            label: value === "all" ? "All sources" : titleCase(value),
-          }))}
-          onChange={(value) => {
-            setSource(value);
-            changeFilter("sourceType", value);
-          }}
-        />
-        <FilterMenu
-          label="Dimension"
-          value={dimension}
-          options={["all", "meaning", "listening", "spelling", "usage"].map(
-            (value) => ({
-              value,
-              label: value === "all" ? "All dimensions" : titleCase(value),
-            }),
-          )}
-          onChange={(value) => {
-            setDimension(value);
-            changeFilter("dimension", value);
-          }}
-        />
-        </div></details> : null}
+        {study ? <button className="btn line" type="button" disabled={bookId === 'all'} onClick={() => setPickerOpen(true)}>{selectedUnit?.title || 'Choose a group'}</button> : <FilterMenu label="Review preset" value={wrongOnly ? 'wrong' : dueOnly ? 'due' : 'custom'} options={[{value:'due',label:'Due learned words'},{value:'wrong',label:'Wrong learned words'},{value:'custom',label:'Custom learned words'}]} onChange={value => { setDue(value === 'due'); setWrong(value === 'wrong'); controller.setReviewPreset(value); }} />}
+        {pickerOpen ? <VocabularyGroupPicker state={controller.state} bookId={bookId} currentUnitId={unitId} onClose={() => setPickerOpen(false)} onSelect={(value: string) => { setUnit(value); changeFilter('unitId',value); }} /> : null}
       </div>
       <details className="practice-setup-details" open={!study || undefined}><summary>{study ? 'Practice options' : 'Review options'}</summary>
       <div className="practice-setup-options">
@@ -278,6 +213,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
               ? `${study ? queue.length : Math.min(preferences.sessionSize, queue.length)} words · ${preferences.layout === "list" ? "List" : "Focus"} · ${preferences.feedback === "end" ? "Results after submission" : "Feedback during practice"}`
               : "No words match these filters."}
           </p>
+          {study && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? <p role="status">Specialist practice: {controller.unitQueue.eligibleWords} of {controller.unitQueue.totalWords} words have eligible tasks. This subset does not complete the whole unit. {controller.unitQueue.unavailableWords} words need content review.</p> : null}
           <button
             className="btn primary practice-start"
             type="button"
@@ -285,7 +221,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
             onClick={() => begin()}
           >
             <Play size={17} />
-            Start session
+            {study && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? 'Start specialist subset' : 'Start session'}
           </button>
           {!queue.length ? (
             <Link

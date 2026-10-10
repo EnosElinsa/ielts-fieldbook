@@ -2,7 +2,7 @@ import { cleanup, fireEvent, render, screen, within } from "@testing-library/rea
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import { VocabularyEntryPage, VocabularyPage, VocabularyProgressPage, VocabularyWordbooksPage, VocabularyWrongPage, VocabularyNavigation } from "./VocabularyPages";
+import { VocabularyEntryPage, VocabularyPage, VocabularyProgressPage, VocabularyWordbooksPage, VocabularyWrongPage, VocabularyNavigation, VocabularyWordsPage, VocabularyHistoryPage } from "./VocabularyPages";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 
 const { fb } = vi.hoisted(() => ({ fb: { current: null as any } }));
@@ -200,4 +200,21 @@ test("an all-archived book has no study continuation or vacuous completion claim
   showBook();
   expect(screen.queryByRole("link", { name: /Start first group|Continue study|Study again|Study group|Restudy group|Continue chapter/ })).not.toBeInTheDocument();
   expect(screen.getByText("All available words are archived. Restore a word to study this book.")).toBeInTheDocument();
+});
+
+
+test("reliable historical zero-grade group advances continue", () => {
+  fixture(); fb.current.state.wordbookProgress = [{bookId:'book',unitId:'first',sourceRecord:{id:'attempt',correct_rate:'0',book_hierarchy_id:'first'}}];
+  showBook(); expect(screen.getByRole('link',{name:/Continue study/})).toHaveAttribute('href',expect.stringContaining('unitId=later'));
+});
+test("my words restores searchable route filters without overview entryways", () => {
+  fixture(); render(<MemoryRouter initialEntries={['/vocabulary/words?search=one']}><VocabularyWordsPage /></MemoryRouter>);
+  expect(screen.getByRole('heading',{name:'My words'})).toBeInTheDocument();
+  expect(screen.queryByRole('link',{name:/Study wordbooks/})).not.toBeInTheDocument();
+  expect(screen.getByRole('link',{name:'one'})).toHaveAttribute('href',expect.stringContaining('returnTo='));
+});
+test("history links submitted sessions to independent result routes", () => {
+  fixture(); fb.current.state.vocabularySessions=[submitted(['one'])];
+  render(<MemoryRouter><VocabularyHistoryPage/></MemoryRouter>);
+  expect(screen.getByRole('link',{name:/Dictation/})).toHaveAttribute('href','/vocabulary/history/session');
 });
