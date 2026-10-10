@@ -1,10 +1,10 @@
 // @ts-nocheck
 import { useMemo, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Star, List, LayoutGrid, ExternalLink, ArrowUpRight } from 'lucide-react';
+import { Star, List, LayoutGrid, ArrowUpRight } from 'lucide-react';
 import { speakingCoverage } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { coverageClass, coverageLabel, safeSource } from '../../lib/format';
+import { coverageClass, coverageLabel } from '../../lib/format';
 import { Empty, FilterMenu } from '../../components/ui';
 
 function topicPreview(topic) {
@@ -140,14 +140,6 @@ export function SpeakingBankPage() {
                           >
                             Open <ArrowUpRight size={15} />
                           </button>
-                          <a
-                            className="source"
-                            href={safeSource(topic.source)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Source <ExternalLink size={13} />
-                          </a>
                         </div>
                       </article>
                     );

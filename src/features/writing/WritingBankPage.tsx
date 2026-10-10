@@ -1,9 +1,9 @@
 // @ts-nocheck
 import { useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Star, List, LayoutGrid, ExternalLink, PenLine } from 'lucide-react';
+import { Star, List, LayoutGrid, PenLine } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { chartLabels, displayName, formatLabel, safeImage, safeSource, typeName } from '../../lib/format';
+import { chartLabels, displayName, formatLabel, safeImage, typeName } from '../../lib/format';
 import { Empty, FilterMenu } from '../../components/ui';
 
 export function WritingBankPage() {
@@ -104,9 +104,6 @@ export function WritingBankPage() {
                   <button className="btn primary" type="button" onClick={() => fb.chooseQuestion(question.id)}>
                     <PenLine size={15} /> Write this
                   </button>
-                  <a className="source" href={safeSource(question.source)} target="_blank" rel="noopener noreferrer">
-                    Source <ExternalLink size={13} />
-                  </a>
                 </div>
               </article>
             );
