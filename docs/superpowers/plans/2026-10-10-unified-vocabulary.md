@@ -25,7 +25,8 @@ Branch: `codex/unified-vocabulary`, based on `6ea58c0`.
 - [x] Import 6,175 personal historical answers, 51 current wrong words, 67 studied groups and six enrollments through an atomic account-scoped transaction. Source answers have no trustworthy dates; retain null dates and source identities without fabricated FSRS history.
 - [x] Publish 5,853 attributed open-dictionary entries with 51,354 senses, independent of source-book metadata. Keep 1,168 unmatched phrases/forms explicitly pending.
 - [x] Update repository positioning, topics, homepage, README and deployment documentation.
-- [ ] Verify the exact master commit in GitHub Check and Cloudflare Pages after merge/push.
+- [x] Merge the verified implementation to `master` and push `e3c8b2f`. GitHub Check and Cloudflare Pages succeeded. Production real-account checks passed.
+- [x] Repair Supabase migration history after its preview integration attempted to recreate existing tables. Verify and register all four migrations; apply the previously missing account-delete function without deleting any account data.
 
 ## Validation
 
@@ -35,4 +36,4 @@ PostgreSQL validation exercised transactional rollback, idempotency, immutable h
 
 Playwright used installed Chrome because the Browser plugin was unavailable. Desktop 1440x1000 and mobile 390x844 rendered without framework errors or horizontal overflow. Real-account checks against the migrated production database showed 7,021 entries, 51 active wrong words, 100 visible paginated rows, 89 vocabulary-book chapter/group rows, working dictionary details and no failed requests. Earlier interactive checks covered concealed dictation and saved distinction results against an intercepted backend.
 
-The dev server runs on port 8001; port 8000 was already occupied. Production database migration precedes frontend release.
+Production release: https://ielts-fieldbook.pages.dev. Real account verification confirmed 7,021 entries, 51 wrong words, complete source-book structure, working dictionary details and 100-row pagination. The 6,175 undated source answers remain privately stored with original identity. Production database migration preceded frontend release.
