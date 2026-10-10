@@ -14,6 +14,40 @@ function fixture(mode: 'dictation' | 'production' | 'distinction' = 'dictation')
 afterEach(() => vi.restoreAllMocks());
 
 describe('vocabulary sessions', () => {
+  test('whole units and retries retain every passed word while batches retain their preference cap', () => {
+    const { cards } = fixture();
+    const many = Array.from({ length: 235 }, (_, index) => ({ ...cards[0], id: `word-${index}:sense:dictation`, entryId: `word-${index}` }));
+    const selection = { kind: 'unit' as const, bookId: 'guixue:11320', unitId: '35028' };
+    const unit = createVocabularySession(many, 'dictation', { sessionSize: 20 }, {}, selection);
+    expect(unit.cardIds).toHaveLength(235);
+    expect(unit.selection).toEqual(selection);
+    expect(createVocabularySession(many, 'dictation', { sessionSize: 1 }, {}, { kind: 'retry' }).cardIds).toHaveLength(235);
+    expect(createVocabularySession(many, 'dictation', { sessionSize: 500 }, {}, { kind: 'batch' }).cardIds).toHaveLength(100);
+    expect(createVocabularySession(many, 'dictation', { sessionSize: 20 }).cardIds).toHaveLength(20);
+  });
+
+  test('persists flagged results and the selected unit in the committed record', () => {
+    const { state, cards } = fixture();
+    const session = createVocabularySession(cards, 'dictation', {}, {}, { kind: 'unit', bookId: 'book', unitId: 'unit' });
+    session.answers[cards[0].id] = { response: cards[0].entry.term, durationMs: 0, answeredAt: session.startedAt, flagged: true };
+    const result = buildVocabularySessionCommit(state, session, cards);
+    expect(result.results[0].flagged).toBe(true);
+    expect(result.sessionRecord.selection).toEqual({ kind: 'unit', bookId: 'book', unitId: 'unit' });
+  });
+
+  test('rejects malformed session selection identities', () => {
+    const { cards } = fixture();
+    expect(() => createVocabularySession(cards, 'dictation', {}, {}, { kind: 'unit', bookId: '', unitId: 'unit' })).toThrow();
+    expect(() => createVocabularySession(cards, 'dictation', {}, {}, { kind: 'unit', bookId: 'book', unitId: '__proto__' })).toThrow();
+    const session = createVocabularySession(cards, 'dictation', {});
+    expect(() => buildVocabularySessionCommit(fixture().state, { ...session, selection: { kind: 'unit', bookId: '', unitId: 'unit' } }, cards)).toThrow();
+  });
+
+  test('rejects whole selections above the recovery safety bound', () => {
+    const { cards } = fixture();
+    const many = Array.from({ length: 10001 }, (_, index) => ({ ...cards[0], id: `word-${index}`, entryId: `word-${index}` }));
+    expect(() => createVocabularySession(many, 'dictation', {}, {}, { kind: 'retry' })).toThrow();
+  });
   test('takes a bounded ID-only snapshot and deduplicates dictation across senses', () => {
     const { cards } = fixture();
     const session = createVocabularySession(cards.concat(cards), 'dictation', { sessionSize: 100 }, { bookId: 'book' });

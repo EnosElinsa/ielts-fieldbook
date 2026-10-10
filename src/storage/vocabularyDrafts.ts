@@ -2,6 +2,7 @@ import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences
 import type { VocabularyPracticeMode } from '../domain/vocabulary/preferences';
 import type { VocabularyPracticeSession, VocabularySessionAnswer } from '../domain/vocabulary/session';
 import type { ReviewQueueFilter } from '../domain/vocabulary/types';
+import { isVocabularySessionSelection } from '../domain/vocabulary/selection';
 
 const key = (owner: string) => `fieldbook-vocabulary-draft-v1:${owner}`;
 const modes: VocabularyPracticeMode[] = ['dictation', 'definition', 'cloze', 'distinction', 'production', 'audio'];
@@ -12,7 +13,8 @@ const time = (value: unknown): value is string => typeof value === 'string' && v
 // Build an explicit snapshot so entry definitions and hidden expected answers never reach storage.
 function snapshot(value: unknown): VocabularyPracticeSession | null {
   const input = object(value);
-  if (!input || !identifier(input.id) || !modes.includes(input.mode as VocabularyPracticeMode) || !time(input.startedAt) || !['active', 'paused'].includes(String(input.status)) || !Array.isArray(input.cardIds) || !input.cardIds.length || input.cardIds.length > 100) return null;
+  if (!input || !identifier(input.id) || !modes.includes(input.mode as VocabularyPracticeMode) || !time(input.startedAt) || !['active', 'paused'].includes(String(input.status)) || !Array.isArray(input.cardIds) || !input.cardIds.length || input.cardIds.length > 10000) return null;
+  if (input.selection !== undefined && !isVocabularySessionSelection(input.selection)) return null;
   if (input.submittedAt !== undefined && !time(input.submittedAt)) return null;
   const ids = new Set<string>();
   const cardIds: VocabularyPracticeSession['cardIds'] = [];
@@ -50,7 +52,7 @@ function snapshot(value: unknown): VocabularyPracticeSession | null {
   if (time(filterInput.now)) filter.now = filterInput.now;
   if (filterInput.now instanceof Date && Number.isFinite(filterInput.now.getTime())) filter.now = filterInput.now.toISOString();
   if (typeof filterInput.wrongOnly === 'boolean') Object.assign(filter, { wrongOnly: filterInput.wrongOnly });
-  return { id: input.id, mode: input.mode as VocabularyPracticeMode, preferences: { ...normalizeVocabularyPreferences(input.preferences), mode: input.mode as VocabularyPracticeMode }, filter, cardIds, answers, index: input.index, status: input.status as VocabularyPracticeSession['status'], startedAt: input.startedAt, ...(time(input.submittedAt) ? { submittedAt: input.submittedAt } : {}) };
+  return { id: input.id, mode: input.mode as VocabularyPracticeMode, preferences: { ...normalizeVocabularyPreferences(input.preferences), mode: input.mode as VocabularyPracticeMode }, filter, cardIds, answers, index: input.index, status: input.status as VocabularyPracticeSession['status'], startedAt: input.startedAt, ...(time(input.submittedAt) ? { submittedAt: input.submittedAt } : {}), ...(input.selection ? { selection: structuredClone(input.selection) as VocabularyPracticeSession['selection'] } : {}) };
 }
 
 export function readVocabularyDraft(owner: string | null): VocabularyPracticeSession | null {

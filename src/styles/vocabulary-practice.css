@@ -2,6 +2,55 @@
   --practice-surface: var(--sheet);
   --practice-focus: var(--blue);
 }
+.vocabulary-practice-view .practice-context-card {
+  padding: 24px 28px;
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--blue);
+  border-radius: 10px;
+  margin-bottom: 22px;
+}
+.practice-context-card .eyebrow { color: var(--muted); font-size: 11px; }
+.practice-context-card h3 { font-size: 23px; margin: 10px 0; }
+.practice-context-card p { color: var(--muted); margin: 8px 0; }
+.practice-context-card strong { display: block; margin: 14px 0; font-size: 13px; color: var(--ink); }
+.practice-context-card a { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; text-decoration: none; }
+.practice-advanced { position: relative; }
+.practice-advanced summary, .practice-setup-details summary, .practice-shortcuts summary { cursor: pointer; padding: 10px 0; color: var(--muted); font-size: 12px; }
+.practice-advanced > summary { padding: 11px; }
+.practice-advanced-controls { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; }
+.practice-setup-details { margin: 0 0 18px; }
+.vocabulary-practice-view .practice-setup-options { border-top: 0; justify-content: flex-start; }
+.vocabulary-practice-view .practice-launch { min-height: 230px; background: var(--surface-soft); border: 1px solid var(--rule); border-radius: 10px; padding: 26px; }
+.vocabulary-practice-view .practice-launch h3 { font-size: 20px; }
+.vocabulary-practice-view .practice-mode-icon { width: 42px; height: 42px; margin-bottom: 12px; }
+.vocabulary-practice-view .practice-session-toolbar { position: sticky; top: 0; z-index: 15; background: var(--bg); padding: 16px 0; border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
+.vocabulary-practice-view .practice-answer-row { border-left: 3px solid transparent; padding-left: 12px; scroll-margin-block: 105px; }
+.vocabulary-practice-view .practice-answer-row.is-current { border-left-color: var(--blue); background: var(--soft-blue); border-radius: 6px; }
+.practice-navigation-tools { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: flex-start; margin: 0 0 16px; }
+.practice-navigation-tools > .actions { flex-wrap: wrap; min-width: 0; }
+.practice-pagination { display: flex; align-items: center; gap: 12px; }
+.practice-pagination span, .practice-result-controls > span { color: var(--muted); font: 12px 'DM Mono', monospace; }
+.practice-shortcuts { max-width: 420px; }
+.practice-shortcuts dl { display: grid; grid-template-columns: 115px 1fr; gap: 10px; font-size: 12px; padding: 16px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; }
+.practice-shortcuts dd { margin: 0; color: var(--muted); }
+.practice-shortcuts p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.practice-load-status, .practice-eligibility { font-size: 13px; color: var(--muted); padding: 8px 0; }
+.practice-result-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-bottom: 20px; }
+.practice-result-controls p { flex-basis: 100%; color: var(--muted); font-size: 12px; margin: 0; }
+.vocabulary-practice-view .practice-result-summary { padding: 20px 24px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; }
+@media (max-width: 700px) {
+  .vocabulary-practice-view .practice-context-card { padding: 20px 18px; }
+  .practice-context-card h3 { font-size: 20px; }
+  .vocabulary-practice-view .practice-session-toolbar { top: 0; gap: 12px; }
+  .vocabulary-practice-view .practice-audio-controls { justify-content: flex-start; }
+  .practice-pagination { gap: 8px; width: 100%; justify-content: space-between; }
+  .practice-pagination .btn { font-size: 11px; padding: 8px; }
+  .practice-navigation-tools > .actions { width: 100%; }
+  .practice-navigation-tools .practice-shortcuts { flex-basis: 100%; width: 100%; }
+  .vocabulary-practice-view .practice-answer-row { padding-left: 6px; }
+  .vocabulary-practice-view .practice-result-summary { gap: 18px; flex-wrap: wrap; }
+}
 .practice-heading {
   display: flex;
   align-items: center;

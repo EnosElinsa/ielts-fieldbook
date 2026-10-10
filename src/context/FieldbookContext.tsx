@@ -122,6 +122,7 @@ function useFieldbookValue() {
   const vocabularyCatalogReads = useRef(new Map());
   const committedVocabularyImports = useRef([]);
   const committedVocabularyPreferences = useRef([]);
+  const committedStudySettings = useRef([]);
   const saveQueue = useRef(Promise.resolve());
   const completingAttempt = useRef(false);
   const saveGeneration = useRef(0);
@@ -185,6 +186,13 @@ function useFieldbookValue() {
   );
 
   function applyCommittedVocabulary(target, owner) {
+    committedStudySettings.current.filter(change => change.owner === owner).forEach(change => {
+      let staleSettings = false;
+      Object.entries(change.after).forEach(([key, value]) => {
+        if (JSON.stringify(target.settings[key]) === change.before[key]) { staleSettings = true; target.settings[key] = structuredClone(value); }
+      });
+      applyStudyPlans(target, change, staleSettings);
+    });
     committedVocabularyPreferences.current.filter(change => change.owner === owner).forEach(change => {
       if (JSON.stringify(target.settings.vocabulary) === change.before) {
         target.settings.vocabulary = structuredClone(change.after);
@@ -196,6 +204,20 @@ function useFieldbookValue() {
       if (index < 0) rows.push(structuredClone(change.after));
       else if (JSON.stringify(rows[index]) === change.before) rows[index] = structuredClone(change.after);
     });
+  }
+
+  function applyStudyPlans(target, change, staleSettings) {
+    let stalePlans = false;
+    change.removedPlans.forEach(before => {
+      const index = target.plans.findIndex(plan => plan.id === before.id && JSON.stringify(plan) === JSON.stringify(before));
+      if (index < 0) return;
+      stalePlans = true;
+      const replacement = change.addedPlans.find(plan => plan.id === before.id);
+      if (replacement) target.plans[index] = structuredClone(replacement);
+      else target.plans.splice(index, 1);
+    });
+    if (staleSettings || stalePlans) change.addedPlans.forEach(plan => { if (!target.plans.some(row => row.id === plan.id)) target.plans.push(structuredClone(plan)); });
+    if (change.removedPlanIds.includes(target.activePlanId) && !target.plans.some(plan => plan.id === target.activePlanId)) target.activePlanId = null;
   }
 
   const persistVocabularyImport = useCallback((draft, batchId) => {
@@ -249,18 +271,69 @@ function useFieldbookValue() {
   },[toast]);
 
   const saveVocabularyPreferences = useCallback(async(input)=>{
-    const owner=accountId();const preferences=normalizeVocabularyPreferences({...stateRef.current.settings.vocabulary,...input});
-    const draft=structuredClone(stateRef.current);draft.settings.vocabulary=preferences;
+    const owner=accountId();const changes=structuredClone(input);
     const generation=++saveGeneration.current;setSaveStatus('saving');
     const operation=saveQueue.current.catch(()=>{}).then(async()=>{
       if(!alive.current || accountId()!==owner)return false;
-      const current=structuredClone(stateRef.current);applyCommittedVocabulary(current,owner);current.settings.vocabulary=preferences;
+      const current=structuredClone(stateRef.current);applyCommittedVocabulary(current,owner);
+      const preferences=normalizeVocabularyPreferences({...current.settings.vocabulary,...changes});current.settings.vocabulary=preferences;
       const previousPreferences=JSON.stringify(stateRef.current.settings.vocabulary);
       let saved=false;try{saved=await saveState(current,toast);}catch{saved=false;}
+      if(!alive.current || accountId()!==owner)return false;
       if(alive.current&&accountId()===owner){if(generation===saveGeneration.current){setSaveFailed(!saved);setSaveStatus(saved?'saved':'failed');}if(saved){committedVocabularyPreferences.current.push({owner,before:previousPreferences,after:structuredClone(preferences)});const next=structuredClone(stateRef.current);next.settings.vocabulary=preferences;stateRef.current=next;setState(next);}}
       return saved;
     });saveQueue.current=operation;return operation;
   },[toast]);
+
+  const saveStudySettings = useCallback(async (input) => {
+    if (completingAttempt.current) return false;
+    const owner = accountId();
+    const changes = structuredClone(input);
+    const generation = ++saveGeneration.current;
+    setSaveStatus('saving');
+    const operation = saveQueue.current.catch(() => {}).then(async () => {
+      if (!alive.current || accountId() !== owner) return false;
+      const current = structuredClone(stateRef.current);
+      applyCommittedVocabulary(current, owner);
+      const beforeVocabulary = JSON.stringify(current.settings.vocabulary);
+      const studyChanges = Object.fromEntries(Object.entries(changes).filter(([key]) => key !== 'vocabulary'));
+      const change = {
+        owner,
+        before: Object.fromEntries(Object.keys(studyChanges).map(key => [key, JSON.stringify(current.settings[key])])),
+        after: studyChanges,
+        removedPlanIds: [],
+        removedPlans: [],
+        addedPlans: [],
+      };
+      Object.assign(current.settings, studyChanges);
+      if (Object.prototype.hasOwnProperty.call(changes, 'vocabulary')) current.settings.vocabulary = normalizeVocabularyPreferences({ ...current.settings.vocabulary, ...changes.vocabulary });
+      if (Object.keys(studyChanges).length) {
+        change.removedPlans = structuredClone(current.plans.filter(plan => plan.status === 'pending'));
+        change.removedPlanIds = change.removedPlans.map(plan => plan.id);
+        current.plans = current.plans.filter(plan => plan.status !== 'pending');
+        const retainedPlanIds = new Set(current.plans.map(plan => plan.id));
+        if (change.removedPlanIds.includes(current.activePlanId)) current.activePlanId = null;
+        ensurePlans(current, current.settings.activeSkill || 'writing');
+        change.addedPlans = current.plans.filter(plan => !retainedPlanIds.has(plan.id));
+      }
+      let saved = false;
+      try { saved = await saveState(current, toast); } catch { saved = false; }
+      if (!alive.current || accountId() !== owner) return false;
+      if (generation === saveGeneration.current) { setSaveFailed(!saved); setSaveStatus(saved ? 'saved' : 'failed'); }
+      if (saved) {
+        committedStudySettings.current.push(change);
+        if (Object.prototype.hasOwnProperty.call(changes, 'vocabulary')) committedVocabularyPreferences.current.push({ owner, before: beforeVocabulary, after: structuredClone(current.settings.vocabulary) });
+        const next = structuredClone(stateRef.current);
+        applyCommittedVocabulary(next, owner);
+        stateRef.current = next;
+        setState(next);
+        lastSaved.current = current;
+      }
+      return saved;
+    });
+    saveQueue.current = operation;
+    return operation;
+  }, [toast]);
 
   const loadVocabularyCatalog = useCallback((bookId) => {
     const key = bookId || 'metadata';
@@ -928,6 +1001,7 @@ function useFieldbookValue() {
       persistVocabularyImport,
       persistVocabularySession,
       saveVocabularyPreferences,
+      saveStudySettings,
       loadVocabularyCatalog,
       vocabularyCatalogRevision,
       addStory,
