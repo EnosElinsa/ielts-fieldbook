@@ -1,0 +1,23 @@
+.rail .mark-box { flex: 0 0 34px; }
+.rail .mark-copy { min-width: 0; }
+.rail .nav-icon { flex: 0 0 18px; }
+.rail .skill-switch button { display: flex; align-items: center; justify-content: center; }
+.rail .skill-switch button:hover { color: var(--ink); background: var(--surface-hover); }
+.rail .skill-switch button[aria-selected="true"] { background: var(--soft-blue); color: var(--blue); box-shadow: none; }
+.skill-speaking .rail .skill-switch button[aria-selected="true"] { background: var(--soft-green); color: var(--teal); }
+.rail .skill-switch button:focus-visible { position: relative; z-index: 1; outline-offset: 2px; }
+.rail-tooltip { pointer-events: none; }
+@media (min-width: 741px) {
+  .shell.is-collapsed .rail { padding: 24px 16px 16px; overflow-x: hidden; }
+  .shell.is-collapsed .mark { padding: 0 0 22px; gap: 0; justify-content: center; }
+  .shell.is-collapsed .mark-copy { display: none; }
+  .shell.is-collapsed .skill-switch { flex-direction: column; margin: 0 0 18px; padding: 3px; gap: 3px; flex-shrink: 0; }
+  .shell.is-collapsed .skill-switch button { flex: none; width: 36px; min-height: 36px; padding: 0; font-size: 12px; }
+  .shell.is-collapsed .skill-long { display: none; }
+  .shell.is-collapsed .skill-short { max-width: none; line-height: 1; }
+  .shell.is-collapsed .nav { gap: 6px; }
+  .shell.is-collapsed .nav a, .shell.is-collapsed .rail-toggle { width: 44px; min-height: 44px; padding: 0; gap: 0; flex-shrink: 0; }
+  .shell.is-collapsed .nav-label, .shell.is-collapsed .rail-toggle-label { display: none; }
+  .shell.is-collapsed .rail-foot { display: none; }
+  .shell.is-collapsed .nav a:focus-visible, .shell.is-collapsed .rail-toggle:focus-visible { outline-offset: -2px; }
+}
