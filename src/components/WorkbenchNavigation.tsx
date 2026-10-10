@@ -2,7 +2,7 @@
 import { useMemo, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { BookOpen, Check, ChevronDown, House, Library, LogOut, Monitor, Moon, MoreHorizontal, PencilLine, Search, Settings2, Sun, Upload, Download, ShieldCheck, MessageSquare, ChartNoAxesCombined } from 'lucide-react';
+import { BookOpen, Check, ChevronDown, House, Library, LogOut, Monitor, Moon, MoreHorizontal, PencilLine, Search, Settings2, Sun, Upload, Download, ShieldCheck, MessageSquare, ChartNoAxesCombined, Mic2, NotebookTabs } from 'lucide-react';
 import { ModalFrame } from './ModalFrame';
 import { useTheme } from '../context/ThemeContext';
 import { useFieldbook } from '../context/FieldbookContext';
@@ -44,8 +44,8 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
   const [selected, setSelected] = useState(0);
   const items = useMemo(() => {
     const navigation = [
-      ['Today', '/', House], ['Writing questions', '/write/questions', Library], ['Writing desk', '/write', PencilLine],
-      ['Speaking questions', '/speak/questions', Library], ['Speaking practice', '/speak', PencilLine], ['Review', '/review', BookOpen], ['Vocabulary', '/vocabulary', BookOpen], ['Progress', '/progress', ChartNoAxesCombined],
+      ['Today', '/', House], ['Writing', '/write', PencilLine], ['Writing questions', '/write/questions', Library],
+      ['Speaking', '/speak', Mic2], ['Speaking questions', '/speak/questions', Library], ['Review', '/review', BookOpen], ['Vocabulary', '/vocabulary', NotebookTabs], ['Progress', '/progress', ChartNoAxesCombined],
     ].map(([title, path, Icon]) => ({ id: path, title, kind: 'Page', Icon, run: () => { if (path.startsWith('/write')) fb.setSkill('writing', path); else if (path.startsWith('/speak')) fb.setSkill('speaking', path); else navigate(path); } }));
     const questions = fb.state.questions.map((q) => ({ id: `w:${q.id}`, title: q.name, kind: 'Writing question', Icon: PencilLine, run: () => { fb.setSkill('writing', '/write'); fb.chooseQuestion(q.id); } }));
     const topics = fb.state.speakingTopics.map((q) => ({ id: `s:${q.id}`, title: q.title, kind: 'Speaking topic', Icon: Library, run: () => { fb.setSelectedTopicId(q.id); fb.setSkill('speaking', `/speak/topics/${q.id}`); } }));
@@ -69,8 +69,9 @@ export function MobileNavigation({ onMore }: { onMore: () => void }) {
   const fb = useFieldbook();
   return <nav className="mobile-navigation" aria-label="Main navigation">
     <NavLink to="/" end><House size={20} /><span>Today</span></NavLink>
-    <NavLink to={fb.activeSkill === 'speaking' ? '/speak' : '/write'}><PencilLine size={20} /><span>Practice</span></NavLink>
-    <NavLink to="/review"><BookOpen size={20} /><span>Review</span></NavLink>
+    <NavLink to="/write" onClick={(event) => { event.preventDefault(); fb.setSkill('writing', '/write'); }}><PencilLine size={20} /><span>Writing</span></NavLink>
+    <NavLink to="/speak" onClick={(event) => { event.preventDefault(); fb.setSkill('speaking', '/speak'); }}><Mic2 size={20} /><span>Speaking</span></NavLink>
+    <NavLink to="/vocabulary"><NotebookTabs size={20} /><span>Vocabulary</span></NavLink>
     <button type="button" onClick={onMore}><MoreHorizontal size={20} /><span>More</span></button>
   </nav>;
 }

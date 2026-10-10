@@ -115,6 +115,7 @@ export function VocabularyPracticeResults({ controller, results }: {
                     {row.term}
                   </Link>
                   <small>{row.definition}</small>
+                  {row.prompt && results.mode !== 'dictation' ? <small className="practice-result-context">{row.prompt}</small> : null}
                 </th>
                 <td className="practice-response-column" data-label="Your response">
                   <span className="practice-cell-label" aria-hidden="true">Your response</span>
@@ -135,6 +136,7 @@ export function VocabularyPracticeResults({ controller, results }: {
                   </span>
                   {results.mode === 'dictation' && row.result === 'success' && isRegionalSpellingDifference(row.expectedAnswer || row.term, row.response) ? <small>UK/US spelling accepted</small> : null}
                   {row.errorType ? <small className="practice-result-explanation">{row.errorType === 'unanswered' ? 'No response submitted' : row.errorType}</small> : null}
+                  {row.explanation ? <small className="practice-result-explanation">{row.explanation}</small> : null}
                 </td>
                 <td data-label="Details">
                   <Link

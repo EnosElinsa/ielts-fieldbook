@@ -5,6 +5,7 @@ import type { VocabularyPracticeMode } from './preferences';
 
 export type VocabularySessionSelection =
   | { kind: 'unit'; bookId: string; unitId: string }
+  | { kind: 'specialist'; bookId: string; unitId: string }
   | { kind: 'batch' }
   | { kind: 'retry' };
 
@@ -12,7 +13,7 @@ export const isVocabularySessionSelection = (value: unknown): value is Vocabular
   if (!value || typeof value !== 'object') return false;
   const input = value as Record<string, unknown>;
   if (input.kind === 'batch' || input.kind === 'retry') return Object.keys(input).length === 1;
-  return input.kind === 'unit' && typeof input.bookId === 'string' && validId(input.bookId) && typeof input.unitId === 'string' && validId(input.unitId) && Object.keys(input).length === 3;
+  return (input.kind === 'unit' || input.kind === 'specialist') && typeof input.bookId === 'string' && validId(input.bookId) && typeof input.unitId === 'string' && validId(input.unitId) && Object.keys(input).length === 3;
 };
 const validId = (value: string) => value.length > 0 && value.length <= 500 && value.trim() === value && !['__proto__', 'prototype', 'constructor'].includes(value);
 

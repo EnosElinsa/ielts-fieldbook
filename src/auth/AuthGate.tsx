@@ -4,7 +4,7 @@ import { authError, type Mode } from './errors';
 import { accountId, resetAccountStore } from '../storage/remote';
 import { discardDraftRecovery } from '../storage/recovery';
 import { clearVocabularyDraft } from '../storage/vocabularyDrafts';
-import { BookOpen, Moon, Sun } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { LegalModal } from '../features/modals/LegalModal';
 
@@ -20,7 +20,7 @@ function errorMessage(error: unknown) {
 function Aside({ title }: { title: string }) {
   return (
     <section className="auth-aside">
-      <div className="mark-box"><BookOpen size={20} /></div>
+      <div className="mark-box"><img src="/favicon.svg" alt="" width="32" height="32" /></div>
       <h1>IELTS Fieldbook</h1>
       <p>{title}</p>
     </section>

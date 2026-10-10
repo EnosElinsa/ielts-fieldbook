@@ -2,7 +2,7 @@ import type { CardInput } from 'ts-fsrs';
 import type { VocabularySessionRecord } from './session';
 
 export type VocabularySkill = 'writing' | 'speaking' | 'listening' | 'reading';
-export type VocabularyMode = 'dictation' | 'definition' | 'cloze' | 'distinction' | 'production';
+export type VocabularyMode = 'dictation' | 'definition' | 'cloze' | 'synonym' | 'distinction' | 'production';
 export type VocabularyDimension = 'meaning' | 'listening' | 'spelling' | 'usage';
 export type VocabularyStatus = 'new' | 'unfamiliar' | 'unstable' | 'active' | 'familiar' | 'mastered';
 export type VocabularyResult = 'success' | 'partial' | 'failure' | 'pending';
@@ -61,5 +61,6 @@ export type ReviewQueueFilter = {
 };
 export type ReviewCard = {
   id: string; entryId: string; senseId: string; entry: VocabularyEntry; mode: VocabularyMode;
+  task?: import('./content').VocabularyLearningTask; contentVersion?: string;
   dimension: VocabularyDimension; dueAt: string; sources: VocabularySource[];
 };

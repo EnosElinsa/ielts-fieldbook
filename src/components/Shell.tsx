@@ -15,7 +15,7 @@ import { BackupModal } from '../features/modals/BackupModal';
 import { useAuthUser } from '../auth/useAuthUser';
 import { AccountMark } from '../features/account/AccountMark';
 import { SaveFailure } from './SaveFailure';
-import { Search, PanelLeftClose, PanelLeftOpen, Upload, BookOpen } from 'lucide-react';
+import { Search, PanelLeftClose, PanelLeftOpen, Upload } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { IconButton } from './IconButton';
 import { AccountMenu, CommandSearch, MobileNavigation } from './WorkbenchNavigation';
@@ -28,26 +28,39 @@ function RailHint({ label, enabled, children }) {
   return <Tooltip.Root><Tooltip.Trigger asChild>{children}</Tooltip.Trigger>{enabled ? <Tooltip.Portal><Tooltip.Content className="tooltip rail-tooltip" side="right" sideOffset={10}>{label}<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal> : null}</Tooltip.Root>;
 }
 
-const writingLinks = [
+const moduleLinks = [
   { to: '/', end: true, label: 'Today', icon: NavIcons.today },
-  { to: '/write/questions', label: 'Questions', icon: NavIcons.questions },
-  { to: '/write', end: true, label: 'Write', icon: NavIcons.write },
-  { to: '/review', label: 'Review', icon: NavIcons.review },
+  { to: '/write', label: 'Writing', icon: NavIcons.write },
+  { to: '/speak', label: 'Speaking', icon: NavIcons.speaking },
   { to: '/vocabulary', label: 'Vocabulary', icon: NavIcons.vocabulary },
   { to: '/progress', label: 'Progress', icon: NavIcons.progress },
 ];
 
 const RAIL_KEY = 'ielts-fieldbook-rail';
 
-const speakingLinks = [
-  { to: '/', end: true, label: 'Today', icon: NavIcons.today },
-  { to: '/speak/questions', label: 'Questions', icon: NavIcons.questions },
-  { to: '/stories', label: 'Stories', icon: NavIcons.stories },
-  { to: '/speak', end: true, label: 'Practice', icon: NavIcons.write },
-  { to: '/review', label: 'Review', icon: NavIcons.review },
-  { to: '/vocabulary', label: 'Vocabulary', icon: NavIcons.vocabulary },
-  { to: '/progress', label: 'Progress', icon: NavIcons.progress },
-];
+const studyLinks = {
+  writing: [
+    { to: '/write/questions', label: 'Questions', icon: NavIcons.questions },
+    { to: '/write', label: 'Practice', icon: NavIcons.write },
+    { to: '/review', label: 'Review', icon: NavIcons.review },
+  ],
+  speaking: [
+    { to: '/speak/questions', label: 'Questions', icon: NavIcons.questions },
+    { to: '/stories', label: 'Stories', icon: NavIcons.stories },
+    { to: '/speak', label: 'Practice', icon: NavIcons.speaking },
+    { to: '/review', label: 'Review', icon: NavIcons.review },
+  ],
+};
+
+function moduleFor(pathname: string, search: string, fallbackSkill: string) {
+  if (pathname.startsWith('/write')) return 'writing';
+  if (pathname.startsWith('/speak') || pathname === '/stories') return 'speaking';
+  if (pathname.startsWith('/review')) return new URLSearchParams(search).get('skill') === 'speaking' ? 'speaking' : new URLSearchParams(search).get('skill') === 'writing' ? 'writing' : fallbackSkill === 'speaking' ? 'speaking' : 'writing';
+  if (pathname.startsWith('/vocabulary')) return 'vocabulary';
+  if (pathname.startsWith('/progress')) return 'progress';
+  if (pathname.startsWith('/account')) return 'account';
+  return 'today';
+}
 
 function chromeFor(pathname: string, activeSkill: string, deskName: string, topicName: string) {
   const speaking = activeSkill === 'speaking';
@@ -60,8 +73,8 @@ function chromeFor(pathname: string, activeSkill: string, deskName: string, topi
   if (pathname === '/stories') return { kicker: 'Stories', title: 'Your stories' };
   if (pathname === '/speak') return { kicker: 'Practice', title: topicName || 'Speaking practice' };
   if (pathname.startsWith('/review')) return { kicker: 'Review', title: speaking ? 'Attempts and scores' : 'Essays and scores' };
-  if (pathname.startsWith('/vocabulary')) return { kicker: 'Vocabulary', title: 'Words, phrases, patterns' };
-  if (pathname.startsWith('/progress')) return { kicker: skillLabel, title: 'Progress' };
+  if (pathname.startsWith('/vocabulary')) return { kicker: 'Vocabulary', title: 'Vocabulary' };
+  if (pathname.startsWith('/progress')) return { kicker: 'Progress', title: 'Progress' };
   if (pathname.startsWith('/account')) return { kicker: 'Account', title: 'Your account' };
   return { kicker: skillLabel, title: 'Today' };
 }
@@ -84,8 +97,10 @@ export function Shell() {
   const [moreOpen, setMoreOpen] = useState(false);
   const [legalView, setLegalView] = useState<string | null>(null);
   const reduced = useReducedMotion();
-  const speaking = fb.activeSkill === 'speaking';
-  const links = speaking ? speakingLinks : writingLinks;
+  const module = moduleFor(location.pathname, location.search, fb.activeSkill);
+  const speaking = module === 'speaking';
+  const secondaryLinks = module === 'writing' || module === 'speaking' ? studyLinks[module] : [];
+  const vocabularyPractice = ['/vocabulary/study', '/vocabulary/review'].includes(location.pathname) || location.pathname.startsWith('/vocabulary/history/');
   const streak = studyStreak(fb.state);
   const deskName = displayName(fb.selectedQuestion?.name) || 'Writing';
   const topicName = fb.selectedTopic?.title || 'Speaking practice';
@@ -128,17 +143,9 @@ export function Shell() {
     return () => document.removeEventListener('keydown', onKey);
   }, [fb]);
 
-  const switchSkill = (skill: string) => {
-    const path = location.pathname;
-    let next = path;
-    if (skill === 'speaking') {
-      if (path === '/write/questions' || path.startsWith('/write')) next = path === '/write' ? '/speak' : '/speak/questions';
-      if (path === '/write') next = '/speak';
-    } else {
-      if (path === '/speak/questions' || path.startsWith('/speak/topics')) next = '/write/questions';
-      if (path === '/speak' || path === '/stories') next = '/write';
-    }
-    fb.setSkill(skill, next);
+  const selectModule = (path: string) => {
+    if (path === '/write') fb.setSkill('writing', path);
+    else if (path === '/speak') fb.setSkill('speaking', path);
   };
 
   const exportBackup = () => {
@@ -198,50 +205,21 @@ export function Shell() {
       <div className={`${collapsed ? 'shell is-collapsed' : 'shell'}${speaking ? ' skill-speaking' : ''}`}>
         <Tooltip.Provider delayDuration={350}><aside className="rail">
           <div className="mark">
-            <div className="mark-box" aria-hidden="true"><BookOpen size={20} /></div>
+            <div className="mark-box" aria-hidden="true"><img src="/favicon.svg" alt="" width="32" height="32" /></div>
             <div className="mark-copy">
               <div className="mark-name">IELTS Fieldbook</div>
-              <span className="mark-sub">{speaking ? 'Speaking' : 'Writing'}</span>
+              <span className="mark-sub">Your study workspace</span>
             </div>
           </div>
-          <div className="skill-switch" role="tablist" aria-label="Skill">
-            <RailHint label="Writing" enabled={collapsed}>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={!speaking}
-              aria-label="Writing"
-              className={!speaking ? 'active' : undefined}
-              data-skill="writing"
-              onClick={() => switchSkill('writing')}
-            >
-              <span className="skill-long">Writing</span>
-              <span className="skill-short">W</span>
-            </button>
-            </RailHint>
-            <RailHint label="Speaking" enabled={collapsed}>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={speaking}
-              aria-label="Speaking"
-              className={speaking ? 'active' : undefined}
-              data-skill="speaking"
-              onClick={() => switchSkill('speaking')}
-            >
-              <span className="skill-long">Speaking</span>
-              <span className="skill-short">S</span>
-            </button>
-            </RailHint>
-          </div>
-          <nav className="nav" aria-label={speaking ? 'Speaking' : 'Writing'}>
-            {links.map((link) => (
+          <nav className="nav" aria-label="Main navigation">
+            {moduleLinks.map((link) => (
               <RailHint key={link.to + link.label} label={link.label} enabled={collapsed}><NavLink
                 key={link.to + link.label}
                 to={link.to}
                 end={link.end}
                 aria-label={link.label}
-                className={({ isActive }) => (isActive ? 'active' : undefined)}
+                onClick={() => selectModule(link.to)}
+                className={module === (link.to === '/' ? 'today' : link.to.slice(1) === 'write' ? 'writing' : link.to.slice(1) === 'speak' ? 'speaking' : link.to.slice(1)) ? 'active' : undefined}
               >
                 <span className="nav-icon" aria-hidden="true">
                   {link.icon}
@@ -249,6 +227,14 @@ export function Shell() {
                 <span className="nav-label">{link.label}</span>
               </NavLink></RailHint>
             ))}
+          </nav>
+          {secondaryLinks.length ? <nav className="nav nav-secondary" aria-label={`${speaking ? 'Speaking' : 'Writing'} study`}>
+            {secondaryLinks.map((link) => <RailHint key={link.to} label={link.label} enabled={collapsed}><NavLink to={link.to} end={link.to === '/write' || link.to === '/speak'} aria-label={link.label} className={({ isActive }) => isActive ? 'active' : undefined}>
+              <span className="nav-icon" aria-hidden="true">{link.icon}</span><span className="nav-label">{link.label}</span>
+            </NavLink></RailHint>)}
+          </nav> : null}
+          <nav className="nav nav-account" aria-label="Account navigation">
+            <RailHint label="Study settings" enabled={collapsed}><button className="nav-settings" type="button" onClick={() => fb.openModal('settings')} aria-label="Study settings"><span className="nav-icon" aria-hidden="true">{NavIcons.settings}</span><span className="nav-label">Study settings</span></button></RailHint>
             <RailHint label="Account" enabled={collapsed}><NavLink to="/account" aria-label="Account" className={({ isActive }) => (isActive ? 'active' : undefined)}>
               <span className="nav-icon">
                 <AccountMark user={accountUser} size="nav" />
@@ -275,10 +261,10 @@ export function Shell() {
         </aside></Tooltip.Provider>
         <main className="main">
           <header className="top">
-            <div className="page-title" key={`${chrome.kicker}-${chrome.title}`}>
+            {!vocabularyPractice ? <div className="page-title" key={`${chrome.kicker}-${chrome.title}`}>
               <p className="kicker">{chrome.kicker}</p>
               <h1 className="title">{chrome.title}</h1>
-            </div>
+            </div> : <div className="page-title page-title-compact"><p className="kicker">Vocabulary</p></div>}
             <div className="actions">
               <IconButton label="Search workspace" onClick={() => setSearchOpen(true)}><Search size={18} /></IconButton>
               <AccountMenu user={accountUser} onImportBackup={() => backupInput.current?.click()} onExportBackup={exportBackup} onLegal={setLegalView} />
@@ -327,9 +313,9 @@ export function Shell() {
                   </button>
                 </div>
               </div>
-              <button className="btn primary import-score" type="button" onClick={() => fb.openFeedbackImport()}>
+              {module !== 'vocabulary' && module !== 'account' ? <button className="btn primary import-score" type="button" onClick={() => fb.openFeedbackImport()}>
                 <Upload size={16} />Import score
-              </button>
+              </button> : null}
               <input
                 ref={backupInput}
                 type="file"
@@ -364,7 +350,7 @@ export function Shell() {
         </main>
       </div>
       <MobileNavigation onMore={() => setMoreOpen(true)} />
-      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More"><div className="modal more-modal"><h3>Workspace</h3><div className="mobile-more-links">{links.map((link) => <NavLink key={link.to} to={link.to} onClick={() => setMoreOpen(false)}>{link.icon}{link.label}</NavLink>)}<button onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><NavLink to="/account" onClick={() => setMoreOpen(false)}>Account</NavLink></div><div className="skill-switch"><button aria-pressed={!speaking} onClick={() => switchSkill('writing')}>Writing</button><button aria-pressed={speaking} onClick={() => switchSkill('speaking')}>Speaking</button></div></div></ModalFrame>
+      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More"><div className="modal more-modal"><div className="mobile-more-links"><NavLink to="/progress" onClick={() => setMoreOpen(false)}>{NavIcons.progress}Progress</NavLink>{secondaryLinks.map((link) => <NavLink key={link.to} to={link.to} onClick={() => setMoreOpen(false)}>{link.icon}{link.label}</NavLink>)}<button onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><NavLink to="/account" onClick={() => setMoreOpen(false)}>Account</NavLink></div></div></ModalFrame>
       <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
       <AssessmentImportModal />
       <LegalModal view={legalView} onClose={() => setLegalView(null)} />

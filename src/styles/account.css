@@ -26,3 +26,24 @@
 .save-failure{margin:-8px 0 22px;padding:10px 12px;border-left:3px solid var(--red);background:var(--soft-red);color:var(--red);font-size:13px}
 .account-danger{border-left:3px solid var(--red);background:#fffefa}
 .account-danger h3{color:var(--red)}
+.account .field input,
+.account .field select,
+.account .field textarea{width:100%;min-height:40px;border:1px solid var(--rule);border-radius:6px;background:var(--sheet);color:var(--ink);font:inherit;padding:9px 10px;caret-color:var(--blue);box-shadow:none}
+.account .field input::placeholder,
+.account .field textarea::placeholder{color:var(--muted);opacity:1}
+.account .field input:hover,
+.account .field select:hover,
+.account .field textarea:hover{border-color:var(--blue)}
+.account .field input:focus,
+.account .field select:focus,
+.account .field textarea:focus{border-color:var(--blue);outline:2px solid var(--soft-blue);outline-offset:1px}
+.account .field input:focus-visible,
+.account .field select:focus-visible,
+.account .field textarea:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.account .field input:disabled,
+.account .field select:disabled,
+.account .field textarea:disabled{background:var(--surface-soft);color:var(--muted);cursor:not-allowed;opacity:.7}
+.account .field input:-webkit-autofill,
+.account .field input:-webkit-autofill:hover,
+.account .field input:-webkit-autofill:focus{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000px var(--sheet) inset;transition:background-color 9999s ease-out}
+.account-danger{background:var(--sheet)}

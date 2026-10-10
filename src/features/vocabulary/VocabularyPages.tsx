@@ -26,6 +26,7 @@ import {
   resolveWrongWord,
   setVocabularyManualStatus,
 } from "../../domain/vocabulary";
+import { reviewedEntry } from "../../domain/vocabulary/content";
 import { vocabularyGroupProgress } from "../../domain/vocabulary/progress";
 import "../../styles/vocabulary.css";
 import "../../styles/vocabulary-workbench.css";
@@ -177,12 +178,10 @@ export function VocabularyNavigation() {
     <nav className="vocabulary-tabs" aria-label="Vocabulary views">
       {[
         ["/vocabulary", "Overview"],
-        ["/vocabulary/wordbooks", "Wordbook study"],
-        ["/vocabulary/review", "Vocabulary review"],
-        ["/vocabulary/wrong", "Wrong words"],
+        ["/vocabulary/wordbooks", "Wordbooks"],
+        ["/vocabulary/review", "Review"],
         ["/vocabulary/words", "My words"],
         ["/vocabulary/history", "History"],
-        ["/vocabulary/progress", "Progress"],
       ].map(([path, title]) => inStudy && path === "/vocabulary/wordbooks" ? (
         <Link key={path} to={path} aria-current="page" className="is-active">{title}</Link>
       ) : (
@@ -734,11 +733,12 @@ export function VocabularyEntryPage() {
   const returnTo = requestedReturn && /^\/vocabulary(?:\/(?:review|study|words|wrong|history|wordbooks)(?:\/[^?]*)?)?(?:\?|$)/.test(requestedReturn) && !/[\r\n\\]/.test(requestedReturn) ? requestedReturn : '/vocabulary';
   const returnLabel = returnTo === '/vocabulary' ? 'My vocabulary' : /^\/vocabulary\/(review|study)/.test(returnTo) ? 'Back to session word list' : 'Back to vocabulary';
   const { id, entryId } = useParams();
-  const entry =
+  const rawEntry =
     (fb.state.vocabulary || []).find((item) => item.id === (id || entryId)) ||
     (VOCABULARY_CATALOG.entries || []).find(
       (item) => item.id === (id || entryId),
     );
+  const entry = rawEntry ? reviewedEntry(rawEntry) : null;
   const engine = useRef(null);
   if (!engine.current) engine.current = speechEngine();
   const [accent, setAccent] = useState("uk");

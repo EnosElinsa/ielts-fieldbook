@@ -18,3 +18,14 @@
 .auth-aside h1{font:700 24px/1.4 Manrope,Arial,sans-serif;color:var(--ink)}.auth-aside p{font-size:14px;line-height:1.6;color:var(--muted);margin:4px 0 0;max-width:40ch}.auth-footer{display:flex;align-items:center;gap:20px}.auth-footer button{border:0;background:transparent;color:var(--muted);font-size:12px;min-height:36px;padding:4px}.auth-footer button:hover{color:var(--ink)}.skill-speaking .mark-box{background:var(--teal)}.skill-speaking .nav a.active{background:var(--soft-green);color:var(--teal)}.skill-speaking .btn.primary{background:var(--teal);border-color:var(--teal)}.skill-speaking .session-index{background:var(--soft-green);color:var(--teal)}.account .account-danger{background:var(--sheet)}.account-id h2{font:650 24px Manrope,Arial,sans-serif}.account .account-email-status.is-confirmed{color:var(--success)}.avatar{font-family:Manrope,Arial,sans-serif}.assessment-section p,.assessment-section li,.assessment-main>.assessment-summary{color:var(--ink)}.block-title{font:600 17px Manrope,Arial,sans-serif}.lexicon-stat{border-radius:6px}.progress-chart .recharts-cartesian-axis-tick text{fill:var(--muted)}
 .skill-speaking .speaking-parts .btn.primary{color:#fff}.speaking-view .editor>textarea{min-height:280px}.speaking-view .phase-step.is-current{color:var(--teal)}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.nav-secondary{margin:12px 0 0 18px;padding-left:10px;border-left:1px solid var(--rule)}
+.nav-secondary a{min-height:36px;font-size:12px}
+.nav-account{margin-top:auto;padding-top:12px;border-top:1px solid var(--rule)}
+.rail .rail-toggle{margin-top:10px}
+.mark-box{font-weight:700;font-size:21px}
+@media (min-width:741px){.shell.is-collapsed .nav-secondary{margin-left:0;padding-left:0;border-left:0}}
+@media (max-width:740px){.mobile-navigation{grid-template-columns:repeat(5,minmax(0,1fr));padding-inline:8px}}
+.rail .nav-settings{display:flex;align-items:center;gap:12px;width:100%;min-height:42px;padding:10px 12px;border:0;border-radius:6px;background:transparent;color:var(--muted);font:500 14px Manrope,Arial,sans-serif;text-align:left}
+.rail .nav-settings:hover{background:var(--surface-hover);color:var(--ink)}
+.mark-box img{display:block;width:34px;height:34px;border-radius:8px}
+@media (min-width:741px){.shell.is-collapsed .rail .nav-settings{justify-content:center;width:44px;min-height:44px;padding:0}.shell.is-collapsed .rail .nav-settings .nav-label{display:none}}

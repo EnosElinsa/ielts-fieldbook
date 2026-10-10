@@ -141,7 +141,7 @@ test.each([
 
 test("group study keeps the wordbook navigation entry active", () => {
   render(<MemoryRouter initialEntries={["/vocabulary/study?bookId=book&unitId=first"]}><VocabularyNavigation /></MemoryRouter>);
-  expect(screen.getByRole("link", { name: "Wordbook study" })).toHaveAttribute("aria-current", "page");
+  expect(screen.getByRole("link", { name: "Wordbooks" })).toHaveAttribute("aria-current", "page");
 });
 
 test("failed enrollment save offers an actionable error", async () => {

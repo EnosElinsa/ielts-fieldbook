@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import { House, Library, PencilLine, RotateCcw, BookOpen, ChartNoAxesCombined, NotebookTabs, CircleUserRound, ChevronDown } from 'lucide-react';
+import { House, Library, PencilLine, RotateCcw, ChartNoAxesCombined, NotebookTabs, CircleUserRound, ChevronDown, Mic2, Settings2 } from 'lucide-react';
 
 export function FilterMenu({
   label,
@@ -283,8 +283,10 @@ export const NavIcons = {
   today: <House size={18} />,
   questions: <Library size={18} />,
   write: <PencilLine size={18} />,
+  speaking: <Mic2 size={18} />,
+  settings: <Settings2 size={18} />,
   review: <RotateCcw size={18} />,
-  vocabulary: <BookOpen size={18} />,
+  vocabulary: <NotebookTabs size={18} />,
   progress: <ChartNoAxesCombined size={18} />,
   stories: <NotebookTabs size={18} />,
   account: <CircleUserRound size={18} />,
