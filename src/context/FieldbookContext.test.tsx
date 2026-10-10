@@ -5,6 +5,7 @@ import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { emptyState, normalizeDraft } from '../domain';
 import { addVocabularyItem, recordVocabularyReview } from '../domain/vocabulary';
 import { readDraftRecovery } from '../storage/recovery';
+import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 
 const mocks = vi.hoisted(() => ({ initial: null, saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
@@ -321,4 +322,10 @@ test('an explicit preference change can restore the original accent', async () =
   await act(async () => { await fieldbook.saveVocabularyPreferences({ accent: 'us' }); });
   await act(async () => { await fieldbook.saveVocabularyPreferences({ accent: 'uk' }); });
   expect(mocks.saveState.mock.calls.at(-1)[0].settings.vocabulary.accent).toBe('uk');
+});
+
+test('metadata catalog loads all released group memberships without full entries',async()=>{
+const snapshot=structuredClone(VOCABULARY_CATALOG);
+const fetchMock=vi.spyOn(globalThis,'fetch').mockResolvedValue({ok:true,json:async()=>({books:[{id:'metadata-book',title:'Book',contentStatus:'complete'}],units:[{id:'group',bookId:'metadata-book',title:'Group',kind:'group'}],memberships:[{id:'m1',bookId:'metadata-book',unitId:'group',entryId:'metadata-one'},{id:'m2',bookId:'metadata-book',unitId:'group',entryId:'metadata-two'}],entries:[{id:'metadata-one'},{id:'metadata-two'}]})});
+try{await mount();await act(async()=>{await fieldbook.loadVocabularyCatalog();});expect(VOCABULARY_CATALOG.memberships.filter(row=>row.bookId==='metadata-book')).toHaveLength(2);expect(VOCABULARY_CATALOG.units.find(row=>row.bookId==='metadata-book')).toBeTruthy();expect(VOCABULARY_CATALOG.entries.find(row=>row.id==='metadata-one')).toBeUndefined();}finally{Object.assign(VOCABULARY_CATALOG,snapshot);fetchMock.mockRestore();}
 });
