@@ -103,7 +103,7 @@ export function Shell() {
   const module = moduleFor(location.pathname, location.search, fb.activeSkill);
   const speaking = module === 'speaking';
   const secondaryLinks = module === 'writing' || module === 'speaking' ? studyLinks[module] : [];
-  const vocabularyPractice = ['/vocabulary/study', '/vocabulary/review'].includes(location.pathname) || location.pathname.startsWith('/vocabulary/history/');
+  const vocabularyOwnHeading = location.pathname.startsWith('/vocabulary');
   const streak = studyStreak(fb.state);
   const deskName = displayName(fb.selectedQuestion?.name) || 'Writing';
   const topicName = fb.selectedTopic?.title || 'Speaking practice';
@@ -270,7 +270,7 @@ export function Shell() {
         </aside></Tooltip.Provider>
         <main className="main">
           <header className="top">
-            {!vocabularyPractice ? <div className="page-title" key={`${chrome.kicker}-${chrome.title}`}>
+            {!vocabularyOwnHeading ? <div className="page-title" key={`${chrome.kicker}-${chrome.title}`}>
               <p className="kicker">{chrome.kicker}</p>
               <h1 className="title">{chrome.title}</h1>
             </div> : <div className="page-title page-title-compact"><p className="kicker">Vocabulary</p></div>}
