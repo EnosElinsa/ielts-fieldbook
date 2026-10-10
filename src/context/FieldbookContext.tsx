@@ -360,6 +360,8 @@ function useFieldbookValue() {
         VOCABULARY_CATALOG.memberships=VOCABULARY_CATALOG.memberships.filter(member=>!(completeBooks.has(member.bookId) && member.unitId?.startsWith('starter:')));
         VOCABULARY_CATALOG.units=VOCABULARY_CATALOG.units.filter(unit=>!(completeBooks.has(unit.bookId) && unit.kind==='starter'));
         merge('books',releasedCatalogue.books);
+        // Metadata already includes group membership; expose accurate counts before a book is opened.
+        merge('units',releasedCatalogue.units); merge('memberships',releasedCatalogue.memberships);
         if(bookId) {
           const memberships=releasedCatalogue.memberships.filter(row=>row.bookId===bookId);
           const entryIds=new Set(memberships.map(row=>row.entryId));
