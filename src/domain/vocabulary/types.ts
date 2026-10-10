@@ -15,6 +15,7 @@ export type VocabularySense = {
   synonyms?: string[]; antonyms?: string[]; distinctions?: string[]; source?: string; license?: string; attribution?: string; sourceUrl?: string;
   distinctionTask?: { prompt: string; options: string[]; answer: string; explanation: string };
   wordFamily?: string[]; register?: string;
+  editorial?: { source: string; license: string; attribution: string };
 };
 export type VocabularyEntry = {
   id: string; term: string; category: 'word' | 'phrase' | 'sentence'; meaning: string; example: string;
@@ -62,5 +63,6 @@ export type ReviewQueueFilter = {
 export type ReviewCard = {
   id: string; entryId: string; senseId: string; entry: VocabularyEntry; mode: VocabularyMode;
   task?: import('./content').VocabularyLearningTask; contentVersion?: string;
+  context?: import('./context').VocabularyLearningContext;
   dimension: VocabularyDimension; dueAt: string; sources: VocabularySource[];
 };

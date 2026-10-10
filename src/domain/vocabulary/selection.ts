@@ -1,6 +1,6 @@
 import { VOCABULARY_CATALOG } from './catalog';
 import { getVocabularyReviewQueue } from './index';
-import { reviewedEntry } from './content';
+import { resolveVocabularyLearningContext } from './context';
 import type { ReviewCard, VocabularyEntry, VocabularyMode, VocabularyStore } from './types';
 import type { VocabularyPracticeMode } from './preferences';
 
@@ -43,7 +43,7 @@ export function buildUnitPracticeQueue(state: Partial<VocabularyStore>, bookId: 
     const entry = byId.get(membership.entryId) || catalogEntry;
     if (!entry) { missingWords++; continue; }
     if (entry.tags.includes('archived')) { archivedWords++; continue; }
-    const reviewed = reviewedEntry(entry);
+    const reviewed = resolveVocabularyLearningContext(entry, { bookId, unitId }).entry;
     const merged: VocabularyEntry = { ...reviewed, sources: [...(entry.sources || [])] };
     if (!merged.sources.some(source => source.bookId === bookId && source.unitId === unitId)) merged.sources.push({ type: 'wordbook', id: `${bookId}:${unitId}:${entry.id}`, bookId, unitId });
     entries.push(merged);
