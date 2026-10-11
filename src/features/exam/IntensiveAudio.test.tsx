@@ -5,7 +5,7 @@ import { IntensiveAudio } from './IntensiveAudio';
 
 const { events, wave } = vi.hoisted(() => {
   const events: Record<string, (...args: unknown[]) => void> = {};
-  const wave = { on: vi.fn((event, cb) => { events[event] = cb; }), load: vi.fn().mockResolvedValue(undefined), destroy: vi.fn(), setTime: vi.fn(), setPlaybackRate: vi.fn(), play: vi.fn().mockResolvedValue(undefined), pause: vi.fn() };
+  const wave = { on: vi.fn((event, cb) => { events[event] = cb; }), load: vi.fn().mockResolvedValue(undefined), destroy: vi.fn(), setTime: vi.fn(), setOptions: vi.fn(), setPlaybackRate: vi.fn(), play: vi.fn().mockResolvedValue(undefined), pause: vi.fn() };
   return { events, wave };
 });
 vi.mock('wavesurfer.js', () => ({ default: { create: () => wave } }));
@@ -38,6 +38,15 @@ it('keyboard shortcuts leave editing fields alone and errors offer retry', () =>
   act(() => { events.error(); });
   expect(screen.getByRole('alert')).toHaveTextContent('Audio could not load');
   expect(screen.getByRole('button', { name: 'Retry audio' })).toBeInTheDocument();
+});
+
+it('updates waveform colors with the theme without restarting playback', async () => {
+  render(<IntensiveAudio src="audio.mp3" start={0} end={2} speed={1} loop={false} onReplay={() => {}} onSentenceEnd={() => {}} onSpeedChange={() => {}} onLoopChange={() => {}} onPrevious={() => {}} onNext={() => {}} />);
+  const loadCount = wave.load.mock.calls.length;
+  await act(async () => { document.documentElement.style.setProperty('--blue', '#89aaff'); document.documentElement.dataset.theme = 'dark'; });
+  expect(wave.setOptions).toHaveBeenCalledWith(expect.objectContaining({ progressColor: '#89aaff' }));
+  expect(wave.load).toHaveBeenCalledTimes(loadCount);
+  document.documentElement.removeAttribute('data-theme'); document.documentElement.style.removeProperty('--blue');
 });
 
 

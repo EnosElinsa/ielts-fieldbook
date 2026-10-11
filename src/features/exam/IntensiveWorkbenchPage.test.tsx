@@ -27,6 +27,17 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
+it('jumps directly to a sentence while preserving the current dictation', async () => {
+  const user = userEvent.setup(); open();
+  await user.type(await screen.findByRole('textbox', { name: 'Sentence dictation' }), 'My first draft');
+  await user.selectOptions(screen.getByRole('combobox', { name: 'Jump to sentence' }), '1');
+  expect(screen.getByRole('heading', { name: 'Sentence 2 / 2' })).toBeInTheDocument();
+  expect(screen.getByRole('textbox', { name: 'Sentence dictation' })).toHaveValue('');
+  await user.selectOptions(screen.getByRole('combobox', { name: 'Jump to sentence' }), '0');
+  expect(screen.getByRole('textbox', { name: 'Sentence dictation' })).toHaveValue('My first draft');
+  expect(screen.getByRole('link', { name: 'Listening practice' })).toHaveAttribute('href', '/listening/part');
+});
+
 it('keeps the transcript blind until listening and dictation, recovers per account', async () => {
   const user = userEvent.setup();
   const view = open();
