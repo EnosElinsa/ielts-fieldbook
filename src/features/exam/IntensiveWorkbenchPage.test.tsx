@@ -38,6 +38,33 @@ it('jumps directly to a sentence while preserving the current dictation', async 
   expect(screen.getByRole('link', { name: 'Listening practice' })).toHaveAttribute('href', '/listening/part');
 });
 
+it('explains pending requirements and updates the completion checklist', async () => {
+  const user = userEvent.setup(); open();
+  const compare = await screen.findByRole('button', { name: 'Compare with transcript' });
+  expect(compare).toHaveAccessibleDescription('Play this sentence to the end before comparing.');
+  expect(screen.getByRole('button', { name: 'Record shadowing' })).toHaveAccessibleDescription('Compare your dictation with the transcript to unlock recording.');
+  expect(screen.getByRole('link', { name: 'Sentence dictation' })).toHaveAttribute('href', '#intensive-dictation');
+  await user.click(await screen.findByRole('button', { name: 'Play test sentence' }));
+  expect(compare).toHaveAccessibleDescription('Write your first attempt before comparing.');
+  await user.type(screen.getByRole('textbox', { name: 'Sentence dictation' }), 'The train leaves at nine');
+  await user.click(compare);
+  expect(screen.getByRole('list', { name: 'Sentence completion checklist' })).toHaveTextContent('Dictation compared · Complete');
+});
+
+it('does not report all changes saved when newer dictation is still pending', async () => {
+  let resolveSave: (saved: boolean) => void = () => {};
+  mocks.fb.persistNow.mockImplementation(() => new Promise<boolean>(resolve => { resolveSave = resolve; }));
+  const user = userEvent.setup(); open();
+  const input = await screen.findByRole('textbox', { name: 'Sentence dictation' });
+  await user.type(input, 'first');
+  await user.click(screen.getByRole('button', { name: 'Save progress' }));
+  await user.type(input, ' newer');
+  resolveSave(true);
+  expect(await screen.findByText('New changes waiting to save.')).toBeInTheDocument();
+  expect(screen.queryByText('Progress saved.')).not.toBeInTheDocument();
+  expect(mocks.recovery.get('one:intensive:part').s1.transcriptInput).toBe('first newer');
+});
+
 it('keeps the transcript blind until listening and dictation, recovers per account', async () => {
   const user = userEvent.setup();
   const view = open();
@@ -140,12 +167,14 @@ it('completes shadowing and schedules only after a fresh blind replay, retaining
   expect(mocks.putAudio.mock.calls[0][0]).toBe(mocks.putAudio.mock.calls[1][0]);
   await user.click(screen.getByRole('button', { name: 'Hide transcript for blind re-listening' }));
   expect(screen.queryByRole('textbox', { name: 'Sentence dictation' })).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Sentence dictation' })).toHaveAttribute('href', '#intensive-player');
   await user.selectOptions(screen.getByLabelText('Self rating'), '5');
   await user.click(screen.getByRole('button', { name: 'Finish ongoing play' }));
   expect(screen.getByRole('button', { name: 'Finish and schedule review' })).toBeDisabled();
   await user.click(screen.getByRole('button', { name: 'Play test sentence' }));
   await user.click(screen.getByRole('button', { name: 'Finish and schedule review' }));
   expect(await screen.findByText(/Next review:/)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Review scheduled' })).toBeDisabled();
   const session = mocks.fb.stateRef.current.intensiveSessions[0];
   expect(session.stage).toBe(6);
   expect(session.shadowingAudioId).toBeTruthy();
