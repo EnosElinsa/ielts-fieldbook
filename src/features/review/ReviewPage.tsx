@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { Copy, Download, FileInput, ArrowUpRight, RotateCcw } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { isBandScore } from '../../domain';
@@ -12,9 +12,10 @@ export function ReviewPage() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const requestedSkill = params.get('skill');
-  const reviewSkill = requestedSkill === 'writing' || requestedSkill === 'speaking' ? requestedSkill : fb.activeSkill;
+  const reviewSkill = ['writing', 'speaking', 'reading', 'listening'].includes(requestedSkill) ? requestedSkill : fb.activeSkill;
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
+  if (reviewSkill === 'reading' || reviewSkill === 'listening') return <Navigate to={`/${reviewSkill}/review`} replace />;
   const speaking = reviewSkill === 'speaking';
   const allSessions = fb.state.sessions.filter((s) => sessionSkill(s) === reviewSkill);
   const sessions = allSessions.filter((session) => (filter === 'all' || (filter === 'pending' && !session.assessmentId) || (filter === 'assessed' && session.assessmentId) || (filter === 'rewrite' && session.parentSessionId)) && `${session.name} ${session.focus || ''}`.toLowerCase().includes(search.toLowerCase()));

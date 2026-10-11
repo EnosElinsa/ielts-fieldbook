@@ -71,3 +71,26 @@ export async function deletePendingAudio(owner: string | null, topicId: string, 
     } catch { db.close(); resolve(false); }
   });
 }
+
+/** Remove every browser-cached microphone recording owned by an account. */
+export async function clearPendingAudioAccount(owner: string | null): Promise<boolean> {
+  if (!owner) return false;
+  const db = await openDb();
+  if (!db) return false;
+  return new Promise((resolve) => {
+    try {
+      const tx = db.transaction(STORE, 'readwrite');
+      const store = tx.objectStore(STORE);
+      const request = store.openCursor();
+      request.onsuccess = () => {
+        const cursor = request.result;
+        if (!cursor) return;
+        if (cursor.value?.accountId === owner) cursor.delete();
+        cursor.continue();
+      };
+      tx.oncomplete = () => { db.close(); resolve(true); };
+      tx.onerror = () => { db.close(); resolve(false); };
+      tx.onabort = () => { db.close(); resolve(false); };
+    } catch { db.close(); resolve(false); }
+  });
+}

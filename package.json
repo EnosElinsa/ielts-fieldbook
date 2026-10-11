@@ -1,7 +1,7 @@
 {
   "name": "ielts-fieldbook",
   "version": "1.0.0",
-  "description": "English-only IELTS study workspace for writing, speaking and vocabulary, with feedback-linked practice and spaced review.",
+  "description": "English-only IELTS study workspace for writing, speaking, reading, listening and vocabulary, with guided practice and spaced review.",
   "license": "MIT",
   "author": "Zhiyuan Cai",
   "repository": {
@@ -29,7 +29,11 @@
     "enrich:vocabulary": "node scripts/enrich-vocabulary.mjs",
     "fetch:vocabulary-dictionary": "node scripts/fetch-open-vocabulary.mjs",
     "deploy:pages": "npm run build && npx wrangler pages deploy dist --project-name ielts-fieldbook",
-    "test": "vitest run"
+    "test": "vitest run",
+    "collect:exams": "node scripts/collect-exams.mjs",
+    "import:exams": "node scripts/import-exams.mjs",
+    "seed:exams": "node scripts/seed-exams.mjs",
+    "align:exams": "python scripts/align-exams.py"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.2.0",

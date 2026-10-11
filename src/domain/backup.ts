@@ -1,12 +1,12 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { migrateState, VOCABULARY_COLLECTIONS } from './state';
+import { migrateState, VOCABULARY_COLLECTIONS, EXAM_COLLECTIONS } from './state';
 
 export function validateBackup(payload) {
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return { valid: false, reason: 'The backup is not a data file.' };
-  const recognized = ['sessions', 'assessments', 'lexicon', 'errors', 'drafts', 'settings', 'plans', 'stories', ...VOCABULARY_COLLECTIONS].some(key => Object.prototype.hasOwnProperty.call(payload, key));
+  const recognized = ['sessions', 'assessments', 'lexicon', 'errors', 'drafts', 'settings', 'plans', 'stories', ...VOCABULARY_COLLECTIONS, ...EXAM_COLLECTIONS].some(key => Object.prototype.hasOwnProperty.call(payload, key));
   if (!recognized) return { valid: false, reason: 'No study data found in this file.' };
-  for (const key of ['sessions', 'assessments', 'lexicon', 'errors', 'plans', 'stories', ...VOCABULARY_COLLECTIONS]) {
+  for (const key of ['sessions', 'assessments', 'lexicon', 'errors', 'plans', 'stories', ...VOCABULARY_COLLECTIONS, ...EXAM_COLLECTIONS]) {
     if (payload[key] !== undefined && !Array.isArray(payload[key])) return { valid: false, reason: `${key} is not a list.` };
   }
   const counts = {
@@ -18,6 +18,7 @@ export function validateBackup(payload) {
   };
   const migrated = migrateState(payload);
   VOCABULARY_COLLECTIONS.forEach(key => { counts[key] = migrated[key].length; });
+  EXAM_COLLECTIONS.forEach(key => { counts[key] = migrated[key].length; });
   return { valid: true, counts };
 }
 
@@ -49,6 +50,7 @@ export function mergeBackup(current, incoming, options) {
   VOCABULARY_COLLECTIONS.forEach(key => {
     left[key] = mergeVocabularyRows(left[key], right[key], ['vocabularyEvidence', 'vocabularyReviews', 'vocabularyActivities', 'vocabularyImportBatches'].includes(key));
   });
+  EXAM_COLLECTIONS.forEach(key => { left[key] = mergeVocabularyRows(left[key], right[key]); });
   left.errors = mergeById(left.errors, right.errors);
   left.plans = mergeById(left.plans, right.plans);
   left.stories = mergeById(left.stories, right.stories);

@@ -1,6 +1,6 @@
 # IELTS Fieldbook
 
-An English-only IELTS study workspace for writing, speaking and vocabulary. Practise with a plan, collect useful language from feedback, and review it across skills without losing its original context.
+An English-only IELTS study workspace for writing, speaking, reading, listening and vocabulary. Practise with a plan, collect useful language from feedback, and review it across skills without losing its original context.
 
 [Open the app](https://ielts-fieldbook.pages.dev) · [Report an issue](https://github.com/EnosElinsa/ielts-fieldbook/issues/new)
 
@@ -16,7 +16,7 @@ Fieldbook does not issue official IELTS scores. Pronunciation remains unscored w
 
 ## Vocabulary
 
-Words, phrases and sentence patterns share a single vocabulary model across wordbooks and personal collections. Each meaning has its own learning state; writing and speaking occurrences retain their source task. Reading and listening evidence use the same contract for future practice modules.
+Words, phrases and sentence patterns share a single vocabulary model across wordbooks and personal collections. Each meaning has its own learning state; occurrences retain their source task, passage or recording.
 
 - List or focused dictation with automatic UK/US audio and clearly identified browser speech fallback.
 - Wordbook study uses each complete group's actual word count in source order; due and wrong-word review batches have their own size and filters.
@@ -47,6 +47,10 @@ The workspace includes Today, questions, practice, review, vocabulary, progress,
 
 ## Development
 
+Reading and listening cover Cambridge IELTS 8–21 in an authenticated shared catalog. Practice supports method notes, evidence, pause/resume, answer checks and mistake retries; full mocks hide guidance and grade on submission. Intensive listening combines sentence playback, A/B loops, dictation comparison, shadowing recordings, blind replay and delayed recall. Practice, supported practice and mock results can be viewed separately.
+
+Source content and audio live in ignored local snapshots or the private Supabase catalog/storage. Public builds include metadata only. See [exam content and deployment](docs/exam-content.md) for acquisition, completeness audits, seeding and local sentence alignment.
+
 Requires Node.js 22 or newer.
 
 ```bash
@@ -61,7 +65,7 @@ npm test
 npm run build
 ```
 
-Stack: React 19, TypeScript, Vite, Supabase, FSRS, Radix UI and Cloudflare Pages. Study records use schema **v10**. Historical backups migrate to the current model; the old Phrases route is removed.
+Stack: React 19, TypeScript, Vite, Supabase, FSRS, Radix UI and Cloudflare Pages. Study records use schema **v11**. Historical backups migrate to the current model; the old Phrases route is removed.
 
 ## Data And Privacy
 
@@ -78,6 +82,7 @@ Apply SQL migrations in `supabase/migrations` in timestamp order before releasin
 ```bash
 npm run seed:bank
 npm run seed:vocabulary
+npm run seed:exams -- --dry-run
 ```
 
 Push `master`. The connected Cloudflare Pages project `ielts-fieldbook` builds with `npm run build`, publishes `dist`, and serves https://ielts-fieldbook.pages.dev. The GitHub Check workflow runs tests and a production build. Deployments are verified through the Cloudflare Pages check for the exact commit.
@@ -88,7 +93,7 @@ See the [deployment runbook](docs/deployment.md) for migration, catalogue seedin
 
 ## Limits
 
-Reading and listening practice modules are not yet implemented. There is no offline installation or concurrent editing of the same record. Open-dictionary coverage varies by term; missing definitions remain visible instead of being presented as verified content.
+There is no offline installation or concurrent editing of the same record. Open-dictionary coverage varies by term. Source explanations and sentence timing have explicitly audited gaps; unavailable content stays visible. Shadowing uses recording and self-rating rather than AI pronunciation scoring.
 
 ## License
 

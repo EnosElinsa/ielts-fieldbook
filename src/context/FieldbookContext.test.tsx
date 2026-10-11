@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { act, cleanup, render, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { emptyState, normalizeDraft } from '../domain';
 import { addVocabularyItem, recordVocabularyReview } from '../domain/vocabulary';
@@ -21,7 +21,8 @@ vi.mock('../storage', () => ({
 vi.mock('../storage/remote', () => ({ accountId: () => mocks.owner }));
 
 let fieldbook;
-function Probe() { fieldbook = useFieldbook(); return null; }
+let currentPath;
+function Probe() { fieldbook = useFieldbook(); currentPath = useLocation().pathname + useLocation().search; return null; }
 async function mount() {
   render(<MemoryRouter><FieldbookProvider><Probe /></FieldbookProvider></MemoryRouter>);
   await waitFor(() => expect(fieldbook.booted).toBe(true));
@@ -52,6 +53,31 @@ beforeEach(() => {
   mocks.initial.drafts = { q1: normalizeDraft({ text: 'A response that must survive.', practiceMode: 'full' }), sp1: normalizeDraft({ transcript: 'A response that must survive.', practiceMode: 'full' }) };
 });
 afterEach(() => { cleanup(); vi.useRealTimers(); fieldbook = null; });
+
+test('reading and due listening plans open their own workspaces and save linked completion', async () => {
+  mocks.initial.plans = [{ id: 'reading-plan', kind: 'reading-practice', status: 'pending' }, { id: 'listening-plan', kind: 'listening-intensive', status: 'pending', sectionId: 'part', sentenceId: 'sentence' }];
+  await mount();
+  await act(async () => { fieldbook.startPlan('reading-plan'); });
+  expect(currentPath).toBe('/reading');
+  expect(fieldbook.state.settings.activeSkill).toBe('reading');
+  const now = new Date().toISOString();
+  await act(async () => {
+    const draft = structuredClone(fieldbook.stateRef.current);
+    draft.examAttempts.push({ id: 'exam', skill: 'reading', status: 'completed', startedAt: now, completedAt: now, sectionIds: ['part'] });
+    await fieldbook.persistNow(draft);
+  });
+  expect(fieldbook.state.plans.find(plan => plan.id === 'reading-plan')).toMatchObject({ status: 'completed', linkedSessionId: 'exam' });
+  expect(fieldbook.state.activePlanId).toBeNull();
+  await act(async () => { fieldbook.startPlan('listening-plan'); });
+  expect(currentPath).toBe('/listening/intensive/part?sentence=sentence');
+  expect(fieldbook.state.settings.activeSkill).toBe('listening');
+  await act(async () => {
+    const draft = structuredClone(fieldbook.stateRef.current);
+    draft.intensiveSessions.push({ id: 'intensive', sectionId: 'part', sentenceId: 'sentence', completedAt: new Date().toISOString(), stage: 6 });
+    await fieldbook.persistNow(draft);
+  });
+  expect(fieldbook.state.plans.find(plan => plan.id === 'listening-plan')).toMatchObject({ status: 'completed', linkedSessionId: 'intensive' });
+});
 
 test('hydration persists proven regional wrong corrections and keeps failed-save recovery', async () => {
   const entry = addVocabularyItem(mocks.initial, { term: 'colour' }).item;

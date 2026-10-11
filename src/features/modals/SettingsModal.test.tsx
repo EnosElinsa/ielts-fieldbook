@@ -41,6 +41,17 @@ test('global settings exposes account vocabulary preferences and retains failure
   expect(context.current.closeModal).not.toHaveBeenCalled();
 });
 
+test('study settings saves reading-only practice and exposes all four skills', async () => {
+  render(<SettingsModal />);
+  const user = userEvent.setup();
+  await user.click(screen.getByRole('button', { name: 'What to practise' }));
+  expect(screen.getByRole('option', { name: 'Listening only' })).toBeInTheDocument();
+  expect(screen.getByRole('option', { name: 'All four skills' })).toBeInTheDocument();
+  await user.click(screen.getByRole('option', { name: 'Reading only' }));
+  await user.click(screen.getByRole('button', { name: 'Save settings' }));
+  expect(context.current.saveStudySettings).toHaveBeenCalledWith({ skillMix: 'reading' });
+});
+
 test('settings save study and vocabulary edits together regardless of active tab', async () => {
   render(<SettingsModal />);
   const user = userEvent.setup();

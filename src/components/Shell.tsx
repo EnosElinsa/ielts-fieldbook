@@ -15,7 +15,7 @@ import { BackupModal } from '../features/modals/BackupModal';
 import { useAuthUser } from '../auth/useAuthUser';
 import { AccountMark } from '../features/account/AccountMark';
 import { SaveFailure } from './SaveFailure';
-import { Search, PanelLeftClose, PanelLeftOpen, Upload } from 'lucide-react';
+import { Search, PanelLeftClose, PanelLeftOpen, Upload, BookOpen, Headphones } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { IconButton } from './IconButton';
 import { AccountMenu, CommandSearch, MobileNavigation } from './WorkbenchNavigation';
@@ -33,6 +33,8 @@ const moduleLinks = [
   { to: '/', end: true, label: 'Today', icon: NavIcons.today },
   { to: '/write', label: 'Writing', icon: NavIcons.write },
   { to: '/speak', label: 'Speaking', icon: NavIcons.speaking },
+  { to: '/reading', label: 'Reading', icon: <BookOpen size={20}/> },
+  { to: '/listening', label: 'Listening', icon: <Headphones size={20}/> },
   { to: '/vocabulary', label: 'Vocabulary', icon: NavIcons.vocabulary },
   { to: '/progress', label: 'Progress', icon: NavIcons.progress },
 ];
@@ -40,6 +42,8 @@ const moduleLinks = [
 const RAIL_KEY = 'ielts-fieldbook-rail';
 
 const studyLinks = {
+  reading: [{to:'/reading',label:'Questions',icon:NavIcons.questions},{to:'/reading/review',label:'Review',icon:NavIcons.review}],
+  listening: [{to:'/listening',label:'Questions',icon:NavIcons.questions},{to:'/listening?mode=intensive',label:'Intensive listening',icon:<Headphones size={20}/>},{to:'/listening/review',label:'Review',icon:NavIcons.review}],
   writing: [
     { to: '/write/questions', label: 'Questions', icon: NavIcons.questions },
     { to: '/write', label: 'Practice', icon: NavIcons.write },
@@ -54,6 +58,8 @@ const studyLinks = {
 };
 
 function moduleFor(pathname: string, search: string, fallbackSkill: string) {
+  if (pathname.startsWith('/reading')) return 'reading';
+  if (pathname.startsWith('/listening')) return 'listening';
   if (pathname.startsWith('/write')) return 'writing';
   if (pathname.startsWith('/speak') || pathname === '/stories') return 'speaking';
   if (pathname.startsWith('/review')) return new URLSearchParams(search).get('skill') === 'speaking' ? 'speaking' : new URLSearchParams(search).get('skill') === 'writing' ? 'writing' : fallbackSkill === 'speaking' ? 'speaking' : 'writing';
@@ -64,6 +70,8 @@ function moduleFor(pathname: string, search: string, fallbackSkill: string) {
 }
 
 function chromeFor(pathname: string, activeSkill: string, deskName: string, topicName: string, search = '') {
+  if (pathname.startsWith('/reading')) return {kicker:'Reading',title:pathname.includes('/review')?'Reading review':'Reading'};
+  if (pathname.startsWith('/listening')) return {kicker:'Listening',title:pathname.includes('/intensive')?'Intensive listening':pathname.includes('/review')?'Listening review':'Listening'};
   const reviewSkill = new URLSearchParams(search).get('skill');
   const effectiveSkill = reviewSkill === 'speaking' || reviewSkill === 'writing' ? reviewSkill : activeSkill;
   const speaking = effectiveSkill === 'speaking';
@@ -79,7 +87,7 @@ function chromeFor(pathname: string, activeSkill: string, deskName: string, topi
   if (pathname.startsWith('/vocabulary')) return { kicker: 'Vocabulary', title: 'Vocabulary' };
   if (pathname.startsWith('/progress')) return { kicker: 'Progress', title: 'Progress' };
   if (pathname.startsWith('/account')) return { kicker: 'Account', title: 'Your account' };
-  return { kicker: skillLabel, title: 'Today' };
+  return { kicker: effectiveSkill === 'reading' ? 'Reading' : effectiveSkill === 'listening' ? 'Listening' : skillLabel, title: 'Today' };
 }
 
 export function Shell() {
@@ -102,7 +110,7 @@ export function Shell() {
   const reduced = useReducedMotion();
   const module = moduleFor(location.pathname, location.search, fb.activeSkill);
   const speaking = module === 'speaking';
-  const secondaryLinks = module === 'writing' || module === 'speaking' ? studyLinks[module] : [];
+  const secondaryLinks = studyLinks[module] || [];
   const vocabularyOwnHeading = location.pathname.startsWith('/vocabulary');
   const streak = studyStreak(fb.state);
   const deskName = displayName(fb.selectedQuestion?.name) || 'Writing';
@@ -149,11 +157,13 @@ export function Shell() {
   const selectModule = (path: string) => {
     if (path === '/write') fb.setSkill('writing', path);
     else if (path === '/speak') fb.setSkill('speaking', path);
+    else if (path === '/reading') fb.setSkill('reading',path);
+    else if (path === '/listening') fb.setSkill('listening',path);
     else navigate(path);
   };
   const goFromMore = (path: string) => {
     setMoreOpen(false);
-    navigateWithPracticeGuard(path, () => navigate(path));
+    navigateWithPracticeGuard(path, () => selectModule(path));
   };
 
   const exportBackup = () => {
@@ -237,7 +247,7 @@ export function Shell() {
               </NavLink></RailHint>
             ))}
           </nav>
-          {secondaryLinks.length ? <nav className="nav nav-secondary" aria-label={`${speaking ? 'Speaking' : 'Writing'} study`}>
+          {secondaryLinks.length ? <nav className="nav nav-secondary" aria-label={`${module === 'reading' ? 'Reading' : module === 'listening' ? 'Listening' : speaking ? 'Speaking' : 'Writing'} study`}>
             {secondaryLinks.map((link) => <RailHint key={link.to} label={link.label} enabled={collapsed}><NavLink to={link.to} end={link.to === '/write' || link.to === '/speak'} aria-label={link.label} className={({ isActive }) => isActive ? 'active' : undefined}>
               <span className="nav-icon" aria-hidden="true">{link.icon}</span><span className="nav-label">{link.label}</span>
             </NavLink></RailHint>)}
@@ -322,7 +332,7 @@ export function Shell() {
                   </button>
                 </div>
               </div>
-              {module !== 'vocabulary' && module !== 'account' ? <button className="btn primary import-score" type="button" onClick={() => fb.openFeedbackImport()}>
+              {!['vocabulary', 'account', 'reading', 'listening'].includes(module) && !['reading','listening'].includes(fb.activeSkill) ? <button className="btn primary import-score" type="button" onClick={() => fb.openFeedbackImport()}>
                 <Upload size={16} />Import score
               </button> : null}
               <input
@@ -359,7 +369,7 @@ export function Shell() {
         </main>
       </div>
       <MobileNavigation onMore={() => setMoreOpen(true)} />
-      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More"><div className="modal more-modal"><div className="mobile-more-links"><button type="button" onClick={() => goFromMore('/progress')}>{NavIcons.progress}Progress</button>{secondaryLinks.map((link) => <button type="button" key={link.to} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}<button onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><button type="button" onClick={() => goFromMore('/account')}>Account</button></div></div></ModalFrame>
+      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More"><div className="modal more-modal"><div className="mobile-more-links"><button type="button" onClick={() => goFromMore('/reading')}><BookOpen size={20}/>Reading</button><button type="button" onClick={() => goFromMore('/listening')}><Headphones size={20}/>Listening</button><button type="button" onClick={() => goFromMore('/progress')}>{NavIcons.progress}Progress</button>{secondaryLinks.map((link) => <button type="button" key={link.to} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}<button onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><button type="button" onClick={() => goFromMore('/account')}>Account</button></div></div></ModalFrame>
       <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
       <AssessmentImportModal />
       <LegalModal view={legalView} onClose={() => setLegalView(null)} />

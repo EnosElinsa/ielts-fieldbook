@@ -9,11 +9,12 @@ import { formatDate, sessionSkill } from '../../lib/format';
 import { planMatchesSkill } from '../../lib/planTemplates';
 import { Empty, FilterMenu } from '../../components/ui';
 import { VocabularyProgressPage } from '../vocabulary/VocabularyPages';
+import { ExamProgressPanel } from '../exam/ExamProgressPanel';
 
 export function ProgressPage() {
   const fb = useFieldbook();
   const [params, setParams] = useSearchParams();
-  const category = ['writing','speaking','vocabulary'].includes(params.get('category')) ? params.get('category') : fb.activeSkill;
+  const category = ['writing','speaking','reading','listening','vocabulary'].includes(params.get('category')) ? params.get('category') : fb.activeSkill;
   const [skill, setSkill] = useState(category);
   useEffect(() => { setSkill(category); setTask('all'); }, [category]);
   function selectCategory(value) { setSkill(value); setTask('all'); const next = new URLSearchParams(params); next.set('category',value); setParams(next,{replace:true}); }
@@ -21,6 +22,7 @@ export function ProgressPage() {
   const [task, setTask] = useState('all');
   const [status, setStatus] = useState('all');
   const speaking = skill === 'speaking';
+  const receptive = skill === 'reading' || skill === 'listening';
   const since = range === 'all' ? 0 : Date.now() - Number(range) * 86400000;
   const inRange = (date) => new Date(date).getTime() >= since;
   const sessions = fb.state.sessions.filter((session) => sessionSkill(session) === skill && inRange(session.date) &&
@@ -58,14 +60,14 @@ export function ProgressPage() {
   const statusNames = { pending: 'Not started', in_progress: 'In progress', completed: 'Completed' };
   return (
     <section className="view active progress-view">
-      <div className="page-tools"><p>Your practice, feedback and progress.</p><Link to="/review" className="btn line">Review attempts <ArrowUpRight size={16} /></Link></div>
+      <div className="page-tools"><p>Your practice, feedback and progress.</p><Link to={receptive ? `/${skill}` : '/review'} className="btn line">{receptive ? 'Open practice bank' : 'Review attempts'} <ArrowUpRight size={16} /></Link></div>
       <div className="page-tools"><Link to="/vocabulary/progress" className="btn line">Vocabulary progress <ArrowUpRight size={16} /></Link><Link to="/vocabulary/review" className="btn line">Review vocabulary <ArrowUpRight size={16} /></Link></div>
       <div className="toolbar">
-        <FilterMenu label="Progress skill" value={skill} onChange={selectCategory} options={[{ value: 'writing', label: 'Writing' }, { value: 'speaking', label: 'Speaking' }, { value: 'vocabulary', label: 'Vocabulary' }]} />
+        <FilterMenu label="Progress skill" value={skill} onChange={selectCategory} options={[{ value: 'writing', label: 'Writing' }, { value: 'speaking', label: 'Speaking' }, { value: 'reading', label: 'Reading' }, { value: 'listening', label: 'Listening' }, { value: 'vocabulary', label: 'Vocabulary' }]} />
         <FilterMenu label="Time range" value={range} onChange={setRange} options={[{ value: '7', label: 'Last 7 days' }, { value: '30', label: 'Last 30 days' }, { value: '90', label: 'Last 90 days' }, { value: 'all', label: 'All time' }]} />
-        <FilterMenu label="Task or part" value={task} onChange={setTask} options={speaking ? [{ value: 'all', label: 'All parts' }, { value: '1', label: 'Part 1' }, { value: '2', label: 'Part 2' }, { value: '3', label: 'Part 3' }] : [{ value: 'all', label: 'All tasks' }, { value: '1', label: 'Task 1' }, { value: '2', label: 'Task 2' }]} />
+        {!receptive && <FilterMenu label="Task or part" value={task} onChange={setTask} options={speaking ? [{ value: 'all', label: 'All parts' }, { value: '1', label: 'Part 1' }, { value: '2', label: 'Part 2' }, { value: '3', label: 'Part 3' }] : [{ value: 'all', label: 'All tasks' }, { value: '1', label: 'Task 1' }, { value: '2', label: 'Task 2' }]} />}
       </div>
-      {skill === 'vocabulary' ? <VocabularyProgressPage /> : <>
+      {skill === 'vocabulary' ? <VocabularyProgressPage /> : receptive ? <ExamProgressPanel skill={skill} since={since} /> : <>
       <div className="progress-metrics">
         {[{ label: 'Practice attempts', value: sessions.length, icon: PenLine }, { label: 'Feedback received', value: assessments.length, icon: FileCheck2 }, { label: 'Rewrites & retakes', value: rewrites.length, icon: CheckCheck }, { label: 'Feedback followed by practice', value: completedLoops, icon: ArrowUpRight }].map(({ label, value, icon: Icon }) => <div className="progress-metric" key={label}><Icon size={18} /><strong>{value}</strong><span>{label}</span></div>)}
       </div>

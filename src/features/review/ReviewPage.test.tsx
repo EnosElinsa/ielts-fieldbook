@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { ReviewPage } from './ReviewPage';
@@ -26,7 +26,7 @@ beforeEach(() => {
   };
 });
 afterEach(cleanup);
-const mount = (route = '/review') => render(<MemoryRouter initialEntries={[route]}><ReviewPage /></MemoryRouter>);
+const mount = (route = '/review') => render(<MemoryRouter initialEntries={[route]}><Routes><Route path="/review" element={<ReviewPage />} /><Route path="/reading/review" element={<p>Reading review queue</p>} /><Route path="/listening/review" element={<p>Listening review queue</p>} /></Routes></MemoryRouter>);
 
 test('route skill selects speaking attempts when the saved skill is writing', () => {
   mockFieldbook.current.state.sessions.push({ id: 'speaking', name: 'Part two answer', skill: 'speaking', questionId: 'topic', date: '2026-10-10T12:00:00Z', essay: 'Answer', words: 85 });
@@ -59,4 +59,16 @@ test('targeted practice links the source attempt and specific mistake', async ()
   mount();
   await userEvent.setup().click(screen.getByRole('button', { name: 'Practise this' }));
   expect(mockFieldbook.current.startTargetedPractice).toHaveBeenCalledWith(mockFieldbook.current.state.sessions[1], 'e1');
+});
+
+test('reading skill dispatches to the receptive review queue and excludes writing feedback', () => {
+  mount('/review?skill=reading');
+  expect(screen.getByText('Reading review queue')).toBeInTheDocument();
+  expect(screen.queryByText('Cities essay')).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Import feedback' })).not.toBeInTheDocument();
+});
+
+test('listening skill dispatches to the receptive review queue', () => {
+  mount('/review?skill=listening');
+  expect(screen.getByText('Listening review queue')).toBeInTheDocument();
 });

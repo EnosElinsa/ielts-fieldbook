@@ -18,6 +18,8 @@ function contentTypeFor(filePath: string): string {
   if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) return 'image/jpeg';
   if (filePath.endsWith('.webp')) return 'image/webp';
   if (filePath.endsWith('.gif')) return 'image/gif';
+  if (filePath.endsWith('.mp3')) return 'audio/mpeg';
+  if (filePath.endsWith('.wav')) return 'audio/wav';
   return 'application/octet-stream';
 }
 
@@ -39,6 +41,37 @@ function privateBankMiddleware(): Connect.NextHandleFunction {
   return (req, res, next) => {
     const rawUrl = req.url || '';
     const pathname = rawUrl.split('?')[0];
+
+    // Private authorized content is served only by the development server.
+    // It never becomes part of dist or the public repository.
+    if (pathname === '/data/exam-catalog.json' || pathname.startsWith('/data/exam-sections/') || pathname.startsWith('/exam-assets/')) {
+      let relative: string;
+      try {
+        relative = pathname === '/data/exam-catalog.json' ? 'metadata.json'
+          : pathname.startsWith('/data/exam-sections/') ? `sections/${decodeURIComponent(pathname.slice('/data/exam-sections/'.length)).replaceAll(':', '_')}`
+          : `assets/${decodeURIComponent(pathname.slice('/exam-assets/'.length))}`;
+      } catch { res.statusCode = 400; res.end('Bad request'); return; }
+      const contentBank = ['local/exam-bank-final-v4', 'local/exam-bank-final', 'local/exam-bank-aligned', 'local/exam-bank'].find(directory => fs.existsSync(path.resolve(rootDir, directory, 'catalog.json'))) || 'local/exam-bank';
+      const bankRoot = path.resolve(rootDir, pathname.startsWith('/exam-assets/') ? 'local/exam-bank' : contentBank);
+      const filePath = path.resolve(bankRoot, relative);
+      if (!filePath.startsWith(bankRoot + path.sep)) { res.statusCode = 400; res.end('Bad request'); return; }
+      if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+        const size = fs.statSync(filePath).size;
+        const range = req.headers.range;
+        res.setHeader('Content-Type', contentTypeFor(filePath));
+        res.setHeader('Accept-Ranges', 'bytes');
+        if (range) {
+          const match = /^bytes=(\d*)-(\d*)$/.exec(range);
+          const start = match?.[1] ? Number(match[1]) : Math.max(0, size - Number(match?.[2]));
+          const end = match?.[1] && match[2] ? Math.min(Number(match[2]), size - 1) : size - 1;
+          if (!match || !Number.isFinite(start) || start < 0 || start > end || start >= size) { res.statusCode = 416; res.setHeader('Content-Range', `bytes */${size}`); res.end(); return; }
+          res.statusCode = 206; res.setHeader('Content-Range', `bytes ${start}-${end}/${size}`); res.setHeader('Content-Length', end - start + 1);
+          fs.createReadStream(filePath, { start, end }).pipe(res);
+        } else { res.statusCode = 200; res.setHeader('Content-Length', size); fs.createReadStream(filePath).pipe(res); }
+        return;
+      }
+      if (pathname !== '/data/exam-catalog.json') { res.statusCode = 404; res.end('Not found'); return; }
+    }
 
     for (const entry of BANK_FILES) {
       if (pathname === entry.url) {
@@ -91,7 +124,8 @@ function privateBankPlugin(): Plugin {
       server.middlewares.use(privateBankMiddleware());
     },
     configurePreviewServer(server) {
-      server.middlewares.use(privateBankMiddleware());
+      // Preview mirrors production: no private exam content overlay.
+      server.middlewares.use((req, res, next) => req.url?.startsWith('/data/exam-') || req.url?.startsWith('/exam-assets/') ? next() : privateBankMiddleware()(req, res, next));
     },
   };
 }

@@ -7,6 +7,7 @@ import { useAuthUser } from '../../auth/useAuthUser';
 import { displayNameOf } from '../../lib/identity';
 import { formatAccountDate } from '../../lib/format';
 import { getSupabase } from '../../lib/supabase';
+import { clearPendingAudioAccount } from '../../storage/pendingAudio';
 import { AccountMark } from './AccountMark';
 
 export function AccountPage() {
@@ -134,6 +135,7 @@ export function AccountPage() {
       setDeleteError('Could not delete this account. Try again.');
       return;
     }
+    await clearPendingAudioAccount(user?.id || null);
     await signOut();
     navigate('/');
   }

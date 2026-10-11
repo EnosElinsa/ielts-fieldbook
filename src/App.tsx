@@ -20,6 +20,11 @@ const VocabularyHistoryPage = lazy(() => import('./features/vocabulary/Vocabular
 const VocabularyEntryPage = lazy(() => import('./features/vocabulary/VocabularyPages').then(module => ({ default: module.VocabularyEntryPage })));
 const VocabularyGroupWordsPage = lazy(() => import('./features/vocabulary/VocabularyGroupWordsPage').then(module => ({ default: module.VocabularyGroupWordsPage })));
 const VocabularyReviewPage = lazy(() => import('./features/vocabulary/VocabularyPracticePage').then(module => ({ default: module.VocabularyPracticePage })));
+const ExamBankPage = lazy(() => import('./features/exam/ExamBankPage').then(module => ({default:module.ExamBankPage})));
+const ExamPracticePage = lazy(() => import('./features/exam/ExamPracticePage').then(module => ({default:module.ExamPracticePage})));
+const ExamReviewPage = lazy(() => import('./features/exam/ExamReviewPage').then(module => ({default:module.ExamReviewPage})));
+const IntensiveWorkbenchPage = lazy(() => import('./features/exam/IntensiveWorkbenchPage').then(module => ({default:module.IntensiveWorkbenchPage})));
+const ExamReviewQueuePage = lazy(() => import('./features/exam/ExamReviewQueuePage').then(module => ({default:module.ExamReviewQueuePage})));
 
 function LegacyWrongWordsRedirect() {
   const { search } = useLocation();
@@ -36,6 +41,14 @@ export function AppRoutes() {
       <Routes>
         <Route element={<Shell />}>
           <Route index element={<TodayPage />} />
+          {(['reading','listening'] as const).map(skill => <Route key={skill}>
+            <Route path={skill} element={<ExamBankPage skill={skill}/>} />
+            <Route path={`${skill}/review`} element={<ExamReviewQueuePage skill={skill}/>} />
+            <Route path={`${skill}/review/:attemptId`} element={<ExamReviewPage skill={skill}/>} />
+            <Route path={`${skill}/mock/:paperId`} element={<ExamPracticePage skill={skill}/>} />
+            <Route path={`${skill}/:sectionId`} element={<ExamPracticePage skill={skill}/>} />
+          </Route>)}
+          <Route path="listening/intensive/:sectionId" element={<IntensiveWorkbenchPage/>}/>
           <Route path="write/questions" element={<WritingBankPage />} />
           <Route path="write" element={<WritingDeskPage />} />
           <Route path="review" element={<ReviewPage />} />

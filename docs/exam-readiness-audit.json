@@ -1,0 +1,708 @@
+{
+  "auditedAt": "2026-10-11T17:19:43.161486+00:00",
+  "schemaVersion": 1,
+  "source": "Signed-in ieltscb.com Cambridge IELTS8–21 export",
+  "authorization": "User stated authorized internal use; not independently verified open license",
+  "catalogSha256": "8dd491d4e0770336e7b529218af562ccdc1b76e77923e659597a88ff8bc82da0",
+  "sourceCatalogSha256": "fc0d401d18d330cb952985634ad7769b2fce0f738ee2517b61423cebb4d84772",
+  "counts": {
+    "papers": 56,
+    "listeningSections": 224,
+    "readingSections": 168,
+    "questionGroups": 4339,
+    "answerSlots": 4480,
+    "sentences": 10146,
+    "assets": 248,
+    "generatedTimings": 120,
+    "unresolvedTimings": 0,
+    "missingExplanations": 7,
+    "sourceWordLimitConflicts": 2,
+    "sourceExplanations": 4330,
+    "missingSourceExplanations": 9,
+    "correctedTimings": 26,
+    "flaggedAdjacentTimingPairs": 1,
+    "remainingAdjacentPairsForReview": 0
+  },
+  "errors": [],
+  "warnings": [
+    "Answer conflicts with word limit question:10053",
+    "Answer conflicts with word limit question:10056"
+  ],
+  "perBook": [
+    {
+      "book": 8,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 308,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:947",
+          "test": 2,
+          "part": 2,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:951",
+          "test": 2,
+          "part": 2,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 13,
+          "answerSlots": 13
+        }
+      ]
+    },
+    {
+      "book": 9,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 313,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:919",
+          "test": 4,
+          "part": 2,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:930",
+          "test": 1,
+          "part": 1,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 13,
+          "answerSlots": 13
+        }
+      ]
+    },
+    {
+      "book": 10,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 314,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:895",
+          "test": 1,
+          "part": 3,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:1032",
+          "test": 3,
+          "part": 3,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 14,
+          "answerSlots": 14
+        }
+      ]
+    },
+    {
+      "book": 11,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 311,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:998",
+          "test": 4,
+          "part": 2,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:875",
+          "test": 1,
+          "part": 1,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 13,
+          "answerSlots": 13
+        }
+      ]
+    },
+    {
+      "book": 12,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 315,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:883",
+          "test": 2,
+          "part": 4,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:841",
+          "test": 3,
+          "part": 1,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 13,
+          "answerSlots": 13
+        }
+      ]
+    },
+    {
+      "book": 13,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 314,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:874",
+          "test": 4,
+          "part": 4,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:807",
+          "test": 3,
+          "part": 2,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 13,
+          "answerSlots": 13
+        }
+      ]
+    },
+    {
+      "book": 14,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 309,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:781",
+          "test": 4,
+          "part": 3,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:750",
+          "test": 1,
+          "part": 3,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 14,
+          "answerSlots": 14
+        }
+      ]
+    },
+    {
+      "book": 15,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 311,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:831",
+          "test": 1,
+          "part": 4,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:735",
+          "test": 3,
+          "part": 2,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 13,
+          "answerSlots": 13
+        }
+      ]
+    },
+    {
+      "book": 16,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 308,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:744",
+          "test": 2,
+          "part": 1,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:720",
+          "test": 4,
+          "part": 2,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 13,
+          "answerSlots": 13
+        }
+      ]
+    },
+    {
+      "book": 17,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 308,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:679",
+          "test": 2,
+          "part": 4,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:669",
+          "test": 1,
+          "part": 3,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 14,
+          "answerSlots": 14
+        }
+      ]
+    },
+    {
+      "book": 18,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 307,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:1068",
+          "test": 4,
+          "part": 2,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:1074",
+          "test": 4,
+          "part": 3,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 14,
+          "answerSlots": 14
+        }
+      ]
+    },
+    {
+      "book": 19,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 308,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:1096",
+          "test": 2,
+          "part": 4,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:1107",
+          "test": 3,
+          "part": 2,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 13,
+          "answerSlots": 13
+        }
+      ]
+    },
+    {
+      "book": 20,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 307,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:1232",
+          "test": 1,
+          "part": 3,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 7,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:1240",
+          "test": 2,
+          "part": 3,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 14,
+          "answerSlots": 14
+        }
+      ]
+    },
+    {
+      "book": 21,
+      "papers": 4,
+      "listeningSections": 16,
+      "readingSections": 12,
+      "questionGroups": 306,
+      "answerSlots": 320,
+      "samples": [
+        {
+          "skill": "listening",
+          "sectionId": "source:1328",
+          "test": 4,
+          "part": 3,
+          "answerMapping": "matches raw source",
+          "audioMapping": "matches raw source and mirrored file",
+          "questionGroups": 10,
+          "answerSlots": 10
+        },
+        {
+          "skill": "reading",
+          "sectionId": "source:1336",
+          "test": 3,
+          "part": 1,
+          "answerMapping": "matches raw source",
+          "audioMapping": "not applicable",
+          "questionGroups": 13,
+          "answerSlots": 13
+        }
+      ]
+    }
+  ],
+  "sampleMethod": "Deterministic SHA-256 sample order2026-10-12, one listening and one reading section per book; all retained answer keys/alternatives/points compared against raw source; selected audio source URL matched. Structural check, not manual listening review.",
+  "limitations": [
+    "Generated timing has not been manually listened through for every sentence.",
+    "Source explanations unavailable for7 question groups.",
+    "Source word limit conflicts for2 answer keys retained as warnings.",
+    "Twenty-six corrected intervals were computationally reviewed using bounded ASR diagnostics and source forced alignment; manual listening approval is not claimed.",
+    "The sole flagged adjacent pair is the confirmed duplicate source:702 narrator substring; it shares audio with the full sentence and original source text order is retained."
+  ],
+  "alignmentInputCatalogSha256": "22531f76cca047bd4170053e7fff547ef9f48f0e0fc07ba09c900760f1fb196c",
+  "alignmentInitialOutputCatalogSha256": "d452eaa122f63fd39ee3b8ddcc3141d2f3b2a9252b9ff121470bcd6cb259f6b6",
+  "explanationPreservation": {
+    "originalLanguage": "Chinese source rationale where supplied",
+    "englishEvidenceAndParaphrase": "Retained independently in explanation field",
+    "sourceExplanation": "Optional sourceExplanation field preserves original full rationale without machine translation",
+    "postAlignmentChange": "Explanation preservation only; answer keys and generated timestamps unchanged"
+  },
+  "catalogPackage": "local/exam-bank-final-v4",
+  "reviewInputCatalogSha256": "653b92aa4f15e3eb765748502a61ba78064dcaa095c7cdb2d77af595656d4079",
+  "reviewedTimingSha256": "a9f5eb9149c383fafeaa88c6e090271f75564499ca38b0c6bf46db428d82e7da",
+  "timingReview": {
+    "method": "Computational audio review, not human listening approval. ASR diagnostics never replace authoritative content.",
+    "count": 26,
+    "allIntervalsWithinMeasuredDuration": true,
+    "originalTextAnswersAndExistingValidTimingPreserved": "Source text and answer keys preserved; 11 originally invalid intervals and 15 explicitly reviewed overlap/overlong/reversed intervals changed. One initially generated interval received reviewed correction.",
+    "corrections": [
+      {
+        "sectionId": "source:1045",
+        "sentenceId": "source:77692",
+        "start": 157.401,
+        "end": 163.699
+      },
+      {
+        "sectionId": "source:1095",
+        "sentenceId": "source:85825",
+        "start": 391.56,
+        "end": 394.38,
+        "limitations": "Expanded window confirms Absolutely at 391.5-392.4; original preceding interval overlaps actual sentence."
+      },
+      {
+        "sectionId": "source:1234",
+        "sentenceId": "source:89085",
+        "start": 277.239,
+        "end": 281.639
+      },
+      {
+        "sectionId": "source:1250",
+        "sentenceId": "source:89537",
+        "start": 435.321,
+        "end": 440.759
+      },
+      {
+        "sectionId": "source:1251",
+        "sentenceId": "source:89566",
+        "start": 390.281,
+        "end": 395.26,
+        "limitations": "Expanded-window ASR contains trailing to with low probability 0.424; forced alignment score is zero for to. Interval covers whole audible fragment rather than claiming exact trailing-word timing."
+      },
+      {
+        "sectionId": "source:702",
+        "sentenceId": "source:54358",
+        "start": 231.602,
+        "end": 235.239,
+        "limitations": "Source duplicate substring overlaps the next narrator sentence intentionally; no extra utterance exists."
+      },
+      {
+        "sectionId": "source:816",
+        "sentenceId": "source:50630",
+        "start": 366.91,
+        "end": 371.05,
+        "limitations": "Source ellipsis omits all the after about; interval covers the audible fragment."
+      },
+      {
+        "sectionId": "source:901",
+        "sentenceId": "source:2478",
+        "start": 432.063,
+        "end": 433.45,
+        "limitations": "Original next sentence start overlaps the end of this utterance. Existing numerically valid timings are preserved by scope."
+      },
+      {
+        "sectionId": "source:911",
+        "sentenceId": "source:3280",
+        "start": 327,
+        "end": 331.2,
+        "limitations": "Two independent ASR windows hear get on and have a look instead of source go on to. Preserve authoritative source text; use actual utterance interval and disclose textual mismatch."
+      },
+      {
+        "sectionId": "source:976",
+        "sentenceId": "source:2833",
+        "start": 345.261,
+        "end": 348.41,
+        "limitations": "Source ellipsis omits make a after is; interval ends at is, based on ASR."
+      },
+      {
+        "sectionId": "source:994",
+        "sentenceId": "source:4852",
+        "start": 379.683,
+        "end": 382.53,
+        "limitations": "Source ellipsis omits if you have; interval covers the audible fragment."
+      },
+      {
+        "sectionId": "source:1045",
+        "sentenceId": "source:77691",
+        "start": 145.5,
+        "end": 156.52,
+        "limitations": "Source punctuation joins clauses; boundary is ASR-supported and not manually listened."
+      },
+      {
+        "sectionId": "source:702",
+        "sentenceId": "source:54357",
+        "start": 220.88,
+        "end": 225.62,
+        "limitations": "Source interval replaced only with explicit reviewed row."
+      },
+      {
+        "sectionId": "source:702",
+        "sentenceId": "source:54359",
+        "start": 228.94,
+        "end": 235.2,
+        "limitations": "Source duplicate substring source:54358 remains inside this sentence and shares its audio."
+      },
+      {
+        "sectionId": "source:1095",
+        "sentenceId": "source:85824",
+        "start": 383.38,
+        "end": 391.28,
+        "limitations": "Source sentence start 383.38 retained; only overlong end replaced."
+      },
+      {
+        "sectionId": "source:701",
+        "sentenceId": "source:54309",
+        "start": 261.42,
+        "end": 263.4,
+        "limitations": "Speaker label, when present, retained in authoritative text; source phrase compared without label. ASR only locates audio, never rewrites text."
+      },
+      {
+        "sectionId": "source:701",
+        "sentenceId": "source:54322",
+        "start": 263.54,
+        "end": 274.02,
+        "limitations": "Speaker label, when present, retained in authoritative text; source phrase compared without label. ASR only locates audio, never rewrites text."
+      },
+      {
+        "sectionId": "source:701",
+        "sentenceId": "source:54314",
+        "start": 291.34,
+        "end": 298.38,
+        "limitations": "Speaker label, when present, retained in authoritative text; source phrase compared without label. ASR only locates audio, never rewrites text."
+      },
+      {
+        "sectionId": "source:701",
+        "sentenceId": "source:54323",
+        "start": 299.12,
+        "end": 301.76,
+        "limitations": "Speaker label, when present, retained in authoritative text; source phrase compared without label. ASR only locates audio, never rewrites text."
+      },
+      {
+        "sectionId": "source:1017",
+        "sentenceId": "source:50993",
+        "start": 59.26,
+        "end": 66.14,
+        "limitations": "Speaker label, when present, retained in authoritative text; source phrase compared without label. ASR only locates audio, never rewrites text."
+      },
+      {
+        "sectionId": "source:881",
+        "sentenceId": "source:50989",
+        "start": 63.34,
+        "end": 72.7,
+        "limitations": "Speaker label, when present, retained in authoritative text; source phrase compared without label. ASR only locates audio, never rewrites text."
+      },
+      {
+        "sectionId": "source:1021",
+        "sentenceId": "source:20826",
+        "start": 106.82,
+        "end": 111.78,
+        "limitations": "Authoritative source text retained exactly, including existing encoding artifacts."
+      },
+      {
+        "sectionId": "source:794",
+        "sentenceId": "source:21653",
+        "start": 143.88,
+        "end": 150.52,
+        "limitations": "Authoritative source text retained exactly, including existing encoding artifacts."
+      },
+      {
+        "sectionId": "source:874",
+        "sentenceId": "source:21899",
+        "start": 170.56,
+        "end": 182.44,
+        "limitations": "Authoritative source text retained exactly, including existing encoding artifacts."
+      },
+      {
+        "sectionId": "source:993",
+        "sentenceId": "source:4809",
+        "start": 437.02,
+        "end": 437.26,
+        "limitations": "Authoritative source text retained exactly, including existing encoding artifacts."
+      },
+      {
+        "sectionId": "source:993",
+        "sentenceId": "source:4810",
+        "start": 437.7,
+        "end": 437.92,
+        "limitations": "Authoritative source text retained exactly, including existing encoding artifacts."
+      }
+    ],
+    "evidence": "Ignored local reviewed-times.json records diagnostics and their SHA-256; computational review does not replace human listening approval."
+  },
+  "deploymentStatus": {
+    "migration": "Applied and RLS verified by parent task",
+    "assetUpload": "All 248 private assets uploaded; parent verified media sizes and signed audio",
+    "catalogSeed": "Earlier final v2 seeded and verified; v4 reviewed catalog awaits parent final digest-skip reseed"
+  },
+  "adjacentTimingAudit": {
+    "thresholdSeconds": 1,
+    "pairsChecked": 9922,
+    "flaggedPairs": 1,
+    "startReversals": 1,
+    "overlapsAboveFiveSeconds": 1,
+    "knownDuplicatePairs": 1,
+    "issues": [
+      {
+        "sectionId": "source:702",
+        "previousId": "source:54358",
+        "nextId": "source:54359",
+        "overlapSeconds": 6.299,
+        "startReversal": true,
+        "knownDuplicate": true,
+        "previous": [
+          231.602,
+          235.239
+        ],
+        "next": [
+          228.94,
+          235.2
+        ]
+      }
+    ],
+    "status": "Remaining flagged pairs are reported for audio review, not guessed; known duplicate retains original text order."
+  },
+  "deploymentVerification": {
+    "reportedBy": "Parent release task",
+    "automatedTests": 602,
+    "productionBuild": "passed",
+    "liveRls": "passed per-account isolation and catalog policy checks",
+    "databaseCounts": {
+      "papers": 56,
+      "sections": 392,
+      "passages": 168,
+      "questions": 4339,
+      "assets": 248
+    },
+    "perBookSamples": 28,
+    "privateAssetSizesAndSignedAudio": "verified",
+    "finalV4Seed": "completed; database counts, all248asset digests/sizes, 28per-book content samples and signed audio verified"
+  }
+}

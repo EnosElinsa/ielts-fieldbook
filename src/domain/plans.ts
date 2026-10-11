@@ -326,7 +326,11 @@ export function ensureMockPlan(state, kind, details) {
 export function studyStreak(state, now) {
   const scheduled = new Set(((state.settings && state.settings.days) || []).map(Number));
   if (!scheduled.size) return 0;
-  const activity = new Set((state.sessions || []).map(item => dateKey(item.date)));
+  const activity = new Set([
+    ...(state.sessions || []).map(item => item.date),
+    ...(state.examAttempts || []).filter(item => item.status === 'completed').map(item => item.completedAt),
+    ...(state.intensiveSessions || []).filter(item => item.stage === 6).map(item => item.completedAt),
+  ].filter(value => value && Number.isFinite(Date.parse(value))).map(value => dateKey(value)));
   const cursor = now ? new Date(now) : new Date();
   cursor.setHours(0, 0, 0, 0);
   const todayDow = cursor.getDay() || 7;

@@ -52,6 +52,7 @@ import { vocabularyLists } from '../domain/vocabulary';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
 import { ensurePlans, inferredDeskMode } from '../lib/planTemplates';
+import { completeReceptivePlanIfMatched, receptivePlanPath } from '../lib/receptivePlans';
 import { sessionSkill } from '../lib/format';
 import { accountId } from '../storage/remote';
 import { differentDrafts, discardDraftRecovery, readDraftRecovery, writeDraftRecovery } from '../storage/recovery';
@@ -145,6 +146,7 @@ function useFieldbookValue() {
     (mutate?: (draft: any) => void, options?: { silent?: boolean }) => {
       const next = structuredClone(stateRef.current);
       if (mutate) mutate(next);
+      completeReceptivePlanIfMatched(next, lastSaved.current);
       stateRef.current = next;
       setState(next);
       return queueSave(next, options?.silent);
@@ -180,6 +182,7 @@ function useFieldbookValue() {
     (draft?: any) => {
       const next = draft || stateRef.current;
       next.schemaVersion = STATE_VERSION;
+      completeReceptivePlanIfMatched(next, lastSaved.current);
       stateRef.current = next;
       setState({ ...next });
       return queueSave(next);
@@ -402,7 +405,7 @@ function useFieldbookValue() {
     return () => window.removeEventListener('beforeunload', onUnload);
   }, [flushDraftPersist]);
 
-  const activeSkill = state.settings.activeSkill === 'speaking' ? 'speaking' : 'writing';
+  const activeSkill = ['writing','speaking','reading','listening'].includes(state.settings.activeSkill) ? state.settings.activeSkill : 'writing';
 
   const selectedQuestion =
     state.questions.find((q) => String(q.id) === String(selectedQuestionId)) ||
@@ -424,7 +427,7 @@ function useFieldbookValue() {
 
   const setSkill = useCallback(
     (skill: string, path?: string | false) => {
-      if (!['writing', 'speaking'].includes(skill)) return;
+      if (!['writing', 'speaking','reading','listening'].includes(skill)) return;
       persist((draft) => {
         draft.settings.activeSkill = skill;
       });
@@ -541,7 +544,7 @@ function useFieldbookValue() {
         toast('The speaking bank did not load. Refresh and try again.');
       }
       repairAssessments(draft);
-      ensurePlans(draft, draft.settings.activeSkill === 'speaking' ? 'speaking' : 'writing', null);
+      ensurePlans(draft, ['speaking', 'reading', 'listening'].includes(draft.settings.activeSkill) ? draft.settings.activeSkill : 'writing', null);
       if (!cancelled) {
         setSelectedQuestionId(String((draft.questions[0] || FALLBACK_QUESTIONS[0]).id));
         if (draft.speakingTopics[0]) setSelectedTopicId(String(draft.speakingTopics[0].id));
@@ -650,7 +653,18 @@ function useFieldbookValue() {
         persistNow();
       };
       if (plan.status === 'completed') {
-        navigate('/review');
+        const skill = String(plan.kind).startsWith('reading') ? 'reading' : String(plan.kind).startsWith('listening') ? 'listening' : null;
+        if (skill && plan.linkedSessionId) navigate(plan.kind === 'listening-intensive' ? receptivePlanPath(plan, skill) : `/${skill}/review/${plan.linkedSessionId}`);
+        else navigate(skill ? `/review?skill=${skill}` : '/review');
+        return;
+      }
+      if (/^(reading|listening)-/.test(String(plan.kind))) {
+        const skill = String(plan.kind).startsWith('reading') ? 'reading' : 'listening';
+        domainStartPlan(draft, planId);
+        draft.settings.activeSkill = skill;
+        persistNow(draft);
+        setActiveDeskMode(inferredDeskMode(plan));
+        navigate(receptivePlanPath(plan, skill));
         return;
       }
       domainStartPlan(draft, planId);

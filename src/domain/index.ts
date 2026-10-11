@@ -85,3 +85,6 @@ export {
   normalizeSections,
   emptySections,
 } from './desk';
+export type * from './exam/types';
+export { normalizeAnswer as normalizeExamAnswer, gradeQuestion, gradeAttempt, diffDictation } from './exam/scoring';
+export { createExamAttempt, normalizeExamStore, dueIntensive, examStats, intensiveStats } from './exam/store';

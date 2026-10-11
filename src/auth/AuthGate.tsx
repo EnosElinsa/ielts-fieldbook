@@ -4,6 +4,8 @@ import { authError, type Mode } from './errors';
 import { accountId, resetAccountStore } from '../storage/remote';
 import { discardDraftRecovery } from '../storage/recovery';
 import { clearVocabularyDraft } from '../storage/vocabularyDrafts';
+import { clearAccountExamRecovery } from '../storage/examRecovery';
+import { clearPendingAudioAccount } from '../storage/pendingAudio';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { LegalModal } from '../features/modals/LegalModal';
@@ -370,7 +372,9 @@ export async function signOut() {
   const owner=accountId();
   const { error } = await getSupabase().auth.signOut();
   if (error) throw error;
-  discardDraftRecovery(accountId());
+  discardDraftRecovery(owner);
   clearVocabularyDraft(owner);
+  clearAccountExamRecovery(owner);
+  await clearPendingAudioAccount(owner);
   resetAccountStore();
 }

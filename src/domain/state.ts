@@ -3,9 +3,12 @@
 import { normalizeStory, dedupeStories } from './stories';
 import { collectVocabularyProduction, migrateLegacyVocabulary } from './vocabulary';
 import { DEFAULT_VOCABULARY_PREFERENCES, normalizeVocabularyPreferences } from './vocabulary/preferences';
+import { normalizeExamStore } from './exam/store';
+import type { ExamAttempt, IntensiveSession } from './exam/types';
 import { wordCount, hashText, dateKey, makeId, nowIso, clone } from './utils';
 
-export const STATE_VERSION = 10;
+export const STATE_VERSION = 11;
+export const EXAM_COLLECTIONS = ['examAttempts', 'intensiveSessions'];
 export const VOCABULARY_COLLECTIONS = [
   'vocabulary', 'vocabularyStates', 'vocabularyEvidence', 'vocabularyReviews',
   'vocabularyActivities', 'wordbookProgress', 'wordbookEnrollments', 'vocabularyImportBatches',
@@ -149,6 +152,8 @@ export function emptyState() {
     schemaVersion: STATE_VERSION,
     questions: [],
     sessions: [],
+    examAttempts: [] as ExamAttempt[],
+    intensiveSessions: [] as IntensiveSession[],
     drafts: {},
     errors: [],
     assessments: [],
@@ -174,6 +179,7 @@ export function migrateState(raw) {
   const source = raw && typeof raw === 'object' ? raw : {};
   const state = Object.assign(emptyState(), source);
   Object.assign(state, migrateLegacyVocabulary(source));
+  Object.assign(state, normalizeExamStore(source));
   delete state.lexicon;
   state.schemaVersion = STATE_VERSION;
   state.questions = Array.isArray(source.questions) ? source.questions.map(q => Object.assign({}, q, { id: String(q.id) })) : [];
@@ -252,8 +258,8 @@ export function migrateState(raw) {
   state.settings = Object.assign({}, DEFAULT_SETTINGS, source.settings || {});
   state.settings.vocabulary = normalizeVocabularyPreferences(source.settings?.vocabulary);
   state.settings.days = Array.isArray(state.settings.days) && state.settings.days.length ? state.settings.days.map(Number) : clone(DEFAULT_SETTINGS.days);
-  if (!['writing', 'speaking'].includes(state.settings.activeSkill)) state.settings.activeSkill = 'writing';
-  if (!['writing', 'speaking', 'mixed'].includes(state.settings.skillMix)) state.settings.skillMix = 'mixed';
+  if (!['writing', 'speaking', 'reading', 'listening'].includes(state.settings.activeSkill)) state.settings.activeSkill = 'writing';
+  if (!['writing', 'speaking', 'reading', 'listening', 'mixed'].includes(state.settings.skillMix)) state.settings.skillMix = 'mixed';
   if (!['balanced', 'part1', 'part2'].includes(state.settings.speakingFocus)) state.settings.speakingFocus = 'balanced';
   return state;
 }

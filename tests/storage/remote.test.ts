@@ -49,10 +49,10 @@ beforeEach(() => {
   mocks.sessions = [];
 });
 
-test('in-place changes after hydration produce plan and draft upserts with actual v10 metadata', async () => {
+test('in-place changes after hydration produce plan and draft upserts with current metadata', async () => {
   const { hydrateState, saveState } = await import('../../src/storage/remote');
   const state = await hydrateState();
-  expect(state.schemaVersion).toBe(10);
+  expect(state.schemaVersion).toBe(11);
   state.plans[0].status = 'in_progress';
   state.plans[0].startedAt = '2026-10-10T00:00:00.000Z';
   state.drafts.q1.text = 'After';
@@ -64,6 +64,30 @@ test('in-place changes after hydration produce plan and draft upserts with actua
   state.plans[0].status = 'completed';
   expect(await saveState(state)).toBe(true);
   expect(mocks.upserts.find(call => call.table === 'plans').rows[0].payload.status).toBe('completed');
+});
+
+test('exam hydration and retries persist separate account rows without creating writing sessions', async () => {
+  const stamp = '2026-10-11T00:00:00.000Z';
+  mocks.rows.exam_attempts = [{ id: 'exam-1', payload: { id: 'exam-1', skill: 'reading', sourceId: 'paper', sectionIds: ['section'], mode: 'practice', status: 'active', responses: { q: 'before' }, evidence: {}, keywords: {}, errorReasons: {}, startedAt: stamp, updatedAt: stamp, hintsEnabled: true, elapsedSeconds: 0 } }];
+  mocks.rows.intensive_sessions = [{ id: 'intensive-1', payload: { id: 'intensive-1', sectionId: 'section', sentenceId: 'line', stage: 6, gist: '', transcriptInput: 'text', replayCount: 1, listened: true, revealed: false, dictationResult: 'correct', errorReasons: [], updatedAt: stamp, speed: 1, loop: false } }];
+  const { hydrateState, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  expect(state.sessions).toEqual([]);
+  expect(state.examAttempts[0].responses.q).toBe('before');
+  expect(state.intensiveSessions[0].stage).toBe(6);
+  state.examAttempts[0].responses.q = 'after';
+  state.intensiveSessions[0].replayCount = 2;
+  mocks.failTable = 'intensive_sessions';
+  expect(await saveState(state)).toBe(false);
+  mocks.upserts = [];
+  mocks.failTable = null;
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.upserts.find(call => call.table === 'exam_attempts').rows[0]).toMatchObject({ user_id: 'account-1', payload: { responses: { q: 'after' } } });
+  expect(mocks.upserts.find(call => call.table === 'intensive_sessions').rows[0].payload.replayCount).toBe(2);
+  expect(mocks.upserts.some(call => call.table === 'sessions')).toBe(false);
+  mocks.upserts = [];
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.upserts).toEqual([]);
 });
 
 test('failed save can retry the same payload and successful duplicate save does not rewrite rows', async () => {
@@ -111,7 +135,7 @@ test('a stale hydration result cannot replace a newer account snapshot', async (
   resetAccountStore();
   mocks.user = 'account-b';
   const current = await hydrateState();
-  expect(current.schemaVersion).toBe(10);
+  expect(current.schemaVersion).toBe(11);
   await actResolve(old, true);
   await expect(oldLoad).rejects.toThrow('superseded');
 });

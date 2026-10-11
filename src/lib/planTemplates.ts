@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { latestPracticeRecommendation, rewritePlanDescription, syncPendingPlan, dateKey, dueErrors, dueVocabulary, examPressure, assignStoryPlanTarget } from '../domain';
 import { sessionSkill, speakingKinds } from './format';
+import { receptivePlanTemplates, ensureReceptivePlans } from './receptivePlans';
 
 export const planTemplates = {
   balanced: [
@@ -59,6 +60,8 @@ export const speakingPlanTemplates = {
 export const mixedPlanTemplates = [
   { kind: '1', title: 'Task 1 · Read the chart', description: 'Check the figures, then write only the introduction and overview.', deskMode: 'overview' },
   { kind: 'speaking-p1', title: 'Part 1 · Short answers', description: 'About 20–30 seconds each.', deskMode: 'full' },
+  { kind: 'reading-practice', title: 'Reading · Find the evidence', description: 'Locate the answer, identify the paraphrase, and prove your choice.', deskMode: 'full' },
+  { kind: 'listening-practice', title: 'Listening · Predict and follow', description: 'Predict the answer form, follow the recording, then check your mistakes.', deskMode: 'full' },
   { kind: '2', title: 'Task 2 · Plan', description: 'Question, position, and two main points.', deskMode: 'outline' },
   { kind: 'speaking-p2', title: 'Part 2 · Long turn', description: 'One minute of notes, then two minutes of speaking.', deskMode: 'full' },
   { kind: 'review', title: 'Review · Mistakes', description: 'Due vocabulary, or attempts still waiting for a score.', deskMode: 'full' },
@@ -161,6 +164,8 @@ const planDescriptionFixes = {
 };
 
 function skillFromKind(kind, mix) {
+  if (String(kind).startsWith('reading')) return 'reading';
+  if (String(kind).startsWith('listening')) return 'listening';
   if (kind === '1' || kind === '2' || kind === 'writing-mock') return 'writing';
   if (String(kind).startsWith('speaking') || kind === 'stories') return 'speaking';
   return mix === 'speaking' ? 'speaking' : 'writing';
@@ -339,6 +344,7 @@ function refreshPlanCopy(plan) {
 
 function templatesForSettings(settings) {
   const mix = settings.skillMix || 'mixed';
+  if (mix === 'reading' || mix === 'listening') return receptivePlanTemplates[mix];
   if (mix === 'speaking') return speakingPlanTemplates[settings.speakingFocus] || speakingPlanTemplates.balanced;
   if (mix === 'writing') return planTemplates[settings.focus] || planTemplates.balanced;
   return mixedPlanTemplates;
@@ -374,6 +380,9 @@ function rewriteTemplate(state, latest) {
 
 export function planMatchesSkill(plan, activeSkill) {
   if (!plan) return false;
+  if (String(plan.kind).startsWith('reading')) return activeSkill === 'reading';
+  if (String(plan.kind).startsWith('listening')) return activeSkill === 'listening';
+  if (activeSkill === 'reading' || activeSkill === 'listening') return false;
   if (plan.kind === 'review' || plan.kind === 'vocabulary') return true;
   if (plan.kind === 'writing-mock') return activeSkill === 'writing';
   if (plan.kind === 'speaking-mock') return activeSkill === 'speaking';
@@ -382,6 +391,10 @@ export function planMatchesSkill(plan, activeSkill) {
 }
 
 export function ensurePlans(state, activeSkill, persistIfChanged) {
+  if (activeSkill === 'reading' || activeSkill === 'listening') {
+    if (state.settings.skillMix === 'mixed') ensurePlans(state, 'writing', persistIfChanged);
+    return ensureReceptivePlans(state, activeSkill, persistIfChanged);
+  }
   const wanted = Math.max(1, state.settings.days.length);
   const templates = templatesForSettings(state.settings);
   const mix = state.settings.skillMix;
@@ -419,7 +432,7 @@ export function ensurePlans(state, activeSkill, persistIfChanged) {
           sequence,
           templates,
           signals: {
-            recommendation: sequence === 0 ? latestPracticeRecommendation(state, templateSkill) : null,
+            recommendation: sequence === 0 && !['reading','listening'].includes(templateSkill) ? latestPracticeRecommendation(state, templateSkill) : null,
             rewrite: rewriteTemplate(state, latest),
             dueErr,
             dueLex,
@@ -458,7 +471,7 @@ export function ensurePlans(state, activeSkill, persistIfChanged) {
       } else if (refreshPlanCopy(plan)) copyChanged = true;
       if (plan.status === 'pending' && key === dateKey(new Date())) {
         const pendingSkill = skillFromKind(plan.kind, mix);
-        if (syncPendingPlan(plan, latestPracticeRecommendation(state, pendingSkill))) copyChanged = true;
+        if (!['reading','listening'].includes(pendingSkill) && syncPendingPlan(plan, latestPracticeRecommendation(state, pendingSkill))) copyChanged = true;
       }
       generated.push(plan);
       sequence += 1;

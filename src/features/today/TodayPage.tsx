@@ -13,6 +13,7 @@ import { useFieldbook } from '../../context/FieldbookContext';
 import { dayLabel, displayName, formatDate, planPillClass, sessionSkill, typeName } from '../../lib/format';
 import { Empty } from '../../components/ui';
 import { ArrowRight, FileCheck2 } from 'lucide-react';
+import { ExamTodayPage } from '../exam/ExamTodayPage';
 
 function planLabel(title: string) {
   const parts = String(title || '').split('·');
@@ -21,6 +22,12 @@ function planLabel(title: string) {
 }
 
 export function TodayPage() {
+  const fb = useFieldbook();
+  if (fb.activeSkill === 'reading' || fb.activeSkill === 'listening') return <ExamTodayPage skill={fb.activeSkill} />;
+  return <WritingSpeakingTodayPage />;
+}
+
+function WritingSpeakingTodayPage() {
   const fb = useFieldbook();
   const navigate = useNavigate();
   const speaking = fb.activeSkill === 'speaking';
@@ -64,7 +71,7 @@ export function TodayPage() {
       ? 'Speaking only'
       : fb.state.settings.skillMix === 'writing'
         ? 'Writing only'
-        : 'Writing and speaking';
+        : 'Writing, speaking, reading and listening';
   const dayWord = fb.state.settings.days.length === 1 ? 'day' : 'days';
   const statusText = { pending: 'Not started', in_progress: 'In progress', completed: 'Done' };
   const nextPlan = plans.find((plan) => plan.status === 'in_progress') || plans.find((plan) => plan.status === 'pending');
