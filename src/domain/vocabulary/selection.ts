@@ -45,7 +45,9 @@ export function buildUnitPracticeQueue(state: Partial<VocabularyStore>, bookId: 
     if (entry.tags.includes('archived')) { archivedWords++; continue; }
     const reviewed = resolveVocabularyLearningContext(entry, { bookId, unitId }).entry;
     const merged: VocabularyEntry = { ...reviewed, sources: [...(entry.sources || [])] };
-    if (!merged.sources.some(source => source.bookId === bookId && source.unitId === unitId)) merged.sources.push({ type: 'wordbook', id: `${bookId}:${unitId}:${entry.id}`, bookId, unitId });
+    // Membership belongs to the word, not a previously selected learning sense.
+    // Keep old evidence/source records intact and add the canonical unscoped link.
+    if (!merged.sources.some(source => source.bookId === bookId && source.unitId === unitId && !source.senseId)) merged.sources.push({ type: 'wordbook', id: `${bookId}:${unitId}:${entry.id}:membership`, bookId, unitId });
     entries.push(merged);
   }
   const virtual = { ...state, vocabulary: entries } as Partial<VocabularyStore>;

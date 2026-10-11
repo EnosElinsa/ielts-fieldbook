@@ -1,4 +1,5 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { createPortal } from 'react-dom';
 import { House, Library, PencilLine, RotateCcw, ChartNoAxesCombined, NotebookTabs, CircleUserRound, ChevronDown, Mic2, Settings2 } from 'lucide-react';
 
 export function FilterMenu({
@@ -14,17 +15,66 @@ export function FilterMenu({
 }) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
+  const pop = useRef<HTMLDivElement>(null);
+  const [placement, setPlacement] = useState<{host: HTMLElement; style: CSSProperties} | null>(null);
   const listId = useId();
   const current = options.find((option) => option.value === value) || options[0];
 
+  useLayoutEffect(() => {
+    if (!open || !root.current) return;
+    const host = root.current.closest<HTMLElement>('[role="dialog"]') || document.body;
+    const place = () => {
+      if (!root.current) return;
+      const rect = root.current.getBoundingClientRect();
+      const viewport = window.visualViewport;
+      const leftEdge = (viewport?.offsetLeft || 0) + 12;
+      const topEdge = (viewport?.offsetTop || 0) + 12;
+      const rightEdge = leftEdge + (viewport?.width || window.innerWidth) - 24;
+      const navigation = host === document.body ? document.querySelector<HTMLElement>('.mobile-navigation')?.getBoundingClientRect() : undefined;
+      const viewportBottom = topEdge + (viewport?.height || window.innerHeight) - 24;
+      const bottomEdge = navigation && navigation.height > 0 ? Math.min(viewportBottom, navigation.top - 12) : viewportBottom;
+      const dialog = host === document.body ? null : host.getBoundingClientRect();
+      const minX = Math.max(leftEdge, dialog ? dialog.left + 12 : leftEdge);
+      const maxX = Math.min(rightEdge, dialog ? dialog.right - 12 : rightEdge);
+      const minY = Math.max(topEdge, dialog ? dialog.top + 12 : topEdge);
+      const maxY = Math.min(bottomEdge, dialog ? dialog.bottom - 12 : bottomEdge);
+      const width = Math.min(Math.max(rect.width, 232), maxX - minX);
+      const below = maxY - rect.bottom - 6;
+      const above = rect.top - minY - 6;
+      const upward = below < Math.min(options.length * 42 + 12, 220) && above > below;
+      const maxHeight = Math.max(40, Math.min(340, upward ? above : below));
+      const actualHeight = Math.min(pop.current?.scrollHeight || options.length * 42 + 12, maxHeight);
+      const x = Math.max(minX, Math.min(rect.left, maxX - width));
+      const y = upward ? rect.top - 6 - actualHeight : rect.bottom + 6;
+      setPlacement({host, style: {position: dialog ? 'absolute' : 'fixed', left: x - (dialog?.left || 0) + (dialog ? host.scrollLeft : 0), top: y - (dialog?.top || 0) + (dialog ? host.scrollTop : 0), right: 'auto', width, minWidth: 0, maxHeight}});
+    };
+    place();
+    window.addEventListener('resize', place);
+    window.addEventListener('scroll', place, true);
+    window.visualViewport?.addEventListener('resize', place);
+    window.visualViewport?.addEventListener('scroll', place);
+    return () => {
+      window.removeEventListener('resize', place);
+      window.removeEventListener('scroll', place, true);
+      window.visualViewport?.removeEventListener('resize', place);
+      window.visualViewport?.removeEventListener('scroll', place);
+    };
+  }, [open, options.length]);
+
+  useLayoutEffect(() => {
+    if (open && placement) pop.current?.querySelector<HTMLButtonElement>('[aria-selected="true"]')?.focus({preventScroll:true});
+  }, [open, Boolean(placement)]);
+
   useEffect(() => {
     if (!open) return undefined;
-    const onPointer = (event: MouseEvent) => {
-      if (!root.current?.contains(event.target as Node)) setOpen(false);
+    const onPointer = (event: PointerEvent) => {
+      if (!root.current?.contains(event.target as Node) && !pop.current?.contains(event.target as Node)) setOpen(false);
     };
     const onKey = (event: KeyboardEvent) => {
-      const buttons = root.current?.querySelectorAll<HTMLButtonElement>('[role="option"]');
-      if (event.key === 'Escape') { setOpen(false); root.current?.querySelector('button')?.focus(); }
+      if (!root.current?.contains(event.target as Node) && !pop.current?.contains(event.target as Node)) return;
+      const buttons = pop.current?.querySelectorAll<HTMLButtonElement>('[role="option"]');
+      if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); setOpen(false); setPlacement(null); root.current?.querySelector('button')?.focus(); }
+      if (event.key === 'Tab') { root.current?.querySelector('button')?.focus({preventScroll:true}); setOpen(false); setPlacement(null); }
       if ((event.key === 'ArrowDown' || event.key === 'ArrowUp') && buttons?.length) {
         event.preventDefault();
         const index = Array.from(buttons).indexOf(document.activeElement as HTMLButtonElement);
@@ -35,11 +85,11 @@ export function FilterMenu({
     const onOther = (event: Event) => {
       if ((event as CustomEvent).detail !== listId) setOpen(false);
     };
-    document.addEventListener('mousedown', onPointer);
+    document.addEventListener('pointerdown', onPointer);
     document.addEventListener('keydown', onKey);
     window.addEventListener('fieldbook-popover', onOther);
     return () => {
-      document.removeEventListener('mousedown', onPointer);
+      document.removeEventListener('pointerdown', onPointer);
       document.removeEventListener('keydown', onKey);
       window.removeEventListener('fieldbook-popover', onOther);
     };
@@ -61,13 +111,13 @@ export function FilterMenu({
             return next;
           });
         }}
-        onKeyDown={(event) => { if (event.key === 'ArrowDown' && !open) { event.preventDefault(); setOpen(true); requestAnimationFrame(() => root.current?.querySelector<HTMLButtonElement>('[role="option"]')?.focus()); } }}
+        onKeyDown={(event) => { if ((event.key === 'ArrowDown' || event.key === 'ArrowUp') && !open) { event.preventDefault(); window.dispatchEvent(new CustomEvent('fieldbook-popover', {detail:listId})); setOpen(true); } }}
       >
         <span>{current?.label}</span>
         <ChevronDown size={14} aria-hidden="true" />
       </button>
-      {open ? (
-        <div className="filter-pop" id={listId} role="listbox" aria-label={label}>
+      {open && placement ? createPortal(
+        <div ref={pop} className="filter-pop filter-pop-positioned" style={placement.style} id={listId} role="listbox" aria-label={label}>
           {options.map((option) => (
             <button
               key={option.value}
@@ -78,12 +128,14 @@ export function FilterMenu({
               onClick={() => {
                 onChange(option.value);
                 setOpen(false);
+                setPlacement(null);
+                root.current?.querySelector('button')?.focus();
               }}
             >
               {option.label}
             </button>
           ))}
-        </div>
+        </div>, placement.host
       ) : null}
     </div>
   );

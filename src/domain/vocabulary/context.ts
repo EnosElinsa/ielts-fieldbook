@@ -1,6 +1,6 @@
 import supplements from './contextSenseOverlay.json';
-import { hasVocabularySenseEdits, reviewedEntry, VOCABULARY_CONTENT_VERSION } from './content';
-import { VOCABULARY_CATALOG } from './catalog';
+import { catalogVocabularyEntry, hasVocabularySenseEdits, reviewedEntry, VOCABULARY_CONTENT_VERSION } from './content';
+import { supplementVocabularySense } from './readiness';
 import type { VocabularyEntry, VocabularySense } from './types';
 
 export const VOCABULARY_CONTEXT_VERSION = supplements.version;
@@ -33,10 +33,11 @@ export function resolveVocabularyLearningContext(entry: VocabularyEntry, request
   // An explicit dictionary sense may not be in the learner's small catalog snapshot yet.
   const explicitSupplement = request.senseId ? [...supplements.bindings, ...supplements.defaults].find(item => item.entryId === entry.id && item.sense.id === request.senseId) : undefined;
   const existing = selectedBinding && entry.senses.find(item => item.id === selectedBinding.sense.id);
-  const catalogSense = selectedBinding && (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).find(item => item.id === entry.id)?.senses.find(item => item.id === selectedBinding.sense.id);
+  const catalogSense = selectedBinding && catalogVocabularyEntry(entry.id)?.senses.find(item => item.id === selectedBinding.sense.id);
   const userOverride = existing && hasVocabularySenseEdits(existing, [selectedBinding?.originalSense, catalogSense, selectedBinding?.sense]);
   const selectedSense = (userOverride ? existing : selectedBinding?.sense) || (request.senseId ? fallback.senses.find(item => item.id === request.senseId) || explicitSupplement?.sense : fallback.senses[0]);
-  const sense = selectedSense ? structuredClone(selectedSense) : undefined;
+  // The more specific reviewed group binding takes precedence over a common-content patch.
+  const sense = selectedSense ? structuredClone(selectedBinding || explicitSupplement ? selectedSense : supplementVocabularySense(entry.id,selectedSense,[catalogVocabularyEntry(entry.id)?.senses.find(s=>s.id===selectedSense.id)].filter((s):s is VocabularySense=>Boolean(s)),hasVocabularySenseEdits)) : undefined;
   const status: VocabularyContextStatus = selectedBinding && !userOverride && (membershipBinding || !request.bookId) ? selectedBinding.status : unresolved.has(membershipKey) ? 'unresolved' : 'unreviewed';
   const resolved = sense ? { ...fallback, senses: [sense, ...fallback.senses.filter(item => item.id !== sense.id)] } : fallback;
   return {

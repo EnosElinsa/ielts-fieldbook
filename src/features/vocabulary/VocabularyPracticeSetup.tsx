@@ -11,6 +11,7 @@ import type { VocabularyPracticeController } from "./useVocabularyPracticeContro
 export function VocabularyPracticeSetup({ controller }: { controller: VocabularyPracticeController }) {
   const { study, explicitEntry, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit, dueOnly, setDue, wrongOnly, setWrong, catalogStatus, queue, unitQueue, books, selectedUnit, selectedBook, chapter, catalogReady, studyReady, resume, recent, changeFilter, changeMode, begin, recover, discardResume, showRecentSession, retryCatalog } = controller;
   const [pickerOpen, setPickerOpen] = useState(false);
+  const specialist = mode === 'synonym' || mode === 'distinction' || mode === 'cloze';
   return (
     <>
       <div className="practice-context-card">
@@ -23,7 +24,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
       </div>
       <div className="practice-setup-controls">
         <FilterMenu
-          label="Review mode"
+          label={study || explicitEntry ? 'Practice mode' : 'Review mode'}
           value={mode}
           options={MODES}
           onChange={changeMode}
@@ -213,15 +214,15 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
               ? `${study ? queue.length : Math.min(preferences.sessionSize, queue.length)} words · ${preferences.layout === "list" ? "List" : "Focus"} · ${preferences.feedback === "end" ? "Results after submission" : "Feedback during practice"}`
               : "No words match these filters."}
           </p>
-          {study && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? <p role="status">Specialist practice: {controller.unitQueue.eligibleWords} of {controller.unitQueue.totalWords} words have eligible tasks. This subset does not complete the whole unit. {controller.unitQueue.unavailableWords} words need content review.</p> : null}
+          {study && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? <p role="status">{specialist ? <>{controller.unitQueue.eligibleWords} of {controller.unitQueue.totalWords} words have a {modeLabel(mode).toLowerCase()} exercise. This optional practice covers these words only. Choose Dictation to study the complete group.</> : <>Some words are unavailable for this mode. Reload the wordbook or choose Dictation to study the complete group.</>}</p> : null}
           <button
             className="btn primary practice-start"
             type="button"
-            disabled={!queue.length || Boolean(resume) || !studyReady}
+            disabled={!queue.length || Boolean(resume) || !studyReady || Boolean(study && !specialist && unitQueue?.unavailableWords)}
             onClick={() => begin()}
           >
             <Play size={17} />
-            {study && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? 'Start specialist subset' : 'Start session'}
+            {study && specialist && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? 'Start specialist subset' : 'Start session'}
           </button>
           {!queue.length ? (
             <Link

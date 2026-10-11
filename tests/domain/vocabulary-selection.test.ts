@@ -28,6 +28,21 @@ describe('reviewed priority senses in whole groups', () => {
 });
 
 describe('whole source unit selection', () => {
+  test('old sense-scoped source records cannot exclude a word after its group meaning changes', () => {
+    const state = fresh();
+    const members = released.memberships.filter((member: any) => member.bookId === 'guixue:10174' && member.unitId === '21840');
+    state.vocabulary = members.map((member: any) => {
+      const entry = structuredClone(released.entries.find((entry: any) => entry.id === member.entryId));
+      entry.sources = [{type: 'wordbook', id: `old:${entry.id}`, bookId: member.bookId, unitId: member.unitId, senseId: entry.senses[0].id}];
+      return entry;
+    });
+    const before = structuredClone(state);
+    const queue = buildUnitPracticeQueue(state, 'guixue:10174', '21840', 'dictation');
+    expect(queue.eligibleWords).toBe(55);
+    expect(queue.unavailableWords).toBe(0);
+    expect(queue.cards.find(card => card.entry.term === 'core')?.senseId).toBe('editorial:core:fruit-centre');
+    expect(state).toEqual(before);
+  });
   test.each([
     ['guixue:10174', '21795', 55, 'atmosphere'],
     ['guixue:11320', '35028', 235, 'abbreviation'],

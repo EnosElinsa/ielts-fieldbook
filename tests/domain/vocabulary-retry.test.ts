@@ -59,6 +59,16 @@ test('legacy dictation remaps even a stale explicit sense filter and missing lea
   expect(retry.cards[0].id).toBe('ve-7c70dbbe:editorial:core:fruit-centre:dictation');
 });
 
+test('legacy dictation retry retains words with old sense-scoped membership sources',()=>{
+  const {raw,record} = fixture(); delete record.cardSnapshots;
+  raw.sources=[{type:'wordbook',id:'legacy',bookId:'guixue:10174',unitId:'21840',senseId:raw.senses[0].id}];
+  const before=structuredClone(raw);
+  const retry=resolveVocabularyRetry({vocabulary:[raw]},record);
+  expect(retry.unavailable).toEqual([]);
+  expect(retry.cards[0].senseId).toBe('editorial:core:fruit-centre');
+  expect(raw).toEqual(before);
+});
+
 test('legacy non-dictation never switches to a current group sense or rewritten same-ID question',()=>{
   const {raw,record} = fixture(); delete record.cardSnapshots;
   record.mode='definition';

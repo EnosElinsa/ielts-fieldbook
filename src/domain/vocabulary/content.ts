@@ -3,7 +3,8 @@ import { VOCABULARY_CATALOG } from './catalog';
 import taskSenseBindings from './taskSenseBindings.json';
 import contextSenses from './contextSenseOverlay.json';
 import type { VocabularyEntry, VocabularySense } from './types';
-export const VOCABULARY_CONTENT_VERSION = 'reviewed-2026-10-10.1';
+import { applyVocabularyReadiness, VOCABULARY_READINESS_VERSION } from './readiness';
+export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-10.1/${VOCABULARY_READINESS_VERSION}`;
 export type VocabularyLearningTask = { prompt: string; acceptedAnswers: string[]; explanation: string; options?: string[] };
 // These substitutions were reviewed in these specific contexts, never pooled across senses.
 const reviewed: Record<string, { definition: string; example: string; answers: string[]; explanation: string; forms?: string[] }> = {
@@ -120,7 +121,7 @@ export function hasVocabularySenseEdits(sense: VocabularySense, baselines: (Voca
  const known = baselines.filter((item): item is VocabularySense => Boolean(item));
  return sense.source === 'Personal note' || Boolean(known.length && editableSenseFields.some(field => !known.some(item => JSON.stringify(item[field] ?? (Array.isArray(sense[field]) ? [] : '')) === JSON.stringify(sense[field] ?? (Array.isArray(item[field]) ? [] : '')))));
 }
-export function reviewedEntry(entry: VocabularyEntry): VocabularyEntry {
+function existingReviewedEntry(entry: VocabularyEntry): VocabularyEntry {
  if (!entry.id.startsWith('vocab:') && !entry.id.startsWith('guixue:') && !entry.senses.some(sense => sense.source?.includes('Kaikki') || sense.source === 'Fieldbook editorial')) return entry;
  const item = reviewed[entry.term.toLowerCase()];
  const replacement = (learningSenses as Record<string, VocabularySense>)[entry.term.toLowerCase()];
@@ -131,6 +132,18 @@ export function reviewedEntry(entry: VocabularyEntry): VocabularyEntry {
  if (!item) return entry;
  // Supplement tasks without mutating learner notes or stable sense identifiers.
  return {...entry, senses:entry.senses.map((sense,index)=> index !== 0 ? sense : {...sense, ...(entry.term === 'order' || entry.term === 'treat' || entry.term === 'recipe' ? {synonyms:[]} : {})})};
+}
+const catalogIndexes=new WeakMap<object,Map<string,VocabularyEntry>>();
+export function catalogVocabularyEntry(id:string):VocabularyEntry | undefined {
+ let index=catalogIndexes.get(VOCABULARY_CATALOG.entries);
+ if (!index) { index=new Map((VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).map(entry=>[entry.id,entry]));catalogIndexes.set(VOCABULARY_CATALOG.entries,index); }
+ return index.get(id);
+}
+export function reviewedEntry(entry:VocabularyEntry):VocabularyEntry {
+ const existing=existingReviewedEntry(entry);
+ const original=catalogVocabularyEntry(entry.id);
+ const canonical=(learningSenses as Record<string,VocabularySense>)[entry.term.toLowerCase()];
+ return applyVocabularyReadiness(existing,[...(original?.senses || []),...(canonical ? [canonical]:[])],hasVocabularySenseEdits);
 }
 const confusion: Record<string, VocabularyLearningTask> = {
 'affect':{prompt:'Noise can _____ concentration.',acceptedAnswers:['affect'],options:['affect','effect'],explanation:'Affect is the verb influence. Effect is usually a noun meaning result.'},
@@ -154,7 +167,7 @@ const confusion: Record<string, VocabularyLearningTask> = {
 };
 export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mode: string): VocabularyLearningTask | undefined {
  const eligible = entry.id.startsWith('vocab:') || entry.id.startsWith('guixue:') || entry.senses.some(sense => sense.source?.includes('Kaikki') || sense.source === 'Fieldbook editorial');
- const catalogEntry = VOCABULARY_CATALOG.entries.find(item => item.id === entry.id) as unknown as VocabularyEntry | undefined;
+ const catalogEntry = catalogVocabularyEntry(entry.id);
  const dictionarySense = (learningSenses as Record<string, VocabularySense>)[entry.term.toLowerCase()];
  const originalSense = catalogEntry?.senses.find(item => item.id === sense.id) || (dictionarySense?.id === sense.id ? dictionarySense : undefined);
  const manifestSenses = [...contextSenses.bindings, ...contextSenses.defaults].filter(item => item.entryId === entry.id && item.sense.id === sense.id).flatMap(item => [item.sense, item.originalSense]) as unknown as (VocabularySense | null)[];
@@ -163,7 +176,7 @@ export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mod
  const item = eligible && !customContent ? reviewed[entry.term.toLowerCase()] : undefined;
  // Reordering a group-specific sense must never retarget a term's reviewed task.
  const canonical = (learningSenses as Record<string, VocabularySense>)[entry.term.toLowerCase()];
- const catalogPrimary = VOCABULARY_CATALOG.entries.find(item => item.id === entry.id)?.senses[0]?.id;
+ const catalogPrimary = catalogEntry?.senses[0]?.id;
  const boundTaskSense = catalogPrimary ? (taskSenseBindings.senseIds as Record<string, string>)[entry.term.toLowerCase()] : undefined;
  const primary = sense.id === (boundTaskSense || canonical?.id || catalogPrimary || entry.senses[0]?.id);
  if (mode === 'synonym') {

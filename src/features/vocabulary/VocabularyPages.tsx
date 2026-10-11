@@ -466,8 +466,8 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
                       Wrong word
                     </Link>
                   ) : null}
-                  {entry.enrichmentPending ? (
-                    <span className="vocabulary-muted">Enrichment pending</span>
+                  {!resolveVocabularyLearningContext(entry).sense?.definition ? (
+                    <span className="vocabulary-muted">Definition unavailable</span>
                   ) : null}
                 </div>
                 <button

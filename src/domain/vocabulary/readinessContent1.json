@@ -1,0 +1,3235 @@
+[
+  {
+    "entryId": "ve-159459a8",
+    "senseId": "sense-c81f8e92",
+    "term": "shade-tolerant",
+    "pos": "adjective",
+    "definition": "Able to grow well with little direct sunlight.",
+    "example": "Ferns are shade-tolerant plants, so we put them under the trees."
+  },
+  {
+    "entryId": "ve-a25502c8",
+    "senseId": "sense-ecf55bf2",
+    "term": "prefer to",
+    "pos": "verb",
+    "definition": "To choose or like one action more than another.",
+    "example": "I prefer to walk to campus when the weather is dry."
+  },
+  {
+    "entryId": "ve-3a227ae3",
+    "senseId": "sense-7e71d779",
+    "term": "comply with",
+    "pos": "verb",
+    "definition": "To act according to a rule, request, or agreement.",
+    "example": "All visitors must comply with the laboratory's safety rules."
+  },
+  {
+    "entryId": "ve-9c96a698",
+    "senseId": "sense-2f6b79a2",
+    "term": "refer to",
+    "pos": "verb",
+    "definition": "To mention someone or something, or direct attention to them.",
+    "example": "The lecturer referred to a recent study on sleep."
+  },
+  {
+    "entryId": "ve-f9c46aab",
+    "senseId": "sense-3251c031",
+    "term": "non-active",
+    "pos": "adjective",
+    "definition": "Not currently working, operating, or participating.",
+    "example": "The non-active accounts were removed from the mailing list.",
+    "usage": "Inactive is usually the more natural adjective."
+  },
+  {
+    "entryId": "ve-de2fc90c",
+    "senseId": "sense-a428eab6",
+    "term": "a great variety of",
+    "pos": "expression",
+    "definition": "Many different kinds of something.",
+    "example": "The market sells a great variety of fresh vegetables."
+  },
+  {
+    "entryId": "ve-ee4791db",
+    "senseId": "sense-b739cd01",
+    "term": "a pair of glasses",
+    "pos": "noun",
+    "definition": "One set of lenses in a frame worn to improve vision or protect the eyes.",
+    "example": "She bought a pair of glasses for reading small print."
+  },
+  {
+    "entryId": "ve-62e9ca35",
+    "senseId": "sense-c02310ef",
+    "term": "a serious person",
+    "pos": "noun",
+    "definition": "Someone who thinks and behaves thoughtfully, with little joking.",
+    "example": "Our new supervisor is a serious person who checks every detail."
+  },
+  {
+    "entryId": "ve-bfc61738",
+    "senseId": "sense-b888fe02",
+    "term": "academic problems",
+    "pos": "noun",
+    "definition": "Difficulties with studying, coursework, or educational performance.",
+    "example": "The tutor helped me resolve my academic problems before the exams."
+  },
+  {
+    "entryId": "ve-24c22b0d",
+    "senseId": "sense-bd078c97",
+    "term": "accommodation expense",
+    "pos": "noun",
+    "definition": "Money spent on a place to stay.",
+    "example": "My largest accommodation expense was the deposit for the flat.",
+    "usage": "Accommodation costs or accommodation expenses are more usual for the general category."
+  },
+  {
+    "entryId": "ve-7c0ad770",
+    "senseId": "sense-fd65c54a",
+    "term": "added panic",
+    "pos": "noun",
+    "definition": "Extra sudden fear caused by an additional problem.",
+    "example": "The missing passport caused added panic on the morning of our flight."
+  },
+  {
+    "entryId": "ve-c4c8c3b7",
+    "senseId": "sense-5de13aad",
+    "term": "adult students",
+    "pos": "noun",
+    "definition": "People who study after reaching adulthood.",
+    "example": "The evening classes are designed for adult students with full-time jobs."
+  },
+  {
+    "entryId": "ve-75d1b7a5",
+    "senseId": "sense-3008ac7f",
+    "term": "agrarian reform",
+    "pos": "noun",
+    "definition": "Changes to the ownership or use of farmland, often intended to benefit farmers.",
+    "example": "The government proposed agrarian reform to give small farmers access to land."
+  },
+  {
+    "entryId": "ve-8f220b83",
+    "senseId": "sense-73637bd9",
+    "term": "an educational film",
+    "pos": "noun",
+    "definition": "A film made to teach viewers about a subject.",
+    "example": "The teacher showed an educational film about the water cycle."
+  },
+  {
+    "entryId": "ve-5e64e568",
+    "senseId": "sense-2b019252",
+    "term": "annual membership fee",
+    "pos": "noun",
+    "definition": "A payment made once a year to belong to an organization.",
+    "example": "The annual membership fee includes access to the swimming pool."
+  },
+  {
+    "entryId": "ve-2dcff93a",
+    "senseId": "sense-e7cf2040",
+    "term": "antibiotics and acid",
+    "pos": "noun",
+    "definition": "Medicines used against bacterial infections together with an acidic substance.",
+    "example": "The laboratory stores antibiotics and acid in separate labelled containers.",
+    "usage": "This is a combination of two nouns, not a standard medical expression; the particular acid requires context."
+  },
+  {
+    "entryId": "ve-7be7339e",
+    "senseId": "sense-f8cda764",
+    "term": "arm badge",
+    "pos": "noun",
+    "definition": "An identifying symbol worn on the upper arm or sleeve.",
+    "example": "Each volunteer wore an arm badge so visitors could find help.",
+    "usage": "Sleeve badge is common for a badge sewn onto clothing; armband describes a band around the arm."
+  },
+  {
+    "entryId": "ve-1b9a99e5",
+    "senseId": "sense-8eedd6bf",
+    "term": "articles from journal",
+    "pos": "noun",
+    "definition": "Written pieces published in a scholarly or specialist periodical.",
+    "example": "We discussed two articles from a journal on public health.",
+    "usage": "Use articles from a journal or journal articles."
+  },
+  {
+    "entryId": "ve-19a5997f",
+    "senseId": "sense-4e58c965",
+    "term": "assessment methods",
+    "pos": "noun",
+    "definition": "Ways of measuring knowledge, ability, quality, or progress.",
+    "example": "The course uses several assessment methods, including presentations and written tests."
+  },
+  {
+    "entryId": "ve-8189162c",
+    "senseId": "sense-b2abdb96",
+    "term": "assume the responsibility",
+    "pos": "verb",
+    "definition": "To accept the duty to deal with something.",
+    "example": "She agreed to assume the responsibility for organizing the field trip.",
+    "usage": "Assume responsibility for is the usual general pattern."
+  },
+  {
+    "entryId": "ve-27dce62d",
+    "senseId": "sense-2379abf7",
+    "term": "atmospheric warming",
+    "pos": "noun",
+    "definition": "An increase in the temperature of the air surrounding the Earth.",
+    "example": "The study examines how atmospheric warming affects mountain snow."
+  },
+  {
+    "entryId": "ve-64dd8cf1",
+    "senseId": "sense-8f2b2b",
+    "term": "bad management",
+    "pos": "noun",
+    "definition": "Ineffective or harmful organization and supervision.",
+    "example": "Bad management left the shop short of staff on its busiest day."
+  },
+  {
+    "entryId": "ve-a850c622",
+    "senseId": "sense-b2698a58",
+    "term": "barbecue set",
+    "pos": "noun",
+    "definition": "A collection of tools or equipment for cooking food over an outdoor fire or grill.",
+    "example": "The barbecue set includes tongs, a fork, and a metal spatula."
+  },
+  {
+    "entryId": "ve-6b918462",
+    "senseId": "sense-ddc21098",
+    "term": "basic course",
+    "pos": "noun",
+    "definition": "A class that teaches the first or simplest parts of a subject.",
+    "example": "I took a basic course in photography before buying a professional camera."
+  },
+  {
+    "entryId": "ve-f711877e",
+    "senseId": "sense-d9427704",
+    "term": "be out of temper",
+    "pos": "verb",
+    "definition": "To be angry or irritable.",
+    "example": "He was out of temper after waiting an hour for the bus.",
+    "usage": "This expression is dated; be in a bad mood is more common in everyday speech."
+  },
+  {
+    "entryId": "ve-de0312ef",
+    "senseId": "sense-9e6570f5",
+    "term": "black raincoat",
+    "pos": "noun",
+    "definition": "A black waterproof coat worn in rainy weather.",
+    "example": "The woman in the black raincoat left her umbrella at reception."
+  },
+  {
+    "entryId": "ve-4305d8d9",
+    "senseId": "sense-a3c0f3c3",
+    "term": "bloom of flowers",
+    "pos": "noun",
+    "definition": "The opening or flowering of blossoms.",
+    "example": "The spring bloom of flowers attracts bees to the orchard.",
+    "usage": "For a collection of flowers, use blossoms or flowers in bloom."
+  },
+  {
+    "entryId": "ve-c604b014",
+    "senseId": "sense-869ab2ae",
+    "term": "book reservation",
+    "pos": "noun",
+    "definition": "An arrangement to hold a book for someone to borrow or buy.",
+    "example": "My book reservation is ready for collection at the library."
+  },
+  {
+    "entryId": "ve-21696785",
+    "senseId": "sense-4e96581f",
+    "term": "British Library",
+    "pos": "noun",
+    "definition": "The national library of the United Kingdom.",
+    "example": "I searched the British Library's catalogue for an old newspaper."
+  },
+  {
+    "entryId": "ve-c2e1f429",
+    "senseId": "sense-1f207973",
+    "term": "broaden one's view",
+    "pos": "verb",
+    "definition": "To develop a wider understanding of the world or a subject.",
+    "example": "Studying overseas can broaden one's view of different ways of life.",
+    "usage": "Broaden one's horizons is a common alternative."
+  },
+  {
+    "entryId": "ve-2e678326",
+    "senseId": "sense-fb57e7dc",
+    "term": "cabin keys",
+    "pos": "noun",
+    "definition": "Keys used to unlock a cabin or a room on a ship.",
+    "example": "Please return your cabin keys before leaving the ferry."
+  },
+  {
+    "entryId": "ve-f19dff6",
+    "senseId": "sense-f255de8c",
+    "term": "cannot meet the deadline",
+    "pos": "verb",
+    "definition": "To be unable to finish something by the required time.",
+    "example": "I cannot meet the deadline because the survey results have not arrived."
+  },
+  {
+    "entryId": "ve-3f5de2c2",
+    "senseId": "sense-2b1a3b38",
+    "term": "comment card",
+    "pos": "noun",
+    "definition": "A small form used to give feedback about a service or experience.",
+    "example": "We filled in a comment card after our meal."
+  },
+  {
+    "entryId": "ve-4a91486",
+    "senseId": "sense-99cba57c",
+    "term": "casual clothes",
+    "pos": "noun",
+    "definition": "Informal clothing suitable for ordinary activities.",
+    "example": "You can wear casual clothes to the welcome party."
+  },
+  {
+    "entryId": "ve-3b1d4487",
+    "senseId": "sense-9ec5d55d",
+    "term": "catering facilities",
+    "pos": "noun",
+    "definition": "Rooms, equipment, or services used to prepare and serve food.",
+    "example": "The conference venue has catering facilities for two hundred guests."
+  },
+  {
+    "entryId": "ve-a182f31d",
+    "senseId": "sense-d1e15687",
+    "term": "centre manager",
+    "pos": "noun",
+    "definition": "A person responsible for running a centre.",
+    "example": "The centre manager approved our request to use the meeting room."
+  },
+  {
+    "entryId": "ve-365370e6",
+    "senseId": "sense-c18d9c",
+    "term": "certificate of childcare",
+    "pos": "noun",
+    "definition": "A document showing completion of training or a qualification in caring for children.",
+    "example": "She earned a certificate in childcare before applying to the nursery.",
+    "usage": "Certificate in childcare is more conventional; the exact qualification varies by institution."
+  },
+  {
+    "entryId": "ve-c477516c",
+    "senseId": "sense-53617ed6",
+    "term": "chemistry lab",
+    "pos": "noun",
+    "definition": "A room equipped for experiments involving substances and their reactions.",
+    "example": "Wear safety goggles in the chemistry lab."
+  },
+  {
+    "entryId": "ve-1cd90460",
+    "senseId": "sense-b7f9905a",
+    "term": "circus performance",
+    "pos": "noun",
+    "definition": "A show featuring circus acts such as acrobatics or juggling.",
+    "example": "The circus performance began with two acrobats on a trapeze."
+  },
+  {
+    "entryId": "ve-2dcdb1ef",
+    "senseId": "sense-e783eff5",
+    "term": "city's expansion",
+    "pos": "noun",
+    "definition": "The growth of a city in size or area.",
+    "example": "The city's expansion has brought new housing to former farmland."
+  },
+  {
+    "entryId": "ve-a61d71ea",
+    "senseId": "sense-69cbaf10",
+    "term": "cleaning equipment",
+    "pos": "noun",
+    "definition": "Tools and machines used to remove dirt.",
+    "example": "The cleaners keep their cleaning equipment in a locked cupboard."
+  },
+  {
+    "entryId": "ve-ed48413",
+    "senseId": "sense-e9650649",
+    "term": "coarse texture",
+    "pos": "noun",
+    "definition": "A rough surface with relatively large particles or fibres.",
+    "example": "The rug's coarse texture makes it unsuitable for a baby's room."
+  },
+  {
+    "entryId": "ve-3327d8c5",
+    "senseId": "sense-9822f15f",
+    "term": "closed shelves",
+    "pos": "noun",
+    "definition": "Library shelves that readers cannot browse directly.",
+    "example": "Books on the closed shelves must be requested from a librarian.",
+    "usage": "Closed stacks is a common library term."
+  },
+  {
+    "entryId": "ve-e00f2d26",
+    "senseId": "sense-e1f4d1dc",
+    "term": "closed circuit TV",
+    "pos": "noun",
+    "definition": "A camera system that sends video to selected monitors, often for security.",
+    "example": "The station uses closed-circuit TV to monitor the platforms.",
+    "usage": "The standard spelling is closed-circuit television, often shortened to CCTV."
+  },
+  {
+    "entryId": "ve-4dc050ac",
+    "senseId": "sense-5ca6616",
+    "term": "common residence",
+    "pos": "noun",
+    "definition": "A home shared by two or more people.",
+    "example": "The students listed the flat as their common residence on the form.",
+    "usage": "The phrase is context-dependent; shared residence is clearer for a home occupied together."
+  },
+  {
+    "entryId": "ve-3b62e943",
+    "senseId": "sense-a7c01199",
+    "term": "communication technology",
+    "pos": "noun",
+    "definition": "Equipment and systems used to transmit information between people or places.",
+    "example": "Video calls are one example of communication technology used in distance learning."
+  },
+  {
+    "entryId": "ve-31ea26f",
+    "senseId": "sense-66f2f075",
+    "term": "company actions",
+    "pos": "noun",
+    "definition": "Things a business does, such as decisions, policies, or practical steps.",
+    "example": "The report examines company actions to reduce packaging waste."
+  },
+  {
+    "entryId": "ve-7c063123",
+    "senseId": "sense-fccc55b9",
+    "term": "connecting flight",
+    "pos": "noun",
+    "definition": "A flight taken after another flight to continue a journey.",
+    "example": "We have only fifty minutes to catch our connecting flight."
+  },
+  {
+    "entryId": "ve-52524a0b",
+    "senseId": "sense-9c9b8b51",
+    "term": "coping with stress",
+    "pos": "noun",
+    "definition": "Managing pressure or worry in a way that allows you to function.",
+    "example": "The workshop offers advice on coping with stress during exams."
+  },
+  {
+    "entryId": "ve-aae1ba5e",
+    "senseId": "sense-7190624",
+    "term": "course fee",
+    "pos": "noun",
+    "definition": "A payment required to attend a course.",
+    "example": "The course fee includes all the materials for the pottery class."
+  },
+  {
+    "entryId": "ve-a5823e1a",
+    "senseId": "sense-55ca0160",
+    "term": "cover the cost",
+    "pos": "verb",
+    "definition": "To provide enough money to pay for something.",
+    "example": "The grant will cover the cost of travelling to the conference."
+  },
+  {
+    "entryId": "ve-d0b8b209",
+    "senseId": "sense-e7cef313",
+    "term": "cross passage",
+    "pos": "noun",
+    "definition": "A short corridor linking two separate passageways or tunnels.",
+    "example": "Workers used a cross passage to move between the two rail tunnels."
+  },
+  {
+    "entryId": "ve-92fb7e94",
+    "senseId": "sense-f26b512e",
+    "term": "currency form",
+    "pos": "noun",
+    "definition": "The type or physical form in which money is used.",
+    "example": "The questionnaire asks which form of currency travellers prefer: cash or electronic payment.",
+    "usage": "Currency form is uncommon; form of currency is clearer, and the intended form needs context."
+  },
+  {
+    "entryId": "ve-7181aacc",
+    "senseId": "sense-a1b70476",
+    "term": "cut and polished",
+    "pos": "adjective",
+    "definition": "Shaped by cutting and made smooth or shiny.",
+    "example": "The cut and polished stone was set into a silver ring."
+  },
+  {
+    "entryId": "ve-292c95c3",
+    "senseId": "sense-4ebf4e19",
+    "term": "data assessment",
+    "pos": "noun",
+    "definition": "An examination of data to judge its quality, meaning, or usefulness.",
+    "example": "Data assessment revealed several missing responses in the survey."
+  },
+  {
+    "entryId": "ve-2b68dad6",
+    "senseId": "sense-988435ac",
+    "term": "decayed teeth",
+    "pos": "noun",
+    "definition": "Teeth damaged by the breakdown of their hard outer material.",
+    "example": "The dentist treated two decayed teeth."
+  },
+  {
+    "entryId": "ve-148e6ea0",
+    "senseId": "sense-a65c429a",
+    "term": "delivery desk",
+    "pos": "noun",
+    "definition": "A counter where deliveries are received, collected, or arranged.",
+    "example": "Leave the parcel at the delivery desk near the warehouse entrance.",
+    "usage": "The exact role depends on the setting; collection desk or dispatch desk may be more precise."
+  },
+  {
+    "entryId": "ve-2e991486",
+    "senseId": "sense-1bba57c",
+    "term": "desire to learn",
+    "pos": "noun",
+    "definition": "A strong wish to gain knowledge or skills.",
+    "example": "Her desire to learn kept her attending evening classes after work."
+  },
+  {
+    "entryId": "ve-2311a645",
+    "senseId": "sense-85466edf",
+    "term": "different levels",
+    "pos": "noun",
+    "definition": "Distinct degrees of ability, amount, difficulty, or height.",
+    "example": "The language school offers classes at different levels."
+  },
+  {
+    "entryId": "ve-5748ebfc",
+    "senseId": "sense-40666b46",
+    "term": "distinguishing feature",
+    "pos": "noun",
+    "definition": "A characteristic that makes something recognizable or different from others.",
+    "example": "The bird's red throat is its distinguishing feature."
+  },
+  {
+    "entryId": "ve-8a5f9b00",
+    "senseId": "sense-d652fb3a",
+    "term": "do training courses",
+    "pos": "verb",
+    "definition": "To attend courses that develop skills for a task or job.",
+    "example": "New employees do training courses in customer service.",
+    "usage": "Take training courses is also common, especially in American English."
+  },
+  {
+    "entryId": "ve-365f70a2",
+    "senseId": "sense-24d84d8",
+    "term": "domestic student",
+    "pos": "noun",
+    "definition": "A student classified as local to the country under an institution's rules.",
+    "example": "Domestic students and international students may pay different tuition fees.",
+    "usage": "Eligibility depends on local rules and is not always determined by citizenship alone."
+  },
+  {
+    "entryId": "ve-c8f5f93b",
+    "senseId": "sense-e7b520a1",
+    "term": "double lock",
+    "pos": "noun",
+    "definition": "A lock or locking arrangement with two securing mechanisms.",
+    "example": "The storage cabinet has a double lock for extra security.",
+    "usage": "The precise mechanism depends on the product or setting."
+  },
+  {
+    "entryId": "ve-e091a328",
+    "senseId": "sense-f2c60812",
+    "term": "Drama Festival",
+    "pos": "noun",
+    "definition": "An event featuring a series of plays or other theatrical performances.",
+    "example": "Our college is staging three short plays for its drama festival.",
+    "usage": "Capitals may indicate an event title; they do not identify a particular festival by themselves."
+  },
+  {
+    "entryId": "ve-8eb49800",
+    "senseId": "sense-6547983a",
+    "term": "dropout rate",
+    "pos": "noun",
+    "definition": "The proportion of people who leave a course or program before finishing.",
+    "example": "The college reduced its dropout rate by offering additional tutoring."
+  },
+  {
+    "entryId": "ve-dcf3a79a",
+    "senseId": "sense-7b689ae0",
+    "term": "drink less coffee",
+    "pos": "verb",
+    "definition": "To consume a smaller amount of coffee.",
+    "example": "I am trying to drink less coffee in the evening so I can sleep better."
+  },
+  {
+    "entryId": "ve-b65fbc57",
+    "senseId": "sense-8257470d",
+    "term": "Eagle Road",
+    "pos": "noun",
+    "definition": "A street name consisting of Eagle and Road.",
+    "example": "Please write Eagle Road clearly in the address box.",
+    "usage": "A name used in addresses; its location requires context."
+  },
+  {
+    "entryId": "ve-a1de0a68",
+    "senseId": "sense-dd9f5752",
+    "term": "economic history",
+    "pos": "noun",
+    "definition": "The study of economies and economic change in the past.",
+    "example": "Her economic history essay compares trade in two nineteenth-century ports."
+  },
+  {
+    "entryId": "ve-d707ac14",
+    "senseId": "sense-b7fd2eae",
+    "term": "education standard",
+    "pos": "noun",
+    "definition": "The expected or achieved level of quality in education.",
+    "example": "Inspectors assessed the school's educational standards.",
+    "usage": "Educational standard or standard of education is generally more natural."
+  },
+  {
+    "entryId": "ve-cdf32c8f",
+    "senseId": "sense-8c58be55",
+    "term": "electric fan",
+    "pos": "noun",
+    "definition": "A device powered by electricity that moves air with rotating blades.",
+    "example": "We switched on the electric fan because the room was hot."
+  },
+  {
+    "entryId": "ve-8a387fdf",
+    "senseId": "sense-d1487b85",
+    "term": "electronic dictionary",
+    "pos": "noun",
+    "definition": "A digital device or application used to look up words and their meanings.",
+    "example": "My electronic dictionary can play the pronunciation of unfamiliar words."
+  },
+  {
+    "entryId": "ve-40860dcb",
+    "senseId": "sense-5147c711",
+    "term": "emergency telephone number",
+    "pos": "noun",
+    "definition": "A phone number used to request urgent assistance.",
+    "example": "Keep the emergency telephone number beside the laboratory phone."
+  },
+  {
+    "entryId": "ve-1ea213d",
+    "senseId": "sense-3f2e48e7",
+    "term": "energy industry",
+    "pos": "noun",
+    "definition": "Businesses involved in producing and supplying power or fuel.",
+    "example": "The energy industry employs engineers who design wind turbines."
+  },
+  {
+    "entryId": "ve-2a69b747",
+    "senseId": "sense-77a0a01d",
+    "term": "entrance fee",
+    "pos": "noun",
+    "definition": "Money paid to enter a place or event.",
+    "example": "The museum's entrance fee is lower for students."
+  },
+  {
+    "entryId": "ve-42952877",
+    "senseId": "sense-953a376d",
+    "term": "environmental issues",
+    "pos": "noun",
+    "definition": "Problems or questions concerning nature and the effects of human activity on it.",
+    "example": "Water pollution is one of the environmental issues discussed in the report."
+  },
+  {
+    "entryId": "ve-f35a8ad2",
+    "senseId": "sense-5eabe528",
+    "term": "evening appointment",
+    "pos": "noun",
+    "definition": "An arranged meeting or visit taking place in the evening.",
+    "example": "The clinic offers an evening appointment for patients who work during the day."
+  },
+  {
+    "entryId": "ve-6705ed0f",
+    "senseId": "sense-47c38ed5",
+    "term": "experimental for construction",
+    "pos": "adjective",
+    "definition": "Being tested for possible use in building.",
+    "example": "The team is testing an experimental material for construction.",
+    "usage": "The original wording is incomplete and nonstandard; experimental material for construction is one possible interpretation."
+  },
+  {
+    "entryId": "ve-d7069790",
+    "senseId": "sense-b7d989aa",
+    "term": "express way",
+    "pos": "noun",
+    "definition": "A major road designed for fast traffic, usually with controlled access.",
+    "example": "We took the expressway to avoid traffic in the town centre.",
+    "usage": "The usual spelling is expressway."
+  },
+  {
+    "entryId": "ve-29ebfa48",
+    "senseId": "sense-676b4372",
+    "term": "exchange drafts",
+    "pos": "verb",
+    "definition": "To give each other preliminary versions of written work.",
+    "example": "The students exchange drafts before revising their essays.",
+    "usage": "Without context, this can also concern financial drafts; the writing sense is used here."
+  },
+  {
+    "entryId": "ve-1f048a95",
+    "senseId": "sense-ff95dd0f",
+    "term": "ethical film",
+    "pos": "noun",
+    "definition": "A film that explores questions about right and wrong.",
+    "example": "The ethical film prompted a discussion about a doctor's duty to patients.",
+    "usage": "This is not a standard film category; a film about ethical issues is clearer, and the original intended category is uncertain."
+  },
+  {
+    "entryId": "ve-be6311c6",
+    "senseId": "sense-8ac54abc",
+    "term": "extinct species",
+    "pos": "noun",
+    "definition": "Kinds of organisms that no longer have any living members.",
+    "example": "The museum has an exhibition about extinct species such as the dodo."
+  },
+  {
+    "entryId": "ve-edd07c12",
+    "senseId": "sense-a7dffe68",
+    "term": "familiar with",
+    "pos": "adjective",
+    "definition": "Knowing or recognizing something through previous experience.",
+    "example": "Are you familiar with the university's online booking system?"
+  },
+  {
+    "entryId": "ve-cbff32d7",
+    "senseId": "sense-4be58d8d",
+    "term": "family relationship",
+    "pos": "noun",
+    "definition": "A connection between members of a family.",
+    "example": "Moving abroad changed her family relationship with her younger sister.",
+    "usage": "Family relationships is usual when discussing several connections."
+  },
+  {
+    "entryId": "ve-51fb16b7",
+    "senseId": "sense-915dedad",
+    "term": "fear of unemployment",
+    "pos": "noun",
+    "definition": "Worry about losing work or being unable to find a job.",
+    "example": "Fear of unemployment led some workers to postpone buying a house."
+  },
+  {
+    "entryId": "ve-97c9c378",
+    "senseId": "sense-91023242",
+    "term": "field method",
+    "pos": "noun",
+    "definition": "A research technique carried out in a real-world setting.",
+    "example": "Direct observation was the main field method used in the bird survey."
+  },
+  {
+    "entryId": "ve-d0fed0fb",
+    "senseId": "sense-f0d8f061",
+    "term": "film studio",
+    "pos": "noun",
+    "definition": "A place with equipment and space for making films.",
+    "example": "The interior scenes were filmed in a film studio."
+  },
+  {
+    "entryId": "ve-8862c189",
+    "senseId": "sense-94baf293",
+    "term": "financial budget",
+    "pos": "noun",
+    "definition": "A plan showing expected income and spending.",
+    "example": "Our financial budget sets aside money for rent, food, and transport.",
+    "usage": "Budget alone is usually sufficient."
+  },
+  {
+    "entryId": "ve-b7fa27a",
+    "senseId": "sense-7b73f180",
+    "term": "financial goals",
+    "pos": "noun",
+    "definition": "Targets concerning money, such as saving or reducing debt.",
+    "example": "Her financial goals include paying off her loan within three years."
+  },
+  {
+    "entryId": "ve-b555a774",
+    "senseId": "sense-600a95ce",
+    "term": "financial problems",
+    "pos": "noun",
+    "definition": "Difficulties involving money or paying expenses.",
+    "example": "The family had financial problems after their main source of income disappeared."
+  },
+  {
+    "entryId": "ve-faef6e3e",
+    "senseId": "sense-58dd35c4",
+    "term": "fine texture",
+    "pos": "noun",
+    "definition": "A smooth or delicate surface with small particles or fibres.",
+    "example": "The fine texture of the powder makes it easy to mix into the paint."
+  },
+  {
+    "entryId": "ve-dedb642b",
+    "senseId": "sense-ba47e9b1",
+    "term": "fishing industry",
+    "pos": "noun",
+    "definition": "Businesses involved in catching, processing, or selling fish.",
+    "example": "The fishing industry provides many jobs in the coastal town."
+  },
+  {
+    "entryId": "ve-885de550",
+    "senseId": "sense-941a8f6a",
+    "term": "fixed expenses",
+    "pos": "noun",
+    "definition": "Regular costs that remain broadly the same over a period.",
+    "example": "Rent and insurance are fixed expenses in our monthly budget."
+  },
+  {
+    "entryId": "ve-8fc30b74",
+    "senseId": "sense-882479ce",
+    "term": "flying craft",
+    "pos": "noun",
+    "definition": "A vehicle or machine capable of travelling through the air.",
+    "example": "The prototype flying craft completed a short test flight.",
+    "usage": "Aircraft is the conventional general term; the precise vehicle is unspecified."
+  },
+  {
+    "entryId": "ve-139ee4c6",
+    "senseId": "sense-877b7dbc",
+    "term": "food and oil",
+    "pos": "noun",
+    "definition": "Food products together with oil, whose type depends on context.",
+    "example": "The shop keeps food and oil in separate sections of the storeroom.",
+    "usage": "This is a noun combination, not a fixed expression; oil may mean cooking oil or fuel."
+  },
+  {
+    "entryId": "ve-7bac5454",
+    "senseId": "sense-f136deee",
+    "term": "formal clothes",
+    "pos": "noun",
+    "definition": "Clothing suitable for official or special occasions.",
+    "example": "Please wear formal clothes to the awards ceremony."
+  },
+  {
+    "entryId": "ve-885ca672",
+    "senseId": "sense-93f17488",
+    "term": "free for heating",
+    "pos": "adjective",
+    "definition": "Provided without an additional charge for heating.",
+    "example": "The rent includes heating, so there is no extra heating charge.",
+    "usage": "Free for heating is nonstandard; heating is included or no heating charge is clearer."
+  },
+  {
+    "entryId": "ve-d42429b7",
+    "senseId": "sense-58a960ad",
+    "term": "Garden Hall",
+    "pos": "noun",
+    "definition": "The name of a hall or building.",
+    "example": "The invitation says the reception will take place in Garden Hall.",
+    "usage": "This proper name does not identify a unique building without context."
+  },
+  {
+    "entryId": "ve-c9505741",
+    "senseId": "sense-f35b3f5b",
+    "term": "general English",
+    "pos": "noun",
+    "definition": "English taught for everyday communication rather than a specialist field.",
+    "example": "The general English course covers shopping, travel, and daily conversations."
+  },
+  {
+    "entryId": "ve-f31089",
+    "senseId": "sense-1f552193",
+    "term": "general ideas",
+    "pos": "noun",
+    "definition": "Broad thoughts or main points without much detail.",
+    "example": "Write down your general ideas before planning the essay paragraphs."
+  },
+  {
+    "entryId": "ve-b8e239c2",
+    "senseId": "sense-d5297238",
+    "term": "geography trip",
+    "pos": "noun",
+    "definition": "A visit made to study landscapes, places, or geographical processes.",
+    "example": "Our geography trip included measurements of the river's width."
+  },
+  {
+    "entryId": "ve-2684471c",
+    "senseId": "sense-f70d2aa6",
+    "term": "give sb. a sack",
+    "pos": "verb",
+    "definition": "To dismiss someone from a job.",
+    "example": "The company gave him the sack after repeated absences.",
+    "usage": "Use give someone the sack, not give someone a sack."
+  },
+  {
+    "entryId": "ve-336da297",
+    "senseId": "sense-a121f54d",
+    "term": "give confirmation",
+    "pos": "verb",
+    "definition": "To state that an arrangement or fact has been accepted or verified.",
+    "example": "The hotel will give confirmation of your booking by email."
+  },
+  {
+    "entryId": "ve-fc9a9947",
+    "senseId": "sense-8fedc21d",
+    "term": "global listening",
+    "pos": "noun",
+    "definition": "Listening to understand the overall meaning rather than every detail.",
+    "example": "During the first recording, practise global listening and identify the speaker's main point."
+  },
+  {
+    "entryId": "ve-e4ef3d64",
+    "senseId": "sense-82d6e9de",
+    "term": "good shoes",
+    "pos": "noun",
+    "definition": "Shoes that are suitable, comfortable, or well made.",
+    "example": "You need good shoes for the long walk across rocky ground."
+  },
+  {
+    "entryId": "ve-d01db9d0",
+    "senseId": "sense-d3d4f3ea",
+    "term": "government policy",
+    "pos": "noun",
+    "definition": "A plan or set of principles adopted by a government.",
+    "example": "The new government policy offers grants for home insulation."
+  },
+  {
+    "entryId": "ve-79b7a9af",
+    "senseId": "sense-b0acdfb5",
+    "term": "graduation announcements",
+    "pos": "noun",
+    "definition": "Notices telling people that someone is graduating or that a graduation will take place.",
+    "example": "She mailed graduation announcements to her relatives."
+  },
+  {
+    "entryId": "ve-371300f2",
+    "senseId": "sense-19731f08",
+    "term": "great favourites",
+    "pos": "noun",
+    "definition": "People or things that are especially well liked.",
+    "example": "Chocolate biscuits are great favourites among the children."
+  },
+  {
+    "entryId": "ve-4d069e4",
+    "senseId": "sense-9edda65e",
+    "term": "gym membership",
+    "pos": "noun",
+    "definition": "An arrangement that allows someone to use a gym, usually for a fee.",
+    "example": "My gym membership includes fitness classes twice a week."
+  },
+  {
+    "entryId": "ve-2358d0cd",
+    "senseId": "sense-8e72ea57",
+    "term": "hard-hoofed animals",
+    "pos": "noun",
+    "definition": "Animals whose feet end in firm, hard hooves.",
+    "example": "The farmer keeps hard-hoofed animals such as horses and goats.",
+    "usage": "Hoofed animals is the usual general term."
+  },
+  {
+    "entryId": "ve-3051cb60",
+    "senseId": "sense-3a8b375a",
+    "term": "have access to",
+    "pos": "verb",
+    "definition": "To be able or permitted to use or enter something.",
+    "example": "Registered students have access to the online journal collection."
+  },
+  {
+    "entryId": "ve-38b8b2fd",
+    "senseId": "sense-4fcf12a7",
+    "term": "have strong hearts and lungs",
+    "pos": "verb",
+    "definition": "To have a healthy heart and lungs capable of demanding physical activity.",
+    "example": "Regular exercise can help people develop strong hearts and lungs."
+  },
+  {
+    "entryId": "ve-aa140717",
+    "senseId": "sense-ec94e9cd",
+    "term": "have strong financial muscles",
+    "pos": "verb",
+    "definition": "To have substantial financial resources or spending power.",
+    "example": "The larger company has strong financial muscles and can fund several projects at once.",
+    "usage": "A figurative, uncommon wording; have financial muscle is the usual expression."
+  },
+  {
+    "entryId": "ve-94f9bfd4",
+    "senseId": "sense-3431ba6e",
+    "term": "horse hair",
+    "pos": "noun",
+    "definition": "Hair from a horse, sometimes used to make brushes or other products.",
+    "example": "The brush has stiff bristles made from horsehair.",
+    "usage": "Horsehair is normally written as one word."
+  },
+  {
+    "entryId": "ve-99ef883d",
+    "senseId": "sense-d7e08fe7",
+    "term": "high rank",
+    "pos": "noun",
+    "definition": "A senior or important position in a hierarchy.",
+    "example": "Her high rank in the organization gives her authority to approve the budget."
+  },
+  {
+    "entryId": "ve-1c697df2",
+    "senseId": "sense-a9993c08",
+    "term": "high-quality camera",
+    "pos": "noun",
+    "definition": "A camera that produces good images and is well made.",
+    "example": "The research team needs a high-quality camera to record small details."
+  },
+  {
+    "entryId": "ve-4fddde7a",
+    "senseId": "sense-4b99ad80",
+    "term": "history of school",
+    "pos": "noun",
+    "definition": "An account of a school's past and development.",
+    "example": "The anniversary booklet describes the history of the school.",
+    "usage": "History of a school or the school's history is more natural in ordinary sentences."
+  },
+  {
+    "entryId": "ve-b36199af",
+    "senseId": "sense-1f94cfb5",
+    "term": "hotel crime",
+    "pos": "noun",
+    "definition": "Criminal activity occurring in or involving hotels.",
+    "example": "Staff training aims to reduce hotel crime, including theft from guest rooms."
+  },
+  {
+    "entryId": "ve-c3d68a36",
+    "senseId": "sense-3ea7d0cc",
+    "term": "house key",
+    "pos": "noun",
+    "definition": "A key used to unlock the entrance to a house.",
+    "example": "I left my house key in the pocket of my coat."
+  },
+  {
+    "entryId": "ve-9e381882",
+    "senseId": "sense-653b28f8",
+    "term": "ice curling",
+    "pos": "noun",
+    "definition": "A sport played on ice in which teams slide stones toward a target.",
+    "example": "We watched ice curling at the winter sports centre.",
+    "usage": "Curling is the standard name of the sport."
+  },
+  {
+    "entryId": "ve-755c0c4b",
+    "senseId": "sense-20dd9591",
+    "term": "in chemistry lab",
+    "pos": "expression",
+    "definition": "Inside a room equipped for chemical experiments.",
+    "example": "The students were in the chemistry lab when the alarm sounded.",
+    "usage": "Usually say in a chemistry lab or in the chemistry lab."
+  },
+  {
+    "entryId": "ve-77996753",
+    "senseId": "sense-6ac65189",
+    "term": "information board",
+    "pos": "noun",
+    "definition": "A board displaying notices or useful details.",
+    "example": "Check the information board for changes to the bus timetable."
+  },
+  {
+    "entryId": "ve-8108a515",
+    "senseId": "sense-a21d478f",
+    "term": "information sector",
+    "pos": "noun",
+    "definition": "The part of the economy concerned with producing, managing, or distributing information.",
+    "example": "Software companies are important employers in the information sector."
+  },
+  {
+    "entryId": "ve-fa9accce",
+    "senseId": "sense-4df466b4",
+    "term": "injection of vaccine",
+    "pos": "noun",
+    "definition": "The administration of a vaccine with a needle to stimulate protection against a disease.",
+    "example": "The nurse explained the procedure before giving the vaccine injection.",
+    "usage": "A vaccine injection or an injection of a vaccine is the usual wording."
+  },
+  {
+    "entryId": "ve-9a0c373b",
+    "senseId": "sense-db931ea1",
+    "term": "interpersonal skills",
+    "pos": "noun",
+    "definition": "Abilities used to communicate and work well with other people.",
+    "example": "The job requires strong interpersonal skills because you will deal with customers every day."
+  },
+  {
+    "entryId": "ve-850a2503",
+    "senseId": "sense-264ec559",
+    "term": "interlibrary service",
+    "pos": "noun",
+    "definition": "A service through which libraries share materials or help readers obtain them.",
+    "example": "The interlibrary service obtained a book that our library did not own.",
+    "usage": "Interlibrary loan is the common term for borrowing materials from another library."
+  },
+  {
+    "entryId": "ve-b25563a7",
+    "senseId": "sense-fd01d8bd",
+    "term": "international club",
+    "pos": "noun",
+    "definition": "A club that brings together people from different countries.",
+    "example": "The international club organizes meals where students share food from home."
+  },
+  {
+    "entryId": "ve-d283271a",
+    "senseId": "sense-22e80a60",
+    "term": "Internet access",
+    "pos": "noun",
+    "definition": "The ability to connect to and use the Internet.",
+    "example": "The hostel provides Internet access in every room."
+  },
+  {
+    "entryId": "ve-b8ab730",
+    "senseId": "sense-7ce19d0a",
+    "term": "isolated spot",
+    "pos": "noun",
+    "definition": "A place far from other people, buildings, or busy areas.",
+    "example": "We found an isolated spot by the lake for our picnic."
+  },
+  {
+    "entryId": "ve-c5677be4",
+    "senseId": "sense-7256f85e",
+    "term": "key approach",
+    "pos": "noun",
+    "definition": "A principal method of dealing with a task or problem.",
+    "example": "Preventing waste is a key approach in the council's environmental plan."
+  },
+  {
+    "entryId": "ve-92cd5be1",
+    "senseId": "sense-ec78d83b",
+    "term": "king-sized bed",
+    "pos": "noun",
+    "definition": "A bed larger than a standard double bed.",
+    "example": "The hotel room has a king-sized bed and a small desk.",
+    "usage": "King-size bed is also common; exact dimensions vary by country."
+  },
+  {
+    "entryId": "ve-37aa52a3",
+    "senseId": "sense-2cf4a739",
+    "term": "listening tapescript",
+    "pos": "noun",
+    "definition": "The written text of a recording used for listening practice.",
+    "example": "Read the listening tapescript after answering the questions.",
+    "usage": "Audio transcript is a current alternative; tapescript is common in older teaching materials."
+  },
+  {
+    "entryId": "ve-9bb0216d",
+    "senseId": "sense-11b44f37",
+    "term": "lack of confidence",
+    "pos": "noun",
+    "definition": "Insufficient belief in one's ability or judgment.",
+    "example": "A lack of confidence made him hesitate to speak in class."
+  },
+  {
+    "entryId": "ve-73aadddd",
+    "senseId": "sense-e9069947",
+    "term": "laser printing",
+    "pos": "noun",
+    "definition": "Printing that uses a laser to form an image on a drum before transferring toner to paper.",
+    "example": "Laser printing produces clear text for office documents."
+  },
+  {
+    "entryId": "ve-5abae815",
+    "senseId": "sense-b217ea8f",
+    "term": "learning styles",
+    "pos": "noun",
+    "definition": "Ways people prefer or tend to approach learning.",
+    "example": "The survey asks students about their preferred learning styles.",
+    "usage": "Preferences can vary; this term does not establish that teaching must match a fixed learner type."
+  },
+  {
+    "entryId": "ve-7e6040a1",
+    "senseId": "sense-4a6854fb",
+    "term": "level of maturity",
+    "pos": "noun",
+    "definition": "The extent to which someone shows developed judgment and responsibility.",
+    "example": "The tasks should suit the child's level of maturity."
+  },
+  {
+    "entryId": "ve-4e4110c7",
+    "senseId": "sense-1663299d",
+    "term": "literary film",
+    "pos": "noun",
+    "definition": "A film connected with literature, often adapted from a literary work.",
+    "example": "The seminar compares a literary film with the novel on which it is based.",
+    "usage": "The category is loose; film adaptation is more precise when a book is adapted."
+  },
+  {
+    "entryId": "ve-23aa47bd",
+    "senseId": "sense-98f33f67",
+    "term": "living cost",
+    "pos": "noun",
+    "definition": "Money needed for everyday necessities such as housing, food, and transport.",
+    "example": "The scholarship helps with tuition and living costs.",
+    "usage": "Living costs or cost of living is more usual for the general total."
+  },
+  {
+    "entryId": "ve-92f4302a",
+    "senseId": "sense-f17a3550",
+    "term": "local history",
+    "pos": "noun",
+    "definition": "The history of a particular town, district, or community.",
+    "example": "The local history museum displays photographs of the old railway station."
+  },
+  {
+    "entryId": "ve-8e6c98e3",
+    "senseId": "sense-5bffb579",
+    "term": "local product",
+    "pos": "noun",
+    "definition": "Something made or grown in the surrounding area.",
+    "example": "The cheese is a local product made at a nearby farm."
+  },
+  {
+    "entryId": "ve-b05d16ec",
+    "senseId": "sense-bbfff456",
+    "term": "local shop",
+    "pos": "noun",
+    "definition": "A shop near where someone lives or within the area being discussed.",
+    "example": "I buy milk at the local shop on my way home."
+  },
+  {
+    "entryId": "ve-cf6d1eb3",
+    "senseId": "sense-bd10f529",
+    "term": "lookout points",
+    "pos": "noun",
+    "definition": "Places offering a wide view of the surrounding area.",
+    "example": "The trail passes two lookout points above the valley."
+  },
+  {
+    "entryId": "ve-2d278a76",
+    "senseId": "sense-d218d90c",
+    "term": "loss of soil",
+    "pos": "noun",
+    "definition": "The removal or reduction of soil, often through erosion.",
+    "example": "Planting trees can reduce loss of soil on steep slopes."
+  },
+  {
+    "entryId": "ve-ecda1b26",
+    "senseId": "sense-881d7fdc",
+    "term": "low-frequency noise",
+    "pos": "noun",
+    "definition": "Sound dominated by slow vibrations, often heard as a deep rumble.",
+    "example": "Residents complained about low-frequency noise from the ventilation system."
+  },
+  {
+    "entryId": "ve-d39fb1c",
+    "senseId": "sense-b4795ea6",
+    "term": "magical animals",
+    "pos": "noun",
+    "definition": "Imaginary animals with supernatural abilities.",
+    "example": "The children's story includes magical animals that can speak."
+  },
+  {
+    "entryId": "ve-f2af1103",
+    "senseId": "sense-48913159",
+    "term": "major in nursing",
+    "pos": "verb",
+    "definition": "To study nursing as the main subject of a university degree.",
+    "example": "She plans to major in nursing and work in community health.",
+    "usage": "Major in is especially common in North American higher education."
+  },
+  {
+    "entryId": "ve-7b943978",
+    "senseId": "sense-ee1b6842",
+    "term": "main kitchen",
+    "pos": "noun",
+    "definition": "The principal room or area where food is prepared.",
+    "example": "Meals for both dining rooms are prepared in the main kitchen."
+  },
+  {
+    "entryId": "ve-5e6d187",
+    "senseId": "sense-c2c1025d",
+    "term": "make plans",
+    "pos": "verb",
+    "definition": "To decide what to do and how to do it.",
+    "example": "We need to make plans for transport before booking the trip."
+  },
+  {
+    "entryId": "ve-d0f16fe2",
+    "senseId": "sense-ef1f6c18",
+    "term": "manmade dam",
+    "pos": "noun",
+    "definition": "A barrier built by people to hold back water.",
+    "example": "The reservoir was created by a man-made dam.",
+    "usage": "Man-made is usually hyphenated; artificial dam is another option."
+  },
+  {
+    "entryId": "ve-a2610df2",
+    "senseId": "sense-ee82cc08",
+    "term": "marketing management",
+    "pos": "noun",
+    "definition": "The planning and supervision of activities that promote and sell products or services.",
+    "example": "The degree includes a module on marketing management."
+  },
+  {
+    "entryId": "ve-2d1869fc",
+    "senseId": "sense-d025a946",
+    "term": "marketing strategies",
+    "pos": "noun",
+    "definition": "Plans for reaching customers and encouraging them to buy or use something.",
+    "example": "The company revised its marketing strategies to attract younger customers."
+  },
+  {
+    "entryId": "ve-136c754c",
+    "senseId": "sense-80fb1ef6",
+    "term": "mathematic formula",
+    "pos": "noun",
+    "definition": "A rule or relationship expressed using mathematical symbols.",
+    "example": "Use the mathematical formula to calculate the area of the circle.",
+    "usage": "Mathematical formula is the conventional form."
+  },
+  {
+    "entryId": "ve-9497b4da",
+    "senseId": "sense-278e5020",
+    "term": "medical science",
+    "pos": "noun",
+    "definition": "The scientific study of health, disease, and medical treatment.",
+    "example": "Advances in medical science have improved the treatment of many infections."
+  },
+  {
+    "entryId": "ve-d6a43107",
+    "senseId": "sense-ab2a51dd",
+    "term": "membership of a club",
+    "pos": "noun",
+    "definition": "The state of belonging to a club.",
+    "example": "Membership of a club can help new students meet people."
+  },
+  {
+    "entryId": "ve-ee9b707c",
+    "senseId": "sense-c2097fc6",
+    "term": "midmorning snacks",
+    "pos": "noun",
+    "definition": "Small amounts of food eaten between breakfast and lunch.",
+    "example": "The nursery provides fruit as midmorning snacks."
+  },
+  {
+    "entryId": "ve-702df72f",
+    "senseId": "sense-75ecdd35",
+    "term": "mileage ticket",
+    "pos": "noun",
+    "definition": "A travel ticket based on a distance allowance or mileage scheme.",
+    "example": "Before buying a mileage ticket, ask how many miles of travel it permits.",
+    "usage": "The exact ticket system is uncertain without context; this is not a universal ticket category."
+  },
+  {
+    "entryId": "ve-9a8d8013",
+    "senseId": "sense-ec3d8249",
+    "term": "millions of",
+    "pos": "expression",
+    "definition": "A number or amount measured in several million units.",
+    "example": "Millions of people watched the final on television."
+  },
+  {
+    "entryId": "ve-862a3c73",
+    "senseId": "sense-4b71cae9",
+    "term": "modern management hotel",
+    "pos": "noun",
+    "definition": "A hotel run using modern management methods.",
+    "example": "The case study describes a hotel with modern management systems.",
+    "usage": "Modern management hotel is nonstandard; a hotel with modern management is clearer, and the intended wording is uncertain."
+  },
+  {
+    "entryId": "ve-4a05a926",
+    "senseId": "sense-8abacddc",
+    "term": "money management",
+    "pos": "noun",
+    "definition": "Planning and controlling how money is earned, saved, and spent.",
+    "example": "The workshop teaches basic money management, including how to make a budget."
+  },
+  {
+    "entryId": "ve-a3be05ce",
+    "senseId": "sense-1b7ebfb4",
+    "term": "movement of muscle",
+    "pos": "noun",
+    "definition": "The motion produced when muscle tissue contracts or relaxes.",
+    "example": "The scan records movement of the muscle during exercise.",
+    "usage": "Muscle movement is the usual general wording."
+  },
+  {
+    "entryId": "ve-59dd06a7",
+    "senseId": "sense-957ddbbd",
+    "term": "name badge",
+    "pos": "noun",
+    "definition": "A small label worn on clothing that shows a person's name.",
+    "example": "Please collect your name badge at the registration desk."
+  },
+  {
+    "entryId": "ve-f74d0450",
+    "senseId": "sense-e0ed8e6a",
+    "term": "natural medicine",
+    "pos": "noun",
+    "definition": "Treatment using substances or practices described as natural, such as herbal preparations.",
+    "example": "She asked the pharmacist about a natural medicine made from a plant extract.",
+    "usage": "Natural does not by itself establish safety or effectiveness."
+  },
+  {
+    "entryId": "ve-73bb2ecc",
+    "senseId": "sense-eb210876",
+    "term": "no allergy",
+    "pos": "noun",
+    "definition": "The absence of an allergic reaction or known allergy.",
+    "example": "The patient reports no allergy to penicillin.",
+    "usage": "In a medical record, no known allergies is more precise when history is meant."
+  },
+  {
+    "entryId": "ve-7d2e2ba5",
+    "senseId": "sense-22f3a07f",
+    "term": "non-medicine items",
+    "pos": "noun",
+    "definition": "Products that are not medicines.",
+    "example": "The pharmacy also sells non-medicine items such as toothbrushes.",
+    "usage": "Non-medicinal items is a more conventional alternative."
+  },
+  {
+    "entryId": "ve-b73d5df4",
+    "senseId": "sense-9ee91c4e",
+    "term": "not for circulation",
+    "pos": "adjective",
+    "definition": "Not available to be borrowed or taken away from a library.",
+    "example": "The reference atlas is marked not for circulation."
+  },
+  {
+    "entryId": "ve-cc3306aa",
+    "senseId": "sense-5293dbd0",
+    "term": "nursing care",
+    "pos": "noun",
+    "definition": "Professional care provided by nurses to people who need health support.",
+    "example": "She received nursing care at home after the operation."
+  },
+  {
+    "entryId": "ve-5fb00766",
+    "senseId": "sense-55b0f41c",
+    "term": "obligatory course",
+    "pos": "noun",
+    "definition": "A course that students are required to take.",
+    "example": "Statistics is an obligatory course in the program.",
+    "usage": "Compulsory course or required course is more common in many institutions."
+  },
+  {
+    "entryId": "ve-cddf273a",
+    "senseId": "sense-89c40e40",
+    "term": "oil explosion",
+    "pos": "noun",
+    "definition": "An explosion involving oil or equipment containing it.",
+    "example": "An oil explosion damaged the storage tank and forced workers to evacuate.",
+    "usage": "Oil-related explosion is broader and clearer when the mechanism is unspecified."
+  },
+  {
+    "entryId": "ve-8beae3a3",
+    "senseId": "sense-9475839",
+    "term": "on small scale",
+    "pos": "expression",
+    "definition": "With a limited size, amount, or scope.",
+    "example": "The charity began operating on a small scale in one neighbourhood.",
+    "usage": "The usual form is on a small scale."
+  },
+  {
+    "entryId": "ve-8b958f24",
+    "senseId": "sense-fe47739e",
+    "term": "open-book exam",
+    "pos": "noun",
+    "definition": "An examination in which students may consult permitted books or notes.",
+    "example": "The open-book exam still required us to explain our reasoning."
+  },
+  {
+    "entryId": "ve-4ab9eee8",
+    "senseId": "sense-a1f7cbd2",
+    "term": "optional expenses",
+    "pos": "noun",
+    "definition": "Costs for things that are chosen rather than necessary.",
+    "example": "Restaurant meals are optional expenses in my budget."
+  },
+  {
+    "entryId": "ve-ad568ee0",
+    "senseId": "sense-58286ada",
+    "term": "organic fibre",
+    "pos": "noun",
+    "definition": "A natural fibre or a fibre produced under an organic farming standard.",
+    "example": "The supplier says the shirt uses certified organic fibre.",
+    "usage": "Organic can describe biological origin or a certification standard; check which is meant."
+  },
+  {
+    "entryId": "ve-f8d26438",
+    "senseId": "sense-131eeb02",
+    "term": "original reason",
+    "pos": "noun",
+    "definition": "The initial cause or purpose behind something.",
+    "example": "The original reason for the trip was to collect water samples."
+  },
+  {
+    "entryId": "ve-60b40bdd",
+    "senseId": "sense-77358747",
+    "term": "outside activity",
+    "pos": "noun",
+    "definition": "An activity performed outdoors or away from the usual indoor setting.",
+    "example": "The school planned an outdoor activity for the final afternoon.",
+    "usage": "Outdoor activity is more usual when the activity takes place in the open air."
+  },
+  {
+    "entryId": "ve-57fd2ed9",
+    "senseId": "sense-57a309c3",
+    "term": "overdue and pay a fine",
+    "pos": "expression",
+    "definition": "Past the required return or payment date, with a penalty payable.",
+    "example": "If the library book is overdue, you may have to pay a fine.",
+    "usage": "The original joins two ideas; a complete sentence should state what is overdue."
+  },
+  {
+    "entryId": "ve-b055d723",
+    "senseId": "sense-bb10bbb9",
+    "term": "pal group relationship",
+    "pos": "noun",
+    "definition": "A relationship among friends in a social group.",
+    "example": "The study examined relationships within a group of friends.",
+    "usage": "Pal group relationship is nonstandard; peer-group relationships may be intended, but the original context is unavailable."
+  },
+  {
+    "entryId": "ve-acc321ed",
+    "senseId": "sense-45275fb7",
+    "term": "part-time job",
+    "pos": "noun",
+    "definition": "Paid work that takes fewer hours than a full-time position.",
+    "example": "She has a part-time job in a bookshop on weekends."
+  },
+  {
+    "entryId": "ve-a4050155",
+    "senseId": "sense-24a52bcf",
+    "term": "pay for loss",
+    "pos": "verb",
+    "definition": "To pay compensation for something that has been lost or for a resulting loss.",
+    "example": "The borrower must pay for the loss of the library book.",
+    "usage": "Pay for a loss or compensate for a loss is usually clearer."
+  },
+  {
+    "entryId": "ve-efce5912",
+    "senseId": "sense-e9997b68",
+    "term": "per month",
+    "pos": "expression",
+    "definition": "For each month.",
+    "example": "The room costs six hundred pounds per month."
+  },
+  {
+    "entryId": "ve-2653024d",
+    "senseId": "sense-f0b34bd7",
+    "term": "per year",
+    "pos": "expression",
+    "definition": "For each year.",
+    "example": "Employees receive twenty-five days of paid leave per year."
+  },
+  {
+    "entryId": "ve-dc31e78",
+    "senseId": "sense-c626ed42",
+    "term": "personal statement",
+    "pos": "noun",
+    "definition": "A written account of one's background, interests, and reasons for applying.",
+    "example": "Her personal statement explains why she wants to study medicine."
+  },
+  {
+    "entryId": "ve-f2c91ab4",
+    "senseId": "sense-4bec710e",
+    "term": "photocopies of articles",
+    "pos": "noun",
+    "definition": "Copies of written articles made with a photocopier.",
+    "example": "Bring photocopies of the articles to the seminar."
+  },
+  {
+    "entryId": "ve-e886459b",
+    "senseId": "sense-f94ef8c1",
+    "term": "physical activities",
+    "pos": "noun",
+    "definition": "Activities involving bodily movement, often for exercise.",
+    "example": "Walking and swimming are physical activities suitable for many beginners."
+  },
+  {
+    "entryId": "ve-f0a7e1d9",
+    "senseId": "sense-5a41cc3",
+    "term": "Planet Society",
+    "pos": "noun",
+    "definition": "A name suggesting an organization concerned with planets or planetary matters.",
+    "example": "The invitation names Planet Society as the host of the astronomy talk.",
+    "usage": "The name alone does not identify a verified organization; the astronomy reading is inferred from its words."
+  },
+  {
+    "entryId": "ve-597571a3",
+    "senseId": "sense-8823a639",
+    "term": "plastic collection",
+    "pos": "noun",
+    "definition": "The gathering of plastic items, often for recycling.",
+    "example": "Plastic collection takes place outside the flats every Tuesday."
+  },
+  {
+    "entryId": "ve-f91d063c",
+    "senseId": "sense-1cbdcd86",
+    "term": "pop test",
+    "pos": "noun",
+    "definition": "A short test given without advance notice.",
+    "example": "The teacher gave us a pop test on yesterday's vocabulary.",
+    "usage": "Pop quiz is the more common expression, especially in American English."
+  },
+  {
+    "entryId": "ve-f4e76042",
+    "senseId": "sense-91d368b8",
+    "term": "population of crocodiles",
+    "pos": "noun",
+    "definition": "The number or group of crocodiles living in an area.",
+    "example": "Researchers estimated the population of crocodiles in the wetland."
+  },
+  {
+    "entryId": "ve-3da0cfae",
+    "senseId": "sense-f1bac554",
+    "term": "postal survey",
+    "pos": "noun",
+    "definition": "A survey whose questions and responses are sent by post.",
+    "example": "The council used a postal survey to ask residents about bus services."
+  },
+  {
+    "entryId": "ve-d427c714",
+    "senseId": "sense-5920a9ae",
+    "term": "practical skills",
+    "pos": "noun",
+    "definition": "Abilities used to carry out real tasks.",
+    "example": "The workshop teaches practical skills such as repairing a bicycle tyre."
+  },
+  {
+    "entryId": "ve-66617344",
+    "senseId": "sense-328fdbfe",
+    "term": "previous data",
+    "pos": "noun",
+    "definition": "Information collected or recorded earlier.",
+    "example": "We compared this year's measurements with previous data."
+  },
+  {
+    "entryId": "ve-14487e5d",
+    "senseId": "sense-9d5849c7",
+    "term": "previous studies",
+    "pos": "noun",
+    "definition": "Research investigations conducted earlier.",
+    "example": "Previous studies found a link between sleep and memory."
+  },
+  {
+    "entryId": "ve-75f61c08",
+    "senseId": "sense-34b99d32",
+    "term": "private bathroom",
+    "pos": "noun",
+    "definition": "A bathroom reserved for one person, room, or household rather than shared publicly.",
+    "example": "Our hotel room has a private bathroom."
+  },
+  {
+    "entryId": "ve-e97fd5fa",
+    "senseId": "sense-197a9500",
+    "term": "professional learning",
+    "pos": "noun",
+    "definition": "Learning related to the skills and knowledge needed in a profession.",
+    "example": "The school provides time for teachers' professional learning."
+  },
+  {
+    "entryId": "ve-7b468bd0",
+    "senseId": "sense-e41805ea",
+    "term": "project outline",
+    "pos": "noun",
+    "definition": "A brief plan showing a project's main aims, stages, and tasks.",
+    "example": "Submit your project outline before starting the interviews."
+  },
+  {
+    "entryId": "ve-c463da2f",
+    "senseId": "sense-50df2035",
+    "term": "public awareness",
+    "pos": "noun",
+    "definition": "The extent to which people know about and understand an issue.",
+    "example": "The campaign aims to increase public awareness of water conservation."
+  },
+  {
+    "entryId": "ve-4c423706",
+    "senseId": "sense-d48917fc",
+    "term": "public skills",
+    "pos": "noun",
+    "definition": "Abilities used when interacting or communicating with the public.",
+    "example": "The volunteer training develops skills for speaking with the public.",
+    "usage": "Public skills is not a standard category; public speaking skills or interpersonal skills may be intended."
+  },
+  {
+    "entryId": "ve-61b658d3",
+    "senseId": "sense-98817309",
+    "term": "quality of personnel",
+    "pos": "noun",
+    "definition": "The standard of employees' skills, competence, or work.",
+    "example": "Staff training can improve the quality of personnel in customer-facing roles.",
+    "usage": "Staff competence or quality of staff is often clearer."
+  },
+  {
+    "entryId": "ve-b1f95945",
+    "senseId": "sense-f12481df",
+    "term": "Queen's suite",
+    "pos": "noun",
+    "definition": "A suite named for a queen or called the Queen's Suite.",
+    "example": "The booking form lists a room named the Queen's Suite.",
+    "usage": "The name does not establish that a queen stayed there or identify a particular hotel."
+  },
+  {
+    "entryId": "ve-c34c296a",
+    "senseId": "sense-2cd15690",
+    "term": "railway worker",
+    "pos": "noun",
+    "definition": "A person employed in operating or maintaining a railway.",
+    "example": "The railway worker inspected the track before the morning service."
+  },
+  {
+    "entryId": "ve-31e08b51",
+    "senseId": "sense-6df1f54b",
+    "term": "rapid population growth",
+    "pos": "noun",
+    "definition": "A fast increase in the number of people in an area.",
+    "example": "Rapid population growth increased demand for housing."
+  },
+  {
+    "entryId": "ve-d985ab75",
+    "senseId": "sense-a3b1a2f",
+    "term": "rare fish",
+    "pos": "noun",
+    "definition": "Fish that are uncommon or difficult to find.",
+    "example": "Divers recorded several rare fish near the reef."
+  },
+  {
+    "entryId": "ve-3960f31",
+    "senseId": "sense-7657f56b",
+    "term": "reading hits",
+    "pos": "noun",
+    "definition": "Results found when searching for reading materials or information.",
+    "example": "The catalogue search returned several useful reading results.",
+    "usage": "Reading hits is nonstandard and ambiguous; hits may mean search results, but reading lists or reading tips could also have been intended."
+  },
+  {
+    "entryId": "ve-617e8eb5",
+    "senseId": "sense-9150656f",
+    "term": "recall system",
+    "pos": "noun",
+    "definition": "A procedure for reminding people to return, revisit, or replace something.",
+    "example": "The clinic's recall system reminds patients when their next check-up is due.",
+    "usage": "The particular use depends on context; recall systems also exist for products and borrowed materials."
+  },
+  {
+    "entryId": "ve-a2537938",
+    "senseId": "sense-ecc2a002",
+    "term": "recreation therapy",
+    "pos": "noun",
+    "definition": "The use of leisure activities to support health, functioning, or well-being.",
+    "example": "Recreation therapy included adapted swimming sessions during her recovery.",
+    "usage": "Recreational therapy is a common alternative."
+  },
+  {
+    "entryId": "ve-6ed7576c",
+    "senseId": "sense-49c244d6",
+    "term": "reference skills",
+    "pos": "noun",
+    "definition": "Abilities needed to find and use reference sources.",
+    "example": "The librarian taught us reference skills, including how to search a subject index."
+  },
+  {
+    "entryId": "ve-a7e84d44",
+    "senseId": "sense-a4f1f5fe",
+    "term": "reinforced by wood and steel",
+    "pos": "adjective",
+    "definition": "Made stronger through the addition of wood and steel.",
+    "example": "The frame was reinforced with wood and steel.",
+    "usage": "Reinforced with is usually used for the materials; reinforced by often introduces an action or agent."
+  },
+  {
+    "entryId": "ve-c8487866",
+    "senseId": "sense-d157851c",
+    "term": "replacement of jobs",
+    "pos": "noun",
+    "definition": "The substitution of existing jobs with other jobs or with processes that remove the need for them.",
+    "example": "Automation may lead to the replacement of jobs in repetitive manufacturing work.",
+    "usage": "The phrase does not say whether new jobs replace old ones or technology eliminates them; context determines this."
+  },
+  {
+    "entryId": "ve-a0972d2a",
+    "senseId": "sense-b37cd250",
+    "term": "research approach",
+    "pos": "noun",
+    "definition": "A general method or way of organizing a research investigation.",
+    "example": "We chose a qualitative research approach based on interviews."
+  },
+  {
+    "entryId": "ve-bd8b06a3",
+    "senseId": "sense-6eebdb39",
+    "term": "research opportunities",
+    "pos": "noun",
+    "definition": "Chances to carry out research.",
+    "example": "The scholarship offers research opportunities in coastal ecology."
+  },
+  {
+    "entryId": "ve-d205533a",
+    "senseId": "sense-12afba40",
+    "term": "resident student",
+    "pos": "noun",
+    "definition": "A student who lives in accommodation associated with an institution.",
+    "example": "Resident students can use the dining hall in the evening.",
+    "usage": "Some institutions use resident for a fee or legal classification; the accommodation sense is used here."
+  },
+  {
+    "entryId": "ve-8cd392cc",
+    "senseId": "sense-2745ec76",
+    "term": "resource protection",
+    "pos": "noun",
+    "definition": "Measures taken to prevent damage, depletion, or misuse of resources.",
+    "example": "Resource protection includes limiting groundwater extraction."
+  },
+  {
+    "entryId": "ve-3ad93be2",
+    "senseId": "sense-9600b818",
+    "term": "respect the local environment",
+    "pos": "verb",
+    "definition": "To behave in ways that avoid damaging the nature and surroundings of an area.",
+    "example": "Visitors should respect the local environment by staying on marked paths."
+  },
+  {
+    "entryId": "ve-320c80e",
+    "senseId": "sense-6739c9f4",
+    "term": "review promptly",
+    "pos": "verb",
+    "definition": "To check or study something again without delay.",
+    "example": "Review promptly after each lecture so the main points are still fresh in your mind."
+  },
+  {
+    "entryId": "ve-837c4648",
+    "senseId": "sense-f3050f72",
+    "term": "Rose Lane",
+    "pos": "noun",
+    "definition": "A street name consisting of Rose and Lane.",
+    "example": "The parcel label gives the address as 12 Rose Lane.",
+    "usage": "The location of this named street requires context."
+  },
+  {
+    "entryId": "ve-81acf80",
+    "senseId": "sense-b74bfba",
+    "term": "route map",
+    "pos": "noun",
+    "definition": "A diagram showing the paths followed by transport services or a journey.",
+    "example": "The route map shows where to change buses."
+  },
+  {
+    "entryId": "ve-82223c1",
+    "senseId": "sense-c669bdb",
+    "term": "running facilities",
+    "pos": "noun",
+    "definition": "Places or equipment provided for running.",
+    "example": "The sports centre's running facilities include an indoor track."
+  },
+  {
+    "entryId": "ve-163be43e",
+    "senseId": "sense-ddb86bc4",
+    "term": "role of staff",
+    "pos": "noun",
+    "definition": "The duties or function of employees.",
+    "example": "The induction session explains the role of staff during an evacuation."
+  },
+  {
+    "entryId": "ve-693b36fe",
+    "senseId": "sense-90a21684",
+    "term": "safety regulations",
+    "pos": "noun",
+    "definition": "Rules intended to prevent injury or harm.",
+    "example": "All laboratory users must follow the safety regulations."
+  },
+  {
+    "entryId": "ve-1edd1dc6",
+    "senseId": "sense-fa80d6bc",
+    "term": "satellite TV station",
+    "pos": "noun",
+    "definition": "A television broadcaster whose programmes are transmitted by satellite.",
+    "example": "The satellite TV station broadcasts news to viewers in several countries."
+  },
+  {
+    "entryId": "ve-29bd52d0",
+    "senseId": "sense-6167acea",
+    "term": "scientific approach",
+    "pos": "noun",
+    "definition": "A way of investigating a question through evidence, observation, and systematic testing.",
+    "example": "The team took a scientific approach by measuring results under controlled conditions."
+  },
+  {
+    "entryId": "ve-acf2da92",
+    "senseId": "sense-4b4e2ce8",
+    "term": "seating capacity",
+    "pos": "noun",
+    "definition": "The maximum number of people a venue or vehicle can accommodate in seats.",
+    "example": "The theatre has a seating capacity of four hundred."
+  },
+  {
+    "entryId": "ve-87f79cde",
+    "senseId": "sense-86eb38a4",
+    "term": "second-year student",
+    "pos": "noun",
+    "definition": "A student in the second year of a course or program.",
+    "example": "A second-year student showed us around the engineering department."
+  },
+  {
+    "entryId": "ve-59276aff",
+    "senseId": "sense-7e14cae5",
+    "term": "self-access lab",
+    "pos": "noun",
+    "definition": "A learning room where students use materials or equipment independently.",
+    "example": "The self-access lab has recordings for pronunciation practice."
+  },
+  {
+    "entryId": "ve-a750a53a",
+    "senseId": "sense-91654c40",
+    "term": "senior manager",
+    "pos": "noun",
+    "definition": "A manager with substantial responsibility and authority.",
+    "example": "A senior manager must approve purchases above the spending limit."
+  },
+  {
+    "entryId": "ve-a0daa2c1",
+    "senseId": "sense-bc2efadb",
+    "term": "sense of success",
+    "pos": "noun",
+    "definition": "A feeling of having achieved something worthwhile.",
+    "example": "Completing the first five kilometres gave her a sense of success."
+  },
+  {
+    "entryId": "ve-7971058d",
+    "senseId": "sense-a791b717",
+    "term": "set money aside",
+    "pos": "verb",
+    "definition": "To save part of one's money for a particular purpose or future need.",
+    "example": "I set money aside each month for unexpected repairs."
+  },
+  {
+    "entryId": "ve-72a8dd1a",
+    "senseId": "sense-c7c48060",
+    "term": "shear the sheep",
+    "pos": "verb",
+    "definition": "To cut the wool from sheep.",
+    "example": "The farmer will shear the sheep before the summer heat arrives."
+  },
+  {
+    "entryId": "ve-55f2e372",
+    "senseId": "sense-144f5188",
+    "term": "shop manager",
+    "pos": "noun",
+    "definition": "A person responsible for running a shop.",
+    "example": "The shop manager arranged extra staff for the weekend sale."
+  },
+  {
+    "entryId": "ve-5aba24aa",
+    "senseId": "sense-b1feb9d0",
+    "term": "single item",
+    "pos": "noun",
+    "definition": "One individual object or unit.",
+    "example": "Passengers may carry a single item of hand luggage."
+  },
+  {
+    "entryId": "ve-dc19c5ce",
+    "senseId": "sense-5f527fb4",
+    "term": "silver cloth",
+    "pos": "noun",
+    "definition": "Fabric that is silver in colour or contains silver-coloured threads.",
+    "example": "The designer used silver cloth for the costume's collar.",
+    "usage": "The wording alone does not establish that the material contains real silver."
+  },
+  {
+    "entryId": "ve-76341ce6",
+    "senseId": "sense-3cb7b99c",
+    "term": "small scar on his chin",
+    "pos": "noun",
+    "definition": "A small mark left by a healed injury on a man's chin.",
+    "example": "The witness described a man with a small scar on his chin."
+  },
+  {
+    "entryId": "ve-329ac0a1",
+    "senseId": "sense-85f2d4fb",
+    "term": "social matter effects",
+    "pos": "noun",
+    "definition": "Effects connected with social issues or conditions.",
+    "example": "The report examines the effects of social conditions on children's health.",
+    "usage": "Social matter effects is nonstandard and its intended meaning is uncertain; effects of social issues is one possible interpretation."
+  },
+  {
+    "entryId": "ve-1aad9d97",
+    "senseId": "sense-7061504d",
+    "term": "spare socks",
+    "pos": "noun",
+    "definition": "Extra socks kept for use when another pair is wet, dirty, or unavailable.",
+    "example": "Pack spare socks in case your feet get wet on the hike."
+  },
+  {
+    "entryId": "ve-28b1ab2d",
+    "senseId": "sense-3ee710f7",
+    "term": "special mail",
+    "pos": "noun",
+    "definition": "Mail sent or handled using a service beyond ordinary delivery.",
+    "example": "Ask whether special mail needs a signature on delivery.",
+    "usage": "This is a broad, context-dependent phrase; registered mail or express mail may be the precise service intended."
+  },
+  {
+    "entryId": "ve-28b7822a",
+    "senseId": "sense-3fa7c750",
+    "term": "special rule",
+    "pos": "noun",
+    "definition": "A rule that applies to a particular situation or group.",
+    "example": "A special rule allows young children to enter free of charge."
+  },
+  {
+    "entryId": "ve-93352980",
+    "senseId": "sense-f9da59ba",
+    "term": "specialized museum",
+    "pos": "noun",
+    "definition": "A museum focused on a particular subject or type of object.",
+    "example": "The town has a specialized museum devoted to historic clocks."
+  },
+  {
+    "entryId": "ve-d79bcb73",
+    "senseId": "sense-cb1539e9",
+    "term": "species of crocodiles",
+    "pos": "noun",
+    "definition": "Distinct biological kinds of crocodiles.",
+    "example": "The guide explained how two species of crocodiles differ in size."
+  },
+  {
+    "entryId": "ve-e02c66a9",
+    "senseId": "sense-e5b93bf3",
+    "term": "spiral notebook",
+    "pos": "noun",
+    "definition": "A notebook whose pages are held together by a coiled wire or plastic binding.",
+    "example": "She takes lecture notes in a spiral notebook."
+  },
+  {
+    "entryId": "ve-1edac7be",
+    "senseId": "sense-fa33bf44",
+    "term": "sports shoes",
+    "pos": "noun",
+    "definition": "Shoes designed for exercise or sporting activities.",
+    "example": "Wear sports shoes with good grip for the indoor training session."
+  },
+  {
+    "entryId": "ve-616d8be0",
+    "senseId": "sense-8f1f07da",
+    "term": "standard suite",
+    "pos": "noun",
+    "definition": "A suite offered as a property's ordinary category of connected rooms.",
+    "example": "We booked a standard suite with a bedroom and a sitting area.",
+    "usage": "Suite categories and facilities vary by property."
+  },
+  {
+    "entryId": "ve-346c5676",
+    "senseId": "sense-c1f7250c",
+    "term": "steel and wood",
+    "pos": "noun",
+    "definition": "Steel and timber considered together as building or manufacturing materials.",
+    "example": "The bridge uses steel and wood in its structure."
+  },
+  {
+    "entryId": "ve-bf45118",
+    "senseId": "sense-8a7e7422",
+    "term": "storage space",
+    "pos": "noun",
+    "definition": "An area or amount of room available for keeping things.",
+    "example": "The flat has storage space under the stairs."
+  },
+  {
+    "entryId": "ve-3a94a5d0",
+    "senseId": "sense-8d295fea",
+    "term": "stress levels",
+    "pos": "noun",
+    "definition": "The amounts of pressure, worry, or tension experienced.",
+    "example": "The survey found higher stress levels during the examination period."
+  },
+  {
+    "entryId": "ve-2004449",
+    "senseId": "sense-4208cd53",
+    "term": "strict control",
+    "pos": "noun",
+    "definition": "Firm limits or close supervision over an activity or process.",
+    "example": "The laboratory keeps strict control over access to dangerous chemicals."
+  },
+  {
+    "entryId": "ve-71da7dcd",
+    "senseId": "sense-ad2a3757",
+    "term": "student account",
+    "pos": "noun",
+    "definition": "An account designed or provided for a student, such as a bank or online account.",
+    "example": "My student account has no monthly banking fee.",
+    "usage": "The type of account depends on the context."
+  },
+  {
+    "entryId": "ve-fb764fe5",
+    "senseId": "sense-6a404cbf",
+    "term": "student hostel",
+    "pos": "noun",
+    "definition": "A building providing accommodation for students, often with shared facilities.",
+    "example": "The student hostel is a ten-minute walk from campus."
+  },
+  {
+    "entryId": "ve-ffd07111",
+    "senseId": "sense-f9de930b",
+    "term": "student service",
+    "pos": "noun",
+    "definition": "Help or facilities provided for students.",
+    "example": "The student service helps new arrivals find accommodation.",
+    "usage": "Student services is usual for the institution's wider set of support functions."
+  },
+  {
+    "entryId": "ve-1d59dcf2",
+    "senseId": "sense-c8957b08",
+    "term": "study club",
+    "pos": "noun",
+    "definition": "A group whose members meet to study or support one another's learning.",
+    "example": "Our study club meets every Thursday to revise lecture notes."
+  },
+  {
+    "entryId": "ve-49d23bf",
+    "senseId": "sense-98419ba5",
+    "term": "stuff of purse",
+    "pos": "noun",
+    "definition": "Things kept inside a purse.",
+    "example": "She emptied the contents of her purse to look for the missing key.",
+    "usage": "Stuff of purse is nonstandard; contents of a purse is the natural form."
+  },
+  {
+    "entryId": "ve-a8dd0127",
+    "senseId": "sense-c47d263d",
+    "term": "submit the document",
+    "pos": "verb",
+    "definition": "To send or hand in a document for consideration or processing.",
+    "example": "Please submit the document before the application deadline."
+  },
+  {
+    "entryId": "ve-7eeca477",
+    "senseId": "sense-5c81336d",
+    "term": "support service",
+    "pos": "noun",
+    "definition": "Assistance provided to help people use something or deal with a difficulty.",
+    "example": "The support service helped me reset my university password."
+  },
+  {
+    "entryId": "ve-7f545147",
+    "senseId": "sense-69de7a1d",
+    "term": "summary report",
+    "pos": "noun",
+    "definition": "A written account presenting the main points of a larger body of information.",
+    "example": "The summary report highlights the survey's three main findings."
+  },
+  {
+    "entryId": "ve-91072288",
+    "senseId": "sense-b1eb73b2",
+    "term": "survival course",
+    "pos": "noun",
+    "definition": "A course teaching skills for staying alive in difficult conditions.",
+    "example": "The survival course taught us how to find safe drinking water."
+  },
+  {
+    "entryId": "ve-4c0be531",
+    "senseId": "sense-cd888b6b",
+    "term": "take blood pressure",
+    "pos": "verb",
+    "definition": "To measure the pressure of blood circulating through a person's arteries.",
+    "example": "The nurse will take your blood pressure before the consultation."
+  },
+  {
+    "entryId": "ve-8629ddee",
+    "senseId": "sense-4b659b94",
+    "term": "take risks",
+    "pos": "verb",
+    "definition": "To do things that involve a possibility of loss, failure, or harm.",
+    "example": "Entrepreneurs often have to take risks when starting a business."
+  },
+  {
+    "entryId": "ve-69027086",
+    "senseId": "sense-8950817c",
+    "term": "teaching club",
+    "pos": "noun",
+    "definition": "A group whose members meet to discuss or practise teaching.",
+    "example": "The teaching club meets monthly to exchange classroom activities.",
+    "usage": "This descriptive name does not specify a formal type of organization."
+  },
+  {
+    "entryId": "ve-883c55b8",
+    "senseId": "sense-8fc70c82",
+    "term": "teaching staff",
+    "pos": "noun",
+    "definition": "The people employed to teach at an institution.",
+    "example": "The teaching staff attended a workshop on assessment."
+  },
+  {
+    "entryId": "ve-5aa3845f",
+    "senseId": "sense-af141005",
+    "term": "telephone survey",
+    "pos": "noun",
+    "definition": "A survey conducted by asking questions over the phone.",
+    "example": "The researchers used a telephone survey to interview residents."
+  },
+  {
+    "entryId": "ve-1040d9f8",
+    "senseId": "sense-185c18c2",
+    "term": "terrestrial heat",
+    "pos": "noun",
+    "definition": "Heat originating within the Earth.",
+    "example": "The plant uses terrestrial heat to generate electricity.",
+    "usage": "Geothermal heat is the more usual technical term."
+  },
+  {
+    "entryId": "ve-4f2dfb1c",
+    "senseId": "sense-34ed5ea6",
+    "term": "the marketing department",
+    "pos": "noun",
+    "definition": "The part of an organization responsible for promoting its products or services.",
+    "example": "The marketing department designed the new advertising campaign."
+  },
+  {
+    "entryId": "ve-f4aaa15e",
+    "senseId": "sense-89fecd24",
+    "term": "the poor",
+    "pos": "noun",
+    "definition": "People who have little money or few financial resources.",
+    "example": "The charity provides winter clothing for the poor.",
+    "usage": "A collective expression with plural agreement; people living in poverty can be more specific."
+  },
+  {
+    "entryId": "ve-dad45b48",
+    "senseId": "sense-355fc472",
+    "term": "theme of project",
+    "pos": "noun",
+    "definition": "The main topic or central idea of a project.",
+    "example": "The theme of the project is sustainable transport.",
+    "usage": "Normally say theme of a project or the project's theme."
+  },
+  {
+    "entryId": "ve-9f99afd2",
+    "senseId": "sense-92cfaa28",
+    "term": "theory chapters",
+    "pos": "noun",
+    "definition": "Sections of a book or thesis that explain theoretical ideas.",
+    "example": "The theory chapters explain the models used in the analysis."
+  },
+  {
+    "entryId": "ve-9c3ff37e",
+    "senseId": "sense-243e6304",
+    "term": "tilled land",
+    "pos": "noun",
+    "definition": "Land whose soil has been turned or prepared for growing crops.",
+    "example": "Heavy rain washed soil from the newly tilled land."
+  },
+  {
+    "entryId": "ve-2361bfbd",
+    "senseId": "sense-8f99b767",
+    "term": "thinking pattern",
+    "pos": "noun",
+    "definition": "A recurring way of reasoning or organizing thoughts.",
+    "example": "The exercise asks you to notice a thinking pattern that leads to worry."
+  },
+  {
+    "entryId": "ve-b58f13d1",
+    "senseId": "sense-67718dcb",
+    "term": "title of essay",
+    "pos": "noun",
+    "definition": "The name given to an essay.",
+    "example": "Write the title of the essay at the top of the first page.",
+    "usage": "Use title of an essay or the essay's title."
+  },
+  {
+    "entryId": "ve-881dace3",
+    "senseId": "sense-8bd34979",
+    "term": "too much work",
+    "pos": "noun",
+    "definition": "More tasks or effort than can comfortably be managed.",
+    "example": "She had too much work to finish everything before the weekend."
+  },
+  {
+    "entryId": "ve-2c6fbd32",
+    "senseId": "sense-ba676348",
+    "term": "tourist brochures",
+    "pos": "noun",
+    "definition": "Printed booklets giving visitors information about places and activities.",
+    "example": "The reception desk has tourist brochures with maps of the old town."
+  },
+  {
+    "entryId": "ve-cc361b75",
+    "senseId": "sense-52f98a2f",
+    "term": "traffic rules",
+    "pos": "noun",
+    "definition": "Rules governing how people and vehicles use roads.",
+    "example": "Drivers must follow traffic rules even when the roads are quiet."
+  },
+  {
+    "entryId": "ve-f1bc0d27",
+    "senseId": "sense-293db23d",
+    "term": "travel package",
+    "pos": "noun",
+    "definition": "A set of travel services sold together, often including transport and accommodation.",
+    "example": "The travel package includes flights, hotel accommodation, and airport transfers."
+  },
+  {
+    "entryId": "ve-5b96f04b",
+    "senseId": "sense-ce74f991",
+    "term": "Trinity College",
+    "pos": "noun",
+    "definition": "A college name shared by several educational institutions.",
+    "example": "Check which Trinity College the application form refers to.",
+    "usage": "The name alone does not identify a particular college or its location."
+  },
+  {
+    "entryId": "ve-3ac6b61a",
+    "senseId": "sense-939d7960",
+    "term": "TV chat show",
+    "pos": "noun",
+    "definition": "A television programme in which a host talks with guests.",
+    "example": "The actor discussed her new film on a TV chat show."
+  },
+  {
+    "entryId": "ve-4284cdf0",
+    "senseId": "sense-931e8bca",
+    "term": "underground car park",
+    "pos": "noun",
+    "definition": "A place below ground level where cars can be parked.",
+    "example": "The hotel has an underground car park beneath the main building."
+  },
+  {
+    "entryId": "ve-2e2a4e0d",
+    "senseId": "sense-f3740f97",
+    "term": "University Drive",
+    "pos": "noun",
+    "definition": "A street name consisting of University and Drive.",
+    "example": "The taxi driver asked which building on University Drive we needed.",
+    "usage": "The name alone does not identify a particular street."
+  },
+  {
+    "entryId": "ve-1125df70",
+    "senseId": "sense-35e1cd4a",
+    "term": "University of Wollongong",
+    "pos": "noun",
+    "definition": "An Australian university named after the city of Wollongong.",
+    "example": "She is applying to the University of Wollongong for postgraduate study."
+  },
+  {
+    "entryId": "ve-c1fe9ac9",
+    "senseId": "sense-1d1f3d3",
+    "term": "upward trend",
+    "pos": "noun",
+    "definition": "A general movement toward higher values or amounts.",
+    "example": "The graph shows an upward trend in electricity demand."
+  },
+  {
+    "entryId": "ve-3c1263d8",
+    "senseId": "sense-be5edee2",
+    "term": "vary according to the type, shape",
+    "pos": "verb",
+    "definition": "To differ depending on category or shape.",
+    "example": "Delivery charges vary according to the type and shape of the parcel.",
+    "usage": "The original is incomplete; specify what varies and join type and shape with and."
+  },
+  {
+    "entryId": "ve-f99e85a1",
+    "senseId": "sense-2d6f39fb",
+    "term": "video project",
+    "pos": "noun",
+    "definition": "A planned piece of work involving the creation or use of video.",
+    "example": "Our video project documents changes along the riverbank."
+  },
+  {
+    "entryId": "ve-9fa4c344",
+    "senseId": "sense-943d2bfe",
+    "term": "VIP class",
+    "pos": "noun",
+    "definition": "A class or service category offering special treatment to selected customers.",
+    "example": "The airline advertises a VIP class with additional lounge access.",
+    "usage": "VIP means very important person; the exact service and whether it is a travel category depend on the provider."
+  },
+  {
+    "entryId": "ve-6d36df80",
+    "senseId": "sense-1412cfba",
+    "term": "volcanic dust",
+    "pos": "noun",
+    "definition": "Fine particles released by a volcanic eruption.",
+    "example": "Volcanic dust reduced visibility near the mountain.",
+    "usage": "Volcanic ash is the usual technical term for fine fragments of erupted rock and glass."
+  },
+  {
+    "entryId": "ve-7a33a32c",
+    "senseId": "sense-c0a80896",
+    "term": "walking club",
+    "pos": "noun",
+    "definition": "A group that organizes walks for its members.",
+    "example": "The walking club meets at the station every Sunday morning."
+  },
+  {
+    "entryId": "ve-866f92fe",
+    "senseId": "sense-5461f284",
+    "term": "waste handling",
+    "pos": "noun",
+    "definition": "The collection, movement, storage, or treatment of discarded material.",
+    "example": "Workers receive training in safe waste handling."
+  },
+  {
+    "entryId": "ve-f0f99f69",
+    "senseId": "sense-102d8cb3",
+    "term": "water resources",
+    "pos": "noun",
+    "definition": "Supplies of water available for use by people or ecosystems.",
+    "example": "The drought placed pressure on the region's water resources."
+  },
+  {
+    "entryId": "ve-cd2a7f11",
+    "senseId": "sense-727a610b",
+    "term": "welcome party",
+    "pos": "noun",
+    "definition": "A social event held to greet new arrivals.",
+    "example": "The department organized a welcome party for first-year students."
+  },
+  {
+    "entryId": "ve-72d3f122",
+    "senseId": "sense-cd521558",
+    "term": "wide writing",
+    "pos": "noun",
+    "definition": "Writing across a broad space, or writing with broadly spaced characters.",
+    "example": "The large, widely spaced handwriting was easy to read from a distance.",
+    "usage": "Wide writing is nonstandard and ambiguous; wide reading may be a transcription error, but cannot be assumed."
+  },
+  {
+    "entryId": "ve-b9a21280",
+    "senseId": "sense-ede462ba",
+    "term": "wing design",
+    "pos": "noun",
+    "definition": "The planned shape and structure of an aircraft's wing.",
+    "example": "Engineers tested a new wing design in the wind tunnel."
+  },
+  {
+    "entryId": "ve-fb02c15",
+    "senseId": "sense-5b5ae8f",
+    "term": "wood should be cut and seasoned",
+    "pos": "expression",
+    "definition": "Timber needs to be cut and dried or conditioned before use.",
+    "example": "Wood should be cut and seasoned before it is used to make furniture."
+  },
+  {
+    "entryId": "ve-f98e346",
+    "senseId": "sense-2b54c3c",
+    "term": "work systematically",
+    "pos": "verb",
+    "definition": "To carry out tasks in an organized and methodical way.",
+    "example": "Work systematically through the checklist so you do not miss a step."
+  },
+  {
+    "entryId": "ve-14736750",
+    "senseId": "sense-a2e0516a",
+    "term": "your own embassy",
+    "pos": "noun",
+    "definition": "The diplomatic office representing your country in another country.",
+    "example": "If you lose your passport abroad, contact your own embassy."
+  },
+  {
+    "entryId": "ve-5b86ff25",
+    "senseId": "sense-cc66e3ff",
+    "term": "try hard",
+    "pos": "verb",
+    "definition": "To make a strong effort to do something.",
+    "example": "I will try hard to improve my listening score before the next test."
+  },
+  {
+    "entryId": "ve-54ac4d06",
+    "senseId": "sense-ea35edfc",
+    "term": "more often",
+    "pos": "expression",
+    "definition": "On a greater number of occasions.",
+    "example": "The buses run more often during the morning rush hour."
+  },
+  {
+    "entryId": "ve-c39cf575",
+    "senseId": "sense-373ba42f",
+    "term": "specialize in",
+    "pos": "verb",
+    "definition": "To focus one's work or study on a particular subject or activity.",
+    "example": "The clinic specializes in sports injuries."
+  },
+  {
+    "entryId": "ve-66c163aa",
+    "senseId": "sense-3eedd8d0",
+    "term": "hair color",
+    "pos": "noun",
+    "definition": "The colour of the hair on a person's head.",
+    "example": "The form asks for height, eye colour, and hair color.",
+    "usage": "Color is American spelling; colour is British spelling."
+  },
+  {
+    "entryId": "ve-d0bf5816",
+    "senseId": "sense-e8aa5aec",
+    "term": "waved hair",
+    "pos": "noun",
+    "definition": "Hair arranged in curves or waves.",
+    "example": "She had waved hair styled carefully for the ceremony.",
+    "usage": "Waved can mean deliberately styled into waves; wavy hair describes the texture more generally."
+  },
+  {
+    "entryId": "ve-6bbd463c",
+    "senseId": "sense-e3660d86",
+    "term": "a pony tail",
+    "pos": "noun",
+    "definition": "Hair gathered and tied at the back of the head, hanging like a tail.",
+    "example": "She tied her hair in a ponytail before going for a run.",
+    "usage": "The usual spelling is ponytail."
+  },
+  {
+    "entryId": "ve-79b598f8",
+    "senseId": "sense-b068b7c2",
+    "term": "wearing glasses",
+    "pos": "verb",
+    "definition": "Having spectacles on one's face.",
+    "example": "The man wearing glasses is our new lecturer."
+  },
+  {
+    "entryId": "ve-53a3a8d6",
+    "senseId": "sense-c818c3ac",
+    "term": "checked shirt",
+    "pos": "noun",
+    "definition": "A shirt patterned with squares of different colours.",
+    "example": "He wore a blue checked shirt and dark trousers."
+  },
+  {
+    "entryId": "ve-774193d9",
+    "senseId": "sense-5f740ec3",
+    "term": "be in dark",
+    "pos": "verb",
+    "definition": "To lack information about something.",
+    "example": "We were in the dark about the change of venue.",
+    "usage": "The idiomatic form is be in the dark; without the article, the original is incomplete."
+  },
+  {
+    "entryId": "ve-a64e54ee",
+    "senseId": "sense-7018f294",
+    "term": "passport number",
+    "pos": "noun",
+    "definition": "The identifying number printed in a passport.",
+    "example": "Enter your passport number exactly as it appears on the document."
+  },
+  {
+    "entryId": "ve-a50f7a06",
+    "senseId": "sense-46febafc",
+    "term": "favourite food",
+    "pos": "noun",
+    "definition": "The food a person likes most.",
+    "example": "My favourite food is vegetable lasagne."
+  },
+  {
+    "entryId": "ve-17a5308e",
+    "senseId": "sense-c4b4274",
+    "term": "English proficiency",
+    "pos": "noun",
+    "definition": "The ability to understand and use English effectively.",
+    "example": "The university requires evidence of English proficiency."
+  },
+  {
+    "entryId": "ve-72bb7149",
+    "senseId": "sense-ca299a53",
+    "term": "home number",
+    "pos": "noun",
+    "definition": "A telephone number used to contact someone at home.",
+    "example": "Please leave your home number in case we need to contact you.",
+    "usage": "Home telephone number is clearer; the phrase can have other meanings in specialized contexts."
+  },
+  {
+    "entryId": "ve-a915406c",
+    "senseId": "sense-cbbd4dd6",
+    "term": "date of departure",
+    "pos": "noun",
+    "definition": "The calendar day on which a journey or departure begins.",
+    "example": "The ticket shows the date of departure as 18 June."
+  },
+  {
+    "entryId": "ve-42c0cf9e",
+    "senseId": "sense-9adac364",
+    "term": "housing coordinator",
+    "pos": "noun",
+    "definition": "A person who organizes accommodation arrangements.",
+    "example": "The housing coordinator helped us find a room near campus."
+  },
+  {
+    "entryId": "ve-f4ed5ce0",
+    "senseId": "sense-9298f8da",
+    "term": "for lease",
+    "pos": "adjective",
+    "definition": "Available to rent under a lease agreement.",
+    "example": "The sign says the shop premises are for lease."
+  },
+  {
+    "entryId": "ve-df1f4cd9",
+    "senseId": "sense-c308e7c3",
+    "term": "room number",
+    "pos": "noun",
+    "definition": "An identifying number assigned to a room.",
+    "example": "Write your room number on the breakfast order form."
+  },
+  {
+    "entryId": "ve-2b4ebfc2",
+    "senseId": "sense-9526b838",
+    "term": "a single bedroom",
+    "pos": "noun",
+    "definition": "A bedroom intended for one occupant or containing one single bed.",
+    "example": "The flat has a single bedroom suitable for one student.",
+    "usage": "Single room may describe occupancy, while single bedroom can also contrast with double bedroom."
+  },
+  {
+    "entryId": "ve-309d73ee",
+    "senseId": "sense-444bf194",
+    "term": "electric stoves",
+    "pos": "noun",
+    "definition": "Cooking appliances that use electricity to heat food.",
+    "example": "The accommodation has electric stoves in the shared kitchen."
+  },
+  {
+    "entryId": "ve-b0af259c",
+    "senseId": "sense-c693d926",
+    "term": "parking sticker",
+    "pos": "noun",
+    "definition": "A label placed on a vehicle to show permission to park.",
+    "example": "Display your parking sticker on the windscreen."
+  },
+  {
+    "entryId": "ve-5a265f1c",
+    "senseId": "sense-9ef242a6",
+    "term": "clamp the wheel",
+    "pos": "verb",
+    "definition": "To attach a locking device to a vehicle's wheel so it cannot move.",
+    "example": "Officials may clamp the wheel of a car parked without permission."
+  },
+  {
+    "entryId": "ve-14e51bfe",
+    "senseId": "sense-b1889b84",
+    "term": "make a reservation",
+    "pos": "verb",
+    "definition": "To arrange in advance for something such as a table, seat, or room to be kept for you.",
+    "example": "We need to make a reservation for six people at the restaurant."
+  },
+  {
+    "entryId": "ve-73ee4952",
+    "senseId": "sense-f1b773a8",
+    "term": "book a room",
+    "pos": "verb",
+    "definition": "To arrange in advance to use a room.",
+    "example": "I would like to book a room for two nights."
+  },
+  {
+    "entryId": "ve-d08b3b55",
+    "senseId": "sense-e1f2a5cf",
+    "term": "open ticket",
+    "pos": "noun",
+    "definition": "A travel ticket without a fixed travel date or with flexible arrangements.",
+    "example": "Ask whether the open ticket requires advance seat booking.",
+    "usage": "Conditions depend on the transport provider; an open ticket does not necessarily guarantee a seat."
+  },
+  {
+    "entryId": "ve-d86c6504",
+    "senseId": "sense-e5f905be",
+    "term": "duty-free shop",
+    "pos": "noun",
+    "definition": "A shop selling eligible goods without certain local taxes or duties.",
+    "example": "She bought perfume at the airport duty-free shop."
+  },
+  {
+    "entryId": "ve-729df893",
+    "senseId": "sense-c65d0ac9",
+    "term": "fulling-booked",
+    "pos": "adjective",
+    "definition": "Having no available places or rooms because all have been reserved.",
+    "example": "The hotel is fully booked for the festival weekend.",
+    "usage": "Fulling-booked is a spelling error; use fully booked."
+  },
+  {
+    "entryId": "ve-a468b54a",
+    "senseId": "sense-317f5eb0",
+    "term": "book the room",
+    "pos": "verb",
+    "definition": "To reserve a particular room in advance.",
+    "example": "Please book the room with the sea view for our anniversary."
+  },
+  {
+    "entryId": "ve-fb179899",
+    "senseId": "sense-5e0aab83",
+    "term": "hilly areas",
+    "pos": "noun",
+    "definition": "Regions with many hills.",
+    "example": "Cycling is more demanding in hilly areas."
+  },
+  {
+    "entryId": "ve-a0a69ee4",
+    "senseId": "sense-b57a7b5e",
+    "term": "river cruise",
+    "pos": "noun",
+    "definition": "A leisure journey by boat along a river.",
+    "example": "The river cruise passes the old castle before returning to the quay."
+  },
+  {
+    "entryId": "ve-c0845697",
+    "senseId": "sense-d10f294d",
+    "term": "withdraw money",
+    "pos": "verb",
+    "definition": "To take money out of a bank account.",
+    "example": "You can withdraw money from the cash machine outside the library."
+  },
+  {
+    "entryId": "ve-30abf158",
+    "senseId": "sense-462a1c62",
+    "term": "open a student account",
+    "pos": "verb",
+    "definition": "To set up a bank account intended for students.",
+    "example": "Bring proof of enrolment when you open a student account."
+  },
+  {
+    "entryId": "ve-78d53c27",
+    "senseId": "sense-937cc13d",
+    "term": "change pounds into dollars",
+    "pos": "verb",
+    "definition": "To exchange money in pounds for money in dollars.",
+    "example": "I need to change pounds into dollars before my trip."
+  },
+  {
+    "entryId": "ve-dbd7dfcc",
+    "senseId": "sense-56d3d976",
+    "term": "apply for a job",
+    "pos": "verb",
+    "definition": "To formally ask to be considered for employment.",
+    "example": "She decided to apply for a job at the museum."
+  },
+  {
+    "entryId": "ve-b549f977",
+    "senseId": "sense-5e89286d",
+    "term": "extra pay",
+    "pos": "noun",
+    "definition": "Money received in addition to ordinary wages.",
+    "example": "Staff receive extra pay for working on public holidays."
+  },
+  {
+    "entryId": "ve-4dfd5489",
+    "senseId": "sense-da7e593",
+    "term": "keep an eye on stock",
+    "pos": "verb",
+    "definition": "To monitor the supply of goods held for sale or use.",
+    "example": "Keep an eye on stock so we can reorder before the shelves are empty."
+  },
+  {
+    "entryId": "ve-78bd95c2",
+    "senseId": "sense-90704e38",
+    "term": "send for a doctor",
+    "pos": "verb",
+    "definition": "To ask for a doctor to come and provide medical help.",
+    "example": "The hotel manager had to send for a doctor when a guest became ill."
+  },
+  {
+    "entryId": "ve-34ffe77",
+    "senseId": "sense-6d4fcd6d",
+    "term": "have a runny nose",
+    "pos": "verb",
+    "definition": "To have liquid mucus flowing from the nose.",
+    "example": "I have a runny nose and keep needing tissues."
+  },
+  {
+    "entryId": "ve-9e80661a",
+    "senseId": "sense-6e8d2960",
+    "term": "have a stuffed nose",
+    "pos": "verb",
+    "definition": "To have a nose blocked by congestion.",
+    "example": "I have a stuffed nose and cannot breathe comfortably through it.",
+    "usage": "Have a stuffy nose or have a blocked nose is more conventional."
+  },
+  {
+    "entryId": "ve-ed935f06",
+    "senseId": "sense-9fff3ffc",
+    "term": "preventive injection",
+    "pos": "noun",
+    "definition": "An injection given to help prevent an illness, often a vaccine.",
+    "example": "The clinic offers a preventive injection against influenza.",
+    "usage": "Vaccination is usually more precise when a vaccine is meant."
+  },
+  {
+    "entryId": "ve-42e278f4",
+    "senseId": "sense-9f31974e",
+    "term": "main industry",
+    "pos": "noun",
+    "definition": "The most important area of business or production in a place.",
+    "example": "Tourism is the town's main industry."
+  },
+  {
+    "entryId": "ve-88ecc5a",
+    "senseId": "sense-1a6857a0",
+    "term": "wine-making",
+    "pos": "noun",
+    "definition": "The process of producing wine, usually by fermenting grapes.",
+    "example": "The course explains the role of yeast in wine-making."
+  },
+  {
+    "entryId": "ve-350aad3f",
+    "senseId": "sense-d6605525",
+    "term": "lowest temperature",
+    "pos": "noun",
+    "definition": "The minimum recorded or expected temperature.",
+    "example": "The lowest temperature tonight is expected to be minus two degrees."
+  },
+  {
+    "entryId": "ve-93e2c76f",
+    "senseId": "sense-103bb575",
+    "term": "old and wet",
+    "pos": "adjective",
+    "definition": "Having existed for a long time and containing moisture.",
+    "example": "The old and wet wooden boards needed replacing.",
+    "usage": "This is a literal combination of adjectives; cold and wet may be a transcription error in weather contexts, but cannot be assumed."
+  },
+  {
+    "entryId": "ve-94a25c35",
+    "senseId": "sense-28ede2ef",
+    "term": "opposite to",
+    "pos": "adjective",
+    "definition": "Located across from something, or contrasting strongly with it.",
+    "example": "His answer was opposite to what I had expected.",
+    "usage": "For a location, directly opposite the station is usually more natural than opposite to the station."
+  },
+  {
+    "entryId": "ve-ffeec174",
+    "senseId": "sense-fdc6efce",
+    "term": "go straight across",
+    "pos": "verb",
+    "definition": "To cross directly to the other side without turning.",
+    "example": "Go straight across the road and enter the building with the red door."
+  },
+  {
+    "entryId": "ve-b7dfc2ae",
+    "senseId": "sense-b3d81854",
+    "term": "go east",
+    "pos": "verb",
+    "definition": "To travel in an easterly direction.",
+    "example": "Go east for two kilometres, then turn toward the lake."
+  },
+  {
+    "entryId": "ve-efac0a9b",
+    "senseId": "sense-e52d5dc1",
+    "term": "go along...till...",
+    "pos": "verb",
+    "definition": "To follow a route until reaching a stated place or point.",
+    "example": "Go along this street till you reach the post office.",
+    "usage": "The dots mark slots for a route and an endpoint; until is a more formal alternative to till."
+  },
+  {
+    "entryId": "ve-89a7a1da",
+    "senseId": "sense-be9bdd20",
+    "term": "be the first left",
+    "pos": "verb",
+    "definition": "To be located at the first road or turn on the left.",
+    "example": "The road to the museum is the first left after the bridge.",
+    "usage": "Use take the first left for an instruction; be the first left describes which turning is meant."
+  },
+  {
+    "entryId": "ve-5e493ddc",
+    "senseId": "sense-2770f966",
+    "term": "be on the corner of A street and B street",
+    "pos": "verb",
+    "definition": "To be situated where two named streets meet.",
+    "example": "The bank is on the corner of King Street and Market Street.",
+    "usage": "A street and B street are placeholders for real street names."
+  },
+  {
+    "entryId": "ve-72dfa7a3",
+    "senseId": "sense-ced49c39",
+    "term": "wheel chair access",
+    "pos": "noun",
+    "definition": "Facilities or routes that allow wheelchair users to enter and move through a place.",
+    "example": "The museum provides wheelchair access through its side entrance.",
+    "usage": "Wheelchair is normally written as one word."
+  },
+  {
+    "entryId": "ve-e5098476",
+    "senseId": "sense-863a130c",
+    "term": "the United Kingdom",
+    "pos": "noun",
+    "definition": "The country consisting of England, Scotland, Wales, and Northern Ireland.",
+    "example": "The United Kingdom uses the pound sterling as its currency."
+  },
+  {
+    "entryId": "ve-978052a",
+    "senseId": "sense-3878aa50",
+    "term": "orientation meeting",
+    "pos": "noun",
+    "definition": "A meeting introducing new people to an institution, role, or setting.",
+    "example": "The orientation meeting explains how to use the library and student portal."
+  },
+  {
+    "entryId": "ve-63e235d2",
+    "senseId": "sense-e028f028",
+    "term": "class participation",
+    "pos": "noun",
+    "definition": "Active involvement in class activities or discussions.",
+    "example": "Class participation counts toward the final course mark."
+  },
+  {
+    "entryId": "ve-2af28f73",
+    "senseId": "sense-89447de9",
+    "term": "closed reserved",
+    "pos": "adjective",
+    "definition": "Kept in a restricted library reserve collection rather than on freely accessible shelves.",
+    "example": "Ask a librarian for items held in the closed reserve collection.",
+    "usage": "Closed reserved is nonstandard; closed reserve is a plausible library interpretation, but the exact original meaning is uncertain."
+  },
+  {
+    "entryId": "ve-27b7a8ea",
+    "senseId": "sense-1eacc610",
+    "term": "dot-matrix printer",
+    "pos": "noun",
+    "definition": "A printer that forms characters and images using small pins that strike an inked ribbon.",
+    "example": "The old dot-matrix printer is still used for multi-part invoices."
+  },
+  {
+    "entryId": "ve-47a5929",
+    "senseId": "sense-93c57e73",
+    "term": "copyright laws",
+    "pos": "noun",
+    "definition": "Legal rules governing rights over the copying and use of creative works.",
+    "example": "Copyright laws may limit how much of a textbook you can photocopy."
+  },
+  {
+    "entryId": "ve-3004a5dc",
+    "senseId": "sense-30996166",
+    "term": "gap filling",
+    "pos": "noun",
+    "definition": "An exercise or task in which missing words or information are supplied.",
+    "example": "The listening test includes gap filling in a short summary."
+  },
+  {
+    "entryId": "ve-560485b8",
+    "senseId": "sense-16953c82",
+    "term": "private opinion",
+    "pos": "noun",
+    "definition": "A person's own view, especially one not expressed publicly.",
+    "example": "My private opinion differs from the statement issued by the committee."
+  },
+  {
+    "entryId": "ve-a5f23b23",
+    "senseId": "sense-64399fb9",
+    "term": "administrating office",
+    "pos": "noun",
+    "definition": "An office that manages an organization's routine operations and records.",
+    "example": "Submit the completed form to the administration office.",
+    "usage": "Administration office or administrative office is more conventional than administrating office."
+  },
+  {
+    "entryId": "ve-ec63df94",
+    "senseId": "sense-78dfd22e",
+    "term": "a jar of",
+    "pos": "expression",
+    "definition": "The amount of something contained in one jar.",
+    "example": "I bought a jar of honey at the market."
+  },
+  {
+    "entryId": "ve-e3a38139",
+    "senseId": "sense-5813a863",
+    "term": "a waste of",
+    "pos": "expression",
+    "definition": "An unnecessary or unproductive use of something.",
+    "example": "Waiting for the wrong bus was a waste of time."
+  },
+  {
+    "entryId": "ve-829aaa24",
+    "senseId": "sense-d5efee9e",
+    "term": "a great deal of",
+    "pos": "expression",
+    "definition": "A large amount of something.",
+    "example": "The repairs required a great deal of patience.",
+    "usage": "Normally followed by an uncountable noun."
+  },
+  {
+    "entryId": "ve-dff3e4f2",
+    "senseId": "sense-de708308",
+    "term": "a range of",
+    "pos": "expression",
+    "definition": "Several different kinds or examples of something.",
+    "example": "The library offers a range of online resources."
+  },
+  {
+    "entryId": "ve-1be7ee60",
+    "senseId": "sense-98e5ba5a",
+    "term": "at some stage",
+    "pos": "expression",
+    "definition": "At an unspecified point in a process or period.",
+    "example": "At some stage, we will need to replace the old computers."
+  },
+  {
+    "entryId": "ve-444585f3",
+    "senseId": "sense-ccf64469",
+    "term": "be attached to",
+    "pos": "verb",
+    "definition": "To be joined or fastened to something.",
+    "example": "The label is attached to the outside of the box.",
+    "usage": "The phrase can also describe emotional affection; the physical sense is used here."
+  },
+  {
+    "entryId": "ve-ac9aab55",
+    "senseId": "sense-3ff015cf",
+    "term": "be familiar with",
+    "pos": "verb",
+    "definition": "To know something through experience or previous contact.",
+    "example": "You should be familiar with the emergency procedures before using the lab."
+  },
+  {
+    "entryId": "ve-18bae62c",
+    "senseId": "sense-3017ab96",
+    "term": "be superior to",
+    "pos": "verb",
+    "definition": "To be better in quality, ability, or performance than something else.",
+    "example": "This material is superior to the cheaper alternative in durability."
+  },
+  {
+    "entryId": "ve-5f87fbbf",
+    "senseId": "sense-508773a5",
+    "term": "cater for",
+    "pos": "verb",
+    "definition": "To provide what a person or group needs.",
+    "example": "The cafeteria caters for students with different dietary requirements."
+  },
+  {
+    "entryId": "ve-a6f847db",
+    "senseId": "sense-86014301",
+    "term": "do a degree",
+    "pos": "verb",
+    "definition": "To study a course leading to a university degree.",
+    "example": "She wants to do a degree in environmental science.",
+    "usage": "Common in British English; study for a degree is another option."
+  },
+  {
+    "entryId": "ve-64c4438d",
+    "senseId": "sense-fd4cb517",
+    "term": "at speeds of",
+    "pos": "expression",
+    "definition": "At stated rates of movement or operation.",
+    "example": "These trains travel at speeds of up to two hundred kilometres an hour."
+  },
+  {
+    "entryId": "ve-2dc57304",
+    "senseId": "sense-e673d3be",
+    "term": "be coupled with",
+    "pos": "verb",
+    "definition": "To be combined or linked with something.",
+    "example": "Heavy rain was coupled with strong winds during the storm."
+  },
+  {
+    "entryId": "ve-3b75a368",
+    "senseId": "sense-aa2a1052",
+    "term": "be replaced with",
+    "pos": "verb",
+    "definition": "To have something else put in one's place.",
+    "example": "The broken chairs will be replaced with new ones."
+  },
+  {
+    "entryId": "ve-1401855e",
+    "senseId": "sense-94323124",
+    "term": "be to blame",
+    "pos": "verb",
+    "definition": "To be responsible for a problem or bad outcome.",
+    "example": "Poor maintenance was to blame for the equipment failure."
+  },
+  {
+    "entryId": "ve-d2bb7a4c",
+    "senseId": "sense-2a2ac3f6",
+    "term": "do painting",
+    "pos": "verb",
+    "definition": "To spend time painting pictures or surfaces.",
+    "example": "We do some painting in the art room on Friday afternoons.",
+    "usage": "Do some painting or paint is usually more natural."
+  },
+  {
+    "entryId": "ve-43e1631e",
+    "senseId": "sense-c00dc6e4",
+    "term": "enrol on",
+    "pos": "verb",
+    "definition": "To register as a participant in a course.",
+    "example": "You can enrol on the evening course through the college website.",
+    "usage": "Enrol is British spelling; enroll is American spelling. Enrol in is also used."
+  },
+  {
+    "entryId": "ve-53ff6f9b",
+    "senseId": "sense-d3ed62c1",
+    "term": "from the very beginning",
+    "pos": "expression",
+    "definition": "Starting at the earliest point of an event or process.",
+    "example": "The instructions were clear from the very beginning."
+  },
+  {
+    "entryId": "ve-4c772b3e",
+    "senseId": "sense-db5c92c4",
+    "term": "grab a coffee",
+    "pos": "verb",
+    "definition": "To get or drink a coffee, often quickly or informally.",
+    "example": "Let's grab a coffee before the next lecture."
+  },
+  {
+    "entryId": "ve-51aba028",
+    "senseId": "sense-871fa512",
+    "term": "from abroad",
+    "pos": "expression",
+    "definition": "From another country.",
+    "example": "Many of the conference speakers have travelled from abroad."
+  },
+  {
+    "entryId": "ve-764936d1",
+    "senseId": "sense-3f7010cb",
+    "term": "give priority to",
+    "pos": "verb",
+    "definition": "To treat something as more important or deal with it before other things.",
+    "example": "The council will give priority to urgent housing repairs."
+  },
+  {
+    "entryId": "ve-8f450f3f",
+    "senseId": "sense-77e6f725",
+    "term": "have words with sb.",
+    "pos": "verb",
+    "definition": "To argue with someone or speak angrily to them.",
+    "example": "She had words with her neighbour about the loud music.",
+    "usage": "Sb. stands for somebody; have a word with someone usually means a brief conversation instead."
+  },
+  {
+    "entryId": "ve-dc35edf0",
+    "senseId": "sense-62f3abca",
+    "term": "in one's employ",
+    "pos": "expression",
+    "definition": "Working for a particular employer.",
+    "example": "He had three assistants in his employ.",
+    "usage": "A formal or somewhat old-fashioned expression."
+  },
+  {
+    "entryId": "ve-ca075822",
+    "senseId": "sense-af25c58",
+    "term": "intend to",
+    "pos": "verb",
+    "definition": "To plan or mean to do something.",
+    "example": "I intend to submit the application before Friday."
+  },
+  {
+    "entryId": "ve-ebc505ec",
+    "senseId": "sense-6465c356",
+    "term": "make a claim",
+    "pos": "verb",
+    "definition": "To formally request money, compensation, or another entitlement.",
+    "example": "You can make a claim on your insurance after the theft.",
+    "usage": "The phrase can also mean asserting that something is true; the insurance sense is used here."
+  },
+  {
+    "entryId": "ve-248436c",
+    "senseId": "sense-4b50b0d6",
+    "term": "meet a target",
+    "pos": "verb",
+    "definition": "To achieve a specified goal or required level.",
+    "example": "The sales team worked together to meet its monthly target."
+  },
+  {
+    "entryId": "ve-999085b2",
+    "senseId": "sense-cba13bc8",
+    "term": "pick one's brain",
+    "pos": "verb",
+    "definition": "To ask someone for ideas, knowledge, or advice.",
+    "example": "Could I pick your brain about choosing a research topic?",
+    "usage": "Informal; one's is replaced by the person whose advice is sought."
+  },
+  {
+    "entryId": "ve-67d53ed0",
+    "senseId": "sense-627d18ea",
+    "term": "in this case",
+    "pos": "expression",
+    "definition": "Under the particular circumstances being discussed.",
+    "example": "The bus has been cancelled; in this case, we should take a taxi."
+  },
+  {
+    "entryId": "ve-36a024b2",
+    "senseId": "sense-aa4bac8",
+    "term": "make an application",
+    "pos": "verb",
+    "definition": "To formally request something by submitting required information.",
+    "example": "You must make an application before you can receive the grant."
+  },
+  {
+    "entryId": "ve-33d6c1e3",
+    "senseId": "sense-aeaefe79",
+    "term": "raise public awareness",
+    "pos": "verb",
+    "definition": "To help people learn about and understand an issue.",
+    "example": "The campaign will raise public awareness of food waste."
+  },
+  {
+    "entryId": "ve-31ecbded",
+    "senseId": "sense-6f847bb7",
+    "term": "serve a purpose",
+    "pos": "verb",
+    "definition": "To perform a useful function or fulfil a need.",
+    "example": "The spare room serves a purpose as a quiet study space."
+  },
+  {
+    "entryId": "ve-8e9ae22e",
+    "senseId": "sense-61f727d4",
+    "term": "take part in",
+    "pos": "verb",
+    "definition": "To participate in an activity or event.",
+    "example": "All students are invited to take part in the sports day."
+  },
+  {
+    "entryId": "ve-d4032d",
+    "senseId": "sense-1b5468f7",
+    "term": "put it another way",
+    "pos": "verb",
+    "definition": "To express the same idea using different words.",
+    "example": "To put it another way, every participant must finish all three tasks."
+  },
+  {
+    "entryId": "ve-4934d7dd",
+    "senseId": "sense-6fcfd347",
+    "term": "set trends",
+    "pos": "verb",
+    "definition": "To introduce styles or behaviours that other people begin to follow.",
+    "example": "Popular designers often set trends in fashion."
+  },
+  {
+    "entryId": "ve-61f9a99e",
+    "senseId": "sense-a12edd64",
+    "term": "take photograph",
+    "pos": "verb",
+    "definition": "To create an image using a camera.",
+    "example": "May I take a photograph of the display?",
+    "usage": "Use take a photograph or take photographs; photograph needs a determiner when singular."
+  },
+  {
+    "entryId": "ve-fea0dfb7",
+    "senseId": "sense-d2bcd6ad",
+    "term": "wash up onto",
+    "pos": "verb",
+    "definition": "To be carried by water onto a shore or other surface.",
+    "example": "Plastic bottles sometimes wash up onto the beach after a storm."
+  },
+  {
+    "entryId": "ve-e9abfc67",
+    "senseId": "sense-1f2b897d",
+    "term": "diving expedition",
+    "pos": "noun",
+    "definition": "An organized trip undertaken to explore or carry out work underwater.",
+    "example": "The diving expedition surveyed the reef for damaged coral."
+  },
+  {
+    "entryId": "ve-84fd489d",
+    "senseId": "sense-24a65c07",
+    "term": "bus tour",
+    "pos": "noun",
+    "definition": "A sightseeing journey made by bus.",
+    "example": "The bus tour stops at the castle and the harbour."
+  },
+  {
+    "entryId": "ve-e37611f9",
+    "senseId": "sense-52385123",
+    "term": "good deals",
+    "pos": "noun",
+    "definition": "Purchases or offers that provide good value.",
+    "example": "We found good deals on winter coats in the sale."
+  },
+  {
+    "entryId": "ve-df6613a4",
+    "senseId": "sense-cc28881e",
+    "term": "three-sixty cinema",
+    "pos": "noun",
+    "definition": "A cinema experience using images displayed around viewers through a full circle.",
+    "example": "The museum's 360-degree cinema surrounds visitors with images of the rainforest.",
+    "usage": "Three-sixty is an informal reading of 360; 360-degree cinema is the clearer written form. The original venue is not identified."
+  },
+  {
+    "entryId": "ve-d9250a3e",
+    "senseId": "sense-fdc651c4",
+    "term": "winning goal",
+    "pos": "noun",
+    "definition": "The goal that gives a team the score needed to win a match.",
+    "example": "She scored the winning goal in the last minute of the game."
+  },
+  {
+    "entryId": "ve-458fd73c",
+    "senseId": "sense-f78abe86",
+    "term": "spatial awareness",
+    "pos": "noun",
+    "definition": "The ability to understand where objects or people are in relation to oneself and one another.",
+    "example": "Parking a car in a narrow space requires spatial awareness."
+  },
+  {
+    "entryId": "ve-1900fc25",
+    "senseId": "sense-392080ff",
+    "term": "historical documents",
+    "pos": "noun",
+    "definition": "Written or recorded materials from the past used as evidence about events or lives.",
+    "example": "The archive preserves historical documents, including letters and land records."
+  }
+]

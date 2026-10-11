@@ -28,8 +28,8 @@ export function resolveVocabularyRetry(state: Partial<VocabularyStore>, record: 
     const unitId = row.context?.unitId || selection?.unitId || record.filter.unitId;
     // Old sessions can reference public words not yet copied into the learner's list.
     const member = bookId && unitId && VOCABULARY_CATALOG.memberships.some(member => member.entryId === raw.id && member.bookId === bookId && member.unitId === unitId);
-    const entry = member && !raw.sources.some(source => source.bookId === bookId && source.unitId === unitId)
-      ? {...raw, sources:[...raw.sources, {type:'wordbook' as const,id:`${bookId}:${unitId}:${raw.id}`,bookId,unitId}]}
+    const entry = member && !raw.sources.some(source => source.bookId === bookId && source.unitId === unitId && !source.senseId)
+      ? {...raw, sources:[...raw.sources, {type:'wordbook' as const,id:`${bookId}:${unitId}:${raw.id}:membership`,bookId,unitId}]}
       : raw;
     const candidates = getVocabularyReviewQueue({...state,vocabulary:[entry]}, {
       ...record.filter, bookId, unitId, entryId:row.entryId,
