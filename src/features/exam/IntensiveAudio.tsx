@@ -43,8 +43,11 @@ export function IntensiveAudio(props: Props) {
     playingRef.current = false; segmentPlaying.current = false;
     const fail = () => { if (active) { setStatus('error'); setPlaying(false); playingRef.current = false; } };
     let player: WaveSurfer | undefined;
+    const colors = () => { const style = getComputedStyle(document.documentElement); return { waveColor: style.getPropertyValue('--muted').trim() || '#707681', progressColor: style.getPropertyValue('--blue').trim() || '#3268da', cursorColor: style.getPropertyValue('--blue').trim() || '#3268da' }; };
+    const themeObserver = new MutationObserver(() => player?.setOptions(colors()));
     try {
-      player = WaveSurfer.create({ container: container.current, height: 86, waveColor: '#b6c2d0', progressColor: '#2563eb', cursorColor: '#17212f', barWidth: 2, barGap: 2, barRadius: 1, dragToSeek: false, normalize: true, interact: false });
+      player = WaveSurfer.create({ container: container.current, height: 86, ...colors(), barWidth: 2, barGap: 2, barRadius: 2, dragToSeek: false, normalize: true, interact: false });
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
       wave.current = player;
       player.on('ready', (seconds) => { if (active) { setDuration(seconds); setStatus('ready'); player?.setPlaybackRate(current.current.speed, true); } });
       player.on('play', () => { if (active) { playingRef.current = true; setPlaying(true); } });
@@ -71,7 +74,7 @@ export function IntensiveAudio(props: Props) {
       player.on('error', fail);
       void player.load(props.src).catch(fail);
     } catch { fail(); }
-    return () => { active = false; wave.current = null; player?.destroy(); };
+    return () => { active = false; themeObserver.disconnect(); wave.current = null; player?.destroy(); };
   }, [props.src, retry]);
 
   useEffect(() => { wave.current?.setPlaybackRate(props.speed, true); }, [props.speed]);
@@ -113,13 +116,17 @@ export function IntensiveAudio(props: Props) {
     {status === 'error' ? <div className="audio-error"><p role="alert">Audio could not load. Check the connection and retry.</p><button className="btn line" onClick={() => setRetry(value => value + 1)}>Retry audio</button></div> : null}
     {status === 'ready' && !props.full && !hasBounds ? <p role="status">Sentence timing is unavailable or outside the audio. Set valid A/B points below, or use full-track listening.</p> : null}
     <div className="intensive-audio-controls">
-      <button className="btn line" aria-label="Previous sentence" disabled={props.previousDisabled} onClick={props.onPrevious}><SkipBack size={17} /></button>
-      <button className="btn" aria-label={playing ? 'Pause audio' : 'Play audio'} disabled={!allowed} onClick={toggle}>{playing ? <Pause size={17} /> : <Play size={17} />}</button>
+      <div className="intensive-transport" role="group" aria-label="Sentence playback">
+      <button className="btn line intensive-skip" aria-label="Previous sentence" title="Previous sentence" disabled={props.previousDisabled} onClick={props.onPrevious}><SkipBack size={17} /></button>
+      <button className="btn primary intensive-play" aria-label={playing ? 'Pause audio' : 'Play audio'} title={playing ? 'Pause audio' : 'Play audio'} disabled={!allowed} onClick={toggle}>{playing ? <Pause size={20} /> : <Play size={20} />}</button>
       <button className="btn line" aria-label="Replay sentence" disabled={!allowed} onClick={replay}><RotateCcw size={17} /> Replay</button>
-      <button className="btn line" aria-label="Next sentence" disabled={props.nextDisabled} onClick={props.onNext}><SkipForward size={17} /></button>
+      <button className="btn line intensive-skip" aria-label="Next sentence" title="Next sentence" disabled={props.nextDisabled} onClick={props.onNext}><SkipForward size={17} /></button>
+      </div>
+      <div className="intensive-playback-settings">
       <span className="audio-time">{clock(position)} / {clock(duration)}</span>
       <label>Speed <select aria-label="Listening speed" value={props.speed} onChange={event => props.onSpeedChange(Number(event.target.value))}>{[0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map(speed => <option key={speed} value={speed}>{speed}×</option>)}</select></label>
       <button className={`btn line ${props.loop ? 'selected' : ''}`} disabled={props.full || !hasBounds} aria-pressed={props.loop} onClick={() => props.onLoopChange(!props.loop)}><Repeat size={17} /> A/B loop</button>
+      </div>
     </div>
     <p className="file-hint">Space: play / pause · ← / →: sentence · Ctrl / ⌘ + Enter: replay</p>
   </div>;
