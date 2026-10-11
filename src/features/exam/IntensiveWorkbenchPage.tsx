@@ -121,6 +121,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
   const [loadingError, setLoadingError] = useState('');
   const [retry, setRetry] = useState(0);
   const [index, setIndex] = useState(0);
+  const sentencesPanel = useRef<HTMLElement>(null);
   const [status, setStatus] = useState('');
   const [saveError, setSaveError] = useState('');
   const [saving, setSaving] = useState(false);
@@ -161,6 +162,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
   }, [sectionId, owner, retry, search]);
 
   const section = catalog?.sections.find(row => row.id === sectionId);
+  useEffect(() => { sentencesPanel.current?.querySelector('[aria-current="step"]')?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' }); }, [index, section?.id]);
   const sentence: ExamSentence | undefined = section?.sentences[index];
   const session = sentence ? sessions[sentence.id] || createIntensiveSession(sectionId, sentence.id) : null;
   const asset: ExamAsset | undefined = catalog?.assets.find(row => row.id === (sentence?.assetId || section?.assetId));
@@ -237,7 +239,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
     {saveError ? <p role="alert" className="audio-error">{saveError}</p> : status ? <p role="status">{status}</p> : null}
     {!section.sentences.length ? <div className="panel"><h2>Transcript unavailable</h2><p>This section has no imported sentence transcript yet. Full-track listening is available when audio has been imported; dictation comparison and sentence loops need the source transcript and timing.</p>{audioUrl ? <RecordingPlayer src={audioUrl} label="Full listening track" /> : <p role="status">{audioError || 'Listening audio unavailable.'}</p>}</div> : null}
     {sentence && session ? <div className="intensive-layout">
-      <aside className="panel intensive-sentences"><h2>Sentences</h2>{section.sentences.map((row, rowIndex) => <button key={row.id} className={`intensive-sentence ${rowIndex === index ? 'active' : ''}`} aria-current={rowIndex === index ? 'step' : undefined} onClick={() => choose(rowIndex)}><span>Sentence {rowIndex + 1}</span><span>{sentenceProgress(sessions[row.id])}%{sessions[row.id]?.nextReviewAt && new Date(sessions[row.id].nextReviewAt!) <= new Date() ? ' · Due' : ''}</span></button>)}<p className="file-hint">Return to weak sentences after a delay, then practise without the transcript first.</p></aside>
+      <aside ref={sentencesPanel} className="panel intensive-sentences"><h2>Sentences</h2>{section.sentences.map((row, rowIndex) => <button key={row.id} className={`intensive-sentence ${rowIndex === index ? 'active' : ''}`} aria-current={rowIndex === index ? 'step' : undefined} onClick={() => choose(rowIndex)}><span>Sentence {rowIndex + 1}</span><span>{sentenceProgress(sessions[row.id])}%{sessions[row.id]?.nextReviewAt && new Date(sessions[row.id].nextReviewAt!) <= new Date() ? ' · Due' : ''}</span></button>)}<p className="file-hint">Return to weak sentences after a delay, then practise without the transcript first.</p></aside>
       <div className="intensive-main">
         <div className="panel"><h2>Sentence {index + 1} / {section.sentences.length}</h2>
           {!sentence.text.trim() ? <p role="status">Transcript unavailable for this sentence.</p> : null}

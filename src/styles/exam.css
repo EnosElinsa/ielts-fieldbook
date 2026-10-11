@@ -34,3 +34,57 @@
 @media(min-width:1350px){.exam-section-grid-listening{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(min-width:561px) and (max-width:1349px){.exam-section-grid-listening{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:740px){.exam-paper{padding:14px}.exam-toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.exam-toolbar .search{grid-column:1/-1;width:100%;min-width:0}.exam-toolbar .filter-menu{min-width:0}.exam-toolbar .filter-trigger{width:100%}.exam-paper>header{align-items:flex-start;flex-wrap:wrap}.exam-intro h2{font-size:24px}.exam-section-card .btn,.exam-pagination .btn,.exam-part-tabs button,.exam-mobile-tabs button{min-height:44px}.exam-source-panel,.exam-question-panel{padding:16px}.exam-workspace-head{flex-wrap:wrap}.exam-timer{flex-shrink:0}.exam-source-panel{min-height:0}.exam-question-nav a{width:38px;height:38px}}
+
+/* Keep recording controls available when mobile source panels are hidden. */
+.exam-practice-recording { margin: 0 0 16px; }
+.exam-practice-recording .exam-source-audio { margin: 8px 0 0; }
+.exam-mobile-tabs button[aria-pressed=true] { background: var(--blue-dark); color: #fff; }
+.exam-question { scroll-margin-top: 24px; }
+.exam-options input { width: auto; flex: 0 0 auto; margin-top: 3px; accent-color: var(--blue); }
+.exam-options label:has(input:disabled) { cursor: default; opacity: .65; }
+.exam-question.is-wrong .exam-feedback { background: var(--soft-red); }
+.exam-evidence-capture .btn { margin: 8px 8px 0 0; white-space: normal; }
+.exam-evidence-capture p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.exam-review-filter { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin: 0 0 18px; }
+.exam-review-filter>span { color: var(--muted); font-size: 12px; }
+.exam-question-heading,.exam-review-card header { flex-wrap: wrap; }
+.exam-question-heading .exam-eyebrow,.exam-review-card header .exam-eyebrow { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.exam-question-panel input:focus-visible,.exam-question-panel select:focus-visible,.exam-annotations textarea:focus-visible,.exam-annotations input:focus-visible,.exam-error-tag select:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+@media(max-width:740px) {
+  .exam-workspace-tools { gap: 10px; }
+  .exam-workspace-tools>.btn-row { width: 100%; flex-wrap: wrap; }
+  .exam-workspace-tools .btn { min-height: 44px; }
+  .exam-progress { margin-left: 0; }
+  .exam-practice-recording { position: sticky; top: 0; z-index: 5; padding: 8px 0; background: var(--bg); }
+  .exam-practice-recording .exam-source-audio { padding: 10px; }
+  .exam-options label { min-height: 44px; align-items: center; }
+  .exam-options input { margin-top: 0; }
+  .exam-question-nav a { min-width: 44px; min-height: 44px; }
+  .exam-question { scroll-margin-top: 130px; }
+  .exam-review-actions .btn { min-height: 44px; }
+  .exam-review-head { gap: 12px; }
+  .exam-queue-card { flex-direction: column; align-items: stretch; gap: 12px; }
+  .exam-queue-card .btn { align-self: flex-start; min-height: 44px; }
+  .exam-review-card header strong { margin-left: 0; }
+  .exam-submit .btn { width: 100%; min-height: 44px; }
+}
+
+.exam-back-links { display: flex; gap: 4px; flex-wrap: wrap; }
+.exam-review-title { flex: 1; }
+.exam-review-actions>p { flex: 1; }
+@media(max-width:740px) {
+ .exam-review-head { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 14px; padding-bottom: 16px; }
+ .exam-review-head .exam-back-links { grid-column: 1/-1; }
+ .exam-review-head .exam-review-title h2 { font-size: 19px; }
+ .exam-review-head .exam-score { text-align: right; align-self: center; }
+ .exam-review-head .exam-score strong { font-size: 30px; }
+ .exam-review-actions { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 10px; padding: 14px 0; }
+ .exam-review-actions>p { grid-column: 1/-1; margin: 0; line-height: 1.6; }
+ .exam-review-actions .btn { white-space: normal; padding-inline: 10px; }
+ .exam-workspace-head { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; }
+ .exam-workspace-head>a { grid-column: 1/-1; justify-self: start; }
+ .exam-timer { text-align: right; align-self: center; }
+ .exam-timer strong { font-size: 20px; }
+}
+
+.exam-inline-figure { display: block; margin: 12px 0; }

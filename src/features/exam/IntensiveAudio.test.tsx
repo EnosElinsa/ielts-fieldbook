@@ -39,3 +39,20 @@ it('keyboard shortcuts leave editing fields alone and errors offer retry', () =>
   expect(screen.getByRole('alert')).toHaveTextContent('Audio could not load');
   expect(screen.getByRole('button', { name: 'Retry audio' })).toBeInTheDocument();
 });
+
+
+it('shortcuts respect dialogs, links and browser modifier keys', () => {
+  const next = vi.fn(), replay = vi.fn();
+  const props = { src: 'audio.mp3', start: 0, end: 2, speed: 1, loop: false, onReplay: replay, onSentenceEnd: () => {}, onSpeedChange: () => {}, onLoopChange: () => {}, onPrevious: () => {}, onNext: next };
+  const view = render(<><a href="/listening">Bank</a><IntensiveAudio {...props} /><div role="dialog">Settings</div></>);
+  act(() => events.ready(100));
+  fireEvent.keyDown(window, { key: 'ArrowRight' });
+  fireEvent.keyDown(window, { key: 'Enter', ctrlKey: true });
+  expect(next).not.toHaveBeenCalled(); expect(replay).not.toHaveBeenCalled();
+  view.rerender(<><a href="/listening">Bank</a><IntensiveAudio {...props} /></>);
+  fireEvent.keyDown(screen.getByRole('link'), { key: 'ArrowRight' });
+  fireEvent.keyDown(window, { key: 'ArrowRight', altKey: true });
+  expect(next).not.toHaveBeenCalled();
+  fireEvent.keyDown(window, { key: 'ArrowRight' });
+  expect(next).toHaveBeenCalledOnce();
+});

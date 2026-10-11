@@ -230,14 +230,27 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
   const fb = useFieldbook();
   const location = useLocation();
   const [wordParams, setWordParams] = useSearchParams();
-  const [search, setSearch] = useState(wordParams.get('search') || "");
-  const [status, setStatus] = useState(wordParams.get("status") || "all");
-  const [source, setSource] = useState(wordParams.get("source") || "all");
-  const [skill, setSkill] = useState(wordParams.get("skill") || "all");
+  const search = wordParams.get('search') || '';
+  const status = wordParams.get('status') || 'all';
+  const source = wordParams.get('source') || 'all';
+  const skill = wordParams.get('skill') || 'all';
+  const requestedPage = Number(wordParams.get('page') || 0);
   const [selected, setSelected] = useState(new Set());
-  const [page, setPage] = useState(Number(wordParams.get("page") || 0));
-  const [bulk, setBulk] = useState("familiar");
-  useEffect(() => { const next = new URLSearchParams(wordParams); [['search', search], ['status', status], ['source', source], ['skill', skill], ['page', String(page)]].forEach(([key,value]) => value && value !== 'all' ? next.set(key,value) : next.delete(key)); if (next.toString() !== wordParams.toString()) setWordParams(next, {replace:true}); }, [search,status,source,skill,page]);
+  const [bulk, setBulk] = useState('familiar');
+  const [bulkSaving, setBulkSaving] = useState(false);
+  const [bulkError, setBulkError] = useState('');
+  const [pendingBulk, setPendingBulk] = useState(null);
+  const bulkLock = useRef(false);
+  const updateFilter = (key, value) => setWordParams(current => {
+    const next = new URLSearchParams(current);
+    if (!value || value === 'all') next.delete(key); else next.set(key, value);
+    next.delete('page');
+    return next;
+  }, { replace: true });
+  const setSearch = value => updateFilter('search', value);
+  const setStatus = value => updateFilter('status', value);
+  const setSource = value => updateFilter('source', value);
+  const setSkill = value => updateFilter('skill', value);
   useEffect(() => { const saved = vocabularyReturnPositions.get(`${accountId()}:${location.pathname + location.search}`); if (saved) requestAnimationFrame(() => { window.scrollTo?.(0,saved.scroll); document.getElementById(saved.focus)?.focus(); }); }, []);
   const rememberReturn = entryId => vocabularyReturnPositions.set(`${accountId()}:${location.pathname + location.search}`, {scroll:window.scrollY,focus:`vocabulary-word-${entryId}`});
   const entries = (fb.state.vocabulary || []).filter(
@@ -268,21 +281,32 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
     [entries, fb.state.vocabularyStates, search, status, source, skill],
   );
   const filterKey = [search,status,source,skill].join('|');
-  const previousFilters = useRef(filterKey);
-  useEffect(() => { if (previousFilters.current !== filterKey) setPage(0); previousFilters.current = filterKey; setSelected(new Set()); }, [filterKey]);
+  const maxPage = Math.max(0, Math.ceil(filtered.length / 100) - 1);
+  const page = Math.min(maxPage, Number.isInteger(requestedPage) && requestedPage >= 0 ? requestedPage : 0);
+  const setPage = value => setWordParams(current => { const next = new URLSearchParams(current); next.set('page', String(Math.max(0, Math.min(maxPage, value)))); return next; });
+  useEffect(() => { setSelected(new Set()); }, [filterKey, page]);
+  useEffect(() => { if (requestedPage !== page) setWordParams(current => { const next = new URLSearchParams(current); next.set('page', String(page)); return next; }, { replace: true }); }, [requestedPage, page, setWordParams]);
   const visibleEntries = filtered.slice(page * 100, page * 100 + 100);
-  const applyBulk = async () => {
+  const applyBulk = async (retry = false) => {
+    const operation = retry ? pendingBulk : { ids: [...selected], status: bulk, owner: accountId() };
+    if (bulkLock.current || !operation?.ids.length || operation.owner !== accountId()) return;
+    setPendingBulk(operation);
+    bulkLock.current = true; setBulkSaving(true); setBulkError('');
+    const owner = accountId();
     const draft = structuredClone(fb.stateRef.current);
-    selected.forEach((id) => {
+    operation.ids.forEach((id) => {
       const entry = draft.vocabulary.find((entry) => entry.id === id);
       (entry?.senses || []).forEach((sense) =>
-        setVocabularyManualStatus(draft, id, bulk, sense.id),
+        setVocabularyManualStatus(draft, id, operation.status, sense.id),
       );
     });
-    if (await fb.persistNow(draft)) {
-      setSelected(new Set());
-      fb.toast("Familiarity updated.");
-    }
+    try {
+      const saved = await fb.persistNow(draft);
+      if (accountId() !== owner) return;
+      if (saved) { setPendingBulk(null); setSelected(new Set()); fb.toast('Familiarity updated.'); }
+      else setBulkError('Could not save familiarity. Your requested change is kept; retry saving.');
+    } catch { if (accountId() === owner) setBulkError('Could not save familiarity. Your requested change is kept; retry saving.'); }
+    finally { bulkLock.current = false; if (accountId() === owner) setBulkSaving(false); }
   };
   return (
     <VocabularyLayout>
@@ -373,7 +397,7 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
           label="Skill"
           value={skill}
           onChange={setSkill}
-          options={["all", "writing", "speaking", "listening", "reading"].map(
+          options={["all", "listening", "reading", "writing", "speaking"].map(
             (value) => ({
               value,
               label: value === "all" ? "All skills" : label(value),
@@ -381,6 +405,7 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
           )}
         />
       </div>
+      {bulkError && <div className="vocabulary-error" role="alert">{bulkError}<button className="btn line" disabled={bulkSaving} onClick={() => applyBulk(true)}>Retry familiarity save</button></div>}
       {filtered.length ? (
         <>
           <div className="vocabulary-selection">
@@ -410,9 +435,9 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
                     label: label(value),
                   }))}
                 />
-                <button className="btn line" type="button" onClick={applyBulk}>
+                <button className="btn line" type="button" disabled={bulkSaving || Boolean(pendingBulk && bulkError)} onClick={() => applyBulk()}>
                   <Check size={15} />
-                  Apply
+                  {bulkSaving ? 'Saving…' : 'Apply'}
                 </button>
               </>
             ) : null}
@@ -482,7 +507,7 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
               </article>
             ))}
           </div>
-          {filtered.length > 100 ? <div className="vocabulary-selection"><button type="button" className="btn line" disabled={page === 0} onClick={() => setPage(value=>value-1)}><ArrowLeft size={15}/>Previous</button><span>{page*100+1}-{Math.min((page+1)*100,filtered.length)} of {filtered.length}</span><button type="button" className="btn line" disabled={(page+1)*100>=filtered.length} onClick={() => setPage(value=>value+1)}>Next<ArrowRight size={15}/></button></div> : null}
+          {filtered.length > 100 ? <div className="vocabulary-selection"><button type="button" className="btn line" disabled={page === 0} onClick={() => setPage(page-1)}><ArrowLeft size={15}/>Previous</button><span>{page*100+1}-{Math.min((page+1)*100,filtered.length)} of {filtered.length}</span><button type="button" className="btn line" disabled={(page+1)*100>=filtered.length} onClick={() => setPage(page+1)}>Next<ArrowRight size={15}/></button></div> : null}
         </>
       ) : (
         <Empty
@@ -495,10 +520,7 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
           onAction={() => {
             if (!entries.length) editEntry(fb);
             else {
-              setSearch("");
-              setStatus("all");
-              setSource("all");
-              setSkill("all");
+              setWordParams(current => { const next = new URLSearchParams(current); ['search','status','source','skill','page'].forEach(key => next.delete(key)); return next; }, { replace: true });
             }
           }}
         />
@@ -709,7 +731,7 @@ export function VocabularyWrongPage() {
           label="Wrong word skill"
           value={skill}
           onChange={setSkill}
-          options={["all", "writing", "speaking", "listening", "reading"].map(
+          options={["all", "listening", "reading", "writing", "speaking"].map(
             (value) => ({
               value,
               label: value === "all" ? "All skills" : label(value),

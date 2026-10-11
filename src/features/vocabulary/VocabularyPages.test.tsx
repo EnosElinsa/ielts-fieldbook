@@ -1,5 +1,5 @@
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { cleanup, fireEvent, render, screen, within, waitFor } from "@testing-library/react";
+import { MemoryRouter, Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { VocabularyEntryPage, VocabularyPage, VocabularyProgressPage, VocabularyWordbooksPage, VocabularyWrongPage, VocabularyNavigation, VocabularyWordsPage, VocabularyHistoryPage } from "./VocabularyPages";
@@ -222,3 +222,55 @@ test("history links submitted sessions to independent result routes", () => {
 test("wordbooks have no progress import action",()=>{fixture();showBook();expect(screen.queryByRole('button',{name:/Import wordbook progress/})).not.toBeInTheDocument();});
 
 test("vocabulary progress keeps backup export out of the page",()=>{render(<MemoryRouter><VocabularyProgressPage/></MemoryRouter>);expect(screen.queryByRole('button',{name:/Export progress/})).not.toBeInTheDocument();});
+
+
+function WordRouteControls() {
+  const navigate = useNavigate(); const location = useLocation();
+  return <><button onClick={() => navigate('/vocabulary/words?search=two')}>Open second filter</button><button onClick={() => navigate(-1)}>Browser back</button><output aria-label="Words URL">{location.search}</output></>;
+}
+
+test('my words follows browser history and clamps invalid page numbers', async () => {
+  fixture(); render(<MemoryRouter initialEntries={['/vocabulary/words?search=one&page=999']}><VocabularyWordsPage /><WordRouteControls /></MemoryRouter>);
+  expect(screen.getByRole('link', { name: 'one' })).toBeInTheDocument();
+  expect(screen.getByRole('textbox', { name: 'Search vocabulary' })).toHaveValue('one');
+  expect(screen.getByLabelText('Words URL')).toHaveTextContent('page=0');
+  fireEvent.click(screen.getByRole('button', { name: 'Open second filter' }));
+  expect(screen.getByRole('textbox', { name: 'Search vocabulary' })).toHaveValue('two');
+  expect(screen.getByRole('link', { name: 'two' })).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Browser back' }));
+  expect(screen.getByRole('textbox', { name: 'Search vocabulary' })).toHaveValue('one');
+  expect(screen.getByRole('link', { name: 'one' })).toBeInTheDocument();
+});
+
+test('changing word pages clears the selection and failed bulk saves offer a retry', async () => {
+  fixture(); const template = fb.current.state.vocabulary[0];
+  fb.current.state.vocabulary = Array.from({ length: 101 }, (_, index) => ({ ...template, id: `word-${index}`, term: `word${index}` }));
+  render(<MemoryRouter initialEntries={['/vocabulary/words']}><VocabularyWordsPage /></MemoryRouter>);
+  fireEvent.click(screen.getByRole('checkbox', { name: 'Select word0' }));
+  expect(screen.getByText('1 selected')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+  expect(screen.queryByText('1 selected')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('checkbox', { name: 'Select word100' }));
+  fb.current.persistNow.mockRejectedValueOnce(new Error('offline'));
+  fireEvent.click(screen.getByRole('button', { name: 'Apply' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Could not save familiarity');
+  expect(screen.getByText('1 selected')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Retry familiarity save' }));
+  await waitFor(() => expect(screen.queryByText('1 selected')).not.toBeInTheDocument());
+  expect(fb.current.persistNow).toHaveBeenCalledTimes(2);
+});
+
+
+test('a failed filtered bulk operation stays retryable after optimistic rows disappear', async () => {
+  fixture(); const view = render(<MemoryRouter initialEntries={['/vocabulary/words?status=new']}><VocabularyWordsPage /></MemoryRouter>);
+  fireEvent.click(screen.getByRole('checkbox', { name: 'Select visible' }));
+  fb.current.persistNow.mockImplementationOnce(async (draft: any) => { fb.current.state = draft; fb.current.stateRef.current = draft; return false; });
+  fireEvent.click(screen.getByRole('button', { name: 'Apply' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Could not save familiarity');
+  view.rerender(<MemoryRouter initialEntries={['/vocabulary/words?status=new']}><VocabularyWordsPage /></MemoryRouter>);
+  expect(screen.getByText('No vocabulary matches these filters.')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Retry familiarity save' }));
+  await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+  expect(fb.current.persistNow).toHaveBeenCalledTimes(2);
+  expect(fb.current.persistNow.mock.calls[1][0].vocabularyStates).toHaveLength(3);
+});
