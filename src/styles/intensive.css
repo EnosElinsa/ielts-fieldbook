@@ -4,14 +4,18 @@
 .intensive-header .back-link { margin-bottom: 6px; }
 .intensive-header p { margin: 0; font-size: 12px; }
 .intensive-header p { color: var(--muted); }
-.intensive-save-status { display: block; font-size: 11px; color: var(--success); margin-top: 4px; }
+.intensive-save-status { display: block; font-size: 11px; color: var(--muted); margin-top: 4px; }
+.intensive-save-status.is-saved { color: var(--success); }
 .intensive-stages { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin: 24px 0; }
-.intensive-stages li { padding: 12px; border: 1px solid var(--rule); border-radius: 8px; font-size: .85rem; }
-.intensive-stages li>span:first-child { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--surface-hover); color: var(--muted); font-weight: 700; margin-bottom: 8px; }
+.intensive-stages li { padding: 0; border: 1px solid var(--rule); border-radius: 8px; font-size: .85rem; overflow: hidden; }
+.intensive-stages li>a,.intensive-stages li>div { display: block; height: 100%; padding: 12px; color: inherit; text-decoration: none; }
+.intensive-stages a:hover { background: color-mix(in srgb,var(--blue) 6%,transparent); }
+.intensive-stages a:focus-visible { outline-offset: -3px; border-radius: 8px; }
+.intensive-stages .intensive-stage-number { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--surface-hover); color: var(--muted); font-weight: 700; margin-bottom: 8px; }
 .intensive-stages .intensive-stage-label { display: block; font-weight: 500; line-height: 1.4; }
-.intensive-stages li[aria-current=step] { background: var(--soft-blue); border-color: color-mix(in srgb,var(--blue) 40%,var(--rule)); color: var(--blue); }
-.intensive-stages li[aria-current=step]>span:first-child { background: var(--blue-dark); color: #fff; }
-.intensive-stages li.done>span:first-child { color: var(--success); background: var(--soft-green); }
+.intensive-stages li:has([aria-current=step]) { background: var(--soft-blue); border-color: color-mix(in srgb,var(--blue) 40%,var(--rule)); color: var(--blue); }
+.intensive-stages li:has([aria-current=step]) .intensive-stage-number { background: var(--blue-dark); color: #fff; }
+.intensive-stages li.done .intensive-stage-number { color: var(--success); background: var(--soft-green); }
 .intensive-stages li.done { color: var(--blue); background: color-mix(in srgb, var(--blue) 8%, transparent); }
 .intensive-layout { display: grid; grid-template-columns: 215px minmax(0, 1fr); gap: 20px; align-items: start; }
 .intensive-workbench .panel { padding: 22px; border: 1px solid var(--rule); border-radius: 8px; }
@@ -62,8 +66,9 @@
   .intensive-header p { font-size: 11px; }
   .intensive-header>.btn { grid-column: 2; grid-row: 3; font-size: 12px; }
   .intensive-stages { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; margin: 16px 0; }
-  .intensive-stages li { display: flex; gap: 6px; align-items: center; min-width: 0; padding: 8px 6px; font-size: 10px; }
-  .intensive-stages li>span:first-child { margin: 0; flex: 0 0 20px; width: 20px; height: 20px; font-size: 10px; }
+  .intensive-stages li { min-width: 0; font-size: 11px; }
+  .intensive-stages li>a,.intensive-stages li>div { display: flex; gap: 6px; align-items: center; padding: 8px 6px; min-height: 44px; }
+  .intensive-stages .intensive-stage-number { margin: 0; flex: 0 0 20px; width: 20px; height: 20px; font-size: 10px; }
   .intensive-layout { gap: 12px; }
   .intensive-sentences { display: flex; align-items: center; gap: 6px; overflow-x: auto; max-height: none; overscroll-behavior-x: contain; scroll-snap-type: x proximity; }
   .intensive-sentences h2,.intensive-sentences>.file-hint { display: none; }
@@ -81,4 +86,27 @@
   .intensive-stages { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .intensive-stages li { font-size: 11px; min-height: 40px; }
   .intensive-player-heading h2 { font-size: 16px; }
+}
+
+.intensive-main [id^=intensive-] { scroll-margin-top: 20px; }
+.intensive-step>p,.intensive-shadowing>p { font-size: 13px; line-height: 1.65; color: var(--muted); }
+.intensive-step>label { font-size: 12px; font-weight: 600; }
+.intensive-step textarea,.intensive-timing input { border: 1px solid var(--rule); border-radius: 8px; padding: 12px; background: var(--surface-soft); color: var(--ink); line-height: 1.65; resize: vertical; }
+.intensive-step textarea::placeholder { color: var(--muted); }
+.intensive-step textarea:focus-visible,.intensive-timing input:focus-visible { background: var(--sheet); outline: 2px solid var(--blue); outline-offset: 2px; }
+.intensive-workbench .intensive-action-hint { margin: 8px 0 0; font-size: 12px; line-height: 1.6; color: var(--muted); }
+.dictation-comparison fieldset { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.dictation-comparison legend { font-size: 12px; font-weight: 600; padding-bottom: 10px; }
+.dictation-comparison fieldset label { min-height: 42px; padding: 8px 10px; border: 1px solid var(--rule); border-radius: 8px; font-size: 12px; }
+.dictation-comparison fieldset label:has(input:checked) { border-color: var(--blue); background: var(--soft-blue); }
+.dictation-comparison input { accent-color: var(--blue); }
+.dictation-text { background: var(--surface-soft); padding: 14px; border-radius: 8px; overflow-wrap: anywhere; }
+.intensive-checklist { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; padding: 0; margin: 18px 0; list-style: none; }
+.intensive-checklist li { display: flex; gap: 7px; align-items: center; padding: 10px; border-radius: 8px; background: var(--surface-soft); color: var(--muted); font-size: 12px; }
+.intensive-checklist li.is-done { color: var(--success); background: var(--soft-green); }
+.intensive-checklist li>span:first-child { display: inline-flex; flex-shrink: 0; }
+@media(max-width:700px) {
+  .intensive-step textarea { font-size: 16px; }
+  .intensive-step .btn { min-height: 44px; white-space: normal; }
+  .intensive-checklist { grid-template-columns: 1fr; }
 }
