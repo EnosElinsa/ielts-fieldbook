@@ -16,6 +16,7 @@ vi.mock('../../storage/examRecovery', () => ({ readExamRecovery: (owner: string,
 const provenance = { sourceUrl: 'https://example.org/source', sourceVersion: '1', fetchedAt: '2026-01-01', contentHash: 'hash', authorization: 'owned' };
 const catalog: ExamCatalog = { schemaVersion: 1, papers: [{ id: 'paper', book: 8, test: 1, title: 'Cambridge 8 Test 1', provenance }], sections: [{ id: 'section', paperId: 'paper', skill: 'reading', part: 1, title: 'The city garden', questionTypes: ['gap', 'true-false'], questionCount: 2, sentences: [], status: 'ready', provenance }], passages: [{ id: 'passage', sectionId: 'section', title: 'The city garden', paragraphs: [{ id: 'A', text: 'The garden opened in 1990.' }], provenance }], questions: [{ id: 'q1', paperId: 'paper', sectionId: 'section', skill: 'reading', number: 1, type: 'gap', prompt: 'The garden opened in _____.', answer: '1990', maxWords: 1, provenance }, { id: 'q2', paperId: 'paper', sectionId: 'section', skill: 'reading', number: 2, type: 'true-false', prompt: 'The garden opened in 2000.', answer: 'FALSE', explanation: 'The source gives 1990.', provenance }], assets: [] };
 function Location() { return <output aria-label="URL">{useLocation().pathname}</output>; }
+function SearchLocation() { return <output aria-label="Search URL">{useLocation().search}</output>; }
 function practice(path = '/reading/section') { return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/reading/:sectionId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/mock/:paperId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/review/:attemptId" element={<ExamReviewPage skill="reading" />} /></Routes><Location /></MemoryRouter>); }
 beforeEach(() => { mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
@@ -34,5 +35,46 @@ test('reading selection opens vocabulary capture with passage context and keeps 
 
 
 test('bank sorts papers by numeric book and test', async () => { mocks.catalog.papers = [[11, 4], [8, 2], [8, 1], [10, 1]].map(([book, test]) => ({ ...catalog.papers[0], id: `paper-${book}-${test}`, book, test, title: `Cambridge ${book} Test ${test}` })); mocks.catalog.sections = mocks.catalog.papers.map((paper: any) => ({ ...catalog.sections[0], id: `section-${paper.id}`, paperId: paper.id })); render(<MemoryRouter><ExamBankPage skill="reading" /></MemoryRouter>); await screen.findByRole('heading', { name: 'Cambridge 8 Test 1' }); expect(screen.getAllByRole('heading', { level: 3 }).map(heading => heading.textContent)).toEqual(['Cambridge 8 Test 1', 'Cambridge 8 Test 2', 'Cambridge 10 Test 1', 'Cambridge 11 Test 4']); });
+
+test('bank search matches book and test even when the passage title differs', async () => {
+  render(<MemoryRouter><ExamBankPage skill="reading" /></MemoryRouter>);
+  await screen.findByText('The city garden');
+  await userEvent.setup().type(screen.getByRole('textbox', { name: 'Search reading sections' }), 'Cambridge 8 Test 1');
+  expect(screen.getByText('The city garden')).toBeInTheDocument();
+  expect(screen.getByRole('status')).toHaveTextContent('1 test · 1 passage');
+});
+
+test('clearing bank filters preserves intensive mode', async () => {
+  mocks.catalog.sections[0].skill = 'listening';
+  render(<MemoryRouter initialEntries={['/listening?mode=intensive&q=missing']}><ExamBankPage skill="listening" /><SearchLocation /></MemoryRouter>);
+  await screen.findByText('No sections match these filters.');
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Clear filters' }));
+  expect(screen.getByLabelText('Search URL')).toHaveTextContent('?mode=intensive');
+  expect(await screen.findByRole('link', { name: 'Open intensive part 1' })).toBeInTheDocument();
+});
+
+test('favourite retry preserves the intended change after an optimistic failed save', async () => {
+  mocks.fb.persistNow.mockImplementationOnce(async (draft: any) => { mocks.fb.state = draft; mocks.fb.stateRef.current = draft; return false; });
+  render(<MemoryRouter><ExamBankPage skill="reading" /></MemoryRouter>);
+  await userEvent.setup().click(await screen.findByRole('button', { name: 'Add favourite: The city garden' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Could not save your favourite');
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Retry favourite save' }));
+  await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+  expect(mocks.fb.persistNow.mock.calls[1][0].settings.favoriteExamSectionIds).toEqual(['section']);
+});
+
+test('bank pagination keeps filters and returns to the first page on search', async () => {
+  mocks.catalog.papers = Array.from({ length: 12 }, (_, i) => ({ ...catalog.papers[0], id: `p${i}`, book: 8 + Math.floor(i / 4), test: i % 4 + 1, title: `Cambridge ${8 + Math.floor(i / 4)} Test ${i % 4 + 1}` }));
+  mocks.catalog.sections = mocks.catalog.papers.map((paper: any) => ({ ...catalog.sections[0], id: `s${paper.id}`, paperId: paper.id }));
+  render(<MemoryRouter initialEntries={['/reading?status=ready']}><ExamBankPage skill="reading" /><SearchLocation /></MemoryRouter>);
+  await screen.findByText('Page 1 of 2');
+  expect(screen.getAllByRole('article')).toHaveLength(8);
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Next tests' }));
+  expect(screen.getAllByRole('article')).toHaveLength(4);
+  expect(screen.getByLabelText('Search URL')).toHaveTextContent('status=ready&page=2');
+  await userEvent.setup().type(screen.getByRole('textbox', { name: 'Search reading sections' }), 'Cambridge 8');
+  expect(screen.getAllByRole('article')).toHaveLength(4);
+  expect(screen.getByLabelText('Search URL')).not.toHaveTextContent('page=2');
+});
 
 test('pausing listening practice pauses playing audio and resumes it at the same position', async () => { mocks.catalog.sections[0].skill = 'listening'; mocks.catalog.sections[0].assetId = 'recording'; mocks.catalog.questions.forEach((question: any) => question.skill = 'listening'); mocks.catalog.assets = [{ id: 'recording', sectionId: 'section', paperId: 'paper', kind: 'audio', storagePath: 'recording.mp3', sourceUrl: '', duration: 100, provenance }]; const play = vi.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue(); const pause = vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {}); const { container } = render(<MemoryRouter initialEntries={['/listening/section']}><Routes><Route path="/listening/:sectionId" element={<ExamPracticePage skill="listening" />} /></Routes></MemoryRouter>); await screen.findByRole('textbox', { name: 'Answer 1' }); const audio = container.querySelector('audio')!; await waitFor(() => expect(audio).toHaveAttribute('src', '/audio.mp3')); audio.currentTime = 25; fireEvent.play(audio); fireEvent.timeUpdate(audio); await userEvent.setup().click(screen.getByRole('button', { name: 'Pause' })); expect(pause).toHaveBeenCalled(); fireEvent.pause(audio); await userEvent.setup().click(screen.getByRole('button', { name: 'Resume' })); expect(play).toHaveBeenCalledTimes(1); expect(audio.currentTime).toBe(25); });
