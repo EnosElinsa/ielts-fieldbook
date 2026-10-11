@@ -94,10 +94,11 @@ export function IntensiveAudio(props: Props) {
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
-      if (event.defaultPrevented) return;
+      if (event.defaultPrevented || document.querySelector('[role="dialog"]')) return;
       if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') { event.preventDefault(); replay(); return; }
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
       const target = event.target;
-      if (target instanceof HTMLElement && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(target.tagName))) return;
+      if (target instanceof HTMLElement && (target.isContentEditable || target.closest('input,textarea,select,button,a,[role="button"],[role="slider"],[role="menu"]'))) return;
       if (event.key === ' ') { event.preventDefault(); toggle(); }
       else if (event.key === 'ArrowLeft' && !props.previousDisabled) { event.preventDefault(); props.onPrevious(); }
       else if (event.key === 'ArrowRight' && !props.nextDisabled) { event.preventDefault(); props.onNext(); }
