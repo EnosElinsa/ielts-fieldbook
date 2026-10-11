@@ -266,7 +266,7 @@ test("submits the complete attempt once and retries the same frozen commit after
   fb.current.persistVocabularySession
     .mockResolvedValueOnce(false)
     .mockResolvedValueOnce(true);
-  mount();
+  render(<MemoryRouter initialEntries={['/vocabulary/review']}><VocabularyPracticePage/><CurrentRoute/></MemoryRouter>);
   await user.click(screen.getByRole("button", { name: "Start session" }));
   await user.type(
     screen.getByRole("textbox", { name: "Answer 1" }),
@@ -285,6 +285,7 @@ test("submits the complete attempt once and retries the same frozen commit after
   ]);
   expect(screen.getByRole("table")).toBeInTheDocument();
   expect(screen.getByRole('heading', {name: '1 of 2 correct'})).toBeInTheDocument();
+  await screen.findByText(`/vocabulary/history/${id}`);
   await user.click(screen.getByRole("button", { name: "Retry mistakes" }));
   expect(await screen.findAllByRole("textbox")).toHaveLength(1);
   await user.type(
