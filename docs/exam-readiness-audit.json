@@ -660,7 +660,7 @@
   "deploymentStatus": {
     "migration": "Applied and RLS verified by parent task",
     "assetUpload": "All 248 private assets uploaded; parent verified media sizes and signed audio",
-    "catalogSeed": "Earlier final v2 seeded and verified; v4 reviewed catalog awaits parent final digest-skip reseed"
+    "catalogSeed": "Final v4 seeded and verified"
   },
   "adjacentTimingAudit": {
     "thresholdSeconds": 1,
@@ -703,6 +703,22 @@
     },
     "perBookSamples": 28,
     "privateAssetSizesAndSignedAudio": "verified",
-    "finalV4Seed": "completed; database counts, all248asset digests/sizes, 28per-book content samples and signed audio verified"
+    "finalV4Seed": "completed; database counts, all248asset digests/sizes, 28per-book content samples and signed audio verified",
+    "frontend": {
+      "commit": "ff3462b606705a7163800ba60241a570db9f2cdf",
+      "branch": "master",
+      "githubCheck": "success",
+      "cloudflarePages": "success",
+      "supabasePreview": "success",
+      "production": "https://ielts-fieldbook.pages.dev",
+      "smoke": [
+        "reading submit/pause/resume/review",
+        "listening signed playback/pause/submit/review",
+        "wrong question to correct intensive sentence",
+        "dictation comparison and private progress save",
+        "mobile listening statistics"
+      ],
+      "temporaryAccounts": "deleted; private exam and intensive cascade cleanup verified"
+    }
   }
 }
