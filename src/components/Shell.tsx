@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { studyStreak } from '../domain';
 import { useFieldbook } from '../context/FieldbookContext';
 import { displayName } from '../lib/format';
@@ -15,7 +15,7 @@ import { BackupModal } from '../features/modals/BackupModal';
 import { useAuthUser } from '../auth/useAuthUser';
 import { AccountMark } from '../features/account/AccountMark';
 import { SaveFailure } from './SaveFailure';
-import { Search, PanelLeftClose, PanelLeftOpen, Upload, BookOpen, Headphones } from 'lucide-react';
+import { Search, PanelLeftClose, PanelLeftOpen, Upload, Headphones } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { IconButton } from './IconButton';
 import { AccountMenu, CommandSearch, MobileNavigation } from './WorkbenchNavigation';
@@ -24,20 +24,11 @@ import { AssessmentImportModal } from '../features/modals/AssessmentImportModal'
 import { LegalModal } from '../features/modals/LegalModal';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { navigateWithPracticeGuard } from '../lib/practiceNavigation';
+import { moduleFor, studyLinkActive, workspaceModules } from './workspaceNavigation';
 
 function RailHint({ label, enabled, children }) {
   return <Tooltip.Root><Tooltip.Trigger asChild>{children}</Tooltip.Trigger>{enabled ? <Tooltip.Portal><Tooltip.Content className="tooltip rail-tooltip" side="right" sideOffset={10}>{label}<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal> : null}</Tooltip.Root>;
 }
-
-const moduleLinks = [
-  { to: '/', end: true, label: 'Today', icon: NavIcons.today },
-  { to: '/write', label: 'Writing', icon: NavIcons.write },
-  { to: '/speak', label: 'Speaking', icon: NavIcons.speaking },
-  { to: '/reading', label: 'Reading', icon: <BookOpen size={20}/> },
-  { to: '/listening', label: 'Listening', icon: <Headphones size={20}/> },
-  { to: '/vocabulary', label: 'Vocabulary', icon: NavIcons.vocabulary },
-  { to: '/progress', label: 'Progress', icon: NavIcons.progress },
-];
 
 const RAIL_KEY = 'ielts-fieldbook-rail';
 
@@ -56,18 +47,6 @@ const studyLinks = {
     { to: '/review?skill=speaking', label: 'Review', icon: NavIcons.review },
   ],
 };
-
-function moduleFor(pathname: string, search: string, fallbackSkill: string) {
-  if (pathname.startsWith('/reading')) return 'reading';
-  if (pathname.startsWith('/listening')) return 'listening';
-  if (pathname.startsWith('/write')) return 'writing';
-  if (pathname.startsWith('/speak') || pathname === '/stories') return 'speaking';
-  if (pathname.startsWith('/review')) return new URLSearchParams(search).get('skill') === 'speaking' ? 'speaking' : new URLSearchParams(search).get('skill') === 'writing' ? 'writing' : fallbackSkill === 'speaking' ? 'speaking' : 'writing';
-  if (pathname.startsWith('/vocabulary')) return 'vocabulary';
-  if (pathname.startsWith('/progress')) return 'progress';
-  if (pathname.startsWith('/account')) return 'account';
-  return 'today';
-}
 
 function chromeFor(pathname: string, activeSkill: string, deskName: string, topicName: string, search = '') {
   if (pathname.startsWith('/reading')) return {kicker:'Reading',title:pathname.includes('/review')?'Reading review':'Reading'};
@@ -230,28 +209,23 @@ export function Shell() {
             </div>
           </div>
           <nav className="nav" aria-label="Main navigation">
-            {moduleLinks.map((link) => (
-              <RailHint key={link.to + link.label} label={link.label} enabled={collapsed}><NavLink
-                key={link.to + link.label}
-                to={link.to}
-                end={link.end}
-                aria-label={link.label}
-                data-practice-navigation
-                onClick={(event) => { event.preventDefault(); navigateWithPracticeGuard(link.to, () => selectModule(link.to)); }}
-                className={module === (link.to === '/' ? 'today' : link.to.slice(1) === 'write' ? 'writing' : link.to.slice(1) === 'speak' ? 'speaking' : link.to.slice(1)) ? 'active' : undefined}
-              >
-                <span className="nav-icon" aria-hidden="true">
-                  {link.icon}
-                </span>
-                <span className="nav-label">{link.label}</span>
-              </NavLink></RailHint>
-            ))}
+            {workspaceModules.map((link) => {
+              const icon = link.id === 'today' ? NavIcons.today : link.id === 'writing' ? NavIcons.write : link.id === 'speaking' ? NavIcons.speaking : link.id === 'vocabulary' ? NavIcons.vocabulary : link.id === 'progress' ? NavIcons.progress : <link.Icon size={20} />;
+              const children = studyLinks[link.id] || [];
+              return <div className="nav-group" key={link.to}>
+                <RailHint label={link.label} enabled={collapsed}><Link
+                  to={link.to} aria-current={module === link.id ? 'page' : undefined} aria-label={link.label} data-practice-navigation
+                  onClick={(event) => { event.preventDefault(); navigateWithPracticeGuard(link.to, () => selectModule(link.to)); }}
+                  className={module === link.id ? 'active' : undefined}
+                ><span className="nav-icon" aria-hidden="true">{icon}</span><span className="nav-label">{link.label}</span></Link></RailHint>
+                {module === link.id && children.length ? <nav className="nav-children" aria-label={`${link.label} study`}>
+                  {children.map((child) => <RailHint key={child.to} label={child.label} enabled={collapsed}><Link to={child.to} aria-label={child.label} aria-current={studyLinkActive(child.to, location.pathname, location.search, module) ? 'page' : undefined} className={studyLinkActive(child.to, location.pathname, location.search, module) ? 'active' : undefined}>
+                    <span className="nav-icon" aria-hidden="true">{child.icon}</span><span className="nav-label">{child.label}</span>
+                  </Link></RailHint>)}
+                </nav> : null}
+              </div>;
+            })}
           </nav>
-          {secondaryLinks.length ? <nav className="nav nav-secondary" aria-label={`${module === 'reading' ? 'Reading' : module === 'listening' ? 'Listening' : speaking ? 'Speaking' : 'Writing'} study`}>
-            {secondaryLinks.map((link) => <RailHint key={link.to} label={link.label} enabled={collapsed}><NavLink to={link.to} end={link.to === '/write' || link.to === '/speak'} aria-label={link.label} className={({ isActive }) => isActive ? 'active' : undefined}>
-              <span className="nav-icon" aria-hidden="true">{link.icon}</span><span className="nav-label">{link.label}</span>
-            </NavLink></RailHint>)}
-          </nav> : null}
           <nav className="nav nav-account" aria-label="Account navigation">
             <RailHint label="Study settings" enabled={collapsed}><button className="nav-settings" type="button" onClick={() => fb.openModal('settings')} aria-label="Study settings"><span className="nav-icon" aria-hidden="true">{NavIcons.settings}</span><span className="nav-label">Study settings</span></button></RailHint>
             <RailHint label="Account" enabled={collapsed}><NavLink to="/account" aria-label="Account" className={({ isActive }) => (isActive ? 'active' : undefined)}>
@@ -369,7 +343,7 @@ export function Shell() {
         </main>
       </div>
       <MobileNavigation onMore={() => setMoreOpen(true)} />
-      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More"><div className="modal more-modal"><div className="mobile-more-links"><button type="button" onClick={() => goFromMore('/reading')}><BookOpen size={20}/>Reading</button><button type="button" onClick={() => goFromMore('/listening')}><Headphones size={20}/>Listening</button><button type="button" onClick={() => goFromMore('/progress')}>{NavIcons.progress}Progress</button>{secondaryLinks.map((link) => <button type="button" key={link.to} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}<button onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><button type="button" onClick={() => goFromMore('/account')}>Account</button></div></div></ModalFrame>
+      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}<button type="button" onClick={() => goFromMore('/progress')}>{NavIcons.progress}Progress</button><button type="button" onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><button type="button" onClick={() => goFromMore('/account')}>Account</button></div></div></ModalFrame>
       <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
       <AssessmentImportModal />
       <LegalModal view={legalView} onClose={() => setLegalView(null)} />

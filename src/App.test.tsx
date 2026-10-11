@@ -161,10 +161,21 @@ describe('Fieldbook UI', () => {
       expect(within(rail).getByRole('link', { name: label })).toBeTruthy();
     }
     expect(within(rail).getByRole('navigation', { name: 'Writing study' })).toBeTruthy();
+    const modules = rail.querySelectorAll('.nav-group');
+    expect(Array.from(modules).map(group => group.querySelector('a')?.getAttribute('aria-label'))).toEqual(['Today', 'Listening', 'Reading', 'Writing', 'Speaking', 'Vocabulary', 'Progress']);
+    expect(within(rail).getByRole('navigation', { name: 'Writing study' }).parentElement?.querySelector('a')?.getAttribute('aria-label')).toBe('Writing');
     await user.click(within(rail).getByRole('link', { name: 'Speaking' }));
     expect(within(rail).getByText('Stories')).toBeTruthy();
     expect(within(rail).getByText('Practice')).toBeTruthy();
     expect(within(rail).queryByRole('navigation', { name: 'Writing study' })).toBeNull();
+  });
+
+  it('More keeps current study actions without repeating mobile module entries', async () => {
+    renderAt('/write');
+    await userEvent.setup().click(screen.getByRole('button', { name: 'More' }));
+    const dialog = screen.getByRole('dialog', { name: 'More' });
+    for (const name of ['Questions', 'Practice', 'Review', 'Progress', 'Study settings', 'Account']) expect(within(dialog).getByRole('button', { name })).toBeTruthy();
+    for (const name of ['Listening', 'Reading', 'Writing', 'Speaking', 'Vocabulary']) expect(within(dialog).queryByRole('button', { name })).toBeNull();
   });
 
   it('keeps Speaking review selected after a direct Speaking question visit', async () => {
