@@ -31,6 +31,8 @@ import { vocabularyGroupProgress } from "../../domain/vocabulary/progress";
 import "../../styles/vocabulary.css";
 import "../../styles/vocabulary-workbench.css";
 import { isRegionalSpellingDifference } from '../../domain/vocabulary/spelling';
+import { getVocabularyMastery } from '../../domain/vocabulary/mastery';
+import { groupPath } from './vocabularyNavigation';
 
 const STATUS = [
   "new",
@@ -130,23 +132,15 @@ const wordbookDescription = book => ({
   'guixue:21953': 'Prepare listening vocabulary in four tests, organised by part.',
   'guixue:10216': 'Rehearse listening words and spelling through test-based groups.',
 }[book.id] || book.description || 'Develop useful English vocabulary one group at a time.');
-const studyLink = unit => `/vocabulary/study?bookId=${encodeURIComponent(unit.bookId)}&unitId=${encodeURIComponent(unit.id)}&dueOnly=false`;
+const studyLink = unit => `/vocabulary/wordbooks/${encodeURIComponent(unit.bookId)}/groups/${encodeURIComponent(unit.id)}/learn`;
+const assessmentLink = unit => `/vocabulary/study?bookId=${encodeURIComponent(unit.bookId)}&unitId=${encodeURIComponent(unit.id)}&dueOnly=false`;
 const learning = (state, entryId) =>
   (state.vocabularyStates || []).filter((item) => item.entryId === entryId);
 function statusOf(state, id) {
-  const states = learning(state, id);
-  return states.length
-    ? states
-        .map(deriveVocabularyStatus)
-        .sort((a, b) => STATUS.indexOf(a) - STATUS.indexOf(b))[0]
-    : "new";
+  return getVocabularyMastery(state, id).effective;
 }
 function manualOf(state, id) {
-  return (
-    learning(state, id)
-      .map((item) => item.manualStatus)
-      .sort((a, b) => STATUS.indexOf(a) - STATUS.indexOf(b))[0] || "new"
-  );
+  return statusOf(state, id);
 }
 function editEntry(fb, entry = null) {
   fb.setEditingVocabularyId(entry?.id || null);
@@ -301,7 +295,7 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
       );
     });
     try {
-      const saved = await fb.persistNow(draft);
+      const saved = await (fb.saveVocabularyStatuses ? fb.saveVocabularyStatuses(operation.ids, operation.status) : fb.persistNow(draft));
       if (accountId() !== owner) return;
       if (saved) { setPendingBulk(null); setSelected(new Set()); fb.toast('Familiarity updated.'); }
       else setBulkError('Could not save familiarity. Your requested change is kept; retry saving.');
@@ -482,7 +476,7 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
                     {label(manualOf(fb.state, entry.id))}
                   </span>
                   <span className="vocabulary-muted">
-                    Evidence: {label(statusOf(fb.state, entry.id))}
+                    {getVocabularyMastery(fb.state, entry.id).manual ? `Manual · System: ${label(getVocabularyMastery(fb.state, entry.id).automatic)}` : 'Automatic'}
                   </span>
                   {learning(fb.state, entry.id).some(
                     (item) => item.wrong?.active,
@@ -603,7 +597,7 @@ export function VocabularyWordbooksPage() {
         {unit.entryIds.length ? <><p>{unit.entryIds.length} words · {unit.studyEntryIds.length ? `${vocabularyGroupProgress(fb.state, unit)} · ${mastered} mastered` : "Archived · Excluded from study"}</p>{unit.archivedCount && unit.studyEntryIds.length ? <p className="vocabulary-muted">{unit.archivedCount} archived {unit.archivedCount === 1 ? "word" : "words"} excluded from study</p> : null}</>
           : <p className="vocabulary-muted">{unit.totalSourceWords ? `${unit.totalSourceWords} source words | ` : ""}Content pending</p>}
       </div>
-      <div className="actions"><Link className="btn line" to={`/vocabulary/wordbooks/${encodeURIComponent(book.id)}/groups/${encodeURIComponent(unit.id)}/words`}>View words</Link>{unit.studyEntryIds.length && enrolled(book.id) ? <Link className="btn line" to={studyLink(unit)} aria-label={`${studied ? "Restudy" : "Study"} group: ${unitPath(book, unit, study.hierarchy)}`}>{studied ? "Restudy group" : "Study group"}<ArrowRight size={15} /></Link> : null}</div>
+      <div className="actions"><Link className="btn line" to={`/vocabulary/wordbooks/${encodeURIComponent(book.id)}/groups/${encodeURIComponent(unit.id)}/words`}>View words</Link>{unit.studyEntryIds.length && enrolled(book.id) ? <Link className="btn primary" to={studyLink(unit)} aria-label={`Learn words: ${unitPath(book, unit, study.hierarchy)}`}>Learn words<ArrowRight size={15} /></Link> : null}{unit.studyEntryIds.length && enrolled(book.id) ? <Link className="btn line" to={assessmentLink(unit)}>Start assessment</Link> : null}</div>
     </article>;
   };
   const chapter = (unit) => {
@@ -634,7 +628,7 @@ export function VocabularyWordbooksPage() {
         <p className="vocabulary-muted">{book.entryIds.length} words · {study.hierarchy.filter(unit => unit.kind === "chapter").length} chapters · {study.groups.length} groups</p>
         <p>{study.studied.length}/{study.available.length} available groups studied</p>
       </div><div className="vocabulary-continue">
-        {enrolled(book.id) ? study.next ? <><p className="vocabulary-group-path">{unitPath(book, study.next, study.hierarchy)}</p><Link className="btn primary" to={studyLink(study.next)}>{study.studied.length === study.available.length ? "Study again" : study.studied.length ? "Continue study" : "Start first group"}<ArrowRight size={16} /></Link><small>{study.next.studyEntryIds.length} words to practise · Complete group</small></> : study.studied.length ? <><p>All groups studied.</p><Link className="btn line" to={studyLink(study.available[0])}>Study again</Link></> : <p className="vocabulary-muted">{study.groups.some(group => group.entryIds.length) ? "All available words are archived. Restore a word to study this book." : "Study will be available when group content is loaded."}</p>
+        {enrolled(book.id) ? study.next ? <><p className="vocabulary-group-path">{unitPath(book, study.next, study.hierarchy)}</p><Link className="btn primary" to={studyLink(study.next)}>{study.studied.length === study.available.length ? "Study again" : study.studied.length ? "Continue study" : "Start first group"}<ArrowRight size={16} /></Link><small>{study.next.studyEntryIds.length} words · Learn, then assess</small></> : study.studied.length ? <><p>All groups studied.</p><Link className="btn line" to={studyLink(study.available[0])}>Study again</Link></> : <p className="vocabulary-muted">{study.groups.some(group => group.entryIds.length) ? "All available words are archived. Restore a word to study this book." : "Study will be available when group content is loaded."}</p>
           : <button type="button" className="btn primary" disabled={Boolean(joining) || catalogBusy || !study.available.length} onClick={() => join(book.id)}><Plus size={15} />Add wordbook</button>}
       </div></div>
       <p className="vocabulary-muted">Studied means a saved attempt with every nonarchived word answered. Mastery comes from review evidence.</p>
@@ -966,6 +960,16 @@ export function VocabularyHistoryPage() {
   const fb = useFieldbook();
   const sessions = [...(fb.state.vocabularySessions || [])].sort((a, b) => String(b.submittedAt).localeCompare(String(a.submittedAt)));
   return <VocabularyLayout><div className="page-tools"><h2>Vocabulary history</h2><Link className="btn line" to="/vocabulary/review">Review vocabulary</Link></div>
-    {sessions.length ? <div className="vocabulary-list">{sessions.map(log => <Link className="vocabulary-study-group" key={log.id} to={`/vocabulary/history/${encodeURIComponent(log.id)}`}><span><strong>{label(log.mode)}</strong><small>{dateLabel(log.submittedAt)}</small></span><span>{log.summary?.total || log.results.length} words</span><ArrowRight size={16} /></Link>)}</div> : <Empty message="Your submitted vocabulary sessions will appear here." />}
+    {sessions.length ? <div className="vocabulary-history-list">{sessions.map(log => {
+      const bookId = log.selection?.bookId || log.filter?.bookId;
+      const unitId = log.selection?.unitId || log.filter?.unitId;
+      const total = log.summary?.total ?? log.results.length;
+      const summary = log.summary || {correct:log.results.filter(row=>row.result==='success').length,incorrect:log.results.filter(row=>['failure','partial'].includes(row.result)).length,pending:log.results.filter(row=>row.result==='pending').length};
+      const validDate = log.submittedAt && Number.isFinite(Date.parse(log.submittedAt));
+      return <Link className="vocabulary-history-row" key={log.id} to={`/vocabulary/history/${encodeURIComponent(log.id)}`}>
+        <div className="vocabulary-history-main"><strong>{label(log.mode)}</strong><span>{bookId && unitId ? groupPath(bookId,unitId) || 'Wordbook assessment' : log.selection?.kind === 'retry' ? 'Mistake retry' : 'Vocabulary review'}</span><time dateTime={validDate ? log.submittedAt : undefined}>{validDate ? new Date(log.submittedAt).toLocaleString('en-GB',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : 'Submission date unavailable'}</time></div>
+        <div className="vocabulary-history-summary"><strong>{total} {total===1?'word':'words'}</strong><small>{log.mode === 'audio' ? 'Listening activity · No mastery assessment' : `${summary.correct || 0} correct · ${summary.incorrect || 0} incorrect`}</small>{log.mode !== 'audio' && summary.pending ? <small>{summary.pending} awaiting feedback</small> : null}</div><ArrowRight size={16} />
+      </Link>;
+    })}</div> : <Empty message="Your submitted vocabulary sessions will appear here." />}
   </VocabularyLayout>;
 }

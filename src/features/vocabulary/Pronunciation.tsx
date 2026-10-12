@@ -4,7 +4,7 @@ import { getVocabularyMedia, type VocabularyAccent, type VocabularyRecording } f
 import { createVocabularyPlayback, type VocabularyPlaybackOptions, type VocabularyPlaybackResult } from './playback';
 import '../../styles/vocabulary-media.css';
 export function playbackMessage(result: VocabularyPlaybackResult): string {
-  if (result.ok) return result.source === 'speech' ? `${result.accent?.toUpperCase() || 'English'} device voice: ${result.voice || 'name unavailable'}${result.fallbackReason ? ' (recording unavailable)' : ''}` : `${result.accent === 'other' ? 'Other accent' : result.accent === 'unknown' ? 'Unverified accent' : result.accent?.toUpperCase()} recording`;
+  if (result.ok) return result.source === 'speech' ? `${result.accent?.toUpperCase() || 'English'} synthetic voice · ${result.voice || 'name unavailable'}` : `${result.accent === 'other' ? 'Other accent' : result.accent === 'unknown' ? 'Unverified accent' : result.accent?.toUpperCase()} recording`;
   if (result.reason === 'cancelled') return 'Stopped.';
   if (result.reason === 'target-voice-unavailable') return `No ${result.accent?.toUpperCase()} voice is available on this device. Choose a matching voice in device settings or explicitly play another recording.`;
   if (result.reason === 'blocked') return 'Playback was blocked. Press Play again to retry.';
@@ -16,6 +16,7 @@ export function Pronunciation({ entry, accent = 'uk', options = {}, compact = fa
   const playAttempt = useRef(0);
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [message, setMessage] = useState('');
+  const [fallback, setFallback] = useState('');
   const [others, setOthers] = useState<VocabularyRecording[]>([]);
   const [mediaError, setMediaError] = useState(false);
   const load = async (token: number) => {
@@ -25,21 +26,23 @@ export function Pronunciation({ entry, accent = 'uk', options = {}, compact = fa
     setOthers(media.recordings.filter(recording => recording.accent !== accent && recording.status !== 'missing' && recording.availability !== 'failed' && recording.wordformConfirmed !== false));
   };
   useEffect(() => {
-    const token = ++generation.current; setOthers([]); setMessage(''); setActiveAction(null); setMediaError(false); void load(token);
+    const token = ++generation.current; setOthers([]); setMessage(''); setFallback(''); setActiveAction(null); setMediaError(false); void load(token);
     return () => { generation.current += 1; playAttempt.current += 1; player.stop(); };
   }, [entry.id, accent, player]);
   const play = async (recording?: VocabularyRecording) => {
     const action = recording?.url || 'target';
     const attempt = ++playAttempt.current;
     if (activeAction === action) { player.stop(); setActiveAction(null); setMessage('Stopped.'); return; }
-    const token = generation.current; setActiveAction(action);
+    const token = generation.current; setActiveAction(action); setFallback('');
     const result = await player.play(entry, { ...options, accent, recording });
     if (token !== generation.current || attempt !== playAttempt.current) return;
     setActiveAction(null); setMessage(playbackMessage(result));
+    if (result.ok && result.source === 'speech' && result.fallbackReason) setFallback(result.fallbackReason === 'target-recording-unavailable' ? 'No recorded word pronunciation is available for this accent. Using your device’s synthetic voice.' : 'The recorded word pronunciation could not be played. Using your device’s synthetic voice.');
   };
   return <div className={`vocabulary-pronunciation${compact ? ' is-compact' : ''}`}>
     <button className="btn line" type="button" aria-label={`${activeAction === 'target' ? 'Stop' : 'Play'} ${accent.toUpperCase()} pronunciation of ${entry.term}`} onClick={() => void play()}>{activeAction === 'target' ? 'Stop' : `Play ${accent.toUpperCase()}`}</button>
     <span role="status">{message}</span>
+    {!compact && fallback && <details className="vocabulary-audio-source"><summary>About this pronunciation</summary><p>{fallback}</p></details>}
     {!compact && mediaError && <button className="btn line" type="button" onClick={() => void load(generation.current)}>Retry media metadata</button>}
     {!compact && others.length > 0 && <details><summary>Other recordings (explicit choice)</summary>{others.map(recording => <button className="btn line" type="button" key={recording.url} onClick={() => void play(recording)}>{activeAction === recording.url ? 'Stop ' : ''}{recording.accent === 'unknown' ? 'Unverified accent' : recording.accent === 'other' ? 'Other accent' : recording.accent.toUpperCase()} — {recording.author || recording.title}</button>)}</details>}
   </div>;

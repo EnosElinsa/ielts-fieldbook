@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Link,
   useLocation,
@@ -19,7 +19,6 @@ import type {
   VocabularyStore,
   VocabularyDimension,
   VocabularyStatus,
-  VocabularyEvidence,
 } from "../../domain/vocabulary/types";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { hasVocabularySenseEdits } from "../../domain/vocabulary/content";
@@ -31,6 +30,12 @@ import {
 } from "../../domain/vocabulary/media";
 import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
 import { isRegionalSpellingDifference } from "../../domain/vocabulary/spelling";
+import { accountId } from "../../storage/remote";
+import { getVocabularyMastery } from "../../domain/vocabulary/mastery";
+import { vocabularyLearningTimeline } from "../../domain/vocabulary/timeline";
+import { vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
+import { VocabularySenseContent } from "./VocabularySenseContent";
+import "../../styles/vocabulary-entry.css";
 import { DictionarySenses } from "./DictionarySenses";
 import { VocabularyCredits, senseCredits } from "./VocabularyCredits";
 import { VocabularyIllustration } from "./VocabularyIllustration";
@@ -52,31 +57,13 @@ const statuses = [
 ];
 const label = (value: string) =>
   value.replace(/^./, (char) => char.toUpperCase());
-function EvidenceRecords({ records }: { records: VocabularyEvidence[] }) {
-  return (
-    <div className="vocabulary-evidence">
-      {records
-        .slice()
-        .reverse()
-        .map((item, index) => (
-          <div key={item.id || `${item.occurredAt}:${index}`}>
-            <span>{label(item.mode || item.dimension || "Usage")}</span>
-            <span>
-              Verification:{" "}
-              {item.verification ? label(item.verification) : "Not recorded"}
-            </span>
-            <span>Result: {label(item.result)}</span>
-            <p>{item.response || "No answer recorded"}</p>
-            <small>
-              {item.occurredAt
-                ? new Date(item.occurredAt).toLocaleDateString("en-GB")
-                : "Date unavailable"}
-            </small>
-          </div>
-        ))}
-    </div>
-  );
-}
+const eventDate = (at: string | null | undefined) =>
+  at && Number.isFinite(Date.parse(at))
+    ? new Date(at).toLocaleString("en-GB", {
+        dateStyle: "short",
+        timeStyle: "short",
+      })
+    : "Date unavailable";
 export function VocabularyEntryPage() {
   const fb = useFieldbook();
   const state = fb.state as unknown as VocabularyStore & {
@@ -103,6 +90,21 @@ export function VocabularyEntryPage() {
   const [recordings, setRecordings] = useState<VocabularyRecording[]>([]);
   const [saveError, setSaveError] = useState("");
   const [saving, setSaving] = useState(false);
+  const saveLock = useRef(false);
+  const mounted = useRef(true);
+  const routeKey = location.pathname + location.search;
+  const routeRef = useRef(routeKey);
+  routeRef.current = routeKey;
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+  useEffect(() => {
+    setSaving(false);
+    setSaveError("");
+  }, [routeKey]);
   useEffect(() => {
     setDictionarySources([]);
     setRecordings([]);
@@ -146,7 +148,9 @@ export function VocabularyEntryPage() {
       ? "My vocabulary"
       : /^\/vocabulary\/(review|study|history)/.test(returnTo)
         ? "Back to session word list"
-        : returnTo.includes("/groups/")
+        : /\/groups\/[^/?]+\/learn/.test(returnTo)
+          ? "Back to learning cards"
+          : returnTo.includes("/groups/")
           ? "Back to group words"
           : "Back to vocabulary";
   const origin = location.pathname + location.search;
@@ -154,9 +158,30 @@ export function VocabularyEntryPage() {
   const primary = resolved?.sense;
   const image = resolved ? getVocabularyIllustration(resolved) : undefined;
   const saved = state.vocabulary?.some((item) => item.id === entry?.id);
-  const evidence = (state.vocabularyEvidence || []).filter(
-    (item) => item.entryId === entry?.id,
-  );
+  const timeline = entry ? vocabularyLearningTimeline(state, entry.id) : [];
+  const locations = [
+    ...new Map(
+      [
+        ...VOCABULARY_CATALOG.memberships.filter(
+          (row) => row.entryId === entry?.id,
+        ),
+        ...(entry?.sources.filter((source) => source.bookId && source.unitId) ||
+          []),
+      ]
+        .filter((source) => source.bookId && source.unitId)
+        .map((source) => [
+          `${source.bookId}:${source.unitId}`,
+          { bookId: source.bookId!, unitId: source.unitId! },
+        ]),
+    ).values(),
+  ];
+  const sourceUrl = (source: { bookId: string; unitId: string }) => {
+    const next = new URLSearchParams(params);
+    next.set("bookId", source.bookId);
+    next.set("unitId", source.unitId);
+    next.delete("senseId");
+    return `${location.pathname}?${next}`;
+  };
   const others =
     entry?.senses.filter(
       (sense) =>
@@ -166,7 +191,14 @@ export function VocabularyEntryPage() {
         ),
     ) || [];
   const changeStatus = async (value: string, senseId: string) => {
-    if (saving) return;
+    if (saveLock.current) return;
+    saveLock.current = true;
+    const owner = accountId();
+    const requestedRoute = routeRef.current;
+    const active = () =>
+      mounted.current &&
+      owner === accountId() &&
+      requestedRoute === routeRef.current;
     setSaving(true);
     setSaveError("");
     try {
@@ -184,21 +216,28 @@ export function VocabularyEntryPage() {
       setVocabularyManualStatus(
         draft,
         entry!.id,
-        value as VocabularyStatus,
+        value as VocabularyStatus | "automatic",
         senseId,
       );
-      if (await fb.persistNow(draft)) fb.toast("Familiarity updated.");
+      const didSave = fb.saveVocabularyStatus
+        ? await fb.saveVocabularyStatus(
+            entry!.id,
+            senseId,
+            value as VocabularyStatus | "automatic",
+            selectedSense ? { ...entry!, senses: [selectedSense] } : undefined,
+          )
+        : await fb.persistNow(draft);
+      if (!active()) return;
+      if (didSave) fb.toast("Mastery preference saved.");
       else setSaveError("Familiarity could not be saved. Try again.");
     } catch {
-      setSaveError("Familiarity could not be saved. Try again.");
+      if (active()) setSaveError("Familiarity could not be saved. Try again.");
     } finally {
-      setSaving(false);
+      saveLock.current = false;
+      if (active()) setSaving(false);
     }
   };
   const renderSense = (sense: VocabularySense, main = false) => {
-    const learningState = state.vocabularyStates?.find(
-      (item) => item.entryId === entry?.id && item.senseId === sense.id,
-    );
     const publicEntry = (
       VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]
     ).find((item) => item.id === entry?.id);
@@ -213,6 +252,7 @@ export function VocabularyEntryPage() {
       Boolean(
         saved && publicSense && hasVocabularySenseEdits(sense, [publicSense]),
       );
+    const content = vocabularySensePresentation(sense);
     return (
       <section
         className={`vocabulary-sense${main ? " vocabulary-primary-meaning" : ""}`}
@@ -226,33 +266,11 @@ export function VocabularyEntryPage() {
                 : "Common meaning"
               : sense.pos || "Other meaning"}
           </h3>
-          {saved ? (
-            <FilterMenu
-              label={
-                main
-                  ? "Familiarity for this meaning"
-                  : `Familiarity for ${sense.pos} meaning`
-              }
-              value={learningState?.manualStatus || "new"}
-              onChange={(value) => void changeStatus(value, sense.id)}
-              options={statuses.map((value) => ({
-                value,
-                label: label(value),
-              }))}
-            />
-          ) : null}
         </div>
         {sense.pos ? (
           <span className="vocabulary-part-of-speech">{sense.pos}</span>
         ) : null}
-        <p className="vocabulary-definition">
-          {sense.definition || "Definition not available yet"}
-        </p>
-        {sense.example ? (
-          <blockquote>{sense.example}</blockquote>
-        ) : (
-          <p className="vocabulary-muted">Example not available yet</p>
-        )}
+        <VocabularySenseContent sense={sense} />
         {((main && resolved?.contentReviewed) || personalNotes) &&
         sense.collocations?.length ? (
           <div className="vocabulary-detail">
@@ -260,19 +278,13 @@ export function VocabularyEntryPage() {
             <p>{sense.collocations.join(" · ")}</p>
           </div>
         ) : null}
-        {sense.usage ? (
-          <div className="vocabulary-detail">
-            <h4>Usage note</h4>
-            <p>{sense.usage}</p>
-          </div>
-        ) : null}
         {((main && resolved?.contentReviewed) || personalNotes) &&
-        sense.register ? (
+        content.register ? (
           <div className="vocabulary-detail">
             <h4>
               {personalNotes ? "Your register note" : "Reviewed register"}
             </h4>
-            <p>{sense.register}</p>
+            <p>{content.register}</p>
           </div>
         ) : null}
         {personalNotes &&
@@ -308,37 +320,6 @@ export function VocabularyEntryPage() {
             <ArrowRight size={15} />
           </Link>
         ) : null}
-        <details className="vocabulary-secondary">
-          <summary>Learning evidence for this meaning</summary>
-          <div className="vocabulary-dimensions">
-            {(
-              [
-                "meaning",
-                "listening",
-                "spelling",
-                "usage",
-              ] as VocabularyDimension[]
-            ).map((dimension) => (
-              <div key={dimension}>
-                <strong>{label(dimension)}</strong>
-                <span>
-                  {learningState?.dimensions?.[dimension]?.successes || 0}{" "}
-                  successes /{" "}
-                  {learningState?.dimensions?.[dimension]?.failures || 0}{" "}
-                  failures
-                </span>
-                <small>
-                  {learningState?.lastReviewedAt
-                    ? "Previously reviewed"
-                    : "Not reviewed"}
-                </small>
-              </div>
-            ))}
-          </div>
-          <EvidenceRecords
-            records={evidence.filter((item) => item.senseId === sense.id)}
-          />
-        </details>
       </section>
     );
   };
@@ -467,17 +448,31 @@ export function VocabularyEntryPage() {
               {saveError}
             </p>
           ) : null}
-          {validGroup && !resolved?.reviewed ? (
-            <p className="vocabulary-muted">
-              Group meaning not confirmed. This is the current common meaning.
-            </p>
-          ) : null}
           <div
             className={`vocabulary-meaning-layout${image ? " has-illustration" : ""}`}
           >
             <div>
               {primary ? (
-                renderSense(primary, true)
+                <>
+                  {validGroup ? (
+                    resolved?.reviewed ? (
+                      <p className="vocabulary-context-label">
+                        Selected group meaning
+                      </p>
+                    ) : (
+                      <details className="vocabulary-context-notice">
+                        <summary>General dictionary meaning</summary>
+                        <p>
+                          A meaning specific to this group has not been
+                          confirmed. This general meaning is a learning
+                          reference, not a verified interpretation of the source
+                          group.
+                        </p>
+                      </details>
+                    )
+                  ) : null}
+                  {renderSense(primary, true)}
+                </>
               ) : (
                 <section className="vocabulary-sense">
                   <h3>
@@ -497,6 +492,260 @@ export function VocabularyEntryPage() {
               />
             ) : null}
           </div>
+          {others.length ? (
+            <details className="vocabulary-secondary">
+              <summary>Other learning meanings · {others.length}</summary>
+              {[...new Set(others.map((sense) => sense.pos || "Meaning"))].map(
+                (pos) => (
+                  <section className="vocabulary-dictionary-pos" key={pos}>
+                    <h3>{pos}</h3>
+                    {others
+                      .filter((sense) => (sense.pos || "Meaning") === pos)
+                      .map((sense, index) => (
+                        <div
+                          className="vocabulary-numbered-meaning"
+                          key={sense.id}
+                        >
+                          <span className="vocabulary-muted">
+                            Meaning {index + 1}
+                          </span>
+                          {renderSense(sense)}
+                        </div>
+                      ))}
+                  </section>
+                ),
+              )}
+            </details>
+          ) : null}
+          <DictionarySenses
+            entry={entry}
+            excludeSenses={[...(primary ? [primary] : []), ...others]}
+            onSources={setDictionarySources}
+          />
+          <section
+            className="vocabulary-learning-progress"
+            aria-label="Learning progress"
+          >
+            <h3>Learning progress</h3>
+            <p className="vocabulary-muted">
+              Statuses use spaced retrieval evidence across four skills. These
+              are Fieldbook learning rules; FSRS schedules reviews.
+            </p>
+            {[...(primary ? [primary] : []), ...others].map((sense, index) => {
+              const mastery = getVocabularyMastery(state, entry.id, sense.id);
+              return (
+                <section className="vocabulary-mastery-sense" key={sense.id}>
+                  <h4>
+                    {index === 0
+                      ? "Current learning meaning"
+                      : `${sense.pos || "Meaning"} · ${sense.definition}`}
+                  </h4>
+                  <div className="vocabulary-mastery-status">
+                    <strong>{label(mastery.effective)}</strong>
+                    <span className="pill">
+                      {mastery.manual ? "Manual" : "Automatic"}
+                    </span>
+                    {mastery.manual ? (
+                      <span>System estimate: {label(mastery.automatic)}</span>
+                    ) : null}
+                  </div>
+                  {saved ? (
+                    <div className="vocabulary-mastery-actions">
+                      <fieldset
+                        disabled={saving}
+                        aria-label="Mastery adjustment"
+                      >
+                        <FilterMenu
+                          label={
+                            index === 0
+                              ? "Familiarity for this meaning"
+                              : `Familiarity for ${sense.pos} meaning`
+                          }
+                          value={
+                            mastery.manual ? mastery.effective : "automatic"
+                          }
+                          onChange={(value) =>
+                            void changeStatus(value, sense.id)
+                          }
+                          options={[
+                            { value: "automatic", label: "Use automatic" },
+                            ...statuses.map((value) => ({
+                              value,
+                              label: label(value),
+                            })),
+                          ]}
+                        />
+                      </fieldset>
+                      {mastery.manual ? (
+                        <button
+                          className="btn line"
+                          disabled={saving}
+                          onClick={() =>
+                            void changeStatus("automatic", sense.id)
+                          }
+                        >
+                          Use automatic
+                        </button>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <p className="vocabulary-muted">
+                      Practise this meaning to start your learning record.
+                    </p>
+                  )}
+                  <div className="vocabulary-dimensions">
+                    {(
+                      [
+                        "meaning",
+                        "listening",
+                        "spelling",
+                        "usage",
+                      ] as VocabularyDimension[]
+                    ).map((dimension) => (
+                      <div key={dimension}>
+                        <strong>{label(dimension)}</strong>
+                        <span>
+                          {mastery.dimensions[dimension].spacedSuccesses} spaced
+                          successes
+                        </span>
+                        <small>
+                          {mastery.dimensions[dimension].nextReviewAt
+                            ? `Next review: ${eventDate(mastery.dimensions[dimension].nextReviewAt)}`
+                            : "Not scheduled"}
+                        </small>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="vocabulary-muted">
+                    Assessed use: {mastery.productionSuccesses} successful
+                    spaced reviews
+                  </p>
+                  {mastery.missing.length ? (
+                    <details className="vocabulary-mastery-requirements">
+                      <summary>What to practise next</summary>
+                      <ul>
+                        {mastery.missing.map((message) => (
+                          <li key={message}>{message}</li>
+                        ))}
+                      </ul>
+                      <p>
+                        Familiar: 3 spaced successes per skill. Mastered: 5 per
+                        skill and 2 assessed use successes. Counted successes in
+                        each skill must be at least 24 hours apart.
+                      </p>
+                    </details>
+                  ) : null}
+                </section>
+              );
+            })}
+            {saving ? <p role="status">Saving mastery preference…</p> : null}
+          </section>
+          <details className="vocabulary-secondary vocabulary-timeline">
+            <summary>Learning history ({timeline.length})</summary>
+            <p className="vocabulary-muted">
+              Each saved review appears once. Dictation records both listening
+              and spelling. Older evidence without a linked review remains
+              separate.
+            </p>
+            {!timeline.length ? (
+              <p>
+                No saved learning events yet. Start an assessment to build your
+                evidence.
+              </p>
+            ) : (
+              <ol>
+                {timeline.map((event, index) => (
+                  <li key={`${event.id}:${index}`}>
+                    <div className="vocabulary-event-head">
+                      <strong>{event.sourceLabel || label(event.mode)}</strong>
+                      <span>Result: {label(event.result)}</span>
+                    </div>
+                    {event.dimensions.length ? (
+                      <p className="vocabulary-event-dimensions">
+                        {event.dimensions.map(label).join(" + ")}
+                      </p>
+                    ) : null}
+                    <p>
+                      Verification:{" "}
+                      {event.verification
+                        ? label(event.verification)
+                        : "Not recorded"}
+                    </p>
+                    <p>{event.response || "No answer recorded"}</p>
+                    {event.mode === "dictation" &&
+                    event.result === "failure" &&
+                    isRegionalSpellingDifference(
+                      entry.term,
+                      event.response || "",
+                    ) ? (
+                      <p className="vocabulary-muted">
+                        This spelling is accepted in current assessments. The
+                        historical result remains Failure.
+                      </p>
+                    ) : null}
+                    {event.senseId && event.senseId !== primary?.id ? (
+                      <small>
+                        Meaning:{" "}
+                        {entry.senses.find(
+                          (sense) => sense.id === event.senseId,
+                        )?.definition || "Previous learning meaning"}
+                      </small>
+                    ) : null}
+                    {event.bookId && event.unitId ? (
+                      <small>
+                        {groupPath(event.bookId, event.unitId) ||
+                          "Recorded source group"}
+                      </small>
+                    ) : null}
+                    <time dateTime={event.occurredAt || undefined}>
+                      {eventDate(event.occurredAt)}
+                    </time>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </details>
+          <section
+            className="vocabulary-source-locations"
+            aria-label="Wordbook sources"
+          >
+            <h3>Wordbook sources</h3>
+            <p className="vocabulary-muted">
+              A word can appear in several groups. Select a source to view its
+              learning meaning; the same meaning shares learning progress.
+            </p>
+            {locations.length ? (
+              <ul>
+                {locations.map((source) => (
+                  <li key={`${source.bookId}:${source.unitId}`}>
+                    <Link
+                      to={sourceUrl(source)}
+                      aria-current={
+                        validGroup &&
+                        source.bookId === bookId &&
+                        source.unitId === unitId
+                          ? "page"
+                          : undefined
+                      }
+                    >
+                      {groupPath(source.bookId, source.unitId) ||
+                        `${source.bookId} / ${source.unitId}`}
+                      {validGroup &&
+                      source.bookId === bookId &&
+                      source.unitId === unitId ? (
+                        <span className="pill">Current source</span>
+                      ) : null}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="vocabulary-muted">
+                No wordbook source linked. Your personal word is available for
+                practice.
+              </p>
+            )}
+          </section>
           {raw &&
           ((raw.meaning && raw.meaning !== primary?.definition) ||
             (raw.example && raw.example !== primary?.example)) ? (
@@ -506,55 +755,6 @@ export function VocabularyEntryPage() {
               {raw.example ? <blockquote>{raw.example}</blockquote> : null}
             </details>
           ) : null}
-          {others.length ? (
-            <details className="vocabulary-secondary">
-              <summary>Other learning meanings · {others.length}</summary>
-              {others.map((sense) => renderSense(sense))}
-            </details>
-          ) : null}
-          <DictionarySenses
-            entry={entry}
-            excludeSenses={[...(primary ? [primary] : []), ...others]}
-            onSources={setDictionarySources}
-          />
-          <details className="vocabulary-secondary">
-            <summary>Review history</summary>
-            {evidence.length ? (
-              <section>
-                <h4>Saved learning evidence</h4>
-                <EvidenceRecords records={evidence} />
-              </section>
-            ) : null}
-            <div className="vocabulary-evidence">
-              {state.vocabularyReviews
-                ?.filter((review) => review.entryId === entry.id)
-                .slice(-30)
-                .reverse()
-                .map((review) => (
-                  <div key={review.id}>
-                    <span>{review.sourceLabel || label(review.mode)}</span>
-                    <span>
-                      {review.mode === "dictation" &&
-                      review.result === "failure" &&
-                      isRegionalSpellingDifference(
-                        entry.term,
-                        review.response || "",
-                      )
-                        ? "UK/US spelling accepted"
-                        : label(review.result)}
-                    </span>
-                    <p>{review.response || "No answer recorded"}</p>
-                    <small>
-                      {review.occurredAt
-                        ? new Date(review.occurredAt).toLocaleDateString(
-                            "en-GB",
-                          )
-                        : "Date unavailable"}
-                    </small>
-                  </div>
-                ))}
-            </div>
-          </details>
           <VocabularyCredits credits={credits} />
         </>
       )}

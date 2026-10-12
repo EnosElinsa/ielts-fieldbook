@@ -25,7 +25,7 @@ export type VocabularyEntry = {
 export type DimensionState = { successes: number; failures: number; partials: number; nextReviewAt?: string; firstSuccessAt?: string; lastSuccessAt?: string };
 export type WrongModeState = { active: boolean; successesSinceFailure: number; firstRecoveryAt?: string; lastFailureAt?: string; resolvedAt?: string };
 export type VocabularyState = {
-  id: string; entryId: string; senseId: string; manualStatus: VocabularyStatus;
+  id: string; entryId: string; senseId: string; manualStatus: VocabularyStatus; statusSource?: 'automatic' | 'manual';
   dimensions: Record<VocabularyDimension, DimensionState>; cards: Partial<Record<VocabularyMode, CardInput>>;
   wrong: WrongModeState & { modes: Partial<Record<VocabularyMode, WrongModeState>>; reason?: string };
   reviewCount: number; lastReviewedAt?: string; nextReviewAt?: string; updatedAt: string;
@@ -49,7 +49,7 @@ export type VocabularyStore = {
   vocabulary: VocabularyEntry[]; vocabularyStates: VocabularyState[];
   vocabularyEvidence: VocabularyEvidence[]; vocabularyReviews: VocabularyReview[];
   vocabularyActivities: { id: string; entryId: string; mode: 'audio'; occurredAt: string; updatedAt: string }[];
-  wordbookProgress: { id: string; bookId: string; unitId: string; completedEntryIds: string[]; status: string; updatedAt: string }[];
+  wordbookProgress: { id: string; bookId: string; unitId: string; completedEntryIds: string[]; status: string; updatedAt: string; learning?: { viewedEntryIds: string[]; currentEntryId?: string; updatedAt: string } }[];
   wordbookEnrollments: { id: string; bookId: string; updatedAt: string }[];
   vocabularyImportBatches: { id: string; [key: string]: unknown }[];
   vocabularySessions?: VocabularySessionRecord[];

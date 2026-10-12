@@ -20,6 +20,7 @@ Words, phrases and sentence patterns share a single vocabulary model across word
 
 - List or focused dictation with automatic UK/US audio and clearly identified browser speech fallback.
 - Wordbook study uses each complete group's actual word count in source order; due and wrong-word review batches have their own size and filters.
+- Theme-based learning cards use batches of 10 words with saved browsing position. Browsing, assessment completion and mastery remain separate; cards link to whole-group assessments and dictionary details.
 - List practice shows 50 items per page without splitting the session. Arrow keys move between single-line answers, Ctrl/Command+Enter replays audio, and Escape pauses with progress recovery.
 - Submit a whole session once, then see responses and answers together. Immediate feedback remains optional.
 - Account-scoped answer recovery, exit/resume, saved session history and retrying mistakes.
@@ -27,7 +28,7 @@ Words, phrases and sentence patterns share a single vocabulary model across word
 - English definition recall, contextual cloze, synonym and confusing-word practice.
 - Audio loops and sentence production. Playback does not count as a successful review; unassessed production remains pending.
 - FSRS review scheduling with separate meaning, listening, spelling and usage evidence.
-- Manual familiarity labels independent of system evidence.
+- Automatic vocabulary mastery from verified, spaced evidence per meaning, with persistent manual overrides and a reset to automatic; labels remain independent of review scheduling.
 - Permanent answer history and current wrong-word tracking. Recovery requires three successful reviews in the failed mode, including a delay of at least 24 hours.
 - Wordbook chapter progress independent of vocabulary mastery.
 - CSV import previews, repeated-import detection, and atomic saves.

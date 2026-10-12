@@ -1,6 +1,6 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { Pronunciation } from './Pronunciation';
+import { Pronunciation, playbackMessage } from './Pronunciation';
 import type { VocabularyEntry } from '../../domain/vocabulary/types';
 const state = vi.hoisted(() => ({ load: vi.fn(), play: vi.fn(), stop: vi.fn() }));
 vi.mock('../../domain/vocabulary/media', () => ({ getVocabularyMedia: state.load }));
@@ -9,6 +9,9 @@ const entry = { id: 'example', term: 'vegetable' } as VocabularyEntry;
 beforeEach(() => { state.load.mockReset(); state.play.mockReset(); state.stop.mockReset(); });
 afterEach(cleanup);
 describe('pronunciation controls', () => {
+ test('synthetic pronunciation describes word audio fallback without implying learner recording failure', () => {
+  expect(playbackMessage({ok:true,source:'speech',accent:'uk',voice:'Google UK English Female',fallbackReason:'unavailable'})).toBe('UK synthetic voice · Google UK English Female');
+ });
  test('requests explicit other recording and reports the actual accent', async () => {
   const other = { url: 'https://example.org/us.ogg', accent: 'us', status: 'verified', availability: 'metadata-only', author: 'Speaker' };
   state.load.mockResolvedValue({ recordings: [other] }); state.play.mockResolvedValue({ ok: true, source: 'recording', accent: 'us' });

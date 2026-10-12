@@ -88,7 +88,7 @@ test("dictionary reports deduplicated credits to the parent and explicit study p
   expect(
     screen.queryByText(/English Wiktionary contributors/),
   ).not.toBeInTheDocument();
-  await userEvent.setup().click(screen.getByText(/English dictionary/));
+  await userEvent.setup().click(screen.getByText(/Other dictionary meanings/));
   await userEvent
     .setup()
     .click(screen.getByRole("button", { name: "Practise this sense" }));
@@ -132,7 +132,7 @@ test("loading is distinct from empty and failed index requests are retried", asy
   expect(await screen.findByRole("alert")).toHaveTextContent(
     "Dictionary could not be loaded",
   );
-  await userEvent.setup().click(screen.getByText(/English dictionary/));
+  await userEvent.setup().click(screen.getByText(/Other dictionary meanings/));
   await userEvent
     .setup()
     .click(screen.getByRole("button", { name: "Retry dictionary" }));
@@ -159,7 +159,7 @@ test("failed manual save leaves the sense and offers a repeat attempt", async ()
     </MemoryRouter>,
   );
   await screen.findByText("To lessen severity.");
-  await userEvent.setup().click(screen.getByText(/English dictionary/));
+  await userEvent.setup().click(screen.getByText(/Other dictionary meanings/));
   await userEvent
     .setup()
     .click(screen.getByRole("button", { name: "Practise this sense" }));
@@ -170,4 +170,128 @@ test("failed manual save leaves the sense and offers a repeat attempt", async ()
     .setup()
     .click(screen.getByRole("button", { name: "Practise this sense" }));
   await waitFor(() => expect(save).toHaveBeenCalledTimes(2));
+});
+
+test("exclusions update without reloading the term and relation fragments are not examples", async () => {
+  const { entry } = fixture();
+  const relationSense = {
+    ...sourceSense,
+    example: "Meronym: [[stock animal]]",
+    usage: "usually",
+  };
+  const fetchMock = vi.fn(async () => ({
+    ok: true,
+    json: async () => ({
+      entries: [{ term: entry.term, senses: [relationSense] }],
+    }),
+  }));
+  vi.stubGlobal("fetch", fetchMock);
+  const view = render(
+    <MemoryRouter>
+      <DictionarySenses entry={entry} />
+    </MemoryRouter>,
+  );
+  expect(await screen.findByText("stock animal")).toBeInTheDocument();
+  expect(screen.queryByText("usually")).not.toBeInTheDocument();
+  expect(screen.getByText("stock animal").closest("blockquote")).toBe(null);
+  expect(screen.getByText("Other dictionary meanings (1)")).toBeInTheDocument();
+  view.rerender(
+    <MemoryRouter>
+      <DictionarySenses entry={entry} excludeSenses={[sourceSense]} />
+    </MemoryRouter>,
+  );
+  expect(screen.queryByText("To lessen severity.")).not.toBeInTheDocument();
+  expect(screen.getByText("Other dictionary meanings (0)")).toBeInTheDocument();
+  expect(fetchMock).toHaveBeenCalledTimes(2);
+});
+
+test("a late dictionary response cannot replace the new term", async () => {
+  const { entry } = fixture();
+  let finish!: (value: any) => void;
+  vi.stubGlobal(
+    "fetch",
+    vi
+      .fn()
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ mitigate: "aa.json", core: "bb.json" }),
+      })
+      .mockImplementationOnce(
+        () =>
+          new Promise((resolve) => {
+            finish = resolve;
+          }),
+      )
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          senses: [
+            {
+              ...sourceSense,
+              id: "core:1",
+              definition: "The centre of something.",
+            },
+          ],
+        }),
+      }),
+  );
+  const view = render(
+    <MemoryRouter>
+      <DictionarySenses entry={entry} />
+    </MemoryRouter>,
+  );
+  await waitFor(() => expect(finish).toBeTypeOf("function"));
+  view.rerender(
+    <MemoryRouter>
+      <DictionarySenses entry={{ ...entry, id: "core", term: "core" }} />
+    </MemoryRouter>,
+  );
+  expect(
+    await screen.findByText("The centre of something."),
+  ).toBeInTheDocument();
+  finish({ ok: true, json: async () => ({ senses: [sourceSense] }) });
+  await waitFor(() =>
+    expect(screen.queryByText("To lessen severity.")).not.toBeInTheDocument(),
+  );
+});
+
+test("a save completed after changing term does not navigate away from the new detail", async () => {
+  const { entry, save } = fixture();
+  let finish!: (value: boolean) => void;
+  save.mockImplementationOnce(
+    () =>
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+  );
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () => ({
+      ok: true,
+      json: async () => ({
+        entries: [{ term: entry.term, senses: [sourceSense] }],
+      }),
+    })),
+  );
+  const view = render(
+    <MemoryRouter initialEntries={["/vocabulary/entry/original"]}>
+      <DictionarySenses entry={entry} />
+      <Route />
+    </MemoryRouter>,
+  );
+  await screen.findByText("To lessen severity.");
+  await userEvent.setup().click(screen.getByText(/Other dictionary meanings/));
+  await userEvent
+    .setup()
+    .click(screen.getByRole("button", { name: "Practise this sense" }));
+  view.rerender(
+    <MemoryRouter initialEntries={["/vocabulary/entry/original"]}>
+      <DictionarySenses entry={{ ...entry, id: "core", term: "core" }} />
+      <Route />
+    </MemoryRouter>,
+  );
+  finish(true);
+  await waitFor(() =>
+    expect(screen.getByText("/vocabulary/entry/original")).toBeInTheDocument(),
+  );
 });
