@@ -14,6 +14,12 @@ const additions = new Map<string,Supplement>((corrections as Supplement[]).map(r
 const preferred = new Map((defaults as unknown as Default[]).map(row=>[row.entryId,row]));
 const editorial = {source:'Fieldbook core content review',license:'CC-BY-4.0',attribution:'Fieldbook editorial contributors'};
 
+export function vocabularyReadinessBaselines(entryId:string,senseId:string):VocabularySense[] {
+ const selected=preferred.get(entryId);
+ const row=additions.get(identity(entryId,senseId)) || core.get(identity(entryId,senseId));
+ return [selected?.sense.id===senseId?selected.sense:undefined,selected?.originalSense?.id===senseId?selected.originalSense:undefined,row?.originalSense?.id===senseId?row.originalSense:undefined].filter((sense):sense is VocabularySense=>Boolean(sense));
+}
+
 /** Public content only. A caller supplies historical public baselines to protect personal edits. */
 export function supplementVocabularySense(entryId:string, sense:VocabularySense, baselines:VocabularySense[], edited:(sense:VocabularySense, baselines:VocabularySense[])=>boolean):VocabularySense {
  const key=identity(entryId,sense.id);

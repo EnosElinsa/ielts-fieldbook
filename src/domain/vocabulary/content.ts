@@ -2,6 +2,7 @@ import learningSenses from './learningSenseOverlay.json';
 import { VOCABULARY_CATALOG } from './catalog';
 import taskSenseBindings from './taskSenseBindings.json';
 import contextSenses from './contextSenseOverlay.json';
+import { vocabularyCurriculumBaselines } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
 import { applyVocabularyReadiness, VOCABULARY_READINESS_VERSION } from './readiness';
 export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-10.1/${VOCABULARY_READINESS_VERSION}`;
@@ -172,7 +173,7 @@ export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mod
  const originalSense = catalogEntry?.senses.find(item => item.id === sense.id) || (dictionarySense?.id === sense.id ? dictionarySense : undefined);
  const manifestSenses = [...contextSenses.bindings, ...contextSenses.defaults].filter(item => item.entryId === entry.id && item.sense.id === sense.id).flatMap(item => [item.sense, item.originalSense]) as unknown as (VocabularySense | null)[];
  const reviewedOriginal = catalogEntry ? reviewedEntry(catalogEntry).senses.find(item => item.id === sense.id) : undefined;
- const customContent = hasVocabularySenseEdits(sense, [originalSense, reviewedOriginal, ...manifestSenses]);
+ const customContent = hasVocabularySenseEdits(sense, [originalSense, reviewedOriginal, ...manifestSenses, ...vocabularyCurriculumBaselines(entry.id,sense.id)]);
  const item = eligible && !customContent ? reviewed[entry.term.toLowerCase()] : undefined;
  // Reordering a group-specific sense must never retarget a term's reviewed task.
  const canonical = (learningSenses as Record<string, VocabularySense>)[entry.term.toLowerCase()];

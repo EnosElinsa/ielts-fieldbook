@@ -1,0 +1,3664 @@
+[
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135342",
+    "entryId": "ve-9825ac27",
+    "term": "painting",
+    "sense": {
+      "id": "editorial:source-curriculum:painting:noun",
+      "definition": "The activity of making pictures with paint.",
+      "example": "Painting helps her relax after work.",
+      "pos": "noun",
+      "collocations": [
+        "take up painting",
+        "painting class"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1318",
+    "sentenceIds": [
+      "source:90694"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135342",
+    "entryId": "ve-b9fef64",
+    "term": "stain",
+    "sense": {
+      "id": "editorial:source-curriculum:stain:verb",
+      "definition": "To leave a coloured mark that is difficult to remove.",
+      "example": "Coffee can stain a pale carpet.",
+      "pos": "verb",
+      "collocations": [
+        "stain a carpet",
+        "stain clothing"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1318",
+    "sentenceIds": [
+      "source:90696"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135342",
+    "entryId": "ve-9cd691a",
+    "term": "drill",
+    "sense": {
+      "id": "editorial:source-curriculum:drill:noun",
+      "definition": "A tool for making holes in a hard material.",
+      "example": "Use a drill to make holes for the shelf.",
+      "pos": "noun",
+      "collocations": [
+        "electric drill",
+        "use a drill"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1318",
+    "sentenceIds": [
+      "source:90698"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135348",
+    "entryId": "ve-356a1d6f",
+    "term": "equipment",
+    "sense": {
+      "id": "editorial:source-curriculum:equipment:noun",
+      "definition": "The tools, devices, clothing or other items needed for a particular activity.",
+      "example": "The laboratory needs new safety equipment.",
+      "pos": "noun",
+      "collocations": [
+        "protective equipment",
+        "electronic equipment"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1323",
+    "sentenceIds": [
+      "source:90882"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22263",
+    "entryId": "ve-356a1d6f",
+    "term": "equipment",
+    "sense": {
+      "id": "editorial:source-curriculum:equipment:noun",
+      "definition": "The tools, devices, clothing or other items needed for a particular activity.",
+      "example": "The laboratory needs new safety equipment.",
+      "pos": "noun",
+      "collocations": [
+        "protective equipment",
+        "electronic equipment"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1241",
+    "sentenceIds": [
+      "source:89255"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22266",
+    "entryId": "ve-356a1d6f",
+    "term": "equipment",
+    "sense": {
+      "id": "editorial:source-curriculum:equipment:noun",
+      "definition": "The tools, devices, clothing or other items needed for a particular activity.",
+      "example": "The laboratory needs new safety equipment.",
+      "pos": "noun",
+      "collocations": [
+        "protective equipment",
+        "electronic equipment"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1244",
+    "sentenceIds": [
+      "source:89387"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135348",
+    "entryId": "ve-515c2549",
+    "term": "replace",
+    "sense": {
+      "id": "editorial:source-curriculum:replace:verb",
+      "definition": "To put something new in the place of something else.",
+      "example": "We need to replace the broken window.",
+      "pos": "verb",
+      "collocations": [
+        "replace a part",
+        "replace old equipment"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1323",
+    "sentenceIds": [
+      "source:90883"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135348",
+    "entryId": "ve-add98be",
+    "term": "truck",
+    "sense": {
+      "id": "editorial:source-curriculum:truck:noun",
+      "definition": "A large road vehicle used for carrying goods.",
+      "example": "The truck delivered the furniture this morning.",
+      "pos": "noun",
+      "collocations": [
+        "delivery truck",
+        "truck driver"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1323",
+    "sentenceIds": [
+      "source:90889"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135348",
+    "entryId": "ve-95467d15",
+    "term": "vegetarian",
+    "sense": {
+      "id": "editorial:source-curriculum:vegetarian:adj",
+      "definition": "Not containing meat or fish, or not eating meat or fish.",
+      "example": "The cafe offers a vegetarian lunch.",
+      "pos": "adj",
+      "collocations": [
+        "vegetarian meal",
+        "vegetarian diet"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1323",
+    "sentenceIds": [
+      "source:90891"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22057",
+    "entryId": "ve-95467d15",
+    "term": "vegetarian",
+    "sense": {
+      "id": "editorial:source-curriculum:vegetarian:adj",
+      "definition": "Not containing meat or fish, or not eating meat or fish.",
+      "example": "The cafe offers a vegetarian lunch.",
+      "pos": "adj",
+      "collocations": [
+        "vegetarian meal",
+        "vegetarian diet"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1230",
+    "sentenceIds": [
+      "source:88889"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22268",
+    "entryId": "ve-95467d15",
+    "term": "vegetarian",
+    "sense": {
+      "id": "editorial:source-curriculum:vegetarian:adj",
+      "definition": "Not containing meat or fish, or not eating meat or fish.",
+      "example": "The cafe offers a vegetarian lunch.",
+      "pos": "adj",
+      "collocations": [
+        "vegetarian meal",
+        "vegetarian diet"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1248",
+    "sentenceIds": [
+      "source:89432"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135348",
+    "entryId": "ve-e8f08e2e",
+    "term": "licence",
+    "sense": {
+      "id": "editorial:source-curriculum:licence:noun",
+      "definition": "Official permission to do or own something, often recorded in a document.",
+      "example": "You need a licence to drive this vehicle.",
+      "pos": "noun",
+      "collocations": [
+        "driving licence",
+        "apply for a licence"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1323",
+    "sentenceIds": [
+      "source:90895"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135348",
+    "entryId": "ve-e1f3820c",
+    "term": "individual",
+    "sense": {
+      "id": "editorial:source-curriculum:individual:adj",
+      "definition": "Relating to one person or thing considered separately.",
+      "example": "Each visitor receives an individual ticket.",
+      "pos": "adj",
+      "collocations": [
+        "individual needs",
+        "individual choice"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1323",
+    "sentenceIds": [
+      "source:90895"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135349",
+    "entryId": "ve-8e3ff1b",
+    "term": "ethical",
+    "sense": {
+      "id": "editorial:source-curriculum:ethical:adj",
+      "definition": "Morally responsible and consistent with principles of right conduct.",
+      "example": "Consumers want ethical business practices.",
+      "pos": "adj",
+      "collocations": [
+        "ethical standards",
+        "ethical decision"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1324",
+    "sentenceIds": [
+      "source:90904",
+      "source:90975",
+      "source:90909"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22261",
+    "entryId": "ve-8e3ff1b",
+    "term": "ethical",
+    "sense": {
+      "id": "editorial:source-curriculum:ethical:adj",
+      "definition": "Morally responsible and consistent with principles of right conduct.",
+      "example": "Consumers want ethical business practices.",
+      "pos": "adj",
+      "collocations": [
+        "ethical standards",
+        "ethical decision"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1237",
+    "sentenceIds": [
+      "source:89215"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135349",
+    "entryId": "ve-be947e9",
+    "term": "appreciate",
+    "sense": {
+      "id": "editorial:source-curriculum:appreciate:verb",
+      "definition": "To recognise or understand something fully.",
+      "example": "The exercise helped students appreciate the difference.",
+      "pos": "verb",
+      "collocations": [
+        "appreciate the difference",
+        "fully appreciate"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1324",
+    "sentenceIds": [
+      "source:90904"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135349",
+    "entryId": "ve-e355df",
+    "term": "industry",
+    "sense": {
+      "id": "editorial:source-curriculum:industry:noun",
+      "definition": "Businesses that produce goods or provide a particular kind of service.",
+      "example": "The tourism industry creates many local jobs.",
+      "pos": "noun",
+      "collocations": [
+        "tech industry",
+        "manufacturing industry"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1324",
+    "sentenceIds": [
+      "source:90922"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22266",
+    "entryId": "ve-e355df",
+    "term": "industry",
+    "sense": {
+      "id": "editorial:source-curriculum:industry:noun",
+      "definition": "Businesses that produce goods or provide a particular kind of service.",
+      "example": "The tourism industry creates many local jobs.",
+      "pos": "noun",
+      "collocations": [
+        "tech industry",
+        "manufacturing industry"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1244",
+    "sentenceIds": [
+      "source:89374"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135350",
+    "entryId": "ve-29c2c69c",
+    "term": "invasive",
+    "sense": {
+      "id": "editorial:source-curriculum:invasive:adj",
+      "definition": "Spreading into a new environment and causing harm to native species.",
+      "example": "Invasive plants can damage local ecosystems.",
+      "pos": "adj",
+      "collocations": [
+        "invasive species",
+        "invasive plants"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1325",
+    "sentenceIds": [
+      "source:90936",
+      "source:90939",
+      "source:90940",
+      "source:90942",
+      "source:90943",
+      "source:90944",
+      "source:90946",
+      "source:90951",
+      "source:90957",
+      "source:90958",
+      "source:90960",
+      "source:90962",
+      "source:90966",
+      "source:90979",
+      "source:90968"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135350",
+    "entryId": "ve-66a9f23b",
+    "term": "accidental",
+    "sense": {
+      "id": "editorial:source-curriculum:accidental:adj",
+      "definition": "Happening by chance rather than on purpose.",
+      "example": "The report examined accidental damage to the equipment.",
+      "pos": "adj",
+      "collocations": [
+        "accidental damage",
+        "accidental death"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1325",
+    "sentenceIds": [
+      "source:90947"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135350",
+    "entryId": "ve-15da6048",
+    "term": "reproduce",
+    "sense": {
+      "id": "editorial:source-curriculum:reproduce:verb",
+      "definition": "To produce offspring or new individuals of the same kind.",
+      "example": "Some insects reproduce very quickly in warm weather.",
+      "pos": "verb",
+      "collocations": [
+        "reproduce rapidly",
+        "reproduce successfully"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1325",
+    "sentenceIds": [
+      "source:90955"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135350",
+    "entryId": "ve-eb88d11c",
+    "term": "behaviour",
+    "sense": {
+      "id": "editorial:source-curriculum:behaviour:noun",
+      "definition": "The way a person or animal acts.",
+      "example": "Researchers observed the birds’ behaviour.",
+      "pos": "noun",
+      "collocations": [
+        "animal behaviour",
+        "change in behaviour"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1325",
+    "sentenceIds": [
+      "source:90979"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135350",
+    "entryId": "ve-db911a45",
+    "term": "photograph",
+    "sense": {
+      "id": "editorial:source-curriculum:photograph:verb",
+      "definition": "To take a picture using a camera.",
+      "example": "Visitors may photograph the exhibits without flash.",
+      "pos": "verb",
+      "collocations": [
+        "photograph wildlife",
+        "photograph a scene"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1325",
+    "sentenceIds": [
+      "source:90970"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135352",
+    "entryId": "ve-7f92a4db",
+    "term": "survey",
+    "sense": {
+      "id": "editorial:source-curriculum:survey:noun",
+      "definition": "An investigation that collects information by asking people questions.",
+      "example": "The survey asked residents about transport.",
+      "pos": "noun",
+      "collocations": [
+        "conduct a survey",
+        "survey results"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1326",
+    "sentenceIds": [
+      "source:90981",
+      "source:90984"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135353",
+    "entryId": "ve-313323a6",
+    "term": "corporate",
+    "sense": {
+      "id": "editorial:source-curriculum:corporate:adj",
+      "definition": "Relating to a company or companies.",
+      "example": "Corporate events take place in the conference centre.",
+      "pos": "adj",
+      "collocations": [
+        "corporate clients",
+        "corporate event"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1327",
+    "sentenceIds": [
+      "source:91032"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135353",
+    "entryId": "ve-a32a657",
+    "term": "organisation",
+    "sense": {
+      "id": "editorial:source-curriculum:organisation:noun",
+      "definition": "A group of people formed for a particular purpose.",
+      "example": "The organisation supports local families.",
+      "pos": "noun",
+      "collocations": [
+        "charitable organisation",
+        "large organisation"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1327",
+    "sentenceIds": [
+      "source:91037"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135354",
+    "entryId": "ve-c750275c",
+    "term": "original",
+    "sense": {
+      "id": "editorial:source-curriculum:original:adj",
+      "definition": "New and creative rather than copied from something else.",
+      "example": "The students proposed an original design.",
+      "pos": "adj",
+      "collocations": [
+        "original idea",
+        "original approach"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1328",
+    "sentenceIds": [
+      "source:91072"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135355",
+    "entryId": "ve-9596bd16",
+    "term": "patient",
+    "sense": {
+      "id": "editorial:source-curriculum:patient:noun",
+      "definition": "A person receiving medical care.",
+      "example": "The nurse checked each patient before the treatment.",
+      "pos": "noun",
+      "collocations": [
+        "hospital patient",
+        "treat a patient"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1329",
+    "sentenceIds": [
+      "source:91116"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135355",
+    "entryId": "ve-5fc4c9c7",
+    "term": "impact",
+    "sense": {
+      "id": "editorial:source-curriculum:impact:noun",
+      "definition": "A strong effect on someone or something.",
+      "example": "Noise has an impact on sleep quality.",
+      "pos": "noun",
+      "collocations": [
+        "have an impact",
+        "positive impact"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1329",
+    "sentenceIds": [
+      "source:91105"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135355",
+    "entryId": "ve-c233930b",
+    "term": "disturbed",
+    "sense": {
+      "id": "editorial:source-curriculum:disturbed:adj",
+      "definition": "Interrupted or disrupted so that a normal activity cannot continue peacefully.",
+      "example": "Disturbed sleep can affect concentration.",
+      "pos": "adj",
+      "collocations": [
+        "disturbed sleep",
+        "disturbed routine"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1329",
+    "sentenceIds": [
+      "source:91100"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135355",
+    "entryId": "ve-f60103ee",
+    "term": "positive",
+    "sense": {
+      "id": "editorial:source-curriculum:positive:adj",
+      "definition": "Helpful, beneficial or showing improvement.",
+      "example": "Regular exercise has a positive effect on health.",
+      "pos": "adj",
+      "collocations": [
+        "positive effect",
+        "positive outcome"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1329",
+    "sentenceIds": [
+      "source:91117",
+      "source:91118"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135355",
+    "entryId": "ve-55d50822",
+    "term": "appropriate",
+    "sense": {
+      "id": "editorial:source-curriculum:appropriate:adj",
+      "definition": "Suitable for a particular situation or purpose.",
+      "example": "Choose appropriate clothing for the visit.",
+      "pos": "adj",
+      "collocations": [
+        "appropriate choice",
+        "appropriate treatment"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1329",
+    "sentenceIds": [
+      "source:91123"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22057",
+    "entryId": "ve-16c52c10",
+    "term": "occasion",
+    "sense": {
+      "id": "editorial:source-curriculum:occasion:noun",
+      "definition": "A particular event or time when something happens.",
+      "example": "The restaurant is suitable for a special occasion.",
+      "pos": "noun",
+      "collocations": [
+        "special occasion",
+        "formal occasion"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1230",
+    "sentenceIds": [
+      "source:88859",
+      "source:88870"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22057",
+    "entryId": "ve-80bbb46b",
+    "term": "atmosphere",
+    "sense": {
+      "id": "editorial:source-curriculum:atmosphere:noun",
+      "definition": "The feeling or mood of a place or situation.",
+      "example": "The cafe has a friendly atmosphere.",
+      "pos": "noun",
+      "collocations": [
+        "relaxed atmosphere",
+        "create an atmosphere"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1230",
+    "sentenceIds": [
+      "source:88871",
+      "source:88886"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22057",
+    "entryId": "ve-b10461c",
+    "term": "judge",
+    "sense": {
+      "id": "editorial:source-curriculum:judge:noun",
+      "definition": "A person who decides the winner or quality of work in a competition.",
+      "example": "Each judge tasted the dishes before deciding.",
+      "pos": "noun",
+      "collocations": [
+        "competition judge",
+        "panel of judges"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1230",
+    "sentenceIds": [
+      "source:88900"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22057",
+    "entryId": "ve-25636466",
+    "term": "average",
+    "sense": {
+      "id": "editorial:source-curriculum:average:adj",
+      "definition": "Ordinary or typical rather than unusually good or bad.",
+      "example": "The service was average rather than outstanding.",
+      "pos": "adj",
+      "collocations": [
+        "average person",
+        "average performance"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1230",
+    "sentenceIds": [
+      "source:88914"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22254",
+    "entryId": "ve-3c16b934",
+    "term": "concentration",
+    "sense": {
+      "id": "editorial:source-curriculum:concentration:noun",
+      "definition": "The ability to give all your attention to something.",
+      "example": "The task requires concentration.",
+      "pos": "noun",
+      "collocations": [
+        "improve concentration",
+        "lose concentration"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1231",
+    "sentenceIds": [
+      "source:88929"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22256",
+    "entryId": "ve-e5ed1cf5",
+    "term": "Astronomical",
+    "sense": {
+      "id": "editorial:source-curriculum:astronomical:adj",
+      "definition": "Extremely large in amount or cost.",
+      "example": "The repair would cost an astronomical amount.",
+      "pos": "adj",
+      "collocations": [
+        "astronomical cost",
+        "astronomical price"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1233",
+    "sentenceIds": [
+      "source:89027"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22258",
+    "entryId": "ve-a7dd9fa",
+    "term": "break",
+    "sense": {
+      "id": "editorial:source-curriculum:break:noun",
+      "definition": "A short period of rest from an activity.",
+      "example": "We took a short break after the lesson.",
+      "pos": "noun",
+      "collocations": [
+        "take a break",
+        "lunch break"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1234",
+    "sentenceIds": [
+      "source:89054"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22258",
+    "entryId": "ve-818e5ff1",
+    "term": "shower",
+    "sense": {
+      "id": "editorial:source-curriculum:shower:noun",
+      "definition": "A device that sprays water for washing the body, or an act of washing with it.",
+      "example": "The room has a shower beside the bath.",
+      "pos": "noun",
+      "collocations": [
+        "take a shower",
+        "shower cubicle"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1234",
+    "sentenceIds": [
+      "source:89062"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22258",
+    "entryId": "ve-7c7044ee",
+    "term": "back",
+    "sense": {
+      "id": "editorial:source-curriculum:back:noun",
+      "definition": "The rear part of the body between the neck and the hips.",
+      "example": "She injured her back while lifting a box.",
+      "pos": "noun",
+      "collocations": [
+        "back pain",
+        "lower back"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1234",
+    "sentenceIds": [
+      "source:89072"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22258",
+    "entryId": "ve-7c6e14c2",
+    "term": "fall",
+    "sense": {
+      "id": "editorial:source-curriculum:fall:noun",
+      "definition": "An accident in which someone drops to the ground.",
+      "example": "The worker hurt his ankle in a fall.",
+      "pos": "noun",
+      "collocations": [
+        "have a fall",
+        "serious fall"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1234",
+    "sentenceIds": [
+      "source:89073"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22258",
+    "entryId": "ve-8ffb9c4a",
+    "term": "appointment",
+    "sense": {
+      "id": "editorial:source-curriculum:appointment:noun",
+      "definition": "An arrangement to meet someone at a particular time.",
+      "example": "He booked an appointment with the doctor.",
+      "pos": "noun",
+      "collocations": [
+        "make an appointment",
+        "medical appointment"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1234",
+    "sentenceIds": [
+      "source:89076"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22258",
+    "entryId": "ve-a8b8e6f",
+    "term": "claim",
+    "sense": {
+      "id": "editorial:source-curriculum:claim:verb",
+      "definition": "To request money that you believe you are entitled to receive.",
+      "example": "You can claim the cost of the damaged luggage.",
+      "pos": "verb",
+      "collocations": [
+        "claim compensation",
+        "claim expenses"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1234",
+    "sentenceIds": [
+      "source:89077",
+      "source:89078"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22259",
+    "entryId": "ve-718a28c9",
+    "term": "summary",
+    "sense": {
+      "id": "editorial:source-curriculum:summary:noun",
+      "definition": "A short account of the main points.",
+      "example": "The guide gave a summary of the project.",
+      "pos": "noun",
+      "collocations": [
+        "brief summary",
+        "summary of findings"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1235",
+    "sentenceIds": [
+      "source:89101"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22259",
+    "entryId": "ve-acd8d950",
+    "term": "flexible",
+    "sense": {
+      "id": "editorial:source-curriculum:flexible:adj",
+      "definition": "Able to change or adapt to different needs or situations.",
+      "example": "The course offers flexible study times.",
+      "pos": "adj",
+      "collocations": [
+        "flexible schedule",
+        "flexible approach"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1235",
+    "sentenceIds": [
+      "source:89112"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22259",
+    "entryId": "ve-289fadc0",
+    "term": "barbecue",
+    "sense": {
+      "id": "editorial:source-curriculum:barbecue:noun",
+      "definition": "A meal or social event at which food is cooked outdoors over a fire.",
+      "example": "The group held a barbecue after the tour.",
+      "pos": "noun",
+      "collocations": [
+        "summer barbecue",
+        "have a barbecue"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1235",
+    "sentenceIds": [
+      "source:89118"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22260",
+    "entryId": "ve-f936f796",
+    "term": "assignment",
+    "sense": {
+      "id": "editorial:source-curriculum:assignment:noun",
+      "definition": "A piece of work that a student is required to complete.",
+      "example": "The assignment is due next Friday.",
+      "pos": "noun",
+      "collocations": [
+        "submit an assignment",
+        "written assignment"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1236",
+    "sentenceIds": [
+      "source:89122",
+      "source:89148"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22270",
+    "entryId": "ve-f936f796",
+    "term": "assignment",
+    "sense": {
+      "id": "editorial:source-curriculum:assignment:noun",
+      "definition": "A piece of work that a student is required to complete.",
+      "example": "The assignment is due next Friday.",
+      "pos": "noun",
+      "collocations": [
+        "submit an assignment",
+        "written assignment"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1250",
+    "sentenceIds": [
+      "source:89486"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22260",
+    "entryId": "ve-62ee7d32",
+    "term": "narrow",
+    "sense": {
+      "id": "editorial:source-curriculum:narrow:verb",
+      "definition": "To reduce the range or scope of something.",
+      "example": "You should narrow the topic before starting your research.",
+      "pos": "verb",
+      "collocations": [
+        "narrow the focus",
+        "narrow the choice"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1236",
+    "sentenceIds": [
+      "source:89123"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22260",
+    "entryId": "ve-b60fbf39",
+    "term": "commercial",
+    "sense": {
+      "id": "editorial:source-curriculum:commercial:adj",
+      "definition": "Relating to business or buying and selling.",
+      "example": "The building is used for commercial activities.",
+      "pos": "adj",
+      "collocations": [
+        "commercial use",
+        "commercial activity"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1236",
+    "sentenceIds": [
+      "source:89132"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22261",
+    "entryId": "ve-6b91287b",
+    "term": "promote",
+    "sense": {
+      "id": "editorial:source-curriculum:promote:verb",
+      "definition": "To encourage interest in a product, service or activity.",
+      "example": "The campaign will promote local tourism.",
+      "pos": "verb",
+      "collocations": [
+        "promote a product",
+        "promote tourism"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1237",
+    "sentenceIds": [
+      "source:89199"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22263",
+    "entryId": "ve-a6f4c8df",
+    "term": "permanent",
+    "sense": {
+      "id": "editorial:source-curriculum:permanent:adj",
+      "definition": "Intended to continue for a long time rather than temporarily.",
+      "example": "She accepted a permanent position at the firm.",
+      "pos": "adj",
+      "collocations": [
+        "permanent job",
+        "permanent staff"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1241",
+    "sentenceIds": [
+      "source:89226"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22264",
+    "entryId": "ve-60eb9a58",
+    "term": "historian",
+    "sense": {
+      "id": "editorial:source-curriculum:historian:noun",
+      "definition": "A person who studies and writes about the past.",
+      "example": "The historian investigated the old settlement.",
+      "pos": "noun",
+      "collocations": [
+        "local historian",
+        "academic historian"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1242",
+    "sentenceIds": [
+      "source:89279"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22264",
+    "entryId": "ve-c0fc81d3",
+    "term": "uncover",
+    "sense": {
+      "id": "editorial:source-curriculum:uncover:verb",
+      "definition": "To discover something that was hidden or unknown.",
+      "example": "The excavation may uncover ancient buildings.",
+      "pos": "verb",
+      "collocations": [
+        "uncover evidence",
+        "uncover remains"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1242",
+    "sentenceIds": [
+      "source:89282"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22264",
+    "entryId": "ve-a13e1620",
+    "term": "documentary",
+    "sense": {
+      "id": "editorial:source-curriculum:documentary:noun",
+      "definition": "A film or television programme that presents factual information.",
+      "example": "We watched a documentary about the excavation.",
+      "pos": "noun",
+      "collocations": [
+        "documentary film",
+        "watch a documentary"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1242",
+    "sentenceIds": [
+      "source:89287"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22265",
+    "entryId": "ve-a3378c79",
+    "term": "programme",
+    "sense": {
+      "id": "editorial:source-curriculum:programme:noun",
+      "definition": "A printed booklet giving details of a performance or event.",
+      "example": "The theatre programme lists the actors.",
+      "pos": "noun",
+      "collocations": [
+        "theatre programme",
+        "programme booklet"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1243",
+    "sentenceIds": [
+      "source:89318",
+      "source:89324",
+      "source:89350",
+      "source:89352",
+      "source:89353",
+      "source:89355",
+      "source:89358"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22265",
+    "entryId": "ve-b9ebae5",
+    "term": "right",
+    "sense": {
+      "id": "editorial:source-curriculum:right:adj",
+      "definition": "Correct or true.",
+      "example": "Your answer is right.",
+      "pos": "adj",
+      "collocations": [
+        "right answer",
+        "get it right"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1243",
+    "sentenceIds": [
+      "source:89339"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22265",
+    "entryId": "ve-7128e146",
+    "term": "parade",
+    "sense": {
+      "id": "editorial:source-curriculum:parade:verb",
+      "definition": "To walk through a public place as part of a display.",
+      "example": "The performers paraded through the town.",
+      "pos": "verb",
+      "collocations": [
+        "parade through the streets",
+        "parade in costume"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1243",
+    "sentenceIds": [
+      "source:89331"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22265",
+    "entryId": "ve-7e9f639b",
+    "term": "reckon",
+    "sense": {
+      "id": "editorial:source-curriculum:reckon:verb",
+      "definition": "To think or believe that something is true.",
+      "example": "I reckon the new timetable will work better.",
+      "pos": "verb",
+      "collocations": [
+        "reckon that",
+        "reckon something is important"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1243",
+    "sentenceIds": [
+      "source:89340"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22265",
+    "entryId": "ve-7c70c240",
+    "term": "cast",
+    "sense": {
+      "id": "editorial:source-curriculum:cast:noun",
+      "definition": "All the actors taking part in a film or play.",
+      "example": "The cast rehearsed together for several weeks.",
+      "pos": "noun",
+      "collocations": [
+        "cast member",
+        "supporting cast"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1243",
+    "sentenceIds": [
+      "source:89322",
+      "source:89354"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22266",
+    "entryId": "ve-244173f1",
+    "term": "inclusive",
+    "sense": {
+      "id": "editorial:source-curriculum:inclusive:adj",
+      "definition": "Designed to include people with different needs and backgrounds.",
+      "example": "Inclusive design helps more people use the service.",
+      "pos": "adj",
+      "collocations": [
+        "inclusive design",
+        "inclusive approach"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1244",
+    "sentenceIds": [
+      "source:89363",
+      "source:89366",
+      "source:89368",
+      "source:89380"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22266",
+    "entryId": "ve-daabcde7",
+    "term": "cognitive",
+    "sense": {
+      "id": "editorial:source-curriculum:cognitive:adj",
+      "definition": "Relating to thinking, understanding, learning or remembering.",
+      "example": "The task measures cognitive skills.",
+      "pos": "adj",
+      "collocations": [
+        "cognitive ability",
+        "cognitive difficulty"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1244",
+    "sentenceIds": [
+      "source:89367"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22266",
+    "entryId": "ve-efb0f06",
+    "term": "challenge",
+    "sense": {
+      "id": "editorial:source-curriculum:challenge:noun",
+      "definition": "A difficult task or problem that requires effort.",
+      "example": "Designing an accessible product is a challenge.",
+      "pos": "noun",
+      "collocations": [
+        "face a challenge",
+        "major challenge"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1244",
+    "sentenceIds": [
+      "source:89367"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22266",
+    "entryId": "ve-594147fc",
+    "term": "activate",
+    "sense": {
+      "id": "editorial:source-curriculum:activate:verb",
+      "definition": "To turn on a device or make a system start working.",
+      "example": "The sensor activates the light.",
+      "pos": "verb",
+      "collocations": [
+        "activate a sensor",
+        "activate a device"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1244",
+    "sentenceIds": [
+      "source:89372"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22266",
+    "entryId": "ve-5683fa7b",
+    "term": "routine",
+    "sense": {
+      "id": "editorial:source-curriculum:routine:adj",
+      "definition": "Usual or done as part of a regular procedure.",
+      "example": "Voice controls are now a routine feature.",
+      "pos": "adj",
+      "collocations": [
+        "routine task",
+        "routine procedure"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1244",
+    "sentenceIds": [
+      "source:89379"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22268",
+    "entryId": "ve-eedac98c",
+    "term": "family room",
+    "sense": {
+      "id": "editorial:source-curriculum:family-room:noun",
+      "definition": "A hotel room designed to accommodate a family.",
+      "example": "We reserved a family room for four people.",
+      "pos": "noun",
+      "collocations": [
+        "book a family room",
+        "family room rate"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1248",
+    "sentenceIds": [
+      "source:89410"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22269",
+    "entryId": "ve-b340183",
+    "term": "pitch",
+    "sense": {
+      "id": "editorial:source-curriculum:pitch:noun",
+      "definition": "A marked outdoor area used for playing a sport such as football.",
+      "example": "The team trained on the football pitch.",
+      "pos": "noun",
+      "collocations": [
+        "football pitch",
+        "on the pitch"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1249",
+    "sentenceIds": [
+      "source:89459",
+      "source:89465"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22269",
+    "entryId": "ve-8eeaf1de",
+    "term": "penalty",
+    "sense": {
+      "id": "editorial:source-curriculum:penalty:noun",
+      "definition": "In football, a free kick awarded for a serious offence in the penalty area.",
+      "example": "The striker scored from a penalty.",
+      "pos": "noun",
+      "collocations": [
+        "take a penalty",
+        "penalty kick"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1249",
+    "sentenceIds": [
+      "source:89458"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22269",
+    "entryId": "ve-2c382eca",
+    "term": "crossbar",
+    "sense": {
+      "id": "editorial:source-curriculum:crossbar:noun",
+      "definition": "The horizontal bar across the top of a goal.",
+      "example": "The ball struck the crossbar.",
+      "pos": "noun",
+      "collocations": [
+        "hit the crossbar",
+        "goal crossbar"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1249",
+    "sentenceIds": [
+      "source:89477"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22269",
+    "entryId": "ve-6f00f92c",
+    "term": "admission",
+    "sense": {
+      "id": "editorial:source-curriculum:admission:noun",
+      "definition": "Permission or payment to enter a place or event.",
+      "example": "Admission to the museum is free on Sundays.",
+      "pos": "noun",
+      "collocations": [
+        "admission fee",
+        "free admission"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1249",
+    "sentenceIds": [
+      "source:89483"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22269",
+    "entryId": "ve-acd4fae",
+    "term": "professional",
+    "sense": {
+      "id": "editorial:source-curriculum:professional:adj",
+      "definition": "Doing a sport or other activity as a paid occupation.",
+      "example": "She hopes to become a professional footballer.",
+      "pos": "adj",
+      "collocations": [
+        "professional player",
+        "professional sport"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1249",
+    "sentenceIds": [
+      "source:89484"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22270",
+    "entryId": "ve-7c737f9d",
+    "term": "type",
+    "sense": {
+      "id": "editorial:source-curriculum:type:verb",
+      "definition": "To write using a keyboard.",
+      "example": "Students learn to type their essays.",
+      "pos": "verb",
+      "collocations": [
+        "type a message",
+        "learn to type"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1250",
+    "sentenceIds": [
+      "source:89489"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22270",
+    "entryId": "ve-b25c654",
+    "term": "print",
+    "sense": {
+      "id": "editorial:source-curriculum:print:noun",
+      "definition": "Handwriting in separate letters rather than joined letters.",
+      "example": "Young learners practise writing in print before cursive.",
+      "pos": "noun",
+      "collocations": [
+        "write in print",
+        "print handwriting"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1250",
+    "sentenceIds": [
+      "source:89515"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22270",
+    "entryId": "ve-b8747b0",
+    "term": "box",
+    "sense": {
+      "id": "editorial:source-curriculum:box:noun",
+      "definition": "A small square or rectangular space on a page.",
+      "example": "Write one letter in each box.",
+      "pos": "noun",
+      "collocations": [
+        "tick a box",
+        "answer box"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1250",
+    "sentenceIds": [
+      "source:89509"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22270",
+    "entryId": "ve-94d7e83",
+    "term": "spelling",
+    "sense": {
+      "id": "editorial:source-curriculum:spelling:noun",
+      "definition": "The way a word is written with letters in the correct order.",
+      "example": "Check the spelling of each word.",
+      "pos": "noun",
+      "collocations": [
+        "correct spelling",
+        "spelling mistake"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1250",
+    "sentenceIds": [
+      "source:89530"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22271",
+    "entryId": "ve-7153c701",
+    "term": "poison",
+    "sense": {
+      "id": "editorial:source-curriculum:poison:verb",
+      "definition": "To harm or kill a living thing using a poisonous substance.",
+      "example": "Chemicals in the water can poison fish.",
+      "pos": "verb",
+      "collocations": [
+        "poison wildlife",
+        "poison the water"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1251",
+    "sentenceIds": [
+      "source:89556"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22271",
+    "entryId": "ve-a8c6308",
+    "term": "cover",
+    "sense": {
+      "id": "editorial:source-curriculum:cover:noun",
+      "definition": "Shelter or something that hides and protects a person or animal.",
+      "example": "The bushes provide cover for small birds.",
+      "pos": "noun",
+      "collocations": [
+        "provide cover",
+        "take cover"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1251",
+    "sentenceIds": [
+      "source:89559"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22271",
+    "entryId": "ve-eec33044",
+    "term": "high-voltage",
+    "sense": {
+      "id": "editorial:source-curriculum:high-voltage:adj",
+      "definition": "Using or carrying electricity at a high voltage.",
+      "example": "Keep clear of high-voltage power lines.",
+      "pos": "adj",
+      "collocations": [
+        "high-voltage cable",
+        "high-voltage power line"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1251",
+    "sentenceIds": [
+      "source:89551"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22259",
+    "entryId": "ve-ba23ab73",
+    "term": "festival",
+    "sense": {
+      "id": "editorial:source-curriculum:festival:noun",
+      "definition": "An organised series of performances or activities, or a special celebration.",
+      "example": "The music festival attracts many visitors.",
+      "pos": "noun",
+      "collocations": [
+        "music festival",
+        "annual festival"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1235",
+    "sentenceIds": [
+      "source:89108",
+      "source:89109",
+      "source:89111",
+      "source:89112"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22260",
+    "entryId": "ve-a24b230",
+    "term": "avoid",
+    "sense": {
+      "id": "editorial:source-curriculum:avoid:verb",
+      "definition": "To keep away from something or prevent it from happening.",
+      "example": "Try to avoid repeating the same information.",
+      "pos": "verb",
+      "collocations": [
+        "avoid a problem",
+        "avoid repetition"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1236",
+    "sentenceIds": [
+      "source:89136"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22270",
+    "entryId": "ve-267881f8",
+    "term": "dyspraxia",
+    "sense": {
+      "id": "editorial:source-curriculum:dyspraxia:noun",
+      "definition": "A condition affecting the coordination and planning of movement.",
+      "example": "A learner with dyspraxia may need more time for handwriting.",
+      "pos": "noun",
+      "collocations": [
+        "have dyspraxia",
+        "children with dyspraxia"
+      ],
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1250",
+    "sentenceIds": [
+      "source:89501",
+      "source:89506"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135337",
+    "entryId": "ve-7c703cec",
+    "term": "book",
+    "sense": {
+      "id": "kaikki:a00ac42eab33c9cbef",
+      "definition": "To reserve a place, ticket or service in advance.",
+      "example": "You should book your train tickets early.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "book a room",
+        "book a ticket",
+        "book an appointment"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/book#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:a00ac42eab33c9cbef",
+      "definition": "To reserve (something) for future use.",
+      "example": "I want to book a hotel room for tomorrow night.",
+      "pos": "verb",
+      "synonyms": [
+        "reserve"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "absey-book",
+        "audio-book",
+        "back of the book",
+        "benchbook",
+        "billbook",
+        "blankbook",
+        "blook",
+        "blot one's copy book",
+        "blue book exam",
+        "book account",
+        "book agent",
+        "bookaholic",
+        "bookalike",
+        "book-answerer",
+        "book award",
+        "bookazine",
+        "book bag",
+        "book-bearer",
+        "book bin",
+        "bookbinder",
+        "bookbindery",
+        "bookbinding",
+        "book board",
+        "bookboard",
+        "book-bosomed",
+        "book-bound",
+        "book bowel",
+        "book bowel tendency",
+        "book-boy",
+        "bookbuild"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/book#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1314",
+    "sentenceIds": [
+      "source:90569"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135337",
+    "entryId": "ve-99c09618",
+    "term": "discount",
+    "sense": {
+      "id": "kaikki:d741a2ffee17dc9a2d",
+      "definition": "A reduction in the usual price.",
+      "example": "Members receive a discount on admission tickets.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "offer a discount",
+        "student discount",
+        "ten per cent discount"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:d741a2ffee17dc9a2d",
+      "definition": "A reduction in price.",
+      "example": "For the summer sale, there was 40% discount in all the stores at the mall.",
+      "pos": "noun",
+      "synonyms": [
+        "rebate",
+        "reduction"
+      ],
+      "antonyms": [
+        "surcharge"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1314",
+    "sentenceIds": [
+      "source:90547"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22268",
+    "entryId": "ve-99c09618",
+    "term": "discount",
+    "sense": {
+      "id": "kaikki:d741a2ffee17dc9a2d",
+      "definition": "A reduction in the usual price.",
+      "example": "Members receive a discount on admission tickets.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "offer a discount",
+        "student discount",
+        "ten per cent discount"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:d741a2ffee17dc9a2d",
+      "definition": "A reduction in price.",
+      "example": "For the summer sale, there was 40% discount in all the stores at the mall.",
+      "pos": "noun",
+      "synonyms": [
+        "rebate",
+        "reduction"
+      ],
+      "antonyms": [
+        "surcharge"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1248",
+    "sentenceIds": [
+      "source:89437"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135338",
+    "entryId": "ve-3bd95a7f",
+    "term": "portfolio",
+    "sense": {
+      "id": "kaikki:3eb32762367e54719d",
+      "definition": "A collection of work that shows a person’s skills and achievements.",
+      "example": "The designer included her best projects in her portfolio.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "build a portfolio",
+        "design portfolio",
+        "portfolio of work"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/portfolio#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:3eb32762367e54719d",
+      "definition": "The collection of such documents, especially the works of an artist or photographer, or more generally, a presentation of an individual's work samples and skills (a career portfolio).",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "broadly",
+      "register": "broadly",
+      "wordFamily": [
+        "e-portfolio",
+        "foreign portfolio investment",
+        "minister without portfolio",
+        "multiportfolio",
+        "nonportfolio",
+        "padfolio",
+        "portfolio career",
+        "portfolio frontier",
+        "portfolio worker",
+        "subportfolio",
+        "webfolio"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/portfolio#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1315",
+    "sentenceIds": [
+      "source:90587",
+      "source:90589"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135345",
+    "entryId": "ve-9c65e55",
+    "term": "dated",
+    "sense": {
+      "id": "kaikki:ba8fd31f82c58f7e67",
+      "definition": "Old-fashioned or no longer suitable for the present time.",
+      "example": "The advertisement looked dated to younger viewers.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "look dated",
+        "dated design",
+        "dated approach"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dated#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ba8fd31f82c58f7e67",
+      "definition": "Outdated.",
+      "example": "\"Omnibus\" is a dated term for a bus.",
+      "pos": "adj",
+      "synonyms": [
+        "outdated"
+      ],
+      "antonyms": [
+        "undated",
+        "up-to-date",
+        "current",
+        "a la mode",
+        "trendy"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "afterdated",
+        "datedly",
+        "datedness",
+        "nondated",
+        "short-dated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dated#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1321",
+    "sentenceIds": [
+      "source:90806"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135349",
+    "entryId": "ve-503cfc78",
+    "term": "fabric",
+    "sense": {
+      "id": "kaikki:e751c85bbe7d843f6e",
+      "definition": "Cloth used for making clothes, curtains or other items.",
+      "example": "The jacket is made from a lightweight fabric.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "cotton fabric",
+        "fabric samples",
+        "woven fabric"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/fabric#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:e751c85bbe7d843f6e",
+      "definition": "A material made of fibers; especially, a woven one.",
+      "example": "Near-synonym: cloth (not always differentiated)",
+      "pos": "noun",
+      "synonyms": [
+        "material",
+        "textile",
+        "cloth"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "biofabric",
+        "couching fabric",
+        "fabric conditioner",
+        "fabricky",
+        "fabricless",
+        "fabriclike",
+        "fabric softener",
+        "geofabric",
+        "ichnofabric",
+        "microfabric",
+        "nanofabric",
+        "nonfabric",
+        "oblique fabric",
+        "self-fabric",
+        "stretch fabric",
+        "urban fabric"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/fabric#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1324",
+    "sentenceIds": [
+      "source:90924",
+      "source:90926",
+      "source:90929",
+      "source:90931"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22057",
+    "entryId": "ve-b2596a2",
+    "term": "press",
+    "sense": {
+      "id": "kaikki:38561ece0c86d9fe19",
+      "definition": "Newspapers, magazines and the journalists who work for them.",
+      "example": "The exhibition attracted attention in the press.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "the local press",
+        "press coverage",
+        "press conference"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/press#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:38561ece0c86d9fe19",
+      "definition": "The print-based media (both the people and the newspapers).",
+      "example": "according to a member of the press",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "collective",
+      "register": "collective, uncountable",
+      "wordFamily": [
+        "all-court press",
+        "alternative press",
+        "amateur press association",
+        "antipress",
+        "any press is good press",
+        "arming press",
+        "bad press",
+        "bench press",
+        "bench-press",
+        "body press",
+        "bookpress",
+        "brake press",
+        "Bramah press",
+        "chest press",
+        "cider press",
+        "close for press",
+        "clothes press",
+        "clothes-press",
+        "cold press",
+        "cookie press",
+        "copying press",
+        "digital press",
+        "drill press",
+        "drop press",
+        "duck press",
+        "fly press",
+        "freedom of the press",
+        "free press",
+        "French press",
+        "fruit press"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/press#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1230",
+    "sentenceIds": [
+      "source:88895"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22256",
+    "entryId": "ve-9cd81d7",
+    "term": "Drone",
+    "sense": {
+      "id": "kaikki:cd0cf60a1932b6e8d5",
+      "definition": "An aircraft operated remotely or automatically without a pilot on board.",
+      "example": "The team used a drone to photograph the coastline.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "fly a drone",
+        "drone footage",
+        "delivery drone"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/drone#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:cd0cf60a1932b6e8d5",
+      "definition": "Any remotely operated or autonomous vehicle for land, sea, air, or space.",
+      "example": "aerial drones",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "alimony drone",
+        "antidrone",
+        "combat drone",
+        "counterdrone",
+        "drone-athon",
+        "drone-a-thon",
+        "droneboarding",
+        "drone fly",
+        "Dronehenge",
+        "droneless",
+        "dronelike",
+        "drone metal",
+        "dronepipe",
+        "dronescape",
+        "dronesome",
+        "Dronespace",
+        "drone wall",
+        "droney",
+        "dronie",
+        "dronification",
+        "dronify",
+        "dronish",
+        "dronist",
+        "dronology",
+        "drony",
+        "microdrone",
+        "minidrone",
+        "Nintendrone",
+        "office drone",
+        "suicide drone"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/drone#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1233",
+    "sentenceIds": [
+      "source:89043"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22259",
+    "entryId": "ve-811d6150",
+    "term": "scheme",
+    "sense": {
+      "id": "kaikki:355dd578f6a74ad0f8",
+      "definition": "An organised plan or programme for achieving something.",
+      "example": "The town has introduced a scheme to improve public transport.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "training scheme",
+        "volunteer scheme",
+        "government scheme"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/scheme#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:355dd578f6a74ad0f8",
+      "definition": "A systematic plan of future action.",
+      "example": "The stoical scheme of supplying our wants by lopping off our desires, is like cutting off our feet when we want shoes.",
+      "pos": "noun",
+      "synonyms": [
+        "blueprint",
+        "blueprint",
+        "design",
+        "plan",
+        "plot",
+        "project",
+        "proposal",
+        "scheme"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "grand scheme of things",
+        "schematization",
+        "scheme arch",
+        "scheme of studies",
+        "scheme of things",
+        "schemer",
+        "schemester",
+        "scheme theory",
+        "schemie"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/scheme#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1235",
+    "sentenceIds": [
+      "source:89087",
+      "source:89088"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22259",
+    "entryId": "ve-a8bfa03",
+    "term": "coach",
+    "sense": {
+      "id": "kaikki:4a8f20ec12242ca279",
+      "definition": "A large bus used for long journeys.",
+      "example": "We travelled to the museum by coach.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "coach journey",
+        "coach station",
+        "travel by coach"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/coach#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:4a8f20ec12242ca279",
+      "definition": "A long-distance, or privately hired, bus.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Australia, UK",
+      "register": "Australia, UK",
+      "wordFamily": [
+        "accommodation coach",
+        "aircoach",
+        "autocoach",
+        "baby coach",
+        "camping coach",
+        "coach and four",
+        "coach and horses",
+        "coach bolt",
+        "coachbox",
+        "coach box",
+        "coachbuilder",
+        "coachbuilding",
+        "coach-built",
+        "coachbuilt",
+        "coachdog",
+        "coach dog",
+        "coach driver",
+        "coacher",
+        "coachfellow",
+        "coachful",
+        "coach gun",
+        "coachhood",
+        "coach horn",
+        "coachhorse",
+        "coach horse",
+        "coach house",
+        "coach inn",
+        "coach killer",
+        "coach lamp",
+        "coachless"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/coach#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1235",
+    "sentenceIds": [
+      "source:89097"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22263",
+    "entryId": "ve-ad7616b",
+    "term": "order",
+    "sense": {
+      "id": "kaikki:14055df8f9ff9265dc",
+      "definition": "A request for goods or a service.",
+      "example": "We placed an order for new office furniture.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "place an order",
+        "online order",
+        "confirm an order"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/order#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:14055df8f9ff9265dc",
+      "definition": "A request for some product or service; a commission to purchase, sell, or supply goods.",
+      "example": "make an order",
+      "pos": "noun",
+      "synonyms": [
+        "ordo",
+        "association",
+        "brotherhood",
+        "league",
+        "sisterhood",
+        "society"
+      ],
+      "antonyms": [
+        "chaos",
+        "disorder"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "Ancient and Honorable Order of Turtles",
+        "bankruptcy order",
+        "bit order",
+        "blanket order",
+        "bring to order",
+        "byte order",
+        "call to order",
+        "cancelled to order",
+        "close order drill",
+        "close-order drill",
+        "come to order",
+        "delivery order",
+        "eigenorder",
+        "engine order telegraph",
+        "established order",
+        "extended-order drill",
+        "extended order drill",
+        "extreme risk protection order",
+        "final order cutoff",
+        "first-order",
+        "first order of the day",
+        "first order stream",
+        "fraternal birth-order effect",
+        "gavel to order",
+        "get one's affairs in order",
+        "get one's house in order",
+        "higher-order",
+        "high order bit",
+        "hold-departure order",
+        "hyper-order"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/order#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1241",
+    "sentenceIds": [
+      "source:89237"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22264",
+    "entryId": "ve-add43aa",
+    "term": "track",
+    "sense": {
+      "id": "kaikki:4d99611d1dafeea425",
+      "definition": "A path or route, especially a narrow or rough one.",
+      "example": "A narrow track leads from the village to the lake.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "forest track",
+        "dirt track",
+        "follow a track"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/track#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:4d99611d1dafeea425",
+      "definition": "A road or other similar beaten path.",
+      "example": "Follow the track for a hundred metres.",
+      "pos": "noun",
+      "synonyms": [
+        "path",
+        "road",
+        "way"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "8-track",
+        "Amtrak",
+        "art track",
+        "audiotrack",
+        "backing track",
+        "backtrack",
+        "belt track",
+        "betrack",
+        "biotrack",
+        "buzz track",
+        "Cascio tracks",
+        "click track",
+        "continuous track",
+        "crawler track",
+        "crosstrack",
+        "detrack",
+        "dirt track",
+        "diss track",
+        "doubletrack",
+        "down the track",
+        "dreaming track",
+        "dreamtime track",
+        "exercise track",
+        "eyetracks",
+        "flaptrack",
+        "flat-track bully",
+        "four-track",
+        "ghost track",
+        "groundtrack",
+        "half-track"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/track#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1242",
+    "sentenceIds": [
+      "source:89295"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22268",
+    "entryId": "ve-7c6e427a",
+    "term": "flat",
+    "sense": {
+      "id": "editorial:curriculum:flat:1",
+      "definition": "A set of rooms for living in, usually on one floor of a building.",
+      "example": "She rents a small flat near the university.",
+      "pos": "noun",
+      "collocations": [
+        "rent a flat",
+        "one-bedroom flat",
+        "block of flats"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      },
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1248",
+    "sentenceIds": [
+      "source:89404"
+    ]
+  },
+  {
+    "bookId": "guixue:21953",
+    "unitId": "135348",
+    "entryId": "ve-5c46053f",
+    "term": "charge",
+    "sense": {
+      "id": "kaikki:0ca8269d19272bde96",
+      "definition": "To ask someone to pay a price for goods or a service.",
+      "example": "The company charges a small fee for delivery.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "charge a fee",
+        "charge extra",
+        "charge someone for something"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/charge#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:0ca8269d19272bde96",
+      "definition": "To require payment (of) (a price or fee, for goods, services, etc.).",
+      "example": "to charge high for goods",
+      "pos": "verb",
+      "synonyms": [
+        "assess"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ambitransitive",
+      "register": "ambitransitive",
+      "wordFamily": [
+        "access charge",
+        "Allen charge",
+        "apparent charge",
+        "banzai charge",
+        "bayonet charge",
+        "blasting charge",
+        "bluff charge",
+        "carrying charge",
+        "charge account",
+        "chargeback",
+        "chargecard",
+        "charge card",
+        "charge carrier",
+        "charge conjugation",
+        "charge-coupled device",
+        "charge density",
+        "charge description master",
+        "chargeful",
+        "charge hand",
+        "chargehouse",
+        "chargeless",
+        "chargeling",
+        "chargeman",
+        "chargemaster",
+        "charge master",
+        "charge nurse",
+        "charge-off",
+        "charge of quarters",
+        "chargeous",
+        "charge plate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/charge#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1323",
+    "sentenceIds": [
+      "source:90891"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22263",
+    "entryId": "ve-5c46053f",
+    "term": "charge",
+    "sense": {
+      "id": "kaikki:0ca8269d19272bde96",
+      "definition": "To ask someone to pay a price for goods or a service.",
+      "example": "The company charges a small fee for delivery.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "charge a fee",
+        "charge extra",
+        "charge someone for something"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/charge#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:0ca8269d19272bde96",
+      "definition": "To require payment (of) (a price or fee, for goods, services, etc.).",
+      "example": "to charge high for goods",
+      "pos": "verb",
+      "synonyms": [
+        "assess"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ambitransitive",
+      "register": "ambitransitive",
+      "wordFamily": [
+        "access charge",
+        "Allen charge",
+        "apparent charge",
+        "banzai charge",
+        "bayonet charge",
+        "blasting charge",
+        "bluff charge",
+        "carrying charge",
+        "charge account",
+        "chargeback",
+        "chargecard",
+        "charge card",
+        "charge carrier",
+        "charge conjugation",
+        "charge-coupled device",
+        "charge density",
+        "charge description master",
+        "chargeful",
+        "charge hand",
+        "chargehouse",
+        "chargeless",
+        "chargeling",
+        "chargeman",
+        "chargemaster",
+        "charge master",
+        "charge nurse",
+        "charge-off",
+        "charge of quarters",
+        "chargeous",
+        "charge plate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/charge#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1241",
+    "sentenceIds": [
+      "source:89247"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22256",
+    "entryId": "ve-d13b3601",
+    "term": "discharge",
+    "sense": {
+      "id": "editorial:source-curriculum:discharge:verb",
+      "definition": "To release liquid, gas or waste from a container or system.",
+      "example": "The factory must not discharge waste into the river.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "discharge sewage",
+        "discharge waste"
+      ],
+      "usage": "",
+      "register": "",
+      "source": "Fieldbook editorial",
+      "attribution": "Fieldbook editorial contributors",
+      "license": "CC-BY-4.0",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1233",
+    "sentenceIds": [
+      "source:89016",
+      "source:89019"
+    ]
+  },
+  {
+    "bookId": "guixue:10216",
+    "unitId": "22254",
+    "entryId": "ve-9352c78e",
+    "term": "impression",
+    "sense": {
+      "id": "kaikki:2c551b5dd7ee2e2bb2",
+      "definition": "A mark made by pressing one object into another.",
+      "example": "The tool left an impression in the clay.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "impression in clay",
+        "leave an impression"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "afterimpression",
+        "after-impression",
+        "artist's impression",
+        "finger impression",
+        "first impression",
+        "impressionability",
+        "impressionable",
+        "impressional",
+        "impressioner",
+        "impressionism",
+        "impressionist",
+        "impressionistic",
+        "impressionless",
+        "impressive",
+        "make an impression",
+        "maternal impression",
+        "misimpression",
+        "present sense impression",
+        "reimpression",
+        "sulfur impression",
+        "sulphur impression",
+        "trial impression",
+        "under the impression",
+        "unimpression"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/impression#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook transcript curriculum review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:2c551b5dd7ee2e2bb2",
+      "definition": "The indentation or depression made by the pressure of one object on or into another.",
+      "example": "His head made an impression on the pillow.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "afterimpression",
+        "after-impression",
+        "artist's impression",
+        "finger impression",
+        "first impression",
+        "impressionability",
+        "impressionable",
+        "impressional",
+        "impressioner",
+        "impressionism",
+        "impressionist",
+        "impressionistic",
+        "impressionless",
+        "impressive",
+        "make an impression",
+        "maternal impression",
+        "misimpression",
+        "present sense impression",
+        "reimpression",
+        "sulfur impression",
+        "sulphur impression",
+        "trial impression",
+        "under the impression",
+        "unimpression"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/impression#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Meaning checked against the corresponding listening sentences; learning example and combinations are editorial.",
+    "sectionId": "source:1231",
+    "sentenceIds": [
+      "source:88925"
+    ]
+  }
+]

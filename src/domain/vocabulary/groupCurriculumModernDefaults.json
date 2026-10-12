@@ -1,0 +1,2180 @@
+[
+  {
+    "entryId": "ve-8c37953b",
+    "term": "agreeable",
+    "sense": {
+      "id": "kaikki:9846c8bd0c3f575a36",
+      "definition": "Pleasant and enjoyable.",
+      "example": "We spent an agreeable afternoon walking by the river.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "agreeable company",
+        "agreeable atmosphere"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/agreeable#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ad7653fafc52aecee6",
+      "definition": "Able to agree; possible to be agreed.",
+      "example": "The revised terms were agreeable to both parties.",
+      "pos": "adj",
+      "synonyms": [
+        "accordant",
+        "agreeable",
+        "agreeing",
+        "concordant",
+        "conformable",
+        "congruent",
+        "congruous",
+        "consonant",
+        "corresponding",
+        "harmonious",
+        "like-minded",
+        "of like mind"
+      ],
+      "antonyms": [
+        "disagreeable",
+        "incongruous",
+        "strange",
+        "unharmonious"
+      ],
+      "collocations": [
+        "agreeable terms",
+        "agreeable to both parties"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "agreeableness",
+        "agreeably",
+        "nonagreeable",
+        "unagreeable"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/agreeable#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "An obscure ability-to-agree definition and an acceptability example obscured the everyday pleasant meaning."
+  },
+  {
+    "entryId": "ve-45f2c186",
+    "term": "evolve",
+    "sense": {
+      "id": "kaikki:2681d646524aefd526",
+      "definition": "To change or develop gradually over time.",
+      "example": "The town evolved from a fishing village into a busy port.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "evolve over time",
+        "evolve into"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/evolve#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:07cae19077cf24333d",
+      "definition": "To move (something) in regular procession through a system.",
+      "example": "The drill instructor evolved the troops through a series of formations.",
+      "pos": "verb",
+      "synonyms": [
+        "develop",
+        "progress"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "evolve troops",
+        "evolve a formation"
+      ],
+      "usage": "Specialised or historical meaning; this learning example illustrates the existing selected sense, not its most common modern use.",
+      "register": "transitive",
+      "wordFamily": [
+        "coevolve",
+        "co-evolve",
+        "evolvability",
+        "evolvingly",
+        "microevolve",
+        "nonevolving",
+        "photoevolve",
+        "reevolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/evolve#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The military movement meaning is historical and unsuitable as the common first meaning."
+  },
+  {
+    "entryId": "ve-7f8a4ebc",
+    "term": "subtle",
+    "sense": {
+      "id": "editorial:curriculum:subtle:not-obvious",
+      "pos": "adj",
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "definition": "Not immediately obvious or easy to notice or understand.",
+      "example": "There is a subtle difference between the two proposals.",
+      "collocations": [
+        "subtle difference",
+        "subtle change"
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "usage": "",
+      "register": "General modern English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:845b7bb857daee162a",
+      "definition": "Very fine or delicate in physical structure.",
+      "example": "The subtle particles were too fine to see without magnification.",
+      "pos": "adj",
+      "synonyms": [
+        "subtle",
+        "tricky",
+        "nice",
+        "delicate",
+        "knotty"
+      ],
+      "antonyms": [
+        "manifest",
+        "obvious",
+        "simple"
+      ],
+      "collocations": [
+        "subtle particles",
+        "subtle material"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "nonsubtle",
+        "oversubtle",
+        "oversubtlety",
+        "subtely",
+        "subtile",
+        "subtilise",
+        "subtilize",
+        "subtilist",
+        "subtlist",
+        "subtle body",
+        "subtle jack",
+        "subtlely",
+        "subtleness",
+        "subtleship",
+        "subtlety",
+        "subtly",
+        "supersubtle",
+        "supersubtlety",
+        "suprasubtle",
+        "suprasubtlety",
+        "suttle",
+        "ultrasubtle",
+        "unsubtle",
+        "unsubtleness",
+        "unsubtlety",
+        "unsubtly",
+        "outsubtle"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/subtle#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Dictionary candidates are broad tangible/intangible headings rather than an explicit learner sense; separate the modern not-obvious meaning from the fine-particle meaning."
+  },
+  {
+    "entryId": "ve-6ed1b8b5",
+    "term": "allowance",
+    "sense": {
+      "id": "kaikki:a8a0626f4eb4806a70",
+      "definition": "An amount of money or another resource provided or permitted for a particular purpose.",
+      "example": "Employees receive a monthly travel allowance.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "travel allowance",
+        "baggage allowance"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allowance#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:abeb8ec5048328009c",
+      "definition": "Permission; granting, conceding, or admitting.",
+      "example": "The council acted with the king's allowance.",
+      "pos": "noun",
+      "synonyms": [
+        "authorization",
+        "permission",
+        "sanction",
+        "tolerance",
+        "allowance",
+        "authority",
+        "authorization",
+        "clearance",
+        "consent",
+        "leave",
+        "license",
+        "mandate",
+        "permission",
+        "permit",
+        "warrant"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "official allowance",
+        "royal allowance"
+      ],
+      "usage": "Specialised or historical meaning; this learning example illustrates the existing selected sense, not its most common modern use.",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "attendance allowance",
+        "cost-of-living disallowance",
+        "depreciation allowance",
+        "disallowance",
+        "emission allowance",
+        "family allowance",
+        "field allowance",
+        "Jobseeker's Allowance",
+        "misallowance",
+        "monkey's allowance",
+        "personal allowance",
+        "seam allowance",
+        "separation allowance",
+        "travel allowance"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allowance#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The old permission meaning should not be the modern learner default."
+  },
+  {
+    "entryId": "ve-42d23fa7",
+    "term": "decade",
+    "sense": {
+      "id": "kaikki:61688eab1d5e776646",
+      "definition": "A period of ten years.",
+      "example": "The population has doubled over the past decade.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "past decade",
+        "over several decades"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/decade#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:1d6b66f727bb7d0293",
+      "definition": "A group or set of ten things.",
+      "example": "The old text describes a decade of soldiers marching together.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "decade of soldiers",
+        "grouped in decades"
+      ],
+      "usage": "Specialised or historical meaning; this learning example illustrates the existing selected sense, not its most common modern use.",
+      "register": "",
+      "wordFamily": [
+        "cosmological decade",
+        "decade box",
+        "decade counter",
+        "decadeful",
+        "decadelong",
+        "decade-long",
+        "decade long",
+        "decadely",
+        "decadeslong",
+        "decades-long",
+        "decadewise",
+        "decadist",
+        "dollar decade",
+        "light decade",
+        "lost decade",
+        "multidecade",
+        "quintade",
+        "semidecade"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/decade#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The candidate's decade-of-time example and decennium synonyms identify the ten-years sense despite its shortened definition; preserve the separate set-of-ten meaning."
+  },
+  {
+    "entryId": "ve-98f3953a",
+    "term": "disposal",
+    "sense": {
+      "id": "kaikki:2555ccdd7c2f9120dc",
+      "definition": "The process of getting rid of something that is no longer needed.",
+      "example": "The council improved its system for waste disposal.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "waste disposal",
+        "safe disposal"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/disposal#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:defbf537a5a7761e20",
+      "definition": "A disposition; an arrangement, categorization, or classification of things.",
+      "example": "The collection's disposal by subject made the books easier to locate.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "disposal of materials",
+        "orderly disposal"
+      ],
+      "usage": "Specialised or historical meaning; this learning example illustrates the existing selected sense, not its most common modern use.",
+      "register": "countable",
+      "wordFamily": [
+        "at someone's disposal",
+        "at the disposal of",
+        "bomb disposal unit",
+        "garbage disposal",
+        "garbage disposal unit",
+        "nondisposal",
+        "predisposal",
+        "waste disposal",
+        "waste disposal unit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/disposal#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The arrangement meaning is rare; getting rid of waste is the useful modern default."
+  },
+  {
+    "entryId": "ve-1308143c",
+    "term": "engineer",
+    "sense": {
+      "id": "kaikki:d898c6ddf65545d2a9",
+      "definition": "A person trained to design, build or maintain machines, structures or technical systems.",
+      "example": "The engineer checked the machinery before production began.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "mechanical engineer",
+        "qualified engineer"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/engineer#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ccaf289665ca69e682",
+      "definition": "A soldier engaged in designing or constructing military works for attack or defence, or other engineering works.",
+      "example": "The army engineer designed a bridge for the troops to cross.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "army engineer",
+        "military engineer"
+      ],
+      "usage": "also, figuratively",
+      "register": "also, figuratively",
+      "wordFamily": [
+        "astroengineer",
+        "bioneer",
+        "engineer boot",
+        "engineeress",
+        "engineerish",
+        "engineerization",
+        "engineer's blue",
+        "engineer's chain",
+        "engineership",
+        "engineer's scale",
+        "enginerd",
+        "engr.",
+        "fungineer",
+        "glycoengineer",
+        "Imagineer",
+        "microengineer",
+        "misengineer",
+        "motorneer",
+        "nanoengineer",
+        "neuroengineer",
+        "nonengineer",
+        "nonengineering",
+        "socioengineer",
+        "subengineer",
+        "tractioneer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/engineer#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The general engineering profession is more useful as a default than the military-only sense."
+  },
+  {
+    "entryId": "ve-b6c9ebd2",
+    "term": "exception",
+    "sense": {
+      "id": "kaikki:e64c859f9215af7ada",
+      "definition": "A person, thing or case that does not follow a general rule or is not included in it.",
+      "example": "Most shops close on Sunday, but the supermarket is an exception.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "exception to the rule",
+        "make an exception"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/exception#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:1ef9d0c77abe9e2856",
+      "definition": "The act of excepting or excluding; exclusion; restriction by taking out something which would otherwise be included, as in a class, statement, rule.",
+      "example": "The exception of the final chapter leaves the argument incomplete.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "exception of a chapter",
+        "exception of a category"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "be no exception",
+        "every rule has an exception",
+        "exceptionable",
+        "exceptioner",
+        "exception handler",
+        "exceptionless",
+        "exception that proves the rule",
+        "exceptious",
+        "first-chance exception",
+        "make an exception",
+        "management by exception",
+        "personal exception",
+        "state of exception",
+        "take exception",
+        "there is an exception to every rule",
+        "without exception",
+        "with the exception of"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/exception#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The excluded case meaning is the common learner meaning; the act-of-exclusion meaning remains separate."
+  },
+  {
+    "entryId": "ve-ba23ab73",
+    "term": "festival",
+    "sense": {
+      "id": "kaikki:6a2f8ec32ad67aa8ee",
+      "definition": "An organised event or series of events celebrating music, culture or another theme.",
+      "example": "The town holds a music festival every summer.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "music festival",
+        "film festival"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/festival#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:c3e471f3f3afa8f572",
+      "definition": "Pertaining to a feast or feast day; festive. (Now only as the noun used attributively.)",
+      "example": "The choir sang a festival hymn during the celebration.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "festival hymn",
+        "festival occasion"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/festival#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The noun event meaning replaces the historical festive adjective as the learner default."
+  },
+  {
+    "entryId": "ve-b25c8d1",
+    "term": "prize",
+    "sense": {
+      "id": "kaikki:c17013768b7bd7bba3",
+      "definition": "A reward given to someone who wins a competition or achieves something.",
+      "example": "She won first prize in the photography competition.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "win a prize",
+        "first prize"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prize#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:4a59905e6942dbfc75",
+      "definition": "That which is taken from another; something captured; a thing seized by force, stratagem, or superior power.",
+      "example": "The captured ship was claimed as a prize after the battle.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "war prize",
+        "captured prize"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "price",
+        "prise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prize#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Award is the common modern noun meaning; captured booty remains a separate historical sense."
+  },
+  {
+    "entryId": "ve-18206614",
+    "term": "occupant",
+    "sense": {
+      "id": "kaikki:822848e4527388e80e",
+      "definition": "A person who is in or uses a building, room or vehicle.",
+      "example": "All occupants of the car were wearing seatbelts.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "car occupant",
+        "building occupant"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/occupant#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:1868e016428b2cb61e",
+      "definition": "A person who occupies an office or a position.",
+      "example": "The current occupant of the post will retire next month.",
+      "pos": "noun",
+      "synonyms": [
+        "occupier"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "current occupant",
+        "occupant of an office"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "nonoccupant",
+        "occupance",
+        "occupancy",
+        "occupantless",
+        "preoccupant"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/occupant#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "A person in a place is a more useful general default than an officeholder."
+  },
+  {
+    "entryId": "ve-3f1eca80",
+    "term": "academic",
+    "sense": {
+      "id": "kaikki:137a64db95e9ed273b",
+      "definition": "Relating to study, teaching or research in an educational institution.",
+      "example": "Students need strong academic writing skills for the course.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "academic writing",
+        "academic research"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/academic#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:2960680f362cbcf869",
+      "definition": "Belonging to the school or philosophy of Plato.",
+      "example": "The scholar examined the academic philosophy associated with Plato.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "academic philosophy",
+        "academic school"
+      ],
+      "usage": "Specialised or historical meaning; this learning example illustrates the existing selected sense, not its most common modern use.",
+      "register": "",
+      "wordFamily": [
+        "academented",
+        "academic advantage",
+        "academic art",
+        "academic bulimia",
+        "academic costume",
+        "academic degree",
+        "academic disadvantage",
+        "academic discipline",
+        "academic freedom",
+        "academic institution",
+        "academicise",
+        "academicism",
+        "Academicism",
+        "academicist",
+        "academicize",
+        "academicness",
+        "academic quarter",
+        "academic question",
+        "academic weapon",
+        "academic year",
+        "acafan",
+        "acafandom",
+        "antiacademic",
+        "Blackademic",
+        "blackademic",
+        "interacademic",
+        "pracademic",
+        "protoacademic",
+        "pseudoacademic",
+        "quackademic"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/academic#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The Platonic philosophy meaning is specialised and historical."
+  },
+  {
+    "entryId": "ve-52c205ff",
+    "term": "regular",
+    "sense": {
+      "id": "kaikki:9481df1f925403a337",
+      "definition": "Happening repeatedly at fairly even intervals.",
+      "example": "Regular exercise can improve your health.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "regular exercise",
+        "regular meetings"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regular#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:434aabde00aea00cf7",
+      "definition": "Bound by religious rule; belonging to a monastic or religious order (often as opposed to secular).",
+      "example": "The historian compared the duties of regular clergy and secular clergy.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [
+        "irregular",
+        "non-regular",
+        "nonregular"
+      ],
+      "collocations": [
+        "regular clergy",
+        "regular order"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "antiregular",
+        "biregular",
+        "equiregular",
+        "extraregular",
+        "hyperregular",
+        "on a regular basis",
+        "on the regular",
+        "overregular",
+        "preregular",
+        "proregular",
+        "regioregular",
+        "regular army",
+        "regular as clockwork",
+        "regular black hole",
+        "regular closed",
+        "regular coffee",
+        "regular continued fraction",
+        "regular dividend",
+        "regular-duty",
+        "regular element",
+        "regular expression",
+        "regular folk",
+        "regular folks",
+        "regular function",
+        "regular graph",
+        "regular grid",
+        "regular guy",
+        "regular hexahedron",
+        "regular insulin",
+        "regularisation"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regular#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The religious-order meaning should not be the common default."
+  },
+  {
+    "entryId": "ve-64e4ee05",
+    "term": "office",
+    "sense": {
+      "id": "kaikki:efb993888520d4d56c",
+      "definition": "A room, group of rooms or building where people do administrative or professional work.",
+      "example": "The company moved into a larger office near the station.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "office building",
+        "head office"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/office#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:cd557d4b82d966b0a8",
+      "definition": "A duty or service performed as part of a ceremony, especially a religious ceremony.",
+      "example": "The choir performed its customary office at the ceremony.",
+      "pos": "noun",
+      "synonyms": [
+        "service",
+        "divine service",
+        "religious service",
+        "liturgy",
+        "doctor's office",
+        "office"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "religious office",
+        "ceremonial office"
+      ],
+      "usage": "Specialised or historical meaning; this learning example illustrates the existing selected sense, not its most common modern use.",
+      "register": "",
+      "wordFamily": [
+        "610 Office",
+        "back office",
+        "booking office",
+        "box-office",
+        "box office",
+        "box-office bomb",
+        "branch office",
+        "call office",
+        "chain of office",
+        "circumlocution office",
+        "cloffice",
+        "coach-office",
+        "coffice",
+        "color of office",
+        "corner office",
+        "dead letter office",
+        "Divine Office",
+        "divine office",
+        "do a land-office business",
+        "doctor's office",
+        "drawing office",
+        "express office",
+        "family office",
+        "find an office",
+        "fire office",
+        "fiscal office",
+        "front office",
+        "garden office",
+        "general office",
+        "gingerbread office"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/office#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The ceremonial duty meaning is specialised; workplace is the useful modern meaning."
+  },
+  {
+    "entryId": "ve-6b4c415d",
+    "term": "according",
+    "sense": {
+      "id": "editorial:curriculum:according-to:source",
+      "pos": "prep_phrase",
+      "source": "Fieldbook editorial",
+      "license": "CC-BY-4.0",
+      "attribution": "Fieldbook editorial contributors",
+      "definition": "In the phrase according to: as stated or reported by a person, document or other source.",
+      "example": "According to the timetable, the next train leaves at noon.",
+      "collocations": [
+        "according to the report",
+        "according to the timetable"
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "usage": "Use according to followed by the source of the information.",
+      "register": "General modern English",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:e33446ec43b670abe5",
+      "definition": "Bringing things into agreement or harmony; the -ing form of accord.",
+      "example": "The musicians were according their voices to produce a single harmony.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "according voices",
+        "according sounds"
+      ],
+      "usage": "Specialised or historical meaning; this learning example illustrates the existing selected sense, not its most common modern use.",
+      "register": "form-of, gerund, participle, present",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/according#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The dictionary only has the verb participle, adjective and rare adverb; author a distinct phrase meaning rather than calling the harmony verb common modern English."
+  },
+  {
+    "entryId": "ve-a6b319ff",
+    "term": "digital",
+    "sense": {
+      "id": "kaikki:4ad7f13a73e394d898",
+      "definition": "Relating to computers and electronic technology.",
+      "example": "The library provides access to digital resources.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "digital technology",
+        "digital resources"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/digital#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:c6b641040c7da81d26",
+      "definition": "Having to do with digits (fingers or toes); especially, performed with a finger.",
+      "example": "The doctor used digital pressure to examine the painful area.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [
+        "nondigital",
+        "undigital",
+        "analog",
+        "analogue",
+        "continuous"
+      ],
+      "collocations": [
+        "digital pressure",
+        "digital examination"
+      ],
+      "usage": "Specialised or historical meaning; this learning example illustrates the existing selected sense, not its most common modern use.",
+      "register": "not-comparable",
+      "wordFamily": [
+        "analog-to-digital converter",
+        "asymmetric digital subscriber line",
+        "bidigital",
+        "biodigital",
+        "born digital",
+        "digerati",
+        "digilante",
+        "digipeater",
+        "digiscope",
+        "digital addiction",
+        "digital age",
+        "digital amnesia",
+        "digital-asset treasury company",
+        "digital audio",
+        "digital audio workstation",
+        "digital autism",
+        "digital backlot",
+        "digital blackface",
+        "digital brownshirt",
+        "digital camera",
+        "digital cash",
+        "digital certificate",
+        "digital clock",
+        "digital commons",
+        "digital computer",
+        "digital converter box",
+        "digital courage",
+        "digital currency",
+        "digital dark age",
+        "digital decay"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/digital#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The finger-related meaning is specialised; the technology meaning is the modern learning default."
+  },
+  {
+    "entryId": "ve-7c6b04a6",
+    "term": "dock",
+    "sense": {
+      "id": "kaikki:6cce06d006b45d81e9",
+      "definition": "A structure beside the water where boats can be secured and loaded or unloaded.",
+      "example": "The ferry waited at the dock while passengers boarded.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "at the dock",
+        "loading dock"
+      ],
+      "usage": "",
+      "register": "Especially American English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dock#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:566be4e5ca296ec128",
+      "definition": "Any of the genus Rumex of coarse weedy plants with small green flowers related to buckwheat, especially bitter dock (Rumex obtusifolius), and used as potherbs and in folk medicine, especially in curing nettle rash.",
+      "example": "Dock grows along the edge of the field.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "dock leaves",
+        "broad-leaved dock"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "bloody dock",
+        "butterdock",
+        "candock",
+        "curled dock",
+        "dock leaf",
+        "docklike",
+        "dock pudding",
+        "dooryard dock",
+        "elf-dock",
+        "northern dock",
+        "patience dock",
+        "prairie dock",
+        "red-veined dock",
+        "spatterdock",
+        "waterdock",
+        "wood dock",
+        "yellow dock"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dock#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The plant meaning remains distinct; the waterside structure is more useful for general learners."
+  },
+  {
+    "entryId": "ve-18087bd9",
+    "term": "concentrate",
+    "sense": {
+      "id": "kaikki:c68f5e4a821fd1954d",
+      "definition": "To give your full attention to something.",
+      "example": "I find it easier to concentrate in a quiet room.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "concentrate on work",
+        "concentrate fully"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/concentrate#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:16826ff10aaf481454",
+      "definition": "To bring to, or direct toward, a common center; to unite more closely; to gather into one body, mass, or force.",
+      "example": "The lens concentrates light into a narrow beam.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "concentrate light",
+        "concentrate resources"
+      ],
+      "usage": "ergative",
+      "register": "ergative",
+      "wordFamily": [
+        "concentrated",
+        "concentrative",
+        "concentrator",
+        "cryoconcentrate",
+        "deconcentrate",
+        "hemoconcentrate",
+        "overconcentrate",
+        "preconcentrate",
+        "reconcentrate",
+        "upconcentrate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/concentrate#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The scientific gathering meaning is valid, but focusing attention is the more useful general learner default."
+  },
+  {
+    "entryId": "ve-dd34a9a2",
+    "term": "company",
+    "sense": {
+      "id": "kaikki:ea7875d9be020ebd09",
+      "definition": "A legally established organisation that carries on a business.",
+      "example": "The company plans to open a new branch next year.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "private company",
+        "work for a company"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/company#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:921e5031d1b10fb4b8",
+      "definition": "A team; a group of people who work together for a common purpose.",
+      "example": "A company of volunteers worked together to restore the hall.",
+      "pos": "noun",
+      "synonyms": [
+        "corporation",
+        "association",
+        "companionship",
+        "fellowship",
+        "organization",
+        "society",
+        "fellowship",
+        "friendship",
+        "mateship"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "company of volunteers",
+        "company of soldiers"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "a man is known by the company he keeps",
+        "and company",
+        "bad company",
+        "biocompany",
+        "blank check company",
+        "bubble company",
+        "community interest company",
+        "companization",
+        "company car",
+        "company clinic",
+        "company doctor",
+        "company front",
+        "company law",
+        "company man",
+        "company officer",
+        "company register",
+        "company seal",
+        "company sergeant major",
+        "company-specific",
+        "company store",
+        "company time",
+        "company town",
+        "company union",
+        "companywide",
+        "compliance company",
+        "daughter company",
+        "fish and company stink after three days",
+        "freight operating company",
+        "ghost company",
+        "in-company"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/company#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The business organisation meaning should be learned before the generic company-of-people sense."
+  },
+  {
+    "entryId": "ve-7c6e34cb",
+    "term": "film",
+    "sense": {
+      "id": "kaikki:8fc7f5392a6f6ac776",
+      "definition": "A recording of moving images that tells a story or presents information; a movie.",
+      "example": "We watched a film about life in the Arctic.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "watch a film",
+        "documentary film"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/film#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:68937ea6746d173a02",
+      "definition": "A thin layer of some substance; a pellicle; a membranous covering, causing opacity.",
+      "example": "A thin film of oil floated on the water.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "thin film",
+        "plastic film"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "action film",
+        "adult film",
+        "antifilm",
+        "art film",
+        "befilm",
+        "bibliofilm",
+        "bifilm",
+        "biofilm",
+        "blood film",
+        "blue film",
+        "bold film",
+        "book of the film",
+        "brickfilm",
+        "buddy film",
+        "cinefilm",
+        "cine film",
+        "ciné film",
+        "cling film",
+        "cult film",
+        "disaster film",
+        "docufilm",
+        "dry film thickness",
+        "epifilm",
+        "exploitation film",
+        "fanfilm",
+        "feature film",
+        "file film",
+        "filmaholic",
+        "filmanthropy",
+        "film at 11"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/film#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The thin layer meaning remains useful and separate; the movie meaning is the general learning default."
+  },
+  {
+    "entryId": "ve-7c6ea02c",
+    "term": "gene",
+    "sense": {
+      "id": "kaikki:e471368a7984e14427",
+      "definition": "A section of DNA or RNA that carries hereditary information and influences how an organism develops or functions.",
+      "example": "Scientists identified a gene linked to the inherited condition.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "gene variant",
+        "gene expression"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gene#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:e49dffbc21e48c524f",
+      "definition": "A theoretical unit of heredity of living organisms which may take several values and (in principle) predetermines a precise trait of an organism's form (phenotype), such as hair color.",
+      "example": "A change in a single gene can affect an inherited trait.",
+      "pos": "noun",
+      "synonyms": [
+        "cistron"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "inherited gene",
+        "gene variant"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "algeny",
+        "Angelina Jolie gene",
+        "antigene",
+        "aristogene",
+        "atrogene",
+        "cene",
+        "cisgene",
+        "control gene",
+        "cream gene",
+        "cytogene",
+        "eigengene",
+        "electrochemogene",
+        "electrogene",
+        "endogene",
+        "gene-altered",
+        "gene bank",
+        "gene cassette",
+        "genechip",
+        "gene complex",
+        "gene drive",
+        "gene-engineered",
+        "gene expression",
+        "gene family",
+        "geneflow",
+        "gene flow",
+        "gene frequency",
+        "gene gun",
+        "geneless",
+        "genelet",
+        "genelike"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gene#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The molecular meaning gives a modern scientific account without saying genes necessarily predetermine a precise trait."
+  },
+  {
+    "entryId": "ve-b09614c6",
+    "term": "commonsense",
+    "sense": {
+      "id": "kaikki:1dd3656b6ad02f8c7e",
+      "definition": "Practical judgement based on ordinary experience rather than specialist knowledge.",
+      "example": "She used commonsense to solve the everyday problem.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "use commonsense",
+        "show commonsense"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/commonsense#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:02b1b34820be346841",
+      "definition": "Practical judgement based on ordinary experience; a form of common sense.",
+      "example": "She used commonsense to solve the everyday problem.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "use commonsense",
+        "commonsense approach"
+      ],
+      "usage": "alt-of, alternative, not-comparable",
+      "register": "alt-of, alternative, not-comparable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/commonsense#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The repaired definition and example describe a noun, so select the actual noun ID instead of the adjective ID."
+  },
+  {
+    "entryId": "ve-f79a7c05",
+    "term": "communication",
+    "sense": {
+      "id": "kaikki:bba4f273b7a1b86f8f",
+      "definition": "The exchange of information, ideas or feelings between people or groups.",
+      "example": "Clear communication between staff and managers prevents misunderstandings.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "effective communication",
+        "communication skills"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/communication#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:652a250fc2250058e0",
+      "definition": "The act or fact of communicating anything; transmission.",
+      "example": "The communication of the disease was reduced by better hygiene.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "anticommunication"
+      ],
+      "collocations": [
+        "communication of disease",
+        "communication of infection"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "biocommunication",
+        "chemocommunication",
+        "commognition",
+        "communication accommodation theory",
+        "communicational",
+        "communication board",
+        "communication cord",
+        "communication disorder",
+        "communication engineering",
+        "communication mix",
+        "communications",
+        "communications satellite",
+        "communication studies",
+        "communication theory",
+        "communicology",
+        "computer-mediated communication",
+        "cross-cultural communication",
+        "cybercommunication",
+        "e-communication",
+        "electrocommunication",
+        "electronic communication",
+        "excommunication",
+        "ex-communication",
+        "exocommunication",
+        "facilitated communication",
+        "intercommunication",
+        "inter-process communication",
+        "line of communication",
+        "malcommunication",
+        "masscom"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/communication#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The disease-transmission example is uncommon; information exchange is the useful modern learning meaning."
+  },
+  {
+    "entryId": "ve-810f3109",
+    "term": "screen",
+    "sense": {
+      "id": "kaikki:2055cf4a90984e3ec0",
+      "definition": "The surface of a device on which pictures or information are displayed.",
+      "example": "The results appeared on the computer screen.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "computer screen",
+        "on screen"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/screen#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:4053bf8fae5b44cfd5",
+      "definition": "A physical barrier that shelters or hides.",
+      "example": "A screen protected the room from the heat of the fire.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "fire screen",
+        "protective screen"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "skirmish"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/screen#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The barrier sense is valid but electronic display is the more useful learner default."
+  },
+  {
+    "entryId": "ve-ba00a1a",
+    "term": "store",
+    "sense": {
+      "id": "kaikki:7fa780a27984829381",
+      "definition": "A place where goods are sold; a shop.",
+      "example": "The new store sells books and stationery.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "department store",
+        "grocery store"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/store#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:1f1d91b7127f29486a",
+      "definition": "A place where items may be accumulated or routinely kept.",
+      "example": "The cellar serves as a store for spare equipment.",
+      "pos": "noun",
+      "synonyms": [
+        "storeroom",
+        "stockroom",
+        "warehouse",
+        "magazine"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "equipment store",
+        "grain store"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "storage"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/store#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The storage-place meaning remains separate; shop is the common learner noun meaning."
+  },
+  {
+    "entryId": "ve-70d0ce19",
+    "term": "subject",
+    "sense": {
+      "id": "kaikki:3fd58b544656a78b44",
+      "definition": "The topic being discussed, studied or written about.",
+      "example": "The subject of the lecture was renewable energy.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "subject of discussion",
+        "change the subject"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/subject#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:c20012ddfaf39b23b7",
+      "definition": "Likely to be affected by or to experience something; liable.",
+      "example": "The coastal town is subject to frequent storms.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "subject to change",
+        "subject to flooding"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "fee simple subject to condition subsequent",
+        "fee simple subject to executory interest",
+        "fee simple subject to executory limitation",
+        "subjectness",
+        "unsubject",
+        "vested remainder subject to open"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/subject#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The subject-to adjective is valid but topic is the more useful default for a general word list."
+  },
+  {
+    "entryId": "ve-718a28c9",
+    "term": "summary",
+    "sense": {
+      "id": "kaikki:652f1bd92187189099",
+      "definition": "A short account that gives the main points of something.",
+      "example": "Please write a brief summary of the article.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "brief summary",
+        "executive summary"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/summary#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:30f15561da3bb449c3",
+      "definition": "Concise, brief, or presented in a condensed form; presenting information in such a form.",
+      "example": "The document provides a summary account of the findings.",
+      "pos": "adj",
+      "synonyms": [
+        "summative",
+        "summarizing[participial adjective|part. adj.]]>",
+        "abstractive"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "summary account",
+        "summary report"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "summarily",
+        "summariness",
+        "summary court-martial",
+        "summary dismissal"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/summary#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The noun main-points meaning is the common learning target; concise adjective remains separate."
+  },
+  {
+    "entryId": "ve-a7a4f285",
+    "term": "buy out",
+    "sense": {
+      "id": "kaikki:dedfc0e8419fe9563c",
+      "definition": "To buy the ownership of a company or another owner's share in it.",
+      "example": "The investor offered to buy out the other owners of the business.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "buy out a company",
+        "buy out a partner"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/buy_out#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:111c989aa773204983",
+      "definition": "to purchase the entire stock or extent of something",
+      "example": "The investor offered to buy out the other owners of the business.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "buy out an owner",
+        "buy out a company"
+      ],
+      "usage": "idiomatic",
+      "register": "idiomatic, transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/buy_out#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The existing example illustrates buying ownership, not buying an entire stock of goods."
+  },
+  {
+    "entryId": "ve-63fd823b",
+    "term": "take up",
+    "sense": {
+      "id": "kaikki:14fa8b42a3b6f761c5",
+      "definition": "To begin doing or dealing with an activity or task.",
+      "example": "She decided to take up swimming to improve her fitness.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "take up a hobby",
+        "take up a new activity"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/take_up#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:811cacb2246cbb1ade",
+      "definition": "The act or rate of accepting or using an offer, service or opportunity; a form of take-up.",
+      "example": "The low take up of the offer surprised the organisers.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "take up rate",
+        "take up of an offer"
+      ],
+      "usage": "alt-of, alternative",
+      "register": "alt-of, alternative, countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/take_up#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The space-separated phrasal verb is the useful default; the noun form of take-up remains a separate meaning."
+  },
+  {
+    "entryId": "ve-1e3366e1",
+    "term": "redevelopment",
+    "sense": {
+      "id": "kaikki:508677c07f9a5f2ef7",
+      "definition": "The replacement of old buildings or infrastructure with new ones on the same site.",
+      "example": "The redevelopment of the old industrial site will create new housing.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "urban redevelopment",
+        "redevelopment project"
+      ],
+      "usage": "",
+      "register": "General modern English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/redevelopment#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:f7aad8940262e53f84",
+      "definition": "The process of developing something anew.",
+      "example": "The novel explores the redevelopment of the hero's character.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "character redevelopment",
+        "redevelopment of an idea"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "antiredevelopment"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/redevelopment#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The urban meaning is the useful learner default; the character-redevelopment example was unnatural."
+  },
+  {
+    "entryId": "ve-a309596",
+    "term": "fancy",
+    "sense": {
+      "id": "kaikki:8afd70ea2d89df016f",
+      "definition": "To want or feel like having or doing something.",
+      "example": "Do you fancy a cup of tea after the walk?",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "fancy a drink",
+        "fancy doing something"
+      ],
+      "usage": "",
+      "register": "Informal British English",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/fancy#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:8f739c531126a9337d",
+      "definition": "The imagination.",
+      "example": "His fancy supplied imaginary adventures during the long journey.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "flight of fancy",
+        "work of fancy"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "blood-red fancy",
+        "border fancy",
+        "catch someone's fancy",
+        "fanciful",
+        "fancy-free",
+        "fancy mouse",
+        "fancy rat",
+        "fancy-sick",
+        "flight of fancy",
+        "strike someone's fancy",
+        "take a fancy to",
+        "take someone's fancy",
+        "tickle someone's fancy"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/fancy#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "The imagination noun is chiefly literary; the want-or-feel-like verb is useful in modern British English."
+  }
+]

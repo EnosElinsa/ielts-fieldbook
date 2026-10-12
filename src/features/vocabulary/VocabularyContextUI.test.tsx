@@ -180,7 +180,7 @@ test("detail uses distinct confirmed core group content, one bottom credits coll
   const origin = `/vocabulary/entry/${raw.id}?bookId=${encodeURIComponent(book)}&unitId=21840&returnTo=${encodeURIComponent(`/vocabulary/wordbooks/${book}/groups/21840/words?search=core&page=0`)}`;
   mount(origin);
   expect(
-    screen.getByRole("heading", { name: "Meaning in this group" }),
+    screen.getByRole("heading", { name: "Current learning meaning" }),
   ).toBeInTheDocument();
   expect(screen.getByText(resolved.sense!.definition)).toBeInTheDocument();
   const practice = new URL(
@@ -210,15 +210,15 @@ test("detail uses distinct confirmed core group content, one bottom credits coll
   expect(screen.queryByText("Sense 1")).not.toBeInTheDocument();
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
-test("unconfirmed group keeps common meaning heading and explicit confirmation note", async () => {
+test("common-list group has an explicit learning syllabus without claiming source confirmation", async () => {
   const raw = release.entries.find((entry: any) => entry.term === "cashier");
   mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A11320&unitId=35003`);
-  await screen.findByText("General dictionary meaning");
+  await screen.findByText("Common meaning to learn");
   expect(
-    screen.getByRole("heading", { name: "Common meaning" }),
+    screen.getByRole("heading", { name: "Current learning meaning" }),
   ).toBeInTheDocument();
   expect(
-    screen.queryByRole("heading", { name: "Meaning in this group" }),
+    screen.queryByText("Meaning in this listening passage"),
   ).not.toBeInTheDocument();
   expect(screen.queryByRole("img")).not.toBeInTheDocument();
 });
@@ -384,7 +384,7 @@ test("edited learner notes remain visible as notes without a context-reviewed he
   mocks.fb.state.vocabulary = [raw];
   mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21795`);
   expect(
-    screen.getByRole("heading", { name: "Common meaning" }),
+    screen.getByRole("heading", { name: "Current learning meaning" }),
   ).toBeInTheDocument();
   expect(screen.getByText("My geology note.")).toBeInTheDocument();
   expect(screen.getByText("Your collocation notes")).toBeInTheDocument();
@@ -490,7 +490,7 @@ test("confirmed register content is labelled reviewed while raw public register 
   const raw = core();
   mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840`);
   const main = screen
-    .getByRole("heading", { name: "Meaning in this group" })
+    .getByRole("heading", { name: "Current learning meaning" })
     .closest("section")!;
   expect(
     within(main).getByRole("heading", { name: "Reviewed register" }),
@@ -526,7 +526,7 @@ test("a register-only learner edit retains a personal label and does not claim c
   ).toBeInTheDocument();
   expect(screen.getByText("My register-only edit.")).toBeInTheDocument();
   expect(
-    screen.queryByRole("heading", { name: "Meaning in this group" }),
+    screen.queryByText("Selected group meaning"),
   ).not.toBeInTheDocument();
   expect(
     screen.queryByRole("heading", { name: "Reviewed register" }),
@@ -650,7 +650,7 @@ test("source switching removes the old requested sense and preserves the list re
   ).toHaveAttribute("href", "/vocabulary?search=core");
   expect(
     screen
-      .getByRole("heading", { name: "Meaning in this group" })
+      .getByRole("heading", { name: "Current learning meaning" })
       .closest("section"),
   ).not.toHaveTextContent("The hard central part of a fruit");
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();
