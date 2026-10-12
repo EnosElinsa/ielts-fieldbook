@@ -35,3 +35,11 @@ Native scrollbars now use narrow, rounded, theme-aware thumbs while retaining dr
 Intensive listening shows all six method steps without horizontal scrolling on mobile (three columns, or two below 360px). The sentence strip retains scrolling and the active sentence stays visible; a direct sentence selector avoids repeated swiping. Playback has a distinct primary button, grouped transport controls and a visible loop state. Waveform colors follow theme changes without restarting audio. Save status shares the compact progress header.
 
 Validation: 82 files / 626 tests passed, followed by focused tests after the final header adjustment; production build passed. Playwright checked 320px, 390px and 1440px in both themes, sentence 1/40 selection, active sentence visibility, playback/pause, loop state, return navigation and all five module entry layouts. No page overflow or browser console errors/warnings were found. The browser checks use the local account harness described above.
+
+## Fifth-round bank and review polish
+
+Recent work prioritises unfinished attempts and identifies their Cambridge book and test, mode, status and marks. Bank pages offer direct review and intensive-practice navigation. Review filters show attempt counts; completed attempts without mistakes can be opened directly from the empty state. Review cards distinguish practice from full mocks and keep the original completion date.
+
+Due intensive reviews identify the book, test, part and sentence. The queue loads full section details only for due sections because catalog metadata intentionally omits timelines. Source loading failures preserve saved review links and provide a retry. Cards, favourite controls and empty states use consistent corners, type and mobile touch targets.
+
+Validation: 82 files / 632 tests passed and the production build passed. Browser checks cover bank and review pages at 320px, 390px and 1440px in both themes, unfinished-first navigation and a due-sentence jump. These use the real app and authorized catalog with local account records, without changing production study data.

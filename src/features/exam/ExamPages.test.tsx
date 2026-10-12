@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
@@ -22,6 +22,23 @@ beforeEach(() => { mocks.catalog = structuredClone(catalog); mocks.owner = 'one'
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 test('bank presents available sections but disables an incomplete full mock', async () => { render(<MemoryRouter><ExamBankPage skill="reading" /></MemoryRouter>); expect(await screen.findByText('The city garden')).toBeInTheDocument(); expect(screen.getByRole('button', { name: 'Full mock unavailable' })).toBeDisabled(); expect(screen.getByRole('link', { name: /Practise passage 1/ })).toHaveAttribute('href', '/reading/section'); });
+test('recent work prioritises unfinished attempts and retains source and retry navigation', async () => {
+  mocks.fb.state.examAttempts = [
+    ...Array.from({ length: 4 }, (_, index) => ({ id: `done${index}`, skill: 'reading', sectionIds: ['section'], mode: 'practice', status: 'completed', score: 2, total: 2, updatedAt: `2026-10-0${index + 2}` })),
+    { id: 'paused', skill: 'reading', sectionIds: ['section'], mode: 'practice', status: 'paused', updatedAt: '2026-01-01', retryOfAttemptId: 'old retry' },
+  ];
+  render(<MemoryRouter><ExamBankPage skill="reading" /></MemoryRouter>);
+  await screen.findByRole('heading', { name: 'Cambridge 8 Test 1' });
+  const recent = within(screen.getByRole('complementary', { name: 'Your recent work' }));
+  const links = recent.getAllByRole('link');
+  expect(links).toHaveLength(4);
+  expect(links[0]).toHaveTextContent('Cambridge 8 / Test 1');
+  expect(links[0]).toHaveTextContent('The city garden');
+  expect(links[0]).toHaveTextContent('Paused');
+  expect(links[0]).toHaveAttribute('href', '/reading/section?attempt=paused&retry=old%20retry');
+  expect(links[1]).toHaveAttribute('href', '/reading/review/done3');
+  expect(screen.getByRole('link', { name: 'Review mistakes' })).toHaveAttribute('href', '/reading/review');
+});
 test('listening intensive bank mode opens the sentence workbench directly', async () => { mocks.catalog.sections[0].skill = 'listening'; render(<MemoryRouter initialEntries={['/listening?mode=intensive']}><ExamBankPage skill="listening" /></MemoryRouter>); expect(await screen.findByRole('link', { name: 'Open intensive part 1' })).toHaveAttribute('href', '/listening/intensive/section'); expect(screen.getByRole('link', { name: /Practise part 1/ })).toHaveAttribute('href', '/listening/section'); });
 test('practice submission stays on the page on save failure and retries the same attempt', async () => { mocks.fb.persistNow.mockResolvedValueOnce(false); practice(); const user = userEvent.setup(); await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), '1990'); await user.click(screen.getByRole('radio', { name: 'FALSE' })); await user.click(screen.getByRole('button', { name: 'Submit answers' })); expect(await screen.findByRole('alert')).toHaveTextContent('Could not save'); expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/section'); const firstId = mocks.fb.persistNow.mock.calls[0][0].examAttempts[0].id; await user.click(screen.getByRole('button', { name: 'Retry submission' })); await waitFor(() => expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/review/')); expect(mocks.fb.persistNow.mock.calls[1][0].examAttempts[0].id).toBe(firstId); expect(await screen.findByLabelText('Attempt score')).toHaveTextContent('2 / 2'); });
 test('practice recovers answers after leaving without carrying them into another account', async () => { const view = practice(); const user = userEvent.setup(); await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), '1990'); view.unmount(); const resumed = practice(); expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990'); resumed.unmount(); mocks.owner = 'two'; practice(); expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue(''); });

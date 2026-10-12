@@ -106,7 +106,35 @@
 .exam-method-head strong svg { flex-shrink: 0; margin-top: 2px; }
 .exam-method-head .btn { flex-shrink: 0; min-width: 40px; min-height: 40px; padding: 8px; }
 .exam-part-tabs { flex-wrap: wrap; }
+.exam-bank-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.exam-recent>a { gap: 8px; border-radius: 10px; }
+.exam-recent>a strong { font-size: 14px; line-height: 1.5; }
+.exam-recent-meta { font-size: 12px; color: var(--muted); }
+.exam-recent b { margin-top: auto; padding-top: 8px; }
+.exam-queue-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0; color: var(--muted); font-size: 12px; }
+.exam-queue-due { border-radius: 10px; min-width: 0; }
+.exam-queue-due>span { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.exam-queue-due>svg { flex-shrink: 0; color: var(--blue); }
+.exam-queue-due strong { display: block; font-size: 14px; line-height: 1.5; }
+.exam-queue-due .exam-due-source { margin: 0 0 6px; }
+.exam-queue-due:hover { background: var(--soft-blue); border-color: var(--blue); }
+.exam-due-review { margin-bottom: 20px; }
+.exam-review-queue .exam-notice { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; font-size: 13px; }
+.exam-review-queue .exam-source-foot { margin: 0 0 16px; }
+.exam-queue-card>div { min-width: 0; }
+.exam-queue-card h3 { overflow-wrap: anywhere; }
+.exam-review-queue .exam-empty { border-radius: 10px; padding: 28px 20px; }
+.exam-review-queue .exam-empty h3 { font-family: Manrope,Arial,sans-serif; font-size: 20px; line-height: 1.45; }
+.exam-review-queue .exam-empty p { max-width: 48ch; margin: 10px auto 20px; font-size: 14px; line-height: 1.7; }
+.exam-bank .icon-btn { min-width: 40px; min-height: 40px; }
+.exam-bank .icon-btn[aria-pressed=true] { color: var(--gold); background: color-mix(in srgb,var(--gold) 12%,var(--sheet)); }
 @media(max-width:740px) {
   .exam-gap,.exam-question select,.exam-annotations input,.exam-annotations textarea,.exam-evidence-capture select,.exam-error-tag select { font-size: 16px; min-height: 44px; }
   .exam-annotations>summary,.exam-method-head .btn { min-height: 44px; }
+  .exam-bank-actions .btn,.exam-bank .icon-btn { min-height: 44px; }
+  .exam-bank .icon-btn { min-width: 44px; }
+  .exam-review-queue .exam-workspace-tools { gap: 12px; }
+  .exam-review-queue .exam-workspace-tools>.back-link { order: -1; }
+  .exam-review-queue .exam-part-tabs { width: 100%; }
+  .exam-review-queue .exam-part-tabs button { flex: 1; padding-inline: 10px; font-size: 12px; }
 }
