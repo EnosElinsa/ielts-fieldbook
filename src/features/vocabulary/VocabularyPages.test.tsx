@@ -40,23 +40,33 @@ function submitted(ids: string[], options: any = {}) {
   return { id: "session", mode: "dictation", status: "submitted", filter: { bookId: "book", unitId: "first", dueOnly: false }, entryIds: ids, results: ids.map(entryId => ({ entryId, response: "an attempt", result: "failure" })), submittedAt: "2026-10-10", ...options };
 }
 
+test('history rows identify group, full submission time and graded outcome independently', () => {
+  fixture();
+  fb.current.state.vocabularySessions = [submitted(['one'], {submittedAt:'2026-10-12T10:20:00Z',summary:{total:1,correct:0,incorrect:1,pending:0},selection:{kind:'unit',bookId:'book',unitId:'first'}})];
+  render(<MemoryRouter><VocabularyHistoryPage /></MemoryRouter>);
+  const row = screen.getByRole('link', {name:/Dictation.*Travel/});
+  expect(within(row).getByText('0 correct · 1 incorrect')).toBeInTheDocument();
+  expect(row.querySelector('time')).toHaveAttribute('dateTime','2026-10-12T10:20:00Z');
+  expect(row).toHaveAttribute('href','/vocabulary/history/session');
+});
+
 test("pending source hierarchy retains loading failure and never claims zero-word completion", async () => {
   Object.assign(VOCABULARY_CATALOG, { books: [{ id: "book", title: "IELTS source book", contentStatus: "starter" }], units: [{ id: "group", bookId: "book", title: "Group 1", totalSourceWords: 100, contentStatus: "pending" }], memberships: [] });
   fb.current.loadVocabularyCatalog = vi.fn(async () => false);
   showBook();
   expect(await screen.findByText("100 source words | Content pending")).toBeInTheDocument();
   expect(screen.queryByText("Studied 0/0")).not.toBeInTheDocument();
-  expect(screen.queryByRole("link", { name: /Study group/ })).not.toBeInTheDocument();
+  expect(screen.queryByRole("link", { name: /Learn words/ })).not.toBeInTheDocument();
   expect(await screen.findByRole("button", { name: "Retry catalog" })).toBeInTheDocument();
 });
 
 test("book continue selects first source group and chapter counts deduplicate descendants", () => {
   fixture(); showBook();
-  expect(screen.getByRole("link", { name: /Start first group/ })).toHaveAttribute("href", "/vocabulary/study?bookId=book&unitId=first&dueOnly=false");
+  expect(screen.getByRole("link", { name: /Start first group/ })).toHaveAttribute("href", "/vocabulary/wordbooks/book/groups/first/learn");
   const chapter = screen.getByText("Travel").closest("details")!;
   expect(within(chapter).getByText("3 words · 0/2 groups studied")).toBeInTheDocument();
-  expect(screen.getAllByRole("link", { name: /Study group/ }).map(link => link.getAttribute("href"))).toEqual([
-    "/vocabulary/study?bookId=book&unitId=first&dueOnly=false", "/vocabulary/study?bookId=book&unitId=later&dueOnly=false",
+  expect(screen.getAllByRole("link", { name: /Learn words/ }).map(link => link.getAttribute("href"))).toEqual([
+    "/vocabulary/wordbooks/book/groups/first/learn", "/vocabulary/wordbooks/book/groups/later/learn",
   ]);
   expect(within(chapter).getAllByText("IELTS source book / Travel / Group 1")).toHaveLength(2);
 });
@@ -66,10 +76,10 @@ test("whole persisted attempts advance continue while imported per-word progress
   fb.current.state.wordbookProgress = [{ bookId: "book", unitId: "first", status: "completed", completedEntryIds: ["one", "two"] }];
   fb.current.state.vocabularySessions = [submitted(["one"])];
   const view = showBook();
-  expect(screen.getByRole("link", { name: /Start first group/ })).toHaveAttribute("href", expect.stringContaining("unitId=first"));
+  expect(screen.getByRole("link", { name: /Start first group/ })).toHaveAttribute("href", expect.stringContaining("/groups/first/learn"));
   fb.current.state.vocabularySessions = [submitted(["one", "two"])];
   view.rerender(<MemoryRouter initialEntries={["/vocabulary/wordbooks?bookId=book"]}><VocabularyWordbooksPage /></MemoryRouter>);
-  expect(screen.getByRole("link", { name: /Continue study/ })).toHaveAttribute("href", expect.stringContaining("unitId=later"));
+  expect(screen.getByRole("link", { name: /Continue study/ })).toHaveAttribute("href", expect.stringContaining("/groups/later/learn"));
   expect(screen.getByText("3 words · 1/2 groups studied")).toBeInTheDocument();
 });
 
@@ -77,7 +87,7 @@ test("blank answers and audio listening do not complete an assessed study group"
   fixture();
   fb.current.state.vocabularySessions = [submitted(["one", "two"], { results: [{ entryId: "one", response: "one" }, { entryId: "two", response: "" }] }), submitted(["one", "two"], { mode: "audio" })];
   showBook();
-  expect(screen.getByRole("link", { name: /Start first group/ })).toHaveAttribute("href", expect.stringContaining("unitId=first"));
+  expect(screen.getByRole("link", { name: /Start first group/ })).toHaveAttribute("href", expect.stringContaining("/groups/first/learn"));
 });
 
 test("overview provides separate wordbook study and vocabulary review entry routes", () => {
@@ -100,7 +110,7 @@ test("explicit unit sessions count answered production without treating pending 
   fixture();
   fb.current.state.vocabularySessions = [submitted(["one", "two"], { mode: "production", filter: {}, selection: { kind: "unit", bookId: "book", unitId: "first" }, results: [{ entryId: "one", response: "A sentence.", result: "pending" }, { entryId: "two", response: "Another sentence.", result: "pending" }] })];
   showBook();
-  expect(screen.getByRole("link", { name: /Continue study/ })).toHaveAttribute("href", expect.stringContaining("unitId=later"));
+  expect(screen.getByRole("link", { name: /Continue study/ })).toHaveAttribute("href", expect.stringContaining("/groups/later/learn"));
 });
 
 test("entry details omit raw source context and retain review history", async () => {
@@ -111,7 +121,7 @@ test("entry details omit raw source context and retain review history", async ()
   expect(screen.getByRole("link", { name: /Practise this word/ })).toHaveAttribute("href", "/vocabulary/review?entryId=one&dueOnly=false&returnTo=%2Fvocabulary%2Fentry%2Fone&senseId=sense");
   expect(screen.queryByText("Source context")).not.toBeInTheDocument();
   expect(screen.queryByText("A source passage.")).not.toBeInTheDocument();
-  expect(screen.getByText("Review history").closest("details")).not.toHaveAttribute("open");
+  expect(screen.getByText("Learning history (0)").closest("details")).not.toHaveAttribute("open");
   await screen.findByText("No additional dictionary senses available.");
   fetchStub.mockRestore();
 });
@@ -159,7 +169,7 @@ test("archived state overrides catalog words so a complete remaining group advan
   fb.current.state.vocabulary[0].tags = ["archived"];
   fb.current.state.vocabularySessions = [submitted(["two"])];
   showBook();
-  expect(screen.getByRole("link", { name: /Continue study/ })).toHaveAttribute("href", expect.stringContaining("unitId=later"));
+  expect(screen.getByRole("link", { name: /Continue study/ })).toHaveAttribute("href", expect.stringContaining("/groups/later/learn"));
   expect(screen.getByText("1 archived word excluded from study")).toBeInTheDocument();
   expect(screen.getByText("3 words · 1/2 groups studied")).toBeInTheDocument();
   cleanup();
@@ -173,9 +183,9 @@ test("entirely archived groups are excluded from continue rather than marked stu
   fb.current.state.vocabulary[1].tags = ["archived"];
   fb.current.state.vocabularySessions = [submitted(["one", "two"])];
   showBook();
-  expect(screen.getByRole("link", { name: /Start first group/ })).toHaveAttribute("href", expect.stringContaining("unitId=later"));
+  expect(screen.getByRole("link", { name: /Start first group/ })).toHaveAttribute("href", expect.stringContaining("/groups/later/learn"));
   expect(screen.getByText("2 words · Archived · Excluded from study")).toBeInTheDocument();
-  expect(screen.getAllByRole("link", { name: /Study group/ })).toHaveLength(1);
+  expect(screen.getAllByRole("link", { name: /Learn words/ })).toHaveLength(1);
   expect(screen.getByText("0/1 available groups studied")).toBeInTheDocument();
 });
 
@@ -186,11 +196,11 @@ test("catalog archived fallback is excluded but mode-ineligible nonarchived word
   fb.current.state.vocabulary = fb.current.state.vocabulary.slice(1);
   fb.current.state.vocabularySessions = [submitted(["two"])];
   const view = showBook();
-  expect(screen.getByRole("link", { name: /Continue study/ })).toHaveAttribute("href", expect.stringContaining("unitId=later"));
+  expect(screen.getByRole("link", { name: /Continue study/ })).toHaveAttribute("href", expect.stringContaining("/groups/later/learn"));
   // Restoring a nonarchived word with no task for the selected mode must not silently complete it.
   fb.current.state.vocabulary.push({ ...VOCABULARY_CATALOG.entries[0], tags: [], senses: [] });
   view.rerender(<MemoryRouter initialEntries={["/vocabulary/wordbooks?bookId=book"]}><VocabularyWordbooksPage /></MemoryRouter>);
-  expect(screen.getByRole("link", { name: /Start first group/ })).toHaveAttribute("href", expect.stringContaining("unitId=first"));
+  expect(screen.getByRole("link", { name: /Start first group/ })).toHaveAttribute("href", expect.stringContaining("/groups/first/learn"));
 });
 
 test("an all-archived book has no study continuation or vacuous completion claim", () => {
@@ -205,7 +215,7 @@ test("an all-archived book has no study continuation or vacuous completion claim
 
 test("reliable historical zero-grade group advances continue", () => {
   fixture(); fb.current.state.wordbookProgress = [{bookId:'book',unitId:'first',sourceRecord:{id:'attempt',correct_rate:'0',book_hierarchy_id:'first'}}];
-  showBook(); expect(screen.getByRole('link',{name:/Continue study/})).toHaveAttribute('href',expect.stringContaining('unitId=later'));
+  showBook(); expect(screen.getByRole('link',{name:/Continue study/})).toHaveAttribute('href',expect.stringContaining('/groups/later/learn'));
 });
 test("my words restores searchable route filters without overview entryways", () => {
   fixture(); render(<MemoryRouter initialEntries={['/vocabulary/words?search=one']}><VocabularyWordsPage /></MemoryRouter>);

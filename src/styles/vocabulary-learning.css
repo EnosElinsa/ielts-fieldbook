@@ -1,0 +1,41 @@
+.vocabulary-learning-heading { margin: 18px 0 22px; }
+.vocabulary-learning-heading h2 { margin: 0; }
+.vocabulary-learning-heading > p:not(.vocabulary-group-path) { color: var(--muted); max-width: 68ch; margin: 10px 0; }
+.vocabulary-group-learning-progress { display: flex; gap: 6px 20px; flex-wrap: wrap; font-size: 12px; margin-top: 14px; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 8px; }
+.vocabulary-group-learning-progress span { padding: 2px 0; }
+.vocabulary-learning-batches { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; font-size: 13px; }
+.vocabulary-learning-batches > div { display: flex; gap: 6px; flex-wrap: wrap; }
+.vocabulary-learning-batches .btn { min-width: 40px; min-height: 40px; padding: 8px; }
+.vocabulary-learning-batches [aria-current="true"] { background: var(--blue); color: white; border-color: var(--blue); }
+.vocabulary-learning-card { max-width: 860px; margin: 0 auto; padding: 28px; border: 1px solid var(--rule); border-radius: 12px; background: var(--sheet); overflow-wrap: anywhere; }
+.vocabulary-learning-card h3 { margin: 16px 0 10px; font-size: clamp(27px, 4vw, 38px); line-height: 1.2; }
+.vocabulary-learning-card h4 { margin: 0 0 8px; font-size: 12px; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
+.vocabulary-learning-definition { margin: 24px 0 10px; }
+.vocabulary-learning-definition small { color: var(--muted); }
+.vocabulary-learning-definition p { font-size: 19px; line-height: 1.6; margin: 6px 0; }
+.vocabulary-learning-provenance { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+.vocabulary-learning-provenance summary { cursor: pointer; width: fit-content; padding: 4px 0; }
+.vocabulary-learning-provenance p { max-width: 65ch; }
+.vocabulary-learning-example { border-left: 3px solid var(--blue); padding: 4px 16px; margin: 20px 0; }
+.vocabulary-learning-example p { margin: 0; line-height: 1.65; }
+.vocabulary-learning-collocations { margin: 20px 0; }
+.vocabulary-learning-collocations ul { margin: 0; padding-left: 20px; line-height: 1.7; }
+.vocabulary-learning-controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 20px 0 8px; }
+.vocabulary-learning-controls .btn { min-height: 44px; }
+.vocabulary-learning-save-status { text-align: center; min-height: 24px; font-size: 12px; color: var(--muted); }
+.vocabulary-learning-save-error { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin: 14px 0; padding: 12px; border: 1px solid var(--rule); border-radius: 8px; }
+.vocabulary-learning-assessments { border-top: 1px solid var(--rule); margin-top: 28px; padding-top: 20px; }
+.vocabulary-learning-assessments h3 { margin: 0 0 8px; }
+.vocabulary-learning-assessments p { color: var(--muted); font-size: 13px; }
+.vocabulary-learning-assessments .actions { flex-wrap: wrap; }
+@media (max-width: 600px) {
+  .vocabulary-learning-heading { margin-top: 12px; }
+  .vocabulary-learning-heading .page-tools { gap: 10px; }
+  .vocabulary-learning-card { padding: 18px; }
+  .vocabulary-learning-definition { margin-top: 18px; }
+  .vocabulary-learning-definition p { font-size: 17px; }
+  .vocabulary-learning-controls { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+  .vocabulary-learning-controls .btn { justify-content: center; white-space: normal; }
+  .vocabulary-learning-controls .primary { grid-column: 1 / -1; grid-row: 1; }
+  .vocabulary-group-learning-progress { gap: 4px 14px; }
+}

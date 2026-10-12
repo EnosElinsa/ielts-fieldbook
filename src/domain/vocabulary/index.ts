@@ -1,5 +1,8 @@
 import { learningTask } from './content';
 import { resolveVocabularyLearningContext } from './context';
+import { vocabularyStatusSource } from './mastery';
+export { getVocabularyMastery, vocabularyStatusSource } from './mastery';
+export type { VocabularyMastery } from './mastery';
 export { resolveVocabularyLearningContext, VOCABULARY_CONTEXT_VERSION } from './context';
 export type { VocabularyLearningContext, VocabularyContextRequest, ResolvedVocabularyLearningContext } from './context';
 import { createEmptyCard, fsrs, Rating } from 'ts-fsrs';
@@ -32,7 +35,7 @@ function ensureLearning(state: VocabularyStore, entry: VocabularyEntry, senseId?
   const existing = state.vocabularyStates.find(item => item.entryId === entry.id && item.senseId === sense.id);
   if (existing) return existing;
   const learning: VocabularyState = {
-    id: `vs-${hashText(`${entry.id}:${sense.id}`)}`, entryId: entry.id, senseId: sense.id, manualStatus: 'new',
+    id: `vs-${hashText(`${entry.id}:${sense.id}`)}`, entryId: entry.id, senseId: sense.id, manualStatus: 'new', statusSource: 'automatic',
     dimensions: { meaning: freshDimension(), listening: freshDimension(), spelling: freshDimension(), usage: freshDimension() },
     cards: {}, wrong: { active: false, successesSinceFailure: 0, modes: {} }, reviewCount: 0, updatedAt: nowIso(),
   };
@@ -139,9 +142,12 @@ export function removeVocabularyItem(state: VocabularyStore, entryId: string) {
   entry.tags = [...new Set(entry.tags.concat('archived'))]; entry.updatedAt = nowIso(); return true;
 }
 
-export function setVocabularyManualStatus(state: VocabularyStore, entryId: string, status: VocabularyStatus, senseId?: string) {
-  const entry = state.vocabulary.find(item => item.id === entryId); if (!entry || !VOCABULARY_STATUSES.includes(status)) return null;
-  const learning = ensureLearning(state, entry, senseId); learning.manualStatus = status; learning.updatedAt = nowIso(); return learning;
+export function setVocabularyManualStatus(state: VocabularyStore, entryId: string, status: VocabularyStatus | 'automatic', senseId?: string) {
+  const entry = state.vocabulary.find(item => item.id === entryId); if (!entry || (status !== 'automatic' && !VOCABULARY_STATUSES.includes(status))) return null;
+  const learning = ensureLearning(state, entry, senseId);
+  learning.statusSource = status === 'automatic' ? 'automatic' : 'manual';
+  if (status !== 'automatic') learning.manualStatus = status;
+  learning.updatedAt = nowIso(); return learning;
 }
 
 export function deriveVocabularyStatus(state: VocabularyState): VocabularyStatus {
@@ -328,6 +334,7 @@ export function normalizeVocabularyCollections(source: Partial<VocabularyStore>)
     data.vocabulary.forEach(entry=>entry.senses.forEach(sense=>{
       const existing=prior.get(`${entry.id}:${sense.id}`);
       data.vocabularyStates.push({id:existing?.id||`vs-${hashText(`${entry.id}:${sense.id}`)}`,entryId:entry.id,senseId:sense.id,manualStatus:existing?.manualStatus||'new',dimensions:Object.fromEntries(VOCABULARY_DIMENSIONS.map(d=>[d,{...freshDimension(),...existing?.dimensions?.[d]}])) as VocabularyState['dimensions'],cards:existing?.cards||{},wrong:Object.assign({active:false,successesSinceFailure:0,modes:{}},existing?.wrong),reviewCount:existing?.reviewCount||0,updatedAt:existing?.updatedAt||entry.updatedAt||nowIso(),...existing});
+      data.vocabularyStates[data.vocabularyStates.length - 1].statusSource = vocabularyStatusSource(existing);
     }));
     data.vocabularyEvidence=data.vocabularyEvidence.map(event=>({...event,response:english(event.response),context:english(event.context)}));
     data.vocabularyReviews=data.vocabularyReviews.map(review=>({...review,response:english(review.response)}));
@@ -342,6 +349,7 @@ export function normalizeVocabularyCollections(source: Partial<VocabularyStore>)
       const existing = states.find(s => s.entryId === entry.id && s.senseId === sense.id); if (!existing) return;
       const current = ensureLearning(data, result.item!, sense.id);
       Object.assign(current, existing, { entryId: result.item!.id });
+      current.statusSource = vocabularyStatusSource(existing);
       current.dimensions = Object.fromEntries(VOCABULARY_DIMENSIONS.map(dimension => [dimension, { ...freshDimension(), ...existing.dimensions?.[dimension] }])) as VocabularyState['dimensions'];
       current.cards = existing.cards || {}; current.wrong = Object.assign({ active: false, successesSinceFailure: 0, modes: {} }, existing.wrong);
     });
@@ -359,6 +367,7 @@ export function migrateLegacyVocabulary(source: Partial<VocabularyStore> & { lex
     if (learning.legacyProgress) return;
     learning.reviewCount = Math.max(learning.reviewCount, Number(old.reviewCount || 0));
     learning.manualStatus = old.status === 'mastered' ? 'familiar' : old.status === 'learning' ? 'unstable' : 'new';
+    learning.statusSource = learning.manualStatus === 'new' ? 'automatic' : 'manual';
     learning.nextReviewAt = old.nextReviewAt ? validTime(old.nextReviewAt) : undefined;
     learning.lastReviewedAt = old.lastReviewedAt ? validTime(old.lastReviewedAt) : undefined;
     learning.legacyProgress = { reviewCount: Number(old.reviewCount || 0), status: english(old.status), nextReviewAt: learning.nextReviewAt, lastReviewedAt: learning.lastReviewedAt };

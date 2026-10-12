@@ -9,6 +9,7 @@ import { useFieldbook } from "../../context/FieldbookContext";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { resolveVocabularyLearningContext } from "../../domain/vocabulary/context";
 import { getLearnedVocabularyIds } from "../../domain/vocabulary/progress";
+import { getVocabularyMastery } from "../../domain/vocabulary/mastery";
 import type { VocabularyStore } from "../../domain/vocabulary/types";
 import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
 import { VocabularyNavigation } from "./VocabularyPages";
@@ -75,7 +76,7 @@ export function VocabularyGroupWordsPage() {
     Math.max(0, Math.floor(Number(params.get("page")) || 0)),
   );
   const shown = filtered.slice(page * 50, page * 50 + 50);
-  const learned = getLearnedVocabularyIds(state);
+  const learned = getLearnedVocabularyIds({ ...state, vocabularyStates: [] });
   const preferences = normalizeVocabularyPreferences(
     state.settings?.vocabulary,
   );
@@ -121,15 +122,10 @@ export function VocabularyGroupWordsPage() {
                 {words.length} unique words · Original source order
               </p>
             </div>
-            {words.some((row) => !row.entry.tags.includes("archived")) ? (
-              <Link
-                className="btn primary"
-                to={`/vocabulary/study?bookId=${encodeURIComponent(bookId)}&unitId=${encodeURIComponent(unitId)}&dueOnly=false`}
-              >
-                Study group
-                <ArrowRight size={16} />
-              </Link>
-            ) : null}
+            {words.some((row) => !row.entry.tags.includes("archived")) ? <div className="actions">
+              <Link className="btn primary" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}/groups/${encodeURIComponent(unitId)}/learn`}>Learn words <ArrowRight size={16} /></Link>
+              <Link className="btn line" to={`/vocabulary/study?bookId=${encodeURIComponent(bookId)}&unitId=${encodeURIComponent(unitId)}&dueOnly=false`}>Start assessment <ArrowRight size={16} /></Link>
+            </div> : null}
           </div>
           {rows.length > words.length ? (
             <p role="status">
@@ -163,12 +159,8 @@ export function VocabularyGroupWordsPage() {
             {shown.map((row) => {
               const focus = `group-word-${row.entry.id}`;
               const archived = row.entry.tags.includes("archived");
-              const familiarity =
-                state.vocabularyStates?.find(
-                  (item) =>
-                    item.entryId === row.entry.id &&
-                    item.senseId === row.resolved.sense?.id,
-                )?.manualStatus || "new";
+              const mastery = getVocabularyMastery(state, row.entry.id, row.resolved.sense?.id);
+              const familiarity = mastery.effective;
               const url = entryUrl(
                 row.entry.id,
                 { bookId, unitId, senseId: row.resolved.sense?.id },
@@ -212,10 +204,10 @@ export function VocabularyGroupWordsPage() {
                       {archived
                         ? "Archived"
                         : learned.has(row.entry.id)
-                          ? "Learned"
+                          ? "Assessed"
                           : "Not started"}
                     </span>
-                    <small>Familiarity: {familiarity}</small>
+                    <small>Mastery: {familiarity}{mastery.manual ? " · Manual" : ""}</small>
                   </div>
                   <div role="cell">
                     <Link

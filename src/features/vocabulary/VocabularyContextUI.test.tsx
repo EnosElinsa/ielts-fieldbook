@@ -134,7 +134,9 @@ test("group browsing works before enrollment, deduplicates source order, include
       "Archived",
     ),
   ).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /Study group/ })).toHaveAttribute(
+  expect(
+    screen.getByRole("link", { name: /Start assessment/ }),
+  ).toHaveAttribute(
     "href",
     `/vocabulary/study?bookId=${encodeURIComponent(book)}&unitId=21795&dueOnly=false`,
   );
@@ -159,7 +161,9 @@ test("235-group search and 50 pagination preserve original indexes and full stud
   expect(screen.getByLabelText("Current route")).not.toHaveTextContent(
     "page=4",
   );
-  expect(screen.getByRole("link", { name: /Study group/ })).toHaveAttribute(
+  expect(
+    screen.getByRole("link", { name: /Start assessment/ }),
+  ).toHaveAttribute(
     "href",
     "/vocabulary/study?bookId=guixue%3A11320&unitId=35028&dueOnly=false",
   );
@@ -209,9 +213,7 @@ test("detail uses distinct confirmed core group content, one bottom credits coll
 test("unconfirmed group keeps common meaning heading and explicit confirmation note", async () => {
   const raw = release.entries.find((entry: any) => entry.term === "cashier");
   mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A11320&unitId=35003`);
-  await screen.findByText(
-    "Group meaning not confirmed. This is the current common meaning.",
-  );
+  await screen.findByText("General dictionary meaning");
   expect(
     screen.getByRole("heading", { name: "Common meaning" }),
   ).toBeInTheDocument();
@@ -455,7 +457,7 @@ test("raw evidence without a review retains response, verification, result and d
   ];
   const before = JSON.stringify(mocks.fb.state);
   mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840`);
-  const history = screen.getByText("Review history").closest("details")!;
+  const history = screen.getByText(/Learning history \(/).closest("details")!;
   expect(history).not.toHaveAttribute("open");
   const historyView = within(history);
   expect(
@@ -465,7 +467,7 @@ test("raw evidence without a review retains response, verification, result and d
     historyView.getByText("Verification: Self-reported"),
   ).toBeInTheDocument();
   expect(historyView.getAllByText("Result: Pending")).toHaveLength(2);
-  expect(historyView.getByText("10/10/2026")).toBeInTheDocument();
+  expect(historyView.getByText(/10\/10\/2026/)).toBeInTheDocument();
   expect(
     historyView.getByText("My earlier meaning answer."),
   ).toBeInTheDocument();
@@ -475,21 +477,11 @@ test("raw evidence without a review retains response, verification, result and d
   expect(
     historyView.queryByText("An unrelated response."),
   ).not.toBeInTheDocument();
-  const mainSense = screen
-    .getByRole("heading", { name: "Meaning in this group" })
-    .closest("section")!;
-  const meaningEvidence = within(mainSense)
-    .getByText("Learning evidence for this meaning")
-    .closest("details")!;
-  expect(meaningEvidence).not.toHaveAttribute("open");
   expect(
-    within(meaningEvidence).getByText("I removed the core from the apple."),
-  ).toBeInTheDocument();
+    screen.getAllByText("I removed the core from the apple."),
+  ).toHaveLength(1);
   expect(
-    within(meaningEvidence).queryByText("My earlier meaning answer."),
-  ).not.toBeInTheDocument();
-  expect(
-    within(meaningEvidence).queryByText("A saved entry-level response."),
+    screen.queryByText("Learning evidence for this meaning"),
   ).not.toBeInTheDocument();
   expect(JSON.stringify(mocks.fb.state)).toBe(before);
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();
@@ -578,16 +570,15 @@ test("failed familiarity saving remains distinct from evidence and allows retry 
   expect(
     screen.queryByText("Familiarity could not be saved. Try again."),
   ).not.toBeInTheDocument();
-  await user.click(
+  expect(
     screen.getByRole("button", { name: "Familiarity for this meaning" }),
-  );
-  await user.click(screen.getByRole("option", { name: "Mastered" }));
+  ).toBeDisabled();
   expect(mocks.fb.persistNow).toHaveBeenCalledTimes(1);
   finishSave(false);
   expect(await screen.findByRole("alert")).toHaveTextContent(
     "Familiarity could not be saved. Try again.",
   );
-  const history = screen.getByText("Review history").closest("details")!;
+  const history = screen.getByText(/Learning history \(/).closest("details")!;
   expect(
     within(history).getByText("A previously submitted response."),
   ).toBeInTheDocument();
@@ -634,4 +625,104 @@ test("a deliberate familiarity save targets the displayed new stable sense witho
     ),
   ).toBe(true);
   expect(saved.vocabularyReviews).toHaveLength(0);
+});
+
+test("source switching removes the old requested sense and preserves the list return", async () => {
+  const raw = structuredClone(core());
+  mount(
+    `/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840&senseId=editorial%3Acore%3Afruit-centre&returnTo=%2Fvocabulary%3Fsearch%3Dcore`,
+  );
+  const sources = screen.getByRole("region", { name: "Wordbook sources" });
+  const links = within(sources).getAllByRole("link");
+  expect(links.length).toBeGreaterThan(1);
+  const target = links.find(
+    (link) =>
+      new URL(link.getAttribute("href")!, "https://test.test").searchParams.get(
+        "unitId",
+      ) === "21795",
+  )!;
+  const next = new URL(target.getAttribute("href")!, "https://test.test");
+  expect(next.searchParams.has("senseId")).toBe(false);
+  expect(next.searchParams.get("returnTo")).toBe("/vocabulary?search=core");
+  await userEvent.setup().click(target);
+  expect(
+    screen.getByRole("link", { name: "Back to vocabulary" }),
+  ).toHaveAttribute("href", "/vocabulary?search=core");
+  expect(
+    screen
+      .getByRole("heading", { name: "Meaning in this group" })
+      .closest("section"),
+  ).not.toHaveTextContent("The hard central part of a fruit");
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test("automatic mastery and manual override are distinct, restoring automatic only changes preference", async () => {
+  const raw = structuredClone(core());
+  mocks.fb.state.vocabulary = [raw];
+  mocks.fb.state.vocabularyStates = [
+    {
+      id: "state",
+      entryId: raw.id,
+      senseId: "editorial:core:fruit-centre",
+      statusSource: "manual",
+      manualStatus: "mastered",
+      dimensions: {},
+      cards: {},
+      wrong: { active: false, successesSinceFailure: 0, modes: {} },
+      reviewCount: 0,
+      updatedAt: raw.updatedAt,
+    },
+  ];
+  mocks.fb.persistNow.mockResolvedValue(true);
+  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840`);
+  expect(screen.getByText("System estimate: New")).toBeInTheDocument();
+  expect(screen.getByText("Manual")).toBeInTheDocument();
+  const before = JSON.stringify(mocks.fb.state);
+  await userEvent
+    .setup()
+    .click(screen.getByRole("button", { name: "Use automatic" }));
+  const draft = mocks.fb.persistNow.mock.calls[0][0];
+  expect(
+    draft.vocabularyStates.find(
+      (row: any) => row.senseId === "editorial:core:fruit-centre",
+    ).statusSource,
+  ).toBe("automatic");
+  expect(draft.vocabularyReviews).toEqual([]);
+  expect(draft.vocabularyEvidence).toEqual([]);
+  expect(JSON.stringify(mocks.fb.state)).toBe(before);
+});
+
+test("one linked dictation event appears once with both dimensions and truthful historical failure", () => {
+  const raw = structuredClone(core());
+  raw.term = "colour";
+  mocks.fb.state.vocabulary = [raw];
+  const review = {
+    id: "event",
+    entryId: raw.id,
+    senseId: raw.senses[0].id,
+    mode: "dictation",
+    result: "failure",
+    response: "color",
+    occurredAt: "2026-10-10T10:00:00Z",
+    updatedAt: "2026-10-10T10:00:00Z",
+  };
+  mocks.fb.state.vocabularyReviews = [review];
+  mocks.fb.state.vocabularyEvidence = ["listening", "spelling"].map(
+    (dimension) => ({
+      ...review,
+      id: `event:${dimension}`,
+      dimension,
+      sourceType: "personal",
+      sourceId: "event",
+      verification: "objective",
+    }),
+  );
+  mount(`/vocabulary/entry/${raw.id}`);
+  expect(screen.getAllByText("color")).toHaveLength(1);
+  expect(screen.getByText("Listening + Spelling")).toBeInTheDocument();
+  expect(screen.getByText("Result: Failure")).toBeInTheDocument();
+  expect(
+    screen.getByText(/historical result remains Failure/),
+  ).toBeInTheDocument();
+  expect(screen.getByText(/Learning history \(1\)/)).toBeInTheDocument();
 });

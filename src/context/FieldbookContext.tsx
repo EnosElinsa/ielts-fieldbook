@@ -48,7 +48,7 @@ import { downloadFile, hydrateState, loadState, saveState, saveVocabularyImport,
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { genericWordbook } from '../domain/vocabulary/wordbookNames';
 import { resolveRegionalSpellingWrongWords } from '../domain/vocabulary/regionalWrongWords';
-import { vocabularyLists } from '../domain/vocabulary';
+import { vocabularyLists, setVocabularyManualStatus, normalizeAnswer } from '../domain/vocabulary';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
 import { ensurePlans, inferredDeskMode } from '../lib/planTemplates';
@@ -124,6 +124,7 @@ function useFieldbookValue() {
   const [vocabularyCatalogRevision, setVocabularyCatalogRevision] = useState(0);
   const vocabularyCatalogReads = useRef(new Map());
   const committedVocabularyImports = useRef([]);
+  const committedVocabularyFields = useRef([]);
   const committedVocabularyPreferences = useRef([]);
   const committedStudySettings = useRef([]);
   const saveQueue = useRef(Promise.resolve());
@@ -191,6 +192,7 @@ function useFieldbookValue() {
   );
 
   function applyCommittedVocabulary(target, owner) {
+    committedVocabularyFields.current.filter(change => change.owner === owner).forEach(change => applyVocabularyFields(target, change));
     committedStudySettings.current.filter(change => change.owner === owner).forEach(change => {
       let staleSettings = false;
       Object.entries(change.after).forEach(([key, value]) => {
@@ -210,6 +212,105 @@ function useFieldbookValue() {
       else if (JSON.stringify(rows[index]) === change.before) rows[index] = structuredClone(change.after);
     });
   }
+
+  function applyVocabularyFields(target, change) {
+    const rows = target[change.key] || (target[change.key] = []);
+    let row = rows.find(item => item.id === change.id || change.key === 'wordbookProgress' && item.bookId === change.seed.bookId && item.unitId === change.seed.unitId);
+    if (!row) { row = structuredClone(change.seed); rows.push(row); }
+    Object.entries(change.after).forEach(([field, value]) => {
+      if (change.key === 'vocabulary' && ['senses','sources'].includes(field)) {
+        const identity = item => field === 'senses' ? item.id : JSON.stringify([item.type,item.id,item.senseId]);
+        const before = JSON.parse(change.before[field] || '[]');
+        const prior = new Map(before.map(item=>[identity(item),JSON.stringify(item)]));
+        const current = row[field] || (row[field] = []);
+        value.forEach(item => {
+          const id = identity(item); const index = current.findIndex(existing=>identity(existing)===id);
+          if (index < 0) current.push(structuredClone(item));
+          else if (JSON.stringify(current[index]) === prior.get(id)) current[index] = structuredClone(item);
+        });
+        return;
+      }
+      if (JSON.stringify(row[field]) === change.before[field]) row[field] = structuredClone(value);
+    });
+  }
+
+  // Save targeted vocabulary fields without optimistic mutation. Queue execution
+  // starts from the latest state; successful fields also survive older autosaves.
+  const commitVocabularyFields = useCallback((prepare) => {
+    const owner = accountId();
+    const generation = ++saveGeneration.current;
+    setSaveStatus('saving');
+    const operation = saveQueue.current.catch(() => {}).then(async () => {
+      if (!alive.current || accountId() !== owner || completingAttempt.current) return false;
+      const before = structuredClone(stateRef.current);
+      applyCommittedVocabulary(before, owner);
+      const next = structuredClone(before);
+      const targets = prepare(next);
+      if (!targets) { setSaveStatus('failed'); setSaveFailed(true); return false; }
+      const changes = targets.flatMap(({key,id,fields}) => {
+        const prior = before[key]?.find(row => row.id === id);
+        const after = next[key]?.find(row => row.id === id);
+        if (!after) return [];
+        return [{owner,key,id,seed:structuredClone(after),before:Object.fromEntries(fields.map(field=>[field,JSON.stringify(prior?.[field])])),after:Object.fromEntries(fields.map(field=>[field,structuredClone(after[field])]))}];
+      });
+      let saved = false;
+      try { saved = await saveState(next, toast); } catch { saved = false; }
+      if (!alive.current || accountId() !== owner) return false;
+      if (generation === saveGeneration.current) { setSaveFailed(!saved); setSaveStatus(saved ? 'saved' : 'failed'); }
+      if (saved) {
+        lastSaved.current = next;
+        committedVocabularyFields.current.push(...changes);
+        const current = structuredClone(stateRef.current);
+        applyCommittedVocabulary(current, owner);
+        stateRef.current = current; setState(current);
+      }
+      return saved;
+    });
+    saveQueue.current = operation;
+    return operation;
+  }, [toast]);
+
+  const saveVocabularyLearning = useCallback((bookId, unitId, learning) => {
+    const frozen = structuredClone(learning);
+    return commitVocabularyFields(next => {
+      let row = next.wordbookProgress.find(item => item.bookId === bookId && item.unitId === unitId);
+      if (!row) { row = {id:`learning:${JSON.stringify([bookId,unitId])}`,bookId,unitId,completedEntryIds:[],status:'in_progress',updatedAt:frozen.updatedAt}; next.wordbookProgress.push(row); }
+      row.learning = frozen; row.updatedAt = frozen.updatedAt;
+      return [{key:'wordbookProgress',id:row.id,fields:['learning','updatedAt']}];
+    });
+  }, [commitVocabularyFields]);
+
+  const saveVocabularyStatus = useCallback((entryId, senseId, status, sourceEntry) => commitVocabularyFields(next => {
+    const stored = sourceEntry ? addVocabularyItem(next, sourceEntry).item : next.vocabulary.find(row=>row.id===entryId);
+    const requestedSense = sourceEntry?.senses.find(sense=>sense.id===senseId);
+    const canonicalSense = stored?.senses.find(sense=>sense.id===senseId) || (requestedSense && stored?.senses.find(sense=>normalizeAnswer(sense.definition)===normalizeAnswer(requestedSense.definition) && normalizeAnswer(sense.pos)===normalizeAnswer(requestedSense.pos)));
+    if (!stored || !canonicalSense) return null;
+    const learning = setVocabularyManualStatus(next, stored.id, status, canonicalSense.id);
+    if (!learning) return null;
+    const targets = [{key:'vocabularyStates',id:learning.id,fields:['manualStatus','statusSource','updatedAt']}];
+    if (sourceEntry) targets.push({key:'vocabulary',id:stored.id,fields:['senses','sources','updatedAt']});
+    return targets;
+  }), [commitVocabularyFields]);
+
+  const saveVocabularyEntry = useCallback(input => {
+    const frozen = structuredClone(input);
+    return commitVocabularyFields(next => {
+      const result = addVocabularyItem(next, frozen);
+      if (!result.item) return null;
+      return [{key:'vocabulary',id:result.item.id,fields:['senses','sources','updatedAt']}, ...next.vocabularyStates.filter(row=>row.entryId===result.item.id).map(row=>({key:'vocabularyStates',id:row.id,fields:[]}))];
+    });
+  }, [commitVocabularyFields]);
+
+  const saveVocabularyStatuses = useCallback((ids, status) => {
+    const selected = [...ids];
+    return commitVocabularyFields(next => selected.flatMap(id => {
+      const entry = next.vocabulary.find(item => item.id === id);
+      return (entry?.senses || []).flatMap(sense => {
+        const learning = setVocabularyManualStatus(next, id, status, sense.id);
+        return learning ? [{key:'vocabularyStates',id:learning.id,fields:['manualStatus','statusSource','updatedAt']}] : [];
+      });
+    }));
+  }, [commitVocabularyFields]);
 
   function applyStudyPlans(target, change, staleSettings) {
     let stalePlans = false;
@@ -1020,6 +1121,10 @@ function useFieldbookValue() {
       dueVocabulary,
       persistVocabularyImport,
       persistVocabularySession,
+      saveVocabularyLearning,
+      saveVocabularyStatus,
+      saveVocabularyEntry,
+      saveVocabularyStatuses,
       saveVocabularyPreferences,
       saveStudySettings,
       loadVocabularyCatalog,

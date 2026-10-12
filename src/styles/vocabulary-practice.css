@@ -712,6 +712,19 @@
 .practice-cell-label { display: block; margin-bottom: 7px; font-size: 9px; font-weight: 600; color: var(--muted); }
 .practice-answer-difference { background: var(--soft-red); color: var(--ink); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
 .practice-result-explanation { display: block; margin-top: 7px; color: var(--muted); line-height: 1.5; }
+.practice-results .practice-results-actions { flex-wrap: wrap; gap: 9px; }
+@media (max-width: 600px) {
+  .practice-results .practice-results-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .practice-results .practice-results-actions .btn {
+    min-width: 0;
+    min-height: 44px;
+    justify-content: center;
+    white-space: normal;
+  }
+}
 .practice-results tbody th > a {
   font-size: 14px;
   color: var(--ink);
@@ -791,12 +804,12 @@
   letter-spacing: -0.04em;
   margin: 0;
 }
-.practice-preferences fieldset {
+.practice-preferences > fieldset {
   margin: 0 0 24px;
   padding: 0;
   border: 0;
 }
-.practice-preferences legend {
+.practice-preferences > fieldset > legend {
   display: flex;
   align-items: center;
   gap: 7px;

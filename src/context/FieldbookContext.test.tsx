@@ -321,6 +321,76 @@ test('a failed session commit keeps live learning unchanged and can retry the pr
   expect(mocks.saveVocabularySession.mock.calls[0][1]).toBe(mocks.saveVocabularySession.mock.calls[1][1]);
 });
 
+test('vocabulary browsing commits only after save and preserves assessment updates queued during saving', async () => {
+  mocks.initial.wordbookProgress=[{id:'progress',bookId:'book',unitId:'group',completedEntryIds:[],status:'in_progress',updatedAt:'2026-10-12'}];
+  await mount();
+  const learning={viewedEntryIds:['one'],currentEntryId:'two',updatedAt:'2026-10-12T10:00:00Z'};
+  mocks.saveState.mockResolvedValueOnce(false);
+  await act(async()=>{expect(await fieldbook.saveVocabularyLearning('book','group',learning)).toBe(false);});
+  expect(fieldbook.state.wordbookProgress[0].learning).toBeUndefined();
+  const pending=defer();mocks.saveState.mockImplementationOnce(()=>pending.promise);
+  let completion;
+  await act(async()=>{completion=fieldbook.saveVocabularyLearning('book','group',learning);await Promise.resolve();});
+  expect(fieldbook.state.wordbookProgress[0].learning).toBeUndefined();
+  await act(async()=>{fieldbook.persist(draft=>{draft.wordbookProgress[0].completedEntryIds=['assessed'];});await Promise.resolve();});
+  await act(async()=>{pending.resolve(true);await completion;});
+  await waitFor(()=>expect(mocks.saveState).toHaveBeenCalledTimes(3));
+  expect(fieldbook.state.wordbookProgress[0]).toMatchObject({completedEntryIds:['assessed'],learning});
+  expect(mocks.saveState.mock.calls.at(-1)[0].wordbookProgress[0]).toMatchObject({completedEntryIds:['assessed'],learning});
+});
+
+test('manual mastery changes and dictionary additions stay unchanged on failed durable save', async () => {
+  const entry=addVocabularyItem(mocks.initial,{term:'field',meaning:'An open area.'}).item;
+  await mount();
+  mocks.saveState.mockResolvedValueOnce(false).mockResolvedValueOnce(true).mockResolvedValueOnce(false);
+  await act(async()=>{expect(await fieldbook.saveVocabularyStatus(entry.id,entry.senses[0].id,'mastered')).toBe(false);});
+  expect(fieldbook.state.vocabularyStates[0].manualStatus).toBe('new');
+  await act(async()=>{expect(await fieldbook.saveVocabularyStatus(entry.id,entry.senses[0].id,'mastered')).toBe(true);});
+  expect(fieldbook.state.vocabularyStates[0]).toMatchObject({manualStatus:'mastered',statusSource:'manual'});
+  await act(async()=>{expect(await fieldbook.saveVocabularyEntry({...entry,senses:[{...entry.senses[0],id:'other',definition:'A subject of study.'}]})).toBe(false);});
+  expect(fieldbook.state.vocabulary[0].senses).toHaveLength(1);
+});
+
+test('vocabulary learning save completion cannot update a different account', async()=>{
+  await mount();const pending=defer();mocks.saveState.mockImplementationOnce(()=>pending.promise);let completion;
+  await act(async()=>{completion=fieldbook.saveVocabularyLearning('book','group',{viewedEntryIds:['one'],updatedAt:'2026-10-12'});await Promise.resolve();});
+  mocks.owner='account-2';
+  await act(async()=>{pending.resolve(true);expect(await completion).toBe(false);});
+  expect(fieldbook.state.wordbookProgress).toHaveLength(0);
+});
+
+test('first browsing save merges with a concurrently created assessment progress row', async()=>{
+  await mount();const pending=defer();mocks.saveState.mockImplementationOnce(()=>pending.promise);let completion;
+  const learning={viewedEntryIds:['one'],updatedAt:'2026-10-12'};
+  await act(async()=>{completion=fieldbook.saveVocabularyLearning('book','group',learning);await Promise.resolve();});
+  await act(async()=>{fieldbook.persist(draft=>draft.wordbookProgress.push({id:'wp-assessment',bookId:'book',unitId:'group',completedEntryIds:['one'],status:'completed',updatedAt:'2026-10-12'}));await Promise.resolve();});
+  await act(async()=>{pending.resolve(true);await completion;});
+  await waitFor(()=>expect(mocks.saveState).toHaveBeenCalledTimes(2));
+  expect(fieldbook.state.wordbookProgress).toHaveLength(1);
+  expect(fieldbook.state.wordbookProgress[0]).toMatchObject({id:'wp-assessment',completedEntryIds:['one'],learning});
+  expect(mocks.saveState.mock.calls.at(-1)[0].wordbookProgress).toHaveLength(1);
+});
+
+test('dictionary sense additions survive a delayed save without overwriting later edits to another sense',async()=>{
+  const entry=addVocabularyItem(mocks.initial,{term:'field',meaning:'An open area.'}).item;
+  await mount();const pending=defer();mocks.saveState.mockImplementationOnce(()=>pending.promise);let completion;
+  await act(async()=>{completion=fieldbook.saveVocabularyEntry({...entry,senses:[{id:'study',definition:'A subject of study.',example:'',pos:'noun'}],sources:[{type:'personal',id:'dictionary:study',senseId:'study'}]});await Promise.resolve();});
+  await act(async()=>{fieldbook.persist(draft=>{draft.vocabulary[0].senses[0].definition='My updated note.';});await Promise.resolve();});
+  await act(async()=>{pending.resolve(true);await completion;});
+  await waitFor(()=>expect(mocks.saveState).toHaveBeenCalledTimes(2));
+  expect(fieldbook.state.vocabulary[0].senses.map(s=>s.definition)).toEqual(['My updated note.','A subject of study.']);
+  expect(mocks.saveState.mock.calls.at(-1)[0].vocabulary[0].senses).toHaveLength(2);
+});
+
+test('manual status resolves canonical legacy entry and sense when a catalog source uses different ids',async()=>{
+  const legacy=addVocabularyItem(mocks.initial,{id:'legacy-field',term:'field',senses:[{id:'legacy-sense',definition:'An open area.',example:'',pos:'noun'}]}).item;
+  await mount();
+  const source={...legacy,id:'catalog-field',senses:[{...legacy.senses[0],id:'catalog-sense'}]};
+  await act(async()=>{expect(await fieldbook.saveVocabularyStatus(source.id,'catalog-sense','familiar',source)).toBe(true);});
+  expect(fieldbook.state.vocabulary).toHaveLength(1);
+  expect(fieldbook.state.vocabularyStates.find(row=>row.entryId===legacy.id && row.senseId===legacy.senses[0].id)).toMatchObject({manualStatus:'familiar',statusSource:'manual'});
+});
+
 test('practice preference save retains an in-progress writing draft and pending plans',async()=>{
   await mount();const pending=structuredClone(fieldbook.state.plans);
   await act(async()=>{expect(await fieldbook.saveVocabularyPreferences({layout:'cards',volume:0.6})).toBe(true)});

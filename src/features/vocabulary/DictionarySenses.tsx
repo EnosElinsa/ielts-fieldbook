@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BookOpen, RotateCcw } from "lucide-react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useFieldbook } from "../../context/FieldbookContext";
 import { addVocabularyItem, normalizeAnswer } from "../../domain/vocabulary";
 import type { VocabularyEntry, VocabularySense } from "../../domain/vocabulary";
+import { accountId } from "../../storage/remote";
+import { VocabularySenseContent } from "./VocabularySenseContent";
 import { practiceUrl } from "./vocabularyNavigation";
 type DictionaryFile = {
   entries: {
@@ -69,35 +71,21 @@ export function DictionarySenses({
   const navigate = useNavigate();
   const location = useLocation();
   const [params] = useSearchParams();
-  const [senses, setSenses] = useState<VocabularySense[]>([]);
+  const [loaded, setLoaded] = useState<VocabularySense[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [revision, setRevision] = useState(0);
   const [saving, setSaving] = useState<string | null>(null);
   useEffect(() => {
     let active = true;
-    setSenses([]);
+    setLoaded([]);
     setError("");
     setLoading(true);
     onSources?.([]);
     loadTermDictionary(entry.term)
       .then((data) => {
         if (active) {
-          const excluded = new Set(excludeSenses.map(key));
-          const seen = new Set(excluded);
-          const unique = data.filter((sense) => {
-            if (
-              !sense ||
-              typeof sense.id !== "string" ||
-              typeof sense.definition !== "string" ||
-              seen.has(key(sense))
-            )
-              return false;
-            seen.add(key(sense));
-            return true;
-          });
-          setSenses(unique);
-          onSources?.(unique);
+          setLoaded(data);
         }
       })
       .catch(() => {
@@ -110,21 +98,83 @@ export function DictionarySenses({
       active = false;
     };
   }, [entry.term, revision]);
+  const excludeKey = excludeSenses.map(key).sort().join("\n");
+  const senses = useMemo(() => {
+    const seen = new Set(excludeSenses.map(key));
+    return loaded.filter((sense) => {
+      if (
+        !sense ||
+        typeof sense.id !== "string" ||
+        typeof sense.definition !== "string" ||
+        typeof sense.pos !== "string" ||
+        seen.has(key(sense))
+      )
+        return false;
+      seen.add(key(sense));
+      return true;
+    });
+  }, [loaded, excludeKey]);
+  useEffect(() => {
+    onSources?.(senses);
+  }, [senses, onSources]);
+  const groups = [
+    ...new Set(
+      senses.map((sense) => sense.pos.trim().toLowerCase() || "Meaning"),
+    ),
+  ];
+  const saveLock = useRef(false);
+  const routeKey = `${entry.id}:${location.pathname}:${location.search}`;
+  const routeRef = useRef(routeKey);
+  routeRef.current = routeKey;
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+  useEffect(() => {
+    setSaving(null);
+  }, [routeKey]);
   const studySense = async (sense: VocabularySense) => {
-    if (saving) return;
+    if (saveLock.current) return;
+    saveLock.current = true;
+    const owner = accountId();
+    const requestedRoute = routeRef.current;
+    const active = () =>
+      mounted.current &&
+      owner === accountId() &&
+      requestedRoute === routeRef.current;
     setSaving(sense.id);
     setError("");
-    const draft = structuredClone(fb.stateRef.current);
-    const result = addVocabularyItem(draft, {
-      ...entry,
-      senses: [sense],
-      sources: [
-        ...(entry.sources || []),
-        { type: "personal", id: `dictionary:${sense.id}`, senseId: sense.id },
-      ],
-    });
     try {
-      if (result.item && (await fb.persistNow(draft))) {
+      const draft = structuredClone(fb.stateRef.current);
+      const result = addVocabularyItem(draft, {
+        ...entry,
+        senses: [sense],
+        sources: [
+          ...(entry.sources || []),
+          { type: "personal", id: `dictionary:${sense.id}`, senseId: sense.id },
+        ],
+      });
+      const saved =
+        result.item &&
+        (fb.saveVocabularyEntry
+          ? await fb.saveVocabularyEntry({
+              ...entry,
+              senses: [sense],
+              sources: [
+                ...entry.sources,
+                {
+                  type: "personal",
+                  id: `dictionary:${sense.id}`,
+                  senseId: sense.id,
+                },
+              ],
+            })
+          : await fb.persistNow(draft));
+      if (!active()) return;
+      if (result.item && saved) {
         const savedSense = result.item.senses.find(
           (item) => key(item) === key(sense),
         );
@@ -142,19 +192,21 @@ export function DictionarySenses({
         );
       } else setError("This sense could not be saved. Try again.");
     } catch {
-      setError("This sense could not be saved. Try again.");
+      if (active()) setError("This sense could not be saved. Try again.");
     } finally {
-      setSaving(null);
+      saveLock.current = false;
+      if (active()) setSaving(null);
     }
   };
   return (
     <details className="vocabulary-secondary vocabulary-dictionary">
       <summary>
-        English dictionary
-        {!loading && senses.length
-          ? ` · ${senses.length} additional meanings`
-          : ""}
+        Other dictionary meanings{!loading ? ` (${senses.length})` : ""}
       </summary>
+      <p className="vocabulary-muted">
+        Dictionary meanings beyond the selected learning meanings. Choose a
+        meaning to practise it separately.
+      </p>
       {loading ? (
         <p className="vocabulary-muted" role="status">
           Loading dictionary meanings…
@@ -179,26 +231,30 @@ export function DictionarySenses({
           No additional dictionary senses available.
         </p>
       ) : null}
-      {senses.map((sense) => (
-        <section className="vocabulary-sense" key={sense.id}>
-          <div className="vocabulary-sense-head">
-            <h4>{sense.pos || "Meaning"}</h4>
-            <button
-              type="button"
-              className="btn line"
-              disabled={saving !== null}
-              onClick={() => void studySense(sense)}
-            >
-              <BookOpen size={15} />
-              {saving === sense.id ? "Saving…" : "Practise this sense"}
-            </button>
-          </div>
-          <p>{sense.definition || "Definition not available yet"}</p>
-          {sense.example ? (
-            <blockquote>{sense.example}</blockquote>
-          ) : (
-            <p className="vocabulary-muted">Example not available yet</p>
-          )}
+      {groups.map((pos) => (
+        <section className="vocabulary-dictionary-pos" key={pos}>
+          <h3>{pos.replace(/^./, (char) => char.toUpperCase())}</h3>
+          {senses
+            .filter(
+              (sense) => (sense.pos.trim().toLowerCase() || "Meaning") === pos,
+            )
+            .map((sense, index) => (
+              <section className="vocabulary-sense" key={sense.id}>
+                <div className="vocabulary-sense-head">
+                  <h4>Meaning {index + 1}</h4>
+                  <button
+                    type="button"
+                    className="btn line"
+                    disabled={saving !== null}
+                    onClick={() => void studySense(sense)}
+                  >
+                    <BookOpen size={15} />
+                    {saving === sense.id ? "Saving…" : "Practise this sense"}
+                  </button>
+                </div>
+                <VocabularySenseContent sense={sense} />
+              </section>
+            ))}
         </section>
       ))}
     </details>

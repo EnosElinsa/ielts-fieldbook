@@ -16,9 +16,9 @@
 .modal-workbench-legacy .practice-confirm-dialog { padding: 0; }
 .modal-workbench-legacy .modal > h3, .modal-workbench-legacy .practice-confirm-dialog > h2 { padding-right: 30px; }
 .modal-workbench-structured .practice-settings-dialog { padding: 0; }
-.modal-workbench .practice-preferences fieldset { margin: 0 0 26px; padding: 0 0 22px; border: 0; border-bottom: 1px solid var(--rule); min-width: 0; }
-.modal-workbench .practice-preferences fieldset:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
-.modal-workbench .practice-preferences legend { font-size: 14px; margin-bottom: 18px; }
+.modal-workbench .practice-preferences > fieldset { margin: 0 0 26px; padding: 0 0 22px; border: 0; border-bottom: 1px solid var(--rule); min-width: 0; }
+.modal-workbench .practice-preferences > fieldset:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+.modal-workbench .practice-preferences > fieldset > legend { font-size: 14px; margin-bottom: 18px; }
 .modal-workbench .practice-preference-grid { gap: 18px 20px; }
 .modal-workbench .practice-preference-grid > label, .modal-workbench .practice-layout-field { font-size: 12px; }
 .modal-workbench .practice-preference-grid select { min-height: 42px; font-size: 13px; }

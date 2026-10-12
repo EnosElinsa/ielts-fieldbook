@@ -478,7 +478,7 @@ test("blocked automatic audio asks for a gesture and manual replay recovers", as
   );
   await user.click(screen.getByRole("button", { name: "Replay current word" }));
   await waitFor(() =>
-    expect(screen.getByRole("status")).toHaveTextContent("UK device voice: Test UK voice"),
+    expect(screen.getByRole("status")).toHaveTextContent("UK synthetic voice · Test UK voice"),
   );
 });
 
