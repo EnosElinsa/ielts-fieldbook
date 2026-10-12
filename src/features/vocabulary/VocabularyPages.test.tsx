@@ -15,6 +15,14 @@ beforeEach(() => {
   Object.assign(VOCABULARY_CATALOG, { entries: [], books: [], units: [], memberships: [] });
 });
 afterEach(cleanup);
+
+test('opening history results carries the history list as its actual origin',()=>{
+  fixture();fb.current.state.vocabularySessions=[submitted(['one'])];
+  function ResultOrigin(){return <output>{useLocation().state?.vocabularyReturn?.url || 'No return origin'}</output>;}
+  render(<MemoryRouter initialEntries={['/vocabulary/history']}><Routes><Route path='/vocabulary/history' element={<VocabularyHistoryPage/>}/><Route path='/vocabulary/history/:sessionId' element={<ResultOrigin/>}/></Routes></MemoryRouter>);
+  fireEvent.click(screen.getByRole('link',{name:/Dictation.*Travel/}));
+  expect(screen.getByText('/vocabulary/history')).toBeInTheDocument();
+});
 function fixture() {
   Object.assign(VOCABULARY_CATALOG, {
     books: [{ id: "book", title: "IELTS source book", contentStatus: "available" }],

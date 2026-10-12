@@ -12,7 +12,7 @@ import { buildUnitPracticeQueue } from "../../domain/vocabulary/selection";
 import { resolveVocabularyRetry } from "../../domain/vocabulary/retry";
 import { createVocabularyPlayback } from "./playback";
 import { playbackMessage } from "./Pronunciation";
-import { safeVocabularyReturn } from "./vocabularyNavigation";
+import { useVocabularyReturn, vocabularyForwardState } from './VocabularyRouteLink';
 import { practiceKeyboard } from "./practiceKeyboard";
 import { presentVocabularySession } from '../../domain/vocabulary/sessionPresentation';
 import { MODES, senseFor } from "./practicePresentation";
@@ -31,6 +31,7 @@ export function useVocabularyPracticeController() {
   const navigate = useNavigate();
   const legacyStudy = location.pathname === '/vocabulary/review' && Boolean(params.get('bookId') && params.get('unitId') && params.get('dueOnly') === 'false' && params.get('wrongOnly') !== 'true' && !['entryId', 'senseId', 'sourceType', 'dimension', 'skill'].some(key => params.has(key)));
   const study = location.pathname === '/vocabulary/study' || legacyStudy;
+  const back = useVocabularyReturn(historySessionId ? '/vocabulary/history' : study && params.get('bookId') && params.get('unitId') ? `/vocabulary/wordbooks/${encodeURIComponent(params.get('bookId')!)}/groups/${encodeURIComponent(params.get('unitId')!)}/words` : '/vocabulary');
   const initialPreferences = normalizeVocabularyPreferences(
     fb.state.settings?.vocabulary,
   );
@@ -70,7 +71,7 @@ export function useVocabularyPracticeController() {
   function setResultFilter(value: string) {
     const next = new URLSearchParams(params);
     if (value === 'all') next.delete('resultFilter'); else next.set('resultFilter', value);
-    setParams(next, { replace: true });
+    setParams(next, { replace: true, state: location.state });
   }
   const owner = useRef(accountId());
   const sessionRef = useRef<Session | null>(null);
@@ -102,7 +103,7 @@ export function useVocabularyPracticeController() {
   routeKeyRef.current = location.key;
 
   useEffect(() => {
-    if (legacyStudy && location.pathname !== '/vocabulary/study') navigate(`/vocabulary/study?${params}`, { replace: true });
+    if (legacyStudy && location.pathname !== '/vocabulary/study') navigate(`/vocabulary/study?${params}`, { replace: true, state: location.state });
   }, [legacyStudy, location.pathname]);
   useEffect(() => {
     if (sessionRef.current) return;
@@ -324,11 +325,11 @@ export function useVocabularyPracticeController() {
     const next = new URLSearchParams(params);
     next.set(key, value);
     if (key === "bookId") next.delete("unitId");
-    setParams(next, { replace: true });
+    setParams(next, { replace: true, state: location.state });
   }
   function setReviewPreset(value: string) {
     setDue(value === 'due'); setWrong(value === 'wrong');
-    const next = new URLSearchParams(params); next.set('dueOnly',String(value === 'due')); next.set('wrongOnly',String(value === 'wrong')); next.delete('unitId'); setParams(next,{replace:true});
+    const next = new URLSearchParams(params); next.set('dueOnly',String(value === 'due')); next.set('wrongOnly',String(value === 'wrong')); next.delete('unitId'); setParams(next,{replace:true, state: location.state});
   }
   function changeMode(value: string) {
     setMode(value as VocabularyPracticeMode);
@@ -492,7 +493,7 @@ export function useVocabularyPracticeController() {
     setResults(null);
     const setupParams = new URLSearchParams(params);
     setupParams.delete('sessionId'); setupParams.delete('resultFilter');
-    setParams(setupParams, { replace: true });
+    setParams(setupParams, { replace: true, state: location.state });
     setResume(null);
     setError("");
     setAudioStatus("");
@@ -724,7 +725,7 @@ export function useVocabularyPracticeController() {
       resultParams.set('sessionId', prepared.sessionRecord.id);
       resultParams.delete('resultFilter');
       resultParams.delete("sessionId");
-      navigate(`/vocabulary/history/${encodeURIComponent(prepared.sessionRecord.id)}?${resultParams}`, { replace: true });
+      navigate(`/vocabulary/history/${encodeURIComponent(prepared.sessionRecord.id)}?${resultParams}`, { replace: true, state: location.state });
       sessionRef.current = null;
       setSession(null);
       pendingCommit.current = null;
@@ -772,12 +773,12 @@ export function useVocabularyPracticeController() {
       if (url.origin !== window.location.origin || !url.pathname.startsWith('/')) return;
       event.preventDefault(); event.stopPropagation();
       const path = url.pathname + url.search + url.hash;
-      departure.current = { path, proceed: () => navigate(path) }; stopAudio(); setExitOpen(true);
+      departure.current = { path, proceed: () => navigate(path, {state: vocabularyForwardState(location)}) }; stopAudio(); setExitOpen(true);
     };
     document.addEventListener('fieldbook:before-navigate', requested);
     document.addEventListener('click', leave, true);
     return () => { document.removeEventListener('fieldbook:before-navigate', requested); document.removeEventListener('click',leave,true); };
-  }, [session,stopAudio,navigate]);
+  }, [session,stopAudio,navigate,location]);
   function exit(keep: boolean) {
     if (!owned() || saving) return;
     stopAudio();
@@ -798,9 +799,10 @@ export function useVocabularyPracticeController() {
     setError("");
     setAudioStatus("");
     if (target) { target.proceed(); return; }
-    const origin = params.get("returnTo"); if (origin) navigate(safeVocabularyReturn(origin));
+    if (params.get('returnTo') || location.state?.vocabularyReturn) back.goBack();
   }
   function resetResults() {
+    const record = results;
     retryGeneration.current += 1;
     retryPreparingRef.current = false;
     setRetryPreparing(false);
@@ -810,9 +812,15 @@ export function useVocabularyPracticeController() {
     setError("");
     const next = new URLSearchParams(params);
     next.delete('sessionId'); next.delete('resultFilter');
-    const origin = params.get("returnTo");
-    if (origin) navigate(safeVocabularyReturn(origin));
-    else if (historySessionId) navigate(`/vocabulary/review?${next}`, {replace:true}); else setParams(next, { replace: true });
+    next.delete('returnTo');
+    if (record) {
+      Object.entries(record.filter || {}).forEach(([key, value]) => {
+        if (value !== undefined) next.set(key, String(value));
+      });
+      next.set('mode', record.mode);
+    }
+    const setup = record?.selection?.kind === 'unit' || record?.selection?.kind === 'specialist' ? '/vocabulary/study' : '/vocabulary/review';
+    navigate(`${setup}${next.toString() ? `?${next}` : ''}`, { state: vocabularyForwardState(location) });
   }
   function discardResume() {
     clearVocabularyDraft(owner.current);
@@ -825,7 +833,7 @@ export function useVocabularyPracticeController() {
     const next = new URLSearchParams(params);
     next.set('sessionId', log.id); next.delete('resultFilter');
     next.delete("sessionId");
-    navigate(`/vocabulary/history/${encodeURIComponent(log.id)}?${next}`);
+    navigate(`/vocabulary/history/${encodeURIComponent(log.id)}?${next}`, {state: vocabularyForwardState(location)});
   }
   function retryCatalog() {
     setCatalogRetry(value => value + 1);

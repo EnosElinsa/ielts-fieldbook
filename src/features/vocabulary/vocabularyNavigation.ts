@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigationType } from 'react-router-dom';
 import { accountId } from "../../storage/remote";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import type {
@@ -104,18 +105,24 @@ const positions = new Map<
   {
     scroll: number;
     focus: string;
+    chapters?: {id: string; open: boolean}[];
   }
 >();
 const positionKey = (origin: string) =>
   `fieldbook:vocabulary-position:${accountId()}:${origin}`;
 export function rememberVocabularyPosition(origin: string, focus: string) {
-  const value = { scroll: window.scrollY, focus };
+  const chapters = Array.from(document.querySelectorAll<HTMLDetailsElement>('details.vocabulary-study-chapter[id]')).map(node=>({id:node.id,open:node.open}));
+  const value = { scroll: window.scrollY, focus, chapters };
   positions.set(positionKey(origin), value);
   try {
     sessionStorage.setItem(positionKey(origin), JSON.stringify(value));
   } catch {}
 }
 export function useVocabularyPosition(origin: string, ready: boolean) {
+  const location = useLocation();
+  const navigationType = useNavigationType();
+  const prior = useRef(origin);
+  const owner = accountId();
   useEffect(() => {
     if (!ready) return;
     let value = positions.get(positionKey(origin));
@@ -125,13 +132,37 @@ export function useVocabularyPosition(origin: string, ready: boolean) {
       );
     } catch {}
     const frame = requestAnimationFrame(() => {
-      if (value) {
+      if (value && (navigationType === 'POP' || location.state?.vocabularyRestore)) {
+        value.chapters?.forEach(chapter=>{
+          const node = document.getElementById(chapter.id);
+          if (node instanceof HTMLDetailsElement) node.open = chapter.open;
+        });
         window.scrollTo?.(0, value.scroll);
         document.getElementById(value.focus)?.focus({ preventScroll: true });
+      } else if (prior.current.split('?')[0] !== origin.split('?')[0] || navigationType === 'PUSH') {
+        window.scrollTo?.(0, 0);
       }
+      if (location.hash && !value) try {
+        const node = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        let parent = node?.parentElement;
+        while (parent) { if (parent instanceof HTMLDetailsElement) parent.open = true; parent = parent.parentElement; }
+        node?.scrollIntoView?.();
+      } catch {}
+      prior.current = origin;
     });
-    return () => cancelAnimationFrame(frame);
-  }, [origin, ready]);
+    const key = positionKey(origin);
+    const rememberScroll = () => {
+      const saved = positions.get(key);
+      positions.set(key, {...saved, scroll: window.scrollY, focus: saved?.focus || ''});
+    };
+    window.addEventListener('scroll', rememberScroll, {passive: true});
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', rememberScroll);
+      const latest = positions.get(key);
+      if (latest) try { sessionStorage.setItem(key, JSON.stringify(latest)); } catch {}
+    };
+  }, [origin, ready, owner, navigationType, location.state, location.hash]);
 }
 export function useVocabularyCatalog(
   load: ((bookId?: string) => Promise<unknown>) | undefined,

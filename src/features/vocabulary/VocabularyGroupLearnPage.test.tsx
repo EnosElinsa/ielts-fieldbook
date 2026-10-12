@@ -29,6 +29,13 @@ afterEach(()=>{cleanup();Object.assign(VOCABULARY_CATALOG,structuredClone(origin
 function Location(){const location=useLocation();return <output aria-label="Route">{location.pathname+location.search}</output>;}
 function mount(url=path){return render(<MemoryRouter initialEntries={[url]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes><Location/></MemoryRouter>);}
 
+test('learning returns to the actual filtered word list rather than the wordbook ancestor',async()=>{
+  const source='/vocabulary/wordbooks/book/groups/group/words?search=Word&page=1';
+  mount(`${path}?returnTo=${encodeURIComponent(source)}`);
+  await screen.findByRole('heading',{name:'Word 1'});
+  expect(screen.getByRole('link',{name:'Back to group words'})).toHaveAttribute('href',source);
+});
+
 test('learns a source-ordered batch, keeps theme truthful and separates browsing from assessment',async()=>{
   const before=JSON.stringify(mocks.fb.state);
   mount();

@@ -1,11 +1,11 @@
+import { VocabularyLink as Link, VocabularyBackLink, useVocabularyReturn, vocabularyReturnLabel } from './VocabularyRouteLink';
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  Link,
   useLocation,
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Pencil, RotateCcw, Trash2 } from "lucide-react";
+import { ArrowRight, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useFieldbook } from "../../context/FieldbookContext";
 import { FilterMenu } from "../../components/ui";
 import {
@@ -44,8 +44,8 @@ import { Pronunciation } from "./Pronunciation";
 import {
   groupPath,
   practiceUrl,
-  safeVocabularyReturn,
   useVocabularyCatalog,
+  useVocabularyPosition,
 } from "./vocabularyNavigation";
 const statuses = [
   "new",
@@ -115,6 +115,7 @@ export function VocabularyEntryPage() {
     (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).find(
       (entry) => entry.id === (id || entryId),
     );
+  useVocabularyPosition(location.pathname + location.search + location.hash, Boolean(raw) && status === 'ready');
   const validGroup = Boolean(
     bookId &&
     unitId &&
@@ -142,8 +143,8 @@ export function VocabularyEntryPage() {
         : null,
     [raw, bookId, unitId, requestedSense, validGroup],
   );
-  const returnTo = safeVocabularyReturn(params.get("returnTo"));
-  const returnLabel =
+  const {to: returnTo} = useVocabularyReturn();
+  const returnLabel = location.state?.vocabularyReturn ? vocabularyReturnLabel(returnTo) :
     returnTo === "/vocabulary"
       ? "My vocabulary"
       : /^\/vocabulary\/(review|study|history)/.test(returnTo)
@@ -340,10 +341,7 @@ export function VocabularyEntryPage() {
   return (
     <section className="view active vocabulary-view vocabulary-workbench">
       <VocabularyNavigation />
-      <Link to={returnTo} className="btn text">
-        <ArrowLeft size={15} />
-        {returnLabel}
-      </Link>
+      <VocabularyBackLink label={returnLabel}/>
       {!entry ? (
         status === "loading" ? (
           <p role="status">Loading vocabulary entry…</p>
@@ -727,6 +725,7 @@ export function VocabularyEntryPage() {
                   <li key={`${source.bookId}:${source.unitId}`}>
                     <Link
                       to={sourceUrl(source)}
+                      replace preserveReturn
                       aria-current={
                         validGroup &&
                         source.bookId === bookId &&

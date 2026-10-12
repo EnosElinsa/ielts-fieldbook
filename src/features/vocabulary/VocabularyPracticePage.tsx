@@ -8,6 +8,9 @@ import { VocabularyPracticeSession } from "./VocabularyPracticeSession";
 import { VocabularyPracticeResults } from "./VocabularyPracticeResults";
 import { useVocabularyPracticeController } from "./useVocabularyPracticeController";
 import "../../styles/vocabulary-practice.css";
+import { VocabularyBackLink } from './VocabularyRouteLink';
+import { useLocation } from 'react-router-dom';
+import { useVocabularyPosition } from './vocabularyNavigation';
 
 export function VocabularyPracticePage() {
   const controller = useVocabularyPracticeController();
@@ -16,9 +19,12 @@ export function VocabularyPracticePage() {
     incompleteOpen, setIncompleteOpen, saving, error, storageError, submissionPending,
     preferences, answered, count, submit, savePreferences, exit, pauseSession,
   } = controller;
+  const location = useLocation();
+  useVocabularyPosition(location.pathname + location.search + location.hash, controller.catalogReady && !session && !results);
   return (
     <section className="view active vocabulary-view vocabulary-practice-view">
       <VocabularyNavigation />
+      {!session && !results ? <VocabularyBackLink fallback={study && controller.bookId !== 'all' && controller.unitId !== 'all' ? `/vocabulary/wordbooks/${encodeURIComponent(controller.bookId)}/groups/${encodeURIComponent(controller.unitId)}/words` : '/vocabulary'}/> : null}
       <header className="practice-heading">
         {!results && !session ? <div>
           <span className="eyebrow">Vocabulary</span>
