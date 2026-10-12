@@ -1,10 +1,11 @@
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useLocation, useNavigate } from 'react-router-dom';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { IntensiveWorkbenchPage } from './IntensiveWorkbenchPage';
 import type { ExamCatalog } from '../../domain/exam/types';
+import { createIntensiveSession } from '../../domain/exam/intensive';
 
 const mocks = vi.hoisted(() => ({ owner: 'one', fb: null as any, catalog: null as any, recovery: new Map(), putAudio: vi.fn().mockResolvedValue(undefined) }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
@@ -19,13 +20,76 @@ vi.mock('./IntensiveAudio', () => ({ IntensiveAudio: (props: any) => <><button o
 const provenance = { sourceUrl: 'https://example.org', sourceVersion: '1', fetchedAt: '2026-01-01', contentHash: 'hash', authorization: 'owned' };
 const catalog: ExamCatalog = { schemaVersion: 1, papers: [], questions: [], passages: [], sections: [{ id: 'part', paperId: 'paper', skill: 'listening', part: 1, title: 'Journey', questionTypes: [], questionCount: 0, assetId: 'audio', status: 'ready', provenance, sentences: [{ id: 's1', text: 'The train leaves at nine.', start: 0, end: 3, alignment: 'source' }, { id: 's2', text: 'Please bring your ticket.', start: 3, end: 6, alignment: 'source' }] }], assets: [{ id: 'audio', paperId: 'paper', kind: 'audio', storagePath: 'audio.mp3', sourceUrl: 'https://example.org/audio', provenance }] };
 const open = (path = '/') => render(<MemoryRouter initialEntries={[path]}><IntensiveWorkbenchPage sectionId="part" /></MemoryRouter>);
+function NavigationProbe() {
+  const location = useLocation(); const navigate = useNavigate();
+  return <><output aria-label="Sentence URL">{location.search}</output><button onClick={() => navigate(-1)}>Browser back</button></>;
+}
 beforeEach(() => {
   mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); mocks.putAudio.mockReset().mockResolvedValue(undefined);
   const state = { intensiveSessions: [] };
   mocks.fb = { state, stateRef: { current: state }, persistNow: vi.fn(async (draft: any) => { mocks.fb.state = draft; mocks.fb.stateRef.current = draft; return true; }) };
-  vi.stubGlobal('URL', { createObjectURL: () => 'blob:recording', revokeObjectURL: vi.fn() });
+  const NativeURL = globalThis.URL;
+  vi.stubGlobal('URL', Object.assign(NativeURL, { createObjectURL: () => 'blob:recording', revokeObjectURL: vi.fn() }));
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
+
+it('stores sentence navigation in history and restores the last sentence after reopening', async () => {
+  const user = userEvent.setup();
+  const view = render(<MemoryRouter><IntensiveWorkbenchPage sectionId="part" /><NavigationProbe /></MemoryRouter>);
+  await user.type(await screen.findByRole('textbox', { name: 'Sentence dictation' }), 'first draft');
+  await user.selectOptions(screen.getByLabelText('Jump to sentence'), '1');
+  expect(screen.getByLabelText('Sentence URL')).toHaveTextContent('sentence=s2');
+  await user.click(screen.getByRole('button', { name: 'Browser back' }));
+  expect(await screen.findByRole('textbox', { name: 'Sentence dictation' })).toHaveValue('first draft');
+  await user.selectOptions(screen.getByLabelText('Jump to sentence'), '1');
+  view.unmount(); open();
+  expect(await screen.findByRole('heading', { name: 'Sentence 2 / 2' })).toBeInTheDocument();
+});
+
+it('keeps a failed completion pending across reopening and retries the same scheduled cycle', async () => {
+  const ready = { ...createIntensiveSession('part', 's1'), stage: 4, listened: true, dictationResult: 'correct' as const, shadowingAudioId: 'recording', blindReplayDone: true, selfRating: 5 as const };
+  mocks.fb.state.intensiveSessions = [ready];
+  mocks.fb.persistNow.mockImplementationOnce(async (draft: any) => { mocks.fb.state = draft; mocks.fb.stateRef.current = draft; return false; });
+  const user = userEvent.setup(); const view = open();
+  await user.click(await screen.findByRole('button', { name: 'Finish and schedule review' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Could not save');
+  expect(screen.queryByRole('button', { name: 'Review scheduled' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Start blind review' })).not.toBeInTheDocument();
+  const cycle = mocks.recovery.get('one:intensive:part').s1;
+  view.unmount(); open();
+  await user.click(await screen.findByRole('button', { name: 'Retry scheduling review' }));
+  expect(await screen.findByRole('button', { name: 'Review scheduled' })).toBeDisabled();
+  expect(mocks.fb.state.intensiveSessions[0].completedAt).toBe(cycle.completedAt);
+  expect(mocks.fb.state.intensiveSessions[0].nextReviewAt).toBe(cycle.nextReviewAt);
+});
+
+it('serializes saves while switching sentences so a later draft cannot be overwritten', async () => {
+  let resolveFirst: (saved: boolean) => void = () => {};
+  mocks.fb.persistNow.mockImplementationOnce(() => new Promise<boolean>(resolve => { resolveFirst = resolve; }));
+  const user = userEvent.setup(); open();
+  await user.type(await screen.findByRole('textbox', { name: 'Sentence dictation' }), 'first');
+  await user.selectOptions(screen.getByLabelText('Jump to sentence'), '1');
+  await user.type(screen.getByLabelText('Sentence dictation'), 'second');
+  await user.selectOptions(screen.getByLabelText('Jump to sentence'), '0');
+  expect(mocks.fb.persistNow).toHaveBeenCalledTimes(1);
+  resolveFirst(true);
+  await waitFor(() => expect(mocks.fb.state.intensiveSessions.find((row: any) => row.sentenceId === 's2')?.transcriptInput).toBe('second'));
+});
+
+it('keeps saved due sentences eligible for blind recall when another sentence has an unsaved draft', async () => {
+  const completed = { ...createIntensiveSession('part', 's1'), stage: 6, listened: true, revealed: true, transcriptInput: 'old answer', dictationResult: 'correct' as const, shadowingAudioId: 'recording', completedAt: '2026-01-01', nextReviewAt: '2099-01-01' };
+  mocks.fb.state.intensiveSessions = [completed];
+  const user = userEvent.setup(); const view = open();
+  await user.selectOptions(await screen.findByLabelText('Jump to sentence'), '1');
+  await user.type(screen.getByLabelText('Sentence dictation'), 'unsaved second sentence');
+  view.unmount();
+  // Time passes while the draft for the other sentence remains local.
+  mocks.fb.state.intensiveSessions[0].nextReviewAt = '2026-01-02';
+  mocks.recovery.get('one:intensive:part').s1.nextReviewAt = '2026-01-02';
+  open('/?sentence=s1');
+  expect(await screen.findByLabelText('Sentence dictation')).toHaveValue('');
+  expect(screen.queryByText('old answer')).not.toBeInTheDocument();
+});
 
 it('jumps directly to a sentence while preserving the current dictation', async () => {
   const user = userEvent.setup(); open();

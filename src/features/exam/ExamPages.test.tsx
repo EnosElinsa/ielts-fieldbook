@@ -118,7 +118,7 @@ test('whitespace and cleared multiple selections stay unanswered in the map and 
   await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), '   ');
   await user.click(screen.getByRole('checkbox', { name: 'A' }));
   await user.click(screen.getByRole('checkbox', { name: 'A' }));
-  expect(screen.getByText('0 / 2 answered')).toBeInTheDocument();
+  expect(screen.getByRole('status', { name: '' })).toHaveTextContent('0 / 2 answered');
   expect(screen.getByRole('link', { name: 'Go to question 1 · unanswered' })).not.toHaveClass('answered');
   expect(screen.getByRole('link', { name: 'Go to question 2 · unanswered' })).not.toHaveClass('answered');
   expect(screen.getByRole('button', { name: 'Check answer 1' })).toBeDisabled();

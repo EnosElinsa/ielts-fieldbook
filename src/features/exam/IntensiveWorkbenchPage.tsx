@@ -117,7 +117,9 @@ export function IntensiveWorkbenchPage({ sectionId: suppliedId }: { sectionId?: 
 }
 
 function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner: string | null; fb: ReturnType<typeof useFieldbook> }) {
-  const [search] = useSearchParams();
+  const [search, setSearch] = useSearchParams();
+  const searchRef = useRef(search);
+  searchRef.current = search;
   const [catalog, setCatalog] = useState<ExamCatalog | null>(null);
   const [loadingError, setLoadingError] = useState('');
   const [retry, setRetry] = useState(0);
@@ -133,6 +135,16 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
   const blindReplayStarted = useRef(false);
   const recoveryKey = `intensive:${sectionId}`;
   const mounted = useRef(true);
+  const saveQueue = useRef<Promise<boolean>>(Promise.resolve(true));
+  const saveGeneration = useRef(0);
+  const [savedCompletions, setSavedCompletions] = useState<Record<string, string>>(() => {
+    const pending = readExamRecovery<Record<string, string>>(owner, `${recoveryKey}:pending-completions`);
+    return Object.fromEntries(((fb.state.intensiveSessions || []) as IntensiveSession[])
+      .filter(row => row.sectionId === sectionId && row.completedAt && pending?.[row.sentenceId] !== row.completedAt)
+      .map(row => [row.sentenceId, row.completedAt!]));
+  });
+  const savedCompletionsRef = useRef(savedCompletions);
+  savedCompletionsRef.current = savedCompletions;
   const [sessions, setSessions] = useState<SessionMap>(() => {
     const saved = Object.fromEntries(((fb.state.intensiveSessions || []) as IntensiveSession[]).filter(row => row.sectionId === sectionId).map(row => [row.sentenceId, row]));
     const recovery = readExamRecovery<SessionMap>(owner, recoveryKey);
@@ -151,18 +163,28 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
     setCatalog(null); setLoadingError('');
     void loadExamSections([sectionId]).then(next => {
       if (!active || accountId() !== owner) return;
-      const section = next.sections.find(row => row.id === sectionId);
-      const sentenceId = search.get('sentence') || search.get('sentenceId');
-      const selectedIndex = Math.max(0, section?.sentences.findIndex(sentence => sentence.id === sentenceId) || 0);
-      const selectedSentence = section?.sentences[selectedIndex];
-      if (selectedSentence) enterRecall(selectedSentence.id);
-      setIndex(selectedIndex);
+      const loadedSection = next.sections.find(row => row.id === sectionId);
+      const id = searchRef.current.get('sentence') || searchRef.current.get('sentenceId') || readExamRecovery<string>(owner, `${recoveryKey}:position`);
+      const selected = Math.max(0, loadedSection?.sentences.findIndex(row => row.id === id) ?? 0);
+      if (loadedSection?.sentences[selected]) enterRecall(loadedSection.sentences[selected].id);
+      setIndex(selected);
       setCatalog(next);
     }).catch(error => { if (active && accountId() === owner) setLoadingError(error instanceof Error ? error.message : 'Could not load listening material.'); });
     return () => { active = false; };
-  }, [sectionId, owner, retry, search]);
+  }, [sectionId, owner, retry]);
 
   const section = catalog?.sections.find(row => row.id === sectionId);
+  useEffect(() => {
+    if (!section?.sentences.length) return;
+    const requested = search.get('sentence') || search.get('sentenceId');
+    const sentenceId = requested || readExamRecovery<string>(owner, `${recoveryKey}:position`);
+    const selected = Math.max(0, section.sentences.findIndex(row => row.id === sentenceId));
+    const id = section.sentences[selected].id;
+    setIndex(selected);
+    enterRecall(id);
+    writeExamRecovery(owner, `${recoveryKey}:position`, id);
+    if (!requested) { const next = new URLSearchParams(search); next.set('sentence', id); setSearch(next, { replace: true }); }
+  }, [section, search, owner, recoveryKey, setSearch]);
   useEffect(() => { sentencesPanel.current?.querySelector('[aria-current="step"]')?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' }); }, [index, section?.id]);
   const sentence: ExamSentence | undefined = section?.sentences[index];
   const session = sentence ? sessions[sentence.id] || createIntensiveSession(sectionId, sentence.id) : null;
@@ -179,7 +201,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
   function enterRecall(sentenceId: string) {
     if (accountId() !== owner) return;
     const current = sessionRef.current[sentenceId];
-    if (!current?.completedAt || !current.nextReviewAt || Date.parse(current.nextReviewAt) > Date.now()) return;
+    if (!current?.completedAt || savedCompletionsRef.current[sentenceId] !== current.completedAt || !current.nextReviewAt || Date.parse(current.nextReviewAt) > Date.now()) return;
     const next = { ...sessionRef.current, [sentenceId]: applyIntensiveStage(current, 'review') };
     sessionRef.current = next;
     setSessions(next);
@@ -200,25 +222,49 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
     if (accountId() !== owner || !mounted.current) return false;
     const snapshot = structuredClone(override || sessionRef.current);
     writeExamRecovery(owner, recoveryKey, snapshot);
+    const pendingKey = `${recoveryKey}:pending-completions`;
+    const pending = readExamRecovery<Record<string, string>>(owner, pendingKey) || {};
+    Object.values(snapshot).forEach(row => {
+      if (row.completedAt && savedCompletionsRef.current[row.sentenceId] !== row.completedAt) pending[row.sentenceId] = row.completedAt;
+    });
+    writeExamRecovery(owner, pendingKey, pending);
     setSaving(true); setSaveError('');
-    const draft = structuredClone(fb.stateRef.current);
-    const ids = new Set(Object.values(snapshot).map(row => row.id));
-    draft.intensiveSessions = [...(draft.intensiveSessions || []).filter((row: IntensiveSession) => !ids.has(row.id)), ...Object.values(snapshot)];
-    let saved = false;
-    try { saved = Boolean(await fb.persistNow(draft)); } catch { saved = false; }
-    if (!mounted.current || accountId() !== owner) return false;
-    setSaving(false);
-    if (!saved) { setSaveError('Could not save progress. Your changes are kept on this device. Retry Save progress.'); return false; }
-    if (JSON.stringify(sessionRef.current) === JSON.stringify(snapshot)) { clearExamRecovery(owner, recoveryKey); setStatus('Progress saved.'); }
-    else setStatus('New changes waiting to save.');
-    return true;
+    const generation = ++saveGeneration.current;
+    const operation = saveQueue.current.catch(() => false).then(async () => {
+      if (!mounted.current || accountId() !== owner) return false;
+      const draft = structuredClone(fb.stateRef.current);
+      const ids = new Set(Object.values(snapshot).map(row => row.id));
+      draft.intensiveSessions = [...(draft.intensiveSessions || []).filter((row: IntensiveSession) => !ids.has(row.id)), ...Object.values(snapshot)];
+      let saved = false;
+      try { saved = Boolean(await fb.persistNow(draft)); } catch { saved = false; }
+      if (!mounted.current || accountId() !== owner) return false;
+      if (saved) {
+        setSavedCompletions(Object.fromEntries(Object.values(snapshot).filter(row => row.completedAt).map(row => [row.sentenceId, row.completedAt!])));
+        const outstanding = readExamRecovery<Record<string, string>>(owner, pendingKey) || {};
+        Object.values(snapshot).forEach(row => { if (outstanding[row.sentenceId] === row.completedAt) delete outstanding[row.sentenceId]; });
+        if (Object.keys(outstanding).length) writeExamRecovery(owner, pendingKey, outstanding);
+        else clearExamRecovery(owner, pendingKey);
+      }
+      if (generation !== saveGeneration.current) return saved;
+      setSaving(false);
+      if (!saved) { setSaveError('Could not save progress. Your changes are kept on this device. Retry Save progress.'); return false; }
+      if (JSON.stringify(sessionRef.current) === JSON.stringify(snapshot) && JSON.stringify(readExamRecovery(owner, recoveryKey)) === JSON.stringify(snapshot)) { clearExamRecovery(owner, recoveryKey); setStatus('Progress saved.'); }
+      else setStatus('New changes waiting to save.');
+      return true;
+    });
+    saveQueue.current = operation;
+    return operation;
   }, [fb.persistNow, fb.stateRef, owner, recoveryKey]);
 
   function choose(next: number) {
     if (!section || next < 0 || next >= section.sentences.length) return;
+    if (next === index) return;
     void save();
     enterRecall(section.sentences[next].id);
     setIndex(next);
+    const params = new URLSearchParams(search);
+    params.delete('sentenceId'); params.set('sentence', section.sentences[next].id);
+    setSearch(params);
   }
   async function recordingSaved(id: string) {
     if (!sentence || accountId() !== owner) return false;
@@ -232,7 +278,8 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
   const hasTiming = Boolean(sentence && (session?.correctedStart ?? sentence.start) !== undefined && (session?.correctedEnd ?? sentence.end) !== undefined);
   const start = session?.correctedStart ?? sentence?.start;
   const end = session?.correctedEnd ?? sentence?.end;
-  const completedCount = section.sentences.filter(row => sessions[row.id]?.completedAt).length;
+  const completedCount = section.sentences.filter(row => sessions[row.id]?.completedAt && savedCompletions[row.id] === sessions[row.id].completedAt).length;
+  const completionSaved = Boolean(session?.completedAt && savedCompletions[sentence?.id || ''] === session.completedAt);
   const checklist = session ? [
     { label: 'Dictation compared', done: session.dictationResult !== 'pending' },
     { label: 'Shadowing saved', done: Boolean(session.shadowingAudioId) },
@@ -256,7 +303,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
           <p className="file-hint">{session.replayCount} plays · {session.listened ? 'Blind listening completed' : 'Listen once before comparing'}</p>
           <details className="intensive-timing"><summary>Correct sentence A/B timing</summary><p>Use the seconds from the source recording. Changes apply to your learning record.</p><div className="intensive-actions"><label>A (seconds)<input aria-label="Sentence start seconds" type="number" min="0" step="0.1" value={start ?? ''} onChange={event => { const value = event.target.value === '' ? undefined : Number(event.target.value); change(row => ({ ...row, correctedStart: value })); }} /></label><label>B (seconds)<input aria-label="Sentence end seconds" type="number" min="0" step="0.1" value={end ?? ''} onChange={event => { const value = event.target.value === '' ? undefined : Number(event.target.value); change(row => ({ ...row, correctedEnd: value })); }} /></label></div>{start !== undefined && end !== undefined && end <= start ? <p role="alert">B must be later than A.</p> : null}</details>
         </div>
-        {!blind ? <div className="panel intensive-step"><h2>1 · Understand before transcribing</h2><label htmlFor="listening-gist">Main idea or situation</label><textarea id="listening-gist" value={session.gist} onChange={event => change(value => ({ ...value, gist: event.target.value }))} placeholder="Who is speaking? What is happening?" rows={2} /></div> : null}
+        {!blind ? <details className="panel intensive-step intensive-gist"><summary>1 · Main idea or situation</summary><p>Understand the situation before transcribing. Keep a short note if it helps.</p><label htmlFor="listening-gist">Main idea or situation</label><textarea id="listening-gist" value={session.gist} onChange={event => change(value => ({ ...value, gist: event.target.value }))} placeholder="Who is speaking? What is happening?" rows={2} /></details> : null}
         {!blind ? <div id="intensive-dictation" className="panel intensive-step"><h2>2 · Dictate, compare, diagnose</h2><p>Type what you hear. Keep uncertain gaps visible, then compare once you have tried.</p><label htmlFor="sentence-dictation">Sentence dictation</label><textarea id="sentence-dictation" value={session.transcriptInput} onChange={event => change(value => ({ ...value, transcriptInput: event.target.value, dictationResult: 'pending' }))} rows={3} disabled={session.stage === 6} placeholder="Write what you hear; use … for uncertain words." />
           <button className="btn primary" aria-describedby="intensive-compare-hint" disabled={saving || !session.listened || !session.transcriptInput.trim() || !sentence.text.trim() || blind} onClick={() => { change(value => applyIntensiveStage({ ...value, dictationResult: calculateDictationResult(value.transcriptInput, sentence.text) }, 'reveal')); void save(); }}>Compare with transcript</button>
           <p id="intensive-compare-hint" className="intensive-action-hint">{!session.listened ? 'Play this sentence to the end before comparing.' : !session.transcriptInput.trim() ? 'Write your first attempt before comparing.' : !sentence.text.trim() ? 'The source transcript is unavailable for comparison.' : 'Compare your attempt, then mark why you missed a word.'}</p>
@@ -265,8 +312,8 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
         <div id="intensive-shadow" className="panel intensive-step"><h2>3 · Shadow, record, listen again</h2><ShadowingRecorder key={`${owner}:${sentence.id}`} owner={owner} sectionId={sectionId} sentenceId={sentence.id} enabled={session.stage >= 2} audioId={session.shadowingAudioId} onSaved={recordingSaved} />
           <button className="btn line" aria-describedby="intensive-blind-hint" disabled={session.stage < 3 || !audioUrl || blind} aria-pressed={blind} onClick={() => { change(value => ({ ...value, revealed: false, blindReplayDone: false })); blindReplayStarted.current = false; setBlind(true); }}>Hide transcript for blind re-listening</button><p id="intensive-blind-hint" className="intensive-action-hint" role={blind ? 'status' : undefined}>{blind ? 'Transcript hidden. Replay the sentence to the end before finishing.' : session.stage < 3 ? 'Save your shadowing recording before blind re-listening.' : !audioUrl ? 'Wait for the source recording to load.' : 'Hide the transcript, then replay the sentence to the end.'}</p>
         </div>
-        <div id="intensive-review" className="panel intensive-step"><h2>4 · Rate and schedule</h2><p>Rate your understanding and shadowing after the blind replay. Weak sentences return sooner.</p><label htmlFor="intensive-rating">Self rating</label><select id="intensive-rating" value={session.selfRating || ''} onChange={event => change(value => ({ ...value, selfRating: Number(event.target.value) as IntensiveSession['selfRating'] }))}><option value="">Choose a rating</option>{[1, 2, 3, 4, 5].map(rating => <option key={rating} value={rating}>{rating} · {['Need help', 'Difficult', 'Some gaps', 'Mostly clear', 'Clear and fluent'][rating - 1]}</option>)}</select><ul className="intensive-checklist" aria-label="Sentence completion checklist">{checklist.map(item => <li key={item.label} className={item.done ? 'is-done' : ''}><span aria-hidden="true">{item.done ? <Check size={13} /> : '○'}</span>{item.label}<span className="sr-only">{item.done ? ' · Complete' : ' · Pending'}</span></li>)}</ul><div className="intensive-actions"><button className="btn primary" disabled={saving || Boolean(session.completedAt) || !session.blindReplayDone || !session.shadowingAudioId || !session.selfRating || session.dictationResult === 'pending'} onClick={() => { change(value => applyIntensiveStage(value, 'complete')); void save(); }}>{session.completedAt ? 'Review scheduled' : 'Finish and schedule review'}</button>{session.completedAt ? <button className="btn line" onClick={() => { change(value => applyIntensiveStage(value, 'review')); setBlind(false); }}>Start blind review</button> : null}</div>
-          {session.nextReviewAt ? <p role="status">Next review: {new Date(session.nextReviewAt).toLocaleDateString()} · {new Date(session.nextReviewAt) <= new Date() ? 'Due now' : 'Scheduled'}</p> : null}
+        <div id="intensive-review" className="panel intensive-step"><h2>4 · Rate and schedule</h2><p>Rate your understanding and shadowing after the blind replay. Weak sentences return sooner.</p><label htmlFor="intensive-rating">Self rating</label><select id="intensive-rating" value={session.selfRating || ''} onChange={event => change(value => ({ ...value, selfRating: Number(event.target.value) as IntensiveSession['selfRating'] }))}><option value="">Choose a rating</option>{[1, 2, 3, 4, 5].map(rating => <option key={rating} value={rating}>{rating} · {['Need help', 'Difficult', 'Some gaps', 'Mostly clear', 'Clear and fluent'][rating - 1]}</option>)}</select><ul className="intensive-checklist" aria-label="Sentence completion checklist">{checklist.map(item => <li key={item.label} className={item.done ? 'is-done' : ''}><span aria-hidden="true">{item.done ? <Check size={13} /> : '○'}</span>{item.label}<span className="sr-only">{item.done ? ' · Complete' : ' · Pending'}</span></li>)}</ul><div className="intensive-actions"><button className="btn primary" disabled={saving || completionSaved || !session.blindReplayDone || !session.shadowingAudioId || !session.selfRating || session.dictationResult === 'pending'} onClick={() => { if (!session.completedAt) change(value => applyIntensiveStage(value, 'complete')); void save(); }}>{saving && session.completedAt ? 'Saving review…' : completionSaved ? 'Review scheduled' : session.completedAt ? 'Retry scheduling review' : 'Finish and schedule review'}</button>{completionSaved ? <button className="btn line" onClick={() => { change(value => applyIntensiveStage(value, 'review')); setBlind(false); }}>Start blind review</button> : null}</div>
+          {session.nextReviewAt ? <p role="status">Next review: {new Date(session.nextReviewAt).toLocaleDateString()} · {!completionSaved && session.completedAt ? 'Pending save' : new Date(session.nextReviewAt) <= new Date() ? 'Due now' : 'Scheduled'}</p> : null}
           {session.stage >= 2 && !blind && session.reviewHistory?.length ? <details><summary>Previous completed cycles</summary>{session.reviewHistory.map((cycle, cycleIndex) => <div key={cycleIndex}><p>{cycle.completedAt ? new Date(cycle.completedAt).toLocaleDateString() : 'Previous review'} · {cycle.dictationResult} · Rating {cycle.selfRating || '—'}</p>{cycle.shadowingAudioId ? <SessionAudioPlayer audioId={cycle.shadowingAudioId} label={`Previous shadowing ${cycleIndex + 1}`} /> : null}</div>)}</details> : null}
         </div>
       </div>

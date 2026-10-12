@@ -110,3 +110,22 @@
   .intensive-step .btn { min-height: 44px; white-space: normal; }
   .intensive-checklist { grid-template-columns: 1fr; }
 }
+
+.intensive-gist>summary { cursor: pointer; font-size: 14px; font-weight: 600; line-height: 1.5; }
+.intensive-gist>summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+.intensive-gist[open]>summary { margin-bottom: 12px; }
+@media(max-width:700px) {
+  .intensive-stages { display: flex; overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 4px; }
+  .intensive-stages li { flex: 0 0 132px; }
+  .intensive-stages li>a { min-height: 48px; }
+  .intensive-sentences { display: none; }
+  .intensive-player-heading { margin-bottom: 10px; }
+  .intensive-player .waveform { display: none; }
+  .intensive-player { margin: 0; padding: 0; border: 0; gap: 0; }
+  .intensive-workbench .intensive-player-panel:not(:has(details[open])) { position: sticky; top: 0; z-index: 5; }
+  .intensive-main [id^=intensive-] { scroll-margin-top: 270px; }
+  .intensive-player .intensive-audio-controls { margin: 10px 0; }
+  .intensive-player-panel>.file-hint { margin-block: 8px; }
+  .intensive-gist>summary { min-height: 44px; display: flex; align-items: center; }
+  .intensive-workbench .intensive-gist { padding-block: 8px; }
+}
