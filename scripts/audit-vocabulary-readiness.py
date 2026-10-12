@@ -54,7 +54,7 @@ def render_markdown(report):
         f"Automatic checks cover **{s['entriesScanned']:,} entries, {s['membershipsScanned']:,} memberships and {s['groupsScanned']} dictation groups**. The source additions contain **{s['coreRows']:,} core rows, {s['correctionRows']:,} correction/example rows and {s['readinessDefaults']} preferred defaults**.", "",
         f"Original catalogue defaults lacked definitions for **{s['originalMissingDefinitionEntries']:,}** entries and examples for **{s['originalMissingExampleEntries']:,}**. The public priority model now has **{s['currentMissingDefinitionEntries']}** missing definitions and **{s['currentMissingExampleEntries']}** missing examples in standalone defaults. Group selections have **{s['membershipMissingDefinition']}** missing definitions and **{s['membershipMissingExample']}** missing examples.", "",
         "Coverage means a nonempty selected definition, example and part of speech. It does not certify all meanings, grammar, factual content, synonyms, media or intended source-group senses. Common learner defaults are editorial choices, not proof of group intent. Uncertain or malformed phrases retain usage notes.", "",
-        "The independent public model applies group bindings or context defaults first. Otherwise it chooses the readiness preferred default, then the existing learning overlay/catalogue default, and applies corrections before core additions for the matching entry/sense identity. It models fresh public content only: explicit sense selection, personal edits, history migration and runtime task eligibility require their own tests.", "",
+        "The independent public model first reconstructs context bindings/defaults and readiness supplements, then applies the released group curriculum: source-specific rows, thematic rows, or common meanings for general lists. Polysemy groups retain their multiple curricular senses while dictation uses the first. Theme/common/multiple recommendations do not verify original source meanings. It models fresh public content only: explicit sense selection, personal edits, history migration and runtime task eligibility require their own tests.", "",
         f"Dictation identity reconstruction passed **{s['dictationGroupsPassed']}/{s['groupsScanned']}** groups: source membership counts, declared counts, entry existence, one selected stable sense per unique entry, and unique `entryId:senseId:dictation` identities. **{s['groupsWithDuplicateMemberships']}** group contains repeated source-word membership; the one-card-per-entry model preserves the source rows and deduplicates the dictation cards. This is an independent Python reconstruction, not a claim that browser sessions were executed. Every group's ordered entry IDs, reconstructed card IDs and duplicate warnings are in the JSON report.", "",
         "| Book | Memberships | Original missing definition | Original missing example | Current missing definition | Current missing example | Core supplemented memberships |",
         "|---|---:|---:|---:|---:|---:|---:|",
@@ -83,6 +83,8 @@ def audit():
              DOMAIN + "readiness.ts", DOMAIN + "context.ts", DOMAIN + "selection.ts"]
     core_paths = [DOMAIN + f"readinessContent{i}.json" for i in range(3)]
     paths += core_paths
+    curriculum_paths = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / DOMAIN).glob("groupCurriculum*.json"))
+    paths += curriculum_paths + [DOMAIN + "curriculum.ts"]
     data = {p: read(p) for p in paths if p.endswith(".json")}
     catalog = data[paths[0]]
     context = data[DOMAIN + "contextSenseOverlay.json"]
@@ -97,6 +99,16 @@ def audit():
     bindings = {member_key(r): r for r in context["bindings"]}
     context_defaults = {r["entryId"]: r for r in context["defaults"]}
     unresolved = {member_key(r) for r in context["unresolved"]}
+    units = {(u["bookId"], u["id"]): u for u in catalog["units"]}
+    source_curriculum = {member_key(r): r for r in data.get(DOMAIN + "groupCurriculumSource.json", [])}
+    topic_rows = [r for p in curriculum_paths if "Topics" in p for r in data[p]]
+    topic_curriculum = {member_key(r): r for r in topic_rows}
+    common_curriculum = defaultdict(list)
+    for row in data.get(DOMAIN + "groupCurriculumCommon.json", []):
+        if row["sense"]["id"] not in {r["sense"]["id"] for r in common_curriculum[row["entryId"]]}:
+            common_curriculum[row["entryId"]].append(row)
+    curriculum_repairs = {(r["entryId"], r["sense"]["id"]): r for r in data.get(DOMAIN + "groupCurriculumRepairs.json", [])}
+    modern_curriculum = {r["entryId"]: r for r in data.get(DOMAIN + "groupCurriculumModernDefaults.json", [])}
     defects = []
 
     def supplement(entry_id, sense):
@@ -108,7 +120,7 @@ def audit():
                     result[field] = row[field]
         return result
 
-    def resolve(entry, membership=None):
+    def fallback_resolve(entry, membership=None):
         binding = bindings.get(member_key(membership)) if membership else None
         binding = binding or context_defaults.get(entry["id"])
         if binding:
@@ -116,6 +128,29 @@ def audit():
         candidate = defaults.get(entry["id"])
         base = candidate["sense"] if candidate else learning.get(entry["term"].lower()) or (entry.get("senses") or [{}])[0]
         return supplement(entry["id"], base), "readiness-default" if candidate else "learning-overlay" if entry["term"].lower() in learning else "catalogue"
+
+    def curriculum(entry, membership):
+        if not membership:
+            return None, []
+        unit = units.get((membership["bookId"], membership["unitId"]))
+        if not unit or unit["kind"] == "chapter":
+            return None, []
+        key = member_key(membership)
+        source_row, topic_row = source_curriculum.get(key), topic_curriculum.get(key)
+        theme = membership["bookId"] == "guixue:10174"
+        multiple = membership["bookId"] == "guixue:10177" and unit.get("parentId") == "21954"
+        rows = [source_row] if source_row else [topic_row] if topic_row else [] if theme else common_curriculum[entry["id"]] if multiple and common_curriculum[entry["id"]] else [modern_curriculum[entry["id"]]] if entry["id"] in modern_curriculum else common_curriculum[entry["id"]]
+        if not rows and not theme:
+            fallback, _ = fallback_resolve(entry, membership)
+            repair = curriculum_repairs.get((entry["id"], fallback.get("id")))
+            rows = [repair] if repair else []
+        basis = "source" if source_row else "multiple" if multiple else "theme" if theme else "common"
+        return basis, rows if multiple else rows[:1]
+
+    def resolve(entry, membership=None):
+        sense, origin = fallback_resolve(entry, membership)
+        basis, rows = curriculum(entry, membership)
+        return (dict(rows[0]["sense"]), "curriculum-" + basis) if rows else (sense, origin)
 
     for name, rows, required, key_fn in [
         ("core", core_rows, ("entryId", "senseId", "definition", "example", "pos"), identity),
@@ -168,10 +203,18 @@ def audit():
             defects.append({"type": "unknown-membership-entry", "membershipId": m.get("id"), "entryId": m["entryId"]})
             continue
         sense, origin = resolve(entry, m)
+        basis, curriculum_rows = curriculum(entry, m)
+        selected_binding = bindings.get(member_key(m))
+        source_confirmed = any(r.get("sectionId") and r.get("sentenceIds") for r in curriculum_rows if r["sense"]["id"] == sense.get("id"))
+        status = "reviewed" if source_confirmed else selected_binding["status"] if selected_binding and selected_binding["sense"]["id"] == sense.get("id") else "unresolved" if member_key(m) in unresolved else "unreviewed"
         membership_rows.append({"bookId": m["bookId"], "unitId": m["unitId"], "entryId": m["entryId"], "senseId": sense.get("id"),
+                                "membershipId": m.get("id"), "term": entry["term"], "curriculumBasis": basis,
+                                "curriculumSenseIds": [r["sense"]["id"] for r in curriculum_rows] or [sense.get("id")],
+                                "curriculumAuthored": bool(curriculum_rows), "sourceMeaningVerified": bool(source_confirmed),
+                                "definition": sense.get("definition", ""), "example": sense.get("example", ""), "pos": sense.get("pos", ""),
                                 "selectionSource": origin, "missingDefinition": not present(sense.get("definition")),
                                 "missingExample": not present(sense.get("example")), "missingPos": not present(sense.get("pos")),
-                                "contextStatus": bindings[member_key(m)]["status"] if member_key(m) in bindings else "unresolved" if member_key(m) in unresolved else "unreviewed"})
+                                "contextStatus": status})
     groups = []
     for unit in catalog["units"]:
         if unit["kind"] != "group":
@@ -237,6 +280,8 @@ def audit():
                "contextReviewedBindings": sum(r["status"] == "reviewed" for r in context["bindings"]),
                "contextUnresolvedBindings": len(context["unresolved"]), "contextDefaults": len(context["defaults"]),
                "uncertainOrNonstandardUsageCandidates": len(usage_candidates), "structuralDefects": len(defects)}
+    summary["curriculumRowsByFile"] = {p: len(data[p]) for p in curriculum_paths}
+    summary["curriculumMembershipsByBasis"] = dict(sorted(Counter(m["curriculumBasis"] for m in membership_rows).items()))
     return {"schemaVersion": 1, "scope": "Automatic public fresh-state coverage and identity scan; authored overlays are separate from exhaustive semantic/context review.",
             "privateDataRead": False, "sourceHashes": {p: hashlib.sha256((ROOT / p).read_bytes().replace(b'\r\n', b'\n')).hexdigest() for p in paths},
             "summary": summary, "books": books, "groups": groups, "entries": entry_rows, "memberships": membership_rows,

@@ -14,7 +14,7 @@ import { buildUnitPracticeQueue } from '../../domain/vocabulary/selection';
 import type { VocabularyStore } from '../../domain/vocabulary/types';
 import { VocabularyNavigation } from './VocabularyPages';
 import { Pronunciation } from './Pronunciation';
-import { entryUrl, groupPath, groupWords, rememberVocabularyPosition, useVocabularyCatalog, useVocabularyPosition } from './vocabularyNavigation';
+import { entryUrl, practiceUrl, groupPath, groupWords, rememberVocabularyPosition, useVocabularyCatalog, useVocabularyPosition } from './vocabularyNavigation';
 import '../../styles/vocabulary-workbench.css';
 import '../../styles/vocabulary-learning.css';
 
@@ -90,7 +90,7 @@ export function VocabularyGroupLearnPage() {
   const word = words[position];
   const batch = Math.floor(position / BATCH_SIZE);
   const batches = Math.ceil(words.length / BATCH_SIZE);
-  const origin = `${location.pathname}?word=${encodeURIComponent(word?.entry.id || '')}`;
+  const origin = `${location.pathname}?${new URLSearchParams({word:word?.entry.id || '',...(params.get('sense') ? {sense:params.get('sense')!} : {})})}`;
   useVocabularyPosition(origin, status === 'ready' && Boolean(word));
   const preferences = normalizeVocabularyPreferences(state.settings?.vocabulary);
   const assessedIds = getLearnedVocabularyIds({ ...state, vocabularyStates: [] });
@@ -125,15 +125,17 @@ export function VocabularyGroupLearnPage() {
     const nextViewed = [...new Set([...viewed, ...(markViewed ? [word.entry.id] : [])])];
     const nextId = words[index].entry.id;
     setViewed(nextViewed); setCurrentId(nextId);
-    const next = new URLSearchParams(params); next.set('word', nextId); setParams(next, { replace:true });
+    const next = new URLSearchParams(params); next.set('word', nextId); if(nextId!==word.entry.id) next.delete('sense'); setParams(next, { replace:true });
     requestAnimationFrame(() => { if (mounted.current && owner === accountId()) document.getElementById('learning-word')?.focus({ preventScroll:true }); });
     void save({ viewedEntryIds:nextViewed, currentEntryId:nextId, updatedAt:new Date().toISOString() });
   }
 
-  const presentation = word?.resolved.sense ? vocabularySensePresentation(word.resolved.sense) : undefined;
+  const selectedSense = word?.resolved.curriculum?.senses.find(sense=>sense.id===params.get('sense')) || word?.resolved.sense;
+  const activeResolved=word && selectedSense ? resolveVocabularyLearningContext(word.entry,{bookId,unitId,senseId:selectedSense.id}) : word?.resolved;
+  const presentation = selectedSense ? vocabularySensePresentation(selectedSense) : undefined;
   const publicEntry = word ? catalogVocabularyEntry(word.entry.id) : undefined;
-  const publicSense = publicEntry && word?.resolved.sense ? resolveVocabularyLearningContext(publicEntry, { bookId, unitId, senseId:word.resolved.sense.id }).sense : undefined;
-  const reliableCollocations = word?.resolved.contentReviewed || word?.resolved.sense?.source === 'Personal note' || Boolean(state.vocabulary.some(entry=>entry.id===word?.entry.id) && publicSense && word?.resolved.sense && hasVocabularySenseEdits(word.resolved.sense,[publicSense]));
+  const publicSense = publicEntry && selectedSense ? resolveVocabularyLearningContext(publicEntry, { bookId, unitId, senseId:selectedSense.id }).sense : undefined;
+  const reliableCollocations = activeResolved?.contentReviewed || selectedSense?.source === 'Personal note' || Boolean(state.vocabulary.some(entry=>entry.id===word?.entry.id) && publicSense && selectedSense && hasVocabularySenseEdits(selectedSense,[publicSense]));
   return <section className="view active vocabulary-view vocabulary-workbench vocabulary-learning">
     <VocabularyNavigation />
     <Link className="btn text" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}#group-${encodeURIComponent(unitId)}`}><ArrowLeft size={15}/>Back to wordbook</Link>
@@ -150,15 +152,17 @@ export function VocabularyGroupLearnPage() {
           <div className="page-tools"><span className="vocabulary-muted">Word {position+1} of {words.length}</span>{viewed.includes(word.entry.id)?<span className="pill"><Check size={13}/>Viewed</span>:null}</div>
           <h3 id="learning-word" tabIndex={-1}>{word.entry.term}</h3>
           <Pronunciation entry={word.entry} accent={preferences.accent}/>
-          <div className="vocabulary-learning-definition"><small>{word.resolved.sense?.pos || 'Meaning'}</small><p>{presentation?.definition || 'Definition not available yet'}</p></div>
-          <details className="vocabulary-learning-provenance"><summary>{word.resolved.reviewed?'Meaning in this group':'General dictionary meaning'}</summary><p>{word.resolved.reviewed?'This meaning is confirmed for the current group.':'A meaning specific to this group has not been confirmed. This card uses the general dictionary meaning.'}</p></details>
+          {word.resolved.curriculum && word.resolved.curriculum.senses.length>1 ? <div className="vocabulary-learning-meanings" aria-label="Meanings to learn">{word.resolved.curriculum.senses.map((sense,i)=><button className="btn line" key={sense.id} aria-pressed={selectedSense?.id===sense.id} onClick={()=>{const next=new URLSearchParams(params);next.set('sense',sense.id);setParams(next,{replace:true});}}>Meaning {i+1} · {sense.pos}</button>)}</div> : null}
+          <div className="vocabulary-learning-definition"><small>{selectedSense?.pos || 'Meaning'}</small><p>{presentation?.definition || 'Definition not available yet'}</p></div>
+          <details className="vocabulary-learning-provenance"><summary>{activeResolved?.curriculum ? !activeResolved.curriculumCurrent?'Your selected meaning':activeResolved.curriculum.basis==='theme'?'Theme learning meaning':activeResolved.curriculum.basis==='source'?'Meaning in this listening passage':activeResolved.curriculum.basis==='multiple'?'Multiple meanings to learn':'Common meaning to learn':activeResolved?.reviewed?'Meaning in this group':'General dictionary meaning'}</summary><p>{activeResolved?.curriculum ? activeResolved.curriculumCurrent?activeResolved.curriculum.explanation:'You are viewing your own edited meaning, separate from the group learning recommendation.' : activeResolved?.reviewed?'This meaning is confirmed for the current group.':'This card uses a general dictionary meaning.'}</p></details>
           {presentation?.example ? <div className="vocabulary-learning-example"><h4>Example</h4><p>{presentation.example}</p></div> : <p className="vocabulary-muted">No example is available for this meaning.</p>}
-          {reliableCollocations && word.resolved.sense?.collocations?.length ? <div className="vocabulary-learning-collocations"><h4>Common combinations</h4><ul>{word.resolved.sense.collocations.map(item=><li key={item}>{item}</li>)}</ul></div> : null}
-          <Link className="btn text" to={entryUrl(word.entry.id,{bookId,unitId,senseId:word.resolved.sense?.id},origin)} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Word details<ArrowRight size={14}/></Link>
+          {reliableCollocations && selectedSense?.collocations?.length ? <div className="vocabulary-learning-collocations"><h4>Common combinations</h4><ul>{selectedSense.collocations.map(item=><li key={item}>{item}</li>)}</ul></div> : null}
+          <Link className="btn text" to={entryUrl(word.entry.id,{bookId,unitId,senseId:selectedSense?.id},origin)} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Word details<ArrowRight size={14}/></Link>
+          {word.resolved.curriculum?.basis==='multiple' ? <div className="vocabulary-learning-selected-practice"><Link className="btn primary" to={practiceUrl(word.entry.id,selectedSense?.id,{bookId,unitId},origin,'definition')}>Practise this meaning<ArrowRight size={14}/></Link><p className="vocabulary-muted">This checks the selected meaning and keeps its own review progress. The whole-group assessment uses the first learning meaning for each word.</p></div> : null}
         </article>
         <div className="vocabulary-learning-controls"><button className="btn line" disabled={position===0 || saveStatus==='saving'} onClick={()=>navigateTo(position-1)}><ArrowLeft size={15}/>Previous word</button><button className="btn primary" disabled={saveStatus==='saving'} onClick={()=>navigateTo(Math.min(position+1,words.length-1),true)}><Check size={15}/>{position===words.length-1?'Mark viewed':'Mark viewed & next'}</button><button className="btn line" disabled={position===words.length-1 || saveStatus==='saving'} onClick={()=>navigateTo(position+1)}>Next word<ArrowRight size={15}/></button></div>
         {saveStatus==='failed'?<div role="alert" className="vocabulary-learning-save-error">Progress could not be saved. Your position is kept on this device. <button className="btn line" onClick={()=>pending && void save(pending)}>Retry save</button></div>:<p role="status" className="vocabulary-learning-save-status">{saveStatus==='saving'?'Saving progress…':saveStatus==='saved'?'Progress saved':'Mark each word viewed when you have finished learning it.'}</p>}
-        <section className="vocabulary-learning-assessments" aria-labelledby="learning-assessment-heading"><h3 id="learning-assessment-heading">Test your recall</h3><p>{viewed.length===words.length?'You have viewed all words. Choose an assessment to practise recall.':'You can start an assessment at any time, or finish learning the group first.'}</p><div className="actions">{assessments.map(item=><Link className={`btn ${item.mode==='dictation'?'primary':'line'}`} key={item.mode} to={assessmentUrl(item.mode)}>{item.label} · {item.queue.eligibleWords} words</Link>)}</div>{!assessments.length?<p>No assessments are available for the current words. Open word details to check available meanings.</p>:<p className="vocabulary-muted">Viewing words does not increase mastery. Specialist assessments may cover a smaller subset.</p>}<Link className="btn text" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}/groups/${encodeURIComponent(unitId)}/words`}>View group words<ArrowRight size={14}/></Link></section>
+        <section className="vocabulary-learning-assessments" aria-labelledby="learning-assessment-heading"><h3 id="learning-assessment-heading">Test your recall</h3><p>{viewed.length===words.length?'You have viewed all words. Choose an assessment to practise recall.':'You can start an assessment at any time, or finish learning the group first.'}</p><div className="actions">{assessments.map(item=><Link className={`btn ${item.mode==='dictation'?'primary':'line'}`} key={item.mode} to={assessmentUrl(item.mode)}>{item.label} · {item.queue.eligibleWords} {item.queue.eligibleWords===1?'word':'words'}</Link>)}</div>{!assessments.length?<p>No assessments are available for the current words. Open word details to check available meanings.</p>:<p className="vocabulary-muted">Viewing words does not increase mastery. Specialist assessments may cover a smaller subset.</p>}<Link className="btn text" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}/groups/${encodeURIComponent(unitId)}/words`}>View group words<ArrowRight size={14}/></Link></section>
       </>}
     </>}
   </section>;

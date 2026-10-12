@@ -261,7 +261,9 @@ export function VocabularyEntryPage() {
         <div className="vocabulary-sense-head">
           <h3>
             {main
-              ? resolved?.reviewed
+              ? resolved?.curriculum
+                ? "Current learning meaning"
+                : resolved?.reviewed
                 ? "Meaning in this group"
                 : "Common meaning"
               : sense.pos || "Other meaning"}
@@ -455,7 +457,12 @@ export function VocabularyEntryPage() {
               {primary ? (
                 <>
                   {validGroup ? (
-                    resolved?.reviewed ? (
+                    resolved?.curriculum ? (
+                      <details className="vocabulary-context-notice">
+                        <summary>{!resolved.curriculumCurrent ? 'Your selected meaning' : resolved.curriculum.basis === 'source' ? 'Meaning in this listening passage' : resolved.curriculum.basis === 'theme' ? 'Theme learning meaning' : resolved.curriculum.basis === 'multiple' ? 'Multiple meanings to learn' : 'Common meaning to learn'}</summary>
+                        <p>{resolved.curriculumCurrent ? resolved.curriculum.explanation : 'You are viewing a different dictionary meaning or your own edited learning notes. This selection is separate from the group learning recommendation.'}</p>
+                      </details>
+                    ) : resolved?.reviewed ? (
                       <p className="vocabulary-context-label">
                         Selected group meaning
                       </p>
@@ -536,8 +543,8 @@ export function VocabularyEntryPage() {
               return (
                 <section className="vocabulary-mastery-sense" key={sense.id}>
                   <h4>
-                    {index === 0
-                      ? "Current learning meaning"
+                      {index === 0
+                        ? "Progress for this meaning"
                       : `${sense.pos || "Meaning"} · ${sense.definition}`}
                   </h4>
                   <div className="vocabulary-mastery-status">

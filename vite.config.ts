@@ -130,8 +130,25 @@ function privateBankPlugin(): Plugin {
   };
 }
 
+// Audit rationales and old dictionary credits are authoring data; edit detection
+// needs the original editable fields only. Current sense credits stay complete.
+function curriculumRuntimePlugin(): Plugin {
+  return {
+    name:'curriculum-runtime-fields', apply:'build', enforce:'pre',
+    transform(code,id) {
+      if(!/\/groupCurriculum(?:Common|Repairs|ModernDefaults|Source|Topics[A-C])\.json$/.test(id.replaceAll('\\','/'))) return;
+      const fields=['id','definition','example','pos','collocations','usage','synonyms','antonyms','distinctions','distinctionTask','wordFamily','register'];
+      const rows=JSON.parse(code).map(({term:_term,reason:_reason,originalSense,...row}:Record<string,any>)=>({
+        ...row,
+        ...(originalSense?.id===row.sense.id ? {originalSense:Object.fromEntries(fields.filter(field=>originalSense[field]!==undefined).map(field=>[field,originalSense[field]]))} : {}),
+      }));
+      return {code:JSON.stringify(rows),map:null};
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), privateBankPlugin()],
+  plugins: [react(), privateBankPlugin(), curriculumRuntimePlugin()],
   build: {
     rollupOptions: {
       output: {

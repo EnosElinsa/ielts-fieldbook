@@ -10,6 +10,11 @@
 .vocabulary-learning-card { max-width: 860px; margin: 0 auto; padding: 28px; border: 1px solid var(--rule); border-radius: 12px; background: var(--sheet); overflow-wrap: anywhere; }
 .vocabulary-learning-card h3 { margin: 16px 0 10px; font-size: clamp(27px, 4vw, 38px); line-height: 1.2; }
 .vocabulary-learning-card h4 { margin: 0 0 8px; font-size: 12px; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
+.vocabulary-learning-meanings { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.vocabulary-learning-meanings .btn { min-height: 44px; white-space: normal; text-align: left; }
+.vocabulary-learning-meanings [aria-pressed="true"] { background: var(--blue); color: white; border-color: var(--blue); }
+.vocabulary-learning-selected-practice { margin-top: 16px; }
+.vocabulary-learning-selected-practice p { font-size: 12px; line-height: 1.6; max-width: 65ch; }
 .vocabulary-learning-definition { margin: 24px 0 10px; }
 .vocabulary-learning-definition small { color: var(--muted); }
 .vocabulary-learning-definition p { font-size: 19px; line-height: 1.6; margin: 6px 0; }
@@ -29,11 +34,15 @@
 .vocabulary-learning-assessments p { color: var(--muted); font-size: 13px; }
 .vocabulary-learning-assessments .actions { flex-wrap: wrap; }
 @media (max-width: 600px) {
-  .vocabulary-learning-heading { margin-top: 12px; }
+  .vocabulary-learning-heading { margin: 10px 0 14px; }
+  .vocabulary-learning-heading > p:not(.vocabulary-group-path) { display: none; }
   .vocabulary-learning-heading .page-tools { gap: 10px; }
   .vocabulary-learning-card { padding: 18px; }
   .vocabulary-learning-definition { margin-top: 18px; }
   .vocabulary-learning-definition p { font-size: 17px; }
+  .vocabulary-learning-card h3 { margin-top: 8px; }
+  .vocabulary-learning-meanings { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin-top: 12px; }
+  .vocabulary-learning-meanings .btn { font-size: 12px; padding: 8px; }
   .vocabulary-learning-controls { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
   .vocabulary-learning-controls .btn { justify-content: center; white-space: normal; }
   .vocabulary-learning-controls .primary { grid-column: 1 / -1; grid-row: 1; }

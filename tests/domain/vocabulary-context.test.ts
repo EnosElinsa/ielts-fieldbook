@@ -39,13 +39,21 @@ test.each([
   ['fruit', '21801', /flower.*seeds/], ['strip', '21840', /piece of material/],
   ['peel', '21840', /skin or outer layer/], ['peel', '21868', /remove the skin/],
   ['order', '21839', /request for food/], ['order', '21861', /command/],
-  ['treat', '21839', /medical care/], ['recipe', '21839', /preparing a dish/],
+  ['recipe', '21839', /preparing a dish/],
 ])('resolves %s in %s to complete contextual content', (term, unit, expected) => {
   const result = resolve(term, unit);
   expect(result.sense?.definition).toMatch(expected);
   expect(result.sense?.example).toMatch(/[.!?]$/);
   expect(result.sense?.collocations?.length).toBeGreaterThan(1);
   expect(result.reviewed).toBe(true);
+});
+
+test('the food curriculum recommends a treat as food without relabelling the previous medical-care sense', () => {
+  const result=resolve('treat','21839');
+  expect(result.sense?.definition).toMatch(/food/);
+  expect(result.sense?.pos).toBe('noun');
+  expect(result.reviewed).toBe(false);
+  expect(result.entry.senses.some(s=>/medical care/.test(s.definition))).toBe(true);
 });
 
 test('common food defaults improve standalone detail and generic group intent remains explicit', () => {

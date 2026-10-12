@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
+import { readFileSync } from 'node:fs';
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { VocabularyGroupLearnPage } from './VocabularyGroupLearnPage';
 
@@ -130,4 +131,23 @@ test('successful save after leaving clears pending device progress',async()=>{
   await userEvent.setup().click(screen.getByRole('button',{name:'Mark viewed & next'}));
   view.unmount();resolve(true);
   await waitFor(()=>expect(sessionStorage.getItem('fieldbook:vocabulary-learning-pending:account-one:book:group')).toBeNull());
+});
+
+test('multiple meanings preserve explicit selection in the details return link and clear it for the next word',async()=>{
+  const released=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'));
+  Object.assign(VOCABULARY_CATALOG,released);
+  const book=released.entries.find((e:any)=>e.term==='book');
+  const url=`/vocabulary/wordbooks/guixue%3A10177/groups/21955/learn?word=${book.id}`;
+  mount(url);
+  await screen.findByRole('heading',{name:'book'});
+  const meaningButtons=screen.getAllByRole('button',{name:/Meaning \d/});
+  expect(meaningButtons.length).toBeGreaterThan(1);
+  await userEvent.setup().click(meaningButtons.find(button=>button.textContent?.includes('noun'))!);
+  expect(screen.getByRole('link',{name:'Word details'}).getAttribute('href')).toContain('senseId=kaikki%3A7d09dc41b99ae33c32');
+  const details=new URL(screen.getByRole('link',{name:'Word details'}).getAttribute('href')!,'http://local.test');
+  expect(new URL(details.searchParams.get('returnTo')!,'http://local.test').searchParams.get('sense')).toBe('kaikki:7d09dc41b99ae33c32');
+  expect(screen.getByRole('link',{name:'Practise this meaning'})).toHaveAttribute('href',expect.stringContaining('senseId=kaikki%3A7d09dc41b99ae33c32'));
+  await userEvent.setup().click(screen.getByRole('button',{name:'Next word'}));
+  expect(screen.getByLabelText('Route')).not.toHaveTextContent('sense=');
+  expect(mocks.fb.state.vocabularyEvidence).toHaveLength(0);
 });
