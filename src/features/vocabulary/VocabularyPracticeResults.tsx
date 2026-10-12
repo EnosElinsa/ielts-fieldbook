@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
+import { useLocation, useNavigationType } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import { accountId } from '../../storage/remote';
 import { isRegionalSpellingDifference } from '../../domain/vocabulary/spelling';
@@ -22,20 +23,23 @@ export function VocabularyPracticeResults({ controller, results }: {
 }) {
   const { resultFilter, setResultFilter, resultRows, nextGroup, resetResults, resultReturnTo, retryMistakes, retryPreparing } = controller;
   const table = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+  const navigationType = useNavigationType();
   const positionKey = `fieldbook:session-position:${accountId()}:${results.id}:${resultFilter}`;
   useEffect(() => {
     let frame = 0;
     try {
       const position = JSON.parse(sessionStorage.getItem(positionKey) || 'null');
-      if (position) frame = requestAnimationFrame(() => {
+      if (position && (navigationType === 'POP' || location.state?.vocabularyRestore)) frame = requestAnimationFrame(() => {
         window.scrollTo(0, position.y);
         if (table.current) { table.current.scrollLeft = position.x; table.current.scrollTop = position.tableY || 0; }
         const rowId = position.cardId || position.entryId;
         if (rowId) document.getElementById(`session-row-${rowId}`)?.querySelector<HTMLAnchorElement>('a')?.focus({ preventScroll: true });
       });
+      else if (navigationType === 'PUSH') frame = requestAnimationFrame(()=>window.scrollTo?.(0,0));
     } catch { /* Browser storage may be disabled. */ }
     return () => cancelAnimationFrame(frame);
-  }, [positionKey]);
+  }, [positionKey, navigationType, location.state]);
   const rememberPosition = (cardId: string) => {
     try { sessionStorage.setItem(positionKey, JSON.stringify({ y: window.scrollY, x: table.current?.scrollLeft || 0, tableY: table.current?.scrollTop || 0, cardId })); } catch { /* Navigation works without storage. */ }
   };
@@ -180,13 +184,11 @@ export function VocabularyPracticeResults({ controller, results }: {
             {retryPreparing ? 'Preparing retry…' : 'Retry mistakes'}
           </button>
         ) : null}
-        {nextGroup ? <Link className={`btn ${hasMistakes ? "line" : "primary"}`} to={`/vocabulary/wordbooks/${encodeURIComponent(nextGroup.bookId)}/groups/${encodeURIComponent(nextGroup.id)}/learn`} onClick={resetResults}>Next group <ArrowRight size={15} /></Link> : null}
+        {nextGroup ? <Link className={`btn ${hasMistakes ? "line" : "primary"}`} to={`/vocabulary/wordbooks/${encodeURIComponent(nextGroup.bookId)}/groups/${encodeURIComponent(nextGroup.id)}/learn`}>Next group <ArrowRight size={15} /></Link> : null}
         <button className="btn line" type="button" onClick={resetResults}>
           New session
         </button>
-        <Link className="btn line" to="/vocabulary">
-          Exit
-        </Link>
+        <VocabularyBackLink className="btn line" fallback="/vocabulary/history"/>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 // @ts-nocheck
+import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, NavLink, useParams, useSearchParams, useLocation } from "react-router-dom";
+import { NavLink, useParams, useSearchParams, useLocation } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
@@ -32,7 +33,7 @@ import "../../styles/vocabulary.css";
 import "../../styles/vocabulary-workbench.css";
 import { isRegionalSpellingDifference } from '../../domain/vocabulary/spelling';
 import { getVocabularyMastery } from '../../domain/vocabulary/mastery';
-import { groupPath } from './vocabularyNavigation';
+import { groupPath, rememberVocabularyPosition, useVocabularyPosition } from './vocabularyNavigation';
 
 const STATUS = [
   "new",
@@ -186,8 +187,9 @@ export function VocabularyNavigation() {
   );
 }
 
-const vocabularyReturnPositions = new Map();
-function VocabularyLayout({ children }) {
+function VocabularyLayout({ children, ready = true }) {
+  const location = useLocation();
+  useVocabularyPosition(location.pathname + location.search + location.hash, ready);
   return (
     <section className="view active vocabulary-view vocabulary-workbench">
       <VocabularyNavigation />
@@ -240,13 +242,12 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
     if (!value || value === 'all') next.delete(key); else next.set(key, value);
     next.delete('page');
     return next;
-  }, { replace: true });
+  }, { replace: true, state: location.state });
   const setSearch = value => updateFilter('search', value);
   const setStatus = value => updateFilter('status', value);
   const setSource = value => updateFilter('source', value);
   const setSkill = value => updateFilter('skill', value);
-  useEffect(() => { const saved = vocabularyReturnPositions.get(`${accountId()}:${location.pathname + location.search}`); if (saved) requestAnimationFrame(() => { window.scrollTo?.(0,saved.scroll); document.getElementById(saved.focus)?.focus(); }); }, []);
-  const rememberReturn = entryId => vocabularyReturnPositions.set(`${accountId()}:${location.pathname + location.search}`, {scroll:window.scrollY,focus:`vocabulary-word-${entryId}`});
+  const rememberReturn = entryId => rememberVocabularyPosition(location.pathname + location.search, `vocabulary-word-${entryId}`);
   const entries = (fb.state.vocabulary || []).filter(
     (entry) => !(entry.tags || []).includes("archived"),
   );
@@ -277,9 +278,9 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
   const filterKey = [search,status,source,skill].join('|');
   const maxPage = Math.max(0, Math.ceil(filtered.length / 100) - 1);
   const page = Math.min(maxPage, Number.isInteger(requestedPage) && requestedPage >= 0 ? requestedPage : 0);
-  const setPage = value => setWordParams(current => { const next = new URLSearchParams(current); next.set('page', String(Math.max(0, Math.min(maxPage, value)))); return next; });
+  const setPage = value => setWordParams(current => { const next = new URLSearchParams(current); next.set('page', String(Math.max(0, Math.min(maxPage, value)))); return next; }, {replace:true,state:location.state});
   useEffect(() => { setSelected(new Set()); }, [filterKey, page]);
-  useEffect(() => { if (requestedPage !== page) setWordParams(current => { const next = new URLSearchParams(current); next.set('page', String(page)); return next; }, { replace: true }); }, [requestedPage, page, setWordParams]);
+  useEffect(() => { if (requestedPage !== page) setWordParams(current => { const next = new URLSearchParams(current); next.set('page', String(page)); return next; }, { replace: true, state: location.state }); }, [requestedPage, page, setWordParams]);
   const visibleEntries = filtered.slice(page * 100, page * 100 + 100);
   const applyBulk = async (retry = false) => {
     const operation = retry ? pendingBulk : { ids: [...selected], status: bulk, owner: accountId() };
@@ -514,7 +515,7 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
           onAction={() => {
             if (!entries.length) editEntry(fb);
             else {
-              setWordParams(current => { const next = new URLSearchParams(current); ['search','status','source','skill','page'].forEach(key => next.delete(key)); return next; }, { replace: true });
+              setWordParams(current => { const next = new URLSearchParams(current); ['search','status','source','skill','page'].forEach(key => next.delete(key)); return next; }, { replace: true, state: location.state });
             }
           }}
         />
@@ -609,7 +610,7 @@ export function VocabularyWordbooksPage() {
     const completed = groups.filter(group => groupStudied(fb.state, group)).length;
     const nextInside = groups.some(group => group.id === study.next?.id);
     const next = groups.find(group => !groupStudied(fb.state, group));
-    return <details className="vocabulary-study-chapter" key={unit.id} open={nextInside || undefined}>
+    return <details className="vocabulary-study-chapter" id={`chapter-${encodeURIComponent(unit.id)}`} key={unit.id} open={nextInside || undefined}>
       <summary><span><strong>{unit.title}</strong><small>{ids.size ? `${ids.size} words · ${completed}/${groups.length} groups studied` : `${unit.totalSourceWords ? `${unit.totalSourceWords} source words | ` : ""}Content pending`}</small></span><span className="vocabulary-chapter-chevron" aria-hidden="true">⌄</span></summary>
       <div className="vocabulary-chapter-body">
         {next && enrolled(book.id) ? <Link className="btn text" to={studyLink(next)}>Continue chapter <ArrowRight size={15} /></Link> : null}
@@ -617,13 +618,13 @@ export function VocabularyWordbooksPage() {
       </div>
     </details>;
   };
-  return <VocabularyLayout>
+  return <VocabularyLayout ready={!catalogBusy}>
     <div className="page-tools"><div><h2>Wordbook study</h2><p className="vocabulary-muted">One group at a time. Clear progress through every chapter.</p></div>
     </div>
     {catalogBusy ? <p role="status" className="vocabulary-muted">Loading catalog...</p> : null}
     {catalogError ? <div className="vocabulary-catalog-error"><p role="alert" className="vocabulary-error">{catalogError}</p><button type="button" className="btn line" disabled={catalogBusy} onClick={() => loadCatalog(selectedBook)}><RotateCcw size={15} />Retry catalog</button></div> : null}
     {book ? <>
-      <Link className="btn text" to="/vocabulary/wordbooks"><ArrowLeft size={16} />All wordbooks</Link>
+      <VocabularyBackLink fallback="/vocabulary/wordbooks"/>
       <div className="vocabulary-study-heading"><div><span className="vocabulary-eyebrow">Your wordbook</span><h3>{book.title}</h3><p>{wordbookDescription(book)}</p>
         <p className="vocabulary-muted">{book.entryIds.length} words · {study.hierarchy.filter(unit => unit.kind === "chapter").length} chapters · {study.groups.length} groups</p>
         <p>{study.studied.length}/{study.available.length} available groups studied</p>

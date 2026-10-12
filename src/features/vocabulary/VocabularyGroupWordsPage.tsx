@@ -1,5 +1,5 @@
+import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
 import {
-  Link,
   useLocation,
   useParams,
   useSearchParams,
@@ -84,18 +84,12 @@ export function VocabularyGroupWordsPage() {
     const next = new URLSearchParams(params);
     value ? next.set(key, value) : next.delete(key);
     if (key === "search") next.delete("page");
-    setParams(next, { replace: true });
+    setParams(next, { replace: true, state: location.state });
   };
   return (
     <section className="view active vocabulary-view vocabulary-workbench">
       <VocabularyNavigation />
-      <Link
-        className="btn text"
-        to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}#group-${encodeURIComponent(unitId)}`}
-      >
-        <ArrowLeft size={15} />
-        Back to wordbook
-      </Link>
+      <VocabularyBackLink fallback={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}#group-${encodeURIComponent(unitId)}`}/>
       {status === "loading" ? (
         <p role="status" className="practice-load-status">
           Loading group words…

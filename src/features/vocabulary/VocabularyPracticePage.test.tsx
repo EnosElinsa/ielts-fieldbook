@@ -238,6 +238,18 @@ function mount(query = "") {
   );
 }
 
+test('a saved result has a return to history and New session opens setup rather than its origin',async()=>{
+  const log={id:'saved-return',mode:'dictation',status:'submitted',filter:{dueOnly:false},selection:{kind:'review'},preferences:{},results:[],summary:{total:0,correct:0,incorrect:0,pending:0},submittedAt:'2026-10-12',startedAt:'2026-10-12'};
+  fb.current.state.vocabularySessions=[log];
+  function CurrentURL(){const l=useLocation();return <output aria-label='Current URL'>{l.pathname+l.search}</output>;}
+  render(<MemoryRouter initialEntries={['/vocabulary/history/saved-return?returnTo=%2Fvocabulary%2Fhistory']}><Routes><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/><Route path='/vocabulary/review' element={<VocabularyPracticePage/>}/><Route path='/vocabulary/history' element={<p>History list</p>}/></Routes><CurrentURL/></MemoryRouter>);
+  await screen.findByRole('heading',{name:/of .* correct/});
+  expect(screen.getByRole('link',{name:'Back to history'})).toHaveAttribute('href','/vocabulary/history');
+  await userEvent.setup().click(screen.getByRole('button',{name:'New session'}));
+  expect(await screen.findByRole('button',{name:'Start session'})).toBeInTheDocument();
+  expect(screen.getByLabelText('Current URL')).toHaveTextContent('/vocabulary/review');
+});
+
 test("dictation rows conceal answers and autoplay on start and row focus", async () => {
   const user = userEvent.setup();
   const view = mount();

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { BookOpen, RotateCcw } from "lucide-react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { vocabularyForwardState } from './VocabularyRouteLink';
 import { useFieldbook } from "../../context/FieldbookContext";
 import { addVocabularyItem, normalizeAnswer } from "../../domain/vocabulary";
 import type { VocabularyEntry, VocabularySense } from "../../domain/vocabulary";
@@ -189,6 +190,7 @@ export function DictionarySenses({
             location.pathname + location.search,
             "definition",
           ),
+          {state: vocabularyForwardState(location)},
         );
       } else setError("This sense could not be saved. Try again.");
     } catch {

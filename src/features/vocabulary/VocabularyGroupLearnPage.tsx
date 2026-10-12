@@ -1,5 +1,6 @@
+import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Check, RotateCcw } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { accountId } from '../../storage/remote';
@@ -72,7 +73,7 @@ export function VocabularyGroupLearnPage() {
     previousOwner.current = owner;
     if (accountChanged) {
       accountPositionReset.current = true;
-      const next = new URLSearchParams(params); next.delete('word'); setParams(next, { replace:true });
+      const next = new URLSearchParams(params); next.delete('word'); setParams(next, { replace:true, state: location.state });
     }
     const requested = accountChanged ? null : params.get('word');
     const position = requested && wordIds.includes(requested) ? requested : learning?.currentEntryId && wordIds.includes(learning.currentEntryId) ? learning.currentEntryId : wordIds[0];
@@ -90,7 +91,9 @@ export function VocabularyGroupLearnPage() {
   const word = words[position];
   const batch = Math.floor(position / BATCH_SIZE);
   const batches = Math.ceil(words.length / BATCH_SIZE);
-  const origin = `${location.pathname}?${new URLSearchParams({word:word?.entry.id || '',...(params.get('sense') ? {sense:params.get('sense')!} : {})})}`;
+  const originParams = new URLSearchParams(params);
+  originParams.set('word', word?.entry.id || '');
+  const origin = `${location.pathname}?${originParams}`;
   useVocabularyPosition(origin, status === 'ready' && Boolean(word));
   const preferences = normalizeVocabularyPreferences(state.settings?.vocabulary);
   const assessedIds = getLearnedVocabularyIds({ ...state, vocabularyStates: [] });
@@ -125,7 +128,7 @@ export function VocabularyGroupLearnPage() {
     const nextViewed = [...new Set([...viewed, ...(markViewed ? [word.entry.id] : [])])];
     const nextId = words[index].entry.id;
     setViewed(nextViewed); setCurrentId(nextId);
-    const next = new URLSearchParams(params); next.set('word', nextId); if(nextId!==word.entry.id) next.delete('sense'); setParams(next, { replace:true });
+    const next = new URLSearchParams(params); next.set('word', nextId); if(nextId!==word.entry.id) next.delete('sense'); setParams(next, { replace:true, state: location.state });
     requestAnimationFrame(() => { if (mounted.current && owner === accountId()) document.getElementById('learning-word')?.focus({ preventScroll:true }); });
     void save({ viewedEntryIds:nextViewed, currentEntryId:nextId, updatedAt:new Date().toISOString() });
   }
@@ -138,7 +141,7 @@ export function VocabularyGroupLearnPage() {
   const reliableCollocations = activeResolved?.contentReviewed || selectedSense?.source === 'Personal note' || Boolean(state.vocabulary.some(entry=>entry.id===word?.entry.id) && publicSense && selectedSense && hasVocabularySenseEdits(selectedSense,[publicSense]));
   return <section className="view active vocabulary-view vocabulary-workbench vocabulary-learning">
     <VocabularyNavigation />
-    <Link className="btn text" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}#group-${encodeURIComponent(unitId)}`}><ArrowLeft size={15}/>Back to wordbook</Link>
+    <VocabularyBackLink fallback={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}#group-${encodeURIComponent(unitId)}`}/>
     {status === 'loading' ? <p role="status">Loading group words…</p> : status === 'error' ? <div role="alert" className="vocabulary-error">Group words could not be loaded. <button className="btn line" onClick={retry}><RotateCcw size={15}/>Retry group</button></div> : !book || !isGroup ? <p role="alert">This wordbook group is unavailable.</p> : <>
       <header className="vocabulary-learning-heading">
         <p className="vocabulary-group-path">{groupPath(bookId, unitId)}</p>
@@ -152,7 +155,7 @@ export function VocabularyGroupLearnPage() {
           <div className="page-tools"><span className="vocabulary-muted">Word {position+1} of {words.length}</span>{viewed.includes(word.entry.id)?<span className="pill"><Check size={13}/>Viewed</span>:null}</div>
           <h3 id="learning-word" tabIndex={-1}>{word.entry.term}</h3>
           <Pronunciation entry={word.entry} accent={preferences.accent}/>
-          {word.resolved.curriculum && word.resolved.curriculum.senses.length>1 ? <div className="vocabulary-learning-meanings" aria-label="Meanings to learn">{word.resolved.curriculum.senses.map((sense,i)=><button className="btn line" key={sense.id} aria-pressed={selectedSense?.id===sense.id} onClick={()=>{const next=new URLSearchParams(params);next.set('sense',sense.id);setParams(next,{replace:true});}}>Meaning {i+1} · {sense.pos}</button>)}</div> : null}
+          {word.resolved.curriculum && word.resolved.curriculum.senses.length>1 ? <div className="vocabulary-learning-meanings" aria-label="Meanings to learn">{word.resolved.curriculum.senses.map((sense,i)=><button className="btn line" key={sense.id} aria-pressed={selectedSense?.id===sense.id} onClick={()=>{const next=new URLSearchParams(params);next.set('sense',sense.id);setParams(next,{replace:true, state: location.state});}}>Meaning {i+1} · {sense.pos}</button>)}</div> : null}
           <div className="vocabulary-learning-definition"><small>{selectedSense?.pos || 'Meaning'}</small><p>{presentation?.definition || 'Definition not available yet'}</p></div>
           <details className="vocabulary-learning-provenance"><summary>{activeResolved?.curriculum ? !activeResolved.curriculumCurrent?'Your selected meaning':activeResolved.curriculum.basis==='theme'?'Theme learning meaning':activeResolved.curriculum.basis==='source'?'Meaning in this listening passage':activeResolved.curriculum.basis==='multiple'?'Multiple meanings to learn':'Common meaning to learn':activeResolved?.reviewed?'Meaning in this group':'General dictionary meaning'}</summary><p>{activeResolved?.curriculum ? activeResolved.curriculumCurrent?activeResolved.curriculum.explanation:'You are viewing your own edited meaning, separate from the group learning recommendation.' : activeResolved?.reviewed?'This meaning is confirmed for the current group.':'This card uses a general dictionary meaning.'}</p></details>
           {presentation?.example ? <div className="vocabulary-learning-example"><h4>Example</h4><p>{presentation.example}</p></div> : <p className="vocabulary-muted">No example is available for this meaning.</p>}

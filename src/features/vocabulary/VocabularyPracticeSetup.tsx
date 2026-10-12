@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { VocabularyGroupPicker } from "./VocabularyGroupPicker";
-import { Link } from "react-router-dom";
+import { VocabularyLink as Link } from './VocabularyRouteLink';
 import { ArrowRight, Headphones, List, Play, Square } from "lucide-react";
 import { FilterMenu } from "../../components/ui";
 import { IconButton } from "../../components/IconButton";
