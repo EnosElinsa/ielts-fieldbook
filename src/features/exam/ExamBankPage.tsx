@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Star, ArrowRight } from 'lucide-react';
+import { Star, ArrowRight, Headphones, RotateCcw } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { FilterMenu } from '../../components/ui';
 import type { ExamAttempt, ExamSkill, QuestionType } from '../../domain/exam/types';
@@ -71,12 +71,13 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
     } catch { setSaveError('Could not save your favourite.'); setFailedFavorite({ id, wanted }); }
     finally { favoriteLock.current = false; setSavingFavorite(false); }
   };
-  const recent = attempts.filter(attempt => attempt.skill === skill).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).slice(0, 4);
+  const recent = attempts.filter(attempt => attempt.skill === skill).sort((a, b) => Number(a.status === 'completed') - Number(b.status === 'completed') || b.updatedAt.localeCompare(a.updatedAt)).slice(0, 4);
   return <section className="view active exam-bank">
     <div className="exam-intro">
       <span className="exam-eyebrow">Cambridge 8–21 · {skill}</span>
       <h2>{intensive ? 'Listen closer, sentence by sentence.' : skill === 'reading' ? 'Find the evidence. Build your accuracy.' : 'Listen with a purpose. Practise with a method.'}</h2>
       <p>{intensive ? 'Choose a part for blind listening, dictation, comparison, shadowing and delayed review.' : skill === 'reading' ? 'Practise a passage with evidence and method notes, or take a complete test under exam conditions.' : 'Practise a part, revisit your mistakes with intensive listening, or take a complete test under exam conditions.'}</p>
+      <div className="exam-bank-actions"><Link className="btn line" to={`/${skill}/review`}><RotateCcw size={15} />Review mistakes</Link>{skill === 'listening' && <Link className="btn line" to={intensive ? '/listening' : '/listening?mode=intensive'}><Headphones size={15} />{intensive ? 'Listening practice bank' : 'Intensive listening bank'}</Link>}</div>
     </div>
     <div className="toolbar exam-toolbar">
       <input className="search" value={search} onChange={event => update('q', event.target.value)} aria-label={`Search ${skill} sections`} placeholder="Search a title, book or test…" />
@@ -87,10 +88,10 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
       <FilterMenu label="Practice status" value={status} onChange={value => update('status', value)} options={[{ value: 'all', label: 'Any status' }, { value: 'ready', label: 'Ready' }, { value: 'incomplete', label: 'Source incomplete' }, { value: 'new', label: 'Not practised' }, { value: 'practised', label: 'Practised' }, { value: 'favorites', label: 'Favourites' }]} />
     </div>
     {saveError && <div role="alert" className="exam-notice">{saveError} {failedFavorite && <button className="btn line" disabled={savingFavorite} onClick={() => void toggleFavorite(failedFavorite.id, failedFavorite.wanted)}>Retry favourite save</button>}</div>}
-    {recent.length > 0 && <aside className="exam-recent"><span className="exam-eyebrow">Your recent work</span>{recent.map(attempt => <Link key={attempt.id} to={attempt.status === 'completed' ? `/${skill}/review/${attempt.id}` : attempt.mode === 'mock' ? `/${skill}/mock/${attempt.sourceId}?attempt=${attempt.id}` : `/${skill}/${attempt.sectionIds[0]}?attempt=${attempt.id}${attempt.retryOfAttemptId ? `&retry=${encodeURIComponent(attempt.retryOfAttemptId)}` : ''}`}>
-      <span>{catalog.sections.find(section => section.id === attempt.sectionIds[0])?.title || attempt.sourceId}</span>
-      <span>{attempt.mode === 'mock' ? 'Full mock' : `${sectionLabel} practice`} · {attempt.status === 'completed' ? `${attempt.score} / ${attempt.total}` : 'In progress'}</span><b>{attempt.status === 'completed' ? 'Review' : 'Resume'} <ArrowRight size={14} /></b>
-    </Link>)}</aside>}
+    {recent.length > 0 && <aside className="exam-recent" aria-label="Your recent work"><span className="exam-eyebrow">Your recent work</span>{recent.map(attempt => { const section = catalog.sections.find(row => row.id === attempt.sectionIds[0]); const paper = catalog.papers.find(row => row.id === (attempt.mode === 'mock' ? attempt.sourceId : section?.paperId)); return <Link key={attempt.id} to={attempt.status === 'completed' ? `/${skill}/review/${attempt.id}` : attempt.mode === 'mock' ? `/${skill}/mock/${attempt.sourceId}?attempt=${attempt.id}` : `/${skill}/${attempt.sectionIds[0]}?attempt=${attempt.id}${attempt.retryOfAttemptId ? `&retry=${encodeURIComponent(attempt.retryOfAttemptId)}` : ''}`}>
+      <span className="exam-eyebrow">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : `${skill} · saved practice`}</span><strong>{attempt.mode === 'mock' ? 'Full mock' : section?.title || `${sectionLabel} practice`}</strong>
+      <span className="exam-recent-meta">{attempt.mode === 'mock' ? 'Full mock' : `${sectionLabel} practice`} · {attempt.status === 'completed' ? `${attempt.score ?? '—'} / ${attempt.total ?? '—'} marks` : attempt.status === 'paused' ? 'Paused' : 'In progress'}</span><b>{attempt.status === 'completed' ? 'Review' : 'Resume'} <ArrowRight size={14} /></b>
+    </Link>; })}</aside>}
     {loading ? <p className="empty" role="status">Loading source catalog…</p> : error ? <div className="empty"><p role="alert">{error}</p><button className="btn line" onClick={reload}>Retry loading</button></div> : !catalog.sections.some(section => section.skill === skill) ? <div className="exam-empty"><h3>The {skill} bank is not available yet.</h3><p>Verified source content for Cambridge 8–21 has not been imported. No sample answers or passages are substituted here.</p></div> : <>
       <div className="exam-results-bar" ref={results}><span role="status">{matchingPapers.length} test{matchingPapers.length === 1 ? '' : 's'} · {sections.length} {sectionLabel.toLowerCase()}{sections.length === 1 ? '' : 's'}</span>{hasFilters && <button className="btn text" onClick={clearFilters}>Clear filters</button>}</div>
       {sections.length === 0 ? <div className="empty"><p>No sections match these filters.</p></div> : <div className="exam-paper-list">{visiblePapers.map(paper => {
