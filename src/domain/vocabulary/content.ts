@@ -120,7 +120,9 @@ const editableSenseFields = ['definition', 'example', 'pos', 'collocations', 'us
 /** Provenance survives editing; compare actual learner-editable content to known baselines. */
 export function hasVocabularySenseEdits(sense: VocabularySense, baselines: (VocabularySense | undefined | null)[]): boolean {
  const known = baselines.filter((item): item is VocabularySense => Boolean(item));
- return sense.source === 'Personal note' || Boolean(known.length && editableSenseFields.some(field => !known.some(item => JSON.stringify(item[field] ?? (Array.isArray(sense[field]) ? [] : '')) === JSON.stringify(sense[field] ?? (Array.isArray(item[field]) ? [] : '')))));
+ // Older saved snapshots omit optional dictionary fields. Missing metadata is not a learner edit;
+ // explicitly stored empty values still are, so clearing a field remains respected.
+ return sense.source === 'Personal note' || Boolean(known.length && editableSenseFields.some(field => sense[field] !== undefined && !known.some(item => JSON.stringify(item[field] ?? (Array.isArray(sense[field]) ? [] : '')) === JSON.stringify(sense[field] ?? (Array.isArray(item[field]) ? [] : '')))));
 }
 function existingReviewedEntry(entry: VocabularyEntry): VocabularyEntry {
  if (!entry.id.startsWith('vocab:') && !entry.id.startsWith('guixue:') && !entry.senses.some(sense => sense.source?.includes('Kaikki') || sense.source === 'Fieldbook editorial')) return entry;

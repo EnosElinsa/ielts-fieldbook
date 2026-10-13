@@ -38,7 +38,7 @@ describe('pronunciation controls', () => {
   await waitFor(() => expect(screen.getByText('US — Speaker')).toBeDefined());
   fireEvent.click(screen.getByText('US — Speaker'));
   expect(state.play).toHaveBeenCalledWith(entry, expect.objectContaining({ accent: 'uk', recording: other }));
-  await waitFor(() => expect(screen.getByRole('status').textContent).toBe('US recording'));
+  await waitFor(() => expect(screen.getByRole('status').textContent).toBe('American · Recorded pronunciation'));
  });
  test('metadata failure is retryable and does not relabel an unknown accent', async () => {
   state.load.mockResolvedValueOnce({ recordings: [], loadError: true }).mockResolvedValueOnce({ recordings: [{ url: 'https://example.org/unknown.ogg', accent: 'unknown', status: 'unknown', author: 'Legacy', availability: 'network-unverified' }] });
@@ -46,6 +46,9 @@ describe('pronunciation controls', () => {
   fireEvent.click(await screen.findByText('Retry media metadata'));
   expect(await screen.findByText('Unverified accent — Legacy')).toBeDefined();
   expect(state.load).toHaveBeenCalledTimes(2); expect(state.play).not.toHaveBeenCalled();
+  state.play.mockResolvedValue({ ok: true, source: 'recording', accent: 'unknown' });
+  fireEvent.click(screen.getByText('Unverified accent — Legacy'));
+  await waitFor(() => expect(screen.getByRole('status').textContent).toBe('Unverified accent · Recorded pronunciation'));
  });
  test('unmount cancels its own player', async () => {
   state.load.mockResolvedValue({ recordings: [] }); const { unmount } = render(<Pronunciation entry={entry} />);
@@ -74,3 +77,14 @@ describe('pronunciation controls', () => {
   expect(screen.getByRole('status').textContent).toBe('Stopped.');
  });
 });
+
+ test('both accents are explicit and device details stay in closed audio options', async () => {
+  state.load.mockResolvedValue({recordings:[]});
+  state.play.mockResolvedValue({ok:true,source:'speech',accent:'us',voice:'Device voice name',fallbackReason:'target-recording-unavailable'});
+  const view=render(<Pronunciation entry={entry} accent="uk" />);
+  fireEvent.click(screen.getByRole('button',{name:'Play US pronunciation of vegetable'}));
+  expect(state.play).toHaveBeenCalledWith(entry,expect.objectContaining({accent:'us',recording:undefined}));
+  await waitFor(()=>expect(screen.getByRole('status').textContent).toBe('American · Device voice'));
+  expect(view.container.querySelector('details')?.open).toBe(false);
+  expect(screen.getByText('US synthetic voice · Device voice name').closest('details')).toBeTruthy();
+ });

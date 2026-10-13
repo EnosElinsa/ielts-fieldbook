@@ -49,7 +49,7 @@
   .vocabulary-group-learning-progress { gap: 4px 14px; }
 }
 
-.vocabulary-learning-content { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(180px,.8fr); align-items:center; gap:28px; margin-top:16px; }
+.vocabulary-learning-content { display:grid; grid-template-columns:minmax(0,1fr); align-items:center; gap:28px; margin-top:16px; }
 .vocabulary-learning-copy { min-width:0; }
 .vocabulary-learning-content .vocabulary-learning-definition { margin-top:0; }
 .vocabulary-learning-content .vocabulary-learning-visual { max-width:360px; justify-self:center; }
@@ -57,3 +57,8 @@
  .vocabulary-learning-content { display:flex; flex-direction:column; align-items:stretch; gap:16px; }
  .vocabulary-learning-content .vocabulary-learning-visual { max-width:260px; margin-inline:auto; }
 }
+
+.vocabulary-learning-content.has-visual { grid-template-columns:minmax(0,1.4fr) minmax(180px,.8fr); }
+.vocabulary-learning-missing-example { font-size:13px; color:var(--muted); line-height:1.65; max-width:60ch; }
+.vocabulary-learning-provenance { margin:18px 0 8px; }
+@media(max-width:600px) { .vocabulary-learning-content.has-visual { display:flex; } }

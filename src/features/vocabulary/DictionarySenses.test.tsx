@@ -107,7 +107,7 @@ test("dictionary reports deduplicated credits to the parent and explicit study p
     </MemoryRouter>,
   );
   expect(await screen.findByText("To lessen severity.")).toBeInTheDocument();
-  expect(sources).toHaveBeenLastCalledWith([sourceSense]);
+  await waitFor(() => expect(sources).toHaveBeenLastCalledWith([sourceSense]));
   expect(
     screen.queryByText(/English Wiktionary contributors/),
   ).not.toBeInTheDocument();

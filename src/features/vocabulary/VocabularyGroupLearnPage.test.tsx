@@ -230,3 +230,14 @@ test('multiple meanings preserve explicit selection in the details return link a
   expect(screen.getByLabelText('Route')).not.toHaveTextContent('sense=');
   expect(mocks.fb.state.vocabularyEvidence).toHaveLength(0);
 });
+
+test('paste learning card uses the existing complete reviewed meaning, example and combinations', async () => {
+  const released=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'));
+  Object.assign(VOCABULARY_CATALOG,released);
+  const paste=released.entries.find((e:any)=>e.term==='paste');
+  mount(`/vocabulary/wordbooks/guixue%3A10174/groups/21840/learn?word=${paste.id}`);
+  await screen.findByRole('heading',{name:'paste'});
+  expect(screen.getByText('Mix the flour and water into a smooth paste.')).toBeInTheDocument();
+  expect(screen.getByText('tomato paste')).toBeInTheDocument();
+  expect(screen.queryByText('A soft moist mixture, in particular:')).not.toBeInTheDocument();
+});

@@ -57,3 +57,13 @@ Vocabulary learning navigation updates immediately. Account-scoped device drafts
 Validation: all 96 suites / 769 tests pass; TypeScript and production build pass. Playwright checked 320, 390 and 1440px in light and dark themes, filtering, equal card actions, last-answer/footer clearance, loading/failure/retry/reduced-motion, rapid navigation with delayed/failed save, module recovery, and passage-panel scroll recovery. Fourteen additional navigation checks cover learning → assessment → results → details → return, history filters, reload, browser Back/Forward, source switching, chapter/scroll restoration and keyboard operation. No horizontal overflow or browser errors were observed in these checks.
 
 These checks use the real application with an isolated local account harness and read-only authorized catalogs. Network responses, audio and device speech are test substitutes; they do not verify a production account, microphone permissions or original media playback quality. Same-path desk history is covered by the hook regression test (the local writing fixture offers only one question). Existing large main-bundle warning remains; no broad dependency restructuring or data/schema/catalog rewrite is part of this release.
+
+## Vocabulary learning card clarity — October 13
+
+Learning cards lead with IPA, explicit UK/US listening controls, the learning definition, example and reliable combinations. Audio metadata and meaning provenance remain available in closed, word-specific disclosures. Theme recommendations are distinguished from interpretations checked against the source; unknown recording accents remain unverified.
+
+Older saved senses that omit optional dictionary metadata can receive the existing reviewed definition and example. Explicitly cleared fields and personal edits remain protected. This is a display-resolution fix, without rewriting stored history or the production catalog.
+
+The decorative definition/context map is removed. Suitable reviewed photos or sense-guarded concrete illustrations remain, including a bowl-of-mixture illustration for the noun “paste”; unsupported meanings use the full card width. Failed photos retain Retry. Missing examples explain the next action without inventing content.
+
+Validation: 96 suites / 774 tests, TypeScript and production build passed. Eight browser checks cover 320/390/1440px in both themes, a historical paste snapshot, explicit UK/US playback selection, disclosure reset, details return and a card without artwork. No horizontal overflow or browser errors were observed. These use the isolated local account and substituted speech/audio described above, not an authenticated production account.

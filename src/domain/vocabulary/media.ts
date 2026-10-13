@@ -58,7 +58,7 @@ export function getVocabularyIllustration(resolved: ResolvedVocabularyLearningCo
 export function aggregateMediaCredits(recordings: VocabularyRecording[], image?: VocabularyIllustrationAsset): MediaCredit[] {
   return [...new Map([...recordings, ...(image ? [image] : [])].filter(item => item.sourceUrl).map(item => [item.sourceUrl, { sourceUrl: item.sourceUrl, author: item.author, license: item.license, licenseUrl: item.licenseUrl, changes: item.changes }])).values()];
 }
-export type VocabularyVisualConcept = 'pea' | 'carrot' | 'apple' | 'banana' | 'grape' | 'lemon' | 'orange' | 'vegetable' | 'fruit';
+export type VocabularyVisualConcept = 'pea' | 'carrot' | 'apple' | 'banana' | 'grape' | 'lemon' | 'orange' | 'vegetable' | 'fruit' | 'paste';
 /** A drawn food scene needs both the exact word and a concrete selected noun meaning. */
 export function getVocabularyVisualConcept(resolved: ResolvedVocabularyLearningContext): VocabularyVisualConcept | undefined {
   const sense = resolved.sense;
@@ -67,6 +67,7 @@ export function getVocabularyVisualConcept(resolved: ResolvedVocabularyLearningC
   if (/\b(company|corporation|software|computer|device|person|reward|incentive|metaphor|figurative|result|outcome|profit|colour|color|political|currency)\b/.test(definition)) return undefined;
   const term = resolved.entry.term.trim().toLowerCase();
   const candidates: { words: string[]; concept: VocabularyVisualConcept; meaning: RegExp }[] = [
+    { words: ['paste'], concept: 'paste', meaning: /\b(mixture|substance)\b/ },
     { words: ['pea', 'peas'], concept: 'pea', meaning: /\b(legume|pod|vegetable)\b|\b(round|spherical|green|edible|small)\b.*\bseed/ },
     { words: ['carrot', 'carrots'], concept: 'carrot', meaning: /\b(root|vegetable|edible)\b/ },
     { words: ['apple', 'apples'], concept: 'apple', meaning: /\b(fruit|orchard|edible)\b/ },
