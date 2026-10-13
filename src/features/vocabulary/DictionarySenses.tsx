@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { BookOpen, RotateCcw } from "lucide-react";
+import { BookOpen } from "lucide-react";
+import { InlineLoadingState, StateMessage } from '../../components/AsyncState';
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { vocabularyForwardState } from './VocabularyRouteLink';
 import { useFieldbook } from "../../context/FieldbookContext";
@@ -21,16 +22,18 @@ export function resetDictionaryCache() {
   dictionaryIndex = null;
 }
 async function loadTermDictionary(term: string) {
-  if (!dictionaryIndex)
-    dictionaryIndex = fetch("/dictionary/index.json")
+  if (!dictionaryIndex) {
+    const request = fetch("/dictionary/index.json")
       .then(async (response) => {
         if (!response.ok) throw new Error("Index unavailable");
         return response.json();
       })
       .catch((error) => {
-        dictionaryIndex = null;
+        if (dictionaryIndex === request) dictionaryIndex = null;
         throw error;
       });
+    dictionaryIndex = request;
+  }
   const index = await dictionaryIndex;
   const file = index[normalizeAnswer(term)];
   if (file && /^[a-f0-9]+\.json$/.test(file)) {
@@ -40,16 +43,18 @@ async function loadTermDictionary(term: string) {
     if (!Array.isArray(data.senses)) throw new Error("Invalid dictionary");
     return data.senses as VocabularySense[];
   }
-  if (!dictionaryRequest)
-    dictionaryRequest = fetch("/vocabulary-dictionary.json")
+  if (!dictionaryRequest) {
+    const request = fetch("/vocabulary-dictionary.json")
       .then(async (response) => {
         if (!response.ok) throw new Error("Dictionary unavailable");
         return response.json() as Promise<DictionaryFile>;
       })
       .catch((error) => {
-        dictionaryRequest = null;
+        if (dictionaryRequest === request) dictionaryRequest = null;
         throw error;
       });
+    dictionaryRequest = request;
+  }
   const data = await dictionaryRequest;
   return (
     data.entries?.find(
@@ -76,6 +81,7 @@ export function DictionarySenses({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [revision, setRevision] = useState(0);
+  const retryDictionary = () => { resetDictionaryCache(); setRevision(value => value + 1); };
   const [saving, setSaving] = useState<string | null>(null);
   useEffect(() => {
     let active = true;
@@ -210,28 +216,13 @@ export function DictionarySenses({
         meaning to practise it separately.
       </p>
       {loading ? (
-        <p className="vocabulary-muted" role="status">
-          Loading dictionary meanings…
-        </p>
+        <InlineLoadingState message="Loading dictionary meanings…" onRetry={saving === null ? retryDictionary : undefined} retryLabel="Retry dictionary" />
       ) : null}
       {error ? (
-        <div role="alert" className="vocabulary-error">
-          {error}
-          <button
-            type="button"
-            className="btn line"
-            onClick={() => setRevision((value) => value + 1)}
-            disabled={saving !== null}
-          >
-            <RotateCcw size={15} />
-            Retry dictionary
-          </button>
-        </div>
+        <StateMessage kind="error" message={error} onRetry={retryDictionary} retryLabel="Retry dictionary" retryDisabled={saving !== null} />
       ) : null}
       {!loading && !senses.length && !error ? (
-        <p className="vocabulary-muted">
-          No additional dictionary senses available.
-        </p>
+        <StateMessage message="No additional dictionary senses available." />
       ) : null}
       {groups.map((pos) => (
         <section className="vocabulary-dictionary-pos" key={pos}>

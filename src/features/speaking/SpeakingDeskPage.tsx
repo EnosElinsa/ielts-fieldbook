@@ -8,6 +8,7 @@ import { RecordingPlayer } from '../../components/SessionAudioPlayer';
 import { deletePendingAudio, readPendingAudio, writePendingAudio } from '../../storage/pendingAudio';
 import { accountId } from '../../storage/remote';
 import { Mic, Square, Play, Pause, RotateCcw, Save, ArrowRight, Shuffle, Download } from 'lucide-react';
+import { useWorkspaceDeskContext, useWorkspacePageState } from '../../lib/workspacePageState';
 
 function speakSecondsFor(part) {
   if (String(part) === '1') return 30;
@@ -58,18 +59,25 @@ export function SpeakingDeskPage() {
   const topic = fb.selectedTopic;
   const part = String(fb.deskPart);
   const owner = accountId();
+  const uiKey = `speaking:desk:${topic?.id || 'none'}:${part}:${fb.questionIndex}:${fb.currentDeskMode()}`;
+  useWorkspaceDeskContext({skill:'speaking', id:String(topic?.id || ''), mode:fb.currentDeskMode(), part, questionIndex:fb.questionIndex}, saved => {
+    fb.setSelectedTopicId(saved.id);
+    if (['1','2','3'].includes(saved.part)) fb.setDeskPart(saved.part);
+    if (Number.isInteger(saved.questionIndex) && saved.questionIndex >= 0) fb.setQuestionIndex(saved.questionIndex);
+    fb.setActiveDeskMode(saved.mode);
+  }, id => fb.state.speakingTopics.some(item => String(item.id) === id), fb.booted !== false);
   const draft = topic ? fb.speakingDraft(topic.id) : { transcript: '', notes: '' };
   const [transcript, setTranscript] = useState(draft.transcript || '');
   const [notes, setNotes] = useState(draft.notes || '');
-  const [noteSeconds, setNoteSeconds] = useState(60);
-  const [speakSeconds, setSpeakSeconds] = useState(speakSecondsFor(part));
+  const [noteSeconds, setNoteSeconds] = useWorkspacePageState(`${uiKey}:noteSeconds`, 60, value => typeof value === 'number' && value >= 0 && value <= 60);
+  const [speakSeconds, setSpeakSeconds] = useWorkspacePageState(`${uiKey}:speakSeconds`, speakSecondsFor(part), value => typeof value === 'number' && value >= 0 && value <= 120);
   const [noteRunning, setNoteRunning] = useState(false);
   const [speakRunning, setSpeakRunning] = useState(false);
   const [recording, setRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
   const [audioUrl, setAudioUrl] = useState(null);
   const [micError, setMicError] = useState(null);
-  const [phase, setPhase] = useState(part === '2' ? 'prepare' : 'answer');
+  const [phase, setPhase] = useWorkspacePageState(`${uiKey}:phase`, part === '2' ? 'prepare' : 'answer', value => ['prepare', 'answer', 'playback'].includes(value));
   const [uploadError, setUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [audioSaved, setAudioSaved] = useState(false);
@@ -77,8 +85,10 @@ export function SpeakingDeskPage() {
   const chunksRef = useRef([]);
   const streamRef = useRef(null);
   const activeCapture = useRef(null);
+  const microphoneGeneration = useRef(0);
 
   const resetRecording = () => {
+    microphoneGeneration.current += 1;
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       try {
         const recorder = mediaRecorderRef.current;
@@ -119,13 +129,10 @@ export function SpeakingDeskPage() {
     const d = fb.speakingDraft(topic.id);
     setTranscript(d.transcript || '');
     setNotes(d.notes || '');
-    setNoteSeconds(60);
-    setSpeakSeconds(speakSecondsFor(fb.deskPart));
     setNoteRunning(false);
     setSpeakRunning(false);
     resetRecording();
     setMicError(null);
-    setPhase(String(fb.deskPart) === '2' ? 'prepare' : 'answer');
     let active = true;
     void readPendingAudio(owner, topic.id, String(fb.deskPart)).then((blob) => {
       if (!active || !blob || owner !== accountId()) return;
@@ -160,7 +167,7 @@ export function SpeakingDeskPage() {
     const guardLink = (event) => {
       if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
-      if (!link || link.hasAttribute('download') || link.target === '_blank') return;
+      if (!link || link.hasAttribute('download') || link.hasAttribute('data-practice-navigation') || link.target === '_blank') return;
       const destination = new URL(link.href, window.location.href);
       if (destination.protocol === 'blob:' || destination.pathname === window.location.pathname && destination.search === window.location.search) return;
       if (!window.confirm('This recording has not been uploaded. Leave this practice and discard it?')) {
@@ -169,7 +176,12 @@ export function SpeakingDeskPage() {
       }
     };
     document.addEventListener('click', guardLink, true);
-    return () => { window.removeEventListener('beforeunload', warn); document.removeEventListener('click', guardLink, true); };
+    const guardRequest = event => {
+      if (event.defaultPrevented || audioSaved && !recording) return;
+      if (!window.confirm('This recording has not been uploaded. Leave this practice and keep it for later?')) event.preventDefault();
+    };
+    document.addEventListener('fieldbook:before-navigate', guardRequest);
+    return () => { window.removeEventListener('beforeunload', warn); document.removeEventListener('click', guardLink, true); document.removeEventListener('fieldbook:before-navigate', guardRequest); };
   }, [audioBlob, audioSaved, recording]);
 
   useEffect(() => {
@@ -259,17 +271,27 @@ export function SpeakingDeskPage() {
     if (!text) { fb.toast('Nothing written yet.'); return; }
     liveSave({ transcript, notes });
     const attemptId = crypto.randomUUID();
+    const generation = microphoneGeneration.current;
+    const stillCurrent = () => owner === accountId() && generation === microphoneGeneration.current;
     let audioId = null;
     if (audioBlob && !transcriptOnly) {
       setUploading(true);
       setUploadError(false);
-      try { await writePendingAudio(owner, topic.id, part, audioBlob); await putAudio(attemptId, audioBlob); audioId = attemptId; setAudioSaved(true); }
+      try {
+        await writePendingAudio(owner, topic.id, part, audioBlob);
+        if (!stillCurrent()) return;
+        await putAudio(attemptId, audioBlob);
+        if (!stillCurrent()) return;
+        audioId = attemptId; setAudioSaved(true);
+      }
       catch {
+        if (!stillCurrent()) return;
         setUploadError(true);
         fb.toast('Recording upload failed. Your recording is still available here.');
         return;
-      } finally { setUploading(false); }
+      } finally { if (stillCurrent()) setUploading(false); }
     }
+    if (!stillCurrent()) return;
     const currentDraft = fb.speakingDraft(topic.id);
     fb.setPendingAttempt({
       id: attemptId, essay: text, notes, part, question: topic,
@@ -567,7 +589,9 @@ export function SpeakingDeskPage() {
                     }
                     try {
                       const captureOwner = owner;
+                      const generation = microphoneGeneration.current;
                       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                      if (generation !== microphoneGeneration.current || captureOwner !== accountId()) { stream.getTracks().forEach(track => track.stop()); return; }
                       streamRef.current = stream;
                       chunksRef.current = [];
                       const recorder = new MediaRecorder(stream);

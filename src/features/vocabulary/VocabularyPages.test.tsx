@@ -16,6 +16,21 @@ beforeEach(() => {
 });
 afterEach(cleanup);
 
+test('empty vocabulary keeps the add and filtered recovery actions', () => {
+  fb.current.setEditingVocabularyId = vi.fn();
+  fb.current.setVocabularySeed = vi.fn();
+  const view = render(<MemoryRouter><VocabularyWordsPage /></MemoryRouter>);
+  fireEvent.click(within(screen.getByText('No vocabulary saved yet.').closest('.async-state') as HTMLElement).getByRole('button', { name: 'Add vocabulary' }));
+  expect(fb.current.openModal).toHaveBeenCalledWith('vocabulary');
+  expect(fb.current.setEditingVocabularyId).toHaveBeenCalledWith(null);
+  view.unmount();
+  fixture();
+  render(<MemoryRouter initialEntries={['/vocabulary/words?search=unmatched']}><VocabularyWordsPage /></MemoryRouter>);
+  expect(screen.getByText('No vocabulary matches these filters.')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Clear filters' }));
+  expect(screen.getByRole('checkbox', { name: 'Select one' })).toBeInTheDocument();
+});
+
 test('opening history results carries the history list as its actual origin',()=>{
   fixture();fb.current.state.vocabularySessions=[submitted(['one'])];
   function ResultOrigin(){return <output>{useLocation().state?.vocabularyReturn?.url || 'No return origin'}</output>;}

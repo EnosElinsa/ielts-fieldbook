@@ -11,6 +11,8 @@ export const workspaceModules = [
   { id: 'progress', to: '/progress', label: 'Progress', Icon: ChartNoAxesCombined },
 ] as const;
 
+export type WorkspaceModule = typeof workspaceModules[number]['id'];
+
 export function moduleFor(pathname: string, search: string, fallbackSkill: string) {
   if (pathname.startsWith('/reading')) return 'reading';
   if (pathname.startsWith('/listening')) return 'listening';

@@ -48,3 +48,12 @@
   .vocabulary-learning-controls .primary { grid-column: 1 / -1; grid-row: 1; }
   .vocabulary-group-learning-progress { gap: 4px 14px; }
 }
+
+.vocabulary-learning-content { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(180px,.8fr); align-items:center; gap:28px; margin-top:16px; }
+.vocabulary-learning-copy { min-width:0; }
+.vocabulary-learning-content .vocabulary-learning-definition { margin-top:0; }
+.vocabulary-learning-content .vocabulary-learning-visual { max-width:360px; justify-self:center; }
+@media(max-width:600px) {
+ .vocabulary-learning-content { display:flex; flex-direction:column; align-items:stretch; gap:16px; }
+ .vocabulary-learning-content .vocabulary-learning-visual { max-width:260px; margin-inline:auto; }
+}

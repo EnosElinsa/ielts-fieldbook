@@ -468,10 +468,7 @@ export function VocabularyEntryPage() {
                       <details className="vocabulary-context-notice">
                         <summary>General dictionary meaning</summary>
                         <p>
-                          A meaning specific to this group has not been
-                          confirmed. This general meaning is a learning
-                          reference, not a verified interpretation of the source
-                          group.
+                          This dictionary meaning is available for general study. Source-group interpretation has not been verified.
                         </p>
                       </details>
                     )

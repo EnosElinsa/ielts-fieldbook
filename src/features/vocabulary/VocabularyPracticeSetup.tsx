@@ -1,3 +1,4 @@
+import { PanelLoadingState, StateMessage } from '../../components/AsyncState';
 import { useState } from "react";
 import { VocabularyGroupPicker } from "./VocabularyGroupPicker";
 import { VocabularyLink as Link } from './VocabularyRouteLink';
@@ -161,8 +162,8 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
         </div>
       </div>
       </details>
-      {catalogStatus.status === 'loading' && study ? <p role="status" className="practice-load-status">Loading the complete wordbook…</p> : null}
-      {catalogStatus.status === 'error' ? <div className="practice-error" role="alert">The wordbook could not be loaded. <button className="btn line" onClick={retryCatalog}>Retry catalog</button></div> : null}
+      {catalogStatus.status === 'loading' && study ? <PanelLoadingState message="Loading the complete wordbook…" onRetry={retryCatalog} retryLabel="Retry catalog" /> : null}
+      {catalogStatus.status === 'error' ? <StateMessage kind="error" message="The wordbook could not be loaded." onRetry={retryCatalog} retryLabel="Retry catalog" /> : null}
       {study && catalogReady && unitQueue && selectedUnit ? <div className="practice-eligibility" role="status">
         {!unitQueue.complete ? <p>Group content is incomplete. Reload the catalog before starting.</p> : null}
         {unitQueue.archivedWords ? <p>{unitQueue.archivedWords} archived words excluded.</p> : null}

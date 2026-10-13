@@ -1,9 +1,10 @@
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { emptyState } from '../../domain';
 import { SpeakingDeskPage } from './SpeakingDeskPage';
+import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 
 const { putAudio, setPendingAttempt, openModal, writePendingAudio, readPendingAudio, deletePendingAudio } = vi.hoisted(() => ({ putAudio: vi.fn(), setPendingAttempt: vi.fn(), openModal: vi.fn(), writePendingAudio: vi.fn().mockResolvedValue(true), readPendingAudio: vi.fn().mockResolvedValue(null), deletePendingAudio: vi.fn().mockResolvedValue(true) }));
 vi.mock('../../storage/audio', () => ({ putAudio }));
@@ -24,7 +25,66 @@ vi.mock('../../context/FieldbookContext', () => ({
   }),
 }));
 
-afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.clearAllMocks(); readPendingAudio.mockResolvedValue(null); });
+afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.clearAllMocks(); readPendingAudio.mockResolvedValue(null); sessionStorage.clear(); vi.useRealTimers(); });
+
+test('speaking practice returns with a paused timer and phase without starting a recording', () => {
+  vi.useFakeTimers();
+  const first = render(<SpeakingDeskPage />);
+  fireEvent.click(screen.getByRole('button', { name: 'Start timer' }));
+  act(() => vi.advanceTimersByTime(4000));
+  expect(first.container.querySelector('.timer')).toHaveTextContent('0:26');
+  first.unmount();
+  act(() => vi.advanceTimersByTime(60000));
+  const returned = render(<SpeakingDeskPage />);
+  expect(returned.container.querySelector('.timer')).toHaveTextContent('0:26');
+  expect(screen.getByRole('button', { name: 'Start timer' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Record' })).toBeInTheDocument();
+  expect(returned.container.querySelector('[aria-current="step"]')).toHaveTextContent('Answer');
+});
+
+test('button-driven module departure protects a pending recording and allows a confirmed departure', async () => {
+  readPendingAudio.mockResolvedValue(new Blob(['pending actual audio'], { type: 'audio/webm' }));
+  URL.createObjectURL = vi.fn(() => 'blob:pending'); URL.revokeObjectURL = vi.fn();
+  render(<SpeakingDeskPage />);
+  await screen.findByText('Decoded recording player');
+  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
+  const proceed = vi.fn();
+  expect(navigateWithPracticeGuard('/vocabulary', proceed)).toBe(false);
+  expect(proceed).not.toHaveBeenCalled();
+  confirm.mockReturnValue(true);
+  expect(navigateWithPracticeGuard('/vocabulary', proceed)).toBe(true);
+  expect(proceed).toHaveBeenCalledOnce();
+  confirm.mockRestore();
+});
+
+test('a microphone permission result arriving after departure stops its stream without recording', async () => {
+  let resolveStream: (value: unknown) => void = () => {};
+  const stop = vi.fn(); const start = vi.fn();
+  vi.stubGlobal('navigator', {mediaDevices:{getUserMedia: () => new Promise(resolve => {resolveStream = resolve;})}});
+  vi.stubGlobal('MediaRecorder', class { start = start; });
+  const view = render(<SpeakingDeskPage />);
+  await userEvent.click(screen.getByRole('button', {name:'Record'}));
+  view.unmount();
+  await act(async () => {resolveStream({getTracks: () => [{stop}]});});
+  expect(stop).toHaveBeenCalledOnce();
+  expect(start).not.toHaveBeenCalled();
+});
+
+test('an upload finishing after departure cannot open a save dialog in another page', async () => {
+  readPendingAudio.mockResolvedValue(new Blob(['pending actual audio'], {type:'audio/webm'}));
+  URL.createObjectURL = vi.fn(() => 'blob:pending'); URL.revokeObjectURL = vi.fn();
+  let resolveUpload: () => void = () => {};
+  putAudio.mockImplementationOnce(() => new Promise<void>(resolve => {resolveUpload = resolve;}));
+  const view = render(<SpeakingDeskPage />);
+  await screen.findByText('Decoded recording player');
+  fireEvent.change(screen.getByRole('textbox', {name:'Speaking transcript'}), {target:{value:'My answer.'}});
+  await userEvent.click(screen.getByRole('button', {name:'Finished'}));
+  await waitFor(() => expect(putAudio).toHaveBeenCalled());
+  view.unmount();
+  await act(async () => {resolveUpload();});
+  expect(setPendingAttempt).not.toHaveBeenCalled();
+  expect(openModal).not.toHaveBeenCalled();
+});
 
 test('an upload failure retains raw recording and requires retry or explicit transcript-only choice', async () => {
   const stopTracks = vi.fn();

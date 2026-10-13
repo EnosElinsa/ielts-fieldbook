@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useMemo, useState } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { BookOpen, Check, ChevronDown, House, Library, LogOut, Monitor, Moon, MoreHorizontal, PencilLine, Search, Settings2, Sun, Upload, Download, ShieldCheck, MessageSquare, ChartNoAxesCombined, Mic2, NotebookTabs, Headphones } from 'lucide-react';
 import { ModalFrame } from './ModalFrame';
@@ -70,12 +70,18 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
   </div></ModalFrame>;
 }
 
-export function MobileNavigation({ onMore }: { onMore: () => void }) {
+export function MobileNavigation({ onMore, onSelectModule }: { onMore: () => void; onSelectModule?: (id: string) => void }) {
   const fb = useFieldbook();
   const { pathname, search } = useLocation();
   const activeModule = moduleFor(pathname, search, fb.activeSkill);
+  const navigate = useNavigate();
+  const select = (id, to) => {
+    if (onSelectModule) { onSelectModule(id); return; }
+    if (activeModule === id) return;
+    navigateWithPracticeGuard(to, () => ['writing', 'speaking', 'reading', 'listening'].includes(id) ? fb.setSkill(id, to) : navigate(to));
+  };
   return <nav className="mobile-navigation" aria-label="Main navigation">
-    {workspaceModules.filter(link => link.id !== 'progress').map(({ id, to, label, Icon }) => id === 'today' || id === 'vocabulary' ? <NavLink key={id} to={to} end={id === 'today'} aria-label={label}><Icon size={20} /><span>{label === 'Vocabulary' ? 'Vocab' : label}</span></NavLink> : <button key={id} type="button" aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} onClick={() => navigateWithPracticeGuard(to, () => fb.setSkill(id, to))}><Icon size={20} /><span>{label}</span></button>)}
+    {workspaceModules.filter(link => link.id !== 'progress').map(({ id, to, label, Icon }) => id === 'today' || id === 'vocabulary' ? <Link key={id} to={to} aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} aria-label={label} data-practice-navigation onClick={event => { if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); select(id, to); }}><Icon size={20} /><span>{label === 'Vocabulary' ? 'Vocab' : label}</span></Link> : <button key={id} type="button" aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} onClick={() => select(id, to)}><Icon size={20} /><span>{label}</span></button>)}
     <button type="button" onClick={onMore}><MoreHorizontal size={20} /><span>More</span></button>
   </nav>;
 }

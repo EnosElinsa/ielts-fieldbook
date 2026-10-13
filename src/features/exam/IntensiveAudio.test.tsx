@@ -9,7 +9,25 @@ const { events, wave } = vi.hoisted(() => {
   return { events, wave };
 });
 vi.mock('wavesurfer.js', () => ({ default: { create: () => wave } }));
-afterEach(() => { cleanup(); vi.clearAllMocks(); });
+afterEach(() => { cleanup(); vi.clearAllMocks(); vi.useRealTimers(); });
+
+it('retries a delayed audio load and offers recovery after the player reports failure', async () => {
+  vi.useFakeTimers();
+  render(<IntensiveAudio src="audio.mp3" start={0} end={2} speed={1} loop={false} onReplay={() => {}} onSentenceEnd={() => {}} onSpeedChange={() => {}} onLoopChange={() => {}} onPrevious={() => {}} onNext={() => {}} />);
+  expect(screen.getByRole('status')).toHaveTextContent('Loading audio…');
+  expect(screen.queryByRole('button', { name: 'Retry audio' })).not.toBeInTheDocument();
+  act(() => vi.advanceTimersByTime(10_000));
+  await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Retry audio' })));
+  expect(wave.load).toHaveBeenCalledTimes(2);
+  expect(wave.destroy).toHaveBeenCalledOnce();
+  act(() => events.error());
+  expect(screen.getByRole('alert')).toHaveTextContent('Audio could not load');
+  await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Retry audio' })));
+  expect(wave.load).toHaveBeenCalledTimes(3);
+  act(() => events.ready(100));
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Replay sentence' })).toBeEnabled();
+});
 
 it('plays the current segment and stops at its end, then loops when requested', async () => {
   const replay = vi.fn(), finished = vi.fn();

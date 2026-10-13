@@ -1,5 +1,6 @@
 import type { VocabularyEntry } from './types';
 import type { ResolvedVocabularyLearningContext } from './context';
+import { vocabularySensePresentation } from './dictionaryPresentation';
 import imageManifest from './illustrations.json';
 export type VocabularyAccent = 'uk' | 'us';
 export type MediaCredit = { sourceUrl: string; author: string; license: string; licenseUrl: string; changes: string };
@@ -38,8 +39,9 @@ function withLegacy(entry: VocabularyEntry, media: VocabularyMedia): VocabularyM
 const shards = new Map<string, Promise<Record<string, VocabularyMedia>>>();
 export function vocabularyMediaShard(id: string) { let hash = 0; for (const char of id) hash = (hash * 31 + char.charCodeAt(0)) >>> 0; return (hash % 16).toString(16); }
 /** Public, on-demand attribution/status data. Failed requests may be retried; no learning writes. */
-export async function getVocabularyMedia(entry: VocabularyEntry): Promise<VocabularyMedia> {
+export async function getVocabularyMedia(entry: VocabularyEntry, options: { retry?: boolean } = {}): Promise<VocabularyMedia> {
   const shard = vocabularyMediaShard(entry.id);
+  if (options.retry) shards.delete(shard);
   let request = shards.get(shard);
   if (!request) {
     request = fetch(`/vocabulary-media/audio/${shard}.json`).then(async response => { if (!response.ok) throw new Error('Media metadata unavailable'); return await response.json() as Record<string, VocabularyMedia>; });
@@ -55,4 +57,25 @@ export function getVocabularyIllustration(resolved: ResolvedVocabularyLearningCo
 }
 export function aggregateMediaCredits(recordings: VocabularyRecording[], image?: VocabularyIllustrationAsset): MediaCredit[] {
   return [...new Map([...recordings, ...(image ? [image] : [])].filter(item => item.sourceUrl).map(item => [item.sourceUrl, { sourceUrl: item.sourceUrl, author: item.author, license: item.license, licenseUrl: item.licenseUrl, changes: item.changes }])).values()];
+}
+export type VocabularyVisualConcept = 'pea' | 'carrot' | 'apple' | 'banana' | 'grape' | 'lemon' | 'orange' | 'vegetable' | 'fruit';
+/** A drawn food scene needs both the exact word and a concrete selected noun meaning. */
+export function getVocabularyVisualConcept(resolved: ResolvedVocabularyLearningContext): VocabularyVisualConcept | undefined {
+  const sense = resolved.sense;
+  if (!sense || !/^noun\b/i.test(sense.pos.trim())) return undefined;
+  const definition = vocabularySensePresentation(sense).definition.toLowerCase();
+  if (/\b(company|corporation|software|computer|device|person|reward|incentive|metaphor|figurative|result|outcome|profit|colour|color|political|currency)\b/.test(definition)) return undefined;
+  const term = resolved.entry.term.trim().toLowerCase();
+  const candidates: { words: string[]; concept: VocabularyVisualConcept; meaning: RegExp }[] = [
+    { words: ['pea', 'peas'], concept: 'pea', meaning: /\b(legume|pod|vegetable)\b|\b(round|spherical|green|edible|small)\b.*\bseed/ },
+    { words: ['carrot', 'carrots'], concept: 'carrot', meaning: /\b(root|vegetable|edible)\b/ },
+    { words: ['apple', 'apples'], concept: 'apple', meaning: /\b(fruit|orchard|edible)\b/ },
+    { words: ['banana', 'bananas'], concept: 'banana', meaning: /\b(fruit|edible|tropical)\b/ },
+    { words: ['grape', 'grapes'], concept: 'grape', meaning: /\b(fruit|berry|berries|vine)\b/ },
+    { words: ['lemon', 'lemons'], concept: 'lemon', meaning: /\b(fruit|citrus|edible)\b/ },
+    { words: ['orange', 'oranges'], concept: 'orange', meaning: /\b(fruit|citrus|edible)\b/ },
+    { words: ['vegetable', 'vegetables'], concept: 'vegetable', meaning: /\b(plant|food|edible|root|leaf|leaves)\b/ },
+    { words: ['fruit', 'fruits'], concept: 'fruit', meaning: /\b(plant|seed|seeds|food|edible|sweet)\b/ },
+  ];
+  return candidates.find(candidate => candidate.words.includes(term) && candidate.meaning.test(definition))?.concept;
 }

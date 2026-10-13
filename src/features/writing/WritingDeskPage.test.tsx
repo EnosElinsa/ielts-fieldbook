@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
@@ -9,8 +9,9 @@ const { persistNow, flushDraftPersist, toast, saveState } = vi.hoisted(() => ({
   persistNow: vi.fn(),
   flushDraftPersist: vi.fn(() => null),
   toast: vi.fn(),
-  saveState: { status: undefined as string | undefined },
+  saveState: { status: undefined as string | undefined, owner: 'one' },
 }));
+vi.mock('../../storage/remote', () => ({accountId: () => saveState.owner}));
 
 vi.mock('../../context/FieldbookContext', () => ({
   useFieldbook: () => {
@@ -53,7 +54,41 @@ afterEach(() => {
   flushDraftPersist.mockReturnValue(null);
   toast.mockReset();
   localStorage.clear();
+  sessionStorage.clear();
+  vi.useRealTimers();
   saveState.status = undefined;
+  saveState.owner = 'one';
+});
+
+test('changing accounts resets writing UI and pauses the previous timer', () => {
+  vi.useFakeTimers();
+  const view = render(<WritingDeskPage />);
+  fireEvent.click(screen.getByRole('checkbox', {name:'Position'}));
+  fireEvent.click(screen.getByRole('button', {name:'Start timer'}));
+  act(() => vi.advanceTimersByTime(2000));
+  saveState.owner = 'two'; view.rerender(<WritingDeskPage />);
+  expect(view.container.querySelector('.timer')).toHaveTextContent('40:00');
+  expect(screen.getByRole('checkbox', {name:'Position'})).not.toBeChecked();
+  expect(screen.getByRole('button', {name:'Start timer'})).toBeInTheDocument();
+  act(() => vi.advanceTimersByTime(5000));
+  expect(view.container.querySelector('.timer')).toHaveTextContent('40:00');
+});
+
+test('writing practice returns with checks, mobile panel, and a paused remaining timer', () => {
+  vi.useFakeTimers();
+  const first = render(<WritingDeskPage />);
+  fireEvent.click(screen.getByRole('checkbox', { name: 'Position' }));
+  fireEvent.click(screen.getByRole('tab', { name: 'Prompt' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Start timer' }));
+  act(() => vi.advanceTimersByTime(3000));
+  expect(first.container.querySelector('.timer')).toHaveTextContent('39:57');
+  first.unmount();
+  act(() => vi.advanceTimersByTime(60000));
+  const returned = render(<WritingDeskPage />);
+  expect(returned.container.querySelector('.timer')).toHaveTextContent('39:57');
+  expect(screen.getByRole('button', { name: 'Start timer' })).toBeInTheDocument();
+  expect(screen.getByRole('checkbox', { name: 'Position' })).toBeChecked();
+  expect(screen.getByRole('tab', { name: 'Prompt' })).toHaveAttribute('aria-selected', 'true');
 });
 
 test('failed save status exposes the existing draft save action as a retry', async () => {

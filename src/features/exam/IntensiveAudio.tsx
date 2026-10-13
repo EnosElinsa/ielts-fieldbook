@@ -1,3 +1,4 @@
+import { InlineLoadingState, StateMessage } from '../../components/AsyncState';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import { Pause, Play, Repeat, RotateCcw, SkipBack, SkipForward } from 'lucide-react';
@@ -112,8 +113,8 @@ export function IntensiveAudio(props: Props) {
 
   return <div className="audio-player intensive-player">
     <div ref={container} className="waveform" aria-label="Listening waveform" />
-    {status === 'loading' ? <p role="status">Loading audio…</p> : null}
-    {status === 'error' ? <div className="audio-error"><p role="alert">Audio could not load. Check the connection and retry.</p><button className="btn line" onClick={() => setRetry(value => value + 1)}>Retry audio</button></div> : null}
+    {status === 'loading' ? <InlineLoadingState message="Loading audio…" onRetry={() => setRetry(value => value + 1)} retryLabel="Retry audio" /> : null}
+    {status === 'error' ? <StateMessage kind="error" message="Audio could not load. Check the connection and retry." onRetry={() => setRetry(value => value + 1)} retryLabel="Retry audio" /> : null}
     {status === 'ready' && !props.full && !hasBounds ? <p role="status">Sentence timing is unavailable or outside the audio. Set valid A/B points below, or use full-track listening.</p> : null}
     <div className="intensive-audio-controls">
       <div className="intensive-transport" role="group" aria-label="Sentence playback">

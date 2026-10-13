@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import WaveSurfer from 'wavesurfer.js';
-import { Download, Pause, Play, RotateCcw } from 'lucide-react';
+import { Download, Pause, Play } from 'lucide-react';
 import { getAudio } from '../storage/audio';
+import { InlineLoadingState, StateMessage } from './AsyncState';
 
 const clock = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
 
@@ -48,8 +49,8 @@ export function RecordingPlayer({ src, label = 'Recording', onPlaybackChange }: 
   return <div className="audio-player">
     <div className="audio-player-head"><strong>{label}</strong><a className="btn line" href={src} download="ielts-recording.webm"><Download size={16} /> Download</a></div>
     <div className="waveform" ref={container} aria-label="Recording waveform" />
-    {status === 'loading' ? <p className="file-hint" role="status">Loading audio waveform...</p> : null}
-    {status === 'error' ? <div className="audio-error"><p role="alert">The waveform could not load. Play or download the recording below.</p><button className="btn line" onClick={() => setRetry((value) => value + 1)}><RotateCcw size={16} /> Retry waveform</button><audio controls src={src} preload="metadata" /></div> : null}
+    {status === 'loading' ? <InlineLoadingState message="Loading audio waveform…" onRetry={() => setRetry(value => value + 1)} retryLabel="Retry waveform" /> : null}
+    {status === 'error' ? <StateMessage kind="error" message="The waveform could not load. Play or download the recording below." onRetry={() => setRetry(value => value + 1)} retryLabel="Retry waveform"><audio controls src={src} preload="metadata" /></StateMessage> : null}
     {status === 'ready' ? <>
       <div className="wave-timeline" aria-hidden="true">{[0, 1, 2, 3, 4].map((tick) => <span key={tick}>{clock(duration * tick / 4)}</span>)}</div>
       <input className="audio-seek" aria-label="Recording playback position" type="range" min="0" max={duration} step="0.1" value={position} aria-valuetext={`${clock(position)} of ${clock(duration)}`} onChange={(event) => wave.current?.setTime(Number(event.target.value))} />
@@ -99,9 +100,9 @@ export function SessionAudioPlayer({
 
   if (!audioId) return null;
   if (missing) {
-    return <div className="audio-error"><p role="status">Recording unavailable on this account.</p><button className="btn line" onClick={() => setRetry((value) => value + 1)}><RotateCcw size={16} /> Retry recording</button></div>;
+    return <StateMessage message="Recording unavailable on this account." onRetry={() => setRetry(value => value + 1)} retryLabel="Retry recording" />;
   }
-  if (!url) return <p className="file-hint" role="status">Loading account recording...</p>;
+  if (!url) return <InlineLoadingState message="Loading account recording…" onRetry={() => setRetry(value => value + 1)} retryLabel="Retry recording" />;
 
   return (
     <RecordingPlayer src={url} label={label} />

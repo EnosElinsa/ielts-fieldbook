@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { aggregateMediaCredits, getVocabularyIllustration, getVocabularyMedia, legacyVocabularyRecordings, vocabularyMediaShard } from './media';
+import { aggregateMediaCredits, getVocabularyIllustration, getVocabularyMedia, legacyVocabularyRecordings, vocabularyMediaShard, getVocabularyVisualConcept } from './media';
 import { resolveVocabularyLearningContext } from './context';
 import supplements from './contextSenseOverlay.json';
 import type { VocabularyEntry } from './types';
@@ -8,6 +8,28 @@ import type { VocabularyMedia } from './media';
 const core = { id: 've-7c70dbbe', term: 'core', senses: [supplements.bindings.find(item => item.entryId === 've-7c70dbbe' && item.unitId === '21795')!.originalSense] } as unknown as VocabularyEntry;
 afterEach(() => vi.unstubAllGlobals());
 describe('sense-bound vocabulary media', () => {
+ test('drawn food concepts need the selected concrete noun definition', () => {
+  const resolved = resolveVocabularyLearningContext(core);
+  const as = (term: string, definition: string, pos = 'noun') => ({ ...resolved, entry: { ...resolved.entry, term }, sense: { ...resolved.sense!, definition, pos } });
+  expect(getVocabularyVisualConcept(as('pea', 'A small green seed that grows in a pod.'))).toBe('pea');
+  expect(getVocabularyVisualConcept(as('carrot', 'An edible orange root vegetable.'))).toBe('carrot');
+  expect(getVocabularyVisualConcept(as('apple', 'A round edible fruit.'))).toBe('apple');
+  expect(getVocabularyVisualConcept(as('apple', 'A software company that makes computers.'))).toBeUndefined();
+  expect(getVocabularyVisualConcept(as('orange', 'A colour like that of the citrus fruit.'))).toBeUndefined();
+  expect(getVocabularyVisualConcept(as('fruit', 'To produce fruit on a plant.', 'verb'))).toBeUndefined();
+ });
+ test('explicit media retry replaces a hanging shared request without stale rejection removing the newer cache', async () => {
+  const entry = { id: 'hanging-media-retry' } as VocabularyEntry;
+  let rejectOld!: (error: Error) => void;
+  const fetcher = vi.fn().mockImplementationOnce(() => new Promise((_, reject) => { rejectOld = reject; })).mockResolvedValue({ ok: true, json: async () => ({ [entry.id]: { version: 'fresh', recordings: [] } }) });
+  vi.stubGlobal('fetch', fetcher);
+  const old = getVocabularyMedia(entry, { retry: true });
+  expect((await getVocabularyMedia(entry, { retry: true })).version).toBe('fresh');
+  rejectOld(new Error('Old request failed late'));
+  expect((await old).loadError).toBe(true);
+  expect((await getVocabularyMedia(entry)).version).toBe('fresh');
+  expect(fetcher).toHaveBeenCalledTimes(2);
+ });
  test('food and geography core use different local images, unknown broad context has no image', () => {
   const earth = resolveVocabularyLearningContext(core, { bookId: 'guixue:10174', unitId: '21795' });
   const food = resolveVocabularyLearningContext(core, { bookId: 'guixue:10174', unitId: '21840' });
