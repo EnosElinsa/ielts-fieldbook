@@ -3,6 +3,7 @@ import path from 'node:path';
 import type { Connect, Plugin } from 'vite';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { vocabularyResourcesPlugin } from './scripts/vocabularyResources';
 const rootDir = __dirname;
 
 const BANK_FILES = [
@@ -148,7 +149,7 @@ function curriculumRuntimePlugin(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), privateBankPlugin(), curriculumRuntimePlugin()],
+  plugins: [react(), privateBankPlugin(), curriculumRuntimePlugin(), vocabularyResourcesPlugin(rootDir)],
   build: {
     rollupOptions: {
       output: {

@@ -1,5 +1,15 @@
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import type { ExamAsset, ExamCatalog, ExamPaper, ExamSection, ExamSkill } from '../domain/exam/types';
+import { cachedRead, readCacheKey, type ReadOptions } from '../lib/readCache';
+import { accountGeneration, accountId } from './accountIdentity';
+
+const contentVersion = 'exam-v1';
+const scopedKey = (resource: string, params: unknown) => readCacheKey(accountId(), contentVersion, resource, [accountGeneration(), import.meta.env.DEV, import.meta.env.BASE_URL, supabaseConfigured(), params]);
+const selectedIds = (ids: string[]) => [...new Set(ids.filter(Boolean))].sort();
+export const examCatalogKey = (skill?: ExamSkill, book?: number) => scopedKey('metadata', [skill, book]);
+export const examSectionsKey = (ids: string[]) => scopedKey('sections', selectedIds(ids));
+export const examAssetKey = (asset: ExamAsset) => scopedKey('asset-url', [asset.id, asset.storagePath]);
+export const EXAM_ASSET_REFRESH_MS = 3_540_000;
 
 const emptyCatalog = (): ExamCatalog => ({ schemaVersion: 1, papers: [], sections: [], passages: [], questions: [], assets: [] });
 const missingRelation = (error: { code?: string; message?: string }) => ['42P01', 'PGRST205'].includes(error.code || '') || /relation .* does not exist|could not find .* table/i.test(error.message || '');
@@ -46,7 +56,11 @@ const paperFields = 'id,book:payload->book,test:payload->test,title:payload->>ti
 const sectionFields = 'id,paperId:payload->>paperId,skill:payload->>skill,part:payload->part,title:payload->>title,questionTypes:payload->questionTypes,questionCount:payload->questionCount,assetId:payload->>assetId,status:payload->>status,provenance:payload->provenance';
 const payload = <T,>(rows: Row[]): T[] => rows.map(row => (row.payload ?? row) as T);
 
-export async function loadExamCatalog(skill?: ExamSkill, book?: number): Promise<ExamCatalog> {
+export function loadExamCatalog(skill?: ExamSkill, book?: number, options?: ReadOptions): Promise<ExamCatalog> {
+  return cachedRead(examCatalogKey(skill, book), () => readExamCatalog(skill, book), options);
+}
+
+async function readExamCatalog(skill?: ExamSkill, book?: number): Promise<ExamCatalog> {
   let catalog = emptyCatalog();
   if (supabaseConfigured()) {
     try {
@@ -67,8 +81,12 @@ export async function loadExamCatalog(skill?: ExamSkill, book?: number): Promise
   return { ...catalog, passages: [], questions: [], assets: [] };
 }
 
-export async function loadExamSections(sectionIds: string[]): Promise<ExamCatalog> {
-  const ids = [...new Set(sectionIds.filter(Boolean))];
+export function loadExamSections(sectionIds: string[], options?: ReadOptions): Promise<ExamCatalog> {
+  const ids = selectedIds(sectionIds);
+  return cachedRead(examSectionsKey(ids), () => readExamSections(ids), options);
+}
+
+async function readExamSections(ids: string[]): Promise<ExamCatalog> {
   if (!ids.length) return emptyCatalog();
   if (supabaseConfigured()) {
     try {
@@ -103,7 +121,11 @@ export async function loadExamSections(sectionIds: string[]): Promise<ExamCatalo
   return result;
 }
 
-export async function resolveExamAsset(asset: ExamAsset): Promise<string> {
+export function resolveExamAsset(asset: ExamAsset, options?: ReadOptions): Promise<string> {
+  return cachedRead(examAssetKey(asset), () => readExamAsset(asset), { ...options, ttlMs: EXAM_ASSET_REFRESH_MS, staleWhileRevalidate: false });
+}
+
+async function readExamAsset(asset: ExamAsset): Promise<string> {
   if (import.meta.env.DEV && asset.storagePath && !asset.storagePath.startsWith('demo/') && !asset.storagePath.startsWith('data/demo/')) return `${import.meta.env.BASE_URL}exam-assets/${asset.storagePath.split('/').map(encodeURIComponent).join('/')}`;
   if (!supabaseConfigured()) {
     if (asset.storagePath.startsWith('demo/') || asset.storagePath.startsWith('data/demo/')) return `${import.meta.env.BASE_URL}${asset.storagePath}`;

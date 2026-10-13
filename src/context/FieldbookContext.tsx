@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { requestTimeout } from '../lib/requestTimeout';
+import { timeOperation } from '../lib/performanceTelemetry';
 import {
   createContext,
   useCallback,
@@ -10,7 +11,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   STATE_VERSION,
   addVocabularyItem,
@@ -45,14 +46,17 @@ import {
   validateBackup,
   wordCount,
 } from '../domain';
-import { downloadFile, hydrateState, loadState, saveState, saveVocabularyImport, saveVocabularySession, loadVocabularyCatalog as readVocabularyCatalog } from '../storage';
+import { downloadFile, hydrateState, loadState, saveState, saveVocabularyImport, saveVocabularySession, loadVocabularyCatalog as readVocabularyCatalog, ensureAccountModule as readAccountModule, ensureCompleteAccount as readCompleteAccount, getCollectionStatuses, ensureQuestionBank as readQuestionBank, ensureSpeakingSample as readSpeakingSample } from '../storage';
+import { ACCOUNT_MODULES } from '../storage/accountModules';
+import { subscribeQuestionBank } from '../storage';
+import { loadReleasedVocabulary, loadReleasedVocabularyTeaching, VocabularyScopeUnavailableError } from '../storage/vocabularyCatalog';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { genericWordbook } from '../domain/vocabulary/wordbookNames';
 import { resolveRegionalSpellingWrongWords } from '../domain/vocabulary/regionalWrongWords';
 import { vocabularyLists, setVocabularyManualStatus, normalizeAnswer } from '../domain/vocabulary';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
-import { ensurePlans, inferredDeskMode } from '../lib/planTemplates';
+import { ensurePlans, inferredDeskMode, planMatchesSkill } from '../lib/planTemplates';
 import { completeReceptivePlanIfMatched, receptivePlanPath } from '../lib/receptivePlans';
 import { sessionSkill } from '../lib/format';
 import { accountId } from '../storage/remote';
@@ -89,6 +93,7 @@ const FieldbookContext = createContext<FieldbookContextValue | null>(null);
 
 function useFieldbookValue() {
   const navigate = useNavigate();
+  const {pathname: accountRoute} = useLocation();
   const [state, setState] = useState(() => loadState());
   const [toastMessage, setToastMessage] = useState('');
   const [toastVisible, setToastVisible] = useState(false);
@@ -123,12 +128,20 @@ function useFieldbookValue() {
   const [recoveryDrafts, setRecoveryDrafts] = useState(null);
   const [draftRevision, setDraftRevision] = useState(0);
   const [vocabularyCatalogRevision, setVocabularyCatalogRevision] = useState(0);
+  const [moduleStatus, setModuleStatus] = useState({productive:'unloaded', vocabulary:'unloaded', receptive:'unloaded'});
+  const [bankStatus, setBankStatus] = useState({writing:'unloaded', speaking:'unloaded'});
+  const [bankErrors, setBankErrors] = useState({writing:'', speaking:''});
+  const moduleReads = useRef(new Map());
+  const hydratedCollections = useRef(new Set());
+  const bankReads = useRef(new Map());
+  const loadEpoch = useRef(0);
   const vocabularyCatalogReads = useRef(new Map());
   const committedVocabularyImports = useRef([]);
   const committedVocabularyFields = useRef([]);
   const committedVocabularyPreferences = useRef([]);
   const committedStudySettings = useRef([]);
   const saveQueue = useRef(Promise.resolve());
+  const pendingAutomaticSave = useRef(null);
   const completingAttempt = useRef(false);
   const saveGeneration = useRef(0);
   const lastSaved = useRef(null);
@@ -156,19 +169,54 @@ function useFieldbookValue() {
     [toast],
   );
 
+  function readySaveCollections() {
+    const statuses = getCollectionStatuses();
+    return statuses ? Object.keys(statuses).filter(key => statuses[key] === 'ready' && hydratedCollections.current.has(key)) : undefined;
+  }
+
+  function acknowledgeSaved(next, collections) {
+    if (!collections) { lastSaved.current = structuredClone(next); return; }
+    const previous = { ...(lastSaved.current || loadState()) };
+    collections.forEach(key => {
+      if (key === 'profile') {
+        ['settings', 'activePlanId', 'reviewedAt'].forEach(field => { previous[field] = structuredClone(next[field]); });
+      } else if (key !== 'lexicon') previous[key] = structuredClone(next[key]);
+    });
+    lastSaved.current = previous;
+  }
+
   function queueSave(next, silent = false, completion = false) {
     if (completingAttempt.current && !completion) return Promise.resolve(false);
-    const generation = ++saveGeneration.current;
+    let generation = ++saveGeneration.current;
     const owner = accountId();
-    const frozen = structuredClone(next);
+    const epoch = loadEpoch.current;
+    let frozen = structuredClone(next);
+    let collections = readySaveCollections();
     writeDraftRecovery(owner, completion ? stateRef.current.drafts : frozen.drafts);
     setSaveStatus('saving');
+    if (!silent) pendingAutomaticSave.current = null;
+    if (silent && pendingAutomaticSave.current?.epoch === epoch) {
+      pendingAutomaticSave.current.snapshot = frozen;
+      pendingAutomaticSave.current.generation = generation;
+      pendingAutomaticSave.current.collections = collections;
+      return pendingAutomaticSave.current.operation;
+    }
+    const automatic = silent ? { snapshot:frozen, generation, collections, epoch, operation:null } : null;
+    if (automatic) pendingAutomaticSave.current = automatic;
     const operation = saveQueue.current.catch(() => {}).then(async () => {
-      if (!alive.current || accountId() !== owner) return false;
+      if (automatic) {
+        frozen = automatic.snapshot; generation = automatic.generation;
+        collections = automatic.collections;
+        if (pendingAutomaticSave.current === automatic) pendingAutomaticSave.current = null;
+      }
+      if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       applyCommittedVocabulary(frozen, owner);
       let saved = false;
-      try { saved = await saveState(frozen, silent ? undefined : toast); } catch { saved = false; }
-      if (saved) lastSaved.current = frozen;
+      const finishSave = timeOperation('save');
+      try { saved = await saveState(frozen, silent ? undefined : toast, {collections}); } catch { saved = false; }
+      finally { finishSave(!saved); }
+      if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
+      if (saved) acknowledgeSaved(frozen, collections);
       if (alive.current && accountId() === owner && generation === saveGeneration.current) {
         setSaveFailed(!saved);
         setSaveStatus(saved ? 'saved' : 'failed');
@@ -177,6 +225,7 @@ function useFieldbookValue() {
       return saved;
     });
     saveQueue.current = operation;
+    if (automatic) automatic.operation = operation;
     return operation;
   }
 
@@ -191,6 +240,137 @@ function useFieldbookValue() {
     },
     [toast],
   );
+
+  const mergeAccountData = useCallback((data, before) => {
+    const next = { ...stateRef.current };
+    const baseline = { ...(lastSaved.current || loadState()) };
+    Object.entries(data).forEach(([key, rows]) => {
+      if (!Array.isArray(rows)) return;
+      const prior = new Map((before[key] || []).map(row => [row.id, JSON.stringify(row)]));
+      const current = new Map((next[key] || []).map(row => [row.id, row]));
+      const loaded = new Map(rows.map(row => [row.id, row]));
+      current.forEach((row, id) => { if (!prior.has(id) || prior.get(id) !== JSON.stringify(row)) loaded.set(id, row); });
+      prior.forEach((_value, id) => { if (!current.has(id)) loaded.delete(id); });
+      next[key] = [...loaded.values()];
+      baseline[key] = structuredClone(rows);
+      hydratedCollections.current.add(key);
+    });
+    lastSaved.current = baseline;
+    stateRef.current = next; setState(next);
+    return next;
+  }, []);
+
+  const ensureAccountModule = useCallback((module) => {
+    if (moduleReads.current.has(module)) return moduleReads.current.get(module);
+    const owner = accountId();
+    const epoch = loadEpoch.current;
+    const before = structuredClone(stateRef.current);
+    const finishTiming = timeOperation(module);
+    setModuleStatus(status => ({...status, [module]:'loading'}));
+    const request = readAccountModule(module).then(async ({data}) => {
+      let teaching;
+      if (module === 'vocabulary' && data.vocabulary?.length) {
+        teaching = await loadReleasedVocabularyTeaching({entryIds: data.vocabulary.map(entry => entry.id), allowMissingEntryIds: true});
+      }
+      if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
+      if (teaching) {
+        for (const key of ['books','units','memberships']) {
+          const identity = row => key === 'units' ? `${row.bookId}:${row.id}` : row.id;
+          const rows = new Map(VOCABULARY_CATALOG[key].map(row => [identity(row), row]));
+          teaching[key].forEach(row => rows.set(identity(row), key === 'books' ? genericWordbook(row) : row));
+          VOCABULARY_CATALOG[key] = [...rows.values()];
+        }
+        setVocabularyCatalogRevision(revision => revision + 1);
+      }
+      const next = mergeAccountData(data, before);
+      if (module === 'productive') repairAssessments(next);
+      if (module === 'vocabulary') {
+        const corrected = resolveRegionalSpellingWrongWords(next);
+        if (corrected.length) void persistNow(next);
+      }
+      setModuleStatus(status => ({...status, [module]:'ready'}));
+      finishTiming();
+      return next;
+    }).catch(error => {
+      finishTiming(true);
+      if (moduleReads.current.get(module) === request) moduleReads.current.delete(module);
+      if (alive.current && owner === accountId() && epoch === loadEpoch.current) setModuleStatus(status => ({...status, [module]:'error'}));
+      throw error;
+    });
+    moduleReads.current.set(module, request);
+    return request;
+  }, [mergeAccountData, persistNow]);
+
+  const ensureCompleteAccount = useCallback(async () => {
+    await Promise.all(Object.keys(ACCOUNT_MODULES).map(module => ensureAccountModule(module)));
+    await readCompleteAccount();
+    return structuredClone(stateRef.current);
+  }, [ensureAccountModule]);
+
+  const ensureQuestionBank = useCallback((skill, force = false) => {
+    if (!force && bankReads.current.has(skill)) return bankReads.current.get(skill);
+    const owner = accountId();
+    const epoch = loadEpoch.current;
+    setBankStatus(status => ({...status, [skill]:status[skill] === 'ready' ? 'ready' : 'loading'}));
+    const request = readQuestionBank(skill, {force}).then(rows => {
+      if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
+      const key = skill === 'writing' ? 'questions' : 'speakingTopics';
+      const retained = rows.map(row => {
+        const previous = skill === 'speaking' && stateRef.current.speakingTopics.find(topic => topic.id === row.id);
+        const samples = Object.fromEntries(['samples','sampleAnswer','sampleNotes','part3Samples'].filter(field => previous?.[field] !== undefined).map(field => [field, previous[field]]));
+        return {...row, ...samples};
+      });
+      const next = {...stateRef.current, [key]: retained};
+      stateRef.current = next; setState(next);
+      if (skill === 'writing' && rows.length) setSelectedQuestionId(id => rows.some(row=>String(row.id)===String(id)) ? id : String(rows[0].id));
+      if (skill === 'speaking' && rows.length) setSelectedTopicId(id => rows.some(row=>String(row.id)===String(id)) ? id : String(rows[0].id));
+      setBankStatus(status => ({...status, [skill]:'ready'}));
+      if (bankReads.current.get(skill) === request) bankReads.current.delete(skill);
+      return rows;
+    }).catch(error => {
+      if (bankReads.current.get(skill) === request) {
+        bankReads.current.delete(skill);
+        if (alive.current && owner === accountId() && epoch === loadEpoch.current) setBankStatus(status => ({...status, [skill]:status[skill] === 'ready' ? 'ready' : 'error'}));
+      }
+      throw error;
+    });
+    bankReads.current.set(skill, request); return request;
+  }, []);
+
+  const ensureSpeakingSample = useCallback(async topicId => {
+    const owner = accountId();
+    const epoch = loadEpoch.current;
+    const sample = await readSpeakingSample(topicId);
+    if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
+    if (sample) {
+      const next = {...stateRef.current, speakingTopics:stateRef.current.speakingTopics.map(topic => String(topic.id) === String(topicId) ? {...topic,...sample,id:topic.id} : topic)};
+      stateRef.current = next; setState(next);
+    }
+    return sample;
+  }, []);
+
+  useEffect(() => {
+    if (!booted) return;
+    const owner = accountId();
+    const epoch = loadEpoch.current;
+    const stops = ['writing','speaking'].map(skill => subscribeQuestionBank(skill, snapshot => {
+      if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return;
+      if (snapshot.rows !== undefined) {
+        const key = skill === 'writing' ? 'questions' : 'speakingTopics';
+        const rows = snapshot.rows.map(row => {
+          if (skill !== 'speaking') return row;
+          const previous = stateRef.current.speakingTopics.find(topic => topic.id === row.id);
+          const samples = Object.fromEntries(['samples','sampleAnswer','sampleNotes','part3Samples'].filter(field => previous?.[field] !== undefined).map(field => [field, previous[field]]));
+          return {...row, ...samples};
+        });
+        const next = {...stateRef.current, [key]: rows};
+        stateRef.current = next; setState(next);
+        setBankStatus(status => ({...status, [skill]: 'ready'}));
+      }
+      setBankErrors(errors => ({...errors, [skill]: snapshot.error ? 'Question bank could not be refreshed.' : ''}));
+    }));
+    return () => stops.forEach(stop => stop());
+  }, [booted, loadGeneration]);
 
   function applyCommittedVocabulary(target, owner) {
     committedVocabularyFields.current.filter(change => change.owner === owner).forEach(change => applyVocabularyFields(target, change));
@@ -239,10 +419,12 @@ function useFieldbookValue() {
   // starts from the latest state; successful fields also survive older autosaves.
   const commitVocabularyFields = useCallback((prepare) => {
     const owner = accountId();
+    const epoch = loadEpoch.current;
     const generation = ++saveGeneration.current;
     setSaveStatus('saving');
+    pendingAutomaticSave.current = null;
     const operation = saveQueue.current.catch(() => {}).then(async () => {
-      if (!alive.current || accountId() !== owner || completingAttempt.current) return false;
+      if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current || completingAttempt.current) return false;
       const before = structuredClone(stateRef.current);
       applyCommittedVocabulary(before, owner);
       const next = structuredClone(before);
@@ -255,11 +437,12 @@ function useFieldbookValue() {
         return [{owner,key,id,seed:structuredClone(after),before:Object.fromEntries(fields.map(field=>[field,JSON.stringify(prior?.[field])])),after:Object.fromEntries(fields.map(field=>[field,structuredClone(after[field])]))}];
       });
       let saved = false;
-      try { saved = await saveState(next, toast); } catch { saved = false; }
-      if (!alive.current || accountId() !== owner) return false;
+      const collections = readySaveCollections();
+      try { saved = await saveState(next, toast, {collections}); } catch { saved = false; }
+      if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       if (generation === saveGeneration.current) { setSaveFailed(!saved); setSaveStatus(saved ? 'saved' : 'failed'); }
       if (saved) {
-        lastSaved.current = next;
+        acknowledgeSaved(next, collections);
         committedVocabularyFields.current.push(...changes);
         const current = structuredClone(stateRef.current);
         applyCommittedVocabulary(current, owner);
@@ -329,13 +512,16 @@ function useFieldbookValue() {
 
   const persistVocabularyImport = useCallback((draft, batchId) => {
     const owner = accountId();
+    const epoch = loadEpoch.current;
     const before = structuredClone(stateRef.current);
     const frozen = structuredClone(draft);
     setSaveStatus('saving');
+    pendingAutomaticSave.current = null;
     const operation = saveQueue.current.catch(() => {}).then(async () => {
-      if (!alive.current || accountId() !== owner) return false;
+      if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       applyCommittedVocabulary(frozen, owner);
       const saved = await saveVocabularyImport(frozen, batchId, toast);
+      if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       if (alive.current && accountId() === owner) {
         setSaveFailed(!saved); setSaveStatus(saved ? 'saved' : 'failed');
         if (saved) {
@@ -358,12 +544,15 @@ function useFieldbookValue() {
 
   const persistVocabularySession = useCallback((draft, sessionId) => {
     const owner=accountId();const before=structuredClone(stateRef.current);const frozen=structuredClone(draft);
+    const epoch = loadEpoch.current;
     const generation=++saveGeneration.current;setSaveStatus('saving');
     const keys=[...vocabularyLists,'vocabularySessions'];
+    pendingAutomaticSave.current = null;
     const operation=saveQueue.current.catch(()=>{}).then(async()=>{
-      if(!alive.current || accountId()!==owner)return false;
+      if(!alive.current || accountId()!==owner || epoch !== loadEpoch.current)return false;
       applyCommittedVocabulary(frozen,owner);
       let saved=false;try{saved=await saveVocabularySession(frozen,sessionId,toast);}catch{saved=false;}
+      if(!alive.current || accountId()!==owner || epoch !== loadEpoch.current)return false;
       if(alive.current&&accountId()===owner){
         if(generation===saveGeneration.current){setSaveFailed(!saved);setSaveStatus(saved?'saved':'failed');}
         if(saved){
@@ -379,14 +568,17 @@ function useFieldbookValue() {
 
   const saveVocabularyPreferences = useCallback(async(input)=>{
     const owner=accountId();const changes=structuredClone(input);
+    const epoch = loadEpoch.current;
     const generation=++saveGeneration.current;setSaveStatus('saving');
+    pendingAutomaticSave.current = null;
     const operation=saveQueue.current.catch(()=>{}).then(async()=>{
-      if(!alive.current || accountId()!==owner)return false;
+      if(!alive.current || accountId()!==owner || epoch !== loadEpoch.current)return false;
       const current=structuredClone(stateRef.current);applyCommittedVocabulary(current,owner);
       const preferences=normalizeVocabularyPreferences({...current.settings.vocabulary,...changes});current.settings.vocabulary=preferences;
       const previousPreferences=JSON.stringify(stateRef.current.settings.vocabulary);
-      let saved=false;try{saved=await saveState(current,toast);}catch{saved=false;}
-      if(!alive.current || accountId()!==owner)return false;
+      const collections = readySaveCollections();
+      let saved=false;try{saved=await saveState(current,toast,{collections});}catch{saved=false;}
+      if(!alive.current || accountId()!==owner || epoch !== loadEpoch.current)return false;
       if(alive.current&&accountId()===owner){if(generation===saveGeneration.current){setSaveFailed(!saved);setSaveStatus(saved?'saved':'failed');}if(saved){committedVocabularyPreferences.current.push({owner,before:previousPreferences,after:structuredClone(preferences)});const next=structuredClone(stateRef.current);next.settings.vocabulary=preferences;stateRef.current=next;setState(next);}}
       return saved;
     });saveQueue.current=operation;return operation;
@@ -395,11 +587,21 @@ function useFieldbookValue() {
   const saveStudySettings = useCallback(async (input) => {
     if (completingAttempt.current) return false;
     const owner = accountId();
+    const epoch = loadEpoch.current;
+    try {
+      await ensureAccountModule('productive');
+      await ensureAccountModule('vocabulary');
+      await ensureAccountModule('receptive');
+      const skill = stateRef.current.settings.activeSkill;
+      if (skill === 'writing' || skill === 'speaking') await ensureQuestionBank(skill);
+    } catch { toast('Could not load your study data. Your settings have not been saved.'); return false; }
+    if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return false;
     const changes = structuredClone(input);
     const generation = ++saveGeneration.current;
     setSaveStatus('saving');
+    pendingAutomaticSave.current = null;
     const operation = saveQueue.current.catch(() => {}).then(async () => {
-      if (!alive.current || accountId() !== owner) return false;
+      if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       const current = structuredClone(stateRef.current);
       applyCommittedVocabulary(current, owner);
       const beforeVocabulary = JSON.stringify(current.settings.vocabulary);
@@ -424,8 +626,9 @@ function useFieldbookValue() {
         change.addedPlans = current.plans.filter(plan => !retainedPlanIds.has(plan.id));
       }
       let saved = false;
-      try { saved = await saveState(current, toast); } catch { saved = false; }
-      if (!alive.current || accountId() !== owner) return false;
+      const collections = readySaveCollections();
+      try { saved = await saveState(current, toast, {collections}); } catch { saved = false; }
+      if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       if (generation === saveGeneration.current) { setSaveFailed(!saved); setSaveStatus(saved ? 'saved' : 'failed'); }
       if (saved) {
         committedStudySettings.current.push(change);
@@ -434,16 +637,17 @@ function useFieldbookValue() {
         applyCommittedVocabulary(next, owner);
         stateRef.current = next;
         setState(next);
-        lastSaved.current = current;
+        acknowledgeSaved(current, collections);
       }
       return saved;
     });
     saveQueue.current = operation;
     return operation;
-  }, [toast]);
+  }, [toast, ensureAccountModule, ensureQuestionBank]);
 
-  const loadVocabularyCatalog = useCallback((bookId) => {
-    const key = bookId || 'metadata';
+  const loadVocabularyCatalog = useCallback((bookId, options = {}) => {
+    const key = JSON.stringify([bookId || 'metadata', options.unitId, [...(options.entryIds || [])].sort()]);
+    if (options.force) vocabularyCatalogReads.current.delete(key);
     if (vocabularyCatalogReads.current.has(key)) return vocabularyCatalogReads.current.get(key);
     const read = (async () => {
       const merge = (key, values) => {
@@ -452,14 +656,23 @@ function useFieldbookValue() {
         values.forEach(item => rows.set(identity(item), key === 'books' ? genericWordbook(item) : item));
         VOCABULARY_CATALOG[key] = [...rows.values()];
       };
+      const owner = accountId();
+      const epoch = loadEpoch.current;
       let releasedCatalogue;
       try {
-        const response=await requestTimeout(fetch('/vocabulary-catalog.json').then(async response => ({ok: response.ok, data: response.ok ? await response.json() : undefined})));
-        if(response.ok) {
-          const data=response.data;
-          if(Array.isArray(data.entries)&&Array.isArray(data.books)&&Array.isArray(data.units)&&Array.isArray(data.memberships))releasedCatalogue=data;
+        releasedCatalogue = await requestTimeout(loadReleasedVocabulary({ bookId, ...options }));
+      } catch {
+        if (options.unitId || options.entryIds?.length) {
+          try {
+            const teaching = await loadReleasedVocabularyTeaching({bookId, ...options, allowMissingEntryIds: true});
+            if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
+            merge('books', teaching.books); merge('units', teaching.units);
+          } catch (error) {
+            if (!(error instanceof VocabularyScopeUnavailableError)) throw error;
+          }
         }
-      } catch {}
+      }
+      if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
       if(releasedCatalogue) {
         const completeBooks=new Set(releasedCatalogue.books.filter(book=>book.contentStatus==='complete').map(book=>book.id));
         VOCABULARY_CATALOG.memberships=VOCABULARY_CATALOG.memberships.filter(member=>!(completeBooks.has(member.bookId) && member.unitId?.startsWith('starter:')));
@@ -467,18 +680,34 @@ function useFieldbookValue() {
         merge('books',releasedCatalogue.books);
         // Metadata already includes group membership; expose accurate counts before a book is opened.
         merge('units',releasedCatalogue.units); merge('memberships',releasedCatalogue.memberships);
-        if(bookId) {
+        if(bookId || options.entryIds?.length) {
           const memberships=releasedCatalogue.memberships.filter(row=>row.bookId===bookId);
           const entryIds=new Set(memberships.map(row=>row.entryId));
-          merge('memberships',memberships);merge('entries',releasedCatalogue.entries.filter(row=>entryIds.has(row.id)));merge('units',releasedCatalogue.units.filter(row=>row.bookId===bookId));
+          merge('memberships',memberships);merge('entries',releasedCatalogue.entries);merge('units',releasedCatalogue.units.filter(row=>row.bookId===bookId));
         }
       }
-      let offset = 0;
-      do {
-        const result = await requestTimeout(readVocabularyCatalog({ bookId, offset, limit: 500 }));
-        merge('entries', result.entries); merge('books', result.books); merge('units', result.units); merge('memberships', result.memberships);
-        offset = result.nextOffset;
-      } while (offset !== null);
+      if (!releasedCatalogue) {
+        const scopes = options.unitId && options.entryIds?.length
+          ? [{...options, entryIds: undefined}, {...options, unitId: undefined}]
+          : [options];
+        for (const scope of scopes) {
+          let offset = 0;
+          do {
+            const result = await requestTimeout(readVocabularyCatalog({ bookId, ...scope, offset, limit: 500 }));
+            if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
+            merge('entries', result.entries); merge('books', result.books); merge('units', result.units); merge('memberships', result.memberships);
+            offset = result.nextOffset;
+          } while (offset !== null);
+        }
+        if (options.unitId) {
+          const group = VOCABULARY_CATALOG.units.find(row => row.bookId === bookId && row.id === options.unitId);
+          if (!group) throw new Error('Vocabulary group is unavailable.');
+          const members = VOCABULARY_CATALOG.memberships.filter(row => row.bookId === bookId && row.unitId === options.unitId);
+          const expected = group.entryIds || members.map(row => row.entryId);
+          const entries = new Set([...VOCABULARY_CATALOG.entries, ...stateRef.current.vocabulary].map(row => row.id));
+          if (expected.some(id => !entries.has(id) || !members.some(row => row.entryId === id)) || members.length < Number(group.entryCount || group.totalSourceWords || 0)) throw new Error('Vocabulary group content is incomplete.');
+        }
+      }
       setVocabularyCatalogRevision(revision => revision + 1);
       return true;
     })().catch(error => { vocabularyCatalogReads.current.delete(key); throw error; });
@@ -490,8 +719,8 @@ function useFieldbookValue() {
     if (draftTimer.current) window.clearTimeout(draftTimer.current);
     draftTimer.current = window.setTimeout(() => {
       draftTimer.current = null;
-      persistNow();
-    }, 350);
+      queueSave(stateRef.current, true);
+    }, 800);
   }, [persistNow]);
 
   const flushDraftPersist = useCallback(() => {
@@ -625,28 +854,45 @@ function useFieldbookValue() {
 
   useEffect(() => {
     let cancelled = false;
+    loadEpoch.current += 1;
+    hydratedCollections.current.clear();
+    moduleReads.current.clear(); bankReads.current.clear(); vocabularyCatalogReads.current.clear();
+    setBooted(false);
     (async () => {
       let draft;
       setLoadError('');
-      try { draft = await hydrateState(); } catch {
+      const finishTiming = timeOperation('workspace');
+      const prefetchModules = accountRoute.startsWith('/vocabulary') ? ['vocabulary']
+        : /^\/(reading|listening)/.test(accountRoute) ? ['receptive']
+        : accountRoute.startsWith('/write') || accountRoute.startsWith('/speak') ? ['productive']
+        : accountRoute.startsWith('/review') ? ['productive','vocabulary']
+        : accountRoute === '/stories' ? ['productive']
+        : accountRoute === '/progress' ? ['productive','vocabulary','receptive'] : [];
+      const prefetchBanks = accountRoute.startsWith('/write') ? ['writing'] : accountRoute.startsWith('/speak') || accountRoute === '/stories' ? ['speaking'] : [];
+      try { draft = await hydrateState({modules:[], prefetchModules, prefetchBanks}); } catch {
+        finishTiming(true);
         if (!cancelled) setLoadError('Could not load your workspace. Check your connection and retry.');
         return;
       }
       if (cancelled) return;
+      finishTiming();
+      const statuses = getCollectionStatuses();
+      if (statuses) Object.entries(statuses).forEach(([key, status]) => { if (status === 'ready') hydratedCollections.current.add(key); });
+      Object.entries(ACCOUNT_MODULES).forEach(([module,keys]) => {
+        const ready = !statuses || keys.every(key => statuses[key] === 'ready');
+        if (ready) moduleReads.current.set(module, Promise.resolve(draft));
+      });
+      setModuleStatus(Object.fromEntries(Object.entries(ACCOUNT_MODULES).map(([module,keys]) => [module, !statuses || keys.every(key => statuses[key] === 'ready') ? 'ready' : 'unloaded'])));
+      setBankStatus({writing:draft.questions.length?'ready':'unloaded',speaking:draft.speakingTopics.length?'ready':'unloaded'});
       lastSaved.current = structuredClone(draft);
       const correctedSpellings = resolveRegionalSpellingWrongWords(draft);
       const recovery = readDraftRecovery(accountId());
       const changedDrafts = recovery ? differentDrafts(recovery.drafts, draft.drafts) : {};
       if (Object.keys(changedDrafts).length) setRecoveryDrafts(changedDrafts);
-      if (!draft.questions.length) {
-        draft.questions = FALLBACK_QUESTIONS;
-        toast('The writing bank did not load. Showing a spare question.');
+      if (!statuses) {
+        repairAssessments(draft);
+        ensurePlans(draft, draft.settings.activeSkill || 'writing', null);
       }
-      if (!draft.speakingTopics.length) {
-        toast('The speaking bank did not load. Refresh and try again.');
-      }
-      repairAssessments(draft);
-      ensurePlans(draft, ['speaking', 'reading', 'listening'].includes(draft.settings.activeSkill) ? draft.settings.activeSkill : 'writing', null);
       if (!cancelled) {
         setSelectedQuestionId(String((draft.questions[0] || FALLBACK_QUESTIONS[0]).id));
         if (draft.speakingTopics[0]) setSelectedTopicId(String(draft.speakingTopics[0].id));
@@ -660,11 +906,15 @@ function useFieldbookValue() {
           try {
             const response = await fetch(filename, { cache: 'no-store' });
             if (!response.ok) throw new Error('assessment');
-            const result = importAssessmentText(draft, await response.text(), filename);
+            const text = await response.text();
+            await ensureCompleteAccount();
+            if (cancelled) return;
+            draft = structuredClone(stateRef.current);
+            const result = importAssessmentText(draft, text, filename);
             if (result.invalid) {
               toast(result.reason);
             } else {
-              persistNow(draft);
+              if (!await persistNow(draft)) { toast('Could not save imported feedback. Retry the import.'); return; }
               history.replaceState({}, '', location.pathname);
               if (result.assessment) {
                 navigate(`/review/${result.assessment.id}`);
@@ -843,6 +1093,10 @@ function useFieldbookValue() {
       if (!pendingAttempt || completingAttempt.current) return;
       const completionOwner = accountId();
       completingAttempt.current = true;
+      try { await ensureAccountModule('productive'); await ensureAccountModule('vocabulary'); } catch {
+        completingAttempt.current = false; toast('Could not load your study data. Your response is still here.'); return;
+      }
+      if (!alive.current || completionOwner !== accountId()) { completingAttempt.current = false; return; }
       if (draftTimer.current) { window.clearTimeout(draftTimer.current); draftTimer.current = null; }
       const draft = structuredClone(stateRef.current);
       const speaking = pendingAttempt.skill === 'speaking';
@@ -983,6 +1237,7 @@ function useFieldbookValue() {
       closeModal,
       navigate,
       pendingAttempt,
+      ensureAccountModule,
       persistNow,
       selectedQuestion,
       startSpeakingPractice,
@@ -991,12 +1246,13 @@ function useFieldbookValue() {
   );
 
   const importFeedback = useCallback(async (text, filename) => {
+    await ensureCompleteAccount();
     const draft = structuredClone(stateRef.current);
     const result = importAssessmentText(draft, text, filename);
     if (result.invalid) return { ...result, saved: false };
     const saved = await persistNow(draft);
     return { ...result, saved };
-  }, [persistNow]);
+  }, [persistNow, ensureCompleteAccount]);
 
   const toggleFavorite = useCallback((id, skill) => persist((draft) => {
     const favorites = draft.settings.favoriteQuestions || [];
@@ -1032,6 +1288,13 @@ function useFieldbookValue() {
       setState,
       stateRef,
       booted,
+      moduleStatus,
+      bankStatus,
+      bankErrors,
+      ensureAccountModule,
+      ensureCompleteAccount,
+      ensureQuestionBank,
+      ensureSpeakingSample,
       saveFailed,
       saveStatus,
       loadError,
@@ -1100,6 +1363,9 @@ function useFieldbookValue() {
       saveAttempt,
       ensurePlansForSkill: () => {
         const draft = stateRef.current;
+        const statuses = getCollectionStatuses();
+        if (statuses && Object.values(ACCOUNT_MODULES).flat().some(key => statuses[key] !== 'ready')) return draft.plans.filter(plan => planMatchesSkill(plan, activeSkill));
+        if (['writing','speaking'].includes(activeSkill) && bankStatus[activeSkill] !== 'ready') return draft.plans.filter(plan => planMatchesSkill(plan, activeSkill));
         let changed = false;
         const plans = ensurePlans(draft, activeSkill, () => {
           changed = true;
@@ -1150,6 +1416,13 @@ function useFieldbookValue() {
     }),
     [
       activeDeskMode,
+      moduleStatus,
+      bankStatus,
+      bankErrors,
+      ensureAccountModule,
+      ensureCompleteAccount,
+      ensureQuestionBank,
+      ensureSpeakingSample,
       activeSkill,
       vocabularyCatalogRevision,
       backupMenuOpen,

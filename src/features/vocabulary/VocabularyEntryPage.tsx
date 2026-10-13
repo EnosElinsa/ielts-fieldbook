@@ -80,6 +80,8 @@ export function VocabularyEntryPage() {
   const { status, retry } = useVocabularyCatalog(
     fb.loadVocabularyCatalog,
     bookId,
+    unitId,
+    entryId || id,
   );
   const [accent, setAccent] = useState(
     () => normalizeVocabularyPreferences(state.settings?.vocabulary).accent,

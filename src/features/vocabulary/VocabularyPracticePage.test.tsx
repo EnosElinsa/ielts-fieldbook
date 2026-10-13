@@ -172,7 +172,7 @@ test("catalog-only draft recovery waits for the saved book and retains answers w
   }));
   await user.click(screen.getByRole('button', { name: 'Resume session' }));
   expect(screen.getByRole('button', { name: 'Loading session…' })).toBeDisabled();
-  expect(fb.current.loadVocabularyCatalog).toHaveBeenLastCalledWith('test-book');
+  expect(fb.current.loadVocabularyCatalog).toHaveBeenLastCalledWith('test-book', expect.objectContaining({ unitId: 'test-group' }));
   release!();
   await waitFor(() => expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('saved-answer'));
   expect(screen.getByText('1–50 of 235')).toBeInTheDocument();
@@ -752,7 +752,7 @@ test('explicit unlearned catalog drill keeps its group sense and makes no prepar
 test('direct historical route loads the frozen session source book without a book query', async()=>{
   fb.current.loadVocabularyCatalog=vi.fn(async()=>true);fb.current.state.vocabularySessions=[{id:'history-book',mode:'dictation',status:'submitted',filter:{},selection:{kind:'unit',bookId:'source-book',unitId:'source-group'},preferences:{},results:[{cardId:'historic-card',entryId:'historic-word',senseId:'historic-sense',term:'peel',response:'peal',expectedAnswer:'peel',definition:'Old meaning.',example:'',result:'failure'}],entryIds:['historic-word'],summary:{total:1,correct:0,incorrect:1,pending:0},submittedAt:'2025-01-01',startedAt:'2025-01-01'}];
   render(<MemoryRouter initialEntries={['/vocabulary/history/history-book']}><Routes><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes></MemoryRouter>);
-  expect(await screen.findByRole('table')).toBeInTheDocument();await waitFor(()=>expect(fb.current.loadVocabularyCatalog).toHaveBeenCalledWith('source-book'));expect(screen.getByRole('button',{name:'Play UK pronunciation of peel'})).toBeInTheDocument();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+  expect(await screen.findByRole('table')).toBeInTheDocument();await waitFor(()=>expect(fb.current.loadVocabularyCatalog).toHaveBeenCalledWith('source-book', {unitId:'source-group',entryIds:['historic-word']}));expect(screen.getByRole('button',{name:'Play UK pronunciation of peel'})).toBeInTheDocument();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
 });
 
 test.each([false, true])('historical food core retry retains changed-sense dictation with mixed failures=%s', async mixed => {

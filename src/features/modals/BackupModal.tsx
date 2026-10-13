@@ -8,6 +8,7 @@ export function BackupModal() {
   const fb = useFieldbook();
   const open = fb.modal === 'backup';
   const [importSettings, setImportSettings] = useState(false);
+  const [saving, setSaving] = useState(false);
   const preview = useMemo(() => {
     if (!fb.pendingBackup) return null;
     const validation = fb.validateBackup(fb.pendingBackup);
@@ -19,7 +20,7 @@ export function BackupModal() {
   }, [fb.pendingBackup, fb]);
 
   return (
-    <ModalFrame open={open} onClose={() => fb.closeModal()}>
+    <ModalFrame open={open} onClose={() => fb.closeModal()} busy={saving}>
       <div className="modal">
         <h3>Import a backup</h3>
         <p>This merges with what you already have. Essays and transcripts stay.</p>
@@ -72,11 +73,15 @@ export function BackupModal() {
           <button
             className="btn primary"
             type="button"
-            onClick={() => {
-              if (!fb.pendingBackup) return;
+            disabled={saving}
+            onClick={async () => {
+              if (!fb.pendingBackup || saving) return;
+              setSaving(true);
+              try {
+              if (fb.ensureCompleteAccount) await fb.ensureCompleteAccount();
               fb.downloadFile(
                 `ielts-fieldbook-rollback-${fb.dateKey(new Date())}.json`,
-                JSON.stringify(fb.persistShape(fb.state), null, 2),
+                JSON.stringify(fb.persistShape(fb.stateRef.current), null, 2),
                 'application/json',
               );
               const questions = fb.state.questions;
@@ -84,14 +89,16 @@ export function BackupModal() {
                 includeSettings: importSettings,
               });
               if (questions.length) draft.questions = questions;
+              if (!await fb.persistNow(draft)) { fb.toast('Backup could not be saved. Retry the merge.'); return; }
               fb.setPendingBackup(null);
               fb.closeModal();
-              fb.persistNow(draft);
               if (draft.questions[0]) fb.setSelectedQuestionId(String(draft.questions[0].id));
               fb.toast('Backup merged. Nothing already here was deleted.');
+              } catch { fb.toast('Could not load or save the complete account. Try again.'); }
+              finally { setSaving(false); }
             }}
           >
-            Back up what I have, then merge
+            {saving ? 'Saving...' : 'Back up what I have, then merge'}
           </button>
         </div>
       </div>

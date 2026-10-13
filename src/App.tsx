@@ -1,16 +1,17 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { lazy } from 'react';
+import { lazy, useEffect } from 'react';
 import { FieldbookProvider } from './context/FieldbookContext';
 import { Shell } from './components/Shell';
-import { TodayPage } from './features/today/TodayPage';
-import { WritingBankPage } from './features/writing/WritingBankPage';
-import { WritingDeskPage } from './features/writing/WritingDeskPage';
-import { ReviewPage } from './features/review/ReviewPage';
-import { AssessmentDetailPage } from './features/review/AssessmentDetailPage';
-import { SpeakingBankPage } from './features/speaking/SpeakingBankPage';
-import { SpeakingTopicPage } from './features/speaking/SpeakingTopicPage';
-import { StoriesPage } from './features/speaking/StoriesPage';
-import { AccountPage } from './features/account/AccountPage';
+import { preloadRoute } from './routePreload';
+const TodayPage = lazy(() => import('./features/today/TodayPage').then(module => ({ default: module.TodayPage })));
+const WritingBankPage = lazy(() => import('./features/writing/WritingBankPage').then(module => ({ default: module.WritingBankPage })));
+const WritingDeskPage = lazy(() => import('./features/writing/WritingDeskPage').then(module => ({ default: module.WritingDeskPage })));
+const ReviewPage = lazy(() => import('./features/review/ReviewPage').then(module => ({ default: module.ReviewPage })));
+const AssessmentDetailPage = lazy(() => import('./features/review/AssessmentDetailPage').then(module => ({ default: module.AssessmentDetailPage })));
+const SpeakingBankPage = lazy(() => import('./features/speaking/SpeakingBankPage').then(module => ({ default: module.SpeakingBankPage })));
+const SpeakingTopicPage = lazy(() => import('./features/speaking/SpeakingTopicPage').then(module => ({ default: module.SpeakingTopicPage })));
+const StoriesPage = lazy(() => import('./features/speaking/StoriesPage').then(module => ({ default: module.StoriesPage })));
+const AccountPage = lazy(() => import('./features/account/AccountPage').then(module => ({ default: module.AccountPage })));
 const ProgressPage = lazy(() => import('./features/progress/ProgressPage').then((module) => ({ default: module.ProgressPage })));
 const SpeakingDeskPage = lazy(() => import('./features/speaking/SpeakingDeskPage').then((module) => ({ default: module.SpeakingDeskPage })));
 const VocabularyPage = lazy(() => import('./features/vocabulary/VocabularyPages').then(module => ({ default: module.VocabularyPage })));
@@ -37,6 +38,8 @@ function LegacyWrongWordsRedirect() {
 }
 
 export function AppRoutes() {
+  const {pathname} = useLocation();
+  useEffect(() => { void preloadRoute(pathname).catch(() => {}); }, [pathname]);
   return (
     <FieldbookProvider>
       <Routes>

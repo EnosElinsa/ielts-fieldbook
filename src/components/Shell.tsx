@@ -1,33 +1,47 @@
 // @ts-nocheck
 import { PageLoadingState } from './AsyncState';
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { studyStreak } from '../domain';
 import { useFieldbook } from '../context/FieldbookContext';
 import { displayName } from '../lib/format';
 import { NavIcons, Toast } from './ui';
-import { SettingsModal } from '../features/modals/SettingsModal';
-import { SaveModal } from '../features/modals/SaveModal';
-import { HistoryModal } from '../features/modals/HistoryModal';
-import { VocabularyModal } from '../features/vocabulary/VocabularyModal';
-import { VocabularyImportModal } from '../features/vocabulary/VocabularyImportModal';
-import { StoryModal } from '../features/modals/StoryModal';
-import { BackupModal } from '../features/modals/BackupModal';
 import { useAuthUser } from '../auth/useAuthUser';
 import { AccountMark } from '../features/account/AccountMark';
 import { SaveFailure } from './SaveFailure';
 import { Search, PanelLeftClose, PanelLeftOpen, Upload, Headphones } from 'lucide-react';
-import { motion, useReducedMotion } from 'motion/react';
 import { IconButton } from './IconButton';
 import { AccountMenu, CommandSearch, MobileNavigation } from './WorkbenchNavigation';
 import { ModalFrame } from './ModalFrame';
-import { AssessmentImportModal } from '../features/modals/AssessmentImportModal';
-import { LegalModal } from '../features/modals/LegalModal';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { navigateWithPracticeGuard } from '../lib/practiceNavigation';
 import { moduleFor, studyLinkActive, workspaceModules } from './workspaceNavigation';
 import { useWorkspaceModuleMemory } from './useWorkspaceModuleMemory';
 import { accountId } from '../storage/remote';
+import { AccountDataBoundary } from './AccountDataBoundary';
+
+const SettingsModal = lazy(()=>import('../features/modals/SettingsModal').then(m=>({default:m.SettingsModal})));
+const SaveModal = lazy(()=>import('../features/modals/SaveModal').then(m=>({default:m.SaveModal})));
+const HistoryModal = lazy(()=>import('../features/modals/HistoryModal').then(m=>({default:m.HistoryModal})));
+const VocabularyModal = lazy(()=>import('../features/vocabulary/VocabularyModal').then(m=>({default:m.VocabularyModal})));
+const VocabularyImportModal = lazy(()=>import('../features/vocabulary/VocabularyImportModal').then(m=>({default:m.VocabularyImportModal})));
+const StoryModal = lazy(()=>import('../features/modals/StoryModal').then(m=>({default:m.StoryModal})));
+const BackupModal = lazy(()=>import('../features/modals/BackupModal').then(m=>({default:m.BackupModal})));
+const AssessmentImportModal = lazy(()=>import('../features/modals/AssessmentImportModal').then(m=>({default:m.AssessmentImportModal})));
+const LegalModal = lazy(()=>import('../features/modals/LegalModal').then(m=>({default:m.LegalModal})));
+
+function WorkspaceRoute() {
+  const {pathname} = useLocation();
+  let modules = []; let banks = [];
+  if (pathname.startsWith('/vocabulary')) modules = ['vocabulary'];
+  else if (/^\/(reading|listening)/.test(pathname)) modules = ['receptive'];
+  else if (pathname.startsWith('/progress')) modules = ['productive','vocabulary','receptive'];
+  else if (pathname.startsWith('/write')) { modules = ['productive']; banks = ['writing']; }
+  else if (pathname.startsWith('/speak')) { modules = ['productive']; banks = ['speaking']; }
+  else if (pathname.startsWith('/stories')) {modules=['productive'];banks=['speaking'];}
+  else if (pathname.startsWith('/review')) modules=['productive','vocabulary'];
+  return <AccountDataBoundary modules={modules} banks={banks}><Outlet /></AccountDataBoundary>;
+}
 
 function RailHint({ label, enabled, children }) {
   return <Tooltip.Root><Tooltip.Trigger asChild>{children}</Tooltip.Trigger>{enabled ? <Tooltip.Portal><Tooltip.Content className="tooltip rail-tooltip" side="right" sideOffset={10}>{label}<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal> : null}</Tooltip.Root>;
@@ -89,13 +103,12 @@ export function Shell() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [legalView, setLegalView] = useState<string | null>(null);
-  const reduced = useReducedMotion();
   const module = moduleFor(location.pathname, location.search, fb.activeSkill);
   const { selectModule: resumeModule } = useWorkspaceModuleMemory({ owner: accountId(), ready: fb.booted, activeSkill: fb.activeSkill, setSkill: fb.setSkill });
   const speaking = module === 'speaking';
   const secondaryLinks = studyLinks[module] || [];
   const vocabularyOwnHeading = location.pathname.startsWith('/vocabulary');
-  const streak = studyStreak(fb.state);
+  const streak = !fb.moduleStatus || fb.moduleStatus.productive === 'ready' && fb.moduleStatus.receptive === 'ready' ? studyStreak(fb.state) : '...';
   const deskName = displayName(fb.selectedQuestion?.name) || 'Writing';
   const topicName = fb.selectedTopic?.title || 'Speaking practice';
   const chrome = useMemo(
@@ -149,14 +162,18 @@ export function Shell() {
     navigateWithPracticeGuard(path, () => selectModule(path));
   };
 
-  const exportBackup = () => {
-    fb.downloadFile(`ielts-fieldbook-backup-${fb.dateKey(new Date())}.json`, JSON.stringify(Object.assign({}, fb.persistShape(fb.state), { backupMeta: { origin: location.origin, exportedAt: new Date().toISOString() } }), null, 2), 'application/json');
-    fb.toast('Backup exported. Recordings stay in your account and are not in the JSON.');
+  const exportBackup = async () => {
+    try {
+      const complete = fb.ensureCompleteAccount ? await fb.ensureCompleteAccount() : fb.state;
+      fb.downloadFile(`ielts-fieldbook-backup-${fb.dateKey(new Date())}.json`, JSON.stringify(Object.assign({}, fb.persistShape(complete), { backupMeta: { origin: location.origin, exportedAt: new Date().toISOString() } }), null, 2), 'application/json');
+      fb.toast('Backup exported. Recordings stay in your account and are not in the JSON.');
+    } catch { fb.toast('Could not load the complete account for backup. Try again.'); }
   };
 
   const importAssessment = (file: File) => {
     const reader = new FileReader();
-    reader.onload = () => {
+    reader.onload = async () => {
+      try { if (fb.ensureCompleteAccount) await fb.ensureCompleteAccount(); } catch { fb.toast('Could not load your account for import. Try again.'); return; }
       const draft = structuredClone(fb.stateRef.current);
       const result = fb.importAssessmentText(draft, String(reader.result), file.name);
       if (result.invalid) {
@@ -283,18 +300,7 @@ export function Shell() {
                     type="button"
                     onClick={() => {
                       fb.setBackupMenuOpen(false);
-                      fb.downloadFile(
-                        `ielts-fieldbook-backup-${fb.dateKey(new Date())}.json`,
-                        JSON.stringify(
-                          Object.assign({}, fb.persistShape(fb.state), {
-                            backupMeta: { origin: location.origin, exportedAt: new Date().toISOString() },
-                          }),
-                          null,
-                          2,
-                        ),
-                        'application/json',
-                      );
-                      fb.toast('Backup exported. Recordings stay in your account and are not in the JSON.');
+                      void exportBackup();
                     }}
                   >
                     Export backup
@@ -341,23 +347,25 @@ export function Shell() {
           {fb.loadError ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
           {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
           {!fb.booted && !fb.loadError ? <PageLoadingState message="Loading workspace…" variant="bank" /> : null}
-          <motion.div className="page" key={location.pathname} initial={reduced ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.24 }}>
-            <Suspense fallback={<PageLoadingState message="Loading page…" />}>{fb.booted || fb.state.questions.length ? <Outlet /> : null}</Suspense>
-          </motion.div>
+          <div className="page" key={location.pathname}>
+            <Suspense fallback={<PageLoadingState message="Loading page…" />}>{fb.booted || fb.state.questions.length ? <WorkspaceRoute /> : null}</Suspense>
+          </div>
         </main>
       </div>
       <MobileNavigation onMore={() => setMoreOpen(true)} onSelectModule={resumeModule} />
       <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}<button type="button" onClick={() => { setMoreOpen(false); resumeModule('progress'); }}>{NavIcons.progress}Progress</button><button type="button" onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><button type="button" onClick={() => goFromMore('/account')}>Account</button></div></div></ModalFrame>
-      <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
-      <AssessmentImportModal />
-      <LegalModal view={legalView} onClose={() => setLegalView(null)} />
-      <SettingsModal />
-      <SaveModal />
-      <HistoryModal />
-      <VocabularyModal />
-      <VocabularyImportModal />
-      <StoryModal />
-      <BackupModal />
+      {searchOpen && <AccountDataBoundary modules={['productive','vocabulary','receptive']} banks={['writing','speaking']}><CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} /></AccountDataBoundary>}
+      <Suspense fallback={<PageLoadingState message="Loading..." />}>
+        {fb.modal === 'assessment' && <AssessmentImportModal />}
+        {legalView && <LegalModal view={legalView} onClose={() => setLegalView(null)} />}
+        {fb.modal === 'settings' && <SettingsModal />}
+        {fb.modal === 'save' && <SaveModal />}
+        {fb.modal === 'history' && <AccountDataBoundary modules={['productive']}><HistoryModal /></AccountDataBoundary>}
+        {fb.modal === 'vocabulary' && <AccountDataBoundary modules={['vocabulary']}><VocabularyModal /></AccountDataBoundary>}
+        {fb.modal === 'vocabularyImport' && <AccountDataBoundary modules={['vocabulary']}><VocabularyImportModal /></AccountDataBoundary>}
+        {fb.modal === 'story' && <AccountDataBoundary modules={['productive']} banks={['speaking']}><StoryModal /></AccountDataBoundary>}
+        {fb.modal === 'backup' && <BackupModal />}
+      </Suspense>
       <Toast message={fb.toastMessage} visible={fb.toastVisible} />
     </>
   );

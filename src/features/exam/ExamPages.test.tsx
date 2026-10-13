@@ -7,19 +7,20 @@ import type { ExamCatalog } from '../../domain/exam/types';
 import { ExamBankPage } from './ExamBankPage';
 import { ExamImage, ExamPracticePage, ExamStimulus } from './ExamPracticePage';
 import { ExamReviewPage } from './ExamReviewPage';
-import { loadExamCatalog } from '../../storage/examCatalog';
+import { examCatalogKey, loadExamCatalog } from '../../storage/examCatalog';
+import { cachedRead, clearReadCache } from '../../lib/readCache';
 
 const mocks = vi.hoisted(() => ({ fb: null as any, owner: 'one', catalog: null as any, recovery: new Map<string, any>() }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
 vi.mock('../../storage/remote', () => ({ accountId: () => mocks.owner }));
-vi.mock('../../storage/examCatalog', () => ({ loadExamCatalog: vi.fn(async () => mocks.catalog), loadExamSections: async () => mocks.catalog, resolveExamAsset: async () => '/audio.mp3' }));
+vi.mock('../../storage/examCatalog', async importOriginal => ({ ...await importOriginal<typeof import('../../storage/examCatalog')>(), loadExamCatalog: vi.fn(async () => mocks.catalog), loadExamSections: async () => mocks.catalog, resolveExamAsset: async () => '/audio.mp3' }));
 vi.mock('../../storage/examRecovery', () => ({ readExamRecovery: (owner: string, key: string) => mocks.recovery.get(`${owner}:${key}`), writeExamRecovery: (owner: string, key: string, data: any) => mocks.recovery.set(`${owner}:${key}`, structuredClone(data)), clearExamRecovery: (owner: string, key: string) => mocks.recovery.delete(`${owner}:${key}`) }));
 const provenance = { sourceUrl: 'https://example.org/source', sourceVersion: '1', fetchedAt: '2026-01-01', contentHash: 'hash', authorization: 'owned' };
 const catalog: ExamCatalog = { schemaVersion: 1, papers: [{ id: 'paper', book: 8, test: 1, title: 'Cambridge 8 Test 1', provenance }], sections: [{ id: 'section', paperId: 'paper', skill: 'reading', part: 1, title: 'The city garden', questionTypes: ['gap', 'true-false'], questionCount: 2, sentences: [], status: 'ready', provenance }], passages: [{ id: 'passage', sectionId: 'section', title: 'The city garden', paragraphs: [{ id: 'A', text: 'The garden opened in 1990.' }], provenance }], questions: [{ id: 'q1', paperId: 'paper', sectionId: 'section', skill: 'reading', number: 1, type: 'gap', prompt: 'The garden opened in _____.', answer: '1990', maxWords: 1, provenance }, { id: 'q2', paperId: 'paper', sectionId: 'section', skill: 'reading', number: 2, type: 'true-false', prompt: 'The garden opened in 2000.', answer: 'FALSE', explanation: 'The source gives 1990.', provenance }], assets: [] };
 function Location() { return <output aria-label="URL">{useLocation().pathname}</output>; }
 function SearchLocation() { return <output aria-label="Search URL">{useLocation().search}</output>; }
 function practice(path = '/reading/section') { return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/reading/:sectionId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/mock/:paperId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/review/:attemptId" element={<ExamReviewPage skill="reading" />} /></Routes><Location /></MemoryRouter>); }
-beforeEach(() => { mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); sessionStorage.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
+beforeEach(() => { clearReadCache(); mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); sessionStorage.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.useRealTimers(); });
 
 test('a slow bank reload ignores the stale request and retains a real retry after failure', async () => {
@@ -44,6 +45,16 @@ test('a slow bank reload ignores the stale request and retains a real retry afte
 });
 
 test('bank presents available sections but disables an incomplete full mock', async () => { render(<MemoryRouter><ExamBankPage skill="reading" /></MemoryRouter>); expect(await screen.findByText('The city garden')).toBeInTheDocument(); expect(screen.getByRole('button', { name: 'Full mock unavailable' })).toBeDisabled(); expect(screen.getByRole('link', { name: /Practise passage 1/ })).toHaveAttribute('href', '/reading/section'); });
+test('a catalog refresh failure preserves cached sections and offers a working retry', async () => {
+  await cachedRead(examCatalogKey('reading'), async () => catalog);
+  vi.mocked(loadExamCatalog).mockRejectedValueOnce(new Error('Source refresh failed.'));
+  render(<MemoryRouter><ExamBankPage skill="reading" /></MemoryRouter>);
+  expect(await screen.findByRole('alert')).toHaveTextContent('Source refresh failed.');
+  expect(screen.getByRole('link', { name: /Practise passage 1/ })).toHaveAttribute('href', '/reading/section');
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Retry loading' }));
+  await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+  expect(screen.getByText('The city garden')).toBeInTheDocument();
+});
 test('recent work prioritises unfinished attempts and retains source and retry navigation', async () => {
   mocks.fb.state.examAttempts = [
     ...Array.from({ length: 4 }, (_, index) => ({ id: `done${index}`, skill: 'reading', sectionIds: ['section'], mode: 'practice', status: 'completed', score: 2, total: 2, updatedAt: `2026-10-0${index + 2}` })),

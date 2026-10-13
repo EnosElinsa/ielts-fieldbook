@@ -1,0 +1,3787 @@
+{
+  "baseline": {
+    "url": "http://127.0.0.1:8001",
+    "sourceRef": "3c5f67a6cb53abac03d97ba1193d68763a96a778",
+    "sourceSnapshotHash": "bb13c8f446fb1f518118a2e0321877d1eaab2852b75f21151b0eb57e3908f035",
+    "harnessHash": "37c79cb67deba6fd24daee7dd1a57b24fd0397e567ca405bdd3dc16d55b4ceea",
+    "builtAssetHashes": {
+      "/assets/audio-Bfpoy7S6.js": "f609f7ade1d2bc0975c660202eddb0f2a41950e20b198bab1741e5d7836602bf",
+      "/assets/index-C7IG_9LA.css": "410de4eb43cb31372d828dcd255139c14381d28299f9bbdab7c49dc08f26883f",
+      "/assets/radix-BYicf3Ov.js": "7b100f0792219a0cb665b49c21539c9713583643fa12308bb1e32b6f99c711ea",
+      "/assets/motion-Bu6zqfmW.js": "d6686ea3a685cb79d21117d955a09824f97e946b7192d6cce5ba5a86376670ec",
+      "/assets/supabase-DXeGmUyu.js": "dc91cbf4047ca0b053622bbcca43e614df245a9b7feadfaf1050fce169c68bea",
+      "/assets/index-De8f2bQS.js": "65cc66f1504817757e94dbe03d6fe283522dff4599b940d8eb3da238e00b8687",
+      "/assets/VocabularyPages-DOxfoQ9b.css": "7398d0bb1e27ccfc3fcdf5abec897add5098276fff1f75087209514ac4e0e06f",
+      "/assets/VocabularyGroupWordsPage-04V13QXe.js": "9a5218dfb77c23c0125ee609028883c97f38e63d7da21d2da2e8f1e519f6aa02",
+      "/assets/VocabularyPages-QXild4tp.js": "8978654627c584775443867225fa4c39e1d87756d20c15f50be45eb4258924ab"
+    },
+    "fixtureHashes": {
+      "public/vocabulary-catalog.json": "fd2738bc735419039d6d8c45bebd6d2e2578ad9ce5622e2c787f57948a28de09",
+      "public/sample/questions.json": "ab23956d83ba95c05124f6c0af7b792b7c7e5da982d190a14343f15fa208ae15",
+      "public/sample/speaking-questions.json": "e3c6f48e92c805108f7e4c32c27b2856bdb08a7710a6e430b35133ee5d348101",
+      "public/sample/speaking-samples.json": "0e0f8d5c69954977d4fb28bc0d2b3eb55721641eeea64ad52ddb119ca3b73ca7"
+    },
+    "network": {
+      "mbps": 10,
+      "latencyMs": 150
+    },
+    "cpuRate": {
+      "desktop": 1,
+      "mobile": 4
+    },
+    "runs": 15,
+    "fixture": {
+      "syntheticAccount": "00000000-0000-4000-8000-000000000001",
+      "group": "/vocabulary/wordbooks/guixue:10174/groups/21795/words",
+      "expectedWords": 55,
+      "authConfirmedDefinition": "Supabase consumes the injected valid session from localStorage.",
+      "writes": "Intercepted in memory; all non-local traffic is intercepted or blocked."
+    },
+    "scenarios": [
+      {
+        "name": "cold-login",
+        "device": "desktop",
+        "p75Ms": 1571.699999988079,
+        "p75AuthMs": null,
+        "p75LongTaskMs": 54,
+        "p75TransferredBytes": 1295819,
+        "samples": [
+          {
+            "readyMs": 1658.5999999642372,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 53,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1593.1000000238419,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 67,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1544.699999988079,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 54,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1544,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 51,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1570.5999999642372,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 51,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1561,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1532.800000011921,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 51,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1571.699999988079,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 55,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1551.5999999642372,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 51,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1545.699999988079,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 53,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1570.6000000238419,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 51,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1667.199999988079,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 95,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1571.6000000238419,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 54,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1550.4000000357628,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 51,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1569.0999999642372,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "authenticated-base-settings",
+        "device": "desktop",
+        "p75Ms": 1965,
+        "p75AuthMs": 427.60000002384186,
+        "p75LongTaskMs": 61,
+        "p75TransferredBytes": 1367237,
+        "samples": [
+          {
+            "readyMs": 1998,
+            "authReadyMs": 460.19999998807907,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 67,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1856.8999999761581,
+            "authReadyMs": 327,
+            "requestCount": 60,
+            "transferredBytes": 1352645,
+            "longTaskMs": 58,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1899.699999988079,
+            "authReadyMs": 345.89999997615814,
+            "requestCount": 60,
+            "transferredBytes": 1352645,
+            "longTaskMs": 67,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1834.8999999761581,
+            "authReadyMs": 315.19999998807907,
+            "requestCount": 60,
+            "transferredBytes": 1352645,
+            "longTaskMs": 55,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1950.2000000476837,
+            "authReadyMs": 408.60000002384186,
+            "requestCount": 59,
+            "transferredBytes": 1366781,
+            "longTaskMs": 53,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1951.6000000238419,
+            "authReadyMs": 403.5,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 51,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1826.5999999642372,
+            "authReadyMs": 302.7999999523163,
+            "requestCount": 59,
+            "transferredBytes": 1366553,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1934.1000000238419,
+            "authReadyMs": 412.30000001192093,
+            "requestCount": 59,
+            "transferredBytes": 1366781,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1965,
+            "authReadyMs": 427.60000002384186,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 51,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1843.699999988079,
+            "authReadyMs": 305.0999999642372,
+            "requestCount": 60,
+            "transferredBytes": 1352645,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2009.5,
+            "authReadyMs": 455.69999998807907,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 58,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2149.199999988079,
+            "authReadyMs": 482.5,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 121,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1955.699999988079,
+            "authReadyMs": 414.80000001192093,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1856.3999999761581,
+            "authReadyMs": 335.69999998807907,
+            "requestCount": 60,
+            "transferredBytes": 1352645,
+            "longTaskMs": 61,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1923.5,
+            "authReadyMs": 412,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "settings-save",
+        "device": "desktop",
+        "p75Ms": 1149.1000000238419,
+        "p75AuthMs": 1566.9000000357628,
+        "p75LongTaskMs": 0,
+        "p75TransferredBytes": 15048,
+        "samples": [
+          {
+            "readyMs": 881.1999999880791,
+            "authReadyMs": 1579.300000011921,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1051.699999988079,
+            "authReadyMs": 1392.699999988079,
+            "requestCount": 4,
+            "transferredBytes": 15048,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 494.30000001192093,
+            "authReadyMs": 916.8999999761581,
+            "requestCount": 4,
+            "transferredBytes": 15048,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1053.8999999761581,
+            "authReadyMs": 1379.8999999761581,
+            "requestCount": 4,
+            "transferredBytes": 15048,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1019.5,
+            "authReadyMs": 1475.1000000238419,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1137.4000000357628,
+            "authReadyMs": 1551.800000011921,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1149.1000000238419,
+            "authReadyMs": 1459.5,
+            "requestCount": 4,
+            "transferredBytes": 684,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1132.699999988079,
+            "authReadyMs": 1555.5,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1154.300000011921,
+            "authReadyMs": 1593,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1160.699999988079,
+            "authReadyMs": 1472.8999999761581,
+            "requestCount": 4,
+            "transferredBytes": 15048,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1154.199999988079,
+            "authReadyMs": 1628,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1040,
+            "authReadyMs": 1560.199999988079,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1141.2000000476837,
+            "authReadyMs": 1566.9000000357628,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1049.5999999642372,
+            "authReadyMs": 1395.5999999642372,
+            "requestCount": 4,
+            "transferredBytes": 15048,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1136.199999988079,
+            "authReadyMs": 1562,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "direct-group-words",
+        "device": "desktop",
+        "p75Ms": 8560,
+        "p75AuthMs": 7026.399999976158,
+        "p75LongTaskMs": 148,
+        "p75TransferredBytes": 9114645,
+        "samples": [
+          {
+            "readyMs": 8505.5,
+            "authReadyMs": 7010,
+            "requestCount": 230,
+            "transferredBytes": 9035355,
+            "longTaskMs": 172,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8572.600000023842,
+            "authReadyMs": 7029.100000023842,
+            "requestCount": 230,
+            "transferredBytes": 9061855,
+            "longTaskMs": 198,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8547.300000011921,
+            "authReadyMs": 7016.900000035763,
+            "requestCount": 230,
+            "transferredBytes": 9114645,
+            "longTaskMs": 148,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8073.099999964237,
+            "authReadyMs": 6518.099999964237,
+            "requestCount": 230,
+            "transferredBytes": 8955689,
+            "longTaskMs": 143,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8550.800000011921,
+            "authReadyMs": 7016,
+            "requestCount": 230,
+            "transferredBytes": 9114645,
+            "longTaskMs": 135,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8514.300000011921,
+            "authReadyMs": 7026.399999976158,
+            "requestCount": 230,
+            "transferredBytes": 9114645,
+            "longTaskMs": 130,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8560,
+            "authReadyMs": 7011.699999988079,
+            "requestCount": 230,
+            "transferredBytes": 9114645,
+            "longTaskMs": 148,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8537.199999988079,
+            "authReadyMs": 7035.800000011921,
+            "requestCount": 229,
+            "transferredBytes": 9114189,
+            "longTaskMs": 129,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8515.100000023842,
+            "authReadyMs": 6969.5,
+            "requestCount": 230,
+            "transferredBytes": 9061855,
+            "longTaskMs": 118,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8571.600000023842,
+            "authReadyMs": 7029.800000011921,
+            "requestCount": 230,
+            "transferredBytes": 9114645,
+            "longTaskMs": 133,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8050.5,
+            "authReadyMs": 6552.800000011921,
+            "requestCount": 230,
+            "transferredBytes": 8955689,
+            "longTaskMs": 147,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8118.5,
+            "authReadyMs": 6557.199999988079,
+            "requestCount": 230,
+            "transferredBytes": 8955689,
+            "longTaskMs": 128,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8562.900000035763,
+            "authReadyMs": 7019.900000035763,
+            "requestCount": 230,
+            "transferredBytes": 9114645,
+            "longTaskMs": 126,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8505.600000023842,
+            "authReadyMs": 6990.100000023842,
+            "requestCount": 229,
+            "transferredBytes": 9034899,
+            "longTaskMs": 143,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8069,
+            "authReadyMs": 6522.5,
+            "requestCount": 230,
+            "transferredBytes": 8955689,
+            "longTaskMs": 133,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "repeat-group-navigation",
+        "device": "desktop",
+        "p75Ms": 64.90000003576279,
+        "p75AuthMs": 7123.199999988079,
+        "p75LongTaskMs": 0,
+        "p75TransferredBytes": 0,
+        "samples": [
+          {
+            "readyMs": 84.90000003576279,
+            "authReadyMs": 7406.699999988079,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 57.799999952316284,
+            "authReadyMs": 7123.199999988079,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 53.69999998807907,
+            "authReadyMs": 7102.100000023842,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 69.69999998807907,
+            "authReadyMs": 6636.799999952316,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 54.59999996423721,
+            "authReadyMs": 7113.899999976158,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 48.10000002384186,
+            "authReadyMs": 7110.199999988079,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 61.40000003576279,
+            "authReadyMs": 7112.800000011921,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 59.5,
+            "authReadyMs": 7156.399999976158,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 40.90000003576279,
+            "authReadyMs": 7050.5,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 55.80000001192093,
+            "authReadyMs": 7139,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 67.19999998807907,
+            "authReadyMs": 6674.600000023842,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 56.90000003576279,
+            "authReadyMs": 6662.5,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 57.09999996423721,
+            "authReadyMs": 7110,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 57.69999998807907,
+            "authReadyMs": 7081.5,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 64.90000003576279,
+            "authReadyMs": 6634.5,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "direct-writing-practice",
+        "device": "desktop",
+        "p75Ms": 2421.599999964237,
+        "p75AuthMs": 879.1000000238419,
+        "p75LongTaskMs": 58,
+        "p75TransferredBytes": 1383892,
+        "samples": [
+          {
+            "readyMs": 2459.300000011921,
+            "authReadyMs": 894.3000000119209,
+            "requestCount": 62,
+            "transferredBytes": 1383892,
+            "longTaskMs": 80,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2421.599999964237,
+            "authReadyMs": 893.5999999642372,
+            "requestCount": 61,
+            "transferredBytes": 1383436,
+            "longTaskMs": 63,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2407.899999976158,
+            "authReadyMs": 863.2999999523163,
+            "requestCount": 62,
+            "transferredBytes": 1383892,
+            "longTaskMs": 53,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1904.6000000238419,
+            "authReadyMs": 388.39999997615814,
+            "requestCount": 61,
+            "transferredBytes": 1366781,
+            "longTaskMs": 51,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1893.6000000238419,
+            "authReadyMs": 374.60000002384186,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 51,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1921.2999999523163,
+            "authReadyMs": 370.7999999523163,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 50,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2422.100000023842,
+            "authReadyMs": 871.8000000119209,
+            "requestCount": 61,
+            "transferredBytes": 1383436,
+            "longTaskMs": 53,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1902.8999999761581,
+            "authReadyMs": 382.19999998807907,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1901,
+            "authReadyMs": 385,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 53,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1889.9000000357628,
+            "authReadyMs": 371.2000000476837,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2421.399999976158,
+            "authReadyMs": 895.3000000119209,
+            "requestCount": 62,
+            "transferredBytes": 1383892,
+            "longTaskMs": 63,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2422.2999999523163,
+            "authReadyMs": 870.8999999761581,
+            "requestCount": 62,
+            "transferredBytes": 1383892,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2403.899999976158,
+            "authReadyMs": 869.3999999761581,
+            "requestCount": 62,
+            "transferredBytes": 1383892,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1906,
+            "authReadyMs": 371.5999999642372,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 51,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2408.5,
+            "authReadyMs": 879.1000000238419,
+            "requestCount": 62,
+            "transferredBytes": 1383892,
+            "longTaskMs": 58,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "cold-login",
+        "device": "mobile",
+        "p75Ms": 1921.199999988079,
+        "p75AuthMs": null,
+        "p75LongTaskMs": 234,
+        "p75TransferredBytes": 1296275,
+        "samples": [
+          {
+            "readyMs": 1921.199999988079,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1296275,
+            "longTaskMs": 239,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1847.5,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 229,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1904.800000011921,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1296275,
+            "longTaskMs": 222,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1869.300000011921,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1296275,
+            "longTaskMs": 224,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1887.1000000238419,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1296275,
+            "longTaskMs": 225,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1892.2999999523163,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1296275,
+            "longTaskMs": 221,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1862.300000011921,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 218,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1899.5,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1296275,
+            "longTaskMs": 223,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2194.100000023842,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1296275,
+            "longTaskMs": 412,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1870.300000011921,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1296275,
+            "longTaskMs": 223,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1857.699999988079,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1296275,
+            "longTaskMs": 227,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1848.1000000238419,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1295819,
+            "longTaskMs": 220,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2384,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1325691,
+            "longTaskMs": 476,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1928.0999999642372,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1296275,
+            "longTaskMs": 234,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1904.5,
+            "authReadyMs": null,
+            "requestCount": 13,
+            "transferredBytes": 1296275,
+            "longTaskMs": 232,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "authenticated-base-settings",
+        "device": "mobile",
+        "p75Ms": 2750.699999988079,
+        "p75AuthMs": 915.8999999761581,
+        "p75LongTaskMs": 697,
+        "p75TransferredBytes": 1367237,
+        "samples": [
+          {
+            "readyMs": 2750.699999988079,
+            "authReadyMs": 915.8999999761581,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 767,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2517.800000011921,
+            "authReadyMs": 728.8000000119209,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 578,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2659.699999988079,
+            "authReadyMs": 878.5999999642372,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 613,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2568.300000011921,
+            "authReadyMs": 778.1000000238419,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 598,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2529.300000011921,
+            "authReadyMs": 728.4000000357628,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 597,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2514.400000035763,
+            "authReadyMs": 716.5,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 589,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2493.100000023842,
+            "authReadyMs": 719.5,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 572,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2967.199999988079,
+            "authReadyMs": 1141.7999999523163,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 697,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2544.5,
+            "authReadyMs": 758.3000000119209,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 604,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2807.600000023842,
+            "authReadyMs": 1013.1999999880791,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 903,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2583,
+            "authReadyMs": 768.5,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 617,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2518.899999976158,
+            "authReadyMs": 743,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 593,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 3830.099999964237,
+            "authReadyMs": 1626.0999999642372,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 1548,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2559,
+            "authReadyMs": 763.8000000119209,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 606,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2578.199999988079,
+            "authReadyMs": 760.3000000119209,
+            "requestCount": 60,
+            "transferredBytes": 1367237,
+            "longTaskMs": 625,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "settings-save",
+        "device": "mobile",
+        "p75Ms": 1067,
+        "p75AuthMs": 1972,
+        "p75LongTaskMs": 0,
+        "p75TransferredBytes": 456,
+        "samples": [
+          {
+            "readyMs": 837.1999999880791,
+            "authReadyMs": 1964.0999999642372,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 371,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1061.199999988079,
+            "authReadyMs": 1819.699999988079,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1057.1000000238419,
+            "authReadyMs": 1972,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1129.8999999761581,
+            "authReadyMs": 1951.800000011921,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1063,
+            "authReadyMs": 1819.300000011921,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1057.3999999761581,
+            "authReadyMs": 1804.3999999761581,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1060.300000011921,
+            "authReadyMs": 1807.3999999761581,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1103.1000000238419,
+            "authReadyMs": 2272.899999976158,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 61,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 819.9000000357628,
+            "authReadyMs": 1618.4000000357628,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 138,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1218.9000000357628,
+            "authReadyMs": 2280.800000011921,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1049.0999999642372,
+            "authReadyMs": 1844.3999999761581,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1065.2999999523163,
+            "authReadyMs": 1835.3999999761581,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1065.800000011921,
+            "authReadyMs": 2747.199999988079,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1061.199999988079,
+            "authReadyMs": 1858.300000011921,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1067,
+            "authReadyMs": 1857.300000011921,
+            "requestCount": 4,
+            "transferredBytes": 456,
+            "longTaskMs": 0,
+            "writeCount": 2,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "direct-group-words",
+        "device": "mobile",
+        "p75Ms": 9126.400000035763,
+        "p75AuthMs": 7300.199999988079,
+        "p75LongTaskMs": 824,
+        "p75TransferredBytes": 9035355,
+        "samples": [
+          {
+            "readyMs": 9659.800000011921,
+            "authReadyMs": 7798.899999976158,
+            "requestCount": 230,
+            "transferredBytes": 9035355,
+            "longTaskMs": 930,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9068.600000023842,
+            "authReadyMs": 7251.800000011921,
+            "requestCount": 230,
+            "transferredBytes": 8955689,
+            "longTaskMs": 771,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9047.5,
+            "authReadyMs": 7276.600000023842,
+            "requestCount": 230,
+            "transferredBytes": 9035355,
+            "longTaskMs": 753,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9043.300000011921,
+            "authReadyMs": 7245.100000023842,
+            "requestCount": 230,
+            "transferredBytes": 8955689,
+            "longTaskMs": 777,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9060.199999988079,
+            "authReadyMs": 7300.199999988079,
+            "requestCount": 230,
+            "transferredBytes": 8955689,
+            "longTaskMs": 880,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9069.600000023842,
+            "authReadyMs": 7263.899999976158,
+            "requestCount": 230,
+            "transferredBytes": 8955689,
+            "longTaskMs": 740,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9095.299999952316,
+            "authReadyMs": 7295.699999988079,
+            "requestCount": 230,
+            "transferredBytes": 8969272,
+            "longTaskMs": 769,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9091.800000011921,
+            "authReadyMs": 7278,
+            "requestCount": 230,
+            "transferredBytes": 9035355,
+            "longTaskMs": 749,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9194.800000011921,
+            "authReadyMs": 7376.800000011921,
+            "requestCount": 230,
+            "transferredBytes": 8955689,
+            "longTaskMs": 819,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9090.200000047684,
+            "authReadyMs": 7285.100000023842,
+            "requestCount": 230,
+            "transferredBytes": 9035355,
+            "longTaskMs": 772,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9126.400000035763,
+            "authReadyMs": 7263.300000011921,
+            "requestCount": 230,
+            "transferredBytes": 8955689,
+            "longTaskMs": 824,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9109.600000023842,
+            "authReadyMs": 7328.900000035763,
+            "requestCount": 230,
+            "transferredBytes": 9035355,
+            "longTaskMs": 736,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9164.199999988079,
+            "authReadyMs": 7253.5,
+            "requestCount": 230,
+            "transferredBytes": 9035355,
+            "longTaskMs": 865,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 8977.599999964237,
+            "authReadyMs": 7185.399999976158,
+            "requestCount": 230,
+            "transferredBytes": 8955689,
+            "longTaskMs": 721,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 9054.600000023842,
+            "authReadyMs": 7257.100000023842,
+            "requestCount": 230,
+            "transferredBytes": 9035355,
+            "longTaskMs": 768,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "repeat-group-navigation",
+        "device": "mobile",
+        "p75Ms": 259.89999997615814,
+        "p75AuthMs": 7762.199999988079,
+        "p75LongTaskMs": 0,
+        "p75TransferredBytes": 135876,
+        "samples": [
+          {
+            "readyMs": 208.60000002384186,
+            "authReadyMs": 8533.699999988079,
+            "requestCount": 1,
+            "transferredBytes": 16602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 283.5999999642372,
+            "authReadyMs": 7716.599999964237,
+            "requestCount": 1,
+            "transferredBytes": 135876,
+            "longTaskMs": 60,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 253,
+            "authReadyMs": 7679.400000035763,
+            "requestCount": 1,
+            "transferredBytes": 122026,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 221.4000000357628,
+            "authReadyMs": 7644.600000023842,
+            "requestCount": 1,
+            "transferredBytes": 79840,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 250.19999998807907,
+            "authReadyMs": 7727,
+            "requestCount": 1,
+            "transferredBytes": 80296,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 250.10000002384186,
+            "authReadyMs": 7701.899999976158,
+            "requestCount": 1,
+            "transferredBytes": 80296,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 225.5,
+            "authReadyMs": 7681.900000035763,
+            "requestCount": 1,
+            "transferredBytes": 94980,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 259.89999997615814,
+            "authReadyMs": 7765.199999988079,
+            "requestCount": 1,
+            "transferredBytes": 149469,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 214.80000001192093,
+            "authReadyMs": 7762.199999988079,
+            "requestCount": 1,
+            "transferredBytes": 79840,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 265.89999997615814,
+            "authReadyMs": 7685.199999988079,
+            "requestCount": 1,
+            "transferredBytes": 149469,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 231.39999997615814,
+            "authReadyMs": 7664.399999976158,
+            "requestCount": 1,
+            "transferredBytes": 79840,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 243.70000004768372,
+            "authReadyMs": 7701.400000035763,
+            "requestCount": 1,
+            "transferredBytes": 80296,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 222.30000001192093,
+            "authReadyMs": 7602.300000011921,
+            "requestCount": 1,
+            "transferredBytes": 79840,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 198,
+            "authReadyMs": 7539.899999976158,
+            "requestCount": 1,
+            "transferredBytes": 79840,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 423.89999997615814,
+            "authReadyMs": 7791.5,
+            "requestCount": 1,
+            "transferredBytes": 149925,
+            "longTaskMs": 127,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "direct-writing-practice",
+        "device": "mobile",
+        "p75Ms": 2669.399999976158,
+        "p75AuthMs": 683.0999999642372,
+        "p75LongTaskMs": 483,
+        "p75TransferredBytes": 1367237,
+        "samples": [
+          {
+            "readyMs": 2395.2000000476837,
+            "authReadyMs": 590.1000000238419,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 467,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2389.5,
+            "authReadyMs": 573.7999999523163,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 449,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2369.800000011921,
+            "authReadyMs": 568.5,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 453,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2355.199999988079,
+            "authReadyMs": 579.5999999642372,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 436,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2872.099999964237,
+            "authReadyMs": 1040.199999988079,
+            "requestCount": 62,
+            "transferredBytes": 1383892,
+            "longTaskMs": 483,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2337.5,
+            "authReadyMs": 559.6000000238419,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 434,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2450.5,
+            "authReadyMs": 570.6999999880791,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 506,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2830,
+            "authReadyMs": 1037.0999999642372,
+            "requestCount": 62,
+            "transferredBytes": 1383892,
+            "longTaskMs": 454,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2650,
+            "authReadyMs": 683.0999999642372,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 651,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2351.2999999523163,
+            "authReadyMs": 554.3999999761581,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 434,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2325.900000035763,
+            "authReadyMs": 551.3000000119209,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 436,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2669.399999976158,
+            "authReadyMs": 592.8999999761581,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 694,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2392.199999988079,
+            "authReadyMs": 590.4000000357628,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 475,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2426.399999976158,
+            "authReadyMs": 614.7999999523163,
+            "requestCount": 62,
+            "transferredBytes": 1367237,
+            "longTaskMs": 478,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2886.5,
+            "authReadyMs": 1040.800000011921,
+            "requestCount": 62,
+            "transferredBytes": 1383892,
+            "longTaskMs": 473,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      }
+    ]
+  },
+  "optimized": {
+    "url": "http://127.0.0.1:8002",
+    "sourceRef": "working-tree",
+    "sourceSnapshotHash": "85420d2aeac13810fb18d65681f24cba775d8efd0c30fc214016d50f4bb9bd87",
+    "harnessHash": "37c79cb67deba6fd24daee7dd1a57b24fd0397e567ca405bdd3dc16d55b4ceea",
+    "builtAssetHashes": {
+      "/assets/index-BMDJY-38.css": "d152d5c83c5cec86bece8e894988b85fe37de385c41d6d70d176c935a1a7ae0e",
+      "/assets/radix-DmyKljyx.js": "acc822b9b5ca43aaa08b0823e32b80259bfd038aaa523d7ee75e7238e4db35ca",
+      "/assets/supabase-DXeGmUyu.js": "dc91cbf4047ca0b053622bbcca43e614df245a9b7feadfaf1050fce169c68bea",
+      "/assets/index-2YRBuRm9.js": "e72cf602bf7f993b219a4a6207a7dae29cb833bd330b4ad5b5455089fad547ee",
+      "/assets/remote-Cjkti5zG.js": "f3abb0659e66184d47932d4566bc7e0a0f47993628b05946a3363f41b82c3883",
+      "/assets/App-DrCzo7x0.js": "c437f3a949cb3421853b927b00f2b37be58bb71136ba340f45be27e89e195a66",
+      "/assets/ModalFrame-D_CEUJOx.css": "4098a37cc225f5cc748e60c0849f09be9316ecb88cd180735ed4b06dd7fb5fdc",
+      "/assets/recovery-uKqD-EZq.js": "ccfea0d9a1deb65f6b69bca89f3e2b666ffafaaa6bc3aa9f5bc1ccfc9a8273bf",
+      "/assets/vocabularyDrafts-DeXu4E2_.js": "8ed8e07fca3e4b8939bb263863ec22a8d50f35a38a69420230beb7383f1723aa",
+      "/assets/pendingAudio-BW5qa68M.js": "d982042d9aa97eab0ef463de7e0ed33b0067b16f75af7c90e30e7f92f9ad9e7d",
+      "/assets/preferences-DbZpdvK4.js": "0fa4e7cba7a144593558dbe602cda1be72a710fe7b3dd0ed840b4ac73b6e21e0",
+      "/assets/ModalFrame-DMisI4bn.js": "f695d3845d1f5238410e7679e8f3e4f48bfed626b3889b65633cca488deb8801",
+      "/assets/arrow-right-BV8ymj1H.js": "78958893cf61d86c5e767376a4a53ff1de74f3deb0feafb313af51540977b909",
+      "/assets/file-check-corner-C9bphtY1.js": "3636fb6bc3cc02c9c45190cc01dbe044e29ff7e3991da8106ce42ff741d72fa9",
+      "/assets/useExamCatalog-DOJdssV7.js": "f40c70e98d8e8a2dda584f7dc7fc5162f96132e488677cd5263893574093e3ea",
+      "/assets/examCatalog-CDt6CZm1.js": "41b1d72205968ebd82fa3588c93d0d27af3e5356d5e6ccc8a4f627af24c24e24",
+      "/assets/TodayPage-DdQ7-Jhd.js": "6bba353a801bc9288bb010b429dd160b9d077abe1ad32ae35788f800033c03b6",
+      "/assets/SettingsModal-B1JjsPFo.js": "75c966490aa936e4b36e767f81defbb8dc184163f09637ad496b3557b3e7bc07",
+      "/assets/VocabularyGroupWordsPage-4KfuGs_X.js": "5ea3b379110fc61a5c8d396d6367172f210b8fc2284c68bf1a6484fe4e48ee05",
+      "/assets/Pronunciation-l19g0nF3.css": "d3c22e4a1c0e8ab910b8cc2c3b10dd5919eaedff3e1fb02e41927e422f578c94",
+      "/assets/arrow-left-DNtdQOm0.js": "2d6020f901f8bd1644cc916e79620e514905e79b2fbb15a57d7e976feb3640a8",
+      "/assets/Pronunciation-Bpi2geXm.js": "264b5ffdd7b055ac0eda64e618d9289a2b4c98fd1efb9f114b6d4ea7619a0934",
+      "/assets/VocabularyPages-raO0KWz6.js": "084fd9e7d0958fb72c3f362365e663c8741a8954f40e71e412d10cfcf26bf6bc",
+      "/assets/VocabularyPages-DOxfoQ9b.css": "7398d0bb1e27ccfc3fcdf5abec897add5098276fff1f75087209514ac4e0e06f",
+      "/assets/vocabulary-awIkXiFc.css": "f68baabd4d8e8de8bc699ae97ba2033c30ddba4f39b7a642e850d2315a3b9bb8",
+      "/assets/trash-Ck8cheId.js": "ff3b1e73ecb157e76c5517a7448f85aeb2436acdf515e052c689603c5dd59dfb",
+      "/assets/workspacePageState-FFkmwyUM.js": "ca1d9e1ec324f76d2abad0b052ef45c7c72d452bd361f5771fc3951ce4f6d53e",
+      "/assets/shuffle-Bp84e5lX.js": "ff6006b5ce2fba3817e6dcc739321221de94a3645fded81b03d57068ec3c28e5",
+      "/assets/play-ChY2v4Jq.js": "161ebcc1c619ad1061fcc62b09f9fca6c4b60c22bca56c182bf733def02b47c2",
+      "/assets/save-DPEEkz70.js": "247a5395feed45544fa1e556b431f34c1ac2c5b40404137e5f9c01316fecd2ee",
+      "/assets/WritingDeskPage-DQDNRqPg.js": "daa1c67ef32368ea1b700982a724cd2ac8ecbcabaa1afd3307ed7637c9c3d181",
+      "/assets/AccountPage-Dcr8xvl_.js": "69c2b2bd6c3cd6efe7339dcb8f81acc5a1ad35d2141b237d69114a103e840621"
+    },
+    "fixtureHashes": {
+      "public/vocabulary-catalog.json": "fd2738bc735419039d6d8c45bebd6d2e2578ad9ce5622e2c787f57948a28de09",
+      "public/sample/questions.json": "ab23956d83ba95c05124f6c0af7b792b7c7e5da982d190a14343f15fa208ae15",
+      "public/sample/speaking-questions.json": "e3c6f48e92c805108f7e4c32c27b2856bdb08a7710a6e430b35133ee5d348101",
+      "public/sample/speaking-samples.json": "0e0f8d5c69954977d4fb28bc0d2b3eb55721641eeea64ad52ddb119ca3b73ca7"
+    },
+    "network": {
+      "mbps": 10,
+      "latencyMs": 150
+    },
+    "cpuRate": {
+      "desktop": 1,
+      "mobile": 4
+    },
+    "runs": 15,
+    "fixture": {
+      "syntheticAccount": "00000000-0000-4000-8000-000000000001",
+      "group": "/vocabulary/wordbooks/guixue:10174/groups/21795/words",
+      "expectedWords": 55,
+      "authConfirmedDefinition": "Supabase consumes the injected valid session from localStorage.",
+      "writes": "Intercepted in memory; all non-local traffic is intercepted or blocked."
+    },
+    "scenarios": [
+      {
+        "name": "cold-login",
+        "device": "desktop",
+        "p75Ms": 601.0999999642372,
+        "p75AuthMs": null,
+        "p75LongTaskMs": 0,
+        "p75TransferredBytes": 205602,
+        "samples": [
+          {
+            "readyMs": 592.8000000119209,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 578,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 601.7000000476837,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 592.3999999761581,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 569.5,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 592.3999999761581,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 594.6999999880791,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 608.9000000357628,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 613.1000000238419,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 576.6000000238419,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 578.8000000119209,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 586.6999999880791,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 601.0999999642372,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 573.5,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 575.7000000476837,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "authenticated-base-settings",
+        "device": "desktop",
+        "p75Ms": 2086.800000011921,
+        "p75AuthMs": 1513.7000000476837,
+        "p75LongTaskMs": 0,
+        "p75TransferredBytes": 389496,
+        "samples": [
+          {
+            "readyMs": 1957.699999988079,
+            "authReadyMs": 1385.300000011921,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1935.199999988079,
+            "authReadyMs": 1378.1000000238419,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2096.300000011921,
+            "authReadyMs": 1522.800000011921,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2043.5,
+            "authReadyMs": 1465.699999988079,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2130.199999988079,
+            "authReadyMs": 1530.5,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1966.5,
+            "authReadyMs": 1399,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2078.5,
+            "authReadyMs": 1513.7000000476837,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1946.300000011921,
+            "authReadyMs": 1371,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2118.600000023842,
+            "authReadyMs": 1528.199999988079,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2086.800000011921,
+            "authReadyMs": 1507.6000000238419,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1948.300000011921,
+            "authReadyMs": 1387.9000000357628,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1959.8999999761581,
+            "authReadyMs": 1408.3999999761581,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1875.5999999642372,
+            "authReadyMs": 1301.0999999642372,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1858.300000011921,
+            "authReadyMs": 1281.9000000357628,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1985.9000000357628,
+            "authReadyMs": 1431,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "settings-save",
+        "device": "desktop",
+        "p75Ms": 514.5999999642372,
+        "p75AuthMs": 1968.2000000476837,
+        "p75LongTaskMs": 0,
+        "p75TransferredBytes": 297,
+        "samples": [
+          {
+            "readyMs": 229,
+            "authReadyMs": 1770.8999999761581,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 408.0999999642372,
+            "authReadyMs": 1800,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 520.3999999761581,
+            "authReadyMs": 2057.599999964237,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 448.60000002384186,
+            "authReadyMs": 1968,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 286.7000000476837,
+            "authReadyMs": 1894.2000000476837,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 420.9000000357628,
+            "authReadyMs": 1865.300000011921,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 414.9000000357628,
+            "authReadyMs": 1968.2000000476837,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 403.69999998807907,
+            "authReadyMs": 1812.699999988079,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 421.30000001192093,
+            "authReadyMs": 2009.8999999761581,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 422.39999997615814,
+            "authReadyMs": 1989,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 289.60000002384186,
+            "authReadyMs": 1740.4000000357628,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 301.60000002384186,
+            "authReadyMs": 1780.699999988079,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 517.3000000119209,
+            "authReadyMs": 1834.8999999761581,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 514.5999999642372,
+            "authReadyMs": 1811.199999988079,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 516.8999999761581,
+            "authReadyMs": 1961.699999988079,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          }
+        ]
+      },
+      {
+        "name": "direct-group-words",
+        "device": "desktop",
+        "p75Ms": 2441.399999976158,
+        "p75AuthMs": 1877.699999988079,
+        "p75LongTaskMs": 0,
+        "p75TransferredBytes": 629558,
+        "samples": [
+          {
+            "readyMs": 2440,
+            "authReadyMs": 1871.199999988079,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2434.100000023842,
+            "authReadyMs": 1862,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2472,
+            "authReadyMs": 1884,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2441.399999976158,
+            "authReadyMs": 1884.0999999642372,
+            "requestCount": 75,
+            "transferredBytes": 708848,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2451.300000011921,
+            "authReadyMs": 1873.6000000238419,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2441.099999964237,
+            "authReadyMs": 1877.699999988079,
+            "requestCount": 75,
+            "transferredBytes": 708848,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2415.199999988079,
+            "authReadyMs": 1850,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2412.399999976158,
+            "authReadyMs": 1861.300000011921,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2426.900000035763,
+            "authReadyMs": 1873.800000011921,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2449.699999988079,
+            "authReadyMs": 1877.199999988079,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2409.399999976158,
+            "authReadyMs": 1876.199999988079,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2440.599999964237,
+            "authReadyMs": 1866,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2423.899999976158,
+            "authReadyMs": 1888.5999999642372,
+            "requestCount": 75,
+            "transferredBytes": 708848,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2422.899999976158,
+            "authReadyMs": 1860.6000000238419,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2426.100000023842,
+            "authReadyMs": 1853.800000011921,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "repeat-group-navigation",
+        "device": "desktop",
+        "p75Ms": 54.60000002384186,
+        "p75AuthMs": 1948.1000000238419,
+        "p75LongTaskMs": 0,
+        "p75TransferredBytes": 79290,
+        "samples": [
+          {
+            "readyMs": 38.30000001192093,
+            "authReadyMs": 2249.899999976158,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 36.89999997615814,
+            "authReadyMs": 1913.5999999642372,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 46.40000003576279,
+            "authReadyMs": 1941.4000000357628,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 44.19999998807907,
+            "authReadyMs": 1945.8999999761581,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 62.80000001192093,
+            "authReadyMs": 1963.300000011921,
+            "requestCount": 1,
+            "transferredBytes": 66974,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 31.80000001192093,
+            "authReadyMs": 1927.699999988079,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 61.799999952316284,
+            "authReadyMs": 1925.5,
+            "requestCount": 1,
+            "transferredBytes": 65981,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 36.89999997615814,
+            "authReadyMs": 1908.800000011921,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 36.10000002384186,
+            "authReadyMs": 1935.5,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 75.60000002384186,
+            "authReadyMs": 2000.6000000238419,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 54.60000002384186,
+            "authReadyMs": 1948.1000000238419,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 40.799999952316284,
+            "authReadyMs": 1916,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 34.10000002384186,
+            "authReadyMs": 1938.199999988079,
+            "requestCount": 1,
+            "transferredBytes": 0,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 39,
+            "authReadyMs": 1911.2000000476837,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 35.5,
+            "authReadyMs": 1907.5,
+            "requestCount": 1,
+            "transferredBytes": 53665,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "direct-writing-practice",
+        "device": "desktop",
+        "p75Ms": 1930.1000000238419,
+        "p75AuthMs": 1368,
+        "p75LongTaskMs": 0,
+        "p75TransferredBytes": 401137,
+        "samples": [
+          {
+            "readyMs": 1915.1000000238419,
+            "authReadyMs": 1349.9000000357628,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1930.1000000238419,
+            "authReadyMs": 1367.7000000476837,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1906.1000000238419,
+            "authReadyMs": 1368,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1929.1000000238419,
+            "authReadyMs": 1384.199999988079,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1907.6000000238419,
+            "authReadyMs": 1364.4000000357628,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1901.5,
+            "authReadyMs": 1351.1000000238419,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1918.3999999761581,
+            "authReadyMs": 1363,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1907.5,
+            "authReadyMs": 1370.800000011921,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2019.9000000357628,
+            "authReadyMs": 1401.9000000357628,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1919.2000000476837,
+            "authReadyMs": 1353.300000011921,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1937.8999999761581,
+            "authReadyMs": 1365.5,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1903.199999988079,
+            "authReadyMs": 1356.800000011921,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1900.1000000238419,
+            "authReadyMs": 1351.6000000238419,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1934,
+            "authReadyMs": 1364.300000011921,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 1907.4000000357628,
+            "authReadyMs": 1341.1000000238419,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "cold-login",
+        "device": "mobile",
+        "p75Ms": 809.1000000238419,
+        "p75AuthMs": null,
+        "p75LongTaskMs": 59,
+        "p75TransferredBytes": 206058,
+        "samples": [
+          {
+            "readyMs": 799.5,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 206058,
+            "longTaskMs": 61,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 810.8000000119209,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 55,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 813.5999999642372,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 206058,
+            "longTaskMs": 59,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 832.3000000119209,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 206058,
+            "longTaskMs": 57,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 801.9000000357628,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 206058,
+            "longTaskMs": 61,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 799.5,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 206058,
+            "longTaskMs": 60,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 798,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 54,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 809.1000000238419,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 206058,
+            "longTaskMs": 54,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 792.5,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 206058,
+            "longTaskMs": 53,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 767,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 53,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 772.9000000357628,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 206058,
+            "longTaskMs": 58,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 749.9000000357628,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 771.3000000119209,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 205602,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 789.1999999880791,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 206058,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 771.2000000476837,
+            "authReadyMs": null,
+            "requestCount": 11,
+            "transferredBytes": 206058,
+            "longTaskMs": 53,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "authenticated-base-settings",
+        "device": "mobile",
+        "p75Ms": 2881.800000011921,
+        "p75AuthMs": 2162.600000023842,
+        "p75LongTaskMs": 262,
+        "p75TransferredBytes": 389496,
+        "samples": [
+          {
+            "readyMs": 2916.599999964237,
+            "authReadyMs": 2214.7999999523163,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 209,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2477.399999976158,
+            "authReadyMs": 1782,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 276,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2855.800000011921,
+            "authReadyMs": 2153.100000023842,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 191,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2856.699999988079,
+            "authReadyMs": 2147.899999976158,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 140,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2293.599999964237,
+            "authReadyMs": 1594.5,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 242,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2881.800000011921,
+            "authReadyMs": 2157.900000035763,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 199,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2319.400000035763,
+            "authReadyMs": 1561.300000011921,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 262,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2739.2999999523163,
+            "authReadyMs": 1989.7999999523163,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 329,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 3001.7000000476837,
+            "authReadyMs": 2270.7000000476837,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 277,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2252.5,
+            "authReadyMs": 1551.8999999761581,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 232,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2882.600000023842,
+            "authReadyMs": 2183.300000011921,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 195,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2838.199999988079,
+            "authReadyMs": 2153.399999976158,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 190,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2850.5,
+            "authReadyMs": 2149.899999976158,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 192,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2878.600000023842,
+            "authReadyMs": 2162.600000023842,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 195,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2362.900000035763,
+            "authReadyMs": 1662.7000000476837,
+            "requestCount": 68,
+            "transferredBytes": 389496,
+            "longTaskMs": 190,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "settings-save",
+        "device": "mobile",
+        "p75Ms": 466.69999998807907,
+        "p75AuthMs": 2506.199999988079,
+        "p75LongTaskMs": 56,
+        "p75TransferredBytes": 297,
+        "samples": [
+          {
+            "readyMs": 283.5,
+            "authReadyMs": 2656.7999999523163,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 50,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 466.69999998807907,
+            "authReadyMs": 2277.5,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 56,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 304.5,
+            "authReadyMs": 2506.199999988079,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 58,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 272.60000002384186,
+            "authReadyMs": 2448,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 487.39999997615814,
+            "authReadyMs": 2120.5,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 50,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 281.5,
+            "authReadyMs": 2461.7000000476837,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 54,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 495.2000000476837,
+            "authReadyMs": 2111.100000023842,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 52,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 463.0999999642372,
+            "authReadyMs": 2484.2999999523163,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 54,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 340.5,
+            "authReadyMs": 2637.100000023842,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 104,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 466.80000001192093,
+            "authReadyMs": 2052,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 277.39999997615814,
+            "authReadyMs": 2507.699999988079,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 57,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 263.5,
+            "authReadyMs": 2441.099999964237,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 281.60000002384186,
+            "authReadyMs": 2456.199999988079,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 280.10000002384186,
+            "authReadyMs": 2468.300000011921,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          },
+          {
+            "readyMs": 441.19999998807907,
+            "authReadyMs": 2163.100000023842,
+            "requestCount": 2,
+            "transferredBytes": 297,
+            "longTaskMs": 0,
+            "writeCount": 1,
+            "writeRpcCount": 1
+          }
+        ]
+      },
+      {
+        "name": "direct-group-words",
+        "device": "mobile",
+        "p75Ms": 2657.599999964237,
+        "p75AuthMs": 1927.5999999642372,
+        "p75LongTaskMs": 208,
+        "p75TransferredBytes": 629558,
+        "samples": [
+          {
+            "readyMs": 2707.800000011921,
+            "authReadyMs": 1991.5,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 261,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2640.899999976158,
+            "authReadyMs": 1916.5,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 193,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2603.300000011921,
+            "authReadyMs": 1900.6000000238419,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 184,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2646.5,
+            "authReadyMs": 1917,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 197,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2596.899999976158,
+            "authReadyMs": 1911.800000011921,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 192,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2621.400000035763,
+            "authReadyMs": 1925.199999988079,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 208,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2661.399999976158,
+            "authReadyMs": 1917.1000000238419,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 189,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2657.599999964237,
+            "authReadyMs": 1939.8999999761581,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 216,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2671.899999976158,
+            "authReadyMs": 1955.699999988079,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 224,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2623.800000011921,
+            "authReadyMs": 1923.1000000238419,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 188,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2615.699999988079,
+            "authReadyMs": 1916.800000011921,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 188,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2623.400000035763,
+            "authReadyMs": 1906.1000000238419,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 199,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2644.800000011921,
+            "authReadyMs": 1926.800000011921,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 207,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2612.099999964237,
+            "authReadyMs": 1921.199999988079,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 184,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2642,
+            "authReadyMs": 1927.5999999642372,
+            "requestCount": 75,
+            "transferredBytes": 629558,
+            "longTaskMs": 181,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "repeat-group-navigation",
+        "device": "mobile",
+        "p75Ms": 163.5,
+        "p75AuthMs": 2153.199999988079,
+        "p75LongTaskMs": 0,
+        "p75TransferredBytes": 79290,
+        "samples": [
+          {
+            "readyMs": 152.60000002384186,
+            "authReadyMs": 2584.800000011921,
+            "requestCount": 1,
+            "transferredBytes": 2887,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 152.60000002384186,
+            "authReadyMs": 2125.800000011921,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 154.30000001192093,
+            "authReadyMs": 2105.100000023842,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 166.89999997615814,
+            "authReadyMs": 2133.399999976158,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 171,
+            "authReadyMs": 2131.199999988079,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 158.69999998807907,
+            "authReadyMs": 2132.2999999523163,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 163.5,
+            "authReadyMs": 2136.7000000476837,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 161.5,
+            "authReadyMs": 2159.300000011921,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 374.2000000476837,
+            "authReadyMs": 2402.600000023842,
+            "requestCount": 1,
+            "transferredBytes": 136666,
+            "longTaskMs": 56,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 158.30000001192093,
+            "authReadyMs": 2142.400000035763,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 162.5999999642372,
+            "authReadyMs": 2141,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 155.69999998807907,
+            "authReadyMs": 2117.399999976158,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 154.30000001192093,
+            "authReadyMs": 2130.699999988079,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 159.5,
+            "authReadyMs": 2141.300000011921,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 161.89999997615814,
+            "authReadyMs": 2153.199999988079,
+            "requestCount": 1,
+            "transferredBytes": 79290,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      },
+      {
+        "name": "direct-writing-practice",
+        "device": "mobile",
+        "p75Ms": 2084.2000000476837,
+        "p75AuthMs": 1377.7000000476837,
+        "p75LongTaskMs": 55,
+        "p75TransferredBytes": 401137,
+        "samples": [
+          {
+            "readyMs": 2107,
+            "authReadyMs": 1393.2000000476837,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 50,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2054.5,
+            "authReadyMs": 1351.7999999523163,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 0,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2075.5,
+            "authReadyMs": 1377.7000000476837,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 50,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2075.399999976158,
+            "authReadyMs": 1373.8999999761581,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 51,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2094.399999976158,
+            "authReadyMs": 1371.199999988079,
+            "requestCount": 47,
+            "transferredBytes": 402496,
+            "longTaskMs": 54,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2061.199999988079,
+            "authReadyMs": 1376,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2051.300000011921,
+            "authReadyMs": 1373.4000000357628,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 55,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2051.5,
+            "authReadyMs": 1380.5999999642372,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 111,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2120.899999976158,
+            "authReadyMs": 1375.7999999523163,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 66,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2057.400000035763,
+            "authReadyMs": 1363.1000000238419,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 53,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2073.199999988079,
+            "authReadyMs": 1383.5,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 50,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2052.199999988079,
+            "authReadyMs": 1355.5999999642372,
+            "requestCount": 47,
+            "transferredBytes": 402496,
+            "longTaskMs": 55,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2084.2000000476837,
+            "authReadyMs": 1377.1000000238419,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2073.699999988079,
+            "authReadyMs": 1347.5999999642372,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 53,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          },
+          {
+            "readyMs": 2050.099999964237,
+            "authReadyMs": 1357.7999999523163,
+            "requestCount": 46,
+            "transferredBytes": 401137,
+            "longTaskMs": 52,
+            "writeCount": 0,
+            "writeRpcCount": 0
+          }
+        ]
+      }
+    ]
+  },
+  "comparisons": [
+    {
+      "name": "cold-login",
+      "device": "desktop",
+      "baselineMs": 1571.699999988079,
+      "optimizedMs": 601.0999999642372,
+      "improvementPercent": 61.75478781136372
+    },
+    {
+      "name": "authenticated-base-settings",
+      "device": "desktop",
+      "baselineMs": 1965,
+      "optimizedMs": 2086.800000011921,
+      "improvementPercent": -6.1984732830494105
+    },
+    {
+      "name": "settings-save",
+      "device": "desktop",
+      "baselineMs": 1149.1000000238419,
+      "optimizedMs": 514.5999999642372,
+      "improvementPercent": 55.21712645082585
+    },
+    {
+      "name": "direct-group-words",
+      "device": "desktop",
+      "baselineMs": 8560,
+      "optimizedMs": 2441.399999976158,
+      "improvementPercent": 71.47897196289534
+    },
+    {
+      "name": "repeat-group-navigation",
+      "device": "desktop",
+      "baselineMs": 64.90000003576279,
+      "optimizedMs": 54.60000002384186,
+      "improvementPercent": 15.870570117480998
+    },
+    {
+      "name": "direct-writing-practice",
+      "device": "desktop",
+      "baselineMs": 2421.599999964237,
+      "optimizedMs": 1930.1000000238419,
+      "improvementPercent": 20.29649818085786
+    },
+    {
+      "name": "cold-login",
+      "device": "mobile",
+      "baselineMs": 1921.199999988079,
+      "optimizedMs": 809.1000000238419,
+      "improvementPercent": 57.885696438222865
+    },
+    {
+      "name": "authenticated-base-settings",
+      "device": "mobile",
+      "baselineMs": 2750.699999988079,
+      "optimizedMs": 2881.800000011921,
+      "improvementPercent": -4.766059549365975
+    },
+    {
+      "name": "settings-save",
+      "device": "mobile",
+      "baselineMs": 1067,
+      "optimizedMs": 466.69999998807907,
+      "improvementPercent": 56.26054358124845
+    },
+    {
+      "name": "direct-group-words",
+      "device": "mobile",
+      "baselineMs": 9126.400000035763,
+      "optimizedMs": 2657.599999964237,
+      "improvementPercent": 70.88008415197862
+    },
+    {
+      "name": "repeat-group-navigation",
+      "device": "mobile",
+      "baselineMs": 259.89999997615814,
+      "optimizedMs": 163.5,
+      "improvementPercent": 37.09118891304401
+    },
+    {
+      "name": "direct-writing-practice",
+      "device": "mobile",
+      "baselineMs": 2669.399999976158,
+      "optimizedMs": 2084.2000000476837,
+      "improvementPercent": 21.922529404873803
+    }
+  ],
+  "onlineColdBaseline": {
+    "url": "https://ielts-fieldbook.pages.dev",
+    "network": {
+      "mbps": 10,
+      "latencyMs": 150
+    },
+    "runs": 15,
+    "scenarios": [
+      {
+        "name": "cold-login",
+        "device": "desktop",
+        "p75Ms": 3140.100000023842,
+        "samples": [
+          {
+            "readyMs": 2590.300000011921
+          },
+          {
+            "readyMs": 3151.800000011921
+          },
+          {
+            "readyMs": 2503.2000000476837
+          },
+          {
+            "readyMs": 3758.5
+          },
+          {
+            "readyMs": 2375.2000000476837
+          },
+          {
+            "readyMs": 2621.300000011921
+          },
+          {
+            "readyMs": 2754.599999964237
+          },
+          {
+            "readyMs": 4290.600000023842
+          },
+          {
+            "readyMs": 2468.5
+          },
+          {
+            "readyMs": 2591.5
+          },
+          {
+            "readyMs": 3140.100000023842
+          },
+          {
+            "readyMs": 2269
+          },
+          {
+            "readyMs": 2086.800000011921
+          },
+          {
+            "readyMs": 2643.199999988079
+          },
+          {
+            "readyMs": 2605.399999976158
+          }
+        ]
+      },
+      {
+        "name": "cold-login",
+        "device": "mobile",
+        "p75Ms": 3263.900000035763,
+        "samples": [
+          {
+            "readyMs": 3147.099999964237
+          },
+          {
+            "readyMs": 2350.300000011921
+          },
+          {
+            "readyMs": 3263.900000035763
+          },
+          {
+            "readyMs": 4264.099999964237
+          },
+          {
+            "readyMs": 3541.900000035763
+          },
+          {
+            "readyMs": 3101.399999976158
+          },
+          {
+            "readyMs": 2804.900000035763
+          },
+          {
+            "readyMs": 2921.100000023842
+          },
+          {
+            "readyMs": 3712.900000035763
+          },
+          {
+            "readyMs": 2876.600000023842
+          },
+          {
+            "readyMs": 2382.599999964237
+          },
+          {
+            "readyMs": 2631.600000023842
+          },
+          {
+            "readyMs": 2289.900000035763
+          },
+          {
+            "readyMs": 2345.199999988079
+          },
+          {
+            "readyMs": 2821.800000011921
+          }
+        ]
+      }
+    ]
+  }
+}

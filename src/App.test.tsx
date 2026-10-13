@@ -80,6 +80,11 @@ vi.mock('./storage', async () => {
     ...actual,
     loadState,
     hydrateState: async () => loadState(),
+    getCollectionStatuses: () => null,
+    ensureAccountModule: async () => ({ data: {}, statuses: {} }),
+    ensureCompleteAccount: async () => loadState(),
+    ensureQuestionBank: async (skill: string) => skill === 'writing' ? loadState().questions : loadState().speakingTopics,
+    ensureSpeakingSample: async () => null,
     saveState: () => true,
     writeBankCache: () => undefined,
     readBankCache: () => null,
@@ -203,8 +208,9 @@ describe('Fieldbook UI', () => {
     expect(within(rail).getByText('Writing')).toBeTruthy();
   });
 
-  it('renders Today', () => {
+  it('renders Today', async () => {
     renderAt('/');
+    await screen.findAllByRole('heading', { level: 2, name: 'Today' });
     expect(screen.getAllByRole('heading', { level: 2, name: 'Today' })[0]).toBeTruthy();
     expect(screen.getAllByRole('button', { name: 'Start' })[0]).toBeTruthy();
   });

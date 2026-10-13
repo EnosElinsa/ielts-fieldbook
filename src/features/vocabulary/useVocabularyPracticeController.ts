@@ -119,11 +119,14 @@ export function useVocabularyPracticeController() {
     let active = true;
     const target = bookId === 'all' ? '' : bookId;
     setCatalogStatus({ bookId: target, status: 'loading' });
-    Promise.resolve(fb.loadVocabularyCatalog?.(target || undefined)).then(() => {
+    const targetUnit = unitId === 'all' ? undefined : unitId;
+    const targetEntry = params.get('entryId');
+    const options = targetUnit || targetEntry || catalogRetry ? { ...(targetUnit ? { unitId: targetUnit } : {}), ...(targetEntry ? { entryIds: [targetEntry] } : {}), ...(catalogRetry ? { force: true } : {}) } : undefined;
+    Promise.resolve(options ? fb.loadVocabularyCatalog?.(target || undefined, options) : fb.loadVocabularyCatalog?.(target || undefined)).then(() => {
       if (active) setCatalogStatus({ bookId: target, status: 'ready' });
     }).catch(() => { if (active) setCatalogStatus({ bookId: target, status: 'error' }); });
     return () => { active = false; };
-  }, [bookId, catalogRetry, fb.loadVocabularyCatalog]);
+  }, [bookId, unitId, params.get('entryId'), catalogRetry, fb.loadVocabularyCatalog]);
 
   const owned = () => mounted.current && owner.current === accountId();
   const stopAudio = useCallback(() => {
@@ -322,7 +325,10 @@ export function useVocabularyPracticeController() {
     if (record) {
       setResults(presentVocabularySession(record)); setCards([]); setError('');
       const sourceBook = record.selection && (record.selection.kind === 'unit' || record.selection.kind === 'specialist') ? record.selection.bookId : record.filter?.bookId;
-      if (sourceBook && sourceBook !== 'all') void fb.loadVocabularyCatalog?.(sourceBook).catch(() => { /* historical view remains available from frozen rows */ });
+      if (sourceBook && sourceBook !== 'all') {
+        const unit = record.selection?.kind === 'unit' || record.selection?.kind === 'specialist' ? record.selection.unitId : record.filter?.unitId;
+        void fb.loadVocabularyCatalog?.(sourceBook, { ...(unit && unit !== 'all' ? { unitId: unit } : {}), entryIds: record.entryIds }).catch(() => { /* historical view remains available from frozen rows */ });
+      }
     }
     else if (fb.booted) { setResults(null); setError('This saved session is unavailable for this account.'); }
   }, [historySessionId, params.get('sessionId'), fb.state.vocabularySessions, fb.booted]);
@@ -525,7 +531,7 @@ export function useVocabularyPracticeController() {
     try {
     if (resume.selection?.kind === 'unit' || resume.selection?.kind === 'specialist') {
       try {
-        await fb.loadVocabularyCatalog?.(resume.selection.bookId);
+        await fb.loadVocabularyCatalog?.(resume.selection.bookId, { unitId: resume.selection.unitId, entryIds: resume.cardSnapshots?.map(card => card.entryId) });
       } catch {
         if (owned() && recoveryOwner === accountId()) setError('The saved wordbook could not be loaded. Your answers are still here. Retry resuming when the connection is available.');
         return;
@@ -894,7 +900,8 @@ export function useVocabularyPracticeController() {
       const sourceBook = results.selection?.kind === 'unit' || results.selection?.kind === 'specialist' ? results.selection.bookId : results.filter.bookId;
       const books = new Set([sourceBook, ...results.results.filter(row => row.result === 'failure' || row.result === 'partial').map(row => row.context?.bookId)].filter((book): book is string => Boolean(book && book !== 'all')));
       for (const book of books) {
-        await fb.loadVocabularyCatalog?.(book);
+        const selectedUnit = results.selection?.kind === 'unit' || results.selection?.kind === 'specialist' ? results.selection.unitId : results.filter.unitId;
+        await fb.loadVocabularyCatalog?.(book, { ...(book === sourceBook && selectedUnit && selectedUnit !== 'all' ? { unitId: selectedUnit } : {}), entryIds: results.results.filter(row => row.result === 'failure' || row.result === 'partial').map(row => row.entryId) });
         if (!active()) return;
       }
       if (!active()) return;

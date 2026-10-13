@@ -5,6 +5,8 @@ import { accountStoreAvailable, hydrateState, saveState, saveVocabularyImport, s
 export const STORE_KEY = 'ielts-writing-fieldbook';
 
 export { accountStoreAvailable, hydrateState, saveState, saveVocabularyImport, saveVocabularySession, loadVocabularyCatalog };
+export { ensureAccountModule, ensureCompleteAccount, getCollectionStatuses, ensureQuestionBank, subscribeQuestionBank, ensureSpeakingSample } from './remote';
+export type { AccountCollection, AccountModule, CollectionStatus, CollectionStatuses, QuestionBankRow, QuestionBankSnapshot } from './remote';
 
 export function loadState() {
   return emptyState();

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
+import { useSpeakingSample, SpeakingSampleStatus } from './useSpeakingSample';
 import { formatClock, formatDate } from '../../lib/format';
 import { Empty } from '../../components/ui';
 import { putAudio } from '../../storage/audio';
@@ -57,6 +58,7 @@ function SampleInline({ topic, part }) {
 export function SpeakingDeskPage() {
   const fb = useFieldbook();
   const topic = fb.selectedTopic;
+  const sampleStatus = useSpeakingSample(topic?.id);
   const part = String(fb.deskPart);
   const owner = accountId();
   const uiKey = `speaking:desk:${topic?.id || 'none'}:${part}:${fb.questionIndex}:${fb.currentDeskMode()}`;
@@ -393,6 +395,7 @@ export function SpeakingDeskPage() {
               </div>
             )}
             {!hideAids && part === '2' && !speakRunning ? <SampleInline topic={topic} part={part} /> : null}
+            {!hideAids && !speakRunning ? <SpeakingSampleStatus {...sampleStatus} /> : null}
           </div>
           <div className="prompt-tip">
             {part === '1'

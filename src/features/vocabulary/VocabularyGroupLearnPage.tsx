@@ -33,7 +33,7 @@ export function VocabularyGroupLearnPage() {
   const owner = accountId();
   const location = useLocation();
   const [params, setParams] = useSearchParams();
-  const { status, retry } = useVocabularyCatalog(fb.loadVocabularyCatalog, bookId);
+  const { status, retry } = useVocabularyCatalog(fb.loadVocabularyCatalog, bookId, unitId);
   const book = VOCABULARY_CATALOG.books.find(row => row.id === bookId);
   const unit = VOCABULARY_CATALOG.units.find(row => row.bookId === bookId && row.id === unitId);
   const isGroup = unit && unit.kind !== 'chapter' && !VOCABULARY_CATALOG.units.some(row => row.bookId === bookId && row.parentId === unitId);

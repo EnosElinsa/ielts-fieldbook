@@ -49,7 +49,7 @@ test('button-driven module departure protects a pending recording and allows a c
   await screen.findByText('Decoded recording player');
   const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
   const proceed = vi.fn();
-  expect(navigateWithPracticeGuard('/vocabulary', proceed)).toBe(false);
+  await waitFor(() => expect(navigateWithPracticeGuard('/vocabulary', proceed)).toBe(false));
   expect(proceed).not.toHaveBeenCalled();
   confirm.mockReturnValue(true);
   expect(navigateWithPracticeGuard('/vocabulary', proceed)).toBe(true);

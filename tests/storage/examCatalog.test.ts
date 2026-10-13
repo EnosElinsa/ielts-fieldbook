@@ -1,5 +1,7 @@
-import { beforeEach, expect, test, vi } from 'vitest';
-const mock = vi.hoisted(() => ({ configured: false, calls: [] as string[], rows: {} as Record<string, { id: string; payload: Record<string, unknown> }[]>, fail: false }));
+import { afterEach, beforeEach, expect, test, vi } from 'vitest';
+import { clearReadCache } from '../../src/lib/readCache';
+import { resetAccountIdentity, setAccountIdentity } from '../../src/storage/accountIdentity';
+const mock = vi.hoisted(() => ({ configured: false, calls: [] as string[], rows: {} as Record<string, { id: string; payload: Record<string, unknown> }[]>, fail: false, signedCalls: 0 }));
 vi.mock('../../src/lib/supabase', () => ({ supabaseConfigured: () => mock.configured, getSupabase: () => ({
   from: (table: string) => ({ select: () => {
     let rows = mock.rows[table] || [];
@@ -8,9 +10,10 @@ vi.mock('../../src/lib/supabase', () => ({ supabaseConfigured: () => mock.config
       order: () => query, range: async (start: number, end: number) => { mock.calls.push(table); return { data: rows.slice(start, end + 1), error: mock.fail ? { message: 'offline' } : null }; } };
     return query;
   } }),
-  storage: { from: () => ({ createSignedUrl: async () => ({ data: { signedUrl: 'https://signed.example/audio' }, error: null }) }) },
+  storage: { from: () => ({ createSignedUrl: async () => { mock.signedCalls++; return { data: { signedUrl: 'https://signed.example/audio' }, error: null }; } }) },
 }) }));
-beforeEach(() => { mock.configured = false; mock.calls = []; mock.rows = {}; mock.fail = false; vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
+beforeEach(() => { clearReadCache(); resetAccountIdentity(); mock.configured = false; mock.calls = []; mock.rows = {}; mock.fail = false; mock.signedCalls = 0; vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
+afterEach(() => { vi.useRealTimers(); });
 const metadata = { schemaVersion: 1, papers: [{ id: 'p', book: 0, title: 'Original demo' }], sections: [{ id: 's', paperId: 'p', skill: 'reading', status: 'ready', sentences: [] }], passages: [], questions: [], assets: [] };
 
 test('unconfigured metadata does not load material and selected local sections load lazily', async () => {
@@ -42,4 +45,37 @@ test('failures remain retryable and asset URLs are signed', async () => {
   await expect(resolveExamAsset({ id: 'a', paperId: 'p', kind: 'audio', storagePath: 'p/audio.mp3', sourceUrl: '' } as never)).resolves.toBe('/exam-assets/p/audio.mp3');
   vi.stubEnv('DEV', false);
   await expect(resolveExamAsset({ id: 'a', paperId: 'p', kind: 'audio', storagePath: 'p/audio.mp3', sourceUrl: '' } as never)).resolves.toBe('https://signed.example/audio');
+});
+
+test('metadata and section revisits reuse scoped content while reload bypasses fresh data', async () => {
+  const fetcher = vi.fn().mockImplementation(async () => ({ ok: true, json: async () => metadata }));
+  vi.stubGlobal('fetch', fetcher);
+  const { loadExamCatalog, loadExamSections } = await import('../../src/storage/examCatalog');
+  await Promise.all([loadExamCatalog('reading', 0), loadExamCatalog('reading', 0)]);
+  await loadExamCatalog('reading', 0);
+  expect(fetcher).toHaveBeenCalledTimes(1);
+  await Promise.all([loadExamSections(['s']), loadExamSections(['s', 's'])]);
+  await loadExamSections(['s']);
+  expect(fetcher).toHaveBeenCalledTimes(2);
+  await loadExamCatalog('reading', 0, { force: true });
+  expect(fetcher).toHaveBeenCalledTimes(3);
+  setAccountIdentity('different-account');
+  await loadExamCatalog('reading', 0);
+  expect(fetcher).toHaveBeenCalledTimes(4);
+});
+
+test('signed URLs are reused but re-signed before the expiry safety window', async () => {
+  vi.useFakeTimers(); vi.stubEnv('DEV', false); mock.configured = true;
+  const { resolveExamAsset } = await import('../../src/storage/examCatalog');
+  const asset = { id: 'a', paperId: 'p', kind: 'audio', storagePath: 'p/audio.mp3', sourceUrl: '' } as never;
+  await Promise.all([resolveExamAsset(asset), resolveExamAsset(asset)]);
+  expect(mock.signedCalls).toBe(1);
+  vi.advanceTimersByTime(3_539_999);
+  await resolveExamAsset(asset);
+  expect(mock.signedCalls).toBe(1);
+  vi.advanceTimersByTime(1);
+  await resolveExamAsset(asset);
+  expect(mock.signedCalls).toBe(2);
+  await resolveExamAsset(asset, { force: true });
+  expect(mock.signedCalls).toBe(3);
 });

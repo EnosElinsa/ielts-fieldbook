@@ -14,6 +14,7 @@ import { dayLabel, displayName, formatDate, planPillClass, sessionSkill, typeNam
 import { Empty } from '../../components/ui';
 import { ArrowRight, FileCheck2 } from 'lucide-react';
 import { ExamTodayPage } from '../exam/ExamTodayPage';
+import { AccountDataBoundary, useAccountRequirements } from '../../components/AccountDataBoundary';
 
 function planLabel(title: string) {
   const parts = String(title || '').split('·');
@@ -23,8 +24,22 @@ function planLabel(title: string) {
 
 export function TodayPage() {
   const fb = useFieldbook();
-  if (fb.activeSkill === 'reading' || fb.activeSkill === 'listening') return <ExamTodayPage skill={fb.activeSkill} />;
-  return <WritingSpeakingTodayPage />;
+  if (fb.activeSkill === 'reading' || fb.activeSkill === 'listening') return <AccountDataBoundary modules={['receptive']}><ExamTodayPage skill={fb.activeSkill} /></AccountDataBoundary>;
+  return <AccountDataBoundary modules={['productive']} banks={[fb.activeSkill]}><WritingSpeakingTodayPage /></AccountDataBoundary>;
+}
+
+function VocabularyDueCount() {
+  const fb = useFieldbook();
+  const {ready,error,retry} = useAccountRequirements({modules:['vocabulary']});
+  if (error) return <button className="btn text" onClick={retry}>Retry</button>;
+  return <strong aria-busy={!ready}>{ready ? dueVocabulary(fb.state, null, fb.activeSkill).length : '...'}</strong>;
+}
+
+function TodayStreak() {
+  const fb = useFieldbook();
+  const {ready,error,retry} = useAccountRequirements({modules:['productive','receptive']});
+  if (error) return <button className="btn text" onClick={retry}>Retry</button>;
+  return <span aria-busy={!ready}>{ready ? `${studyStreak(fb.state)}-day streak` : '...'}</span>;
 }
 
 function WritingSpeakingTodayPage() {
@@ -231,7 +246,7 @@ function WritingSpeakingTodayPage() {
             <span>Exam {exam}</span>
             {fb.state.settings.targetBand ? <span>Target {fb.state.settings.targetBand}</span> : null}
           </p>
-          <div className="rule-note">{studyStreak(fb.state)}-day streak</div>
+          <div className="rule-note"><TodayStreak /></div>
         </div>
       </div>
       <div className="metrics">
@@ -257,7 +272,7 @@ function WritingSpeakingTodayPage() {
         </div>
         <button className="metric metric-link" type="button" onClick={() => navigate('/vocabulary')}>
           <label>Due vocabulary</label>
-          <strong>{dueVocabulary(fb.state, null, fb.activeSkill).length}</strong>
+          <VocabularyDueCount />
           <small>due today</small>
         </button>
       </div>
