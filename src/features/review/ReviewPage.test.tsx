@@ -9,6 +9,7 @@ const { mockFieldbook } = vi.hoisted(() => ({ mockFieldbook: { current: null as 
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mockFieldbook.current }));
 
 beforeEach(() => {
+  sessionStorage.clear();
   mockFieldbook.current = {
     activeSkill: 'writing',
     state: {
@@ -24,6 +25,19 @@ beforeEach(() => {
     openFeedbackImport: vi.fn(), startTargetedPractice: vi.fn(), downloadFile: vi.fn(),
     buildAssessmentRequest: vi.fn(() => 'Assessment request'), toast: vi.fn(),
   };
+});
+
+test('review returns with its saved search and status filter', async () => {
+  const first = mount();
+  const user = userEvent.setup();
+  await user.type(screen.getByRole('textbox', {name:'Search attempts'}), 'Cities');
+  await user.click(screen.getByRole('button', {name:'Attempt status'}));
+  await user.click(screen.getByRole('option', {name:'Awaiting feedback'}));
+  first.unmount();
+  mount();
+  expect(screen.getByRole('textbox', {name:'Search attempts'})).toHaveValue('Cities');
+  expect(screen.getByRole('button', {name:'Attempt status'})).toHaveTextContent('Awaiting feedback');
+  expect(screen.queryByText('Education essay')).not.toBeInTheDocument();
 });
 afterEach(cleanup);
 const mount = (route = '/review') => render(<MemoryRouter initialEntries={[route]}><Routes><Route path="/review" element={<ReviewPage />} /><Route path="/reading/review" element={<p>Reading review queue</p>} /><Route path="/listening/review" element={<p>Listening review queue</p>} /></Routes></MemoryRouter>);

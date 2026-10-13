@@ -8,14 +8,14 @@ import { readDraftRecovery } from '../storage/recovery';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 
-const mocks = vi.hoisted(() => ({ initial: null, saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
+const mocks = vi.hoisted(() => ({ initial: null, saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), catalogRead: vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
 vi.mock('../storage', () => ({
   loadState: () => structuredClone(mocks.initial),
   hydrateState: async () => structuredClone(mocks.initial),
   saveState: (...args) => mocks.saveState(...args),
   saveVocabularyImport: (...args) => mocks.saveVocabularyImport(...args),
   saveVocabularySession: (...args) => mocks.saveVocabularySession(...args),
-  loadVocabularyCatalog: vi.fn(async () => ({ entries: [], books: [], units: [], memberships: [], nextOffset: null })),
+  loadVocabularyCatalog: (...args) => mocks.catalogRead(...args),
   downloadFile: (...args) => mocks.downloadFile(...args),
 }));
 vi.mock('../storage/remote', () => ({ accountId: () => mocks.owner }));
@@ -47,6 +47,7 @@ beforeEach(() => {
   mocks.downloadFile.mockReset();
   mocks.saveVocabularyImport.mockReset().mockResolvedValue(true);
   mocks.saveVocabularySession.mockReset().mockResolvedValue(true);
+  mocks.catalogRead.mockReset().mockResolvedValue({ entries: [], books: [], units: [], memberships: [], nextOffset: null });
   mocks.initial = emptyState();
   mocks.initial.questions = [{ id: 'q1', type: '1', name: 'Chart', prompt: 'Describe the chart.' }];
   mocks.initial.speakingTopics = [{ id: 'sp1', part: '2', title: 'A trip', cueCard: 'Describe a trip.' }];
@@ -424,4 +425,32 @@ test('metadata catalog loads all released group memberships without full entries
 const snapshot=structuredClone(VOCABULARY_CATALOG);
 const fetchMock=vi.spyOn(globalThis,'fetch').mockResolvedValue({ok:true,json:async()=>({books:[{id:'metadata-book',title:'Book',contentStatus:'complete'}],units:[{id:'group',bookId:'metadata-book',title:'Group',kind:'group'}],memberships:[{id:'m1',bookId:'metadata-book',unitId:'group',entryId:'metadata-one'},{id:'m2',bookId:'metadata-book',unitId:'group',entryId:'metadata-two'}],entries:[{id:'metadata-one'},{id:'metadata-two'}]})});
 try{await mount();await act(async()=>{await fieldbook.loadVocabularyCatalog();});expect(VOCABULARY_CATALOG.memberships.filter(row=>row.bookId==='metadata-book')).toHaveLength(2);expect(VOCABULARY_CATALOG.units.find(row=>row.bookId==='metadata-book')).toBeTruthy();expect(VOCABULARY_CATALOG.entries.find(row=>row.id==='metadata-one')).toBeUndefined();}finally{Object.assign(VOCABULARY_CATALOG,snapshot);fetchMock.mockRestore();}
+});
+
+test('catalog timeout clears shared read for retry and ignores the expired response', async () => {
+  const snapshot = structuredClone(VOCABULARY_CATALOG);
+  const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue({ ok: false });
+  try {
+    await mount();
+    vi.useFakeTimers();
+    const pending = defer();
+    const fresh = {entries: [], books: [], units: [], memberships: [], nextOffset: null};
+    mocks.catalogRead.mockImplementationOnce(() => pending.promise).mockResolvedValueOnce(fresh);
+    let failed;
+    await act(async () => {
+      failed = fieldbook.loadVocabularyCatalog('timeout-book').catch(error => error);
+      await vi.advanceTimersByTimeAsync(10_000);
+    });
+    expect((await failed).message).toMatch(/too long/);
+    await act(async () => { expect(await fieldbook.loadVocabularyCatalog('timeout-book')).toBe(true); });
+    expect(mocks.catalogRead).toHaveBeenCalledTimes(2);
+    await act(async () => {
+      pending.resolve({...fresh, entries: [{id: 'expired-catalog-entry'}]});
+      await Promise.resolve();
+    });
+    expect(VOCABULARY_CATALOG.entries.some(row => row.id === 'expired-catalog-entry')).toBe(false);
+  } finally {
+    Object.assign(VOCABULARY_CATALOG, snapshot);
+    fetchMock.mockRestore();
+  }
 });

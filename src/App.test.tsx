@@ -306,8 +306,8 @@ Write only the overview next time.
 
     await waitFor(() => {
       expect(screen.getAllByText(/Linked/i).length).toBeGreaterThan(0);
+      expect(screen.getByText(/Marked/i)).toBeTruthy();
+      expect(screen.getByText(/Overall 5\.5/i)).toBeTruthy();
     });
-    expect(screen.getByText(/Marked/i)).toBeTruthy();
-    expect(screen.getByText(/Overall 5\.5/i)).toBeTruthy();
   }, 30000);
 });

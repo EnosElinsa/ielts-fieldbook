@@ -13,6 +13,13 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
   const lock = useRef(false); const timer = useRef<number | null>(null); const alive = useRef(true); const boundOwner = useRef(owner);
   const practiceTick = useRef(Date.now());
   useEffect(() => { alive.current = true; return () => { alive.current = false; }; }, []);
+  useEffect(() => () => {
+    const current = ref.current;
+    if (mode !== 'practice' || !current || current.status !== 'active' || accountId() !== boundOwner.current) return;
+    const paused = { ...current, status: 'paused' as const, updatedAt: new Date().toISOString() };
+    ref.current = paused;
+    writeExamRecovery(boundOwner.current, key, paused);
+  }, [key, mode]);
   const update = useCallback((patch: Partial<ExamAttempt>) => {
     if (accountId() !== boundOwner.current || !ref.current) return;
     const next = { ...ref.current, ...patch, updatedAt: new Date().toISOString() }; ref.current = next; setAttempt(next); writeExamRecovery(boundOwner.current, key, next);

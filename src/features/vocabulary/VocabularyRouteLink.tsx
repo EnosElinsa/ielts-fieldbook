@@ -58,13 +58,15 @@ export function useVocabularyReturn(fallback = '/vocabulary') {
   const goBack = () => {
     const latest = readOrigin(location.state?.vocabularyReturn);
     const index = window.history.state?.idx;
-    if (latest && latest.url !== current) {
+    const restored = location.state?.workspaceModuleRestore;
+    const resumedModule = restored?.owner === accountId() && Boolean(safeVocabularyReturn(restored?.url, '')) && latest?.index === undefined;
+    if (!resumedModule && latest && latest.url !== current) {
       // Pop to the real source entry, including any intermediate practice replacements.
       if (latest.index === undefined) { navigate(-1); return; }
       if (Number.isInteger(index) && index > latest.index) { navigate(latest.index - index); return; }
     }
     // New tabs and direct URLs have no owned history entry to pop.
-    navigate(to, {replace: true, state: {vocabularyReturn: latest?.parent, vocabularyRestore: true}});
+    navigate(to, {replace: true, state: {vocabularyReturn: latest?.parent, vocabularyRestore: true, ...(resumedModule ? {workspaceModuleRestore: {owner: accountId(), url: to}} : {})}});
   };
   return {to, label: vocabularyReturnLabel(to), goBack};
 }

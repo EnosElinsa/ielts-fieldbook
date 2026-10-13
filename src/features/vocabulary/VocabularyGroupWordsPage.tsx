@@ -1,10 +1,11 @@
+import { PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
 import {
   useLocation,
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { ArrowLeft, ArrowRight, RotateCcw } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useFieldbook } from "../../context/FieldbookContext";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { resolveVocabularyLearningContext } from "../../domain/vocabulary/context";
@@ -91,19 +92,11 @@ export function VocabularyGroupWordsPage() {
       <VocabularyNavigation />
       <VocabularyBackLink fallback={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}#group-${encodeURIComponent(unitId)}`}/>
       {status === "loading" ? (
-        <p role="status" className="practice-load-status">
-          Loading group words…
-        </p>
+        <PageLoadingState variant="cards" message="Loading group words…" onRetry={retry} retryLabel="Retry group" />
       ) : status === "error" ? (
-        <div role="alert" className="vocabulary-error">
-          Group words could not be loaded.{" "}
-          <button className="btn line" onClick={retry}>
-            <RotateCcw size={15} />
-            Retry group
-          </button>
-        </div>
+        <StateMessage kind="error" message="Group words could not be loaded." onRetry={retry} retryLabel="Retry group" />
       ) : !book || !isGroup ? (
-        <p role="alert">This wordbook group is unavailable.</p>
+        <StateMessage kind="error" message="This wordbook group is unavailable." />
       ) : (
         <>
           <div className="page-tools vocabulary-group-words-heading">
@@ -216,7 +209,7 @@ export function VocabularyGroupWordsPage() {
               );
             })}
           </div>
-          {!shown.length ? <p>No words match your search.</p> : null}
+          {!shown.length ? <StateMessage message="No words match your search." /> : null}
           <div className="vocabulary-pagination">
             <button
               className="btn line"

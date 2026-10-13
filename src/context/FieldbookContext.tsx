@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { requestTimeout } from '../lib/requestTimeout';
 import {
   createContext,
   useCallback,
@@ -453,9 +454,9 @@ function useFieldbookValue() {
       };
       let releasedCatalogue;
       try {
-        const response=await fetch('/vocabulary-catalog.json');
+        const response=await requestTimeout(fetch('/vocabulary-catalog.json').then(async response => ({ok: response.ok, data: response.ok ? await response.json() : undefined})));
         if(response.ok) {
-          const data=await response.json();
+          const data=response.data;
           if(Array.isArray(data.entries)&&Array.isArray(data.books)&&Array.isArray(data.units)&&Array.isArray(data.memberships))releasedCatalogue=data;
         }
       } catch {}
@@ -474,7 +475,7 @@ function useFieldbookValue() {
       }
       let offset = 0;
       do {
-        const result = await readVocabularyCatalog({ bookId, offset, limit: 500 });
+        const result = await requestTimeout(readVocabularyCatalog({ bookId, offset, limit: 500 }));
         merge('entries', result.entries); merge('books', result.books); merge('units', result.units); merge('memberships', result.memberships);
         offset = result.nextOffset;
       } while (offset !== null);

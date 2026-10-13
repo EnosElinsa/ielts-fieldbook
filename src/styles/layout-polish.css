@@ -1,0 +1,144 @@
+/* Shared layout rhythm for filters, action groups and asynchronous panels. */
+.page .toolbar,
+.exam-bank .exam-toolbar {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 16px 0 20px;
+}
+
+.exam-bank .exam-toolbar .search,
+.page .toolbar > .search {
+  flex: 1 1 280px;
+  min-width: min(100%, 240px);
+}
+
+.exam-bank .exam-toolbar .filter-menu,
+.page .toolbar .filter-menu {
+  flex: 0 1 auto;
+  min-width: 132px;
+}
+
+.exam-bank .exam-toolbar .filter-trigger,
+.page .toolbar .filter-trigger {
+  width: 100%;
+  min-height: 42px;
+  max-width: 100%;
+}
+
+.exam-bank .exam-toolbar .filter-trigger > span,
+.page .toolbar .filter-trigger > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exam-bank .exam-section-card {
+  min-height: 226px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.exam-bank .exam-section-card .exam-section-top { flex: 0 0 auto; }
+.exam-bank .exam-section-card h4 { margin: 14px 0 8px; }
+.exam-bank .exam-section-card p { min-height: 54px; margin: 0; overflow-wrap: anywhere; }
+.exam-bank .exam-section-card .btn-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 18px;
+}
+.exam-bank .exam-section-card .btn-row .btn {
+  justify-content: center;
+  min-width: 0;
+  min-height: 42px;
+  text-align: center;
+}
+
+.exam-bank-actions,
+.exam-review-actions,
+.intensive-actions,
+.page .btn-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.exam-bank .exam-results-bar {
+  min-height: 42px;
+  margin: 8px 0 16px;
+  padding: 8px 0;
+}
+
+.exam-bank .exam-results-bar .btn { margin-left: auto; }
+
+.state-panel,
+.async-state {
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--sheet);
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .exam-bank .exam-toolbar .filter-menu,
+  .page .toolbar .filter-menu { flex: 1 1 150px; }
+  .exam-bank .exam-section-card { min-height: 214px; }
+}
+
+@media (max-width: 560px) {
+  .page .toolbar,
+  .exam-bank .exam-toolbar { gap: 8px; margin: 12px 0 16px; }
+  .exam-bank .exam-toolbar .search,
+  .page .toolbar > .search { flex-basis: 100%; min-width: 100%; }
+  .exam-bank .exam-toolbar .filter-menu,
+  .page .toolbar .filter-menu { flex: 1 1 calc(50% - 4px); min-width: 0; }
+  .exam-bank .exam-toolbar .filter-trigger,
+  .page .toolbar .filter-trigger { min-height: 44px; padding-inline: 10px; }
+  .exam-bank .exam-section-card { min-height: 0; }
+  .exam-bank .exam-section-card p { min-height: 0; }
+  .exam-bank .exam-section-card .btn-row { grid-template-columns: 1fr; padding-top: 14px; }
+  .exam-bank .exam-section-card .btn-row .btn { min-height: 44px; }
+  .exam-bank-actions,
+  .exam-review-actions,
+  .intensive-actions,
+  .page .btn-row { align-items: stretch; }
+  .exam-bank-actions .btn,
+  .exam-review-actions .btn,
+  .intensive-actions .btn { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .async-state *,
+  .workspace-skeleton * { animation-duration: 0.001ms !important; }
+}
+
+/* At four desktop cards, two long actions need a vertical stack within each card. */
+@media(min-width: 901px) and (max-width: 1500px) {
+  .exam-bank .exam-section-grid-listening .exam-section-card .btn-row { grid-template-columns: 1fr; }
+}
+.exam-workspace .exam-source-panel { min-height: min(650px, calc(100dvh - 120px)); max-height: calc(100dvh - 120px); }
+.exam-workspace { --submit-clearance: 86px; }
+.exam-workspace .exam-split { padding-bottom: var(--submit-clearance); }
+.exam-workspace .exam-submit { margin-top: 0; }
+.exam-workspace .exam-question-panel { scroll-padding-bottom: var(--submit-clearance); }
+.page .filter-trigger:focus-visible,.page .btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.page .btn[aria-busy=true] { cursor: progress; }
+@media(max-width:740px) {
+  .exam-workspace { --submit-clearance: 150px; }
+  .exam-workspace .exam-source-panel { max-height: none; }
+  .page .btn-row > .btn { min-height: 44px; }
+}
+
+.page .empty { padding: 28px; border: 1px solid var(--rule); border-radius: 10px; background: var(--sheet); line-height: 1.65; }
+.page .empty p { margin: 0 0 12px; }
+.page .panel .btn-row { justify-content: flex-start; }
+.page .panel .modal-foot { display: flex; flex-wrap: wrap; gap: 10px; }
+.page .exam-review-queue .async-state { margin-bottom: 20px; }
+
+.exam-bank .exam-section-card .btn-row > .btn:only-child { grid-column: 1 / -1; }

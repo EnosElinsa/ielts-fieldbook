@@ -1,4 +1,4 @@
-import { render, screen, cleanup, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
@@ -14,6 +14,7 @@ beforeEach(() => resetDictionaryCache());
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
+  vi.useRealTimers();
 });
 const sourceSense = {
   id: "wiki:1",
@@ -42,6 +43,28 @@ function Route() {
   const location = useLocation();
   return <output>{location.pathname + location.search}</output>;
 }
+test('slow dictionary retry starts a fresh fetch and an older rejection cannot clear the new cache', async () => {
+  vi.useFakeTimers();
+  const { entry } = fixture();
+  let rejectOld!: (error: Error) => void;
+  const fetcher = vi.fn().mockImplementationOnce(() => new Promise((_, reject) => { rejectOld = reject; }))
+    .mockResolvedValueOnce({ ok: true, json: async () => ({}) })
+    .mockResolvedValueOnce({ ok: true, json: async () => ({ entries: [{ term: entry.term, senses: [sourceSense] }] }) });
+  vi.stubGlobal('fetch', fetcher);
+  render(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  expect(screen.getByRole('status')).toHaveTextContent('Loading dictionary meanings…');
+  expect(screen.queryByRole('button', { name: 'Retry dictionary' })).not.toBeInTheDocument();
+  act(() => vi.advanceTimersByTime(10_000));
+  await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Retry dictionary' })));
+  expect(screen.getByText('To lessen severity.')).toBeInTheDocument();
+  await act(async () => rejectOld(new Error('Old request failed late')));
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  const otherEntry = { ...entry, id: 'other', term: 'another' };
+  render(<MemoryRouter><DictionarySenses entry={otherEntry} /></MemoryRouter>);
+  await act(async () => {});
+  expect(fetcher).toHaveBeenCalledTimes(3);
+});
 test("dictionary reports deduplicated credits to the parent and explicit study preserves the detail origin", async () => {
   const { entry, save } = fixture();
   const sources = vi.fn();

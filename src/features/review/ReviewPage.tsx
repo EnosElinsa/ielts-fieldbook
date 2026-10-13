@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useState } from 'react';
+import { useWorkspacePageState } from '../../lib/workspacePageState';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { Copy, Download, FileInput, ArrowUpRight, RotateCcw } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
@@ -13,8 +13,8 @@ export function ReviewPage() {
   const [params] = useSearchParams();
   const requestedSkill = params.get('skill');
   const reviewSkill = ['writing', 'speaking', 'reading', 'listening'].includes(requestedSkill) ? requestedSkill : fb.activeSkill;
-  const [filter, setFilter] = useState('all');
-  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useWorkspacePageState(`review:${reviewSkill}:filter`, 'all', value => ['all', 'pending', 'assessed', 'rewrite'].includes(value));
+  const [search, setSearch] = useWorkspacePageState(`review:${reviewSkill}:search`, '');
   if (reviewSkill === 'reading' || reviewSkill === 'listening') return <Navigate to={`/${reviewSkill}/review`} replace />;
   const speaking = reviewSkill === 'speaking';
   const allSessions = fb.state.sessions.filter((s) => sessionSkill(s) === reviewSkill);

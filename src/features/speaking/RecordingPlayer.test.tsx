@@ -17,7 +17,7 @@ test('waveform decodes the actual source and playback controls use decoded timin
   const view = render(<RecordingPlayer src="blob:actual-recording" />);
   expect(player.load).toHaveBeenCalledWith('blob:actual-recording');
   expect(create.mock.calls[0][0]).not.toHaveProperty('peaks');
-  expect(screen.getByText('Loading audio waveform...')).toBeInTheDocument();
+  expect(screen.getByText('Loading audio waveform…')).toBeInTheDocument();
   act(() => { events.ready(120); events.timeupdate(30); });
   expect(screen.getByText('0:30 / 2:00')).toBeInTheDocument();
   fireEvent.change(screen.getByRole('slider', { name: 'Recording playback position' }), { target: { value: '60' } });

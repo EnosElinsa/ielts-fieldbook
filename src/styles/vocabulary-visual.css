@@ -1,0 +1,22 @@
+.vocabulary-learning-visual { width:100%; min-width:0; margin:0; }
+.vocabulary-learning-visual svg { display:block; width:100%; height:auto; max-width:100%; }
+.vocabulary-visual-frame { aspect-ratio:4/3; overflow:hidden; display:grid; place-items:center; border:1px solid var(--rule); border-radius:16px; background:var(--sheet); }
+.vocabulary-visual-frame img { display:block; width:100%; height:100%; max-height:100%; object-fit:contain; }
+.vocabulary-learning-visual figcaption { margin-top:10px; color:var(--muted); font-size:12px; line-height:1.6; overflow-wrap:anywhere; }
+.vocabulary-visual-credits { margin-top:9px; font-size:12px; color:var(--muted); }
+.vocabulary-visual-credits summary { cursor:pointer; width:fit-content; }
+.vocabulary-visual-credits p { margin:8px 0; overflow-wrap:anywhere; }
+.vocabulary-visual-credits div { display:flex; flex-wrap:wrap; gap:14px; }
+.vocabulary-visual-credits a { color:var(--blue); }
+.visual-scene-background,.visual-map-background { fill:var(--sheet); stroke:var(--rule); }
+.visual-scene-ground { fill:var(--ink); opacity:.07; }
+.visual-map-word { fill:var(--soft-blue); stroke:var(--rule); }
+.visual-map-definition { fill:var(--sheet); stroke:var(--rule); }
+.visual-map-example { fill:var(--soft-green); stroke:var(--rule); }
+.visual-map-term { font:600 25px 'Source Serif 4',Georgia,serif; fill:var(--ink); }
+.visual-map-label { font:600 10px Manrope,sans-serif; letter-spacing:1.5px; fill:var(--muted); }
+.visual-map-body { font:500 16px Manrope,sans-serif; fill:var(--ink); }
+.visual-map-example-text { font:400 14px Manrope,sans-serif; fill:var(--ink); }
+.visual-map-arrow { fill:none; stroke:var(--muted); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+.vocabulary-visual-recovery { margin-top:12px; }
+.vocabulary-visual-recovery p { font-size:12px; color:var(--muted); line-height:1.6; }

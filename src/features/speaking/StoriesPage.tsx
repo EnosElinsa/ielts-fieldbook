@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import { useWorkspacePageState } from '../../lib/workspacePageState';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { formatDate } from '../../lib/format';
 import { Empty } from '../../components/ui';
@@ -19,9 +20,9 @@ function storySummary(story) {
 
 export function StoriesPage() {
   const fb = useFieldbook();
-  const [search, setSearch] = useState('');
-  const [tag, setTag] = useState('all');
-  const [topic, setTopic] = useState('all');
+  const [search, setSearch] = useWorkspacePageState('stories:search', '');
+  const [tag, setTag] = useWorkspacePageState('stories:tag', 'all');
+  const [topic, setTopic] = useWorkspacePageState('stories:topic', 'all');
   const tags = [...new Set((fb.state.stories || []).flatMap((story) => story.tags || []))].sort();
   const linkedTopics = fb.state.speakingTopics.filter((entry) => fb.state.stories.some((story) => (story.topicIds || []).map(String).includes(String(entry.id))));
   const items = useMemo(() => {

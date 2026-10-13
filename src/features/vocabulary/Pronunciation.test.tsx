@@ -7,8 +7,27 @@ vi.mock('../../domain/vocabulary/media', () => ({ getVocabularyMedia: state.load
 vi.mock('./playback', () => ({ createVocabularyPlayback: () => ({ play: state.play, stop: state.stop }) }));
 const entry = { id: 'example', term: 'vegetable' } as VocabularyEntry;
 beforeEach(() => { state.load.mockReset(); state.play.mockReset(); state.stop.mockReset(); });
-afterEach(cleanup);
+afterEach(() => { cleanup(); vi.useRealTimers(); });
 describe('pronunciation controls', () => {
+ test('delayed metadata retry ignores an older response and exposes a recoverable failure', async () => {
+  vi.useFakeTimers();
+  let finishOld!: (value: any) => void;
+  state.load.mockImplementationOnce(() => new Promise(resolve => { finishOld = resolve; }))
+    .mockRejectedValueOnce(new Error('Offline'))
+    .mockResolvedValueOnce({ recordings: [] });
+  render(<Pronunciation entry={entry} />);
+  expect(screen.getByRole('status').textContent).toBe('Loading pronunciation details…');
+  expect(screen.queryByRole('button', { name: 'Retry media metadata' })).toBeNull();
+  act(() => vi.advanceTimersByTime(10_000));
+  await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Retry media metadata' })));
+  expect(screen.getByRole('alert').textContent).toContain('Pronunciation details could not be loaded.');
+  await act(async () => finishOld({ recordings: [] }));
+  expect(screen.getByRole('alert').textContent).toContain('Pronunciation details could not be loaded.');
+  await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Retry media metadata' })));
+  expect(screen.queryByRole('alert')).toBeNull();
+  expect(state.load).toHaveBeenCalledTimes(3);
+  expect(state.play).not.toHaveBeenCalled();
+ });
  test('synthetic pronunciation describes word audio fallback without implying learner recording failure', () => {
   expect(playbackMessage({ok:true,source:'speech',accent:'uk',voice:'Google UK English Female',fallbackReason:'unavailable'})).toBe('UK synthetic voice · Google UK English Female');
  });

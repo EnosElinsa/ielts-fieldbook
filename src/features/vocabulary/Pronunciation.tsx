@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { InlineLoadingState, StateMessage } from '../../components/AsyncState';
 import type { VocabularyEntry } from '../../domain/vocabulary/types';
 import { getVocabularyMedia, type VocabularyAccent, type VocabularyRecording } from '../../domain/vocabulary/media';
 import { createVocabularyPlayback, type VocabularyPlaybackOptions, type VocabularyPlaybackResult } from './playback';
@@ -13,17 +14,25 @@ export function playbackMessage(result: VocabularyPlaybackResult): string {
 export function Pronunciation({ entry, accent = 'uk', options = {}, compact = false, onMedia }: { entry: VocabularyEntry; accent?: VocabularyAccent; options?: VocabularyPlaybackOptions; compact?: boolean; onMedia?: (recordings: VocabularyRecording[]) => void }) {
   const player = useMemo(() => createVocabularyPlayback(), []);
   const generation = useRef(0);
+  const mediaRequest = useRef(0);
   const playAttempt = useRef(0);
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [message, setMessage] = useState('');
   const [fallback, setFallback] = useState('');
   const [others, setOthers] = useState<VocabularyRecording[]>([]);
   const [mediaError, setMediaError] = useState(false);
-  const load = async (token: number) => {
-    const media = await getVocabularyMedia(entry);
-    if (token !== generation.current) return;
-    setMediaError(Boolean(media.loadError)); onMedia?.(media.recordings);
-    setOthers(media.recordings.filter(recording => recording.accent !== accent && recording.status !== 'missing' && recording.availability !== 'failed' && recording.wordformConfirmed !== false));
+  const [mediaLoading, setMediaLoading] = useState(true);
+  const load = async (token: number, retry = false) => {
+    const request = ++mediaRequest.current;
+    const current = () => token === generation.current && request === mediaRequest.current;
+    setMediaLoading(true); setMediaError(false);
+    try {
+      const media = await getVocabularyMedia(entry, { retry });
+      if (!current()) return;
+      setMediaError(Boolean(media.loadError)); onMedia?.(media.recordings);
+      setOthers(media.recordings.filter(recording => recording.accent !== accent && recording.status !== 'missing' && recording.availability !== 'failed' && recording.wordformConfirmed !== false));
+    } catch { if (current()) setMediaError(true); }
+    finally { if (current()) setMediaLoading(false); }
   };
   useEffect(() => {
     const token = ++generation.current; setOthers([]); setMessage(''); setFallback(''); setActiveAction(null); setMediaError(false); void load(token);
@@ -41,9 +50,10 @@ export function Pronunciation({ entry, accent = 'uk', options = {}, compact = fa
   };
   return <div className={`vocabulary-pronunciation${compact ? ' is-compact' : ''}`}>
     <button className="btn line" type="button" aria-label={`${activeAction === 'target' ? 'Stop' : 'Play'} ${accent.toUpperCase()} pronunciation of ${entry.term}`} onClick={() => void play()}>{activeAction === 'target' ? 'Stop' : `Play ${accent.toUpperCase()}`}</button>
-    <span role="status">{message}</span>
+    {message ? <span role="status">{message}</span> : null}
+    {!compact && mediaLoading ? <InlineLoadingState message="Loading pronunciation details…" onRetry={() => void load(generation.current, true)} retryLabel="Retry media metadata" /> : null}
     {!compact && fallback && <details className="vocabulary-audio-source"><summary>About this pronunciation</summary><p>{fallback}</p></details>}
-    {!compact && mediaError && <button className="btn line" type="button" onClick={() => void load(generation.current)}>Retry media metadata</button>}
+    {!compact && mediaError && <StateMessage inline kind="error" message="Pronunciation details could not be loaded." onRetry={() => void load(generation.current, true)} retryLabel="Retry media metadata" />}
     {!compact && others.length > 0 && <details><summary>Other recordings (explicit choice)</summary>{others.map(recording => <button className="btn line" type="button" key={recording.url} onClick={() => void play(recording)}>{activeAction === recording.url ? 'Stop ' : ''}{recording.accent === 'unknown' ? 'Unverified accent' : recording.accent === 'other' ? 'Other accent' : recording.accent.toUpperCase()} — {recording.author || recording.title}</button>)}</details>}
   </div>;
 }

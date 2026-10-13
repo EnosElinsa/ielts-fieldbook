@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { PageLoadingState } from './AsyncState';
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { studyStreak } from '../domain';
@@ -25,6 +26,8 @@ import { LegalModal } from '../features/modals/LegalModal';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { navigateWithPracticeGuard } from '../lib/practiceNavigation';
 import { moduleFor, studyLinkActive, workspaceModules } from './workspaceNavigation';
+import { useWorkspaceModuleMemory } from './useWorkspaceModuleMemory';
+import { accountId } from '../storage/remote';
 
 function RailHint({ label, enabled, children }) {
   return <Tooltip.Root><Tooltip.Trigger asChild>{children}</Tooltip.Trigger>{enabled ? <Tooltip.Portal><Tooltip.Content className="tooltip rail-tooltip" side="right" sideOffset={10}>{label}<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal> : null}</Tooltip.Root>;
@@ -88,6 +91,7 @@ export function Shell() {
   const [legalView, setLegalView] = useState<string | null>(null);
   const reduced = useReducedMotion();
   const module = moduleFor(location.pathname, location.search, fb.activeSkill);
+  const { selectModule: resumeModule } = useWorkspaceModuleMemory({ owner: accountId(), ready: fb.booted, activeSkill: fb.activeSkill, setSkill: fb.setSkill });
   const speaking = module === 'speaking';
   const secondaryLinks = studyLinks[module] || [];
   const vocabularyOwnHeading = location.pathname.startsWith('/vocabulary');
@@ -215,7 +219,7 @@ export function Shell() {
               return <div className="nav-group" key={link.to}>
                 <RailHint label={link.label} enabled={collapsed}><Link
                   to={link.to} aria-current={module === link.id ? 'page' : undefined} aria-label={link.label} data-practice-navigation
-                  onClick={(event) => { event.preventDefault(); navigateWithPracticeGuard(link.to, () => selectModule(link.to)); }}
+                  onClick={(event) => { if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); resumeModule(link.id); }}
                   className={module === link.id ? 'active' : undefined}
                 ><span className="nav-icon" aria-hidden="true">{icon}</span><span className="nav-label">{link.label}</span></Link></RailHint>
                 {module === link.id && children.length ? <nav className="nav-children" aria-label={`${link.label} study`}>
@@ -336,14 +340,14 @@ export function Shell() {
           <SaveFailure failed={fb.saveFailed} />
           {fb.loadError ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
           {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
-          {!fb.booted && !fb.loadError ? <div className="workspace-skeleton" aria-label="Loading workspace"><div /><div /><div /></div> : null}
+          {!fb.booted && !fb.loadError ? <PageLoadingState message="Loading workspace…" variant="bank" /> : null}
           <motion.div className="page" key={location.pathname} initial={reduced ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.24 }}>
-            <Suspense fallback={<div className="workspace-skeleton" aria-label="Loading page"><div /><div /></div>}>{fb.booted || fb.state.questions.length ? <Outlet /> : null}</Suspense>
+            <Suspense fallback={<PageLoadingState message="Loading page…" />}>{fb.booted || fb.state.questions.length ? <Outlet /> : null}</Suspense>
           </motion.div>
         </main>
       </div>
-      <MobileNavigation onMore={() => setMoreOpen(true)} />
-      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}<button type="button" onClick={() => goFromMore('/progress')}>{NavIcons.progress}Progress</button><button type="button" onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><button type="button" onClick={() => goFromMore('/account')}>Account</button></div></div></ModalFrame>
+      <MobileNavigation onMore={() => setMoreOpen(true)} onSelectModule={resumeModule} />
+      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}<button type="button" onClick={() => { setMoreOpen(false); resumeModule('progress'); }}>{NavIcons.progress}Progress</button><button type="button" onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><button type="button" onClick={() => goFromMore('/account')}>Account</button></div></div></ModalFrame>
       <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
       <AssessmentImportModal />
       <LegalModal view={legalView} onClose={() => setLegalView(null)} />

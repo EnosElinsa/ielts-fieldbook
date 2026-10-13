@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
+import { PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Star, ArrowRight, Headphones, RotateCcw } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
@@ -92,9 +93,9 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
       <span className="exam-eyebrow">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : `${skill} · saved practice`}</span><strong>{attempt.mode === 'mock' ? 'Full mock' : section?.title || `${sectionLabel} practice`}</strong>
       <span className="exam-recent-meta">{attempt.mode === 'mock' ? 'Full mock' : `${sectionLabel} practice`} · {attempt.status === 'completed' ? `${attempt.score ?? '—'} / ${attempt.total ?? '—'} marks` : attempt.status === 'paused' ? 'Paused' : 'In progress'}</span><b>{attempt.status === 'completed' ? 'Review' : 'Resume'} <ArrowRight size={14} /></b>
     </Link>; })}</aside>}
-    {loading ? <p className="empty" role="status">Loading source catalog…</p> : error ? <div className="empty"><p role="alert">{error}</p><button className="btn line" onClick={reload}>Retry loading</button></div> : !catalog.sections.some(section => section.skill === skill) ? <div className="exam-empty"><h3>The {skill} bank is not available yet.</h3><p>Verified source content for Cambridge 8–21 has not been imported. No sample answers or passages are substituted here.</p></div> : <>
+    {loading ? <PageLoadingState variant="bank" message="Loading source catalog…" onRetry={reload} /> : error ? <StateMessage kind="error" message={error} onRetry={reload} /> : !catalog.sections.some(section => section.skill === skill) ? <StateMessage title={`The ${skill} bank is not available yet.`} message="Verified source content for Cambridge 8–21 has not been imported. No sample answers or passages are substituted here." /> : <>
       <div className="exam-results-bar" ref={results}><span role="status">{matchingPapers.length} test{matchingPapers.length === 1 ? '' : 's'} · {sections.length} {sectionLabel.toLowerCase()}{sections.length === 1 ? '' : 's'}</span>{hasFilters && <button className="btn text" onClick={clearFilters}>Clear filters</button>}</div>
-      {sections.length === 0 ? <div className="empty"><p>No sections match these filters.</p></div> : <div className="exam-paper-list">{visiblePapers.map(paper => {
+      {sections.length === 0 ? <StateMessage message="No sections match these filters." /> : <div className="exam-paper-list">{visiblePapers.map(paper => {
         const all = catalog.sections.filter(section => section.paperId === paper.id && section.skill === skill);
         const complete = all.length === (skill === 'reading' ? 3 : 4) && all.every(section => section.status === 'ready' && section.questionCount > 0);
         return <article className="exam-paper" key={paper.id}>

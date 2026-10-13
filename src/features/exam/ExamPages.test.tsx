@@ -5,21 +5,43 @@ import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import type { ExamCatalog } from '../../domain/exam/types';
 import { ExamBankPage } from './ExamBankPage';
-import { ExamPracticePage, ExamStimulus } from './ExamPracticePage';
+import { ExamImage, ExamPracticePage, ExamStimulus } from './ExamPracticePage';
 import { ExamReviewPage } from './ExamReviewPage';
+import { loadExamCatalog } from '../../storage/examCatalog';
 
 const mocks = vi.hoisted(() => ({ fb: null as any, owner: 'one', catalog: null as any, recovery: new Map<string, any>() }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
 vi.mock('../../storage/remote', () => ({ accountId: () => mocks.owner }));
-vi.mock('../../storage/examCatalog', () => ({ loadExamCatalog: async () => mocks.catalog, loadExamSections: async () => mocks.catalog, resolveExamAsset: async () => '/audio.mp3' }));
+vi.mock('../../storage/examCatalog', () => ({ loadExamCatalog: vi.fn(async () => mocks.catalog), loadExamSections: async () => mocks.catalog, resolveExamAsset: async () => '/audio.mp3' }));
 vi.mock('../../storage/examRecovery', () => ({ readExamRecovery: (owner: string, key: string) => mocks.recovery.get(`${owner}:${key}`), writeExamRecovery: (owner: string, key: string, data: any) => mocks.recovery.set(`${owner}:${key}`, structuredClone(data)), clearExamRecovery: (owner: string, key: string) => mocks.recovery.delete(`${owner}:${key}`) }));
 const provenance = { sourceUrl: 'https://example.org/source', sourceVersion: '1', fetchedAt: '2026-01-01', contentHash: 'hash', authorization: 'owned' };
 const catalog: ExamCatalog = { schemaVersion: 1, papers: [{ id: 'paper', book: 8, test: 1, title: 'Cambridge 8 Test 1', provenance }], sections: [{ id: 'section', paperId: 'paper', skill: 'reading', part: 1, title: 'The city garden', questionTypes: ['gap', 'true-false'], questionCount: 2, sentences: [], status: 'ready', provenance }], passages: [{ id: 'passage', sectionId: 'section', title: 'The city garden', paragraphs: [{ id: 'A', text: 'The garden opened in 1990.' }], provenance }], questions: [{ id: 'q1', paperId: 'paper', sectionId: 'section', skill: 'reading', number: 1, type: 'gap', prompt: 'The garden opened in _____.', answer: '1990', maxWords: 1, provenance }, { id: 'q2', paperId: 'paper', sectionId: 'section', skill: 'reading', number: 2, type: 'true-false', prompt: 'The garden opened in 2000.', answer: 'FALSE', explanation: 'The source gives 1990.', provenance }], assets: [] };
 function Location() { return <output aria-label="URL">{useLocation().pathname}</output>; }
 function SearchLocation() { return <output aria-label="Search URL">{useLocation().search}</output>; }
 function practice(path = '/reading/section') { return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/reading/:sectionId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/mock/:paperId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/review/:attemptId" element={<ExamReviewPage skill="reading" />} /></Routes><Location /></MemoryRouter>); }
-beforeEach(() => { mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
-afterEach(() => { cleanup(); vi.restoreAllMocks(); });
+beforeEach(() => { mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); sessionStorage.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
+afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.useRealTimers(); });
+
+test('a slow bank reload ignores the stale request and retains a real retry after failure', async () => {
+  vi.useFakeTimers();
+  let finishOld!: (value: ExamCatalog) => void;
+  vi.mocked(loadExamCatalog)
+    .mockImplementationOnce(() => new Promise(resolve => { finishOld = resolve; }))
+    .mockRejectedValueOnce(new Error('The source connection was interrupted.'));
+  render(<MemoryRouter><ExamBankPage skill="reading" /></MemoryRouter>);
+  expect(screen.getByRole('status')).toHaveTextContent('Loading source catalog…');
+  expect(screen.queryByRole('button', { name: 'Retry loading' })).not.toBeInTheDocument();
+  act(() => vi.advanceTimersByTime(10_000));
+  await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Retry loading' })));
+  expect(screen.getByRole('alert')).toHaveTextContent('The source connection was interrupted.');
+  expect(screen.queryByText('Loading source catalog…')).not.toBeInTheDocument();
+  await act(async () => finishOld(catalog));
+  expect(screen.getByRole('alert')).toHaveTextContent('The source connection was interrupted.');
+  await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Retry loading' })));
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  expect(screen.getByText('The city garden')).toBeInTheDocument();
+  expect(screen.getByRole('status')).toHaveTextContent('1 test · 1 passage');
+});
 
 test('bank presents available sections but disables an incomplete full mock', async () => { render(<MemoryRouter><ExamBankPage skill="reading" /></MemoryRouter>); expect(await screen.findByText('The city garden')).toBeInTheDocument(); expect(screen.getByRole('button', { name: 'Full mock unavailable' })).toBeDisabled(); expect(screen.getByRole('link', { name: /Practise passage 1/ })).toHaveAttribute('href', '/reading/section'); });
 test('recent work prioritises unfinished attempts and retains source and retry navigation', async () => {
@@ -220,4 +242,45 @@ test('source images nested in paragraphs preserve valid HTML while loading and a
   await screen.findByRole('img', { name: 'Paragraph diagram' });
   expect(container.querySelector('p figure,p p')).toBeNull();
   expect(error).not.toHaveBeenCalled();
+});
+
+test('leaving ordinary practice pauses it and retains responses for resume', async () => {
+  const user = userEvent.setup();
+  const view = practice();
+  await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), '1990');
+  view.unmount();
+  practice();
+  expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990');
+  expect(screen.getByRole('button', { name: /^Resume$/ })).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: /^Resume$/ }));
+  expect(screen.getByRole('textbox', { name: 'Answer 1' })).toBeEnabled();
+});
+
+test('source image network failure offers a real reload in both image layouts', async () => {
+  const asset = { id: 'diagram', paperId: 'paper', kind: 'image' as const, storagePath: 'diagram', sourceUrl: 'https://example.org/diagram.jpg', provenance };
+  for (const inline of [false, true]) {
+    const view = render(<ExamImage asset={asset} label="Source map" inline={inline} />);
+    fireEvent.error(await screen.findByRole('img', { name: 'Source map' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('image could not load');
+    await userEvent.setup().click(screen.getByRole('button', { name: 'Retry image' }));
+    expect(await screen.findByRole('img', { name: 'Source map' })).toBeInTheDocument();
+    view.unmount();
+  }
+});
+
+test('passage panel scroll restores after leaving and stays isolated by account', async () => {
+  const view = practice();
+  await screen.findByRole('textbox', { name: 'Answer 1' });
+  const panel = document.getElementById('exam-panel-source')!;
+  panel.scrollTop = 240;
+  fireEvent.scroll(panel);
+  view.unmount();
+  const restored = practice();
+  await screen.findByRole('textbox', { name: 'Answer 1' });
+  expect(document.getElementById('exam-panel-source')!.scrollTop).toBe(240);
+  restored.unmount();
+  mocks.owner = 'two';
+  practice();
+  await screen.findByRole('textbox', { name: 'Answer 1' });
+  expect(document.getElementById('exam-panel-source')!.scrollTop).toBe(0);
 });

@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { PanelLoadingState, StateMessage } from '../../components/AsyncState';
 import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
 import { useEffect, useMemo, useRef, useState } from "react";
 import { NavLink, useParams, useSearchParams, useLocation } from "react-router-dom";
@@ -13,7 +14,7 @@ import {
   Upload,
 } from "lucide-react";
 import { useFieldbook } from "../../context/FieldbookContext";
-import { Empty, FilterMenu } from "../../components/ui";
+import { FilterMenu } from "../../components/ui";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import {
   deriveVocabularyStatus,
@@ -505,20 +506,20 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
           {filtered.length > 100 ? <div className="vocabulary-selection"><button type="button" className="btn line" disabled={page === 0} onClick={() => setPage(page-1)}><ArrowLeft size={15}/>Previous</button><span>{page*100+1}-{Math.min((page+1)*100,filtered.length)} of {filtered.length}</span><button type="button" className="btn line" disabled={(page+1)*100>=filtered.length} onClick={() => setPage(page+1)}>Next<ArrowRight size={15}/></button></div> : null}
         </>
       ) : (
-        <Empty
+        <StateMessage
           message={
             entries.length
               ? "No vocabulary matches these filters."
               : "No vocabulary saved yet."
           }
-          label={entries.length ? "Clear filters" : "Add vocabulary"}
-          onAction={() => {
+        >
+          <button type="button" className="btn line" onClick={() => {
             if (!entries.length) editEntry(fb);
             else {
               setWordParams(current => { const next = new URLSearchParams(current); ['search','status','source','skill','page'].forEach(key => next.delete(key)); return next; }, { replace: true, state: location.state });
             }
-          }}
-        />
+          }}>{entries.length ? "Clear filters" : "Add vocabulary"}</button>
+        </StateMessage>
       )}
     </VocabularyLayout>
   );
@@ -621,8 +622,8 @@ export function VocabularyWordbooksPage() {
   return <VocabularyLayout ready={!catalogBusy}>
     <div className="page-tools"><div><h2>Wordbook study</h2><p className="vocabulary-muted">One group at a time. Clear progress through every chapter.</p></div>
     </div>
-    {catalogBusy ? <p role="status" className="vocabulary-muted">Loading catalog...</p> : null}
-    {catalogError ? <div className="vocabulary-catalog-error"><p role="alert" className="vocabulary-error">{catalogError}</p><button type="button" className="btn line" disabled={catalogBusy} onClick={() => loadCatalog(selectedBook)}><RotateCcw size={15} />Retry catalog</button></div> : null}
+    {catalogBusy ? <PanelLoadingState message="Loading catalog..." onRetry={() => loadCatalog(selectedBook)} retryLabel="Retry catalog" /> : null}
+    {catalogError ? <StateMessage kind="error" message={catalogError} onRetry={() => loadCatalog(selectedBook)} retryLabel="Retry catalog" retryDisabled={catalogBusy} /> : null}
     {book ? <>
       <VocabularyBackLink fallback="/vocabulary/wordbooks"/>
       <div className="vocabulary-study-heading"><div><span className="vocabulary-eyebrow">Your wordbook</span><h3>{book.title}</h3><p>{wordbookDescription(book)}</p>
@@ -634,7 +635,7 @@ export function VocabularyWordbooksPage() {
       </div></div>
       <p className="vocabulary-muted">Studied means a saved attempt with every nonarchived word answered. Mastery comes from review evidence.</p>
       <div className="vocabulary-study-chapters">{study.hierarchy.filter(unit => !unit.parentId || !study.hierarchy.some(parent => parent.id === unit.parentId)).map(chapter)}</div>
-      {!study.hierarchy.length ? <Empty message="No chapters available yet." /> : null}
+      {!study.hierarchy.length && !catalogBusy && !catalogError ? <StateMessage message="No chapters available yet." /> : null}
 
     </> : <>
       <div className="vocabulary-books">{books(fb.state).map(item => {
@@ -647,7 +648,7 @@ export function VocabularyWordbooksPage() {
               : progress.next ? <Link className="btn primary" to={studyLink(progress.next)}>{progress.studied.length ? "Continue study" : "Start study"}<ArrowRight size={15} /></Link> : progress.studied.length ? <span className="pill green">All groups studied</span> : <span className="pill">{progress.groups.some(group => group.entryIds.length) ? "Words archived" : "Content pending"}</span>}
           </div></article>;
       })}</div>
-      {!books(fb.state).length && !catalogBusy ? <Empty message="No wordbooks available yet." /> : null}
+      {!books(fb.state).length && !catalogBusy && !catalogError ? <StateMessage message="No wordbooks available yet." /> : null}
     </>}
   </VocabularyLayout>;
 }
@@ -819,7 +820,7 @@ export function VocabularyWrongPage() {
           })}
         </div>
       ) : (
-        <Empty message="No active wrong words." />
+        <StateMessage message="No active wrong words." />
       )}
     </VocabularyLayout>
   );
@@ -951,7 +952,7 @@ export function VocabularyProgressPage() {
             ))}
         </div>
       ) : (
-        <Empty message="No review evidence yet." />
+        <StateMessage message="No review evidence yet." />
       )}
     </VocabularyLayout>
   );
@@ -971,6 +972,6 @@ export function VocabularyHistoryPage() {
         <div className="vocabulary-history-main"><strong>{label(log.mode)}</strong><span>{bookId && unitId ? groupPath(bookId,unitId) || 'Wordbook assessment' : log.selection?.kind === 'retry' ? 'Mistake retry' : 'Vocabulary review'}</span><time dateTime={validDate ? log.submittedAt : undefined}>{validDate ? new Date(log.submittedAt).toLocaleString('en-GB',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : 'Submission date unavailable'}</time></div>
         <div className="vocabulary-history-summary"><strong>{total} {total===1?'word':'words'}</strong><small>{log.mode === 'audio' ? 'Listening activity · No mastery assessment' : `${summary.correct || 0} correct · ${summary.incorrect || 0} incorrect`}</small>{log.mode !== 'audio' && summary.pending ? <small>{summary.pending} awaiting feedback</small> : null}</div><ArrowRight size={16} />
       </Link>;
-    })}</div> : <Empty message="Your submitted vocabulary sessions will appear here." />}
+    })}</div> : <StateMessage message="Your submitted vocabulary sessions will appear here." />}
   </VocabularyLayout>;
 }

@@ -7,25 +7,33 @@ import { useDraftHistory } from './useDraftHistory';
 import { todaySession, composeEssay, writingSaveBlockers, writingWordSoftConfirm, normalizeSections, emptySections } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { attemptLabel, displayName, formatClock, formatDate, safeImage, typeName } from '../../lib/format';
+import { useWorkspaceDeskContext, useWorkspacePageState } from '../../lib/workspacePageState';
+import { accountId } from '../../storage/remote';
 
 const FRAGMENT_MODES = new Set(['overview', 'outline', 'compare', 'body']);
 
 export function WritingDeskPage() {
   const fb = useFieldbook();
   const selected = fb.selectedQuestion;
+  const owner = accountId();
   const mode = fb.currentDeskMode();
   const fragment = FRAGMENT_MODES.has(mode);
+  const uiKey = `writing:desk:${selected.id}:${mode}`;
+  useWorkspaceDeskContext({skill:'writing', id:String(selected.id), mode}, saved => {
+    fb.setSelectedQuestionId(saved.id);
+    fb.setActiveDeskMode(saved.mode);
+  }, id => fb.state.questions.some(question => String(question.id) === id), fb.booted !== false);
 
   const [essay, setEssay] = useState(() => fb.writingDraft(selected.id));
   const [sections, setSections] = useState(() => {
     const draft = fb.state.drafts[selected.id];
     return normalizeSections(draft && draft.sections);
   });
-  const [timerSeconds, setTimerSeconds] = useState(selected.type === '1' ? 1200 : 2400);
+  const [timerSeconds, setTimerSeconds] = useWorkspacePageState(`${uiKey}:seconds`, selected.type === '1' ? 1200 : 2400, value => typeof value === 'number' && value >= 0 && value <= 7200);
   const [running, setRunning] = useState(false);
-  const [checks, setChecks] = useState({});
+  const [checks, setChecks] = useWorkspacePageState(`${uiKey}:checks`, {}, value => Boolean(value && typeof value === 'object' && Object.values(value).every(item => typeof item === 'boolean')));
   const [focused, setFocused] = useState(false);
-  const [mobileTab, setMobileTab] = useState('answer');
+  const [mobileTab, setMobileTab] = useWorkspacePageState(`${uiKey}:mobileTab`, 'answer', value => value === 'answer' || value === 'prompt');
   const [split, setSplit] = useState(() => {
     try { return Math.max(30, Math.min(55, Number(localStorage.getItem('fieldbook.writingSplit')) || 40)); }
     catch { return 40; }
@@ -43,11 +51,9 @@ export function WritingDeskPage() {
     const draft = fb.state.drafts[selected.id];
     setEssay(fb.writingDraft(selected.id));
     setSections(normalizeSections(draft && draft.sections));
-    setTimerSeconds(selected.type === '1' ? 1200 : 2400);
     setRunning(false);
-    setChecks({});
     history.reset({ essay: fb.writingDraft(selected.id), sections: normalizeSections(draft && draft.sections) });
-  }, [selected.id, fb.draftRevision]);
+  }, [selected.id, mode, fb.draftRevision, owner]);
 
   useEffect(() => {
     if (!running) return undefined;
