@@ -7,7 +7,7 @@ export default defineConfig({
   resolve: { alias: { 'virtual:vocabulary-manifest': path.resolve(__dirname, 'tests/vocabularyManifestUrl.ts') } },
   test: {
     environment: 'jsdom',
-    maxWorkers: 4,
+    maxWorkers: process.env.CI ? 2 : 4,
     minWorkers: 1,
     setupFiles: ['tests/vocabularyTeachingSetup.ts'],
     globals: false,

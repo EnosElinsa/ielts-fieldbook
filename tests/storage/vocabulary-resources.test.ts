@@ -42,5 +42,9 @@ test('resources use deterministic content-addressed URLs', () => {
   for (const [url, content] of first.resources) {
     const hash = createHash('sha256').update(content).digest('hex').slice(0, 16);
     expect(url.endsWith(`.${hash}.json`)).toBe(true);
+    // Pages decodes paths before looking up files. A request must continue to
+    // name the emitted file after one or more URL decoding passes.
+    expect(url).toMatch(/^\/[a-zA-Z0-9._/-]+$/);
+    expect(decodeURIComponent(url)).toBe(url);
   }
 });

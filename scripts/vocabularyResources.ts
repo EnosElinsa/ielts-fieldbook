@@ -62,7 +62,9 @@ export function buildVocabularyResources(root: string) {
     const entries = entryIds.map(id => entryIndex.get(id)!);
     if (entries.some(entry => !entry)) throw new Error(`Missing vocabulary entry in ${unit.bookId}/${unit.id}`);
     const scoped = scopeTeaching(entries);
-    const name = `${encodeURIComponent(unit.bookId)}-${encodeURIComponent(unit.id)}`;
+    // CDN servers decode URL paths differently. Use only safe filename bytes,
+    // rather than emitting literal percent escapes that Pages decodes on lookup.
+    const name = `${Buffer.from(unit.bookId).toString('hex')}-${Buffer.from(unit.id).toString('hex')}`;
     const resource = unit.kind !== 'chapter' ? emit(`groups/${name}`, { entries, memberships: members, teaching: scoped }) : undefined;
     const teachingResource = resource ? emit(`teaching/groups/${name}`, { teaching: scoped, memberships: members }) : undefined;
     return { ...unit, entryIds, entryCount: entryIds.length, archivedEntryIds: entries.filter(entry => entry.tags.includes('archived')).map(entry => entry.id), ...(resource ? { resource, teachingResource } : {}) };
