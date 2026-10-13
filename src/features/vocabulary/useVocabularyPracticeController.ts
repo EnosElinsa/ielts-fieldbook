@@ -8,7 +8,7 @@ import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { normalizeVocabularyPreferences, type VocabularyPracticeMode, type VocabularyPreferences } from "../../domain/vocabulary/preferences";
 import { buildVocabularySessionCommit, createVocabularySession, evaluateVocabularySessionAnswer, updateVocabularySessionAnswer, type VocabularyPracticeSession, type VocabularySessionSelection } from "../../domain/vocabulary/session";
 import { getLearnedVocabularyIds, vocabularyGroupProgress } from "../../domain/vocabulary/progress";
-import { buildUnitPracticeQueue } from "../../domain/vocabulary/selection";
+import { availableUnitPracticeModes, buildUnitPracticeQueue } from "../../domain/vocabulary/selection";
 import { resolveVocabularyRetry } from "../../domain/vocabulary/retry";
 import { createVocabularyPlayback } from "./playback";
 import { playbackMessage } from "./Pronunciation";
@@ -61,6 +61,8 @@ export function useVocabularyPracticeController() {
   const [recovering, setRecovering] = useState(false);
   const [retryPreparing, setRetryPreparing] = useState(false);
   const [error, setError] = useState("");
+  const [modeRecovery, setModeRecovery] = useState<{ owner: string | null; bookId: string; unitId: string; message: string } | null>(null);
+  const modeNotice = modeRecovery?.owner === accountId() && modeRecovery?.bookId === bookId && modeRecovery?.unitId === unitId ? modeRecovery.message : '';
   const [audioStatus, setAudioStatus] = useState("");
   const [audioBusy, setAudioBusy] = useState(false);
   const [looping, setLooping] = useState(false);
@@ -274,6 +276,14 @@ export function useVocabularyPracticeController() {
   const catalogReady = catalogStatus.bookId === (bookId === 'all' ? '' : bookId) && catalogStatus.status === 'ready';
   const leafUnits = units.filter(unit => unit.kind !== 'chapter' && !units.some(child => child.parentId === unit.id));
   const studyReady = !study ? catalogReady : (catalogReady && Boolean(selectedUnit && leafUnits.includes(selectedUnit)) && Boolean(unitQueue?.complete));
+  const groupModes = useMemo(()=>study && catalogReady && selectedUnit ? availableUnitPracticeModes(fb.state,bookId,unitId) : null,[study,catalogReady,selectedUnit,fb.state,bookId,unitId]);
+  useEffect(()=>{
+    if (session || results || !groupModes?.length || groupModes.some(item=>item.value===mode)) return;
+    const fallback=groupModes[0];
+    setModeRecovery({owner:accountId(),bookId,unitId,message:`${MODES.find(item=>item.value===mode)?.label} has no tasks in this group. Showing ${fallback.label}.`});
+    setMode(fallback.value);
+    const next=new URLSearchParams(params); next.set('mode',fallback.value);setParams(next,{replace:true,state:location.state});
+  },[groupModes,mode,session,results]);
   const answered = session
     ? cards.filter((card) => session.answers[card.id]?.response.trim()).length
     : 0;
@@ -332,6 +342,7 @@ export function useVocabularyPracticeController() {
     const next = new URLSearchParams(params); next.set('dueOnly',String(value === 'due')); next.set('wrongOnly',String(value === 'wrong')); next.delete('unitId'); setParams(next,{replace:true, state: location.state});
   }
   function changeMode(value: string) {
+    setModeRecovery(null);
     setMode(value as VocabularyPracticeMode);
     changeFilter("mode", value);
     setAudioStatus("");
@@ -915,7 +926,7 @@ export function useVocabularyPracticeController() {
     dueOnly, setDue, wrongOnly, setWrong, session, cards, resume, results,
     settingsOpen, setSettingsOpen, exitOpen, setExitOpen, incompleteOpen, setIncompleteOpen,
     saving, recovering, retryPreparing, error, audioStatus, audioBusy, looping, storageError, catalogStatus,
-    resultFilter, setResultFilter, resultReturnTo, queue, unitQueue, books, units, selectedUnit,
+    resultFilter, setResultFilter, resultReturnTo, queue, unitQueue, groupModes, modeNotice, books, units, selectedUnit,
     selectedBook, chapter, catalogReady, leafUnits, studyReady, answered, flagged,
     count, locked, currentIndex, pageStart, visibleCards, resultRows, nextGroup, recent,
     setReviewPreset, changeFilter, changeMode, playCard, begin, recover, updateAnswer, finalizeAnswer,

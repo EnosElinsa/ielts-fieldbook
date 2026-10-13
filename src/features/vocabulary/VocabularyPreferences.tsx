@@ -4,6 +4,7 @@ import { DeviceVoicePreferences } from './DeviceVoicePreferences';
 import { ModalFrame } from "../../components/ModalFrame";
 import {
   normalizeVocabularyPreferences,
+  VOCABULARY_PRACTICE_MODES,
   type VocabularyPreferences,
 } from "../../domain/vocabulary/preferences";
 import "../../styles/vocabulary-practice.css";
@@ -40,15 +41,7 @@ export function VocabularyPreferencesFields({
                 })
               }
             >
-              {[
-                { value: "dictation", label: "Dictation" },
-                { value: "definition", label: "Definition recall" },
-                { value: "cloze", label: "Cloze" },
-                { value: "synonym", label: "Synonyms" },
-                { value: "distinction", label: "Confusing words" },
-                { value: "audio", label: "Audio loop" },
-                { value: "production", label: "Sentence production" },
-              ].map((mode) => (
+              {VOCABULARY_PRACTICE_MODES.map((mode) => (
                 <option key={mode.value} value={mode.value}>
                   {mode.label}
                 </option>

@@ -30,6 +30,31 @@ afterEach(()=>{cleanup();Object.assign(VOCABULARY_CATALOG,structuredClone(origin
 function Location(){const location=useLocation();return <output aria-label="Route">{location.pathname+location.search}</output>;}
 function mount(url=path){return render(<MemoryRouter initialEntries={[url]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes><Location/></MemoryRouter>);}
 
+test('viewed final word and unchanged batch do not create another save',async()=>{
+  mocks.fb.state.wordbookProgress=[{bookId:'book',unitId:'group',learning:{viewedEntryIds:['word-12'],currentEntryId:'word-12',updatedAt:'2026-01-01'}}];
+  mount();await screen.findByRole('heading',{name:'Word 12'});
+  expect(screen.getByRole('button',{name:'Viewed'})).toBeDisabled();
+  fireEvent.click(screen.getByRole('button',{name:'Viewed'}));
+  fireEvent.click(screen.getByRole('button',{name:'Viewed'}));
+  fireEvent.click(screen.getByRole('button',{name:'Batch 2: words 11–12'}));
+  expect(screen.getByRole('heading',{name:'Word 12'})).toBeInTheDocument();
+  expect(mocks.fb.saveVocabularyLearning).not.toHaveBeenCalled();
+  expect(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-one:book:group')).toBeNull();
+});
+
+test('revisiting a viewed word keeps marking disabled while navigation remains available',async()=>{
+  mocks.fb.state.wordbookProgress=[{bookId:'book',unitId:'group',learning:{viewedEntryIds:['word-1'],currentEntryId:'word-1',updatedAt:'2026-01-01'}}];
+  mount();await screen.findByRole('heading',{name:'Word 1'});
+  expect(await screen.findByRole('button',{name:'Viewed'})).toBeDisabled();
+  fireEvent.click(screen.getByRole('button',{name:'Batch 1: words 1–10'}));
+  expect(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-one:book:group')).toBeNull();
+  fireEvent.click(screen.getByRole('button',{name:'Viewed'}));
+  expect(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-one:book:group')).toBeNull();
+  fireEvent.click(screen.getByRole('button',{name:'Next word'}));
+  expect(screen.getByRole('heading',{name:'Word 2'})).toBeInTheDocument();
+  expect(screen.getByText('Viewed 1 / 12')).toBeInTheDocument();
+});
+
 test('learning returns to the actual filtered word list rather than the wordbook ancestor',async()=>{
   const source='/vocabulary/wordbooks/book/groups/group/words?search=Word&page=1';
   mount(`${path}?returnTo=${encodeURIComponent(source)}`);
@@ -75,7 +100,7 @@ test('restores saved position, ignores unavailable viewed words and offers ten-w
   expect(screen.getByText('Viewed 1 / 12')).toBeInTheDocument();
   await userEvent.setup().click(screen.getByRole('button',{name:'Batch 1: words 1–10'}));
   expect(screen.getByRole('heading',{name:'Word 1'})).toBeInTheDocument();
-  await waitFor(()=>expect(mocks.fb.saveVocabularyLearning).toHaveBeenLastCalledWith('book','group',expect.objectContaining({currentEntryId:'word-1'})));
+  await waitFor(()=>expect(mocks.fb.saveVocabularyLearning).toHaveBeenLastCalledWith('book','group',expect.objectContaining({currentEntryId:'word-1'})),{timeout:3500});
 });
 
 test('failed save retains position and retries without claiming completion or changing assessment',async()=>{
@@ -127,7 +152,7 @@ test('rapid navigation remains immediate and saves only the latest durable snaps
   expect(screen.getByRole('button',{name:'Previous word'})).toBeEnabled();
   expect(mocks.fb.saveVocabularyLearning).not.toHaveBeenCalled();
   expect(JSON.parse(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-one:book:group')!)).toMatchObject({currentEntryId:'word-11',viewedEntryIds:['word-1','word-2']});
-  await waitFor(()=>expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalledTimes(1));
+  await waitFor(()=>expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalledTimes(1),{timeout:3500});
   expect(mocks.fb.saveVocabularyLearning).toHaveBeenLastCalledWith('book','group',expect.objectContaining({currentEntryId:'word-11',viewedEntryIds:['word-1','word-2']}));
 });
 

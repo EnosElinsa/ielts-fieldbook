@@ -86,6 +86,28 @@ function groupFixture(count: number) {
   VOCABULARY_CATALOG.memberships = [...originalCatalog.memberships, ...vocabulary.map((entry, order) => ({ id: `membership-${order}`, entryId: entry.id, bookId: 'test-book', unitId: 'test-group', order })) as any];
 }
 
+test('group mode menu excludes unavailable tasks and old empty mode links recover',async()=>{
+  groupFixture(2);
+  mount('?bookId=test-book&unitId=test-group&dueOnly=false&mode=synonym');
+  expect(await screen.findByText(/Synonyms has no tasks in this group/)).toBeInTheDocument();
+  expect(screen.getByRole('button',{name:'Practice mode'})).toHaveTextContent('Dictation');
+  await userEvent.setup().click(screen.getByRole('button',{name:'Practice mode'}));
+  expect(screen.queryByRole('option',{name:/Synonyms/})).not.toBeInTheDocument();
+  expect(screen.queryByRole('option',{name:/Word distinctions/})).not.toBeInTheDocument();
+  expect(screen.queryByRole('option',{name:/Sentence gaps/})).not.toBeInTheDocument();
+  expect(screen.getByRole('option',{name:'Meaning recall · 2 words'})).toBeInTheDocument();
+  expect(screen.getByRole('option',{name:'Audio loop · 2 words · Listening activity'})).toBeInTheDocument();
+});
+
+test('empty mode recovery notice belongs to its group and clears on source navigation',async()=>{
+  groupFixture(2);
+  const base='/vocabulary/study?bookId=test-book&unitId=test-group&dueOnly=false';
+  render(<MemoryRouter initialEntries={[base+'&mode=synonym']}><VocabularyPracticePage/><Link to="/vocabulary/study?bookId=test-book&unitId=another-group&dueOnly=false&mode=dictation">Another group</Link></MemoryRouter>);
+  await screen.findByText(/Synonyms has no tasks in this group/);
+  await userEvent.setup().click(screen.getByRole('link',{name:'Another group'}));
+  expect(screen.queryByText(/Synonyms has no tasks in this group/)).not.toBeInTheDocument();
+});
+
 test("whole group uses all 55 words in source order and preserves answers across pages and recovery", async () => {
   const user = userEvent.setup();
   groupFixture(55);

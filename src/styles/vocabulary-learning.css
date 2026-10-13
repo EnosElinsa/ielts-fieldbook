@@ -32,7 +32,7 @@
 .vocabulary-learning-assessments { border-top: 1px solid var(--rule); margin-top: 28px; padding-top: 20px; }
 .vocabulary-learning-assessments h3 { margin: 0 0 8px; }
 .vocabulary-learning-assessments p { color: var(--muted); font-size: 13px; }
-.vocabulary-learning-assessments .actions { flex-wrap: wrap; }
+.vocabulary-learning-assessments .actions { flex-wrap: wrap; justify-content:flex-start; gap:8px; margin:16px 0; }
 @media (max-width: 600px) {
   .vocabulary-learning-heading { margin: 10px 0 14px; }
   .vocabulary-learning-heading > p:not(.vocabulary-group-path) { display: none; }

@@ -2,7 +2,12 @@ import { VOCABULARY_CATALOG } from './catalog';
 import { getVocabularyReviewQueue } from './index';
 import { resolveVocabularyLearningContext } from './context';
 import type { ReviewCard, VocabularyEntry, VocabularyMode, VocabularyStore } from './types';
-import type { VocabularyPracticeMode } from './preferences';
+import { VOCABULARY_PRACTICE_MODES, isSpecialistVocabularyMode, type VocabularyPracticeMode } from './preferences';
+
+export function availableUnitPracticeModes(state: Partial<VocabularyStore>, bookId: string, unitId: string) {
+  return VOCABULARY_PRACTICE_MODES.map(item => ({...item, queue:buildUnitPracticeQueue(state,bookId,unitId,item.value)}))
+    .filter(item=>item.queue.eligibleWords > 0 && (isSpecialistVocabularyMode(item.value) || item.queue.unavailableWords === 0));
+}
 
 export type VocabularySessionSelection =
   | { kind: 'unit'; bookId: string; unitId: string }
