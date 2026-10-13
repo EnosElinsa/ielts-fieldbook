@@ -23,7 +23,7 @@ export function BackupModal() {
     <ModalFrame open={open} onClose={() => fb.closeModal()} busy={saving}>
       <div className="modal">
         <h3>Import a backup</h3>
-        <p>This merges with what you already have. Essays and transcripts stay.</p>
+        <p>Import study records into your account without deleting existing records.</p>
         <div className="panel">
           {preview ? (
             <>
@@ -93,12 +93,12 @@ export function BackupModal() {
               fb.setPendingBackup(null);
               fb.closeModal();
               if (draft.questions[0]) fb.setSelectedQuestionId(String(draft.questions[0].id));
-              fb.toast('Backup merged. Nothing already here was deleted.');
+              fb.toast('Backup imported. Existing records were kept.');
               } catch { fb.toast('Could not load or save the complete account. Try again.'); }
               finally { setSaving(false); }
             }}
           >
-            {saving ? 'Saving...' : 'Back up what I have, then merge'}
+            {saving ? 'Saving...' : 'Back up and import'}
           </button>
         </div>
       </div>

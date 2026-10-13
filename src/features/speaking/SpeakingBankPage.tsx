@@ -157,7 +157,7 @@ export function SpeakingBankPage() {
             </div>
           ))
         ) : (
-          <Empty message="The speaking bank did not load. Sign in again after the question catalog has been seeded." />
+          <Empty message="Speaking questions are unavailable. Please try again later." />
         )}
       </div>
     </section>

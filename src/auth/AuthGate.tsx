@@ -169,11 +169,11 @@ export function AuthGate({ children }: { children: ReactNode }) {
   if (sessionState === 'loading') {
     return (
       <main className="auth-screen">
-        <Aside title="Opening your notebook." />
+        <Aside title="Loading your account." />
         <section className="auth-card">
           <p className="kicker">Fieldbook</p>
-          <h2>Checking this browser</h2>
-          <p>Looking for a saved sign-in.</p>
+          <h2>Checking your sign-in</h2>
+          <p>Please wait while we check your saved session.</p>
         </section>
       </main>
     );
@@ -254,21 +254,21 @@ export function AuthGate({ children }: { children: ReactNode }) {
     const confirming = mailbox === 'confirm';
     return (
       <main className="auth-screen">
-        <Aside title={confirming ? 'Confirm the email, then the notebook opens.' : 'The reset link is in your inbox.'} />
+        <Aside title={confirming ? 'Confirm your email to activate your account.' : 'Check your email for a password reset link.'} />
         <section className="auth-card">
           <p className="kicker">{confirming ? 'Check email' : 'Reset sent'}</p>
-          <h2>{confirming ? 'Confirm this address' : 'Choose a new password'}</h2>
+          <h2>{confirming ? 'Confirm your email' : 'Reset your password'}</h2>
           <p className="auth-address">{email.trim()}</p>
           <ol className="auth-steps">
             {confirming ? (
               <>
-                <li>Open the message from Supabase.</li>
+                <li>Open the confirmation email.</li>
                 <li>Click the confirmation link.</li>
-                <li>The notebook opens in that tab.</li>
+                <li>Return to IELTS Fieldbook in the tab that opens.</li>
               </>
             ) : (
               <>
-                <li>Open the message from Supabase.</li>
+                <li>Open the password reset email.</li>
                 <li>Click the reset link. It returns to this site.</li>
                 <li>Enter a new password on the page that opens.</li>
               </>
@@ -277,7 +277,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
           {error ? <p className="auth-error">{error}</p> : null}
           {confirming ? (
             sent ? (
-              <p>Confirmation sent.</p>
+              <p>Confirmation email sent.</p>
             ) : (
               <button className="btn line" type="button" onClick={() => void resend()} disabled={busy}>
                 {busy ? 'Sending…' : 'Resend confirmation'}
@@ -304,12 +304,12 @@ export function AuthGate({ children }: { children: ReactNode }) {
 
   return (
     <main className="auth-screen">
-      <Aside title="One account for the essays, the recordings, and the plan." />
+      <Aside title={mode === 'signup' ? 'Create an account to save your IELTS practice.' : mode === 'reset' ? 'Reset the password for your account.' : 'Sign in to continue your IELTS practice.'} />
       <form className="auth-card" onSubmit={onSubmit}>
         <p className="kicker">{kicker}</p>
         <h2>{heading}</h2>
-        {mode === 'signup' ? <p>Use an inbox you can open. We send one confirmation message before the first sign-in.</p> : null}
-        {mode === 'reset' ? <p>We email a link that brings you back to this site to choose a new password.</p> : null}
+        {mode === 'signup' ? <p>You will need to confirm your email before signing in.</p> : null}
+        {mode === 'reset' ? <p>Enter your account email to request a password reset link.</p> : null}
         <label htmlFor="auth-email">Email</label>
         <input id="auth-email" type="email" autoComplete="email" value={email} required onChange={(event) => setEmail(event.target.value)} />
         {mode === 'reset' ? null : (

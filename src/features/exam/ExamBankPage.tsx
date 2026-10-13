@@ -80,8 +80,8 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
   return <section className="view active exam-bank">
     <div className="exam-intro">
       <span className="exam-eyebrow">Cambridge 8–21 · {skill}</span>
-      <h2>{skill === 'reading' ? 'Find the evidence. Build your accuracy.' : 'Listening questions'}</h2>
-      {skill === 'reading' && <p>Practise a passage with evidence and method notes, or take a complete test under exam conditions.</p>}
+      <h2>{skill === 'reading' ? 'Reading questions' : 'Listening questions'}</h2>
+      {skill === 'reading' && <p>Reading passages and full mock tests.</p>}
       <div className="exam-bank-actions"><Link className="btn line" to={`/${skill}/review`}><RotateCcw size={15} />Review mistakes</Link></div>
     </div>
     <div className="toolbar exam-toolbar">
@@ -97,7 +97,7 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
       <span className="exam-eyebrow">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : `${skill} · saved practice`}</span><strong>{attempt.mode === 'mock' ? 'Full mock' : section?.title || `${sectionLabel} practice`}</strong>
       <span className="exam-recent-meta">{attempt.mode === 'mock' ? 'Full mock' : `${sectionLabel} practice`} · {attempt.status === 'completed' ? `${attempt.score ?? '—'} / ${attempt.total ?? '—'} marks` : attempt.status === 'paused' ? 'Paused' : 'In progress'}</span><b>{attempt.status === 'completed' ? 'Review' : 'Resume'} <ArrowRight size={14} /></b>
     </Link>; })}</aside>}
-    {loading ? <PageLoadingState variant="bank" message="Loading source catalog…" onRetry={reload} /> : error && !hasCatalogSections ? <StateMessage kind="error" message={error} onRetry={reload} /> : !hasCatalogSections ? <StateMessage title={`The ${skill} bank is not available yet.`} message="Verified source content for Cambridge 8–21 has not been imported. No sample answers or passages are substituted here." /> : <>
+    {loading ? <PageLoadingState variant="bank" message="Loading questions…" onRetry={reload} /> : error && !hasCatalogSections ? <StateMessage kind="error" message={error} onRetry={reload} /> : !hasCatalogSections ? <StateMessage title={`The ${skill} bank is not available yet.`} message="Questions are not available yet. Please try again later." /> : <>
       {error && <StateMessage kind="error" message={error} onRetry={reload} />}
       <div className="exam-results-bar" ref={results}><span role="status">{matchingPapers.length} test{matchingPapers.length === 1 ? '' : 's'} · {sections.length} {sectionLabel.toLowerCase()}{sections.length === 1 ? '' : 's'}</span>{hasFilters && <button className="btn text" onClick={clearFilters}>Clear filters</button>}</div>
       {sections.length === 0 ? <StateMessage message="No sections match these filters." /> : <div className="exam-paper-list">{visiblePapers.map(paper => {
@@ -110,7 +110,7 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
             <h4>{section.title}</h4><p>{section.questionCount} questions · {section.questionTypes.map(value => QUESTION_TYPE_NAMES[value]).join(' · ')}</p>
             {section.status === 'ready' ? <div className="btn-row"><Link className="btn primary" to={`/${skill}/${section.id}`}>Practise {sectionLabel.toLowerCase()} {section.part} <ArrowRight size={15} /></Link>{skill === 'listening' && <Link className="btn line" to={`/listening/intensive/${section.id}`}>Open intensive part {section.part}</Link>}</div> : <div className="exam-source-status">Source incomplete · practice unavailable</div>}
           </div>)}</div>
-          {!complete && <p className="exam-source-foot">A full mock opens when every {sectionLabel.toLowerCase()} and its source assets are available.</p>}
+          {!complete && <p className="exam-source-foot">A full mock requires {skill === 'reading' ? 'all passages and question materials' : 'all parts and audio recordings'}.</p>}
         </article>;
       })}</div>}
       {pageCount > 1 && <nav className="exam-pagination" aria-label="Question bank pages"><span>Page {page} of {pageCount}</span><button className="btn line" disabled={page === 1} onClick={() => changePage(page - 1)}>Previous tests</button><button className="btn line" disabled={page === pageCount} onClick={() => changePage(page + 1)}>Next tests</button></nav>}

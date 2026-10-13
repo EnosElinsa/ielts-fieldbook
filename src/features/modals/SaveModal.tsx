@@ -17,15 +17,15 @@ export function SaveModal() {
   return (
     <ModalFrame open={open} onClose={() => fb.closeModal()}>
       <div className="modal">
-        <h3>Finished</h3>
+        <h3>Save practice</h3>
         <p>
-          {focused ? 'This file requests feedback on your focused exercise. Export it to your marker, then import the feedback.' : speaking
-            ? 'This file is what you said. The recording is not inside the file. Score it outside Fieldbook, then import the scored file.'
-            : 'This file is the essay to score. Score it outside Fieldbook, then import the scored file.'}
+          {focused ? 'Save your exercise, or export it for feedback and import the marked file when it is ready.' : speaking
+            ? 'Save your transcript, or export it for feedback. The export does not include your recording. Import the marked file when it is ready.'
+            : 'Save your response, or export it for feedback and import the marked file when it is ready.'}
         </p>
         <div className="form">
           <div className="field full">
-            <label>What to watch</label>
+            <label>Practice focus</label>
             <input
               value={focus}
               onChange={(e) => setFocus(e.target.value)}

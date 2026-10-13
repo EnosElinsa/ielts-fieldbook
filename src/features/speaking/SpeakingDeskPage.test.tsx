@@ -78,7 +78,7 @@ test('an upload finishing after departure cannot open a save dialog in another p
   const view = render(<SpeakingDeskPage />);
   await screen.findByText('Decoded recording player');
   fireEvent.change(screen.getByRole('textbox', {name:'Speaking transcript'}), {target:{value:'My answer.'}});
-  await userEvent.click(screen.getByRole('button', {name:'Finished'}));
+  await userEvent.click(screen.getByRole('button', {name:'Finish practice'}));
   await waitFor(() => expect(putAudio).toHaveBeenCalled());
   view.unmount();
   await act(async () => {resolveUpload();});
@@ -116,7 +116,7 @@ test('an upload failure retains raw recording and requires retry or explicit tra
   expect(confirm).toHaveBeenCalledWith(expect.stringContaining('recording has not been uploaded'));
   link.remove();
   confirm.mockRestore();
-  await userEvent.click(screen.getByRole('button', { name: 'Finished' }));
+  await userEvent.click(screen.getByRole('button', { name: 'Finish practice' }));
   expect(await screen.findByRole('button', { name: 'Retry upload' })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Download recording' })).toHaveAttribute('href', 'blob:test-recording');
   expect(setPendingAttempt).not.toHaveBeenCalled();
@@ -137,7 +137,7 @@ test('a durable pending recording restores and survives cancelled completion unt
   expect(await screen.findByText('Decoded recording player')).toBeInTheDocument();
   expect(readPendingAudio).toHaveBeenCalledWith('account-1', 'speaking-1', '1');
   fireEvent.change(screen.getByRole('textbox', { name: 'Speaking transcript' }), { target: { value: 'Restored answer.' } });
-  await userEvent.click(screen.getByRole('button', { name: 'Finished' }));
+  await userEvent.click(screen.getByRole('button', { name: 'Finish practice' }));
   expect(openModal).toHaveBeenCalledWith('save');
   expect(deletePendingAudio).not.toHaveBeenCalled();
   const unload = new Event('beforeunload', { cancelable: true });

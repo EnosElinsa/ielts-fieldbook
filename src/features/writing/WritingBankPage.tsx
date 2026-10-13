@@ -117,7 +117,7 @@ export function WritingBankPage() {
             }}
           />
         ) : (
-          <Empty message="The question bank did not load. Sign in again after the question catalog has been seeded." />
+          <Empty message="Writing questions are unavailable. Please try again later." />
         )}
       </div>
     </section>

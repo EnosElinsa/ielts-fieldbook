@@ -55,7 +55,7 @@ async function renderGate() {
   await screen.findByRole('heading', { name: 'Sign in' });
 }
 
-test('the confirmation link opens the notebook and resend uses the shared sentence', async () => {
+test('signup shows confirmation steps and supports resending the email', async () => {
   signUp.mockResolvedValue({ data: { session: null }, error: null });
   resend.mockResolvedValue({ error: null });
   await renderGate();
@@ -68,7 +68,7 @@ test('the confirmation link opens the notebook and resend uses the shared senten
     password: 'secret1',
     options: { emailRedirectTo: window.location.origin },
   });
-  expect(await screen.findByText('The notebook opens in that tab.')).toBeInTheDocument();
+  expect(await screen.findByText('Return to IELTS Fieldbook in the tab that opens.')).toBeInTheDocument();
   expect(screen.queryByRole('button', { name: 'I confirmed it. Sign in' })).not.toBeInTheDocument();
   await userEvent.click(screen.getByRole('button', { name: 'Resend confirmation' }));
   expect(resend).toHaveBeenCalledWith({
@@ -76,7 +76,7 @@ test('the confirmation link opens the notebook and resend uses the shared senten
     email: 'enoselinsa@gmail.com',
     options: { emailRedirectTo: window.location.origin },
   });
-  expect(await screen.findByText('Confirmation sent.')).toBeInTheDocument();
+  expect(await screen.findByText('Confirmation email sent.')).toBeInTheDocument();
   expect(screen.queryByRole('button', { name: 'Resend confirmation' })).not.toBeInTheDocument();
 });
 
@@ -122,7 +122,7 @@ test('the notebook opens when a session exists', async () => {
   const listener = onAuthStateChange.mock.calls[0][0];
   listener('SIGNED_IN', { user: { id: 'u' } });
   expect(await screen.findByText('Notebook')).toBeInTheDocument();
-  expect(screen.queryByText('Confirm this address')).not.toBeInTheDocument();
+  expect(screen.queryByText('Confirm your email')).not.toBeInTheDocument();
 });
 
 const connectionError = 'Could not reach the sign-in service. Check your connection and try again. The service may be temporarily unavailable.';

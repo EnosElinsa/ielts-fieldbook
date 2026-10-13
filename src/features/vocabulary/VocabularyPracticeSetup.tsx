@@ -17,10 +17,10 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
     <>
       <div className="practice-context-card">
         <span className="eyebrow">{controller.batchRequest ? `Learning batch ${Number(controller.learningBatch.batch?.selection.batchIndex || 0) + 1}` : study ? 'One complete group' : explicitEntry ? 'A single word' : 'A focused review batch'}</span>
-        <h3>{study ? selectedBook?.title || 'Choose a wordbook' : explicitEntry ? queue[0]?.entry.term || 'Practise this word' : 'Keep your vocabulary ready'}</h3>
-        <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : explicitEntry ? queue[0]?.entry.senses.find(sense => sense.id === queue[0]?.senseId)?.definition || 'This selected meaning is unavailable.' : 'Review learned words that are due, recover mistakes, or create a custom batch.'}</p>
+        <h3>{study ? selectedBook?.title || 'Choose a wordbook' : explicitEntry ? queue[0]?.entry.term || 'Practise this word' : 'Vocabulary review'}</h3>
+        <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : explicitEntry ? queue[0]?.entry.senses.find(sense => sense.id === queue[0]?.senseId)?.definition || 'This selected meaning is unavailable.' : 'Review due words, retry mistakes, or build a custom review.'}</p>
         {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
-        {mode === 'production' ? <p>Sentences are saved for review. Self-review does not count as assessed usage evidence.</p> : null}
+        {mode === 'production' ? <p>Your sentences are saved for review. A self-rating does not verify correct usage.</p> : null}
         {controller.batchRequest ? <strong>{queue.length} words in this batch</strong> : study && unitQueue ? <strong>{unitQueue.totalWords} words in this group · {unitQueue.eligibleWords} ready for {modeLabel(mode).toLowerCase()}</strong> : null}
         {controller.learningBatch.error ? <p role="alert">{controller.learningBatch.error}</p> : null}
         {controller.plannedReview && !studyReady ? <p role="alert">The planned review could not be prepared. Your task has not been completed.</p> : null}
@@ -49,7 +49,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
             changeFilter("bookId", value);
           }}
         />
-        {study ? <button className="btn line" type="button" disabled={bookId === 'all'} onClick={() => setPickerOpen(true)}>{selectedUnit?.title || 'Choose a group'}</button> : explicitEntry ? null : <FilterMenu label="Review preset" value={wrongOnly ? 'wrong' : dueOnly ? 'due' : 'custom'} options={[{value:'due',label:'Due learned words'},{value:'wrong',label:'Wrong learned words'},{value:'custom',label:'Custom learned words'}]} onChange={value => { setDue(value === 'due'); setWrong(value === 'wrong'); controller.setReviewPreset(value); }} />}
+        {study ? <button className="btn line" type="button" disabled={bookId === 'all'} onClick={() => setPickerOpen(true)}>{selectedUnit?.title || 'Choose a group'}</button> : explicitEntry ? null : <FilterMenu label="Review preset" value={wrongOnly ? 'wrong' : dueOnly ? 'due' : 'custom'} options={[{value:'due',label:'Due for review'},{value:'wrong',label:'Words to retry'},{value:'custom',label:'Custom selection'}]} onChange={value => { setDue(value === 'due'); setWrong(value === 'wrong'); controller.setReviewPreset(value); }} />}
         {pickerOpen ? <VocabularyGroupPicker state={controller.state} bookId={bookId} currentUnitId={unitId} onClose={() => setPickerOpen(false)} onSelect={(value: string) => { setUnit(value); changeFilter('unitId',value); }} /> : null}
       </div>
       {controller.modeNotice ? <p role="status">{controller.modeNotice}</p> : null}
@@ -77,7 +77,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
                 changeFilter("wrongOnly", String(event.target.checked));
               }}
             />
-            Wrong words only
+            Mistakes only
           </label>
         </div>
         : null}

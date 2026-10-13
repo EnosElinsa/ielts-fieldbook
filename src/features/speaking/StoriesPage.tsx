@@ -37,7 +37,7 @@ export function StoriesPage() {
   return (
     <section className="view active">
       <div className="page-tools">
-        <p>A few real stories. The same one can cover more than one Part 2.</p>
+        <p>Personal experiences for your Part 2 answers.</p>
         <button
           className="btn primary"
           type="button"

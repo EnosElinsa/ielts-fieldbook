@@ -266,7 +266,7 @@ function VocabularyHomePage() {
   }
   const href = saved ? resumeTo : due.length ? `/vocabulary/review?${new URLSearchParams({ mode, dueOnly: 'true' })}` : nextGroup ? studyLink(nextGroup) : '/vocabulary/wordbooks';
   const action = saved ? 'Continue session' : due.length ? 'Review due words' : nextGroup ? learning?.viewedEntryIds?.length ? 'Continue learning' : 'Start learning' : 'Study wordbooks';
-  const title = saved ? 'Continue your session' : due.length ? 'Your words are due' : enrollment ? enrollment.book.title : 'Choose your wordbook';
+  const title = saved ? 'Continue your session' : due.length ? 'Words due for review' : enrollment ? enrollment.book.title : 'Choose a wordbook';
   return <VocabularyLayout ready={catalogStatus !== 'loading'}>
     <div className="page-tools"><h2>Vocabulary</h2><Link className="btn line" to="/settings/vocabulary">Practice settings</Link></div>
     <section className="vocabulary-home-next" aria-label="Next vocabulary task">
@@ -275,7 +275,7 @@ function VocabularyHomePage() {
       {nextGroup && !saved && !due.length ? <p>{unitPath(enrollment.book, nextGroup, enrollment.study.hierarchy)}</p> : null}
       {catalogStatus === 'loading' && !saved && !due.length ? <PanelLoadingState message="Loading your wordbooks..." /> : catalogStatus === 'error' && !saved && !due.length ? <StateMessage kind="error" message="Wordbooks could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16}/></Link>}
     </section>
-    <VocabularyStats values={[["Due cards", due.length], ["Wrong words", getActiveWrongWords(fb.state).length], ["Saved words", (fb.state.vocabulary || []).filter(entry => !entry.tags.includes('archived')).length]]}/>
+    <VocabularyStats values={[["Due cards", due.length], ["Words to retry", getActiveWrongWords(fb.state).length], ["Saved words", (fb.state.vocabulary || []).filter(entry => !entry.tags.includes('archived')).length]]}/>
     <nav className="vocabulary-home-links" aria-label="More vocabulary tasks"><Link to="/vocabulary/wordbooks"><BookOpen size={17}/>Wordbooks<ArrowRight size={15}/></Link><Link to="/vocabulary/review"><RotateCcw size={17}/>Review vocabulary<ArrowRight size={15}/></Link><Link to="/vocabulary/words"><Pencil size={17}/>Manage my words<ArrowRight size={15}/></Link><Link to="/vocabulary/history">Session history<ArrowRight size={15}/></Link></nav>
   </VocabularyLayout>;
 }
@@ -389,7 +389,7 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
         values={[
           ["Entries", entries.length],
           ["Due cards", safeQueue(fb.state, { dueOnly: true }).length],
-          ["Wrong words", getActiveWrongWords(fb.state).length],
+          ["Words to retry", getActiveWrongWords(fb.state).length],
           [
             "Mastered",
             entries.filter(
@@ -664,7 +664,7 @@ export function VocabularyWordbooksPage() {
     </details>;
   };
   return <VocabularyLayout ready={!catalogBusy}>
-    <div className="page-tools"><div><h2>Wordbook study</h2><p className="vocabulary-muted">One group at a time. Clear progress through every chapter.</p></div>
+    <div className="page-tools"><div><h2>Wordbook study</h2><p className="vocabulary-muted">Your wordbooks and chapter progress.</p></div>
     </div>
     {catalogBusy ? <PanelLoadingState message="Loading catalog..." onRetry={() => loadCatalog(selectedBook)} retryLabel="Retry catalog" /> : null}
     {catalogError ? <StateMessage kind="error" message={catalogError} onRetry={() => loadCatalog(selectedBook)} retryLabel="Retry catalog" retryDisabled={catalogBusy} /> : null}
@@ -677,7 +677,7 @@ export function VocabularyWordbooksPage() {
         {enrolled(book.id) ? study.next ? <><p className="vocabulary-group-path">{unitPath(book, study.next, study.hierarchy)}</p><Link className="btn primary" to={studyLink(study.next)}>{study.studied.length === study.available.length ? "Study again" : study.studied.length ? "Continue study" : "Start first group"}<ArrowRight size={16} /></Link><small>{study.next.studyEntryIds.length} words · Learn, then assess</small></> : study.studied.length ? <><p>All groups studied.</p><Link className="btn line" to={studyLink(study.available[0])}>Study again</Link></> : <p className="vocabulary-muted">{study.groups.some(group => group.entryIds.length) ? "All available words are archived. Restore a word to study this book." : "Study will be available when group content is loaded."}</p>
           : <button type="button" className="btn primary" disabled={Boolean(joining) || catalogBusy || !study.available.length} onClick={() => join(book.id)}><Plus size={15} />Add wordbook</button>}
       </div></div>
-      <p className="vocabulary-muted">Studied means a saved attempt with every nonarchived word answered. Mastery comes from review evidence.</p>
+      <p className="vocabulary-muted">A group is studied when you submit answers for all its active words. Mastery is tracked separately.</p>
       <div className="vocabulary-study-chapters">{study.hierarchy.filter(unit => !unit.parentId || !study.hierarchy.some(parent => parent.id === unit.parentId)).map(chapter)}</div>
       {!study.hierarchy.length && !catalogBusy && !catalogError ? <StateMessage message="No chapters available yet." /> : null}
 
@@ -732,9 +732,9 @@ export function VocabularyWrongPage() {
   };
   return (
     <VocabularyLayout>
-      <div className="page-tools"><h2>Wrong words</h2></div>
-      <div className="vocabulary-recovery"><div><span className="vocabulary-eyebrow">Recovery practice</span><h3>{wrong.length ? `${wrong.length} words to recover` : "Your recovery queue"}</h3><p>Give these words another attempt. Repeated successful reviews rebuild confidence.</p></div>
-        <Link className="btn primary" to={`/vocabulary/review?${new URLSearchParams({ wrongOnly: 'true', dueOnly: 'false', ...(source !== 'all' ? { sourceType: source } : {}), ...(bookId !== 'all' ? { bookId } : {}), ...(skill !== 'all' ? { skill } : {}), ...(dimension !== 'all' ? { dimension } : {}) }).toString()}`}><RotateCcw size={16} />Recover wrong words<ArrowRight size={15} /></Link>
+      <div className="page-tools"><h2>Words to retry</h2></div>
+      <div className="vocabulary-recovery"><div><span className="vocabulary-eyebrow">Mistake review</span><h3>{wrong.length ? `${wrong.length} words to retry` : "Your retry queue"}</h3><p>Review words you answered incorrectly.</p></div>
+        <Link className="btn primary" to={`/vocabulary/review?${new URLSearchParams({ wrongOnly: 'true', dueOnly: 'false', ...(source !== 'all' ? { sourceType: source } : {}), ...(bookId !== 'all' ? { bookId } : {}), ...(skill !== 'all' ? { skill } : {}), ...(dimension !== 'all' ? { dimension } : {}) }).toString()}`}><RotateCcw size={16} />Retry words<ArrowRight size={15} /></Link>
       </div>
       <div className="toolbar">
         <SelectField
@@ -815,7 +815,7 @@ export function VocabularyWrongPage() {
                   <Pronunciation compact entry={entry} accent={normalizeVocabularyPreferences(fb.state.settings?.vocabulary).accent} />
                   <span className="vocabulary-muted">
                     Last failure {dateLabel(state.wrong?.lastFailureAt)} |{" "}
-                    {state.wrong?.successesSinceFailure || 0} recovery successes
+                    {state.wrong?.successesSinceFailure || 0} correct reviews since the last mistake
                   </span>
                 </div>
                 {resolving === key ? (
@@ -864,7 +864,7 @@ export function VocabularyWrongPage() {
           })}
         </div>
       ) : (
-        <StateMessage message="No active wrong words." />
+        <StateMessage message="No words to retry." />
       )}
     </VocabularyLayout>
   );
@@ -886,7 +886,7 @@ export function VocabularyProgressPage() {
           ["Entries", entries.length],
           ["Mastered words", entries.filter(entry => statusOf(fb.state, entry.id) === "mastered").length],
           ["Due cards", safeQueue(fb.state, { dueOnly: true }).length],
-          ["Active wrong words", getActiveWrongWords(fb.state).length],
+          ["Words to retry", getActiveWrongWords(fb.state).length],
           [
             "Awaiting verification",
             evidence.filter(
@@ -896,7 +896,7 @@ export function VocabularyProgressPage() {
           ],
         ]}
       />
-      <p className="vocabulary-muted">Studied tracks complete saved group attempts. Mastered tracks learning evidence; due cards show what needs review.</p>
+      <p className="vocabulary-muted">Study progress counts completed group tests. Mastery reflects your practice results or manual status. Due cards are ready for review.</p>
       <h3 className="vocabulary-section-title">Familiarity</h3>
       <div className="vocabulary-status-breakdown">
         {STATUS.map((status) => (
@@ -975,7 +975,7 @@ export function VocabularyProgressPage() {
             );
           })}
       </div>
-      <h3 className="vocabulary-section-title">Recent evidence</h3>
+      <h3 className="vocabulary-section-title">Recent practice results</h3>
       {reviews.length || evidence.length ? (
         <div className="vocabulary-evidence">
           {[...reviews, ...evidence]
@@ -996,7 +996,7 @@ export function VocabularyProgressPage() {
             ))}
         </div>
       ) : (
-        <StateMessage message="No review evidence yet." />
+        <StateMessage message="No vocabulary practice results yet." />
       )}
     </VocabularyLayout>
   );

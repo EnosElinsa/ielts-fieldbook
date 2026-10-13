@@ -10,7 +10,7 @@ import { Empty, FilterMenu } from '../../components/ui';
 function SampleBlock({ topic, part }) {
   const wanted = String(part || topic.part);
   const hint = (
-    <p className="file-hint">A sample for shape, not for memorising. A Part 2 answer is about one or two minutes.</p>
+    <p className="file-hint">Use this example to plan your own answer. In Part 2, speak for 1–2 minutes.</p>
   );
   if (wanted === '1') {
     const items = (topic.questions || [])

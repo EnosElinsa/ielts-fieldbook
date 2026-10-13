@@ -29,10 +29,10 @@ afterEach(() => {
   pending.skill = 'writing';
 });
 
-test('writing Finished names the essay file and keeps both save buttons', async () => {
+test('writing save dialog explains export and keeps both save buttons', async () => {
   render(<SaveModal />);
   expect(
-    screen.getByText('This file is the essay to score. Score it outside Fieldbook, then import the scored file.'),
+    screen.getByText('Save your response, or export it for feedback and import the marked file when it is ready.'),
   ).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Save and export' }).className).toContain('primary');
   expect(screen.getByRole('button', { name: 'Save only' }).className).toContain('line');
@@ -41,12 +41,12 @@ test('writing Finished names the essay file and keeps both save buttons', async 
   expect(saveAttempt).toHaveBeenCalledWith(false, { focus: '', next: '', errors: '' });
 });
 
-test('speaking Finished says the recording is not inside the file', () => {
+test('speaking save dialog explains that recordings are excluded from export', () => {
   pending.skill = 'speaking';
   render(<SaveModal />);
   expect(
     screen.getByText(
-      'This file is what you said. The recording is not inside the file. Score it outside Fieldbook, then import the scored file.',
+      'Save your transcript, or export it for feedback. The export does not include your recording. Import the marked file when it is ready.',
     ),
   ).toBeInTheDocument();
   expect(screen.queryByText(/in this browser/)).not.toBeInTheDocument();

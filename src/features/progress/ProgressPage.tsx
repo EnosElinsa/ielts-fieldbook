@@ -60,7 +60,7 @@ export function ProgressPage() {
   const statusNames = { pending: 'Not started', in_progress: 'In progress', completed: 'Completed' };
   return (
     <section className="view active progress-view">
-      <div className="page-tools"><p>Your practice, feedback and progress.</p><Link to={receptive ? `/${skill}` : '/review'} className="btn line">{receptive ? 'Open practice bank' : 'Review attempts'} <ArrowUpRight size={16} /></Link></div>
+      <div className="page-tools"><p>Practice results and imported feedback.</p><Link to={receptive ? `/${skill}` : '/review'} className="btn line">{receptive ? 'Open practice bank' : 'Review attempts'} <ArrowUpRight size={16} /></Link></div>
       <div className="page-tools"><Link to="/vocabulary/progress" className="btn line">Vocabulary progress <ArrowUpRight size={16} /></Link><Link to="/vocabulary/review" className="btn line">Review vocabulary <ArrowUpRight size={16} /></Link></div>
       <div className="toolbar">
         <FilterMenu label="Progress skill" value={skill} onChange={selectCategory} options={[{ value: 'listening', label: 'Listening' }, { value: 'reading', label: 'Reading' }, { value: 'writing', label: 'Writing' }, { value: 'speaking', label: 'Speaking' }, { value: 'vocabulary', label: 'Vocabulary' }]} />

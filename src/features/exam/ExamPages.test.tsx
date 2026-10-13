@@ -75,12 +75,12 @@ test('a slow bank reload ignores the stale request and retains a real retry afte
     .mockImplementationOnce(() => new Promise(resolve => { finishOld = resolve; }))
     .mockRejectedValueOnce(new Error('The source connection was interrupted.'));
   render(<MemoryRouter><ExamBankPage skill="reading" /></MemoryRouter>);
-  expect(screen.getByRole('status')).toHaveTextContent('Loading source catalog…');
+  expect(screen.getByRole('status')).toHaveTextContent('Loading questions…');
   expect(screen.queryByRole('button', { name: 'Retry loading' })).not.toBeInTheDocument();
   act(() => vi.advanceTimersByTime(10_000));
   await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Retry loading' })));
   expect(screen.getByRole('alert')).toHaveTextContent('The source connection was interrupted.');
-  expect(screen.queryByText('Loading source catalog…')).not.toBeInTheDocument();
+  expect(screen.queryByText('Loading questions…')).not.toBeInTheDocument();
   await act(async () => finishOld(catalog));
   expect(screen.getByRole('alert')).toHaveTextContent('The source connection was interrupted.');
   await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Retry loading' })));

@@ -188,7 +188,7 @@ export function AccountPage() {
       <div className="split">
         <form className="panel" onSubmit={saveName}>
           <h3>Name</h3>
-          <p className="account-note">Shown beside your study record. The sign-in address stays the email above.</p>
+          <p className="account-note">Your display name does not change your sign-in email.</p>
           <div className="field">
             <label htmlFor="account-name">Display name</label>
             <input id="account-name" value={name} maxLength={40} onChange={(event) => setName(event.target.value)} />
@@ -239,7 +239,7 @@ export function AccountPage() {
 
       <form className="panel" onSubmit={saveEmail}>
         <h3>Email address</h3>
-        <p className="account-note">The address above keeps working until the new one is confirmed.</p>
+        <p className="account-note">Continue using your current email until you confirm the new address.</p>
         <div className="field">
           <label htmlFor="account-email">New email</label>
           <input id="account-email" type="email" value={nextEmail} onChange={(event) => setNextEmail(event.target.value)} />
@@ -255,7 +255,7 @@ export function AccountPage() {
 
       <div className="panel account-danger">
         <h3>Delete account</h3>
-        <p className="account-note">Essays, recordings, and the login are removed. This email can be used to register again.</p>
+        <p className="account-note">Permanently delete your account and all saved study data. You can register again with this email.</p>
         <div className="field">
           <label htmlFor="account-delete-email">Type your email</label>
           <input
@@ -277,7 +277,7 @@ export function AccountPage() {
       <div className="panel account-leave">
         <div>
           <h3>Sign out</h3>
-          <p className="account-note">Essays and recordings stay on this account.</p>
+          <p className="account-note">Your saved study data will remain in your account.</p>
         </div>
         <button className="btn warn" type="button" onClick={() => void leave()} disabled={busy === 'out'}>
           Sign out

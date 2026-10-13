@@ -193,7 +193,7 @@ export function WritingDeskPage() {
       <div className="page-tools desk-tools">
         <p>
           {selected.type === '1' ? 'Task 1 · at least 150 words · 20 minutes.' : 'Task 2 · at least 250 words · 40 minutes.'}{' '}
-          <span className="draft-status" role="status">{fb.saveStatus === 'saving' ? 'Saving...' : fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Failed' : fb.saveStatus === 'saved' ? 'Saved' : 'Autosave on'}</span>
+          <span className="draft-status" role="status">{fb.saveStatus === 'saving' ? 'Saving draft...' : fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Draft could not be saved' : fb.saveStatus === 'saved' ? 'Draft saved' : 'Autosave enabled'}</span>
         </p>
         <div className="desk-controls">
           {iconButton(focused ? 'Exit focus mode' : 'Enter focus mode', focused ? Minimize2 : Expand, () => setFocused((value) => !value))}
@@ -428,7 +428,7 @@ export function WritingDeskPage() {
                 <Save size={16} /> {fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Retry save' : 'Save draft'}
               </button>
               <button className="btn primary" type="button" onClick={openSave} data-testid="writing-finished">
-                Finished <ArrowRight size={16} />
+                Finish practice <ArrowRight size={16} />
               </button>
             </div>
           </div>

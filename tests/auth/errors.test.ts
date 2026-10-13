@@ -13,7 +13,7 @@ test('authError maps the sign-in failures the account page can also hit', () => 
   );
   assert.equal(
     authError('Email not confirmed', 'signin'),
-    'Confirm the email first. Open the message we sent. The notebook opens from that link.',
+    'Confirm your email before signing in. Open the confirmation link in the email we sent.',
   );
   assert.equal(authError('Password should be at least 6 characters', 'signup'), 'Use at least 6 characters.');
   assert.equal(

@@ -34,7 +34,7 @@ function SampleInline({ topic, part }) {
   return (
     <details className="sample-answers">
       <summary>Show a sample answer</summary>
-      <p className="file-hint">A sample for shape, not for memorising. A Part 2 answer is about one or two minutes.</p>
+      <p className="file-hint">Use this example to plan your own answer. In Part 2, speak for 1–2 minutes.</p>
       {topic.sampleNotes && topic.sampleNotes.length ? (
         <div className="sample-qa">
           <strong>Sample one-minute notes</strong>
@@ -307,7 +307,7 @@ export function SpeakingDeskPage() {
   if (!topic) {
     return (
       <section className="view active">
-          <Empty message="The speaking bank did not load. Sign in again after the question catalog has been seeded." />
+          <Empty message="Speaking questions are unavailable. Please try again later." />
       </section>
     );
   }
@@ -317,7 +317,7 @@ export function SpeakingDeskPage() {
       <div className="page-tools desk-tools">
         <p>
           {mockMode
-            ? 'Timed mock. Record if you can, then write what you said.'
+            ? 'Timed speaking mock. Record your answers and enter a transcript.'
             : part === '2' ? 'One minute to prepare, then two minutes to answer.' : 'Answer the question, then review your transcript.'}
         </p>
         <div className="desk-controls">
@@ -671,7 +671,7 @@ export function SpeakingDeskPage() {
             }}
           />
           <div className="editor-foot">
-            <p role="status">{uploading ? 'Uploading recording...' : fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Failed.' : fb.saveStatus === 'saving' ? 'Saving...' : fb.saveStatus === 'saved' ? 'Saved.' : 'Autosave on.'} {audioBlob && !audioSaved ? 'Recording not uploaded.' : 'Saved recordings are stored on your account.'}</p>
+            <p role="status">{uploading ? 'Uploading recording...' : fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Draft could not be saved.' : fb.saveStatus === 'saving' ? 'Saving draft...' : fb.saveStatus === 'saved' ? 'Draft saved.' : 'Autosave enabled.'} {audioBlob && !audioSaved ? 'Recording has not been uploaded.' : audioSaved ? 'Recording saved to your account.' : ''}</p>
             <div>
               <button
                 className="btn line"
@@ -691,7 +691,7 @@ export function SpeakingDeskPage() {
                 disabled={recording || uploading}
                 onClick={() => finishAttempt()}
               >
-                {uploading ? 'Uploading...' : 'Finished'} <ArrowRight size={16} />
+                {uploading ? 'Uploading...' : 'Finish practice'} <ArrowRight size={16} />
               </button>
             </div>
           </div>

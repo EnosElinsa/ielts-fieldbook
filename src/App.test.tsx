@@ -278,7 +278,7 @@ describe('Fieldbook UI', () => {
     await user.paste(longEssay);
 
     await user.click(screen.getByTestId('writing-finished'));
-    expect(screen.queryByRole('heading', { name: 'Finished' })).toBeNull();
+    expect(screen.queryByRole('heading', { name: 'Save practice' })).toBeNull();
     await waitFor(() => {
       expect(document.body.textContent).toMatch(/Tick series|overview before saving/i);
     });
@@ -287,11 +287,11 @@ describe('Fieldbook UI', () => {
       await user.click(screen.getByLabelText(label));
     }
     await user.click(screen.getByTestId('writing-finished'));
-    expect(await screen.findByRole('heading', { name: 'Finished' })).toBeTruthy();
+    expect(await screen.findByRole('heading', { name: 'Save practice' })).toBeTruthy();
     await user.click(screen.getByRole('button', { name: 'Save and export' }));
     expect(
       await screen.findByText(
-        'Essay saved, and the score request was exported. Score it outside Fieldbook, then import the scored file.',
+        'Writing practice saved. Feedback request exported. Import the marked file when it is ready.',
       ),
     ).toBeTruthy();
 

@@ -162,7 +162,7 @@ test("wrong word recovery preserves active source filters in its practice link",
   render(<MemoryRouter><VocabularyWrongPage /></MemoryRouter>);
   fireEvent.click(screen.getByRole("button", { name: "Wrong word book" }));
   fireEvent.click(screen.getByRole("option", { name: "IELTS source book" }));
-  expect(screen.getByRole("link", { name: /Recover wrong words/ })).toHaveAttribute("href", "/vocabulary/review?wrongOnly=true&dueOnly=false&bookId=book");
+  expect(screen.getByRole("link", { name: /Retry words/ })).toHaveAttribute("href", "/vocabulary/review?wrongOnly=true&dueOnly=false&bookId=book");
 });
 
 test.each([

@@ -34,7 +34,7 @@ test('blocked source content remains retryable',async()=>{
 test('completion summary includes every selected skill and vocabulary',async()=>{
   mocks.state.plans=[plan('read','reading','completed'),plan('vocab','vocabulary','completed')];renderPage();
   await waitFor(()=>expect(mocks.generate).toHaveBeenCalled());
-  expect(screen.getByText('40 min completed')).toBeInTheDocument();
+  expect(screen.getByText('40 min estimated for completed tasks')).toBeInTheDocument();
   expect(screen.getAllByText('1 done')).toHaveLength(2);
   expect(screen.getByRole('heading',{name:'Today is complete'})).toBeInTheDocument();
 });
