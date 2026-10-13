@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import type { ResolvedVocabularyLearningContext } from '../../domain/vocabulary/context';
 import { getVocabularyIllustration, getVocabularyVisualConcept, type VocabularyVisualConcept } from '../../domain/vocabulary/media';
-import { vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
 import '../../styles/vocabulary-visual.css';
 
 /** Edits and navigation reset a failed photo by keying the actual selected meaning. */
@@ -18,45 +17,13 @@ function LearningVisual({ resolved }: { resolved: ResolvedVocabularyLearningCont
     <figcaption>{image.caption}</figcaption>
     <details className="vocabulary-visual-credits"><summary>Image credits</summary><p>{image.author} · {image.license}</p><p>{image.changes}</p><div><a href={image.sourceUrl} target="_blank" rel="noreferrer">Source</a><a href={image.licenseUrl} target="_blank" rel="noreferrer">License</a></div></details>
   </figure>;
-  return <figure className={`vocabulary-learning-visual ${concept && !failed ? 'is-illustration' : 'is-context'}`}>
-    {concept && !failed ? <FoodScene concept={concept} term={resolved.entry.term} /> : <ContextMap resolved={resolved} />}
-    <figcaption>{concept && !failed ? `Illustration · ${resolved.entry.term}` : 'Context map · selected meaning'}</figcaption>
-    {failed ? <div className="vocabulary-visual-recovery"><p role="status">Image unavailable. The selected meaning is shown in the context map.</p><button type="button" className="btn line" onClick={() => setFailed(false)}>Retry image</button></div> : null}
+  if (!concept && !image) return null;
+  return <figure className="vocabulary-learning-visual is-illustration">
+    {concept ? <FoodScene concept={concept} term={resolved.entry.term} /> : null}
+    <figcaption>{concept ? `Illustration · ${resolved.entry.term}` : null}</figcaption>
+    {failed ? <div className="vocabulary-visual-recovery"><p role="status">Image could not load. You can keep learning from the definition and example.</p><button type="button" className="btn line" onClick={() => setFailed(false)}>Retry image</button></div> : null}
   </figure>;
 }
-function wrapText(text: string, limit: number): string[] {
-  const words = text.trim().split(/\s+/).flatMap(word => Array.from(word).length > limit ? word.match(new RegExp(`.{1,${limit}}`, 'gu')) || [word] : [word]);
-  const lines: string[] = [];
-  for (const word of words) {
-    if (lines.length && `${lines.at(-1)} ${word}`.length <= limit) lines[lines.length - 1] += ` ${word}`;
-    else lines.push(word);
-  }
-  return lines.length ? lines : [''];
-}
-function ContextMap({ resolved }: { resolved: ResolvedVocabularyLearningContext }) {
-  const content = resolved.sense ? vocabularySensePresentation(resolved.sense) : undefined;
-  const term = wrapText(resolved.entry.term, 24);
-  const definition = wrapText(content?.definition || 'No selected definition is available yet.', 42);
-  const example = content?.example ? wrapText(content.example, 48) : [];
-  const termHeight = 32 + term.length * 28;
-  const definitionY = termHeight + 68;
-  const definitionHeight = 48 + definition.length * 23;
-  const exampleY = definitionY + definitionHeight + 46;
-  const exampleHeight = example.length ? 48 + example.length * 22 : 0;
-  const height = example.length ? exampleY + exampleHeight + 22 : definitionY + definitionHeight + 24;
-  return <svg className="vocabulary-context-map" viewBox={`0 0 520 ${height}`} role="img" aria-label={`Context map for ${resolved.entry.term}: ${content?.definition || 'Definition unavailable.'}`}>
-    <rect className="visual-map-background" x="1" y="1" width="518" height={height - 2} rx="16" />
-    <rect className="visual-map-word" x="40" y="24" width="440" height={termHeight} rx="12" />
-    <text className="visual-map-term" textAnchor="middle">{term.map((line, i) => <tspan key={i} x="260" y={58 + i * 28}>{line}{' '}</tspan>)}</text>
-    <MapArrow y={termHeight + 31} />
-    <rect className="visual-map-definition" x="40" y={definitionY} width="440" height={definitionHeight} rx="10" />
-    <text className="visual-map-label" x="60" y={definitionY + 24}>MEANING</text>
-    <text className="visual-map-body">{definition.map((line, i) => <tspan key={i} x="60" y={definitionY + 50 + i * 23}>{line}{' '}</tspan>)}</text>
-    {example.length ? <><MapArrow y={definitionY + definitionHeight + 7} /><rect className="visual-map-example" x="40" y={exampleY} width="440" height={exampleHeight} rx="10" /><text className="visual-map-label" x="60" y={exampleY + 24}>IN CONTEXT</text><text className="visual-map-example-text">{example.map((line, i) => <tspan key={i} x="60" y={exampleY + 49 + i * 22}>{line}{' '}</tspan>)}</text></> : null}
-  </svg>;
-}
-function MapArrow({ y }: { y: number }) { return <g className="visual-map-arrow" aria-hidden="true"><path d={`M260 ${y}v24m-5-5 5 5 5-5`} /></g>; }
-
 function Peas() {
   return <g><path d="M74 214Q161 73 415 114Q342 259 150 264Q108 265 74 214Z" fill="#386c38" /><path d="M85 213Q161 117 399 121Q304 232 151 245Q108 246 85 213Z" fill="#bad784" stroke="#639545" strokeWidth="4" />{[[134,207,23],[189,184,28],[250,164,31],[316,145,29]].map(([x,y,r]) => <g key={x}><circle cx={x} cy={y} r={r} fill="#739e44" stroke="#386c38" strokeWidth="2" /><circle cx={x-6} cy={y-8} r={r*.32} fill="#c3dd93" opacity=".7" /></g>)}<path d="M414 115q26-47 45-24t-17 36" fill="none" stroke="#47733c" strokeWidth="5" strokeLinecap="round" /></g>;
 }
@@ -75,8 +42,11 @@ function Grapes() {
 function Citrus({ lemon }: { lemon: boolean }) {
   return <g><path d="M253 115Q261 68 310 83Q295 114 258 115Z" fill="#567844" />{lemon ? <path d="M173 165Q179 135 220 133Q285 104 331 160Q352 181 347 220Q326 242 286 255Q222 282 179 232Q157 215 165 190Z" fill="#dec454" stroke="#a99437" strokeWidth="3" /> : <circle cx="259" cy="203" r="85" fill="#db9444" stroke="#af6c32" strokeWidth="3" />}<path d="M195 166Q172 199 194 222" fill="none" stroke={lemon ? '#f5e59d' : '#f7c17e'} strokeWidth="12" strokeLinecap="round" />{[[257,152],[302,185],[278,233],[222,247],[318,221]].map(([x,y]) => <circle key={x} cx={x} cy={y} r="2" fill={lemon ? '#a99437' : '#af6c32'} />)}</g>;
 }
+function Paste() {
+  return <g><path d="M105 180Q260 138 415 180L390 266Q260 315 130 266Z" fill="#9b7050" stroke="#674c36" strokeWidth="4"/><ellipse cx="260" cy="180" rx="155" ry="44" fill="#d8c18e" stroke="#674c36" strokeWidth="4"/><path d="M147 181Q179 143 212 180T285 181T371 176M173 197Q248 215 332 193" fill="none" stroke="#b99c62" strokeWidth="8" strokeLinecap="round"/><path d="m307 184 81-105" stroke="#736347" strokeWidth="15" strokeLinecap="round"/><ellipse cx="302" cy="188" rx="30" ry="13" fill="#b79b64" transform="rotate(-25 302 188)"/></g>;
+}
 function FoodScene({ concept, term }: { concept: VocabularyVisualConcept; term: string }) {
-  const subject = concept === 'pea' ? <Peas /> : concept === 'carrot' ? <Carrot /> : concept === 'apple' ? <Apple /> : concept === 'banana' ? <Banana /> : concept === 'grape' ? <Grapes /> : concept === 'lemon' || concept === 'orange' ? <Citrus lemon={concept === 'lemon'} /> : concept === 'vegetable' ? <><g transform="translate(-35 -22) scale(.75)"><Carrot /></g><g transform="translate(136 126) scale(.67)"><Peas /></g></> : <><g transform="translate(-10 0) scale(.82)"><Apple /></g><g transform="translate(127 126) scale(.63)"><Banana /></g></>;
-  const label = concept === 'pea' ? 'Green peas in an open pod' : concept === 'carrot' ? 'An orange carrot root with green leaves' : concept === 'vegetable' ? 'Carrot roots and green peas, examples of vegetables' : concept === 'fruit' ? 'An apple and a banana, examples of fruit' : concept === 'grape' ? 'A bunch of grapes growing on a stem' : `A ${concept} fruit`;
+  const subject = concept === 'paste' ? <Paste /> : concept === 'pea' ? <Peas /> : concept === 'carrot' ? <Carrot /> : concept === 'apple' ? <Apple /> : concept === 'banana' ? <Banana /> : concept === 'grape' ? <Grapes /> : concept === 'lemon' || concept === 'orange' ? <Citrus lemon={concept === 'lemon'} /> : concept === 'vegetable' ? <><g transform="translate(-35 -22) scale(.75)"><Carrot /></g><g transform="translate(136 126) scale(.67)"><Peas /></g></> : <><g transform="translate(-10 0) scale(.82)"><Apple /></g><g transform="translate(127 126) scale(.63)"><Banana /></g></>;
+  const label = concept === 'paste' ? 'A bowl of thick mixture with a spoon' : concept === 'pea' ? 'Green peas in an open pod' : concept === 'carrot' ? 'An orange carrot root with green leaves' : concept === 'vegetable' ? 'Carrot roots and green peas, examples of vegetables' : concept === 'fruit' ? 'An apple and a banana, examples of fruit' : concept === 'grape' ? 'A bunch of grapes growing on a stem' : `A ${concept} fruit`;
   return <svg className="vocabulary-food-scene" viewBox="0 0 520 350" role="img" aria-label={`${term}: ${label}`}><rect className="visual-scene-background" x="1" y="1" width="518" height="348" rx="16" /><ellipse className="visual-scene-ground" cx="260" cy="301" rx="175" ry="16" />{subject}</svg>;
 }

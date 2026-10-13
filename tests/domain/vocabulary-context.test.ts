@@ -2,7 +2,7 @@ import { afterEach, beforeEach, expect, test } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { VOCABULARY_CATALOG } from '../../src/domain/vocabulary/catalog';
 import { resolveVocabularyLearningContext, VOCABULARY_CONTEXT_VERSION } from '../../src/domain/vocabulary/context';
-import { getVocabularyReviewQueue } from '../../src/domain/vocabulary';
+import { getVocabularyReviewQueue, normalizeVocabularyCollections } from '../../src/domain/vocabulary';
 import { learningTask } from '../../src/domain/vocabulary/content';
 import { buildUnitPracticeQueue } from '../../src/domain/vocabulary/selection';
 import { createVocabularySession, buildVocabularySessionCommit } from '../../src/domain/vocabulary/session';
@@ -183,4 +183,24 @@ test('draft and submission reject mismatched or malformed context while old draf
   delete session.cardSnapshots; delete session.contentVersion;
   expect(writeVocabularyDraft('legacy-identities', session)).toBe(true);
   expect(buildVocabularySessionCommit(state, session, cards).results[0].result).toBe('success');
+});
+
+test('a normalized saved source snapshot of paste still receives reviewed teaching content', () => {
+  const raw = entry('paste');
+  delete raw.senses[0].wordFamily; delete raw.senses[0].register;
+  const saved = normalizeVocabularyCollections(fresh([raw])).vocabulary[0];
+  const result = resolveVocabularyLearningContext(saved, {bookId:'guixue:10174',unitId:'21840'});
+  expect(result.sense?.example).toBe('Mix the flour and water into a smooth paste.');
+});
+
+test('legacy metadata omissions do not block enrichment but actual personal edits remain', () => {
+  const raw = entry('paste');
+  delete raw.senses[0].wordFamily; delete raw.senses[0].register;
+  raw.senses[0].definition = 'My cooking note about paste.';
+  raw.senses[0].example = 'Use the paste from my recipe.';
+  const before = structuredClone(raw);
+  const result = resolveVocabularyLearningContext(raw, {bookId:'guixue:10174',unitId:'21840'});
+  expect(result.sense?.definition).toBe(raw.senses[0].definition);
+  expect(result.sense?.example).toBe(raw.senses[0].example);
+  expect(raw).toEqual(before);
 });
