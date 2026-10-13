@@ -1,4 +1,5 @@
-import { moduleFor, type WorkspaceModule } from './workspaceNavigation';
+import { canonicalListeningUrl, moduleFor, type WorkspaceModule } from './workspaceNavigation';
+import { normalizeVocabularyRoute } from '../domain/vocabulary/identities';
 
 export type ModuleContext = { url: string; state: unknown; scroll: { x: number; y: number } };
 type ModuleMemory = { version: 1; owner: string | null; modules: Partial<Record<WorkspaceModule, ModuleContext>> };
@@ -13,7 +14,9 @@ export function safeModuleUrl(value: unknown, module: WorkspaceModule): value is
     if (/[\\\s]/.test(path) || path.split('/').some(segment => segment === '.' || segment === '..')) return false;
     if (moduleFor(url.pathname, url.search, module) !== module) return false;
     // Recognize registered routes, rather than accepting lookalike path prefixes.
-    if (module === 'today') return path === '/';
+    if (module === 'today') return path === '/' || path === '/today';
+    if (module === 'planning') return path === '/planning';
+    if (module === 'settings') return /^\/settings(?:\/(?:target|schedule|skills|vocabulary|audio|appearance|account|backup))?$/.test(path);
     if (module === 'progress') return path === '/progress';
     if (module === 'writing') return /^\/(?:write(?:\/questions)?|review(?:\/[^/]+)?)$/.test(path);
     if (module === 'speaking') return /^\/(?:speak(?:\/questions|\/topics\/[^/]+)?|stories|review(?:\/[^/]+)?)$/.test(path);
@@ -35,13 +38,13 @@ export function readModuleContext(owner: string | null, module: WorkspaceModule)
   if (!context || !safeModuleUrl(context.url, module)) return null;
   const { x, y } = context.scroll || {};
   if (!Number.isFinite(x) || !Number.isFinite(y) || x < 0 || y < 0) return null;
-  return context;
+  return module === 'listening' ? { ...context, url: canonicalListeningUrl(context.url) } : module === 'vocabulary' ? { ...context, url: normalizeVocabularyRoute(context.url) } : context;
 }
 
 export function rememberModuleContext(owner: string | null, module: WorkspaceModule, context: ModuleContext) {
   if (!safeModuleUrl(context.url, module)) return;
   const memory = readMemory(owner);
-  memory.modules[module] = context;
+  memory.modules[module] = module === 'listening' ? { ...context, url: canonicalListeningUrl(context.url) } : module === 'vocabulary' ? { ...context, url: normalizeVocabularyRoute(context.url) } : context;
   try { sessionStorage.setItem(moduleMemoryKey(owner), JSON.stringify(memory)); } catch { /* Navigation still works when storage is full or unavailable. */ }
 }
 
@@ -50,7 +53,7 @@ function restoredVocabularyOrigin(value: unknown, owner: string | null, depth = 
   if (!value || typeof value !== 'object' || depth >= 12) return undefined;
   const row = value as { owner?: unknown; url?: unknown; parent?: unknown };
   if (row.owner !== owner || !safeModuleUrl(row.url, 'vocabulary')) return undefined;
-  return { owner, url: row.url, parent: restoredVocabularyOrigin(row.parent, owner, depth + 1) };
+  return { owner, url: normalizeVocabularyRoute(row.url), parent: restoredVocabularyOrigin(row.parent, owner, depth + 1) };
 }
 
 export function restoredModuleState(context: ModuleContext, owner: string | null, module: WorkspaceModule) {

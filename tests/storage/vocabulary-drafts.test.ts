@@ -7,14 +7,20 @@ const card = { id: 'entry:sense:dictation', entryId: 'entry', senseId: 'sense', 
 beforeEach(() => { localStorage.clear(); vi.restoreAllMocks(); });
 
 describe('vocabulary draft recovery', () => {
+  test('rejects a batch draft whose saved cards differ from its fixed selection', () => {
+    const session = createVocabularySession([card], 'dictation', {});
+    const selection = {kind:'learning-batch' as const,bookId:'book',unitId:'group',batchIndex:0,batchSize:10,cards:[{entryId:'another',senseId:'sense'}]};
+    expect(writeVocabularyDraft('alice',{...session,selection})).toBe(false);
+    expect(readVocabularyDraft('alice')).toBeNull();
+  });
   test('roundtrips all 235 whole-unit references and flags without exposing entry content', () => {
     const cards = Array.from({ length: 235 }, (_, index) => ({ ...card, id: `word-${index}:sense:dictation`, entryId: `word-${index}` }));
-    const session = createVocabularySession(cards, 'dictation', { sessionSize: 20 }, {}, { kind: 'unit', bookId: 'guixue:11320', unitId: '35028' });
+    const session = createVocabularySession(cards, 'dictation', { sessionSize: 20 }, {}, { kind: 'unit', bookId: 'ielts-listening-vocabulary', unitId: 'ielts-listening-vocabulary-chapter-03-group-12' });
     session.answers[cards[234].id] = { response: 'last answer', answeredAt: session.startedAt, durationMs: 3, flagged: true };
     session.index = 234;
     expect(writeVocabularyDraft('alice', session)).toBe(true);
     expect(readVocabularyDraft('alice')?.cardIds).toHaveLength(235);
-    expect(readVocabularyDraft('alice')?.selection).toEqual({ kind: 'unit', bookId: 'guixue:11320', unitId: '35028' });
+    expect(readVocabularyDraft('alice')?.selection).toEqual({ kind: 'unit', bookId: 'ielts-listening-vocabulary', unitId: 'ielts-listening-vocabulary-chapter-03-group-12' });
     expect(readVocabularyDraft('alice')?.answers[cards[234].id].flagged).toBe(true);
     expect(localStorage.getItem(localStorage.key(0)!)).not.toContain('secret answer');
   });

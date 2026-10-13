@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { normalizeVocabularyIdentities } from './identities';
 // Source hierarchy verified from the public Guixue metadata API on 2026-10-10.
 const metadata = [
   ['10174', 'IELTS Vocabulary', 3632, [
@@ -166,4 +167,4 @@ const books = metadata.map(([sourceBookId,title,totalSourceWords,chapters], book
 const memberships = books.flatMap((book,index) => entries.slice(index*12,index*12+12).map((entry,order) => ({id:`${book.id}:starter:${entry.id}`,entryId:entry.id,bookId:book.id,unitId:`starter:${book.sourceBookId}`,order,source:'Fieldbook editorial starter selection',verifiedSourceMembership:false})));
 books.forEach(book => { book.starterEntryCount = memberships.filter(member => member.bookId === book.id).length; });
 
-export const VOCABULARY_CATALOG = { entries, books, units, memberships };
+export const VOCABULARY_CATALOG = normalizeVocabularyIdentities({ entries, books, units, memberships });

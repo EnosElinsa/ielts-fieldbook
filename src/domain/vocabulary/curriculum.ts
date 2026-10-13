@@ -1,5 +1,6 @@
 import { vocabularyTeaching, vocabularyTeachingRevision } from './runtimeData';
 import { VOCABULARY_CATALOG } from './catalog';
+import { normalizeVocabularyScope } from './identities';
 import type { VocabularyEntry, VocabularySense } from './types';
 
 export type VocabularyCurriculum = {
@@ -42,7 +43,7 @@ const membershipIndexes=new WeakMap<object,Set<string>>();
 /** A teaching syllabus is distinct from a claim about the original source author. */
 export function vocabularyCurriculum(entry:VocabularyEntry, request:{bookId?:string;unitId?:string}, fallback:VocabularySense|undefined): {curriculum:VocabularyCurriculum;rows:CurriculumRow[]}|undefined {
   ensureCurriculum();
-  const {bookId,unitId}=request;
+  const {bookId,unitId}=normalizeVocabularyScope(request);
   if(!bookId||!unitId||!fallback) return;
   let units=unitIndexes.get(VOCABULARY_CATALOG.units);
   if(!units){units=new Map(VOCABULARY_CATALOG.units.map(row=>[JSON.stringify([row.bookId,row.id]),row]));unitIndexes.set(VOCABULARY_CATALOG.units,units);}
@@ -53,8 +54,8 @@ export function vocabularyCurriculum(entry:VocabularyEntry, request:{bookId?:str
   const chapter=units.get(JSON.stringify([bookId,unit.parentId]));
   const sourceRow=sources.get(key(bookId,unitId,entry.id)),topicRow=topics.get(key(bookId,unitId,entry.id));
   const commonChoices=commonRows.get(entry.id)||[];
-  const multiple=bookId==='guixue:10177'&&unit.parentId==='21954';
-  const theme=bookId==='guixue:10174';
+  const multiple=bookId==='ielts-listening-essentials'&&unit.parentId==='ielts-listening-essentials-chapter-04';
+  const theme=bookId==='ielts-vocabulary';
   const repair=repairRows.get(JSON.stringify([entry.id,fallback.id]));
   const modernRow=modernRows.get(entry.id);
   const rows=sourceRow?[sourceRow]:topicRow?[topicRow]:!theme?multiple&&commonChoices.length?commonChoices:modernRow?[modernRow]:commonChoices.length?commonChoices:repair?[repair]:[]:[];

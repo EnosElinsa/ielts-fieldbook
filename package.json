@@ -30,6 +30,7 @@
     "fetch:vocabulary-dictionary": "node scripts/fetch-open-vocabulary.mjs",
     "deploy:pages": "npm run build && npx wrangler pages deploy dist --project-name ielts-fieldbook",
     "test": "vitest run",
+    "test:identities": "node scripts/verify-vocabulary-identities.mjs && node tests/storage/neutral-identities-sql.cjs",
     "collect:exams": "node scripts/collect-exams.mjs",
     "import:exams": "node scripts/import-exams.mjs",
     "seed:exams": "node scripts/seed-exams.mjs",
@@ -52,6 +53,7 @@
     "wavesurfer.js": "^8.0.2"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.9",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",

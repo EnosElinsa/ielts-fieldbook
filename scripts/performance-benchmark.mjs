@@ -12,7 +12,7 @@ const { chromium } = await import(args.playwright ? pathToFileURL(resolve(args.p
 const runs = Number(args.runs || 15);
 const url = args.url || 'http://127.0.0.1:8001';
 const origin = new URL(url).origin;
-const groupPath = '/vocabulary/wordbooks/guixue:10174/groups/21795/words';
+const groupPath = '/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-01-group-01/words';
 const output = resolve(args.out || 'local/performance/report.json');
 const screenshotDir = args.screenshots && resolve(args.screenshots);
 await mkdir(resolve(output, '..'), { recursive: true });
@@ -33,8 +33,8 @@ const encode = value => Buffer.from(JSON.stringify(value)).toString('base64url')
 const token = `${encode({ alg: 'HS256', typ: 'JWT' })}.${encode({ sub: user.id, aud: 'authenticated', role: 'authenticated', exp: 4_102_444_800, iat: 1_760_000_000 })}.benchmark-signature`;
 const session = { access_token: token, token_type: 'bearer', expires_in: 3_600_000, expires_at: 4_102_444_800, refresh_token: 'benchmark-refresh-token', user };
 const rowify = rows => rows.map(payload => ({ id: String(payload.id), payload }));
-const initialTables = { writing_questions: rowify(questions), speaking_topics: rowify(speaking.topics || speaking), speaking_samples: rowify(samples.samples || samples.topics || (Array.isArray(samples) ? samples : Object.entries(samples).filter(([, value]) => value && typeof value === 'object').map(([id, payload]) => ({ id, ...payload })))), word_entries: rowify(catalog.entries), wordbooks: rowify(catalog.books), wordbook_units: rowify(catalog.units.map(unit => ({ ...unit, id: `${unit.bookId}:${unit.id}`, sourceUnitId: unit.id }))), wordbook_memberships: rowify(catalog.memberships) };
-const groupMembers = catalog.memberships.filter(row => row.bookId === 'guixue:10174' && row.unitId === '21795');
+const initialTables = { writing_questions: rowify(questions), speaking_topics: rowify(speaking.topics || speaking), speaking_samples: rowify(samples.samples || samples.topics || (Array.isArray(samples) ? samples : Object.entries(samples).filter(([, value]) => value && typeof value === 'object').map(([id, payload]) => ({ id, ...payload })))), word_entries: rowify(catalog.entries), wordbooks: rowify(catalog.books), wordbook_units: rowify(catalog.units), wordbook_memberships: rowify(catalog.memberships) };
+const groupMembers = catalog.memberships.filter(row => row.bookId === 'ielts-vocabulary' && row.unitId === 'ielts-vocabulary-chapter-01-group-01');
 const firstTerm = catalog.entries.find(entry => entry.id === groupMembers[0].entryId).term;
 const report = { url, expectedSourceRef: args['source-ref'] || 'working-tree', harnessWorkspaceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), harnessWorkspaceSnapshotHash: sourceHash.digest('hex'), sourceFileCount: sourcePaths.length, harnessHash: hash(await readFile(new URL(import.meta.url))), fixtureHashes: Object.fromEntries(fixturePaths.map((path, index) => [path, hash(fixtureFiles[index])])), builtAssetHashes: {}, fixture: { syntheticAccount: user.id, group: groupPath, expectedWords: groupMembers.length, authConfirmedDefinition: 'Supabase consumes the injected valid session from localStorage.', writes: 'Intercepted in memory; all non-local traffic is intercepted or blocked.' }, network: { mbps: 10, latencyMs: 150 }, cpuRate: { desktop: 1, mobile: 4 }, runs, scenarios: [] };
 const percentile = values => [...values].sort((a, b) => a - b)[Math.ceil(values.length * 0.75) - 1];
@@ -146,8 +146,9 @@ const counts = metrics => ({ requests: metrics.requests.length, writes: metrics.
 async function clientNavigate(page, path) { await page.evaluate(path => { history.pushState({}, '', path); window.dispatchEvent(new PopStateEvent('popstate')); }, path); }
 async function settings(page) {
   await page.getByRole('button', { name: 'Account menu', exact: true }).click();
-  await page.getByRole('menuitem', { name: 'Study settings', exact: true }).click();
-  await page.getByRole('dialog').getByLabel('Minutes a day', { exact: true }).waitFor({ state: 'visible' });
+  await page.getByRole('menuitem', { name: 'Settings', exact: true }).click();
+  await page.getByRole('link', { name: 'Study time', exact: true }).click();
+  await page.getByLabel('Minutes a day', { exact: true }).waitFor({ state: 'visible' });
 }
 async function groupReady(page) {
   await page.getByLabel('Search group words', { exact: true }).waitFor({ state: 'visible', timeout: 90_000 });
@@ -169,9 +170,9 @@ try {
       await run.page.getByLabel('Minutes a day', { exact: true }).fill('35');
       const start = await run.page.evaluate(() => performance.now());
       await run.page.getByRole('button', { name: 'Save settings', exact: true }).click();
-      await run.page.getByRole('dialog').waitFor({ state: 'hidden', timeout: 90_000 });
+      await run.page.getByText('Settings saved.', { exact: true }).waitFor({ timeout: 90_000 });
       const saved = await capture('settings-save', device, index, run.page, run.metrics, start, baseline);
-      if (!saved.writeCount || saved.persistedDailyMinutes !== 35) throw new Error('Settings save closed without an intercepted persisted settings update.');
+      if (!saved.writeCount || saved.persistedDailyMinutes !== 35) throw new Error('Settings save reported success without an intercepted persisted settings update.');
     } finally { await run.context.close(); }
     run = await setup(device, true);
     try {

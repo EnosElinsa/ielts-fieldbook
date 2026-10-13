@@ -4,7 +4,7 @@ import { MemoryRouter, useLocation, useNavigate } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { useWorkspaceModuleMemory } from './useWorkspaceModuleMemory';
-import { readModuleContext, moduleMemoryKey, restoredModuleState } from './workspaceModuleMemory';
+import { readModuleContext, moduleMemoryKey, rememberModuleContext, restoredModuleState, safeModuleUrl } from './workspaceModuleMemory';
 
 const originState = { vocabularyReturn: { owner: 'one', url: '/vocabulary/words?tag=fruit', index: 0, parent: { owner: 'one', url: '/vocabulary' } } };
 
@@ -168,4 +168,20 @@ test('restored scroll waits for delayed page content instead of losing a clamped
   document.body.append(content);
   await waitFor(() => expect(window.scrollY).toBe(650));
   content.remove();
+});
+
+test('old listening bank memory resumes its canonical bank with query and scroll intact', () => {
+  const context = { url: '/listening?mode=intensive&book=12&page=3&q=train#results', state: { filter: 'train' }, scroll: { x: 0, y: 350 } };
+  sessionStorage.setItem(moduleMemoryKey('one'), JSON.stringify({ version: 1, owner: 'one', modules: { listening: context } }));
+  expect(readModuleContext('one', 'listening')).toEqual({ ...context, url: '/listening?book=12&page=3&q=train#results' });
+  rememberModuleContext('one', 'listening', context);
+  expect(JSON.parse(sessionStorage.getItem(moduleMemoryKey('one'))!).modules.listening.url).toBe('/listening?book=12&page=3&q=train#results');
+  expect(readModuleContext('two', 'listening')).toBeNull();
+});
+
+test('today alias, planning and registered settings categories are valid memory destinations', () => {
+  expect(safeModuleUrl('/today', 'today')).toBe(true);
+  expect(safeModuleUrl('/planning?date=2026-10-20', 'planning')).toBe(true);
+  expect(safeModuleUrl('/settings/audio', 'settings')).toBe(true);
+  expect(safeModuleUrl('/settings/unknown', 'settings')).toBe(false);
 });

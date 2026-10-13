@@ -1,6 +1,6 @@
-import { cleanup, render, screen, waitFor, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AppRoutes } from './App';
 
@@ -11,6 +11,12 @@ afterEach(() => {
 });
 
 const downloads: { name: string; text: string }[] = [];
+
+function RouteLocation() {const location=useLocation();return <output aria-label="Current route">{location.pathname+location.search+location.hash}</output>;}
+it('normalizes old vocabulary URLs while preserving batch filters and anchors',async()=>{
+  render(<MemoryRouter initialEntries={['/vocabulary/wordbooks/guixue%3A10174/groups/21795/learn?batch=5&batchSize=10#word']}><AppRoutes/><RouteLocation/></MemoryRouter>);
+  await waitFor(()=>expect(screen.getByLabelText('Current route').textContent).toBe('/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-01-group-01/learn?batch=5&batchSize=10#word'));
+});
 
 vi.mock('./storage', async () => {
   const actual = await vi.importActual<typeof import('./storage')>('./storage');
@@ -162,12 +168,12 @@ describe('Fieldbook UI', () => {
     const user = userEvent.setup();
     renderAt('/write');
     const rail = document.querySelector('.rail') as HTMLElement;
-    for (const label of ['Today', 'Writing', 'Speaking', 'Vocabulary', 'Progress']) {
+    for (const label of ['Today', 'Planning', 'Writing', 'Speaking', 'Vocabulary', 'Progress', 'Settings']) {
       expect(within(rail).getByRole('link', { name: label })).toBeTruthy();
     }
     expect(within(rail).getByRole('navigation', { name: 'Writing study' })).toBeTruthy();
     const modules = rail.querySelectorAll('.nav-group');
-    expect(Array.from(modules).map(group => group.querySelector('a')?.getAttribute('aria-label'))).toEqual(['Today', 'Listening', 'Reading', 'Writing', 'Speaking', 'Vocabulary', 'Progress']);
+    expect(Array.from(modules).map(group => group.querySelector('a')?.getAttribute('aria-label'))).toEqual(['Today', 'Planning', 'Listening', 'Reading', 'Writing', 'Speaking', 'Vocabulary', 'Progress', 'Settings']);
     expect(within(rail).getByRole('navigation', { name: 'Writing study' }).parentElement?.querySelector('a')?.getAttribute('aria-label')).toBe('Writing');
     await user.click(within(rail).getByRole('link', { name: 'Speaking' }));
     expect(within(rail).getByText('Stories')).toBeTruthy();
@@ -179,7 +185,7 @@ describe('Fieldbook UI', () => {
     renderAt('/write');
     await userEvent.setup().click(screen.getByRole('button', { name: 'More' }));
     const dialog = screen.getByRole('dialog', { name: 'More' });
-    for (const name of ['Questions', 'Practice', 'Review', 'Progress', 'Study settings', 'Account']) expect(within(dialog).getByRole('button', { name })).toBeTruthy();
+    for (const name of ['Questions', 'Practice', 'Review', 'Planning', 'Progress', 'Settings', 'Account']) expect(within(dialog).getByRole('button', { name })).toBeTruthy();
     for (const name of ['Listening', 'Reading', 'Writing', 'Speaking', 'Vocabulary']) expect(within(dialog).queryByRole('button', { name })).toBeNull();
   });
 
@@ -212,7 +218,46 @@ describe('Fieldbook UI', () => {
     renderAt('/');
     await screen.findAllByRole('heading', { level: 2, name: 'Today' });
     expect(screen.getAllByRole('heading', { level: 2, name: 'Today' })[0]).toBeTruthy();
-    expect(screen.getAllByRole('button', { name: 'Start' })[0]).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Resume' })).toBeTruthy();
+  });
+
+  it('listening sidebar and mobile More contain only Questions and Review study entries', async () => {
+    renderAt('/listening/intensive/part1');
+    const rail = document.querySelector('.rail') as HTMLElement;
+    const study = within(rail).getByRole('navigation', { name: 'Listening study' });
+    expect(within(study).getAllByRole('link').map(link => link.textContent)).toEqual(['Questions', 'Review']);
+    expect(within(study).getByRole('link', { name: 'Questions' }).getAttribute('aria-current')).toBe('page');
+    await userEvent.setup().click(screen.getByRole('button', { name: 'More' }));
+    const more = screen.getByRole('dialog', { name: 'More' });
+    expect(within(more).getByRole('button', { name: 'Questions' })).toBeTruthy();
+    expect(within(more).getByRole('button', { name: 'Review' })).toBeTruthy();
+    expect(within(more).queryByRole('button', { name: 'Intensive listening' })).toBeNull();
+  });
+
+  it('Shell preserves the settings draft across category routes and guards global departures', async () => {
+    renderAt('/settings/schedule'); const user = userEvent.setup();
+    const minutes = await screen.findByRole('spinbutton', { name: 'Minutes a day' });
+    fireEvent.change(minutes, { target: { value: '45' } });
+    const categories = screen.getByRole('navigation', { name: 'Settings categories' });
+    await user.click(within(categories).getByRole('link', { name: 'Vocabulary' }));
+    expect(await screen.findByRole('spinbutton', { name: 'Learning batch size' })).toBeTruthy();
+    await user.click(within(categories).getByRole('link', { name: 'Study time' }));
+    expect((screen.getByRole('spinbutton', { name: 'Minutes a day' }) as HTMLInputElement).value).toBe('45');
+    vi.mocked(window.confirm).mockReturnValue(false);
+    const rail = document.querySelector('.rail') as HTMLElement;
+    await user.click(within(rail).getByRole('link', { name: 'Today' }));
+    expect((screen.getByRole('spinbutton', { name: 'Minutes a day' }) as HTMLInputElement).value).toBe('45');
+    expect(window.confirm).toHaveBeenCalled();
+  });
+
+  it('Settings backup export uses the existing complete-account download flow', async () => {
+    renderAt('/settings/backup');
+    await screen.findByRole('heading', { level: 2, name: 'Backup' });
+    const content = document.querySelector('.settings-content') as HTMLElement;
+    await userEvent.setup().click(await within(content).findByRole('button', { name: 'Export backup' }));
+    await waitFor(() => expect(downloads).toHaveLength(1));
+    expect(downloads[0].name).toMatch(/^ielts-fieldbook-backup-.*\.json$/);
+    expect(JSON.parse(downloads[0].text).settings.dailyMinutes).toBe(30);
   });
 
   it('updates writing desk word count when the draft changes', async () => {

@@ -10,7 +10,7 @@ Generic chapters and test parts do not identify a sense without the original sen
 
 Bound 99 preexisting editorial tasks to explicit sense IDs, suppressing 21 mismatched old primary sense tasks. Task correction is separate from membership review. Additionally, 35 reviewed defaults (fruit, vegetable, the 21 task mismatch words and additional fragment/archaic-priority corrections) improve unbound and standalone content; unknown group intent remains unreviewed.
 
-Automated candidates: **6,727 words** and **8,886 remaining risk memberships**. Polysemy and missing examples are signals, not proof of error. All candidates and unresolved memberships are enumerated in [vocabulary-context-audit.json](vocabulary-context-audit.json). This is not exhaustive human review.
+Automated candidates: **6,727 words** and **8,886 remaining risk memberships**. Polysemy and missing examples are signals, not proof of error. All candidates and unresolved memberships are enumerated in [vocabulary-context-audit.json](../local/audits/vocabulary-context-audit.json). This is not exhaustive human review.
 
 | Book | Memberships scanned | Editorially audited | Content corrected | Context resolved | Remaining risk |
 |---|---:|---:|---:|---:|---:|
@@ -27,66 +27,66 @@ Poetic/dated heaven retains its register while completing the definition; inform
 
 | Word | Book / group | Context status | Meaning or unresolved reason |
 |---|---|---|---|
-| core | guixue:10174 / 21795 | reviewed | The central part of the Earth, beneath the mantle. |
-| core | guixue:10174 / 21840 | reviewed | The central part of a fruit containing its seeds. |
-| vegetable | guixue:10174 / 21840 | reviewed | A plant or part of a plant eaten as food, such as a carrot or cabbage. |
-| vegetable | guixue:11320 / 35010 | unresolved | A plant or part of a plant eaten as food, such as a carrot or cabbage. |
-| fruit | guixue:10174 / 21801 | reviewed | The part of a flowering plant that develops from a flower and contains seeds. |
-| fruit | guixue:10174 / 21840 | reviewed | An edible, usually sweet or sour part of a plant, such as an apple or orange. |
-| fruit | guixue:11320 / 35005 | unresolved | An edible, usually sweet or sour part of a plant, such as an apple or orange. |
-| strip | guixue:10174 / 21840 | reviewed | A long, narrow piece of material. |
-| peel | guixue:10174 / 21840 | reviewed | The skin or outer layer of a fruit or vegetable. |
-| peel | guixue:10174 / 21868 | reviewed | To remove the skin or outer covering of something. |
-| order | guixue:10174 / 21839 | reviewed | A request for food, goods or a service. |
-| order | guixue:10174 / 21861 | reviewed | A command telling someone what to do. |
-| treat | guixue:10174 / 21839 | reviewed | To give medical care to a person or condition. |
-| recipe | guixue:10174 / 21839 | reviewed | Instructions for preparing a dish, including its ingredients. |
-| recipe | guixue:11320 / 35008 | unresolved | Instructions for preparing a dish, including its ingredients. |
-| mantle | guixue:10174 / 21795 | reviewed | The layer of the Earth between its crust and core. |
-| crust | guixue:10174 / 21795 | reviewed | The outermost solid layer of the Earth. |
-| gale | guixue:10174 / 21795 | reviewed | A very strong wind. |
-| fundamental | guixue:10176 / 21937 | unresolved | Forming a basic or necessary part of something. |
-| array | guixue:10176 / 21942 | unresolved | A large collection of things. |
-| attitude | guixue:10176 / 21942 | unresolved | A way of thinking or feeling about something. |
-| underlie | guixue:10176 / 21937 | unresolved | To form the basis or cause of something. |
-| cashier | guixue:11320 / 35003 | unresolved | A person who receives payments in a shop or other business. |
-| cathedral | guixue:11320 / 35003 | unresolved | The main church of a diocese, where its bishop has a seat. |
-| reserve | guixue:10177 / 21948 | unresolved | To arrange for a room, seat or other item to be kept for you. |
-| feature | guixue:10177 / 21948 | unresolved | A noticeable or distinctive characteristic of something. |
-| fitness | guixue:10177 / 21948 | unresolved | The state of being physically healthy and strong. |
-| kit | guixue:21953 / 135338 | unresolved | A set of items needed for a particular purpose. |
-| discount | guixue:21953 / 135337 | unresolved | A reduction in the usual price. |
-| cultivation | guixue:21953 / 135340 | unresolved | The preparation and use of land for growing crops. |
-| impression | guixue:10216 / 22254 | unresolved | A mark left when something is pressed into a surface. |
-| compound | guixue:10216 / 22254 | unresolved | A substance formed when two or more chemical elements are chemically joined. |
-| discharge | guixue:10216 / 22256 | unresolved | To release a substance such as liquid or gas. |
-| concentration | guixue:10216 / 22254 | unresolved | The ability to give all your attention to something. |
-| courtship | guixue:10174 / 21804 | reviewed | Behaviour by an animal that attracts a mate before mating. |
-| courtship | guixue:10176 / 21942 | unresolved | Behaviour by an animal that attracts a mate before mating. |
-| Mandarin | guixue:10177 / 23796 | unresolved | The standard form of Chinese used as an official language in China and Taiwan. |
-| bull | guixue:10174 / 21805 | reviewed | An adult male bovine, such as a male cow. |
-| cock | guixue:10174 / 21805 | reviewed | An adult male chicken or other male bird. |
-| appliance | guixue:10174 / 21820 | reviewed | A device designed for a particular task, especially an electrical device used in the home. |
-| appliance | guixue:11320 / 35028 | unresolved | A device designed for a particular task, especially an electrical device used in the home. |
-| temple | guixue:10174 / 21823 | reviewed | A building used for religious worship. |
-| temple | guixue:11320 / 35010 | unresolved | A building used for religious worship. |
-| rock | guixue:10174 / 21829 | reviewed | A style of popular music often played with electric guitars, bass and drums. |
-| rock | guixue:11320 / 35008 | unresolved | The hard natural material that forms much of the Earth, or a piece of this material. |
-| paste | guixue:10174 / 21840 | reviewed | A thick, soft mixture of a solid material and liquid. |
-| democracy | guixue:10174 / 21849 | reviewed | A system of government in which people choose their leaders by voting or decide policies themselves. |
-| warn | guixue:10174 / 21861 | reviewed | To tell someone about a possible danger or problem. |
-| commitment | guixue:10176 / 21942 | unresolved | A promise or firm decision to do something. |
-| heaven | guixue:10174 / 21798 | reviewed | The sky, especially when described poetically as the heavens. |
-| order | guixue:11320 / 35007 | unresolved | Alphabetical chapter provides no evidence to choose sequence, command or request. |
-| order | guixue:10177 / 21952 | unresolved | Key-word group alone cannot establish an intended sense. |
-| order | guixue:10216 / 22263 | unresolved | Test part lacks original sentence; sequence and command both plausible. |
-| application | guixue:10176 / 21942 | unresolved | Reading keyword list lacks the original sentence; request, practical use and software remain possible. |
-| channel | guixue:11320 / 35003 | unresolved | Alphabetical chapter lacks the original sentence; waterway and broadcasting remain possible. |
-| press | guixue:10177 / 21948 | unresolved | Core keyword group lacks the original sentence; media and action remain possible. |
-| book | guixue:21953 / 135337 | unresolved | Listening part lacks original question; publication and reservation both plausible. |
-| portfolio | guixue:21953 / 135338 | unresolved | Work or investment meaning cannot be confirmed without the original sentence. |
-| Drone | guixue:10216 / 22256 | unresolved | No original sentence; vehicle, male bee and continuous sound remain possible. |
-| canteen | guixue:11320 / 35003 | unresolved | Alphabetical chapter does not distinguish dining room from water container. |
+| core | ielts-vocabulary / ielts-vocabulary-chapter-01-group-01 | reviewed | The central part of the Earth, beneath the mantle. |
+| core | ielts-vocabulary / ielts-vocabulary-chapter-12-group-02 | reviewed | The central part of a fruit containing its seeds. |
+| vegetable | ielts-vocabulary / ielts-vocabulary-chapter-12-group-02 | reviewed | A plant or part of a plant eaten as food, such as a carrot or cabbage. |
+| vegetable | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-09 | unresolved | A plant or part of a plant eaten as food, such as a carrot or cabbage. |
+| fruit | ielts-vocabulary / ielts-vocabulary-chapter-02-group-01 | reviewed | The part of a flowering plant that develops from a flower and contains seeds. |
+| fruit | ielts-vocabulary / ielts-vocabulary-chapter-12-group-02 | reviewed | An edible, usually sweet or sour part of a plant, such as an apple or orange. |
+| fruit | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-04 | unresolved | An edible, usually sweet or sour part of a plant, such as an apple or orange. |
+| strip | ielts-vocabulary / ielts-vocabulary-chapter-12-group-02 | reviewed | A long, narrow piece of material. |
+| peel | ielts-vocabulary / ielts-vocabulary-chapter-12-group-02 | reviewed | The skin or outer layer of a fruit or vegetable. |
+| peel | ielts-vocabulary / ielts-vocabulary-chapter-20-group-02 | reviewed | To remove the skin or outer covering of something. |
+| order | ielts-vocabulary / ielts-vocabulary-chapter-12-group-01 | reviewed | A request for food, goods or a service. |
+| order | ielts-vocabulary / ielts-vocabulary-chapter-18-group-03 | reviewed | A command telling someone what to do. |
+| treat | ielts-vocabulary / ielts-vocabulary-chapter-12-group-01 | reviewed | To give medical care to a person or condition. |
+| recipe | ielts-vocabulary / ielts-vocabulary-chapter-12-group-01 | reviewed | Instructions for preparing a dish, including its ingredients. |
+| recipe | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-07 | unresolved | Instructions for preparing a dish, including its ingredients. |
+| mantle | ielts-vocabulary / ielts-vocabulary-chapter-01-group-01 | reviewed | The layer of the Earth between its crust and core. |
+| crust | ielts-vocabulary / ielts-vocabulary-chapter-01-group-01 | reviewed | The outermost solid layer of the Earth. |
+| gale | ielts-vocabulary / ielts-vocabulary-chapter-01-group-01 | reviewed | A very strong wind. |
+| fundamental | ielts-reading-keywords / ielts-reading-keywords-chapter-01-group-01 | unresolved | Forming a basic or necessary part of something. |
+| array | ielts-reading-keywords / ielts-reading-keywords-chapter-03-group-01 | unresolved | A large collection of things. |
+| attitude | ielts-reading-keywords / ielts-reading-keywords-chapter-03-group-01 | unresolved | A way of thinking or feeling about something. |
+| underlie | ielts-reading-keywords / ielts-reading-keywords-chapter-01-group-01 | unresolved | To form the basis or cause of something. |
+| cashier | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-02 | unresolved | A person who receives payments in a shop or other business. |
+| cathedral | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-02 | unresolved | The main church of a diocese, where its bishop has a seat. |
+| reserve | ielts-listening-essentials / ielts-listening-essentials-chapter-01-group-01 | unresolved | To arrange for a room, seat or other item to be kept for you. |
+| feature | ielts-listening-essentials / ielts-listening-essentials-chapter-01-group-01 | unresolved | A noticeable or distinctive characteristic of something. |
+| fitness | ielts-listening-essentials / ielts-listening-essentials-chapter-01-group-01 | unresolved | The state of being physically healthy and strong. |
+| kit | ielts-listening-practice-21 / ielts-listening-practice-21-chapter-01-group-02 | unresolved | A set of items needed for a particular purpose. |
+| discount | ielts-listening-practice-21 / ielts-listening-practice-21-chapter-01-group-01 | unresolved | A reduction in the usual price. |
+| cultivation | ielts-listening-practice-21 / ielts-listening-practice-21-chapter-01-group-04 | unresolved | The preparation and use of land for growing crops. |
+| impression | ielts-listening-practice-20 / ielts-listening-practice-20-chapter-01-group-02 | unresolved | A mark left when something is pressed into a surface. |
+| compound | ielts-listening-practice-20 / ielts-listening-practice-20-chapter-01-group-02 | unresolved | A substance formed when two or more chemical elements are chemically joined. |
+| discharge | ielts-listening-practice-20 / ielts-listening-practice-20-chapter-01-group-04 | unresolved | To release a substance such as liquid or gas. |
+| concentration | ielts-listening-practice-20 / ielts-listening-practice-20-chapter-01-group-02 | unresolved | The ability to give all your attention to something. |
+| courtship | ielts-vocabulary / ielts-vocabulary-chapter-03-group-01 | reviewed | Behaviour by an animal that attracts a mate before mating. |
+| courtship | ielts-reading-keywords / ielts-reading-keywords-chapter-03-group-01 | unresolved | Behaviour by an animal that attracts a mate before mating. |
+| Mandarin | ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-13 | unresolved | The standard form of Chinese used as an official language in China and Taiwan. |
+| bull | ielts-vocabulary / ielts-vocabulary-chapter-03-group-02 | reviewed | An adult male bovine, such as a male cow. |
+| cock | ielts-vocabulary / ielts-vocabulary-chapter-03-group-02 | reviewed | An adult male chicken or other male bird. |
+| appliance | ielts-vocabulary / ielts-vocabulary-chapter-06-group-01 | reviewed | A device designed for a particular task, especially an electrical device used in the home. |
+| appliance | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-12 | unresolved | A device designed for a particular task, especially an electrical device used in the home. |
+| temple | ielts-vocabulary / ielts-vocabulary-chapter-07-group-01 | reviewed | A building used for religious worship. |
+| temple | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-09 | unresolved | A building used for religious worship. |
+| rock | ielts-vocabulary / ielts-vocabulary-chapter-09-group-02 | reviewed | A style of popular music often played with electric guitars, bass and drums. |
+| rock | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-07 | unresolved | The hard natural material that forms much of the Earth, or a piece of this material. |
+| paste | ielts-vocabulary / ielts-vocabulary-chapter-12-group-02 | reviewed | A thick, soft mixture of a solid material and liquid. |
+| democracy | ielts-vocabulary / ielts-vocabulary-chapter-15-group-01 | reviewed | A system of government in which people choose their leaders by voting or decide policies themselves. |
+| warn | ielts-vocabulary / ielts-vocabulary-chapter-18-group-03 | reviewed | To tell someone about a possible danger or problem. |
+| commitment | ielts-reading-keywords / ielts-reading-keywords-chapter-03-group-01 | unresolved | A promise or firm decision to do something. |
+| heaven | ielts-vocabulary / ielts-vocabulary-chapter-01-group-04 | reviewed | The sky, especially when described poetically as the heavens. |
+| order | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-06 | unresolved | Alphabetical chapter provides no evidence to choose sequence, command or request. |
+| order | ielts-listening-essentials / ielts-listening-essentials-chapter-01-group-05 | unresolved | Key-word group alone cannot establish an intended sense. |
+| order | ielts-listening-practice-20 / ielts-listening-practice-20-chapter-03-group-01 | unresolved | Test part lacks original sentence; sequence and command both plausible. |
+| application | ielts-reading-keywords / ielts-reading-keywords-chapter-03-group-01 | unresolved | Reading keyword list lacks the original sentence; request, practical use and software remain possible. |
+| channel | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-02 | unresolved | Alphabetical chapter lacks the original sentence; waterway and broadcasting remain possible. |
+| press | ielts-listening-essentials / ielts-listening-essentials-chapter-01-group-01 | unresolved | Core keyword group lacks the original sentence; media and action remain possible. |
+| book | ielts-listening-practice-21 / ielts-listening-practice-21-chapter-01-group-01 | unresolved | Listening part lacks original question; publication and reservation both plausible. |
+| portfolio | ielts-listening-practice-21 / ielts-listening-practice-21-chapter-01-group-02 | unresolved | Work or investment meaning cannot be confirmed without the original sentence. |
+| Drone | ielts-listening-practice-20 / ielts-listening-practice-20-chapter-01-group-04 | unresolved | No original sentence; vehicle, male bee and continuous sound remain possible. |
+| canteen | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-02 | unresolved | Alphabetical chapter does not distinguish dining room from water container. |
 
 ## Reviewed default senses
 

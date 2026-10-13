@@ -1,4 +1,5 @@
 import { VOCABULARY_CATALOG } from './catalog';
+import { normalizeVocabularyScope } from './identities';
 import { getVocabularyReviewQueue } from './index';
 import { resolveVocabularyLearningContext } from './context';
 import type { ReviewCard, VocabularyEntry, VocabularyMode, VocabularyStore } from './types';
@@ -9,7 +10,12 @@ export function availableUnitPracticeModes(state: Partial<VocabularyStore>, book
     .filter(item=>item.queue.eligibleWords > 0 && (isSpecialistVocabularyMode(item.value) || item.queue.unavailableWords === 0));
 }
 
+export type VocabularyLearningBatchSelection = {
+  kind: 'learning-batch'; bookId: string; unitId: string; batchIndex: number; batchSize: number;
+  cards: { entryId: string; senseId: string }[];
+};
 export type VocabularySessionSelection =
+  | VocabularyLearningBatchSelection
   | { kind: 'unit'; bookId: string; unitId: string }
   | { kind: 'specialist'; bookId: string; unitId: string }
   | { kind: 'batch' }
@@ -19,6 +25,16 @@ export const isVocabularySessionSelection = (value: unknown): value is Vocabular
   if (!value || typeof value !== 'object') return false;
   const input = value as Record<string, unknown>;
   if (input.kind === 'batch' || input.kind === 'retry') return Object.keys(input).length === 1;
+  if (input.kind === 'learning-batch') {
+    if (Object.keys(input).length !== 6 || typeof input.bookId !== 'string' || !validId(input.bookId) || typeof input.unitId !== 'string' || !validId(input.unitId)
+      || !Number.isSafeInteger(input.batchIndex) || Number(input.batchIndex) < 0 || !Number.isSafeInteger(input.batchSize) || Number(input.batchSize) < 1 || Number(input.batchSize) > 50
+      || !Array.isArray(input.cards) || !input.cards.length || input.cards.length > Number(input.batchSize)) return false;
+    const entries = new Set<string>();
+    return input.cards.every(card => {
+      if (!card || typeof card !== 'object' || Array.isArray(card) || Object.keys(card).length !== 2 || typeof card.entryId !== 'string' || !validId(card.entryId) || typeof card.senseId !== 'string' || !validId(card.senseId) || entries.has(card.entryId)) return false;
+      entries.add(card.entryId); return true;
+    });
+  }
   return (input.kind === 'unit' || input.kind === 'specialist') && typeof input.bookId === 'string' && validId(input.bookId) && typeof input.unitId === 'string' && validId(input.unitId) && Object.keys(input).length === 3;
 };
 const validId = (value: string) => value.length > 0 && value.length <= 500 && value.trim() === value && !['__proto__', 'prototype', 'constructor'].includes(value);
@@ -30,6 +46,7 @@ export type UnitPracticeQueue = {
 
 /** Assemble a source-ordered, one-card-per-word queue without changing learner state. */
 export function buildUnitPracticeQueue(state: Partial<VocabularyStore>, bookId: string, unitId: string, mode: VocabularyPracticeMode): UnitPracticeQueue {
+  ({ bookId, unitId } = normalizeVocabularyScope({ bookId, unitId }));
   const memberships = VOCABULARY_CATALOG.memberships
     .filter(member => member.bookId === bookId && member.unitId === unitId)
     .slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || String(a.entryId).localeCompare(String(b.entryId)));

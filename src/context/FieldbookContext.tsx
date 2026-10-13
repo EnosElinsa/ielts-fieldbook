@@ -56,8 +56,14 @@ import { resolveRegionalSpellingWrongWords } from '../domain/vocabulary/regional
 import { vocabularyLists, setVocabularyManualStatus, normalizeAnswer } from '../domain/vocabulary';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
-import { ensurePlans, inferredDeskMode, planMatchesSkill } from '../lib/planTemplates';
+import { ensurePlans, ensureUnifiedPlans, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan } from '../lib/planTemplates';
+import { isProtectedPlan } from '../domain/plans';
+import { loadExamCatalog, loadExamSections } from '../storage/examCatalog';
+import { getVocabularyReviewQueue } from '../domain/vocabulary';
+import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
 import { completeReceptivePlanIfMatched, receptivePlanPath } from '../lib/receptivePlans';
+import { bindStudyPlanTargets } from '../lib/planTargets';
+import { normalizeVocabularyIdentities } from '../domain/vocabulary/identities';
 import { sessionSkill } from '../lib/format';
 import { accountId } from '../storage/remote';
 import { differentDrafts, discardDraftRecovery, readDraftRecovery, writeDraftRecovery } from '../storage/recovery';
@@ -140,6 +146,7 @@ function useFieldbookValue() {
   const committedVocabularyFields = useRef([]);
   const committedVocabularyPreferences = useRef([]);
   const committedStudySettings = useRef([]);
+  const committedPlanChanges = useRef([]);
   const saveQueue = useRef(Promise.resolve());
   const pendingAutomaticSave = useRef(null);
   const completingAttempt = useRef(false);
@@ -276,8 +283,8 @@ function useFieldbookValue() {
       if (teaching) {
         for (const key of ['books','units','memberships']) {
           const identity = row => key === 'units' ? `${row.bookId}:${row.id}` : row.id;
-          const rows = new Map(VOCABULARY_CATALOG[key].map(row => [identity(row), row]));
-          teaching[key].forEach(row => rows.set(identity(row), key === 'books' ? genericWordbook(row) : row));
+          const rows = new Map(normalizeVocabularyIdentities(VOCABULARY_CATALOG[key]).map(row => [identity(row), row]));
+          normalizeVocabularyIdentities(teaching[key]).forEach(row => rows.set(identity(row), key === 'books' ? genericWordbook(row) : row));
           VOCABULARY_CATALOG[key] = [...rows.values()];
         }
         setVocabularyCatalogRevision(revision => revision + 1);
@@ -373,6 +380,19 @@ function useFieldbookValue() {
   }, [booted, loadGeneration]);
 
   function applyCommittedVocabulary(target, owner) {
+    committedPlanChanges.current.filter(change => change.owner === owner && change.epoch===loadEpoch.current).forEach(change => {
+      let applied=false;
+      const before = new Map(change.before.map(plan=>[plan.id,JSON.stringify(plan)]));
+      const after = new Map(change.after.map(plan=>[plan.id,plan]));
+      target.plans = (target.plans || []).flatMap(plan => {
+        if (!before.has(plan.id) || JSON.stringify(plan)!==before.get(plan.id)) return [plan];
+        if(JSON.stringify(after.get(plan.id))!==before.get(plan.id))applied=true;
+        return after.has(plan.id) ? [structuredClone(after.get(plan.id))] : [];
+      });
+      change.after.forEach(plan=>{ if (!before.has(plan.id) && !target.plans.some(row=>row.id===plan.id)) target.plans.push(structuredClone(plan)); });
+      if (applied && target.activePlanId===change.beforeActivePlanId) target.activePlanId=change.afterActivePlanId;
+      if (applied && target.settings.activeSkill===change.beforeActiveSkill) target.settings.activeSkill=change.afterActiveSkill;
+    });
     committedVocabularyFields.current.filter(change => change.owner === owner).forEach(change => applyVocabularyFields(target, change));
     committedStudySettings.current.filter(change => change.owner === owner).forEach(change => {
       let staleSettings = false;
@@ -558,8 +578,8 @@ function useFieldbookValue() {
         if(saved){
           keys.forEach(key=>{const previous=new Map((before[key]||[]).map(row=>[row.id,JSON.stringify(row)]));(frozen[key]||[]).forEach(row=>{if(previous.get(row.id)!==JSON.stringify(row))committedVocabularyImports.current.push({owner,key,before:previous.get(row.id),after:structuredClone(row)});});});
           const next=structuredClone(stateRef.current);applyCommittedVocabulary(next,owner);stateRef.current=next;setState(next);if(readVocabularyDraft(owner)?.id===sessionId)clearVocabularyDraft(owner);
-          const plan=next.plans.find(plan=>plan.id===next.activePlanId&&plan.kind==='vocabulary'&&plan.status==='in_progress');
-          if(plan){plan.status='completed';plan.completedAt=frozen.vocabularySessions?.find(row=>row.id===sessionId)?.submittedAt||new Date().toISOString();next.activePlanId=null;void queueSave(next);}
+          const session = frozen.vocabularySessions?.find(row=>row.id===sessionId);
+          void mutatePlans(draft=>completeVocabularyPlan(draft,session)).catch(()=>{});
         }
       }
       return saved;
@@ -592,8 +612,6 @@ function useFieldbookValue() {
       await ensureAccountModule('productive');
       await ensureAccountModule('vocabulary');
       await ensureAccountModule('receptive');
-      const skill = stateRef.current.settings.activeSkill;
-      if (skill === 'writing' || skill === 'speaking') await ensureQuestionBank(skill);
     } catch { toast('Could not load your study data. Your settings have not been saved.'); return false; }
     if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return false;
     const changes = structuredClone(input);
@@ -614,19 +632,23 @@ function useFieldbookValue() {
         removedPlans: [],
         addedPlans: [],
       };
+      const previousPlanningKey = planningSettingsKey(current.settings);
       Object.assign(current.settings, studyChanges);
       if (Object.prototype.hasOwnProperty.call(changes, 'vocabulary')) current.settings.vocabulary = normalizeVocabularyPreferences({ ...current.settings.vocabulary, ...changes.vocabulary });
-      if (Object.keys(studyChanges).length) {
-        change.removedPlans = structuredClone(current.plans.filter(plan => plan.status === 'pending'));
+      if (planningSettingsKey(current.settings) !== previousPlanningKey) {
+        change.removedPlans = structuredClone(current.plans.filter(plan => !isProtectedPlan(plan) && plan.dateKey >= dateKey(new Date())));
         change.removedPlanIds = change.removedPlans.map(plan => plan.id);
-        current.plans = current.plans.filter(plan => plan.status !== 'pending');
+        current.plans = current.plans.filter(plan => !change.removedPlanIds.includes(plan.id));
         const retainedPlanIds = new Set(current.plans.map(plan => plan.id));
         if (change.removedPlanIds.includes(current.activePlanId)) current.activePlanId = null;
-        ensurePlans(current, current.settings.activeSkill || 'writing');
+        ensureUnifiedPlans(current);
+        try { await bindCurrentPlanTargets(current); }
+        catch { if(generation===saveGeneration.current){setSaveFailed(true);setSaveStatus('failed');}toast('Could not load the planned exercises. Retry saving your settings.');return false; }
         change.addedPlans = current.plans.filter(plan => !retainedPlanIds.has(plan.id));
       }
       let saved = false;
       const collections = readySaveCollections();
+      if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       try { saved = await saveState(current, toast, {collections}); } catch { saved = false; }
       if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       if (generation === saveGeneration.current) { setSaveFailed(!saved); setSaveStatus(saved ? 'saved' : 'failed'); }
@@ -652,8 +674,8 @@ function useFieldbookValue() {
     const read = (async () => {
       const merge = (key, values) => {
         const identity = item => key === 'units' ? `${item.bookId}:${item.id}` : item.id;
-        const rows = new Map(VOCABULARY_CATALOG[key].map(item => [identity(item), item]));
-        values.forEach(item => rows.set(identity(item), key === 'books' ? genericWordbook(item) : item));
+        const rows = new Map(normalizeVocabularyIdentities(VOCABULARY_CATALOG[key]).map(item => [identity(item), item]));
+        normalizeVocabularyIdentities(values).forEach(item => rows.set(identity(item), key === 'books' ? genericWordbook(item) : item));
         VOCABULARY_CATALOG[key] = [...rows.values()];
       };
       const owner = accountId();
@@ -674,8 +696,10 @@ function useFieldbookValue() {
       }
       if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
       if(releasedCatalogue) {
+        releasedCatalogue=normalizeVocabularyIdentities(releasedCatalogue);
         const completeBooks=new Set(releasedCatalogue.books.filter(book=>book.contentStatus==='complete').map(book=>book.id));
-        VOCABULARY_CATALOG.memberships=VOCABULARY_CATALOG.memberships.filter(member=>!(completeBooks.has(member.bookId) && member.unitId?.startsWith('starter:')));
+        const starterUnits=new Set(VOCABULARY_CATALOG.units.filter(unit=>completeBooks.has(unit.bookId)&&unit.kind==='starter').map(unit=>unit.id));
+        VOCABULARY_CATALOG.memberships=VOCABULARY_CATALOG.memberships.filter(member=>!starterUnits.has(member.unitId));
         VOCABULARY_CATALOG.units=VOCABULARY_CATALOG.units.filter(unit=>!(completeBooks.has(unit.bookId) && unit.kind==='starter'));
         merge('books',releasedCatalogue.books);
         // Metadata already includes group membership; expose accurate counts before a book is opened.
@@ -991,7 +1015,7 @@ function useFieldbookValue() {
     [navigate, persistNow, setSpeakingDraft],
   );
 
-  const startPlan = useCallback(
+  const legacyStartPlan = useCallback(
     (planId: string) => {
       const draft = stateRef.current;
       const plan = draft.plans.find((item) => item.id === planId);
@@ -1087,6 +1111,173 @@ function useFieldbookValue() {
     },
     [chooseQuestion, navigate, persistNow, startSpeakingPractice, toast],
   );
+
+  const mutatePlans = useCallback((mutate) => {
+    if (completingAttempt.current) return Promise.resolve(false);
+    const owner=accountId();const epoch=loadEpoch.current;const generation=++saveGeneration.current;
+    pendingAutomaticSave.current=null;setSaveStatus('saving');
+    const operation=saveQueue.current.catch(()=>{}).then(async()=>{
+      if(!alive.current||accountId()!==owner||epoch!==loadEpoch.current)return false;
+      const statuses=getCollectionStatuses();
+      if(statuses && (statuses.plans!=='ready'||statuses.profile!=='ready'))throw new Error('Your plan is still loading. Retry shortly.');
+      const current=structuredClone(stateRef.current);applyCommittedVocabulary(current,owner);
+      const before=structuredClone(current.plans);const beforeActivePlanId=current.activePlanId;const beforeActiveSkill=current.settings.activeSkill;
+      await mutate(current);
+      if(!alive.current||accountId()!==owner||epoch!==loadEpoch.current)return false;
+      const change={owner,epoch,before,after:structuredClone(current.plans),beforeActivePlanId,afterActivePlanId:current.activePlanId,beforeActiveSkill,afterActiveSkill:current.settings.activeSkill};
+      if(JSON.stringify(before)===JSON.stringify(change.after)&&beforeActivePlanId===change.afterActivePlanId&&beforeActiveSkill===change.afterActiveSkill){if(generation===saveGeneration.current)setSaveStatus('saved');return true;}
+      const collections=readySaveCollections()?.filter(key=>key==='profile'||key==='plans');
+      let saved=false;try{saved=await saveState(current,toast,{collections});}catch{saved=false;}
+      if(!alive.current||accountId()!==owner||epoch!==loadEpoch.current)return false;
+      if(generation===saveGeneration.current){setSaveFailed(!saved);setSaveStatus(saved?'saved':'failed');}
+      if(saved){committedPlanChanges.current.push(change);const next=structuredClone(stateRef.current);applyCommittedVocabulary(next,owner);stateRef.current=next;setState(next);acknowledgeSaved(current,collections);}
+      return saved;
+    }).catch(error=>{if(alive.current&&accountId()===owner&&epoch===loadEpoch.current&&generation===saveGeneration.current){setSaveStatus('failed');setSaveFailed(true);}throw error;});
+    saveQueue.current=operation;return operation;
+  },[toast]);
+
+  const refreshUnifiedPlans = useCallback(async()=>{
+    await Promise.all(['productive','vocabulary','receptive'].map(module=>ensureAccountModule(module)));
+    if(stateRef.current.wordbookEnrollments?.length)await loadVocabularyCatalog();
+    return mutatePlans(async draft=>{
+      for(const session of draft.vocabularySessions || [])completeVocabularyPlan(draft,session);
+      ensureUnifiedPlans(draft);
+      await bindCurrentPlanTargets(draft);
+    });
+  },[ensureAccountModule,mutatePlans,loadVocabularyCatalog,ensureQuestionBank]);
+
+  async function bindCurrentPlanTargets(draft) {
+    if(draft.wordbookEnrollments?.length)await loadVocabularyCatalog();
+    await bindStudyPlanTargets(draft,{
+      bank:ensureQuestionBank,catalog:loadExamCatalog,section:loadExamSections,
+      vocabulary:async(bookId,unitId)=>{await loadVocabularyCatalog(bookId,{unitId});draft.vocabulary=stateRef.current.vocabulary;},
+    });
+  }
+
+  const changePlan = useCallback((planId,action)=>mutatePlans(async draft=>{
+    mutateStudyPlan(draft,planId,action);
+    if(action.type==='replace')await bindCurrentPlanTargets(draft);
+  }),[mutatePlans,loadVocabularyCatalog,ensureQuestionBank]);
+
+  const startPlan = useCallback(async(planId:string, options={})=>{
+    const owner=accountId();const epoch=loadEpoch.current;
+    let plan=structuredClone(stateRef.current.plans.find(row=>row.id===planId));
+    if(!plan)throw new Error('Task is unavailable. Reload your plan.');
+    if(plan.status==='skipped')throw new Error('Restore this task before starting it.');
+    if(plan.status==='completed'){
+      if(plan.kind==='vocabulary'&&plan.linkedSessionId)navigate(`/vocabulary/history/${encodeURIComponent(plan.linkedSessionId)}`);
+      else legacyStartPlan(planId);
+      return true;
+    }
+    if(plan.kind==='stories'){
+      await ensureAccountModule('productive');await ensureQuestionBank('speaking',Boolean(options.force));
+      if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)return false;
+      if(!stateRef.current.stories.length){navigate('/stories');return true;}
+      legacyStartPlan(planId);return true;
+    }
+    const skill=plan.skill || (String(plan.kind).startsWith('reading')?'reading':String(plan.kind).startsWith('listening')?'listening':String(plan.kind).startsWith('speaking')||plan.kind==='stories'?'speaking':plan.kind==='vocabulary'?'vocabulary':'writing');
+    const initial=JSON.stringify(plan);
+    await ensureAccountModule(skill==='vocabulary'?'vocabulary':['reading','listening'].includes(skill)?'receptive':'productive');
+    let target=plan.target;
+    if(skill==='writing'||skill==='speaking') {
+      if(plan.kind==='review'){
+        target=target||{type:'error-review',errorIds:(plan.targetErrorIds||[])};
+        if(!target.errorIds?.length||target.errorIds.some(id=>!stateRef.current.errors.some(error=>error.id===id)))throw new Error('The selected review is unavailable. Replace the task or retry.');
+      } else {
+        const bank=await ensureQuestionBank(skill,Boolean(options.force));
+        if(plan.kind==='writing-mock' && (!bank.some(question=>String(question.type)==='1')||!bank.some(question=>String(question.type)==='2')))throw new Error('Both writing mock questions must be available. Retry loading the bank.');
+        if(plan.kind==='speaking-mock' && (!bank.some(topic=>String(topic.part)==='1'&&!topic.incomplete)||!bank.some(topic=>String(topic.part)==='2'&&!topic.incomplete)))throw new Error('Both speaking mock topics must be available. Retry loading the bank.');
+        const stagePart=plan.kind==='speaking-mock'?(plan.stage==='p3'?'3':plan.stage==='p2'?'2':'1'):plan.kind.slice(-1);
+        const kind=plan.kind==='writing-mock'?(plan.stage==='task2'?'2':'1'):plan.kind;
+        const wanted=target?.questionId||plan.questionId;
+        const topicPart=stagePart==='3'?'2':stagePart;
+        const candidates=bank.filter(row=>skill==='writing'?String(row.type)===kind:String(row.part)===topicPart&&!row.incomplete).slice().sort((a,b)=>String(a.id).localeCompare(String(b.id)));
+        const question=wanted?bank.find(row=>String(row.id)===String(wanted)):candidates[0];
+        if(!question)throw new Error('The selected question is unavailable. Retry loading its bank.');
+        target={type:'question',skill,questionId:String(question.id),mode:inferredDeskMode(plan),...(skill==='speaking'?{part:stagePart}:{})};
+        plan.questionId=String(question.id);
+      }
+    } else if(skill==='vocabulary'){
+      if(target?.type!=='vocabulary')throw new Error('Replace this old vocabulary task to bind a learning batch.');
+      if(target.mode==='learning-batch'){
+        if(!target.unitId){
+          await loadVocabularyCatalog();
+          const groups=VOCABULARY_CATALOG.units.filter(unit=>unit.bookId===target.bookId&&unit.kind!=='chapter').slice().sort((a,b)=>(a.order||0)-(b.order||0)||String(a.id).localeCompare(String(b.id)));
+          let localIndex=target.batchOrdinal ?? target.batchIndex ?? 0;let group;
+          for(const candidate of groups){
+            const total=Math.ceil(Number(candidate.entryCount||candidate.totalSourceWords||candidate.entryIds?.length||0)/(target.batchSize||10));
+            if(localIndex<total){group=candidate;break;}localIndex-=total;
+          }
+          if(!group)throw new Error('The wordbook group is unavailable. Retry loading it.');
+          target={...target,unitId:group.id,batchIndex:localIndex};
+        }
+        await loadVocabularyCatalog(target.bookId,{unitId:target.unitId});
+        const batch=buildLearningBatch(stateRef.current,target.bookId,target.unitId,target.batchIndex||0,target.batchSize||10,target.assessmentMode,target.cards?.length?target.cards:undefined);
+        if(!batch.cards.length)throw new Error('The selected word batch is unavailable. Replace the task or retry.');
+        const refs=batch.cards.map(({entryId,senseId})=>({entryId,senseId}));
+        if(target.cards?.length && JSON.stringify(target.cards)!==JSON.stringify(refs))throw new Error('This word batch has changed. Replace the task or retry.');
+        target={...target,...batch.selection,type:'vocabulary',mode:'learning-batch',assessmentMode:batch.mode,cards:refs};
+      } else {
+        const cards=getVocabularyReviewQueue(stateRef.current,{mode:target.assessmentMode,dueOnly:false});
+        if(!target.cards?.length||target.cards.some(ref=>!cards.some(card=>card.entryId===ref.entryId&&card.senseId===ref.senseId)))throw new Error('Some selected review words are unavailable. Retry loading them.');
+      }
+    } else {
+      const reviewId=target?.attemptId||plan.attemptId;
+      if(plan.kind.endsWith('review')){
+        if(!reviewId||!stateRef.current.examAttempts.some(attempt=>attempt.id===reviewId&&attempt.skill===skill))throw new Error('The selected attempt is unavailable. Retry loading your review.');
+        target={type:'exam-review',skill,attemptId:reviewId};plan.attemptId=reviewId;
+      } else {
+        let sectionId=target?.sectionId||plan.sectionId;
+        if(!sectionId){
+          const catalog=await loadExamCatalog(skill,undefined,{force:Boolean(options.force)});
+          const available=catalog.sections.filter(section=>section.skill===skill&&section.status==='ready').slice().sort((a,b)=>String(a.id).localeCompare(String(b.id)));
+          const serial=Number(String(plan.dateKey||dateKey(new Date())).replaceAll('-',''))+(plan.rotationIndex||0);
+          const tried=new Set((stateRef.current.examAttempts||[]).filter(attempt=>attempt.skill===skill&&attempt.status==='completed').flatMap(attempt=>attempt.sectionIds));
+          const fresh=available.filter(section=>!tried.has(section.id));const choices=fresh.length?fresh:available;
+          sectionId=choices[serial%choices.length]?.id;
+        }
+        if(!sectionId)throw new Error('No practice section is available. Retry loading the bank.');
+        const scoped=await loadExamSections([sectionId],{force:Boolean(options.force)});
+        const section=scoped.sections.find(row=>row.id===sectionId&&row.skill===skill&&row.status==='ready');
+        if(!section||!scoped.questions.some(question=>question.sectionId===sectionId))throw new Error('The selected section is incomplete. Retry loading it.');
+        if(plan.kind==='listening-intensive'){
+          const sentenceId=target?.sentenceId||plan.sentenceId;
+          if(!sentenceId||!section.sentences.some(sentence=>sentence.id===sentenceId))throw new Error('The selected listening sentence is unavailable. Retry loading it.');
+          target={type:'intensive',skill:'listening',sectionId,sentenceId};plan.sentenceId=sentenceId;
+        } else {
+          const questions=scoped.questions.filter(question=>question.sectionId===sectionId).slice().sort((a,b)=>a.number-b.number);
+          const maximum=Math.floor(Number(plan.estimatedMinutes||stateRef.current.settings.dailyMinutes)/(skill==='reading'?2:1));
+          if(maximum<1)throw new Error('This task needs more study time. Reschedule it with a larger daily budget.');
+          const questionIds=target?.questionIds||questions.slice(0,maximum).map(question=>question.id);
+          if(!questionIds.length||questionIds.length>maximum||questionIds.some(id=>!questions.some(question=>question.id===id)))throw new Error('The selected questions no longer fit this task. Replace it or retry.');
+          target={type:'section',skill,sectionId,mode:'practice',questionIds};
+        }
+        plan.sectionId=sectionId;
+      }
+    }
+    if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)return false;
+    const saved=await mutatePlans(draft=>{
+      const current=draft.plans.find(row=>row.id===planId);
+      if(!current||JSON.stringify(current)!==initial)throw new Error('This task changed while loading. Retry to open the current task.');
+      Object.assign(current,{target,questionId:plan.questionId,sectionId:plan.sectionId,sentenceId:plan.sentenceId,attemptId:plan.attemptId});
+      domainStartPlan(draft,planId);
+      if(skill!=='vocabulary')draft.settings.activeSkill=skill;
+    });
+    if(!saved)return false;
+    setActiveDeskMode(inferredDeskMode(plan));
+    if(skill==='vocabulary'){
+      const params=new URLSearchParams({planId,mode:target.assessmentMode,dueOnly:'false',batchSize:String(target.cards.length),batchCards:JSON.stringify(target.cards)});
+      if(target.mode==='learning-batch'){
+        params.set('batch',String(target.batchIndex));params.set('batchSize',String(target.batchSize));
+        navigate(`/vocabulary/wordbooks/${encodeURIComponent(target.bookId)}/groups/${encodeURIComponent(target.unitId)}/learn?${params}`);
+      } else navigate(`/vocabulary/review?${params}`);
+    } else if(skill==='reading'||skill==='listening'){
+      const path=receptivePlanPath({...plan,target},skill);const params=new URLSearchParams({planId});if(target.questionIds)params.set('questions',JSON.stringify(target.questionIds));navigate(`${path}${path.includes('?')?'&':'?'}${params}`);
+    } else if(plan.kind==='review')navigate('/review');
+    else if(skill==='speaking') {startSpeakingPractice(plan.questionId,target.part,plan.storyId);setSpeakingDraft(plan.questionId,{practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});}
+    else {chooseQuestion(plan.questionId);const existing=normalizeDraft(stateRef.current.drafts[plan.questionId]);setWritingDraft(plan.questionId,existing.text,{practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});navigate('/write');}
+    return true;
+  },[legacyStartPlan,ensureAccountModule,ensureQuestionBank,loadVocabularyCatalog,mutatePlans,navigate,startSpeakingPractice,chooseQuestion,setSpeakingDraft,setWritingDraft]);
 
   const saveAttempt = useCallback(
     async (exportForReview: boolean, saveFields: { focus: string; next: string; errors: string }) => {
@@ -1199,7 +1390,7 @@ function useFieldbookValue() {
         : null;
       if (activePlan && activePlan.kind === 'writing-mock' && activePlan.status === 'in_progress' && activePlan.stage === 'task2') {
         setActiveDeskMode('timed');
-        const next =
+        const next = activePlan.target?.questionId ? draft.questions.find(question=>String(question.id)===activePlan.target.questionId) :
           selectWritingQuestion(draft, '2', draft.questions) ||
           draft.questions.find((item) => item.type === '2') ||
           draft.questions[0];
@@ -1359,6 +1550,9 @@ function useFieldbookValue() {
       setWritingDraft,
       setSpeakingDraft,
       startPlan,
+      mutatePlans,
+      changePlan,
+      ensureUnifiedPlans: refreshUnifiedPlans,
       startSpeakingPractice,
       saveAttempt,
       ensurePlansForSkill: () => {
@@ -1401,7 +1595,7 @@ function useFieldbookValue() {
       removeStory,
       completeStoriesPlan,
       completeVocabularyPlan,
-      completeReview,
+      completeReview: (draft,details) => completeReview(draft,{...details,planId:details?.planId||draft.activePlanId}),
       reviewError,
       resolveError,
       importAssessmentText,
@@ -1466,6 +1660,9 @@ function useFieldbookValue() {
       setSpeakingDraft,
       setWritingDraft,
       startPlan,
+      mutatePlans,
+      changePlan,
+      refreshUnifiedPlans,
       startSpeakingPractice,
       state,
       storyPresetTopicIds,

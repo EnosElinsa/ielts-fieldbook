@@ -2,8 +2,8 @@
   "version": "context-2026-10-10.2",
   "bindings": [
     {
-      "bookId": "guixue:10174",
-      "unitId": "21795",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
       "entryId": "ve-7c70dbbe",
       "term": "core",
       "sense": {
@@ -87,8 +87,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21840",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
       "entryId": "ve-7c70dbbe",
       "term": "core",
       "sense": {
@@ -122,8 +122,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21840",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
       "entryId": "ve-695ef76a",
       "term": "vegetable",
       "sense": {
@@ -207,8 +207,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:11320",
-      "unitId": "35010",
+      "bookId": "ielts-listening-vocabulary",
+      "unitId": "ielts-listening-vocabulary-chapter-01-group-09",
       "entryId": "ve-695ef76a",
       "term": "vegetable",
       "sense": {
@@ -292,8 +292,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21801",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-02-group-01",
       "entryId": "ve-a3556f9",
       "term": "fruit",
       "sense": {
@@ -350,8 +350,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21840",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
       "entryId": "ve-a3556f9",
       "term": "fruit",
       "sense": {
@@ -408,8 +408,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:11320",
-      "unitId": "35005",
+      "bookId": "ielts-listening-vocabulary",
+      "unitId": "ielts-listening-vocabulary-chapter-01-group-04",
       "entryId": "ve-a3556f9",
       "term": "fruit",
       "sense": {
@@ -466,8 +466,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21840",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
       "entryId": "ve-ba01e29",
       "term": "strip",
       "sense": {
@@ -519,8 +519,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21840",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
       "entryId": "ve-7c75c179",
       "term": "peel",
       "sense": {
@@ -604,8 +604,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21868",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-20-group-02",
       "entryId": "ve-7c75c179",
       "term": "peel",
       "sense": {
@@ -682,8 +682,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21839",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
       "entryId": "ve-ad7616b",
       "term": "order",
       "sense": {
@@ -774,8 +774,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21861",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03",
       "entryId": "ve-ad7616b",
       "term": "order",
       "sense": {
@@ -866,8 +866,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21839",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
       "entryId": "ve-add5573",
       "term": "treat",
       "sense": {
@@ -951,8 +951,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21839",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-01",
       "entryId": "ve-7e9f49ed",
       "term": "recipe",
       "sense": {
@@ -1013,8 +1013,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:11320",
-      "unitId": "35008",
+      "bookId": "ielts-listening-vocabulary",
+      "unitId": "ielts-listening-vocabulary-chapter-01-group-07",
       "entryId": "ve-7e9f49ed",
       "term": "recipe",
       "sense": {
@@ -1075,8 +1075,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21795",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
       "entryId": "ve-5741bf7a",
       "term": "mantle",
       "sense": {
@@ -1157,8 +1157,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21795",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
       "entryId": "ve-a8e97e6",
       "term": "crust",
       "sense": {
@@ -1241,8 +1241,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21795",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-01",
       "entryId": "ve-7c6e90ea",
       "term": "gale",
       "sense": {
@@ -1303,8 +1303,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10176",
-      "unitId": "21937",
+      "bookId": "ielts-reading-keywords",
+      "unitId": "ielts-reading-keywords-chapter-01-group-01",
       "entryId": "ve-f0705be2",
       "term": "fundamental",
       "sense": {
@@ -1387,8 +1387,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10176",
-      "unitId": "21942",
+      "bookId": "ielts-reading-keywords",
+      "unitId": "ielts-reading-keywords-chapter-03-group-01",
       "entryId": "ve-a26727c",
       "term": "array",
       "sense": {
@@ -1473,8 +1473,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10176",
-      "unitId": "21942",
+      "bookId": "ielts-reading-keywords",
+      "unitId": "ielts-reading-keywords-chapter-03-group-01",
       "entryId": "ve-411a97ad",
       "term": "attitude",
       "sense": {
@@ -1549,8 +1549,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10176",
-      "unitId": "21937",
+      "bookId": "ielts-reading-keywords",
+      "unitId": "ielts-reading-keywords-chapter-01-group-01",
       "entryId": "ve-d629898d",
       "term": "underlie",
       "sense": {
@@ -1604,8 +1604,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:11320",
-      "unitId": "35003",
+      "bookId": "ielts-listening-vocabulary",
+      "unitId": "ielts-listening-vocabulary-chapter-01-group-02",
       "entryId": "ve-d1034a42",
       "term": "cashier",
       "sense": {
@@ -1661,8 +1661,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:11320",
-      "unitId": "35003",
+      "bookId": "ielts-listening-vocabulary",
+      "unitId": "ielts-listening-vocabulary-chapter-01-group-02",
       "entryId": "ve-67e01a05",
       "term": "cathedral",
       "sense": {
@@ -1734,8 +1734,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10177",
-      "unitId": "21948",
+      "bookId": "ielts-listening-essentials",
+      "unitId": "ielts-listening-essentials-chapter-01-group-01",
       "entryId": "ve-51654ac5",
       "term": "reserve",
       "sense": {
@@ -1822,8 +1822,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10177",
-      "unitId": "21948",
+      "bookId": "ielts-listening-essentials",
+      "unitId": "ielts-listening-essentials-chapter-01-group-01",
       "entryId": "ve-61890231",
       "term": "feature",
       "sense": {
@@ -1921,8 +1921,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10177",
-      "unitId": "21948",
+      "bookId": "ielts-listening-essentials",
+      "unitId": "ielts-listening-essentials-chapter-01-group-01",
       "entryId": "ve-6c486c95",
       "term": "fitness",
       "sense": {
@@ -1993,8 +1993,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:21953",
-      "unitId": "135338",
+      "bookId": "ielts-listening-practice-21",
+      "unitId": "ielts-listening-practice-21-chapter-01-group-02",
       "entryId": "ve-b876cb3",
       "term": "kit",
       "sense": {
@@ -2075,8 +2075,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:21953",
-      "unitId": "135337",
+      "bookId": "ielts-listening-practice-21",
+      "unitId": "ielts-listening-practice-21-chapter-01-group-01",
       "entryId": "ve-99c09618",
       "term": "discount",
       "sense": {
@@ -2131,8 +2131,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:21953",
-      "unitId": "135340",
+      "bookId": "ielts-listening-practice-21",
+      "unitId": "ielts-listening-practice-21-chapter-01-group-04",
       "entryId": "ve-dbafd209",
       "term": "cultivation",
       "sense": {
@@ -2201,8 +2201,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10216",
-      "unitId": "22254",
+      "bookId": "ielts-listening-practice-20",
+      "unitId": "ielts-listening-practice-20-chapter-01-group-02",
       "entryId": "ve-9352c78e",
       "term": "impression",
       "sense": {
@@ -2277,8 +2277,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10216",
-      "unitId": "22254",
+      "bookId": "ielts-listening-practice-20",
+      "unitId": "ielts-listening-practice-20-chapter-01-group-02",
       "entryId": "ve-83cab064",
       "term": "compound",
       "sense": {
@@ -2359,8 +2359,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10216",
-      "unitId": "22256",
+      "bookId": "ielts-listening-practice-20",
+      "unitId": "ielts-listening-practice-20-chapter-01-group-04",
       "entryId": "ve-d13b3601",
       "term": "discharge",
       "sense": {
@@ -2422,8 +2422,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10216",
-      "unitId": "22254",
+      "bookId": "ielts-listening-practice-20",
+      "unitId": "ielts-listening-practice-20-chapter-01-group-02",
       "entryId": "ve-3c16b934",
       "term": "concentration",
       "sense": {
@@ -2532,8 +2532,8 @@
       "status": "reviewed",
       "contentReviewed": true,
       "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity.",
-      "bookId": "guixue:10174",
-      "unitId": "21804"
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-01"
     },
     {
       "entryId": "ve-e5c6be78",
@@ -2567,8 +2567,8 @@
       "status": "unresolved",
       "contentReviewed": true,
       "reason": "Common content reviewed; group lacks evidence of original intended sense. No context certainty claimed.",
-      "bookId": "guixue:10176",
-      "unitId": "21942"
+      "bookId": "ielts-reading-keywords",
+      "unitId": "ielts-reading-keywords-chapter-03-group-01"
     },
     {
       "entryId": "ve-2d840af7",
@@ -2645,8 +2645,8 @@
       "status": "unresolved",
       "contentReviewed": true,
       "reason": "Common content reviewed; group lacks evidence of original intended sense. No context certainty claimed.",
-      "bookId": "guixue:10177",
-      "unitId": "23796"
+      "bookId": "ielts-listening-essentials",
+      "unitId": "ielts-listening-essentials-chapter-02-group-13"
     },
     {
       "entryId": "ve-7c707952",
@@ -2698,8 +2698,8 @@
       "status": "reviewed",
       "contentReviewed": true,
       "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity.",
-      "bookId": "guixue:10174",
-      "unitId": "21805"
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02"
     },
     {
       "entryId": "ve-7c70d9c1",
@@ -2783,8 +2783,8 @@
       "status": "reviewed",
       "contentReviewed": true,
       "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity.",
-      "bookId": "guixue:10174",
-      "unitId": "21805"
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-03-group-02"
     },
     {
       "entryId": "ve-d8f55188",
@@ -2842,8 +2842,8 @@
       "status": "reviewed",
       "contentReviewed": true,
       "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity.",
-      "bookId": "guixue:10174",
-      "unitId": "21820"
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-06-group-01"
     },
     {
       "entryId": "ve-d8f55188",
@@ -2901,8 +2901,8 @@
       "status": "unresolved",
       "contentReviewed": true,
       "reason": "Common content reviewed; group lacks evidence of original intended sense. No context certainty claimed.",
-      "bookId": "guixue:11320",
-      "unitId": "35028"
+      "bookId": "ielts-listening-vocabulary",
+      "unitId": "ielts-listening-vocabulary-chapter-03-group-12"
     },
     {
       "entryId": "ve-6827dc60",
@@ -2989,8 +2989,8 @@
       "status": "reviewed",
       "contentReviewed": true,
       "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity.",
-      "bookId": "guixue:10174",
-      "unitId": "21823"
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-07-group-01"
     },
     {
       "entryId": "ve-6827dc60",
@@ -3077,8 +3077,8 @@
       "status": "unresolved",
       "contentReviewed": true,
       "reason": "Common content reviewed; group lacks evidence of original intended sense. No context certainty claimed.",
-      "bookId": "guixue:11320",
-      "unitId": "35010"
+      "bookId": "ielts-listening-vocabulary",
+      "unitId": "ielts-listening-vocabulary-chapter-01-group-09"
     },
     {
       "entryId": "ve-7c790370",
@@ -3159,8 +3159,8 @@
       "status": "reviewed",
       "contentReviewed": true,
       "reason": "Entertainment and sport chapter and neighbouring music words establish music context; dictionary music sense reused.",
-      "bookId": "guixue:10174",
-      "unitId": "21829"
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-09-group-02"
     },
     {
       "entryId": "ve-7c790370",
@@ -3243,8 +3243,8 @@
       "status": "unresolved",
       "contentReviewed": true,
       "reason": "Common content reviewed; group lacks evidence of original intended sense. No context certainty claimed.",
-      "bookId": "guixue:11320",
-      "unitId": "35008"
+      "bookId": "ielts-listening-vocabulary",
+      "unitId": "ielts-listening-vocabulary-chapter-01-group-07"
     },
     {
       "entryId": "ve-b2fc676",
@@ -3325,8 +3325,8 @@
       "status": "reviewed",
       "contentReviewed": true,
       "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity.",
-      "bookId": "guixue:10174",
-      "unitId": "21840"
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02"
     },
     {
       "entryId": "ve-157cdcac",
@@ -3409,8 +3409,8 @@
       "status": "reviewed",
       "contentReviewed": true,
       "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity.",
-      "bookId": "guixue:10174",
-      "unitId": "21849"
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-15-group-01"
     },
     {
       "entryId": "ve-7c7752af",
@@ -3476,8 +3476,8 @@
       "status": "reviewed",
       "contentReviewed": true,
       "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity.",
-      "bookId": "guixue:10174",
-      "unitId": "21861"
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-18-group-03"
     },
     {
       "entryId": "ve-9a7da546",
@@ -3563,8 +3563,8 @@
       "status": "unresolved",
       "contentReviewed": true,
       "reason": "Common content reviewed; group lacks evidence of original intended sense. No context certainty claimed.",
-      "bookId": "guixue:10176",
-      "unitId": "21942"
+      "bookId": "ielts-reading-keywords",
+      "unitId": "ielts-reading-keywords-chapter-03-group-01"
     },
     {
       "entryId": "ve-5e40d494",
@@ -3653,86 +3653,86 @@
       "status": "reviewed",
       "contentReviewed": true,
       "reason": "Known fragment or archaic priority reviewed against all extracted dictionary senses. Stable source ID reused; animal courtship absent from extracted senses requires new editorial identity.",
-      "bookId": "guixue:10174",
-      "unitId": "21798"
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-01-group-04"
     }
   ],
   "unresolved": [
     {
-      "bookId": "guixue:11320",
-      "unitId": "35007",
+      "bookId": "ielts-listening-vocabulary",
+      "unitId": "ielts-listening-vocabulary-chapter-01-group-06",
       "entryId": "ve-ad7616b",
       "term": "order",
       "status": "unresolved",
       "reason": "Alphabetical chapter provides no evidence to choose sequence, command or request."
     },
     {
-      "bookId": "guixue:10177",
-      "unitId": "21952",
+      "bookId": "ielts-listening-essentials",
+      "unitId": "ielts-listening-essentials-chapter-01-group-05",
       "entryId": "ve-ad7616b",
       "term": "order",
       "status": "unresolved",
       "reason": "Key-word group alone cannot establish an intended sense."
     },
     {
-      "bookId": "guixue:10216",
-      "unitId": "22263",
+      "bookId": "ielts-listening-practice-20",
+      "unitId": "ielts-listening-practice-20-chapter-03-group-01",
       "entryId": "ve-ad7616b",
       "term": "order",
       "status": "unresolved",
       "reason": "Test part lacks original sentence; sequence and command both plausible."
     },
     {
-      "bookId": "guixue:10176",
-      "unitId": "21942",
+      "bookId": "ielts-reading-keywords",
+      "unitId": "ielts-reading-keywords-chapter-03-group-01",
       "entryId": "ve-e672775f",
       "term": "application",
       "status": "unresolved",
       "reason": "Reading keyword list lacks the original sentence; request, practical use and software remain possible."
     },
     {
-      "bookId": "guixue:11320",
-      "unitId": "35003",
+      "bookId": "ielts-listening-vocabulary",
+      "unitId": "ielts-listening-vocabulary-chapter-01-group-02",
       "entryId": "ve-e4f79126",
       "term": "channel",
       "status": "unresolved",
       "reason": "Alphabetical chapter lacks the original sentence; waterway and broadcasting remain possible."
     },
     {
-      "bookId": "guixue:10177",
-      "unitId": "21948",
+      "bookId": "ielts-listening-essentials",
+      "unitId": "ielts-listening-essentials-chapter-01-group-01",
       "entryId": "ve-b2596a2",
       "term": "press",
       "status": "unresolved",
       "reason": "Core keyword group lacks the original sentence; media and action remain possible."
     },
     {
-      "bookId": "guixue:21953",
-      "unitId": "135337",
+      "bookId": "ielts-listening-practice-21",
+      "unitId": "ielts-listening-practice-21-chapter-01-group-01",
       "entryId": "ve-7c703cec",
       "term": "book",
       "status": "unresolved",
       "reason": "Listening part lacks original question; publication and reservation both plausible."
     },
     {
-      "bookId": "guixue:21953",
-      "unitId": "135338",
+      "bookId": "ielts-listening-practice-21",
+      "unitId": "ielts-listening-practice-21-chapter-01-group-02",
       "entryId": "ve-3bd95a7f",
       "term": "portfolio",
       "status": "unresolved",
       "reason": "Work or investment meaning cannot be confirmed without the original sentence."
     },
     {
-      "bookId": "guixue:10216",
-      "unitId": "22256",
+      "bookId": "ielts-listening-practice-20",
+      "unitId": "ielts-listening-practice-20-chapter-01-group-04",
       "entryId": "ve-9cd81d7",
       "term": "Drone",
       "status": "unresolved",
       "reason": "No original sentence; vehicle, male bee and continuous sound remain possible."
     },
     {
-      "bookId": "guixue:11320",
-      "unitId": "35003",
+      "bookId": "ielts-listening-vocabulary",
+      "unitId": "ielts-listening-vocabulary-chapter-01-group-02",
       "entryId": "ve-d01fca93",
       "term": "canteen",
       "status": "unresolved",
@@ -3741,8 +3741,8 @@
   ],
   "defaults": [
     {
-      "bookId": "guixue:10174",
-      "unitId": "21840",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
       "entryId": "ve-695ef76a",
       "term": "vegetable",
       "sense": {
@@ -3826,8 +3826,8 @@
       "contentReviewed": true
     },
     {
-      "bookId": "guixue:10174",
-      "unitId": "21840",
+      "bookId": "ielts-vocabulary",
+      "unitId": "ielts-vocabulary-chapter-12-group-02",
       "entryId": "ve-a3556f9",
       "term": "fruit",
       "sense": {

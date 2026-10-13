@@ -1,10 +1,10 @@
+import { useVocabularySearchParams } from './vocabularyNavigation';
 import { VocabularyLink as Link, VocabularyBackLink, useVocabularyReturn, vocabularyReturnLabel } from './VocabularyRouteLink';
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   useLocation,
   useParams,
-  useSearchParams,
-} from "react-router-dom";
+  } from "react-router-dom";
 import { ArrowRight, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useFieldbook } from "../../context/FieldbookContext";
 import { FilterMenu } from "../../components/ui";
@@ -72,7 +72,7 @@ export function VocabularyEntryPage() {
     };
   };
   const { id, entryId } = useParams();
-  const [params] = useSearchParams();
+  const [params] = useVocabularySearchParams();
   const location = useLocation();
   const bookId = params.get("bookId") || undefined;
   const unitId = params.get("unitId") || undefined;

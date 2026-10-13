@@ -7,6 +7,7 @@ import type { VocabularyEntry } from '../src/domain/vocabulary/types';
 
 type Unit = { id: string; bookId: string; kind: string; entryIds: string[]; entryCount: number; archivedEntryIds: string[]; resource?: string; teachingResource?: string; [key: string]: unknown };
 type Membership = { id: string; bookId: string; unitId: string; entryId: string; order: number };
+type Catalog = { entries: VocabularyEntry[]; books: { id: string }[]; units: Unit[]; memberships: Membership[] };
 const REVALIDATE = 'public, max-age=0, must-revalidate';
 const IMMUTABLE = 'public, max-age=31536000, immutable';
 export function vocabularyResourceHeaders(manifestUrl: string, teachingIndexUrl: string): string {
@@ -17,7 +18,7 @@ export function vocabularyResourceHeaders(manifestUrl: string, teachingIndexUrl:
 }
 export function buildVocabularyResources(root: string) {
   const read = (file: string) => JSON.parse(fs.readFileSync(path.join(root, file), 'utf8'));
-  const source = read('public/vocabulary-catalog.json') as { entries: VocabularyEntry[]; books: { id: string }[]; units: Unit[]; memberships: Membership[] };
+  const source = read('public/vocabulary-catalog.json') as Catalog;
   const data = (file: string) => read(`src/domain/vocabulary/${file}.json`);
   const teaching: VocabularyTeachingData = {
     senseBaselines: {},
@@ -25,6 +26,27 @@ export function buildVocabularyResources(root: string) {
     readiness: { core: [...data('readinessContent0'), ...data('readinessContent1'), ...data('readinessContent2')], corrections: data('readinessCorrections'), defaults: data('readinessDefaults') },
     learning: data('learningSenseOverlay'), tasks: data('taskSenseBindings'), context: data('contextSenseOverlay'),
   };
+  const generated = buildResourceCatalog(source, teaching);
+  const mapping = data('identityMapping') as { books: {id: string; oldId: string}[]; units: {id: string; oldId: string}[]; memberships: {id: string; oldId: string}[] };
+  const legacyIds = new Map([...mapping.books, ...mapping.units, ...mapping.memberships].map(row => [row.id, row.oldId]));
+  // Rebuild the prior release from the same content. Its immutable URLs must
+  // remain available to clients that still hold the previous manifest.
+  const legacyValue = <T>(value: T): T => {
+    if (typeof value === 'string') return (legacyIds.get(value) || value) as T;
+    if (Array.isArray(value)) return value.map(legacyValue) as T;
+    if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, row]) => [legacyIds.get(key) || key, legacyValue(row)])) as T;
+    return value;
+  };
+  const legacy = buildResourceCatalog(legacyValue(source), legacyValue(teaching));
+  for (const [url, content] of legacy.resources) {
+    const existing = generated.resources.get(url);
+    if (existing !== undefined && existing !== content) throw new Error(`Vocabulary resource hash collision: ${url}`);
+    if (existing === undefined) generated.resources.set(url, content);
+  }
+  return generated;
+}
+
+function buildResourceCatalog(source: Catalog, teaching: VocabularyTeachingData) {
   const baselineFields = new Set(['id', 'definition', 'example', 'pos', 'collocations', 'usage', 'synonyms', 'antonyms', 'distinctions', 'distinctionTask', 'wordFamily', 'register', 'source']);
   const resources = new Map<string, string>();
   const emit = (name: string, value: unknown) => {

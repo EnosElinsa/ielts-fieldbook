@@ -16,19 +16,21 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
   return (
     <>
       <div className="practice-context-card">
-        <span className="eyebrow">{study ? 'One complete group' : explicitEntry ? 'A single word' : 'A focused review batch'}</span>
+        <span className="eyebrow">{controller.batchRequest ? `Learning batch ${Number(controller.learningBatch.batch?.selection.batchIndex || 0) + 1}` : study ? 'One complete group' : explicitEntry ? 'A single word' : 'A focused review batch'}</span>
         <h3>{study ? selectedBook?.title || 'Choose a wordbook' : explicitEntry ? queue[0]?.entry.term || 'Practise this word' : 'Keep your vocabulary ready'}</h3>
         <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : explicitEntry ? queue[0]?.entry.senses.find(sense => sense.id === queue[0]?.senseId)?.definition || 'This selected meaning is unavailable.' : 'Review learned words that are due, recover mistakes, or create a custom batch.'}</p>
         {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
         {mode === 'production' ? <p>Sentences are saved for review. Self-review does not count as assessed usage evidence.</p> : null}
-        {study && unitQueue ? <strong>{unitQueue.totalWords} words in this group · {unitQueue.eligibleWords} ready for {modeLabel(mode).toLowerCase()}</strong> : null}
+        {controller.batchRequest ? <strong>{queue.length} words in this batch</strong> : study && unitQueue ? <strong>{unitQueue.totalWords} words in this group · {unitQueue.eligibleWords} ready for {modeLabel(mode).toLowerCase()}</strong> : null}
+        {controller.learningBatch.error ? <p role="alert">{controller.learningBatch.error}</p> : null}
+        {controller.plannedReview && !studyReady ? <p role="alert">The planned review could not be prepared. Your task has not been completed.</p> : null}
         <Link to={study ? '/vocabulary/review' : '/vocabulary/wordbooks'}>{study ? 'Switch to vocabulary review' : 'Study a complete wordbook group'} <ArrowRight size={14} /></Link>
       </div>
       <div className="practice-setup-controls">
-        {controller.groupModes?.length === 0 ? <span>No practice tasks are available in this group.</span> : <FilterMenu
+        {controller.boundAssessmentMode ? <span>{modeLabel(controller.boundAssessmentMode)}</span> : controller.groupModes?.length === 0 ? <span>No practice tasks are available in this group.</span> : <FilterMenu
           label={study || explicitEntry ? 'Practice mode' : 'Review mode'}
           value={mode}
-          options={controller.groupModes ? controller.groupModes.map(item=>({value:item.value,label:`${item.label} · ${item.queue.eligibleWords} ${item.queue.eligibleWords===1?'word':'words'}${item.value==='audio'?' · Listening activity':''}`})) : MODES}
+          options={controller.groupModes ? controller.groupModes.filter(item => !controller.batchRequest || item.value !== 'audio' && controller.learningBatch.batch?.selection.cards.every(ref => item.queue.cards.some(card => card.entryId === ref.entryId && card.senseId === ref.senseId))).map(item=>{ const count = controller.batchRequest ? queue.length : item.queue.eligibleWords; return {value:item.value,label:`${item.label} · ${count} ${count === 1 ? 'word' : 'words'}${item.value==='audio'?' · Listening activity':''}`}; }) : MODES}
           onChange={changeMode}
         />}
         <FilterMenu
@@ -166,7 +168,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
       </details>
       {catalogStatus.status === 'loading' && study ? <PanelLoadingState message="Loading the complete wordbook…" onRetry={retryCatalog} retryLabel="Retry catalog" /> : null}
       {catalogStatus.status === 'error' ? <StateMessage kind="error" message="The wordbook could not be loaded." onRetry={retryCatalog} retryLabel="Retry catalog" /> : null}
-      {study && catalogReady && unitQueue && selectedUnit ? <div className="practice-eligibility" role="status">
+      {study && !controller.batchRequest && catalogReady && unitQueue && selectedUnit ? <div className="practice-eligibility" role="status">
         {!unitQueue.complete ? <p>Group content is incomplete. Reload the catalog before starting.</p> : null}
         {unitQueue.archivedWords ? <p>{unitQueue.archivedWords} archived words excluded.</p> : null}
         {unitQueue.unavailableWords ? <p>{unitQueue.unavailableWords} words have no {modeLabel(mode).toLowerCase()} task. Choose another mode to practise them.</p> : null}
@@ -217,11 +219,11 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
               ? `${study ? queue.length : Math.min(preferences.sessionSize, queue.length)} words · ${preferences.layout === "list" ? "List" : "Focus"} · ${preferences.feedback === "end" ? "Results after submission" : "Feedback during practice"}`
               : "No words match these filters."}
           </p>
-          {study && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? <p role="status">{specialist ? <>{controller.unitQueue.eligibleWords} of {controller.unitQueue.totalWords} words have a {modeLabel(mode).toLowerCase()} exercise. This optional practice covers these words only. Choose Dictation to study the complete group.</> : <>Some words are unavailable for this mode. Reload the wordbook or choose Dictation to study the complete group.</>}</p> : null}
+          {study && !controller.batchRequest && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? <p role="status">{specialist ? <>{controller.unitQueue.eligibleWords} of {controller.unitQueue.totalWords} words have a {modeLabel(mode).toLowerCase()} exercise. This optional practice covers these words only. Choose Dictation to study the complete group.</> : <>Some words are unavailable for this mode. Reload the wordbook or choose Dictation to study the complete group.</>}</p> : null}
           <button
             className="btn primary practice-start"
             type="button"
-            disabled={!queue.length || Boolean(resume) || !studyReady || Boolean(study && !specialist && unitQueue?.unavailableWords)}
+            disabled={!queue.length || Boolean(resume) || !studyReady || Boolean(study && !controller.batchRequest && !specialist && unitQueue?.unavailableWords)}
             onClick={() => begin()}
           >
             <Play size={17} />

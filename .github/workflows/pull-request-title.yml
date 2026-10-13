@@ -1,0 +1,15 @@
+name: Pull Request Title
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+permissions:
+  contents: read
+jobs:
+  title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Conventional Commit title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          node -e 'const title = process.env.PR_TITLE; if (!/^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9-]+\))?!?: [\x20-\x7e]+$/.test(title)) { console.error("Use an English Conventional Commit title, such as feat(vocabulary): guide daily learning"); process.exit(1); }'

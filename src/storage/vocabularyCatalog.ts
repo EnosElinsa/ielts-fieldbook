@@ -2,6 +2,7 @@ import manifestUrl, { teachingIndexUrl } from 'virtual:vocabulary-manifest';
 import type { VocabularyEntry } from '../domain/vocabulary/types';
 import { registerVocabularyTeaching, type VocabularyTeachingData } from '../domain/vocabulary/runtimeData';
 import { requestTimeout } from '../lib/requestTimeout';
+import { normalizeVocabularyScope } from '../domain/vocabulary/identities';
 
 export type ReleasedVocabularyOptions = { bookId?: string; unitId?: string; entryIds?: string[]; force?: boolean };
 export type ReleasedVocabularyTeachingOptions = ReleasedVocabularyOptions & { allowMissingEntryIds?: boolean };
@@ -79,6 +80,7 @@ function registerTeaching(url: string, data: VocabularyTeachingData) {
 
 /** Remote catalog fallback must restore public teaching before exposing raw dictionary entries. */
 export async function loadReleasedVocabularyTeaching(options: ReleasedVocabularyTeachingOptions = {}): Promise<ReleasedVocabularyCatalog> {
+  options = normalizeVocabularyScope(options);
   let manifest: Manifest | undefined;
   try { manifest = await readManifest(options.force); } catch { /* The teaching index is independent of the main manifest. */ }
   let metadata: Pick<ReleasedVocabularyCatalog, 'books' | 'units'> = { books: [], units: [] };
@@ -129,6 +131,7 @@ export async function loadReleasedVocabularyTeaching(options: ReleasedVocabulary
 
 /** Metadata requests never download entries; group and entry requests load their teaching baselines first. */
 export async function loadReleasedVocabulary(options: ReleasedVocabularyOptions = {}): Promise<ReleasedVocabularyCatalog> {
+  options = normalizeVocabularyScope(options);
   const manifest = await readManifest(options.force);
   const { books, units, group } = selectedMetadata(manifest, options);
   const urls = new Set<string>();

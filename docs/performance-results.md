@@ -62,7 +62,7 @@
 运行 rollout 文档中的基线、优化浏览器命令，再生成可归档汇总：
 
 ```sh
-node scripts/summarize-performance.mjs --baseline=local/performance/baseline-authenticated.json --optimized=local/performance/optimized-release.json --online=local/performance/baseline-online.json --out=docs/performance-results.json
+node scripts/summarize-performance.mjs --baseline=local/performance/baseline-authenticated.json --optimized=local/performance/optimized-release.json --online=local/performance/baseline-online.json --out=local/audits/performance-results.json
 ```
 
 汇总脚本拒绝数据版本或网络条件不一致、缺少任意场景的 15 个样本、以及意外外部请求。详细原始报告和截图位于工作区的 gitignored `local/performance/`。

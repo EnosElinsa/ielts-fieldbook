@@ -1,5 +1,7 @@
+import { useVocabularySearchParams } from './vocabularyNavigation';
+import { boundVocabularyAssessment } from '../../domain/vocabulary/plannedAssessment';
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { useLocation, useNavigate, useSearchParams, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useFieldbook } from "../../context/FieldbookContext";
 import { accountId } from "../../storage/remote";
 import { clearVocabularyDraft, readVocabularyDraft, writeVocabularyDraft } from "../../storage/vocabularyDrafts";
@@ -9,6 +11,8 @@ import { normalizeVocabularyPreferences, type VocabularyPracticeMode, type Vocab
 import { buildVocabularySessionCommit, createVocabularySession, evaluateVocabularySessionAnswer, updateVocabularySessionAnswer, type VocabularyPracticeSession, type VocabularySessionSelection } from "../../domain/vocabulary/session";
 import { getLearnedVocabularyIds, vocabularyGroupProgress } from "../../domain/vocabulary/progress";
 import { availableUnitPracticeModes, buildUnitPracticeQueue } from "../../domain/vocabulary/selection";
+import { buildLearningBatch, type LearningBatch } from '../../domain/vocabulary/learningBatch';
+import { isVocabularySessionSelection } from '../../domain/vocabulary/selection';
 import { resolveVocabularyRetry } from "../../domain/vocabulary/retry";
 import { createVocabularyPlayback } from "./playback";
 import { playbackMessage } from "./Pronunciation";
@@ -25,7 +29,9 @@ const clone = <T,>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 
 export function useVocabularyPracticeController() {
   const fb = useFieldbook();
-  const [params, setParams] = useSearchParams();
+  const [params, setParams] = useVocabularySearchParams();
+  const boundVocabularyPlan = boundVocabularyAssessment(fb.state, params.get('planId'));
+  const boundAssessmentMode = boundVocabularyPlan?.target?.assessmentMode as VocabularyPracticeMode | undefined;
   const location = useLocation();
   const { sessionId: historySessionId } = useParams();
   const navigate = useNavigate();
@@ -37,9 +43,9 @@ export function useVocabularyPracticeController() {
   );
   const [preferences, setPreferences] = useState(initialPreferences);
   const [mode, setMode] = useState<VocabularyPracticeMode>(() =>
-    MODES.some((item) => item.value === params.get("mode"))
+    boundAssessmentMode || (MODES.some((item) => item.value === params.get("mode"))
       ? (params.get("mode") as VocabularyPracticeMode)
-      : (study ? "dictation" : initialPreferences.mode),
+      : (study ? "dictation" : initialPreferences.mode)),
   );
   const [bookId, setBook] = useState(params.get("bookId") || "all");
   const [unitId, setUnit] = useState(params.get("unitId") || "all");
@@ -82,6 +88,7 @@ export function useVocabularyPracticeController() {
   const pendingCommit = useRef<Prepared | null>(null);
   const savingRef = useRef(false);
   const recoveringRef = useRef(false);
+  const autoRecovery = useRef<string | null>(null);
   const retryGeneration = useRef(0);
   const retryPreparingRef = useRef(false);
   const resultsRef = useRef(results);
@@ -113,8 +120,9 @@ export function useVocabularyPracticeController() {
     setSource(params.get('sourceType') || 'all'); setSkill(params.get('skill') || 'all');
     setDimension(params.get('dimension') || 'all');
     setDue(params.get('dueOnly') !== 'false'); setWrong(params.get('wrongOnly') === 'true');
-    if (params.get('mode') && MODES.some(item => item.value === params.get('mode'))) setMode(params.get('mode') as VocabularyPracticeMode);
-  }, [location.pathname, params.toString(), session === null]);
+    if (boundAssessmentMode) setMode(boundAssessmentMode);
+    else if (params.get('mode') && MODES.some(item => item.value === params.get('mode'))) setMode(params.get('mode') as VocabularyPracticeMode);
+  }, [location.pathname, params.toString(), session === null, boundAssessmentMode]);
   useEffect(() => {
     let active = true;
     const target = bookId === 'all' ? '' : bookId;
@@ -233,7 +241,22 @@ export function useVocabularyPracticeController() {
   );
   const explicitEntry = Boolean(params.get("entryId"));
   const unitQueue = useMemo(() => study ? buildUnitPracticeQueue(fb.state, bookId, unitId, mode) : null, [study, fb.state, bookId, unitId, mode, catalogStatus]);
+  const batchRequest = study && params.has('batch');
+  const learningBatch = useMemo((): { batch: LearningBatch | null; error: string } => {
+    if (!batchRequest) return { batch: null, error: '' };
+    try {
+      return { batch: buildLearningBatch(fb.state, bookId, unitId, Number(params.get('batch')), Number(params.get('batchSize') || 10), mode, params.has('batchCards') ? JSON.parse(params.get('batchCards')!) : undefined), error: '' };
+    } catch { return { batch: null, error: 'This learning batch is unavailable. Reload its group or return to learning.' }; }
+  }, [batchRequest, fb.state, bookId, unitId, mode, catalogStatus, params.toString()]);
+  const plannedReview = useMemo(() => {
+    if (study || !params.has('planId') || !params.has('batchCards')) return null;
+    try {
+      const refs = JSON.parse(params.get('batchCards')!);
+      return isVocabularySessionSelection({ kind: 'learning-batch', bookId: 'plan', unitId: 'review', batchIndex: 0, batchSize: refs.length, cards: refs }) ? refs as { entryId: string; senseId: string }[] : [];
+    } catch { return []; }
+  }, [study, params.toString()]);
   const queue = useMemo(() => {
+    if (batchRequest) return learningBatch.batch?.cards || [];
     if (unitQueue) return unitQueue.cards;
     const learned = getLearnedVocabularyIds(fb.state);
     const explicit = Boolean(filter.entryId);
@@ -267,8 +290,9 @@ export function useVocabularyPracticeController() {
       available = [
         ...new Map(available.map((card) => [card.entryId, card])).values(),
       ];
+    if (plannedReview) return plannedReview.map(ref => available.find(card => card.entryId === ref.entryId && card.senseId === ref.senseId)).filter((card): card is ReviewCard => Boolean(card));
     return available;
-  }, [fb.state, filter, wrongOnly, mode, preferences.order, unitQueue, catalogStatus]);
+  }, [fb.state, filter, wrongOnly, mode, preferences.order, unitQueue, catalogStatus, batchRequest, learningBatch, plannedReview]);
   const books = VOCABULARY_CATALOG.books || [];
   const units = (VOCABULARY_CATALOG.units || []).filter(
     (unit) => bookId === "all" || unit.bookId === bookId,
@@ -278,15 +302,20 @@ export function useVocabularyPracticeController() {
   const chapter = units.find(unit => unit.id === selectedUnit?.parentId);
   const catalogReady = catalogStatus.bookId === (bookId === 'all' ? '' : bookId) && catalogStatus.status === 'ready';
   const leafUnits = units.filter(unit => unit.kind !== 'chapter' && !units.some(child => child.parentId === unit.id));
-  const studyReady = !study ? catalogReady : (catalogReady && Boolean(selectedUnit && leafUnits.includes(selectedUnit)) && Boolean(unitQueue?.complete));
+  const studyReady = (!boundAssessmentMode || mode === boundAssessmentMode) && (!study ? catalogReady && (!plannedReview || plannedReview.length > 0 && plannedReview.length === queue.length) : (catalogReady && Boolean(selectedUnit && leafUnits.includes(selectedUnit)) && Boolean(unitQueue?.complete) && (!batchRequest || Boolean(learningBatch.batch && (!boundAssessmentMode || learningBatch.batch.mode === boundAssessmentMode)))));
   const groupModes = useMemo(()=>study && catalogReady && selectedUnit ? availableUnitPracticeModes(fb.state,bookId,unitId) : null,[study,catalogReady,selectedUnit,fb.state,bookId,unitId]);
   useEffect(()=>{
-    if (session || results || !groupModes?.length || groupModes.some(item=>item.value===mode)) return;
+    if (boundAssessmentMode || batchRequest || session || results || !groupModes?.length || groupModes.some(item=>item.value===mode)) return;
     const fallback=groupModes[0];
     setModeRecovery({owner:accountId(),bookId,unitId,message:`${MODES.find(item=>item.value===mode)?.label} has no tasks in this group. Showing ${fallback.label}.`});
     setMode(fallback.value);
     const next=new URLSearchParams(params); next.set('mode',fallback.value);setParams(next,{replace:true,state:location.state});
   },[groupModes,mode,session,results]);
+  useEffect(() => {
+    if (boundAssessmentMode || !batchRequest || !learningBatch.batch || session || results || mode === learningBatch.batch.mode) return;
+    setMode(learningBatch.batch.mode);
+    const next = new URLSearchParams(params); next.set('mode', learningBatch.batch.mode); setParams(next, { replace: true, state: location.state });
+  }, [batchRequest, learningBatch, mode, session, results]);
   const answered = session
     ? cards.filter((card) => session.answers[card.id]?.response.trim()).length
     : 0;
@@ -303,13 +332,24 @@ export function useVocabularyPracticeController() {
     (resultFilter === 'unanswered' && !row.response.trim()) ||
     (resultFilter === 'pending' && row.result === 'pending') ||
     (resultFilter === 'flagged' && row.flagged)) || [];
-  const resultUnitId = results?.selection?.kind === 'unit' ? results.selection.unitId : null;
+  const resultUnitId = results?.selection?.kind === 'unit' || results?.selection?.kind === 'learning-batch' ? results.selection.unitId : null;
+  const nextBatch = useMemo(() => {
+    if (results?.selection?.kind !== 'learning-batch' || results.results.some(row => !row.response.trim())) return null;
+    const selected = results.selection;
+    try {
+      const next = buildLearningBatch(fb.state, selected.bookId, selected.unitId, selected.batchIndex + 1, selected.batchSize, results.mode);
+      return `/vocabulary/wordbooks/${encodeURIComponent(selected.bookId)}/groups/${encodeURIComponent(selected.unitId)}/learn?${new URLSearchParams({ word: next.cards[0].entryId, batch: String(next.selection.batchIndex), batchSize: String(selected.batchSize) })}`;
+    } catch { return null; }
+  }, [fb.state, results]);
   const orderedGroups = [...(VOCABULARY_CATALOG.units || [])].filter(unit => unit.bookId === results?.filter.bookId && unit.kind !== 'chapter' && !(VOCABULARY_CATALOG.units || []).some(child => child.bookId === unit.bookId && child.parentId === unit.id)).sort((a, b) => {
     const parents = VOCABULARY_CATALOG.units;
     return (parents.find(unit => unit.id === a.parentId && unit.bookId === a.bookId)?.order || 0) - (parents.find(unit => unit.id === b.parentId && unit.bookId === b.bookId)?.order || 0) || (a.order || 0) - (b.order || 0);
   });
   const resultGroupIndex = orderedGroups.findIndex(unit => unit.id === resultUnitId);
-  const nextGroup = resultGroupIndex >= 0 ? orderedGroups.slice(resultGroupIndex + 1).find(unit => {
+  const currentGroup = orderedGroups[resultGroupIndex];
+  const currentGroupIds = currentGroup ? VOCABULARY_CATALOG.memberships.filter(item => item.bookId === currentGroup.bookId && item.unitId === currentGroup.id).map(item => item.entryId) : [];
+  const completedGroup = currentGroup && vocabularyGroupProgress(fb.state, { ...currentGroup, studyEntryIds: currentGroupIds }) === 'Studied';
+  const nextGroup = resultGroupIndex >= 0 && (results?.selection?.kind !== 'learning-batch' || completedGroup) ? orderedGroups.slice(resultGroupIndex + 1).find(unit => {
     const ids = VOCABULARY_CATALOG.memberships.filter(item => item.bookId === unit.bookId && item.unitId === unit.id).map(item => item.entryId);
     return vocabularyGroupProgress(fb.state, { ...unit, studyEntryIds: ids }) !== 'Studied';
   }) : null;
@@ -324,9 +364,9 @@ export function useVocabularyPracticeController() {
     const record = ((fb.state.vocabularySessions || []) as SessionLog[]).find(record => record.id === id);
     if (record) {
       setResults(presentVocabularySession(record)); setCards([]); setError('');
-      const sourceBook = record.selection && (record.selection.kind === 'unit' || record.selection.kind === 'specialist') ? record.selection.bookId : record.filter?.bookId;
+      const sourceBook = record.selection && 'bookId' in record.selection ? record.selection.bookId : record.filter?.bookId;
       if (sourceBook && sourceBook !== 'all') {
-        const unit = record.selection?.kind === 'unit' || record.selection?.kind === 'specialist' ? record.selection.unitId : record.filter?.unitId;
+        const unit = record.selection && 'unitId' in record.selection ? record.selection.unitId : record.filter?.unitId;
         void fb.loadVocabularyCatalog?.(sourceBook, { ...(unit && unit !== 'all' ? { unitId: unit } : {}), entryIds: record.entryIds }).catch(() => { /* historical view remains available from frozen rows */ });
       }
     }
@@ -339,6 +379,7 @@ export function useVocabularyPracticeController() {
 
   function changeFilter(key: string, value: string) {
     const next = new URLSearchParams(params);
+    if (key !== 'mode') for (const name of ['batch', 'batchCards', 'batchSize', 'planId', 'resume']) next.delete(name);
     next.set(key, value);
     if (key === "bookId") next.delete("unitId");
     setParams(next, { replace: true, state: location.state });
@@ -348,6 +389,7 @@ export function useVocabularyPracticeController() {
     const next = new URLSearchParams(params); next.set('dueOnly',String(value === 'due')); next.set('wrongOnly',String(value === 'wrong')); next.delete('unitId'); setParams(next,{replace:true, state: location.state});
   }
   function changeMode(value: string) {
+    if (boundAssessmentMode && value !== boundAssessmentMode) return;
     setModeRecovery(null);
     setMode(value as VocabularyPracticeMode);
     changeFilter("mode", value);
@@ -471,12 +513,20 @@ export function useVocabularyPracticeController() {
     options: BeginOptions = {},
   ) {
     if (!owned() || !selected.length || (!selection && !studyReady)) return;
+    const planSelection = Boolean(boundVocabularyPlan && (!selection || selection.kind === 'learning-batch' && selection.bookId === boundVocabularyPlan.target.bookId && selection.unitId === boundVocabularyPlan.target.unitId && JSON.stringify(selection.cards) === JSON.stringify(boundVocabularyPlan.target.cards)));
+    if (planSelection && boundVocabularyPlan) {
+      if (chosenMode !== boundAssessmentMode || JSON.stringify(selected.map(card => ({ entryId: card.entryId, senseId: card.senseId }))) !== JSON.stringify(boundVocabularyPlan.target.cards)) {
+        setError('The planned assessment is unavailable. Return to this task and retry.');
+        return;
+      }
+      chosenMode = boundAssessmentMode!;
+    }
     stopAudio();
     pendingCommit.current = null;
     playedIndex.current = -1;
     const ordered = [...selected];
-    const chosenSelection = selection || (study ? { kind: (unitQueue && unitQueue.unavailableWords > 0 ? 'specialist' : 'unit') as 'specialist' | 'unit', bookId, unitId } : { kind: 'batch' as const });
-    const chosenPreferences = { ...normalizeVocabularyPreferences(options.preferences || preferences), ...(study && chosenSelection.kind === 'unit' ? { order: 'source' as const } : {}), mode: chosenMode };
+    const chosenSelection = selection || learningBatch.batch?.selection || (study ? { kind: (unitQueue && unitQueue.unavailableWords > 0 ? 'specialist' : 'unit') as 'specialist' | 'unit', bookId, unitId } : { kind: 'batch' as const });
+    const chosenPreferences = { ...normalizeVocabularyPreferences(options.preferences || preferences), ...((study && chosenSelection.kind === 'unit') || chosenSelection.kind === 'learning-batch' ? { order: 'source' as const } : {}), ...(!selection && plannedReview ? { sessionSize: plannedReview.length } : {}), mode: chosenMode };
     if (chosenPreferences.order === "source" && chosenSelection.kind !== 'unit') {
       const order = new Map(
         (fb.state.vocabulary || []).map(
@@ -498,9 +548,10 @@ export function useVocabularyPracticeController() {
       candidates,
       chosenMode,
       chosenPreferences,
-      (chosenSelection.kind === 'unit' || chosenSelection.kind === 'specialist') ? { bookId, unitId, dueOnly: false } : options.filter || Object.assign({ ...filter }, { wrongOnly }),
+      (chosenSelection.kind === 'unit' || chosenSelection.kind === 'specialist' || chosenSelection.kind === 'learning-batch') ? { bookId, unitId, dueOnly: false } : options.filter || Object.assign({ ...filter }, { wrongOnly }),
       chosenSelection,
     );
+    if (planSelection && boundVocabularyPlan) next.planId = boundVocabularyPlan.id;
     const frozen = next.cardIds.map((identity) =>
       candidates.find((card) => card.id === identity.id)!,
     );
@@ -529,7 +580,7 @@ export function useVocabularyPracticeController() {
     setRecovering(true);
     setError('');
     try {
-    if (resume.selection?.kind === 'unit' || resume.selection?.kind === 'specialist') {
+    if (resume.selection?.kind === 'unit' || resume.selection?.kind === 'specialist' || resume.selection?.kind === 'learning-batch') {
       try {
         await fb.loadVocabularyCatalog?.(resume.selection.bookId, { unitId: resume.selection.unitId, entryIds: resume.cardSnapshots?.map(card => card.entryId) });
       } catch {
@@ -836,7 +887,11 @@ export function useVocabularyPracticeController() {
       });
       next.set('mode', record.mode);
     }
-    const setup = record?.selection?.kind === 'unit' || record?.selection?.kind === 'specialist' ? '/vocabulary/study' : '/vocabulary/review';
+    if (record?.selection?.kind === 'learning-batch') {
+      next.set('batch', String(record.selection.batchIndex)); next.set('batchSize', String(record.selection.batchSize)); next.set('batchCards', JSON.stringify(record.selection.cards));
+    }
+    next.delete('planId'); next.delete('resume');
+    const setup = record?.selection && 'bookId' in record.selection ? '/vocabulary/study' : '/vocabulary/review';
     navigate(`${setup}${next.toString() ? `?${next}` : ''}`, { state: vocabularyForwardState(location) });
   }
   function discardResume() {
@@ -897,15 +952,15 @@ export function useVocabularyPracticeController() {
     setRetryPreparing(true);
     setError('');
     try {
-      const sourceBook = results.selection?.kind === 'unit' || results.selection?.kind === 'specialist' ? results.selection.bookId : results.filter.bookId;
+      const sourceBook = results.selection && 'bookId' in results.selection ? results.selection.bookId : results.filter.bookId;
       const books = new Set([sourceBook, ...results.results.filter(row => row.result === 'failure' || row.result === 'partial').map(row => row.context?.bookId)].filter((book): book is string => Boolean(book && book !== 'all')));
       for (const book of books) {
-        const selectedUnit = results.selection?.kind === 'unit' || results.selection?.kind === 'specialist' ? results.selection.unitId : results.filter.unitId;
+        const selectedUnit = results.selection && 'unitId' in results.selection ? results.selection.unitId : results.filter.unitId;
         await fb.loadVocabularyCatalog?.(book, { ...(book === sourceBook && selectedUnit && selectedUnit !== 'all' ? { unitId: selectedUnit } : {}), entryIds: results.results.filter(row => row.result === 'failure' || row.result === 'partial').map(row => row.entryId) });
         if (!active()) return;
       }
       if (!active()) return;
-      const retryFilter: ReviewQueueFilter = results.selection?.kind === 'unit' || results.selection?.kind === 'specialist'
+      const retryFilter: ReviewQueueFilter = results.selection && 'bookId' in results.selection
         ? { ...results.filter, bookId: results.selection.bookId, unitId: results.selection.unitId, dueOnly: false }
         : { ...results.filter, dueOnly: false };
       const retry = resolveVocabularyRetry(fb.stateRef.current, results, cards);
@@ -927,6 +982,14 @@ export function useVocabularyPracticeController() {
     }
   }
 
+  useEffect(() => {
+    if (params.get('resume') !== 'true' || !resume || session || results || !fb.booted) return;
+    const identity = `${accountId()}:${resume.id}`;
+    if (autoRecovery.current === identity) return;
+    autoRecovery.current = identity;
+    void recover();
+  }, [params.get('resume'), resume?.id, session, results, fb.booted]);
+
   return {
     state: fb.state, study, explicitEntry, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit,
     sourceType, setSource, skill, setSkill, dimension, setDimension,
@@ -935,7 +998,7 @@ export function useVocabularyPracticeController() {
     saving, recovering, retryPreparing, error, audioStatus, audioBusy, looping, storageError, catalogStatus,
     resultFilter, setResultFilter, resultReturnTo, queue, unitQueue, groupModes, modeNotice, books, units, selectedUnit,
     selectedBook, chapter, catalogReady, leafUnits, studyReady, answered, flagged,
-    count, locked, currentIndex, pageStart, visibleCards, resultRows, nextGroup, recent,
+    count, locked, currentIndex, pageStart, visibleCards, resultRows, nextGroup, nextBatch, batchRequest, learningBatch, plannedReview, recent, boundAssessmentMode,
     setReviewPreset, changeFilter, changeMode, playCard, begin, recover, updateAnswer, finalizeAnswer,
     focusCard, advance, toggleFlag, reportProduction, submit, savePreferences, exit,
     resetResults, discardResume, showRecentSession, retryCatalog,

@@ -1,5 +1,6 @@
 /** Load code for the selected authenticated route; this never reads account data. */
 export function preloadRoute(path: string) {
+  if (path === '/planning') return import('./features/planning/PlanningPage');
   if (path.includes('/groups/') && path.endsWith('/words')) return import('./features/vocabulary/VocabularyGroupWordsPage');
   if (path.includes('/groups/') && path.endsWith('/learn')) return import('./features/vocabulary/VocabularyGroupLearnPage');
   if (path.startsWith('/vocabulary/study') || path.startsWith('/vocabulary/review')) return import('./features/vocabulary/VocabularyPracticePage');
@@ -9,7 +10,7 @@ export function preloadRoute(path: string) {
   if (path === '/speak/questions') return import('./features/speaking/SpeakingBankPage');
   if (path.startsWith('/speak/topics')) return import('./features/speaking/SpeakingTopicPage');
   if (path.startsWith('/speak')) return import('./features/speaking/SpeakingDeskPage');
-  if (path === '/account') return import('./features/account/AccountPage');
+  if (path === '/account' || path.startsWith('/settings')) return import('./features/settings/SettingsPage');
   if (path === '/progress') return import('./features/progress/ProgressPage');
   if (path === '/stories') return import('./features/speaking/StoriesPage');
   if (path.startsWith('/listening/intensive')) return import('./features/exam/IntensiveWorkbenchPage');
@@ -19,6 +20,6 @@ export function preloadRoute(path: string) {
   if (/^\/(reading|listening)$/.test(path)) return import('./features/exam/ExamBankPage');
   if (path.startsWith('/review/')) return import('./features/review/AssessmentDetailPage');
   if (path === '/review') return import('./features/review/ReviewPage');
-  if (path === '/') return import('./features/today/TodayPage');
+  if (path === '/' || path === '/today') return import('./features/today/TodayPage');
   return Promise.resolve();
 }

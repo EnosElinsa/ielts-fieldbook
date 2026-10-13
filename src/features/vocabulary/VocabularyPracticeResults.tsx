@@ -21,7 +21,7 @@ export function VocabularyPracticeResults({ controller, results }: {
   controller: VocabularyPracticeController;
   results: VocabularySessionRecord;
 }) {
-  const { resultFilter, setResultFilter, resultRows, nextGroup, resetResults, resultReturnTo, retryMistakes, retryPreparing } = controller;
+  const { resultFilter, setResultFilter, resultRows, nextGroup, nextBatch, resetResults, resultReturnTo, retryMistakes, retryPreparing } = controller;
   const table = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const navigationType = useNavigationType();
@@ -46,8 +46,8 @@ export function VocabularyPracticeResults({ controller, results }: {
   const currentRow = (row: VocabularySessionResult) => {
     const snapshot = results.cardSnapshots?.find(card => card.id === row.cardId);
     const raw = (controller.state.vocabulary as VocabularyEntry[])?.find(entry => entry.id === row.entryId) || (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).find(entry => entry.id === row.entryId) || snapshot?.entry || ({ id: row.entryId, term: row.term, category: 'word', meaning: row.definition, example: row.example, tags: [], sources: [], senses: [{ id: row.senseId, definition: row.definition, example: row.example, pos: 'word' }], createdAt: '', updatedAt: '' } as VocabularyEntry);
-    const bookId = row.context?.bookId || (results.selection?.kind === 'unit' || results.selection?.kind === 'specialist' ? results.selection.bookId : results.filter.bookId);
-    const unitId = row.context?.unitId || (results.selection?.kind === 'unit' || results.selection?.kind === 'specialist' ? results.selection.unitId : results.filter.unitId);
+    const bookId = row.context?.bookId || (results.selection && 'bookId' in results.selection ? results.selection.bookId : results.filter.bookId);
+    const unitId = row.context?.unitId || (results.selection && 'unitId' in results.selection ? results.selection.unitId : results.filter.unitId);
     const valid = Boolean(raw && bookId && unitId && (VOCABULARY_CATALOG.memberships.some(member => member.entryId === row.entryId && member.bookId === bookId && member.unitId === unitId) || raw.sources.some(source => source.bookId === bookId && source.unitId === unitId)));
     const context = valid ? {bookId,unitId} : {};
     const resolved = raw ? resolveVocabularyLearningContext(raw, {...context, ...(results.mode !== 'dictation' ? {senseId: row.senseId} : {})}) : null;
@@ -184,7 +184,8 @@ export function VocabularyPracticeResults({ controller, results }: {
             {retryPreparing ? 'Preparing retry…' : 'Retry mistakes'}
           </button>
         ) : null}
-        {nextGroup ? <Link className={`btn ${hasMistakes ? "line" : "primary"}`} to={`/vocabulary/wordbooks/${encodeURIComponent(nextGroup.bookId)}/groups/${encodeURIComponent(nextGroup.id)}/learn`}>Next group <ArrowRight size={15} /></Link> : null}
+        {nextBatch ? <Link className={`btn ${hasMistakes ? 'line' : 'primary'}`} to={nextBatch}>Next batch<ArrowRight size={15}/></Link> : nextGroup ? <Link className={`btn ${hasMistakes ? "line" : "primary"}`} to={`/vocabulary/wordbooks/${encodeURIComponent(nextGroup.bookId)}/groups/${encodeURIComponent(nextGroup.id)}/learn`}>Next group <ArrowRight size={15} /></Link> : null}
+        {results.planId ? <Link className="btn line" to="/">Back to Today<ArrowRight size={15}/></Link> : null}
         <button className="btn line" type="button" onClick={resetResults}>
           New session
         </button>

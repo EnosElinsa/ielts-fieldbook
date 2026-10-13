@@ -2,24 +2,25 @@ import { Settings2, X } from "lucide-react";
 import { IconButton } from "../../components/IconButton";
 import { ModalFrame } from "../../components/ModalFrame";
 import { VocabularyNavigation } from "./VocabularyPages";
-import { VocabularyPreferencesDialog } from "./VocabularyPreferences";
 import { VocabularyPracticeSetup } from "./VocabularyPracticeSetup";
 import { VocabularyPracticeSession } from "./VocabularyPracticeSession";
 import { VocabularyPracticeResults } from "./VocabularyPracticeResults";
 import { useVocabularyPracticeController } from "./useVocabularyPracticeController";
 import "../../styles/vocabulary-practice.css";
 import { VocabularyBackLink } from './VocabularyRouteLink';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { useVocabularyPosition } from './vocabularyNavigation';
 
 export function VocabularyPracticePage() {
   const controller = useVocabularyPracticeController();
   const {
-    session, results, study, settingsOpen, setSettingsOpen, exitOpen, setExitOpen,
+    session, results, study, exitOpen, setExitOpen,
     incompleteOpen, setIncompleteOpen, saving, error, storageError, submissionPending,
-    preferences, answered, count, submit, savePreferences, exit, pauseSession,
+    answered, count, submit, exit, pauseSession,
   } = controller;
   const location = useLocation();
+  const navigate = useNavigate();
   useVocabularyPosition(location.pathname + location.search + location.hash, controller.catalogReady && !session && !results);
   return (
     <section className="view active vocabulary-view vocabulary-practice-view">
@@ -34,7 +35,7 @@ export function VocabularyPracticePage() {
           <IconButton
             label="Practice settings"
             disabled={saving}
-            onClick={() => setSettingsOpen(true)}
+            onClick={() => navigateWithPracticeGuard('/settings/vocabulary', () => navigate('/settings/vocabulary'))}
           >
             <Settings2 size={18} />
           </IconButton>
@@ -74,14 +75,6 @@ export function VocabularyPracticePage() {
       {!session && !results ? <VocabularyPracticeSetup controller={controller} /> : null}
       {session ? <VocabularyPracticeSession controller={controller} session={session} /> : null}
       {results ? <VocabularyPracticeResults controller={controller} results={results} /> : null}
-      <VocabularyPreferencesDialog
-        open={settingsOpen}
-        onClose={() => setSettingsOpen(false)}
-        preferences={preferences}
-        onSave={savePreferences}
-        busy={saving}
-        configurationLocked={Boolean(session)}
-      />
       <ModalFrame
         open={exitOpen}
         onClose={() => setExitOpen(false)}

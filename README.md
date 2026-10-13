@@ -7,7 +7,7 @@ An English-only IELTS study workspace for writing, speaking, reading, listening 
 ## Study Workflow
 
 1. Set an exam date, target band, study days and daily time.
-2. Complete a writing or speaking task. Save drafts, outlines, transcripts, recordings and rewrites to your account.
+2. Open Today to continue your next task. Planning keeps a seven-day schedule with specific practice targets, time budgets, rescheduling and skipping.
 3. Export a Markdown scoring request, have it assessed outside Fieldbook, and import the feedback.
 4. Save expressions from the feedback to your vocabulary. Review meanings, listening, spelling and usage separately.
 5. Use the next practice task to apply corrections, then follow progress over time.
@@ -19,8 +19,8 @@ Fieldbook does not issue official IELTS scores. Pronunciation remains unscored w
 Words, phrases and sentence patterns share a single vocabulary model across wordbooks and personal collections. Each meaning has its own learning state; occurrences retain their source task, passage or recording.
 
 - List or focused dictation with automatic UK/US audio and clearly identified browser speech fallback.
-- Wordbook study uses each complete group's actual word count in source order; due and wrong-word review batches have their own size and filters.
-- Theme-based learning cards use batches of 10 words with saved browsing position. Browsing, assessment completion and mastery remain separate; cards link to whole-group assessments and dictionary details.
+- The vocabulary home prioritises resumed sessions, due review and enrolled books; first-time learners choose a wordbook.
+- Theme-based learning uses 10-word batches by default, tests the same fixed words and meanings, and offers the next batch after results. The final batch can be smaller. Browsing, assessment completion and mastery remain separate; whole-group assessments remain available.
 - List practice shows 50 items per page without splitting the session. Arrow keys move between single-line answers, Ctrl/Command+Enter replays audio, and Escape pauses with progress recovery.
 - Submit a whole session once, then see responses and answers together. Immediate feedback remains optional.
 - Account-scoped answer recovery, exit/resume, saved session history and retrying mistakes.
@@ -44,7 +44,7 @@ Writing includes Task 1/2 question banks, chart assets, short exercises, timed/f
 
 Feedback links back to the original attempt. Vocabulary occurrences are initially pending; imported feedback can confirm correct usage only with an exact quotation from that attempt. Short exercises and historical attempts with unknown modes are excluded from comparable band trends.
 
-The workspace includes Today, questions, practice, review, vocabulary, progress, account settings, search, favourites and light/dark/system appearance.
+The workspace includes unified Today, seven-day Planning, questions, practice, review, vocabulary and progress. Settings manages study targets, schedule, skills, vocabulary, audio, appearance, account and backups. Drafts survive category changes and failed saves; plan changes show affected tasks before saving.
 
 ## Development
 
@@ -66,7 +66,7 @@ npm test
 npm run build
 ```
 
-Stack: React 19, TypeScript, Vite, Supabase, FSRS, Radix UI and Cloudflare Pages. Study records use schema **v11**. Historical backups migrate to the current model; the old Phrases route is removed.
+Stack: React 19, TypeScript, Vite, Supabase, FSRS, Radix UI and Cloudflare Pages. Study records use schema **v12**. Historical backups migrate to the current model; the old Phrases route is removed.
 
 ## Data And Privacy
 
@@ -91,6 +91,8 @@ Push `master`. The connected Cloudflare Pages project `ielts-fieldbook` builds w
 Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in Pages build settings. Configure the production origin in Supabase authentication site/redirect URLs. `public/_redirects` serves application routes through `index.html`. Do not upload `dist` with Wrangler for routine releases.
 
 See the [deployment runbook](docs/deployment.md) for migration, catalogue seeding, verification and recovery.
+
+See [contributing](docs/contributing.md) for commit titles, squash merges and reproducible audit reports. Detailed generated JSON reports belong in gitignored `local/audits/`.
 
 ## Limits
 

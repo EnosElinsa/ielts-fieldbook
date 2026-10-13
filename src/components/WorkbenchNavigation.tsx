@@ -20,8 +20,8 @@ export function AccountMenu({ user, onImportBackup, onExportBackup, onLegal }: {
       <DropdownMenu.Trigger className="account-menu-trigger" aria-label="Account menu"><AccountMark user={user} size="nav" /><ChevronDown size={14} /></DropdownMenu.Trigger>
       <DropdownMenu.Portal><DropdownMenu.Content className="dropdown-content" sideOffset={8} align="end">
         <DropdownMenu.Label className="dropdown-label">Your workspace</DropdownMenu.Label>
-        <DropdownMenu.Item className="dropdown-item" onSelect={() => navigateWithPracticeGuard('/account', () => navigate('/account'))}><BookOpen size={16} />Account</DropdownMenu.Item>
-        <DropdownMenu.Item className="dropdown-item" onSelect={() => fb.openModal('settings')}><Settings2 size={16} />Study settings</DropdownMenu.Item>
+        <DropdownMenu.Item className="dropdown-item" onSelect={() => navigateWithPracticeGuard('/settings/account', () => navigate('/settings/account'))}><BookOpen size={16} />Account</DropdownMenu.Item>
+        <DropdownMenu.Item className="dropdown-item" onSelect={() => navigateWithPracticeGuard('/settings', () => navigate('/settings'))}><Settings2 size={16} />Settings</DropdownMenu.Item>
         <DropdownMenu.Separator className="dropdown-separator" />
         <DropdownMenu.Label className="dropdown-label">Appearance</DropdownMenu.Label>
         <DropdownMenu.RadioGroup value={theme} onValueChange={setTheme}>
@@ -47,7 +47,7 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
   const items = useMemo(() => {
     const navigation = [
       ...workspaceModules.map(({ label, to, Icon }) => [label, to, Icon]),
-      ['Listening review', '/listening/review', Headphones], ['Intensive listening', '/listening?mode=intensive', Headphones],
+      ['Listening review', '/listening/review', Headphones],
       ['Reading review', '/reading/review', BookOpen], ['Writing questions', '/write/questions', Library],
       ['Speaking questions', '/speak/questions', Library], ['Writing review', '/review?skill=writing', BookOpen], ['Speaking review', '/review?skill=speaking', BookOpen],
     ].map(([title, path, Icon]) => ({ id: path, path, title, kind: 'Page', Icon, run: () => { const module = moduleFor(path.split('?')[0], path.includes('?') ? path.slice(path.indexOf('?')) : '', fb.activeSkill); if (['writing', 'speaking', 'reading', 'listening'].includes(module)) fb.setSkill(module, path); else navigate(path); } }));
@@ -81,7 +81,7 @@ export function MobileNavigation({ onMore, onSelectModule }: { onMore: () => voi
     navigateWithPracticeGuard(to, () => ['writing', 'speaking', 'reading', 'listening'].includes(id) ? fb.setSkill(id, to) : navigate(to));
   };
   return <nav className="mobile-navigation" aria-label="Main navigation">
-    {workspaceModules.filter(link => link.id !== 'progress').map(({ id, to, label, Icon }) => id === 'today' || id === 'vocabulary' ? <Link key={id} to={to} aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} aria-label={label} data-practice-navigation onClick={event => { if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); select(id, to); }}><Icon size={20} /><span>{label === 'Vocabulary' ? 'Vocab' : label}</span></Link> : <button key={id} type="button" aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} onClick={() => select(id, to)}><Icon size={20} /><span>{label}</span></button>)}
-    <button type="button" onClick={onMore}><MoreHorizontal size={20} /><span>More</span></button>
+    {workspaceModules.filter(link => !['progress', 'planning', 'settings'].includes(link.id)).map(({ id, to, label, Icon }) => id === 'today' || id === 'vocabulary' ? <Link key={id} to={to} aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} aria-label={label} data-practice-navigation onClick={event => { if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); select(id, to); }}><Icon size={20} /><span>{label === 'Vocabulary' ? 'Vocab' : label}</span></Link> : <button key={id} type="button" aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} onClick={() => select(id, to)}><Icon size={20} /><span>{label}</span></button>)}
+    <button type="button" className={['progress', 'planning', 'settings', 'account'].includes(activeModule) ? 'active' : undefined} aria-current={['progress', 'planning', 'settings', 'account'].includes(activeModule) ? 'page' : undefined} onClick={onMore}><MoreHorizontal size={20} /><span>More</span></button>
   </nav>;
 }

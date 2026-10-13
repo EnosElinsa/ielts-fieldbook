@@ -10,13 +10,13 @@ export const VOCABULARY_PRACTICE_MODES: { value: VocabularyPracticeMode; label: 
 export const isSpecialistVocabularyMode = (mode: VocabularyPracticeMode) => ['cloze','synonym','distinction'].includes(mode);
 export type VocabularyPreferences = {
   mode: VocabularyPracticeMode; layout: 'list' | 'cards'; feedback: 'end' | 'immediate';
-  sessionSize: number; order: 'source' | 'due' | 'random'; accent: 'uk' | 'us';
+  sessionSize: number; learningBatchSize: number; order: 'source' | 'due' | 'random'; accent: 'uk' | 'us';
   autoPlay: boolean; repeatCount: number; repeatGapMs: number; speechRate: number; volume: number;
   autoAdvance: boolean; audioExamples: boolean; audioGapMs: number;
 };
 
 export const DEFAULT_VOCABULARY_PREFERENCES: VocabularyPreferences = {
-  mode: 'dictation', layout: 'list', feedback: 'end', sessionSize: 20, order: 'source', accent: 'uk',
+  mode: 'dictation', layout: 'list', feedback: 'end', sessionSize: 20, learningBatchSize: 10, order: 'source', accent: 'uk',
   autoPlay: true, repeatCount: 1, repeatGapMs: 800, speechRate: 1, volume: 1,
   autoAdvance: true, audioExamples: true, audioGapMs: 1000,
 };
@@ -37,7 +37,7 @@ export function normalizeVocabularyPreferences(value: unknown): VocabularyPrefer
     feedback: choice('feedback', ['end', 'immediate'], defaults.feedback),
     order: choice('order', ['source', 'due', 'random'], defaults.order),
     accent: choice('accent', ['uk', 'us'], defaults.accent),
-    sessionSize: number('sessionSize', 1, 100, true), repeatCount: number('repeatCount', 1, 5, true),
+    sessionSize: number('sessionSize', 1, 100, true), learningBatchSize: number('learningBatchSize', 1, 50, true), repeatCount: number('repeatCount', 1, 5, true),
     repeatGapMs: number('repeatGapMs', 0, 5000, true), speechRate: number('speechRate', 0.5, 1.5),
     volume: number('volume', 0, 1), audioGapMs: number('audioGapMs', 0, 5000, true),
     autoPlay: boolean('autoPlay'), autoAdvance: boolean('autoAdvance'), audioExamples: boolean('audioExamples'),

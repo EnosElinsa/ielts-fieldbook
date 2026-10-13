@@ -2,6 +2,7 @@
 import Papa from 'papaparse';
 import { addVocabularyItem, recordVocabularyEvidence, normalizeAnswer } from './index';
 import { VOCABULARY_CATALOG } from './catalog';
+import { normalizeVocabularyIdentities, normalizeVocabularyBookId, normalizeVocabularyRowId, normalizeVocabularyUnitId } from './identities';
 
 const text = (value) => value == null ? '' : String(value).trim();
 const flag = (value) => value === true || value === 1 || value === '1' || value === 'true';
@@ -101,7 +102,7 @@ export function mergeVocabularyImport(state, batch) {
   const key=sourceKey(batch.accountId,record);
   const catalogue=VOCABULARY_CATALOG.entries.find(item=>normalizeAnswer(item.term)===normalizeAnswer(record.term));
   const sourceType=batch.provider==='guixue'?'wordbook':'personal';
-  const bookId=batch.provider==='guixue'?`guixue:${record.sourceBookId}`:undefined;
+  const bookId=batch.provider==='guixue'?normalizeVocabularyBookId(record.sourceBookId):undefined;
   const skill=record.sourceBookId==='10176'?'reading':record.sourceBookId==='10174'?'writing':'listening';
   const {item,invalid,reason}=addVocabularyItem(next,{...(catalogue || {}),...(record.senses.length?{senses:record.senses}:{}),term:record.term,pronunciation:record.pronunciation,category:record.term.includes(' ')?'phrase':'word',meaning:record.meaning || catalogue?.meaning || '',example:record.example || catalogue?.example || '',enrichmentPending:!record.meaning&&!catalogue,sources:[{type:sourceType,id:key,skill:batch.provider==='guixue'?skill:undefined,senseId:record.senses[0]?.id || catalogue?.senses[0]?.id,bookId,unitId:record.unitId || undefined,context:`${batch.provider} account ${batch.accountId}; source word ${record.sourceWordId}`} ]});
   if (invalid || !item) throw new Error(`Invalid import item: ${reason || record.term}`);
@@ -134,15 +135,15 @@ export function mergeVocabularyImport(state, batch) {
  }
  for (const book of batch.books) for (const unit of book.units || []) {
   if (!unit.record) continue;
-  const id=`guixue-progress:${batch.accountId}:${book.sourceBookId}:${unit.id}`;
+  const id=normalizeVocabularyRowId(`guixue-progress:${batch.accountId}:${book.sourceBookId}:${unit.id}`);
   const completedEntryIds=[...new Set(batch.records.filter(record=>record.sourceBookId===book.sourceBookId && record.unitId===unit.id && record.history.length).map(record=>next.vocabulary.find(entry=>normalizeAnswer(entry.term)===normalizeAnswer(record.term))?.id).filter(Boolean))];
   const sourceReports={hierarchy:book.reports?.hierarchy?.table?.find(row=>String(row.id)===String(unit.id)) || null,allCount:book.reports?.allCount?.table?.find(row=>String(row.id)===String(unit.id)) || null};
-  const summary={id,bookId:`guixue:${book.sourceBookId}`,unitId:unit.id,completedEntryIds,status:'imported-summary',sourceRecord:unit.record,sourceReports,updatedAt:batch.exportedAt || 'source-time-unknown'};
+  const summary={id,bookId:normalizeVocabularyBookId(book.sourceBookId),unitId:normalizeVocabularyUnitId(unit.id),completedEntryIds,status:'imported-summary',sourceRecord:unit.record,sourceReports,updatedAt:batch.exportedAt || 'source-time-unknown'};
   const existing=next.wordbookProgress.find(progress=>progress.id===id);
   if (existing) { existing.sourceRecord=unit.record; existing.sourceReports=book.reports; } else next.wordbookProgress.push(summary);
  }
  next.vocabularyImportBatches.push({id:batchId,provider:batch.provider,accountId:batch.accountId,exportedAt:batch.exportedAt || null,fingerprints:batchPrints,summaries,books:batch.books,report});
- for (const key of arrays) state[key]=next[key];
+ for (const key of arrays) state[key]=normalizeVocabularyIdentities(next[key]);
  return report;
 }
 

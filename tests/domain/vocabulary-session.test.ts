@@ -17,7 +17,7 @@ describe('vocabulary sessions', () => {
   test('whole units and retries retain every passed word while batches retain their preference cap', () => {
     const { cards } = fixture();
     const many = Array.from({ length: 235 }, (_, index) => ({ ...cards[0], id: `word-${index}:sense:dictation`, entryId: `word-${index}` }));
-    const selection = { kind: 'unit' as const, bookId: 'guixue:11320', unitId: '35028' };
+    const selection = { kind: 'unit' as const, bookId: 'ielts-listening-vocabulary', unitId: 'ielts-listening-vocabulary-chapter-03-group-12' };
     const unit = createVocabularySession(many, 'dictation', { sessionSize: 20 }, {}, selection);
     expect(unit.cardIds).toHaveLength(235);
     expect(unit.selection).toEqual(selection);

@@ -6,6 +6,7 @@ import '@testing-library/jest-dom/vitest';
 import { readFileSync } from 'node:fs';
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { VocabularyGroupLearnPage } from './VocabularyGroupLearnPage';
+import { buildLearningBatch } from '../../domain/vocabulary/learningBatch';
 
 const mocks = vi.hoisted(() => ({ fb: null as any, owner: 'account-one' as string | null }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
@@ -13,6 +14,17 @@ vi.mock('../../storage/remote', () => ({ accountId: () => mocks.owner }));
 vi.mock('./VocabularyPages', () => ({ VocabularyNavigation: () => <nav>Vocabulary</nav> }));
 vi.mock('./Pronunciation', () => ({ Pronunciation: ({entry}: any) => <button>Play {entry.term}</button> }));
 const original = structuredClone(VOCABULARY_CATALOG);
+test('planned learning retains its required fixed batch mode and whole-group assessments clear binding', async () => {
+  const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'definition');
+  mocks.fb.state.plans=[{id:'planned',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',...batch.selection,cards:batch.selection.cards}}];
+  mount(`/vocabulary/wordbooks/book/groups/group/learn?planId=planned&batch=0&batchSize=10&batchCards=${encodeURIComponent(JSON.stringify(batch.selection.cards))}`);
+  const link=await screen.findByRole('link',{name:/Test this batch/});
+  const url=new URL(link.getAttribute('href')!,'http://local.test');
+  expect(url.searchParams.get('mode')).toBe('definition');
+  expect(url.searchParams.get('planId')).toBe('planned');
+  expect(screen.queryByText('Other assessments')).not.toBeInTheDocument();
+  for (const groupLink of screen.getAllByRole('link').filter(node=>node.getAttribute('href')?.includes('/vocabulary/study?') && node!==link)) expect(new URL(groupLink.getAttribute('href')!,'http://local.test').searchParams.has('planId')).toBe(false);
+});
 const path = '/vocabulary/wordbooks/book/groups/group/learn';
 function entry(index: number) {
   return { id:`word-${index}`, term:`Word ${index}`, category:'word', meaning:`Meaning ${index}`, example:`Example ${index}.`, tags:[], sources:[{type:'wordbook',id:`source-${index}`,bookId:'book',unitId:'group'}], senses:[{id:`sense-${index}`,definition:`Meaning ${index}`,example:index===1?'Meronym: stock animal':`Example ${index}.`,pos:'noun',collocations:['reliable phrase']}], createdAt:'2026-01-01T00:00:00Z',updatedAt:'2026-01-01T00:00:00Z' };
@@ -29,6 +41,29 @@ beforeEach(() => {
 afterEach(async()=>{vi.useRealTimers();cleanup();await act(async()=>{await Promise.resolve();});Object.assign(VOCABULARY_CATALOG,structuredClone(original));vi.restoreAllMocks();});
 function Location(){const location=useLocation();return <output aria-label="Route">{location.pathname+location.search}</output>;}
 function mount(url=path){return render(<MemoryRouter initialEntries={[url]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes><Location/></MemoryRouter>);}
+
+test('primary assessment freezes the current ten words and preserves its plan', async () => {
+  const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'dictation');
+  mocks.fb.state.plans=[{id:'plan-one',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'dictation',...batch.selection,cards:batch.selection.cards}}];
+  mount(`${path}?planId=plan-one`);
+  await screen.findByRole('heading', { name: 'Word 1' });
+  const link = await screen.findByRole('link', { name: /Test this batch/ });
+  const params = new URL(link.getAttribute('href')!, 'https://test.local').searchParams;
+  expect(params.get('planId')).toBe('plan-one');
+  expect(params.get('batch')).toBe('0');
+  expect(JSON.parse(params.get('batchCards')!)).toHaveLength(10);
+  expect(JSON.parse(params.get('batchCards')!)[0]).toEqual({ entryId: 'word-1', senseId: 'sense-1' });
+});
+
+test('last word stays in its batch so learning does not skip its assessment', async () => {
+  const user = userEvent.setup();
+  mount(`${path}?word=word-10`);
+  await screen.findByRole('heading', { name: 'Word 10' });
+  await user.click(screen.getByRole('button', { name: 'Mark viewed' }));
+  expect(screen.getByRole('heading', { name: 'Word 10' })).toBeInTheDocument();
+  const params = new URL(screen.getByRole('link', { name: /Test this batch/ }).getAttribute('href')!, 'https://test.local').searchParams;
+  expect(params.get('batch')).toBe('0');
+});
 
 test('viewed final word and unchanged batch do not create another save',async()=>{
   mocks.fb.state.wordbookProgress=[{bookId:'book',unitId:'group',learning:{viewedEntryIds:['word-12'],currentEntryId:'word-12',updatedAt:'2026-01-01'}}];
@@ -143,10 +178,13 @@ test('late save cannot leak progress into another account',async()=>{
 });
 
 test('rapid navigation remains immediate and saves only the latest durable snapshot',async()=>{
+  const user = userEvent.setup();
   mount();await screen.findByRole('heading',{name:'Word 1'});
-  fireEvent.click(screen.getByRole('button',{name:'Mark viewed & next'}));
-  fireEvent.click(screen.getByRole('button',{name:'Mark viewed & next'}));
-  fireEvent.click(screen.getByRole('button',{name:'Batch 2: words 11–12'}));
+  await user.click(screen.getByRole('button',{name:'Mark viewed & next'}));
+  await screen.findByRole('heading',{name:'Word 2'});
+  await user.click(screen.getByRole('button',{name:'Mark viewed & next'}));
+  await screen.findByRole('heading',{name:'Word 3'});
+  await user.click(screen.getByRole('button',{name:'Batch 2: words 11–12'}));
   expect(screen.getByRole('heading',{name:'Word 11'})).toBeInTheDocument();
   expect(screen.getByText('Viewed 2 / 12')).toBeInTheDocument();
   expect(screen.getByRole('button',{name:'Previous word'})).toBeEnabled();
@@ -246,7 +284,7 @@ test('multiple meanings preserve explicit selection in the details return link a
   const released=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'));
   Object.assign(VOCABULARY_CATALOG,released);
   const book=released.entries.find((e:any)=>e.term==='book');
-  const url=`/vocabulary/wordbooks/guixue%3A10177/groups/21955/learn?word=${book.id}`;
+  const url=`/vocabulary/wordbooks/ielts-listening-essentials/groups/ielts-listening-essentials-chapter-04-group-01/learn?word=${book.id}`;
   mount(url);
   await screen.findByRole('heading',{name:'book'});
   const meaningButtons=screen.getAllByRole('button',{name:/Meaning \d/});
@@ -265,7 +303,7 @@ test('paste learning card uses the existing complete reviewed meaning, example a
   const released=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'));
   Object.assign(VOCABULARY_CATALOG,released);
   const paste=released.entries.find((e:any)=>e.term==='paste');
-  mount(`/vocabulary/wordbooks/guixue%3A10174/groups/21840/learn?word=${paste.id}`);
+  mount(`/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-12-group-02/learn?word=${paste.id}`);
   await screen.findByRole('heading',{name:'paste'});
   expect(screen.getByText('Mix the flour and water into a smooth paste.')).toBeInTheDocument();
   expect(screen.getByText('tomato paste')).toBeInTheDocument();

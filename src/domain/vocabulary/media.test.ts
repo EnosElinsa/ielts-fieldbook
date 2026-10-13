@@ -5,7 +5,7 @@ import supplements from './contextSenseOverlay.json';
 import type { VocabularyEntry } from './types';
 import { readFileSync } from 'node:fs';
 import type { VocabularyMedia } from './media';
-const core = { id: 've-7c70dbbe', term: 'core', senses: [supplements.bindings.find(item => item.entryId === 've-7c70dbbe' && item.unitId === '21795')!.originalSense] } as unknown as VocabularyEntry;
+const core = { id: 've-7c70dbbe', term: 'core', senses: [supplements.bindings.find(item => item.entryId === 've-7c70dbbe' && item.unitId === 'ielts-vocabulary-chapter-01-group-01')!.originalSense] } as unknown as VocabularyEntry;
 afterEach(() => vi.unstubAllGlobals());
 describe('sense-bound vocabulary media', () => {
  test('drawn food concepts need the selected concrete noun definition', () => {
@@ -31,14 +31,14 @@ describe('sense-bound vocabulary media', () => {
   expect(fetcher).toHaveBeenCalledTimes(2);
  });
  test('food and geography core use different local images, unknown broad context has no image', () => {
-  const earth = resolveVocabularyLearningContext(core, { bookId: 'guixue:10174', unitId: '21795' });
-  const food = resolveVocabularyLearningContext(core, { bookId: 'guixue:10174', unitId: '21840' });
+  const earth = resolveVocabularyLearningContext(core, { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' });
+  const food = resolveVocabularyLearningContext(core, { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-12-group-02' });
   expect(getVocabularyIllustration(earth)?.src).toContain('earth-layers');
   expect(getVocabularyIllustration(food)?.src).toContain('apple-section');
   expect(getVocabularyIllustration(resolveVocabularyLearningContext(core))).toBeUndefined();
  });
  test('a learner edit does not receive a public sense image', () => {
-  const resolved = resolveVocabularyLearningContext({ ...core, senses: [{ ...core.senses[0], definition: 'My custom definition' }] }, { bookId: 'guixue:10174', unitId: '21795' });
+  const resolved = resolveVocabularyLearningContext({ ...core, senses: [{ ...core.senses[0], definition: 'My custom definition' }] }, { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' });
   expect(getVocabularyIllustration(resolved)).toBeUndefined();
  });
  test('on-demand shards share a request and failed requests retry instead of poisoning the cache', async () => {
@@ -78,7 +78,7 @@ describe('sense-bound vocabulary media', () => {
   expect((await getVocabularyMedia(personal)).recordings.at(-1)).toMatchObject({ url: 'https://example.org/pronounce?word=new', status: 'unknown' });
  });
  test('credits retain author, license and change statement while deduplicating the same source', () => {
-  const image = getVocabularyIllustration(resolveVocabularyLearningContext(core, { bookId: 'guixue:10174', unitId: '21795' }))!;
+  const image = getVocabularyIllustration(resolveVocabularyLearningContext(core, { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' }))!;
   const credits = aggregateMediaCredits([], image);
   expect(credits).toHaveLength(1); expect(credits[0]).toMatchObject({ author: 'Surachit', license: 'CC BY-SA 3.0' }); expect(credits[0].changes).toContain('white');
  });

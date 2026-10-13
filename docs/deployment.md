@@ -34,6 +34,18 @@ Verify source membership totals per book, public English content/provenance, the
 
 Unknown source dates remain null with the original history identity and label. They must not be converted to fake dated review or FSRS events.
 
+## Workflow And Identity Release
+
+State v12 adds explicit planned targets and fixed vocabulary batches. The six book IDs, 206 unit IDs and 9,205 membership IDs are fixed in `src/domain/vocabulary/identityMapping.json`; entry and sense IDs retain their original identities. Provider names and licenses remain attribution.
+
+Before the identity migration, create a complete administrator backup with `node scripts/backup-workspace.mjs <private-directory>`. The script checks all 35 tables and records row counts and SHA256 digests. Keep it outside the checkout used for cleanup. Run `npm run test:identities`, then `node scripts/build-identity-rehearsal.mjs` and execute the generated private SQL using the database management API. The rehearsal applies the migration twice, compares full-row SHA256 multisets with field-normalized originals, checks immutable triggers, and rolls back. It must pass before applying `20261013160000_neutral_vocabulary_identities.sql` and registering that version.
+
+The migration takes workspace and table locks, aborts identity collisions, converts only identifier references, and restores the original history constraints. Legacy direct writes and import/session/workspace RPCs normalize identifiers before validation. RLS remains in force. Exact legacy PostgREST filters cannot find canonical rows; coordinate frontend publication with the migration and retain the prior released resource packs for old clients. Do not insert duplicate alias catalog rows.
+
+After release, run `supabase/verify-neutral-vocabulary.sql`, compare account counts and preserved content/timestamps against the private backup, verify signed media and desktop/mobile workflows, and create a post-release backup. Keep the pre-release database snapshot, original Git bundle, commit SHA mapping and previous Pages resources available for rollback. A frontend rollback must retain the identity compatibility functions and the old resource packs.
+
+The one-time Git title migration uses an isolated mirror and verifies every commit tree, author, dates and mapped parent graph. Publish only after checking the remote expected SHA, using `--force-with-lease=refs/heads/master:<expected-old-sha>`. Future pull requests use English Conventional Commit titles and squash merge.
+
 ## Recovery
 
 A failed import RPC rolls back its entire batch. Retry the same batch ID after resolving the cause. Do not manually delete immutable history to retry.

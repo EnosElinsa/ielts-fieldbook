@@ -46,3 +46,30 @@ test('review plans open the canonical queue and targeted practice opens its part
   const plan = completeReceptivePlanIfMatched(state)!;
   expect(receptivePlanPath(plan, 'listening')).toBe('/listening/intensive/part?sentence=s1');
 });
+
+test('typed receptive plans reject other plan ids, mixed sections, incompatible mode and unrelated review edits',()=>{
+  const state=base('reading-practice');state.plans[0].target={type:'section',skill:'reading',sectionId:'part',mode:'practice'};
+  const attempt={id:'exam',planId:'plan',skill:'reading',mode:'practice',status:'completed',startedAt,completedAt,sectionIds:['part']};
+  for(const patch of [{planId:'other'},{mode:'mock'},{sectionIds:['part','other']}]){state.examAttempts=[{...attempt,...patch}];expect(completeReceptivePlanIfMatched(state)).toBeNull();}
+  state.plans[0].kind='reading-review';state.plans[0].attemptId='exam';state.plans[0].target={type:'exam-review',skill:'reading',attemptId:'exam'};
+  state.examAttempts=[{...attempt,updatedAt:completedAt,results:{q1:false},evidence:{q1:''},errorReasons:{q1:''}}];const before=structuredClone(state);
+  Object.assign(state.examAttempts[0],{evidence:{q1:'Passage proof'},errorReasons:{q1:'Missed detail'},planId:'other'});
+  expect(completeReceptivePlanIfMatched(state,before)).toBeNull();state.examAttempts[0].planId='plan';
+  expect(completeReceptivePlanIfMatched(state,before)?.status).toBe('completed');
+});
+
+test('a bound exam completes its original task without clearing another active task',()=>{
+  const state=base('reading-practice');state.plans[0].target={type:'section',skill:'reading',sectionId:'part',mode:'practice'};
+  state.plans.push({id:'other',kind:'vocabulary',status:'in_progress',startedAt});state.activePlanId='other';
+  state.examAttempts=[{id:'exam',planId:'plan',skill:'reading',mode:'practice',status:'completed',completedAt,sectionIds:['part']}];
+  expect(completeReceptivePlanIfMatched(state)?.id).toBe('plan');
+  expect(state.activePlanId).toBe('other');
+  expect(completeReceptivePlanIfMatched(state)).toBeNull();
+});
+
+test('unbound legacy work only completes the active legacy task',()=>{
+  const state=base('reading-practice');state.activePlanId='other';
+  state.examAttempts=[{id:'exam',skill:'reading',status:'completed',completedAt,sectionIds:['part']}];
+  expect(completeReceptivePlanIfMatched(state)).toBeNull();
+  expect(receptivePlanPath({kind:'listening-intensive'},'listening')).toBe('/listening');
+});

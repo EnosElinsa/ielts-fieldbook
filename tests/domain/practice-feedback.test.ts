@@ -59,7 +59,7 @@ test('v9 migration preserves lineage and target errors while old modes stay unkn
     sessions: [{ id: 'old', mode: 'full', parentSessionId: 'parent', essay: 'Old response.' }],
     drafts: { old: { text: 'Draft.', mode: 'timed', parentSessionId: 'parent' }, modern: { text: 'Modern.', practiceMode: 'body', targetErrorIds: ['e1'] } },
   });
-  assert.equal(state.schemaVersion, 11);
+  assert.equal(state.schemaVersion, 12);
   assert.equal(state.sessions[0].practiceMode, 'unknown');
   assert.equal(state.sessions[0].parentSessionId, 'parent');
   assert.equal(state.drafts.old.practiceMode, 'unknown');
@@ -165,7 +165,7 @@ test('blank metadata never consumes the next line and unknown legacy feedback ca
   assert.deepEqual(core.numericOveralls(state, 'writing'), []);
 });
 
-test('short drill feedback remains the next practice when no comparable bands exist', async () => {
+test('short drill feedback remains available while unified planning prioritizes its due correction', async () => {
   const state = core.migrateState({
     sessions: [{ id: 'drill', questionId: 'q1', practiceMode: 'overview', essay: 'Overall, sales increased.' }],
   });
@@ -173,5 +173,6 @@ test('short drill feedback remains the next practice when no comparable bands ex
   assert.equal(core.todaySession(state, now, 'writing').practice.deskMode, 'overview');
   const { ensurePlans } = await import('../../src/lib/planTemplates');
   const plans = ensurePlans(state, 'writing');
-  assert.equal(plans[0].deskMode, 'overview');
+  assert.equal(plans[0].target.type,'error-review');
+  assert.equal(plans[0].target.errorIds.length,1);
 });

@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("readiness_audit", ROOT / "scripts/audit-vocabulary-readiness.py")
 READINESS = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(READINESS)
-OUTPUT_JSON = ROOT / "docs/vocabulary-curriculum-audit.json"
+OUTPUT_JSON = ROOT / "local/audits/vocabulary-curriculum-audit.json"
 OUTPUT_MD = ROOT / "docs/vocabulary-curriculum-audit.md"
 RELATION = re.compile(r"^(?:near[- ]?synonyms?|synonyms?|antonyms?|holonyms?|hypernyms?|hyponyms?|meronyms?|coordinate terms?|for quotations|see (?:also )?(?:citations|thesaurus))\s*[:.]?", re.I)
 PLACEHOLDER = re.compile(r"definition pending|meaning pending|a phrase referring to|the word is|^senses (?:relating|referring)|\b(?:particularly|such as)\s*:?$|^(?:alternative|standard|british|american|commonwealth|non-oxford|uk).{0,90}\b(?:spelling|form) of\b", re.I)
@@ -127,6 +127,7 @@ def main():
             return 1
     else:
         for path, text in output:
+            path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text, encoding="utf-8")
     print(json.dumps(report["summary"], indent=2))
     return int(bool(report["structuralDefects"]))

@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
+import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { buildVocabularyResources, vocabularyResourceHeaders } from '../../scripts/vocabularyResources';
 
@@ -46,5 +47,35 @@ test('resources use deterministic content-addressed URLs', () => {
     // name the emitted file after one or more URL decoding passes.
     expect(url).toMatch(/^\/[a-zA-Z0-9._/-]+$/);
     expect(decodeURIComponent(url)).toBe(url);
+  }
+});
+
+test('previously released discovery and teaching URLs remain available with legacy identities', () => {
+  const generated = buildVocabularyResources(process.cwd());
+  const manifestUrl='/vocabulary-resources/manifest.594ea6a804861668.json';
+  const teachingIndexUrl='/vocabulary-resources/teaching-index.61322c9fd3ccb3d1.json';
+  expect(generated.resources.has(manifestUrl)).toBe(true);
+  expect(generated.resources.has(teachingIndexUrl)).toBe(true);
+  const legacy=JSON.parse(generated.resources.get(manifestUrl)!);
+  expect(legacy.books.map((book: {id: string})=>book.id)).toContain('guixue:10174');
+  expect(generated.manifest.books.map(book=>book.id)).not.toContain('guixue:10174');
+  for(const unit of legacy.units) {
+    if(!unit.resource) continue;
+    const pack=JSON.parse(generated.resources.get(unit.resource)!);
+    expect(pack.memberships.every((row: {bookId: string;unitId: string})=>row.bookId===unit.bookId && row.unitId===unit.id)).toBe(true);
+    expect(generated.resources.has(unit.teachingResource)).toBe(true);
+  }
+  for(const url of [...Object.values(legacy.entryResources),...Object.values(legacy.entryTeachingResources)] as string[]) expect(generated.resources.has(url)).toBe(true);
+});
+
+test.skipIf(!process.env.LEGACY_VOCABULARY_RESOURCE_DIRECTORY)('all archived release assets retain their exact bytes and URLs', () => {
+  const archive=process.env.LEGACY_VOCABULARY_RESOURCE_DIRECTORY!;
+  const generated=buildVocabularyResources(process.cwd());
+  const files=readdirSync(archive,{recursive:true,withFileTypes:true}).filter(item=>item.isFile());
+  expect(files).toHaveLength(460);
+  for(const item of files) {
+    const absolute=path.join(item.parentPath,item.name);
+    const url='/vocabulary-resources/'+path.relative(archive,absolute).split(path.sep).join('/');
+    expect(generated.resources.get(url),url).toBe(readFileSync(absolute,'utf8'));
   }
 });

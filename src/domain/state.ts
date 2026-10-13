@@ -4,10 +4,11 @@ import { normalizeStory, dedupeStories } from './stories';
 import { collectVocabularyProduction, migrateLegacyVocabulary } from './vocabulary';
 import { DEFAULT_VOCABULARY_PREFERENCES, normalizeVocabularyPreferences } from './vocabulary/preferences';
 import { normalizeExamStore } from './exam/store';
+import { normalizeVocabularyIdentities } from './vocabulary/identities';
 import type { ExamAttempt, IntensiveSession } from './exam/types';
 import { wordCount, hashText, dateKey, makeId, nowIso, clone } from './utils';
 
-export const STATE_VERSION = 11;
+export const STATE_VERSION = 12;
 export const EXAM_COLLECTIONS = ['examAttempts', 'intensiveSessions'];
 export const VOCABULARY_COLLECTIONS = [
   'vocabulary', 'vocabularyStates', 'vocabularyEvidence', 'vocabularyReviews',
@@ -107,7 +108,7 @@ export function persistShape(state) {
   delete payload.questions;
   delete payload.speakingTopics;
   payload.assessments = (state.assessments || []).map(migrateAssessmentVocabulary);
-  return payload;
+  return normalizeVocabularyIdentities(payload);
 }
 
 export function compactAssessmentsForQuota(state) {
@@ -176,7 +177,7 @@ export function emptyState() {
 }
 
 export function migrateState(raw) {
-  const source = raw && typeof raw === 'object' ? raw : {};
+  const source = normalizeVocabularyIdentities(raw && typeof raw === 'object' ? raw : {});
   const state = Object.assign(emptyState(), source);
   Object.assign(state, migrateLegacyVocabulary(source));
   Object.assign(state, normalizeExamStore(source));

@@ -3,6 +3,7 @@ import { catalogVocabularyEntry, catalogVocabularySenses, hasVocabularySenseEdit
 import { supplementVocabularySense, vocabularyReadinessBaselines } from './readiness';
 import { vocabularyCurriculum, vocabularyCurriculumBaselines, type VocabularyCurriculum } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
+import { normalizeVocabularyScope } from './identities';
 
 const supplements = vocabularyTeaching.context;
 export const VOCABULARY_CONTEXT_VERSION = `${supplements.version}/curriculum-2026-10-12.1`;
@@ -37,6 +38,7 @@ function key(value: { bookId?: string; unitId?: string; entryId: string }) {
 
 /** Pure display/task resolver. Explicit sense wins; group bindings never change learner data. */
 export function resolveVocabularyLearningContext(entry: VocabularyEntry, request: VocabularyContextRequest = {}): ResolvedVocabularyLearningContext {
+  request = normalizeVocabularyScope(request);
   ensureContexts();
   const membershipKey = key({ ...request, entryId: entry.id });
   const membershipBinding = bindings.get(membershipKey);

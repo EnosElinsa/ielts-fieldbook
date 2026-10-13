@@ -23,7 +23,7 @@ test('every released membership has a complete explicit learning curriculum with
 });
 
 test('livestock uses an actual example and reviewed farm-animal combinations in the food theme', () => {
-  const result = resolveVocabularyLearningContext(entry('livestock'), {bookId:'guixue:10174',unitId:'21840'});
+  const result = resolveVocabularyLearningContext(entry('livestock'), {bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02'});
   expect(result.sense?.example).not.toMatch(/^Meronym:/);
   expect(result.sense?.example).toMatch(/[.!?]$/);
   expect(result.sense?.collocations).toContain('raise livestock');
@@ -31,14 +31,14 @@ test('livestock uses an actual example and reviewed farm-animal combinations in 
 });
 
 test('a multiple-meaning wordbook exposes distinct modern meanings with separate identities', () => {
-  const result = resolveVocabularyLearningContext(entry('book'), {bookId:'guixue:10177',unitId:'21955'});
+  const result = resolveVocabularyLearningContext(entry('book'), {bookId:'ielts-listening-essentials',unitId:'ielts-listening-essentials-chapter-04-group-01'});
   expect(result.curriculum?.basis).toBe('multiple');
   expect(result.curriculum?.senses.length).toBeGreaterThan(1);
   expect(result.curriculum?.senses.some(s=>s.pos==='verb' && /reserv/i.test(s.definition))).toBe(true);
   const ids = result.curriculum!.senses.map(s=>s.id);
   expect(new Set(ids).size).toBe(ids.length);
   const verb = result.curriculum!.senses.find(s=>s.pos==='verb')!;
-  const selected = resolveVocabularyLearningContext(entry('book'), {bookId:'guixue:10177',unitId:'21955',senseId:verb.id});
+  const selected = resolveVocabularyLearningContext(entry('book'), {bookId:'ielts-listening-essentials',unitId:'ielts-listening-essentials-chapter-04-group-01',senseId:verb.id});
   expect(selected.sense?.id).toBe(verb.id);
 });
 
@@ -46,7 +46,7 @@ test('unknown group and learner edits cannot inherit a public curriculum confirm
   expect(resolveVocabularyLearningContext(entry('livestock'), {bookId:'unknown',unitId:'unknown'}).curriculum).toBeUndefined();
   const raw=entry('livestock');raw.senses[0].definition='My farm vocabulary note.';
   const before=structuredClone(raw);
-  const resolved=resolveVocabularyLearningContext(raw,{bookId:'guixue:10174',unitId:'21840'});
+  const resolved=resolveVocabularyLearningContext(raw,{bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02'});
   expect(resolved.sense?.definition).toBe(raw.senses[0].definition);
   expect(resolved.reviewed).toBe(false);
   expect(raw).toEqual(before);
@@ -54,7 +54,7 @@ test('unknown group and learner edits cannot inherit a public curriculum confirm
 
 test('source transcript selections use separate meanings and freeze verified provenance without migrating history', () => {
   const raw=entry('Drone');
-  const m=catalog.memberships.find((row:any)=>row.entryId===raw.id&&row.bookId==='guixue:10216');
+  const m=catalog.memberships.find((row:any)=>row.entryId===raw.id&&row.bookId==='ielts-listening-practice-20');
   const before=structuredClone(raw);
   const resolved=resolveVocabularyLearningContext(raw,m);
   expect(resolved.curriculum?.basis).toBe('source');
@@ -76,7 +76,7 @@ test('source transcript selections use separate meanings and freeze verified pro
 });
 
 test('theme teaching recommendations do not inherit reviewed status from a different old binding', () => {
-  const result=resolveVocabularyLearningContext(entry('treat'),{bookId:'guixue:10174',unitId:'21839'});
+  const result=resolveVocabularyLearningContext(entry('treat'),{bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-01'});
   if(result.sense?.pos==='noun') {
     expect(result.reviewed).toBe(false);
     expect(result.context?.status).toBe('unreviewed');
@@ -86,17 +86,17 @@ test('theme teaching recommendations do not inherit reviewed status from a diffe
 test('a source recommendation cannot override notes on a different primary identity',()=>{
   const raw=entry('core');
   raw.senses[0].definition='My own core definition.';
-  const result=resolveVocabularyLearningContext(raw,{bookId:'guixue:10174',unitId:'21840'});
+  const result=resolveVocabularyLearningContext(raw,{bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02'});
   expect(result.sense?.id).toBe(raw.senses[0].id);
   expect(result.sense?.definition).toBe(raw.senses[0].definition);
   expect(result.curriculumCurrent).toBe(false);
-  const explicit=resolveVocabularyLearningContext(raw,{bookId:'guixue:10174',unitId:'21840',senseId:'editorial:core:fruit-centre'});
+  const explicit=resolveVocabularyLearningContext(raw,{bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02',senseId:'editorial:core:fruit-centre'});
   expect(explicit.sense?.id).toBe('editorial:core:fruit-centre');
 });
 
 test.each([['decade',/ten years/],['academic',/education|study/],['office',/work|room/]])('general lists select modern %s meanings without retargeting legacy identities',(term,expected)=>{
   const raw=entry(term);
-  const membership=catalog.memberships.find((row:any)=>row.entryId===raw.id&&row.bookId==='guixue:11320');
+  const membership=catalog.memberships.find((row:any)=>row.entryId===raw.id&&row.bookId==='ielts-listening-vocabulary');
   const result=resolveVocabularyLearningContext(raw,membership);
   expect(result.sense?.definition).toMatch(expected);
   expect(result.sense?.id).not.toBe(raw.senses[0].id);

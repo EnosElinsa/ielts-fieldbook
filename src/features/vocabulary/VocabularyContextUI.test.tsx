@@ -115,13 +115,13 @@ function mount(path: string) {
     </MemoryRouter>,
   );
 }
-const book = "guixue:10174";
+const book = "ielts-vocabulary";
 const core = () => release.entries.find((entry: any) => entry.term === "core");
 test("group browsing works before enrollment, deduplicates source order, includes archived, and play creates no learning writes", async () => {
   const raw = core();
   mocks.fb.state.vocabulary = [{ ...structuredClone(raw), tags: ["archived"] }];
   const before = JSON.stringify(mocks.fb.state);
-  mount(`/vocabulary/wordbooks/${book}/groups/21795/words`);
+  mount(`/vocabulary/wordbooks/${book}/groups/ielts-vocabulary-chapter-01-group-01/words`);
   await screen.findByRole("heading", { name: "Group 1 words" });
   expect(
     screen.getByText("55 unique words · Original source order"),
@@ -138,7 +138,7 @@ test("group browsing works before enrollment, deduplicates source order, include
     screen.getByRole("link", { name: /Start assessment/ }),
   ).toHaveAttribute(
     "href",
-    `/vocabulary/study?bookId=${encodeURIComponent(book)}&unitId=21795&dueOnly=false`,
+    `/vocabulary/study?bookId=${encodeURIComponent(book)}&unitId=ielts-vocabulary-chapter-01-group-01&dueOnly=false`,
   );
   await userEvent
     .setup()
@@ -148,7 +148,7 @@ test("group browsing works before enrollment, deduplicates source order, include
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
 test("235-group search and 50 pagination preserve original indexes and full study selection", async () => {
-  mount("/vocabulary/wordbooks/guixue:11320/groups/35028/words?page=4");
+  mount("/vocabulary/wordbooks/ielts-listening-vocabulary/groups/ielts-listening-vocabulary-chapter-03-group-12/words?page=4");
   await screen.findByRole("heading", { name: "Group 12 words" });
   expect(screen.getByText("201–235 of 235 · 50 per page")).toBeInTheDocument();
   const first = screen.getAllByRole("row")[1];
@@ -165,7 +165,7 @@ test("235-group search and 50 pagination preserve original indexes and full stud
     screen.getByRole("link", { name: /Start assessment/ }),
   ).toHaveAttribute(
     "href",
-    "/vocabulary/study?bookId=guixue%3A11320&unitId=35028&dueOnly=false",
+    "/vocabulary/study?bookId=ielts-listening-vocabulary&unitId=ielts-listening-vocabulary-chapter-03-group-12&dueOnly=false",
   );
   expect(
     screen.getAllByRole("row").some((row) => row.textContent?.includes("201")),
@@ -175,9 +175,9 @@ test("detail uses distinct confirmed core group content, one bottom credits coll
   const raw = core();
   const resolved = resolveVocabularyLearningContext(raw, {
     bookId: book,
-    unitId: "21840",
+    unitId: "ielts-vocabulary-chapter-12-group-02",
   });
-  const origin = `/vocabulary/entry/${raw.id}?bookId=${encodeURIComponent(book)}&unitId=21840&returnTo=${encodeURIComponent(`/vocabulary/wordbooks/${book}/groups/21840/words?search=core&page=0`)}`;
+  const origin = `/vocabulary/entry/${raw.id}?bookId=${encodeURIComponent(book)}&unitId=ielts-vocabulary-chapter-12-group-02&returnTo=${encodeURIComponent(`/vocabulary/wordbooks/${book}/groups/ielts-vocabulary-chapter-12-group-02/words?search=core&page=0`)}`;
   mount(origin);
   expect(
     screen.getByRole("heading", { name: "Current learning meaning" }),
@@ -192,7 +192,7 @@ test("detail uses distinct confirmed core group content, one bottom credits coll
   expect(practice.searchParams.get("senseId")).toBe(
     "editorial:core:fruit-centre",
   );
-  expect(practice.searchParams.get("unitId")).toBe("21840");
+  expect(practice.searchParams.get("unitId")).toBe("ielts-vocabulary-chapter-12-group-02");
   expect(practice.searchParams.get("returnTo")).toBe(origin);
   expect(screen.getByRole("link", { name: "Image credits" })).toHaveAttribute(
     "href",
@@ -212,7 +212,7 @@ test("detail uses distinct confirmed core group content, one bottom credits coll
 });
 test("common-list group has an explicit learning syllabus without claiming source confirmation", async () => {
   const raw = release.entries.find((entry: any) => entry.term === "cashier");
-  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A11320&unitId=35003`);
+  mount(`/vocabulary/entry/${raw.id}?bookId=ielts-listening-vocabulary&unitId=ielts-listening-vocabulary-chapter-01-group-02`);
   await screen.findByText("Common meaning to learn");
   expect(
     screen.getByRole("heading", { name: "Current learning meaning" }),
@@ -224,7 +224,7 @@ test("common-list group has an explicit learning syllabus without claiming sourc
 });
 test("detail back preserves list filters and focus across real route navigation", async () => {
   const view = mount(
-    `/vocabulary/wordbooks/${book}/groups/21840/words?search=core`,
+    `/vocabulary/wordbooks/${book}/groups/ielts-vocabulary-chapter-12-group-02/words?search=core`,
   );
   await screen.findByRole("heading", { name: "Group 2 words" });
   const coreLink = screen.getByRole("link", { name: "core" });
@@ -279,8 +279,8 @@ function resultsFixture(mode = "dictation") {
     startedAt: "2025-01-01",
     submittedAt: "2025-01-01",
     preferences: normalizeVocabularyPreferences({}),
-    filter: { bookId: book, unitId: "21840" },
-    selection: { kind: "unit", bookId: book, unitId: "21840" },
+    filter: { bookId: book, unitId: "ielts-vocabulary-chapter-12-group-02" },
+    selection: { kind: "unit", bookId: book, unitId: "ielts-vocabulary-chapter-12-group-02" },
     results: [row],
     summary: { correct: 0, incorrect: 1, total: 1, pending: 0 },
     entryIds: [raw.id],
@@ -326,7 +326,7 @@ test("historical dictation shows current group reference but frozen score and gr
   expect(details.searchParams.get("senseId")).toBe(
     "editorial:core:fruit-centre",
   );
-  expect(details.searchParams.get("unitId")).toBe("21840");
+  expect(details.searchParams.get("unitId")).toBe("ielts-vocabulary-chapter-12-group-02");
   await userEvent
     .setup()
     .click(
@@ -356,7 +356,7 @@ test("non-dictation preserves frozen prompt and adds current definition separate
 test("wordbook navigation stays active on direct group browsing route", () => {
   render(
     <MemoryRouter
-      initialEntries={["/vocabulary/wordbooks/guixue:10174/groups/21795/words"]}
+      initialEntries={["/vocabulary/wordbooks/ielts-vocabulary/groups/ielts-vocabulary-chapter-01-group-01/words"]}
     >
       <VocabularyNavigation />
     </MemoryRouter>,
@@ -370,7 +370,7 @@ test("edited learner notes remain visible as notes without a context-reviewed he
   const raw = structuredClone(core());
   const resolved = resolveVocabularyLearningContext(raw, {
     bookId: book,
-    unitId: "21795",
+    unitId: "ielts-vocabulary-chapter-01-group-01",
   });
   raw.senses = [
     {
@@ -382,7 +382,7 @@ test("edited learner notes remain visible as notes without a context-reviewed he
     },
   ];
   mocks.fb.state.vocabulary = [raw];
-  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21795`);
+  mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-01-group-01`);
   expect(
     screen.getByRole("heading", { name: "Current learning meaning" }),
   ).toBeInTheDocument();
@@ -456,7 +456,7 @@ test("raw evidence without a review retains response, verification, result and d
     },
   ];
   const before = JSON.stringify(mocks.fb.state);
-  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840`);
+  mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-02`);
   const history = screen.getByText(/Learning history \(/).closest("details")!;
   expect(history).not.toHaveAttribute("open");
   const historyView = within(history);
@@ -488,7 +488,7 @@ test("raw evidence without a review retains response, verification, result and d
 });
 test("confirmed register content is labelled reviewed while raw public register is not promoted", () => {
   const raw = core();
-  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840`);
+  mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-02`);
   const main = screen
     .getByRole("heading", { name: "Current learning meaning" })
     .closest("section")!;
@@ -513,14 +513,14 @@ test("a register-only learner edit retains a personal label and does not claim c
     {
       ...resolveVocabularyLearningContext(raw, {
         bookId: book,
-        unitId: "21795",
+        unitId: "ielts-vocabulary-chapter-01-group-01",
       }).sense!,
       register: "My register-only edit.",
     },
   ];
   mocks.fb.state.vocabulary = [raw];
   const before = JSON.stringify(mocks.fb.state);
-  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21795`);
+  mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-01-group-01`);
   expect(
     screen.getByRole("heading", { name: "Your register note" }),
   ).toBeInTheDocument();
@@ -561,7 +561,7 @@ test("failed familiarity saving remains distinct from evidence and allows retry 
         }),
     )
     .mockResolvedValueOnce(true);
-  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840`);
+  mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-02`);
   const user = userEvent.setup();
   await user.click(
     screen.getByRole("button", { name: "Familiarity for this meaning" }),
@@ -605,7 +605,7 @@ test("a deliberate familiarity save targets the displayed new stable sense witho
   const raw = structuredClone(core());
   mocks.fb.state.vocabulary = [raw];
   mocks.fb.persistNow.mockResolvedValue(true);
-  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840`);
+  mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-02`);
   await userEvent
     .setup()
     .click(
@@ -630,7 +630,7 @@ test("a deliberate familiarity save targets the displayed new stable sense witho
 test("source switching removes the old requested sense and preserves the list return", async () => {
   const raw = structuredClone(core());
   mount(
-    `/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840&senseId=editorial%3Acore%3Afruit-centre&returnTo=%2Fvocabulary%3Fsearch%3Dcore`,
+    `/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-02&senseId=editorial%3Acore%3Afruit-centre&returnTo=%2Fvocabulary%3Fsearch%3Dcore`,
   );
   const sources = screen.getByRole("region", { name: "Wordbook sources" });
   const links = within(sources).getAllByRole("link");
@@ -639,7 +639,7 @@ test("source switching removes the old requested sense and preserves the list re
     (link) =>
       new URL(link.getAttribute("href")!, "https://test.test").searchParams.get(
         "unitId",
-      ) === "21795",
+      ) === "ielts-vocabulary-chapter-01-group-01",
   )!;
   const next = new URL(target.getAttribute("href")!, "https://test.test");
   expect(next.searchParams.has("senseId")).toBe(false);
@@ -674,7 +674,7 @@ test("automatic mastery and manual override are distinct, restoring automatic on
     },
   ];
   mocks.fb.persistNow.mockResolvedValue(true);
-  mount(`/vocabulary/entry/${raw.id}?bookId=guixue%3A10174&unitId=21840`);
+  mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-02`);
   expect(screen.getByText("System estimate: New")).toBeInTheDocument();
   expect(screen.getByText("Manual")).toBeInTheDocument();
   const before = JSON.stringify(mocks.fb.state);

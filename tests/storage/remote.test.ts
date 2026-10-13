@@ -338,7 +338,7 @@ test('changes made while a workspace RPC is pending remain available for the nex
 test('in-place changes after hydration produce plan and draft upserts with current metadata', async () => {
   const { hydrateState, saveState } = await import('../../src/storage/remote');
   const state = await hydrateState();
-  expect(state.schemaVersion).toBe(11);
+  expect(state.schemaVersion).toBe(12);
   state.plans[0].status = 'in_progress';
   state.plans[0].startedAt = '2026-10-10T00:00:00.000Z';
   state.drafts.q1.text = 'After';
@@ -425,7 +425,7 @@ test('a stale hydration result cannot replace a newer account snapshot', async (
   resetAccountStore();
   mocks.user = 'account-b';
   const current = await hydrateState();
-  expect(current.schemaVersion).toBe(11);
+  expect(current.schemaVersion).toBe(12);
   await actResolve(old, true);
   await expect(oldLoad).rejects.toThrow('superseded');
 });
@@ -503,6 +503,19 @@ test('replayed import batches do not acknowledge vocabulary edits that were not 
   expect(await saveVocabularyImport(state, 'existing-batch')).toBe(true);
   expect(await saveState(state)).toBe(true);
   expect(mocks.upserts.find(call => call.table === 'vocabulary').rows[0].id).toBe('new-word');
+});
+
+test('legacy catalog query scopes normalize before remote reads and retain neutral row ids', async () => {
+  const unitId='ielts-vocabulary-chapter-01-group-01';
+  mocks.rows.wordbooks=[{id:'ielts-vocabulary',payload:{id:'ielts-vocabulary'}}];
+  mocks.rows.wordbook_units=[{id:unitId,payload:{id:unitId,bookId:'ielts-vocabulary',sourceUnitId:'21795',kind:'group'}}];
+  mocks.rows.wordbook_memberships=[{id:unitId+'-member-001',payload:{id:unitId+'-member-001',bookId:'ielts-vocabulary',unitId,entryId:'ve-x'}}];
+  mocks.rows.word_entries=[{id:'ve-x',payload:{id:'ve-x',term:'word'}}];
+  const {loadVocabularyCatalog}=await import('../../src/storage/remote');
+  const result=await loadVocabularyCatalog({bookId:'guixue:10174',unitId:'21795'});
+  expect(result.units[0]).toMatchObject({id:unitId,sourceUnitId:'21795'});
+  expect(result.books[0].id).toBe('ielts-vocabulary');
+  expect(result.memberships).toHaveLength(1);
 });
 
 test('lazy vocabulary catalog loads bounded selected book memberships and exact term matches', async () => {

@@ -1,14 +1,12 @@
 import { readFile, writeFile, rename } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import ts from 'typescript';
+import { loadEditorialCatalog } from './load-catalog.mjs';
 import { parseFragment } from 'parse5';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 const execute = promisify(execFile);
 
-const source = await readFile(new URL('../src/domain/vocabulary/catalog.ts', import.meta.url), 'utf8');
-const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText;
-const { VOCABULARY_CATALOG } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
+const VOCABULARY_CATALOG = await loadEditorialCatalog();
 const plain = html => {
   const walk = node => node.nodeName === '#text' ? node.value : (node.childNodes || []).map(walk).join('');
   return walk(parseFragment(html || '')).replace(/\s+/g, ' ').trim();

@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { emptyState, migrateState, persistShape, STATE_VERSION } from '../domain';
+import { normalizeVocabularyIdentities, normalizeVocabularyScope } from '../domain/vocabulary/identities';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import { cachedRead, clearReadCache, readCacheKey, readSnapshot, subscribeRead } from '../lib/readCache';
 import { accountId, accountGeneration, beginAccountLoad, resetAccountIdentity, setAccountIdentity } from './accountIdentity';
@@ -90,6 +91,7 @@ async function selectCatalog(table: string) {
 }
 
 export async function loadVocabularyCatalog(options: { bookId?: string; unitId?: string; entryIds?: string[]; term?: string; limit?: number; offset?: number } = {}) {
+  options = normalizeVocabularyScope(options);
   if (!supabaseConfigured()) throw new Error('Vocabulary catalog is unavailable offline.');
   const supabase = getSupabase();
   const limit = Math.min(1000, Math.max(1, Math.floor(Number(options.limit) || 100)));
@@ -99,7 +101,7 @@ export async function loadVocabularyCatalog(options: { bookId?: string; unitId?:
     if (filter) query = filter(query);
     const { data, error } = await query.range(offset, offset + limit - 1);
     if (error) throw new Error(`Could not load vocabulary catalog (${table}): ${error.message || 'request failed'}`);
-    return (data || []).map(row => Object.assign({}, row.payload, { id: String(row.id) }));
+    return (data || []).map(row => normalizeVocabularyIdentities(Object.assign({}, row.payload, { id: String(row.id) })));
   }
   if (options.term?.trim()) {
     const term = options.term.normalize('NFKC').trim().toLocaleLowerCase('en').replace(/\s+/g, ' ');
@@ -134,7 +136,7 @@ export async function loadVocabularyCatalog(options: { bookId?: string; unitId?:
       if (error) throw new Error(`Could not load vocabulary catalog (word_entries): ${error.message || 'request failed'}`);
       return (data || []).map(row => Object.assign({}, row.payload, { id: String(row.id) }));
     }))).flat() : [];
-    return { entries, books, units: units.map(unit => ({ ...unit, id: unit.sourceUnitId || unit.id })), memberships, nextOffset: memberships.length === limit ? offset + limit : null };
+    return { entries, books, units, memberships, nextOffset: memberships.length === limit ? offset + limit : null };
   }
   const books = await page('wordbooks');
   return { entries: [], books, units: [], memberships: [], nextOffset: books.length === limit ? offset + limit : null };

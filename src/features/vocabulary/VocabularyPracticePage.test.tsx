@@ -6,6 +6,7 @@ import { MemoryRouter, Link, useLocation, useNavigate, Routes, Route } from "rea
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { VocabularyPracticePage } from "./VocabularyPracticePage";
+import { completeVocabularyPlan } from '../../domain/plans';
 import { getVocabularyReviewQueue } from "../../domain/vocabulary";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
@@ -71,6 +72,24 @@ beforeEach(() => {
   };
 });
 const originalCatalog = { books: [...VOCABULARY_CATALOG.books], units: [...VOCABULARY_CATALOG.units], entries: [...VOCABULARY_CATALOG.entries], memberships: [...VOCABULARY_CATALOG.memberships] };
+test('planned batch ignores query mode mutation and submits exact frozen cards in target mode', async () => {
+  groupFixture(2);
+  const refs=VOCABULARY_CATALOG.memberships.filter(member=>member.bookId==='test-book').map(member=>({entryId:member.entryId,senseId:`group-sense-${member.order}`}));
+  fb.current.state.plans=[{id:'planned-mode',kind:'vocabulary',status:'in_progress',startedAt:'2020-01-01',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',bookId:'test-book',unitId:'test-group',batchIndex:0,batchSize:2,cards:refs}}];
+  mount(`?bookId=test-book&unitId=test-group&dueOnly=false&planId=planned-mode&mode=dictation&batch=0&batchSize=2&batchCards=${encodeURIComponent(JSON.stringify(refs))}`);
+  const user=userEvent.setup();
+  await user.click(await screen.findByRole('button',{name:'Start session'}));
+  const draft=JSON.parse(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')!).session;
+  expect(draft.mode).toBe('definition');
+  expect(draft.planId).toBe('planned-mode');
+  expect(draft.selection.cards).toEqual(refs);
+  await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'word0');
+  await user.type(screen.getByRole('textbox',{name:'Answer 2'}),'word1');
+  await user.click(screen.getByRole('button',{name:'Submit session'}));
+  const submitted=fb.current.persistVocabularySession.mock.calls[0][0].vocabularySessions[0];
+  expect(submitted).toMatchObject({mode:'definition',planId:'planned-mode',selection:{cards:refs}});
+  expect(completeVocabularyPlan(fb.current.state,submitted)).toMatchObject({id:'planned-mode',status:'completed'});
+});
 afterEach(() => { cleanup(); Object.assign(VOCABULARY_CATALOG, originalCatalog); });
 function groupFixture(count: number) {
   const vocabulary = Array.from({ length: count }, (_, index) => ({
@@ -106,6 +125,32 @@ test('empty mode recovery notice belongs to its group and clears on source navig
   await screen.findByText(/Synonyms has no tasks in this group/);
   await userEvent.setup().click(screen.getByRole('link',{name:'Another group'}));
   expect(screen.queryByText(/Synonyms has no tasks in this group/)).not.toBeInTheDocument();
+});
+
+test('fixed learning batch ignores review size, resumes from home, and submits its exact planned references', async () => {
+  groupFixture(13);
+  fb.current.booted = true;
+  fb.current.state.settings.vocabulary = { sessionSize: 1, autoPlay: false };
+  const refs = Array.from({length:10},(_,index)=>({entryId:`group-entry-${index}`,senseId:`group-sense-${index}`}));
+  fb.current.state.plans=[{id:'planned-batch',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'dictation',bookId:'test-book',unitId:'test-group',batchIndex:0,batchSize:10,cards:refs}}];
+  const query = `?${new URLSearchParams({bookId:'test-book',unitId:'test-group',dueOnly:'false',batch:'0',batchSize:'10',batchCards:JSON.stringify(refs),planId:'planned-batch'})}`;
+  const user = userEvent.setup();
+  const view = mount(query);
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
+  await user.click(screen.getByRole('button',{name:'Start session'}));
+  expect(screen.getAllByRole('textbox')).toHaveLength(10);
+  fireEvent.change(screen.getByRole('textbox',{name:'Answer 1'}),{target:{value:'word0'}});
+  await user.click(screen.getByRole('button',{name:'Exit session'}));
+  await user.click(screen.getByRole('button',{name:'Keep progress'}));
+  view.unmount();
+  mount(`${query}&resume=true`);
+  await waitFor(()=>expect(screen.getByRole('textbox',{name:'Answer 1'})).toHaveValue('word0'));
+  for(let index=1;index<10;index++) fireEvent.change(screen.getByRole('textbox',{name:`Answer ${index+1}`}),{target:{value:`word${index}`}});
+  await user.click(screen.getByRole('button',{name:'Submit session'}));
+  await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1));
+  const [prepared] = fb.current.persistVocabularySession.mock.calls[0];
+  expect(prepared.vocabularySessions[0]).toMatchObject({planId:'planned-batch',selection:{kind:'learning-batch',cards:refs}});
+  expect(screen.getByRole('link',{name:'Next batch'})).toHaveAttribute('href',expect.stringContaining('batch=1'));
 });
 
 test("whole group uses all 55 words in source order and preserves answers across pages and recovery", async () => {
@@ -383,20 +428,15 @@ test("focus layout moves with Enter and stops playback on unmount", async () => 
   expect(player.stop).toHaveBeenCalled();
 });
 
-test("settings save account preferences without changing the active feedback snapshot", async () => {
+test("central settings departure preserves an active session through the practice guard", async () => {
   const user = userEvent.setup();
   mount();
   await user.click(screen.getByRole("button", { name: "Start session" }));
   await user.click(screen.getByRole("button", { name: "Practice settings" }));
-  expect(screen.getByRole("combobox", { name: "Feedback" })).toBeDisabled();
-  await user.selectOptions(
-    screen.getByRole("combobox", { name: "Accent" }),
-    "us",
-  );
-  await user.click(screen.getByRole("button", { name: "Save preferences" }));
-  expect(fb.current.saveVocabularyPreferences.mock.calls[0][0].accent).toEqual(
-    "us",
-  );
+  expect(screen.getByRole('dialog',{name:'Exit practice session'})).toBeInTheDocument();
+  expect(fb.current.saveVocabularyPreferences).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button',{name:'Cancel'}));
+  expect(screen.getByRole('textbox',{name:'Answer 1'})).toBeInTheDocument();
 });
 
 test("clears the old owner session and cancels playback when the account changes", async () => {
@@ -742,10 +782,10 @@ test('legacy identity-only distinction draft keeps the old accepted synonym', as
 test('explicit unlearned catalog drill keeps its group sense and makes no preparation writes', async()=>{
   const released=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'));Object.assign(VOCABULARY_CATALOG,released);
   const raw=released.entries.find((entry:any)=>entry.term==='core');fb.current.state.vocabulary=[];fb.current.state.vocabularyEvidence=[];fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
-  const before=JSON.stringify(fb.current.state);const view=mount(`?entryId=${raw.id}&senseId=editorial%3Acore%3Afruit-centre&bookId=guixue%3A10174&unitId=21840&dueOnly=false&returnTo=%2Fvocabulary%2Fentry%2F${raw.id}`);
+  const before=JSON.stringify(fb.current.state);const view=mount(`?entryId=${raw.id}&senseId=editorial%3Acore%3Afruit-centre&bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-02&dueOnly=false&returnTo=%2Fvocabulary%2Fentry%2F${raw.id}`);
   await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());expect(screen.getByText(/containing its seeds/)).toBeInTheDocument();
   await userEvent.setup().click(screen.getByRole('button',{name:'Start session'}));expect(screen.getAllByRole('textbox')).toHaveLength(1);
-  const draft=JSON.parse(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')!).session;expect(draft.cardSnapshots[0].context).toMatchObject({bookId:'guixue:10174',unitId:'21840',senseId:'editorial:core:fruit-centre'});expect(draft.cardSnapshots[0].entry.senses[0].definition).toContain('seeds');expect(JSON.stringify(fb.current.state)).toBe(before);expect(fb.current.persistNow).not.toHaveBeenCalled();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();view.unmount();
+  const draft=JSON.parse(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')!).session;expect(draft.cardSnapshots[0].context).toMatchObject({bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02',senseId:'editorial:core:fruit-centre'});expect(draft.cardSnapshots[0].entry.senses[0].definition).toContain('seeds');expect(JSON.stringify(fb.current.state)).toBe(before);expect(fb.current.persistNow).not.toHaveBeenCalled();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();view.unmount();
   mount('?dueOnly=false');expect(await screen.findByText('No words match these filters.')).toBeInTheDocument();expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
 });
 
@@ -762,8 +802,8 @@ test.each([false, true])('historical food core retry retains changed-sense dicta
   const old = {cardId:'ve-7c70dbbe:kaikki:846f18ca02f7f1d01c:dictation',entryId:raw.id,senseId:'kaikki:846f18ca02f7f1d01c',term:'core',expectedAnswer:'core',response:'cor',result:'failure',definition:'Old core definition.',example:''};
   const rows = mixed ? [old, {cardId:'entry-0:sense-0:dictation',entryId:'entry-0',senseId:'sense-0',term:'resilient',expectedAnswer:'resilient',response:'wrong',result:'failure',definition:'Definition 0',example:'A resilient community.'}] : [old];
   // A legacy record can refer to public words absent from the learner's active list.
-  fb.current.state.vocabularySessions = [{id:'legacy-food',mode:'dictation',status:'submitted',selection:{kind:'unit',bookId:'guixue:10174',unitId:'21840'},filter:{},preferences:{order:'source'},results:rows,entryIds:rows.map(row=>row.entryId),summary:{total:rows.length,correct:0,incorrect:rows.length,pending:0},startedAt:'2025-01-01',submittedAt:'2025-01-01'}];
-  if (mixed) fb.current.state.vocabulary[0].sources.push({type:'wordbook',id:'old-food-member',bookId:'guixue:10174',unitId:'21840'});
+  fb.current.state.vocabularySessions = [{id:'legacy-food',mode:'dictation',status:'submitted',selection:{kind:'unit',bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02'},filter:{},preferences:{order:'source'},results:rows,entryIds:rows.map(row=>row.entryId),summary:{total:rows.length,correct:0,incorrect:rows.length,pending:0},startedAt:'2025-01-01',submittedAt:'2025-01-01'}];
+  if (mixed) fb.current.state.vocabulary[0].sources.push({type:'wordbook',id:'old-food-member',bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02'});
   fb.current.loadVocabularyCatalog = vi.fn(async()=>true);
   const before = JSON.stringify(fb.current.state);
   render(<MemoryRouter initialEntries={['/vocabulary/history/legacy-food']}><Routes><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes></MemoryRouter>);
@@ -813,13 +853,13 @@ function delayedHistoryFixture() {
   const released=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'));
   const raw=released.entries.find((entry:any)=>entry.term==='core');
   const row={cardId:'ve-7c70dbbe:kaikki:846f18ca02f7f1d01c:dictation',entryId:raw.id,senseId:'kaikki:846f18ca02f7f1d01c',term:'core',expectedAnswer:'core',response:'cor',result:'failure',definition:'Old core definition.',example:''};
-  fb.current.state.vocabularySessions=[{id:'delayed-history',mode:'dictation',status:'submitted',selection:{kind:'unit',bookId:'guixue:10174',unitId:'21840'},filter:{},preferences:{},results:[row],entryIds:[raw.id],summary:{total:1,correct:0,incorrect:1,pending:0},startedAt:'2025-01-01',submittedAt:'2025-01-01'}];
+  fb.current.state.vocabularySessions=[{id:'delayed-history',mode:'dictation',status:'submitted',selection:{kind:'unit',bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02'},filter:{},preferences:{},results:[row],entryIds:[raw.id],summary:{total:1,correct:0,incorrect:1,pending:0},startedAt:'2025-01-01',submittedAt:'2025-01-01'}];
   VOCABULARY_CATALOG.entries=originalCatalog.entries.filter(entry=>entry.id!==raw.id);
   VOCABULARY_CATALOG.memberships=originalCatalog.memberships.filter(member=>member.entryId!==raw.id);
   let complete!:()=>void;
   let fail!:(error:Error)=>void;
   const pending=new Promise<void>((resolve,reject)=>{complete=()=>{Object.assign(VOCABULARY_CATALOG,released);resolve();};fail=reject;});
-  fb.current.loadVocabularyCatalog=vi.fn((book?:string)=>book==='guixue:10174'?pending:Promise.resolve());
+  fb.current.loadVocabularyCatalog=vi.fn((book?:string)=>book==='ielts-vocabulary'?pending:Promise.resolve());
   return {complete,fail,before:JSON.stringify(fb.current.state)};
 }
 
@@ -831,7 +871,7 @@ test('historical retry waits for delayed source catalog and prevents duplicate r
   expect(screen.getByRole('button',{name:/Preparing retry/i})).toBeDisabled();
   expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   expect(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')).toBeNull();
-  expect(fb.current.loadVocabularyCatalog.mock.calls.filter(([book]:[string])=>book==='guixue:10174')).toHaveLength(2); // one background load, one guarded retry wait
+  expect(fb.current.loadVocabularyCatalog.mock.calls.filter(([book]:[string])=>book==='ielts-vocabulary')).toHaveLength(2); // one background load, one guarded retry wait
   await act(async()=>complete());
   expect(await screen.findByRole('textbox',{name:'Answer 1'})).toBeInTheDocument();
   expect(JSON.stringify(fb.current.state)).toBe(before);

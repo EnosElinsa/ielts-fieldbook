@@ -212,7 +212,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
   function change(mutator: (value: IntensiveSession) => IntensiveSession) {
     if (!sentence || accountId() !== owner) return;
     const latest = sessionRef.current[sentence.id] || createIntensiveSession(sectionId, sentence.id);
-    const changed = { ...mutator(latest), updatedAt: stamp() };
+    const changed = { ...mutator(latest), ...(search.get('planId') ? { planId: search.get('planId')! } : {}), updatedAt: stamp() };
     const next = { ...sessionRef.current, [sentence.id]: changed };
     sessionRef.current = next; setSessions(next);
     writeExamRecovery(owner, recoveryKey, next);

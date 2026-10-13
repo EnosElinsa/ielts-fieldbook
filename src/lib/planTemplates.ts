@@ -2,6 +2,10 @@
 import { latestPracticeRecommendation, rewritePlanDescription, syncPendingPlan, dateKey, dueErrors, dueVocabulary, examPressure, assignStoryPlanTarget } from '../domain';
 import { sessionSkill, speakingKinds } from './format';
 import { receptivePlanTemplates, ensureReceptivePlans } from './receptivePlans';
+import { isProtectedPlan, practiceFromWeakness } from '../domain/plans';
+import { getVocabularyReviewQueue } from '../domain/vocabulary';
+import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
+import { getLearnedVocabularyIds, vocabularyGroupProgress } from '../domain/vocabulary/progress';
 
 export const planTemplates = {
   balanced: [
@@ -391,94 +395,228 @@ export function planMatchesSkill(plan, activeSkill) {
 }
 
 export function ensurePlans(state, activeSkill, persistIfChanged) {
-  if (activeSkill === 'reading' || activeSkill === 'listening') {
-    if (state.settings.skillMix === 'mixed') ensurePlans(state, 'writing', persistIfChanged);
-    return ensureReceptivePlans(state, activeSkill, persistIfChanged);
+  return ensureUnifiedPlans(state, persistIfChanged).filter(plan => planMatchesSkill(plan, activeSkill));
+}
+
+export function studyBudget(settings) {
+  const daily = Math.max(1, Math.floor(Number(settings.dailyMinutes) || 30));
+  const vocabulary = Math.min(10, Math.floor(daily / 3));
+  return { daily, vocabulary, skill: daily - vocabulary };
+}
+
+export function selectedStudySkills(settings) {
+  if (Array.isArray(settings.skills) && settings.skills.length) return ['writing','speaking','reading','listening'].filter(skill => settings.skills.includes(skill));
+  return ['writing','speaking','reading','listening'].includes(settings.skillMix) ? [settings.skillMix] : ['writing','speaking','reading','listening'];
+}
+
+export function planningSettingsKey(settings) {
+  return JSON.stringify([2, settings.days, studyBudget(settings).daily, selectedStudySkills(settings), settings.focus, settings.speakingFocus, settings.vocabulary?.learningBatchSize || 10, settings.vocabulary?.mode || 'dictation']);
+}
+
+export function calendarDays(now = new Date()) {
+  const cursor = new Date(now); cursor.setHours(0,0,0,0);
+  return Array.from({length:7}, (_,index) => { const day = new Date(cursor); day.setDate(day.getDate()+index); return dateKey(day); });
+}
+
+export function nextUnifiedPlan(plans, now = new Date()) {
+  const sorted = plans.slice().sort((a,b) => String(a.dateKey).localeCompare(String(b.dateKey)) || (a.skill === 'vocabulary' ? 1 : b.skill === 'vocabulary' ? -1 : String(a.id).localeCompare(String(b.id))));
+  return sorted.find(plan => plan.status === 'in_progress') || sorted.find(plan => plan.status === 'pending' && plan.dateKey === dateKey(now)) || null;
+}
+
+function deterministicQuestion(state, skill, kind, sequence) {
+  const bank = skill === 'writing' ? state.questions : state.speakingTopics;
+  const part=kind.slice(-1)==='3'?'2':kind.slice(-1);
+  const pool = (bank || []).filter(row => skill === 'writing' ? String(row.type) === kind : String(row.part) === part && !row.incomplete).slice().sort((a,b)=>String(a.id).localeCompare(String(b.id)));
+  return pool.length ? String(pool[sequence % pool.length].id) : null;
+}
+
+export function skillTask(state, skill, minutes, sequence = 0, useEvidence = true) {
+  let template;
+  if (skill === 'writing') {
+    const task2 = state.settings.focus === 'task2' || state.settings.focus !== 'task1' && sequence % 2 === 1;
+    const full = minutes >= (task2 ? 40 : 20);
+    template = {kind:task2?'2':'1',title:full?`Task ${task2?'2':'1'} - Timed writing`:task2?'Task 2 - Position and support':'Task 1 - Chart overview',description:full?'Complete the response and save your attempt.':task2?'Write your position and two supporting points.':'Write the introduction and overview.',deskMode:full?'timed':task2?'outline':'overview'};
+  } else if (skill === 'speaking') {
+    const part = state.settings.speakingFocus === 'part2' ? '2' : state.settings.speakingFocus === 'part1' ? '1' : String(sequence % 3 + 1);
+    template = {kind:`speaking-p${part}`,title:`Speaking - Part ${part}`,description:'Record your response and save the attempt.',deskMode:'full'};
+  } else template = {...receptivePlanTemplates[skill][0], deskMode:minutes>=20?'timed':'full'};
+  const weak = useEvidence && ['writing','speaking'].includes(skill) ? practiceFromWeakness(state,skill) : null;
+  if (weak) {
+    const required = weak.deskMode === 'full' || weak.deskMode === 'timed' ? weak.kind === '2' ? 40 : weak.kind === '1' ? 20 : 5 : 1;
+    if (minutes >= required) template = {...template,...weak};
   }
-  const wanted = Math.max(1, state.settings.days.length);
-  const templates = templatesForSettings(state.settings);
-  const mix = state.settings.skillMix;
-  const mixSkill = mix === 'speaking' || mix === 'writing' ? mix : null;
-  const dueErr = dueErrors(state)
-    .filter((error) => {
-      if (!mixSkill || !error.sourceSessionId) return true;
-      const session = state.sessions.find((item) => item.id === error.sourceSessionId);
-      return !session || sessionSkill(session) === mixSkill;
-    }).length;
-  const unassessed = state.sessions.filter(
-    (session) => !session.assessmentId && (!mixSkill || sessionSkill(session) === mixSkill),
-  ).length;
-  const dueLex = dueVocabulary(state).length;
-  const examSoon = examPressure(state);
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
-  const generated = [];
-  let cursor = new Date(now);
-  let sequence = 0;
-  let guard = 0;
-  let copyChanged = false;
-  while (generated.length < wanted && guard < 35) {
-    const weekday = cursor.getDay() || 7;
-    if (state.settings.days.includes(weekday)) {
-      const key = dateKey(cursor);
-      const id = `plan-${key}`;
-      let plan = state.plans.find((item) => item.id === id);
-      if (!plan) {
-        const baseTemplate = templates[sequence % templates.length];
-        const templateSkill = skillFromKind(baseTemplate.kind, mix);
-        const latest = state.sessions[state.sessions.length - 1];
-        const template = pickTemplate({
-          settings: state.settings,
-          sequence,
-          templates,
-          signals: {
-            recommendation: sequence === 0 && !['reading','listening'].includes(templateSkill) ? latestPracticeRecommendation(state, templateSkill) : null,
-            rewrite: rewriteTemplate(state, latest),
-            dueErr,
-            dueLex,
-            unassessed,
-            examSoon,
-          },
-        });
-        plan = {
-          id,
-          dateKey: key,
-          kind: template.kind,
-          title: template.title,
-          description: template.description,
-          deskMode: template.deskMode || inferredDeskMode(template),
-          status: 'pending',
-          linkedSessionId: null,
-          questionId:
-            template.questionId ||
-            (latest && (template.title === '再练一遍' || template.title === 'Say it again' || /重写|Rewrite/.test(template.title))
-              ? latest.questionId
-              : null),
-          startedAt: null,
-          completedAt: null,
-          driver: template.driver || null,
-          targetErrorIds: (template.targetErrorIds || []).slice(),
-          sourceAssessmentId: template.sourceAssessmentId || null,
-        };
-        if (template.kind === 'stories') {
-          const assignment = assignStoryPlanTarget(state);
-          if (assignment) {
-            plan.storyId = assignment.storyId;
-            plan.questionId = assignment.questionId;
-          }
-        }
-        state.plans.push(plan);
-      } else if (refreshPlanCopy(plan)) copyChanged = true;
-      if (plan.status === 'pending' && key === dateKey(new Date())) {
-        const pendingSkill = skillFromKind(plan.kind, mix);
-        if (!['reading','listening'].includes(pendingSkill) && syncPendingPlan(plan, latestPracticeRecommendation(state, pendingSkill))) copyChanged = true;
+  const questionId = template.questionId || deterministicQuestion(state,skill,template.kind,sequence);
+  const target = ['writing','speaking'].includes(skill)
+    ? {type:'question',skill,questionId,mode:template.deskMode, ...(skill === 'speaking' ? {part:template.kind.slice(-1)} : {})}
+    : {type:'section',skill,sectionId:null,mode:'practice'};
+  return {...template,skill,estimatedMinutes:minutes,questionId,target,completion:{type:'attempt',description:skill==='reading'||skill==='listening'?'Submit the selected section.':'Save a response for this question and practice mode.'}};
+}
+
+function reviewTask(state, skills, now, minutes) {
+  const due = dueErrors(state,now).filter(error=> { const session=(state.sessions||[]).find(row=>row.id===error.sourceSessionId); return skills.includes(session?.skill==='speaking'?'speaking':'writing'); });
+  if (due.length) {
+    const first = due[0]; const source=(state.sessions||[]).find(row=>row.id===first.sourceSessionId);
+    return {skill:source?.skill==='speaking'?'speaking':'writing',kind:'review',title:'Review - Due mistakes',description:first.text,deskMode:'full',estimatedMinutes:minutes,target:{type:'error-review',errorIds:[first.id]},targetErrorIds:[first.id],completion:{type:'review',description:'Review the selected mistake and save the correction.'}};
+  }
+  const sentence=(state.intensiveSessions||[]).filter(row=>row.nextReviewAt&&Date.parse(row.nextReviewAt)<=new Date(now).getTime()).sort((a,b)=>String(a.nextReviewAt).localeCompare(String(b.nextReviewAt)))[0];
+  if (skills.includes('listening') && sentence) return {skill:'listening',kind:'listening-intensive',title:'Listening - Due sentence',description:'Complete blind recall and dictation for this sentence.',deskMode:'full',estimatedMinutes:minutes,sectionId:sentence.sectionId,sentenceId:sentence.sentenceId,target:{type:'intensive',skill:'listening',sectionId:sentence.sectionId,sentenceId:sentence.sentenceId},completion:{type:'review',description:'Complete the selected sentence practice.'}};
+  const attempt=(state.examAttempts||[]).filter(row=>skills.includes(row.skill)&&row.status==='completed'&&Object.values(row.results||{}).some(value=>!value)&&Object.entries(row.results||{}).some(([id,correct])=>!correct&&(!row.errorReasons?.[id]||row.skill==='reading'&&!row.evidence?.[id]))).sort((a,b)=>String(b.completedAt).localeCompare(String(a.completedAt)))[0];
+  if (attempt) return {skill:attempt.skill,kind:`${attempt.skill}-review`,title:`${attempt.skill==='reading'?'Reading':'Listening'} - Review mistakes`,description:'Save the evidence and diagnosis for each missed answer.',deskMode:'full',estimatedMinutes:minutes,attemptId:attempt.id,target:{type:'exam-review',skill:attempt.skill,attemptId:attempt.id},completion:{type:'review',description:'Save proof and a diagnosis for every missed answer.'}};
+  return null;
+}
+
+function evidenceTargetKey(task) {
+  if (['error-review','intensive','exam-review'].includes(task.target?.type)) return JSON.stringify(task.target);
+  return typeof task.driver==='string'&&task.driver.startsWith('criterion:') ? JSON.stringify([task.skill,task.driver,task.kind,task.deskMode]) : null;
+}
+
+function replaceAutomaticTarget(plan, task) {
+  // Clear fields from the old target before the shared context binds the replacement.
+  for (const field of ['questionId','sectionId','sentenceId','attemptId','sourceAssessmentId','targetErrorIds','driver','stage']) delete plan[field];
+  Object.assign(plan,task);
+}
+
+function refreshEvidenceTargets(state, keys, skills, now) {
+  const candidates=state.plans.filter(plan=>keys.includes(plan.dateKey)&&plan.schemaVersion===2&&plan.origin==='automatic'&&!isProtectedPlan(plan)&&plan.skill!=='vocabulary'&&plan.kind!=='vocabulary').slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)||a.id.localeCompare(b.id));
+  const review=reviewTask(state,skills,now,1);
+  const reviewKey=review&&evidenceTargetKey(review);
+  const alreadyScheduled=reviewKey&&state.plans.some(plan=>plan.status!=='skipped'&&plan.status!=='completed'&&(keys.includes(plan.dateKey)||plan.status==='in_progress')&&evidenceTargetKey(plan)===reviewKey);
+  if (review&&!alreadyScheduled&&candidates.length) {
+    const plan=candidates[0];
+    replaceAutomaticTarget(plan,{...review,estimatedMinutes:plan.estimatedMinutes});
+  }
+  for (const plan of candidates) {
+    if (['error-review','intensive','exam-review'].includes(plan.target?.type)) continue;
+    const task=skillTask(state,plan.skill,plan.estimatedMinutes,Math.floor((plan.rotationIndex||0)/skills.length));
+    // Ordinary targets may already have a concrete question/section bound by the context.
+    if (evidenceTargetKey(task)!==evidenceTargetKey(plan)) replaceAutomaticTarget(plan,task);
+  }
+}
+
+function vocabularyReviewTask(dueCards, mode, minutes) {
+  const cards=dueCards.slice(0,Math.max(1,minutes)).map(({entryId,senseId})=>({entryId,senseId}));
+  return {skill:'vocabulary',kind:'vocabulary',title:'Vocabulary - Due recall',description:`Recall ${cards.length} due words.`,estimatedMinutes:minutes,deskMode:mode,target:{type:'vocabulary',mode:'due-review',assessmentMode:mode,cards},completion:{type:'assessment',description:'Submit recall answers for these exact words.'}};
+}
+
+function vocabularyRecallKey(target) {
+  if(target?.mode!=='due-review')return null;
+  return JSON.stringify([target.assessmentMode,(target.cards||[]).map(card=>JSON.stringify([card.entryId,card.senseId])).sort()]);
+}
+
+function refreshVocabularyTarget(state, keys, dueCards, mode, cap) {
+  if(!dueCards.length||cap<=0)return;
+  const plan=state.plans.filter(plan=>keys.includes(plan.dateKey)&&plan.schemaVersion===2&&plan.origin==='automatic'&&!isProtectedPlan(plan)&&plan.kind==='vocabulary').slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)||a.id.localeCompare(b.id))[0];
+  if(!plan)return;
+  const task=vocabularyReviewTask(dueCards,mode,Math.min(cap,plan.estimatedMinutes));
+  const recallKey=vocabularyRecallKey(task.target);
+  if(state.plans.some(row=>row.status!=='completed'&&row.status!=='skipped'&&(keys.includes(row.dateKey)||row.status==='in_progress')&&vocabularyRecallKey(row.target)===recallKey))return;
+  replaceAutomaticTarget(plan,task);
+}
+
+export function nextLearningTarget(state, reserved = new Set()) {
+  const batchSize=state.settings.vocabulary?.learningBatchSize || 10;
+  const assessmentMode=['audio','production'].includes(state.settings.vocabulary?.mode)?'definition':state.settings.vocabulary?.mode || 'dictation';
+  for(const enrollment of state.wordbookEnrollments || []) {
+    const groups=VOCABULARY_CATALOG.units.filter(unit=>unit.bookId===enrollment.bookId&&unit.kind!=='chapter').slice().sort((a,b)=>(a.order||0)-(b.order||0)||String(a.id).localeCompare(String(b.id)));
+    for(const group of groups) {
+      if(vocabularyGroupProgress(state,group)==='Studied')continue;
+      const answered=new Set();
+      for(const session of state.vocabularySessions || []) {
+        const selection=session.selection;
+        if(session.status!=='submitted'||['audio','production'].includes(session.mode)||selection?.kind!=='learning-batch'||selection.bookId!==group.bookId||selection.unitId!==group.id)continue;
+        session.results.filter(result=>String(result.response||'').trim()&&selection.cards.some(ref=>ref.entryId===result.entryId&&ref.senseId===result.senseId)).forEach(result=>answered.add(result.entryId));
       }
-      generated.push(plan);
-      sequence += 1;
+      const ids=group.entryIds || VOCABULARY_CATALOG.memberships.filter(row=>row.bookId===group.bookId&&row.unitId===group.id).slice().sort((a,b)=>a.order-b.order).map(row=>row.entryId);
+      for(let index=0;index<Math.ceil(ids.length/batchSize);index++) {
+        if(ids.slice(index*batchSize,(index+1)*batchSize).every(id=>answered.has(id)))continue;
+        const key=JSON.stringify([group.bookId,group.id,index,batchSize]);if(reserved.has(key))continue;
+        reserved.add(key);
+        return {type:'vocabulary',mode:'learning-batch',assessmentMode,bookId:group.bookId,unitId:group.id,batchIndex:index,batchSize,cards:[]};
+      }
     }
-    cursor.setDate(cursor.getDate() + 1);
-    guard += 1;
+    if(!groups.length){
+      let index=0;while(reserved.has(JSON.stringify([enrollment.bookId,null,index,batchSize])))index++;
+      reserved.add(JSON.stringify([enrollment.bookId,null,index,batchSize]));
+      return {type:'vocabulary',mode:'learning-batch',assessmentMode,bookId:enrollment.bookId,batchIndex:index,batchSize,cards:[]};
+    }
   }
-  if (copyChanged && persistIfChanged) persistIfChanged();
-  return generated.filter((plan) => planMatchesSkill(plan, activeSkill));
+  return null;
+}
+
+export function ensureUnifiedPlans(state, persistIfChanged, now = new Date()) {
+  const before = JSON.stringify(state.plans);
+  const keys = calendarDays(now); const today = keys[0]; const generationKey = planningSettingsKey(state.settings);
+  // Migrate only recognizable untouched automatic plans. Keep every unfinished past task visible.
+  state.plans = (state.plans || []).filter(plan => {
+    if (isProtectedPlan(plan) || String(plan.dateKey || '') < today) return true;
+    if (plan.schemaVersion === 2) return plan.generationKey === generationKey;
+    return !/^plan-(?:(?:reading|listening)-)?\d{4}-\d{2}-\d{2}$/.test(plan.id || '');
+  });
+  const skills = selectedStudySkills(state.settings); const budget = studyBudget(state.settings);
+  const uniqueId=(id)=>{let next=id;let suffix=2;while(state.plans.some(plan=>plan.id===next))next=`${id}-${suffix++}`;return next;};
+  const prior=state.plans.filter(plan=>plan.dateKey<today&&Number.isInteger(plan.rotationIndex)).slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)).pop();
+  let sequence = prior ? prior.rotationIndex+1 : 0;
+  const reserved=new Set(state.plans.filter(plan=>plan.target?.mode==='learning-batch'&&plan.status!=='skipped').map(plan=>JSON.stringify([plan.target.bookId,plan.target.unitId||null,plan.target.batchIndex,plan.target.batchSize])));
+  const learned=getLearnedVocabularyIds(state);const preferred=state.settings.vocabulary?.mode || 'dictation';
+  let dueCards=[];let dueMode='definition';
+  for(const mode of [...new Set([preferred,'definition','dictation','cloze','synonym','distinction'])].filter(mode=>!['audio','production'].includes(mode))) {
+    const cards=getVocabularyReviewQueue(state,{mode,dueOnly:true,now}).filter(card=>learned.has(card.entryId));
+    if(cards.length){dueCards=cards;dueMode=mode;break;}
+  }
+  for (const key of keys) {
+    if (!(state.settings.days || []).includes(new Date(`${key}T00:00:00`).getDay() || 7) || !skills.length) continue;
+    const existing = state.plans.filter(plan=>plan.dateKey===key);
+    const retainedRotation=existing.find(plan=>Number.isInteger(plan.rotationIndex));
+    if(retainedRotation)sequence=retainedRotation.rotationIndex;
+    const existingMinutes = existing.reduce((sum,plan)=>sum+(Number(plan.estimatedMinutes)||budget.daily),0);
+    let available = Math.max(0,budget.daily-existingMinutes);
+    let vocabulary = null;
+    const vocabMinutes = Math.min(budget.vocabulary,available);
+    if (!existing.some(plan=>plan.skill==='vocabulary'||plan.kind==='vocabulary') && vocabMinutes>0) {
+      if (key===today && dueCards.length) {
+        vocabulary=vocabularyReviewTask(dueCards,dueMode,vocabMinutes);
+      } else if (vocabMinutes===10) {
+        const target=nextLearningTarget(state,reserved);
+        if(target)vocabulary={skill:'vocabulary',kind:'vocabulary',title:`Vocabulary - Learn ${target.batchSize} words`,description:'Learn the batch, then submit recall answers.',estimatedMinutes:10,deskMode:target.assessmentMode,target,completion:{type:'assessment',description:'Submit the exact learning batch assessment.'}};
+      }
+    }
+    const vocabReserved = vocabulary?.estimatedMinutes || 0;
+    if (!existing.some(plan=>plan.skill!=='vocabulary'&&plan.kind!=='vocabulary') && available-vocabReserved>0) {
+      const selected = skills[sequence % skills.length];
+      const task = key===today ? reviewTask(state,skills,now,available-vocabReserved) || skillTask(state,selected,available-vocabReserved,Math.floor(sequence/skills.length)) : skillTask(state,selected,available-vocabReserved,Math.floor(sequence/skills.length));
+      if(task.skill!=='reading'||task.estimatedMinutes>=2)state.plans.push({id:uniqueId(`study-${key}-skill`),dateKey:key,...task,rotationIndex:sequence,schemaVersion:2,generationKey,origin:'automatic',status:'pending',startedAt:null,completedAt:null,linkedSessionId:null});
+    }
+    if (vocabulary && available>=vocabReserved) state.plans.push({id:uniqueId(`study-${key}-vocabulary`),dateKey:key,...vocabulary,schemaVersion:2,generationKey,origin:'automatic',status:'pending',startedAt:null,completedAt:null,linkedSessionId:null});
+    sequence++;
+  }
+  refreshEvidenceTargets(state,keys,skills,now);
+  refreshVocabularyTarget(state,keys,dueCards,dueMode,budget.vocabulary);
+  if (JSON.stringify(state.plans)!==before) persistIfChanged?.();
+  return state.plans.filter(plan=>keys.includes(plan.dateKey)).slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)||a.id.localeCompare(b.id));
+}
+
+export function mutateStudyPlan(state, planId, action, now = new Date()) {
+  const plan = state.plans.find(row=>row.id===planId); if (!plan) throw new Error('Task not found.');
+  if (action.type==='skip' && plan.status!=='completed') { plan.previousStatus=plan.status;plan.status='skipped';if(state.activePlanId===plan.id)state.activePlanId=null; }
+  else if (action.type==='restore' && plan.status==='skipped') plan.status=plan.previousStatus==='in_progress'?'in_progress':'pending';
+  else if (action.type==='reschedule') {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(action.dateKey) || dateKey(`${action.dateKey}T00:00:00`)!==action.dateKey) throw new Error('Choose a valid date.');
+    if(plan.status==='completed')throw new Error('Completed tasks cannot be rescheduled.');
+    const used=state.plans.filter(row=>row.id!==plan.id&&row.dateKey===action.dateKey&&row.status!=='skipped').reduce((sum,row)=>sum+Number(row.estimatedMinutes||0),0);
+    if(used+Number(plan.estimatedMinutes||0)>studyBudget(state.settings).daily)throw new Error('This day does not have enough study time.');
+    plan.dateKey=action.dateKey;
+  } else if (action.type==='replace') {
+    if(plan.status!=='pending'||plan.startedAt)throw new Error('Only unstarted tasks can be replaced.');
+    if(!['writing','speaking','reading','listening'].includes(action.skill))throw new Error('Choose a skill.');
+    if(action.kind==='writing-mock'||action.kind==='speaking-mock'){
+      const minutes=action.kind==='writing-mock'?60:15;
+      const used=state.plans.filter(row=>row.id!==plan.id&&row.dateKey===plan.dateKey&&row.status!=='skipped').reduce((sum,row)=>sum+Number(row.estimatedMinutes||0),0);
+      if(used+minutes>studyBudget(state.settings).daily)throw new Error(`This mock needs ${minutes} minutes available on this day.`);
+      const skill=action.kind==='writing-mock'?'writing':'speaking';
+      Object.assign(plan,{kind:action.kind,skill,title:skill==='writing'?'Writing mock':'Speaking mock',description:skill==='writing'?'Complete Task 1 and Task 2 under exam timing.':'Complete Parts 1, 2 and 3 under exam timing.',deskMode:'timed',estimatedMinutes:minutes,stage:skill==='writing'?'task1':'p1',questionId:null,target:{type:'question',skill,questionId:null,mode:'timed'},completion:{type:'attempt',description:'Save every stage of this mock.'}});
+    }else Object.assign(plan,skillTask(state,action.skill,Number(plan.estimatedMinutes)||studyBudget(state.settings).skill,0,false));
+    Object.assign(plan,{sectionId:null,sentenceId:null,attemptId:null,sourceAssessmentId:null,targetErrorIds:[],driver:null});
+  } else throw new Error('This task cannot be changed.');
+  plan.origin='manual';plan.manuallyEditedAt=new Date(now).toISOString();
+  return plan;
 }

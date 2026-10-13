@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { CommandSearch, MobileNavigation } from './WorkbenchNavigation';
-import { studyLinkActive } from './workspaceNavigation';
+import { canonicalListeningUrl, moduleFor, studyLinkActive } from './workspaceNavigation';
 const { fb } = vi.hoisted(() => ({ fb: { state: { questions: [], speakingTopics: [], sessions: [], vocabulary: [], examAttempts: [] }, setSkill: vi.fn() } }));
 vi.mock('../context/FieldbookContext', () => ({ useFieldbook: () => fb }));
 vi.mock('../context/ThemeContext', () => ({ useTheme: () => ({ theme: 'light', setTheme: vi.fn() }) }));
@@ -42,9 +42,28 @@ test('mobile module order follows test order and recognizes speaking review', ()
   expect(within(nav).getByRole('button', { name: 'Writing' })).not.toHaveAttribute('aria-current');
 });
 
-test('only one listening child is active for intensive mode and detail routes', () => {
-  for (const [path, search, expected] of [['/listening', '?mode=intensive', '/listening?mode=intensive'], ['/listening/intensive/part1', '', '/listening?mode=intensive'], ['/listening/review/a1', '', '/listening/review'], ['/listening', '', '/listening']]) {
-    const active = ['/listening', '/listening?mode=intensive', '/listening/review'].filter(to => studyLinkActive(to, path, search, 'listening'));
+test('listening questions remains active across bank, standard practice, mock, and intensive paths', () => {
+  for (const [path, search, expected] of [['/listening', '?mode=intensive', '/listening'], ['/listening/intensive/part1', '', '/listening'], ['/listening/part1', '', '/listening'], ['/listening/mock/paper1', '', '/listening'], ['/listening/review/a1', '', '/listening/review'], ['/listening/review', '', '/listening/review'], ['/listening', '', '/listening']]) {
+    const active = ['/listening', '/listening/review'].filter(to => studyLinkActive(to, path, search, 'listening'));
     expect(active).toEqual([expected]);
   }
+});
+
+test.each(['/listening/part1', '/listening/intensive/part1', '/listening/mock/paper1', '/listening/review/a1'])('mobile listening remains active on %s', path => {
+  render(<MemoryRouter initialEntries={[path]}><MobileNavigation onMore={() => {}} /></MemoryRouter>);
+  expect(screen.getByRole('button', { name: 'Listening' })).toHaveAttribute('aria-current', 'page');
+});
+
+test.each(['/planning', '/settings', '/settings/audio'])('planning and settings fit under mobile More on %s', path => {
+  render(<MemoryRouter initialEntries={[path]}><MobileNavigation onMore={() => {}} /></MemoryRouter>);
+  expect(screen.getByRole('button', { name: 'More' })).toHaveAttribute('aria-current', 'page');
+  expect(screen.queryByRole('button', { name: 'Planning' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Settings' })).not.toBeInTheDocument();
+});
+
+test('legacy listening bank canonicalization keeps filters, paging and hash', () => {
+  expect(canonicalListeningUrl('/listening?mode=intensive&book=8&q=city+garden&page=3#results')).toBe('/listening?book=8&q=city+garden&page=3#results');
+  expect(moduleFor('/today', '', 'writing')).toBe('today');
+  expect(moduleFor('/planning', '', 'writing')).toBe('planning');
+  expect(moduleFor('/settings/audio', '', 'writing')).toBe('settings');
 });

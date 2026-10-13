@@ -1,6 +1,6 @@
 # Exam bank readiness audit
 
-Audited 12 October 2026 from the final reviewed catalog and its signed-in source export. See [exam-readiness-audit.json](exam-readiness-audit.json) for machine-readable counts, hashes and one listening/reading structural sample per Cambridge book 8–21.
+Audited 12 October 2026 from the final reviewed catalog and its signed-in source export. See [exam-readiness-audit.json](../local/audits/exam-readiness-audit.json) for machine-readable counts, hashes and one listening/reading structural sample per Cambridge book 8–21.
 
 | Measure | Result |
 | --- | ---: |

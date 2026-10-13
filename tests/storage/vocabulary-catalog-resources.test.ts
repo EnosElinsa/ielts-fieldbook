@@ -20,7 +20,7 @@ function resourceFetch(delay = 0) {
 
 test('book metadata does not fetch any group or entry packs', async () => {
   const requests = resourceFetch();
-  const result = await loadReleasedVocabulary({ bookId: 'guixue:10174', force: true });
+  const result = await loadReleasedVocabulary({ bookId: 'ielts-vocabulary', force: true });
   expect(result.books).toHaveLength(1);
   expect(result.units.length).toBeGreaterThan(1);
   expect(result.units.some(unit => unit.entryIds.length)).toBe(true);
@@ -35,20 +35,20 @@ test('group loads include complete membership and register teaching before resol
   const { loadReleasedVocabulary: loadGroup } = await import('../../src/storage/vocabularyCatalog');
   expect(vocabularyTeaching.curriculum.topics).toEqual([]);
   const requests = resourceFetch();
-  const result = await loadGroup({ bookId: 'guixue:10174', unitId: '21795', force: true });
+  const result = await loadGroup({ bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01', force: true });
   expect(result.entries).toHaveLength(55);
   expect(result.memberships).toHaveLength(55);
-  expect(result.memberships.every(row => row.unitId === '21795')).toBe(true);
+  expect(result.memberships.every(row => row.unitId === 'ielts-vocabulary-chapter-01-group-01')).toBe(true);
   expect(requests.urls.filter(url => url.includes('/groups/'))).toHaveLength(1);
-  expect(vocabularyTeaching.curriculum.topics.some(row => row.unitId === '21795')).toBe(true);
+  expect(vocabularyTeaching.curriculum.topics.some(row => row.unitId === 'ielts-vocabulary-chapter-01-group-01')).toBe(true);
   const { VOCABULARY_CATALOG } = await import('../../src/domain/vocabulary/catalog');
   const { resolveVocabularyLearningContext } = await import('../../src/domain/vocabulary/context');
   Object.assign(VOCABULARY_CATALOG, result);
   const core = result.entries.find(entry => entry.term === 'core')!;
-  expect(resolveVocabularyLearningContext(core, { bookId: 'guixue:10174', unitId: '21795' }).sense?.definition).toContain('Earth');
+  expect(resolveVocabularyLearningContext(core, { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' }).sense?.definition).toContain('Earth');
   const edited = structuredClone(core);
   edited.senses[0].definition = 'My course note.';
-  expect(resolveVocabularyLearningContext(edited, { bookId: 'guixue:10174', unitId: '21795' }).sense?.definition).toBe('My course note.');
+  expect(resolveVocabularyLearningContext(edited, { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' }).sense?.definition).toBe('My course note.');
 });
 
 test('entry loads deduplicate shards and cap all concurrent resource requests at four', async () => {
@@ -72,7 +72,7 @@ test('failed resources reject and can be retried', async () => {
 });
 
 test('a failed group pack retries without reloading successful metadata', async () => {
-  const group = generated.manifest.units.find(unit => unit.bookId === 'guixue:10174' && unit.id === '21795')!;
+  const group = generated.manifest.units.find(unit => unit.bookId === 'ielts-vocabulary' && unit.id === 'ielts-vocabulary-chapter-01-group-01')!;
   vi.stubGlobal('fetch', async (url: string) => new Response(url === group.resource ? '' : JSON.stringify(generated.manifest), { status: url === group.resource ? 503 : 200 }));
   await expect(loadReleasedVocabulary({ bookId: group.bookId, unitId: group.id, force: true })).rejects.toThrow();
   const requests = resourceFetch();
@@ -96,18 +96,18 @@ test('independent teaching resources restore group curriculum when the full grou
     const body = url.endsWith('manifest.test.json') ? JSON.stringify(generated.manifest) : url.startsWith('/vocabulary-resources/groups/') ? undefined : generated.resources.get(url);
     return new Response(body, { status: body ? 200 : 503 });
   });
-  await expect(loadGroup({ bookId: 'guixue:10174', unitId: '21795', force: true })).rejects.toThrow();
+  await expect(loadGroup({ bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01', force: true })).rejects.toThrow();
   expect(vocabularyTeaching.curriculum.topics).toEqual([]);
-  const metadata = await loadTeaching({ bookId: 'guixue:10174', unitId: '21795', force: true });
+  const metadata = await loadTeaching({ bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01', force: true });
   expect(metadata.books).toHaveLength(1);
   expect(metadata.entries).toEqual([]);
-  expect(vocabularyTeaching.curriculum.topics.some(row => row.unitId === '21795')).toBe(true);
+  expect(vocabularyTeaching.curriculum.topics.some(row => row.unitId === 'ielts-vocabulary-chapter-01-group-01')).toBe(true);
   expect(urls.filter(url => url.startsWith('/vocabulary-resources/groups/'))).toHaveLength(1);
   expect(urls.filter(url => url.includes('/teaching/groups/'))).toHaveLength(1);
 });
 
 test.each(['entries', 'memberships'])('incomplete group %s cannot look like a successful load', async field => {
-  const group = generated.manifest.units.find(unit => unit.bookId === 'guixue:10174' && unit.id === '21795')!;
+  const group = generated.manifest.units.find(unit => unit.bookId === 'ielts-vocabulary' && unit.id === 'ielts-vocabulary-chapter-01-group-01')!;
   vi.stubGlobal('fetch', async (url: string) => {
     let body = url.endsWith('manifest.test.json') ? JSON.stringify(generated.manifest) : generated.resources.get(url);
     if (url === group.resource) body = JSON.stringify({ ...JSON.parse(body!), [field]: [] });
@@ -125,7 +125,7 @@ test('account teaching prefetch loads known entries while allowing custom accoun
   await loadTeaching({ entryIds: [publicEntry, 'my-custom-entry'], allowMissingEntryIds: true });
   expect(vocabularyTeaching.context.bindings.some(row => row.entryId === publicEntry)).toBe(true);
   expect(requests.urls.filter(url => url.includes('/teaching/entries/'))).toHaveLength(1);
-  await expect(loadTeaching({ bookId: 'guixue:10174', unitId: 'missing-group', allowMissingEntryIds: true })).rejects.toThrow(/group/i);
+  await expect(loadTeaching({ bookId: 'ielts-vocabulary', unitId: 'missing-group', allowMissingEntryIds: true })).rejects.toThrow(/group/i);
 });
 
 test('account teaching prefetch preserves standalone content semantics before any catalog entries are loaded', async () => {
@@ -154,7 +154,7 @@ test('account teaching prefetch restores source-group curriculum without loading
   expect(teaching.entries).toEqual([]);
   expect(teaching.memberships).toEqual(released.memberships.filter((row: any) => row.entryId === core.id));
   Object.assign(VOCABULARY_CATALOG, teaching);
-  const context = resolveVocabularyLearningContext(core, { bookId: 'guixue:10174', unitId: '21795' });
+  const context = resolveVocabularyLearningContext(core, { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' });
   expect(context.curriculum?.basis).toBe('theme');
   expect(context.curriculum?.title).toContain('Group 1');
   expect(context.sense?.definition).toContain('Earth');
@@ -172,7 +172,7 @@ test('account teaching prefetch protects private edits when the public catalog e
   Object.assign(VOCABULARY_CATALOG, teaching);
   const edited = structuredClone(raw);
   edited.senses[0].definition = 'My private study note.';
-  expect(resolveVocabularyLearningContext(edited, {bookId:'guixue:10174',unitId:'21795'}).sense?.definition).toBe('My private study note.');
+  expect(resolveVocabularyLearningContext(edited, {bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-01-group-01'}).sense?.definition).toBe('My private study note.');
 });
 
 test('account teaching prefetch preserves edited source meanings across the released corpus', async () => {
@@ -218,6 +218,6 @@ test('teaching fallback can use its independent index when the main manifest is 
     const body = url.endsWith('manifest.test.json') ? undefined : url.endsWith('teaching-index.test.json') ? JSON.stringify(generated.teachingIndex) : generated.resources.get(url);
     return new Response(body, { status: body ? 200 : 503 });
   });
-  await loadTeaching({ bookId: 'guixue:10174', unitId: '21795', force: true });
-  expect(vocabularyTeaching.curriculum.topics.some(row => row.unitId === '21795')).toBe(true);
+  await loadTeaching({ bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01', force: true });
+  expect(vocabularyTeaching.curriculum.topics.some(row => row.unitId === 'ielts-vocabulary-chapter-01-group-01')).toBe(true);
 });

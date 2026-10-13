@@ -17,6 +17,7 @@ export type VocabularySessionAnswer = {
   answeredAt: string; durationMs: number; flagged?: boolean; revealed?: boolean; checked?: boolean;
 };
 export type VocabularyPracticeSession = {
+  planId?: string;
   id: string; mode: VocabularyPracticeMode; preferences: VocabularyPreferences; filter: ReviewQueueFilter;
   cardIds: { id: string; entryId: string; senseId: string; mode: VocabularyPracticeMode }[];
   answers: Record<string, VocabularySessionAnswer>; index: number;
@@ -32,6 +33,7 @@ export type VocabularySessionResult = {
 };
 export type VocabularySessionSummary = { total: number; correct: number; incorrect: number; pending: number; listened?: number };
 export type VocabularySessionRecord = {
+  planId?: string;
   id: string; mode: VocabularyPracticeMode; status: 'submitted'; startedAt: string; submittedAt: string;
   preferences: VocabularyPreferences; filter: ReviewQueueFilter; summary: VocabularySessionSummary;
   results: VocabularySessionResult[]; entryIds: string[]; reviewIds: string[]; updatedAt: string; selection?: VocabularySessionSelection; contentVersion?: string; cardSnapshots?: ReviewCard[];
@@ -47,13 +49,21 @@ export function createVocabularySession(cards: ReviewCard[], mode: VocabularyPra
     if (!unique.has(id)) unique.set(id, card);
   });
   let selected = [...unique.values()];
+  if (selection?.kind === 'learning-batch') {
+    selected = selection.cards.map(ref => {
+      const card = selected.find(item => item.entryId === ref.entryId && item.senseId === ref.senseId);
+      if (!card || !card.sources.some(source => source.bookId === selection.bookId && source.unitId === selection.unitId)) throw new Error('Frozen learning batch is unavailable.');
+      return card;
+    });
+    filter = { ...filter, bookId: selection.bookId, unitId: selection.unitId, dueOnly: false };
+  }
   if (mode === 'dictation' || mode === 'audio') {
     const entries = new Set<string>();
     selected = selected.filter(card => entries.has(card.entryId) ? false : (entries.add(card.entryId), true));
   }
   if (normalized.order === 'due') selected.sort((a, b) => a.dueAt.localeCompare(b.dueAt) || a.id.localeCompare(b.id));
   if (normalized.order === 'random') selected.sort((a, b) => hashText(`${id}:${a.id}`).localeCompare(hashText(`${id}:${b.id}`)) || a.id.localeCompare(b.id));
-  if (selection?.kind !== 'unit' && selection?.kind !== 'specialist' && selection?.kind !== 'retry') selected = selected.slice(0, normalized.sessionSize);
+  if (selection?.kind !== 'unit' && selection?.kind !== 'specialist' && selection?.kind !== 'retry' && selection?.kind !== 'learning-batch') selected = selected.slice(0, normalized.sessionSize);
   if (selected.length > 10000) throw new Error('Vocabulary session size is invalid.');
   const startedAt = nowIso();
   return {
@@ -112,7 +122,7 @@ export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S
   const byId = new Map((session.cardSnapshots || cards).map(card => [card.id, card]));
   const entriesById = new Map(targetState.vocabulary.map(entry => [entry.id, entry]));
   const catalogById = new Map((VOCABULARY_CATALOG.entries as unknown as typeof targetState.vocabulary).map(entry => [entry.id, entry]));
-  const selection = session.selection?.kind === 'unit' ? session.selection : undefined;
+  const selection = session.selection?.kind === 'unit' || session.selection?.kind === 'learning-batch' ? session.selection : undefined;
   const seen = new Set<string>();
   session.cardIds.forEach(ref => {
     if (seen.has(ref.id)) throw new Error('Vocabulary session contains duplicate cards.');
@@ -158,6 +168,7 @@ export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S
   });
   const summary: VocabularySessionSummary = { total: results.length, correct: audio ? 0 : results.filter(result => result.result === 'success').length, incorrect: audio ? 0 : results.filter(result => result.result === 'failure' || result.result === 'partial').length, pending: audio ? 0 : results.filter(result => result.result === 'pending').length, ...(audio ? { listened: results.filter(result => normalizeAnswer(session.answers[result.cardId]?.response) === 'listened').length } : {}) };
   const sessionRecord: VocabularySessionRecord = { id: session.id, mode: session.mode, status: 'submitted', startedAt: session.startedAt, submittedAt, preferences: structuredClone(session.preferences), filter: structuredClone(session.filter), summary, results: structuredClone(results), entryIds: [...new Set(session.cardIds.map(card => card.entryId))], reviewIds: session.mode === 'audio' ? [] : session.cardIds.map(card => `${session.id}:${card.id}`), updatedAt: submittedAt, ...(session.contentVersion ? { contentVersion: session.contentVersion, cardSnapshots: structuredClone(session.cardSnapshots) } : {}), ...(session.selection ? { selection: structuredClone(session.selection) } : {}) };
+  if (session.planId) sessionRecord.planId = session.planId;
   (targetState as S & { vocabularySessions?: VocabularySessionRecord[] }).vocabularySessions = [...existing, sessionRecord];
   return { state: targetState, sessionRecord, results, summary };
 }

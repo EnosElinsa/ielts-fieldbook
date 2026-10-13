@@ -119,6 +119,14 @@ test("overview provides separate wordbook study and vocabulary review entry rout
   expect(screen.getByRole("link", { name: /Review vocabulary/ })).toHaveAttribute("href", "/vocabulary/review");
 });
 
+test('vocabulary home recommends the enrolled group instead of word management', async () => {
+  fixture();
+  render(<MemoryRouter initialEntries={['/vocabulary']}><VocabularyPage /></MemoryRouter>);
+  expect(await screen.findByRole('link', { name: /Start learning/ })).toHaveAttribute('href', '/vocabulary/wordbooks/book/groups/first/learn');
+  expect(screen.queryByRole('button', { name: 'Add vocabulary' })).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'My words' })).toHaveAttribute('href', '/vocabulary/words');
+});
+
 test("progress keeps studied coverage separate from mastery and imported history", () => {
   fixture();
   fb.current.state.wordbookProgress = [{ bookId: "book", unitId: "later", completedEntryIds: ["three"], status: "imported-summary" }];

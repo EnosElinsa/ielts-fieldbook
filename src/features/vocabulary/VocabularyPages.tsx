@@ -1,8 +1,10 @@
 // @ts-nocheck
+import { useVocabularySearchParams } from './vocabularyNavigation';
+import { normalizeVocabularyScope } from '../../domain/vocabulary/identities';
 import { PanelLoadingState, StateMessage } from '../../components/AsyncState';
 import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
 import { useEffect, useMemo, useRef, useState } from "react";
-import { NavLink, useParams, useSearchParams, useLocation } from "react-router-dom";
+import { NavLink, useParams, useLocation } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
@@ -26,12 +28,14 @@ import {
   setVocabularyManualStatus,
 } from "../../domain/vocabulary";
 import { accountId } from '../../storage/remote';
+import { readVocabularyDraft } from '../../storage/vocabularyDrafts';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
 import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
 import { Pronunciation } from './Pronunciation';
-import { vocabularyGroupProgress } from "../../domain/vocabulary/progress";
+import { vocabularyGroupProgress, getLearnedVocabularyIds } from "../../domain/vocabulary/progress";
 import "../../styles/vocabulary.css";
 import "../../styles/vocabulary-workbench.css";
+import '../../styles/vocabulary-home.css';
 import { isRegionalSpellingDifference } from '../../domain/vocabulary/spelling';
 import { getVocabularyMastery } from '../../domain/vocabulary/mastery';
 import { groupPath, rememberVocabularyPosition, useVocabularyPosition } from './vocabularyNavigation';
@@ -128,12 +132,12 @@ function descendants(unit, hierarchy) {
   return hierarchy.filter(row => ids.has(row.id));
 }
 const wordbookDescription = book => ({
-  'guixue:10174': 'Build topic vocabulary for clear IELTS writing and speaking.',
-  'guixue:10176': 'Recognise key terms and paraphrases in reading passages.',
-  'guixue:11320': 'Practise listening vocabulary across everyday and academic topics.',
-  'guixue:10177': 'Strengthen essential listening words, phrases and irregular verbs.',
-  'guixue:21953': 'Prepare listening vocabulary in four tests, organised by part.',
-  'guixue:10216': 'Rehearse listening words and spelling through test-based groups.',
+  'ielts-vocabulary': 'Build topic vocabulary for clear IELTS writing and speaking.',
+  'ielts-reading-keywords': 'Recognise key terms and paraphrases in reading passages.',
+  'ielts-listening-vocabulary': 'Practise listening vocabulary across everyday and academic topics.',
+  'ielts-listening-essentials': 'Strengthen essential listening words, phrases and irregular verbs.',
+  'ielts-listening-practice-21': 'Prepare listening vocabulary in four tests, organised by part.',
+  'ielts-listening-practice-20': 'Rehearse listening words and spelling through test-based groups.',
 }[book.id] || book.description || 'Develop useful English vocabulary one group at a time.');
 const studyLink = unit => `/vocabulary/wordbooks/${encodeURIComponent(unit.bookId)}/groups/${encodeURIComponent(unit.id)}/learn`;
 const assessmentLink = unit => `/vocabulary/study?bookId=${encodeURIComponent(unit.bookId)}&unitId=${encodeURIComponent(unit.id)}&dueOnly=false`;
@@ -222,12 +226,64 @@ function SelectField({ label: title, value, onChange, options }) {
   );
 }
 
-export function VocabularyWordsPage() { return <VocabularyPage wordsOnly />; }
+export function VocabularyWordsPage() { return <VocabularyWordsView />; }
 
 export function VocabularyPage({ wordsOnly = false } = {}) {
+  return wordsOnly ? <VocabularyWordsView /> : <VocabularyHomePage />;
+}
+
+function VocabularyHomePage() {
+  const fb = useFieldbook();
+  const owner = accountId();
+  const [catalogStatus, setCatalogStatus] = useState('ready');
+  const [retry, setRetry] = useState(0);
+  useEffect(() => {
+    if (!fb.loadVocabularyCatalog) return;
+    let active = true; setCatalogStatus('loading');
+    Promise.resolve(fb.loadVocabularyCatalog(undefined, { force: retry > 0 })).then(result => {
+      if (active && accountId() === owner) setCatalogStatus(result === false ? 'error' : 'ready');
+    }, () => { if (active && accountId() === owner) setCatalogStatus('error'); });
+    return () => { active = false; };
+  }, [fb.loadVocabularyCatalog, owner, retry]);
+  const saved = readVocabularyDraft(owner);
+  const preferences = normalizeVocabularyPreferences(fb.state.settings?.vocabulary);
+  const mode = preferences.mode === 'audio' ? 'definition' : preferences.mode;
+  const learned = getLearnedVocabularyIds(fb.state);
+  const due = safeQueue(fb.state, { dueOnly: true, mode }).filter(card => learned.has(card.entryId));
+  const enrollment = [...(fb.state.wordbookEnrollments || [])].sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || ''))).map(row => ({ book: VOCABULARY_CATALOG.books.find(book => book.id === row.bookId), study: bookStudy(fb.state, row.bookId) })).find(row => row.book && row.study.next);
+  const nextGroup = enrollment?.study.next;
+  const learning = nextGroup && fb.state.wordbookProgress.find(row => row.bookId === nextGroup.bookId && row.unitId === nextGroup.id)?.learning;
+  const resumeParams = new URLSearchParams({ resume: 'true', mode: saved?.mode || mode });
+  if (saved?.planId) resumeParams.set('planId', saved.planId);
+  let resumeTo = `/vocabulary/review?${resumeParams}`;
+  if (saved?.selection && 'bookId' in saved.selection) {
+    const params = new URLSearchParams({ bookId: saved.selection.bookId, unitId: saved.selection.unitId, mode: saved.mode, dueOnly: 'false', resume: 'true' });
+    if (saved.selection.kind === 'learning-batch') {
+      params.set('batch', String(saved.selection.batchIndex)); params.set('batchSize', String(saved.selection.batchSize)); params.set('batchCards', JSON.stringify(saved.selection.cards));
+    }
+    if (saved.planId) params.set('planId', saved.planId);
+    resumeTo = `/vocabulary/study?${params}`;
+  }
+  const href = saved ? resumeTo : due.length ? `/vocabulary/review?${new URLSearchParams({ mode, dueOnly: 'true' })}` : nextGroup ? studyLink(nextGroup) : '/vocabulary/wordbooks';
+  const action = saved ? 'Continue session' : due.length ? 'Review due words' : nextGroup ? learning?.viewedEntryIds?.length ? 'Continue learning' : 'Start learning' : 'Study wordbooks';
+  const title = saved ? 'Continue your session' : due.length ? 'Your words are due' : enrollment ? enrollment.book.title : 'Choose your wordbook';
+  return <VocabularyLayout ready={catalogStatus !== 'loading'}>
+    <div className="page-tools"><h2>Vocabulary</h2><Link className="btn line" to="/settings/vocabulary">Practice settings</Link></div>
+    <section className="vocabulary-home-next" aria-label="Next vocabulary task">
+      <span className="vocabulary-eyebrow">{saved ? `${saved.cardIds.length} words · Session saved` : due.length ? `${due.length} due cards` : nextGroup ? `${preferences.learningBatchSize} words per batch` : 'Wordbook study'}</span>
+      <h3>{title}</h3>
+      {nextGroup && !saved && !due.length ? <p>{unitPath(enrollment.book, nextGroup, enrollment.study.hierarchy)}</p> : null}
+      {catalogStatus === 'loading' && !saved && !due.length ? <PanelLoadingState message="Loading your wordbooks..." /> : catalogStatus === 'error' && !saved && !due.length ? <StateMessage kind="error" message="Wordbooks could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16}/></Link>}
+    </section>
+    <VocabularyStats values={[["Due cards", due.length], ["Wrong words", getActiveWrongWords(fb.state).length], ["Saved words", (fb.state.vocabulary || []).filter(entry => !entry.tags.includes('archived')).length]]}/>
+    <nav className="vocabulary-home-links" aria-label="More vocabulary tasks"><Link to="/vocabulary/wordbooks"><BookOpen size={17}/>Wordbooks<ArrowRight size={15}/></Link><Link to="/vocabulary/review"><RotateCcw size={17}/>Review vocabulary<ArrowRight size={15}/></Link><Link to="/vocabulary/words"><Pencil size={17}/>Manage my words<ArrowRight size={15}/></Link><Link to="/vocabulary/history">Session history<ArrowRight size={15}/></Link></nav>
+  </VocabularyLayout>;
+}
+
+function VocabularyWordsView({ wordsOnly = true } = {}) {
   const fb = useFieldbook();
   const location = useLocation();
-  const [wordParams, setWordParams] = useSearchParams();
+  const [wordParams, setWordParams] = useVocabularySearchParams();
   const search = wordParams.get('search') || '';
   const status = wordParams.get('status') || 'all';
   const source = wordParams.get('source') || 'all';
@@ -328,19 +384,6 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
           </button>
         </div>
       </div>
-      {!wordsOnly ? <div className="vocabulary-entryways">
-        <article className="vocabulary-entryway">
-          <BookOpen size={22} /><span className="vocabulary-eyebrow">Follow a wordbook</span>
-          <h3>Wordbook study</h3><p>Work through one complete group at a time, in the book's original order.</p>
-          <Link className="btn primary" to="/vocabulary/wordbooks">Study wordbooks <ArrowRight size={16} /></Link>
-        </article>
-        <article className="vocabulary-entryway">
-          <RotateCcw size={22} /><span className="vocabulary-eyebrow">Keep words ready</span>
-          <h3>Vocabulary review</h3><p>Practise due cards, recover wrong words, or build a focused review session.</p>
-          <Link className="btn primary" to="/vocabulary/review">Review vocabulary <ArrowRight size={16} /></Link>
-        </article>
-      </div>
-      : null}
       <h3 className="vocabulary-section-title">My vocabulary</h3>
       <VocabularyStats
         values={[
@@ -528,8 +571,8 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
 
 export function VocabularyWordbooksPage() {
   const fb = useFieldbook();
-  const [params] = useSearchParams();
-  const { bookId: pathBookId } = useParams();
+  const [params] = useVocabularySearchParams();
+  const { bookId: pathBookId } = normalizeVocabularyScope(useParams());
   const [selectedBook, setSelectedBook] = useState(pathBookId || params.get("bookId") || "");
   useEffect(() => { setSelectedBook(pathBookId || params.get("bookId") || ""); }, [pathBookId, params]);
   const [catalogBusy, setCatalogBusy] = useState(false);

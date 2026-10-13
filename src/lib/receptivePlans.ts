@@ -35,23 +35,35 @@ export function ensureReceptivePlans(state:ReceptiveState, skill:ExamSkill, chan
   return generated;
 }
 export function receptivePlanPath(plan:Record<string,any>, skill:ExamSkill):string {
+  if (plan.target?.type==='section' && plan.target.sectionId) return `/${skill}/${encodeURIComponent(plan.target.sectionId)}`;
+  if (plan.target?.type==='exam-review') return `/${skill}/review/${encodeURIComponent(plan.target.attemptId)}`;
   if(plan.kind==='listening-intensive'&&plan.sectionId)return `/listening/intensive/${encodeURIComponent(plan.sectionId)}${plan.sentenceId?`?sentence=${encodeURIComponent(plan.sentenceId)}`:''}`;
   if(plan.attemptId)return `/${skill}/review/${encodeURIComponent(plan.attemptId)}`;
   if(plan.kind.endsWith('review'))return `/${skill}/review`;
   if(plan.sectionId)return `/${skill}/${encodeURIComponent(plan.sectionId)}`;
-  return `/${skill}${plan.kind==='listening-intensive'?'?mode=intensive':''}`;
+  return `/${skill}`;
 }
 
 type CompletionState = { activePlanId: string | null; plans: Record<string, any>[]; examAttempts?: ExamAttempt[]; intensiveSessions?: IntensiveSession[] };
 /** Completing a task must be driven by work done after that task started. */
 export function completeReceptivePlanIfMatched(state: CompletionState, previous?: CompletionState | null) {
-  const plan = state.plans.find(row => row.id === state.activePlanId && row.status === 'in_progress');
+  let completed: Record<string, any> | null = null;
+  for (const plan of state.plans) {
+    if (!plan.target && plan.id !== state.activePlanId) continue;
+    completed = completeBoundReceptivePlan(state, plan, previous) || completed;
+  }
+  return completed;
+}
+
+function completeBoundReceptivePlan(state: CompletionState, plan: Record<string, any>, previous?: CompletionState | null) {
+  if (plan.status !== 'in_progress') return null;
   if (!plan || !plan.startedAt || !/^(reading|listening)-/.test(plan.kind)) return null;
   const skill: ExamSkill = plan.kind.startsWith('reading') ? 'reading' : 'listening';
   const afterStart = (value?: string) => Boolean(value && Date.parse(value) >= Date.parse(plan.startedAt));
+  const exactPlan = (row: Record<string,any>) => !plan.target || row.planId === plan.id;
   let linked: { id: string; completedAt?: string } | undefined;
   if (plan.kind === 'listening-intensive') {
-    linked = state.intensiveSessions?.find(row => row.stage === 6 && afterStart(row.completedAt) && (!plan.sectionId || row.sectionId === plan.sectionId) && (!plan.sentenceId || row.sentenceId === plan.sentenceId));
+    linked = state.intensiveSessions?.find(row => row.stage === 6 && exactPlan(row) && afterStart(row.completedAt) && (!plan.sectionId || row.sectionId === plan.sectionId) && (!plan.sentenceId || row.sentenceId === plan.sentenceId));
     if (linked) {
       const sentence = linked as IntensiveSession;
       plan.sectionId = sentence.sectionId;
@@ -59,7 +71,7 @@ export function completeReceptivePlanIfMatched(state: CompletionState, previous?
     }
   } else if (plan.kind.endsWith('-review')) {
     linked = state.examAttempts?.find(row => {
-      if (row.skill !== skill || row.status !== 'completed' || (plan.attemptId && row.id !== plan.attemptId)) return false;
+      if (row.skill !== skill || row.status !== 'completed' || (plan.attemptId && row.id !== plan.attemptId) || !exactPlan(row) || plan.target && !afterStart(row.updatedAt)) return false;
       const before = previous?.examAttempts?.find(prior => prior.id === row.id);
       if (!before) return false;
       const wrong = Object.entries(row.results || {}).filter(([, correct]) => !correct).map(([id]) => id);
@@ -68,12 +80,18 @@ export function completeReceptivePlanIfMatched(state: CompletionState, previous?
       return diagnosed && changed;
     });
   } else {
-    linked = state.examAttempts?.find(row => row.skill === skill && row.status === 'completed' && afterStart(row.completedAt) && (!plan.sectionId || row.sectionIds.includes(plan.sectionId)));
+    linked = state.examAttempts?.find(row => {
+      if(row.skill!==skill||row.status!=='completed'||!exactPlan(row)||!afterStart(row.completedAt)||plan.sectionId&&!row.sectionIds.includes(plan.sectionId))return false;
+      if(!plan.target)return true;
+      if(row.mode!==plan.target.mode||row.sectionIds.length!==1||row.sectionIds[0]!==plan.target.sectionId)return false;
+      const ids: string[] | undefined=plan.target.questionIds;
+      return !ids || ids.length>0 && JSON.stringify(ids.slice().sort())===JSON.stringify((row.questionSnapshot||[]).map(question=>question.id).sort()) && ids.every(id=>{const value=row.responses?.[id];return Array.isArray(value)?value.length>0&&value.every(item=>String(item).trim()):Boolean(String(value||'').trim());});
+    });
   }
   if (!linked) return null;
   plan.status = 'completed';
   plan.completedAt = plan.kind.endsWith('-review') ? new Date().toISOString() : linked.completedAt;
   plan.linkedSessionId = linked.id;
-  state.activePlanId = null;
+  if (state.activePlanId === plan.id) state.activePlanId = null;
   return plan;
 }

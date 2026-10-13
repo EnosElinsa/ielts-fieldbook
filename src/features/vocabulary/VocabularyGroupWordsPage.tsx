@@ -1,10 +1,11 @@
+import { useVocabularySearchParams } from './vocabularyNavigation';
+import { normalizeVocabularyScope } from '../../domain/vocabulary/identities';
 import { PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
 import {
   useLocation,
   useParams,
-  useSearchParams,
-} from "react-router-dom";
+  } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useFieldbook } from "../../context/FieldbookContext";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
@@ -31,9 +32,9 @@ export function VocabularyGroupWordsPage() {
       vocabulary?: unknown;
     };
   };
-  const { bookId = "", unitId = "" } = useParams();
+  const { bookId = "", unitId = "" } = normalizeVocabularyScope(useParams());
   const location = useLocation();
-  const [params, setParams] = useSearchParams();
+  const [params, setParams] = useVocabularySearchParams();
   const { status, retry } = useVocabularyCatalog(
     fb.loadVocabularyCatalog,
     bookId,

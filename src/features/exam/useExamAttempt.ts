@@ -6,8 +6,10 @@ import type { ExamAttempt, ExamCatalog, ExamSkill } from '../../domain/exam/type
 import { accountId } from '../../storage/remote';
 import { readExamRecovery, writeExamRecovery, clearExamRecovery } from '../../storage/examRecovery';
 
-export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practice' | 'mock', catalog: ExamCatalog, requestedId?: string | null, retryId?: string | null) {
-  const fb = useFieldbook(); const navigate = useNavigate(); const owner = accountId(); const key = `${skill}:${mode}:${sourceId}${retryId ? `:retry:${retryId}` : ''}`;
+export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practice' | 'mock', catalog: ExamCatalog, requestedId?: string | null, retryId?: string | null, planId?: string | null) {
+  const fb = useFieldbook(); const navigate = useNavigate(); const owner = accountId();
+  const baseKey = `${skill}:${mode}:${sourceId}${retryId ? `:retry:${retryId}` : ''}`;
+  const key = `${baseKey}${planId ? `:plan:${planId}` : ''}`;
   const [attempt, setAttempt] = useState<ExamAttempt | null>(null); const ref = useRef<ExamAttempt | null>(null);
   const [saving, setSaving] = useState(false); const [error, setError] = useState(''); const [clock, setClock] = useState(0);
   const lock = useRef(false); const timer = useRef<number | null>(null); const alive = useRef(true); const boundOwner = useRef(owner);
@@ -27,17 +29,31 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
   useEffect(() => {
     boundOwner.current = owner; ref.current = null; setAttempt(null); setError(''); setSaving(false); lock.current = false;
     if (!catalog.sections.length || !sourceId) return;
-    const existing = (fb.stateRef.current.examAttempts || []).find((row: ExamAttempt) => row.skill === skill && row.mode === mode && row.sourceId === sourceId && row.retryOfAttemptId === (retryId || undefined) && (requestedId ? row.id === requestedId : row.status !== 'completed')) as ExamAttempt | undefined;
-    const local = readExamRecovery<ExamAttempt>(owner, key);
-    const validLocal = local && local.skill === skill && local.mode === mode && local.sourceId === sourceId && (!requestedId || local.id === requestedId) ? local : undefined;
+    const matches = (row: ExamAttempt) => {
+      if (row.skill !== skill || row.mode !== mode || row.sourceId !== sourceId || row.retryOfAttemptId !== (retryId || undefined)) return false;
+      if (requestedId && row.id !== requestedId) return false;
+      if (planId) {
+        if (row.planId !== planId) return false;
+        const plan = (fb.stateRef.current.plans as import('../../domain/plans').StudyPlan[] || []).find(item => item.id === planId);
+        if (plan?.startedAt && !(Date.parse(row.startedAt) >= Date.parse(plan.startedAt))) return false;
+        const wanted = catalog.questions.map(question => question.id).sort();
+        const recorded = row.questionSnapshot ? row.questionSnapshot.map(question => question.id) : Object.keys(row.questionTypes || {});
+        if (JSON.stringify(wanted) !== JSON.stringify(recorded.sort())) return false;
+      } else if (!requestedId && row.planId) return false;
+      return true;
+    };
+    const existing = (fb.stateRef.current.examAttempts || []).find((row: ExamAttempt) => matches(row) && (requestedId || row.status !== 'completed')) as ExamAttempt | undefined;
+    const local = readExamRecovery<ExamAttempt>(owner, key) || (planId ? readExamRecovery<ExamAttempt>(owner, baseKey) : null);
+    const validLocal = local && matches(local) ? local : undefined;
     const recovered = validLocal && (!existing || validLocal.updatedAt >= existing.updatedAt) ? validLocal : existing;
-    const next = recovered || (mode === 'practice' ? { ...createExamAttempt(catalog.sections, catalog.questions, mode), sourceId, ...(retryId ? { retryOfAttemptId: retryId } : {}) } : null);
+    const next = recovered ? { ...recovered } : (mode === 'practice' ? { ...createExamAttempt(catalog.sections, catalog.questions, mode), sourceId, ...(retryId ? { retryOfAttemptId: retryId } : {}), ...(planId ? { planId, questionSnapshot: structuredClone(catalog.questions) } : {}) } : null);
     if (next) { if (mode === 'mock' && next.status === 'paused') next.status = 'active'; ref.current = next; setAttempt(next); setClock(next.elapsedSeconds); practiceTick.current = Date.now(); writeExamRecovery(owner, key, next); if (next.status === 'completed' && validLocal) setError('This completed attempt still needs to be saved. Retry submission.'); }
-  }, [owner, key, catalog, requestedId, retryId, sourceId, skill, mode, fb.stateRef]);
+  }, [owner, key, catalog, requestedId, retryId, sourceId, skill, mode, planId, fb.stateRef]);
   const start = () => {
     if (accountId() !== owner) return;
     const next = createExamAttempt(catalog.sections, catalog.questions, mode);
     next.sourceId = sourceId;
+    if (planId) { next.planId = planId; next.questionSnapshot = structuredClone(catalog.questions); }
     if (mode === 'mock') { next.timeLimitSeconds = skill === 'reading' ? 3600 : Math.ceil(catalog.assets.filter(asset => asset.kind === 'audio').reduce((sum, asset) => sum + (asset.duration || 0), 0)) + 120; next.hintsEnabled = false; }
     ref.current = next; setAttempt(next); setClock(0); practiceTick.current = Date.now(); writeExamRecovery(owner, key, next);
   };

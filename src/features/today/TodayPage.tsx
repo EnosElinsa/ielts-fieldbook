@@ -1,369 +1,44 @@
 // @ts-nocheck
-import { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import {
-  criterionBands,
-  criterionLabel,
-  dueVocabulary,
-  studyStreak,
-  todaySession,
-  weakestCriterion,
-} from '../../domain';
+import { Link } from 'react-router-dom';
+import { ArrowRight, CalendarDays, Check, Clock3 } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { dayLabel, displayName, formatDate, planPillClass, sessionSkill, typeName } from '../../lib/format';
-import { Empty } from '../../components/ui';
-import { ArrowRight, FileCheck2 } from 'lucide-react';
-import { ExamTodayPage } from '../exam/ExamTodayPage';
-import { AccountDataBoundary, useAccountRequirements } from '../../components/AccountDataBoundary';
-
-function planLabel(title: string) {
-  const parts = String(title || '').split('·');
-  if (parts.length < 2) return { tag: '', name: title || '' };
-  return { tag: parts[0].trim(), name: parts.slice(1).join('·').trim() };
-}
+import { AccountDataBoundary } from '../../components/AccountDataBoundary';
+import { dateKey } from '../../domain';
+import { nextUnifiedPlan, selectedStudySkills } from '../../lib/planTemplates';
+import { studyTargetSummary } from '../../lib/planTargets';
+import { TaskStartButton, useStudySchedule } from '../planning/StudySchedule';
+import '../../styles/planning.css';
 
 export function TodayPage() {
-  const fb = useFieldbook();
-  if (fb.activeSkill === 'reading' || fb.activeSkill === 'listening') return <AccountDataBoundary modules={['receptive']}><ExamTodayPage skill={fb.activeSkill} /></AccountDataBoundary>;
-  return <AccountDataBoundary modules={['productive']} banks={[fb.activeSkill]}><WritingSpeakingTodayPage /></AccountDataBoundary>;
+  return <AccountDataBoundary modules={['productive','vocabulary','receptive']}><UnifiedToday /></AccountDataBoundary>;
 }
 
-function VocabularyDueCount() {
-  const fb = useFieldbook();
-  const {ready,error,retry} = useAccountRequirements({modules:['vocabulary']});
-  if (error) return <button className="btn text" onClick={retry}>Retry</button>;
-  return <strong aria-busy={!ready}>{ready ? dueVocabulary(fb.state, null, fb.activeSkill).length : '...'}</strong>;
-}
-
-function TodayStreak() {
-  const fb = useFieldbook();
-  const {ready,error,retry} = useAccountRequirements({modules:['productive','receptive']});
-  if (error) return <button className="btn text" onClick={retry}>Retry</button>;
-  return <span aria-busy={!ready}>{ready ? `${studyStreak(fb.state)}-day streak` : '...'}</span>;
-}
-
-function WritingSpeakingTodayPage() {
-  const fb = useFieldbook();
-  const navigate = useNavigate();
-  const speaking = fb.activeSkill === 'speaking';
-  const [plans, setPlans] = useState([]);
-  useEffect(() => {
-    setPlans(fb.ensurePlansForSkill());
-  }, [fb.state, fb.activeSkill]);
-  const skillSessions = fb.state.sessions.filter((s) => sessionSkill(s) === fb.activeSkill);
-  const week = useMemo(() => {
-    const now = new Date();
-    const day = now.getDay() || 7;
-    const start = new Date(now);
-    start.setHours(0, 0, 0, 0);
-    start.setDate(start.getDate() - day + 1);
-    return skillSessions.filter((session) => new Date(session.date) >= start && new Date(session.date) <= now);
-  }, [skillSessions]);
-  const session = todaySession(fb.state, null, fb.activeSkill);
-  const report = criterionBands(fb.state, fb.activeSkill, 5);
-  const weak = weakestCriterion(fb.state, fb.activeSkill);
-  const keys = Object.keys(report.bands);
-  const exam = fb.state.settings.examDate
-    ? new Date(`${fb.state.settings.examDate}T00:00:00`).toLocaleDateString('en-GB', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-      })
-    : 'not set';
-  const focus = speaking
-    ? fb.state.settings.speakingFocus === 'part1'
-      ? 'Part 1 first'
-      : fb.state.settings.speakingFocus === 'part2'
-        ? 'Part 2 first'
-        : 'Part 1 and Part 2'
-    : fb.state.settings.focus === 'task1'
-      ? 'Task 1 first'
-      : fb.state.settings.focus === 'task2'
-        ? 'Task 2 first'
-        : 'Task 1 and Task 2';
-  const mix =
-    fb.state.settings.skillMix === 'speaking'
-      ? 'Speaking only'
-      : fb.state.settings.skillMix === 'writing'
-        ? 'Writing only'
-        : 'Writing, speaking, reading and listening';
-  const dayWord = fb.state.settings.days.length === 1 ? 'day' : 'days';
-  const statusText = { pending: 'Not started', in_progress: 'In progress', completed: 'Done' };
-  const nextPlan = plans.find((plan) => plan.status === 'in_progress') || plans.find((plan) => plan.status === 'pending');
-  const pendingFeedback = skillSessions.filter((item) => !item.assessmentId).length;
-
-  const assessmentMatches = (assessment) => {
-    if (assessment && assessment.skill === 'speaking') return fb.activeSkill === 'speaking';
-    const sess = assessment?.sessionId ? fb.state.sessions.find((item) => item.id === assessment.sessionId) : null;
-    if (sess) return sessionSkill(sess) === fb.activeSkill;
-    return fb.activeSkill === 'writing';
-  };
-  const errorMatches = (error) => {
-    if (!error?.sourceSessionId) return true;
-    const sess = fb.state.sessions.find((item) => item.id === error.sourceSessionId);
-    if (!sess) return true;
-    return sessionSkill(sess) === fb.activeSkill;
-  };
-
-  return (
-    <section className="view active">
-      <div className="lead-grid">
-        <div className="lead">
-          <p className="kicker">
-            <span>{dayLabel(new Date())}</span>
-          </p>
-          <h2 className="sr-only">Today</h2>
-          <h2>{nextPlan?.status === 'in_progress' ? 'Pick up where you left off' : 'Your next study session'}</h2>
-          {fb.state.settings.examDate ? (
-            <p>
-              {session.weakest
-                ? `Practise ${criterionLabel(session.weakest.key).toLowerCase()} first. Work through the steps below.`
-                : speaking
-                  ? 'Today’s speaking is below.'
-                  : 'Today’s writing is below.'}
-            </p>
-          ) : (
-            <p>The exam date is not set. Set it and the daily tasks follow the exam.</p>
-          )}
-          {skillSessions.length ? null : (
-            <p>Finish one task. Export the file, score it outside Fieldbook, then import the scored file.</p>
-          )}
-          <ol className="session-steps">
-            {session.steps.map((step, index) => {
-              const label = step.id === 'recall' ? 'Recall' : step.id === 'correction' ? 'Use this' : 'Start this';
-              const tone = step.id === 'practice' ? 'primary' : 'line';
-              return (
-                <li className="session-step" key={step.id}>
-                  <span className="session-index">{index + 1}</span>
-                  <div>
-                    <h3>{step.title}</h3>
-                    <p>{step.detail}</p>
-                  </div>
-                  {step.id === 'practice' ? null : (
-                  <button
-                    type="button"
-                    className={`btn ${tone}`}
-                    onClick={() => {
-                      if (step.id === 'recall') {
-                        fb.setVocabularyDueOnly(true);
-                        navigate('/vocabulary/review');
-                        return;
-                      }
-                      if (step.id === 'correction') {
-                        const error = fb.state.errors.find((item) => item.id === step.errorId);
-                        const source = error && fb.state.sessions.find((item) => item.id === error.sourceSessionId);
-                        if (source) fb.startTargetedPractice(source, error.id);
-                        else fb.setSkill(fb.activeSkill, speaking ? '/speak' : '/write');
-                        return;
-                      }
-                      const first = plans.find((item) => item.status !== 'completed') || plans[0];
-                      if (first) fb.startPlan(first.id);
-                      else navigate(speaking ? '/speak' : '/write');
-                    }}
-                  >
-                    {label}
-                  </button>
-                  )}
-                </li>
-              );
-            })}
-          </ol>
-          <div className="lead-actions">
-            {!fb.state.settings.examDate ? (
-              <button className="btn line" type="button" onClick={() => fb.openModal('settings')}>
-                Set exam date
-              </button>
-            ) : null}
-            <button
-              className="btn primary"
-              type="button"
-              onClick={() => {
-                const first = nextPlan;
-                if (first) fb.startPlan(first.id);
-                else navigate(speaking ? '/speak' : '/write');
-              }}
-            >
-              {nextPlan?.status === 'in_progress' ? 'Continue' : 'Start'} <ArrowRight size={16} />
-            </button>
-            {!speaking ? (
-              <button
-                className="btn line"
-                type="button"
-                onClick={() => {
-                  const draft = fb.stateRef.current;
-                  const plan = fb.ensureMockPlan(draft, 'writing-mock');
-                  fb.persistNow(draft);
-                  fb.startPlan(plan.id);
-                }}
-              >
-                Writing mock
-              </button>
-            ) : (
-              <button
-                className="btn line"
-                type="button"
-                onClick={() => {
-                  const draft = fb.stateRef.current;
-                  const plan = fb.ensureMockPlan(draft, 'speaking-mock');
-                  fb.persistNow(draft);
-                  fb.startPlan(plan.id);
-                }}
-              >
-                Speaking mock
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="quiet">
-          <h3>Recent scores</h3>
-          <div>
-            {!keys.length ? (
-              <p className="empty">Import a score and this will show which criterion to practise first.</p>
-            ) : (
-              <>
-                <div className="band-list">
-                  {keys.map((key) => (
-                    <div key={key} className={`band-row${weak && weak.key === key ? ' is-low' : ''}`}>
-                      <span>{criterionLabel(key)}</span>
-                      <strong>{report.bands[key]}</strong>
-                    </div>
-                  ))}
-                </div>
-                {weak ? (
-                  <p className="rule-note">Practise {criterionLabel(weak.key).toLowerCase()} first.</p>
-                ) : null}
-              </>
-            )}
-          </div>
-          {pendingFeedback ? <button className="today-feedback" onClick={() => navigate('/review')}><FileCheck2 size={17} /><span>{pendingFeedback} {pendingFeedback === 1 ? 'attempt needs' : 'attempts need'} feedback</span><ArrowRight size={15} /></button> : null}
-          <p className="quiet-meta">
-            <span>
-              {fb.state.settings.days.length} {dayWord} a week
-            </span>
-            <span>{fb.state.settings.dailyMinutes} min a day</span>
-            <span>{mix}</span>
-            <span>{focus}</span>
-            <span>Exam {exam}</span>
-            {fb.state.settings.targetBand ? <span>Target {fb.state.settings.targetBand}</span> : null}
-          </p>
-          <div className="rule-note"><TodayStreak /></div>
-        </div>
-      </div>
-      <div className="metrics">
-        <div className="metric">
-          <label>This week</label>
-          <strong>{week.length}</strong>
-          <small>sessions</small>
-        </div>
-        <div className="metric">
-          <label>Words</label>
-          <strong>{skillSessions.reduce((sum, s) => sum + Number(s.words || 0), 0).toLocaleString()}</strong>
-          <small>written so far</small>
-        </div>
-        <div className="metric">
-          <label>Open</label>
-          <strong>{fb.state.errors.filter((e) => !e.resolved && errorMatches(e)).length}</strong>
-          <small>mistakes</small>
-        </div>
-        <div className="metric">
-          <label>Scores</label>
-          <strong>{fb.state.assessments.filter(assessmentMatches).length}</strong>
-          <small>imported</small>
-        </div>
-        <button className="metric metric-link" type="button" onClick={() => navigate('/vocabulary')}>
-          <label>Due vocabulary</label>
-          <VocabularyDueCount />
-          <small>due today</small>
-        </button>
-      </div>
-      <div className="section-head">
-        <div>
-          <h3>Coming up</h3>
-          <p>
-            {fb.state.settings.days.length} {dayWord} a week · {fb.state.settings.dailyMinutes} min a day
-          </p>
-        </div>
-        <Link className="btn text" to="/progress">
-          Open progress →
-        </Link>
-      </div>
-      <div className="plan">
-        {plans.length ? (
-          plans.map((plan, index) => {
-            const label = planLabel(plan.title);
-            return (
-            <div key={plan.id} className={`plan-card${index === 0 && plan.status !== 'completed' ? ' next' : ''}`}>
-              <div>
-                <div className="plan-top">
-                  <span className="date">
-                    {dayLabel(`${plan.dateKey}T00:00:00`)} · {fb.state.settings.dailyMinutes} min
-                  </span>
-                  {label.tag ? <span className={`pill ${planPillClass(plan.kind)}`}>{label.tag}</span> : null}
-                </div>
-                <h4>{label.name}</h4>
-                <p>{plan.description}</p>
-              </div>
-              <div className="plan-foot">
-                <span className="status">{statusText[plan.status] || plan.status}</span>
-                <button
-                  className={`btn ${plan.status === 'completed' ? 'line' : 'primary'}`}
-                  type="button"
-                  onClick={() => fb.startPlan(plan.id)}
-                >
-                  {plan.status === 'completed' ? 'View' : plan.status === 'in_progress' ? 'Continue' : 'Start'}
-                </button>
-              </div>
-            </div>
-            );
-          })
-        ) : (
-          <Empty message="No plan yet." label="Open settings" onAction={() => fb.openModal('settings')} />
-        )}
-      </div>
-      <div className="section-head">
-        <div>
-          <h3>Recent work</h3>
-          <p>{speaking ? 'Recent attempts and scores.' : 'Recent essays and scores.'}</p>
-        </div>
-        <Link className="btn text" to="/review">
-          Open review →
-        </Link>
-      </div>
-      {skillSessions.length ? (
-        <div className="panel">
-          {skillSessions
-            .slice()
-            .reverse()
-            .slice(0, 5)
-            .map((sess) => (
-              <div className="work-row" key={sess.id} role="button" tabIndex={0} onClick={() => { if (sess.assessmentId) navigate(`/review/${sess.assessmentId}`); else { fb.setViewedSession(sess); fb.openModal('history'); } }} onKeyDown={(event) => { if (event.key === 'Enter') { if (sess.assessmentId) navigate(`/review/${sess.assessmentId}`); else { fb.setViewedSession(sess); fb.openModal('history'); } } }}>
-                <div className="work-name">
-                  {displayName(sess.name)}
-                  <small>
-                    {formatDate(sess.date)} · {sess.words} words
-                    {sess.next ? ` · Next: ${sess.next}` : ''}
-                  </small>
-                </div>
-                <span className="work-type">{typeName(sess)}</span>
-                <span className={`pill${sess.assessmentId ? ' green' : ''}`}>
-                  {sess.assessmentId
-                    ? 'Marked'
-                    : sess.attemptKind === 'rewrite'
-                      ? 'Rewrite'
-                      : sessionSkill(sess) === 'speaking'
-                        ? 'Spoken'
-                        : 'First draft'}
-                </span>
-              </div>
-            ))}
-        </div>
-      ) : (
-        <Empty
-          message={speaking ? 'No speaking attempts yet.' : 'No essays yet.'}
-          label={speaking ? 'Practise' : 'Write one'}
-          onAction={() => navigate(speaking ? '/speak' : '/write')}
-        />
-      )}
-    </section>
-  );
+function UnifiedToday() {
+  const fb=useFieldbook();const schedule=useStudySchedule();const today=dateKey(new Date());
+  const plans=fb.state.plans || [];const next=nextUnifiedPlan(plans);
+  const paused=(fb.state.examAttempts||[]).filter(attempt=>['active','paused'].includes(attempt.status)).sort((a,b)=>String(b.updatedAt||b.startedAt).localeCompare(String(a.updatedAt||a.startedAt)))[0];
+  const resume=paused&&next?.status!=='in_progress'?paused:null;
+  const resumeParams=new URLSearchParams(resume?{attempt:resume.id}:{});
+  if(resume?.retryOfAttemptId)resumeParams.set('retry',resume.retryOfAttemptId);
+  if(resume?.planId)resumeParams.set('planId',resume.planId);
+  const resumePath=resume?`/${resume.skill}/${resume.mode==='mock'?'mock/':''}${encodeURIComponent(resume.mode==='mock'?resume.sourceId:resume.sectionIds[0])}?${resumeParams}`:null;
+  const todays=plans.filter(plan=>plan.dateKey===today);
+  const done=todays.filter(plan=>plan.status==='completed');
+  const overdue=plans.filter(plan=>plan.dateKey<today&&['pending','in_progress'].includes(plan.status));
+  const skills=[...selectedStudySkills(fb.state.settings),'vocabulary'];
+  const upcoming=plans.filter(plan=>plan.dateKey>today&&plan.status==='pending').sort((a,b)=>a.dateKey.localeCompare(b.dateKey))[0];
+  return <section className="view active study-today">
+    <header className="study-page-head"><div><p className="kicker">{new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})}</p><h2>Today</h2></div><Link className="btn line" to="/planning"><CalendarDays size={16}/>Planning</Link></header>
+    {schedule.error && <div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
+    <div className="study-today-main">
+      <section className="study-next" aria-busy={schedule.saving}>
+        <p className="kicker">{resume||next?.status==='in_progress'?'In progress':next?.dateKey<today?'Overdue':'Next task'}</p>
+        <h3>{resume?`Continue ${resume.skill} ${resume.mode==='mock'?'mock':'practice'}`:next?.title || (schedule.saving?'Loading your plan':'Today is complete')}</h3>
+        {next&&!resume&&<p>{studyTargetSummary(next)}</p>}
+        {resume?<><div className="study-task-meta"><span className={`study-skill study-skill-${resume.skill}`}>{resume.skill}</span><span><Clock3 size={15}/>{Math.max(1,Math.ceil((Number(resume.remainingSeconds)||Number(resume.durationSeconds)||1200)/60))} min remaining</span></div><Link className="btn primary" to={resumePath}>Resume <ArrowRight size={16}/></Link></>:next ? <><div className="study-task-meta"><span className={`study-skill study-skill-${next.skill||'writing'}`}>{next.skill || 'Practice'}</span><span><Clock3 size={15}/>{next.estimatedMinutes || fb.state.settings.dailyMinutes} min</span>{next.dateKey<today&&<span>Due {next.dateKey}</span>}</div><p>{next.description}</p><p className="study-completion-condition">{next.completion?.description}</p><TaskStartButton plan={next}/></> : <>{upcoming&&<p>Next study day: {new Date(`${upcoming.dateKey}T00:00:00`).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'})}</p>}<Link className="btn line" to="/planning">Open plan <ArrowRight size={16}/></Link></>}
+      </section>
+      <section className="study-summary"><h3>Completed today</h3><p className="study-summary-total"><strong>{done.length}</strong><span>of {todays.filter(plan=>plan.status!=='skipped').length} tasks</span></p><p>{done.reduce((total,plan)=>total+Number(plan.estimatedMinutes||0),0)} min completed</p><ul>{skills.map(skill=><li key={skill}><span className={`study-skill study-skill-${skill}`}>{skill}</span><span>{done.filter(plan=>plan.skill===skill).length ? <><Check size={15}/> {done.filter(plan=>plan.skill===skill).length} done</> : '0 done'}</span></li>)}</ul>{overdue.length>0&&<Link className="study-overdue-link" to="/planning">{overdue.length} overdue {overdue.length===1?'task':'tasks'} <ArrowRight size={15}/></Link>}</section>
+    </div>
+    {todays.length>0&&<section className="study-today-list"><h3>Today's tasks</h3>{todays.map(plan=><div className="study-work-row" key={plan.id}><span className={`study-status-dot ${plan.status}`}/><div><strong>{plan.title}</strong><small>{plan.estimatedMinutes || fb.state.settings.dailyMinutes} min</small></div><span>{({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status}</span></div>)}</section>}
+  </section>;
 }

@@ -5,7 +5,7 @@ import { mergeBackup, validateBackup } from '../../src/domain/backup';
 
 test('v10 state has independent personal vocabulary collections and removes legacy runtime keys', () => {
   const state = migrateState({ lexicon: [{ id: 'old-1', term: 'mitigate', meaning: 'reduce the severity', example: 'Trees mitigate heat.', reviewCount: 4, skill: 'writing' }], plans: [{ id: 'p1', kind: 'lexicon' }] });
-  expect(state.schemaVersion).toBe(11);
+  expect(state.schemaVersion).toBe(12);
   expect(state).not.toHaveProperty('lexicon');
   expect(state.vocabulary.length).toBe(1);
   expect(state.vocabularyStates.length).toBeGreaterThan(0);

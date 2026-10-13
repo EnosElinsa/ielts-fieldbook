@@ -9,7 +9,7 @@ import { NavIcons, Toast } from './ui';
 import { useAuthUser } from '../auth/useAuthUser';
 import { AccountMark } from '../features/account/AccountMark';
 import { SaveFailure } from './SaveFailure';
-import { Search, PanelLeftClose, PanelLeftOpen, Upload, Headphones } from 'lucide-react';
+import { Search, PanelLeftClose, PanelLeftOpen, Upload } from 'lucide-react';
 import { IconButton } from './IconButton';
 import { AccountMenu, CommandSearch, MobileNavigation } from './WorkbenchNavigation';
 import { ModalFrame } from './ModalFrame';
@@ -19,6 +19,7 @@ import { moduleFor, studyLinkActive, workspaceModules } from './workspaceNavigat
 import { useWorkspaceModuleMemory } from './useWorkspaceModuleMemory';
 import { accountId } from '../storage/remote';
 import { AccountDataBoundary } from './AccountDataBoundary';
+import { SETTINGS_BACKUP_EVENT, type SettingsBackupAction } from '../features/settings/backupActions';
 
 const SettingsModal = lazy(()=>import('../features/modals/SettingsModal').then(m=>({default:m.SettingsModal})));
 const SaveModal = lazy(()=>import('../features/modals/SaveModal').then(m=>({default:m.SaveModal})));
@@ -40,6 +41,7 @@ function WorkspaceRoute() {
   else if (pathname.startsWith('/speak')) { modules = ['productive']; banks = ['speaking']; }
   else if (pathname.startsWith('/stories')) {modules=['productive'];banks=['speaking'];}
   else if (pathname.startsWith('/review')) modules=['productive','vocabulary'];
+  else if (pathname.startsWith('/settings')) modules=['productive','vocabulary','receptive'];
   return <AccountDataBoundary modules={modules} banks={banks}><Outlet /></AccountDataBoundary>;
 }
 
@@ -51,7 +53,7 @@ const RAIL_KEY = 'ielts-fieldbook-rail';
 
 const studyLinks = {
   reading: [{to:'/reading',label:'Questions',icon:NavIcons.questions},{to:'/reading/review',label:'Review',icon:NavIcons.review}],
-  listening: [{to:'/listening',label:'Questions',icon:NavIcons.questions},{to:'/listening?mode=intensive',label:'Intensive listening',icon:<Headphones size={20}/>},{to:'/listening/review',label:'Review',icon:NavIcons.review}],
+  listening: [{to:'/listening',label:'Questions',icon:NavIcons.questions},{to:'/listening/review',label:'Review',icon:NavIcons.review}],
   writing: [
     { to: '/write/questions', label: 'Questions', icon: NavIcons.questions },
     { to: '/write', label: 'Practice', icon: NavIcons.write },
@@ -83,7 +85,9 @@ function chromeFor(pathname: string, activeSkill: string, deskName: string, topi
   if (pathname.startsWith('/vocabulary')) return { kicker: 'Vocabulary', title: 'Vocabulary' };
   if (pathname.startsWith('/progress')) return { kicker: 'Progress', title: 'Progress' };
   if (pathname.startsWith('/account')) return { kicker: 'Account', title: 'Your account' };
-  return { kicker: effectiveSkill === 'reading' ? 'Reading' : effectiveSkill === 'listening' ? 'Listening' : skillLabel, title: 'Today' };
+  if (pathname.startsWith('/settings')) return { kicker: 'Workspace', title: 'Settings' };
+  if (pathname.startsWith('/planning')) return { kicker: 'Study', title: 'Planning' };
+  return { kicker: 'Study', title: 'Today' };
 }
 
 export function Shell() {
@@ -218,6 +222,16 @@ export function Shell() {
     reader.readAsText(file);
   };
 
+  useEffect(() => {
+    const requested = (event: Event) => {
+      const action = (event as CustomEvent<SettingsBackupAction>).detail;
+      if (action === 'export') void exportBackup();
+      if (action === 'import') backupInput.current?.click();
+    };
+    document.addEventListener(SETTINGS_BACKUP_EVENT, requested);
+    return () => document.removeEventListener(SETTINGS_BACKUP_EVENT, requested);
+  }, [fb]);
+
   return (
     <>
       <div className={`${collapsed ? 'shell is-collapsed' : 'shell'}${speaking ? ' skill-speaking' : ''}`}>
@@ -248,8 +262,7 @@ export function Shell() {
             })}
           </nav>
           <nav className="nav nav-account" aria-label="Account navigation">
-            <RailHint label="Study settings" enabled={collapsed}><button className="nav-settings" type="button" onClick={() => fb.openModal('settings')} aria-label="Study settings"><span className="nav-icon" aria-hidden="true">{NavIcons.settings}</span><span className="nav-label">Study settings</span></button></RailHint>
-            <RailHint label="Account" enabled={collapsed}><NavLink to="/account" aria-label="Account" className={({ isActive }) => (isActive ? 'active' : undefined)}>
+            <RailHint label="Account" enabled={collapsed}><NavLink to="/settings/account" aria-label="Account" className={({ isActive }) => (isActive ? 'active' : undefined)}>
               <span className="nav-icon">
                 <AccountMark user={accountUser} size="nav" />
               </span>
@@ -282,7 +295,7 @@ export function Shell() {
             <div className="actions">
               <IconButton label="Search workspace" onClick={() => setSearchOpen(true)}><Search size={18} /></IconButton>
               <AccountMenu user={accountUser} onImportBackup={() => backupInput.current?.click()} onExportBackup={exportBackup} onLegal={setLegalView} />
-              <button className="btn text legacy-header-action" type="button" onClick={() => fb.openModal('settings')}>
+              <button className="btn text legacy-header-action" type="button" onClick={() => navigateWithPracticeGuard('/settings', () => navigate('/settings'))}>
                 Settings
               </button>
               <div className="menu legacy-header-action">
@@ -316,7 +329,7 @@ export function Shell() {
                   </button>
                 </div>
               </div>
-              {!['vocabulary', 'account', 'reading', 'listening'].includes(module) && !['reading','listening'].includes(fb.activeSkill) ? <button className="btn primary import-score" type="button" onClick={() => fb.openFeedbackImport()}>
+              {!['vocabulary', 'account', 'settings', 'planning', 'reading', 'listening'].includes(module) && !['reading','listening'].includes(fb.activeSkill) ? <button className="btn primary import-score" type="button" onClick={() => fb.openFeedbackImport()}>
                 <Upload size={16} />Import score
               </button> : null}
               <input
@@ -347,13 +360,13 @@ export function Shell() {
           {fb.loadError ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
           {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
           {!fb.booted && !fb.loadError ? <PageLoadingState message="Loading workspace…" variant="bank" /> : null}
-          <div className="page" key={location.pathname}>
+          <div className="page" key={module === 'settings' ? 'settings' : location.pathname}>
             <Suspense fallback={<PageLoadingState message="Loading page…" />}>{fb.booted || fb.state.questions.length ? <WorkspaceRoute /> : null}</Suspense>
           </div>
         </main>
       </div>
       <MobileNavigation onMore={() => setMoreOpen(true)} onSelectModule={resumeModule} />
-      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}<button type="button" onClick={() => { setMoreOpen(false); resumeModule('progress'); }}>{NavIcons.progress}Progress</button><button type="button" onClick={() => { setMoreOpen(false); fb.openModal('settings'); }}>Study settings</button><button type="button" onClick={() => goFromMore('/account')}>Account</button></div></div></ModalFrame>
+      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}{workspaceModules.filter(link => ['planning', 'progress', 'settings'].includes(link.id)).map(link => <button type="button" key={link.id} className={module === link.id ? 'active' : undefined} onClick={() => { setMoreOpen(false); resumeModule(link.id); }}><link.Icon size={20} />{link.label}</button>)}<button type="button" onClick={() => goFromMore('/settings/account')}>Account</button></div></div></ModalFrame>
       {searchOpen && <AccountDataBoundary modules={['productive','vocabulary','receptive']} banks={['writing','speaking']}><CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} /></AccountDataBoundary>}
       <Suspense fallback={<PageLoadingState message="Loading..." />}>
         {fb.modal === 'assessment' && <AssessmentImportModal />}

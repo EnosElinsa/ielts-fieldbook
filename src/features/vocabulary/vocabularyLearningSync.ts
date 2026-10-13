@@ -1,3 +1,5 @@
+import { migrateVocabularyRecovery } from '../../storage/vocabularyRecovery';
+
 export type VocabularyLearning = { viewedEntryIds: string[]; currentEntryId?: string; updatedAt: string };
 export type LearningSaveSnapshot = { status: 'idle' | 'pending' | 'saving' | 'saved' | 'failed'; pending?: VocabularyLearning; savedOnDevice: boolean };
 type Options = { owner: string | null; bookId: string; unitId: string; currentOwner: () => string | null; save: (learning: VocabularyLearning) => Promise<boolean> };
@@ -106,6 +108,7 @@ class VocabularyLearningSync {
   }
 }
 export function acquireVocabularyLearningSync(options: Options) {
+  migrateVocabularyRecovery(options.owner);
   const key = vocabularyLearningPendingKey(options.owner, options.bookId, options.unitId);
   let queue = queues.get(key);
   if (!queue) { queue = new VocabularyLearningSync(key, options); queues.set(key, queue); }

@@ -24,3 +24,10 @@ legacy/
 
 # Isolated worktrees
 .worktrees/
+
+# Browser verification artifacts and compiler caches
+.playwright-cli/
+test-results/
+playwright-report/
+*.tsbuildinfo
+*.log

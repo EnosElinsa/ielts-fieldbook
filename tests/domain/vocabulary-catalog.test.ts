@@ -22,6 +22,6 @@ describe('English vocabulary catalogue', () => {
       expect(entry.senses[0].source).toBe('Fieldbook editorial');
       expect(entry.senses[0].license).toBe('CC-BY-4.0');
     }
-    for (const membership of VOCABULARY_CATALOG.memberships) expect(membership.unitId).toContain('starter:');
+    for (const membership of VOCABULARY_CATALOG.memberships) expect(membership.unitId).toContain('-editorial-starter');
   });
 });

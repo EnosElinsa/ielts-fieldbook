@@ -1,11 +1,12 @@
 // Shared learning evidence. Each call only reads the supplied account state.
 import { VOCABULARY_CATALOG } from './catalog';
+import { normalizeVocabularyBookId, normalizeVocabularyUnitId } from './identities';
 import type { VocabularyStore } from './types';
 export type GroupProgress = 'Not started' | 'In progress' | 'Studied';
 type Group = { id: string; bookId: string; studyEntryIds?: string[]; entryIds?: string[]; totalSourceWords?: number };
 function historicalAttempt(row: any): boolean {
   const record = row.sourceRecord;
-  return Boolean(record && String(record.id || '').trim() && String(record.book_hierarchy_id || row.unitId) === String(row.unitId) && (!record.book_id || String(row.bookId) === `guixue:${record.book_id}` || String(row.bookId) === String(record.book_id))
+  return Boolean(record && String(record.id || '').trim() && normalizeVocabularyUnitId(String(record.book_hierarchy_id || row.unitId)) === normalizeVocabularyUnitId(String(row.unitId)) && (!record.book_id || normalizeVocabularyBookId(String(row.bookId)) === normalizeVocabularyBookId(String(record.book_id)))
     && record.correct_rate !== null && record.correct_rate !== undefined && String(record.correct_rate).trim() !== '' && Number.isFinite(Number(record.correct_rate)));
 }
 export function vocabularyGroupProgress(state: Partial<VocabularyStore>, group: Group, learnedIds?: Set<string>): GroupProgress {
@@ -14,16 +15,24 @@ export function vocabularyGroupProgress(state: Partial<VocabularyStore>, group: 
   if (rows.some(historicalAttempt)) return 'Studied';
   if (!ids.length) return 'Not started';
   let partial = rows.some(row => row.completedEntryIds?.length);
+  const batchAnswered = new Set<string>();
   for (const session of state.vocabularySessions || []) {
     if (session.status !== 'submitted' || session.mode === 'audio') continue;
     const selected = session.selection ? session.selection.kind === 'unit' && session.selection.bookId === group.bookId && session.selection.unitId === group.id
       : session.filter?.bookId === group.bookId && session.filter?.unitId === group.id && session.filter.dueOnly === false && !session.filter.wrongOnly;
     const answered = new Set((session.results || []).filter(result => String(result.response || '').trim()).map(result => result.entryId));
+    if (session.selection?.kind === 'learning-batch' && session.selection.bookId === group.bookId && session.selection.unitId === group.id) {
+      const targets = session.selection.cards;
+      for (const result of session.results || []) {
+        if (String(result.response || '').trim() && targets.some(ref => ref.entryId === result.entryId && ref.senseId === result.senseId)) batchAnswered.add(result.entryId);
+      }
+    }
     if (ids.some(id => answered.has(id))) partial = true;
     // Specialist subsets can contribute evidence but cannot complete the group.
     if (selected && ids.every(id => answered.has(id))) return 'Studied';
   }
   const learned = learnedIds || getLearnedVocabularyIds(state);
+  if (ids.every(id => batchAnswered.has(id))) return 'Studied';
   if (ids.some(id => learned.has(id))) partial = true;
   return partial ? 'In progress' : 'Not started';
 }

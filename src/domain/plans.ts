@@ -4,6 +4,26 @@ import { weakestCriterion, criterionBucket, isBandScore } from './assessment';
 import { firstSentence, daysUntilExam, addLocalDays, dateKey, nowIso } from './utils';
 import { dueVocabulary } from './vocabulary';
 
+export type StudySkill = 'writing' | 'speaking' | 'reading' | 'listening' | 'vocabulary';
+export type PlanTarget =
+  | { type: 'question'; skill: 'writing' | 'speaking'; questionId: string | null; part?: string; mode: string }
+  | { type: 'section'; skill: 'reading' | 'listening'; sectionId: string | null; mode: 'practice' | 'mock'; questionIds?: string[] }
+  | { type: 'exam-review'; skill: 'reading' | 'listening'; attemptId: string }
+  | { type: 'intensive'; skill: 'listening'; sectionId: string; sentenceId: string }
+  | { type: 'error-review'; errorIds: string[] }
+  | { type: 'vocabulary'; mode: 'learning-batch' | 'due-review'; assessmentMode: string; bookId?: string; unitId?: string; batchIndex?: number; batchSize?: number; cards: {entryId:string; senseId:string}[] };
+export type StudyPlan = {
+  id: string; dateKey: string; skill: StudySkill; kind: string; title: string; description: string;
+  estimatedMinutes: number; origin: 'automatic' | 'manual'; status: 'pending' | 'in_progress' | 'completed' | 'skipped';
+  target: PlanTarget; completion: { type: 'attempt' | 'review' | 'assessment'; description: string };
+  schemaVersion: 2; generationKey: string; startedAt: string | null; completedAt: string | null;
+  [key: string]: unknown;
+};
+
+export function isProtectedPlan(plan) {
+  return plan.status !== 'pending' || Boolean(plan.startedAt || plan.completedAt || plan.manuallyEditedAt || plan.origin === 'manual' || plan.manual || plan.userModified);
+}
+
 export function recommendationFromAssessment(state, assessment) {
   if (!assessment) return null;
   const skill = assessment.skill === 'speaking' ? 'speaking' : 'writing';
@@ -40,7 +60,7 @@ export function syncNearestPendingPlan(state, recommendation, now) {
   if (!recommendation) return null;
   const today = dateKey(now || new Date());
   const candidates = (state.plans || []).filter(plan => {
-    if (!plan || plan.status !== 'pending') return false;
+    if (!plan || isProtectedPlan(plan) || plan.target) return false;
     if (plan.kind === 'writing-mock' || plan.kind === 'speaking-mock' || plan.kind === 'review' || plan.kind === 'vocabulary' || plan.kind === 'stories') return false;
     const skill = String(plan.kind).startsWith('speaking') ? 'speaking' : (plan.kind === '1' || plan.kind === '2' ? 'writing' : null);
     if (skill !== recommendation.skill) return false;
@@ -76,9 +96,9 @@ export function latestPracticeRecommendation(state, skill) {
 
 export function startPlan(state, planId, startedAt) {
   const plan = state.plans.find(item => item.id === planId);
-  if (!plan) return null;
+  if (!plan || plan.status === 'completed' || plan.status === 'skipped') return null;
   plan.status = 'in_progress';
-  plan.startedAt = startedAt || nowIso();
+  plan.startedAt = plan.startedAt || startedAt || nowIso();
   state.activePlanId = plan.id;
   return plan;
 }
@@ -95,6 +115,13 @@ export function completePlan(state, planId, details) {
 
 export function planMatchesAttempt(plan, attempt) {
   if (!plan || !attempt) return false;
+  if (plan.target) {
+    if (plan.status !== 'in_progress' || !plan.startedAt || attempt.planId !== plan.id || plan.target.type !== 'question') return false;
+    if (!plan.target.questionId || String(attempt.questionId) !== String(plan.target.questionId)) return false;
+    if (!(Date.parse(attempt.date) >= Date.parse(plan.startedAt))) return false;
+    const expected = plan.target.mode;
+    if (attempt.practiceMode !== expected && !(['full','timed'].includes(expected) && ['full','timed'].includes(attempt.practiceMode))) return false;
+  }
   const kind = String(plan.kind || '');
   if (kind === 'review' || kind === 'vocabulary' || kind === 'stories') return false;
   const speaking = attempt.skill === 'speaking';
@@ -125,6 +152,7 @@ export function completePlanIfMatched(state, planId, attempt) {
     const stage = plan.stage || 'task1';
     if (stage === 'task1') {
       plan.stage = 'task2';
+      if(plan.target){const next=(state.questions||[]).find(question=>String(question.type)==='2');if(next){plan.questionId=String(next.id);plan.target={...plan.target,questionId:String(next.id)};}}
       plan.status = 'in_progress';
       plan.linkedSessionId = attempt && attempt.id || plan.linkedSessionId;
       return plan;
@@ -135,19 +163,21 @@ export function completePlanIfMatched(state, planId, attempt) {
     const stage = plan.stage || 'p1';
     if (stage === 'p1') {
       plan.stage = 'p2';
+      if(plan.target){const next=(state.speakingTopics||[]).find(topic=>String(topic.part)==='2'&&!topic.incomplete);if(next){plan.questionId=String(next.id);plan.target={...plan.target,questionId:String(next.id),part:'2'};}}
       plan.status = 'in_progress';
       plan.linkedSessionId = attempt && attempt.id || plan.linkedSessionId;
       return plan;
     }
     if (stage === 'p2') {
       plan.stage = 'p3';
+      if(plan.target)plan.target={...plan.target,part:'3'};
       plan.status = 'in_progress';
       plan.linkedSessionId = attempt && attempt.id || plan.linkedSessionId;
       return plan;
     }
     return completePlan(state, planId, { linkedSessionId: attempt && attempt.id });
   }
-  return completePlan(state, planId, { linkedSessionId: attempt && attempt.id });
+  return completePlan(state, planId, { linkedSessionId: attempt && attempt.id, completedAt: attempt?.date });
 }
 
 export function completeStoriesPlan(state, details) {
@@ -156,17 +186,32 @@ export function completeStoriesPlan(state, details) {
   return completePlan(state, plan.id, details);
 }
 
-export function completeVocabularyPlan(state, previousDueCount, now) {
-  const plan = (state.plans || []).find(item => item.id === state.activePlanId && item.kind === 'vocabulary');
-  if (!plan) return null;
-  const due = dueVocabulary(state, now).length;
-  if (due > 0 && !(typeof previousDueCount === 'number' && due < previousDueCount)) return null;
-  return completePlan(state, plan.id, { completedAt: now });
+export function completeVocabularyPlan(state, session, now = undefined) {
+  const plan = (state.plans || []).find(item => item.id === session?.planId && item.kind === 'vocabulary');
+  const target = plan?.target;
+  if (!plan || plan.status !== 'in_progress' || target?.type !== 'vocabulary' || !session || typeof session !== 'object') return null;
+  if (session.planId !== plan.id || session.status !== 'submitted' || session.mode !== target.assessmentMode || ['audio','production'].includes(session.mode)) return null;
+  if (!(Date.parse(session.startedAt) >= Date.parse(plan.startedAt)) || !(Date.parse(session.submittedAt) >= Date.parse(session.startedAt))) return null;
+  const identities = cards => (cards || []).map(card => `${card.entryId}:${card.senseId}`).sort();
+  const wanted = identities(target.cards);
+  if (!wanted.length || JSON.stringify(wanted) !== JSON.stringify(identities(session.results)) || session.results.some(result => !String(result.response || '').trim() || result.result === 'pending')) return null;
+  if (target.mode === 'learning-batch') {
+    const selection = session.selection;
+    if (selection?.kind !== 'learning-batch' || ['bookId','unitId','batchIndex','batchSize'].some(key => selection[key] !== target[key]) || JSON.stringify(wanted) !== JSON.stringify(identities(selection.cards))) return null;
+  }
+  return completePlan(state, plan.id, { linkedSessionId: session.id, completedAt: session.submittedAt || now });
 }
 
 export function completeReview(state, details) {
   const plan = (state.plans || []).find(item => item.id === state.activePlanId && item.kind === 'review');
   if (!plan) return null;
+  if (plan.target) {
+    if (plan.status !== 'in_progress' || plan.target.type !== 'error-review' || details?.planId !== plan.id) return null;
+    if (!plan.target.errorIds.length || !plan.target.errorIds.every(id => {
+      const error = (state.errors || []).find(row => row.id === id);
+      return error && (error.resolved || Date.parse(error.lastReviewedAt) >= Date.parse(plan.startedAt));
+    })) return null;
+  }
   return completePlan(state, plan.id, details);
 }
 
@@ -443,7 +488,7 @@ export function todaySession(state, now, skill) {
 }
 
 export function syncPendingPlan(plan, recommendation) {
-  if (!plan || plan.status !== 'pending' || !recommendation || !recommendation.driver) return false;
+  if (!plan || isProtectedPlan(plan) || plan.target || !recommendation || !recommendation.driver) return false;
   const kind = String(plan.kind || '');
   if (kind === 'writing-mock' || kind === 'speaking-mock') return false;
   const currentSkill = kind === '1' || kind === '2' || kind === 'writing-mock'

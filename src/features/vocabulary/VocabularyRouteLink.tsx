@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate, useSearchParams, type LinkProps, type L
 import { accountId } from '../../storage/remote';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { rememberVocabularyPosition, safeVocabularyReturn } from './vocabularyNavigation';
+import { normalizeVocabularyRoute } from '../../domain/vocabulary/identities';
 
 type ReturnOrigin = {
   owner: string | null;
@@ -15,9 +16,9 @@ type ReturnOrigin = {
 function readOrigin(value: unknown, depth = 0): ReturnOrigin | undefined {
   if (!value || typeof value !== 'object' || depth >= 12) return;
   const row = value as ReturnOrigin;
-  if (row.owner !== accountId() || safeVocabularyReturn(row.url, '') !== row.url || !row.url) return;
+  if (row.owner !== accountId() || !row.url || !safeVocabularyReturn(row.url, '')) return;
   return {
-    owner: row.owner, url: row.url,
+    owner: row.owner, url: normalizeVocabularyRoute(row.url),
     ...(Number.isInteger(row.index) && row.index! >= 0 ? {index: row.index} : {}),
     parent: readOrigin(row.parent, depth + 1),
   };
@@ -27,7 +28,7 @@ function readOrigin(value: unknown, depth = 0): ReturnOrigin | undefined {
 export function vocabularyForwardState(location: Location) {
   const index = window.history.state?.idx;
   return { vocabularyReturn: {
-    owner: accountId(), url: location.pathname + location.search + location.hash,
+    owner: accountId(), url: normalizeVocabularyRoute(location.pathname + location.search + location.hash),
     ...(Number.isInteger(index) ? {index} : {}),
     parent: readOrigin(location.state?.vocabularyReturn),
   } satisfies ReturnOrigin };
@@ -73,7 +74,8 @@ export function useVocabularyReturn(fallback = '/vocabulary') {
 
 export function VocabularyLink({preserveReturn = false, ...props}: LinkProps & {preserveReturn?: boolean}) {
   const location = useLocation();
-  return <Link {...props} state={props.state ?? (preserveReturn ? location.state : vocabularyForwardState(location))} onClick={event=>{
+  const to = typeof props.to === 'string' ? normalizeVocabularyRoute(props.to) : props.to;
+  return <Link {...props} to={to} state={props.state ?? (preserveReturn ? location.state : vocabularyForwardState(location))} onClick={event=>{
     rememberVocabularyPosition(location.pathname + location.search + location.hash, event.currentTarget.id);
     props.onClick?.(event);
   }}/>;

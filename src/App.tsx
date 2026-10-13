@@ -3,7 +3,9 @@ import { lazy, useEffect } from 'react';
 import { FieldbookProvider } from './context/FieldbookContext';
 import { Shell } from './components/Shell';
 import { preloadRoute } from './routePreload';
+import { normalizeVocabularyRoute } from './domain/vocabulary/identities';
 const TodayPage = lazy(() => import('./features/today/TodayPage').then(module => ({ default: module.TodayPage })));
+const PlanningPage = lazy(() => import('./features/planning/PlanningPage').then(module => ({ default: module.PlanningPage })));
 const WritingBankPage = lazy(() => import('./features/writing/WritingBankPage').then(module => ({ default: module.WritingBankPage })));
 const WritingDeskPage = lazy(() => import('./features/writing/WritingDeskPage').then(module => ({ default: module.WritingDeskPage })));
 const ReviewPage = lazy(() => import('./features/review/ReviewPage').then(module => ({ default: module.ReviewPage })));
@@ -11,7 +13,7 @@ const AssessmentDetailPage = lazy(() => import('./features/review/AssessmentDeta
 const SpeakingBankPage = lazy(() => import('./features/speaking/SpeakingBankPage').then(module => ({ default: module.SpeakingBankPage })));
 const SpeakingTopicPage = lazy(() => import('./features/speaking/SpeakingTopicPage').then(module => ({ default: module.SpeakingTopicPage })));
 const StoriesPage = lazy(() => import('./features/speaking/StoriesPage').then(module => ({ default: module.StoriesPage })));
-const AccountPage = lazy(() => import('./features/account/AccountPage').then(module => ({ default: module.AccountPage })));
+const SettingsPage = lazy(() => import('./features/settings/SettingsPage').then(module => ({ default: module.SettingsPage })));
 const ProgressPage = lazy(() => import('./features/progress/ProgressPage').then((module) => ({ default: module.ProgressPage })));
 const SpeakingDeskPage = lazy(() => import('./features/speaking/SpeakingDeskPage').then((module) => ({ default: module.SpeakingDeskPage })));
 const VocabularyPage = lazy(() => import('./features/vocabulary/VocabularyPages').then(module => ({ default: module.VocabularyPage })));
@@ -38,13 +40,18 @@ function LegacyWrongWordsRedirect() {
 }
 
 export function AppRoutes() {
-  const {pathname} = useLocation();
+  const {pathname,search,hash} = useLocation();
   useEffect(() => { void preloadRoute(pathname).catch(() => {}); }, [pathname]);
+  const current = pathname + search + hash;
+  const normalized = normalizeVocabularyRoute(current);
+  if (normalized !== current) return <Navigate to={normalized} replace />;
   return (
     <FieldbookProvider>
       <Routes>
         <Route element={<Shell />}>
           <Route index element={<TodayPage />} />
+          <Route path="today" element={<TodayPage />} />
+          <Route path="planning" element={<PlanningPage />} />
           {(['reading','listening'] as const).map(skill => <Route key={skill}>
             <Route path={skill} element={<ExamBankPage skill={skill}/>} />
             <Route path={`${skill}/review`} element={<ExamReviewQueuePage skill={skill}/>} />
@@ -75,7 +82,8 @@ export function AppRoutes() {
           <Route path="speak/questions" element={<SpeakingBankPage />} />
           <Route path="speak/topics/:id" element={<SpeakingTopicPage />} />
           <Route path="stories" element={<StoriesPage />} />
-          <Route path="account" element={<AccountPage />} />
+          <Route path="settings/:category?" element={<SettingsPage />} />
+          <Route path="account" element={<Navigate to="/settings/account" replace />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

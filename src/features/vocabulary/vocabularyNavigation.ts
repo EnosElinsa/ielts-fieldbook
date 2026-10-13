@@ -1,5 +1,7 @@
-import { useEffect, useState, useRef } from "react";
-import { useLocation, useNavigationType } from 'react-router-dom';
+import { useEffect, useState, useRef, useMemo } from "react";
+import { useLocation, useNavigationType, useSearchParams } from 'react-router-dom';
+import { normalizeVocabularyRoute, normalizeVocabularyScope } from '../../domain/vocabulary/identities';
+import { migrateVocabularyRecovery } from '../../storage/vocabularyRecovery';
 import { accountId } from "../../storage/remote";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import type { ReleasedVocabularyOptions } from '../../storage/vocabularyCatalog';
@@ -67,7 +69,7 @@ export function safeVocabularyReturn(
   return value &&
     /^\/vocabulary(?:\/[^?#]*)?(?:\?[^#]*)?(?:#[^\s]*)?$/.test(value) &&
     !/[\r\n\\]/.test(value)
-    ? value
+    ? normalizeVocabularyRoute(value)
     : fallback;
 }
 export function entryUrl(
@@ -80,7 +82,7 @@ export function entryUrl(
   returnTo: string,
 ) {
   const params = new URLSearchParams({ returnTo });
-  Object.entries(request).forEach(([key, value]) => {
+  Object.entries(normalizeVocabularyScope(request)).forEach(([key, value]) => {
     if (value) params.set(key, value);
   });
   return `/vocabulary/entry/${encodeURIComponent(entryId)}?${params}`;
@@ -96,7 +98,7 @@ export function practiceUrl(
   mode?: string,
 ) {
   const params = new URLSearchParams({ entryId, dueOnly: "false", returnTo });
-  Object.entries({ ...request, senseId, mode }).forEach(([key, value]) => {
+  Object.entries({ ...normalizeVocabularyScope(request), senseId, mode }).forEach(([key, value]) => {
     if (value) params.set(key, value);
   });
   return `/vocabulary/review?${params}`;
@@ -110,7 +112,13 @@ const positions = new Map<
   }
 >();
 const positionKey = (origin: string) =>
-  `fieldbook:vocabulary-position:${accountId()}:${origin}`;
+  `fieldbook:vocabulary-position:${accountId()}:${normalizeVocabularyRoute(origin)}`;
+
+export function useVocabularySearchParams(): ReturnType<typeof useSearchParams> {
+  const [params, setParams] = useSearchParams();
+  const normalized = useMemo(() => new URLSearchParams(normalizeVocabularyRoute(`/vocabulary?${params}`).split('?')[1] || ''), [params]);
+  return [normalized, setParams];
+}
 export function rememberVocabularyPosition(origin: string, focus: string) {
   const chapters = Array.from(document.querySelectorAll<HTMLDetailsElement>('details.vocabulary-study-chapter[id]')).map(node=>({id:node.id,open:node.open}));
   const value = { scroll: window.scrollY, focus, chapters };
@@ -126,6 +134,7 @@ export function useVocabularyPosition(origin: string, ready: boolean) {
   const owner = accountId();
   useEffect(() => {
     if (!ready) return;
+    migrateVocabularyRecovery(owner);
     let value = positions.get(positionKey(origin));
     try {
       value ||= JSON.parse(

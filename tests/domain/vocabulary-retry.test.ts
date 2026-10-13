@@ -13,9 +13,9 @@ function fixture() {
   const raw = (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).find(entry=>entry.term==='core')!;
   const card = getVocabularyReviewQueue({vocabulary:[raw]}, {mode:'dictation',dueOnly:false,senseId:'kaikki:846f18ca02f7f1d01c'})[0];
   const session = createVocabularySession([card],'dictation',{});
-  const record: VocabularySessionRecord = {...session,status:'submitted',submittedAt:session.startedAt,updatedAt:session.startedAt,results:[evaluateVocabularySessionAnswer(card,'cor')],summary:{total:1,correct:0,incorrect:1,pending:0},entryIds:[raw.id],reviewIds:[],selection:{kind:'unit',bookId:'guixue:10174',unitId:'21840'},filter:{bookId:'guixue:10174',unitId:'21840'}};
+  const record: VocabularySessionRecord = {...session,status:'submitted',submittedAt:session.startedAt,updatedAt:session.startedAt,results:[evaluateVocabularySessionAnswer(card,'cor')],summary:{total:1,correct:0,incorrect:1,pending:0},entryIds:[raw.id],reviewIds:[],selection:{kind:'unit',bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02'},filter:{bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02'}};
   // The frozen explicit-sense route must share the record's source context.
-  card.context = {...card.context!,bookId:'guixue:10174',unitId:'21840'};
+  card.context = {...card.context!,bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02'};
   record.cardSnapshots = [structuredClone(card)];
   return {raw,card,record};
 }
@@ -61,7 +61,7 @@ test('legacy dictation remaps even a stale explicit sense filter and missing lea
 
 test('legacy dictation retry retains words with old sense-scoped membership sources',()=>{
   const {raw,record} = fixture(); delete record.cardSnapshots;
-  raw.sources=[{type:'wordbook',id:'legacy',bookId:'guixue:10174',unitId:'21840',senseId:raw.senses[0].id}];
+  raw.sources=[{type:'wordbook',id:'legacy',bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02',senseId:raw.senses[0].id}];
   const before=structuredClone(raw);
   const retry=resolveVocabularyRetry({vocabulary:[raw]},record);
   expect(retry.unavailable).toEqual([]);

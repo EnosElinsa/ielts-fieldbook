@@ -12,7 +12,7 @@ function meaning(term: string, definition: string, pos = 'noun', example = ''): 
   const entry = { id: 'personal', term, senses: [sense] } as VocabularyEntry;
   return { entry, sense, status: 'unreviewed', reviewed: false, contentReviewed: false, context: undefined, contentVersion: 'test' };
 }
-const core = { id: 've-7c70dbbe', term: 'core', senses: [supplements.bindings.find(item => item.entryId === 've-7c70dbbe' && item.unitId === '21795')!.originalSense] } as unknown as VocabularyEntry;
+const core = { id: 've-7c70dbbe', term: 'core', senses: [supplements.bindings.find(item => item.entryId === 've-7c70dbbe' && item.unitId === 'ielts-vocabulary-chapter-01-group-01')!.originalSense] } as unknown as VocabularyEntry;
 
 test('a concrete pea noun draws a pod but a changed selected meaning has no misleading picture', () => {
   const view = render(<VocabularyLearningVisual resolved={meaning('pea', 'A small round green seed eaten as a vegetable.')} />);
@@ -39,8 +39,8 @@ test('abstract meanings do not repeat definitions as decorative diagrams', () =>
 });
 
 test('sense-specific photos preserve credits, show a failure and retry the actual image', () => {
-  const earth = resolveVocabularyLearningContext(core, { bookId: 'guixue:10174', unitId: '21795' });
-  const food = resolveVocabularyLearningContext(core, { bookId: 'guixue:10174', unitId: '21840' });
+  const earth = resolveVocabularyLearningContext(core, { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' });
+  const food = resolveVocabularyLearningContext(core, { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-12-group-02' });
   const view = render(<VocabularyLearningVisual resolved={earth} />);
   const image = screen.getByRole('img', { name: /Cutaway of Earth/ });
   expect(image).toHaveAttribute('width', '640');
@@ -59,7 +59,7 @@ test('sense-specific photos preserve credits, show a failure and retry the actua
 });
 
 test('a learner edit with the same public sense id never inherits the reviewed photo', () => {
-  const edited = resolveVocabularyLearningContext({ ...core, senses: [{ ...core.senses[0], definition: 'The central idea of my presentation.' }] }, { bookId: 'guixue:10174', unitId: '21795' });
+  const edited = resolveVocabularyLearningContext({ ...core, senses: [{ ...core.senses[0], definition: 'The central idea of my presentation.' }] }, { bookId: 'ielts-vocabulary', unitId: 'ielts-vocabulary-chapter-01-group-01' });
   render(<VocabularyLearningVisual resolved={edited} />);
   expect(screen.queryByRole('img')).not.toBeInTheDocument();
   expect(screen.queryByRole('img', { name: /Cutaway of Earth/ })).not.toBeInTheDocument();

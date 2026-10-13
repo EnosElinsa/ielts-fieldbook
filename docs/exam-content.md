@@ -116,7 +116,7 @@ node scripts/seed-exams.mjs --catalog local/exam-bank-final-v4/catalog.json --as
 
 For the October 12 release the preflight passed with 56 papers, 392 sections, 168 passages, 4,339 question groups, 4,480 answer slots and 248 assets (1,634,448,805 bytes). The parent applied the migration, uploaded all assets and verified signed media, per-account RLS and the earlier seed. The final v4 timing catalog was seeded successfully and verified.
 
-The adjacent-interval audit checked 9,922 consecutive sentence pairs. The only flagged pair is the confirmed source:702 duplicate narrator substring. All other detected overlaps above one second and start reversals were corrected using audio diagnostics. The report is recorded in `docs/exam-readiness-audit.json` and `local/exam-bank-final-v4/adjacency-audit.json`.
+The adjacent-interval audit checked 9,922 consecutive sentence pairs. The only flagged pair is the confirmed source:702 duplicate narrator substring. All other detected overlaps above one second and start reversals were corrected using audio diagnostics. The report is recorded in `local/audits/exam-readiness-audit.json` and `local/exam-bank-final-v4/adjacency-audit.json`.
 
 Numerically valid source intervals can be replaced only with reviewed JSON and explicit IDs, e.g. `--replace-sentence source:77691`. The script rejects unknown IDs, missing reviewed rows, mismatched optional source text and out-of-duration replacement intervals. Other valid intervals remain unchanged; replacement provenance retains the previous timing and review evidence. The final review additionally corrected 15 explicitly identified adjacent intervals. Every replacement preserves the old timing and review evidence in provenance.
 

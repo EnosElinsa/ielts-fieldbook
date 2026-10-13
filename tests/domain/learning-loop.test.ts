@@ -37,8 +37,8 @@ test('A1: v6 state migrates to v7 without dropping essays, assessments, or lexic
     lexicon: [{ id: 'l1', term: 'overall', meaning: '总体上' }],
     drafts: { '1342': 'still here', 'topic-1:notes': 'cue notes', 'topic-1': 'spoken draft' },
   });
-  assert.equal(migrated.schemaVersion, 11);
-  assert.equal(core.STATE_VERSION, 11);
+  assert.equal(migrated.schemaVersion, 12);
+  assert.equal(core.STATE_VERSION, 12);
   assert.equal(migrated.sessions.length, 1);
   assert.equal(migrated.sessions[0].essay, essay);
   assert.equal(migrated.assessments.length, 1);
@@ -69,7 +69,7 @@ test('A2: persistShape omits question banks and preserves structured rawText', (
     sessions: [{ id: 's1', questionId: '1342', essay }],
   });
   const payload = core.persistShape(state);
-  assert.equal(payload.schemaVersion, 11);
+  assert.equal(payload.schemaVersion, 12);
   assert.equal(payload.questions, undefined);
   assert.equal(payload.speakingTopics, undefined);
   assert.equal(payload.assessments[0].rawText, state.assessments[0].rawText);
@@ -171,7 +171,7 @@ test('A4: saving Task 1 only completes kind 1, and stories are not completed by 
   assert.equal(state.plans[2].status, 'completed');
 });
 
-test('A4: vocabularyComplete only when due count dropped or nothing is due', () => {
+test('A4: vocabulary completion cannot be inferred from a shrinking due queue', () => {
   const state = core.migrateState({
     plans: [{ id: 'plx', kind: 'lexicon', status: 'in_progress' }],
     activePlanId: 'plx',
@@ -183,8 +183,8 @@ test('A4: vocabularyComplete only when due count dropped or nothing is due', () 
   assert.equal(core.completeVocabularyPlan(state, 1, '2026-09-19T00:00:00.000Z'), null);
   assert.equal(state.plans[0].status, 'in_progress');
   core.getVocabularyReviewQueue(state, { now: '2026-09-19T00:00:00.000Z' }).forEach(card => core.recordVocabularyReview(state, { entryId: card.entryId, senseId: card.senseId, mode: card.mode, result: 'success', occurredAt: '2026-09-19T00:00:00.000Z' }));
-  assert.ok(core.completeVocabularyPlan(state, 1, '2026-09-19T00:00:00.000Z'));
-  assert.equal(state.plans[0].status, 'completed');
+  assert.equal(core.completeVocabularyPlan(state, 1, '2026-09-19T00:00:00.000Z'),null);
+  assert.equal(state.plans[0].status, 'in_progress');
 });
 
 test('A4: completeReview finishes the review plan without auto-reviewing errors', () => {
@@ -555,7 +555,7 @@ test('syncPendingPlan rewrites only a pending same-skill plan and keeps driver o
   assert.equal(core.syncPendingPlan(running, recommendation), false);
   assert.equal(running.title, '进行中');
   const migrated = core.migrateState({ plans: [{ id: 'keep', status: 'completed', driver: 'criterion:CC', title: '留着' }] });
-  assert.equal(migrated.schemaVersion, 11);
+  assert.equal(migrated.schemaVersion, 12);
   assert.equal(migrated.plans[0].driver, 'criterion:CC');
   assert.equal(migrated.plans[0].title, '留着');
 });

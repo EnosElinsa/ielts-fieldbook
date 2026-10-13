@@ -16,7 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "src/domain/vocabulary/"
-OUTPUT_JSON = ROOT / "docs/vocabulary-readiness-audit.json"
+OUTPUT_JSON = ROOT / "local/audits/vocabulary-readiness-audit.json"
 OUTPUT_MD = ROOT / "docs/vocabulary-readiness-audit.md"
 UNCERTAIN = re.compile(
     r"malformed|unconfirmed|unknown|uncertain|context.*(?:needed|required|missing)|"
@@ -137,8 +137,8 @@ def audit():
             return None, []
         key = member_key(membership)
         source_row, topic_row = source_curriculum.get(key), topic_curriculum.get(key)
-        theme = membership["bookId"] == "guixue:10174"
-        multiple = membership["bookId"] == "guixue:10177" and unit.get("parentId") == "21954"
+        theme = membership["bookId"] == "ielts-vocabulary"
+        multiple = membership["bookId"] == "ielts-listening-essentials" and unit.get("parentId") == "ielts-listening-essentials-chapter-04"
         rows = [source_row] if source_row else [topic_row] if topic_row else [] if theme else common_curriculum[entry["id"]] if multiple and common_curriculum[entry["id"]] else [modern_curriculum[entry["id"]]] if entry["id"] in modern_curriculum else common_curriculum[entry["id"]]
         if not rows and not theme:
             fallback, _ = fallback_resolve(entry, membership)
@@ -301,6 +301,7 @@ def main():
             print("Readiness reports are missing or stale; rerun without --check.")
             return 1
     else:
+        OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
         OUTPUT_JSON.write_text(json_text, encoding="utf-8")
         OUTPUT_MD.write_text(md_text, encoding="utf-8")
     print(json.dumps(report["summary"], indent=2))

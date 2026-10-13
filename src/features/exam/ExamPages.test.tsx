@@ -23,6 +23,51 @@ function practice(path = '/reading/section') { return render(<MemoryRouter initi
 beforeEach(() => { clearReadCache(); mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); sessionStorage.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.useRealTimers(); });
 
+test('a short planned section submits only its bound questions and records the plan identity', async () => {
+  mocks.fb.state.plans = [{id:'short-reading',status:'in_progress',target:{type:'section',skill:'reading',sectionId:'section',mode:'practice',questionIds:['q1']}}];
+  practice('/reading/section?planId=short-reading&questions=%5B%22q2%22%5D');
+  const answer = await screen.findByRole('textbox',{name:'Answer 1'});
+  expect(screen.queryByText('The garden opened in 2000.')).not.toBeInTheDocument();
+  fireEvent.change(answer,{target:{value:'1990'}});
+  await userEvent.setup().click(screen.getByRole('button',{name:'Submit answers'}));
+  await waitFor(()=>expect(mocks.fb.stateRef.current.examAttempts[0]?.status).toBe('completed'));
+  expect(mocks.fb.stateRef.current.examAttempts[0]).toMatchObject({planId:'short-reading',total:1,questionSnapshot:[{id:'q1'}]});
+});
+
+test('a planned subset cannot reuse answers or steal recovery from manual or other-plan practice',async()=>{
+  const manual=practice();
+  fireEvent.change(await screen.findByRole('textbox',{name:'Answer 1'}),{target:{value:'1990'}});
+  manual.unmount();
+  const original=structuredClone(mocks.recovery.get('one:reading:practice:section'));
+  mocks.fb.state.examAttempts=[original];
+  mocks.fb.state.plans=[{id:'new-plan',status:'in_progress',target:{type:'section',skill:'reading',sectionId:'section',mode:'practice',questionIds:['q1']}}];
+  const planned=practice('/reading/section?planId=new-plan');
+  expect(await screen.findByRole('textbox',{name:'Answer 1'})).toHaveValue('');
+  fireEvent.change(screen.getByRole('textbox',{name:'Answer 1'}),{target:{value:'new answer'}});
+  planned.unmount();
+  expect(mocks.recovery.get('one:reading:practice:section')).toEqual(original);
+  mocks.fb.state.plans.push({id:'second-plan',status:'in_progress',target:{type:'section',skill:'reading',sectionId:'section',mode:'practice',questionIds:['q1']}});
+  const second=practice('/reading/section?planId=second-plan');
+  expect(await screen.findByRole('textbox',{name:'Answer 1'})).toHaveValue('');
+  second.unmount();practice('/reading/section?planId=new-plan');
+  expect(await screen.findByRole('textbox',{name:'Answer 1'})).toHaveValue('new answer');
+});
+
+test('an explicit resume keeps its saved plan scope even without a plan query',async()=>{
+  const planned=practice('/reading/section?planId=saved-plan');
+  mocks.fb.state.plans=[{id:'saved-plan',status:'in_progress',target:{type:'section',skill:'reading',sectionId:'section',questionIds:['q1']}}];
+  planned.unmount();
+  const timestamp=new Date().toISOString();
+  mocks.fb.state.examAttempts=[{id:'saved',skill:'reading',mode:'practice',sourceId:'section',planId:'saved-plan',status:'paused',sectionIds:['section'],questionSnapshot:[catalog.questions[0]],questionTypes:{q1:'gap'},responses:{q1:'1990'},evidence:{},keywords:{},errorReasons:{},startedAt:timestamp,updatedAt:timestamp,elapsedSeconds:0}];
+  practice('/reading/section?attempt=saved');
+  expect(await screen.findByRole('textbox',{name:'Answer 1'})).toHaveValue('1990');
+  expect(screen.queryByText('The garden opened in 2000.')).not.toBeInTheDocument();
+  await userEvent.setup().click(screen.getByRole('button',{name:'Resume'}));
+  await userEvent.setup().click(screen.getByRole('button',{name:'Submit answers'}));
+  await waitFor(()=>expect(mocks.fb.stateRef.current.examAttempts[0]?.status).toBe('completed'));
+  expect(mocks.fb.stateRef.current.examAttempts[0]).toMatchObject({id:'saved',planId:'saved-plan',total:1,questionSnapshot:[{id:'q1'}]});
+});
+
 test('a slow bank reload ignores the stale request and retains a real retry after failure', async () => {
   vi.useFakeTimers();
   let finishOld!: (value: ExamCatalog) => void;
@@ -94,13 +139,22 @@ test('bank search matches book and test even when the passage title differs', as
   expect(screen.getByRole('status')).toHaveTextContent('1 test · 1 passage');
 });
 
-test('clearing bank filters preserves intensive mode', async () => {
+test('clearing listening bank filters returns the canonical questions bank', async () => {
   mocks.catalog.sections[0].skill = 'listening';
   render(<MemoryRouter initialEntries={['/listening?mode=intensive&q=missing']}><ExamBankPage skill="listening" /><SearchLocation /></MemoryRouter>);
   await screen.findByText('No sections match these filters.');
   await userEvent.setup().click(screen.getByRole('button', { name: 'Clear filters' }));
-  expect(screen.getByLabelText('Search URL')).toHaveTextContent('?mode=intensive');
+  expect(screen.getByLabelText('Search URL')).toHaveTextContent(/^$/);
   expect(await screen.findByRole('link', { name: 'Open intensive part 1' })).toBeInTheDocument();
+});
+
+test('legacy intensive query is removed while all remaining filters and paging survive', async () => {
+  mocks.catalog.sections[0].skill = 'listening';
+  render(<MemoryRouter initialEntries={['/listening?mode=intensive&book=8&part=1&q=city&page=2']}><ExamBankPage skill="listening" /><SearchLocation /></MemoryRouter>);
+  await screen.findByRole('link', { name: 'Open intensive part 1' });
+  expect(screen.getByLabelText('Search URL')).toHaveTextContent('?book=8&part=1&q=city&page=2');
+  expect(screen.queryByRole('link', { name: 'Intensive listening bank' })).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /Practise part 1/ })).toHaveAttribute('href', '/listening/section');
 });
 
 test('favourite retry preserves the intended change after an optimistic failed save', async () => {

@@ -1,7 +1,7 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Star, ArrowRight, Headphones, RotateCcw } from 'lucide-react';
+import { Star, ArrowRight, RotateCcw } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { FilterMenu } from '../../components/ui';
 import type { ExamAttempt, ExamSkill, QuestionType } from '../../domain/exam/types';
@@ -18,7 +18,10 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
   const [savingFavorite, setSavingFavorite] = useState(false);
   const favoriteLock = useRef(false);
   const results = useRef<HTMLDivElement>(null);
-  const intensive = skill === 'listening' && params.get('mode') === 'intensive';
+  useEffect(() => {
+    if (skill !== 'listening' || params.get('mode') !== 'intensive') return;
+    setParams(current => { const next = new URLSearchParams(current); next.delete('mode'); return next; }, { replace: true });
+  }, [skill, params, setParams]);
   const sectionLabel = skill === 'reading' ? 'Passage' : 'Part';
   const book = params.get('book') || 'all';
   const test = params.get('test') || 'all';
@@ -36,7 +39,7 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
     next.delete('page');
     return next;
   }, { replace: true });
-  const clearFilters = () => setParams(intensive ? { mode: 'intensive' } : {});
+  const clearFilters = () => setParams({});
   const hasFilters = [book, test, part, type, status].some(value => value !== 'all') || Boolean(search);
   const papers = useMemo(() => catalog.papers.filter(paper => (book === 'all' || paper.book === Number(book)) && (test === 'all' || paper.test === Number(test))).sort((a, b) => a.book - b.book || a.test - b.test), [catalog, book, test]);
   const paperById = new Map(papers.map(paper => [paper.id, paper]));
@@ -77,9 +80,9 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
   return <section className="view active exam-bank">
     <div className="exam-intro">
       <span className="exam-eyebrow">Cambridge 8–21 · {skill}</span>
-      <h2>{intensive ? 'Listen closer, sentence by sentence.' : skill === 'reading' ? 'Find the evidence. Build your accuracy.' : 'Listen with a purpose. Practise with a method.'}</h2>
-      <p>{intensive ? 'Choose a part for blind listening, dictation, comparison, shadowing and delayed review.' : skill === 'reading' ? 'Practise a passage with evidence and method notes, or take a complete test under exam conditions.' : 'Practise a part, revisit your mistakes with intensive listening, or take a complete test under exam conditions.'}</p>
-      <div className="exam-bank-actions"><Link className="btn line" to={`/${skill}/review`}><RotateCcw size={15} />Review mistakes</Link>{skill === 'listening' && <Link className="btn line" to={intensive ? '/listening' : '/listening?mode=intensive'}><Headphones size={15} />{intensive ? 'Listening practice bank' : 'Intensive listening bank'}</Link>}</div>
+      <h2>{skill === 'reading' ? 'Find the evidence. Build your accuracy.' : 'Listening questions'}</h2>
+      {skill === 'reading' && <p>Practise a passage with evidence and method notes, or take a complete test under exam conditions.</p>}
+      <div className="exam-bank-actions"><Link className="btn line" to={`/${skill}/review`}><RotateCcw size={15} />Review mistakes</Link></div>
     </div>
     <div className="toolbar exam-toolbar">
       <input className="search" value={search} onChange={event => update('q', event.target.value)} aria-label={`Search ${skill} sections`} placeholder="Search a title, book or test…" />
@@ -105,7 +108,7 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
           <div className={`exam-section-grid exam-section-grid-${skill}`}>{sections.filter(section => section.paperId === paper.id).sort((a, b) => a.part - b.part).map(section => <div className="exam-section-card" key={section.id}>
             <div className="exam-section-top"><span className="pill blue">{sectionLabel} {section.part}</span><button className="btn text icon-btn" aria-label={`${favorites.has(section.id) ? 'Remove' : 'Add'} favourite: ${section.title}`} aria-pressed={favorites.has(section.id)} disabled={savingFavorite} onClick={() => void toggleFavorite(section.id)}><Star size={17} fill={favorites.has(section.id) ? 'currentColor' : 'none'} /></button></div>
             <h4>{section.title}</h4><p>{section.questionCount} questions · {section.questionTypes.map(value => QUESTION_TYPE_NAMES[value]).join(' · ')}</p>
-            {section.status === 'ready' ? <div className="btn-row"><Link className={`btn ${intensive ? 'line' : 'primary'}`} to={`/${skill}/${section.id}`}>Practise {sectionLabel.toLowerCase()} {section.part} <ArrowRight size={15} /></Link>{skill === 'listening' && <Link className={`btn ${intensive ? 'primary' : 'line'}`} to={`/listening/intensive/${section.id}`}>Open intensive part {section.part}</Link>}</div> : <div className="exam-source-status">Source incomplete · practice unavailable</div>}
+            {section.status === 'ready' ? <div className="btn-row"><Link className="btn primary" to={`/${skill}/${section.id}`}>Practise {sectionLabel.toLowerCase()} {section.part} <ArrowRight size={15} /></Link>{skill === 'listening' && <Link className="btn line" to={`/listening/intensive/${section.id}`}>Open intensive part {section.part}</Link>}</div> : <div className="exam-source-status">Source incomplete · practice unavailable</div>}
           </div>)}</div>
           {!complete && <p className="exam-source-foot">A full mock opens when every {sectionLabel.toLowerCase()} and its source assets are available.</p>}
         </article>;
