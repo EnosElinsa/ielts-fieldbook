@@ -1,10 +1,4 @@
-import common from './groupCurriculumCommon.json';
-import topicsA from './groupCurriculumTopicsA.json';
-import topicsB from './groupCurriculumTopicsB.json';
-import topicsC from './groupCurriculumTopicsC.json';
-import source from './groupCurriculumSource.json';
-import repairs from './groupCurriculumRepairs.json';
-import modern from './groupCurriculumModernDefaults.json';
+import { vocabularyTeaching, vocabularyTeachingRevision } from './runtimeData';
 import { VOCABULARY_CATALOG } from './catalog';
 import type { VocabularyEntry, VocabularySense } from './types';
 
@@ -16,26 +10,38 @@ export type VocabularyCurriculum = {
 };
 export type CurriculumRow = {bookId?:string;unitId?:string;entryId:string;term:string;sense:VocabularySense;originalSense?:VocabularySense;reason:string;sectionId?:string;sentenceIds?:string[]};
 const key = (bookId: string, unitId: string, entryId: string) => JSON.stringify([bookId,unitId,entryId]);
-const topics = new Map(([...topicsA,...topicsB,...topicsC] as CurriculumRow[]).map(row=>[key(row.bookId!,row.unitId!,row.entryId),row]));
-const sources = new Map((source as CurriculumRow[]).map(row=>[key(row.bookId!,row.unitId!,row.entryId),row]));
-const repairRows=new Map((repairs as CurriculumRow[]).map(row=>[JSON.stringify([row.entryId,row.sense.id]),row]));
-const modernRows=new Map((modern as CurriculumRow[]).map(row=>[row.entryId,row]));
+const topics = new Map<string,CurriculumRow>();
+const sources = new Map<string,CurriculumRow>();
+const repairRows=new Map<string,CurriculumRow>();
+const modernRows=new Map<string,CurriculumRow>();
 const commonRows = new Map<string,CurriculumRow[]>();
-for (const row of common as CurriculumRow[]) {
+const baselines = new Map<string,VocabularySense[]>();
+let revision = -1;
+function ensureCurriculum() {
+ if (revision === vocabularyTeachingRevision) return;
+ revision = vocabularyTeachingRevision;
+ topics.clear(); sources.clear(); repairRows.clear(); modernRows.clear(); commonRows.clear(); baselines.clear();
+ const {common,topics:topicData,source,repairs,modern} = vocabularyTeaching.curriculum;
+ for (const row of topicData) topics.set(key(row.bookId!,row.unitId!,row.entryId),row);
+ for (const row of source) sources.set(key(row.bookId!,row.unitId!,row.entryId),row);
+ for (const row of repairs) repairRows.set(JSON.stringify([row.entryId,row.sense.id]),row);
+ for (const row of modern) modernRows.set(row.entryId,row);
+for (const row of common) {
   const rows=commonRows.get(row.entryId)||[];
   if(!rows.some(item=>item.sense.id===row.sense.id)) rows.push(row);
   commonRows.set(row.entryId,rows);
 }
-const baselines = new Map<string,VocabularySense[]>();
-for (const row of [...topics.values(),...sources.values(),...repairRows.values(),...modernRows.values(),...(common as CurriculumRow[])]) {
+for (const row of [...topics.values(),...sources.values(),...repairRows.values(),...modernRows.values(),...common]) {
   const id=JSON.stringify([row.entryId,row.sense.id]);
   baselines.set(id,[...(baselines.get(id)||[]),row.sense,...(row.originalSense?.id===row.sense.id?[row.originalSense]:[])]);
+}
 }
 const unitIndexes=new WeakMap<object,Map<string,typeof VOCABULARY_CATALOG.units[number]>>();
 const membershipIndexes=new WeakMap<object,Set<string>>();
 
 /** A teaching syllabus is distinct from a claim about the original source author. */
 export function vocabularyCurriculum(entry:VocabularyEntry, request:{bookId?:string;unitId?:string}, fallback:VocabularySense|undefined): {curriculum:VocabularyCurriculum;rows:CurriculumRow[]}|undefined {
+  ensureCurriculum();
   const {bookId,unitId}=request;
   if(!bookId||!unitId||!fallback) return;
   let units=unitIndexes.get(VOCABULARY_CATALOG.units);
@@ -59,5 +65,6 @@ export function vocabularyCurriculum(entry:VocabularyEntry, request:{bookId?:str
 }
 
 export function vocabularyCurriculumBaselines(entryId:string,senseId:string):VocabularySense[] {
+  ensureCurriculum();
   return baselines.get(JSON.stringify([entryId,senseId])) || [];
 }

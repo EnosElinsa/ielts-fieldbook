@@ -3,7 +3,7 @@ import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { ExamMockAudio } from './ExamMockAudio';
 import type { ExamAsset } from '../../domain/exam/types';
-vi.mock('../../storage/examCatalog', () => ({ resolveExamAsset: async (asset: ExamAsset) => `/track-${asset.id}.mp3` }));
+vi.mock('../../storage/examCatalog', async importOriginal => ({ ...await importOriginal<typeof import('../../storage/examCatalog')>(), resolveExamAsset: async (asset: ExamAsset) => `/track-${asset.id}.mp3` }));
 const provenance = { sourceUrl: 'https://example.org', sourceVersion: '1', contentHash: 'hash', fetchedAt: '2026', authorization: 'owned' };
 const assets: ExamAsset[] = [{ id: 'one', paperId: 'paper', kind: 'audio', storagePath: 'one', sourceUrl: '', duration: 10, provenance }, { id: 'two', paperId: 'paper', kind: 'audio', storagePath: 'two', sourceUrl: '', duration: 20, provenance }];
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });

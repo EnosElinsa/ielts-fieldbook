@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { speakingCoverage } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
+import { useSpeakingSample, SpeakingSampleStatus } from './useSpeakingSample';
 import { coverageClass, coverageLabel } from '../../lib/format';
 import { Empty, FilterMenu } from '../../components/ui';
 
@@ -91,6 +92,7 @@ export function SpeakingTopicPage() {
     fb.state.speakingTopics.find((t) => String(t.id) === String(id)) ||
     fb.selectedTopic ||
     null;
+  const sampleStatus = useSpeakingSample(topic?.id);
 
   if (!topic) {
     return (
@@ -154,6 +156,7 @@ export function SpeakingTopicPage() {
             </>
           )}
           <SampleBlock topic={topic} />
+          <SpeakingSampleStatus {...sampleStatus} />
           {Number(topic.part) === 2 ? <SampleBlock topic={topic} part="3" /> : null}
           <p className="file-hint">Candidates reported this topic. It is not an official paper. No recording.</p>
         </div>

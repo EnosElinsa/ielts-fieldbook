@@ -1,14 +1,9 @@
-import { FormEvent, useEffect, useState, type ReactNode } from 'react';
+import { FormEvent, lazy, Suspense, useEffect, useState, type ReactNode } from 'react';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import { authError, type Mode } from './errors';
-import { accountId, resetAccountStore } from '../storage/remote';
-import { discardDraftRecovery } from '../storage/recovery';
-import { clearVocabularyDraft } from '../storage/vocabularyDrafts';
-import { clearAccountExamRecovery } from '../storage/examRecovery';
-import { clearPendingAudioAccount } from '../storage/pendingAudio';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-import { LegalModal } from '../features/modals/LegalModal';
+const LegalModal = lazy(() => import('../features/modals/LegalModal').then(module => ({ default: module.LegalModal })));
 
 type SessionState = 'loading' | 'in' | 'out';
 type Mailbox = 'confirm' | 'reset' | null;
@@ -45,6 +40,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
   const [sessionCheck, setSessionCheck] = useState(0);
   const [sessionCheckFailed, setSessionCheckFailed] = useState(false);
   const [legalView, setLegalView] = useState<string | null>(null);
+  const [sessionOwner, setSessionOwner] = useState<string | null>(null);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -65,6 +61,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
         if (cancelled) return;
         if (sessionError) throw sessionError;
         setSessionCheckFailed(false);
+        setSessionOwner(data.session?.user.id || null);
         setSessionState(data.session ? 'in' : 'out');
       } catch (cause) {
         if (cancelled) return;
@@ -75,6 +72,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
     })();
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') setRecovery(true);
+      setSessionOwner(session?.user.id || null);
       setSessionState(session ? 'in' : 'out');
     });
     return () => {
@@ -250,7 +248,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
     );
   }
 
-  if (sessionState === 'in') return children;
+  if (sessionState === 'in') return <div key={sessionOwner} style={{ display: 'contents' }}>{children}</div>;
 
   if (mailbox) {
     const confirming = mailbox === 'confirm';
@@ -362,13 +360,16 @@ export function AuthGate({ children }: { children: ReactNode }) {
         </button>
       </form>
       <footer className="auth-footer"><button type="button" onClick={() => setLegalView('privacy')}>Privacy & terms</button><button type="button" onClick={() => setLegalView('feedback')}>Feedback</button><button type="button" aria-label={theme === 'dark' ? 'Use light theme' : 'Use dark theme'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>{theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}</button></footer>
-      <LegalModal view={legalView} onClose={() => setLegalView(null)} />
+      {legalView ? <Suspense fallback={null}><LegalModal view={legalView} onClose={() => setLegalView(null)} /></Suspense> : null}
     </main>
   );
 }
 
 export async function signOut() {
   if (!supabaseConfigured()) return;
+  const [{ accountId, resetAccountStore }, { discardDraftRecovery }, { clearVocabularyDraft }, { clearAccountExamRecovery }, { clearPendingAudioAccount }] = await Promise.all([
+    import('../storage/remote'), import('../storage/recovery'), import('../storage/vocabularyDrafts'), import('../storage/examRecovery'), import('../storage/pendingAudio'),
+  ]);
   const owner=accountId();
   const { error } = await getSupabase().auth.signOut();
   if (error) throw error;

@@ -33,7 +33,7 @@ test('global settings exposes account vocabulary preferences and retains failure
   render(<SettingsModal />);
   const user = userEvent.setup();
   await user.click(screen.getByRole('tab', { name: 'Vocabulary practice' }));
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Accent' }), 'us');
+  await user.selectOptions(await screen.findByRole('combobox', { name: 'Accent' }), 'us');
   await user.click(screen.getByRole('button', { name: 'Save settings' }));
   expect(context.current.saveVocabularyPreferences).toHaveBeenCalledWith(expect.objectContaining({ accent: 'us' }));
   expect(screen.getByRole('alert')).toHaveTextContent('could not be saved');

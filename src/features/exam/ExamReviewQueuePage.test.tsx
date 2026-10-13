@@ -6,7 +6,7 @@ import '@testing-library/jest-dom/vitest';
 import { ExamReviewQueuePage } from './ExamReviewQueuePage';
 const mocks = vi.hoisted(() => ({ state: null as any, catalog: null as any, load: vi.fn(), loadSections: vi.fn() }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => ({ state: mocks.state }) }));
-vi.mock('../../storage/examCatalog', () => ({ loadExamCatalog: (...args: any[]) => mocks.load(...args), loadExamSections: (...args: any[]) => mocks.loadSections(...args) }));
+vi.mock('../../storage/examCatalog', async importOriginal => ({ ...await importOriginal<typeof import('../../storage/examCatalog')>(), loadExamCatalog: (...args: any[]) => mocks.load(...args), loadExamSections: (...args: any[]) => mocks.loadSections(...args) }));
 beforeEach(() => {
   mocks.state = { examAttempts: [
     { id: 'wrong', skill: 'reading', sourceId: 'part', sectionIds: ['part'], mode: 'practice', status: 'completed', score: 1, total: 2, results: { q1: true, q2: false }, updatedAt: '2026-10-01', errorReasons: { q2: 'Missed paraphrase' } },
@@ -53,6 +53,6 @@ test('due listening reviews identify their paper and sentence and preserve the s
   expect(await screen.findByText('Part 1 · Sentence 2')).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /Cambridge 8 \/ Test 1 Part 1 · Sentence 2 Weak forms/ })).toHaveAttribute('href', '/listening/intensive/audio?sentence=s2');
   expect(screen.getByText('1 sentence due')).toBeInTheDocument();
-  expect(mocks.loadSections).toHaveBeenCalledWith(['audio']);
+  expect(mocks.loadSections).toHaveBeenCalledWith(['audio'], { force: false });
   expect(screen.queryByText('Part 1 · Sentence 1')).not.toBeInTheDocument();
 });

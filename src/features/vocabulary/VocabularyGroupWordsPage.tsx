@@ -37,6 +37,7 @@ export function VocabularyGroupWordsPage() {
   const { status, retry } = useVocabularyCatalog(
     fb.loadVocabularyCatalog,
     bookId,
+    unitId,
   );
   const origin = location.pathname + location.search;
   useVocabularyPosition(origin, status === "ready");

@@ -1,20 +1,24 @@
-import core0 from './readinessContent0.json';
-import core1 from './readinessContent1.json';
-import core2 from './readinessContent2.json';
-import corrections from './readinessCorrections.json';
-import defaults from './readinessDefaults.json';
+import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default } from './runtimeData';
 import type { VocabularyEntry, VocabularySense } from './types';
 
 export const VOCABULARY_READINESS_VERSION = 'core-2026-10-11.1';
-type Supplement = {entryId:string; senseId:string; definition?:string; example:string; pos?:string; usage?:string; originalSense?:VocabularySense};
-type Default = {entryId:string; sense:VocabularySense; originalSense?:VocabularySense};
 const identity = (entryId:string, senseId:string) => `${entryId}\u0000${senseId}`;
-const core = new Map<string,Supplement>(([...core0,...core1,...core2] as Supplement[]).map(row=>[identity(row.entryId,row.senseId),row]));
-const additions = new Map<string,Supplement>((corrections as Supplement[]).map(row=>[identity(row.entryId,row.senseId),row]));
-const preferred = new Map((defaults as unknown as Default[]).map(row=>[row.entryId,row]));
+const core = new Map<string,Supplement>();
+const additions = new Map<string,Supplement>();
+const preferred = new Map<string,Default>();
+let revision = -1;
+function ensureReadiness() {
+ if (revision === vocabularyTeachingRevision) return;
+ revision = vocabularyTeachingRevision;
+ core.clear(); additions.clear(); preferred.clear();
+ for (const row of vocabularyTeaching.readiness.core) core.set(identity(row.entryId,row.senseId),row);
+ for (const row of vocabularyTeaching.readiness.corrections) additions.set(identity(row.entryId,row.senseId),row);
+ for (const row of vocabularyTeaching.readiness.defaults) preferred.set(row.entryId,row);
+}
 const editorial = {source:'Fieldbook core content review',license:'CC-BY-4.0',attribution:'Fieldbook editorial contributors'};
 
 export function vocabularyReadinessBaselines(entryId:string,senseId:string):VocabularySense[] {
+ ensureReadiness();
  const selected=preferred.get(entryId);
  const row=additions.get(identity(entryId,senseId)) || core.get(identity(entryId,senseId));
  return [selected?.sense.id===senseId?selected.sense:undefined,selected?.originalSense?.id===senseId?selected.originalSense:undefined,row?.originalSense?.id===senseId?row.originalSense:undefined].filter((sense):sense is VocabularySense=>Boolean(sense));
@@ -22,6 +26,7 @@ export function vocabularyReadinessBaselines(entryId:string,senseId:string):Voca
 
 /** Public content only. A caller supplies historical public baselines to protect personal edits. */
 export function supplementVocabularySense(entryId:string, sense:VocabularySense, baselines:VocabularySense[], edited:(sense:VocabularySense, baselines:VocabularySense[])=>boolean):VocabularySense {
+ ensureReadiness();
  const key=identity(entryId,sense.id);
  const missing=core.get(key), addition=additions.get(key);
  if (!missing && !addition) return sense;
@@ -38,6 +43,7 @@ export function supplementVocabularySense(entryId:string, sense:VocabularySense,
 }
 
 export function applyVocabularyReadiness(entry:VocabularyEntry, originals:VocabularySense[], edited:(sense:VocabularySense,baselines:VocabularySense[])=>boolean):VocabularyEntry {
+ ensureReadiness();
  const candidate=preferred.get(entry.id);
  let senses=entry.senses;
  if (!candidate && !senses.some(s=>core.has(identity(entry.id,s.id)) || additions.has(identity(entry.id,s.id)))) return entry;

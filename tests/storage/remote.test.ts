@@ -9,18 +9,44 @@ vi.mock('../../src/lib/supabase', () => ({
       const next = mocks.sessions.shift();
       const id = next ? next.user : mocks.user;
       if (next && next.promise) await next.promise;
-      return { data: { session: { user: { id } } }, error: null };
+      return { data: { session: { user: { id }, access_token: `test-token-${id}` } }, error: null };
     } },
-    rpc: async (name, args) => { mocks.rpcCalls.push({ name, args: structuredClone(args) }); if (mocks.rpcPromise) await mocks.rpcPromise; return { error: mocks.rpcError, data: mocks.rpcResult }; },
+    rpc: (name, args) => {
+      const response = (async () => {
+      mocks.rpcCalls.push({ name, args: structuredClone(args) });
+      if (mocks.rpcPromise) await mocks.rpcPromise;
+      if (name === 'commit_workspace_changes') {
+        const tables = (await import('../../src/storage/sync')).USER_TABLES;
+        const changes = { ...args.batch.lists, ...(args.batch.drafts ? { drafts: args.batch.drafts } : {}) };
+        // Project the transaction request into rows to keep the existing payload assertions.
+        for (const [key, diff] of Object.entries(changes)) {
+          const table = tables[key] || key;
+          if (diff.upserts.length) mocks.upserts.push({ table, rows: structuredClone(diff.upserts.map(row => ({ ...row, user_id: mocks.user }))) });
+          if (diff.deletes.length) mocks.deletes.push({ table, userId: mocks.user, ids: [...diff.deletes] });
+        }
+        return { error: mocks.rpcError || (mocks.failTable ? new Error('Rejected transaction') : null), data: mocks.workspaceResult || { id: args.batch.id, alreadyCommitted: false } };
+      }
+      return { error: mocks.rpcError, data: mocks.rpcResult };
+      })();
+      response.setHeader = (header, value) => {
+        mocks.headers.push({ name, header, value });
+        return response;
+      };
+      return response;
+    },
     from: (table) => ({
       select: () => {
         let rows = mocks.rows[table] || [];
         const query = {
-          range: async (from, to) => { mocks.reads.push(table); return { data: structuredClone(rows.slice(from, to + 1)), error: null }; },
+          range: async (from, to) => {
+            mocks.reads.push(table);
+            if (mocks.readPromises[table]) await mocks.readPromises[table];
+            return { data: structuredClone(rows.slice(from, to + 1)), error: mocks.readError === table ? new Error('Read failed') : null };
+          },
           eq: (key, value) => { rows = rows.filter(row => (key.startsWith('payload->>') ? row.payload?.[key.slice(10)] : row[key]) === value); return query; },
           in: (key, values) => { rows = rows.filter(row => values.includes(row[key])); return query; },
           order: () => { rows = rows.slice().sort((left, right) => String(left.id).localeCompare(String(right.id))); return query; },
-          maybeSingle: async () => ({ data: structuredClone(mocks.profile), error: null }),
+          maybeSingle: async () => ({ data: structuredClone(table === 'profiles' ? mocks.profile : rows[0] || null), error: null }),
         };
         return query;
       },
@@ -40,13 +66,273 @@ beforeEach(() => {
   mocks.upserts = [];
   mocks.deletes = [];
   mocks.rpcCalls = [];
+  mocks.headers = [];
   mocks.rpcError = null;
   mocks.rpcResult = null;
   mocks.rpcPromise = null;
+  mocks.workspaceResult = null;
   mocks.reads = [];
+  mocks.readPromises = {};
+  mocks.readError = null;
   mocks.failTable = null;
   mocks.user = 'account-1';
   mocks.sessions = [];
+});
+
+test('base hydration reads only plans and drafts and never diffs unloaded module records', async () => {
+  mocks.rows.sessions = [{ id: 'remote-session', payload: { id: 'remote-session' } }];
+  const { hydrateState, saveState, getCollectionStatuses } = await import('../../src/storage/remote');
+  const state = await hydrateState({ modules: [] });
+  expect(mocks.reads).toEqual(['plans', 'drafts']);
+  expect(getCollectionStatuses()).toMatchObject({ plans: 'ready', drafts: 'ready', profile: 'ready', sessions: 'unloaded', vocabulary: 'unloaded', examAttempts: 'unloaded' });
+  state.sessions.push({ id: 'local-unloaded' });
+  state.plans[0].status = 'completed';
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.rpcCalls[0].args.batch.lists).toHaveProperty('plans');
+  expect(mocks.rpcCalls[0].args.batch.lists).not.toHaveProperty('sessions');
+});
+
+test('a queued base snapshot cannot delete collections loaded after its save scope was captured', async () => {
+  mocks.rows.sessions = [{ id: 'remote-session', payload: { id: 'remote-session', skill: 'writing' } }];
+  const { hydrateState, ensureAccountModule, getCollectionStatuses, saveState } = await import('../../src/storage/remote');
+  const queued = await hydrateState({ modules: [] });
+  const collections = Object.entries(getCollectionStatuses()).filter(([, status]) => status === 'ready').map(([key]) => key);
+  queued.drafts.q1.text = 'Queued before records loaded';
+  const loaded = await ensureAccountModule('productive');
+  mocks.rpcError = new Error('Transient failure');
+  expect(await saveState(queued, undefined, { collections })).toBe(false);
+  const first = mocks.rpcCalls[0].args.batch;
+  expect(first.lists).toEqual({});
+  mocks.rpcError = null;
+  expect(await saveState(queued, undefined, { collections })).toBe(true);
+  expect(mocks.rpcCalls[1].args.batch).toEqual(first);
+  expect(mocks.deletes).toEqual([]);
+  const current = { ...queued, ...loaded.data };
+  expect(await saveState(current)).toBe(true);
+  expect(mocks.rpcCalls).toHaveLength(2);
+});
+
+test('workspace and specialized writes pin the verified account session token', async () => {
+  const { hydrateState, saveState, saveVocabularyImport, saveVocabularySession } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  state.drafts.q1.text = 'Edited';
+  expect(await saveState(state)).toBe(true);
+  state.vocabularyImportBatches.push({id:'token-import'});
+  expect(await saveVocabularyImport(state, 'token-import')).toBe(true);
+  state.vocabularySessions.push(completedVocabularySession('token-session'));
+  mocks.rpcResult = {id:'token-session', alreadyCommitted:false};
+  expect(await saveVocabularySession(state, 'token-session')).toBe(true);
+  expect(mocks.headers).toEqual(['commit_workspace_changes', 'commit_vocabulary_import', 'commit_vocabulary_session'].map(name => ({name, header:'Authorization', value:'Bearer test-token-account-1'})));
+});
+
+test('route prefetch overlaps blocked base hydration and later module loading reuses the same reads', async () => {
+  let releaseBase;
+  mocks.readPromises.plans = new Promise(resolve => { releaseBase = resolve; });
+  mocks.rows.sessions = [{id:'prefetched-session', payload:{id:'prefetched-session', skill:'writing'}}];
+  const { hydrateState, ensureAccountModule, getCollectionStatuses } = await import('../../src/storage/remote');
+  let resolved = false;
+  const base = hydrateState({modules:[], prefetchModules:['productive','productive']}).then(state => { resolved = true; return state; });
+  await vi.waitFor(() => expect(mocks.reads).toContain('sessions'));
+  expect(resolved).toBe(false);
+  expect(getCollectionStatuses().sessions).toBe('unloaded');
+  releaseBase();
+  const state = await base;
+  expect(state.sessions).toEqual([]);
+  const loaded = await ensureAccountModule('productive');
+  expect(loaded.data.sessions[0].id).toBe('prefetched-session');
+  expect(mocks.reads.filter(table => table === 'sessions')).toHaveLength(1);
+});
+
+test('prefetched vocabulary remains excluded from saves until consumed and includes legacy lexicon', async () => {
+  mocks.rows.lexicon = [{id:'legacy', payload:{id:'legacy',term:'adapt'}}];
+  const { hydrateState, ensureAccountModule, saveState, getCollectionStatuses } = await import('../../src/storage/remote');
+  const state = await hydrateState({modules:[],prefetchModules:['vocabulary']});
+  expect(getCollectionStatuses().vocabulary).toBe('unloaded');
+  state.drafts.q1.text = 'Base edit';
+  state.vocabulary = [{id:'unloaded-local',term:'mitigate'}];
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.rpcCalls[0].args.batch.lists).not.toHaveProperty('vocabulary');
+  const { data } = await ensureAccountModule('vocabulary');
+  expect(data.vocabulary[0].term).toBe('adapt');
+  expect(mocks.reads.filter(table => table === 'lexicon')).toHaveLength(1);
+});
+
+test('prefetch rows cannot cross an account reset even if the old request finishes later', async () => {
+  let release;
+  mocks.readPromises.sessions = new Promise(resolve => { release = resolve; });
+  mocks.rows.sessions = [{id:'old',payload:{id:'old'}}];
+  const { hydrateState, ensureAccountModule, resetAccountStore } = await import('../../src/storage/remote');
+  await hydrateState({modules:[],prefetchModules:['productive']});
+  resetAccountStore();
+  mocks.user = 'account-2';
+  mocks.rows.sessions = [{id:'new',payload:{id:'new'}}];
+  delete mocks.readPromises.sessions;
+  await hydrateState({modules:[],prefetchModules:['productive']});
+  release();
+  const loaded = await ensureAccountModule('productive');
+  expect(loaded.data.sessions.map(row => row.id)).toEqual(['new']);
+});
+
+test('unused failed prefetch leaves base usable and module retry starts fresh reads', async () => {
+  mocks.readError = 'sessions';
+  const { hydrateState, ensureAccountModule, getCollectionStatuses } = await import('../../src/storage/remote');
+  const state = await hydrateState({modules:[],prefetchModules:['productive']});
+  expect(state.plans).toHaveLength(1);
+  expect(getCollectionStatuses().sessions).toBe('unloaded');
+  mocks.readError = null;
+  await ensureAccountModule('productive');
+  expect(mocks.reads.filter(table => table === 'sessions')).toHaveLength(2);
+});
+
+test('bank prefetch waits for verified identity, overlaps base load, and leaves base banks empty', async () => {
+  let releaseSession, releaseBase;
+  const verified = new Promise(resolve => { releaseSession = resolve; });
+  mocks.sessions.push({user:'account-1',promise:verified});
+  mocks.readPromises.plans = new Promise(resolve => { releaseBase = resolve; });
+  mocks.rows.writing_questions = [{id:'q',payload:{title:'Question'}}];
+  const { hydrateState, ensureQuestionBank } = await import('../../src/storage/remote');
+  const loading = hydrateState({modules:[],prefetchBanks:['writing','writing']});
+  await Promise.resolve();
+  expect(mocks.reads).not.toContain('writing_questions');
+  releaseSession();
+  await vi.waitFor(() => expect(mocks.reads).toContain('writing_questions'));
+  releaseBase();
+  const base = await loading;
+  expect(base.questions).toEqual([]);
+  expect(await ensureQuestionBank('writing')).toEqual([{id:'q',title:'Question'}]);
+  expect(mocks.reads.filter(table => table === 'writing_questions')).toHaveLength(1);
+});
+
+test('bank prefetch failure does not block base hydration and a later bank read retries', async () => {
+  mocks.readError = 'writing_questions';
+  const { hydrateState, ensureQuestionBank } = await import('../../src/storage/remote');
+  const base = await hydrateState({modules:[],prefetchBanks:['writing']});
+  expect(base.plans).toHaveLength(1);
+  expect(base.questions).toEqual([]);
+  await vi.waitFor(() => expect(mocks.reads).toContain('writing_questions'));
+  await expect(ensureQuestionBank('writing')).rejects.toThrow('Read failed');
+  mocks.readError = null;
+  mocks.rows.writing_questions = [{id:'q',payload:{title:'Retry'}}];
+  expect(await ensureQuestionBank('writing')).toEqual([{id:'q',title:'Retry'}]);
+  expect(mocks.reads.filter(table => table === 'writing_questions')).toHaveLength(2);
+});
+
+test('module loads deduplicate in flight and normalize only their own collections', async () => {
+  mocks.rows.sessions = [{ id: 'session', payload: { id: 'session', skill: 'writing' } }];
+  const { hydrateState, ensureAccountModule } = await import('../../src/storage/remote');
+  await hydrateState({ modules: [] });
+  mocks.reads = [];
+  const [first, second] = await Promise.all([ensureAccountModule('productive'), ensureAccountModule('productive')]);
+  expect(first).toEqual(second);
+  expect(Object.keys(first.data)).toEqual(['sessions', 'assessments', 'errors', 'stories']);
+  expect(first.data.sessions[0].id).toBe('session');
+  expect(mocks.reads).toEqual(['sessions', 'assessments', 'errors', 'stories']);
+  await ensureAccountModule('productive');
+  expect(mocks.reads).toHaveLength(4);
+});
+
+test('failed module reads remain unloaded for saving and can be retried', async () => {
+  const { hydrateState, ensureAccountModule, getCollectionStatuses, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState({ modules: [] });
+  mocks.readError = 'sessions';
+  await expect(ensureAccountModule('productive')).rejects.toThrow('Read failed');
+  expect(getCollectionStatuses().sessions).toBe('error');
+  state.sessions = [{ id: 'unsafely-loaded' }];
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.rpcCalls).toEqual([]);
+  mocks.readError = null;
+  await ensureAccountModule('productive');
+  expect(getCollectionStatuses().sessions).toBe('ready');
+});
+
+test('an old module read cannot publish into a replacement account', async () => {
+  const { hydrateState, ensureAccountModule, resetAccountStore, getCollectionStatuses } = await import('../../src/storage/remote');
+  await hydrateState({ modules: [] });
+  let resolve;
+  mocks.readPromises.sessions = new Promise(done => { resolve = done; });
+  const loading = ensureAccountModule('productive');
+  resetAccountStore();
+  mocks.user = 'account-2';
+  await hydrateState({ modules: [] });
+  resolve();
+  await expect(loading).rejects.toThrow('superseded');
+  expect(getCollectionStatuses().sessions).toBe('unloaded');
+});
+
+test('only the correct transaction acknowledgement advances the snapshot', async () => {
+  const { hydrateState, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState({ modules: [] });
+  state.drafts.q1.text = 'Changed';
+  mocks.workspaceResult = { id: 'wrong-operation', alreadyCommitted: false };
+  expect(await saveState(state)).toBe(false);
+  const batch = mocks.rpcCalls[0].args.batch;
+  mocks.workspaceResult = null;
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.rpcCalls[1].args.batch).toEqual(batch);
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.rpcCalls).toHaveLength(2);
+});
+
+test('public banks and samples deduplicate and samples load by requested topic only', async () => {
+  mocks.rows.writing_questions = [{ id: 'q', payload: { title: 'Writing' } }];
+  mocks.rows.speaking_samples = [{ id: 'topic-1', payload: { answer: 'One' } }, { id: 'topic-2', payload: { answer: 'Two' } }];
+  const { hydrateState, ensureQuestionBank, ensureSpeakingSample } = await import('../../src/storage/remote');
+  await hydrateState({ modules: [] });
+  mocks.reads = [];
+  expect(await ensureQuestionBank('writing')).toEqual([{ id: 'q', title: 'Writing' }]);
+  await ensureQuestionBank('writing');
+  expect(mocks.reads).toEqual(['writing_questions']);
+  expect(await ensureSpeakingSample('topic-2')).toEqual({ id: 'topic-2', answer: 'Two' });
+});
+
+test('complete account loading includes unloaded modules and excludes public catalogs', async () => {
+  mocks.rows.lexicon = [{ id: 'legacy', payload: { id: 'legacy', term: 'adapt' } }];
+  const { hydrateState, ensureCompleteAccount, getCollectionStatuses } = await import('../../src/storage/remote');
+  await hydrateState({ modules: [] });
+  mocks.reads = [];
+  const complete = await ensureCompleteAccount();
+  expect(complete.vocabulary[0].term).toBe('adapt');
+  expect(Object.values(getCollectionStatuses()).every(status => status === 'ready')).toBe(true);
+  expect(mocks.reads).not.toContain('writing_questions');
+  expect(mocks.reads).not.toContain('speaking_samples');
+  expect(mocks.reads).toContain('exam_attempts');
+});
+
+test('a workspace response from the old generation never acknowledges the new account', async () => {
+  const { hydrateState, resetAccountStore, saveState } = await import('../../src/storage/remote');
+  const first = await hydrateState({ modules: [] });
+  first.plans[0].status = 'completed';
+  let resolve;
+  mocks.rpcPromise = new Promise(done => { resolve = done; });
+  const saving = saveState(first);
+  await Promise.resolve();
+  await Promise.resolve();
+  resetAccountStore();
+  mocks.user = 'account-2';
+  const second = await hydrateState({ modules: [] });
+  resolve();
+  expect(await saving).toBe(false);
+  mocks.rpcPromise = null;
+  second.plans[0].status = 'completed';
+  expect(await saveState(second)).toBe(true);
+  expect(mocks.rpcCalls[1].args.batch.lists.plans.upserts).toHaveLength(1);
+});
+
+test('changes made while a workspace RPC is pending remain available for the next save', async () => {
+  const { hydrateState, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState({ modules: [] });
+  state.drafts.q1.text = 'First edit';
+  let resolve;
+  mocks.rpcPromise = new Promise(done => { resolve = done; });
+  const saving = saveState(state);
+  await Promise.resolve();
+  await Promise.resolve();
+  state.drafts.q1.text = 'Second edit';
+  resolve();
+  expect(await saving).toBe(true);
+  mocks.rpcPromise = null;
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.rpcCalls[1].args.batch.drafts.upserts[0].payload.text).toBe('Second edit');
 });
 
 test('in-place changes after hydration produce plan and draft upserts with current metadata', async () => {
@@ -98,10 +384,14 @@ test('failed save can retry the same payload and successful duplicate save does 
   state.plans[0].status = 'completed';
   mocks.failTable = 'plans';
   expect(await saveState(state)).toBe(false);
+  expect(mocks.rpcCalls).toHaveLength(1);
+  expect(mocks.rpcCalls[0].name).toBe('commit_workspace_changes');
+  const firstBatch = structuredClone(mocks.rpcCalls[0].args.batch);
   const firstErrors = mocks.upserts.find(call => call.table === 'errors').rows;
   mocks.upserts = [];
   mocks.failTable = null;
   expect(await saveState(state)).toBe(true);
+  expect(mocks.rpcCalls[1].args.batch).toEqual(firstBatch);
   expect(mocks.upserts.find(call => call.table === 'errors').rows.map(row => row.id)).toEqual(firstErrors.map(row => row.id));
   expect(mocks.upserts.find(call => call.table === 'sessions').rows[0].payload).toEqual(state.sessions[0]);
   mocks.upserts = [];
@@ -175,6 +465,18 @@ test('atomic import advances only vocabulary snapshot and failed import retries 
   expect(mocks.upserts.some(call => call.table === 'vocabulary')).toBe(false);
   expect(mocks.upserts.find(call => call.table === 'plans').rows[0].payload.status).toBe('completed');
   expect(mocks.upserts.find(call => call.table === 'drafts').rows[0].payload.text).toBe('Edited during import');
+});
+
+test('import acknowledges only its upserts and leaves vocabulary deletions for the workspace transaction', async () => {
+  mocks.rows.vocabulary = [{ id: 'kept-word', payload: { id: 'kept-word', term: 'adapt' } }];
+  const { hydrateState, saveVocabularyImport, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState();
+  state.vocabulary = [{ id: 'new-word', term: 'mitigate' }];
+  state.vocabularyImportBatches.push({ id: 'new-import' });
+  expect(await saveVocabularyImport(state, 'new-import')).toBe(true);
+  expect(await saveState(state)).toBe(true);
+  const workspace = mocks.rpcCalls.find(call => call.name === 'commit_workspace_changes');
+  expect(workspace?.args.batch.lists.vocabulary).toEqual({ upserts: [], deletes: ['kept-word'] });
 });
 
 test('an import awaiting authentication cannot run after an account reset', async () => {

@@ -56,6 +56,7 @@ const books = (state = {}) =>
     entryIds: [
       ...new Set([
         ...(book.entryIds || []),
+        ...(VOCABULARY_CATALOG.units || []).filter(unit => unit.bookId === book.id).flatMap(unit => unit.entryIds || []),
         ...(VOCABULARY_CATALOG.memberships || [])
           .filter((item) => item.bookId === book.id)
           .map((item) => item.entryId),
@@ -83,7 +84,7 @@ function units(state = {}) {
     const entryIds = [...new Set([
       ...(memberships.get(`${unit.bookId}:${unit.id}`) || []), ...(unit.entryIds || []), ...(personal.get(`${unit.bookId}:${unit.id}`) || []),
     ])];
-    const studyEntryIds = entryIds.filter(id => !(entries.get(id)?.tags || []).includes('archived'));
+    const studyEntryIds = entryIds.filter(id => entries.has(id) ? !(entries.get(id)?.tags || []).includes('archived') : !(unit.archivedEntryIds || []).includes(id));
     return { ...unit, entryIds, studyEntryIds, archivedCount: entryIds.length - studyEntryIds.length };
   });
 }

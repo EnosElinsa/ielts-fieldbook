@@ -10,7 +10,7 @@ import { createIntensiveSession } from '../../domain/exam/intensive';
 const mocks = vi.hoisted(() => ({ owner: 'one', fb: null as any, catalog: null as any, recovery: new Map(), putAudio: vi.fn().mockResolvedValue(undefined) }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
 vi.mock('../../storage/remote', () => ({ accountId: () => mocks.owner }));
-vi.mock('../../storage/examCatalog', () => ({ loadExamSections: async () => mocks.catalog, resolveExamAsset: async () => '/audio.mp3' }));
+vi.mock('../../storage/examCatalog', async importOriginal => ({ ...await importOriginal<typeof import('../../storage/examCatalog')>(), loadExamSections: async () => mocks.catalog, resolveExamAsset: async () => '/audio.mp3' }));
 vi.mock('../../storage/examRecovery', () => ({ readExamRecovery: (owner: string, key: string) => mocks.recovery.get(`${owner}:${key}`), writeExamRecovery: (owner: string, key: string, data: unknown) => mocks.recovery.set(`${owner}:${key}`, structuredClone(data)), clearExamRecovery: (owner: string, key: string) => mocks.recovery.delete(`${owner}:${key}`) }));
 vi.mock('../../storage/audio', () => ({ putAudio: mocks.putAudio, getAudio: async () => null }));
 vi.mock('../../storage/pendingAudio', () => ({ readPendingAudio: async () => null, writePendingAudio: async () => true, deletePendingAudio: async () => true }));

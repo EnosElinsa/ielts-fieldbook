@@ -8,7 +8,7 @@ import { readDraftRecovery } from '../storage/recovery';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 
-const mocks = vi.hoisted(() => ({ initial: null, saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), catalogRead: vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
+const mocks = vi.hoisted(() => ({ initial: null, statuses: null, moduleRead: vi.fn(), releasedRead: vi.fn(), teachingRead: vi.fn(), saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), catalogRead: vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
 vi.mock('../storage', () => ({
   loadState: () => structuredClone(mocks.initial),
   hydrateState: async () => structuredClone(mocks.initial),
@@ -17,6 +17,17 @@ vi.mock('../storage', () => ({
   saveVocabularySession: (...args) => mocks.saveVocabularySession(...args),
   loadVocabularyCatalog: (...args) => mocks.catalogRead(...args),
   downloadFile: (...args) => mocks.downloadFile(...args),
+  getCollectionStatuses: () => mocks.statuses,
+  ensureAccountModule: (...args) => mocks.moduleRead(...args),
+  ensureCompleteAccount: async () => structuredClone(mocks.initial),
+  ensureQuestionBank: async skill => structuredClone(skill === 'writing' ? mocks.initial.questions : mocks.initial.speakingTopics),
+  ensureSpeakingSample: async () => null,
+  subscribeQuestionBank: () => () => {},
+}));
+vi.mock('../storage/vocabularyCatalog', () => ({
+  loadReleasedVocabulary: (...args) => mocks.releasedRead(...args),
+  loadReleasedVocabularyTeaching: (...args) => mocks.teachingRead(...args),
+  VocabularyScopeUnavailableError: class extends Error {},
 }));
 vi.mock('../storage/remote', () => ({ accountId: () => mocks.owner }));
 
@@ -43,6 +54,10 @@ async function prepareCompletion(skill = 'writing') {
 beforeEach(() => {
   localStorage.clear();
   mocks.owner = 'account-1';
+  mocks.statuses = null;
+  mocks.moduleRead.mockReset().mockImplementation(async () => ({data: {}, statuses: {}}));
+  mocks.releasedRead.mockReset().mockRejectedValue(new Error('Static resource unavailable'));
+  mocks.teachingRead.mockReset().mockResolvedValue({books:[], units:[], entries:[], memberships:[]});
   mocks.saveState.mockReset().mockResolvedValue(true);
   mocks.downloadFile.mockReset();
   mocks.saveVocabularyImport.mockReset().mockResolvedValue(true);
@@ -54,6 +69,31 @@ beforeEach(() => {
   mocks.initial.drafts = { q1: normalizeDraft({ text: 'A response that must survive.', practiceMode: 'full' }), sp1: normalizeDraft({ transcript: 'A response that must survive.', practiceMode: 'full' }) };
 });
 afterEach(() => { cleanup(); vi.useRealTimers(); fieldbook = null; });
+
+test('base hydration opens workspace without loading account modules and later module load keeps live settings', async () => {
+  mocks.statuses = { profile: 'ready', plans: 'ready', drafts: 'ready', sessions: 'unloaded', vocabulary: 'unloaded', examAttempts: 'unloaded' };
+  const pending = defer();
+  mocks.moduleRead.mockImplementation(() => pending.promise);
+  await mount();
+  expect(mocks.moduleRead).not.toHaveBeenCalled();
+  let request;
+  await act(async () => { request = fieldbook.ensureAccountModule('productive'); });
+  await act(async () => { fieldbook.persist(draft => { draft.settings.dailyMinutes = 75; }); });
+  await act(async () => { pending.resolve({ data: { sessions: [{id:'late', essay:'Loaded history'}], assessments: [], errors: [], stories: [] }, statuses: {} }); await request; });
+  expect(fieldbook.state.settings.dailyMinutes).toBe(75);
+  expect(fieldbook.state.sessions[0].id).toBe('late');
+  expect(fieldbook.moduleStatus.productive).toBe('ready');
+});
+
+test('pending module results cannot merge into a different account', async () => {
+  mocks.statuses = { sessions: 'unloaded', vocabulary: 'unloaded', examAttempts: 'unloaded' };
+  const pending = defer(); mocks.moduleRead.mockImplementation(() => pending.promise);
+  await mount(); let request;
+  await act(async () => { request = fieldbook.ensureAccountModule('productive').catch(() => false); });
+  mocks.owner = 'account-2';
+  await act(async () => { pending.resolve({data:{sessions:[{id:'account-1-only'}]},statuses:{}}); await request; });
+  expect(fieldbook.state.sessions.some(row=>row.id==='account-1-only')).toBe(false);
+});
 
 test('reading and due listening plans open their own workspaces and save linked completion', async () => {
   mocks.initial.plans = [{ id: 'reading-plan', kind: 'reading-practice', status: 'pending' }, { id: 'listening-plan', kind: 'listening-intensive', status: 'pending', sectionId: 'part', sentenceId: 'sentence' }];
@@ -421,10 +461,35 @@ test('an explicit preference change can restore the original accent', async () =
   expect(mocks.saveState.mock.calls.at(-1)[0].settings.vocabulary.accent).toBe('uk');
 });
 
-test('metadata catalog loads all released group memberships without full entries',async()=>{
+test('metadata catalog loads complete group identities without entries or database traversal',async()=>{
 const snapshot=structuredClone(VOCABULARY_CATALOG);
-const fetchMock=vi.spyOn(globalThis,'fetch').mockResolvedValue({ok:true,json:async()=>({books:[{id:'metadata-book',title:'Book',contentStatus:'complete'}],units:[{id:'group',bookId:'metadata-book',title:'Group',kind:'group'}],memberships:[{id:'m1',bookId:'metadata-book',unitId:'group',entryId:'metadata-one'},{id:'m2',bookId:'metadata-book',unitId:'group',entryId:'metadata-two'}],entries:[{id:'metadata-one'},{id:'metadata-two'}]})});
-try{await mount();await act(async()=>{await fieldbook.loadVocabularyCatalog();});expect(VOCABULARY_CATALOG.memberships.filter(row=>row.bookId==='metadata-book')).toHaveLength(2);expect(VOCABULARY_CATALOG.units.find(row=>row.bookId==='metadata-book')).toBeTruthy();expect(VOCABULARY_CATALOG.entries.find(row=>row.id==='metadata-one')).toBeUndefined();}finally{Object.assign(VOCABULARY_CATALOG,snapshot);fetchMock.mockRestore();}
+mocks.releasedRead.mockResolvedValue({books:[{id:'metadata-book',title:'Book',contentStatus:'complete'}],units:[{id:'group',bookId:'metadata-book',title:'Group',kind:'group',entryIds:['metadata-one','metadata-two'],entryCount:2}],memberships:[],entries:[]});
+try{await mount();await act(async()=>{await fieldbook.loadVocabularyCatalog();});expect(VOCABULARY_CATALOG.units.find(row=>row.bookId==='metadata-book').entryIds).toHaveLength(2);expect(VOCABULARY_CATALOG.entries.find(row=>row.id==='metadata-one')).toBeUndefined();expect(mocks.catalogRead).not.toHaveBeenCalled();}finally{Object.assign(VOCABULARY_CATALOG,snapshot);}
+});
+
+test('queued automatic drafts collapse to the latest version behind a manual save', async () => {
+  await mount(); vi.useFakeTimers();
+  const blocked = defer(); mocks.saveState.mockImplementationOnce(()=>blocked.promise);
+  let manual;
+  await act(async()=>{manual=fieldbook.persistNow();});
+  await act(async()=>{fieldbook.setWritingDraft('q1','Earlier');fieldbook.scheduleDraftPersist();await vi.advanceTimersByTimeAsync(801);});
+  await act(async()=>{fieldbook.setWritingDraft('q1','Latest');fieldbook.scheduleDraftPersist();await vi.advanceTimersByTimeAsync(801);});
+  expect(mocks.saveState).toHaveBeenCalledTimes(1);
+  await act(async()=>{blocked.resolve(true);await manual;await Promise.resolve();});
+  expect(mocks.saveState).toHaveBeenCalledTimes(2);
+  expect(mocks.saveState.mock.calls[1][0].drafts.q1.text).toBe('Latest');
+});
+
+test('automatic draft coalescing cannot cross an explicit save', async () => {
+  await mount(); vi.useFakeTimers();
+  const blocked = defer(); mocks.saveState.mockImplementationOnce(() => blocked.promise);
+  let first;
+  await act(async () => { first = fieldbook.persistNow(); });
+  await act(async () => { fieldbook.setWritingDraft('q1','Auto A'); fieldbook.scheduleDraftPersist(); await vi.advanceTimersByTimeAsync(801); });
+  await act(async () => { fieldbook.setWritingDraft('q1','Manual B'); void fieldbook.persistNow(); });
+  await act(async () => { fieldbook.setWritingDraft('q1','Auto C'); fieldbook.scheduleDraftPersist(); await vi.advanceTimersByTimeAsync(801); });
+  await act(async () => { blocked.resolve(true); await first; await Promise.resolve(); });
+  expect(mocks.saveState.mock.calls.slice(1).map(call => call[0].drafts.q1.text)).toEqual(['Auto A','Manual B','Auto C']);
 });
 
 test('catalog timeout clears shared read for retry and ignores the expired response', async () => {
@@ -453,4 +518,63 @@ test('catalog timeout clears shared read for retry and ignores the expired respo
     Object.assign(VOCABULARY_CATALOG, snapshot);
     fetchMock.mockRestore();
   }
+});
+
+test('hydrated receptive baselines survive a scoped base save and complete the first review edit', async () => {
+  mocks.statuses = { profile: 'ready', plans: 'ready', drafts: 'ready', examAttempts: 'unloaded', intensiveSessions: 'unloaded' };
+  mocks.initial.activePlanId = 'review-plan';
+  mocks.initial.plans = [{id:'review-plan', kind:'reading-review', status:'in_progress', startedAt:'2026-10-01T00:00:00Z', attemptId:'exam'}];
+  const attempt = {id:'exam', skill:'reading', status:'completed', results:{q:false}, errorReasons:{}, evidence:{}, keywords:{}, completedAt:'2026-10-01T01:00:00Z'};
+  mocks.moduleRead.mockImplementation(async () => {
+    mocks.statuses.examAttempts = mocks.statuses.intensiveSessions = 'ready';
+    return {data:{examAttempts:[attempt], intensiveSessions:[]}, statuses:mocks.statuses};
+  });
+  await mount();
+  const blocked = defer(); mocks.saveState.mockImplementationOnce(() => blocked.promise);
+  let baseSave;
+  await act(async () => { baseSave = fieldbook.persist(draft => { draft.drafts.q1.text = 'Before module hydration'; }); await Promise.resolve(); });
+  await act(async () => { await fieldbook.ensureAccountModule('receptive'); });
+  await act(async () => { blocked.resolve(true); await baseSave; });
+  await act(async () => {
+    await fieldbook.persist(draft => {
+      draft.examAttempts[0].errorReasons.q = 'Missed the paraphrase';
+      draft.examAttempts[0].evidence.q = 'The corresponding passage sentence';
+    });
+  });
+  expect(fieldbook.state.plans[0].status).toBe('completed');
+  expect(mocks.saveState.mock.calls[0][2].collections).not.toContain('examAttempts');
+});
+
+test('same-owner reload rejects both an old in-flight acknowledgement and an old queued save', async () => {
+  await mount();
+  const blocked = defer(); mocks.saveState.mockImplementationOnce(() => blocked.promise);
+  let first, queued;
+  await act(async () => { first = fieldbook.persistNow(); await Promise.resolve(); });
+  await act(async () => { queued = fieldbook.persist(draft => { draft.drafts.q1.text = 'Stale queued edit'; }); });
+  mocks.initial.drafts.q1.text = 'Fresh account load';
+  await act(async () => { fieldbook.retryLoad(); });
+  await waitFor(() => expect(fieldbook.state.drafts.q1.text).toBe('Fresh account load'));
+  await act(async () => { blocked.resolve(true); expect(await first).toBe(false); expect(await queued).toBe(false); });
+  expect(mocks.saveState).toHaveBeenCalledTimes(1);
+  expect(fieldbook.state.drafts.q1.text).toBe('Fresh account load');
+});
+
+test('preferences and drafts exclude fetched vocabulary until its teaching metadata and state merge finish', async () => {
+  mocks.statuses = {profile:'ready', drafts:'ready', plans:'ready', vocabulary:'unloaded'};
+  mocks.moduleRead.mockImplementation(async () => {
+    mocks.statuses.vocabulary = 'ready';
+    return {data:{vocabulary:[{id:'remote-word', term:'adapt'}]}, statuses:mocks.statuses};
+  });
+  const teaching = defer(); mocks.teachingRead.mockImplementationOnce(() => teaching.promise);
+  await mount();
+  let loading;
+  await act(async () => { loading = fieldbook.ensureAccountModule('vocabulary'); await Promise.resolve(); });
+  expect(fieldbook.state.vocabulary).toHaveLength(0);
+  await act(async () => { await fieldbook.saveVocabularyPreferences({accent:'us'}); });
+  await act(async () => { await fieldbook.persist(draft => { draft.drafts.q1.text = 'While metadata loads'; }); });
+  expect(mocks.saveState.mock.calls.every(call => !call[2].collections.includes('vocabulary'))).toBe(true);
+  await act(async () => { teaching.resolve({books:[], units:[], entries:[], memberships:[]}); await loading; });
+  await act(async () => { await fieldbook.persistNow(); });
+  expect(mocks.saveState.mock.calls.at(-1)[2].collections).toContain('vocabulary');
+  expect(mocks.saveState.mock.calls.at(-1)[0].vocabulary[0].id).toBe('remote-word');
 });

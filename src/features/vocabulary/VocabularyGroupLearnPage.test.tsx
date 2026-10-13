@@ -26,7 +26,7 @@ beforeEach(() => {
   sessionStorage.clear();
   localStorage.clear();
 });
-afterEach(()=>{cleanup();Object.assign(VOCABULARY_CATALOG,structuredClone(original));vi.restoreAllMocks();});
+afterEach(async()=>{vi.useRealTimers();cleanup();await act(async()=>{await Promise.resolve();});Object.assign(VOCABULARY_CATALOG,structuredClone(original));vi.restoreAllMocks();});
 function Location(){const location=useLocation();return <output aria-label="Route">{location.pathname+location.search}</output>;}
 function mount(url=path){return render(<MemoryRouter initialEntries={[url]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes><Location/></MemoryRouter>);}
 
@@ -216,25 +216,30 @@ test('successful save after leaving clears pending device progress',async()=>{
 
 test('hiding the page flushes the latest draft before the debounce expires',async()=>{
   mount();await screen.findByRole('heading',{name:'Word 1'});
+  vi.useFakeTimers();
   fireEvent.click(screen.getByRole('button',{name:'Mark viewed & next'}));
   fireEvent.click(screen.getByRole('button',{name:'Mark viewed & next'}));
   expect(mocks.fb.saveVocabularyLearning).not.toHaveBeenCalled();
   vi.spyOn(document,'visibilityState','get').mockReturnValue('hidden');
   fireEvent(document,new Event('visibilitychange'));
   expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalledWith('book','group',expect.objectContaining({currentEntryId:'word-3',viewedEntryIds:['word-1','word-2']}));
-  await screen.findByText('Progress saved');
+  await act(async()=>{await vi.advanceTimersByTimeAsync(1);});
+  expect(screen.getByText('Progress saved')).toBeInTheDocument();
 });
 
 test('a new account never flushes the previous account debounce draft',async()=>{
   const view=mount();await screen.findByRole('heading',{name:'Word 1'});
+  vi.useFakeTimers();
   fireEvent.click(screen.getByRole('button',{name:'Mark viewed & next'}));
   mocks.owner='account-two';
   view.rerender(<MemoryRouter initialEntries={[path]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes></MemoryRouter>);
-  await screen.findByRole('heading',{name:'Word 1'});
+  await act(async () => { await vi.advanceTimersByTimeAsync(1); });
+  expect(screen.getByRole('heading',{name:'Word 1'})).toBeInTheDocument();
   expect(mocks.fb.saveVocabularyLearning).not.toHaveBeenCalled();
   expect(screen.getByText('Viewed 0 / 12')).toBeInTheDocument();
   expect(JSON.parse(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-one:book:group')!)).toMatchObject({currentEntryId:'word-2',viewedEntryIds:['word-1']});
   expect(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-two:book:group')).toBeNull();
+  vi.useRealTimers();
 });
 
 test('multiple meanings preserve explicit selection in the details return link and clear it for the next word',async()=>{

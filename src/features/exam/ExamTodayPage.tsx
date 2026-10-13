@@ -6,11 +6,13 @@ import type { ExamAttempt, ExamSkill, IntensiveSession } from '../../domain/exam
 import { dueIntensive, examStats } from '../../domain/exam';
 import { dayLabel } from '../../lib/format';
 import { useExamCatalog } from './useExamCatalog';
+import { useAccountRequirements } from '../../components/AccountDataBoundary';
 
 export function ExamTodayPage({ skill }: { skill: ExamSkill }) {
   const fb = useFieldbook();
+  const dependencies = useAccountRequirements({modules: ['productive', 'vocabulary']});
   const [plans, setPlans] = useState<Record<string, any>[]>([]);
-  useEffect(() => { setPlans(fb.ensurePlansForSkill()); }, [fb.state, skill]);
+  useEffect(() => { setPlans(fb.ensurePlansForSkill()); }, [fb.state, skill, dependencies.ready]);
   const { catalog, loading, error, reload } = useExamCatalog(skill);
   const attempts = ((fb.state.examAttempts || []) as ExamAttempt[]).filter(attempt => attempt.skill === skill);
   const recent = attempts.slice().sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
@@ -29,6 +31,7 @@ export function ExamTodayPage({ skill }: { skill: ExamSkill }) {
   const nextPlan = plans.find(plan => plan.status === 'in_progress') || plans.find(plan => plan.status === 'pending');
   const label = skill === 'reading' ? 'Reading' : 'Listening';
   return <section className="view active">
+    {dependencies.error && <p role="alert">Study plans could not be loaded. <button className="btn text" onClick={dependencies.retry}>Retry</button></p>}
     <div className="lead-grid"><div className="lead"><p className="kicker">{dayLabel(new Date())} · {label}</p><h2>Your {skill} session</h2><p>{recommendation.detail}</p>
       <ol className="session-steps">{(skill === 'reading' ? [
         ['Find the evidence', 'Locate the relevant paragraph and match the question wording to its paraphrase.'],

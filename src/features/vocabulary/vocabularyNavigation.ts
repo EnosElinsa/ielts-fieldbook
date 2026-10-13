@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigationType } from 'react-router-dom';
 import { accountId } from "../../storage/remote";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
+import type { ReleasedVocabularyOptions } from '../../storage/vocabularyCatalog';
 import type {
   VocabularyEntry,
   VocabularyStore,
@@ -165,8 +166,10 @@ export function useVocabularyPosition(origin: string, ready: boolean) {
   }, [origin, ready, owner, navigationType, location.state, location.hash]);
 }
 export function useVocabularyCatalog(
-  load: ((bookId?: string) => Promise<unknown>) | undefined,
+  load: ((bookId?: string, options?: ReleasedVocabularyOptions) => Promise<unknown>) | undefined,
   bookId?: string,
+  unitId?: string,
+  entryId?: string,
 ) {
   const [status, setStatus] = useState<"loading" | "ready" | "error">(
     "loading",
@@ -175,7 +178,8 @@ export function useVocabularyCatalog(
   useEffect(() => {
     let active = true;
     setStatus("loading");
-    Promise.resolve(load?.(bookId))
+    const options = unitId || entryId || revision ? { ...(unitId ? { unitId } : {}), ...(entryId ? { entryIds: [entryId] } : {}), ...(revision ? { force: true } : {}) } : undefined;
+    Promise.resolve(options ? load?.(bookId, options) : load?.(bookId))
       .then((result) => {
         if (active) setStatus(result === false ? "error" : "ready");
       })
@@ -185,6 +189,6 @@ export function useVocabularyCatalog(
     return () => {
       active = false;
     };
-  }, [load, bookId, revision]);
+  }, [load, bookId, unitId, entryId, revision]);
   return { status, retry: () => setRevision((value) => value + 1) };
 }

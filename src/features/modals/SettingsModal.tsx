@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { ModalFrame } from '../../components/ModalFrame';
 import { DateField, FilterMenu } from '../../components/ui';
-import { VocabularyPreferencesFields } from '../vocabulary/VocabularyPreferences';
+const VocabularyPreferencesFields = lazy(() => import('../vocabulary/VocabularyPreferences').then(module => ({default: module.VocabularyPreferencesFields})));
 import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
 
 function settingsDraft(settings: any) {
@@ -87,7 +87,7 @@ export function SettingsModal() {
       <div className="field"><label>What to practise</label><FilterMenu label="What to practise" value={draft.skillMix} onChange={(skillMix) => update({ skillMix })} options={[{ value: 'listening', label: 'Listening only' }, { value: 'reading', label: 'Reading only' }, { value: 'writing', label: 'Writing only' }, { value: 'speaking', label: 'Speaking only' }, { value: 'mixed', label: 'All four skills' }]} /></div>
       <div className="field"><label>Speaking focus</label><FilterMenu label="Speaking focus" value={draft.speakingFocus} onChange={(speakingFocus) => update({ speakingFocus })} options={[{ value: 'balanced', label: 'Part 1 and Part 2' }, { value: 'part1', label: 'Part 1 first' }, { value: 'part2', label: 'Part 2 first' }]} /></div>
       <div className="field full"><label>Study days</label><div className="days">{[[1, 'Mon'], [2, 'Tue'], [3, 'Wed'], [4, 'Thu'], [5, 'Fri'], [6, 'Sat'], [7, 'Sun']].map(([day, label]) => <label className="day" key={day}><input type="checkbox" value={day} checked={draft.days.includes(Number(day))} onChange={(event) => update({ days: event.target.checked ? [...draft.days, Number(day)] : draft.days.filter((value: number) => value !== Number(day)) })} />{label}</label>)}</div></div>
-    </div></fieldset></section> : <section id="vocabulary-settings-panel" role="tabpanel" aria-labelledby="vocabulary-settings-tab"><VocabularyPreferencesFields value={draft.vocabulary} onChange={(vocabulary) => update({ vocabulary })} disabled={saving} /></section>}
+    </div></fieldset></section> : <section id="vocabulary-settings-panel" role="tabpanel" aria-labelledby="vocabulary-settings-tab"><Suspense fallback={<p role="status">Loading vocabulary settings...</p>}><VocabularyPreferencesFields value={draft.vocabulary} onChange={(vocabulary) => update({ vocabulary })} disabled={saving} /></Suspense></section>}
     <p className="rule-note">Study records and recordings are stored on your account. A new account starts empty. A backup JSON does not include recordings.</p>
     {saveError ? <p className="vocabulary-error" role="alert">{saveError}</p> : null}
   </ModalFrame>;

@@ -27,6 +27,7 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
   const status = params.get('status') || 'all';
   const search = params.get('q') || '';
   const { catalog, loading, error, reload } = useExamCatalog(skill, book === 'all' ? undefined : Number(book));
+  const hasCatalogSections = catalog.sections.some(section => section.skill === skill);
   const attempts = (fb.state.examAttempts || []) as ExamAttempt[];
   const favorites = new Set<string>(fb.state.settings.favoriteExamSectionIds || []);
   const update = (key: string, value: string) => setParams(current => {
@@ -93,7 +94,8 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
       <span className="exam-eyebrow">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : `${skill} · saved practice`}</span><strong>{attempt.mode === 'mock' ? 'Full mock' : section?.title || `${sectionLabel} practice`}</strong>
       <span className="exam-recent-meta">{attempt.mode === 'mock' ? 'Full mock' : `${sectionLabel} practice`} · {attempt.status === 'completed' ? `${attempt.score ?? '—'} / ${attempt.total ?? '—'} marks` : attempt.status === 'paused' ? 'Paused' : 'In progress'}</span><b>{attempt.status === 'completed' ? 'Review' : 'Resume'} <ArrowRight size={14} /></b>
     </Link>; })}</aside>}
-    {loading ? <PageLoadingState variant="bank" message="Loading source catalog…" onRetry={reload} /> : error ? <StateMessage kind="error" message={error} onRetry={reload} /> : !catalog.sections.some(section => section.skill === skill) ? <StateMessage title={`The ${skill} bank is not available yet.`} message="Verified source content for Cambridge 8–21 has not been imported. No sample answers or passages are substituted here." /> : <>
+    {loading ? <PageLoadingState variant="bank" message="Loading source catalog…" onRetry={reload} /> : error && !hasCatalogSections ? <StateMessage kind="error" message={error} onRetry={reload} /> : !hasCatalogSections ? <StateMessage title={`The ${skill} bank is not available yet.`} message="Verified source content for Cambridge 8–21 has not been imported. No sample answers or passages are substituted here." /> : <>
+      {error && <StateMessage kind="error" message={error} onRetry={reload} />}
       <div className="exam-results-bar" ref={results}><span role="status">{matchingPapers.length} test{matchingPapers.length === 1 ? '' : 's'} · {sections.length} {sectionLabel.toLowerCase()}{sections.length === 1 ? '' : 's'}</span>{hasFilters && <button className="btn text" onClick={clearFilters}>Clear filters</button>}</div>
       {sections.length === 0 ? <StateMessage message="No sections match these filters." /> : <div className="exam-paper-list">{visiblePapers.map(paper => {
         const all = catalog.sections.filter(section => section.paperId === paper.id && section.skill === skill);
