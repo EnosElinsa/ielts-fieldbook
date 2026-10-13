@@ -196,7 +196,9 @@ test('hung shard requests release the cache and fetch slots for a retry', async 
   vi.resetModules();
   const { loadReleasedVocabulary: loadEntries } = await import('../../src/storage/vocabularyCatalog');
   vi.useFakeTimers();
-  vi.stubGlobal('fetch', async (url: string) => url.endsWith('manifest.test.json') ? new Response(JSON.stringify(generated.manifest)) : new Promise(() => {}));
+  // Node 22's Response streams schedule work that can loop under fake timers.
+  // This test exercises request timeouts, so keep the manifest mock stream-free.
+  vi.stubGlobal('fetch', async (url: string) => url.endsWith('manifest.test.json') ? { ok: true, json: async () => generated.manifest } : new Promise(() => {}));
   const entryIds = Object.keys(generated.manifest.entryShards).slice(0, 60);
   let rejected = false;
   const stalled = loadEntries({ entryIds });
