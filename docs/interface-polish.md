@@ -67,3 +67,13 @@ Older saved senses that omit optional dictionary metadata can receive the existi
 The decorative definition/context map is removed. Suitable reviewed photos or sense-guarded concrete illustrations remain, including a bowl-of-mixture illustration for the noun “paste”; unsupported meanings use the full card width. Failed photos retain Retry. Missing examples explain the next action without inventing content.
 
 Validation: 96 suites / 774 tests, TypeScript and production build passed. Eight browser checks cover 320/390/1440px in both themes, a historical paste snapshot, explicit UK/US playback selection, disclosure reset, details return and a card without artwork. No horizontal overflow or browser errors were observed. These use the isolated local account and substituted speech/audio described above, not an authenticated production account.
+
+## Vocabulary action integrity — October 13
+
+Already-viewed words show a disabled Viewed action; Previous/Next remain usable. Choosing the current batch does not reset its position or write progress. The sync queue compares viewed IDs and position, ignoring timestamp-only changes while pending and after acknowledgment. Plain navigation uses a 2.5-second debounce; new viewed progress uses 800 ms. Device recovery is immediate, departure flushes pending progress, and older responses respect a newer debounce. Pending device progress, actual syncing and server acknowledgment have distinct messages; failures retain Retry.
+
+Learning assessment links and group practice menus share task availability, source-ordered queues and mode names, also used in settings and results. Modes without usable tasks are omitted; legacy empty-mode links select an available mode with an explanation. Counts describe actual launchable questions, including specialist subsets. Audio loop is identified as a listening activity. Use in context retains sentence submission and self-review, explicitly distinguished from assessed usage evidence.
+
+The Audio options & sources disclosure and its explanatory text are removed. UK/US controls remain; playback errors retain retry and explicit alternative recordings when needed, including a Stop action during alternative playback.
+
+Validation: 96 suites / 781 tests, TypeScript and production build passed, covering idempotent marking, current-batch clicks, debounce and older responses, failed saves, recovery, account boundaries, unavailable modes, group-specific notices and actual assessment sizes. Thirteen browser checks use the same isolated local account harness, including 320/390/1440px in both themes, all four offered assessment launches, dictation submission and return. Production account data and real speech/audio quality are not validated by that harness.

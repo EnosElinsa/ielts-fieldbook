@@ -1,6 +1,13 @@
 import type { VocabularyMode } from './types';
 
 export type VocabularyPracticeMode = VocabularyMode | 'audio';
+export const VOCABULARY_PRACTICE_MODES: { value: VocabularyPracticeMode; label: string }[] = [
+  { value:'dictation', label:'Dictation' }, { value:'definition', label:'Meaning recall' },
+  { value:'cloze', label:'Sentence gaps' }, { value:'synonym', label:'Synonyms' },
+  { value:'distinction', label:'Word distinctions' }, { value:'audio', label:'Audio loop' },
+  { value:'production', label:'Use in context' },
+];
+export const isSpecialistVocabularyMode = (mode: VocabularyPracticeMode) => ['cloze','synonym','distinction'].includes(mode);
 export type VocabularyPreferences = {
   mode: VocabularyPracticeMode; layout: 'list' | 'cards'; feedback: 'end' | 'immediate';
   sessionSize: number; order: 'source' | 'due' | 'random'; accent: 'uk' | 'us';

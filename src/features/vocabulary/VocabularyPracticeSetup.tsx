@@ -5,14 +5,14 @@ import { VocabularyLink as Link } from './VocabularyRouteLink';
 import { ArrowRight, Headphones, List, Play, Square } from "lucide-react";
 import { FilterMenu } from "../../components/ui";
 import { IconButton } from "../../components/IconButton";
-import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
+import { isSpecialistVocabularyMode, normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
 import { MODES, dateLabel, modeLabel } from "./practicePresentation";
 import type { VocabularyPracticeController } from "./useVocabularyPracticeController";
 
 export function VocabularyPracticeSetup({ controller }: { controller: VocabularyPracticeController }) {
   const { study, explicitEntry, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit, dueOnly, setDue, wrongOnly, setWrong, catalogStatus, queue, unitQueue, books, selectedUnit, selectedBook, chapter, catalogReady, studyReady, resume, recent, changeFilter, changeMode, begin, recover, discardResume, showRecentSession, retryCatalog } = controller;
   const [pickerOpen, setPickerOpen] = useState(false);
-  const specialist = mode === 'synonym' || mode === 'distinction' || mode === 'cloze';
+  const specialist = isSpecialistVocabularyMode(mode);
   return (
     <>
       <div className="practice-context-card">
@@ -20,16 +20,17 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
         <h3>{study ? selectedBook?.title || 'Choose a wordbook' : explicitEntry ? queue[0]?.entry.term || 'Practise this word' : 'Keep your vocabulary ready'}</h3>
         <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : explicitEntry ? queue[0]?.entry.senses.find(sense => sense.id === queue[0]?.senseId)?.definition || 'This selected meaning is unavailable.' : 'Review learned words that are due, recover mistakes, or create a custom batch.'}</p>
         {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
+        {mode === 'production' ? <p>Sentences are saved for review. Self-review does not count as assessed usage evidence.</p> : null}
         {study && unitQueue ? <strong>{unitQueue.totalWords} words in this group · {unitQueue.eligibleWords} ready for {modeLabel(mode).toLowerCase()}</strong> : null}
         <Link to={study ? '/vocabulary/review' : '/vocabulary/wordbooks'}>{study ? 'Switch to vocabulary review' : 'Study a complete wordbook group'} <ArrowRight size={14} /></Link>
       </div>
       <div className="practice-setup-controls">
-        <FilterMenu
+        {controller.groupModes?.length === 0 ? <span>No practice tasks are available in this group.</span> : <FilterMenu
           label={study || explicitEntry ? 'Practice mode' : 'Review mode'}
           value={mode}
-          options={MODES}
+          options={controller.groupModes ? controller.groupModes.map(item=>({value:item.value,label:`${item.label} · ${item.queue.eligibleWords} ${item.queue.eligibleWords===1?'word':'words'}${item.value==='audio'?' · Listening activity':''}`})) : MODES}
           onChange={changeMode}
-        />
+        />}
         <FilterMenu
           label="Wordbook"
           value={bookId}
@@ -49,6 +50,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
         {study ? <button className="btn line" type="button" disabled={bookId === 'all'} onClick={() => setPickerOpen(true)}>{selectedUnit?.title || 'Choose a group'}</button> : explicitEntry ? null : <FilterMenu label="Review preset" value={wrongOnly ? 'wrong' : dueOnly ? 'due' : 'custom'} options={[{value:'due',label:'Due learned words'},{value:'wrong',label:'Wrong learned words'},{value:'custom',label:'Custom learned words'}]} onChange={value => { setDue(value === 'due'); setWrong(value === 'wrong'); controller.setReviewPreset(value); }} />}
         {pickerOpen ? <VocabularyGroupPicker state={controller.state} bookId={bookId} currentUnitId={unitId} onClose={() => setPickerOpen(false)} onSelect={(value: string) => { setUnit(value); changeFilter('unitId',value); }} /> : null}
       </div>
+      {controller.modeNotice ? <p role="status">{controller.modeNotice}</p> : null}
       <details className="practice-setup-details" open={!study || undefined}><summary>{study ? 'Practice options' : 'Review options'}</summary>
       <div className="practice-setup-options">
         {!study ?

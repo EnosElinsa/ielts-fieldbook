@@ -3,8 +3,23 @@ import { acquireVocabularyLearningSync, vocabularyLearningPendingKey } from './v
 
 const key = vocabularyLearningPendingKey('one', 'book', 'group');
 const learning = (id: string) => ({ viewedEntryIds: ['first'], currentEntryId: id, updatedAt: '2026-10-13T00:00:00Z' });
+
+test('identical progress ignores fresh timestamps while pending and after acknowledgment',async()=>{
+  const save=vi.fn().mockResolvedValue(true);
+  const sync=acquireVocabularyLearningSync({owner:'dedup',bookId:'book',unitId:'group',currentOwner:()=> 'dedup',save});
+  const release=sync.subscribe(()=>{});
+  sync.update(learning('second'));
+  const draft=sync.snapshot().pending;
+  sync.update({...learning('second'),updatedAt:'2026-10-14T00:00:00Z'});
+  expect(sync.snapshot().pending).toEqual(draft);
+  await vi.advanceTimersByTimeAsync(800);
+  sync.update({...learning('second'),updatedAt:'2026-10-15T00:00:00Z'});
+  await vi.advanceTimersByTimeAsync(800);
+  expect(save).toHaveBeenCalledTimes(1);
+  expect(sync.snapshot().status).toBe('saved');release();
+});
 beforeEach(() => { vi.useFakeTimers(); localStorage.clear(); sessionStorage.clear(); });
-afterEach(() => { vi.useRealTimers(); });
+afterEach(() => { vi.useRealTimers(); vi.restoreAllMocks(); });
 
 test('same-timestamp revisions serialize and keep a newer draft through an older acknowledgment', async () => {
   let resolve!: (saved: boolean) => void;
@@ -44,6 +59,20 @@ test('leaving flushes before debounce and remounting shares the existing in-flig
   resolve(true); await vi.advanceTimersByTimeAsync(0);
   expect(save).toHaveBeenCalledTimes(2);
   expect(returned.snapshot().status).toBe('saved'); releaseReturned();
+});
+
+test('an older response does not bypass the debounce for continuing navigation',async()=>{
+  let resolve!:(saved:boolean)=>void;
+  const save=vi.fn().mockImplementationOnce(()=>new Promise<boolean>(r=>{resolve=r;})).mockResolvedValue(true);
+  const sync=acquireVocabularyLearningSync({owner:'navigation',bookId:'book',unitId:'group',currentOwner:()=> 'navigation',save});
+  const release=sync.subscribe(()=>{});
+  sync.update(learning('second'));await vi.advanceTimersByTimeAsync(800);
+  sync.update(learning('third'),2500);
+  resolve(true);await vi.advanceTimersByTimeAsync(0);
+  expect(save).toHaveBeenCalledTimes(1);
+  await vi.advanceTimersByTimeAsync(2499);expect(save).toHaveBeenCalledTimes(1);
+  await vi.advanceTimersByTimeAsync(1);expect(save).toHaveBeenCalledTimes(2);
+  expect(save).toHaveBeenLastCalledWith(learning('third'));release();
 });
 
 test('account switch cancels queued writes and prevents clearing the previous account draft', async () => {
@@ -99,7 +128,7 @@ test('a newer session fallback survives old local storage and old acknowledgment
   const sync=acquireVocabularyLearningSync(options);
   const release=sync.subscribe(()=>{});
   sync.update(learning('second'));sync.flush();sync.update(learning('third'));
-  resolve(true);await vi.advanceTimersByTimeAsync(0);
+  resolve(true);await vi.advanceTimersByTimeAsync(800);
   expect(JSON.parse(sessionStorage.getItem(key)!)).toMatchObject(learning('third'));
   expect(sync.snapshot().status).toBe('failed');
   release();await vi.advanceTimersByTimeAsync(0);

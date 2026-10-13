@@ -1,5 +1,5 @@
 export type VocabularyLearning = { viewedEntryIds: string[]; currentEntryId?: string; updatedAt: string };
-export type LearningSaveSnapshot = { status: 'idle' | 'saving' | 'saved' | 'failed'; pending?: VocabularyLearning; savedOnDevice: boolean };
+export type LearningSaveSnapshot = { status: 'idle' | 'pending' | 'saving' | 'saved' | 'failed'; pending?: VocabularyLearning; savedOnDevice: boolean };
 type Options = { owner: string | null; bookId: string; unitId: string; currentOwner: () => string | null; save: (learning: VocabularyLearning) => Promise<boolean> };
 export const vocabularyLearningPendingKey = (owner: string | null, bookId: string, unitId: string) => `fieldbook:vocabulary-learning-pending:${owner}:${bookId}:${unitId}`;
 
@@ -38,6 +38,7 @@ function learningOnly(draft: Draft): VocabularyLearning {
 const queues = new Map<string, VocabularyLearningSync>();
 class VocabularyLearningSync {
   private draft?: Draft;
+  private acknowledged?: VocabularyLearning;
   private status: LearningSaveSnapshot['status'];
   private timer?: ReturnType<typeof setTimeout>;
   private inFlight = false;
@@ -62,13 +63,15 @@ class VocabularyLearningSync {
   private releaseIfUnused() {
     if (!this.listeners.size && !this.inFlight && queues.get(this.key) === this) queues.delete(this.key);
   }
-  update = (learning: VocabularyLearning) => {
+  update = (learning: VocabularyLearning, delay = 800) => {
     if (!this.isOwner()) return;
+    const previous = this.draft || this.acknowledged;
+    if (previous && previous.currentEntryId === learning.currentEntryId && previous.viewedEntryIds.length === learning.viewedEntryIds.length && previous.viewedEntryIds.every(id=>learning.viewedEntryIds.includes(id))) return;
     const sequence = lastSequence = Math.max(lastSequence + 1, Date.now() * 1000);
     this.draft = { ...learning, viewedEntryIds: [...learning.viewedEntryIds], revision: crypto.randomUUID(), sequence };
     this.savedOnDevice = writeDraft(this.key, this.draft);
-    this.status = 'saving'; this.emit(); this.clearTimer();
-    this.timer = setTimeout(this.flush, 800);
+    this.status = this.inFlight ? 'saving' : 'pending'; this.emit(); this.clearTimer();
+    this.timer = setTimeout(this.flush, delay);
   };
   flush = () => {
     this.clearTimer();
@@ -84,7 +87,8 @@ class VocabularyLearningSync {
     if (!this.isOwner()) { this.status = 'failed'; this.releaseIfUnused(); return; }
     if (this.draft?.revision !== submitted.revision) {
       // New navigation supersedes both success and failure of an older request.
-      this.flush(); this.releaseIfUnused(); return;
+      if (this.timer === undefined || !this.listeners.size) this.flush();
+      this.releaseIfUnused(); return;
     }
     const stored = readDraft(this.key);
     if (saved && (!stored || stored.revision === submitted.revision || stored.sequence < submitted.sequence)) {
@@ -94,7 +98,7 @@ class VocabularyLearningSync {
           if (current && (current.revision === submitted.revision || draftSequence(current) < submitted.sequence)) storage().removeItem(this.key);
         } catch { /* Storage cleanup is best effort. */ }
       }
-      this.draft = undefined; this.status = 'saved';
+      this.acknowledged = learningOnly(submitted); this.draft = undefined; this.status = 'saved';
     } else {
       this.status = 'failed';
     }

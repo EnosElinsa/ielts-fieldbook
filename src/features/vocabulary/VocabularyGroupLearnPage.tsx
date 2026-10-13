@@ -13,8 +13,8 @@ import { vocabularySensePresentation } from '../../domain/vocabulary/dictionaryP
 import { getVocabularyIllustration, getVocabularyVisualConcept } from '../../domain/vocabulary/media';
 import { getVocabularyMastery } from '../../domain/vocabulary/mastery';
 import { getLearnedVocabularyIds, vocabularyGroupProgress } from '../../domain/vocabulary/progress';
-import { normalizeVocabularyPreferences, type VocabularyPracticeMode } from '../../domain/vocabulary/preferences';
-import { buildUnitPracticeQueue } from '../../domain/vocabulary/selection';
+import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
+import { availableUnitPracticeModes } from '../../domain/vocabulary/selection';
 import type { VocabularyStore } from '../../domain/vocabulary/types';
 import { VocabularyNavigation } from './VocabularyPages';
 import { Pronunciation } from './Pronunciation';
@@ -44,7 +44,7 @@ export function VocabularyGroupLearnPage() {
   const [currentId, setCurrentId] = useState<string>();
   const [viewed, setViewed] = useState<string[]>([]);
   const viewedRef = useRef<string[]>([]);
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'failed'>('idle');
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'pending' | 'saving' | 'saved' | 'failed'>('idle');
   const [savedOnDevice, setSavedOnDevice] = useState(true);
   const sync = useRef<ReturnType<typeof acquireVocabularyLearningSync> | undefined>(undefined);
   const saveLearning = useRef(fb.saveVocabularyLearning);
@@ -108,20 +108,20 @@ export function VocabularyGroupLearnPage() {
   const assessmentStatus = progress === 'Studied' ? 'Assessed' : progress;
   const mastered = useMemo(() => words.filter(row => getVocabularyMastery(state, row.entry.id, row.resolved.sense?.id).automatic === 'mastered').length, [state, words]);
   const assessments = useMemo(() => {
-    const modes: { mode: VocabularyPracticeMode; label: string }[] = [{ mode:'dictation',label:'Dictation' },{ mode:'definition',label:'Meaning recall' },{ mode:'cloze',label:'Sentence gaps' },{ mode:'synonym',label:'Synonyms' },{ mode:'distinction',label:'Word distinctions' },{ mode:'production',label:'Use in context' }];
-    return status === 'ready' ? modes.map(item => ({ ...item, queue:buildUnitPracticeQueue(state,bookId,unitId,item.mode) })).filter(item=>item.queue.eligibleWords > 0) : [];
+    return status === 'ready' ? availableUnitPracticeModes(state,bookId,unitId).filter(item=>item.value!=='audio') : [];
   }, [state, bookId, unitId, status]);
   const assessmentUrl = (mode: string) => `/vocabulary/study?${new URLSearchParams({ bookId, unitId, dueOnly:'false', mode, returnTo:origin })}`;
 
   function navigateTo(index: number, markViewed = false) {
     if (owner !== accountId() || !word || !words[index]) return;
     const nextViewed = [...new Set([...viewedRef.current, ...(markViewed ? [word.entry.id] : [])])];
-    viewedRef.current = nextViewed;
     const nextId = words[index].entry.id;
+    if (nextId === word.entry.id && nextViewed.length === viewedRef.current.length) return;
+    viewedRef.current = nextViewed;
     setViewed(nextViewed); setCurrentId(nextId);
     const next = new URLSearchParams(params); next.set('word', nextId); if(nextId!==word.entry.id) next.delete('sense'); setParams(next, { replace:true, state: location.state });
     requestAnimationFrame(() => { if (mounted.current && owner === accountId()) document.getElementById('learning-word')?.focus({ preventScroll:true }); });
-    sync.current?.update({ viewedEntryIds:nextViewed, currentEntryId:nextId, updatedAt:new Date().toISOString() });
+    sync.current?.update({ viewedEntryIds:nextViewed, currentEntryId:nextId, updatedAt:new Date().toISOString() }, markViewed ? 800 : 2500);
   }
 
   const selectedSense = word?.resolved.curriculum?.senses.find(sense=>sense.id===params.get('sense')) || word?.resolved.sense;
@@ -142,7 +142,7 @@ export function VocabularyGroupLearnPage() {
         <div className="vocabulary-group-learning-progress" aria-label="Group progress"><span>Viewed {viewed.length} / {words.length}</span><span>Assessment: {assessmentStatus}</span><span>System mastered {mastered} / {words.length}</span></div>
       </header>
       {!word ? <p>No active words are available in this group.</p> : <>
-        <div className="vocabulary-learning-batches"><span>Batch {batch+1} of {batches} · Words {batch*BATCH_SIZE+1}–{Math.min((batch+1)*BATCH_SIZE,words.length)}</span><div aria-label="Learning batches">{Array.from({length:batches},(_,i)=><button key={i} className="btn line" aria-label={`Batch ${i+1}: words ${i*BATCH_SIZE+1}–${Math.min((i+1)*BATCH_SIZE,words.length)}`} aria-current={batch===i?'true':undefined} onClick={()=>navigateTo(i*BATCH_SIZE)}>{i+1}</button>)}</div></div>
+        <div className="vocabulary-learning-batches"><span>Batch {batch+1} of {batches} · Words {batch*BATCH_SIZE+1}–{Math.min((batch+1)*BATCH_SIZE,words.length)}</span><div aria-label="Learning batches">{Array.from({length:batches},(_,i)=><button key={i} className="btn line" aria-label={`Batch ${i+1}: words ${i*BATCH_SIZE+1}–${Math.min((i+1)*BATCH_SIZE,words.length)}`} aria-current={batch===i?'true':undefined} onClick={()=>{if(batch!==i)navigateTo(i*BATCH_SIZE);}}>{i+1}</button>)}</div></div>
         <article className="vocabulary-learning-card" aria-label="Current learning word">
           <div className="page-tools"><span className="vocabulary-muted">Word {position+1} of {words.length}</span>{viewed.includes(word.entry.id)?<span className="pill"><Check size={13}/>Viewed</span>:null}</div>
           <h3 id="learning-word" tabIndex={-1}>{word.entry.term}</h3>
@@ -157,9 +157,9 @@ export function VocabularyGroupLearnPage() {
           {word.resolved.curriculum?.basis==='multiple' ? <div className="vocabulary-learning-selected-practice"><Link className="btn primary" to={practiceUrl(word.entry.id,selectedSense?.id,{bookId,unitId},origin,'definition')}>Practise this meaning<ArrowRight size={14}/></Link><p className="vocabulary-muted">This checks the selected meaning and keeps its own review progress. The whole-group assessment uses the first learning meaning for each word.</p></div> : null}
           </div>{activeResolved && <VocabularyLearningVisual resolved={activeResolved} />}</div>
         </article>
-        <div className="vocabulary-learning-controls"><button className="btn line" disabled={position===0} onClick={()=>navigateTo(position-1)}><ArrowLeft size={15}/>Previous word</button><button className="btn primary" onClick={()=>navigateTo(Math.min(position+1,words.length-1),true)}><Check size={15}/>{position===words.length-1?'Mark viewed':'Mark viewed & next'}</button><button className="btn line" disabled={position===words.length-1} onClick={()=>navigateTo(position+1)}>Next word<ArrowRight size={15}/></button></div>
-        {saveStatus==='failed'?<div role="alert" className="vocabulary-learning-save-error">Progress could not be saved. {savedOnDevice?'Your position is kept on this device.':'Your position is kept while this page is open.'} <button className="btn line" onClick={()=>sync.current?.flush()}>Retry save</button></div>:<p role="status" className="vocabulary-learning-save-status">{saveStatus==='saving'?'Saving progress…':saveStatus==='saved'?'Progress saved':'Mark each word viewed when you have finished learning it.'}</p>}
-        <section className="vocabulary-learning-assessments" aria-labelledby="learning-assessment-heading"><h3 id="learning-assessment-heading">Test your recall</h3><p>{viewed.length===words.length?'You have viewed all words. Choose an assessment to practise recall.':'You can start an assessment at any time, or finish learning the group first.'}</p><div className="actions">{assessments.map(item=><Link className={`btn ${item.mode==='dictation'?'primary':'line'}`} key={item.mode} to={assessmentUrl(item.mode)}>{item.label} · {item.queue.eligibleWords} {item.queue.eligibleWords===1?'word':'words'}</Link>)}</div>{!assessments.length?<p>No assessments are available for the current words. Open word details to check available meanings.</p>:<p className="vocabulary-muted">Viewing words does not increase mastery. Specialist assessments may cover a smaller subset.</p>}<Link className="btn text" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}/groups/${encodeURIComponent(unitId)}/words`}>View group words<ArrowRight size={14}/></Link></section>
+        <div className="vocabulary-learning-controls"><button className="btn line" disabled={position===0} onClick={()=>navigateTo(position-1)}><ArrowLeft size={15}/>Previous word</button><button className="btn primary" disabled={viewed.includes(word.entry.id)} onClick={()=>navigateTo(Math.min(position+1,words.length-1),true)}><Check size={15}/>{viewed.includes(word.entry.id)?'Viewed':position===words.length-1?'Mark viewed':'Mark viewed & next'}</button><button className="btn line" disabled={position===words.length-1} onClick={()=>navigateTo(position+1)}>Next word<ArrowRight size={15}/></button></div>
+        {saveStatus==='failed'?<div role="alert" className="vocabulary-learning-save-error">Progress could not be saved. {savedOnDevice?'Your position is kept on this device.':'Your position is kept while this page is open.'} <button className="btn line" onClick={()=>sync.current?.flush()}>Retry save</button></div>:<p role="status" className="vocabulary-learning-save-status">{saveStatus==='pending'?(savedOnDevice?'Position saved on this device':'Position kept in this page'):saveStatus==='saving'?'Syncing progress…':saveStatus==='saved'?'Progress saved':'Mark each word viewed when you have finished learning it.'}</p>}
+        <section className="vocabulary-learning-assessments" aria-labelledby="learning-assessment-heading"><h3 id="learning-assessment-heading">Test your recall</h3><p>{viewed.length===words.length?'You have viewed all words. Choose an assessment to practise recall.':'You can start an assessment at any time, or finish learning the group first.'}</p><div className="actions">{assessments.map(item=><Link className={`btn ${item.value==='dictation'?'primary':'line'}`} key={item.value} to={assessmentUrl(item.value)}>{item.label} · {item.queue.eligibleWords} {item.queue.eligibleWords===1?'word':'words'}</Link>)}</div>{!assessments.length?<p>No assessments are available for the current words. Open word details to check available meanings.</p>:<p className="vocabulary-muted">Viewing words does not increase mastery. Specialist assessments may cover a smaller subset.</p>}<Link className="btn text" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}/groups/${encodeURIComponent(unitId)}/words`}>View group words<ArrowRight size={14}/></Link></section>
       </>}
     </>}
   </section>;
