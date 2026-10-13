@@ -169,3 +169,12 @@ revoke all on function public.commit_vocabulary_import(jsonb) from public, anon;
 revoke all on function public.commit_vocabulary_session(jsonb) from public, anon;
 grant execute on function public.commit_vocabulary_import(jsonb) to authenticated;
 grant execute on function public.commit_vocabulary_session(jsonb) to authenticated;
+
+-- Support bounded catalog fallback and exact term lookup on JSON fields.
+-- Existing exam indexes remain unchanged.
+create index if not exists wordbook_memberships_book_unit_id
+  on public.wordbook_memberships ((payload ->> 'bookId'), (payload ->> 'unitId'), id);
+create index if not exists wordbook_units_book_id
+  on public.wordbook_units ((payload ->> 'bookId'), id);
+create index if not exists word_entries_term_id
+  on public.word_entries ((payload ->> 'term'), id);

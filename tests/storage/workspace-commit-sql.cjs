@@ -27,6 +27,8 @@ async function main() {
     for (const migration of ['20261010090000_unified_vocabulary.sql', '20261010170000_vocabulary_sessions.sql', '20261013120000_workspace_commits.sql']) {
       await db.exec(fs.readFileSync(path.join(migrationDir, migration), 'utf8'));
     }
+    const indexNames = (await db.query("select indexname from pg_indexes where schemaname='public' and indexname in ('wordbook_memberships_book_unit_id','wordbook_units_book_id','word_entries_term_id') order by indexname")).rows.map(row => row.indexname);
+    assert.deepEqual(indexNames, ['word_entries_term_id','wordbook_memberships_book_unit_id','wordbook_units_book_id']);
     const account = '00000000-0000-0000-0000-000000000001';
     const other = '00000000-0000-0000-0000-000000000002';
     await db.exec(`insert into auth.users values('${account}'),('${other}'); set role authenticated; set request.jwt.claim.sub='${account}';`);
@@ -100,7 +102,7 @@ async function main() {
     assert.equal(await count('sessions', 'session'), 1);
     await db.exec("set request.jwt.claim.sub='';");
     await assert.rejects(() => commit({ id: 'anonymous', lists: {} }), /Sign in/);
-    console.log('Workspace commit SQL checks passed: atomic rollback, replay conflicts, RLS isolation, immutable history, server timestamps, whitelist.');
+    console.log('Workspace commit SQL checks passed: atomic rollback, replay conflicts, RLS isolation, immutable history, server timestamps, whitelist, catalog indexes.');
   } finally {
     await db.close();
   }
