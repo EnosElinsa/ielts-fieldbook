@@ -439,10 +439,23 @@ test('manual status resolves canonical legacy entry and sense when a catalog sou
 test('practice preference save retains an in-progress writing draft and pending plans',async()=>{
   await mount();const pending=structuredClone(fieldbook.state.plans);
   await act(async()=>{expect(await fieldbook.saveVocabularyPreferences({layout:'cards',volume:0.6})).toBe(true)});
+  expect(mocks.saveState.mock.calls.at(-1)[2].collections).toEqual(['profile']);
   expect(fieldbook.state.settings.vocabulary.layout).toBe('cards');
   expect(fieldbook.state.settings.vocabulary.volume).toBe(0.6);
   expect(fieldbook.state.drafts.q1.text).toBe('A response that must survive.');
   expect(fieldbook.state.plans).toEqual(pending);
+});
+
+test('settings save feedback resets between study and vocabulary retries',async()=>{
+  await mount();
+  mocks.saveState.mockImplementationOnce(async(_state,feedback)=>{feedback('Check your connection and retry.');return false;});
+  await act(async()=>{expect(await fieldbook.saveStudySettings({targetBand:7})).toBe(false);});
+  expect(fieldbook.getStudySettingsError()).toContain('connection');
+  mocks.saveState.mockImplementationOnce(async(_state,feedback)=>{feedback('Sign in again to save.');return false;});
+  await act(async()=>{expect(await fieldbook.saveVocabularyPreferences({accent:'us'})).toBe(false);});
+  expect(fieldbook.getStudySettingsError()).toContain('Sign in again');
+  await act(async()=>{expect(await fieldbook.saveVocabularyPreferences({accent:'us'})).toBe(true);});
+  expect(fieldbook.getStudySettingsError()).toBe('');
 });
 
 test('queued writing autosave retains newly committed practice preferences', async () => {
@@ -640,6 +653,29 @@ test('unrelated profile changes keep manual pending and running tasks',async()=>
   expect(fieldbook.state.plans).toEqual(before);
   await act(async()=>{await fieldbook.saveStudySettings({dailyMinutes:60});});
   expect(fieldbook.state.plans.filter(row=>['manual','run'].includes(row.id))).toEqual(before.filter(row=>['manual','run'].includes(row.id)));
+});
+
+test('direct settings saves load released vocabulary metadata before generating new batch targets',async()=>{
+  const catalog=structuredClone(VOCABULARY_CATALOG);
+  const bookId='ielts-vocabulary';
+  mocks.initial.wordbookEnrollments=[{id:'enrolled',bookId}];
+  mocks.initial.settings.days=[1,2,3,4,5,6,7];
+  const released={books:[{id:bookId,contentStatus:'complete'}],units:[],memberships:[],entries:[]};
+  mocks.releasedRead.mockResolvedValue(released);
+  mocks.catalogRead.mockImplementation(async({unitId})=>{
+    if(unitId && !VOCABULARY_CATALOG.units.some(unit=>unit.id===unitId))throw new Error('Removed starter group');
+    return {entries:[],books:[],units:[],memberships:[],nextOffset:null};
+  });
+  try{
+    await mount();
+    let saved;
+    await act(async()=>{saved=await fieldbook.saveStudySettings({dailyMinutes:60});});
+    expect(saved).toBe(true);
+    expect(mocks.saveState).toHaveBeenCalled();
+    const options=mocks.saveState.mock.calls.at(-1)[2];
+    expect(options.collections).toEqual(['profile','plans']);
+    expect(fieldbook.state.plans.every(plan=>!plan.target?.unitId?.includes('editorial-starter'))).toBe(true);
+  }finally{Object.assign(VOCABULARY_CATALOG,catalog);}
 });
 
 test('an account switch during asynchronous plan binding prevents saving the old account snapshot',async()=>{

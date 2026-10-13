@@ -12,5 +12,5 @@ test('the failed save line stays only while the flag is set', () => {
   rerender(<SaveFailure failed={false} />);
   expect(screen.queryByRole('status')).not.toBeInTheDocument();
   const shell = readFileSync('src/components/Shell.tsx', 'utf8');
-  expect(shell).toContain('<SaveFailure failed={fb.saveFailed} />');
+  expect(shell).toContain('<SaveFailure failed={fb.saveFailed && !location.pathname.startsWith(\'/settings\')} />');
 });

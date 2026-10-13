@@ -128,6 +128,8 @@ function useFieldbookValue() {
   const [backupMenuOpen, setBackupMenuOpen] = useState(false);
   const [booted, setBooted] = useState(false);
   const [saveFailed, setSaveFailed] = useState(false);
+  const [studySettingsError, setStudySettingsError] = useState('');
+  const studySettingsErrorRef = useRef('');
   const [saveStatus, setSaveStatus] = useState('saved');
   const [loadError, setLoadError] = useState('');
   const [loadGeneration, setLoadGeneration] = useState(0);
@@ -587,6 +589,8 @@ function useFieldbookValue() {
   },[toast]);
 
   const saveVocabularyPreferences = useCallback(async(input)=>{
+    studySettingsErrorRef.current = '';
+    setStudySettingsError('');
     const owner=accountId();const changes=structuredClone(input);
     const epoch = loadEpoch.current;
     const generation=++saveGeneration.current;setSaveStatus('saving');
@@ -596,8 +600,8 @@ function useFieldbookValue() {
       const current=structuredClone(stateRef.current);applyCommittedVocabulary(current,owner);
       const preferences=normalizeVocabularyPreferences({...current.settings.vocabulary,...changes});current.settings.vocabulary=preferences;
       const previousPreferences=JSON.stringify(stateRef.current.settings.vocabulary);
-      const collections = readySaveCollections();
-      let saved=false;try{saved=await saveState(current,toast,{collections});}catch{saved=false;}
+      const collections = ['profile'];
+      let saved=false;try{saved=await saveState(current,message=>{if(!alive.current || accountId()!==owner || epoch!==loadEpoch.current)return;studySettingsErrorRef.current=`${message} Your changes are still here.`;setStudySettingsError(studySettingsErrorRef.current);},{collections});}catch{saved=false;}
       if(!alive.current || accountId()!==owner || epoch !== loadEpoch.current)return false;
       if(alive.current&&accountId()===owner){if(generation===saveGeneration.current){setSaveFailed(!saved);setSaveStatus(saved?'saved':'failed');}if(saved){committedVocabularyPreferences.current.push({owner,before:previousPreferences,after:structuredClone(preferences)});const next=structuredClone(stateRef.current);next.settings.vocabulary=preferences;stateRef.current=next;setState(next);}}
       return saved;
@@ -605,6 +609,8 @@ function useFieldbookValue() {
   },[toast]);
 
   const saveStudySettings = useCallback(async (input) => {
+    studySettingsErrorRef.current = '';
+    setStudySettingsError('');
     if (completingAttempt.current) return false;
     const owner = accountId();
     const epoch = loadEpoch.current;
@@ -612,7 +618,8 @@ function useFieldbookValue() {
       await ensureAccountModule('productive');
       await ensureAccountModule('vocabulary');
       await ensureAccountModule('receptive');
-    } catch { toast('Could not load your study data. Your settings have not been saved.'); return false; }
+      if (stateRef.current.wordbookEnrollments?.length) await loadVocabularyCatalog();
+    } catch { if(alive.current && owner===accountId() && epoch===loadEpoch.current){studySettingsErrorRef.current = 'Could not load your study data. Your changes are still here. Check your connection and retry.'; setStudySettingsError(studySettingsErrorRef.current);} return false; }
     if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return false;
     const changes = structuredClone(input);
     const generation = ++saveGeneration.current;
@@ -643,13 +650,13 @@ function useFieldbookValue() {
         if (change.removedPlanIds.includes(current.activePlanId)) current.activePlanId = null;
         ensureUnifiedPlans(current);
         try { await bindCurrentPlanTargets(current); }
-        catch { if(generation===saveGeneration.current){setSaveFailed(true);setSaveStatus('failed');}toast('Could not load the planned exercises. Retry saving your settings.');return false; }
+        catch (error) { if(alive.current && owner===accountId() && epoch===loadEpoch.current && generation===saveGeneration.current){setSaveFailed(true);setSaveStatus('failed');studySettingsErrorRef.current=`${error instanceof Error ? error.message : 'Could not load the planned exercises.'} Your changes are still here. Retry saving.`;setStudySettingsError(studySettingsErrorRef.current);}return false; }
         change.addedPlans = current.plans.filter(plan => !retainedPlanIds.has(plan.id));
       }
       let saved = false;
-      const collections = readySaveCollections();
+      const collections = ['profile', 'plans'];
       if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
-      try { saved = await saveState(current, toast, {collections}); } catch { saved = false; }
+      try { saved = await saveState(current, message => {if(!alive.current || accountId()!==owner || epoch!==loadEpoch.current)return;studySettingsErrorRef.current=`${message} Your changes are still here.`;setStudySettingsError(studySettingsErrorRef.current);}, {collections}); } catch { saved = false; }
       if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       if (generation === saveGeneration.current) { setSaveFailed(!saved); setSaveStatus(saved ? 'saved' : 'failed'); }
       if (saved) {
@@ -1487,6 +1494,8 @@ function useFieldbookValue() {
       ensureQuestionBank,
       ensureSpeakingSample,
       saveFailed,
+      studySettingsError,
+      getStudySettingsError: () => studySettingsErrorRef.current,
       saveStatus,
       loadError,
       recoveryDrafts,
@@ -1624,6 +1633,7 @@ function useFieldbookValue() {
       checklistToastNeeded,
       chooseQuestion,
       saveFailed,
+      studySettingsError,
       saveStatus,
       loadError,
       recoveryDrafts,

@@ -1,13 +1,13 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Check, Download, List, Monitor, Moon, Save, Square, Sun, Upload } from 'lucide-react';
+import { BookOpen, CalendarDays, Check, Clock3, Download, Headphones, List, Monitor, Moon, RotateCcw, Save, Settings2, ShieldCheck, Square, Sun, Target, Upload } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { useTheme, type Theme } from '../../context/ThemeContext';
 import { AccountPage } from '../account/AccountPage';
 import { DeviceVoicePreferences } from '../vocabulary/DeviceVoicePreferences';
 import { VOCABULARY_PRACTICE_MODES, type VocabularyPreferences } from '../../domain/vocabulary/preferences';
 import { DateField } from '../../components/ui';
-import { navigateWithPracticeGuard, type PracticeNavigationRequest } from '../../lib/practiceNavigation';
+import { type PracticeNavigationRequest } from '../../lib/practiceNavigation';
 import { accountId } from '../../storage/remote';
 import { requestSettingsBackup } from './backupActions';
 import { settingsChanges, settingsDraft, settingsPlanPreview, type SettingsDraft } from './settingsDraft';
@@ -17,6 +17,7 @@ const categories = [
   ['target', 'Target'], ['schedule', 'Study time'], ['skills', 'Skills'], ['vocabulary', 'Vocabulary'],
   ['audio', 'Audio'], ['appearance', 'Appearance'], ['account', 'Account'], ['backup', 'Backup'],
 ] as const;
+const categoryIcons = [Target, Clock3, Settings2, BookOpen, Headphones, Monitor, ShieldCheck, Download];
 const skillNames = ['listening', 'reading', 'writing', 'speaking'];
 const capital = (value: string) => value[0].toUpperCase() + value.slice(1);
 
@@ -40,7 +41,7 @@ export function SettingsPage() {
   const changes = settingsChanges(draft, baseline.current.draft);
   const dirty = Object.keys(changes).length > 0 || appearance !== baseline.current.appearance;
   const preview = settingsPlanPreview(fb.state.settings, changes, fb.state.plans || []);
-  const update = (patch: Partial<SettingsDraft>) => { setDraft(current => ({ ...current, ...patch })); setNote(''); };
+  const update = (patch: Partial<SettingsDraft>) => { setDraft(current => ({ ...current, ...patch })); setNote(''); setError(''); };
   const vocabulary = (patch: Partial<VocabularyPreferences>) => update({ vocabulary: { ...draft.vocabulary, ...patch } });
 
   useLayoutEffect(() => {
@@ -86,7 +87,7 @@ export function SettingsPage() {
     return () => { document.removeEventListener('fieldbook:before-navigate', requested); document.removeEventListener('click', leave, true); window.removeEventListener('beforeunload', unload); window.removeEventListener('popstate', pop, true); };
   }, [dirty]);
 
-  const cancel = () => navigateWithPracticeGuard('/', () => navigate('/'));
+  const discard = () => { setDraft(structuredClone(baseline.current.draft)); setAppearance(baseline.current.appearance); setError(''); setNote(''); };
   async function save() {
     if (savingRef.current) return;
     if (draft.targetBand && (!Number.isFinite(Number(draft.targetBand)) || Number(draft.targetBand) < 1 || Number(draft.targetBand) > 9 || !Number.isInteger(Number(draft.targetBand) * 2))) { setError('Use a target band from 1 to 9 in half-band steps.'); return; }
@@ -99,7 +100,7 @@ export function SettingsPage() {
       const studyChanged = Object.keys(changes).some(key => key !== 'vocabulary') || preview.rebuild;
       const saved = !Object.keys(changes).length || (studyChanged ? await fb.saveStudySettings(changes) : await fb.saveVocabularyPreferences(changes.vocabulary));
       if (saveOwner !== accountId()) return;
-      if (!saved) { setError('Settings could not be saved. Your changes are still here. Try again.'); return; }
+      if (!saved) { setError(fb.getStudySettingsError?.() || 'Settings could not be saved. Your changes are still here. Try again.'); return; }
       if (appearance !== baseline.current.appearance) setTheme(appearance);
       baseline.current = { draft, appearance, owner: saveOwner };
       setNote('Settings saved.');
@@ -111,18 +112,23 @@ export function SettingsPage() {
     return <label className="field" key={key}>{label}<select aria-label={label} value={String(draft.vocabulary[key])} onChange={event => vocabulary({ [key]: typeof draft.vocabulary[key] === 'number' ? Number(event.target.value) : event.target.value } as Partial<VocabularyPreferences>)}>{options.map(option => <option key={String(option.value)} value={String(option.value)}>{option.label}</option>)}</select></label>;
   }
   const choices = (values: number[], suffix = '') => values.map(value => ({ value, label: `${value}${suffix}` }));
+  const weeklyMinutes = draft.dailyMinutes * draft.days.length;
+  const weekDuration = `${Math.floor(weeklyMinutes / 60) ? `${Math.floor(weeklyMinutes / 60)}h ` : ''}${weeklyMinutes % 60 ? `${weeklyMinutes % 60}m` : ''}`.trim() || '0m';
+  const affectedDates = [...new Set(preview.affected.map(plan => plan.dateKey))];
   return <section className="view active settings-page">
-    <nav className="settings-categories" aria-label="Settings categories">{categories.map(([id, label]) => <Link key={id} to={`/settings/${id}`} aria-current={category === id ? 'page' : undefined}>{label}</Link>)}</nav>
+    <div className="settings-category-picker"><select aria-label="Settings category" value={category} onChange={event => navigate(`/settings/${event.target.value}`)}>{categories.map(([id,label]) => <option key={id} value={id}>{label}</option>)}</select></div>
+    <nav className="settings-categories" aria-label="Settings categories">{categories.map(([id, label],index) => {const Icon=categoryIcons[index];return <div key={id}>{(index===0||index===5)&&<p className="settings-category-group">{index===0?'Learning':'Workspace'}</p>}<Link to={`/settings/${id}`} aria-current={category === id ? 'page' : undefined}><Icon size={17}/>{label}</Link></div>;})}</nav>
     <div className="settings-content">
-      <h2>{categories.find(([id]) => id === category)?.[1]}</h2>
+      <header className="settings-section-heading"><h2>{categories.find(([id]) => id === category)?.[1]}</h2>{dirty&&<span className="settings-draft-status">Unsaved changes</span>}</header>
       {category === 'account' ? <AccountPage /> : <fieldset className="settings-fields" disabled={saving}>
         {category === 'target' && <div className="form">
           <div className="field"><label htmlFor="settings-exam">Exam date (optional)</label><DateField id="settings-exam" label="Exam date" value={draft.examDate} onChange={(examDate: string) => update({ examDate })} /></div>
           <label className="field">Target band (optional)<input aria-label="Target band" type="number" min={1} max={9} step={0.5} value={draft.targetBand} placeholder="None" onChange={event => update({ targetBand: event.target.value })} /></label>
         </div>}
-        {category === 'schedule' && <div className="form">
-          <label className="field">Minutes a day<input aria-label="Minutes a day" type="number" min={10} max={180} step={5} value={draft.dailyMinutes} onChange={event => update({ dailyMinutes: Number(event.target.value) })} /></label>
-          <div className="field full"><span>Study days</span><div className="days">{['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((label, index) => <label className="day" key={label}><input type="checkbox" checked={draft.days.includes(index + 1)} onChange={event => update({ days: event.target.checked ? [...draft.days, index + 1].sort() : draft.days.filter(day => day !== index + 1) })} />{label}</label>)}</div></div>
+        {category === 'schedule' && <div className="settings-schedule">
+          <div className="settings-setting-row"><div className="settings-setting-label"><Clock3 size={18}/><h3>Daily time</h3></div><div className="settings-time-controls"><div className="settings-segment" role="group" aria-label="Daily time presets">{[15,30,45,60].map(minutes=><button key={minutes} type="button" aria-pressed={draft.dailyMinutes===minutes} onClick={()=>update({dailyMinutes:minutes})}>{minutes} min</button>)}</div><label className="field settings-custom-time">Minutes a day<div className="settings-number-unit"><input aria-label="Minutes a day" type="number" min={10} max={180} step={5} value={draft.dailyMinutes || ''} onChange={event => update({ dailyMinutes: Number(event.target.value) })}/><span>min</span></div></label></div></div>
+          <div className="settings-setting-row"><div className="settings-setting-label"><CalendarDays size={18}/><h3>Study days</h3></div><div className="settings-weekdays">{['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((label, index) => <label className="settings-weekday" key={label}><input aria-label={label} type="checkbox" checked={draft.days.includes(index + 1)} onChange={event => update({ days: event.target.checked ? [...draft.days, index + 1].sort() : draft.days.filter(day => day !== index + 1) })} /><span>{label}<Check size={15}/></span></label>)}</div></div>
+          <dl className="settings-week-summary"><div><dt>Weekly study time</dt><dd>{weekDuration}</dd></div><div><dt>Study days</dt><dd>{draft.days.length}<small> / week</small></dd></div><div><dt>Daily commitment</dt><dd>{draft.dailyMinutes}<small> min</small></dd></div></dl>
         </div>}
         {category === 'skills' && <div className="form">
           <div className="field full"><span>Selected skills</span><div className="settings-skills">{skillNames.map(skill => <label key={skill}><input type="checkbox" checked={draft.skills.includes(skill)} onChange={event => update({ skills: ['writing', 'speaking', 'reading', 'listening'].filter(value => value === skill ? event.target.checked : draft.skills.includes(value)) })} />{capital(skill)}</label>)}</div></div>
@@ -152,10 +158,8 @@ export function SettingsPage() {
         {category === 'appearance' && <div className="settings-segment" role="group" aria-label="Appearance">{([['light', Sun], ['dark', Moon], ['system', Monitor]] as const).map(([value, Icon]) => <button key={value} type="button" aria-pressed={appearance === value} onClick={() => { setAppearance(value); setNote(''); }}><Icon size={17} />{capital(value)}{appearance === value && <Check size={15} />}</button>)}</div>}
         {category === 'backup' && <div className="btn-row"><button className="btn line" type="button" onClick={() => requestSettingsBackup('export')}><Download size={16} />Export backup</button><button className="btn line" type="button" onClick={() => requestSettingsBackup('import')}><Upload size={16} />Import backup</button></div>}
       </fieldset>}
-      {preview.rebuild && <section className="settings-plan-preview" aria-label="Affected study tasks"><h3>{preview.affected.length} pending task{preview.affected.length === 1 ? '' : 's'} will be rebuilt</h3>{preview.affected.length > 0 && <ul>{preview.affected.map(plan => <li key={plan.id}><time>{plan.dateKey}</time><span>{plan.title}</span></li>)}</ul>}</section>}
-      {error && <p className="vocabulary-error" role="alert">{error}</p>}
-      {note && <p role="status">{note}</p>}
-      <footer className="settings-actions"><button className="btn line" type="button" disabled={saving} onClick={cancel}>Cancel</button><button className="btn primary" type="button" disabled={saving || !dirty} onClick={() => void save()}><Save size={16} />{saving ? 'Saving...' : 'Save settings'}</button></footer>
+      {preview.rebuild && <section className="settings-plan-preview" aria-label="Affected study tasks"><details><summary><RotateCcw size={16}/><span>{preview.affected.length} pending task{preview.affected.length === 1 ? '' : 's'} will be rebuilt</span></summary>{affectedDates.map(date=><div className="settings-preview-day" key={date}><time>{new Date(`${date}T00:00:00`).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})}</time><ul>{preview.affected.filter(plan=>plan.dateKey===date).map(plan=><li key={plan.id}>{plan.title}</li>)}</ul></div>)}</details></section>}
+      <footer className="settings-actions"><div className="settings-save-status">{error?<p role="alert">{error}</p>:note?<p role="status"><Check size={16}/>{note}</p>:<p>{dirty?'Unsaved changes':'All changes saved'}</p>}</div><div className="settings-save-buttons"><button className="btn line" type="button" disabled={saving || !dirty} onClick={discard}><RotateCcw size={15}/>Discard changes</button><button className="btn primary" type="button" disabled={saving || !dirty} onClick={() => void save()}><Save size={16} />{saving ? 'Saving...' : error ? 'Retry save' : 'Save settings'}</button></div></footer>
     </div>
   </section>;
 }

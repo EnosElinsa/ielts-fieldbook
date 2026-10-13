@@ -351,8 +351,18 @@ export async function saveState(state, onQuotaToast?: (message: string) => void,
     snapshot = updated;
     pendingCommit = null;
     return true;
-  } catch {
-    if (onQuotaToast) onQuotaToast('Could not save to your account. Try again.');
+  } catch (error) {
+    const code = String(error?.code || '');
+    const status = Number(error?.status || 0);
+    const message = String(error?.message || '');
+    const feedback = /Sign in|not loaded/i.test(message) || ['PGRST301', 'PGRST302', 'PGRST303'].includes(code) || status === 401
+      ? 'Your sign-in session has expired. Sign in again to save.'
+      : /fetch|network|timeout|connection/i.test(message) || globalThis.navigator?.onLine === false
+        ? 'Could not reach your account. Check your connection and retry.'
+        : code === '42501' || status === 403
+          ? 'Your account could not authorize this save. Reload and try again.'
+          : 'Could not save to your account. Try again.';
+    if (onQuotaToast) onQuotaToast(feedback);
     return false;
   }
 }

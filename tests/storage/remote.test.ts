@@ -79,6 +79,18 @@ beforeEach(() => {
   mocks.sessions = [];
 });
 
+test.each([
+  [{message:'Failed to fetch'},'Check your connection'],
+  [{code:'PGRST301',message:'JWT expired'},'Sign in again'],
+  [{code:'42501',message:'permission denied'},'authorize this save'],
+])('workspace save failures distinguish recoverable account and connection errors',async(error,expected)=>{
+  const {hydrateState,saveState}=await import('../../src/storage/remote');
+  const state=await hydrateState();state.settings.dailyMinutes=60;
+  mocks.rpcError=error;const feedback=vi.fn();
+  expect(await saveState(state,feedback)).toBe(false);
+  expect(feedback).toHaveBeenCalledWith(expect.stringContaining(expected));
+});
+
 test('base hydration reads only plans and drafts and never diffs unloaded module records', async () => {
   mocks.rows.sessions = [{ id: 'remote-session', payload: { id: 'remote-session' } }];
   const { hydrateState, saveState, getCollectionStatuses } = await import('../../src/storage/remote');

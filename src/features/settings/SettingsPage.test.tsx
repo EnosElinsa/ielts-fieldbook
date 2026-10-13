@@ -44,6 +44,7 @@ test('one draft survives categories and previews only future automatic pending t
   setup(); const user = userEvent.setup();
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Minutes a day' }), { target: { value: '45' } });
   expect(screen.getByRole('region', { name: 'Affected study tasks' })).toHaveTextContent('1 pending task will be rebuilt');
+  await user.click(screen.getByText('1 pending task will be rebuilt'));
   expect(screen.getByText('Automatic task')).toBeInTheDocument();
   expect(screen.queryByText('Manual task')).not.toBeInTheDocument();
   await user.click(screen.getByRole('link', { name: 'Vocabulary' }));
@@ -79,16 +80,15 @@ test('failed settings save retains all category edits and retries the same patch
   await user.click(screen.getByRole('button', { name: 'Save settings' }));
   expect(screen.getByRole('alert')).toHaveTextContent('Your changes are still here');
   expect(screen.getByRole('spinbutton', { name: 'Minutes a day' })).toHaveValue(45);
-  await user.click(screen.getByRole('button', { name: 'Save settings' }));
+  await user.click(screen.getByRole('button', { name: 'Retry save' }));
   expect(context.current.saveStudySettings.mock.calls.map((call: any) => call[0])).toEqual([{ dailyMinutes: 45 }, { dailyMinutes: 45 }]);
   expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 });
 
-test('dirty cancel, ordinary links, guarded navigation and beforeunload are guarded', async () => {
+test('discard resets the draft while ordinary links and departures remain guarded', async () => {
   const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
   setup(); const user = userEvent.setup();
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Minutes a day' }), { target: { value: '45' } });
-  await user.click(screen.getByRole('button', { name: 'Cancel' }));
   await user.click(screen.getByRole('link', { name: 'Today' }));
   const proceed = vi.fn();
   expect(navigateWithPracticeGuard('/reading', proceed)).toBe(false);
@@ -97,10 +97,27 @@ test('dirty cancel, ordinary links, guarded navigation and beforeunload are guar
   window.dispatchEvent(unload);
   expect(unload.defaultPrevented).toBe(true);
   expect(screen.getByLabelText('Location')).toHaveTextContent('/settings/schedule');
-  expect(confirm).toHaveBeenCalledTimes(3);
+  expect(confirm).toHaveBeenCalledTimes(2);
+  await user.click(screen.getByRole('button', { name: 'Discard changes' }));
+  expect(screen.getByRole('spinbutton', { name: 'Minutes a day' })).toHaveValue(30);
+  expect(screen.getByRole('button', { name: 'Save settings' })).toBeDisabled();
   confirm.mockReturnValue(true);
-  await user.click(screen.getByRole('button', { name: 'Cancel' }));
+  await user.click(screen.getByRole('link', { name: 'Today' }));
   expect(screen.getByLabelText('Location')).toHaveTextContent('/');
+});
+
+test('time presets update the weekly commitment and study-day controls are keyboard accessible', async () => {
+  setup(); const user=userEvent.setup();
+  await user.click(screen.getByRole('button',{name:'60 min'}));
+  expect(screen.getByRole('spinbutton',{name:'Minutes a day'})).toHaveValue(60);
+  expect(screen.getByText('1h')).toBeInTheDocument();
+  await user.click(screen.getByRole('checkbox',{name:'Tue'}));
+  expect(screen.getByText('2h')).toBeInTheDocument();
+  screen.getByRole('checkbox',{name:'Wed'}).focus();
+  await user.keyboard(' ');
+  expect(screen.getByText('3h')).toBeInTheDocument();
+  await user.selectOptions(screen.getByRole('combobox',{name:'Settings category'}),'audio');
+  expect(screen.getByRole('combobox',{name:'Accent'})).toBeInTheDocument();
 });
 
 test('background refresh keeps the draft and writes only the changed preferences', async () => {
