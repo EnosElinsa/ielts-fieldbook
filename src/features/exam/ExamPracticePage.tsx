@@ -13,6 +13,7 @@ import { useExamAttempt } from './useExamAttempt';
 import { ExamMockAudio } from './ExamMockAudio';
 import { ModalFrame } from '../../components/ModalFrame';
 import { SourceAnnotations, AnnotatedText, type SourceSelection } from './SourceAnnotations';
+import { examGapMatches, examGapNumber, questionPresentation } from './questionPresentation';
 import '../../styles/exam.css';
 
 export function ExamImage({ asset, label, inline = false }: { asset?: ExamAsset; label: string; inline?: boolean }) {
@@ -31,7 +32,10 @@ export function examStimulusBlockIds(html: string, blockPrefix: string): string[
   const visit = (node: Node, key: string) => {
     if (node.nodeType === Node.TEXT_NODE) {
       const text = node.textContent || ''; let offset = 0;
-      for (const match of text.matchAll(/#####-(\d+)-#####/g)) {
+      for (const match of examGapMatches(text)) {
+        // Bracket blanks used to be one annotated text node. Keep its old ID
+        // eligible so a saved note remains in the list if its text is now an input.
+        if (match[2]) blocks.push(`${blockPrefix}:${key}:0`);
         if (match.index! > offset) blocks.push(`${blockPrefix}:${key}:${offset}`);
         offset = match.index! + match[0].length;
       }
@@ -41,7 +45,7 @@ export function examStimulusBlockIds(html: string, blockPrefix: string): string[
     }
   };
   Array.from(parsed.body.childNodes).forEach((node, index) => visit(node, String(index)));
-  return blocks;
+  return [...new Set(blocks)];
 }
 export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stimulus', version = '' }: { html: string; assets?: ExamAsset[]; renderGap?: (number: number) => ReactNode; blockPrefix?: string; version?: string }) {
   const nodes = useMemo(() => {
@@ -50,9 +54,9 @@ export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stim
     const convert = (node: Node, key: string): ReactNode => {
       if (node.nodeType === Node.TEXT_NODE) {
         const text = node.textContent || ''; const result: ReactNode[] = []; let offset = 0;
-        for (const match of text.matchAll(/#####-(\d+)-#####/g)) {
+        for (const match of examGapMatches(text)) {
           if (match.index! > offset) result.push(<AnnotatedText key={`${key}:${offset}`} blockId={`${blockPrefix}:${key}:${offset}`} text={text.slice(offset, match.index)} version={version} />);
-          result.push(<span key={`${key}:gap:${match.index}`} className="exam-inline-gap">{renderGap?.(Number(match[1])) || `〔${match[1]}〕`}</span>);
+          result.push(<span key={`${key}:gap:${match.index}`} className="exam-inline-gap">{renderGap?.(examGapNumber(match)) || (match[2] ? match[0] : `〔${examGapNumber(match)}〕`)}</span>);
           offset = match.index! + match[0].length;
         }
         if (offset < text.length) result.push(<AnnotatedText key={`${key}:${offset}`} blockId={`${blockPrefix}:${key}:${offset}`} text={text.slice(offset)} version={version} />);
@@ -76,12 +80,13 @@ export function hasExamResponse(value?: string | string[]) {
   return Array.isArray(value) ? value.some(item => item.trim().length > 0) : Boolean(value?.trim());
 }
 
-export function ExamAnswerInput({ question, value, onChange, disabled }: { question: ExamQuestion; value: string | string[]; onChange: (value: string | string[]) => void; disabled: boolean }) {
+export function ExamAnswerInput({ question, value, onChange, disabled, describedBy }: { question: ExamQuestion; value: string | string[]; onChange: (value: string | string[]) => void; disabled: boolean; describedBy?: string }) {
   const options = question.type === 'true-false' ? ['TRUE', 'FALSE', 'NOT GIVEN'] : question.type === 'yes-no' ? ['YES', 'NO', 'NOT GIVEN'] : question.options || [];
   if (question.type === 'multiple') return <div className="exam-options">{options.map(option => { const selected = Array.isArray(value) ? value : []; return <label key={option}><input type="checkbox" disabled={disabled} checked={selected.includes(option)} onChange={event => onChange(event.target.checked ? [...selected, option] : selected.filter(item => item !== option))} /><span>{option}</span></label>; })}</div>;
   if (question.type === 'single' || question.type === 'true-false' || question.type === 'yes-no') return <div className="exam-options">{options.map(option => <label key={option}><input type="radio" name={question.id} disabled={disabled} checked={value === option} onChange={() => onChange(option)} /><span>{option}</span></label>)}</div>;
   if (options.length) return <select aria-label={`Answer ${question.number}`} value={typeof value === 'string' ? value : ''} onChange={event => onChange(event.target.value)} disabled={disabled}><option value="">Choose an answer</option>{options.map(option => <option key={option} value={option}>{option}</option>)}</select>;
-  return <input className="exam-gap" aria-label={`Answer ${question.number}`} value={typeof value === 'string' ? value : ''} onChange={event => onChange(event.target.value)} disabled={disabled} autoComplete="off" spellCheck={false} placeholder="Your answer" />;
+  const exceeded = Boolean(question.maxWords && typeof value === 'string' && value.trim().split(/\s+/).filter(Boolean).length > question.maxWords);
+  return <input className="exam-gap" aria-label={`Answer ${question.number}`} aria-describedby={describedBy} aria-invalid={exceeded || undefined} value={typeof value === 'string' ? value : ''} onChange={event => onChange(event.target.value)} disabled={disabled} autoComplete="off" spellCheck={false} placeholder="Your answer" />;
 }
 function SourceAudio({ asset, mock, started, paused, startPosition, onPosition }: { asset: ExamAsset; mock: boolean; started: boolean; paused: boolean; startPosition: number; onPosition: (value: number) => void }) {
   const { url, error, reload } = useExamAsset(asset); const [mediaError, setMediaError] = useState(false); const audio = useRef<HTMLAudioElement>(null); const [playing, setPlaying] = useState(false); const position = useRef(startPosition);
@@ -156,32 +161,59 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   const audioAsset = catalog.assets.find(asset => asset.kind === 'audio' && (asset.id === activeSection?.assetId || asset.sectionId === activeSection?.id || !asset.sectionId));
   const mockAssets = useMemo(() => { const ordered = sections.flatMap(section => { const asset = catalog.assets.find(row => row.kind === 'audio' && (row.id === section.assetId || row.sectionId === section.id || !row.sectionId)); return asset ? [asset] : []; }); return [...new Map(ordered.map(asset => [asset.id, asset])).values()]; }, [catalog.assets, selectedIds.join('|')]);
   const materialGroups = currentQuestions.filter((question, index) => !question.groupId || currentQuestions[index - 1]?.groupId !== question.groupId);
-  const gapCounts = new Map<number, number>();
-  materialGroups.forEach(question => { for (const match of (question.stimulusHtml || '').matchAll(/#####-(\d+)-#####/g)) { const number = Number(match[1]); gapCounts.set(number, (gapCounts.get(number) || 0) + 1); } });
+  const presentation = useMemo(() => questionPresentation(currentQuestions), [catalog.questions, requestedAttempt?.questionSnapshot, activeSection?.id, currentQuestions.map(question => question.id).join('|')]);
+  const gapCounts = useMemo(() => {
+    const counts = new Map<number, number>();
+    materialGroups.forEach(question => {
+      const parsed = new DOMParser().parseFromString(question.stimulusHtml || '', 'text/html');
+      const walker = parsed.createTreeWalker(parsed.body, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) for (const match of examGapMatches(walker.currentNode.textContent || '')) { const number = examGapNumber(match); counts.set(number, (counts.get(number) || 0) + 1); }
+    });
+    return counts;
+  }, [presentation]);
+  const embeddedAssetIds = useMemo(() => new Set(materialGroups.flatMap(question => {
+    const parsed = new DOMParser().parseFromString(question.stimulusHtml || '', 'text/html');
+    return [...parsed.querySelectorAll('img')].map(image => image.getAttribute('src') || '').filter(src => src.startsWith('exam-asset:')).map(src => src.slice('exam-asset:'.length));
+  })), [presentation]);
   const inlineQuestions = new Set(layout === 'integrated' ? currentQuestions.filter(question => gapCounts.get(question.number) === 1 && !question.options?.length && ['gap', 'summary', 'map', 'flow'].includes(question.type)).map(question => question.id) : []);
+  const limitId = (question: ExamQuestion) => { const info = presentation[currentQuestions.indexOf(question)]; return `exam-limit-${info.sharedLimit ? info.group[0].id : question.id}`; };
+  const wordLimit = (question: ExamQuestion) => question.maxWords ? `Maximum ${question.maxWords} ${question.maxWords === 1 ? 'word' : 'words'}` : '';
+  const groupHeading = (question: ExamQuestion, index: number) => {
+    const info = presentation[index];
+    if (!info.groupStart || info.group.length < 2) return null;
+    return <div className="exam-question-group-heading"><strong>Questions {info.group[0].number}–{info.group.at(-1)!.number}</strong>{info.sharedType && <span>{QUESTION_TYPE_NAMES[question.type]}</span>}{info.sharedLimit && <span id={limitId(question)}>{wordLimit(question)}</span>}</div>;
+  };
   const renderGap = (number: number) => {
     const question = currentQuestions.find(row => row.number === number && inlineQuestions.has(row.id));
-    return question ? <span id={`exam-inline-${question.id}`} className="exam-inline-answer" onFocus={() => setFocusedQuestion(question.id)}><span className="exam-inline-number">{number}</span><ExamAnswerInput question={question} value={attempt?.responses[question.id] || ''} disabled={disabled} onChange={value => response(question, value)} /></span> : null;
+    return question ? <span id={`exam-inline-${question.id}`} className="exam-inline-answer" onFocus={() => setFocusedQuestion(question.id)}><span className="exam-inline-number">{number}</span><ExamAnswerInput question={question} value={attempt?.responses[question.id] || ''} disabled={disabled} describedBy={limitId(question)} onChange={value => response(question, value)} /></span> : null;
   };
   const questionNavigation = <nav className="exam-question-nav" aria-label="Question navigation">{currentQuestions.map(question => <a key={question.id} href={`#exam-question-${question.id}`} className={hasExamResponse(attempt?.responses[question.id]) ? 'answered' : ''} aria-current={focusedQuestion === question.id ? 'location' : undefined} aria-label={`Go to question ${question.number} · ${hasExamResponse(attempt?.responses[question.id]) ? 'answered' : 'unanswered'}`} onClick={event => { event.preventDefault(); focusAnswer(question); }}>{question.number}</a>)}</nav>;
   const renderQuestionMaterial = (question: ExamQuestion, index: number) => {
+    const info = presentation[index];
     const showStimulus = question.stimulusHtml && (!question.groupId || currentQuestions[index - 1]?.groupId !== question.groupId);
-    return <div key={question.id}>{showStimulus && <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />}
-      <article className="exam-question-material"><span className="exam-number">{question.number}</span>{question.instructions && <p className="exam-instruction">{question.instructions}</p>}<p className="exam-prompt"><AnnotatedText blockId={`question:${question.id}`} text={question.prompt} version={question.provenance.contentHash || question.provenance.sourceVersion} /></p><ExamImage asset={catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`Question ${question.number} diagram`} /></article></div>;
+    const image = catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image');
+    return <div key={question.id}>{info.showInstructions && <p className="exam-instruction">{question.instructions}</p>}{showStimulus && <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />}
+      {(info.showPrompt || image) && <article className="exam-question-material"><span className="exam-number">{question.number}</span>{info.showPrompt && <p className="exam-prompt"><AnnotatedText blockId={`question:${question.id}`} text={question.prompt} version={question.provenance.contentHash || question.provenance.sourceVersion} /></p>}<ExamImage asset={image} label={`Question ${question.number} diagram`} /></article>}</div>;
   };
   const renderAnswer = (question: ExamQuestion, index: number) => {
+    const info = presentation[index]; const value = attempt?.responses[question.id] || (question.type === 'multiple' ? [] : '');
+    const exceeded = Boolean(question.maxWords && typeof value === 'string' && value.trim().split(/\s+/).filter(Boolean).length > question.maxWords);
+    const showTools = !inlineQuestions.has(question.id) || info.showPrompt || Boolean(question.assetId) || question.id === (focusedQuestion || currentQuestions[0]?.id);
     const isChecked = mode === 'practice' && checked.has(question.id); const correct = isChecked && gradeQuestion(question, attempt?.responses[question.id] || '');
     const showStimulus = layout === 'integrated' && question.stimulusHtml && (!question.groupId || currentQuestions[index - 1]?.groupId !== question.groupId);
-    return <div key={question.id}>{showStimulus && <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} renderGap={renderGap} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />}
-      <article id={`exam-question-${question.id}`} tabIndex={-1} className={`exam-question${isChecked ? correct ? ' is-correct' : ' is-wrong' : ''}`} onFocus={() => setFocusedQuestion(question.id)}>
-        <div className="exam-question-heading"><span className="exam-number">{question.number}</span><span className="exam-eyebrow">{QUESTION_TYPE_NAMES[question.type]}</span>{isChecked && <span className="exam-result">{correct ? 'Correct' : 'Check the evidence'}</span>}</div>
-        {layout === 'integrated' && <>{question.instructions && <p className="exam-instruction">{question.instructions}</p>}<p className="exam-prompt"><AnnotatedText blockId={`question:${question.id}`} text={question.prompt} version={question.provenance.contentHash || question.provenance.sourceVersion} /></p><ExamImage asset={catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`Question ${question.number} diagram`} /></>}
-        {!inlineQuestions.has(question.id) && <ExamAnswerInput question={question} value={attempt?.responses[question.id] || (question.type === 'multiple' ? [] : '')} disabled={disabled} onChange={value => response(question, value)} />}
-        {question.maxWords && <span className="exam-word-limit">Maximum {question.maxWords} {question.maxWords === 1 ? 'word' : 'words'}{typeof attempt?.responses[question.id] === 'string' && (attempt.responses[question.id] as string).trim().split(/\s+/).filter(Boolean).length > question.maxWords ? ' · word limit exceeded' : ''}</span>}
-        {mode === 'practice' && attempt && <details className="exam-annotations"><summary>Evidence & paraphrase</summary><label>Evidence for question {question.number}<textarea disabled={disabled} value={attempt.evidence[question.id] || ''} onChange={event => update({ evidence: { ...attempt.evidence, [question.id]: event.target.value } })} placeholder={skill === 'reading' ? 'Quote the source words that prove your answer…' : 'Note the words or time in the recording…'} /></label><label>Keywords & synonyms for question {question.number}<input disabled={disabled} value={attempt.keywords[question.id] || ''} onChange={event => update({ keywords: { ...attempt.keywords, [question.id]: event.target.value } })} placeholder="question wording → source wording" /></label></details>}
-        {mode === 'practice' && <button className="btn text exam-check" disabled={disabled || !hasExamResponse(attempt?.responses[question.id])} aria-label={`Check answer ${question.number}`} onClick={() => update({ checkedQuestionIds: [...checked, question.id], answerRevealed: true })}><Check size={14} />Check answer</button>}
+    const compact = layout === 'split' && !question.options?.length && ['gap', 'summary', 'map', 'flow'].includes(question.type);
+    return <div key={question.id}>{groupHeading(question, index)}{layout === 'integrated' && info.showInstructions && <p className="exam-instruction">{question.instructions}</p>}{showStimulus && <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} renderGap={renderGap} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />}
+      {!showTools && question.maxWords && !info.sharedLimit && <span id={limitId(question)} className="sr-only">{wordLimit(question)}</span>}
+      {showTools && <article id={`exam-question-${question.id}`} tabIndex={-1} aria-label={`Question ${question.number} details`} className={`exam-question${compact ? ' exam-question-compact' : ''}${isChecked ? correct ? ' is-correct' : ' is-wrong' : ''}`} onFocus={() => setFocusedQuestion(question.id)}>
+        <div className="exam-question-heading"><span className="exam-number">{question.number}</span>{!info.sharedType && <span className="exam-eyebrow">{QUESTION_TYPE_NAMES[question.type]}</span>}{isChecked && <span className="exam-result">{correct ? 'Correct' : 'Check the evidence'}</span>}</div>
+        {layout === 'integrated' && <>{info.showPrompt && <p className="exam-prompt"><AnnotatedText blockId={`question:${question.id}`} text={question.prompt} version={question.provenance.contentHash || question.provenance.sourceVersion} /></p>}<ExamImage asset={catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`Question ${question.number} diagram`} /></>}
+        {!inlineQuestions.has(question.id) && <ExamAnswerInput question={question} value={value} disabled={disabled} describedBy={limitId(question)} onChange={value => response(question, value)} />}
+        {question.maxWords && !info.sharedLimit && <span id={limitId(question)} className="exam-word-limit">{wordLimit(question)}</span>}
+        {exceeded && <span className="exam-word-limit exam-word-limit-error" role="alert">Question {question.number} · word limit exceeded</span>}
+        {mode === 'practice' && <div className="exam-question-actions">{attempt && <details className="exam-annotations"><summary aria-label={`Evidence & paraphrase for question ${question.number}`}>Evidence & paraphrase{(attempt.evidence[question.id] || attempt.keywords[question.id]) && <span className="exam-note-saved" aria-label="Notes added">· Notes added</span>}</summary><label>Evidence for question {question.number}<textarea disabled={disabled} value={attempt.evidence[question.id] || ''} onChange={event => update({ evidence: { ...attempt.evidence, [question.id]: event.target.value } })} placeholder={skill === 'reading' ? 'Quote the source words that prove your answer…' : 'Note the words or time in the recording…'} /></label><label>Keywords & synonyms for question {question.number}<input disabled={disabled} value={attempt.keywords[question.id] || ''} onChange={event => update({ keywords: { ...attempt.keywords, [question.id]: event.target.value } })} placeholder="question wording → source wording" /></label></details>}
+        {hasExamResponse(value) && <button className="btn text exam-check" disabled={disabled} aria-label={`Check answer ${question.number}`} onClick={() => update({ checkedQuestionIds: [...checked, question.id], answerRevealed: true })}><Check size={14} />Check answer</button>}</div>}
         {isChecked && <div className="exam-feedback"><p><b>Answer:</b> {Array.isArray(question.answer) ? question.answer.join(' · ') : question.answer}</p><p>{question.explanation || 'The source does not include an explanation for this answer.'}</p>{question.sourceExplanation && <details><summary>Original source explanation</summary><p>{question.sourceExplanation}</p></details>}{question.evidence?.text && <blockquote>{question.evidence.text}</blockquote>}{skill === 'reading' && question.evidence?.text && <Link className="btn text" to={`/reading/source/${encodeURIComponent(question.sectionId)}?paragraph=${encodeURIComponent(question.evidence.paragraphId || '')}&quote=${encodeURIComponent(question.evidence.text)}`}><LocateFixed size={14} />Locate evidence</Link>}{skill === 'listening' && question.evidence?.sentenceId && <Link className="btn text" to={`/listening/intensive/${encodeURIComponent(question.sectionId)}?sentence=${encodeURIComponent(question.evidence.sentenceId)}`}><Headphones size={14} />Play source sentence</Link>}</div>}
-      </article></div>;
+      </article>}</div>;
   };
   if (metadata.loading || source.loading) return <section className="view active"><PageLoadingState variant="workbench" message="Loading source material…" onRetry={() => { metadata.reload(); source.reload(); }} /></section>;
   if (metadata.error || source.error) return <section className="view active"><StateMessage kind="error" message={metadata.error || source.error} onRetry={() => { metadata.reload(); source.reload(); }} /></section>;
@@ -203,7 +235,7 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
           {skill === 'reading' && <div id="exam-panel-source" ref={sourcePanel} onScroll={event => setSourceScroll(event.currentTarget.scrollTop)} className={`exam-source-panel ${mobileTab === 'source' ? 'mobile-active' : ''}`}><span className="exam-eyebrow">Passage {activeSection?.part}</span><h3>{activeSection?.title}</h3>{passages.map(passage => <article className="exam-passage" key={passage.id}><h4>{passage.title}</h4>{passage.paragraphs.map((paragraph, index) => <p key={paragraph.id}><span className="exam-paragraph-id" aria-label={`Paragraph ${index + 1}`}>{/^[A-Z]$/.test(paragraph.id) ? paragraph.id : index + 1}</span><AnnotatedText blockId={`passage:${passage.id}:${paragraph.id}`} text={paragraph.text} version={passage.provenance.contentHash || passage.provenance.sourceVersion} /></p>)}</article>)}</div>}
           <div id="exam-panel-questions" className={`exam-question-panel ${mobileTab === 'questions' ? 'mobile-active' : ''}`}>
             {layout === 'integrated' ? <>{questionNavigation}{currentQuestions.map(renderAnswer)}</> : <><h3 className="exam-panel-title">Questions</h3>{currentQuestions.map(renderQuestionMaterial)}</>}
-            {catalog.assets.filter(asset => asset.kind === 'image' && asset.sectionId === activeSection?.id && !questions.some(question => question.assetId === asset.id)).map(asset => <ExamImage key={asset.id} asset={asset} label="Source illustration" />)}
+            {catalog.assets.filter(asset => asset.kind === 'image' && asset.sectionId === activeSection?.id && !embeddedAssetIds.has(asset.id) && !questions.some(question => question.assetId === asset.id)).map(asset => <ExamImage key={asset.id} asset={asset} label="Source illustration" />)}
           </div>
           {layout === 'split' && <div id="exam-panel-answers" className={`exam-question-panel exam-answer-panel ${mobileTab === 'answers' ? 'mobile-active' : ''}`}><h3 className="exam-panel-title">Answers</h3>{questionNavigation}{currentQuestions.map(renderAnswer)}</div>}
         </div>

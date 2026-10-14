@@ -178,3 +178,33 @@
 .exam-source-document { max-width: 850px; margin: 20px auto; line-height: 1.8; }
 .exam-source-sentence { display: flex; gap: 12px; align-items: baseline; }
 .exam-source-sentence > [data-source-block] { min-width: 0; }
+
+/* Shared instructions belong to the group; each answer keeps only its controls. */
+.exam-question-group-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; padding: 16px 0 12px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.exam-question-group-heading strong { color: var(--ink); font-weight: 600; }
+.exam-question-group-heading + .exam-stimulus { margin-top: 0; }
+.exam-question-heading { margin-bottom: 12px; }
+.exam-number { flex-shrink: 0; }
+.exam-word-limit { display: block; margin-top: 8px; line-height: 1.5; }
+.exam-word-limit-error { color: var(--red); }
+.exam-question-actions { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; }
+.exam-question-actions .exam-annotations { flex: 1; margin: 0; min-width: 0; }
+.exam-question-actions .exam-annotations[open] { flex-basis: 100%; }
+.exam-question-actions .exam-annotations > summary { width: fit-content; max-width: 100%; min-height: 36px; padding: 6px 0; border: 0; background: transparent; line-height: 1.5; flex-wrap: wrap; }
+.exam-question-actions .exam-annotations label { margin-top: 8px; }
+.exam-question-actions .exam-check { margin: 0; min-height: 36px; padding: 6px 0; font-size: 12px; }
+.exam-note-saved { color: var(--muted); font-size: 11px; }
+.exam-question-compact { display: grid; grid-template-columns: 28px minmax(0,1fr); gap: 0 12px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.exam-answer-panel .exam-question-compact { border-bottom: 1px solid var(--rule); }
+.exam-question-panel > div:last-of-type > .exam-question-compact { border-bottom: 0; }
+.exam-question-compact .exam-question-heading { display: contents; }
+.exam-question-compact .exam-number { align-self: center; grid-column: 1; grid-row: 1; }
+.exam-question-compact > .exam-gap { grid-column: 2; grid-row: 1; }
+.exam-question-compact .exam-eyebrow,.exam-question-compact .exam-result,.exam-question-compact .exam-word-limit,.exam-question-compact .exam-question-actions,.exam-question-compact .exam-feedback { grid-column: 2; }
+.exam-question-compact .exam-eyebrow { grid-row: 2; margin-top: 8px; }
+.exam-question-compact .exam-result { margin: 8px 0 0; }
+.exam-question-compact .exam-annotations > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+@media(max-width:740px) {
+  .exam-question-actions .exam-annotations > summary,.exam-question-actions .exam-check { min-height: 44px; }
+  .exam-question-compact { gap: 0 10px; }
+}

@@ -149,6 +149,51 @@ test('integrated source gaps render controlled answers in the original table', (
   expect(within(screen.getAllByRole('cell')[0]).getByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990');
   expect(screen.getAllByRole('cell')[1]).toHaveTextContent('〔99〕');
 });
+test('imported numbered blanks stay in the source while shared instructions and scaffold prompts are not repeated', async () => {
+  const instructions = 'Complete the notes below. Write ONE WORD ONLY for each answer.';
+  mocks.catalog.questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, groupId: 'notes', instructions, prompt: `Question ${number} · Complete the marked gap in the text above.`, stimulusHtml: '<p>Complete the notes below.</p><p>Write <strong>ONE WORD ONLY</strong> for each answer.</p><table><tr><td>Opened [1 ____]</td><td>Closed [2 ____]</td></tr></table>' }));
+  const view = practice(); const user = userEvent.setup();
+  const answer = await screen.findByRole('textbox', { name: 'Answer 1' });
+  expect(within(screen.getAllByRole('cell')[0]).getByRole('textbox', { name: 'Answer 1' })).toBe(answer);
+  expect(screen.queryByText(/Complete the marked gap/)).not.toBeInTheDocument();
+  expect(screen.getAllByText('Complete the notes below.')).toHaveLength(1);
+  expect(screen.getAllByText('Maximum 1 word')).toHaveLength(1);
+  expect(view.container.querySelectorAll('.exam-question')).toHaveLength(1);
+  expect(screen.queryByRole('button', { name: 'Check answer 1' })).not.toBeInTheDocument();
+  await user.type(answer, '1990');
+  await user.click(screen.getByRole('button', { name: 'Check answer 1' }));
+  expect(screen.getByText('Correct')).toBeInTheDocument();
+  await user.click(screen.getByRole('link', { name: 'Go to question 2 · unanswered' }));
+  expect(screen.getByRole('article', { name: 'Question 2 details' })).toBeInTheDocument();
+  expect(screen.queryByRole('article', { name: 'Question 1 details' })).not.toBeInTheDocument();
+  expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990');
+  await user.click(screen.getByRole('button', { name: 'Split view' }));
+  expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990');
+  expect(view.container.querySelectorAll('.exam-question-material')).toHaveLength(0);
+  expect(screen.getAllByText('Complete the notes below.')).toHaveLength(1);
+  expect(screen.getAllByText('Maximum 1 word')).toHaveLength(1);
+  await user.click(screen.getAllByText('Evidence & paraphrase')[1]);
+  await user.type(screen.getByRole('textbox', { name: 'Evidence for question 2' }), 'Fresh proof');
+  expect(mocks.recovery.get('one:reading:practice:section').evidence).toMatchObject({ q2: 'Fresh proof' });
+});
+
+test('source simplification preserves real stems, missing-gap scaffolds, diagrams and differing limits', async () => {
+  mocks.catalog.questions = [
+    { ...catalog.questions[0], groupId: 'notes', instructions: 'Answer the questions.', stimulusHtml: '<p>Opened [1 ____]</p>', assetId: 'diagram' },
+    { ...catalog.questions[0], id: 'q2', number: 2, groupId: 'notes', instructions: 'Answer the questions.', stimulusHtml: '<p>Opened [1 ____]</p>', prompt: 'Question 2 · Complete the marked gap in the text above.', maxWords: 2 },
+  ];
+  mocks.catalog.assets = [{ id: 'diagram', paperId: 'paper', kind: 'image', storagePath: 'diagram', sourceUrl: '', provenance }];
+  practice(); await screen.findByRole('textbox', { name: 'Answer 1' });
+  expect(screen.getByText('The garden opened in _____.')).toBeInTheDocument();
+  expect(screen.getByText('Question 2 · Complete the marked gap in the text above.')).toBeInTheDocument();
+  expect(screen.getAllByText('Answer the questions.')).toHaveLength(1);
+  expect(await screen.findByRole('img', { name: 'Question 1 diagram' })).toBeInTheDocument();
+  expect(screen.getByText('Maximum 1 word')).toBeInTheDocument();
+  expect(screen.getByText('Maximum 2 words')).toBeInTheDocument();
+  fireEvent.change(screen.getByRole('textbox', { name: 'Answer 1' }), { target: { value: 'too many' } });
+  expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveAttribute('aria-invalid', 'true');
+  expect(screen.getByRole('alert')).toHaveTextContent('word limit exceeded');
+});
 test('layout switching preserves the attempt and responses while showing real question material', async () => {
   practice();
   fireEvent.change(await screen.findByRole('textbox', { name: 'Answer 1' }), { target: { value: '1990' } });
@@ -159,6 +204,37 @@ test('layout switching preserves the attempt and responses while showing real qu
   await userEvent.setup().click(screen.getByRole('button', { name: 'Integrated view' }));
   expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990');
   expect(mocks.recovery.get('one:reading:practice:section').id).toBe(original);
+});
+
+test('a source diagram embedded in group material is displayed once in either layout', async () => {
+  mocks.catalog.questions[0].stimulusHtml = '<p><img src="exam-asset:diagram" alt="Garden plan"></p>';
+  mocks.catalog.assets = [{ id: 'diagram', sectionId: 'section', paperId: 'paper', kind: 'image', storagePath: 'diagram', sourceUrl: '', provenance }];
+  practice(); await screen.findByRole('img', { name: 'Garden plan' });
+  expect(screen.getAllByRole('img')).toHaveLength(1);
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Split view' }));
+  await screen.findByRole('img', { name: 'Garden plan' });
+  expect(screen.getAllByRole('img')).toHaveLength(1);
+});
+
+test('selecting an embedded answer keeps other real stems and unique word limits available', async () => {
+  mocks.catalog.questions = [
+    { ...catalog.questions[0], groupId: 'notes', stimulusHtml: '<p>Opened [1 ____], closed [2 ____]</p>' },
+    { ...catalog.questions[0], id: 'q2', number: 2, groupId: 'notes', prompt: 'Question 2 · Complete the marked gap in the text above.', maxWords: 2, stimulusHtml: '<p>Opened [1 ____], closed [2 ____]</p>' },
+  ];
+  practice(); await screen.findByRole('textbox', { name: 'Answer 1' });
+  expect(screen.getByText('Maximum 2 words')).toHaveClass('sr-only');
+  await userEvent.setup().click(screen.getByRole('textbox', { name: 'Answer 2' }));
+  expect(screen.getByText('The garden opened in _____.')).toBeInTheDocument();
+  expect(screen.getByText('Maximum 2 words')).not.toHaveClass('sr-only');
+});
+
+test('an annotation on an old bracket blank remains viewable when the blank becomes an input', async () => {
+  mocks.catalog.questions = [{ ...catalog.questions[0], groupId: 'notes', stimulusHtml: '<p>[1 ____]</p>', prompt: 'Question 1 · Complete the marked gap in the text above.' }];
+  mocks.fb.state.examAnnotations = [{ id: 'legacy-note', skill: 'reading', sourceId: 'section', color: 'yellow', quote: '[1 ____]', note: 'Remember this clue', updatedAt: '2026-10-14', anchors: [{ blockId: 'stimulus:notes:0-0:0', quote: '[1 ____]', start: 0, end: 8, prefix: '', suffix: '', contentVersion: 'hash' }] }];
+  practice(); await screen.findByRole('textbox', { name: 'Answer 1' });
+  expect(screen.getByText('Highlights & notes (1)')).toBeInTheDocument();
+  expect(screen.getByText('Remember this clue')).toBeInTheDocument();
+  expect(screen.getByText('Original position unavailable')).toBeInTheDocument();
 });
 
 test('source backlinks open passage material without creating or changing an attempt', async () => {
@@ -279,7 +355,7 @@ test('whitespace and cleared multiple selections stay unanswered in the map and 
   expect(screen.getByRole('status', { name: '' })).toHaveTextContent('0 / 2 answered');
   expect(screen.getByRole('link', { name: 'Go to question 1 · unanswered' })).not.toHaveClass('answered');
   expect(screen.getByRole('link', { name: 'Go to question 2 · unanswered' })).not.toHaveClass('answered');
-  expect(screen.getByRole('button', { name: 'Check answer 1' })).toBeDisabled();
+  expect(screen.queryByRole('button', { name: 'Check answer 1' })).not.toBeInTheDocument();
 });
 
 test('pause disables evidence editing and capture until resumed', async () => {
