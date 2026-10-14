@@ -1,3 +1,4 @@
+import { selectChoice } from '../../../tests/selectChoice';
 import { act, cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
@@ -42,7 +43,7 @@ it('step three plays the original with the same player and earns an actual sched
   expect(screen.queryByRole('textbox',{name:'Sentence dictation'})).not.toBeInTheDocument();
   expect(screen.queryByLabelText('Main idea or situation')).not.toBeInTheDocument();
   expect(mocks.create).toHaveBeenCalledTimes(createCount);
-  await user.selectOptions(screen.getByLabelText('Self rating'),'5');
+  await selectChoice(await screen.getByLabelText('Self rating'), '5 · Clear and fluent');
   const finish=screen.getByRole('button',{name:'Finish and schedule review'});expect(finish).toBeDisabled();
   act(()=>{mocks.events.timeupdate(1);mocks.events.timeupdate(2);});expect(finish).toBeDisabled();
   act(()=>mocks.events.timeupdate(3));expect(finish).toBeEnabled();
@@ -50,7 +51,7 @@ it('step three plays the original with the same player and earns an actual sched
   const completed=mocks.fb.stateRef.current.intensiveSessions[0];expect(completed.stage).toBe(6);expect(completed.shadowingAudioId).toMatch(/^intensive-/);expect(completed.completedAt).toBeTruthy();expect(completed.nextReviewAt).toBeTruthy();
 });
 it('a paused or sought blind replay cannot finish, but a fresh complete replay can',async()=>{
-  const user=userEvent.setup();open();await prepareShadowing(user);await user.selectOptions(screen.getByLabelText('Self rating'),'5');
+  const user=userEvent.setup();open();await prepareShadowing(user);await selectChoice(await screen.getByLabelText('Self rating'), '5 · Clear and fluent');
   await user.click(screen.getByRole('button',{name:'Play original blind'}));
   act(()=>{mocks.events.timeupdate(1);mocks.events.pause();mocks.events.play();mocks.events.timeupdate(3);});
   expect(screen.getByRole('button',{name:'Finish and schedule review'})).toBeDisabled();
@@ -67,7 +68,7 @@ it('switching sentences during delayed microphone permission stops the old strea
   await user.type(screen.getByLabelText('Sentence dictation'),'The train leaves at nine');await user.click(screen.getByRole('button',{name:'Compare with transcript'}));
   await user.click(screen.getByRole('button',{name:'Record shadowing'}));
   expect(screen.getByRole('button',{name:'Opening microphone…'})).toBeDisabled();
-  await user.selectOptions(screen.getByLabelText('Jump to sentence'),'1');
+  await selectChoice(await screen.findByLabelText('Jump to sentence'), 'Sentence 2');
   await act(async()=>allow({getTracks:()=>[{stop}]}));
   await waitFor(()=>expect(stop).toHaveBeenCalled());expect(start).not.toHaveBeenCalled();expect(mocks.pending).not.toHaveBeenCalled();
   expect(screen.getByRole('textbox',{name:'Sentence dictation'})).toHaveValue('');expect(screen.getByRole('button',{name:'Record shadowing'})).toBeDisabled();

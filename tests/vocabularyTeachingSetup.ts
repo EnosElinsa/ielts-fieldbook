@@ -1,6 +1,12 @@
 import { readFileSync } from 'node:fs';
 import { registerVocabularyTeaching } from '../src/domain/vocabulary/runtimeData';
 
+// Browser APIs used by the shared Radix select are absent in jsdom.
+HTMLElement.prototype.hasPointerCapture ??= () => false;
+HTMLElement.prototype.setPointerCapture ??= () => {};
+HTMLElement.prototype.releasePointerCapture ??= () => {};
+HTMLElement.prototype.scrollIntoView ??= () => {};
+
 const data = (name: string) => JSON.parse(readFileSync(`src/domain/vocabulary/${name}.json`, 'utf8'));
 registerVocabularyTeaching({
   senseBaselines: {},

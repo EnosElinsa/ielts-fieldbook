@@ -1,3 +1,4 @@
+import { SelectField } from '../../components/SelectField';
 import { useWorkspacePageState } from '../../lib/workspacePageState';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { InlineLoadingState, PageLoadingState, StateMessage } from '../../components/AsyncState';
@@ -84,7 +85,7 @@ export function ExamAnswerInput({ question, value, onChange, disabled, described
   const options = question.type === 'true-false' ? ['TRUE', 'FALSE', 'NOT GIVEN'] : question.type === 'yes-no' ? ['YES', 'NO', 'NOT GIVEN'] : question.options || [];
   if (question.type === 'multiple') return <div className="exam-options">{options.map(option => { const selected = Array.isArray(value) ? value : []; return <label key={option}><input type="checkbox" disabled={disabled} checked={selected.includes(option)} onChange={event => onChange(event.target.checked ? [...selected, option] : selected.filter(item => item !== option))} /><span>{option}</span></label>; })}</div>;
   if (question.type === 'single' || question.type === 'true-false' || question.type === 'yes-no') return <div className="exam-options">{options.map(option => <label key={option}><input type="radio" name={question.id} disabled={disabled} checked={value === option} onChange={() => onChange(option)} /><span>{option}</span></label>)}</div>;
-  if (options.length) return <select aria-label={`Answer ${question.number}`} value={typeof value === 'string' ? value : ''} onChange={event => onChange(event.target.value)} disabled={disabled}><option value="">Choose an answer</option>{options.map(option => <option key={option} value={option}>{option}</option>)}</select>;
+  if (options.length) return <SelectField aria-label={`Answer ${question.number}`} value={typeof value === 'string' ? value : ''} onChange={event => onChange(event.target.value)} disabled={disabled}><option value="">Choose an answer</option>{options.map(option => <option key={option} value={option}>{option}</option>)}</SelectField>;
   const exceeded = Boolean(question.maxWords && typeof value === 'string' && value.trim().split(/\s+/).filter(Boolean).length > question.maxWords);
   return <input className="exam-gap" aria-label={`Answer ${question.number}`} aria-describedby={describedBy} aria-invalid={exceeded || undefined} value={typeof value === 'string' ? value : ''} onChange={event => onChange(event.target.value)} disabled={disabled} autoComplete="off" spellCheck={false} placeholder="Your answer" />;
 }

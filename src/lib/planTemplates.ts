@@ -6,6 +6,8 @@ import { isProtectedPlan, practiceFromWeakness } from '../domain/plans';
 import { getVocabularyReviewQueue } from '../domain/vocabulary';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { getLearnedVocabularyIds, vocabularyGroupProgress } from '../domain/vocabulary/progress';
+import { dayBudget, normalizePlanning } from '../domain/planningPreferences';
+import { TASK_PRACTICES } from './planningTaskOptions';
 
 export const planTemplates = {
   balanced: [
@@ -398,10 +400,8 @@ export function ensurePlans(state, activeSkill, persistIfChanged) {
   return ensureUnifiedPlans(state, persistIfChanged).filter(plan => planMatchesSkill(plan, activeSkill));
 }
 
-export function studyBudget(settings) {
-  const daily = Math.max(1, Math.floor(Number(settings.dailyMinutes) || 30));
-  const vocabulary = Math.min(10, Math.floor(daily / 3));
-  return { daily, vocabulary, skill: daily - vocabulary };
+export function studyBudget(settings, key: string | undefined = undefined) {
+  return dayBudget(settings,key);
 }
 
 export function selectedStudySkills(settings) {
@@ -410,7 +410,7 @@ export function selectedStudySkills(settings) {
 }
 
 export function planningSettingsKey(settings) {
-  return JSON.stringify([2, settings.days, studyBudget(settings).daily, selectedStudySkills(settings), settings.focus, settings.speakingFocus, settings.vocabulary?.learningBatchSize || 10, settings.vocabulary?.mode || 'dictation']);
+  return JSON.stringify([3, settings.days, studyBudget(settings).daily, normalizePlanning(settings.planning,settings.dailyMinutes), selectedStudySkills(settings), settings.focus, settings.speakingFocus, settings.vocabulary?.learningBatchSize || 10, settings.vocabulary?.mode || 'dictation']);
 }
 
 export function calendarDays(now = new Date()) {
@@ -419,7 +419,7 @@ export function calendarDays(now = new Date()) {
 }
 
 export function nextUnifiedPlan(plans, now = new Date()) {
-  const sorted = plans.slice().sort((a,b) => String(a.dateKey).localeCompare(String(b.dateKey)) || (a.skill === 'vocabulary' ? 1 : b.skill === 'vocabulary' ? -1 : String(a.id).localeCompare(String(b.id))));
+  const sorted = plans.slice().sort(compareStudyPlans);
   return sorted.find(plan => plan.status === 'in_progress') || sorted.find(plan => plan.status === 'pending' && plan.dateKey === dateKey(now)) || null;
 }
 
@@ -486,8 +486,9 @@ function refreshEvidenceTargets(state, keys, skills, now) {
   const review=reviewTask(state,skills,now,1);
   const reviewKey=review&&evidenceTargetKey(review);
   const alreadyScheduled=reviewKey&&state.plans.some(plan=>plan.status!=='skipped'&&plan.status!=='completed'&&(keys.includes(plan.dateKey)||plan.status==='in_progress')&&evidenceTargetKey(plan)===reviewKey);
-  if (review&&!alreadyScheduled&&candidates.length) {
-    const plan=candidates[0];
+  const reviewSlot=review&&candidates.find(plan=>studyDaySkills(state.settings,plan.dateKey,skills).includes(review.skill));
+  if (review&&!alreadyScheduled&&reviewSlot) {
+    const plan=reviewSlot;
     replaceAutomaticTarget(plan,{...review,estimatedMinutes:plan.estimatedMinutes});
   }
   for (const plan of candidates) {
@@ -512,7 +513,10 @@ function refreshVocabularyTarget(state, keys, dueCards, mode, cap) {
   if(!dueCards.length||cap<=0)return;
   const plan=state.plans.filter(plan=>keys.includes(plan.dateKey)&&plan.schemaVersion===2&&plan.origin==='automatic'&&!isProtectedPlan(plan)&&plan.kind==='vocabulary').slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)||a.id.localeCompare(b.id))[0];
   if(!plan)return;
-  const task=vocabularyReviewTask(dueCards,mode,Math.min(cap,plan.estimatedMinutes));
+  const reserved=new Set(state.plans.filter(row=>row.id!==plan.id&&row.status!=='completed'&&row.status!=='skipped'&&(keys.includes(row.dateKey)||row.status==='in_progress')&&row.target?.mode==='due-review').flatMap(row=>row.target.cards.map(card=>JSON.stringify([card.entryId,card.senseId]))));
+  const available=dueCards.filter(card=>!reserved.has(JSON.stringify([card.entryId,card.senseId])));
+  if(!available.length)return;
+  const task=vocabularyReviewTask(available,mode,Math.min(cap,plan.estimatedMinutes));
   const recallKey=vocabularyRecallKey(task.target);
   if(state.plans.some(row=>row.status!=='completed'&&row.status!=='skipped'&&(keys.includes(row.dateKey)||row.status==='in_progress')&&vocabularyRecallKey(row.target)===recallKey))return;
   replaceAutomaticTarget(plan,task);
@@ -557,7 +561,7 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date()) {
     if (plan.schemaVersion === 2) return plan.generationKey === generationKey;
     return !/^plan-(?:(?:reading|listening)-)?\d{4}-\d{2}-\d{2}$/.test(plan.id || '');
   });
-  const skills = selectedStudySkills(state.settings); const budget = studyBudget(state.settings);
+  const skills = selectedStudySkills(state.settings);
   const uniqueId=(id)=>{let next=id;let suffix=2;while(state.plans.some(plan=>plan.id===next))next=`${id}-${suffix++}`;return next;};
   const prior=state.plans.filter(plan=>plan.dateKey<today&&Number.isInteger(plan.rotationIndex)).slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)).pop();
   let sequence = prior ? prior.rotationIndex+1 : 0;
@@ -569,60 +573,206 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date()) {
     if(cards.length){dueCards=cards;dueMode=mode;break;}
   }
   for (const key of keys) {
+    const budget = studyBudget(state.settings,key);
+    const daySkills=studyDaySkills(state.settings,key,skills);
     if (!(state.settings.days || []).includes(new Date(`${key}T00:00:00`).getDay() || 7) || !skills.length) continue;
+    if (!budget.daily) continue;
     const existing = state.plans.filter(plan=>plan.dateKey===key);
     const retainedRotation=existing.find(plan=>Number.isInteger(plan.rotationIndex));
     if(retainedRotation)sequence=retainedRotation.rotationIndex;
-    const existingMinutes = existing.reduce((sum,plan)=>sum+(Number(plan.estimatedMinutes)||budget.daily),0);
+    if (budget.planning.multipleTasks && existing.some(plan=>plan.generationKey===generationKey)) { sequence++; continue; }
+    const existingMinutes = existing.filter(plan=>plan.status!=='skipped').reduce((sum,plan)=>sum+(Number(plan.estimatedMinutes)||budget.daily),0);
     let available = Math.max(0,budget.daily-existingMinutes);
     let vocabulary = null;
     const vocabMinutes = Math.min(budget.vocabulary,available);
     if (!existing.some(plan=>plan.skill==='vocabulary'||plan.kind==='vocabulary') && vocabMinutes>0) {
       if (key===today && dueCards.length) {
         vocabulary=vocabularyReviewTask(dueCards,dueMode,vocabMinutes);
-      } else if (vocabMinutes===10) {
+      } else if (vocabMinutes>=5 && (budget.planning.multipleTasks || vocabMinutes===10)) {
         const target=nextLearningTarget(state,reserved);
-        if(target)vocabulary={skill:'vocabulary',kind:'vocabulary',title:`Vocabulary - Learn ${target.batchSize} words`,description:'Learn the batch, then submit recall answers.',estimatedMinutes:10,deskMode:target.assessmentMode,target,completion:{type:'assessment',description:'Submit the exact learning batch assessment.'}};
+        if(target)vocabulary={skill:'vocabulary',kind:'vocabulary',title:`Vocabulary - Learn ${target.batchSize} words`,description:'Learn the batch, then submit recall answers.',estimatedMinutes:vocabMinutes,deskMode:target.assessmentMode,target,completion:{type:'assessment',description:'Submit the exact learning batch assessment.'}};
       }
     }
-    const vocabReserved = vocabulary?.estimatedMinutes || 0;
-    if (!existing.some(plan=>plan.skill!=='vocabulary'&&plan.kind!=='vocabulary') && available-vocabReserved>0) {
-      const selected = skills[sequence % skills.length];
-      const task = key===today ? reviewTask(state,skills,now,available-vocabReserved) || skillTask(state,selected,available-vocabReserved,Math.floor(sequence/skills.length)) : skillTask(state,selected,available-vocabReserved,Math.floor(sequence/skills.length));
+    const vocabularyTasks=[];
+    if(vocabulary) {
+      const count=budget.planning.multipleTasks ? Math.max(1,Math.ceil(vocabulary.estimatedMinutes/budget.planning.blockMinutes)) : 1;
+      const total=vocabulary.estimatedMinutes;
+      let cardOffset=0;
+      for(let index=0;index<count;index++) {
+        const minutes=Math.floor(total/count)+(index<total%count?1:0);
+        const target=vocabulary.target.mode==='due-review'?{...vocabulary.target,cards:vocabulary.target.cards.slice(cardOffset,cardOffset+minutes)}:index===0?vocabulary.target:nextLearningTarget(state,reserved);
+        cardOffset+=minutes;
+        if(!target || target.mode==='due-review'&&!target.cards.length)break;
+        vocabularyTasks.push({...vocabulary,estimatedMinutes:minutes,target,...(target.mode==='due-review'?{description:`Recall ${target.cards.length} due words.`}:{})});
+      }
+    }
+    const vocabReserved = vocabularyTasks.reduce((sum,task)=>sum+task.estimatedMinutes,0);
+    if (budget.planning.multipleTasks && available-vocabReserved>0) {
+      const slots=allocateStudyBlocks(skills,budget,available-vocabReserved,sequence);
+      slots.forEach(({skill,minutes},index)=>{
+        const task=key===today&&index===0 ? reviewTask(state,daySkills,now,minutes)||skillTask(state,skill,minutes,sequence+index) : skillTask(state,skill,minutes,sequence+index);
+        state.plans.push({id:uniqueId(`study-${key}-slot-${index+1}`),dateKey:key,...task,order:index+vocabularyTasks.length,rotationIndex:sequence+index,schemaVersion:2,generationKey,origin:'automatic',status:'pending',startedAt:null,completedAt:null,linkedSessionId:null});
+      });
+    } else if (!existing.some(plan=>plan.skill!=='vocabulary'&&plan.kind!=='vocabulary') && available-vocabReserved>0) {
+      const weighted=daySkills.flatMap(skill=>Array(Math.max(1,budget.planning.weights[skill])).fill(skill));
+      if(!weighted.length)continue;
+      const selected = weighted[sequence % weighted.length];
+      const task = key===today ? reviewTask(state,daySkills,now,available-vocabReserved) || skillTask(state,selected,available-vocabReserved,Math.floor(sequence/skills.length)) : skillTask(state,selected,available-vocabReserved,Math.floor(sequence/skills.length));
       if(task.skill!=='reading'||task.estimatedMinutes>=2)state.plans.push({id:uniqueId(`study-${key}-skill`),dateKey:key,...task,rotationIndex:sequence,schemaVersion:2,generationKey,origin:'automatic',status:'pending',startedAt:null,completedAt:null,linkedSessionId:null});
     }
-    if (vocabulary && available>=vocabReserved) state.plans.push({id:uniqueId(`study-${key}-vocabulary`),dateKey:key,...vocabulary,schemaVersion:2,generationKey,origin:'automatic',status:'pending',startedAt:null,completedAt:null,linkedSessionId:null});
+    vocabularyTasks.forEach((task,index)=>state.plans.push({id:uniqueId(`study-${key}-vocabulary${index?`-${index+1}`:''}`),dateKey:key,...task,order:index,schemaVersion:2,generationKey,origin:'automatic',status:'pending',startedAt:null,completedAt:null,linkedSessionId:null}));
     sequence++;
   }
   refreshEvidenceTargets(state,keys,skills,now);
-  refreshVocabularyTarget(state,keys,dueCards,dueMode,budget.vocabulary);
+  refreshVocabularyTarget(state,keys,dueCards,dueMode,studyBudget(state.settings,today).vocabulary);
   if (JSON.stringify(state.plans)!==before) persistIfChanged?.();
   return state.plans.filter(plan=>keys.includes(plan.dateKey)).slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)||a.id.localeCompare(b.id));
 }
 
+function studyDaySkills(settings,key,skills) {
+  const budget=studyBudget(settings,key);
+  if(budget.focus!=='balanced'&&skills.includes(budget.focus))return [budget.focus];
+  return skills.filter(skill=>budget.planning.weights[skill]>0);
+}
+
+function allocateStudyBlocks(skills, budget, minutes, sequence) {
+  const {planning}=budget;
+  let candidates=skills.filter(skill=>planning.weights[skill]>0);
+  if (budget.focus!=='balanced' && skills.includes(budget.focus)) candidates=[budget.focus];
+  candidates.sort((a,b)=>planning.weights[b]-planning.weights[a] || (skills.indexOf(a)-sequence%skills.length+skills.length)%skills.length-(skills.indexOf(b)-sequence%skills.length+skills.length)%skills.length);
+  candidates=candidates.slice(0,Math.max(1,Math.floor(minutes/10)));
+  if (!candidates.length) return [];
+  const total=candidates.reduce((sum,skill)=>sum+Math.max(1,planning.weights[skill]),0);
+  const shares=candidates.map(skill=>({skill,minutes:Math.floor(minutes*Math.max(1,planning.weights[skill])/total)}));
+  let remainder=minutes-shares.reduce((sum,row)=>sum+row.minutes,0);
+  for(let index=0;remainder>0;index=(index+1)%shares.length,remainder--)shares[index].minutes++;
+  const blocks=[];
+  for(const row of shares) {
+    const size=planning.preferFullTasks&&row.skill==='writing' ? Math.max(planning.blockMinutes,40) : planning.blockMinutes;
+    const count=Math.max(1,Math.ceil(row.minutes/size));
+    for(let index=0;index<count;index++) {
+      const duration=planning.preferFullTasks ? Math.min(size,row.minutes-index*size) : Math.floor(row.minutes/count)+(index<row.minutes%count?1:0);
+      if(duration>=(row.skill==='reading'?2:1))blocks.push({skill:row.skill,minutes:duration});
+    }
+  }
+  return blocks;
+}
+
+export function manualStudyTask(state, action) {
+  const skill=action.skill;
+  if(!TASK_PRACTICES[skill])throw new Error('Choose a skill.');
+  const practice=action.practice || action.kind || (skill==='vocabulary'?'learning-batch':'recommended');
+  const option=TASK_PRACTICES[skill].find(row=>row.value===practice);
+  if(!option)throw new Error('Choose a supported practice type.');
+  const minutes=Number(action.estimatedMinutes);
+  if(!Number.isInteger(minutes)||minutes<1||minutes>180)throw new Error('Use a task duration from 1 to 180 minutes.');
+  if(minutes<option.minimum)throw new Error(`This practice needs at least ${option.minimum} minutes.`);
+  if(skill==='vocabulary') {
+    if(practice==='due-review') {
+      const mode=action.assessmentMode || state.settings.vocabulary?.mode || 'definition';
+      if(['audio','production'].includes(mode))throw new Error('Choose an assessed recall mode.');
+      const learned=getLearnedVocabularyIds(state);
+      const cards=getVocabularyReviewQueue(state,{mode,dueOnly:true}).filter(card=>learned.has(card.entryId));
+      if(!cards.length)throw new Error('No learned words are due for this recall mode.');
+      return vocabularyReviewTask(cards,mode,minutes);
+    }
+    const target=action.bookId&&action.unitId ? {type:'vocabulary',mode:'learning-batch',assessmentMode:['audio','production'].includes(state.settings.vocabulary?.mode)?'definition':state.settings.vocabulary?.mode||'dictation',bookId:action.bookId,unitId:action.unitId,batchIndex:Number(action.batchIndex)||0,batchSize:state.settings.vocabulary?.learningBatchSize||10,cards:[]} : nextLearningTarget(state);
+    if(action.batchIndex!==undefined&&(!Number.isInteger(action.batchIndex)||action.batchIndex<0))throw new Error('Choose a valid batch number.');
+    if(!target)throw new Error('Enrol in a wordbook before adding a learning batch.');
+    return {skill,kind:'vocabulary',title:`Vocabulary - Learn ${target.batchSize} words`,description:'Learn the selected batch, then submit recall answers.',estimatedMinutes:minutes,target,deskMode:target.assessmentMode,completion:{type:'assessment',description:'Submit the exact learning batch assessment.'}};
+  }
+  if(practice==='writing-mock'||practice==='speaking-mock') {
+    const exact=practice==='writing-mock'?60:15;
+    if(minutes!==exact)throw new Error(`This mock needs ${exact} minutes.`);
+    return {skill,kind:practice,title:skill==='writing'?'Writing mock':'Speaking mock',description:skill==='writing'?'Complete Task 1 and Task 2 under exam timing.':'Complete Parts 1, 2 and 3 under exam timing.',estimatedMinutes:exact,deskMode:'timed',stage:skill==='writing'?'task1':'p1',questionId:null,target:{type:'question',skill,questionId:null,mode:'timed',...(skill==='speaking'?{part:'1'}:{})},completion:{type:'attempt',description:'Save every stage of this mock.'}};
+  }
+  let task=skillTask(state,skill,minutes,0,false);
+  if(skill==='writing' && practice!=='recommended') {
+    const kind=['outline','body','task2-timed'].includes(practice)?'2':'1';
+    const mode=practice.endsWith('-timed')?'timed':practice;
+    task={...task,kind,title:option.label,deskMode:mode,target:{type:'question',skill,questionId:null,mode}};
+  } else if(skill==='speaking'&&practice!=='recommended') {
+    task={...task,kind:practice,title:option.label,target:{type:'question',skill,questionId:null,mode:'full',part:practice.slice(-1)}};
+  } else if(practice==='listening-intensive') {
+    if(!action.sectionId||!action.sentenceId)throw new Error('Choose a listening section and sentence.');
+    task={...task,kind:practice,title:'Listening - Sentence intensive',sectionId:action.sectionId,sentenceId:action.sentenceId,target:{type:'intensive',skill,sectionId:action.sectionId,sentenceId:action.sentenceId},completion:{type:'review',description:'Complete the selected sentence practice.'}};
+  }
+  if(task.target.type==='question') {
+    const questionId=action.questionId||task.target.questionId;
+    const bank=skill==='writing'?state.questions:state.speakingTopics;
+    if(action.questionId && bank?.length && !bank.some(row=>String(row.id)===String(questionId) && (skill==='writing'?String(row.type)===task.kind:String(row.part)===(task.target.part==='3'?'2':task.target.part))))throw new Error('The selected question does not match this practice.');
+    task.target.questionId=questionId||null;task.questionId=questionId||null;
+  }
+  if(task.target.type==='section'&&action.sectionId) {task.target.sectionId=action.sectionId;task.sectionId=action.sectionId;}
+  return task;
+}
+
+function requireDayCapacity(state, key, minutes, excludedId, allowed) {
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(key)||dateKey(`${key}T00:00:00`)!==key)throw new Error('Choose a valid date.');
+  const used=state.plans.filter(row=>row.id!==excludedId&&row.dateKey===key&&row.status!=='skipped').reduce((n,row)=>n+Number(row.estimatedMinutes||0),0);
+  const budget=studyBudget(state.settings,key).daily;
+  if(used+minutes>budget&&!allowed)throw new Error(`This change exceeds the daily budget by ${used+minutes-budget} minutes. Confirm to keep the extra time.`);
+}
+
+export function validatePlanDuration(plan, minutes) {
+  if(!Number.isInteger(minutes)||minutes<1||minutes>180)throw new Error('Use a task duration from 1 to 180 minutes.');
+  const selected=TASK_PRACTICES[plan.skill]?.find(row=>row.value===plan.practice);
+  const required=plan.kind==='writing-mock'?60:plan.kind==='speaking-mock'?15:plan.skill==='writing'&&['timed','full'].includes(plan.deskMode)?plan.kind==='2'?40:20:plan.skill==='reading'?2:1;
+  const minimum=Math.max(selected?.minimum||1,required);
+  if(minutes<minimum)throw new Error(`This practice needs at least ${minimum} minutes. Replace it with a shorter practice instead.`);
+  if(plan.kind?.endsWith('-mock')&&minutes!==minimum)throw new Error(`This mock needs ${minimum} minutes.`);
+}
+
 export function mutateStudyPlan(state, planId, action, now = new Date()) {
-  const plan = state.plans.find(row=>row.id===planId); if (!plan) throw new Error('Task not found.');
-  if (action.type==='skip' && plan.status!=='completed') { plan.previousStatus=plan.status;plan.status='skipped';if(state.activePlanId===plan.id)state.activePlanId=null; }
-  else if (action.type==='restore' && plan.status==='skipped') plan.status=plan.previousStatus==='in_progress'?'in_progress':'pending';
-  else if (action.type==='reschedule') {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(action.dateKey) || dateKey(`${action.dateKey}T00:00:00`)!==action.dateKey) throw new Error('Choose a valid date.');
-    if(plan.status==='completed')throw new Error('Completed tasks cannot be rescheduled.');
-    const used=state.plans.filter(row=>row.id!==plan.id&&row.dateKey===action.dateKey&&row.status!=='skipped').reduce((sum,row)=>sum+Number(row.estimatedMinutes||0),0);
-    if(used+Number(plan.estimatedMinutes||0)>studyBudget(state.settings).daily)throw new Error('This day does not have enough study time.');
-    plan.dateKey=action.dateKey;
-  } else if (action.type==='replace') {
-    if(plan.status!=='pending'||plan.startedAt)throw new Error('Only unstarted tasks can be replaced.');
-    if(!['writing','speaking','reading','listening'].includes(action.skill))throw new Error('Choose a skill.');
-    if(action.kind==='writing-mock'||action.kind==='speaking-mock'){
-      const minutes=action.kind==='writing-mock'?60:15;
-      const used=state.plans.filter(row=>row.id!==plan.id&&row.dateKey===plan.dateKey&&row.status!=='skipped').reduce((sum,row)=>sum+Number(row.estimatedMinutes||0),0);
-      if(used+minutes>studyBudget(state.settings).daily)throw new Error(`This mock needs ${minutes} minutes available on this day.`);
-      const skill=action.kind==='writing-mock'?'writing':'speaking';
-      clearPlanBinding(plan);
-      Object.assign(plan,{kind:action.kind,skill,title:skill==='writing'?'Writing mock':'Speaking mock',description:skill==='writing'?'Complete Task 1 and Task 2 under exam timing.':'Complete Parts 1, 2 and 3 under exam timing.',deskMode:'timed',estimatedMinutes:minutes,stage:skill==='writing'?'task1':'p1',questionId:null,target:{type:'question',skill,questionId:null,mode:'timed'},completion:{type:'attempt',description:'Save every stage of this mock.'}});
-    }else { const task = skillTask(state,action.skill,Number(plan.estimatedMinutes)||studyBudget(state.settings).skill,0,false); clearPlanBinding(plan); Object.assign(plan,task); }
-    Object.assign(plan,{sectionId:null,sentenceId:null,attemptId:null,sourceAssessmentId:null,targetErrorIds:[],driver:null});
-  } else throw new Error('This task cannot be changed.');
+  let plan=state.plans.find(row=>row.id===planId);
+  if(action.type==='add'||action.type==='duplicate') {
+    if(action.type==='duplicate'&&!plan)throw new Error('Task not found.');
+    let task;
+    if(action.type==='duplicate') {
+      task=structuredClone(plan);
+      // Retain the chosen material but discard all attempt/completion state.
+      for(const key of ['id','startedAt','completedAt','linkedSessionId','completedPromptKeys','previousStatus','stage','speakingGroups','manuallyEditedAt'])delete task[key];
+      if(task.kind==='writing-mock')task.stage='task1';
+      if(task.kind==='speaking-mock'){task.stage='p1';task.target={type:'question',skill:'speaking',questionId:null,part:'1',mode:'timed'};task.questionId=null;}
+      if(task.kind==='writing-mock'){task.target={type:'question',skill:'writing',questionId:null,mode:'timed'};task.questionId=null;}
+    }else task={...manualStudyTask(state,action),practice:action.practice||action.kind||(action.skill==='vocabulary'?'learning-batch':'recommended')};
+    const key=action.dateKey||plan?.dateKey;
+    requireDayCapacity(state,key,task.estimatedMinutes,null,action.allowOverBudget);
+    let id=`manual-${new Date(now).getTime()}`;let index=1;while(state.plans.some(row=>row.id===id))id=`manual-${new Date(now).getTime()}-${index++}`;
+    plan={...task,id,dateKey:key,order:Math.max(-1,...state.plans.filter(row=>row.dateKey===key).map(row=>Number(row.order)||0))+1,status:'pending',startedAt:null,completedAt:null,linkedSessionId:null,schemaVersion:2,generationKey:planningSettingsKey(state.settings)};
+    state.plans.push(plan);
+  } else {
+    if(!plan)throw new Error('Task not found.');
+    if(action.type==='skip'&&plan.status!=='completed') {plan.previousStatus=plan.status;plan.status='skipped';if(state.activePlanId===plan.id)state.activePlanId=null;}
+    else if(action.type==='restore'&&plan.status==='skipped') {requireDayCapacity(state,plan.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);plan.status=plan.previousStatus==='in_progress'?'in_progress':'pending';}
+    else if(action.type==='reschedule') {
+      if(plan.status==='completed')throw new Error('Completed tasks cannot be rescheduled.');
+      requireDayCapacity(state,action.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);plan.dateKey=action.dateKey;
+    } else if(action.type==='resize'||action.type==='replace') {
+      if(plan.status!=='pending'||plan.startedAt)throw new Error('Only unstarted tasks can be edited.');
+      if(action.type==='resize') {
+        const minutes=Number(action.estimatedMinutes);
+        validatePlanDuration(plan,minutes);
+        requireDayCapacity(state,plan.dateKey,minutes,plan.id,action.allowOverBudget);plan.estimatedMinutes=minutes;
+        if(plan.target?.type==='section')delete plan.target.questionIds;
+      }else {
+        const minutes=action.estimatedMinutes ?? (action.kind==='writing-mock'?60:action.kind==='speaking-mock'?15:plan.estimatedMinutes||studyBudget(state.settings,plan.dateKey).skill);
+        const task={...manualStudyTask(state,{...action,estimatedMinutes:minutes}),practice:action.practice||action.kind||(action.skill==='vocabulary'?'learning-batch':'recommended')};
+        requireDayCapacity(state,plan.dateKey,task.estimatedMinutes,plan.id,action.allowOverBudget);
+        clearPlanBinding(plan);Object.assign(plan,task);
+      }
+    }else if(action.type==='reorder') {
+      const rows=state.plans.filter(row=>row.dateKey===plan.dateKey).sort(compareStudyPlans);
+      const index=rows.indexOf(plan);const next=index+(action.direction==='up'?-1:1);
+      if(next<0||next>=rows.length)return plan;
+      [rows[index],rows[next]]=[rows[next],rows[index]];
+      rows.forEach((row,order)=>{row.order=order;row.origin='manual';row.manuallyEditedAt=new Date(now).toISOString();});
+    } else throw new Error('This task cannot be changed.');
+  }
   plan.origin='manual';plan.manuallyEditedAt=new Date(now).toISOString();
   return plan;
+}
+
+export function compareStudyPlans(a,b) {
+  return String(a.dateKey).localeCompare(String(b.dateKey)) || (Number(a.order)||0)-(Number(b.order)||0) || String(a.id).localeCompare(String(b.id));
 }

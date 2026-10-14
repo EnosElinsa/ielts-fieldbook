@@ -256,7 +256,7 @@ test("production textarea retains multiline editing on Enter and arrows", async 
   expect(first).toHaveFocus();
 });
 
-test("self-review selects retain their native arrow-key interaction", async () => {
+test("self-review selects open with arrow keys and restore practice focus after selection", async () => {
   const user = userEvent.setup();
   mount('?mode=production');
   await user.click(screen.getByRole('button', { name: 'Start session' }));
@@ -264,8 +264,13 @@ test("self-review selects retain their native arrow-key interaction", async () =
   const rating = screen.getByRole('combobox', { name: 'Self review 1' });
   rating.focus();
   const prevented = !fireEvent.keyDown(rating, { key: 'ArrowDown', cancelable: true });
-  expect(prevented).toBe(false);
+  expect(prevented).toBe(true);
+  await user.click(await screen.findByRole('option',{name:'Looks correct'}));
+  expect(rating).toHaveTextContent('Looks correct');
   await waitFor(() => expect(rating).toHaveFocus());
+  // Wait beyond the workbench animation frame: it must not steal select focus.
+  await new Promise(resolve=>setTimeout(resolve,40));
+  expect(rating).toHaveFocus();
 });
 
 test("distinction choice focus targets the correct word and preserves radio navigation", async () => {

@@ -1248,7 +1248,7 @@ function useFieldbookValue() {
 
   const changePlan = useCallback((planId,action)=>mutatePlans(async draft=>{
     mutateStudyPlan(draft,planId,action);
-    if(action.type==='replace')await bindCurrentPlanTargets(draft);
+    if(['replace','add','duplicate','resize'].includes(action.type))await bindCurrentPlanTargets(draft);
   }),[mutatePlans,loadVocabularyCatalog,ensureQuestionBank]);
 
   const startPlan = useCallback(async(planId:string, options={})=>{

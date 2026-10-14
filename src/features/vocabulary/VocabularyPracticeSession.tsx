@@ -1,3 +1,4 @@
+import { SelectField } from '../../components/SelectField';
 import { ArrowLeft, ArrowRight, Check, Flag, Pause, Play, Volume2 } from "lucide-react";
 import { IconButton } from "../../components/IconButton";
 import { evaluateVocabularySessionAnswer, type VocabularyPracticeSession } from "../../domain/vocabulary/session";
@@ -145,11 +146,11 @@ export function VocabularyPracticeSession({ controller, session }: {
     return (
       <label className="practice-self-report">
         Self review
-        <select
+        <SelectField
           aria-label={`Self review ${index + 1}`}
           value={session.answers[card.id]?.result || "pending"}
           disabled={locked}
-          onFocus={() => focusCard(index)}
+          onFocus={() => focusCard(index, false, false)}
           onChange={(event) =>
             reportProduction(index, event.target.value as VocabularyResult)
           }
@@ -158,7 +159,7 @@ export function VocabularyPracticeSession({ controller, session }: {
           <option value="success">Looks correct</option>
           <option value="partial">Needs improvement</option>
           <option value="failure">Incorrect</option>
-        </select>
+        </SelectField>
       </label>
     );
   }

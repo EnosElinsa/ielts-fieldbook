@@ -55,7 +55,7 @@ test('replacing a bound speaking mock removes all frozen scope and progress befo
   const state: any = emptyState();
   state.settings.speakingFocus = 'part2';
   state.speakingTopics = [{ id: 'short', title: 'Home', part: '1', questions: ['Where?', 'Why?'] }, { id: 'long', title: 'Friend', part: '2', cueCard: 'Describe a friend', part3: ['How?', 'When?'] }];
-  const plan: any = { id: 'replace-mock', kind: 'speaking-mock', status: 'pending', estimatedMinutes: 15, target: { type: 'question', skill: 'speaking', questionId: null } };
+  const plan: any = { id: 'replace-mock', dateKey:'2026-10-14', kind: 'speaking-mock', status: 'pending', estimatedMinutes: 15, target: { type: 'question', skill: 'speaking', questionId: null } };
   state.plans = [plan];
   const sources = { bank: async () => state.speakingTopics };
   await bindStudyPlanTargets(state, sources as any);

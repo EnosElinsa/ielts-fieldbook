@@ -1,3 +1,4 @@
+import { SelectField } from '../../components/SelectField';
 import { InlineLoadingState, StateMessage } from '../../components/AsyncState';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import WaveSurfer from 'wavesurfer.js';
@@ -154,7 +155,7 @@ export const IntensiveAudio = forwardRef<IntensiveAudioHandle, Props>(function I
       </div>
       <div className="intensive-playback-settings">
       <span className="audio-time">{clock(position)} / {clock(duration)}</span>
-      <label>Speed <select aria-label="Listening speed" value={props.speed} onChange={event => props.onSpeedChange(Number(event.target.value))}>{[0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map(speed => <option key={speed} value={speed}>{speed}×</option>)}</select></label>
+      <label>Speed <SelectField aria-label="Listening speed" value={props.speed} onChange={event => props.onSpeedChange(Number(event.target.value))}>{[0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map(speed => <option key={speed} value={speed}>{speed}×</option>)}</SelectField></label>
       <button className={`btn line ${props.loop ? 'selected' : ''}`} disabled={props.full || !hasBounds} aria-pressed={props.loop} onClick={() => props.onLoopChange(!props.loop)}><Repeat size={17} /> A/B loop</button>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { selectChoice } from '../../../tests/selectChoice';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter, Link, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
@@ -40,6 +41,14 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); window.history.replaceState(null, '', '/'); });
 
+test('weekly overrides and vocabulary allocation can be saved as actionable settings',async()=>{
+ setup(); const user=userEvent.setup();
+ fireEvent.change(screen.getByRole('spinbutton',{name:'Mon study minutes'}),{target:{value:'90'}});
+ fireEvent.change(screen.getByRole('spinbutton',{name:'Task block minutes'}),{target:{value:'25'}});
+ await user.click(screen.getByRole('button',{name:'Save settings'}));
+ expect(context.current.saveStudySettings.mock.calls[0][0].planning).toMatchObject({blockMinutes:25,week:{1:{minutes:90}}});
+});
+
 test('one draft survives categories and previews only future automatic pending tasks', async () => {
   setup(); const user = userEvent.setup();
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Minutes a day' }), { target: { value: '45' } });
@@ -53,12 +62,12 @@ test('one draft survives categories and previews only future automatic pending t
   expect(screen.getByRole('spinbutton', { name: 'Minutes a day' })).toHaveValue(45);
   await user.click(screen.getByRole('button', { name: 'Save settings' }));
   expect(context.current.saveStudySettings).toHaveBeenCalledWith({ dailyMinutes: 45, vocabulary: { learningBatchSize: 5 } });
-  expect(screen.getByText('Settings saved.')).toHaveAttribute('role', 'status');
+  expect(screen.getByText(/Settings saved\./)).toHaveAttribute('role', 'status');
 });
 
 test('audio-only changes use preference persistence with no affected-plan preview', async () => {
   setup('audio'); const user = userEvent.setup();
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Accent' }), 'us');
+  await selectChoice(await screen.getByLabelText('Accent'), 'American English');
   expect(screen.queryByRole('region', { name: 'Affected study tasks' })).not.toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'Save settings' }));
   expect(context.current.saveVocabularyPreferences).toHaveBeenCalledWith({ accent: 'us' });
@@ -67,7 +76,7 @@ test('audio-only changes use preference persistence with no affected-plan previe
 
 test('vocabulary mode rebuilds planning via study persistence', async () => {
   setup('vocabulary'); const user = userEvent.setup();
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Default mode' }), 'definition');
+  await selectChoice(await screen.getByLabelText('Default mode'), 'Meaning recall');
   expect(screen.getByRole('region', { name: 'Affected study tasks' })).toHaveTextContent('Automatic task');
   await user.click(screen.getByRole('button', { name: 'Save settings' }));
   expect(context.current.saveStudySettings).toHaveBeenCalledWith({ vocabulary: { mode: 'definition' } });
@@ -116,13 +125,13 @@ test('time presets update the weekly commitment and study-day controls are keybo
   screen.getByRole('checkbox',{name:'Wed'}).focus();
   await user.keyboard(' ');
   expect(screen.getByText('3h')).toBeInTheDocument();
-  await user.selectOptions(screen.getByRole('combobox',{name:'Settings category'}),'audio');
+  await selectChoice(await screen.getByLabelText('Settings category'), 'Audio');
   expect(screen.getByRole('combobox',{name:'Accent'})).toBeInTheDocument();
 });
 
 test('background refresh keeps the draft and writes only the changed preferences', async () => {
   const view = setup('audio'); const user = userEvent.setup();
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Accent' }), 'us');
+  await selectChoice(await screen.getByLabelText('Accent'), 'American English');
   context.current.state = { ...context.current.state, settings: { ...context.current.state.settings, vocabulary: { ...DEFAULT_VOCABULARY_PREFERENCES, volume: 0.4 } } };
   view.rerender(<Harness category="audio" />);
   await user.click(screen.getByRole('button', { name: 'Save settings' }));
@@ -176,7 +185,7 @@ test('changing accounts discards the old owner draft before saving', async () =>
 test('selected skills persist with the legacy focus settings', async () => {
   setup('skills'); const user = userEvent.setup();
   for (const skill of ['Writing', 'Speaking', 'Listening']) await user.click(screen.getByRole('checkbox', { name: skill }));
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Writing focus' }), 'task2');
+  await selectChoice(await screen.getByLabelText('Writing focus'), 'Task 2 first');
   await user.click(screen.getByRole('button', { name: 'Save settings' }));
   expect(context.current.saveStudySettings).toHaveBeenCalledWith({ skills: ['reading'], skillMix: 'reading', focus: 'task2' });
 });

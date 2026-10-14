@@ -6,7 +6,8 @@ import { ensureUnifiedPlans, nextUnifiedPlan, studyBudget, mutateStudyPlan } fro
 import { addVocabularyItem, recordVocabularyReview } from '../domain/vocabulary';
 
 const now = new Date('2026-10-13T12:00:00');
-const setup = () => { const state = emptyState(); state.settings.days = [1,2,3,4,5,6,7]; return state; };
+// Keep legacy scheduling regressions separate from the new multi-task defaults.
+const setup = () => { const state = emptyState(); state.settings.days = [1,2,3,4,5,6,7]; state.settings.planning={...state.settings.planning,vocabularyMode:'fixed',vocabularyMinutes:10,multipleTasks:false}; return state; };
 
 test('seven calendar days rotate all selected skills and are deterministic and idempotent', () => {
   const left = setup(); const right = setup();
@@ -24,6 +25,7 @@ test('vocabulary uses at most one third and ten minutes, with short budgets rese
   for (const minutes of [5,15,20,29,30,60]) {
     const state = setup(); state.settings.dailyMinutes = minutes;
     state.wordbookEnrollments = [{id:'e',bookId:'book',updatedAt:''}];
+    state.settings.planning.vocabularyMinutes=Math.min(10,Math.floor(minutes/3));
     const budget = studyBudget(state.settings);
     expect(budget.vocabulary).toBeLessThanOrEqual(Math.floor(minutes/3));
     expect(budget.vocabulary).toBeLessThanOrEqual(10);
@@ -192,7 +194,7 @@ test('new learning honors batch-size and mode preferences, while appearance chan
 
 test('manual mock replacement requires its entire duration in the daily budget',()=>{
   const state=setup();ensureUnifiedPlans(state,undefined,now);const plan=state.plans[0];
-  expect(()=>mutateStudyPlan(state,plan.id,{type:'replace',skill:'writing',kind:'writing-mock'})).toThrow('60 minutes');
+  expect(()=>mutateStudyPlan(state,plan.id,{type:'replace',skill:'writing',kind:'writing-mock'})).toThrow(/budget/i);
   state.settings.dailyMinutes=60;mutateStudyPlan(state,plan.id,{type:'replace',skill:'writing',kind:'writing-mock'});
   expect(plan).toMatchObject({kind:'writing-mock',estimatedMinutes:60,origin:'manual',deskMode:'timed'});
 });

@@ -1,3 +1,4 @@
+import { SelectField } from '../../components/SelectField';
 import { useEffect, useRef, useState } from "react";
 import { List, Square, Volume2 } from "lucide-react";
 import { DeviceVoicePreferences } from './DeviceVoicePreferences';
@@ -33,7 +34,7 @@ export function VocabularyPreferencesFields({
         <div className="practice-preference-grid">
           <label>
             Default mode
-            <select
+            <SelectField
               aria-label="Default mode"
               value={value.mode}
               onChange={(event) =>
@@ -47,11 +48,11 @@ export function VocabularyPreferencesFields({
                   {mode.label}
                 </option>
               ))}
-            </select>
+            </SelectField>
           </label>
           <label>
             Review batch size
-            <select
+            <SelectField
               aria-label="Review batch size"
               value={value.sessionSize}
               onChange={(event) =>
@@ -63,12 +64,12 @@ export function VocabularyPreferencesFields({
                   {count} words
                 </option>
               ))}
-            </select>
+            </SelectField>
             <span className="practice-field-hint">Used for review batches. Whole groups use their actual word count.</span>
           </label>
           <label>
             Feedback
-            <select
+            <SelectField
               aria-label="Feedback"
               value={value.feedback}
               onChange={(event) =>
@@ -80,11 +81,11 @@ export function VocabularyPreferencesFields({
             >
               <option value="end">After submission</option>
               <option value="immediate">During practice</option>
-            </select>
+            </SelectField>
           </label>
           <label>
             Order
-            <select
+            <SelectField
               aria-label="Order"
               value={value.order}
               onChange={(event) =>
@@ -96,7 +97,7 @@ export function VocabularyPreferencesFields({
               <option value="source">Source order</option>
               <option value="due">Due date</option>
               <option value="random">Shuffle</option>
-            </select>
+            </SelectField>
           </label>
           <div className="practice-layout-field">
             <span>Layout</span>
@@ -137,7 +138,7 @@ export function VocabularyPreferencesFields({
         <div className="practice-preference-grid">
           <label>
             Accent
-            <select
+            <SelectField
               aria-label="Accent"
               value={value.accent}
               onChange={(event) =>
@@ -148,11 +149,11 @@ export function VocabularyPreferencesFields({
             >
               <option value="uk">British English</option>
               <option value="us">American English</option>
-            </select>
+            </SelectField>
           </label>
           <label>
             Playback speed
-            <select
+            <SelectField
               aria-label="Playback speed"
               value={value.speechRate}
               onChange={(event) =>
@@ -164,11 +165,11 @@ export function VocabularyPreferencesFields({
                   {rate}×
                 </option>
               ))}
-            </select>
+            </SelectField>
           </label>
           <label>
             Repeat
-            <select
+            <SelectField
               aria-label="Repeat"
               value={value.repeatCount}
               onChange={(event) =>
@@ -180,11 +181,11 @@ export function VocabularyPreferencesFields({
                   {count === 1 ? "Once" : `${count} times`}
                 </option>
               ))}
-            </select>
+            </SelectField>
           </label>
           <label>
             Repeat gap
-            <select
+            <SelectField
               aria-label="Repeat gap"
               value={value.repeatGapMs}
               onChange={(event) =>
@@ -196,11 +197,11 @@ export function VocabularyPreferencesFields({
                   {gap / 1000} seconds
                 </option>
               ))}
-            </select>
+            </SelectField>
           </label>
           <label>
             Audio loop gap
-            <select
+            <SelectField
               aria-label="Audio loop gap"
               value={value.audioGapMs}
               onChange={(event) =>
@@ -212,7 +213,7 @@ export function VocabularyPreferencesFields({
                   {gap / 1000} seconds
                 </option>
               ))}
-            </select>
+            </SelectField>
           </label>
           <label>
             Volume{" "}

@@ -18,7 +18,7 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
   for (const plan of state.plans as StudyPlan[]) {
     if (plan.status !== 'pending' || !plan.target) continue;
     const target = plan.target;
-    if (target.type === 'question' && (!target.questionId || target.skill === 'speaking' && !target.prompts?.length)) {
+    if (target.type === 'question' && (!target.questionId || !plan.targetLabel || target.skill === 'speaking' && !target.prompts?.length)) {
       const skill = target.skill;
       if (!banks.has(skill)) banks.set(skill, await sources.bank(skill));
       const mock = plan.kind === 'writing-mock' || plan.kind === 'speaking-mock';
@@ -27,12 +27,13 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
       const candidates = banks.get(skill)!.filter(row => skill === 'writing' ? String(row.type) === kind : String(row.part) === part && !row.incomplete).sort((a,b)=>String(a.id).localeCompare(String(b.id)));
       const selected = target.questionId ? banks.get(skill)!.find(row => String(row.id) === String(target.questionId)) : candidates[Number(plan.rotationIndex || 0) % candidates.length];
       if (!selected) throw new Error(`The ${skill} question bank is unavailable. Retry your plan.`);
+      if (!candidates.some(row=>String(row.id)===String(selected.id))) throw new Error('The selected question does not match this practice.');
       target.questionId = String(selected.id);plan.questionId = target.questionId;
       if (mock && skill === 'speaking') target.part = '1';
       if (skill === 'speaking') bindSpeakingPlan(plan, selected, target.part || plan.kind.slice(-1), plan.targetPrompt, banks.get(skill));
       plan.targetLabel = selected.name || selected.title || selected.topic || `Question ${selected.id}`;
       plan.quantity = skill === 'speaking' ? plan.target.type === 'question' ? plan.target.prompts?.length || 1 : 1 : 1;
-    } else if (target.type === 'section' && !target.sectionId) {
+    } else if (target.type === 'section' && (!target.sectionId || !target.questionIds?.length)) {
       const skill = target.skill;
       if (!catalogs.has(skill)) catalogs.set(skill, await sources.catalog(skill));
       const catalog = catalogs.get(skill)!;
@@ -40,7 +41,7 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
       const candidates = catalog.sections.filter(section=>section.skill===skill && section.status==='ready').sort((a,b)=>a.id.localeCompare(b.id));
       const fresh = candidates.filter(section=>!tried.has(section.id) && !reserved.has(section.id));
       const choices = fresh.length ? fresh : candidates;
-      const selected = choices[Number(plan.rotationIndex || 0) % choices.length];
+      const selected = target.sectionId ? candidates.find(row=>row.id===target.sectionId) : choices[Number(plan.rotationIndex || 0) % choices.length];
       if (!selected) throw new Error(`The ${skill} question bank is unavailable. Retry your plan.`);
       const scoped = await sources.section([selected.id]);
       const maximum = Math.floor(plan.estimatedMinutes / (skill==='reading' ? 2 : 1));
@@ -50,6 +51,9 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
       const paper=catalog.papers?.find(paper=>paper.id===selected.paperId);
       plan.targetLabel=`${paper?.title || selected.title} / ${skill==='reading'?'Passage':'Part'} ${selected.part}`;
       plan.quantity=questions.length;reserved.add(selected.id);
+    } else if (target.type==='intensive') {
+      const scoped=await sources.section([target.sectionId]);
+      if(!scoped.sections.some(row=>row.skill==='listening'&&row.id===target.sectionId&&row.sentences?.some(sentence=>sentence.id===target.sentenceId)))throw new Error('The selected listening sentence is unavailable.');
     } else if (target.type==='vocabulary' && target.mode==='learning-batch' && !target.cards.length && target.bookId && target.unitId) {
       await sources.vocabulary(target.bookId,target.unitId);
       const batch=buildLearningBatch(state,target.bookId,target.unitId,target.batchIndex||0,target.batchSize||10,target.assessmentMode as any);

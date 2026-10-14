@@ -1,6 +1,8 @@
 import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
 import { isProtectedPlan } from '../../domain/plans';
-import { planningSettingsKey, selectedStudySkills } from '../../lib/planTemplates';
+import { planningSettingsKey, selectedStudySkills, ensureUnifiedPlans, calendarDays } from '../../lib/planTemplates';
+import { normalizePlanning } from '../../domain/planningPreferences';
+import { emptyState } from '../../domain/state';
 import { dateKey } from '../../domain/utils';
 
 export function settingsDraft(settings: Record<string, any>) {
@@ -10,6 +12,7 @@ export function settingsDraft(settings: Record<string, any>) {
     skills: selectedStudySkills(settings) as string[],
     focus: settings.focus || 'balanced', speakingFocus: settings.speakingFocus || 'balanced',
     vocabulary: normalizeVocabularyPreferences(settings.vocabulary),
+    planning: normalizePlanning(settings.planning,settings.dailyMinutes),
   };
 }
 export type SettingsDraft = ReturnType<typeof settingsDraft>;
@@ -22,8 +25,14 @@ export function settingsChanges(draft: SettingsDraft, baseline: SettingsDraft): 
   return changes;
 }
 
-export function settingsPlanPreview(settings: Record<string, any>, changes: Record<string, any>, plans: any[], today = dateKey(new Date())) {
+export function settingsPlanPreview(settings: Record<string, any>, changes: Record<string, any>, plans: any[], today = dateKey(new Date()), state?: any) {
   const next = { ...settings, ...changes, vocabulary: { ...settings.vocabulary, ...changes.vocabulary } };
   const rebuild = planningSettingsKey(next) !== planningSettingsKey(settings);
-  return { rebuild, affected: rebuild ? plans.filter(plan => !isProtectedPlan(plan) && plan.dateKey >= today) : [] };
+  const affected = rebuild ? plans.filter(plan => !isProtectedPlan(plan) && plan.dateKey >= today) : [];
+  const now=new Date(`${today}T12:00:00`);
+  const draft={...emptyState(),...state,settings:next,plans:structuredClone(plans.filter(plan=>!affected.some(row=>row.id===plan.id)))};
+  const generated: any[]=rebuild?ensureUnifiedPlans(draft,undefined,now):[];
+  const days=calendarDays(now);
+  const totals=Object.fromEntries(['writing','speaking','reading','listening','vocabulary'].map(skill=>[skill,generated.filter(plan=>plan.skill===skill&&plan.status!=='skipped').reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0)]));
+  return {rebuild,affected,generated,days,totals};
 }

@@ -7,7 +7,7 @@ export function practiceKeyboard(event: KeyboardEvent<HTMLElement>, actions: {
 }) {
   if (event.defaultPrevented || event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229 || event.altKey) return;
   const target = event.target as HTMLElement;
-  if (target.closest('[role="dialog"], [role="listbox"], [role="menu"], .filter-menu') ||
+  if (target.closest('[role="dialog"], [role="listbox"], [role="menu"], [role="combobox"], .select-field, .filter-menu') ||
       document.querySelector('[role="dialog"], .filter-menu.is-open, [role="menu"][data-state="open"]')) return;
   const input = target instanceof HTMLInputElement && target.type === 'text';
   const editing = input || target instanceof HTMLTextAreaElement || target.isContentEditable;

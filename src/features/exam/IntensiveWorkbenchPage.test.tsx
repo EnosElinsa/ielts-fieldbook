@@ -1,3 +1,4 @@
+import { selectChoice } from '../../../tests/selectChoice';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Link, MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -38,11 +39,11 @@ it('stores sentence navigation in history and restores the last sentence after r
   const user = userEvent.setup();
   const view = render(<MemoryRouter><IntensiveWorkbenchPage sectionId="part" /><NavigationProbe /></MemoryRouter>);
   await user.type(await screen.findByRole('textbox', { name: 'Sentence dictation' }), 'first draft');
-  await user.selectOptions(screen.getByLabelText('Jump to sentence'), '1');
+  await selectChoice(await screen.findByLabelText('Jump to sentence'), 'Sentence 2');
   expect(screen.getByLabelText('Sentence URL')).toHaveTextContent('sentence=s2');
   await user.click(screen.getByRole('button', { name: 'Browser back' }));
   expect(await screen.findByRole('textbox', { name: 'Sentence dictation' })).toHaveValue('first draft');
-  await user.selectOptions(screen.getByLabelText('Jump to sentence'), '1');
+  await selectChoice(await screen.findByLabelText('Jump to sentence'), 'Sentence 2');
   view.unmount(); open();
   expect(await screen.findByRole('heading', { name: 'Sentence 2 / 2' })).toBeInTheDocument();
 });
@@ -69,9 +70,9 @@ it('serializes saves while switching sentences so a later draft cannot be overwr
   mocks.fb.persistNow.mockImplementationOnce(() => new Promise<boolean>(resolve => { resolveFirst = resolve; }));
   const user = userEvent.setup(); open();
   await user.type(await screen.findByRole('textbox', { name: 'Sentence dictation' }), 'first');
-  await user.selectOptions(screen.getByLabelText('Jump to sentence'), '1');
+  await selectChoice(await screen.findByLabelText('Jump to sentence'), 'Sentence 2');
   await user.type(screen.getByLabelText('Sentence dictation'), 'second');
-  await user.selectOptions(screen.getByLabelText('Jump to sentence'), '0');
+  await selectChoice(await screen.findByLabelText('Jump to sentence'), 'Sentence 1');
   expect(mocks.fb.persistNow).toHaveBeenCalledTimes(1);
   resolveFirst(true);
   await waitFor(() => expect(mocks.fb.state.intensiveSessions.find((row: any) => row.sentenceId === 's2')?.transcriptInput).toBe('second'));
@@ -81,7 +82,7 @@ it('keeps saved due sentences eligible for blind recall when another sentence ha
   const completed = { ...createIntensiveSession('part', 's1'), stage: 6, listened: true, revealed: true, transcriptInput: 'old answer', dictationResult: 'correct' as const, shadowingAudioId: 'recording', completedAt: '2026-01-01', nextReviewAt: '2099-01-01' };
   mocks.fb.state.intensiveSessions = [completed];
   const user = userEvent.setup(); const view = open();
-  await user.selectOptions(await screen.findByLabelText('Jump to sentence'), '1');
+  await selectChoice(await screen.findByLabelText('Jump to sentence'), 'Sentence 2');
   await user.type(screen.getByLabelText('Sentence dictation'), 'unsaved second sentence');
   view.unmount();
   // Time passes while the draft for the other sentence remains local.
@@ -95,10 +96,10 @@ it('keeps saved due sentences eligible for blind recall when another sentence ha
 it('jumps directly to a sentence while preserving the current dictation', async () => {
   const user = userEvent.setup(); open();
   await user.type(await screen.findByRole('textbox', { name: 'Sentence dictation' }), 'My first draft');
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Jump to sentence' }), '1');
+  await selectChoice(await screen.findByLabelText('Jump to sentence'), 'Sentence 2');
   expect(screen.getByRole('heading', { name: 'Sentence 2 / 2' })).toBeInTheDocument();
   expect(screen.getByRole('textbox', { name: 'Sentence dictation' })).toHaveValue('');
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Jump to sentence' }), '0');
+  await selectChoice(await screen.findByLabelText('Jump to sentence'), 'Sentence 1');
   expect(screen.getByRole('textbox', { name: 'Sentence dictation' })).toHaveValue('My first draft');
   expect(screen.getByRole('link', { name: 'Listening practice' })).toHaveAttribute('href', '/listening/part');
 });
@@ -292,7 +293,7 @@ it('completes shadowing and schedules only after a fresh blind replay, retaining
   await user.click(screen.getByRole('button', { name: 'Hide transcript for blind re-listening' }));
   expect(screen.queryByRole('textbox', { name: 'Sentence dictation' })).not.toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Sentence dictation' })).toHaveAttribute('href', '#intensive-player');
-  await user.selectOptions(screen.getByLabelText('Self rating'), '5');
+  await selectChoice(await screen.getByLabelText('Self rating'), '5 · Clear and fluent');
   await user.click(screen.getByRole('button', { name: 'Finish ongoing play' }));
   expect(screen.getByRole('button', { name: 'Finish and schedule review' })).toBeDisabled();
   await user.click(screen.getByRole('button', { name: 'Play test sentence' }));

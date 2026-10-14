@@ -1,3 +1,4 @@
+import { selectChoice } from '../../../tests/selectChoice';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, expect, test, vi } from 'vitest';
@@ -7,7 +8,7 @@ import { RecordingPlayer, SessionAudioPlayer } from '../../components/SessionAud
 const { events, player, create, getAudio } = vi.hoisted(() => {
   const events: Record<string, (...args: any[]) => void> = {};
   const player = { on: vi.fn((name, callback) => { events[name] = callback; }), load: vi.fn().mockResolvedValue(undefined), destroy: vi.fn(), setTime: vi.fn(), setPlaybackRate: vi.fn(), playPause: vi.fn().mockResolvedValue(undefined) };
-  return { events, player, create: vi.fn((_options: object) => player), getAudio: vi.fn() };
+  return { events, player, create: vi.fn((_options: { url?: string; media?: HTMLMediaElement; [key: string]: unknown }) => player), getAudio: vi.fn() };
 });
 vi.mock('wavesurfer.js', () => ({ default: { create } }));
 vi.mock('../../storage/audio', () => ({ getAudio }));
@@ -15,14 +16,15 @@ afterEach(() => { cleanup(); vi.clearAllMocks(); });
 
 test('waveform decodes the actual source and playback controls use decoded timing', async () => {
   const view = render(<RecordingPlayer src="blob:actual-recording" />);
-  expect(create.mock.calls[0][0]).toMatchObject({url:'blob:actual-recording',media:view.container.querySelector('audio')});
+  expect(create.mock.calls[0][0].url).toBe('blob:actual-recording');
+  expect(create.mock.calls[0][0].media).toBe(view.container.querySelector('audio'));
   expect(create.mock.calls[0][0]).not.toHaveProperty('peaks');
   expect(screen.getByText('Loading audio waveform…')).toBeInTheDocument();
   act(() => { events.ready(120); events.timeupdate(30); });
   expect(screen.getByText('0:30 / 2:00')).toBeInTheDocument();
   fireEvent.change(screen.getByRole('slider', { name: 'Recording playback position' }), { target: { value: '60' } });
   expect(player.setTime).toHaveBeenCalledWith(60);
-  fireEvent.change(screen.getByRole('combobox', { name: 'Playback speed' }), { target: { value: '1.5' } });
+  await selectChoice(screen.getByRole('combobox', { name: 'Playback speed' }), '1.5x');
   expect(player.setPlaybackRate).toHaveBeenCalledWith(1.5, true);
   await userEvent.click(screen.getByRole('button', { name: 'Play recording' }));
   expect(player.playPause).toHaveBeenCalled();
@@ -42,7 +44,7 @@ test('decode failure retains the same native media, transport slots, download an
   const playback=vi.fn();const {container}=render(<RecordingPlayer src="blob:playable-recording" onPlaybackChange={playback}/>);
   const audio=container.querySelector('audio');
   expect(audio).not.toBeNull();expect(audio).toHaveAttribute('controls');expect(audio).toHaveAttribute('src','blob:playable-recording');
-  expect(create.mock.calls.at(-1)?.[0]).toMatchObject({media:audio});
+  expect(create.mock.calls.at(-1)?.[0].media).toBe(audio);
   const seek=screen.getByRole('slider',{name:'Recording playback position'});expect(seek).toBeDisabled();
   const transport=screen.getByRole('button',{name:'Play recording'});expect(transport).toBeDisabled();
   fireEvent.play(audio!);expect(playback).toHaveBeenLastCalledWith(true);

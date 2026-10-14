@@ -1,5 +1,6 @@
+import { selectChoice } from '../../../tests/selectChoice';
 import { afterEach, expect, test, vi } from 'vitest';
-import { cleanup, render, screen, fireEvent } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import { MemoryRouter } from 'react-router-dom';
 import { dateKey, emptyState } from '../../domain';
@@ -45,15 +46,15 @@ test('today retains wrong-only retry scope when resuming an existing part', () =
   expect(screen.getByRole('link', { name: 'Resume' })).toHaveAttribute('href', '/reading/s?attempt=retry&retry=original');
 });
 
-test('progress keeps assisted practice and mock marks out of unassisted practice by default', () => {
+test('progress keeps assisted practice and mock marks out of unassisted practice by default', async () => {
   const data = state();
   const base = { skill: 'reading', sectionIds: ['s'], status: 'completed', startedAt: stamp, completedAt: stamp, updatedAt: stamp, total: 2, elapsedSeconds: 120, errorReasons: {}, results: {}, earnedPoints: {}, questionTypes: {} };
   data.examAttempts = [{ ...base, id: 'practice', mode: 'practice', score: 1 }, { ...base, id: 'supported', mode: 'practice', answerRevealed: true, score: 2 }, { ...base, id: 'mock', mode: 'mock', score: 0 }];
   render(<MemoryRouter initialEntries={['/progress?category=reading']}><ProgressPage /></MemoryRouter>);
   expect(screen.getAllByText('1 / 2')).toHaveLength(2);
-  fireEvent.change(screen.getByRole('combobox', { name: 'Answer support' }), { target: { value: 'supported' } });
+  await selectChoice(screen.getByRole('combobox', { name: 'Answer support' }), 'Answers checked');
   expect(screen.getAllByText('2 / 2')).toHaveLength(2);
-  fireEvent.change(screen.getByRole('combobox', { name: 'Answer support' }), { target: { value: 'unassisted' } });
-  fireEvent.change(screen.getByRole('combobox', { name: 'View' }), { target: { value: 'mock' } });
+  await selectChoice(screen.getByRole('combobox', { name: 'Answer support' }), 'Unassisted');
+  await selectChoice(screen.getByRole('combobox', { name: 'View' }), 'Mocks only');
   expect(screen.getAllByText('0 / 2')).toHaveLength(2);
 });

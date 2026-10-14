@@ -5,6 +5,7 @@ import { collectVocabularyProduction, migrateLegacyVocabulary } from './vocabula
 import { DEFAULT_VOCABULARY_PREFERENCES, normalizeVocabularyPreferences } from './vocabulary/preferences';
 import { normalizeExamStore } from './exam/store';
 import { normalizeVocabularyIdentities } from './vocabulary/identities';
+import { DEFAULT_PLANNING, normalizePlanning } from './planningPreferences';
 import type { ExamAttempt, IntensiveSession } from './exam/types';
 import type { ExamAnnotation } from './exam/annotations';
 import { wordCount, hashText, dateKey, makeId, nowIso, clone } from './utils';
@@ -28,6 +29,7 @@ export const DEFAULT_SETTINGS = {
   activeSkill: 'writing',
   skillMix: 'mixed',
   speakingFocus: 'balanced',
+  planning: DEFAULT_PLANNING,
   vocabulary: { ...DEFAULT_VOCABULARY_PREFERENCES },
 };
 
@@ -271,6 +273,7 @@ export function migrateState(raw) {
   state.stories = dedupeStories(Array.isArray(source.stories) ? source.stories.map(normalizeStory) : []);
   state.speakingTopics = Array.isArray(source.speakingTopics) ? source.speakingTopics.map(item => Object.assign({}, item)) : [];
   state.settings = Object.assign({}, DEFAULT_SETTINGS, source.settings || {});
+  state.settings.planning = normalizePlanning(source.settings?.planning, source.settings?.dailyMinutes);
   state.settings.vocabulary = normalizeVocabularyPreferences(source.settings?.vocabulary);
   state.settings.days = Array.isArray(state.settings.days) && state.settings.days.length ? state.settings.days.map(Number) : clone(DEFAULT_SETTINGS.days);
   if (!['writing', 'speaking', 'reading', 'listening'].includes(state.settings.activeSkill)) state.settings.activeSkill = 'writing';

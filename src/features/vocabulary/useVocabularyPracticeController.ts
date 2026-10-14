@@ -688,7 +688,7 @@ export function useVocabularyPracticeController() {
       },
     });
   }
-  function focusCard(index: number, forcePlayback = false) {
+  function focusCard(index: number, forcePlayback = false, focusAnswer = true) {
     if (
       !sessionRef.current ||
       locked ||
@@ -706,6 +706,7 @@ export function useVocabularyPracticeController() {
       playedIndex.current = index;
       void playCardRef.current(index);
     }
+    if (!focusAnswer) return;
     requestAnimationFrame(() => {
       const field = answerFields.current[index];
       field?.focus();

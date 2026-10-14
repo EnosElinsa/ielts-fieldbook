@@ -28,6 +28,13 @@ export function bindSpeakingPlan(plan, topic, part, targetedPrompt, topics: any[
 }
 
 export type StudySkill = 'writing' | 'speaking' | 'reading' | 'listening' | 'vocabulary';
+export type StudyPlanAction =
+  | {type:'add'|'replace';skill:StudySkill;practice?:string;kind?:string;estimatedMinutes?:number;dateKey?:string;questionId?:string;sectionId?:string;sentenceId?:string;bookId?:string;unitId?:string;batchIndex?:number;allowOverBudget?:boolean}
+  | {type:'resize';estimatedMinutes:number;allowOverBudget?:boolean}
+  | {type:'reschedule'|'duplicate';dateKey:string;allowOverBudget?:boolean}
+  | {type:'restore';allowOverBudget?:boolean}
+  | {type:'skip'}
+  | {type:'reorder';direction:'up'|'down'};
 export type PlanTarget =
   | { type: 'question'; skill: 'writing' | 'speaking'; questionId: string | null; part?: string; mode: string; prompts?: { promptKey: string; promptText: string; promptIndex: number; part: string }[] }
   | { type: 'section'; skill: 'reading' | 'listening'; sectionId: string | null; mode: 'practice' | 'mock'; questionIds?: string[] }

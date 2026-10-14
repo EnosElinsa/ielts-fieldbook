@@ -1,3 +1,4 @@
+import { selectChoice } from '../../../tests/selectChoice';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, expect, test, vi } from 'vitest';
@@ -18,7 +19,7 @@ test('dirty preferences protect Cancel, close button, Escape and outside dismiss
   const close = vi.fn();
   render(<VocabularyPreferencesDialog open onClose={close} onSave={() => true} preferences={DEFAULT_VOCABULARY_PREFERENCES} />);
   const user = userEvent.setup();
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Accent' }), 'us');
+  await selectChoice(await screen.getByLabelText('Accent'), 'American English');
   await user.click(screen.getByRole('button', { name: 'Cancel' }));
   await user.click(within(screen.getByRole('dialog', { name: 'Discard unsaved practice settings?' })).getByRole('button', { name: 'Cancel' }));
   await user.click(screen.getByRole('button', { name: 'Close dialog' }));
@@ -28,7 +29,7 @@ test('dirty preferences protect Cancel, close button, Escape and outside dismiss
   fireEvent.pointerDown(document.querySelector('.dialog-overlay')!, { pointerType: 'mouse', button: 0 });
   await user.click(within(await screen.findByRole('dialog', { name: 'Discard unsaved practice settings?' })).getByRole('button', { name: 'Cancel' }));
   expect(close).not.toHaveBeenCalled();
-  expect(screen.getByRole('combobox', { name: 'Accent' })).toHaveValue('us');
+  expect(screen.getByRole('combobox', { name: 'Accent' })).toHaveTextContent('American English');
   await user.click(screen.getByRole('button', { name: 'Cancel' }));
   await user.click(screen.getByRole('button', { name: 'Discard changes' }));
   expect(close).toHaveBeenCalledOnce();
@@ -41,7 +42,7 @@ test('clean preferences close directly and reopened drafts use the saved baselin
   const user = userEvent.setup();
   await user.click(screen.getByRole('button', { name: 'Cancel' }));
   expect(close).toHaveBeenCalledOnce();
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Accent' }), 'us');
+  await selectChoice(await screen.getByLabelText('Accent'), 'American English');
   view.rerender(<VocabularyPreferencesDialog open={false} onClose={close} onSave={() => true} preferences={DEFAULT_VOCABULARY_PREFERENCES} />);
   view.rerender(<VocabularyPreferencesDialog open onClose={close} onSave={() => true} preferences={{ ...DEFAULT_VOCABULARY_PREFERENCES, accent: 'us' }} />);
   await user.click(screen.getByRole('button', { name: 'Cancel' }));
@@ -54,12 +55,12 @@ test('preference failure retains changed values and blocks close until saving fi
   const save = vi.fn(() => new Promise<boolean>((resolve) => { finish = resolve; }));
   render(<VocabularyPreferencesDialog open onClose={close} onSave={save} preferences={DEFAULT_VOCABULARY_PREFERENCES} />);
   const user = userEvent.setup();
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Accent' }), 'us');
+  await selectChoice(await screen.getByLabelText('Accent'), 'American English');
   await user.click(screen.getByRole('button', { name: 'Save preferences' }));
   expect(screen.getByRole('button', { name: 'Close dialog' })).toBeDisabled();
   await user.keyboard('{Escape}');
   expect(close).not.toHaveBeenCalled();
   await act(async () => finish(false));
   expect(screen.getByRole('alert')).toHaveTextContent('could not be saved');
-  expect(screen.getByRole('combobox', { name: 'Accent' })).toHaveValue('us');
+  expect(screen.getByRole('combobox', { name: 'Accent' })).toHaveTextContent('American English');
 });
