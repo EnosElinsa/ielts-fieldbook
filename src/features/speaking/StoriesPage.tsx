@@ -124,7 +124,7 @@ export function StoriesPage() {
                         if (await confirm({ title: 'Delete this story?', description: story.title, confirmLabel: 'Delete story', destructive: true }) && accountId() === owner) {
                           const draft = structuredClone(fb.stateRef.current);
                           fb.removeStory(draft, story.id);
-                          if (await fb.persistNow(draft)) fb.toast('Story deleted.');
+                          if (await fb.persistNow(draft, { collections: ['stories'] })) fb.toast('Story deleted.');
                         }
                       }}
                     >

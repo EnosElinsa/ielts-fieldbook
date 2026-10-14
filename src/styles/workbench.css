@@ -36,3 +36,8 @@
 @media (min-width:741px){.shell.is-collapsed .rail .nav-settings{justify-content:center;width:44px;min-height:44px;padding:0}.shell.is-collapsed .rail .nav-settings .nav-label{display:none}}
 .command-load-state{padding:10px 0;color:var(--muted);font-size:13px}.command-load-state p{margin:0 0 8px}.command-load-state .async-loading-inline{flex-wrap:wrap}
 @media(max-width:740px){html:has(.writing-workspace) .toast{bottom:calc(244px + env(safe-area-inset-bottom))}}
+@media(max-width:740px){
+  .shell { --mobile-navigation-height: calc(57px + max(8px, env(safe-area-inset-bottom))); }
+  .mobile-navigation { height: var(--mobile-navigation-height); }
+  .writing-workspace .editor-foot { bottom: var(--mobile-navigation-height); }
+}

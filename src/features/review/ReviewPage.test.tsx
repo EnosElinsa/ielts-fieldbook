@@ -75,6 +75,20 @@ test('targeted practice links the source attempt and specific mistake', async ()
   expect(mockFieldbook.current.startTargetedPractice).toHaveBeenCalledWith(mockFieldbook.current.state.sessions[1], 'e1');
 });
 
+test('reviewing and resolving mistakes save only errors, preserving unrelated drafts', async () => {
+  const fb = mockFieldbook.current;
+  fb.stateRef = { current: fb.state };
+  fb.reviewError = vi.fn(); fb.resolveError = vi.fn();
+  fb.persistNow = vi.fn().mockResolvedValue(false);
+  mount();
+  const user = userEvent.setup();
+  await user.click(screen.getByRole('button', { name: 'Review once' }));
+  expect(fb.persistNow).toHaveBeenLastCalledWith(expect.any(Object), { collections: ['errors'] });
+  expect(fb.toast).not.toHaveBeenCalledWith('Review saved.');
+  await user.click(screen.getByRole('button', { name: 'Mark corrected myself' }));
+  expect(fb.persistNow).toHaveBeenLastCalledWith(expect.any(Object), { collections: ['errors'] });
+});
+
 test('a search with no matches can clear filters without pretending the account is empty', async () => {
   mount();
   const user = userEvent.setup();

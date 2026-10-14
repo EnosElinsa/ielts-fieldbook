@@ -113,6 +113,8 @@ export function DictionarySenses({
           { type: "personal", id: `dictionary:${sense.id}`, senseId: sense.id },
         ],
       });
+      let feedback = '';
+      const options = { onError: (message: string) => { feedback = message; } };
       const saved =
         result.item &&
         (fb.saveVocabularyEntry
@@ -127,8 +129,8 @@ export function DictionarySenses({
                   senseId: sense.id,
                 },
               ],
-            })
-          : await fb.persistNow(draft));
+            }, options)
+          : await fb.persistNow(draft, { ...options, collections: ['vocabulary', 'vocabularyStates'] }));
       if (!active()) return;
       if (result.item && saved) {
         const savedSense = result.item.senses.find(
@@ -147,7 +149,7 @@ export function DictionarySenses({
           ),
           {state: vocabularyForwardState(location)},
         );
-      } else setError("This sense could not be saved. Try again.");
+      } else setError(feedback || "This sense could not be saved. Try again.");
     } catch {
       if (active()) setError("This sense could not be saved. Try again.");
     } finally {

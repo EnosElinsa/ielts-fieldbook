@@ -316,7 +316,7 @@ export function Shell() {
               />
             </div>
           </header>
-          <SaveFailure failed={fb.saveFailed && !location.pathname.startsWith('/settings')} saving={fb.saveStatus === 'saving'} onRetry={() => void fb.persistNow()} />
+          <SaveFailure failed={fb.saveFailed && !location.pathname.startsWith('/settings')} message={fb.saveFailureMessage || undefined} saving={fb.saveStatus === 'saving'} onRetry={() => void fb.persistNow()} />
           {fb.loadError ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
           {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
           {!fb.booted && !fb.loadError ? <PageLoadingState message="Loading workspace…" variant="bank" /> : null}

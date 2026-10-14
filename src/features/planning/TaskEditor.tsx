@@ -67,7 +67,8 @@ export function TaskEditor({mode,plan,dateKey,onClose}) {
   async function save(){
     if(saving||accountId()!==owner)return;setSaving(true);setError('');
     const action=editing?config:mode==='resize'?{type:mode,estimatedMinutes:Number(minutes),allowOverBudget}:{type:mode,dateKey:date,allowOverBudget};
-    try{if(await fb.changePlan(plan?.id||null,action)){if(accountId()===owner)onClose();}else if(accountId()===owner)setError('Your task could not be saved. Retry the change.');}
+    let feedback='';
+    try{if(await fb.changePlan(plan?.id||null,action,{onError:message=>{feedback=message;}})){if(accountId()===owner)onClose();}else if(accountId()===owner)setError(feedback||'Your task could not be saved. Retry the change.');}
     catch(cause){if(accountId()===owner)setError(cause.message||'Your task could not be saved.');}
     finally{if(accountId()===owner)setSaving(false);}
   }

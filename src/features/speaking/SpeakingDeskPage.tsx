@@ -738,7 +738,7 @@ export function SpeakingDeskPage() {
                 onClick={async () => {
                   liveSave({ transcript, notes });
                   const pending = fb.flushDraftPersist();
-                  const saved = await (pending ?? fb.persistNow());
+                  const saved = await (pending ?? fb.persistNow(undefined, { collections: ['drafts'] }));
                   if (saved) fb.toast('Draft saved.');
                 }}
               >

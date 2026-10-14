@@ -1,7 +1,8 @@
 // @ts-nocheck
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { ModalFrame } from '../../components/ModalFrame';
+import { SaveFailure } from '../../components/SaveFailure';
 
 export function SaveModal() {
   const fb = useFieldbook();
@@ -10,20 +11,27 @@ export function SaveModal() {
   const [next, setNext] = useState('');
   const [errors, setErrors] = useState('');
   const [saving, setSaving] = useState(false);
-  const save = async (exportForReview) => { setSaving(true); try { await fb.saveAttempt(exportForReview, { focus, next, errors }); } finally { setSaving(false); } };
+  const [error, setError] = useState(''); const lock = useRef(false);
+  const save = async (exportForReview) => {
+    if (lock.current) return;
+    lock.current = true; setSaving(true); setError(''); let feedback = '';
+    try { if (await fb.saveAttempt(exportForReview, { focus, next, errors }, { onError: message => { feedback = message; } }) === false) setError(feedback || 'Practice could not be saved. Your work is still here. Retry saving.'); }
+    catch { setError('Practice could not be saved. Your work is still here. Retry saving.'); }
+    finally { lock.current = false; setSaving(false); }
+  };
   const speaking = fb.pendingAttempt?.skill === 'speaking';
   const focused = ['overview', 'outline', 'compare', 'body'].includes(fb.pendingAttempt?.practiceMode);
 
   return (
-    <ModalFrame open={open} onClose={() => fb.closeModal()}>
+    <ModalFrame open={open} title="Save practice" busy={saving} onClose={() => fb.closeModal()}>
       <div className="modal">
-        <h3>Save practice</h3>
+        <h3 aria-hidden="true">Save practice</h3>
         <p>
           {focused ? 'Save your exercise, or export it for feedback and import the marked file when it is ready.' : speaking
             ? 'Save your transcript, or export it for feedback. The export does not include your recording. Import the marked file when it is ready.'
             : 'Save your response, or export it for feedback and import the marked file when it is ready.'}
         </p>
-        <div className="form">
+        <fieldset className="form" disabled={saving}>
           <div className="field full">
             <label>Practice focus</label>
             <input
@@ -48,9 +56,9 @@ export function SaveModal() {
               placeholder="For example: TA-DATA wrong figure; GRA-PREP preposition"
             />
           </div>
-        </div>
+        </fieldset>
+        <SaveFailure failed={Boolean(error)} role="alert" message={error} />
         <div className="modal-foot">
-          {fb.saveFailed ? <p className="inline-error" role="alert">Your work is still here. Retry saving when your connection returns.</p> : null}
           <button
             className="btn line"
             type="button"

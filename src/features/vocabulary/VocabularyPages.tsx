@@ -352,10 +352,12 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
       );
     });
     try {
-      const saved = await (fb.saveVocabularyStatuses ? fb.saveVocabularyStatuses(operation.ids, operation.status) : fb.persistNow(draft));
+      let feedback = '';
+      const options = { onError: message => { feedback = message; } };
+      const saved = await (fb.saveVocabularyStatuses ? fb.saveVocabularyStatuses(operation.ids, operation.status, options) : fb.persistNow(draft, { ...options, collections: ['vocabularyStates'] }));
       if (accountId() !== owner) return;
       if (saved) { setPendingBulk(null); setSelected(new Set()); fb.toast('Familiarity updated.'); }
-      else setBulkError('Could not save familiarity. Your requested change is kept; retry saving.');
+      else setBulkError(`${feedback || 'Could not save familiarity.'} Your requested change is kept; retry saving.`);
     } catch { if (accountId() === owner) setBulkError('Could not save familiarity. Your requested change is kept; retry saving.'); }
     finally { bulkLock.current = false; if (accountId() === owner) setBulkSaving(false); }
   };

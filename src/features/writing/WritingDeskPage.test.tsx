@@ -142,7 +142,7 @@ test('failed save status exposes the existing draft save action as a retry', asy
   render(<WritingDeskPage />);
   expect(screen.getByRole('status')).toHaveTextContent('Draft could not be saved');
   await userEvent.click(screen.getByRole('button', { name: 'Retry save' }));
-  expect(persistNow).toHaveBeenCalled();
+  expect(persistNow).toHaveBeenCalledWith(undefined, { collections: ['drafts'] });
   expect(toast).toHaveBeenCalledWith('Draft saved.');
 });
 

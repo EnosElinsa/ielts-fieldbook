@@ -379,6 +379,7 @@ test("submits the complete attempt once and retries the same frozen commit after
   expect(fb.current.persistVocabularySession.mock.calls[1]).toEqual([
     prepared,
     id,
+    { onError: expect.any(Function) },
   ]);
   expect(screen.getByRole("table")).toBeInTheDocument();
   expect(screen.getByRole('heading', {name: '1 of 2 correct'})).toBeInTheDocument();

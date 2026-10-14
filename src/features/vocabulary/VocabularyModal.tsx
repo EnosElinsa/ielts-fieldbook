@@ -120,8 +120,9 @@ export function VocabularyModal() {
       setSaving(false);
       return;
     }
+    let feedback = '';
     try {
-      if (await fb.persistNow(draft)) {
+      if (await fb.persistNow(draft, { collections: ['vocabulary', 'vocabularyStates'], onError: message => { feedback = message; } })) {
         fb.setEditingVocabularyId(null);
         fb.setVocabularySeed(null);
         fb.closeModal();
@@ -131,7 +132,7 @@ export function VocabularyModal() {
             : "Vocabulary saved.",
         );
       } else
-        setError("Vocabulary could not be saved. Your changes are still here.");
+        setError(feedback || 'Vocabulary could not be saved. Your changes are still here.');
     } catch {
       setError("Vocabulary could not be saved. Your changes are still here.");
     }
@@ -151,6 +152,7 @@ export function VocabularyModal() {
   return (
     <ModalFrame
       open={open}
+      busy={saving}
       title={editing ? "Edit vocabulary" : "Add vocabulary"}
       onClose={() => {
         if (!saving) fb.closeModal();

@@ -13,6 +13,12 @@
 .modal-workbench-footer > * { margin-top: 0; }
 .modal-workbench-legacy .modal-workbench-body { padding: 24px; }
 .modal-workbench-legacy .modal { padding: 0; }
+.modal-workbench-legacy .story-modal { max-height: none; overflow: visible; }
+.modal-workbench .field input[type="checkbox"], .modal-workbench .field input[type="radio"] {
+  width: 18px; height: 18px; min-width: 18px; min-height: 18px; padding: 0; margin: 0; flex: 0 0 18px; accent-color: var(--blue);
+}
+.modal-workbench .story-topics label { align-items: flex-start; gap: 10px; text-transform: none; letter-spacing: normal; line-height: 1.6; }
+.modal-workbench .story-topics label span { min-width: 0; overflow-wrap: anywhere; }
 .modal-workbench-legacy .practice-confirm-dialog { padding: 0; }
 .modal-workbench-legacy .modal > h3, .modal-workbench-legacy .practice-confirm-dialog > h2 { padding-right: 30px; }
 .modal-workbench-structured .practice-settings-dialog { padding: 0; }

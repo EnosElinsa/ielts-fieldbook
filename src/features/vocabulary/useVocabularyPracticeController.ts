@@ -777,14 +777,16 @@ export function useVocabularyPracticeController() {
           ...current,
           submittedAt: prepared.sessionRecord.submittedAt,
         });
+      let feedback = '';
       const saved = await fb.persistVocabularySession(
         prepared.state,
         current.id,
+        { onError: (message: string) => { feedback = message; } },
       );
       if (!owned() || owner.current !== submittingOwner) return;
       if (!saved) {
         setError(
-          "This session could not be saved. Your responses are still here.",
+          `${feedback || 'This session could not be saved.'} Your responses are still here.`,
         );
         return;
       }

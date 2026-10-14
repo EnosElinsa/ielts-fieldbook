@@ -23,10 +23,10 @@ test('replace and reschedule save explicit actions',async()=>{
   await userEvent.click(screen.getByRole('option',{name:'Listening'}));
   await waitFor(()=>expect(screen.getByRole('button',{name:'Save change'})).toBeEnabled());
   await userEvent.click(screen.getByRole('button',{name:'Save change'}));
-  expect(mocks.change).toHaveBeenCalledWith('task',expect.objectContaining({type:'replace',skill:'listening',practice:'recommended',estimatedMinutes:20}));
+  expect(mocks.change).toHaveBeenCalledWith('task',expect.objectContaining({type:'replace',skill:'listening',practice:'recommended',estimatedMinutes:20}),{onError:expect.any(Function)});
   await userEvent.click(screen.getByRole('button',{name:'Reschedule task'}));
   const dialog=screen.getByRole('dialog');expect(within(dialog).getByRole('button',{name:'Study date'})).toHaveTextContent(new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}));
-  await userEvent.click(within(dialog).getByRole('button',{name:'Save change'}));expect(mocks.change).toHaveBeenLastCalledWith('task',{type:'reschedule',dateKey:dateKey(new Date()),allowOverBudget:false});
+  await userEvent.click(within(dialog).getByRole('button',{name:'Save change'}));expect(mocks.change).toHaveBeenLastCalledWith('task',{type:'reschedule',dateKey:dateKey(new Date()),allowOverBudget:false},{onError:expect.any(Function)});
 });
 test('the themed date picker saves its chosen date and cannot change during saving',async()=>{
   let finish; mocks.change.mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
@@ -36,7 +36,7 @@ test('the themed date picker saves its chosen date and cannot change during savi
   await userEvent.click(screen.getByRole('button',{name:'Save change'}));
   expect(screen.getByRole('button',{name:'Study date'})).toBeDisabled();
   expect(screen.getByRole('button',{name:'Close dialog'})).toBeDisabled();
-  expect(mocks.change).toHaveBeenCalledWith('task',{type:'reschedule',dateKey:dateKey(new Date()),allowOverBudget:false});
+  expect(mocks.change).toHaveBeenCalledWith('task',{type:'reschedule',dateKey:dateKey(new Date()),allowOverBudget:false},{onError:expect.any(Function)});
   await act(async()=>finish(true));
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 });
@@ -49,13 +49,13 @@ test('skill selection stays disabled while its replacement saves',async()=>{
   await userEvent.click(screen.getByRole('option',{name:'Speaking mock'}));
   await userEvent.click(screen.getByRole('button',{name:'Save change'}));
   expect(screen.getByRole('button',{name:'Skill'})).toBeDisabled();
-  expect(mocks.change).toHaveBeenCalledWith('task',expect.objectContaining({type:'replace',skill:'speaking',practice:'speaking-mock',estimatedMinutes:15}));
+  expect(mocks.change).toHaveBeenCalledWith('task',expect.objectContaining({type:'replace',skill:'speaking',practice:'speaking-mock',estimatedMinutes:15}),{onError:expect.any(Function)});
   await act(async()=>finish(true));
 });
 test('skip and restore preserve explicit tasks',async()=>{
-  const view=mount();await userEvent.click(screen.getByRole('button',{name:'Skip task'}));expect(mocks.change).toHaveBeenCalledWith('task',{type:'skip'});
+  const view=mount();await userEvent.click(screen.getByRole('button',{name:'Skip task'}));expect(mocks.change).toHaveBeenCalledWith('task',{type:'skip'},{onError:expect.any(Function)});
   mocks.state.plans[0].status='skipped';view.rerender(<MemoryRouter><PlanningPage/></MemoryRouter>);
-  await userEvent.click(screen.getByRole('button',{name:'Restore task'}));await userEvent.click(screen.getByRole('button',{name:'Save change'}));expect(mocks.change).toHaveBeenLastCalledWith('task',expect.objectContaining({type:'restore'}));
+  await userEvent.click(screen.getByRole('button',{name:'Restore task'}));await userEvent.click(screen.getByRole('button',{name:'Save change'}));expect(mocks.change).toHaveBeenLastCalledWith('task',expect.objectContaining({type:'restore'}),{onError:expect.any(Function)});
 });
 test('failed edit stays open and keeps the selected date for retry',async()=>{
   mocks.change.mockResolvedValueOnce(false);mount();await userEvent.click(screen.getByRole('button',{name:'Reschedule task'}));

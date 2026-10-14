@@ -27,7 +27,7 @@ export function AssessmentImportModal() {
     finally { busyRef.current = false; if (alive.current) setBusy(false); }
     if (!alive.current || owner !== accountId()) return;
     if (result.invalid) { setError(result.reason); return; }
-    if (!result.saved) { setError('Could not save feedback to your account. Retry when your connection returns.'); return; }
+    if (!result.saved) { setError(`${result.error || 'Could not save feedback to your account.'} Your text is still here. Retry importing.`); return; }
     setError('');
     setText('');
     fb.closeModal();

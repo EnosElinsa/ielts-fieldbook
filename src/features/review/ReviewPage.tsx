@@ -149,7 +149,7 @@ export function ReviewPage() {
           className="btn text"
           onClick={async () => {
             const draft = structuredClone(fb.stateRef.current);
-            if (fb.completeReview(draft) && await fb.persistNow(draft)) fb.toast('Review done.');
+            if (fb.completeReview(draft) && await fb.persistNow(draft, { collections: ['plans', 'profile'] })) fb.toast('Review done.');
           }}
         >
           Mark review done
@@ -183,7 +183,7 @@ export function ReviewPage() {
                       const session =
                         item.sourceSessionId && draft.sessions.find((entry) => entry.id === item.sourceSessionId);
                       fb.reviewError(draft, item.id);
-                      const saved = await fb.persistNow(draft);
+                      const saved = await fb.persistNow(draft, { collections: ['errors'] });
                       if (!saved) return;
                       if (!session) {
                         fb.toast('No matching attempt. The review was still saved.');
@@ -202,7 +202,7 @@ export function ReviewPage() {
                     onClick={() => {
                       const draft = structuredClone(fb.stateRef.current);
                       fb.resolveError(draft, error.id, !error.resolved);
-                      fb.persistNow(draft);
+                      fb.persistNow(draft, { collections: ['errors'] });
                     }}
                   >
                     {error.resolved ? 'Reopen' : 'Mark corrected myself'}

@@ -10,7 +10,8 @@ export function useStudySchedule() {
   const settingsKey=planningSettingsKey(fb.state.settings);const today=dateKey(new Date());
   const refresh=useCallback(async()=>{
     setSaving(true);setError('');
-    try{if(!await fb.ensureUnifiedPlans())setError('Your plan could not be saved. Retry to keep these tasks.');}
+    let feedback='';
+    try{if(!await fb.ensureUnifiedPlans({onError:message=>{feedback=message;}}))setError(feedback||'Your plan could not be saved. Retry to keep these tasks.');}
     catch(cause){setError(cause instanceof Error?cause.message:'Your plan could not load. Retry shortly.');}
     finally{setSaving(false);}
   },[fb.ensureUnifiedPlans]);
@@ -23,7 +24,8 @@ export function TaskStartButton({plan}) {
   useEffect(()=>{setError('');},[plan.id]);
   async function start(){
     setStarting(true);setError('');
-    try{if(!await fb.startPlan(plan.id,{force:Boolean(error)}))setError('Your task could not be saved. Retry to start.');}
+    let feedback='';
+    try{if(!await fb.startPlan(plan.id,{force:Boolean(error),onError:message=>{feedback=message;}}))setError(feedback||'Your task could not be saved. Retry to start.');}
     catch(cause){setError(cause instanceof Error?cause.message:'The selected task could not load. Retry shortly.');}
     finally{setStarting(false);}
   }

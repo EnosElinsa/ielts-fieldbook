@@ -135,7 +135,7 @@ test('learns a source-ordered batch, keeps theme truthful and separates browsing
   expect(screen.getByRole('heading',{name:'Word 2'})).toBeInTheDocument();
   expect(screen.getByText('Viewed 1 / 12')).toBeInTheDocument();
   await screen.findByText('Progress saved');
-  expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalledWith('book','group',expect.objectContaining({viewedEntryIds:['word-1'],currentEntryId:'word-2'}));
+  expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalledWith('book','group',expect.objectContaining({viewedEntryIds:['word-1'],currentEntryId:'word-2'}),{onError:expect.any(Function)});
   expect(JSON.stringify(mocks.fb.state)).toBe(before);
 });
 
@@ -147,7 +147,7 @@ test('restores saved position, ignores unavailable viewed words and offers ten-w
   expect(screen.getByText('Viewed 1 / 12')).toBeInTheDocument();
   await userEvent.setup().click(screen.getByRole('button',{name:'Batch 1: words 1–10'}));
   expect(screen.getByRole('heading',{name:'Word 1'})).toBeInTheDocument();
-  await waitFor(()=>expect(mocks.fb.saveVocabularyLearning).toHaveBeenLastCalledWith('book','group',expect.objectContaining({currentEntryId:'word-1'})),{timeout:3500});
+  await waitFor(()=>expect(mocks.fb.saveVocabularyLearning).toHaveBeenLastCalledWith('book','group',expect.objectContaining({currentEntryId:'word-1'}),{onError:expect.any(Function)}),{timeout:3500});
 });
 
 test('failed save retains position and retries without claiming completion or changing assessment',async()=>{
@@ -203,7 +203,7 @@ test('rapid navigation remains immediate and saves only the latest durable snaps
   expect(mocks.fb.saveVocabularyLearning).not.toHaveBeenCalled();
   expect(JSON.parse(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-one:book:group')!)).toMatchObject({currentEntryId:'word-11',viewedEntryIds:['word-1','word-2']});
   await waitFor(()=>expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalledTimes(1),{timeout:3500});
-  expect(mocks.fb.saveVocabularyLearning).toHaveBeenLastCalledWith('book','group',expect.objectContaining({currentEntryId:'word-11',viewedEntryIds:['word-1','word-2']}));
+  expect(mocks.fb.saveVocabularyLearning).toHaveBeenLastCalledWith('book','group',expect.objectContaining({currentEntryId:'word-11',viewedEntryIds:['word-1','word-2']}),{onError:expect.any(Function)});
 });
 
 test('a stale successful save cannot clear newer progress or claim it is saved',async()=>{
@@ -223,7 +223,7 @@ test('a stale successful save cannot clear newer progress or claim it is saved',
   mocks.fb.saveVocabularyLearning.mockResolvedValue(true);
   fireEvent.click(screen.getByRole('button',{name:'Retry save'}));
   await screen.findByText('Progress saved');
-  expect(mocks.fb.saveVocabularyLearning).toHaveBeenLastCalledWith('book','group',expect.objectContaining({currentEntryId:'word-4',viewedEntryIds:['word-1','word-2','word-3']}));
+  expect(mocks.fb.saveVocabularyLearning).toHaveBeenLastCalledWith('book','group',expect.objectContaining({currentEntryId:'word-4',viewedEntryIds:['word-1','word-2','word-3']}),{onError:expect.any(Function)});
 });
 
 test('loading errors retry and archived-only groups have a useful next step',async()=>{
@@ -275,7 +275,7 @@ test('keeps both viewed words when the first click happens as the learning card 
   expect(screen.getByText('Viewed 2 / 12')).toBeInTheDocument();
   vi.spyOn(document,'visibilityState','get').mockReturnValue('hidden');
   fireEvent(document,new Event('visibilitychange'));
-  expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalledWith('book','group',expect.objectContaining({currentEntryId:'word-3',viewedEntryIds:['word-1','word-2']}));
+  expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalledWith('book','group',expect.objectContaining({currentEntryId:'word-3',viewedEntryIds:['word-1','word-2']}),{onError:expect.any(Function)});
   await act(async()=>{await vi.advanceTimersByTimeAsync(1);});
   expect(screen.getByText('Progress saved')).toBeInTheDocument();
 });
@@ -304,7 +304,7 @@ test('hiding the page flushes the latest draft before the debounce expires',asyn
   expect(mocks.fb.saveVocabularyLearning).not.toHaveBeenCalled();
   vi.spyOn(document,'visibilityState','get').mockReturnValue('hidden');
   fireEvent(document,new Event('visibilitychange'));
-  expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalledWith('book','group',expect.objectContaining({currentEntryId:'word-3',viewedEntryIds:['word-1','word-2']}));
+  expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalledWith('book','group',expect.objectContaining({currentEntryId:'word-3',viewedEntryIds:['word-1','word-2']}),{onError:expect.any(Function)});
   await act(async()=>{await vi.advanceTimersByTimeAsync(1);});
   expect(screen.getByText('Progress saved')).toBeInTheDocument();
 });

@@ -38,7 +38,7 @@ test('writing save dialog explains export and keeps both save buttons', async ()
   expect(screen.getByRole('button', { name: 'Save only' }).className).toContain('line');
   expect(screen.queryByRole('button', { name: 'Import score' })).not.toBeInTheDocument();
   await userEvent.click(screen.getByRole('button', { name: 'Save only' }));
-  expect(saveAttempt).toHaveBeenCalledWith(false, { focus: '', next: '', errors: '' });
+  expect(saveAttempt).toHaveBeenCalledWith(false, { focus: '', next: '', errors: '' }, { onError: expect.any(Function) });
 });
 
 test('speaking save dialog explains that recordings are excluded from export', () => {
@@ -50,4 +50,18 @@ test('speaking save dialog explains that recordings are excluded from export', (
     ),
   ).toBeInTheDocument();
   expect(screen.queryByText(/in this browser/)).not.toBeInTheDocument();
+});
+
+test('pending practice completion blocks every dismissal and preserves notes after failure', async () => {
+  let finish!: (value: boolean) => void;
+  saveAttempt.mockImplementationOnce(() => new Promise(resolve => { finish = resolve; }));
+  const user = userEvent.setup(); render(<SaveModal />);
+  await user.type(screen.getByPlaceholderText('For example: overview, comparisons, paragraph order'), 'Use clearer comparisons');
+  await user.click(screen.getByRole('button', { name: 'Save only' }));
+  expect(screen.getByRole('button', { name: 'Close dialog' })).toBeDisabled();
+  await user.keyboard('{Escape}');
+  expect(closeModal).not.toHaveBeenCalled();
+  finish(false);
+  expect(await screen.findByRole('alert')).toHaveTextContent('Your work is still here');
+  expect(screen.getByPlaceholderText('For example: overview, comparisons, paragraph order')).toHaveValue('Use clearer comparisons');
 });

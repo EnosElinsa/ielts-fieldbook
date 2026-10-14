@@ -3,12 +3,14 @@ import { useMemo, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { migrateState } from '../../domain';
 import { ModalFrame } from '../../components/ModalFrame';
+import { SaveFailure } from '../../components/SaveFailure';
 
 export function BackupModal() {
   const fb = useFieldbook();
   const open = fb.modal === 'backup';
   const [importSettings, setImportSettings] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
   const preview = useMemo(() => {
     if (!fb.pendingBackup) return null;
     const validation = fb.validateBackup(fb.pendingBackup);
@@ -20,9 +22,9 @@ export function BackupModal() {
   }, [fb.pendingBackup, fb]);
 
   return (
-    <ModalFrame open={open} onClose={() => fb.closeModal()} busy={saving}>
+    <ModalFrame open={open} title="Import a backup" onClose={() => fb.closeModal()} busy={saving}>
       <div className="modal">
-        <h3>Import a backup</h3>
+        <h3 aria-hidden="true">Import a backup</h3>
         <p>Import study records into your account without deleting existing records.</p>
         <div className="panel">
           {preview ? (
@@ -56,13 +58,15 @@ export function BackupModal() {
           )}
         </div>
         <label className="check-field import-settings">
-          <input type="checkbox" checked={importSettings} onChange={(e) => setImportSettings(e.target.checked)} />
+          <input type="checkbox" disabled={saving} checked={importSettings} onChange={(e) => setImportSettings(e.target.checked)} />
           Also import study settings
         </label>
+        <SaveFailure failed={Boolean(error)} role="alert" message={error} />
         <div className="modal-foot">
           <button
             className="btn line"
             type="button"
+            disabled={saving}
             onClick={() => {
               fb.setPendingBackup(null);
               fb.closeModal();
@@ -76,7 +80,7 @@ export function BackupModal() {
             disabled={saving}
             onClick={async () => {
               if (!fb.pendingBackup || saving) return;
-              setSaving(true);
+              setSaving(true); setError('');
               try {
               if (fb.ensureCompleteAccount) await fb.ensureCompleteAccount();
               fb.downloadFile(
@@ -89,12 +93,13 @@ export function BackupModal() {
                 includeSettings: importSettings,
               });
               if (questions.length) draft.questions = questions;
-              if (!await fb.persistNow(draft)) { fb.toast('Backup could not be saved. Retry the merge.'); return; }
+              let feedback = '';
+              if (!await fb.persistNow(draft, { onError: message => { feedback = message; } })) { setError(feedback || 'Backup could not be saved. Retry the merge.'); return; }
               fb.setPendingBackup(null);
               fb.closeModal();
               if (draft.questions[0]) fb.setSelectedQuestionId(String(draft.questions[0].id));
               fb.toast('Backup imported. Existing records were kept.');
-              } catch { fb.toast('Could not load or save the complete account. Try again.'); }
+              } catch { setError('Could not load or save the complete account. Your backup is still here. Try again.'); }
               finally { setSaving(false); }
             }}
           >

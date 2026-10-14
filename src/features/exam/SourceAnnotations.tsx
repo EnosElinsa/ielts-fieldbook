@@ -98,17 +98,18 @@ export function SourceAnnotations({ sourceId, skill, mock = false, disabled = fa
     if (!current() || lock.current) return false;
     lock.current = true; setSaving(true); setError('');
     let saved = false;
+    let feedback = '';
     try {
       await fb.ensureAccountModule?.('receptive');
       if (!current()) return false;
       const draft = structuredClone(fb.stateRef.current);
       const all = normalizeExamAnnotations(draft.examAnnotations);
       draft.examAnnotations = [...all.filter(row => row.sourceId !== sourceId || row.skill !== skill), ...applyRecovery(all.filter(row => row.sourceId === sourceId && row.skill === skill), snapshot)];
-      saved = await fb.persistNow(draft);
+      saved = await fb.persistNow(draft, { collections: ['examAnnotations'], onError: (message: string) => { feedback = message; } });
     } catch { saved = false; }
     finally { if (current()) { lock.current = false; setSaving(false); } }
     if (!current()) return false;
-    if (!saved) { setError('Annotations could not be saved. Your edits remain in this browser.'); return false; }
+    if (!saved) { setError(`${feedback || 'Annotations could not be saved.'} Your edits remain in this browser.`); return false; }
     if (JSON.stringify(pendingRef.current) === JSON.stringify(snapshot)) {
       clearExamRecovery(owner, recoveryKey); pendingRef.current = emptyRecovery(); setLocal({ scope, pending: emptyRecovery() });
     }

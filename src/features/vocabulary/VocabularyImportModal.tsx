@@ -114,17 +114,19 @@ export function VocabularyImportModal() {
         }
         pending.current = { draft, batchId };
       }
+      let feedback = '';
       if (
         await fb.persistVocabularyImport(
           pending.current.draft,
           pending.current.batchId,
+          { onError: message => { feedback = message; } },
         )
       ) {
         fb.closeModal();
         fb.toast("Vocabulary import saved.");
         pending.current = null;
       } else
-        setError("Import could not be saved. Retry to save this same batch.");
+        setError(`${feedback || 'Import could not be saved.'} Retry to save this same batch.`);
     } catch (failure) {
       setError(
         failure instanceof Error

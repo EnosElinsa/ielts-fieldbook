@@ -55,7 +55,7 @@ export function VocabularyGroupLearnPage() {
   const [savedOnDevice, setSavedOnDevice] = useState(true);
   const sync = useRef<ReturnType<typeof acquireVocabularyLearningSync> | undefined>(undefined);
   const saveLearning = useRef(fb.saveVocabularyLearning);
-  saveLearning.current = fb.saveVocabularyLearning;
+  saveLearning.current = (bookId, unitId, learning) => fb.saveVocabularyLearning(bookId, unitId, learning, { onError: () => {} });
   const mounted = useRef(true);
   const initialized = useRef('');
   const previousOwner = useRef(owner);

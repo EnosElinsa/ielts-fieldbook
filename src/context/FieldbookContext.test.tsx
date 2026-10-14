@@ -36,6 +36,52 @@ vi.mock('../storage/vocabularyCatalog', () => ({
 vi.mock('../storage/remote', () => ({ accountId: () => mocks.owner }));
 
 let fieldbook;
+test('an acknowledged draft save cannot discard recovery for text edited during the request', async () => {
+  await mount('/write');
+  const pending = defer(); mocks.saveState.mockReturnValueOnce(pending.promise);
+  let saving;
+  await act(async () => { fieldbook.setWritingDraft('q1', 'First version'); saving = fieldbook.persistNow(undefined, { collections: ['drafts'] }); });
+  await act(async () => { fieldbook.setWritingDraft('q1', 'Newer unsaved version'); });
+  await act(async () => { pending.resolve(true); await saving; });
+  expect(readDraftRecovery(mocks.owner)?.drafts.q1.text).toBe('Newer unsaved version');
+  expect(fieldbook.draftSaveStatus('q1')).toBe('unsaved');
+});
+
+test('global save failures keep server feedback in one banner without a duplicate toast', async () => {
+  await mount('/write');
+  mocks.saveState.mockImplementation(async (_next, onError) => { onError?.('The account server took too long to save. Retry saving.'); return false; });
+  await act(async () => { await fieldbook.persistNow(); });
+  expect(fieldbook.saveFailed).toBe(true);
+  expect(fieldbook.saveFailureMessage).toContain('server took too long');
+  expect(fieldbook.toastVisible).toBe(false);
+});
+
+test('targeted vocabulary saves exclude unrelated unsaved drafts and have one error owner', async () => {
+  await mount('/vocabulary');
+  const onError = vi.fn();
+  await act(async () => { fieldbook.setWritingDraft('q1', 'Unsaved writing'); });
+  mocks.saveState.mockClear();
+  mocks.saveState.mockImplementationOnce(async (_next, feedback) => { feedback?.('Server timeout'); return false; });
+  await act(async () => { expect(await fieldbook.saveVocabularyEntry({ term: 'harbor', meaning: 'A sheltered port.' }, { onError })).toBe(false); });
+  expect(mocks.saveState.mock.calls.at(-1)[2].collections).toEqual(['vocabulary', 'vocabularyStates']);
+  expect(onError).toHaveBeenCalledWith('Server timeout');
+  expect(fieldbook.saveFailed).toBe(false);
+  expect(fieldbook.draftSaveStatus('q1')).toBe('unsaved');
+});
+
+test('plan edit failures use their local handler without a global error or toast', async () => {
+  await mount('/planning');
+  await act(async () => { await fieldbook.ensureUnifiedPlans(); });
+  const plan = fieldbook.state.plans.find(row => row.status === 'pending');
+  expect(plan).toBeTruthy();
+  const onError = vi.fn();
+  mocks.saveState.mockImplementationOnce(async (_next, feedback) => { feedback?.('Server timeout'); return false; });
+  await act(async () => { expect(await fieldbook.changePlan(plan.id, { type: 'skip' }, { onError })).toBe(false); });
+  expect(onError).toHaveBeenCalledWith('Server timeout');
+  expect(fieldbook.saveFailed).toBe(false);
+  expect(fieldbook.state.plans.find(row => row.id === plan.id).status).toBe('pending');
+});
+
 test('a locally handled exam save excludes vocabulary migrations and has one error owner', async () => {
   await mount('/reading');
   mocks.saveState.mockClear();
@@ -898,9 +944,12 @@ test('settings save feedback resets between study and vocabulary retries',async(
   mocks.saveState.mockImplementationOnce(async(_state,feedback)=>{feedback('Check your connection and retry.');return false;});
   await act(async()=>{expect(await fieldbook.saveStudySettings({targetBand:7})).toBe(false);});
   expect(fieldbook.getStudySettingsError()).toContain('connection');
+  expect(fieldbook.saveFailed).toBe(false);
+  expect(fieldbook.toastVisible).toBe(false);
   mocks.saveState.mockImplementationOnce(async(_state,feedback)=>{feedback('Sign in again to save.');return false;});
   await act(async()=>{expect(await fieldbook.saveVocabularyPreferences({accent:'us'})).toBe(false);});
   expect(fieldbook.getStudySettingsError()).toContain('Sign in again');
+  expect(fieldbook.saveFailed).toBe(false);
   await act(async()=>{expect(await fieldbook.saveVocabularyPreferences({accent:'us'})).toBe(true);});
   expect(fieldbook.getStudySettingsError()).toBe('');
 });

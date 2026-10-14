@@ -153,7 +153,7 @@ export function WritingDeskPage() {
     if (soft && !await confirm({ title: 'Finish this response?', description: soft, confirmLabel: 'Finish practice' })) return;
     fb.setChecklistToastNeeded(false);
     fb.setWritingDraft(selected.id, text, { sections: fragment ? sections : emptySections(), practiceMode: mode, targetErrorIds });
-    if (!fb.flushDraftPersist()) fb.persistNow();
+    if (!fb.flushDraftPersist()) fb.persistNow(undefined, { collections: ['drafts'] });
     fb.setPendingAttempt({
       id: crypto.randomUUID(),
       essay: text,
@@ -408,7 +408,7 @@ export function WritingDeskPage() {
                 onClick={async () => {
                   fb.setWritingDraft(selected.id, composed, { sections, practiceMode: mode, targetErrorIds });
                   const pending = fb.flushDraftPersist();
-                  const saved = await (pending ?? fb.persistNow());
+                  const saved = await (pending ?? fb.persistNow(undefined, { collections: ['drafts'] }));
                   if (saved) fb.toast('Draft saved.');
                 }}
               >

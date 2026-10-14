@@ -64,6 +64,7 @@ test("previews first and closes only after the atomic import save completes", as
   expect(fb.current.persistVocabularyImport).toHaveBeenCalledWith(
     expect.objectContaining({ vocabularyImportBatches: [{ id: "batch-1" }] }),
     "batch-1",
+    { onError: expect.any(Function) },
   );
   expect(fb.current.closeModal).not.toHaveBeenCalled();
   finish!(true);

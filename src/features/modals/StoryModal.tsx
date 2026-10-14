@@ -1,7 +1,9 @@
 // @ts-nocheck
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { ModalFrame } from '../../components/ModalFrame';
+import { SaveFailure } from '../../components/SaveFailure';
+import { accountId } from '../../storage/remote';
 
 export function StoryModal() {
   const fb = useFieldbook();
@@ -18,9 +20,16 @@ export function StoryModal() {
   const [feeling, setFeeling] = useState('');
   const [tags, setTags] = useState('');
   const [topicIds, setTopicIds] = useState([]);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+  const lock = useRef(false); const mounted = useRef(true);
+  const pendingId = useRef<string | null>(null);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
 
   useEffect(() => {
     if (!open) return;
+    setError('');
+    pendingId.current = null;
     if (editing) {
       setTitle(editing.title || '');
       setPeople(editing.people || '');
@@ -40,14 +49,41 @@ export function StoryModal() {
       setTags('');
       setTopicIds(fb.storyPresetTopicIds || []);
     }
-  }, [open, editing, fb.storyPresetTopicIds]);
+  }, [open, editing?.id, fb.storyPresetTopicIds]);
+
+  const save = async () => {
+    if (lock.current) return;
+    if (!title.trim()) { setError('Give the story a title first.'); return; }
+    const owner = accountId(); const editingId = fb.editingStoryId;
+    lock.current = true; setSaving(true); setError('');
+    let feedback = '';
+    try {
+      const draft = structuredClone(fb.stateRef.current);
+      const input = { title, people, place, time, event, feeling, tags, topicIds };
+      const storyId = editingId || pendingId.current;
+      if (storyId && draft.stories.some(row => row.id === storyId)) fb.updateStory(draft, storyId, input);
+      else {
+        pendingId.current ||= crypto.randomUUID();
+        fb.addStory(draft, input, { id: () => pendingId.current });
+      }
+      if (!editingId) fb.completeStoriesPlan(draft);
+      const saved = await fb.persistNow(draft, { collections: ['stories', 'plans', 'profile'], onError: message => { feedback = message; } });
+      if (!mounted.current || accountId() !== owner) return;
+      if (!saved) { setError(feedback || 'Story could not be saved. Your changes are still here. Retry saving.'); return; }
+      fb.setEditingStoryId(null); fb.closeModal(); fb.toast(editingId ? 'Story updated.' : 'Story saved.');
+    } catch {
+      if (mounted.current && accountId() === owner) setError('Story could not be saved. Your changes are still here. Retry saving.');
+    } finally {
+      lock.current = false; if (mounted.current && accountId() === owner) setSaving(false);
+    }
+  };
 
   return (
-    <ModalFrame open={open} onClose={() => fb.closeModal()}>
+    <ModalFrame open={open} title={editing ? 'Edit this story' : 'Write a story'} busy={saving} onClose={() => fb.closeModal()}>
       <div className="modal story-modal">
-        <h3>{editing ? 'Edit this story' : 'Write a story'}</h3>
+        <h3 aria-hidden="true">{editing ? 'Edit this story' : 'Write a story'}</h3>
         <p>Who, where, when, and what happened.</p>
-        <div className="form">
+        <fieldset className="form" disabled={saving}>
           <div className="field full">
             <label htmlFor="storyTitle">Title</label>
             <input
@@ -118,37 +154,19 @@ export function StoryModal() {
               )}
             </div>
           </div>
-        </div>
+        </fieldset>
+        <SaveFailure failed={Boolean(error)} role="alert" message={error} />
         <div className="modal-foot">
-          <button className="btn line" type="button" onClick={() => fb.closeModal()}>
+          <button className="btn line" type="button" disabled={saving} onClick={() => fb.closeModal()}>
             Cancel
           </button>
           <button
             className="btn primary"
             type="button"
-            onClick={() => {
-              if (!String(title || '').trim()) {
-                fb.toast('Give the story a title first.');
-                return;
-              }
-              const draft = structuredClone(fb.stateRef.current);
-              const input = { title, people, place, time, event, feeling, tags, topicIds };
-              if (fb.editingStoryId) {
-                fb.updateStory(draft, fb.editingStoryId, input);
-                fb.closeModal();
-                fb.persistNow(draft);
-                fb.toast('Story updated.');
-              } else {
-                const added = fb.addStory(draft, input, { id: () => crypto.randomUUID() });
-                if (added.item && !added.duplicate) fb.completeStoriesPlan(draft);
-                fb.closeModal();
-                fb.persistNow(draft);
-                fb.toast('Story saved.');
-              }
-              fb.setEditingStoryId(null);
-            }}
+            disabled={saving}
+            onClick={() => void save()}
           >
-            Save
+            {saving ? 'Saving…' : 'Save'}
           </button>
         </div>
       </div>

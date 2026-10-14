@@ -18,11 +18,11 @@ test('one next task is unified and does not depend on the active skill',async()=
   mocks.state.plans=[plan('listen','listening')];mocks.skill='writing';renderPage();
   await screen.findByRole('heading',{name:'listening task'});
   expect(screen.getAllByText(/20 min/)).toHaveLength(2);
-  await userEvent.click(screen.getByRole('button',{name:'Start'}));expect(mocks.start).toHaveBeenCalledWith('listen',{force:false});
+  await userEvent.click(screen.getByRole('button',{name:'Start'}));expect(mocks.start).toHaveBeenCalledWith('listen',{force:false,onError:expect.any(Function)});
 });
 test('resumes existing progress before overdue or new tasks',async()=>{
   mocks.state.plans=[plan('overdue','reading','pending','2020-01-01'),plan('resume','speaking','in_progress')];renderPage();
-  await userEvent.click(screen.getByRole('button',{name:'Resume'}));expect(mocks.start).toHaveBeenCalledWith('resume',{force:false});
+  await userEvent.click(screen.getByRole('button',{name:'Resume'}));expect(mocks.start).toHaveBeenCalledWith('resume',{force:false,onError:expect.any(Function)});
   expect(screen.getByRole('link',{name:'1 overdue task'})).toHaveAttribute('href','/planning');
 });
 test('blocked source content remains retryable',async()=>{
@@ -50,19 +50,19 @@ test('today progress takes priority over old work and previous tasks keep their 
   expect(within(next).getByRole('heading',{name:'speaking task'})).toBeInTheDocument();
   expect(next).toHaveAttribute('data-plan-id','current');
   await userEvent.click(within(next).getByRole('button',{name:'Resume'}));
-  expect(mocks.start).toHaveBeenLastCalledWith('current',{force:false});
+  expect(mocks.start).toHaveBeenLastCalledWith('current',{force:false,onError:expect.any(Function)});
   const previous=screen.getByRole('region',{name:'Continue previous tasks'});
   const old=within(previous).getByRole('article');
   expect(old).toHaveAttribute('data-plan-id','old');expect(old).toHaveTextContent('Due 2020-01-01');
   await userEvent.click(within(old).getByRole('button',{name:'Resume'}));
-  expect(mocks.start).toHaveBeenLastCalledWith('old',{force:false});
+  expect(mocks.start).toHaveBeenLastCalledWith('old',{force:false,onError:expect.any(Function)});
 });
 test('the active eligible task takes priority and its overdue detail resumes that exact plan',async()=>{
   mocks.state.activePlanId='chosen';mocks.state.plans=[plan('old','reading','in_progress','2020-01-01'),plan('today','speaking','in_progress'),plan('chosen','listening','in_progress','2020-01-02')];
   const {container}=renderPage();const next=container.querySelector('.study-next');
   expect(next).toHaveAttribute('data-plan-id','chosen');expect(next).toHaveTextContent('Due 2020-01-02');
   await userEvent.click(within(next).getByRole('button',{name:'Resume'}));
-  expect(mocks.start).toHaveBeenLastCalledWith('chosen',{force:false});
+  expect(mocks.start).toHaveBeenLastCalledWith('chosen',{force:false,onError:expect.any(Function)});
   expect(screen.getByRole('region',{name:'Continue previous tasks'}).querySelector('[data-plan-id="chosen"]')).toBeNull();
 });
 test('future and completed active plans cannot displace today or an unfinished exam hijack its detail',async()=>{

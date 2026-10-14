@@ -226,17 +226,20 @@ export function VocabularyEntryPage() {
         value as VocabularyStatus | "automatic",
         senseId,
       );
+      let feedback = '';
+      const options = { onError: (message: string) => { feedback = message; } };
       const didSave = fb.saveVocabularyStatus
         ? await fb.saveVocabularyStatus(
             entry!.id,
             senseId,
             value as VocabularyStatus | "automatic",
             selectedSense ? { ...entry!, senses: [selectedSense] } : undefined,
+            options,
           )
-        : await fb.persistNow(draft);
+        : await fb.persistNow(draft, { ...options, collections: ['vocabulary', 'vocabularyStates'] });
       if (!active()) return;
       if (didSave) fb.toast("Mastery preference saved.");
-      else setSaveError("Familiarity could not be saved. Try again.");
+      else setSaveError(feedback || "Familiarity could not be saved. Try again.");
     } catch {
       if (active()) setSaveError("Familiarity could not be saved. Try again.");
     } finally {

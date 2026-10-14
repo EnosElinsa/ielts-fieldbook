@@ -210,7 +210,7 @@ export function SpeakingTopicPage() {
               className="btn line"
               type="button"
               disabled={!fb.state.stories.length}
-              onClick={() => {
+              onClick={async () => {
                 if (!attachStoryId) {
                   fb.toast('Choose a story first.');
                   return;
@@ -221,8 +221,7 @@ export function SpeakingTopicPage() {
                 fb.updateStory(draftState, story.id, {
                   topicIds: Array.from(new Set((story.topicIds || []).concat([topic.id]))),
                 });
-                fb.persistNow(draftState);
-                fb.toast('Added to this topic.');
+                if (await fb.persistNow(draftState, { collections: ['stories'] })) fb.toast('Added to this topic.');
               }}
             >
               Add to this topic

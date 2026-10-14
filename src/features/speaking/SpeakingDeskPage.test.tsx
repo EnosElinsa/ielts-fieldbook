@@ -8,7 +8,7 @@ import { SpeakingDeskPage } from './SpeakingDeskPage';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { speakingPrompts } from '../../domain/speaking';
 
-const { putAudio, setPendingAttempt, openModal, writePendingAudio, readPendingAudio, deletePendingAudio, desk } = vi.hoisted(() => ({ putAudio: vi.fn(), setPendingAttempt: vi.fn(), openModal: vi.fn(), writePendingAudio: vi.fn().mockResolvedValue(true), readPendingAudio: vi.fn().mockResolvedValue(null), deletePendingAudio: vi.fn().mockResolvedValue(true), desk: { part: '1', mode: 'speak-blind', index: 0, owner: 'account-1', drafts: {} as Record<string, any>, statuses: {} as Record<string, string> } }));
+const { putAudio, setPendingAttempt, openModal, persistNow, writePendingAudio, readPendingAudio, deletePendingAudio, desk } = vi.hoisted(() => ({ putAudio: vi.fn(), setPendingAttempt: vi.fn(), openModal: vi.fn(), persistNow: vi.fn().mockResolvedValue(true), writePendingAudio: vi.fn().mockResolvedValue(true), readPendingAudio: vi.fn().mockResolvedValue(null), deletePendingAudio: vi.fn().mockResolvedValue(true), desk: { part: '1', mode: 'speak-blind', index: 0, owner: 'account-1', drafts: {} as Record<string, any>, statuses: {} as Record<string, string> } }));
 vi.mock('../../storage/audio', () => ({ putAudio }));
 vi.mock('../../storage/pendingAudio', () => ({
   writePendingAudio, readPendingAudio, deletePendingAudio,
@@ -24,7 +24,7 @@ vi.mock('../../context/FieldbookContext', () => ({
     draftSaveStatus: (_topic: string, key?: string) => desk.statuses[key || 'legacy'] || 'saved',
     setSpeakingDraft: (_topic: string, patch: any) => { desk.drafts[patch.promptKey || 'legacy'] = { ...desk.drafts[patch.promptKey || 'legacy'], ...patch }; }, scheduleDraftPersist: vi.fn(), toast: vi.fn(),
     wordCount: (text: string) => text.trim().split(/\s+/).filter(Boolean).length,
-    setPendingAttempt, openModal, persistNow: vi.fn().mockResolvedValue(true), flushDraftPersist: vi.fn(),
+    setPendingAttempt, openModal, persistNow, flushDraftPersist: vi.fn(),
   }); },
 }));
 
@@ -69,6 +69,12 @@ test('switching speaking prompts isolates transcript and recording and restores 
   fireEvent.click(screen.getByRole('button', { name: '1. Where do you live?' })); view.rerender(<SpeakingDeskPage />);
   await waitFor(() => expect(screen.getByRole('textbox', { name: 'Speaking transcript' })).toHaveValue('First response'));
   expect(await screen.findByText('Decoded recording player')).toBeInTheDocument();
+});
+
+test('saving a speaking draft excludes unrelated account collections', async () => {
+  render(<SpeakingDeskPage />);
+  await userEvent.click(screen.getByRole('button', { name: 'Save draft' }));
+  expect(persistNow).toHaveBeenCalledWith(undefined, { collections: ['drafts'] });
 });
 
 test('a permission result after switching prompts releases its stream and cannot record the new prompt', async () => {

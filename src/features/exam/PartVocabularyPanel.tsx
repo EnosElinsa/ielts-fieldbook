@@ -88,17 +88,18 @@ export function PartVocabularyPanel({ catalog, attempt, sectionId }: { catalog: 
     });
     setSaving(true); setError(''); setStatus('');
     let count = 0;
+    let feedback = '';
     try {
       for (const { candidate, senses } of batch) {
         if (!current(requested, version)) return;
         const input = { term: candidate.term, senses, sources: senses.flatMap(sense => candidate.sources.map(source => ({ ...source, senseId: sense.id }))) };
-        const ok = await fb.saveVocabularyEntry(input);
+        const ok = await fb.saveVocabularyEntry(input, { onError: (message: string) => { feedback = message; } });
         if (!current(requested, version)) return;
         if (!ok) throw new Error('save');
         count++; setChosen(value => { const next = { ...value }; delete next[candidate.term]; return next; }); setSavedRevision(value => value + 1);
       }
       if (current(requested, version)) setStatus(`${count} ${count === 1 ? 'word' : 'words'} saved.`);
-    } catch { if (current(requested, version)) setError(`${count ? `${count} ${count === 1 ? 'word was' : 'words were'} saved. ` : ''}Selected meanings could not be saved. Your remaining selections are kept; retry saving.`); }
+    } catch { if (current(requested, version)) setError(`${count ? `${count} ${count === 1 ? 'word was' : 'words were'} saved. ` : ''}${feedback || 'Selected meanings could not be saved.'} Your remaining selections are kept; retry saving.`); }
     finally { if (current(requested, version)) { lock.current = false; setSaving(false); } }
   }
   if (!available) return null;
