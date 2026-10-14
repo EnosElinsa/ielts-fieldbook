@@ -12,6 +12,7 @@ import {
   type ReactNode,
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { navigateWithPracticeGuard } from '../lib/practiceNavigation';
 import {
   STATE_VERSION,
   addVocabularyItem,
@@ -65,6 +66,7 @@ import { completeReceptivePlanIfMatched, receptivePlanPath } from '../lib/recept
 import { bindStudyPlanTargets } from '../lib/planTargets';
 import { normalizeVocabularyIdentities } from '../domain/vocabulary/identities';
 import { sessionSkill } from '../lib/format';
+import { attemptSections } from '../domain/desk';
 import { accountId } from '../storage/remote';
 import { differentDrafts, discardDraftRecovery, readDraftRecovery, writeDraftRecovery } from '../storage/recovery';
 import { deletePendingAudio } from '../storage/pendingAudio';
@@ -111,7 +113,7 @@ function useFieldbookValue() {
     return String((s.questions[0] || FALLBACK_QUESTIONS[0]).id);
   });
   const [selectedTopicId, setSelectedTopicId] = useState<string | null>(null);
-  const [deskPart, setDeskPart] = useState('2');
+  const [deskPartOverride, setDeskPart] = useState<string | null>(null);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [activeDeskMode, setActiveDeskMode] = useState<string | null>(null);
   const [vocabularyDueOnly, setVocabularyDueOnly] = useState(false);
@@ -778,10 +780,11 @@ function useFieldbookValue() {
     (selectedTopicId && state.speakingTopics.find((t) => String(t.id) === String(selectedTopicId))) ||
     state.speakingTopics[0] ||
     null;
+  const deskPart = deskPartOverride || String(selectedTopic?.part || '2');
 
   const currentDeskMode = useCallback(() => {
     const plan = state.plans.find((item) => item.id === state.activePlanId);
-    return inferredDeskMode(plan) || activeDeskMode || 'full';
+    return (plan ? inferredDeskMode(plan) : null) || activeDeskMode || 'full';
   }, [state.plans, state.activePlanId, activeDeskMode]);
 
   const openModal = useCallback((name: ModalName) => setModal(name), []);
@@ -1307,6 +1310,7 @@ function useFieldbookValue() {
           name: question.name || question.title,
           type: speaking ? String(pendingAttempt.part) : question.type,
           essay: pendingAttempt.essay,
+          sections: speaking ? undefined : pendingAttempt.sections,
           focus: saveFields.focus,
           next: saveFields.next,
           parentSessionId: pendingAttempt.parentSessionId,
@@ -1444,7 +1448,10 @@ function useFieldbookValue() {
   );
 
   const importFeedback = useCallback(async (text, filename) => {
+    const owner = accountId();
+    const epoch = loadEpoch.current;
     await ensureCompleteAccount();
+    if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return { saved: false };
     const draft = structuredClone(stateRef.current);
     const result = importAssessmentText(draft, text, filename);
     if (result.invalid) return { ...result, saved: false };
@@ -1458,21 +1465,55 @@ function useFieldbookValue() {
     draft.settings.favoriteQuestions = favorites.includes(key) ? favorites.filter((value) => value !== key) : [...favorites, key];
   }), [persist]);
 
+  const startingTargetedPractice = useRef(false);
   const startTargetedPractice = useCallback((session, errorId = null) => {
+    if (!session || startingTargetedPractice.current) return Promise.resolve(false);
+    const owner = accountId();
+    const epoch = loadEpoch.current;
+    const path = session.skill === 'speaking' ? '/speak' : '/write';
+    const begin = async () => {
+    if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current || startingTargetedPractice.current) return false;
+    startingTargetedPractice.current = true;
+    try {
     const speaking = session.skill === 'speaking';
     const id = String(session.questionId);
+    try { await ensureQuestionBank(speaking ? 'speaking' : 'writing'); }
+    catch { toast('Could not load the source question. Try again.'); return false; }
+    if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return false;
+    const source = (speaking ? stateRef.current.speakingTopics : stateRef.current.questions).find(item => String(item.id) === id);
+    if (!source) { toast('The source question is unavailable. Your draft has been kept.'); return false; }
     const draft = structuredClone(stateRef.current);
-    draft.activePlanId = null;
     const targetErrorIds = errorId ? [errorId] : draft.errors.filter((error) => error.sourceSessionId === session.id && !error.resolved).map((error) => error.id);
-    const practiceMode = ['overview', 'outline', 'compare', 'body'].includes(session.practiceMode) ? session.practiceMode : 'full';
-    draft.drafts[id] = normalizeDraft({ text: speaking ? '' : session.essay, transcript: speaking ? session.essay : '', notes: session.notes || '', parentSessionId: session.id, targetErrorIds, practiceMode });
+    const practiceMode = ['overview', 'outline', 'compare', 'body', 'timed', 'speak-blind', 'speak-notes', 'speak-full', 'speaking'].includes(session.practiceMode) ? session.practiceMode : 'full';
+    const nextDraft = normalizeDraft({ text: speaking ? '' : session.essay, transcript: speaking ? session.essay : '', notes: session.notes || '', sections: speaking ? undefined : attemptSections(practiceMode, session.essay, session.sections), parentSessionId: session.id, targetErrorIds, practiceMode });
+    const existing = normalizeDraft(draft.drafts[id]);
+    const content = value => JSON.stringify([value.text, value.transcript, value.notes, value.sections || null]);
+    const hasWork = Boolean(existing.text.trim() || existing.transcript.trim() || existing.notes.trim() || Object.values(existing.sections || {}).some(value => String(value).trim()));
+    if (hasWork && content(existing) !== content(nextDraft) && !window.confirm('Replace the existing draft for this question with this attempt?')) return false;
+    draft.activePlanId = null;
+    draft.drafts[id] = nextDraft;
     draft.settings.activeSkill = speaking ? 'speaking' : 'writing';
-    persistNow(draft);
+    const saved = await persistNow(draft);
+    if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return false;
+    if (!saved) { toast('Could not save the new draft. Your copy is still here. Retry before continuing.'); return false; }
     setActiveDeskMode(practiceMode);
-    if (speaking) { setSelectedTopicId(id); setDeskPart(session.part || '2'); }
+    setDraftRevision(value => value + 1);
+    if (speaking) { setSelectedTopicId(id); setDeskPart(String(session.part || source.part || '2')); setQuestionIndex(0); }
     else setSelectedQuestionId(id);
-    navigate(speaking ? '/speak' : '/write');
-  }, [persistNow, navigate]);
+    closeModal();
+    navigate(path);
+    return true;
+    } finally { startingTargetedPractice.current = false; }
+    };
+    let operation = Promise.resolve(false);
+    navigateWithPracticeGuard(path, () => {
+      operation = begin().catch(() => {
+        if (alive.current && owner === accountId() && epoch === loadEpoch.current) toast('Could not open this attempt. Try again.');
+        return false;
+      });
+    });
+    return operation;
+  }, [persistNow, navigate, ensureQuestionBank, toast, closeModal]);
 
   const resolveDraftRecovery = useCallback((restore) => {
     if (restore && recoveryDrafts) { persist((draft) => { draft.drafts = { ...draft.drafts, ...recoveryDrafts }; }); setDraftRevision((value) => value + 1); }

@@ -75,6 +75,15 @@ test('targeted practice links the source attempt and specific mistake', async ()
   expect(mockFieldbook.current.startTargetedPractice).toHaveBeenCalledWith(mockFieldbook.current.state.sessions[1], 'e1');
 });
 
+test('a search with no matches can clear filters without pretending the account is empty', async () => {
+  mount();
+  const user = userEvent.setup();
+  await user.type(screen.getByRole('textbox', { name: 'Search attempts' }), 'no match');
+  expect(screen.getByText('No attempts match your filters.')).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Clear filters' }));
+  expect(screen.getByText('Cities essay')).toBeInTheDocument();
+});
+
 test('reading skill dispatches to the receptive review queue and excludes writing feedback', () => {
   mount('/review?skill=reading');
   expect(screen.getByText('Reading review queue')).toBeInTheDocument();

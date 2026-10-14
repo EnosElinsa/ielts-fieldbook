@@ -7,6 +7,8 @@ import { dateKey } from '../../domain';
 import { nextUnifiedPlan, selectedStudySkills } from '../../lib/planTemplates';
 import { studyTargetSummary } from '../../lib/planTargets';
 import { TaskStartButton, useStudySchedule } from '../planning/StudySchedule';
+import { needsStudySetup, StudySetup } from './StudySetup';
+import { accountId } from '../../storage/remote';
 import '../../styles/planning.css';
 
 export function TodayPage() {
@@ -29,6 +31,7 @@ function UnifiedToday() {
   const upcoming=plans.filter(plan=>plan.dateKey>today&&plan.status==='pending').sort((a,b)=>a.dateKey.localeCompare(b.dateKey))[0];
   return <section className="view active study-today">
     <header className="study-page-head"><div><p className="kicker">{new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})}</p><h2>Today</h2></div><Link className="btn line" to="/planning"><CalendarDays size={16}/>Planning</Link></header>
+    {needsStudySetup(fb.state) && <StudySetup key={accountId()} />}
     {schedule.error && <div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
     <div className="study-today-main">
       <section className="study-next" aria-busy={schedule.saving}>

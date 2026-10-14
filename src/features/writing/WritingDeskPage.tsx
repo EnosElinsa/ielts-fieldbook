@@ -9,6 +9,8 @@ import { useFieldbook } from '../../context/FieldbookContext';
 import { attemptLabel, displayName, formatClock, formatDate, safeImage, typeName } from '../../lib/format';
 import { useWorkspaceDeskContext, useWorkspacePageState } from '../../lib/workspacePageState';
 import { accountId } from '../../storage/remote';
+import { useElapsedCountdown } from '../../lib/useElapsedCountdown';
+import { navigateTabs } from '../../lib/tabNavigation';
 
 const FRAGMENT_MODES = new Set(['overview', 'outline', 'compare', 'body']);
 
@@ -55,20 +57,10 @@ export function WritingDeskPage() {
     history.reset({ essay: fb.writingDraft(selected.id), sections: normalizeSections(draft && draft.sections) });
   }, [selected.id, mode, fb.draftRevision, owner]);
 
-  useEffect(() => {
-    if (!running) return undefined;
-    const id = window.setInterval(() => {
-      setTimerSeconds((s) => {
-        if (s <= 1) {
-          setRunning(false);
-          fb.toast('Time is up. Check the answer.');
-          return 0;
-        }
-        return s - 1;
-      });
-    }, 1000);
-    return () => window.clearInterval(id);
-  }, [running, fb]);
+  useElapsedCountdown({
+    seconds: timerSeconds, running, scope: JSON.stringify([owner, uiKey]), setSeconds: setTimerSeconds,
+    onComplete: () => { setRunning(false); fb.toast('Time is up. Check the answer.'); },
+  });
 
   const tips = {
     overview: 'Write only the introduction and overview.',
@@ -163,6 +155,7 @@ export function WritingDeskPage() {
     fb.setPendingAttempt({
       id: crypto.randomUUID(),
       essay: text,
+      sections: fragment ? structuredClone(sections) : undefined,
       question: selected,
       parentSessionId: fb.state.drafts[selected.id]?.parentSessionId || null,
       planId: fb.state.activePlanId,
@@ -213,7 +206,7 @@ export function WritingDeskPage() {
       </div>
       <div className="workspace-layout-tools">
         <div className="mobile-desk-tabs" role="tablist" aria-label="Writing workspace">
-          {['prompt', 'answer'].map((tab) => <button key={tab} className={mobileTab === tab ? 'active' : ''} role="tab" aria-selected={mobileTab === tab} aria-controls={`writing-${tab}`} onClick={() => setMobileTab(tab)}>{tab === 'prompt' ? 'Prompt' : 'Answer'}</button>)}
+          {['prompt', 'answer'].map((tab) => <button key={tab} id={`writing-tab-${tab}`} type="button" className={mobileTab === tab ? 'active' : ''} role="tab" tabIndex={mobileTab === tab ? 0 : -1} aria-selected={mobileTab === tab} aria-controls={`writing-${tab}`} onKeyDown={navigateTabs} onClick={() => setMobileTab(tab)}>{tab === 'prompt' ? 'Prompt' : 'Answer'}</button>)}
         </div>
         <label className="split-control">Prompt width<input type="range" aria-label="Prompt panel width" min="30" max="55" value={split} onChange={(event) => { const value = Number(event.target.value); setSplit(value); try { localStorage.setItem('fieldbook.writingSplit', String(value)); } catch { /* Browser preference is optional. */ } }} /><span>{split}%</span></label>
       </div>
@@ -310,15 +303,7 @@ export function WritingDeskPage() {
                         className="btn line"
                         type="button"
                         onClick={async () => {
-                          fb.setWritingDraft(selected.id, session.essay, {
-                            parentSessionId: session.id,
-                            sections: emptySections(),
-                          });
-                          setEssay(session.essay);
-                          setSections(emptySections());
-                          history.reset({ essay: session.essay, sections: emptySections() });
-                          const saved = await fb.persistNow();
-                          if (saved) fb.toast('Copied into a new draft.');
+                          await fb.startTargetedPractice(session);
                         }}
                       >
                         Continue
@@ -362,7 +347,7 @@ export function WritingDeskPage() {
             <div className="btn-row">
               {iconButton('Undo', Undo2, () => restore('undo'), !history.canUndo)}
               {iconButton('Redo', Redo2, () => restore('redo'), !history.canRedo)}
-              <button className="btn line" type="button" onClick={() => setRunning((r) => !r)}>
+              <button className="btn line" type="button" onClick={() => { if (!timerSeconds) setTimerSeconds(selected.type === '1' ? 1200 : 2400); setRunning((r) => !r); }}>
                 {running ? <Pause size={15} /> : <Play size={15} />}{running ? 'Pause' : 'Start timer'}
               </button>
               <button

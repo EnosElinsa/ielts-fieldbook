@@ -7,6 +7,7 @@ import type {
 
 export type VocabularyLearningEvent = {
   id: string;
+  entryId: string;
   senseId?: string;
   mode: string;
   result: string;
@@ -24,20 +25,26 @@ export function vocabularyLearningTimeline(
   store: Partial<
     Pick<VocabularyStore, "vocabularyReviews" | "vocabularyEvidence">
   >,
-  entryId: string,
+  entryId?: string,
 ): VocabularyLearningEvent[] {
   const records = (store.vocabularyEvidence || []).filter(
-    (event) => event.entryId === entryId,
+    (event) => entryId === undefined || event.entryId === entryId,
   );
+  const recordsById = new Map<string, VocabularyEvidence[]>();
+  records.forEach(event => {
+    if (event.id) recordsById.set(event.id, [...(recordsById.get(event.id) || []), event]);
+  });
+  const dimensions: VocabularyDimension[] = ['meaning', 'listening', 'spelling', 'usage'];
   const consumed = new Set<VocabularyEvidence>();
   const reviews = (store.vocabularyReviews || []).filter(
-    (review) => review.entryId === entryId,
+    (review) => entryId === undefined || review.entryId === entryId,
   );
   const events: VocabularyLearningEvent[] = reviews.map(
     (review: VocabularyReview) => {
-      const linked = records.filter(
+      const linked = dimensions.flatMap(dimension => recordsById.get(`${review.id}:${dimension}`) || []).filter(
         (event) =>
           event.id === `${review.id}:${event.dimension}` &&
+          event.entryId === review.entryId &&
           (!event.senseId || event.senseId === review.senseId),
       );
       linked.forEach((event) => consumed.add(event));

@@ -5,6 +5,7 @@ import { Star, List, LayoutGrid, PenLine } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { chartLabels, displayName, formatLabel, safeImage, typeName } from '../../lib/format';
 import { Empty, FilterMenu } from '../../components/ui';
+import { BANK_PAGE_SIZE, BankPagination, bankPage } from '../../components/BankPagination';
 
 export function WritingBankPage() {
   const fb = useFieldbook();
@@ -19,6 +20,7 @@ export function WritingBankPage() {
     const next = new URLSearchParams(current);
     if (value && value !== 'all' && value !== 'catalog' && value !== 'grid') next.set(key, value);
     else next.delete(key);
+    if (key !== 'view') next.delete('page');
     return next;
   }, { replace: true });
   const practiced = new Set(fb.state.sessions.filter((session) => session.skill !== 'speaking').map((session) => String(session.questionId)));
@@ -39,6 +41,13 @@ export function WritingBankPage() {
         (!q || `${question.name} ${question.prompt}`.toLowerCase().includes(q)),
     ).slice().sort((a, b) => sort === 'title' ? String(a.name).localeCompare(String(b.name), undefined, { numeric: true }) : 0);
   }, [fb.state, search, task, format, progress, sort]);
+  const page = bankPage(params.get('page'), questions.length);
+  const visible = questions.slice((page - 1) * BANK_PAGE_SIZE, page * BANK_PAGE_SIZE);
+  const changePage = value => setParams(current => {
+    const next = new URLSearchParams(current);
+    if (value === 1) next.delete('page'); else next.set('page', String(value));
+    return next;
+  });
 
   return (
     <section className="view active">
@@ -84,9 +93,10 @@ export function WritingBankPage() {
           <button type="button" className="btn line icon-btn" aria-label="List view" title="List view" aria-pressed={view === 'list'} onClick={() => update('view', 'list')}><List size={16} /></button>
         </div>
       </div>
+      <BankPagination total={questions.length} page={page} onChange={changePage} label="Writing questions, top pagination" />
       <div className={`questions${view === 'list' ? ' questions-list' : ''}`}>
         {questions.length ? (
-          questions.map((question) => {
+          visible.map((question) => {
             const image = safeImage(question.image);
             const prompt =
               question.prompt.length > 175 ? `${question.prompt.slice(0, 175)}…` : question.prompt;
@@ -120,6 +130,7 @@ export function WritingBankPage() {
           <Empty message="Writing questions are unavailable. Please try again later." />
         )}
       </div>
+      {questions.length > BANK_PAGE_SIZE ? <BankPagination total={questions.length} page={page} onChange={changePage} label="Writing questions, bottom pagination" /> : null}
     </section>
   );
 }

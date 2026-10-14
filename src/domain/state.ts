@@ -276,6 +276,7 @@ export function createAttempt(state, input, deps) {
     type: String(input.type || '1'),
     words: wordCount(input.essay),
     essay: String(input.essay || ''),
+    ...(input.sections ? { sections: normalizeDraft({ sections: input.sections }).sections } : {}),
     focus: input.focus || '',
     next: input.next || '',
     attemptKind: input.parentSessionId ? 'rewrite' : (input.attemptKind || 'original'),

@@ -1,11 +1,13 @@
 // @ts-nocheck
 import { useWorkspacePageState } from '../../lib/workspacePageState';
+import { useState } from 'react';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { Copy, Download, FileInput, ArrowUpRight, RotateCcw } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { isBandScore } from '../../domain';
 import { attemptLabel, displayName, formatDate, sessionSkill } from '../../lib/format';
 import { Empty, FilterMenu } from '../../components/ui';
+import { exportAttemptRequest } from './assessmentRequest';
 
 export function ReviewPage() {
   const fb = useFieldbook();
@@ -15,6 +17,7 @@ export function ReviewPage() {
   const reviewSkill = ['writing', 'speaking', 'reading', 'listening'].includes(requestedSkill) ? requestedSkill : fb.activeSkill;
   const [filter, setFilter] = useWorkspacePageState(`review:${reviewSkill}:filter`, 'all', value => ['all', 'pending', 'assessed', 'rewrite'].includes(value));
   const [search, setSearch] = useWorkspacePageState(`review:${reviewSkill}:search`, '');
+  const [openingId, setOpeningId] = useState(null);
   if (reviewSkill === 'reading' || reviewSkill === 'listening') return <Navigate to={`/${reviewSkill}/review`} replace />;
   const speaking = reviewSkill === 'speaking';
   const allSessions = fb.state.sessions.filter((s) => sessionSkill(s) === reviewSkill);
@@ -26,18 +29,7 @@ export function ReviewPage() {
     return !speaking;
   });
 
-  const requestFor = (session) => {
-    const question = (sessionSkill(session) === 'speaking' ? fb.state.speakingTopics : fb.state.questions).find((item) => String(item.id) === String(session.questionId));
-    if (!question) { fb.toast('The source question is unavailable.'); return null; }
-    return sessionSkill(session) === 'speaking' ? fb.buildSpeakingAssessmentRequest(session, question) : fb.buildAssessmentRequest(session, question);
-  };
-  const exportRequest = async (session, copy = false) => {
-    const request = requestFor(session);
-    if (!request) return;
-    if (!copy) { fb.downloadFile(`ielts-assessment-request-${session.id}.md`, request, 'text/markdown'); return; }
-    try { await navigator.clipboard.writeText(request); fb.toast('Assessment request copied.'); }
-    catch { fb.toast('Clipboard unavailable. Download the request instead.'); }
-  };
+  const exportRequest = (session, copy = false) => exportAttemptRequest(fb, session, copy);
   const errors = fb.state.errors.filter((error) => {
     if (!error?.sourceSessionId) return true;
     const sess = fb.state.sessions.find((item) => item.id === error.sourceSessionId);
@@ -46,35 +38,12 @@ export function ReviewPage() {
   });
 
   const openHistory = async (session, reuse) => {
-    if (sessionSkill(session) === 'speaking') {
-      fb.setSkill('speaking', false);
-      if (reuse) {
-        const topic = fb.state.speakingTopics.find((t) => String(t.id) === String(session.questionId));
-        if (topic) {
-          fb.setSelectedTopicId(String(topic.id));
-          fb.setDeskPart(String(session.part || '2'));
-          fb.setSpeakingDraft(topic.id, {
-            transcript: session.essay,
-            notes: session.notes || fb.speakingDraft(topic.id).notes,
-            parentSessionId: session.id,
-          });
-          const saved = await fb.persistNow();
-          navigate('/speak');
-          if (saved) fb.toast('Copied into a new draft.');
-          return;
-        }
-      }
-      fb.setViewedSession(session);
-      fb.openModal('history');
-      return;
-    }
     if (reuse) {
-      const q = fb.state.questions.find((question) => String(question.id) === String(session.questionId));
-      if (q) fb.setSelectedQuestionId(String(q.id));
-      fb.setWritingDraft(q?.id || session.questionId, session.essay, { parentSessionId: session.id });
-      const saved = await fb.persistNow();
-      navigate('/write');
-      if (saved) fb.toast('Copied into a new draft.');
+      if (openingId) return;
+      setOpeningId(session.id);
+      try { await fb.startTargetedPractice(session); }
+      catch { fb.toast('Could not open this attempt. Try again.'); }
+      finally { setOpeningId(null); }
       return;
     }
     fb.setViewedSession(session);
@@ -109,8 +78,8 @@ export function ReviewPage() {
                       <button className="btn line" type="button" onClick={() => openHistory(session, false)}>
                         {speaking ? 'Transcript' : 'Essay'}
                       </button>
-                      <button className="btn line" type="button" onClick={() => openHistory(session, true)}>
-                        <RotateCcw size={15} /> Continue
+                      <button className="btn line" type="button" disabled={Boolean(openingId)} onClick={() => openHistory(session, true)}>
+                        <RotateCcw size={15} /> {openingId === session.id ? 'Opening...' : 'Continue'}
                       </button>
                       {!session.assessmentId ? <>
                         <button className="btn line" type="button" onClick={() => exportRequest(session, true)}><Copy size={15} /> Copy request</button>
@@ -132,9 +101,9 @@ export function ReviewPage() {
             </div>
           ) : (
             <Empty
-              message={speaking ? 'No speaking attempts yet.' : 'No essays yet.'}
-              label={speaking ? 'Practise' : 'Write one'}
-              onAction={() => navigate(speaking ? '/speak' : '/write')}
+              message={allSessions.length ? 'No attempts match your filters.' : speaking ? 'No speaking attempts yet.' : 'No essays yet.'}
+              label={allSessions.length ? 'Clear filters' : speaking ? 'Practise' : 'Write one'}
+              onAction={() => { if (allSessions.length) { setSearch(''); setFilter('all'); } else navigate(speaking ? '/speak' : '/write'); }}
             />
           )}
         </div>

@@ -16,6 +16,52 @@ beforeEach(() => {
 });
 afterEach(cleanup);
 
+test('standalone vocabulary ranges include the entire first local day and exclude future results', () => {
+  vi.useFakeTimers(); vi.setSystemTime(new Date(2026, 9, 14, 12));
+  try {
+    fixture();
+    fb.current.state.vocabularyReviews = [
+      { id: 'first-day', entryId: 'one', mode: 'definition', result: 'success', occurredAt: new Date(2026, 9, 8, 1).toISOString() },
+      { id: 'before-range', entryId: 'three', mode: 'definition', result: 'success', occurredAt: new Date(2026, 9, 7, 18).toISOString() },
+      { id: 'future', entryId: 'two', mode: 'definition', result: 'success', occurredAt: new Date(2026, 9, 15).toISOString() },
+    ];
+    const view = render(<MemoryRouter initialEntries={['/vocabulary/progress?range=7']}><VocabularyProgressPage /></MemoryRouter>);
+    const results = view.container.querySelector('.vocabulary-evidence');
+    expect(results).not.toBeNull();
+    expect(within(results as HTMLElement).getByRole('link', { name: 'one' })).toBeInTheDocument();
+    expect(within(results as HTMLElement).queryByRole('link', { name: 'two' })).not.toBeInTheDocument();
+    expect(within(results as HTMLElement).queryByRole('link', { name: 'three' })).not.toBeInTheDocument();
+  } finally { vi.useRealTimers(); }
+});
+
+test('new saved words have zero due review cards on every vocabulary overview', () => {
+  fixture();
+  for (const Page of [VocabularyPage, VocabularyWordsPage, VocabularyProgressPage]) {
+    const view = render(<MemoryRouter><Page /></MemoryRouter>);
+    expect(within(screen.getByText('Due cards').parentElement!).getByText('0')).toBeInTheDocument();
+    view.unmount();
+  }
+});
+
+test('vocabulary progress applies the date range while preserving the current word snapshot', () => {
+  fixture();
+  fb.current.state.vocabularyReviews = [
+    { id: 'recent', entryId: 'one', mode: 'definition', response: 'Meaning', result: 'success', occurredAt: '2026-10-12' },
+    { id: 'old', entryId: 'two', mode: 'definition', response: 'Meaning', result: 'failure', occurredAt: '2026-01-01' },
+    { id: 'undated', entryId: 'three', mode: 'dictation', imported: true, result: 'success', occurredAt: null, updatedAt: '2026-10-12' },
+  ];
+  const view = render(<MemoryRouter><VocabularyProgressPage embedded since={Date.parse('2026-10-06')} /></MemoryRouter>);
+  const results = view.container.querySelector('.vocabulary-evidence')!;
+  expect(within(results as HTMLElement).getByRole('link', { name: 'one' })).toBeInTheDocument();
+  expect(within(results as HTMLElement).queryByRole('link', { name: 'two' })).not.toBeInTheDocument();
+  expect(within(results as HTMLElement).queryByRole('link', { name: 'three' })).not.toBeInTheDocument();
+  expect(within(screen.getByText('Entries').parentElement!).getByText('3')).toBeInTheDocument();
+  expect(screen.queryByRole('navigation', { name: 'Vocabulary views' })).not.toBeInTheDocument();
+  view.rerender(<MemoryRouter><VocabularyProgressPage embedded since={0} /></MemoryRouter>);
+  expect(screen.getByText('Source date unavailable')).toBeInTheDocument();
+  expect(within(view.container.querySelector('.vocabulary-evidence') as HTMLElement).getAllByRole('link')).toHaveLength(3);
+});
+
 test('empty vocabulary keeps the add and filtered recovery actions', () => {
   fb.current.setEditingVocabularyId = vi.fn();
   fb.current.setVocabularySeed = vi.fn();

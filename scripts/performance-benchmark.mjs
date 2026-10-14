@@ -147,7 +147,10 @@ async function clientNavigate(page, path) { await page.evaluate(path => { histor
 async function settings(page) {
   await page.getByRole('button', { name: 'Account menu', exact: true }).click();
   await page.getByRole('menuitem', { name: 'Settings', exact: true }).click();
-  await page.getByRole('link', { name: 'Study time', exact: true }).click();
+  await page.locator('.settings-section-heading').waitFor({ state: 'visible' });
+  const category = page.getByRole('combobox', { name: 'Settings category', exact: true });
+  if (await category.isVisible()) await category.selectOption('schedule');
+  else await page.getByRole('link', { name: 'Study time', exact: true }).click();
   await page.getByLabel('Minutes a day', { exact: true }).waitFor({ state: 'visible' });
 }
 async function groupReady(page) {
@@ -180,7 +183,7 @@ try {
       await groupReady(run.page);
       await capture('direct-group-words', device, index, run.page, run.metrics);
       await clientNavigate(run.page, '/account');
-      await run.page.getByRole('heading', { name: 'Your account', exact: true }).first().waitFor({ timeout: 90_000 });
+      await run.page.getByRole('textbox', { name: 'Display name', exact: true }).waitFor({ timeout: 90_000 });
       const baseline = counts(run.metrics);
       const start = await run.page.evaluate(() => performance.now());
       await clientNavigate(run.page, groupPath);

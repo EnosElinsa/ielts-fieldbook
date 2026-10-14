@@ -31,29 +31,8 @@ export function HistoryModal() {
             className="btn primary"
             type="button"
             onClick={async () => {
-              fb.closeModal();
-              if (sessionSkill(session) === 'speaking') {
-                const topic = fb.state.speakingTopics.find((t) => String(t.id) === String(session.questionId));
-                if (topic) {
-                  fb.setSelectedTopicId(String(topic.id));
-                  fb.setDeskPart(String(session.part || '2'));
-                  fb.setSpeakingDraft(topic.id, {
-                    transcript: session.essay,
-                    notes: session.notes || fb.speakingDraft(topic.id).notes,
-                    parentSessionId: session.id,
-                  });
-                  const saved = await fb.persistNow();
-                  fb.navigate('/speak');
-                  if (saved) fb.toast('Copied into a new draft.');
-                }
-                return;
-              }
-              const q = fb.state.questions.find((question) => String(question.id) === String(session.questionId));
-              if (q) fb.setSelectedQuestionId(String(q.id));
-              fb.setWritingDraft(q?.id || session.questionId, session.essay, { parentSessionId: session.id });
-              const saved = await fb.persistNow();
-              fb.navigate('/write');
-              if (saved) fb.toast('Copied into a new draft.');
+              try { await fb.startTargetedPractice(session); }
+              catch { fb.toast('Could not open this attempt. Try again.'); }
             }}
           >
             Continue in a new draft

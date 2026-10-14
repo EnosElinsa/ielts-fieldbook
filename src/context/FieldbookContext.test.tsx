@@ -8,7 +8,7 @@ import { readDraftRecovery } from '../storage/recovery';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 
-const mocks = vi.hoisted(() => ({ initial: null, statuses: null, moduleRead: vi.fn(), releasedRead: vi.fn(), teachingRead: vi.fn(), saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), catalogRead: vi.fn(), examCatalogRead:vi.fn(), examSectionsRead:vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
+const mocks = vi.hoisted(() => ({ initial: null, statuses: null, moduleRead: vi.fn(), completeRead: vi.fn(), releasedRead: vi.fn(), teachingRead: vi.fn(), saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), catalogRead: vi.fn(), examCatalogRead:vi.fn(), examSectionsRead:vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
 vi.mock('../storage/examCatalog',()=>({loadExamCatalog:(...args)=>mocks.examCatalogRead(...args),loadExamSections:(...args)=>mocks.examSectionsRead(...args)}));
 vi.mock('../storage', () => ({
   loadState: () => structuredClone(mocks.initial),
@@ -20,7 +20,7 @@ vi.mock('../storage', () => ({
   downloadFile: (...args) => mocks.downloadFile(...args),
   getCollectionStatuses: () => mocks.statuses,
   ensureAccountModule: (...args) => mocks.moduleRead(...args),
-  ensureCompleteAccount: async () => structuredClone(mocks.initial),
+  ensureCompleteAccount: (...args) => mocks.completeRead(...args),
   ensureQuestionBank: async skill => structuredClone(skill === 'writing' ? mocks.initial.questions : mocks.initial.speakingTopics),
   ensureSpeakingSample: async () => null,
   subscribeQuestionBank: () => () => {},
@@ -57,6 +57,7 @@ beforeEach(() => {
   mocks.owner = 'account-1';
   mocks.statuses = null;
   mocks.moduleRead.mockReset().mockImplementation(async () => ({data: {}, statuses: {}}));
+  mocks.completeRead.mockReset().mockImplementation(async () => structuredClone(mocks.initial));
   mocks.releasedRead.mockReset().mockRejectedValue(new Error('Static resource unavailable'));
   mocks.teachingRead.mockReset().mockResolvedValue({books:[], units:[], entries:[], memberships:[]});
   mocks.saveState.mockReset().mockResolvedValue(true);
@@ -72,6 +73,98 @@ beforeEach(() => {
   mocks.initial.drafts = { q1: normalizeDraft({ text: 'A response that must survive.', practiceMode: 'full' }), sp1: normalizeDraft({ transcript: 'A response that must survive.', practiceMode: 'full' }) };
 });
 afterEach(() => { cleanup(); vi.useRealTimers(); fieldbook = null; });
+
+test('targeted practice protects an existing draft when replacement is declined', async () => {
+  await mount();
+  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
+  const before = structuredClone(fieldbook.state.drafts.q1);
+  await act(async () => {
+    expect(await fieldbook.startTargetedPractice({ id: 'original', skill: 'writing', questionId: 'q1', essay: 'Original answer', practiceMode: 'timed' })).toBe(false);
+  });
+  expect(confirm).toHaveBeenCalledOnce();
+  expect(fieldbook.state.drafts.q1).toEqual(before);
+  expect(currentPath).toBe('/');
+  confirm.mockRestore();
+});
+
+test('declining practice departure prevents any targeted draft mutation or save', async () => {
+  await mount();
+  const before = structuredClone(fieldbook.state.drafts.q1);
+  const guard = event => event.preventDefault();
+  document.addEventListener('fieldbook:before-navigate', guard);
+  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
+  try {
+    await act(async () => {
+      expect(await fieldbook.startTargetedPractice({ id: 'original', skill: 'writing', questionId: 'q1', essay: 'Original answer' })).toBe(false);
+    });
+    expect(fieldbook.state.drafts.q1).toEqual(before);
+    expect(mocks.saveState).not.toHaveBeenCalled();
+    expect(confirm).not.toHaveBeenCalled();
+  } finally { document.removeEventListener('fieldbook:before-navigate', guard); confirm.mockRestore(); }
+});
+
+test('a deferred departure starts targeted practice only after the guard proceeds', async () => {
+  mocks.initial.drafts = {};
+  await mount();
+  let proceed;
+  const guard = event => { event.preventDefault(); proceed = event.detail.proceed; };
+  document.addEventListener('fieldbook:before-navigate', guard);
+  try {
+    await act(async () => {
+      expect(await fieldbook.startTargetedPractice({ id: 'original', skill: 'writing', questionId: 'q1', essay: 'Original answer' })).toBe(false);
+    });
+    expect(mocks.saveState).not.toHaveBeenCalled();
+    await act(async () => { proceed(); });
+    await waitFor(() => expect(currentPath).toBe('/write'));
+    expect(fieldbook.state.drafts.q1.parentSessionId).toBe('original');
+  } finally { document.removeEventListener('fieldbook:before-navigate', guard); }
+});
+
+test('targeted save failure stays recoverable and retry retains timed mode and selected errors', async () => {
+  await mount();
+  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
+  const original = { id: 'original', skill: 'writing', questionId: 'q1', essay: 'Original answer', practiceMode: 'timed' };
+  mocks.saveState.mockResolvedValueOnce(false).mockResolvedValueOnce(true);
+  await act(async () => { expect(await fieldbook.startTargetedPractice(original, 'mistake')).toBe(false); });
+  expect(currentPath).toBe('/');
+  expect(readDraftRecovery(mocks.owner)?.drafts.q1).toMatchObject({ text: 'Original answer', practiceMode: 'timed', parentSessionId: 'original', targetErrorIds: ['mistake'] });
+  await act(async () => { expect(await fieldbook.startTargetedPractice(original, 'mistake')).toBe(true); });
+  expect(currentPath).toBe('/write');
+  expect(fieldbook.currentDeskMode()).toBe('timed');
+  expect(confirm).toHaveBeenCalledOnce();
+  confirm.mockRestore();
+});
+
+test('historical paragraph practice remains editable in its original mode', async () => {
+  mocks.initial.drafts = {};
+  await mount();
+  await act(async () => { await fieldbook.startTargetedPractice({ id: 'original', skill: 'writing', questionId: 'q1', essay: 'My practice paragraph.', practiceMode: 'body' }); });
+  expect(fieldbook.state.drafts.q1.sections.paragraph).toBe('My practice paragraph.');
+  expect(fieldbook.currentDeskMode()).toBe('body');
+});
+
+test('feedback import cannot mutate a new account after a delayed complete-account read', async () => {
+  await mount();
+  const pending = defer(); mocks.completeRead.mockImplementationOnce(() => pending.promise);
+  let operation;
+  await act(async () => { operation = fieldbook.importFeedback('overall: 6.5\n\n## Candidate response\nAn old account response.', 'feedback.md'); });
+  await waitFor(() => expect(mocks.completeRead).toHaveBeenCalled());
+  mocks.owner = 'account-2';
+  await act(async () => { pending.resolve(mocks.initial); expect((await operation).saved).toBe(false); });
+  expect(mocks.saveState).not.toHaveBeenCalled();
+  expect(fieldbook.state.assessments).toHaveLength(0);
+});
+
+test('fresh speaking practice follows the selected topic part and preserves an explicit Part 3', async () => {
+  mocks.initial.speakingTopics.reverse();
+  await mount();
+  expect(fieldbook.selectedTopic.id).toBe('sp2');
+  expect(fieldbook.deskPart).toBe('1');
+  await act(async () => { fieldbook.setSelectedTopicId('sp1'); fieldbook.setDeskPart('3'); });
+  expect(fieldbook.deskPart).toBe('3');
+  await act(async () => { fieldbook.setSpeakingDraft('sp1', { transcript: 'New answer.' }); });
+  expect(fieldbook.deskPart).toBe('3');
+});
 
 test('base hydration opens workspace without loading account modules and later module load keeps live settings', async () => {
   mocks.statuses = { profile: 'ready', plans: 'ready', drafts: 'ready', sessions: 'unloaded', vocabulary: 'unloaded', examAttempts: 'unloaded' };

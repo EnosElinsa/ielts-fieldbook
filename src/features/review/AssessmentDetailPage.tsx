@@ -5,6 +5,7 @@ import { useFieldbook } from '../../context/FieldbookContext';
 import { formatDate, vocabularyLabels, markdownLines, sessionSkill } from '../../lib/format';
 import { SessionAudioPlayer } from '../../components/SessionAudioPlayer';
 import { ArrowUpRight, Download, ArrowLeft, RotateCcw } from 'lucide-react';
+import { exportAttemptRequest } from './assessmentRequest';
 
 function Lines({ text }: { text: string }) {
   return (
@@ -42,6 +43,8 @@ export function AssessmentDetailPage() {
   const skillAttr =
     assessment.skill === 'speaking' || (session && session.skill === 'speaking') ? 'speaking' : 'writing';
   const rewrites = session ? fb.state.sessions.filter((item) => item.parentSessionId === session.id).slice().sort((left, right) => String(left.date).localeCompare(String(right.date))) : [];
+  const latestRewrite = rewrites.at(-1);
+  const original = session?.parentSessionId ? fb.state.sessions.find(item => item.id === session.parentSessionId) : null;
   const hasOverall = isBandScore(assessment.overall);
 
   const quickVocabulary = (seed) => {
@@ -60,15 +63,16 @@ export function AssessmentDetailPage() {
               : ''}
             {formatDate(assessment.date, true)}
           </p>
-          <Link className="btn line" to="/review">
+          <Link className="btn line" to={`/review?skill=${skillAttr}`}>
             <ArrowLeft size={16} /> Back to review
           </Link>
         </div>
         <div className="feedback-overview">
           <div><span className="feedback-eyebrow">{skillAttr === 'speaking' ? 'Speaking feedback' : 'Writing feedback'}</span><h2>{session ? session.name : assessment.task || 'Assessment'}</h2><p>{['overview', 'outline', 'compare', 'body'].includes(assessment.practiceMode) ? 'Focused exercise' : assessment.task || ''}{estimated ? ' · Pronunciation unscored' : ''}</p></div>
           <div className="feedback-band"><strong>{hasOverall ? assessment.overall : '—'}</strong><span>{hasOverall ? 'Overall band' : 'Exercise feedback'}</span></div>
-          <div className="actions"><button type="button" className="btn line" onClick={() => fb.downloadFile(assessment.filename || `assessment-${assessment.id}.md`, assessment.rawText || reconstructAssessmentMarkdown(assessment), 'text/markdown')}><Download size={16} /> Feedback</button>{session ? <button type="button" className="btn primary" onClick={() => fb.startTargetedPractice(session, assessment.targetErrorIds?.[0] || null)}><RotateCcw size={16} /> {skillAttr === 'speaking' ? 'Try again' : 'Rewrite'}</button> : null}</div>
+          <div className="actions"><button type="button" className="btn line" onClick={() => fb.downloadFile(assessment.filename || `assessment-${assessment.id}.md`, assessment.rawText || reconstructAssessmentMarkdown(assessment), 'text/markdown')}><Download size={16} /> Feedback</button>{session ? <button type="button" className="btn primary" onClick={() => void fb.startTargetedPractice(session)}><RotateCcw size={16} /> {skillAttr === 'speaking' ? 'Try again' : 'Rewrite'}</button> : null}</div>
         </div>
+        {original?.assessmentId && <p><Link to={`/review/${original.assessmentId}`}><ArrowLeft size={15} /> Previous feedback</Link></p>}
         <div className="assessment-page-layout">
           <article className="assessment-main">
             <div className="assessment-summary">
@@ -242,9 +246,9 @@ export function AssessmentDetailPage() {
                   <p>Nothing recorded.</p>
                 )}
               </div>
-              {session ? <button type="button" className="btn primary" onClick={() => fb.startTargetedPractice(session, assessment.targetErrorIds?.[0] || null)}>Start targeted practice <ArrowUpRight size={16} /></button> : null}
+              {session ? <button type="button" className="btn primary" onClick={() => void fb.startTargetedPractice(session)}>Start targeted practice <ArrowUpRight size={16} /></button> : null}
             </section>
-            {session && rewrites.length ? <section className="assessment-section"><h4>Your progress on this task</h4><div className="rewrite-comparison"><div><h5>Original attempt</h5><small>{formatDate(session.date, true)} · {session.words} words</small><pre>{session.essay}</pre></div><div><h5>Your latest {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</h5><small>{formatDate(rewrites.at(-1).date, true)} · {rewrites.at(-1).words} words</small><pre>{rewrites.at(-1).essay}</pre>{rewrites.at(-1).assessmentId ? <Link className="btn line" to={`/review/${rewrites.at(-1).assessmentId}`}>View new feedback <ArrowUpRight size={15} /></Link> : null}</div></div></section> : null}
+            {session && latestRewrite ? <section className="assessment-section"><h4>Your progress on this task</h4><div className="rewrite-comparison"><div><h5>Original attempt</h5><small>{formatDate(session.date, true)} · {session.words} words</small><pre>{session.essay}</pre></div><div><h5>Your latest {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</h5><small>{formatDate(latestRewrite.date, true)} · {latestRewrite.words} words</small><pre>{latestRewrite.essay}</pre>{latestRewrite.assessmentId ? <Link className="btn line" to={`/review/${latestRewrite.assessmentId}`}>View new feedback <ArrowUpRight size={15} /></Link> : <div className="history-actions"><button className="btn line" onClick={() => void exportAttemptRequest(fb, latestRewrite)}><Download size={16} />Request feedback for {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</button><button className="btn line" onClick={() => fb.openFeedbackImport()}>Import feedback</button></div>}</div></div></section> : null}
           </article>
           <aside className="assessment-aside">
             <section>

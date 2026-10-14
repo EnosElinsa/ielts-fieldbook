@@ -11,6 +11,13 @@ import { createVocabularySession } from '../../src/domain/vocabulary/session';
 import { buildLearningBatch } from '../../src/domain/vocabulary/learningBatch';
 import { VOCABULARY_CATALOG } from '../../src/domain/vocabulary/catalog';
 
+test('runtime identities reproduce every authoring row and normalize all legacy memberships', () => {
+  const authoring = JSON.parse(readFileSync('src/domain/vocabulary/identityMapping.json', 'utf8'));
+  expect(VOCABULARY_IDENTITIES).toEqual(authoring);
+  for (const row of authoring.memberships) expect(normalizeVocabularyIdentities({ id: row.oldId, bookId: 'guixue:10174' }).id).toBe(row.id);
+  execFileSync(process.execPath, ['scripts/compact-vocabulary-identities.mjs', '--check']);
+});
+
 const bookId = 'ielts-vocabulary';
 const unitId = 'ielts-vocabulary-chapter-01-group-01';
 test('fixed mapping covers released identities and preserves every entry and sense byte for byte', () => {

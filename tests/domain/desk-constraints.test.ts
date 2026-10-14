@@ -6,8 +6,16 @@ import {
   writingWordSoftConfirm,
   fragmentFieldsFilled,
   normalizeSections,
+  attemptSections,
 } from '../../src/domain/desk';
 import { normalizeDraft } from '../../src/domain/state';
+
+test('reusable focused attempts preserve structured fields and recover historical paragraphs', () => {
+  assert.equal(composeEssay('body', attemptSections('body', 'Historical paragraph.'), ''), 'Historical paragraph.');
+  assert.equal(composeEssay('overview', attemptSections('overview', 'Intro.\n\nOverview.'), ''), 'Intro.\n\nOverview.');
+  assert.equal(composeEssay('outline', attemptSections('outline', 'Position.\n\nA.\n\nB.'), ''), 'Position.\n\nA.\n\nB.');
+  assert.equal(attemptSections('overview', 'Joined answer.', { intro: 'Saved intro.', overview: 'Saved overview.' })?.intro, 'Saved intro.');
+});
 
 test('composeEssay stitches overview columns', () => {
   assert.equal(

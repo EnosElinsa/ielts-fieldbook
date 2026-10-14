@@ -142,3 +142,5 @@
 .page .exam-review-queue .async-state { margin-bottom: 20px; }
 
 .exam-bank .exam-section-card .btn-row > .btn:only-child { grid-column: 1 / -1; }
+.workspace-error-screen{min-height:100dvh;display:grid;place-items:center;padding:24px;background:var(--bg);color:var(--ink)}
+.workspace-error-screen>.async-state{width:min(100%,560px)}.workspace-page-error .async-state{margin-top:20px}.workspace-page-error .async-state>.btn,.workspace-error-screen .async-state>.btn{margin:8px 8px 0 0}

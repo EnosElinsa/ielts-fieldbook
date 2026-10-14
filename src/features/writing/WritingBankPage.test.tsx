@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
@@ -38,4 +38,18 @@ test('favorite action uses persisted context and search changes the URL', async 
   await user.type(screen.getByRole('textbox', { name: 'Search writing questions' }), 'Education');
   expect(screen.getByLabelText('Current URL')).toHaveTextContent('?q=Education');
   expect(screen.queryByText('Cities')).not.toBeInTheDocument();
+});
+
+test('question pagination preserves filters and resets when the search changes', () => {
+  fieldbook.current.state.questions = Array.from({ length: 25 }, (_, index) => ({ id: `q${index + 1}`, name: `Question ${index + 1}`, prompt: 'Discuss.', type: '2', format: '' }));
+  render(<MemoryRouter initialEntries={['/questions?task=2&view=list']}><WritingBankPage /><Location /></MemoryRouter>);
+  expect(screen.getAllByRole('article')).toHaveLength(12);
+  fireEvent.click(screen.getAllByRole('button', { name: 'Next page' })[0]);
+  expect(screen.getByLabelText('Current URL')).toHaveTextContent('task=2&view=list&page=2');
+  expect(screen.getByRole('heading', { name: 'Question 13' })).toBeInTheDocument();
+  expect(screen.queryByRole('heading', { name: 'Question 1' })).not.toBeInTheDocument();
+  fireEvent.change(screen.getByRole('textbox', { name: 'Search writing questions' }), { target: { value: 'Question 25' } });
+  expect(screen.getByLabelText('Current URL')).not.toHaveTextContent('page=');
+  expect(screen.getAllByRole('article')).toHaveLength(1);
+  expect(screen.getByRole('heading', { name: 'Question 25' })).toBeInTheDocument();
 });

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { BookOpen, Check, ChevronDown, House, Library, LogOut, Monitor, Moon, MoreHorizontal, PencilLine, Search, Settings2, Sun, Upload, Download, ShieldCheck, MessageSquare, ChartNoAxesCombined, Mic2, NotebookTabs, Headphones } from 'lucide-react';
@@ -10,6 +10,8 @@ import { AccountMark } from '../features/account/AccountMark';
 import { signOut } from '../auth/AuthGate';
 import { navigateWithPracticeGuard } from '../lib/practiceNavigation';
 import { moduleFor, workspaceModules } from './workspaceNavigation';
+import { useAccountRequirements } from './AccountDataBoundary';
+import { InlineLoadingState } from './AsyncState';
 
 export function AccountMenu({ user, onImportBackup, onExportBackup, onLegal }: { user: unknown; onImportBackup: () => void; onExportBackup: () => void; onLegal: (view: string) => void }) {
   const fb = useFieldbook();
@@ -44,6 +46,7 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState(0);
+  const requirements = useAccountRequirements({ modules: ['productive', 'vocabulary', 'receptive'], banks: ['writing', 'speaking'] });
   const items = useMemo(() => {
     const navigation = [
       ...workspaceModules.map(({ label, to, Icon }) => [label, to, Icon]),
@@ -59,14 +62,16 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
     const search = query.trim().toLowerCase();
     return [...navigation, ...questions, ...topics, ...attempts, ...examAttempts, ...vocabularyEntries].filter((item) => !search || `${item.title} ${item.kind}`.toLowerCase().includes(search)).slice(0, search ? 12 : navigation.length);
   }, [query, fb.state, navigate]);
+  useEffect(() => { document.getElementById(`command-${selected}`)?.scrollIntoView?.({ block: 'nearest' }); }, [selected, query, items.length]);
   const choose = (item) => { onClose(); if (item.path) navigateWithPracticeGuard(item.path, item.run); else item.run(); };
   return <ModalFrame open={open} onClose={onClose} title="Search Fieldbook"><div className="modal command-modal">
-    <div className="command-input"><Search size={20} /><input autoFocus aria-label="Search Fieldbook" placeholder="Search your workspace" value={query} onChange={(e) => { setQuery(e.target.value); setSelected(0); }} aria-controls="command-results" aria-activedescendant={items[selected] ? `command-${selected}` : undefined} onKeyDown={(e) => {
-      if (e.key === 'ArrowDown') { e.preventDefault(); setSelected((v) => Math.min(v + 1, items.length - 1)); }
+    <div className="command-input"><Search size={20} /><input autoFocus role="combobox" aria-autocomplete="list" aria-expanded="true" aria-label="Search Fieldbook" placeholder="Search your workspace" value={query} onChange={(e) => { setQuery(e.target.value); setSelected(0); }} aria-controls="command-results" aria-activedescendant={items[selected] ? `command-${selected}` : undefined} onKeyDown={(e) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); setSelected((v) => Math.max(0, Math.min(v + 1, items.length - 1))); }
       if (e.key === 'ArrowUp') { e.preventDefault(); setSelected((v) => Math.max(v - 1, 0)); }
       if (e.key === 'Enter' && items[selected]) { e.preventDefault(); choose(items[selected]); }
     }} /></div>
-    <div className="command-results" id="command-results" role="listbox" aria-label="Search results">{items.length ? items.map((item, index) => <button type="button" role="option" aria-selected={selected === index} id={`command-${index}`} key={item.id} onMouseEnter={() => setSelected(index)} onClick={() => choose(item)}><item.Icon size={18} /><span>{item.title}<small>{item.kind}</small></span></button>) : <div className="empty">No matching results.</div>}</div>
+    {requirements.error ? <div className="command-load-state"><p role="alert">{requirements.error}</p><button type="button" className="btn line" onClick={requirements.retry}>Retry search</button></div> : !requirements.ready && <div className="command-load-state"><InlineLoadingState message="Loading workspace results..." onRetry={requirements.retry} retryLabel="Retry search" /></div>}
+    <div className="command-results" id="command-results" role="listbox" aria-label="Search results" aria-busy={!requirements.ready}> {items.length ? items.map((item, index) => <button type="button" role="option" tabIndex={-1} aria-selected={selected === index} id={`command-${index}`} key={item.id} onMouseEnter={() => setSelected(index)} onClick={() => choose(item)}><item.Icon size={18} /><span>{item.title}<small>{item.kind}</small></span></button>) : requirements.ready ? <div className="empty">No matching results.</div> : null}</div>
   </div></ModalFrame>;
 }
 

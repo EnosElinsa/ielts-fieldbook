@@ -71,3 +71,11 @@ test("missing review dates stay missing and unrelated production evidence remain
     events.find((event) => event.id === "production:attempt")?.result,
   ).toBe("pending");
 });
+
+test('an account timeline includes other words and only consumes evidence for its own entry', () => {
+  const store = { vocabularyReviews: [review], vocabularyEvidence: [evidence('listening', 'review:a:listening'), { ...evidence('spelling', 'review:a:spelling'), entryId: 'other' }] };
+  const events = vocabularyLearningTimeline(store);
+  expect(events).toHaveLength(2);
+  expect(events[0]).toMatchObject({ entryId: 'word', dimensions: ['listening'] });
+  expect(events[1]).toMatchObject({ entryId: 'other', dimensions: ['spelling'] });
+});

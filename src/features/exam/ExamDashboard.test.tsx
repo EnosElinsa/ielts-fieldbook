@@ -2,7 +2,7 @@ import { afterEach, expect, test, vi } from 'vitest';
 import { cleanup, render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import { MemoryRouter } from 'react-router-dom';
-import { emptyState } from '../../domain';
+import { dateKey, emptyState } from '../../domain';
 import { TodayPage } from '../today/TodayPage';
 import { ProgressPage } from '../progress/ProgressPage';
 const mock = vi.hoisted(() => ({ state: null as any, skill: 'reading' }));
@@ -25,7 +25,7 @@ test('reading progress shows weighted marks and retained type evidence without w
 test('unified today retains a bound due sentence regardless of the current skill', () => {
   const data = state(); mock.skill = 'listening';
   data.intensiveSessions = [{ id: 'i', sectionId: 's', sentenceId: 'line', completedAt: stamp, nextReviewAt: '2026-01-01T00:00:00Z', updatedAt: stamp, stage: 6, replayCount: 2, dictationResult: 'partial' }];
-  data.plans=[{id:'due',skill:'listening',kind:'listening-intensive',dateKey:stamp.slice(0,10),status:'pending',title:'Listening - Due sentence',estimatedMinutes:20,target:{type:'intensive',sectionId:'s',sentenceId:'line'}}];
+  data.plans=[{id:'due',skill:'listening',kind:'listening-intensive',dateKey:dateKey(stamp),status:'pending',title:'Listening - Due sentence',estimatedMinutes:20,target:{type:'intensive',sectionId:'s',sentenceId:'line'}}];
   render(<MemoryRouter><TodayPage /></MemoryRouter>);
   expect(screen.getByRole('button', { name: 'Start' })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'Listening - Due sentence' })).toBeInTheDocument();

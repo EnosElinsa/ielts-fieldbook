@@ -349,12 +349,17 @@ Write only the overview next time.
 `;
 
     const file = new File([scoreMarkdown], 'score.md', { type: 'text/markdown' });
+    await user.click(screen.getByRole('button', { name: 'Import score' }));
+    await screen.findByRole('dialog', { name: 'Import feedback' });
     const fileInput = document.querySelector(
       'input[accept=".md,.txt,text/markdown,text/plain"]',
     ) as HTMLInputElement;
     expect(fileInput).toBeTruthy();
     await user.upload(fileInput, file);
 
+    await screen.findByRole('link', { name: 'Back to review' });
+    expect(screen.getByText(/Overall 5\.5/i)).toBeTruthy();
+    await user.click(screen.getByRole('link', { name: 'Back to review' }));
     await waitFor(() => {
       expect(screen.getAllByText(/Linked/i).length).toBeGreaterThan(0);
       expect(screen.getByText(/Marked/i)).toBeTruthy();

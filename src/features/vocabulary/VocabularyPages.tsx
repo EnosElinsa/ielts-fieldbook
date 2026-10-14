@@ -22,7 +22,6 @@ import {
   deriveVocabularyStatus,
   enrollWordbook,
   getActiveWrongWords,
-  getVocabularyReviewQueue,
   removeVocabularyItem,
   resolveWrongWord,
   setVocabularyManualStatus,
@@ -32,7 +31,8 @@ import { readVocabularyDraft } from '../../storage/vocabularyDrafts';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
 import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
 import { Pronunciation } from './Pronunciation';
-import { vocabularyGroupProgress, getLearnedVocabularyIds } from "../../domain/vocabulary/progress";
+import { vocabularyGroupProgress, getDueVocabularyReviewQueue, getVocabularyPracticeResults } from "../../domain/vocabulary/progress";
+import { progressRangeStart } from '../progress/practiceActivity';
 import "../../styles/vocabulary.css";
 import "../../styles/vocabulary-workbench.css";
 import '../../styles/vocabulary-home.css';
@@ -162,10 +162,6 @@ function dateLabel(value) {
       })
     : "Due now";
 }
-function safeQueue(state, filter) {
-  return getVocabularyReviewQueue(state, filter) || [];
-}
-
 export function VocabularyNavigation() {
   const { pathname } = useLocation();
   const inStudy = pathname === "/vocabulary/study";
@@ -193,14 +189,15 @@ export function VocabularyNavigation() {
   );
 }
 
-function VocabularyLayout({ children, ready = true }) {
+function VocabularyLayout({ children, ready = true, embedded = false }) {
   const location = useLocation();
   useVocabularyPosition(location.pathname + location.search + location.hash, ready);
+  const Container = embedded ? 'div' : 'section';
   return (
-    <section className="view active vocabulary-view vocabulary-workbench">
-      <VocabularyNavigation />
+    <Container className={`${embedded ? '' : 'view active '}vocabulary-view vocabulary-workbench`}>
+      {!embedded ? <VocabularyNavigation /> : null}
       {children}
-    </section>
+    </Container>
   );
 }
 function VocabularyStats({ values }) {
@@ -248,8 +245,9 @@ function VocabularyHomePage() {
   const saved = readVocabularyDraft(owner);
   const preferences = normalizeVocabularyPreferences(fb.state.settings?.vocabulary);
   const mode = preferences.mode === 'audio' ? 'definition' : preferences.mode;
-  const learned = getLearnedVocabularyIds(fb.state);
-  const due = safeQueue(fb.state, { dueOnly: true, mode }).filter(card => learned.has(card.entryId));
+  const dueCards = getDueVocabularyReviewQueue(fb.state);
+  const reviewMode = dueCards.some(card => card.mode === mode) ? mode : dueCards[0]?.mode || mode;
+  const due = dueCards.filter(card => card.mode === reviewMode);
   const enrollment = [...(fb.state.wordbookEnrollments || [])].sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || ''))).map(row => ({ book: VOCABULARY_CATALOG.books.find(book => book.id === row.bookId), study: bookStudy(fb.state, row.bookId) })).find(row => row.book && row.study.next);
   const nextGroup = enrollment?.study.next;
   const learning = nextGroup && fb.state.wordbookProgress.find(row => row.bookId === nextGroup.bookId && row.unitId === nextGroup.id)?.learning;
@@ -264,18 +262,18 @@ function VocabularyHomePage() {
     if (saved.planId) params.set('planId', saved.planId);
     resumeTo = `/vocabulary/study?${params}`;
   }
-  const href = saved ? resumeTo : due.length ? `/vocabulary/review?${new URLSearchParams({ mode, dueOnly: 'true' })}` : nextGroup ? studyLink(nextGroup) : '/vocabulary/wordbooks';
+  const href = saved ? resumeTo : due.length ? `/vocabulary/review?${new URLSearchParams({ mode: reviewMode, dueOnly: 'true' })}` : nextGroup ? studyLink(nextGroup) : '/vocabulary/wordbooks';
   const action = saved ? 'Continue session' : due.length ? 'Review due words' : nextGroup ? learning?.viewedEntryIds?.length ? 'Continue learning' : 'Start learning' : 'Study wordbooks';
   const title = saved ? 'Continue your session' : due.length ? 'Words due for review' : enrollment ? enrollment.book.title : 'Choose a wordbook';
   return <VocabularyLayout ready={catalogStatus !== 'loading'}>
     <div className="page-tools"><h2>Vocabulary</h2><Link className="btn line" to="/settings/vocabulary">Practice settings</Link></div>
     <section className="vocabulary-home-next" aria-label="Next vocabulary task">
-      <span className="vocabulary-eyebrow">{saved ? `${saved.cardIds.length} words · Session saved` : due.length ? `${due.length} due cards` : nextGroup ? `${preferences.learningBatchSize} words per batch` : 'Wordbook study'}</span>
+      <span className="vocabulary-eyebrow">{saved ? `${saved.cardIds.length} words · Session saved` : due.length ? `${due.length} ${reviewMode} cards due` : nextGroup ? `${preferences.learningBatchSize} words per batch` : 'Wordbook study'}</span>
       <h3>{title}</h3>
       {nextGroup && !saved && !due.length ? <p>{unitPath(enrollment.book, nextGroup, enrollment.study.hierarchy)}</p> : null}
       {catalogStatus === 'loading' && !saved && !due.length ? <PanelLoadingState message="Loading your wordbooks..." /> : catalogStatus === 'error' && !saved && !due.length ? <StateMessage kind="error" message="Wordbooks could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16}/></Link>}
     </section>
-    <VocabularyStats values={[["Due cards", due.length], ["Words to retry", getActiveWrongWords(fb.state).length], ["Saved words", (fb.state.vocabulary || []).filter(entry => !entry.tags.includes('archived')).length]]}/>
+    <VocabularyStats values={[["Due cards", dueCards.length], ["Words to retry", getActiveWrongWords(fb.state).length], ["Saved words", (fb.state.vocabulary || []).filter(entry => !entry.tags.includes('archived')).length]]}/>
     <nav className="vocabulary-home-links" aria-label="More vocabulary tasks"><Link to="/vocabulary/wordbooks"><BookOpen size={17}/>Wordbooks<ArrowRight size={15}/></Link><Link to="/vocabulary/review"><RotateCcw size={17}/>Review vocabulary<ArrowRight size={15}/></Link><Link to="/vocabulary/words"><Pencil size={17}/>Manage my words<ArrowRight size={15}/></Link><Link to="/vocabulary/history">Session history<ArrowRight size={15}/></Link></nav>
   </VocabularyLayout>;
 }
@@ -388,7 +386,7 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
       <VocabularyStats
         values={[
           ["Entries", entries.length],
-          ["Due cards", safeQueue(fb.state, { dueOnly: true }).length],
+          ["Due cards", getDueVocabularyReviewQueue(fb.state).length],
           ["Words to retry", getActiveWrongWords(fb.state).length],
           [
             "Mastered",
@@ -870,22 +868,28 @@ export function VocabularyWrongPage() {
   );
 }
 
-export function VocabularyProgressPage() {
+export function VocabularyProgressPage({ since: selectedSince, embedded = false }: { since?: number; embedded?: boolean } = {}) {
   const fb = useFieldbook();
+  const [params, setParams] = useVocabularySearchParams();
+  const range = ['7', '30', '90', 'all'].includes(params.get('range')) ? params.get('range') : '30';
+  const since = selectedSince ?? progressRangeStart(range);
   const states = fb.state.vocabularyStates || [];
   const entries = fb.state.vocabulary || [];
   const evidence = fb.state.vocabularyEvidence || [];
-  const reviews = fb.state.vocabularyReviews || [];
+  const results = getVocabularyPracticeResults(fb.state, since);
   return (
-    <VocabularyLayout>
+    <VocabularyLayout embedded={embedded}>
       <div className="page-tools">
-        <h2>Vocabulary progress</h2>
+        <h2>{embedded ? 'Vocabulary activity' : 'Vocabulary progress'}</h2>
+        {!embedded ? <FilterMenu label="Time range" value={range} onChange={value => setParams(current => { const next = new URLSearchParams(current); next.set('range', value); return next; }, { replace: true })} options={[{ value: '7', label: 'Last 7 days' }, { value: '30', label: 'Last 30 days' }, { value: '90', label: 'Last 90 days' }, { value: 'all', label: 'All time' }]} /> : null}
       </div>
+      <VocabularyStats values={[["Practice results", results.length], ["Words practised", new Set(results.map(row => row.entryId)).size], ["Successful results", results.filter(row => row.result === 'success').length], ["Needs practice", results.filter(row => ['failure', 'partial'].includes(row.result)).length]]} />
+      <h3 className="vocabulary-section-title">Current vocabulary · All time</h3>
       <VocabularyStats
         values={[
           ["Entries", entries.length],
           ["Mastered words", entries.filter(entry => statusOf(fb.state, entry.id) === "mastered").length],
-          ["Due cards", safeQueue(fb.state, { dueOnly: true }).length],
+          ["Due cards", getDueVocabularyReviewQueue(fb.state).length],
           ["Words to retry", getActiveWrongWords(fb.state).length],
           [
             "Awaiting verification",
@@ -896,7 +900,7 @@ export function VocabularyProgressPage() {
           ],
         ]}
       />
-      <p className="vocabulary-muted">Study progress counts completed group tests. Mastery reflects your practice results or manual status. Due cards are ready for review.</p>
+      <p className="vocabulary-muted">Current totals across all time. Due cards include review modes for words you have already studied.</p>
       <h3 className="vocabulary-section-title">Familiarity</h3>
       <div className="vocabulary-status-breakdown">
         {STATUS.map((status) => (
@@ -912,7 +916,7 @@ export function VocabularyProgressPage() {
           </div>
         ))}
       </div>
-      <h3 className="vocabulary-section-title">Learning dimensions</h3>
+      <h3 className="vocabulary-section-title">Learning dimensions · All time</h3>
       <div className="vocabulary-progress-table">
         <div className="vocabulary-progress-head">
           <span>Dimension</span>
@@ -946,7 +950,7 @@ export function VocabularyProgressPage() {
           );
         })}
       </div>
-      <h3 className="vocabulary-section-title">Wordbook progress</h3>
+      <h3 className="vocabulary-section-title">Wordbook progress · All time</h3>
       <div className="vocabulary-table">
         {books(fb.state)
           .filter((book) =>
@@ -976,13 +980,9 @@ export function VocabularyProgressPage() {
           })}
       </div>
       <h3 className="vocabulary-section-title">Recent practice results</h3>
-      {reviews.length || evidence.length ? (
+      {results.length ? (
         <div className="vocabulary-evidence">
-          {[...reviews, ...evidence]
-            .sort((a, b) =>
-              (Date.parse(b.occurredAt || b.createdAt || '') || 0)-(Date.parse(a.occurredAt || a.createdAt || '') || 0),
-            )
-            .slice(0, 20)
+          {results.slice(0, 20)
             .map((item, index) => (
               <div key={item.id || index}>
                 <Link to={`/vocabulary/entry/${item.entryId}`}>
@@ -990,13 +990,13 @@ export function VocabularyProgressPage() {
                     "Vocabulary entry"}
                 </Link>
                 <span>{label(item.mode || item.dimension)}</span>
-                <span>{label(item.verification || item.result)}</span>
+                <span>{label(item.result || item.verification)}</span>
                 <small>{item.occurredAt || item.createdAt ? dateLabel(item.occurredAt || item.createdAt) : 'Source date unavailable'}</small>
               </div>
             ))}
         </div>
       ) : (
-        <StateMessage message="No vocabulary practice results yet." />
+        <StateMessage message="No vocabulary practice results in this range." />
       )}
     </VocabularyLayout>
   );

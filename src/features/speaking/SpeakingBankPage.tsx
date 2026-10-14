@@ -6,6 +6,7 @@ import { speakingCoverage } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { coverageClass, coverageLabel } from '../../lib/format';
 import { Empty, FilterMenu } from '../../components/ui';
+import { BANK_PAGE_SIZE, BankPagination, bankPage } from '../../components/BankPagination';
 
 function topicPreview(topic) {
   if (Number(topic.part) === 1) return (topic.questions || []).slice(0, 2).join(' / ') || topic.title;
@@ -26,6 +27,7 @@ export function SpeakingBankPage() {
     const next = new URLSearchParams(current);
     if (value && value !== 'all' && value !== 'catalog' && value !== 'grid') next.set(key, value);
     else next.delete(key);
+    if (key !== 'view') next.delete('page');
     return next;
   }, { replace: true });
   useEffect(() => {
@@ -55,10 +57,15 @@ export function SpeakingBankPage() {
     counts[speakingCoverage(fb.state, topic.id)] += 1;
   });
 
-  const groups = [
-    { part: 1, title: 'Part 1', items: filtered.filter((topic) => Number(topic.part) === 1) },
-    { part: 2, title: 'Part 2', items: filtered.filter((topic) => Number(topic.part) === 2) },
-  ].filter((group) => part === 'all' || String(group.part) === part);
+  const ordered = [1, 2].flatMap(part => filtered.filter(topic => Number(topic.part) === part));
+  const page = bankPage(params.get('page'), ordered.length);
+  const visible = ordered.slice((page - 1) * BANK_PAGE_SIZE, page * BANK_PAGE_SIZE);
+  const groups = [1, 2].map(part => ({ part, title: `Part ${part}`, items: visible.filter(topic => Number(topic.part) === part) })).filter(group => group.items.length);
+  const changePage = value => setParams(current => {
+    const next = new URLSearchParams(current);
+    if (value === 1) next.delete('page'); else next.set('page', String(value));
+    return next;
+  });
 
   return (
     <section className="view active">
@@ -105,12 +112,13 @@ export function SpeakingBankPage() {
           <button type="button" className="btn line icon-btn" aria-label="List view" title="List view" aria-pressed={view === 'list'} onClick={() => update('view', 'list')}><List size={16} /></button>
         </div>
       </div>
+      <BankPagination total={ordered.length} page={page} onChange={changePage} label="Speaking topics, top pagination" />
       <div>
         {groups.length ? (
           groups.map((group) => (
             <div className="speak-board" key={group.part}>
               <h3>
-                {group.title} · {group.items.length}
+                {group.title}
               </h3>
               <div className={`questions${view === 'list' ? ' questions-list' : ''}`}>
                 {group.items.length ? (
@@ -156,10 +164,13 @@ export function SpeakingBankPage() {
               </div>
             </div>
           ))
+        ) : topics.length ? (
+          <Empty message="No topics match." label="Clear filters" onAction={() => setParams({})} />
         ) : (
           <Empty message="Speaking questions are unavailable. Please try again later." />
         )}
       </div>
+      {ordered.length > BANK_PAGE_SIZE ? <BankPagination total={ordered.length} page={page} onChange={changePage} label="Speaking topics, bottom pagination" /> : null}
     </section>
   );
 }

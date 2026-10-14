@@ -5,15 +5,15 @@ import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { CommandSearch, MobileNavigation } from './WorkbenchNavigation';
 import { canonicalListeningUrl, moduleFor, studyLinkActive } from './workspaceNavigation';
-const { fb } = vi.hoisted(() => ({ fb: { state: { questions: [], speakingTopics: [], sessions: [], vocabulary: [], examAttempts: [] }, setSkill: vi.fn() } }));
+const { fb } = vi.hoisted(() => ({ fb: { state: { questions: [], speakingTopics: [], sessions: [], vocabulary: [], examAttempts: [] }, setSkill: vi.fn(), moduleStatus: undefined as any, ensureAccountModule: vi.fn(), ensureQuestionBank: vi.fn() } }));
 vi.mock('../context/FieldbookContext', () => ({ useFieldbook: () => fb }));
 vi.mock('../context/ThemeContext', () => ({ useTheme: () => ({ theme: 'light', setTheme: vi.fn() }) }));
 vi.mock('../auth/AuthGate', () => ({ signOut: vi.fn() }));
-afterEach(() => { cleanup(); vi.clearAllMocks(); });
+afterEach(() => { cleanup(); vi.clearAllMocks(); fb.moduleStatus = undefined; });
 test('search routes reading and listening through skill selection', async () => {
   const user = userEvent.setup();
   render(<MemoryRouter><CommandSearch open onClose={() => {}} /></MemoryRouter>);
-  await user.type(screen.getByRole('textbox', { name: 'Search Fieldbook' }), 'Reading');
+  await user.type(screen.getByRole('combobox', { name: 'Search Fieldbook' }), 'Reading');
   await user.click(screen.getByRole('option', { name: 'Reading Page' }));
   expect(fb.setSkill).toHaveBeenCalledWith('reading', '/reading');
 });
@@ -29,9 +29,24 @@ test('mobile navigation gives listening and reading direct guarded entry points'
 test.each(['reading', 'listening'])('command search opens the %s review page in its module', async (skill) => {
   render(<MemoryRouter><CommandSearch open onClose={() => {}} /></MemoryRouter>);
   const user = userEvent.setup();
-  await user.type(screen.getByRole('textbox', { name: 'Search Fieldbook' }), `${skill} review`);
+  await user.type(screen.getByRole('combobox', { name: 'Search Fieldbook' }), `${skill} review`);
   await user.click(screen.getByRole('option'));
   expect(fb.setSkill).toHaveBeenCalledWith(skill, `/${skill}/review`);
+});
+
+test('search remains open and dismissible while data is loading, and failed results offer retry', async () => {
+  fb.moduleStatus = { productive: 'loading', vocabulary: 'loading', receptive: 'loading' };
+  fb.ensureAccountModule.mockRejectedValue(new Error('Connection unavailable'));
+  fb.ensureQuestionBank.mockResolvedValue([]);
+  const close = vi.fn();
+  render(<MemoryRouter><CommandSearch open onClose={close} /></MemoryRouter>);
+  expect(screen.getByRole('dialog', { name: 'Search Fieldbook' })).toBeInTheDocument();
+  expect(screen.getByRole('combobox', { name: 'Search Fieldbook' })).toBeInTheDocument();
+  expect(await screen.findByRole('alert')).toHaveTextContent('Connection unavailable');
+  await userEvent.click(screen.getByRole('button', { name: 'Retry search' }));
+  expect(fb.ensureAccountModule).toHaveBeenCalledTimes(6);
+  await userEvent.click(screen.getByRole('button', { name: 'Close dialog' }));
+  expect(close).toHaveBeenCalledOnce();
 });
 
 test('mobile module order follows test order and recognizes speaking review', () => {

@@ -1,7 +1,9 @@
 // Shared learning evidence. Each call only reads the supplied account state.
 import { VOCABULARY_CATALOG } from './catalog';
 import { normalizeVocabularyBookId, normalizeVocabularyUnitId } from './identities';
-import type { VocabularyStore } from './types';
+import { getVocabularyReviewQueue } from './index';
+import { vocabularyLearningTimeline } from './timeline';
+import type { ReviewQueueFilter, VocabularyStore } from './types';
 export type GroupProgress = 'Not started' | 'In progress' | 'Studied';
 type Group = { id: string; bookId: string; studyEntryIds?: string[]; entryIds?: string[]; totalSourceWords?: number };
 function historicalAttempt(row: any): boolean {
@@ -52,4 +54,16 @@ export function getLearnedVocabularyIds(state: Partial<VocabularyStore>): Set<st
     (state.vocabulary || []).filter(entry => (entry.sources || []).some(source => attemptedGroups.has(`${source.bookId}:${source.unitId}`))).forEach(entry => learned.add(entry.id));
   }
   return learned;
+}
+
+export function getDueVocabularyReviewQueue(state: Partial<VocabularyStore>, filter: ReviewQueueFilter = {}) {
+  const learned = getLearnedVocabularyIds(state);
+  return getVocabularyReviewQueue(state, { ...filter, dueOnly: true }).filter(card => learned.has(card.entryId));
+}
+
+export function getVocabularyPracticeResults(state: Partial<VocabularyStore>, since = 0, now = Date.now()) {
+  return vocabularyLearningTimeline(state).filter(row => {
+    const date = Date.parse(row.occurredAt || '');
+    return (!since || date >= since) && (!Number.isFinite(date) || date <= now);
+  });
 }

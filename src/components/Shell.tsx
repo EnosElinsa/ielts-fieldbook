@@ -19,6 +19,7 @@ import { moduleFor, studyLinkActive, workspaceModules } from './workspaceNavigat
 import { useWorkspaceModuleMemory } from './useWorkspaceModuleMemory';
 import { accountId } from '../storage/remote';
 import { AccountDataBoundary } from './AccountDataBoundary';
+import { PageErrorBoundary } from './PageErrorBoundary';
 import { SETTINGS_BACKUP_EVENT, type SettingsBackupAction } from '../features/settings/backupActions';
 
 const SettingsModal = lazy(()=>import('../features/modals/SettingsModal').then(m=>({default:m.SettingsModal})));
@@ -32,7 +33,7 @@ const AssessmentImportModal = lazy(()=>import('../features/modals/AssessmentImpo
 const LegalModal = lazy(()=>import('../features/modals/LegalModal').then(m=>({default:m.LegalModal})));
 
 function WorkspaceRoute() {
-  const {pathname} = useLocation();
+  const {pathname, key} = useLocation();
   let modules = []; let banks = [];
   if (pathname.startsWith('/vocabulary')) modules = ['vocabulary'];
   else if (/^\/(reading|listening)/.test(pathname)) modules = ['receptive'];
@@ -42,7 +43,7 @@ function WorkspaceRoute() {
   else if (pathname.startsWith('/stories')) {modules=['productive'];banks=['speaking'];}
   else if (pathname.startsWith('/review')) modules=['productive','vocabulary'];
   else if (pathname.startsWith('/settings')) modules=['productive','vocabulary','receptive'];
-  return <AccountDataBoundary modules={modules} banks={banks}><Outlet /></AccountDataBoundary>;
+  return <PageErrorBoundary resetKey={`${accountId()}:${key}`}><AccountDataBoundary modules={modules} banks={banks}><Outlet /></AccountDataBoundary></PageErrorBoundary>;
 }
 
 function RailHint({ label, enabled, children }) {
@@ -95,7 +96,6 @@ export function Shell() {
   const accountUser = useAuthUser();
   const location = useLocation();
   const navigate = useNavigate();
-  const assessmentInput = useRef(null);
   const backupInput = useRef(null);
   const [collapsed, setCollapsed] = useState(() => {
     try {
@@ -147,7 +147,6 @@ export function Shell() {
           fb.setBackupMenuOpen(false);
           return;
         }
-        if (fb.modal) fb.closeModal();
       }
     };
     document.addEventListener('keydown', onKey);
@@ -172,34 +171,6 @@ export function Shell() {
       fb.downloadFile(`ielts-fieldbook-backup-${fb.dateKey(new Date())}.json`, JSON.stringify(Object.assign({}, fb.persistShape(complete), { backupMeta: { origin: location.origin, exportedAt: new Date().toISOString() } }), null, 2), 'application/json');
       fb.toast('Backup exported. Recordings stay in your account and are not in the JSON.');
     } catch { fb.toast('Could not load the complete account for backup. Try again.'); }
-  };
-
-  const importAssessment = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = async () => {
-      try { if (fb.ensureCompleteAccount) await fb.ensureCompleteAccount(); } catch { fb.toast('Could not load your account for import. Try again.'); return; }
-      const draft = structuredClone(fb.stateRef.current);
-      const result = fb.importAssessmentText(draft, String(reader.result), file.name);
-      if (result.invalid) {
-        fb.toast(result.reason);
-        return;
-      }
-      fb.persistNow(draft);
-      navigate('/review');
-      const speakingScore = result.assessment && result.assessment.skill === 'speaking';
-      const noun = speakingScore ? 'transcript' : 'essay';
-      fb.toast(
-        result.duplicate
-          ? result.session
-            ? `This score was already here. It is linked to the ${noun} again.`
-            : 'This score was already imported, and it still has no matching attempt.'
-          : result.session
-            ? `Score linked to the ${noun}.`
-            : `Score saved, but the file has no ${noun} to link.`,
-      );
-    };
-    reader.onerror = () => fb.toast('Could not read the score file.');
-    reader.readAsText(file);
   };
 
   const previewBackup = (file: File) => {
@@ -343,20 +314,9 @@ export function Shell() {
                   event.target.value = '';
                 }}
               />
-              <input
-                ref={assessmentInput}
-                type="file"
-                accept=".md,.txt,text/markdown,text/plain"
-                hidden
-                onChange={(event) => {
-                  const file = event.target.files?.[0];
-                  if (file) importAssessment(file);
-                  event.target.value = '';
-                }}
-              />
             </div>
           </header>
-          <SaveFailure failed={fb.saveFailed && !location.pathname.startsWith('/settings')} />
+          <SaveFailure failed={fb.saveFailed && !location.pathname.startsWith('/settings')} saving={fb.saveStatus === 'saving'} onRetry={() => void fb.persistNow()} />
           {fb.loadError ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
           {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
           {!fb.booted && !fb.loadError ? <PageLoadingState message="Loading workspace…" variant="bank" /> : null}
@@ -367,7 +327,7 @@ export function Shell() {
       </div>
       <MobileNavigation onMore={() => setMoreOpen(true)} onSelectModule={resumeModule} />
       <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}{workspaceModules.filter(link => ['planning', 'progress', 'settings'].includes(link.id)).map(link => <button type="button" key={link.id} className={module === link.id ? 'active' : undefined} onClick={() => { setMoreOpen(false); resumeModule(link.id); }}><link.Icon size={20} />{link.label}</button>)}<button type="button" onClick={() => goFromMore('/settings/account')}>Account</button></div></div></ModalFrame>
-      {searchOpen && <AccountDataBoundary modules={['productive','vocabulary','receptive']} banks={['writing','speaking']}><CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} /></AccountDataBoundary>}
+      {searchOpen && <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <Suspense fallback={<PageLoadingState message="Loading..." />}>
         {fb.modal === 'assessment' && <AssessmentImportModal />}
         {legalView && <LegalModal view={legalView} onClose={() => setLegalView(null)} />}

@@ -47,3 +47,4 @@
 .account .field input:-webkit-autofill:hover,
 .account .field input:-webkit-autofill:focus{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000px var(--sheet) inset;transition:background-color 9999s ease-out}
 .account-danger{background:var(--sheet)}
+.save-failure{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.save-failure .btn{min-height:44px;flex-shrink:0}

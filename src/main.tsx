@@ -6,6 +6,7 @@ import { ThemeProvider, applyTheme, initialTheme } from './context/ThemeContext'
 import * as Tooltip from '@radix-ui/react-tooltip';
 import './styles/index.css';
 import { startPerformanceTelemetry } from './lib/performanceTelemetry';
+import { PageErrorBoundary } from './components/PageErrorBoundary';
 
 const AppRoutes = lazy(() => import('./App').then(module => ({ default: module.AppRoutes })));
 
@@ -16,11 +17,13 @@ createRoot(document.getElementById('root')!).render(
     <ThemeProvider>
     <Tooltip.Provider delayDuration={350}>
     <BrowserRouter>
+      <PageErrorBoundary standalone>
       <AuthGate>
         <Suspense fallback={<main className="auth-screen" role="status">Loading workspace...</main>}>
           <AppRoutes />
         </Suspense>
       </AuthGate>
+      </PageErrorBoundary>
     </BrowserRouter>
     </Tooltip.Provider>
     </ThemeProvider>

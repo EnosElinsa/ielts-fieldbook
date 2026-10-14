@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { getLearnedVocabularyIds, vocabularyGroupProgress } from './progress';
-vi.mock('./catalog', () => ({ VOCABULARY_CATALOG: { memberships: [{ bookId: 'book', unitId: 'group', entryId: 'one' }] } }));
+import { getDueVocabularyReviewQueue, getLearnedVocabularyIds, getVocabularyPracticeResults, vocabularyGroupProgress } from './progress';
+vi.mock('./catalog', () => ({ VOCABULARY_CATALOG: { entries: [], memberships: [{ bookId: 'book', unitId: 'group', entryId: 'one' }] } }));
 const group = { id: 'group', bookId: 'book', studyEntryIds: ['one', 'two'] };
 describe('account-scoped vocabulary learning evidence', () => {
   it('recognizes a reliable historical group attempt including zero grade', () => {
@@ -26,3 +26,23 @@ describe('account-scoped vocabulary learning evidence', () => {
 });
 
 it('blank objective submissions do not manufacture learned evidence',()=>{const state:any={vocabularyReviews:[{entryId:'one',response:'',result:'failure'}],vocabularyEvidence:[{entryId:'one',response:'',mode:'dictation',verification:'objective'}],vocabularySessions:[{status:'submitted',mode:'dictation',results:[{entryId:'one',response:''}]}]};expect(getLearnedVocabularyIds(state).size).toBe(0);expect(vocabularyGroupProgress(state,group)).toBe('Not started');});
+
+it('due review excludes unlearned words and respects mode and scheduled dates', () => {
+  const state: any = {
+    vocabulary: ['one', 'two'].map(id => ({ id, term: id, tags: [], sources: [], senses: [{ id: 'sense', definition: 'Meaning', example: '' }], createdAt: '2026-01-01' })),
+    vocabularyReviews: [{ entryId: 'one', response: 'Meaning', result: 'success' }],
+  };
+  expect(getDueVocabularyReviewQueue(state, { now: '2026-10-13' }).map(card => card.mode).sort()).toEqual(['definition', 'dictation', 'production']);
+  expect(getDueVocabularyReviewQueue(state, { mode: 'definition', now: '2026-10-13' })).toHaveLength(1);
+  state.vocabularyStates = [{ entryId: 'one', senseId: 'sense', cards: { definition: { due: '2027-01-01' } } }];
+  expect(getDueVocabularyReviewQueue(state, { mode: 'definition', now: '2026-10-13' })).toHaveLength(0);
+});
+
+it('range results exclude undated imports and do not count a review again for each dimension', () => {
+  const state: any = {
+    vocabularyReviews: [{ id: 'recent', entryId: 'one', occurredAt: '2026-10-12', mode: 'dictation' }, { id: 'old', entryId: 'two', occurredAt: '2026-01-01' }, { id: 'import', entryId: 'three', occurredAt: null, updatedAt: '2026-10-12' }],
+    vocabularyEvidence: [{ id: 'recent:listening', entryId: 'one', dimension: 'listening', sourceId: 'recent', occurredAt: '2026-10-12' }, { id: 'recent:spelling', entryId: 'one', dimension: 'spelling', sourceId: 'recent', occurredAt: '2026-10-12' }, { id: 'independent', entryId: 'two', dimension: 'meaning', occurredAt: '2026-10-11' }],
+  };
+  expect(getVocabularyPracticeResults(state, Date.parse('2026-10-06')).map(row => row.id)).toEqual(['recent', 'independent']);
+  expect(getVocabularyPracticeResults(state, 0)).toHaveLength(4);
+});

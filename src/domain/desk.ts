@@ -34,6 +34,16 @@ export function normalizeSections(raw: unknown): DeskSections {
   return out;
 }
 
+export function attemptSections(mode: DeskMode, essay: string, saved?: Partial<DeskSections>): DeskSections | undefined {
+  if (!['overview', 'outline', 'compare', 'body'].includes(mode)) return undefined;
+  if (saved) return normalizeSections(saved);
+  // Older attempts stored only the text joined by composeEssay.
+  const parts = String(essay || '').trim().split(/\n\s*\n/);
+  if (mode === 'overview') return normalizeSections({ intro: parts[0], overview: parts.slice(1).join('\n\n') });
+  if (mode === 'outline') return normalizeSections({ position: parts[0], pointA: parts[1], pointB: parts.slice(2).join('\n\n') });
+  return normalizeSections({ paragraph: essay });
+}
+
 function joinParts(parts: string[]): string {
   return parts.map((part) => String(part || '').trim()).filter(Boolean).join('\n\n');
 }

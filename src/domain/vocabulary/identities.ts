@@ -1,4 +1,13 @@
-import mapping from './identityMapping.json';
+import compact from './identityRuntime.json';
+
+// Membership prefixes and sequential canonical suffixes are stored once per group.
+const mapping = {
+  version: compact.version, books: compact.books, units: compact.units,
+  memberships: (compact.groups as [number, [number, string][]][]).flatMap(([unitIndex, rows]) => {
+    const unit = compact.units[unitIndex];
+    return rows.map(([sourceId, entryId], index) => ({ oldId: `${unit.oldStorageId}:${sourceId}`, id: `${unit.id}-member-${String(index + 1).padStart(3, '0')}`, entryId }));
+  }),
+};
 
 const books = new Map(mapping.books.flatMap(row => [[row.oldId, row.id], [row.sourceBookId, row.id]]));
 const units = new Map(mapping.units.flatMap(row => [[row.oldId, row.id], [row.oldStorageId, row.id]]));

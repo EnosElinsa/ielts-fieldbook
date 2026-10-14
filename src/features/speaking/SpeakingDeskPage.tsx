@@ -10,6 +10,8 @@ import { deletePendingAudio, readPendingAudio, writePendingAudio } from '../../s
 import { accountId } from '../../storage/remote';
 import { Mic, Square, Play, Pause, RotateCcw, Save, ArrowRight, Shuffle, Download } from 'lucide-react';
 import { useWorkspaceDeskContext, useWorkspacePageState } from '../../lib/workspacePageState';
+import { useElapsedCountdown } from '../../lib/useElapsedCountdown';
+import { navigateTabs } from '../../lib/tabNavigation';
 
 function speakSecondsFor(part) {
   if (String(part) === '1') return 30;
@@ -76,10 +78,14 @@ export function SpeakingDeskPage() {
   const [noteRunning, setNoteRunning] = useState(false);
   const [speakRunning, setSpeakRunning] = useState(false);
   const [recording, setRecording] = useState(false);
+  const [requestingMicrophone, setRequestingMicrophone] = useState(false);
+  const microphoneRequestPending = useRef(false);
   const [audioBlob, setAudioBlob] = useState(null);
   const [audioUrl, setAudioUrl] = useState(null);
   const [micError, setMicError] = useState(null);
   const [phase, setPhase] = useWorkspacePageState(`${uiKey}:phase`, part === '2' ? 'prepare' : 'answer', value => ['prepare', 'answer', 'playback'].includes(value));
+  const [mobileTab, setMobileTab] = useWorkspacePageState(`${uiKey}:mobileTab`, 'practice', value => value === 'practice' || value === 'prompt');
+  const [notesOpen, setNotesOpen] = useWorkspacePageState(`${uiKey}:notesOpen`, part === '2', value => typeof value === 'boolean');
   const [uploadError, setUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [audioSaved, setAudioSaved] = useState(false);
@@ -91,6 +97,8 @@ export function SpeakingDeskPage() {
 
   const resetRecording = () => {
     microphoneGeneration.current += 1;
+    microphoneRequestPending.current = false;
+    setRequestingMicrophone(false);
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       try {
         const recorder = mediaRecorderRef.current;
@@ -158,6 +166,8 @@ export function SpeakingDeskPage() {
 
   useEffect(() => () => resetRecording(), []);
 
+  useEffect(() => { setNoteRunning(false); setSpeakRunning(false); }, [uiKey, owner]);
+
   useEffect(() => {
     if (!recording && !audioBlob) return undefined;
     const warn = (event) => {
@@ -186,38 +196,19 @@ export function SpeakingDeskPage() {
     return () => { window.removeEventListener('beforeunload', warn); document.removeEventListener('click', guardLink, true); document.removeEventListener('fieldbook:before-navigate', guardRequest); };
   }, [audioBlob, audioSaved, recording]);
 
-  useEffect(() => {
-    if (!noteRunning) return undefined;
-    const id = window.setInterval(() => {
-      setNoteSeconds((s) => {
-        if (s <= 1) {
-          setNoteRunning(false);
-          setPhase('answer');
-          fb.toast('Note time is up.');
-          return 0;
-        }
-        return s - 1;
-      });
-    }, 1000);
-    return () => window.clearInterval(id);
-  }, [noteRunning, fb]);
-
-  useEffect(() => {
-    if (!speakRunning) return undefined;
-    const id = window.setInterval(() => {
-      setSpeakSeconds((s) => {
-        if (s <= 1) {
-          setSpeakRunning(false);
-          setPhase(audioBlob ? 'playback' : 'answer');
-          if (mediaRecorderRef.current?.state === 'recording') mediaRecorderRef.current.stop();
-          fb.toast('Time is up. Write what you said.');
-          return 0;
-        }
-        return s - 1;
-      });
-    }, 1000);
-    return () => window.clearInterval(id);
-  }, [speakRunning, fb, audioBlob]);
+  useElapsedCountdown({
+    seconds: noteSeconds, running: noteRunning, scope: JSON.stringify([owner, uiKey]), setSeconds: setNoteSeconds,
+    onComplete: () => { setNoteRunning(false); setNotesOpen(false); setPhase('answer'); fb.toast('Note time is up.'); },
+  });
+  useElapsedCountdown({
+    seconds: speakSeconds, running: speakRunning, scope: JSON.stringify([owner, uiKey]), setSeconds: setSpeakSeconds,
+    onComplete: () => {
+      setSpeakRunning(false);
+      setPhase(audioBlob ? 'playback' : 'answer');
+      if (mediaRecorderRef.current?.state === 'recording') mediaRecorderRef.current.stop();
+      fb.toast('Time is up. Write what you said.');
+    },
+  });
 
   const mode = fb.currentDeskMode();
   const blind = mode === 'speak-blind';
@@ -332,13 +323,19 @@ export function SpeakingDeskPage() {
                   type="button"
                   role="tab"
                   aria-selected={part === p}
+                  tabIndex={part === p ? 0 : -1}
+                  onKeyDown={navigateTabs}
                   disabled={recording || uploading}
                   onClick={() => {
                     if (p !== part && audioBlob && !window.confirm('This recording has not been uploaded. Change part and discard it?')) return;
+                    const wantedPart = p === '3' ? '2' : p;
+                    if (String(topic.part) !== wantedPart) {
+                      const next = fb.state.speakingTopics.find(item => String(item.part) === wantedPart && !item.incomplete) || fb.state.speakingTopics.find(item => String(item.part) === wantedPart);
+                      if (!next) { fb.toast(`Part ${p} topics are unavailable.`); return; }
+                      fb.setSelectedTopicId(String(next.id));
+                    }
                     fb.setDeskPart(p);
                     if (p === '1' || p === '3') fb.setQuestionIndex(0);
-                    setSpeakSeconds(speakSecondsFor(p));
-                    setNoteSeconds(60);
                     setNoteRunning(false);
                     setSpeakRunning(false);
                   }}
@@ -355,11 +352,14 @@ export function SpeakingDeskPage() {
           ) : null}
         </div>
       </div>
+      <div className="mobile-desk-tabs" role="tablist" aria-label="Speaking workspace">
+        {['prompt', 'practice'].map(tab => <button key={tab} id={`speaking-tab-${tab}`} className={mobileTab === tab ? 'active' : ''} type="button" role="tab" tabIndex={mobileTab === tab ? 0 : -1} aria-selected={mobileTab === tab} aria-controls={`speaking-${tab}`} onKeyDown={navigateTabs} onClick={() => setMobileTab(tab)}>{tab === 'prompt' ? 'Prompt' : 'Practice'}</button>)}
+      </div>
       <ol className="speaking-phases" aria-label="Speaking practice phase">
-        {['prepare', 'answer', 'record', 'playback'].map((item, index) => <li key={item} aria-current={phase === item ? 'step' : undefined}><span>{index + 1}</span>{item === 'prepare' ? 'Prepare' : item === 'answer' ? 'Answer' : item === 'record' ? 'Record' : 'Playback'}</li>)}
+        {(part === '2' ? ['prepare', 'answer', 'playback'] : ['answer', 'playback']).map((item, index) => <li key={item} aria-current={(phase === 'record' ? 'answer' : phase) === item ? 'step' : undefined}><span>{index + 1}</span>{item === 'prepare' ? 'Prepare' : item === 'answer' ? recording ? 'Recording' : 'Answer' : 'Review'}</li>)}
       </ol>
       <div className="desk-grid">
-        <div className="prompt">
+        <div className={`prompt${mobileTab === 'prompt' ? ' mobile-active' : ''}`} id="speaking-prompt">
           <span className="pill blue">Part {part}</span>
           <h3>{topic.title}</h3>
           <div className="prompt-body">
@@ -374,7 +374,6 @@ export function SpeakingDeskPage() {
                     disabled={recording || uploading}
                     onClick={() => {
                       fb.setQuestionIndex(index);
-                      setSpeakSeconds(speakSecondsFor(part));
                       setSpeakRunning(false);
                     }}
                   >
@@ -452,15 +451,9 @@ export function SpeakingDeskPage() {
                         <button
                           className="btn line"
                           type="button"
+                          disabled={uploading || requestingMicrophone}
                           onClick={async () => {
-                            setTranscript(session.essay);
-                            liveSave({
-                              transcript: session.essay,
-                              notes: session.notes || notes,
-                              parentSessionId: session.id,
-                            });
-                            const saved = await fb.persistNow();
-                            if (saved) fb.toast('Copied into a new draft.');
+                            await fb.startTargetedPractice(session);
                           }}
                         >
                           Continue
@@ -487,17 +480,21 @@ export function SpeakingDeskPage() {
             </div>
           </div>
         </div>
-        <div className={`editor${recording ? ' is-recording' : ''}`}>
+        <div className={`editor${recording ? ' is-recording' : ''}${mobileTab === 'practice' ? ' mobile-active' : ''}`} id="speaking-practice">
+          <div className="speaking-current-prompt">
+            <span className="pill blue">Part {part}</span>
+            <p>{part === '2' ? topic.cueCard || topic.title : questions[qIndex] || topic.title}</p>
+          </div>
           {part === '2' && !hideAids ? (
-            <div className="editor-block">
-              <div className="editor-head">
+            <details className="editor-block preparation-notes" open={notesOpen} onToggle={event => setNotesOpen(event.currentTarget.open)}>
+              <summary className="editor-head">
                 <h3>One-minute notes</h3>
                 <span className={`timer${noteRunning ? ' is-live' : ''}`}>{formatClock(noteSeconds)}</span>
-              </div>
+              </summary>
               <div className="editor-bar">
                 <span className="count">Glance at these while you speak</span>
                 <div className="btn-row">
-                  <button className="btn line" type="button" disabled={recording} onClick={() => { setPhase('prepare'); setSpeakRunning(false); setNoteRunning((r) => !r); }}>
+                  <button className="btn line" type="button" disabled={recording} onClick={() => { setPhase('prepare'); setSpeakRunning(false); if (!noteSeconds) setNoteSeconds(60); setNoteRunning((r) => !r); }}>
                     {noteRunning ? 'Pause notes' : 'Start notes'}
                   </button>
                   <button
@@ -534,6 +531,7 @@ export function SpeakingDeskPage() {
               </div>
               <textarea
                 className="notes-area"
+                aria-label="Preparation notes"
                 placeholder="Notes for this question…"
                 value={notes}
                 onChange={(e) => {
@@ -541,8 +539,8 @@ export function SpeakingDeskPage() {
                   liveSave({ notes: e.target.value, transcript });
                 }}
               />
-              <button className="btn line prepare-complete" type="button" onClick={() => { setNoteRunning(false); setPhase('answer'); setSpeakRunning(true); }} disabled={recording}><Play size={16} /> Start answer</button>
-            </div>
+              <button className="btn line prepare-complete" type="button" onClick={() => { setNoteRunning(false); setNotesOpen(false); setPhase('answer'); if (!speakSeconds) setSpeakSeconds(speakSecondsFor(part)); setSpeakRunning(true); }} disabled={recording}><Play size={16} /> Start answer</button>
+            </details>
           ) : null}
           <div className="editor-head">
             <h3>What you said</h3>
@@ -551,7 +549,7 @@ export function SpeakingDeskPage() {
           <div className="editor-bar">
             <span className="count">{fb.wordCount(transcript)} words</span>
             <div className="btn-row">
-              <button className="btn line" type="button" disabled={recording} onClick={() => { setNoteRunning(false); setPhase('answer'); setSpeakRunning((r) => !r); }}>
+              <button className="btn line" type="button" disabled={recording} onClick={() => { setNoteRunning(false); setNotesOpen(false); setPhase('answer'); if (!speakSeconds) setSpeakSeconds(speakSecondsFor(part)); setSpeakRunning((r) => !r); }}>
                 {speakRunning ? <Pause size={16} /> : <Play size={16} />}{speakRunning ? 'Pause' : 'Start timer'}
               </button>
               <button
@@ -563,6 +561,7 @@ export function SpeakingDeskPage() {
                   setNoteSeconds(60);
                   setSpeakSeconds(speakSecondsFor(part));
                   setPhase(part === '2' ? 'prepare' : 'answer');
+                  setNotesOpen(part === '2');
                 }}
                 disabled={recording}
               >
@@ -573,31 +572,41 @@ export function SpeakingDeskPage() {
           <div className={`rec-strip${recording ? ' is-live' : ''}${audioBlob ? ' is-ready' : ''}`} role="status">
             <span className="rec-dot" aria-hidden="true" />
             <span className="rec-label">
-              {recording ? 'Recording' : audioBlob ? 'Recording ready' : 'Microphone off'}
+              {recording ? 'Recording' : requestingMicrophone ? 'Waiting for microphone' : audioBlob ? 'Recording ready' : 'Microphone off'}
             </span>
             <div className="btn-row">
               {!recording ? (
                 <button
                   className="btn line"
                   type="button"
-                  disabled={uploading}
+                  disabled={uploading || requestingMicrophone}
                   onClick={async () => {
+                    if (microphoneRequestPending.current) return;
                     if (audioBlob && !window.confirm('This recording has not been uploaded. Replace it with a new recording?')) return;
-                    if (audioBlob) await deletePendingAudio(accountId(), topic.id, part);
-                    resetRecording();
+                    setSpeakRunning(false);
                     setMicError(null);
-                    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
                       setMicError('This browser cannot record. You can still type the transcript.');
                       return;
                     }
+                    const captureOwner = owner;
+                    const generation = microphoneGeneration.current;
+                    let requestedStream = null;
+                    let requestedRecorder = null;
+                    microphoneRequestPending.current = true;
+                    setRequestingMicrophone(true);
                     try {
-                      const captureOwner = owner;
-                      const generation = microphoneGeneration.current;
                       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                      requestedStream = stream;
                       if (generation !== microphoneGeneration.current || captureOwner !== accountId()) { stream.getTracks().forEach(track => track.stop()); return; }
+                      const recorder = new MediaRecorder(stream);
+                      requestedRecorder = recorder;
+                      recorder.start();
+                      // Replace recoverable audio only once a new recording has started.
+                      if (audioBlob) void deletePendingAudio(captureOwner, topic.id, part);
+                      resetRecording();
                       streamRef.current = stream;
                       chunksRef.current = [];
-                      const recorder = new MediaRecorder(stream);
                       activeCapture.current = { owner: captureOwner, topicId: topic.id, part };
                       const chunks = chunksRef.current;
                       mediaRecorderRef.current = recorder;
@@ -605,7 +614,7 @@ export function SpeakingDeskPage() {
                         if (event.data && event.data.size) chunks.push(event.data);
                       };
                       recorder.onstop = () => {
-                        const blob = new Blob(chunksRef.current, { type: recorder.mimeType || 'audio/webm' });
+                        const blob = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
                         setAudioBlob(blob);
                         void writePendingAudio(captureOwner, topic.id, part, blob);
                         setAudioUrl((prev) => {
@@ -620,19 +629,25 @@ export function SpeakingDeskPage() {
                         setSpeakRunning(false);
                         setPhase('playback');
                       };
-                      recorder.start();
                       setRecording(true);
                       setPhase('record');
+                      setNotesOpen(false);
                       setNoteRunning(false);
+                      setSpeakSeconds(speakSecondsFor(part));
                       setSpeakRunning(true);
                       setUploadError(false);
                       setAudioSaved(false);
-                    } catch {
-                      setMicError('Microphone permission was denied. You can still type the transcript.');
+                    } catch (error) {
+                      try { if (requestedRecorder?.state === 'recording') requestedRecorder.stop(); } catch { /* Release tracks even when the recorder cannot stop. */ }
+                      requestedStream?.getTracks().forEach(track => track.stop());
+                      if (generation !== microphoneGeneration.current || captureOwner !== accountId()) return;
+                      setMicError(error?.name === 'NotAllowedError' || error?.name === 'SecurityError' ? 'Microphone permission was denied. You can still type the transcript.' : error?.name === 'NotFoundError' ? 'No microphone was found. Connect one and retry, or type the transcript.' : error?.name === 'NotReadableError' ? 'The microphone is unavailable or in use. Retry, or type the transcript.' : 'Recording could not start. Retry, or type the transcript.');
+                    } finally {
+                      if (generation === microphoneGeneration.current && captureOwner === accountId()) { microphoneRequestPending.current = false; setRequestingMicrophone(false); }
                     }
                   }}
                 >
-                  <Mic size={16} />{audioBlob ? 'Re-record' : 'Record'}
+                  <Mic size={16} />{requestingMicrophone ? 'Opening microphone...' : audioBlob ? 'Re-record' : 'Record'}
                 </button>
               ) : (
                 <button
@@ -654,7 +669,7 @@ export function SpeakingDeskPage() {
               ) : null}
             </div>
           </div>
-          {micError ? <p className="file-hint warn-note">{micError}</p> : null}
+          {micError ? <p className="file-hint warn-note" role="alert">{micError}</p> : null}
           {audioUrl ? <RecordingPlayer src={audioUrl} label="Current recording" onPlaybackChange={() => setPhase('playback')} /> : null}
           {uploadError ? <div className="recording-upload-error" role="alert"><p>The recording could not upload. It remains available until you leave this practice.</p><div className="btn-row"><button className="btn line" disabled={uploading} onClick={() => finishAttempt()}><RotateCcw size={16} /> Retry upload</button>{audioUrl ? <a className="btn line" href={audioUrl} download="ielts-recording.webm"><Download size={16} /> Download recording</a> : null}<button className="btn line" disabled={uploading} onClick={() => finishAttempt(true)}>Continue with transcript only</button></div></div> : null}
           <textarea

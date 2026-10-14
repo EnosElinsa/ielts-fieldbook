@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir, stat } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { parse } from 'parse5';
@@ -23,3 +23,7 @@ for (const path of paths) {
 }
 console.log(`Login JS gzip: ${bytes} bytes (${paths.size} assets)`);
 if (bytes > 300 * 1024) throw new Error('Login JS exceeds 300 KiB gzip budget');
+const assets = await Promise.all((await readdir(resolve(directory, 'assets'))).filter(name => name.endsWith('.js')).map(async name => ({ name, bytes: (await stat(resolve(directory, 'assets', name))).size })));
+const largest = assets.sort((left, right) => right.bytes - left.bytes)[0];
+console.log(`Largest JS asset: ${largest.name} (${largest.bytes} bytes)`);
+if (largest.bytes > 500 * 1024) throw new Error('A JS asset exceeds the 500 KiB runtime budget');
