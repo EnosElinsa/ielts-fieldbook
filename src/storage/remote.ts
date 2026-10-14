@@ -368,7 +368,9 @@ export async function saveState(state, onQuotaToast?: (message: string) => void,
     const code = String(error?.code || '');
     const status = Number(error?.status || 0);
     const message = String(error?.message || '');
-    const feedback = /Sign in|not loaded/i.test(message) || ['PGRST301', 'PGRST302', 'PGRST303'].includes(code) || status === 401
+    const feedback = code === '57014' || /statement timeout/i.test(message)
+      ? 'The account server took too long to save. Your changes are still here. Retry saving.'
+      : /Sign in|not loaded/i.test(message) || ['PGRST301', 'PGRST302', 'PGRST303'].includes(code) || status === 401
       ? 'Your sign-in session has expired. Sign in again to save.'
       : /fetch|network|timeout|connection/i.test(message) || globalThis.navigator?.onLine === false
         ? 'Could not reach your account. Check your connection and retry.'

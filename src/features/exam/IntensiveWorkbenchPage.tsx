@@ -264,7 +264,8 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
       const ids = new Set(Object.values(snapshot).map(row => row.id));
       draft.intensiveSessions = [...(draft.intensiveSessions || []).filter((row: IntensiveSession) => !ids.has(row.id)), ...Object.values(snapshot)];
       let saved = false;
-      try { saved = Boolean(await fb.persistNow(draft)); } catch { saved = false; }
+      let feedback = '';
+      try { saved = Boolean(await fb.persistNow(draft, { collections: ['intensiveSessions', 'plans'], onError: (message: string) => { feedback = message; } })); } catch { saved = false; }
       if (!mounted.current || accountId() !== owner) return false;
       if (saved) {
         setSavedCompletions(Object.fromEntries(Object.values(snapshot).filter(row => row.completedAt).map(row => [row.sentenceId, row.completedAt!])));
@@ -275,7 +276,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
       }
       if (generation !== saveGeneration.current) return saved;
       setSaving(false);
-      if (!saved) { setSaveError('Could not save progress. Your changes are kept on this device. Retry Save progress.'); return false; }
+      if (!saved) { setSaveError(`${feedback || 'Could not save progress.'} Your changes are kept on this device. Retry Save progress.`); return false; }
       if (JSON.stringify(sessionRef.current) === JSON.stringify(snapshot) && JSON.stringify(readExamRecovery(owner, recoveryKey)) === JSON.stringify(snapshot)) { clearExamRecovery(owner, recoveryKey); setStatus('Progress saved.'); }
       else setStatus('New changes waiting to save.');
       return true;

@@ -9,8 +9,10 @@ import { readExamRecoveries, readExamRecovery } from '../../storage/examRecovery
 import { accountId } from '../../storage/remote';
 import { useExamCatalog } from './useExamCatalog';
 import { AnnotatedText, SourceAnnotations } from './SourceAnnotations';
+import { ReadingPassage, readingParagraphs, readingQuestionPrompt, HeadingList } from './ReadingPassage';
 import { ExamImage, ExamStimulus, examStimulusBlockIds } from './ExamPracticePage';
 import { examVocabularySources } from './vocabularyCapture';
+import { questionPresentation } from './questionPresentation';
 import '../../styles/exam.css';
 
 export function ExamSourcePage({ skill }: { skill: ExamSkill }) {
@@ -22,6 +24,7 @@ export function ExamSourcePage({ skill }: { skill: ExamSkill }) {
   const section = catalog.sections.find(row => row.id === sectionId && row.skill === skill);
   const passages = catalog.passages.filter(row => row.sectionId === sectionId);
   const questions = (catalog.questions || []).filter(row => row.sectionId === sectionId && row.skill === skill).slice().sort((a, b) => a.number - b.number);
+  const presentation = questionPresentation(questions);
   const requestedBlock = params.get('block') || '';
   const paragraphId = params.get('paragraph');
   const sentenceId = params.get('sentence');
@@ -34,10 +37,10 @@ export function ExamSourcePage({ skill }: { skill: ExamSkill }) {
   const materialBlockIds = useMemo(() => questions.flatMap((question, index) => [`question:${question.id}`, ...(question.stimulusHtml && (!question.groupId || questions[index - 1]?.groupId !== question.groupId) ? examStimulusBlockIds(question.stimulusHtml, `stimulus:${question.groupId || question.id}`) : [])]), [catalog, sectionId, skill]);
   useEffect(() => {
     if (!section || !container.current) return;
-    const blocks = [...container.current.querySelectorAll<HTMLElement>('[data-source-block]')];
+    const blocks = [...container.current.querySelectorAll<HTMLElement>('[data-source-block]')].filter(block => !block.closest('[hidden]'));
     const candidates = requestedBlock ? blocks.filter(row => row.dataset.sourceBlock === requestedBlock)
       : sentenceId ? blocks.filter(row => row.dataset.sourceBlock === `sentence:${sentenceId}`)
-      : paragraphId ? blocks.filter(row => passages.some(passage => row.dataset.sourceBlock === `passage:${passage.id}:${paragraphId}`))
+      : paragraphId ? blocks.filter(row => passages.some(passage => row.dataset.sourceBlock === `passage:${passage.id}:${paragraphId}` || readingParagraphs(passage.paragraphs).some(group => group.label === paragraphId && row.dataset.sourceBlock === `passage:${passage.id}:${group.fragments[0]?.id}`)))
       : quote ? blocks.filter(row => row.textContent?.includes(quote)) : [];
     if (candidates.length !== 1) return;
     candidates[0].scrollIntoView?.({ block: 'center' }); candidates[0].focus({ preventScroll: true });
@@ -60,12 +63,13 @@ export function ExamSourcePage({ skill }: { skill: ExamSkill }) {
       <div ref={container} className="exam-source-document">
         {questions.length > 0 && <section className="exam-source-questions" aria-label="Original questions"><h3>Original questions</h3>{questions.map((question, index) => <article key={question.id} className="exam-question-material">
           {question.stimulusHtml && (!question.groupId || questions[index - 1]?.groupId !== question.groupId) && <ExamStimulus html={question.stimulusHtml} assets={catalog.assets || []} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />}
-          <span className="exam-number">{question.number}</span>{question.instructions && <p className="exam-instruction">{question.instructions}</p>}
-          <p className="exam-prompt"><AnnotatedText blockId={`question:${question.id}`} text={question.prompt} version={question.provenance.contentHash || question.provenance.sourceVersion} /></p>
+          {question.type === 'heading' && presentation[index].groupStart && <HeadingList question={question} />}
+          <span className="exam-number">{question.number}</span>{presentation[index].showInstructions && <p className="exam-instruction">{question.instructions}</p>}
+          {presentation[index].showPrompt && <p className="exam-prompt"><AnnotatedText blockId={`question:${question.id}`} text={readingQuestionPrompt(question, questions, passages.flatMap(passage => passage.paragraphs))} version={question.provenance.contentHash || question.provenance.sourceVersion} /></p>}
           <ExamImage asset={(catalog.assets || []).find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`Question ${question.number} diagram`} />
-          {question.options?.length ? <ul>{question.options.map(option => <li key={option}>{option}</li>)}</ul> : null}
+          {question.type !== 'heading' && question.options?.length ? <ul>{question.options.map(option => <li key={option}>{option}</li>)}</ul> : null}
         </article>)}</section>}
-        {skill === 'reading' ? passages.map(passage => <article className="exam-passage" key={passage.id}><h3>{passage.title}</h3>{passage.paragraphs.map((paragraph, index) => <p key={paragraph.id}><span className="exam-paragraph-id">{/^[A-Z]$/.test(paragraph.id) ? paragraph.id : index + 1}</span><AnnotatedText blockId={`passage:${passage.id}:${paragraph.id}`} text={paragraph.text} version={passage.provenance.contentHash || passage.provenance.sourceVersion} /></p>)}</article>) : visibleSentences.map(sentence => <p className="exam-source-sentence" key={sentence.id}><Link className="icon-button" title={`Play sentence ${section.sentences.indexOf(sentence) + 1}`} aria-label={`Play sentence ${section.sentences.indexOf(sentence) + 1}`} to={`/listening/intensive/${encodeURIComponent(sectionId)}?sentence=${encodeURIComponent(sentence.id)}`}><Headphones size={16} /></Link><AnnotatedText blockId={`sentence:${sentence.id}`} text={sentence.text} version={version} /></p>)}
+        {skill === 'reading' ? passages.map(passage => <ReadingPassage key={passage.id} passage={passage} sourceView />) : visibleSentences.map(sentence => <p className="exam-source-sentence" key={sentence.id}><Link className="icon-button" title={`Play sentence ${section.sentences.indexOf(sentence) + 1}`} aria-label={`Play sentence ${section.sentences.indexOf(sentence) + 1}`} to={`/listening/intensive/${encodeURIComponent(sectionId)}?sentence=${encodeURIComponent(sentence.id)}`}><Headphones size={16} /></Link><AnnotatedText blockId={`sentence:${sentence.id}`} text={sentence.text} version={version} /></p>)}
         {skill === 'listening' && section.sentences.length > visibleSentences.length && <StateMessage title="Transcript hidden." message="Submit this listening part to view the full transcript, or compare an intensive sentence to unlock its text." />}
         {skill === 'listening' && !section.sentences.length && <StateMessage title="Transcript unavailable." message="The source does not include a transcript for this part." />}
       </div>

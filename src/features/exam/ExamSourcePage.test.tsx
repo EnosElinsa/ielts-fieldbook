@@ -25,6 +25,17 @@ afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.useRealTimers(); });
 const page = () => <MemoryRouter initialEntries={['/listening/source/part']}><Routes><Route path="/listening/source/:sectionId" element={<ExamSourcePage skill="listening" />} /></Routes></MemoryRouter>;
 const view = () => render(page());
 
+test('reading source uses paragraph labels, one heading list and preserved evidence anchors', () => {
+  mocks.catalog.sections = [{ id: 'part', skill: 'reading', part: 1, title: 'Passage 1', provenance: { sourceVersion: '1' }, sentences: [] }];
+  mocks.catalog.passages = [{ id: 'passage', sectionId: 'part', title: 'The garden', provenance: { sourceVersion: '1' }, paragraphs: [{ id: 'old-0', text: 'A 14' }, { id: 'old-1', text: 'It opened.' }, { id: 'old-2', text: 'B 15' }, { id: 'old-3', text: 'It closed.' }] }];
+  mocks.catalog.questions = [14, 15].map(number => ({ id: `q${number}`, sectionId: 'part', skill: 'reading', number, groupId: 'headings', type: 'heading', prompt: `Question ${number} · Complete the marked gap in the text above.`, options: ['I. Opening', 'II. Closure'], provenance: { sourceVersion: '1' } }));
+  render(<MemoryRouter initialEntries={['/reading/source/part?paragraph=A']}><Routes><Route path="/reading/source/:sectionId" element={<ExamSourcePage skill="reading" />} /></Routes></MemoryRouter>);
+  expect(screen.getAllByRole('list', { name: 'List of headings' })).toHaveLength(1);
+  expect(screen.getByText('Paragraph A')).toBeInTheDocument();
+  expect(screen.getByText('Paragraph B')).toBeInTheDocument();
+  expect(document.activeElement).toHaveAttribute('data-source-block', 'passage:passage:old-1');
+});
+
 test('direct source navigation hides unrevealed transcript and vocabulary tools', () => {
   view();
   expect(screen.getByText('Transcript hidden.')).toBeInTheDocument();

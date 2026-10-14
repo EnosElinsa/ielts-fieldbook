@@ -14,6 +14,15 @@ describe('account hydrate', () => {
 });
 
 describe('row diff', () => {
+  test('jsonb key order does not turn unchanged nested rows, drafts and settings into writes', () => {
+    const previous = { id: 'state', cards: { recall: { due: '2026-10-14', reps: 2 } }, wrong: { active: false, modes: {} } };
+    const next = { wrong: { modes: {}, active: false }, cards: { recall: { reps: 2, due: '2026-10-14' } }, id: 'state' };
+    expect(diffList([previous], [next])).toEqual({ upserts: [], deletes: [] });
+    expect(diffDrafts({ draft: previous }, { draft: next }).upserts).toEqual([]);
+    expect(profileStamp({ settings: previous })).toBe(profileStamp({ settings: next }));
+    expect(diffList([previous], [{ ...next, cards: { recall: { reps: 3, due: '2026-10-14' } } }]).upserts).toHaveLength(1);
+    expect(diffList([{ id: 'array', values: ['a', 'b'] }], [{ id: 'array', values: ['b', 'a'] }]).upserts).toHaveLength(1);
+  });
   test('personal vocabulary collections map to owned tables and legacy lexicon is read only', () => {
     expect(USER_LISTS).not.toContain('lexicon');
     expect(USER_LISTS).toContain('vocabularyStates');

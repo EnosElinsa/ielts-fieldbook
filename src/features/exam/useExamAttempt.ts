@@ -14,6 +14,7 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
   const [saving, setSaving] = useState(false); const [error, setError] = useState(''); const [clock, setClock] = useState(0);
   const lock = useRef(false); const timer = useRef<number | null>(null); const alive = useRef(true); const boundOwner = useRef(owner);
   const practiceTick = useRef(Date.now());
+  const saveFeedback = useRef('');
   useEffect(() => { alive.current = true; return () => { alive.current = false; }; }, []);
   useEffect(() => () => {
     const current = ref.current;
@@ -71,12 +72,16 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
     const savingOwner = boundOwner.current;
     const draft = structuredClone(fb.stateRef.current); const rows = (draft.examAttempts || []) as ExamAttempt[];
     draft.examAttempts = [...rows.filter(row => row.id !== current.id), structuredClone(current)];
-    try { const saved = await fb.persistNow(draft); return saved && accountId() === savingOwner && boundOwner.current === savingOwner; } catch { return false; }
+    saveFeedback.current = '';
+    try {
+      const saved = await fb.persistNow(draft, { collections: ['examAttempts', 'plans'], onError: (message: string) => { saveFeedback.current = message; } });
+      return saved && accountId() === savingOwner && boundOwner.current === savingOwner;
+    } catch { return false; }
   }, [fb.persistNow, fb.stateRef]);
   useEffect(() => {
     if (!attempt || attempt.status === 'completed' || saving) return;
     const savingOwner = boundOwner.current;
-    timer.current = window.setTimeout(() => { if (ref.current && accountId() === savingOwner && !lock.current) void save(ref.current).then(saved => { if (alive.current && accountId() === savingOwner && boundOwner.current === savingOwner) setError(saved ? '' : 'Autosave failed. Your answers remain in this browser; retry saving before leaving.'); }); }, 1500);
+    timer.current = window.setTimeout(() => { if (ref.current && accountId() === savingOwner && !lock.current) void save(ref.current).then(saved => { if (alive.current && accountId() === savingOwner && boundOwner.current === savingOwner) setError(saved ? '' : saveFeedback.current ? `${saveFeedback.current} Your answers remain in this browser.` : 'Autosave failed. Your answers remain in this browser; retry saving before leaving.'); }); }, 1500);
     return () => { if (timer.current) window.clearTimeout(timer.current); };
   }, [attempt, save, saving]);
   const submit = useCallback(async () => {
@@ -90,9 +95,20 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
     const completed = ref.current.status === 'completed' ? ref.current : gradeAttempt(ref.current, catalog.questions);
     ref.current = completed; setAttempt(completed); writeExamRecovery(boundOwner.current, key, completed);
     const saved = await save(completed);
-    if (alive.current && accountId() === submissionOwner && boundOwner.current === submissionOwner) { setSaving(false); if (saved) { clearExamRecovery(submissionOwner, key); navigate(`/${skill}/review/${completed.id}`); } else setError('Could not save your completed attempt. Your answers are retained. Retry submission.'); lock.current = false; }
+    if (alive.current && accountId() === submissionOwner && boundOwner.current === submissionOwner) { setSaving(false); if (saved) { clearExamRecovery(submissionOwner, key); navigate(`/${skill}/review/${completed.id}`); } else setError(`${saveFeedback.current || 'Could not save your completed attempt.'} Your answers are retained. Retry submission.`); lock.current = false; }
   }, [catalog.questions, key, save, navigate, skill, retryId]);
   useEffect(() => { if (attempt?.mode === 'mock' && attempt.status === 'active' && attempt.timeLimitSeconds && clock >= attempt.timeLimitSeconds) void submit(); }, [attempt?.status, attempt?.timeLimitSeconds, clock, submit]);
   const pause = () => { if (mode === 'mock' || !ref.current || ref.current.status === 'completed') return; practiceTick.current = Date.now(); update({ status: ref.current.status === 'paused' ? 'active' : 'paused' }); };
-  return { attempt, elapsed: clock, update, start, pause, submit, saving, error, retrySave: async () => { if (ref.current) setError(await save(ref.current) ? '' : 'Could not save. Your answers are retained in this browser.'); } };
+  const retrySave = async () => {
+    if (!ref.current || lock.current || accountId() !== boundOwner.current) return;
+    const savingOwner = boundOwner.current;
+    lock.current = true; setSaving(true);
+    if (timer.current) window.clearTimeout(timer.current);
+    const saved = await save(ref.current);
+    if (alive.current && accountId() === savingOwner && boundOwner.current === savingOwner) {
+      setError(saved ? '' : `${saveFeedback.current || 'Could not save.'} Your answers are retained in this browser.`);
+      setSaving(false); lock.current = false;
+    }
+  };
+  return { attempt, elapsed: clock, update, start, pause, submit, saving, error, retrySave };
 }

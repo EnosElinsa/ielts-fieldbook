@@ -124,8 +124,7 @@
 }
 .exam-workspace .exam-source-panel { min-height: min(650px, calc(100dvh - 120px)); max-height: calc(100dvh - 120px); }
 .exam-workspace { --submit-clearance: 86px; }
-.exam-workspace .exam-split { padding-bottom: var(--submit-clearance); }
-.exam-workspace .exam-submit { margin-top: 0; }
+.exam-workspace .exam-split { padding-bottom: 0; }
 .exam-workspace .exam-question-panel { scroll-padding-bottom: var(--submit-clearance); }
 .page .filter-trigger:focus-visible,.page .btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 .page .btn[aria-busy=true] { cursor: progress; }

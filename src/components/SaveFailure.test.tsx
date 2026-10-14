@@ -19,5 +19,5 @@ test('offers a real retry and prevents duplicate retries while saving', async ()
   await userEvent.click(screen.getByRole('button', { name: 'Retry save' }));
   expect(retry).toHaveBeenCalledOnce();
   rerender(<SaveFailure failed saving onRetry={retry} />);
-  expect(screen.getByRole('button', { name: 'Saving...' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: 'Saving…' })).toBeDisabled();
 });

@@ -18,7 +18,10 @@ export type RowDiff = {
 };
 
 function stable(value: unknown) {
-  return JSON.stringify(value ?? null);
+  // PostgreSQL jsonb and client normalization may order the same keys differently.
+  // Object order is not a change; array order and actual field edits still are.
+  return JSON.stringify(value ?? null, (_key, item) => item && typeof item === 'object' && !Array.isArray(item)
+    ? Object.fromEntries(Object.keys(item).sort().map(key => [key, item[key]])) : item);
 }
 
 export function diffList(previous: unknown[], next: unknown[]): RowDiff {

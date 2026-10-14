@@ -43,3 +43,12 @@ label.check-field:has(input:checked) { background: var(--soft-blue); border-colo
 label.check-field:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 3px; }
 label.check-field:has(input:disabled), fieldset:disabled label.check-field { opacity: .65; cursor: not-allowed; }
 @media (max-width: 740px) { .filter-trigger.select-field { min-height: 44px; } }
+
+.page .save-failure {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin: 16px 0; padding: 14px 16px; border: 1px solid var(--rule);
+  border-inline-start: 3px solid var(--red); border-radius: 8px;
+  background: var(--sheet); color: var(--ink); font-size: 13px; line-height: 1.65;
+}
+.page .save-failure > span { flex: 1 1 240px; min-width: 0; overflow-wrap: anywhere; }
+.page .save-failure .btn { flex: 0 0 auto; min-height: 44px; }

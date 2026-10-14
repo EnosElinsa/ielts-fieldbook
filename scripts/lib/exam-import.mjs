@@ -90,10 +90,16 @@ export function normalizeSourceSection(raw) {
     const title=htmlText(report.content_title)||lines[0]||`${paper.title} · Passage ${job.part}`;
     const body=lines[0]===title?lines.slice(1):lines;
     const paragraphs=[];
-    if(body.some(line=>/^[A-Z]$/.test(line))) {
-      for(const line of body)if(/^[A-Z]$/.test(line)||!paragraphs.length)paragraphs.push(line);else paragraphs[paragraphs.length-1]+=` ${line}`;
-    }else paragraphs.push(...body);
-    passages.push({id:`passage:${job.id}`,sectionId,title,paragraphs:paragraphs.map((text,i)=>({id:`paragraph:${job.id}:${i}`,text})),provenance});
+    const marker=/^([A-Z])(?:\s+\d{1,3})?$/;
+    const markers=body.filter(line=>marker.test(line));
+    const lettered=markers.length>0&&markers.every((line,index)=>line.match(marker)[1]===String.fromCharCode(65+index));
+    for(const line of body) {
+      const label=lettered&&line.match(marker);
+      if(label) paragraphs.push({id:label[1],text:''});
+      else if(lettered&&paragraphs.length) paragraphs.at(-1).text += `${paragraphs.at(-1).text?' ':''}${line}`;
+      else paragraphs.push({id:`paragraph:${job.id}:${paragraphs.length}`,text:line});
+    }
+    passages.push({id:`passage:${job.id}`,sectionId,title,paragraphs,provenance});
   }
   const section={id:sectionId,paperId,skill,part:job.part,title:`${skill==='reading'?'Passage':'Part'} ${job.part}`,questionTypes:[...new Set(questions.map(q=>q.type))],questionCount:questions.reduce((n,q)=>n+(q.points||1),0),assetId:audioUrl?audioId:undefined,sentences,status:questions.length&&questions.every(q=>Array.isArray(q.answer)?q.answer.length:q.answer)?'ready':'incomplete',provenance};
   return {schemaVersion:1,papers:[paper],sections:[section],passages,questions,assets};

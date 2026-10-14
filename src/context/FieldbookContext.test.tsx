@@ -36,7 +36,31 @@ vi.mock('../storage/vocabularyCatalog', () => ({
 vi.mock('../storage/remote', () => ({ accountId: () => mocks.owner }));
 
 let fieldbook;
+test('a locally handled exam save excludes vocabulary migrations and has one error owner', async () => {
+  await mount('/reading');
+  mocks.saveState.mockClear();
+  mocks.saveState.mockImplementation(async (_next, onError) => { onError?.('The account server took too long to save. Retry.'); return false; });
+  const onError = vi.fn();
+  await act(async () => {
+    const draft = structuredClone(fieldbook.stateRef.current);
+    draft.examAttempts = [{ id: 'attempt', status: 'paused' }];
+    expect(await fieldbook.persistNow(draft, { collections: ['examAttempts', 'plans'], onError })).toBe(false);
+  });
+  expect(mocks.saveState.mock.calls.at(-1)[2].collections).toEqual(['examAttempts', 'plans']);
+  expect(onError).toHaveBeenCalledWith('The account server took too long to save. Retry.');
+  expect(fieldbook.saveFailed).toBe(false);
+});
 let currentPath;
+test('a successful scoped exam save keeps recovery for unrelated unsaved writing', async () => {
+  await mount('/reading');
+  await act(async () => {
+    const draft = structuredClone(fieldbook.stateRef.current);
+    draft.drafts.q1.text = 'New unsaved writing';
+    draft.examAttempts = [{ id: 'attempt', status: 'paused' }];
+    expect(await fieldbook.persistNow(draft, { collections: ['examAttempts', 'plans'] })).toBe(true);
+  });
+  expect(readDraftRecovery(mocks.owner)?.drafts.q1.text).toBe('New unsaved writing');
+});
 function Probe() { fieldbook = useFieldbook(); currentPath = useLocation().pathname + useLocation().search; return null; }
 async function mount(path = '/') {
   render(<MemoryRouter initialEntries={[path]}><FieldbookProvider><Probe /></FieldbookProvider></MemoryRouter>);

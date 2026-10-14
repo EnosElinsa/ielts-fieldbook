@@ -81,6 +81,15 @@ beforeEach(() => {
   mocks.sessions = [];
 });
 
+test('database statement timeouts explain server delay without blaming the browser connection', async () => {
+  const { hydrateState, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState(); state.drafts.q1.text = 'recoverable';
+  mocks.rpcError = { code: '57014', message: 'canceling statement due to statement timeout' };
+  const feedback = vi.fn();
+  expect(await saveState(state, feedback)).toBe(false);
+  expect(feedback).toHaveBeenCalledWith('The account server took too long to save. Your changes are still here. Retry saving.');
+});
+
 test('workspace deadline aborts transport, ignores late receipts and retries the same batch', async () => {
   const { hydrateState, saveState } = await import('../../src/storage/remote');
   const state = await hydrateState(); state.drafts.q1.text = 'recoverable edit';

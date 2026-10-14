@@ -57,10 +57,11 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
       Object.entries(annotations).forEach(([id, annotation]) => { row.evidence[id] = annotation.evidence; row.keywords[id] = annotation.keywords; row.errorReasons[id] = annotation.reason; });
     }
     let saved = false;
-    try { saved = await fb.persistNow(draft); } catch { saved = false; }
+    let feedback = '';
+    try { saved = await fb.persistNow(draft, { collections: ['examAttempts', 'plans'], onError: (message: string) => { feedback = message; } }); } catch { saved = false; }
     if (!mounted.current || accountId() !== owner || currentIdentity.current !== identity || generation.current !== requestGeneration) return;
     setSaving(false);
-    if (!saved) setSaveError('Could not save review notes. Your edits remain here; retry saving.');
+    if (!saved) setSaveError(`${feedback || 'Could not save review notes.'} Your edits remain here; retry saving.`);
     else { if (JSON.stringify(readExamRecovery(owner, recoveryKey)) === snapshot) clearExamRecovery(owner, recoveryKey); setAnnotations({}); fb.toast('Review notes saved.'); }
   };
   const retry = () => navigate(`/${skill}/${attempt.sectionIds[0]}?retry=${encodeURIComponent(attempt.id)}`);

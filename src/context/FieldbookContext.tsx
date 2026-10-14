@@ -244,14 +244,16 @@ function useFieldbookValue() {
     setDraftStatuses(updated);
   }
 
-  function queueSave(next, silent = false, completion = false) {
+  function queueSave(next, silent = false, completion = false, options?: { collections?: string[]; onError?: (message: string) => void }) {
     if (completingAttempt.current && !completion) return Promise.resolve(false);
     let generation = ++saveGeneration.current;
     const owner = accountId();
     const epoch = loadEpoch.current;
     let frozen = structuredClone(next);
     let collections = readySaveCollections();
+    if (options?.collections) collections = options.collections.filter(key => !collections || collections.includes(key));
     let scopes = changedDraftScopes(frozen);
+    if (collections && !collections.includes('drafts')) scopes = [];
     if (completion) {
       const combined = new Map([...scopes, ...changedDraftScopes(stateRef.current)].map(scope => [scope.key, scope]));
       scopes = [...combined.values()].map(scope => ({ ...scope, stamp: JSON.stringify(draftScopeValue(stateRef.current, scope.id, scope.promptKey)) }));
@@ -285,15 +287,15 @@ function useFieldbookValue() {
       markDraftScopes(scopes, 'saving');
       let saved = false;
       const finishSave = timeOperation('save');
-      try { saved = await saveState(frozen, silent ? undefined : toast, {collections}); } catch { saved = false; }
+      try { saved = await saveState(frozen, options?.onError || (silent ? undefined : toast), {collections}); } catch { saved = false; }
       finally { finishSave(!saved); }
       if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       if (saved) acknowledgeSaved(frozen, collections);
       markDraftScopes(scopes, saved ? 'saved' : 'failed');
       if (alive.current && accountId() === owner && generation === saveGeneration.current) {
-        setSaveFailed(!saved);
+        setSaveFailed(!saved && !options?.onError);
         setSaveStatus(saved ? 'saved' : 'failed');
-        if (saved && !completion) discardDraftRecovery(owner);
+        if (saved && !completion && (!collections || collections.includes('drafts'))) discardDraftRecovery(owner);
       }
       return saved;
     });
@@ -303,13 +305,13 @@ function useFieldbookValue() {
   }
 
   const persistNow = useCallback(
-    (draft?: any) => {
+    (draft?: any, options?: { collections?: string[]; onError?: (message: string) => void }) => {
       const next = draft || stateRef.current;
       next.schemaVersion = STATE_VERSION;
       completeReceptivePlanIfMatched(next, lastSaved.current);
       stateRef.current = next;
       setState({ ...next });
-      return queueSave(next);
+      return queueSave(next, false, false, options);
     },
     [toast],
   );

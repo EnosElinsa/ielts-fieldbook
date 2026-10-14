@@ -2,6 +2,11 @@ import { expect, test } from 'vitest';
 // @ts-expect-error Node ingestion module used by its CLI and tests.
 import { normalizeSourceSection, validateCatalog, htmlText } from '../../scripts/lib/exam-import.mjs';
 const job={id:'1',paperId:'p',classify:1,book:21,test:1,part:1,url:'https://www.ieltscb.com/Paper/part/?id=p',types:'填空'};
+
+test('reading import recognises letter markers followed by heading question numbers', () => {
+ const result=normalizeSourceSection({job:{...job,classify:2},detail:{0:{content:'<p>Source title</p><p>A 14</p><p>First sentence.</p><p>Second sentence.</p><p>B 15</p><p>Another paragraph.</p>',pages:[{desc:'Choose the correct heading.',sections:[{type:'1',questions:[{id:'q',sort:'14',title:'14',option_ids:'a',option_names:'I. Opening'}],options:[{id:'a',title:'I. Opening'}]}]}]}},report:{data:{content_title:'Source title'}}});
+ expect(result.passages[0].paragraphs.map(row=>({id:row.id,text:row.text}))).toEqual([{id:'A',text:'First sentence. Second sentence.'},{id:'B',text:'Another paragraph.'}]);
+});
 test('source gaps retain alternatives but never expose answer options and strip account data',()=>{
  const result=normalizeSourceSection({job,fetchedAt:'2026-10-11',detail:{0:{mobile:'secret',audio:'https://uimg.gximg.cn/a.mp3',pages:[{title:'Questions 1–2',desc:'Write ONE WORD ONLY',content:'<table><tr><td>Wear #####-1-#####</td></tr></table><script>bad()</script>',sections:[{id:'g',type:'10',questions:[{id:'q',sort:'1',title:'1',option_names:'coat|jacket',option_ids:'a|b'}],options:[{id:'a',title:'coat'},{id:'b',title:'jacket'}]}]}]}},report:{data:{content:{list:[{id:'s',content:'WOMAN: Wear a coat.',begin_time:'1000',end_time:'3000'}]},analysis:{list:[{sort:'1',origin_id:'s',answer_en:'Wear a coat.'}]}}}});
  expect(result.questions[0]).toMatchObject({answer:'coat',alternatives:['jacket'],options:undefined,evidence:{sentenceId:'source:s'}});

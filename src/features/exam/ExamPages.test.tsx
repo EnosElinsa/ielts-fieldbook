@@ -24,6 +24,67 @@ function practice(path = '/reading/section') { return render(<MemoryRouter initi
 beforeEach(() => { clearReadCache(); mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); sessionStorage.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, ensureAccountModule: vi.fn().mockResolvedValue(undefined), persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.useRealTimers(); });
 
+test('legacy letter and question markers restore real paragraphs without changing annotation anchors', async () => {
+  mocks.catalog.passages[0].paragraphs = [
+    { id: 'old-0', text: 'A 14' }, { id: 'old-1', text: 'The garden opened.' }, { id: 'old-2', text: 'It was green.' },
+    { id: 'old-3', text: 'B 15' }, { id: 'old-4', text: 'Then it closed.' },
+  ];
+  practice();
+  const first = await screen.findByText('The garden opened.');
+  expect(first.closest('p')).toHaveTextContent('A The garden opened. It was green.');
+  expect(first).toHaveAttribute('data-source-block', 'passage:passage:old-1');
+  expect(screen.getByText('A 14')).not.toBeVisible();
+  expect(screen.getByText('Then it closed.').closest('p')).toHaveTextContent('B Then it closed.');
+});
+
+test('heading tasks display the complete shared list and name the real source paragraphs', async () => {
+  mocks.catalog.passages[0].paragraphs = [{ id: 'legacy-0', text: 'A 1' }, { id: 'legacy-1', text: 'The garden opened.' }, { id: 'legacy-2', text: 'B 2' }, { id: 'legacy-3', text: 'Then it closed.' }];
+  mocks.catalog.questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, type: 'heading', groupId: 'headings', prompt: `Question ${number} · Complete the marked gap in the text above.`, options: ['I. A garden', 'II. A closure'], answer: 'I. A garden', stimulusHtml: '<p>List of Headings:</p>' }));
+  practice();
+  await screen.findByRole('combobox', { name: 'Answer 1' });
+  expect(screen.getByRole('list', { name: 'List of headings' })).toHaveTextContent('I. A garden');
+  expect(screen.getByRole('list', { name: 'List of headings' })).toHaveTextContent('II. A closure');
+  expect(screen.getByText('Paragraph A')).toBeInTheDocument();
+  expect(screen.getByText('Paragraph B')).toBeInTheDocument();
+  expect(screen.queryByText(/Complete the marked gap/)).not.toBeInTheDocument();
+});
+
+test('exam autosave scopes its records and shows the server error with a working retry', async () => {
+  mocks.fb.persistNow.mockImplementation(async (_draft: any, options: any) => { options?.onError?.('The account server took too long to save. Your changes are still here. Retry saving.'); return false; });
+  practice();
+  fireEvent.change(await screen.findByRole('textbox', { name: 'Answer 1' }), { target: { value: '1990' } });
+  await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('The account server took too long'), { timeout: 3500 });
+  expect(mocks.fb.persistNow.mock.calls.at(-1)[1].collections).toEqual(['examAttempts', 'plans']);
+  expect(screen.getAllByRole('button', { name: 'Retry save' })).toHaveLength(1);
+  mocks.fb.persistNow.mockResolvedValue(true);
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Retry save' }));
+  await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+  expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990');
+});
+
+test('pooled multiple-choice slots count separately and limit choices without losing deselection', async () => {
+  mocks.catalog.questions = [{ ...catalog.questions[0], type: 'multiple', number: 25, points: 2, options: ['A. First', 'B. Second', 'C. Third'], answer: ['A. First', 'B. Second'] }];
+  practice();
+  const first = await screen.findByRole('checkbox', { name: 'A. First' });
+  expect(screen.getByText('0 / 2 answered')).toBeInTheDocument();
+  fireEvent.click(first);
+  expect(screen.getByText('1 / 2 answered')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('checkbox', { name: 'B. Second' }));
+  expect(screen.getByRole('checkbox', { name: 'C. Third' })).toBeDisabled();
+  expect(screen.getByText('2 / 2 answered')).toBeInTheDocument();
+  fireEvent.click(first);
+  expect(screen.getByRole('checkbox', { name: 'C. Third' })).toBeEnabled();
+});
+
+test('older multiple-choice content without a slot limit still allows multiple selections', async () => {
+  mocks.catalog.questions = [{ ...catalog.questions[0], type: 'multiple', options: ['A. First', 'B. Second', 'C. Third'], answer: ['A. First', 'B. Second'] }];
+  practice();
+  fireEvent.click(await screen.findByRole('checkbox', { name: 'A. First' }));
+  expect(screen.getByRole('checkbox', { name: 'B. Second' })).toBeEnabled();
+  fireEvent.click(screen.getByRole('checkbox', { name: 'B. Second' }));
+  expect(screen.getByRole('checkbox', { name: 'B. Second' })).toBeChecked();
+});
+
 test('submitted mock results provide exact Part vocabulary and reading evidence backlinks', async () => {
   const question = { ...catalog.questions[0], explanation: 'The opening year is stated in paragraph A.', sourceExplanation: 'Original explanation.', evidence: { paragraphId: 'A', text: 'opened in 1990' } };
   mocks.fb.state.examAttempts = [{ id: 'submitted', skill: 'reading', mode: 'mock', status: 'completed', sourceId: 'paper', sectionIds: ['section'], questionSnapshot: [question], responses: { q1: '1990' }, results: { q1: true }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-10-14', startedAt: '2026-10-14' }];
