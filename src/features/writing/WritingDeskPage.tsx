@@ -216,17 +216,7 @@ export function WritingDeskPage() {
         <div className={`prompt${mobileTab === 'prompt' ? ' mobile-active' : ''}`} id="writing-prompt">
           <span className="pill blue">{typeName(selected)}</span>
           <h3>{displayName(selected.name)}</h3>
-          <div className={image ? 'prompt-with-figure' : 'prompt-body'}>
-            <div className="prompt-copy">{selected.prompt}</div>
-            {image ? (
-              <figure className="prompt-figure">
-                <Dialog.Root>
-                  <Dialog.Trigger asChild><button type="button" className="figure-zoom" aria-label="Zoom task chart"><img src={image} alt="Task chart" /><span><ZoomIn size={16} /> Zoom</span></button></Dialog.Trigger>
-                  <Dialog.Portal><Dialog.Overlay className="chart-dialog-overlay" /><Dialog.Content className="chart-dialog-content"><div className="chart-dialog-head"><Dialog.Title>Task chart</Dialog.Title><Dialog.Close asChild><button className="btn line icon-btn" aria-label="Close task chart"><X size={20} /></button></Dialog.Close></div><Dialog.Description className="sr-only">Full-size chart for the current writing prompt.</Dialog.Description><div className="chart-dialog-image"><img src={image} alt="Task chart enlarged" /></div></Dialog.Content></Dialog.Portal>
-                </Dialog.Root>
-              </figure>
-            ) : null}
-          </div>
+          <WritingTaskPrompt prompt={selected.prompt} image={image} />
           <div className="prompt-tip">{tips[mode] || tips.full}</div>
           {['overview', 'outline', 'timed'].includes(mode) ? (
             <div className="prompt-tip">
@@ -364,6 +354,7 @@ export function WritingDeskPage() {
               </button>
             </div>
           </div>
+          <details key={selected.id} className="writing-answer-prompt"><summary>Task prompt</summary><WritingTaskPrompt prompt={selected.prompt} image={image} /></details>
           {mode === 'overview' ? (
             <div className="section-fields">
               {sectionField('intro', 'Introduction', 'Paraphrase the question…', 110)}
@@ -424,4 +415,18 @@ export function WritingDeskPage() {
       {dialog}
     </section></Tooltip.Provider>
   );
+}
+
+function WritingTaskPrompt({ prompt, image }) {
+  return <div className={image ? 'prompt-with-figure' : 'prompt-body'}>
+            <div className="prompt-copy">{prompt}</div>
+            {image ? (
+              <figure className="prompt-figure">
+                <Dialog.Root>
+                  <Dialog.Trigger asChild><button type="button" className="figure-zoom" aria-label="Zoom task chart"><img src={image} alt="Task chart" /><span><ZoomIn size={16} /> Zoom</span></button></Dialog.Trigger>
+                  <Dialog.Portal><Dialog.Overlay className="chart-dialog-overlay" /><Dialog.Content className="chart-dialog-content"><div className="chart-dialog-head"><Dialog.Title>Task chart</Dialog.Title><Dialog.Close asChild><button className="btn line icon-btn" aria-label="Close task chart"><X size={20} /></button></Dialog.Close></div><Dialog.Description className="sr-only">Full-size chart for the current writing prompt.</Dialog.Description><div className="chart-dialog-image"><img src={image} alt="Task chart enlarged" /></div></Dialog.Content></Dialog.Portal>
+                </Dialog.Root>
+              </figure>
+            ) : null}
+          </div>;
 }

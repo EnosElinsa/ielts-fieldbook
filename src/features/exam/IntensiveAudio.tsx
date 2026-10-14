@@ -132,7 +132,7 @@ export const IntensiveAudio = forwardRef<IntensiveAudioHandle, Props>(function I
       if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') { event.preventDefault(); replay(); return; }
       if (event.ctrlKey || event.metaKey || event.altKey) return;
       const target = event.target;
-      if (target instanceof HTMLElement && (target.isContentEditable || target.closest('input,textarea,select,button,a,[role="button"],[role="slider"],[role="menu"]'))) return;
+      if (target instanceof HTMLElement && (target.isContentEditable || target.closest('input,textarea,select,button,a,summary,[role="button"],[role="slider"],[role="menu"]'))) return;
       if (event.key === ' ') { event.preventDefault(); toggle(); }
       else if (event.key === 'ArrowLeft' && !props.previousDisabled) { event.preventDefault(); stop(); props.onPrevious(); }
       else if (event.key === 'ArrowRight' && !props.nextDisabled) { event.preventDefault(); stop(); props.onNext(); }
@@ -150,14 +150,15 @@ export const IntensiveAudio = forwardRef<IntensiveAudioHandle, Props>(function I
       <div className="intensive-transport" role="group" aria-label="Sentence playback">
       <button className="btn line intensive-skip" aria-label="Previous sentence" title="Previous sentence" disabled={props.previousDisabled} onClick={()=>{stop();props.onPrevious();}}><SkipBack size={17} /></button>
       <button className="btn primary intensive-play" aria-label={playing ? 'Pause audio' : 'Play audio'} title={playing ? 'Pause audio' : 'Play audio'} disabled={!allowed} onClick={toggle}>{playing ? <Pause size={20} /> : <Play size={20} />}</button>
-      <button className="btn line" aria-label="Replay sentence" disabled={!allowed} onClick={replay}><RotateCcw size={17} /> Replay</button>
+      <button className="btn line intensive-replay" aria-label="Replay sentence" disabled={!allowed} onClick={replay}><RotateCcw size={17} /><span className="intensive-replay-label">Replay</span></button>
       <button className="btn line intensive-skip" aria-label="Next sentence" title="Next sentence" disabled={props.nextDisabled} onClick={()=>{stop();props.onNext();}}><SkipForward size={17} /></button>
       </div>
-      <div className="intensive-playback-settings">
+      <div className="intensive-playback-meta">
       <span className="audio-time">{clock(position)} / {clock(duration)}</span>
+      <details className="intensive-playback-options"><summary aria-label="Playback settings"><span className="intensive-settings-prefix">Playback </span>settings <span className="intensive-settings-state">{props.speed}×{props.loop ? ' · Loop on' : ''}</span></summary><div className="intensive-playback-settings">
       <label>Speed <SelectField aria-label="Listening speed" value={props.speed} onChange={event => props.onSpeedChange(Number(event.target.value))}>{[0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map(speed => <option key={speed} value={speed}>{speed}×</option>)}</SelectField></label>
       <button className={`btn line ${props.loop ? 'selected' : ''}`} disabled={props.full || !hasBounds} aria-pressed={props.loop} onClick={() => props.onLoopChange(!props.loop)}><Repeat size={17} /> A/B loop</button>
-      </div>
+      </div></details></div>
     </div>
     <p className="file-hint">Space: play / pause · ← / →: sentence · Ctrl / ⌘ + Enter: replay</p>
   </div>;

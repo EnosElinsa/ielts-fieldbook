@@ -246,6 +246,10 @@
 .exam-heading-reference .exam-heading-list { border: 0; background: transparent; padding: 0; margin: 4px 0 0; gap: 9px; font-size: 13px; line-height: 1.6; }
 .exam-heading-reference li { overflow-wrap: anywhere; }
 .exam-heading-answers { min-width: 0; }
+.exam-heading-reference .exam-stimulus { margin: 0; padding: 0; background: transparent; }
+.exam-heading-answer.exam-map-answer { grid-template-columns: 24px minmax(0,1fr) 64px 32px 32px; }
+.exam-map-answer .exam-map-toggle { grid-column: 4; grid-row: 1; }
+.exam-map-answer .exam-notes-toggle:not(.exam-map-toggle) { grid-column: 5; }
 .exam-heading-answer { display: grid; grid-template-columns: 24px minmax(54px,1fr) minmax(80px,1fr) 32px; align-items: center; gap: 6px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
 .exam-heading-answer .exam-question-heading { display: contents; }
 .exam-heading-answer .exam-number { grid-column: 1; grid-row: 1; width: 24px; height: 24px; font-size: 11px; }
@@ -277,4 +281,9 @@
   .exam-notes-toggle { width: 44px; height: 44px; }
   .exam-question-compact:has(.exam-notes-toggle) { grid-template-columns: 28px minmax(0,1fr) 44px; }
   .exam-heading-reference > summary,.exam-group-instructions > summary { min-height: 44px; }
+  .exam-heading-answer.exam-map-answer { grid-template-columns: 24px minmax(0,1fr) 44px 44px; }
+  .exam-map-answer .exam-prompt { grid-column: 2 / -1; grid-row: 1; }
+  .exam-map-answer > .select-field { grid-column: 2; grid-row: 2; }
+  .exam-map-answer .exam-map-toggle { grid-column: 3; grid-row: 2; }
+  .exam-map-answer .exam-notes-toggle:not(.exam-map-toggle) { grid-column: 4; grid-row: 2; }
 }

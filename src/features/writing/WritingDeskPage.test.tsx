@@ -74,6 +74,20 @@ test('workspace tabs support arrow keys with one tab stop', async () => {
   expect(answer).toHaveAttribute('aria-selected', 'true');
 });
 
+test('the answer panel offers a collapsible task reference without losing the draft', async () => {
+  const view = render(<WritingDeskPage />);
+  const answerPanel = view.container.querySelector('#writing-answer')!;
+  const reference = answerPanel.querySelector('details')!;
+  expect(reference).not.toBeNull();
+  expect(reference.open).toBe(false);
+  fireEvent.change(screen.getByRole('textbox', { name: 'Writing answer' }), { target: { value: 'My argument.' } });
+  await userEvent.click(screen.getByText('Task prompt', { selector: 'summary' }));
+  expect(reference.open).toBe(true);
+  expect(reference).toHaveTextContent('Discuss.');
+  await userEvent.click(screen.getByText('Task prompt', { selector: 'summary' }));
+  expect(screen.getByRole('textbox', { name: 'Writing answer' })).toHaveValue('My argument.');
+});
+
 test('changing accounts resets writing UI and pauses the previous timer', () => {
   vi.useFakeTimers();
   const view = render(<WritingDeskPage />);

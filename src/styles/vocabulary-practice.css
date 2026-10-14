@@ -941,10 +941,15 @@
   .practice-number-nav {
     margin-bottom: 17px;
     gap: 4px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    overscroll-behavior-x: contain;
   }
   .practice-number-nav button {
-    width: 27px;
-    height: 27px;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
   }
   .practice-answer-row {
     gap: 7px;

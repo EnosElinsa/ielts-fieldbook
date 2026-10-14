@@ -84,6 +84,18 @@ it('shortcuts respect dialogs, links and browser modifier keys', () => {
   expect(next).toHaveBeenCalledOnce();
 });
 const segmentProps={src:'audio.mp3',start:10,end:15,speed:1,loop:false,onReplay:()=>{},onSpeedChange:()=>{},onLoopChange:()=>{},onPrevious:()=>{},onNext:()=>{}};
+it('keeps playback available while settings collapse and respects the settings keyboard controls', async () => {
+  render(<IntensiveAudio {...segmentProps} onSentenceEnd={() => {}} />);
+  act(() => events.ready(100));
+  const settings = screen.getByLabelText('Playback settings');
+  expect(settings.closest('details')).not.toHaveAttribute('open');
+  expect(screen.getByRole('button', { name: 'Play audio' })).toBeEnabled();
+  fireEvent.keyDown(settings, { key: ' ' });
+  expect(wave.play).not.toHaveBeenCalled();
+  fireEvent.click(settings);
+  expect(screen.getByRole('combobox', { name: 'Listening speed' })).toBeVisible();
+  expect(screen.getByRole('button', { name: 'A/B loop' })).toBeVisible();
+});
 it('an early pause invalidates completion even when the media later reaches the end',async()=>{
   const finished=vi.fn();render(<IntensiveAudio {...segmentProps} onSentenceEnd={finished}/>);
   act(()=>events.ready(100));await act(async()=>fireEvent.click(screen.getByRole('button',{name:'Replay sentence'})));

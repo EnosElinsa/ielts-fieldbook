@@ -19,7 +19,7 @@
 .intensive-stages li.done { color: var(--blue); background: color-mix(in srgb, var(--blue) 8%, transparent); }
 .intensive-layout { display: grid; grid-template-columns: 215px minmax(0, 1fr); gap: 20px; align-items: start; }
 .intensive-workbench .panel { padding: 22px; border: 1px solid var(--rule); border-radius: 8px; }
-.intensive-main { display: grid; gap: 18px; min-width: 0; }
+.intensive-main { display: grid; grid-template-columns: minmax(0,1fr); gap: 18px; min-width: 0; }
 .intensive-main h2, .intensive-sentences h2 { margin-top: 0; font-size: 1.1rem; }
 .intensive-sentences { position: sticky; top: 90px; max-height: 75vh; overflow: auto; }
 .intensive-sentence { width: 100%; display: flex; justify-content: space-between; text-align: left; gap: 8px; padding: 12px 8px; border: 0; border-bottom: 1px solid var(--rule); color: inherit; background: transparent; cursor: pointer; }
@@ -123,7 +123,8 @@
   .intensive-player .waveform { display: none; }
   .intensive-player { margin: 0; padding: 0; border: 0; gap: 0; }
   .intensive-workbench .intensive-player-panel:not(:has(details[open])) { position: sticky; top: 0; z-index: 5; }
-  .intensive-main [id^=intensive-] { scroll-margin-top: 270px; }
+  .intensive-main [id^=intensive-] { scroll-margin-top: var(--intensive-player-offset, 16px); }
+  .intensive-main #intensive-player { scroll-margin-top: 16px; }
   .intensive-player .intensive-audio-controls { margin: 10px 0; }
   .intensive-player-panel>.file-hint { margin-block: 8px; }
   .intensive-gist>summary { min-height: 44px; display: flex; align-items: center; }
@@ -132,3 +133,25 @@
 .intensive-source-transcript{margin:14px 0;padding:12px;border:1px solid var(--rule);border-radius:4px;background:var(--sheet)}
 .intensive-source-transcript h3{font-size:12px;color:var(--muted);margin:0 0 8px}
 .intensive-source-transcript p{line-height:1.8;margin:0}
+
+.intensive-playback-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.intensive-playback-options { min-width: 0; }
+.intensive-playback-options > summary { padding: 8px 0; cursor: pointer; font-size: 12px; color: var(--muted); }
+.intensive-playback-options > summary .intensive-settings-state { margin-left: 6px; color: var(--ink); }
+.intensive-playback-options > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+.intensive-playback-options[open] { flex-basis: 100%; }
+.intensive-practice-tools > .file-hint { margin: 0 0 12px; }
+@media(max-width:700px) {
+  .intensive-workbench .intensive-player-panel { padding: 12px; }
+  .intensive-playback-options > summary { min-height: 36px; }
+}
+@media(max-width:700px) and (max-height:500px) {
+  .intensive-workbench .intensive-player-panel:not(:has(details[open])) { position: static; }
+}
+@media(max-width:360px) {
+  .intensive-replay-label,.intensive-settings-prefix { display: none; }
+  .intensive-transport .intensive-replay { width: 44px; height: 44px; padding: 0; }
+  .intensive-player-heading { gap: 6px; }
+  .intensive-player-heading h2 { font-size: 14px; }
+  .intensive-player-heading > .select-field { padding-inline: 8px; font-size: 12px; }
+}

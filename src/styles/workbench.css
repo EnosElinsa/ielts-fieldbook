@@ -41,3 +41,23 @@
   .mobile-navigation { height: var(--mobile-navigation-height); }
   .writing-workspace .editor-foot { bottom: var(--mobile-navigation-height); }
 }
+
+.writing-answer-prompt { display: none; }
+@media(max-width:360px) {
+  .top:has(.import-score) { display: grid; grid-template-columns: minmax(0,1fr); gap: 4px; }
+  .top:has(.import-score) > .actions { justify-self: end; }
+}
+@media(max-width:740px) {
+  .writing-answer-prompt { display: block; border-bottom: 1px solid var(--rule); margin-bottom: 16px; padding-bottom: 8px; }
+  .writing-answer-prompt > summary { display: flex; align-items: center; justify-content: space-between; min-height: 44px; cursor: pointer; font-size: 13px; font-weight: 600; list-style: none; }
+  .writing-answer-prompt > summary::-webkit-details-marker { display: none; }
+  .writing-answer-prompt > summary::after { content: '+'; color: var(--muted); }
+  .writing-answer-prompt[open] > summary::after { content: '−'; }
+  .writing-answer-prompt > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .writing-answer-prompt .prompt-copy { white-space: pre-wrap; font-size: 14px; line-height: 1.75; overflow-wrap: anywhere; }
+  .writing-answer-prompt .prompt-with-figure { grid-template-columns: minmax(0,1fr); }
+  .writing-answer-prompt > .prompt-body,.writing-answer-prompt > .prompt-with-figure { max-height: min(32dvh,260px); overflow-y: auto; overscroll-behavior-y: contain; padding-right: 4px; }
+  .writing-answer-prompt .prompt-figure { margin: 12px 0; }
+  .writing-answer-prompt .figure-zoom { max-width: 100%; }
+  .speaking-current-prompt p { white-space: pre-line; }
+}

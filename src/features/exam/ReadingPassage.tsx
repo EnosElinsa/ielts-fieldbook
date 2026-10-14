@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState, type ReactNode } from 'react';
 import type { ExamPassage, ExamQuestion } from '../../domain/exam/types';
 import { AnnotatedText } from './SourceAnnotations';
 
@@ -35,6 +35,10 @@ export function HeadingList({ question }: { question: ExamQuestion }) {
 }
 
 export function HeadingReference({ question }: { question: ExamQuestion }) {
+  return <QuestionReference label="List of headings" count={question.options?.length}><HeadingList question={question} /></QuestionReference>;
+}
+
+export function QuestionReference({ label, count, children }: { label: string; count?: number; children: ReactNode }) {
   const reference = useRef<HTMLDetailsElement>(null);
   const [expanded, setExpanded] = useState(() => !window.matchMedia?.('(max-width: 740px)').matches);
   useEffect(() => {
@@ -55,8 +59,8 @@ export function HeadingReference({ question }: { question: ExamQuestion }) {
     return () => media.removeEventListener('change', resize);
   }, []);
   return <details ref={reference} className="exam-heading-reference" open={expanded} onToggle={event => setExpanded(event.currentTarget.open)}>
-    <summary>List of headings <span>{question.options?.length || 0} choices</span></summary>
-    <HeadingList question={question} />
+    <summary>{label} {count !== undefined && <span>{count} choices</span>}</summary>
+    {children}
   </details>;
 }
 

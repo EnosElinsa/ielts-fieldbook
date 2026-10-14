@@ -1,11 +1,11 @@
 import { SelectField } from '../../components/SelectField';
 import { SaveFailure } from '../../components/SaveFailure';
-import { ReadingPassage, readingQuestionPrompt, HeadingList, HeadingReference } from './ReadingPassage';
+import { ReadingPassage, readingQuestionPrompt, HeadingList, HeadingReference, QuestionReference } from './ReadingPassage';
 import { useWorkspacePageState } from '../../lib/workspacePageState';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { InlineLoadingState, PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Check, Pause, Play, Compass, Send, Columns2, Rows3, LocateFixed, Headphones, NotebookPen } from 'lucide-react';
+import { ArrowLeft, Check, Pause, Play, Compass, Send, Columns2, Rows3, LocateFixed, Headphones, NotebookPen, Map as MapIcon } from 'lucide-react';
 import type { ExamAsset, ExamQuestion, ExamSkill } from '../../domain/exam/types';
 import { examVocabularySources } from './vocabularyCapture';
 import { gradeQuestion } from '../../domain/exam';
@@ -84,12 +84,12 @@ export function hasExamResponse(value?: string | string[]) {
   return Array.isArray(value) ? value.some(item => item.trim().length > 0) : Boolean(value?.trim());
 }
 
-export function ExamAnswerInput({ question, value, onChange, disabled, describedBy }: { question: ExamQuestion; value: string | string[]; onChange: (value: string | string[]) => void; disabled: boolean; describedBy?: string }) {
+export function ExamAnswerInput({ question, value, onChange, disabled, describedBy, compactOptions = false }: { question: ExamQuestion; value: string | string[]; onChange: (value: string | string[]) => void; disabled: boolean; describedBy?: string; compactOptions?: boolean }) {
   const options = question.type === 'true-false' ? ['TRUE', 'FALSE', 'NOT GIVEN'] : question.type === 'yes-no' ? ['YES', 'NO', 'NOT GIVEN'] : question.options || [];
   if (question.type === 'multiple') return <div className="exam-options">{options.map(option => { const selected = Array.isArray(value) ? value : []; const limit = question.points || options.length; return <label key={option}><input type="checkbox" disabled={disabled || selected.length >= limit && !selected.includes(option)} checked={selected.includes(option)} onChange={event => onChange(event.target.checked ? [...selected, option] : selected.filter(item => item !== option))} /><span>{option}</span></label>; })}</div>;
   if (question.type === 'single' || question.type === 'true-false' || question.type === 'yes-no') return <div className="exam-options">{options.map(option => <label key={option}><input type="radio" name={question.id} disabled={disabled} checked={value === option} onChange={() => onChange(option)} /><span>{option}</span></label>)}</div>;
-  if (options.length) return <SelectField aria-label={`Answer ${question.number}`} title={typeof value === 'string' && value ? value : question.type === 'heading' ? 'Choose a heading' : undefined} value={typeof value === 'string' ? value : ''} onChange={event => onChange(event.target.value)} disabled={disabled}><option value="">{question.type === 'heading' ? '—' : 'Choose an answer'}</option>{options.map(option => {
-    const code = question.type === 'heading' && option.match(/^([A-Z]|[ivxlcdm]+)(?=[.)\s])/i)?.[1];
+  if (options.length) return <SelectField aria-label={`Answer ${question.number}`} title={typeof value === 'string' && value ? value : question.type === 'heading' ? 'Choose a heading' : undefined} value={typeof value === 'string' ? value : ''} onChange={event => onChange(event.target.value)} disabled={disabled}><option value="">{question.type === 'heading' || compactOptions ? '—' : 'Choose an answer'}</option>{options.map(option => {
+    const code = (compactOptions || question.type === 'heading') && option.match(/^([A-Z]|[ivxlcdm]+)(?=$|[.)\s])/i)?.[1];
     return <option key={option} value={option}>{code ? <span className="exam-heading-choice"><span>{code}</span><span className="exam-heading-choice-title">{option.slice(code.length)}</span></span> : option}</option>;
   })}</SelectField>;
   const exceeded = Boolean(question.maxWords && typeof value === 'string' && value.trim().split(/\s+/).filter(Boolean).length > question.maxWords);
@@ -105,6 +105,8 @@ function SourceAudio({ asset, mock, started, paused, startPosition, onPosition }
 }
 
 export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
+  const [mapPreview, setMapPreview] = useState<ExamQuestion | null>(null);
+  const mapTrigger = useRef<HTMLButtonElement | null>(null);
   const fb = useFieldbook(); const { sectionId, paperId } = useParams(); const [params] = useSearchParams(); const mode = paperId ? 'mock' : 'practice'; const sourceId = paperId || sectionId || ''; const retryId = params.get('retry');
   const retryAttempt = (fb.state.examAttempts || []).find((attempt: import('../../domain/exam/types').ExamAttempt) => attempt.id === retryId) as import('../../domain/exam/types').ExamAttempt | undefined;
   const retryQuestionIds = retryAttempt ? new Set(Object.entries(retryAttempt.results || {}).filter(([, correct]) => !correct).map(([id]) => id)) : null;
@@ -215,15 +217,16 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
     const isChecked = mode === 'practice' && checked.has(question.id); const correct = isChecked && gradeQuestion(question, attempt?.responses[question.id] || '');
     const showStimulus = layout === 'integrated' && question.stimulusHtml && (!question.groupId || currentQuestions[index - 1]?.groupId !== question.groupId);
     const compact = layout === 'split' && !question.options?.length && ['gap', 'summary', 'map', 'flow'].includes(question.type);
-    const headingAnswer = question.type === 'heading' && layout === 'integrated';
+    const headingAnswer = layout === 'integrated' && (grouped || question.type === 'heading');
     const notesOpen = openNotes.includes(question.id);
     const hasNotes = Boolean(attempt?.evidence[question.id]?.trim() || attempt?.keywords[question.id]?.trim());
     return <div key={question.id}>{!grouped && <>{groupHeading(question, index)}{layout === 'integrated' && info.showInstructions && <p className="exam-instruction">{question.instructions}</p>}{showStimulus && <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} renderGap={renderGap} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />}{layout === 'integrated' && info.groupStart && headingList(question)}</>}
       {!showTools && question.maxWords && !info.sharedLimit && <span id={limitId(question)} className="sr-only">{wordLimit(question)}</span>}
-      {showTools && <article id={`exam-question-${question.id}`} tabIndex={-1} aria-label={`Question ${question.number} details`} className={`exam-question${compact ? ' exam-question-compact' : ''}${headingAnswer ? ' exam-heading-answer' : ''}${isChecked ? correct ? ' is-correct' : ' is-wrong' : ''}`} onFocus={() => setFocusedQuestion(question.id)}>
+      {showTools && <article id={`exam-question-${question.id}`} tabIndex={-1} aria-label={`Question ${question.number} details`} className={`exam-question${compact ? ' exam-question-compact' : ''}${headingAnswer ? ' exam-heading-answer' : ''}${grouped && question.type === 'map' ? ' exam-map-answer' : ''}${isChecked ? correct ? ' is-correct' : ' is-wrong' : ''}`} onFocus={() => setFocusedQuestion(question.id)}>
         <div className="exam-question-heading"><span className="exam-number">{question.number}</span>{!info.sharedType && !headingAnswer && <span className="exam-eyebrow">{QUESTION_TYPE_NAMES[question.type]}</span>}{isChecked && <span className="exam-result">{correct ? 'Correct' : 'Check the evidence'}</span>}{mode === 'practice' && attempt && <button type="button" className="exam-notes-toggle" aria-label={`Evidence & paraphrase for question ${question.number}`} aria-expanded={notesOpen} aria-controls={`exam-notes-${question.id}`} title={hasNotes ? 'Evidence & paraphrase · Notes added' : 'Evidence & paraphrase'} onClick={() => setOpenNotes(ids => notesOpen ? ids.filter(id => id !== question.id) : [...ids, question.id])}><NotebookPen size={16} aria-hidden="true" />{hasNotes && <span className="exam-note-dot" aria-label="Notes added" />}</button>}</div>
         {layout === 'integrated' && <>{info.showPrompt && <p className="exam-prompt"><AnnotatedText blockId={`question:${question.id}`} text={headingPrompt(question)} version={question.provenance.contentHash || question.provenance.sourceVersion} /></p>}<ExamImage asset={catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`Question ${question.number} diagram`} /></>}
-        {!inlineQuestions.has(question.id) && <ExamAnswerInput question={question} value={value} disabled={disabled} describedBy={limitId(question)} onChange={value => response(question, value)} />}
+        {!inlineQuestions.has(question.id) && <ExamAnswerInput question={question} value={value} disabled={disabled} compactOptions={grouped} describedBy={limitId(question)} onChange={value => response(question, value)} />}
+        {grouped && question.type === 'map' && <button type="button" className="exam-notes-toggle exam-map-toggle" aria-label={`View map for question ${question.number}`} title="View map" onClick={event => { mapTrigger.current = event.currentTarget; setMapPreview(question); }}><MapIcon size={16} aria-hidden="true" /></button>}
         {question.maxWords && !info.sharedLimit && <span id={limitId(question)} className="exam-word-limit">{wordLimit(question)}</span>}
         {exceeded && <span className="exam-word-limit exam-word-limit-error" role="alert">Question {question.number} · word limit exceeded</span>}
         {mode === 'practice' && attempt && notesOpen && <div className="exam-annotations exam-notes-panel" id={`exam-notes-${question.id}`} role="region" aria-label={`Evidence & paraphrase for question ${question.number}`}><h4>Evidence & paraphrase</h4><label>Evidence for question {question.number}<textarea disabled={disabled} value={attempt.evidence[question.id] || ''} onChange={event => update({ evidence: { ...attempt.evidence, [question.id]: event.target.value } })} placeholder={skill === 'reading' ? 'Quote the source words that prove your answer…' : 'Note the words or time in the recording…'} /></label><label>Keywords & synonyms for question {question.number}<input disabled={disabled} value={attempt.keywords[question.id] || ''} onChange={event => update({ keywords: { ...attempt.keywords, [question.id]: event.target.value } })} placeholder="question wording → source wording" /></label></div>}
@@ -233,12 +236,15 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   };
   const renderIntegratedQuestions = () => currentQuestions.flatMap((question, index) => {
     const info = presentation[index];
-    if (question.type !== 'heading' || !info.group.every(row => row.type === 'heading')) return [renderAnswer(question, index)];
+    const sharedChoices = question.options?.length && info.group.every(row => row.type === question.type && JSON.stringify(row.options) === JSON.stringify(question.options) && row.stimulusHtml === question.stimulusHtml && !catalog.assets.some(asset => asset.id === row.assetId && asset.kind === 'image'));
+    if (!['heading', 'matching', 'map'].includes(question.type) || !sharedChoices || (question.type === 'map' && !question.stimulusHtml)) return [renderAnswer(question, index)];
     if (!info.groupStart) return [];
     const range = info.group.length > 1 ? `Questions ${question.number}–${info.group.at(-1)!.number}` : `Question ${question.number}`;
-    return [<section key={question.id} className="exam-heading-group" role="group" aria-label={`${range} · Matching headings`}>
-      <header className="exam-heading-group-header"><div className="exam-question-group-heading"><strong>{range}</strong><span>Matching headings</span></div>{(info.showInstructions || question.stimulusHtml) && <details className="exam-group-instructions"><summary>Instructions</summary>{info.showInstructions && <p className="exam-instruction">{question.instructions}</p>}{question.stimulusHtml && <ExamStimulus html={question.stimulusHtml} assets={catalog.assets} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />}</details>}</header>
-      <div className="exam-heading-workspace"><HeadingReference question={question} /><div className="exam-heading-answers">{info.group.map(row => renderAnswer(row, currentQuestions.indexOf(row), true))}</div></div>
+    const map = question.type === 'map';
+    const source = question.stimulusHtml && <ExamStimulus html={question.stimulusHtml} assets={catalog.assets} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />;
+    return [<section key={question.id} className="exam-heading-group" role="group" aria-label={`${range} · ${QUESTION_TYPE_NAMES[question.type]}`}>
+      <header className="exam-heading-group-header"><div className="exam-question-group-heading"><strong>{range}</strong><span>{QUESTION_TYPE_NAMES[question.type]}</span></div>{(info.showInstructions || (!map && source)) && <details className="exam-group-instructions"><summary>Instructions</summary>{info.showInstructions && <p className="exam-instruction">{question.instructions}</p>}{!map && source}</details>}</header>
+      <div className="exam-heading-workspace">{question.type === 'heading' ? <HeadingReference question={question} /> : <QuestionReference label={map ? 'Map reference' : 'Answer choices'} count={map ? undefined : question.options!.length}>{map ? source : <ul className="exam-heading-list" aria-label="Answer choices">{question.options!.map(option => <li key={option}>{option}</li>)}</ul>}</QuestionReference>}<div className="exam-heading-answers">{info.group.map(row => renderAnswer(row, currentQuestions.indexOf(row), true))}</div></div>
     </section>];
   });
   if (metadata.loading || source.loading) return <section className="view active"><PageLoadingState variant="workbench" message="Loading source material…" onRetry={() => { metadata.reload(); source.reload(); }} /></section>;
@@ -269,5 +275,6 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
       <footer className="exam-submit"><span className="exam-submit-progress" role="status">{answered} / {answerSlots} answered</span><p>{mode === 'mock' ? 'Submit once you have checked every answer.' : 'Save your answers and evidence, then review the source explanations.'}</p><button className="btn primary" disabled={controller.saving} onClick={requestSubmit}><Send size={15} />{controller.saving ? 'Saving…' : attempt?.status === 'completed' ? 'Retry submission' : 'Submit answers'}</button></footer>
     </>}
     <ModalFrame open={confirmSubmit} onClose={() => setConfirmSubmit(false)} title="Submit with unanswered questions?" header="Check before submitting" description={`${unanswered.length} question${unanswered.length === 1 ? '' : 's'} still unanswered. These will receive no marks. Your current answers are kept.`} footer={<><button className="btn line" onClick={goToUnanswered}>Return to unanswered</button><button className="btn primary" disabled={controller.saving} onClick={() => { setConfirmSubmit(false); void controller.submit(); }}>Submit anyway</button></>}><p>Unanswered: {unanswered.map(question => question.number).join(', ')}</p></ModalFrame>
+    <ModalFrame open={Boolean(mapPreview && mapPreview.sectionId === activeSection?.id)} onClose={() => { setMapPreview(null); requestAnimationFrame(() => mapTrigger.current?.focus({ preventScroll: true })); }} title="Map reference" header={mapPreview ? `Question ${mapPreview.number}` : undefined} description="Check the source map, then close it to continue your answer." size="lg"><ExamStimulus html={mapPreview?.stimulusHtml || ''} assets={catalog.assets} blockPrefix="map-preview" /></ModalFrame>
   </section>;
 }

@@ -82,6 +82,42 @@ test('question notes open from a compact accessible button and retain their cont
   expect(screen.getByRole('textbox', { name: 'Evidence for question 1' })).toHaveValue('opened in 1990');
 });
 
+test('matching tasks keep shared choices beside answers without changing saved values', async () => {
+  mocks.catalog.questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, type: 'matching', maxWords: undefined, groupId: 'matching', prompt: `${number} Film ${number}`, options: ['A historical period', 'B a modern setting'], answer: 'B a modern setting' }));
+  practice();
+  await screen.findByRole('combobox', { name: 'Answer 1' });
+  const group = screen.getByRole('group', { name: 'Questions 1–2 · Matching' });
+  expect(within(group).getByRole('list', { name: 'Answer choices' })).toHaveTextContent('B a modern setting');
+  const user = userEvent.setup();
+  await user.click(within(group).getByRole('combobox', { name: 'Answer 2' }));
+  await user.click(screen.getByRole('option', { name: /B\s+a modern setting/ }));
+  expect(mocks.recovery.get('one:reading:practice:section').responses.q2).toBe('B a modern setting');
+});
+
+test('different matching choices are not presented as a shared reference', async () => {
+  mocks.catalog.questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, type: 'matching', groupId: 'matching', options: [`A choice ${number}`], answer: `A choice ${number}` }));
+  practice();
+  await screen.findByRole('combobox', { name: 'Answer 1' });
+  expect(screen.queryByRole('list', { name: 'Answer choices' })).not.toBeInTheDocument();
+});
+
+test('map answers can open the source beside the current answer and return without losing it', async () => {
+  mocks.catalog.assets = [{ id: 'map', paperId: 'paper', kind: 'image', storagePath: 'map.png', sourceUrl: 'https://example.org/map', provenance }];
+  mocks.catalog.questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, type: 'map', maxWords: undefined, groupId: 'map', prompt: `Building ${number}`, options: ['A', 'B'], answer: 'B', stimulusHtml: '<p>Label the map.</p><img src="exam-asset:map" alt="Library map">' }));
+  practice();
+  const answer = await screen.findByRole('combobox', { name: 'Answer 2' });
+  const user = userEvent.setup();
+  await user.click(answer);
+  await user.click(screen.getByRole('option', { name: /^B$/ }));
+  await user.click(screen.getByRole('button', { name: 'View map for question 2' }));
+  const dialog = screen.getByRole('dialog', { name: 'Map reference' });
+  expect(within(dialog).getByRole('img', { name: 'Library map' })).toBeVisible();
+  await user.keyboard('{Escape}');
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  await waitFor(() => expect(screen.getByRole('button', { name: 'View map for question 2' })).toHaveFocus());
+  expect(answer).toHaveTextContent('B');
+});
+
 test('heading references adapt to the available panel width without undoing manual collapse on content changes', async () => {
   let resize!: (entries: { contentRect: { width: number } }[]) => void;
   const disconnect = vi.fn();
