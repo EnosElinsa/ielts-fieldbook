@@ -1,4 +1,5 @@
 import { makeId } from '../utils';
+import { normalizeExamAnnotations } from './annotations';
 import type { ExamAttempt, ExamQuestion, ExamSection, ExamStore, IntensiveSession } from './types';
 
 export function createExamAttempt(sections: ExamSection[], questions: ExamQuestion[], mode: ExamAttempt['mode'], now = new Date().toISOString()): ExamAttempt {
@@ -40,7 +41,7 @@ export function normalizeExamStore(input: unknown): ExamStore {
     dictationResult: ['correct', 'partial', 'wrong', 'pending'].includes(row.dictationResult) ? row.dictationResult : 'pending',
     errorReasons: strings(row.errorReasons), updatedAt: row.updatedAt || '', speed: Math.max(0.25, Math.min(2, number(row.speed, 1))), loop: Boolean(row.loop),
   } as IntensiveSession));
-  return { examAttempts, intensiveSessions };
+  return { examAttempts, intensiveSessions, examAnnotations: normalizeExamAnnotations(source.examAnnotations) };
 }
 
 export function dueIntensive(sessions: IntensiveSession[], now: string | Date = new Date()): IntensiveSession[] {

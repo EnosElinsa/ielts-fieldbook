@@ -470,9 +470,14 @@ function evidenceTargetKey(task) {
   return typeof task.driver==='string'&&task.driver.startsWith('criterion:') ? JSON.stringify([task.skill,task.driver,task.kind,task.deskMode]) : null;
 }
 
+function clearPlanBinding(plan) {
+  for (const field of ['target','targetLabel','quantity','questionId','sectionId','sentenceId','attemptId','sourceAssessmentId','targetErrorIds','driver','stage','speakingGroups','completedPromptKeys','targetPrompt']) delete plan[field];
+  plan.linkedSessionId = null;
+  plan.completedAt = null;
+}
+
 function replaceAutomaticTarget(plan, task) {
-  // Clear fields from the old target before the shared context binds the replacement.
-  for (const field of ['questionId','sectionId','sentenceId','attemptId','sourceAssessmentId','targetErrorIds','driver','stage']) delete plan[field];
+  clearPlanBinding(plan);
   Object.assign(plan,task);
 }
 
@@ -613,8 +618,9 @@ export function mutateStudyPlan(state, planId, action, now = new Date()) {
       const used=state.plans.filter(row=>row.id!==plan.id&&row.dateKey===plan.dateKey&&row.status!=='skipped').reduce((sum,row)=>sum+Number(row.estimatedMinutes||0),0);
       if(used+minutes>studyBudget(state.settings).daily)throw new Error(`This mock needs ${minutes} minutes available on this day.`);
       const skill=action.kind==='writing-mock'?'writing':'speaking';
+      clearPlanBinding(plan);
       Object.assign(plan,{kind:action.kind,skill,title:skill==='writing'?'Writing mock':'Speaking mock',description:skill==='writing'?'Complete Task 1 and Task 2 under exam timing.':'Complete Parts 1, 2 and 3 under exam timing.',deskMode:'timed',estimatedMinutes:minutes,stage:skill==='writing'?'task1':'p1',questionId:null,target:{type:'question',skill,questionId:null,mode:'timed'},completion:{type:'attempt',description:'Save every stage of this mock.'}});
-    }else Object.assign(plan,skillTask(state,action.skill,Number(plan.estimatedMinutes)||studyBudget(state.settings).skill,0,false));
+    }else { const task = skillTask(state,action.skill,Number(plan.estimatedMinutes)||studyBudget(state.settings).skill,0,false); clearPlanBinding(plan); Object.assign(plan,task); }
     Object.assign(plan,{sectionId:null,sentenceId:null,attemptId:null,sourceAssessmentId:null,targetErrorIds:[],driver:null});
   } else throw new Error('This task cannot be changed.');
   plan.origin='manual';plan.manuallyEditedAt=new Date(now).toISOString();

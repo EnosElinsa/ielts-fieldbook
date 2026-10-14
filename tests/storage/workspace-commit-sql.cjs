@@ -24,7 +24,7 @@ async function main() {
         grant select,insert,update,delete on public.${table} to authenticated;`);
     }
     const migrationDir = path.resolve(__dirname, '../../supabase/migrations');
-    for (const migration of ['20261010090000_unified_vocabulary.sql', '20261010170000_vocabulary_sessions.sql', '20261013120000_workspace_commits.sql']) {
+    for (const migration of ['20261010090000_unified_vocabulary.sql', '20261010170000_vocabulary_sessions.sql', '20261013120000_workspace_commits.sql', '20261013160000_neutral_vocabulary_identities.sql', '20261014120000_exam_annotations.sql']) {
       await db.exec(fs.readFileSync(path.join(migrationDir, migration), 'utf8'));
     }
     const indexNames = (await db.query("select indexname from pg_indexes where schemaname='public' and indexname in ('wordbook_memberships_book_unit_id','wordbook_units_book_id','word_entries_term_id') order by indexname")).rows.map(row => row.indexname);
@@ -39,6 +39,27 @@ async function main() {
     const batch = { id: 'save-1', lists: { sessions: diff('session'), plans: diff('plan'), examAttempts: diff('exam') }, drafts: diff('question', { text: 'Response' }), profile: { settings: { activeSkill: 'reading' }, activePlanId: 'plan', reviewedAt: null } };
     assert.deepEqual((await commit(batch)).rows[0].result, { id: 'save-1', alreadyCommitted: false });
     assert.equal(await count('sessions', 'session'), 1);
+    const annotation = { id: 'source-note', sourceId: 'section', skill: 'reading', quote: 'garden', note: 'initial' };
+    const annotationBatch = { id: 'annotation-save', lists: { examAnnotations: diff(annotation.id, annotation) } };
+    assert.deepEqual((await commit(annotationBatch)).rows[0].result, { id: 'annotation-save', alreadyCommitted: false });
+    assert.deepEqual((await commit(annotationBatch)).rows[0].result, { id: 'annotation-save', alreadyCommitted: true });
+    await db.exec(`set request.jwt.claim.sub='${other}';`);
+    assert.equal(await count('exam_annotations', annotation.id), 0);
+    await assert.rejects(() => db.query('insert into exam_annotations(user_id,id,payload) values($1,$2,$3)', [account, 'foreign', { id: 'foreign' }]), /row-level security/);
+    await db.exec(`set request.jwt.claim.sub='${account}';`);
+    await commit({ id: 'annotation-edit', lists: { examAnnotations: diff(annotation.id, { ...annotation, note: 'edited' }) } });
+    assert.equal((await db.query('select payload from exam_annotations where id=$1', [annotation.id])).rows[0].payload.note, 'edited');
+    await commit({ id: 'annotation-delete', lists: { examAnnotations: { upserts: [], deletes: [annotation.id] } } });
+    assert.equal(await count('exam_annotations', annotation.id), 0);
+    await commit({ id: 'annotation-cascade', lists: { examAnnotations: diff('cascade-note') } });
+    await db.exec('reset role');
+    await db.exec(fs.readFileSync(path.join(migrationDir, '20261014120000_exam_annotations.sql'), 'utf8'));
+    const deletedAccount = '00000000-0000-0000-0000-000000000003';
+    await db.query('insert into auth.users values($1)', [deletedAccount]);
+    await db.query('insert into exam_annotations(user_id,id,payload) values($1,$2,$3)', [deletedAccount, 'removed-with-account', { id: 'removed-with-account' }]);
+    await db.query('delete from auth.users where id=$1', [deletedAccount]);
+    assert.equal(await count('exam_annotations', 'removed-with-account'), 0);
+    await db.exec('set role authenticated');
     assert.equal(await count('drafts', 'question'), 1);
     assert.equal((await db.query("select updated_at > clock_timestamp()-interval '1 minute' as recent from sessions where id='session'")).rows[0].recent, true);
     assert.equal((await db.query('select settings from profiles')).rows[0].settings.activeSkill, 'reading');

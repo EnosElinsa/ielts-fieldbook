@@ -10,7 +10,7 @@ const env = Object.fromEntries((await readFile('.env', 'utf8')).split(/\r?\n/).f
 const endpoint = process.env.SUPABASE_URL || env.SUPABASE_URL || env.VITE_SUPABASE_URL;
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_SERVICE_ROLE_KEY;
 if (!endpoint || !key) throw new Error('Administrative backup credentials are unavailable.');
-const owned = ['sessions', 'assessments', 'errors', 'plans', 'stories', 'vocabulary', 'vocabulary_states', 'vocabulary_evidence', 'vocabulary_reviews', 'vocabulary_activities', 'wordbook_progress', 'wordbook_enrollments', 'vocabulary_import_batches', 'vocabulary_sessions', 'exam_attempts', 'intensive_sessions', 'drafts', 'lexicon', 'workspace_commit_receipts'];
+const owned = ['sessions', 'assessments', 'errors', 'plans', 'stories', 'vocabulary', 'vocabulary_states', 'vocabulary_evidence', 'vocabulary_reviews', 'vocabulary_activities', 'wordbook_progress', 'wordbook_enrollments', 'vocabulary_import_batches', 'vocabulary_sessions', 'exam_attempts', 'intensive_sessions', 'exam_annotations', 'drafts', 'lexicon', 'workspace_commit_receipts'];
 const shared = ['profiles', 'word_entries', 'word_senses', 'word_relations', 'word_enrichments', 'wordbooks', 'wordbook_units', 'wordbook_memberships', 'writing_questions', 'speaking_topics', 'speaking_samples', 'exam_papers', 'exam_sections', 'exam_passages', 'exam_questions', 'exam_assets'];
 await mkdir(directory, { recursive: true });
 const manifest = { startedAt: new Date().toISOString(), tables: {} };

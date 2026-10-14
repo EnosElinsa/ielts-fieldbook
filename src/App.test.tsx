@@ -243,11 +243,11 @@ describe('Fieldbook UI', () => {
     expect(await screen.findByRole('spinbutton', { name: 'Learning batch size' })).toBeTruthy();
     await user.click(within(categories).getByRole('link', { name: 'Study time' }));
     expect((screen.getByRole('spinbutton', { name: 'Minutes a day' }) as HTMLInputElement).value).toBe('45');
-    vi.mocked(window.confirm).mockReturnValue(false);
     const rail = document.querySelector('.rail') as HTMLElement;
     await user.click(within(rail).getByRole('link', { name: 'Today' }));
+    expect(screen.getByRole('dialog', { name: 'Discard unsaved settings?' })).toBeTruthy();
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
     expect((screen.getByRole('spinbutton', { name: 'Minutes a day' }) as HTMLInputElement).value).toBe('45');
-    expect(window.confirm).toHaveBeenCalled();
   });
 
   it('Settings backup export uses the existing complete-account download flow', async () => {

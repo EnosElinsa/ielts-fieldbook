@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { beforeEach, expect, test, vi } from 'vitest';
+import { afterEach, beforeEach, expect, test, vi } from 'vitest';
+afterEach(() => vi.useRealTimers());
 
 const mocks = vi.hoisted(() => ({ rows: {}, upserts: [], deletes: [], rpcCalls: [], rpcError: null, rpcResult: null, rpcPromise: null, reads: [], failTable: null, profile: { settings: {}, active_plan_id: null, reviewed_at: null }, user: 'account-1', sessions: [] }));
 vi.mock('../../src/lib/supabase', () => ({
@@ -32,6 +33,7 @@ vi.mock('../../src/lib/supabase', () => ({
         mocks.headers.push({ name, header, value });
         return response;
       };
+      response.abortSignal = signal => { mocks.signal = signal; return response; };
       return response;
     },
     from: (table) => ({
@@ -77,6 +79,23 @@ beforeEach(() => {
   mocks.failTable = null;
   mocks.user = 'account-1';
   mocks.sessions = [];
+});
+
+test('workspace deadline aborts transport, ignores late receipts and retries the same batch', async () => {
+  const { hydrateState, saveState } = await import('../../src/storage/remote');
+  const state = await hydrateState(); state.drafts.q1.text = 'recoverable edit';
+  vi.useFakeTimers();
+  let release; mocks.rpcPromise = new Promise(resolve => { release = resolve; });
+  const first = saveState(state);
+  await vi.advanceTimersByTimeAsync(1);
+  const batch = structuredClone(mocks.rpcCalls[0].args.batch);
+  await vi.advanceTimersByTimeAsync(20000);
+  expect(await first).toBe(false);
+  expect(mocks.signal.aborted).toBe(true);
+  release(); await vi.advanceTimersByTimeAsync(0);
+  mocks.rpcPromise = null;
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.rpcCalls[1].args.batch).toEqual(batch);
 });
 
 test.each([
@@ -350,7 +369,7 @@ test('changes made while a workspace RPC is pending remain available for the nex
 test('in-place changes after hydration produce plan and draft upserts with current metadata', async () => {
   const { hydrateState, saveState } = await import('../../src/storage/remote');
   const state = await hydrateState();
-  expect(state.schemaVersion).toBe(12);
+  expect(state.schemaVersion).toBe(13);
   state.plans[0].status = 'in_progress';
   state.plans[0].startedAt = '2026-10-10T00:00:00.000Z';
   state.drafts.q1.text = 'After';
@@ -437,7 +456,7 @@ test('a stale hydration result cannot replace a newer account snapshot', async (
   resetAccountStore();
   mocks.user = 'account-b';
   const current = await hydrateState();
-  expect(current.schemaVersion).toBe(12);
+  expect(current.schemaVersion).toBe(13);
   await actResolve(old, true);
   await expect(oldLoad).rejects.toThrow('superseded');
 });

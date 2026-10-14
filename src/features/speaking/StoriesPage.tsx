@@ -6,6 +6,8 @@ import { formatDate } from '../../lib/format';
 import { Empty } from '../../components/ui';
 import { FilterMenu } from '../../components/ui';
 import { ArrowUpRight, Pencil, Plus, Trash2 } from 'lucide-react';
+import { useConfirmationDialog } from '../../components/useConfirmationDialog';
+import { accountId } from '../../storage/remote';
 
 function storySummary(story) {
   return [
@@ -20,6 +22,8 @@ function storySummary(story) {
 
 export function StoriesPage() {
   const fb = useFieldbook();
+  const owner = accountId();
+  const { confirm, dialog } = useConfirmationDialog(owner || 'anonymous');
   const [search, setSearch] = useWorkspacePageState('stories:search', '');
   const [tag, setTag] = useWorkspacePageState('stories:tag', 'all');
   const [topic, setTopic] = useWorkspacePageState('stories:topic', 'all');
@@ -117,7 +121,7 @@ export function StoriesPage() {
                       className="btn line"
                       type="button"
                       onClick={async () => {
-                        if (window.confirm(`Delete “${story.title}”?`)) {
+                        if (await confirm({ title: 'Delete this story?', description: story.title, confirmLabel: 'Delete story', destructive: true }) && accountId() === owner) {
                           const draft = structuredClone(fb.stateRef.current);
                           fb.removeStory(draft, story.id);
                           if (await fb.persistNow(draft)) fb.toast('Story deleted.');
@@ -144,6 +148,7 @@ export function StoriesPage() {
           />
         )}
       </div>
+      {dialog}
     </section>
   );
 }

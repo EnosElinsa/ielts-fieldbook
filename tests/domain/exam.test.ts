@@ -80,7 +80,7 @@ test('word alignment distinguishes omissions, extras, replacements and repeated 
 test('v10 migration preserves exam work separately and backup merges newer records', () => {
   const attempt = createExamAttempt([section], [question()], 'practice', stamp);
   const state = migrateState({ schemaVersion: 10, sessions: [{ id: 'writing', essay: 'Legacy essay' }], examAttempts: [attempt], intensiveSessions: [], settings: { activeSkill: 'reading', skillMix: 'listening' } });
-  expect(state.schemaVersion).toBe(12);
+  expect(state.schemaVersion).toBe(13);
   expect(state.sessions).toHaveLength(1);
   expect(state.examAttempts).toEqual([attempt]);
   expect(state.settings).toMatchObject({ activeSkill: 'reading', skillMix: 'listening' });

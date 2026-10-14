@@ -1,31 +1,123 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { useState } from 'react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { emptyState } from '../../domain';
 import { SpeakingDeskPage } from './SpeakingDeskPage';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
+import { speakingPrompts } from '../../domain/speaking';
 
-const { putAudio, setPendingAttempt, openModal, writePendingAudio, readPendingAudio, deletePendingAudio, desk } = vi.hoisted(() => ({ putAudio: vi.fn(), setPendingAttempt: vi.fn(), openModal: vi.fn(), writePendingAudio: vi.fn().mockResolvedValue(true), readPendingAudio: vi.fn().mockResolvedValue(null), deletePendingAudio: vi.fn().mockResolvedValue(true), desk: { part: '1', mode: 'speak-blind', index: 0 } }));
+const { putAudio, setPendingAttempt, openModal, writePendingAudio, readPendingAudio, deletePendingAudio, desk } = vi.hoisted(() => ({ putAudio: vi.fn(), setPendingAttempt: vi.fn(), openModal: vi.fn(), writePendingAudio: vi.fn().mockResolvedValue(true), readPendingAudio: vi.fn().mockResolvedValue(null), deletePendingAudio: vi.fn().mockResolvedValue(true), desk: { part: '1', mode: 'speak-blind', index: 0, owner: 'account-1', drafts: {} as Record<string, any>, statuses: {} as Record<string, string> } }));
 vi.mock('../../storage/audio', () => ({ putAudio }));
 vi.mock('../../storage/pendingAudio', () => ({
   writePendingAudio, readPendingAudio, deletePendingAudio,
 }));
-vi.mock('../../storage/remote', () => ({ accountId: () => 'account-1' }));
-vi.mock('../../components/SessionAudioPlayer', () => ({ RecordingPlayer: () => <div>Decoded recording player</div> }));
+vi.mock('../../storage/remote', () => ({ accountId: () => desk.owner }));
+vi.mock('../../components/SessionAudioPlayer', () => ({ RecordingPlayer: ({ label }: { label: string }) => <div>{label === 'Unassociated earlier recording' ? 'Earlier recording player' : 'Decoded recording player'}</div> }));
 vi.mock('../../context/FieldbookContext', () => ({
-  useFieldbook: () => ({
+  useFieldbook: () => { const [index, setIndex] = useState(desk.index); return ({
     state: { ...emptyState(), speakingTopics: [], stories: [] },
     selectedTopic: { id: 'speaking-1', title: 'Your home', part: 1, questions: ['Where do you live?', 'What do you like about your home?'] },
-    deskPart: desk.part, questionIndex: desk.index, setQuestionIndex: (index: number) => { desk.index = index; }, currentDeskMode: () => desk.mode,
-    speakingDraft: () => ({ transcript: '', notes: '', targetErrorIds: ['error-1'] }),
-    setSpeakingDraft: vi.fn(), scheduleDraftPersist: vi.fn(), toast: vi.fn(),
+    deskPart: desk.part, questionIndex: index, setQuestionIndex: (next: number) => { desk.index = next; setIndex(next); }, currentDeskMode: () => desk.mode,
+    speakingDraft: (_topic: string, key?: string) => ({ transcript: '', notes: '', targetErrorIds: ['error-1'], ...desk.drafts[key || 'legacy'] }),
+    draftSaveStatus: (_topic: string, key?: string) => desk.statuses[key || 'legacy'] || 'saved',
+    setSpeakingDraft: (_topic: string, patch: any) => { desk.drafts[patch.promptKey || 'legacy'] = { ...desk.drafts[patch.promptKey || 'legacy'], ...patch }; }, scheduleDraftPersist: vi.fn(), toast: vi.fn(),
     wordCount: (text: string) => text.trim().split(/\s+/).filter(Boolean).length,
     setPendingAttempt, openModal, persistNow: vi.fn().mockResolvedValue(true), flushDraftPersist: vi.fn(),
-  }),
+  }); },
 }));
 
-afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.clearAllMocks(); readPendingAudio.mockResolvedValue(null); sessionStorage.clear(); vi.useRealTimers(); desk.part = '1'; desk.mode = 'speak-blind'; desk.index = 0; });
+afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.clearAllMocks(); readPendingAudio.mockResolvedValue(null); sessionStorage.clear(); vi.useRealTimers(); desk.part = '1'; desk.mode = 'speak-blind'; desk.index = 0; desk.drafts = {}; desk.statuses = {}; desk.owner = 'account-1'; });
+
+test('the speaking footer shows all five scoped draft statuses and retry without leaking another prompt status', () => {
+  const [first] = speakingPrompts({ title: 'Your home', questions: ['Where do you live?', 'What do you like about your home?'] }, '1');
+  desk.statuses[first.promptKey] = 'unsaved';
+  const view = render(<SpeakingDeskPage />);
+  expect(view.container.querySelector('.editor-foot [role="status"]')).toHaveTextContent('Draft has unsaved changes.');
+  desk.statuses[first.promptKey] = 'pending'; view.rerender(<SpeakingDeskPage />);
+  expect(view.container.querySelector('.editor-foot [role="status"]')).toHaveTextContent('Waiting to save draft...');
+  desk.statuses[first.promptKey] = 'saving'; view.rerender(<SpeakingDeskPage />);
+  expect(view.container.querySelector('.editor-foot [role="status"]')).toHaveTextContent('Saving draft...');
+  desk.statuses[first.promptKey] = 'failed'; view.rerender(<SpeakingDeskPage />);
+  expect(view.container.querySelector('.editor-foot [role="status"]')).toHaveTextContent('Draft could not be saved.');
+  expect(screen.getByRole('button', { name: 'Retry save' })).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: '2. What do you like about your home?' }));
+  expect(view.container.querySelector('.editor-foot [role="status"]')).toHaveTextContent('Draft saved.');
+  fireEvent.click(screen.getByRole('button', { name: '1. Where do you live?' }));
+  expect(view.container.querySelector('.editor-foot [role="status"]')).toHaveTextContent('Draft could not be saved.');
+  desk.statuses[first.promptKey] = 'saved'; view.rerender(<SpeakingDeskPage />);
+  expect(view.container.querySelector('.editor-foot [role="status"]')).toHaveTextContent('Draft saved.');
+  expect(screen.getByRole('button', { name: 'Save draft' })).toBeInTheDocument();
+});
+
+test('switching speaking prompts isolates transcript and recording and restores each response', async () => {
+  const firstPrompt = speakingPrompts({ title: 'Your home', questions: ['Where do you live?', 'What do you like about your home?'] }, '1')[0];
+  readPendingAudio.mockImplementation(async (_owner, _topic, _part, key) => key === firstPrompt.promptKey ? new Blob(['first recording']) : null);
+  URL.createObjectURL = vi.fn(() => 'blob:first'); URL.revokeObjectURL = vi.fn();
+  const view = render(<SpeakingDeskPage />);
+  await screen.findByText('Decoded recording player');
+  fireEvent.change(screen.getByRole('textbox', { name: 'Speaking transcript' }), { target: { value: 'First response' } });
+  fireEvent.click(screen.getByRole('button', { name: '2. What do you like about your home?' }));
+  expect(desk.index).toBe(1);
+  expect(Object.values(desk.drafts).map((draft: any) => [draft.promptKey, draft.transcript])).toEqual([[firstPrompt.promptKey, 'First response']]);
+  view.rerender(<SpeakingDeskPage />);
+  expect(screen.getByRole('button', { name: '2. What do you like about your home?' })).toHaveAttribute('aria-pressed', 'true');
+  await waitFor(() => expect(screen.getByRole('textbox', { name: 'Speaking transcript' })).toHaveValue(''));
+  expect(screen.queryByText('Decoded recording player')).toBeNull();
+  fireEvent.change(screen.getByRole('textbox', { name: 'Speaking transcript' }), { target: { value: 'Second response' } });
+  fireEvent.click(screen.getByRole('button', { name: '1. Where do you live?' })); view.rerender(<SpeakingDeskPage />);
+  await waitFor(() => expect(screen.getByRole('textbox', { name: 'Speaking transcript' })).toHaveValue('First response'));
+  expect(await screen.findByText('Decoded recording player')).toBeInTheDocument();
+});
+
+test('a permission result after switching prompts releases its stream and cannot record the new prompt', async () => {
+  let release!: (value: unknown) => void;
+  const stop = vi.fn(); const start = vi.fn();
+  vi.stubGlobal('navigator', { mediaDevices: { getUserMedia: () => new Promise(resolve => { release = resolve; }) } });
+  vi.stubGlobal('MediaRecorder', class { start = start; });
+  render(<SpeakingDeskPage />);
+  await userEvent.click(screen.getByRole('button', { name: 'Record' }));
+  await userEvent.click(screen.getByRole('button', { name: '2. What do you like about your home?' }));
+  await act(async () => { release({ getTracks: () => [{ stop }] }); });
+  expect(stop).toHaveBeenCalledOnce(); expect(start).not.toHaveBeenCalled();
+  expect(screen.getByRole('button', { name: 'Record' })).toBeEnabled();
+});
+
+test('account changes isolate transcript, timer and delayed uploads', async () => {
+  readPendingAudio.mockImplementation(async owner => owner === 'account-1' ? new Blob(['owner-one']) : null);
+  URL.createObjectURL = vi.fn(() => 'blob:owner-one'); URL.revokeObjectURL = vi.fn();
+  let release!: () => void; putAudio.mockImplementationOnce(() => new Promise<void>(resolve => { release = resolve; }));
+  const view = render(<SpeakingDeskPage />);
+  await screen.findByText('Decoded recording player');
+  fireEvent.change(screen.getByRole('textbox', { name: 'Speaking transcript' }), { target: { value: 'Owner one response' } });
+  await userEvent.click(screen.getByRole('button', { name: 'Finish practice' }));
+  await waitFor(() => expect(putAudio).toHaveBeenCalled());
+  desk.owner = 'account-2'; desk.drafts = {};
+  view.rerender(<SpeakingDeskPage />);
+  await act(async () => { release(); });
+  expect(screen.getByRole('textbox', { name: 'Speaking transcript' })).toHaveValue('');
+  expect(view.container.querySelector('.timer')).toHaveTextContent('0:30');
+  expect(screen.queryByText('Decoded recording player')).toBeNull();
+  expect(setPendingAttempt).not.toHaveBeenCalled(); expect(openModal).not.toHaveBeenCalled();
+});
+
+test('legacy topic text and recording require explicit association and survive it', async () => {
+  desk.drafts.legacy = { transcript: 'Earlier topic response', notes: 'Earlier notes' };
+  readPendingAudio.mockImplementation(async (_owner, _topic, _part, key) => key ? null : new Blob(['legacy audio']));
+  URL.createObjectURL = vi.fn(() => 'blob:legacy'); URL.revokeObjectURL = vi.fn();
+  render(<SpeakingDeskPage />);
+  await screen.findByText('Earlier recording player');
+  expect(screen.getByRole('textbox', { name: 'Speaking transcript' })).toHaveValue('');
+  expect(screen.queryByText('Decoded recording player')).toBeNull();
+  fireEvent.click(screen.getByText('Unassociated earlier response'));
+  await userEvent.click(screen.getByRole('button', { name: 'Associate with current question' }));
+  await userEvent.click(screen.getByRole('button', { name: 'Associate response' }));
+  expect(screen.getByRole('textbox', { name: 'Speaking transcript' })).toHaveValue('Earlier topic response');
+  expect(screen.getByText('Decoded recording player')).toBeInTheDocument();
+  expect(desk.drafts.legacy.transcript).toBe('Earlier topic response');
+  expect(deletePendingAudio).not.toHaveBeenCalled();
+});
 
 test('speaking workspace tabs support Home and arrow-key selection', async () => {
   render(<SpeakingDeskPage />); const user = userEvent.setup();
@@ -127,7 +219,7 @@ test('recording restarts an exhausted answer timer and expires into recoverable 
   expect(screen.getByText('Decoded recording player')).toBeInTheDocument();
   expect(view.container.querySelector('[aria-current="step"]')).toHaveTextContent('Review');
   expect(stopTracks).toHaveBeenCalledTimes(1);
-  expect(writePendingAudio).toHaveBeenCalledWith('account-1', 'speaking-1', '1', expect.any(Blob));
+  expect(writePendingAudio).toHaveBeenCalledWith('account-1', 'speaking-1', '1', expect.any(Blob), expect.any(String));
 });
 
 test('button-driven module departure protects a pending recording and allows a confirmed departure', async () => {
@@ -135,14 +227,14 @@ test('button-driven module departure protects a pending recording and allows a c
   URL.createObjectURL = vi.fn(() => 'blob:pending'); URL.revokeObjectURL = vi.fn();
   await act(async () => { render(<SpeakingDeskPage />); });
   expect(screen.getByText('Decoded recording player')).toBeInTheDocument();
-  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
   const proceed = vi.fn();
-  expect(navigateWithPracticeGuard('/vocabulary', proceed)).toBe(false);
+  act(() => { expect(navigateWithPracticeGuard('/vocabulary', proceed)).toBe(false); });
   expect(proceed).not.toHaveBeenCalled();
-  confirm.mockReturnValue(true);
-  expect(navigateWithPracticeGuard('/vocabulary', proceed)).toBe(true);
-  expect(proceed).toHaveBeenCalledOnce();
-  confirm.mockRestore();
+  await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+  expect(proceed).not.toHaveBeenCalled();
+  act(() => { expect(navigateWithPracticeGuard('/vocabulary', proceed)).toBe(false); });
+  await userEvent.click(screen.getByRole('button', { name: 'Leave practice' }));
+  await waitFor(() => expect(proceed).toHaveBeenCalledOnce());
 });
 
 test('a microphone permission result arriving after departure stops its stream without recording', async () => {
@@ -179,14 +271,13 @@ test('a failed re-record keeps the previous audio available for recovery', async
   URL.createObjectURL = vi.fn(() => 'blob:previous'); URL.revokeObjectURL = vi.fn();
   vi.stubGlobal('navigator', { mediaDevices: { getUserMedia: vi.fn().mockRejectedValue(new DOMException('Denied', 'NotAllowedError')) } });
   vi.stubGlobal('MediaRecorder', class {});
-  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
   render(<SpeakingDeskPage />);
   await screen.findByText('Decoded recording player');
   await userEvent.click(screen.getByRole('button', { name: 'Re-record' }));
+  await userEvent.click(screen.getByRole('button', { name: 'Replace recording' }));
   expect(await screen.findByRole('alert')).toHaveTextContent('permission was denied');
   expect(screen.getByText('Decoded recording player')).toBeInTheDocument();
   expect(deletePendingAudio).not.toHaveBeenCalled();
-  confirm.mockRestore();
 });
 
 test('a recorder initialization failure releases the acquired microphone', async () => {
@@ -226,21 +317,20 @@ test('an upload failure retains raw recording and requires retry or explicit tra
   fireEvent.change(screen.getByRole('textbox', { name: 'Speaking transcript' }), { target: { value: 'I live in a small city.' } });
   await userEvent.click(screen.getByRole('button', { name: 'Record' }));
   await userEvent.click(screen.getByRole('button', { name: 'Stop' }));
-  expect(writePendingAudio).toHaveBeenCalledWith('account-1', 'speaking-1', '1', expect.any(Blob));
+  expect(writePendingAudio).toHaveBeenCalledWith('account-1', 'speaking-1', '1', expect.any(Blob), expect.any(String));
   const unload = new Event('beforeunload', { cancelable: true });
   window.dispatchEvent(unload);
   expect(unload.defaultPrevented).toBe(true);
-  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
   const link = document.createElement('a');
   link.href = '/review';
   link.textContent = 'Leave practice';
   document.body.append(link);
   const navigate = new MouseEvent('click', { bubbles: true, cancelable: true, button: 0 });
-  link.dispatchEvent(navigate);
+  act(() => { link.dispatchEvent(navigate); });
   expect(navigate.defaultPrevented).toBe(true);
-  expect(confirm).toHaveBeenCalledWith(expect.stringContaining('recording has not been uploaded'));
+  expect(screen.getByRole('dialog')).toHaveTextContent('Leave speaking practice?');
+  await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
   link.remove();
-  confirm.mockRestore();
   await userEvent.click(screen.getByRole('button', { name: 'Finish practice' }));
   expect(await screen.findByRole('button', { name: 'Retry upload' })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Download recording' })).toHaveAttribute('href', 'blob:test-recording');
@@ -273,6 +363,7 @@ test('a durable pending recording restores and survives cancelled completion unt
   render(<SpeakingDeskPage />);
   expect(await screen.findByText('Decoded recording player')).toBeInTheDocument();
   await userEvent.click(screen.getByRole('button', { name: 'Clear audio' }));
-  expect(deletePendingAudio).toHaveBeenCalledWith('account-1', 'speaking-1', '1');
+  await userEvent.click(screen.getByRole('button', { name: 'Clear recording' }));
+  expect(deletePendingAudio).toHaveBeenCalledWith('account-1', 'speaking-1', '1', expect.any(String));
   expect(screen.queryByText('Decoded recording player')).not.toBeInTheDocument();
 });

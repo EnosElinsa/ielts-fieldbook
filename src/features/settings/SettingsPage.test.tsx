@@ -86,22 +86,22 @@ test('failed settings save retains all category edits and retries the same patch
 });
 
 test('discard resets the draft while ordinary links and departures remain guarded', async () => {
-  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
   setup(); const user = userEvent.setup();
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Minutes a day' }), { target: { value: '45' } });
   await user.click(screen.getByRole('link', { name: 'Today' }));
+  expect(screen.getByRole('dialog', { name: 'Discard unsaved settings?' })).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Cancel' }));
   const proceed = vi.fn();
-  expect(navigateWithPracticeGuard('/reading', proceed)).toBe(false);
+  act(() => { expect(navigateWithPracticeGuard('/reading', proceed)).toBe(false); });
   expect(proceed).not.toHaveBeenCalled();
   const unload = new Event('beforeunload', { cancelable: true });
   window.dispatchEvent(unload);
   expect(unload.defaultPrevented).toBe(true);
   expect(screen.getByLabelText('Location')).toHaveTextContent('/settings/schedule');
-  expect(confirm).toHaveBeenCalledTimes(2);
+  await user.click(screen.getByRole('button', { name: 'Cancel' }));
   await user.click(screen.getByRole('button', { name: 'Discard changes' }));
   expect(screen.getByRole('spinbutton', { name: 'Minutes a day' })).toHaveValue(30);
   expect(screen.getByRole('button', { name: 'Save settings' })).toBeDisabled();
-  confirm.mockReturnValue(true);
   await user.click(screen.getByRole('link', { name: 'Today' }));
   expect(screen.getByLabelText('Location')).toHaveTextContent('/');
 });
@@ -184,20 +184,21 @@ test('selected skills persist with the legacy focus settings', async () => {
 test('browser Back between categories retains the draft and canceled departure restores history', async () => {
   window.history.replaceState({ idx: 0 }, '', '/');
   window.history.pushState({ idx: 1 }, '', '/settings/schedule');
-  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
   render(<BrowserRouter><Routes><Route path="/settings/:category?" element={<SettingsPage />} /><Route path="/" element={<p>Today content</p>} /></Routes><Location /></BrowserRouter>);
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Minutes a day' }), { target: { value: '45' } });
   await userEvent.setup().click(screen.getByRole('link', { name: 'Vocabulary' }));
   act(() => window.history.back());
   await waitFor(() => expect(screen.getByLabelText('Location')).toHaveTextContent('/settings/schedule'));
   expect(screen.getByRole('spinbutton', { name: 'Minutes a day' })).toHaveValue(45);
-  expect(confirm).not.toHaveBeenCalled();
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   act(() => window.history.back());
-  await waitFor(() => expect(confirm).toHaveBeenCalledOnce());
+  await screen.findByRole('dialog', { name: 'Discard unsaved settings?' });
   await waitFor(() => expect(window.location.pathname).toBe('/settings/schedule'));
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Cancel' }));
   expect(screen.getByRole('spinbutton', { name: 'Minutes a day' })).toHaveValue(45);
-  confirm.mockReturnValue(true);
   act(() => window.history.back());
+  await screen.findByRole('dialog', { name: 'Discard unsaved settings?' });
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Discard and leave' }));
   await waitFor(() => expect(screen.getByLabelText('Location')).toHaveTextContent(/^\/$/));
   expect(screen.getByText('Today content')).toBeInTheDocument();
 });

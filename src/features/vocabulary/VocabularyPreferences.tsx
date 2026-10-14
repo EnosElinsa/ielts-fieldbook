@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { List, Square, Volume2 } from "lucide-react";
 import { DeviceVoicePreferences } from './DeviceVoicePreferences';
 import { ModalFrame } from "../../components/ModalFrame";
+import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 import {
   normalizeVocabularyPreferences,
   VOCABULARY_PRACTICE_MODES,
@@ -286,6 +287,7 @@ export function VocabularyPreferencesDialog({
   const savingRef = useRef(false);
   const baseline = useRef(normalizeVocabularyPreferences(preferences));
   const [error, setError] = useState("");
+  const { confirm, dialog } = useConfirmationDialog(`preferences:${open}`);
   useEffect(() => {
     if (open) {
       const next = normalizeVocabularyPreferences(preferences);
@@ -294,9 +296,9 @@ export function VocabularyPreferencesDialog({
       setError("");
     }
   }, [open]);
-  function close() {
+  async function close() {
     if (savingRef.current || busy) return;
-    if (JSON.stringify(draft) !== JSON.stringify(baseline.current) && !window.confirm('Discard your unsaved practice settings changes?')) return;
+    if (JSON.stringify(draft) !== JSON.stringify(baseline.current) && !await confirm({ title: 'Discard unsaved practice settings?', description: 'Your practice preferences have not been saved.', confirmLabel: 'Discard changes', destructive: true })) return;
     onClose();
   }
   async function save() {
@@ -317,7 +319,7 @@ export function VocabularyPreferencesDialog({
     }
   }
   return (
-    <ModalFrame
+    <><ModalFrame
       open={open}
       onClose={close}
       title="Practice settings"
@@ -339,6 +341,6 @@ export function VocabularyPreferencesDialog({
           </p>
         ) : null}
       </div>
-    </ModalFrame>
+    </ModalFrame>{dialog}</>
   );
 }

@@ -59,7 +59,7 @@ test('v9 migration preserves lineage and target errors while old modes stay unkn
     sessions: [{ id: 'old', mode: 'full', parentSessionId: 'parent', essay: 'Old response.' }],
     drafts: { old: { text: 'Draft.', mode: 'timed', parentSessionId: 'parent' }, modern: { text: 'Modern.', practiceMode: 'body', targetErrorIds: ['e1'] } },
   });
-  assert.equal(state.schemaVersion, 12);
+  assert.equal(state.schemaVersion, 13);
   assert.equal(state.sessions[0].practiceMode, 'unknown');
   assert.equal(state.sessions[0].parentSessionId, 'parent');
   assert.equal(state.drafts.old.practiceMode, 'unknown');

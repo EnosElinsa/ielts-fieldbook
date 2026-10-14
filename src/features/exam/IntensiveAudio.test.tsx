@@ -5,7 +5,7 @@ import { IntensiveAudio } from './IntensiveAudio';
 
 const { events, wave } = vi.hoisted(() => {
   const events: Record<string, (...args: unknown[]) => void> = {};
-  const wave = { on: vi.fn((event, cb) => { events[event] = cb; }), load: vi.fn().mockResolvedValue(undefined), destroy: vi.fn(), setTime: vi.fn(), setOptions: vi.fn(), setPlaybackRate: vi.fn(), play: vi.fn().mockResolvedValue(undefined), pause: vi.fn() };
+  const wave = { on: vi.fn((event, cb) => { events[event] = cb; }), load: vi.fn().mockResolvedValue(undefined), destroy: vi.fn(), getDuration:()=>100, setTime: vi.fn(), setOptions: vi.fn(), setPlaybackRate: vi.fn(), play: vi.fn().mockResolvedValue(undefined), pause: vi.fn() };
   return { events, wave };
 });
 vi.mock('wavesurfer.js', () => ({ default: { create: () => wave } }));
@@ -82,4 +82,49 @@ it('shortcuts respect dialogs, links and browser modifier keys', () => {
   expect(next).not.toHaveBeenCalled();
   fireEvent.keyDown(window, { key: 'ArrowRight' });
   expect(next).toHaveBeenCalledOnce();
+});
+const segmentProps={src:'audio.mp3',start:10,end:15,speed:1,loop:false,onReplay:()=>{},onSpeedChange:()=>{},onLoopChange:()=>{},onPrevious:()=>{},onNext:()=>{}};
+it('an early pause invalidates completion even when the media later reaches the end',async()=>{
+  const finished=vi.fn();render(<IntensiveAudio {...segmentProps} onSentenceEnd={finished}/>);
+  act(()=>events.ready(100));await act(async()=>fireEvent.click(screen.getByRole('button',{name:'Replay sentence'})));
+  act(()=>{events.play();events.timeupdate(12);events.pause();events.play();events.timeupdate(15);events.finish();});
+  expect(finished).not.toHaveBeenCalled();
+});
+it('seeking to the endpoint invalidates a sentence pass',async()=>{
+  const finished=vi.fn();render(<IntensiveAudio {...segmentProps} onSentenceEnd={finished}/>);
+  act(()=>events.ready(100));await act(async()=>fireEvent.click(screen.getByRole('button',{name:'Replay sentence'})));
+  act(()=>{events.play();events.seeking?.(15);events.timeupdate(15);events.finish();});
+  expect(finished).not.toHaveBeenCalled();
+});
+it('a full-track finish without sentence timing cannot earn sentence completion',async()=>{
+  const finished=vi.fn();render(<IntensiveAudio {...segmentProps} start={undefined} end={undefined} full onSentenceEnd={finished}/>);
+  act(()=>events.ready(100));await act(async()=>fireEvent.click(screen.getByRole('button',{name:'Replay sentence'})));
+  act(()=>{events.play();events.timeupdate(100);events.finish();});expect(finished).not.toHaveBeenCalled();
+});
+it('a same-bounds sentence scope switch cannot inherit an ongoing replay',async()=>{
+  const first=vi.fn(),second=vi.fn();const view=render(<IntensiveAudio {...segmentProps} scope="s1:blind" onSentenceEnd={first}/>);
+  act(()=>events.ready(100));await act(async()=>fireEvent.click(screen.getByRole('button',{name:'Replay sentence'})));
+  act(()=>{events.play();events.timeupdate(12);});
+  view.rerender(<IntensiveAudio {...segmentProps} scope="s2:blind" onSentenceEnd={second}/>);
+  act(()=>{events.play();events.timeupdate(15);events.finish();});expect(first).not.toHaveBeenCalled();expect(second).not.toHaveBeenCalled();
+});
+it('an endpoint update before playback begins cannot complete the sentence',async()=>{
+  const finished=vi.fn();render(<IntensiveAudio {...segmentProps} onSentenceEnd={finished}/>);
+  act(()=>events.ready(100));await act(async()=>fireEvent.click(screen.getByRole('button',{name:'Replay sentence'})));
+  act(()=>events.timeupdate(15));expect(finished).not.toHaveBeenCalled();
+});
+it('a queued native pause from restarting playback does not invalidate the fresh replay',async()=>{
+  const finished=vi.fn();render(<IntensiveAudio {...segmentProps} onSentenceEnd={finished}/>);
+  act(()=>events.ready(100));await act(async()=>fireEvent.click(screen.getByRole('button',{name:'Replay sentence'})));
+  act(()=>{events.play();events.timeupdate(12);});
+  wave.pause.mockImplementationOnce(()=>queueMicrotask(()=>events.pause()));
+  await act(async()=>fireEvent.click(screen.getByRole('button',{name:'Replay sentence'})));
+  act(()=>{events.play();events.timeupdate(13);events.timeupdate(15);});
+  expect(finished).toHaveBeenCalledOnce();
+});
+it('looping the final sentence ignores the previous track-ended event and completes the fresh pass',async()=>{
+  const finished=vi.fn();render(<IntensiveAudio {...segmentProps} start={95} end={100} loop onSentenceEnd={finished}/>);
+  act(()=>events.ready(100));await act(async()=>fireEvent.click(screen.getByRole('button',{name:'Replay sentence'})));
+  act(()=>{events.play();events.timeupdate(100);events.finish();events.play();events.timeupdate(98);events.timeupdate(100);});
+  expect(finished).toHaveBeenCalledTimes(2);
 });

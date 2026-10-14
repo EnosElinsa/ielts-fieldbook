@@ -6,10 +6,11 @@ import { DEFAULT_VOCABULARY_PREFERENCES, normalizeVocabularyPreferences } from '
 import { normalizeExamStore } from './exam/store';
 import { normalizeVocabularyIdentities } from './vocabulary/identities';
 import type { ExamAttempt, IntensiveSession } from './exam/types';
+import type { ExamAnnotation } from './exam/annotations';
 import { wordCount, hashText, dateKey, makeId, nowIso, clone } from './utils';
 
-export const STATE_VERSION = 12;
-export const EXAM_COLLECTIONS = ['examAttempts', 'intensiveSessions'];
+export const STATE_VERSION = 13;
+export const EXAM_COLLECTIONS = ['examAttempts', 'intensiveSessions', 'examAnnotations'];
 export const VOCABULARY_COLLECTIONS = [
   'vocabulary', 'vocabularyStates', 'vocabularyEvidence', 'vocabularyReviews',
   'vocabularyActivities', 'wordbookProgress', 'wordbookEnrollments', 'vocabularyImportBatches',
@@ -55,6 +56,18 @@ export function normalizeDraft(raw) {
       sections[key] = String(source.sections[key] || '');
     });
     draft.sections = sections;
+  }
+  if (source.promptKey) {
+    draft.promptKey = String(source.promptKey);
+    draft.promptText = String(source.promptText || '');
+    draft.promptIndex = Number.isInteger(source.promptIndex) && source.promptIndex >= 0 ? source.promptIndex : 0;
+    draft.part = ['1', '2', '3'].includes(String(source.part)) ? String(source.part) : '';
+  }
+  if (source.responses && typeof source.responses === 'object' && !Array.isArray(source.responses)) {
+    draft.responses = Object.fromEntries(Object.entries(source.responses).filter(([key, value]) => key && value && typeof value === 'object' && !Array.isArray(value)).map(([key, value]) => [key, normalizeDraft({ ...value, promptKey: key, responses: undefined })]));
+  }
+  if (source.targetPrompt && typeof source.targetPrompt === 'object' && source.targetPrompt.promptKey) {
+    draft.targetPrompt = { promptKey: String(source.targetPrompt.promptKey), promptText: String(source.targetPrompt.promptText || ''), promptIndex: Number.isInteger(source.targetPrompt.promptIndex) ? source.targetPrompt.promptIndex : 0, part: String(source.targetPrompt.part || '') };
   }
   return draft;
 }
@@ -155,6 +168,7 @@ export function emptyState() {
     sessions: [],
     examAttempts: [] as ExamAttempt[],
     intensiveSessions: [] as IntensiveSession[],
+    examAnnotations: [] as ExamAnnotation[],
     drafts: {},
     errors: [],
     assessments: [],
@@ -287,6 +301,7 @@ export function createAttempt(state, input, deps) {
     part: ['1', '2', '3'].includes(String(input.part ?? '')) ? String(input.part) : '',
     notes: String(input.notes ?? ''),
     audioId: input.audioId || null,
+    ...(input.promptKey ? { promptKey: String(input.promptKey), promptText: String(input.promptText || ''), promptIndex: Number.isInteger(input.promptIndex) ? input.promptIndex : 0 } : {}),
     practiceMode: PRACTICE_MODES.includes(input.practiceMode) ? input.practiceMode : 'full',
     targetErrorIds: Array.isArray(input.targetErrorIds)
       ? input.targetErrorIds.map(value => String(value)).filter(Boolean)

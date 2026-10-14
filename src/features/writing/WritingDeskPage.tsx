@@ -11,6 +11,7 @@ import { useWorkspaceDeskContext, useWorkspacePageState } from '../../lib/worksp
 import { accountId } from '../../storage/remote';
 import { useElapsedCountdown } from '../../lib/useElapsedCountdown';
 import { navigateTabs } from '../../lib/tabNavigation';
+import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 
 const FRAGMENT_MODES = new Set(['overview', 'outline', 'compare', 'body']);
 
@@ -21,6 +22,7 @@ export function WritingDeskPage() {
   const mode = fb.currentDeskMode();
   const fragment = FRAGMENT_MODES.has(mode);
   const uiKey = `writing:desk:${selected.id}:${mode}`;
+  const { confirm, dialog } = useConfirmationDialog(`${owner}:${uiKey}`);
   useWorkspaceDeskContext({skill:'writing', id:String(selected.id), mode}, saved => {
     fb.setSelectedQuestionId(saved.id);
     fb.setActiveDeskMode(saved.mode);
@@ -136,7 +138,7 @@ export function WritingDeskPage() {
     </Tooltip.Root>
   );
 
-  const openSave = () => {
+  const openSave = async () => {
     const text = String(composed || '').trim();
     const blockers = writingSaveBlockers(mode, selected.type, text, checks, sections);
     if (blockers.length) {
@@ -148,7 +150,7 @@ export function WritingDeskPage() {
       return;
     }
     const soft = writingWordSoftConfirm(mode, selected.type, text);
-    if (soft && !window.confirm(soft)) return;
+    if (soft && !await confirm({ title: 'Finish this response?', description: soft, confirmLabel: 'Finish practice' })) return;
     fb.setChecklistToastNeeded(false);
     fb.setWritingDraft(selected.id, text, { sections: fragment ? sections : emptySections(), practiceMode: mode, targetErrorIds });
     if (!fb.flushDraftPersist()) fb.persistNow();
@@ -419,6 +421,7 @@ export function WritingDeskPage() {
           </div>
         </div>
       </div>
+      {dialog}
     </section></Tooltip.Provider>
   );
 }

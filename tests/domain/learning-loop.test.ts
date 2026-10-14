@@ -37,8 +37,8 @@ test('A1: v6 state migrates to v7 without dropping essays, assessments, or lexic
     lexicon: [{ id: 'l1', term: 'overall', meaning: '总体上' }],
     drafts: { '1342': 'still here', 'topic-1:notes': 'cue notes', 'topic-1': 'spoken draft' },
   });
-  assert.equal(migrated.schemaVersion, 12);
-  assert.equal(core.STATE_VERSION, 12);
+  assert.equal(migrated.schemaVersion, 13);
+  assert.equal(core.STATE_VERSION, 13);
   assert.equal(migrated.sessions.length, 1);
   assert.equal(migrated.sessions[0].essay, essay);
   assert.equal(migrated.assessments.length, 1);
@@ -69,7 +69,7 @@ test('A2: persistShape omits question banks and preserves structured rawText', (
     sessions: [{ id: 's1', questionId: '1342', essay }],
   });
   const payload = core.persistShape(state);
-  assert.equal(payload.schemaVersion, 12);
+  assert.equal(payload.schemaVersion, 13);
   assert.equal(payload.questions, undefined);
   assert.equal(payload.speakingTopics, undefined);
   assert.equal(payload.assessments[0].rawText, state.assessments[0].rawText);
@@ -555,7 +555,7 @@ test('syncPendingPlan rewrites only a pending same-skill plan and keeps driver o
   assert.equal(core.syncPendingPlan(running, recommendation), false);
   assert.equal(running.title, '进行中');
   const migrated = core.migrateState({ plans: [{ id: 'keep', status: 'completed', driver: 'criterion:CC', title: '留着' }] });
-  assert.equal(migrated.schemaVersion, 12);
+  assert.equal(migrated.schemaVersion, 13);
   assert.equal(migrated.plans[0].driver, 'criterion:CC');
   assert.equal(migrated.plans[0].title, '留着');
 });

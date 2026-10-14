@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
@@ -16,19 +16,21 @@ test('preferences group practice, audio and shortcuts with a visible dialog head
 
 test('dirty preferences protect Cancel, close button, Escape and outside dismissal', async () => {
   const close = vi.fn();
-  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
   render(<VocabularyPreferencesDialog open onClose={close} onSave={() => true} preferences={DEFAULT_VOCABULARY_PREFERENCES} />);
   const user = userEvent.setup();
   await user.selectOptions(screen.getByRole('combobox', { name: 'Accent' }), 'us');
   await user.click(screen.getByRole('button', { name: 'Cancel' }));
+  await user.click(within(screen.getByRole('dialog', { name: 'Discard unsaved practice settings?' })).getByRole('button', { name: 'Cancel' }));
   await user.click(screen.getByRole('button', { name: 'Close dialog' }));
+  await user.click(within(screen.getByRole('dialog', { name: 'Discard unsaved practice settings?' })).getByRole('button', { name: 'Cancel' }));
   await user.keyboard('{Escape}');
+  await user.click(within(screen.getByRole('dialog', { name: 'Discard unsaved practice settings?' })).getByRole('button', { name: 'Cancel' }));
   fireEvent.pointerDown(document.querySelector('.dialog-overlay')!, { pointerType: 'mouse', button: 0 });
-  expect(confirm).toHaveBeenCalledTimes(4);
+  await user.click(within(await screen.findByRole('dialog', { name: 'Discard unsaved practice settings?' })).getByRole('button', { name: 'Cancel' }));
   expect(close).not.toHaveBeenCalled();
   expect(screen.getByRole('combobox', { name: 'Accent' })).toHaveValue('us');
-  confirm.mockReturnValue(true);
   await user.click(screen.getByRole('button', { name: 'Cancel' }));
+  await user.click(screen.getByRole('button', { name: 'Discard changes' }));
   expect(close).toHaveBeenCalledOnce();
 });
 

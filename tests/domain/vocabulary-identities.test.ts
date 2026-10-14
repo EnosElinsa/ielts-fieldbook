@@ -36,7 +36,7 @@ test('v11 import and twice-run v12 migration preserve content, evidence, dates a
   const sourceRecord={id:'21795',book_id:'10174',book_hierarchy_id:'21795',correct_rate:'80',text:'guixue:10174'};
   const legacy={...emptyState(),schemaVersion:11,wordbookEnrollments:[{id:'import-enrollment:guixue:10174',bookId:'guixue:10174'}],wordbookProgress:[{id:'guixue-progress:owner:10174:21795',bookId:'guixue:10174',unitId:'21795',sourceRecord,completedEntryIds:['ve-x']}],vocabularyEvidence:[{id:'e',entryId:'ve-x',senseId:'sense',bookId:'guixue:10174',unitId:'21795',response:'guixue:10174 21795',quote:'21795',score:7,occurredAt:'2020-01-01',sourceRecord}],plans:[{id:'p',kind:'vocabulary',target:{bookId:'guixue:10174',unitId:'21795',cards:[{entryId:'ve-x',senseId:'sense'}]},description:'guixue:10174'}]};
   const migrated=migrateState(legacy);
-  expect(STATE_VERSION).toBe(12);
+  expect(STATE_VERSION).toBe(13);
   expect(migrateState(migrated)).toEqual(migrated);
   expect(persistShape(legacy).wordbookProgress[0]).toMatchObject({id:'imported-progress:owner:'+unitId,bookId,unitId,sourceRecord});
   expect(migrated.vocabularyEvidence[0]).toMatchObject({...legacy.vocabularyEvidence[0],bookId,unitId});

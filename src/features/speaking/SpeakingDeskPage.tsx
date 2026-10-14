@@ -12,6 +12,8 @@ import { Mic, Square, Play, Pause, RotateCcw, Save, ArrowRight, Shuffle, Downloa
 import { useWorkspaceDeskContext, useWorkspacePageState } from '../../lib/workspacePageState';
 import { useElapsedCountdown } from '../../lib/useElapsedCountdown';
 import { navigateTabs } from '../../lib/tabNavigation';
+import { speakingPrompts } from '../../domain/speaking';
+import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 
 function speakSecondsFor(part) {
   if (String(part) === '1') return 30;
@@ -63,14 +65,27 @@ export function SpeakingDeskPage() {
   const sampleStatus = useSpeakingSample(topic?.id);
   const part = String(fb.deskPart);
   const owner = accountId();
-  const uiKey = `speaking:desk:${topic?.id || 'none'}:${part}:${fb.questionIndex}:${fb.currentDeskMode()}`;
+  const mode = fb.currentDeskMode();
+  const activePlan = fb.state.activePlanId ? fb.state.plans.find(plan => plan.id === fb.state.activePlanId) : null;
+  const topicDraft = topic ? fb.speakingDraft(topic.id) : { transcript: '', notes: '' };
+  const bound = activePlan?.status === 'in_progress' && String(activePlan.target?.questionId) === String(topic?.id) && String(activePlan.target?.part) === part ? activePlan.target.prompts : null;
+  const prompts = bound?.length ? bound : topicDraft.targetPrompt?.part === part ? [topicDraft.targetPrompt] : speakingPrompts(topic, part);
+  const qIndex = Math.min(fb.questionIndex, Math.max(0, prompts.length - 1));
+  const prompt = prompts[qIndex];
+  const promptKey = prompt?.promptKey;
+  const questions = prompts.map(item => item.promptText);
+  const scope = JSON.stringify([owner, topic?.id || '', part, promptKey || '']);
+  const scopeRef = useRef(scope); scopeRef.current = scope;
+  const { confirm, dialog } = useConfirmationDialog(scope);
+  const uiKey = `speaking:desk:${scope}:${mode}`;
   useWorkspaceDeskContext({skill:'speaking', id:String(topic?.id || ''), mode:fb.currentDeskMode(), part, questionIndex:fb.questionIndex}, saved => {
     fb.setSelectedTopicId(saved.id);
     if (['1','2','3'].includes(saved.part)) fb.setDeskPart(saved.part);
     if (Number.isInteger(saved.questionIndex) && saved.questionIndex >= 0) fb.setQuestionIndex(saved.questionIndex);
     fb.setActiveDeskMode(saved.mode);
   }, id => fb.state.speakingTopics.some(item => String(item.id) === id), fb.booted !== false);
-  const draft = topic ? fb.speakingDraft(topic.id) : { transcript: '', notes: '' };
+  const draft = topic ? fb.speakingDraft(topic.id, promptKey) : { transcript: '', notes: '' };
+  const saveStatus = topic ? fb.draftSaveStatus?.(topic.id, promptKey) || 'saved' : 'saved';
   const [transcript, setTranscript] = useState(draft.transcript || '');
   const [notes, setNotes] = useState(draft.notes || '');
   const [noteSeconds, setNoteSeconds] = useWorkspacePageState(`${uiKey}:noteSeconds`, 60, value => typeof value === 'number' && value >= 0 && value <= 60);
@@ -89,6 +104,8 @@ export function SpeakingDeskPage() {
   const [uploadError, setUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [audioSaved, setAudioSaved] = useState(false);
+  const [legacyAudio, setLegacyAudio] = useState(null);
+  const [legacyAudioUrl, setLegacyAudioUrl] = useState(null);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
   const streamRef = useRef(null);
@@ -105,7 +122,7 @@ export function SpeakingDeskPage() {
         const capture = activeCapture.current;
         const chunks = chunksRef.current;
         recorder.onstop = () => {
-          if (capture && chunks.length) void writePendingAudio(capture.owner, capture.topicId, capture.part, new Blob(chunks, { type: recorder.mimeType || 'audio/webm' }));
+          if (capture && chunks.length) void writePendingAudio(capture.owner, capture.topicId, capture.part, new Blob(chunks, { type: recorder.mimeType || 'audio/webm' }), capture.promptKey);
         };
         mediaRecorderRef.current.stop();
       } catch {
@@ -122,6 +139,7 @@ export function SpeakingDeskPage() {
     setRecording(false);
     setAudioBlob(null);
     setAudioSaved(false);
+    setUploading(false);
     setUploadError(false);
     setAudioUrl((prev) => {
       if (prev) URL.revokeObjectURL(prev);
@@ -130,13 +148,13 @@ export function SpeakingDeskPage() {
   };
 
   const clearRecording = () => {
-    if (topic) void deletePendingAudio(owner, topic.id, part);
+    if (topic) void deletePendingAudio(owner, topic.id, part, promptKey);
     resetRecording();
   };
 
   useEffect(() => {
     if (!topic) return;
-    const d = fb.speakingDraft(topic.id);
+    const d = fb.speakingDraft(topic.id, promptKey);
     setTranscript(d.transcript || '');
     setNotes(d.notes || '');
     setNoteRunning(false);
@@ -144,8 +162,8 @@ export function SpeakingDeskPage() {
     resetRecording();
     setMicError(null);
     let active = true;
-    void readPendingAudio(owner, topic.id, String(fb.deskPart)).then((blob) => {
-      if (!active || !blob || owner !== accountId()) return;
+    void readPendingAudio(owner, topic.id, part, promptKey).then((blob) => {
+      if (!active || !blob || owner !== accountId() || scopeRef.current !== scope) return;
       setAudioBlob(blob);
       setAudioUrl((previous) => {
         if (previous) URL.revokeObjectURL(previous);
@@ -155,11 +173,21 @@ export function SpeakingDeskPage() {
       setPhase('playback');
     });
     return () => { active = false; };
-  }, [topic?.id, fb.deskPart, owner]);
+  }, [scope]);
+
+  useEffect(() => {
+    setLegacyAudio(null); setLegacyAudioUrl(null);
+    let active = true; let url = null;
+    if (topic) void readPendingAudio(owner, topic.id, part).then(blob => {
+      if (!active || owner !== accountId() || !blob) return;
+      url = URL.createObjectURL(blob); setLegacyAudio(blob); setLegacyAudioUrl(url);
+    });
+    return () => { active = false; if (url) URL.revokeObjectURL(url); };
+  }, [owner, topic?.id, part]);
 
   useEffect(() => {
     if (!topic) return;
-    const recovered = fb.speakingDraft(topic.id);
+    const recovered = fb.speakingDraft(topic.id, promptKey);
     setTranscript(recovered.transcript || '');
     setNotes(recovered.notes || '');
   }, [fb.draftRevision]);
@@ -182,19 +210,25 @@ export function SpeakingDeskPage() {
       if (!link || link.hasAttribute('download') || link.hasAttribute('data-practice-navigation') || link.target === '_blank') return;
       const destination = new URL(link.href, window.location.href);
       if (destination.protocol === 'blob:' || destination.pathname === window.location.pathname && destination.search === window.location.search) return;
-      if (!window.confirm('This recording has not been uploaded. Leave this practice and discard it?')) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+      event.preventDefault(); event.stopPropagation();
+      void confirm({ title: 'Leave speaking practice?', description: 'Your recording will stay available for this question.', confirmLabel: 'Leave practice' }).then(accepted => {
+        if (!accepted || scopeRef.current !== scope || owner !== accountId()) return;
+        keepCurrentDraft();
+        if (destination.origin === window.location.origin) fb.navigate(`${destination.pathname}${destination.search}${destination.hash}`);
+        else window.location.assign(destination.href);
+      });
     };
     document.addEventListener('click', guardLink, true);
     const guardRequest = event => {
       if (event.defaultPrevented || audioSaved && !recording) return;
-      if (!window.confirm('This recording has not been uploaded. Leave this practice and keep it for later?')) event.preventDefault();
+      event.preventDefault();
+      void confirm({ title: 'Leave speaking practice?', description: 'Your recording will stay available for this question.', confirmLabel: 'Leave practice' }).then(accepted => {
+        if (accepted && scopeRef.current === scope && owner === accountId()) { keepCurrentDraft(); event.detail?.proceed(); }
+      });
     };
     document.addEventListener('fieldbook:before-navigate', guardRequest);
     return () => { window.removeEventListener('beforeunload', warn); document.removeEventListener('click', guardLink, true); document.removeEventListener('fieldbook:before-navigate', guardRequest); };
-  }, [audioBlob, audioSaved, recording]);
+  }, [audioBlob, audioSaved, recording, scope, transcript, notes]);
 
   useElapsedCountdown({
     seconds: noteSeconds, running: noteRunning, scope: JSON.stringify([owner, uiKey]), setSeconds: setNoteSeconds,
@@ -210,20 +244,9 @@ export function SpeakingDeskPage() {
     },
   });
 
-  const mode = fb.currentDeskMode();
   const blind = mode === 'speak-blind';
-  const activePlan = fb.state.activePlanId
-    ? fb.state.plans.find((plan) => plan.id === fb.state.activePlanId)
-    : null;
   const mockMode = activePlan && activePlan.kind === 'speaking-mock';
   const hideAids = blind || mockMode;
-  const questions =
-    part === '1'
-      ? (topic?.questions || [topic?.title]).filter(Boolean)
-      : part === '3'
-        ? topic?.part3 || topic?.questions || []
-        : [];
-  const qIndex = Math.min(fb.questionIndex, Math.max(0, questions.length - 1));
 
   const attempts = useMemo(() => {
     if (!topic) return [];
@@ -238,12 +261,16 @@ export function SpeakingDeskPage() {
 
   const liveSave = (patch) => {
     if (!topic) return;
-    fb.setSpeakingDraft(topic.id, { ...patch, practiceMode: mode, targetErrorIds: draft.targetErrorIds || [] });
-    fb.scheduleDraftPersist();
+    if (owner !== accountId() || scopeRef.current !== scope) return;
+    const changed = fb.setSpeakingDraft(topic.id, { ...prompt, ...patch, practiceMode: mode, targetErrorIds: draft.targetErrorIds || [] });
+    if (changed !== false) fb.scheduleDraftPersist();
   };
 
-  const randomTopic = () => {
-    if (audioBlob && !window.confirm('This recording has not been uploaded. Change question and discard it?')) return;
+  const keepCurrentDraft = () => { liveSave({ transcript, notes }); fb.flushDraftPersist(); setNoteRunning(false); setSpeakRunning(false); };
+
+  const randomTopic = async () => {
+    if (audioBlob && !await confirm({ title: 'Change topic?', description: 'Your recording will stay available for this question.', confirmLabel: 'Change topic' })) return;
+    if (scopeRef.current !== scope || owner !== accountId()) return;
     const topics = fb.state.speakingTopics || [];
     const wanted = part === '3' ? '2' : part;
     const pool =
@@ -254,7 +281,7 @@ export function SpeakingDeskPage() {
     const list = usable.length ? usable : pool.length ? pool : topics;
     if (!list.length) return;
     const next = list[Math.floor(Math.random() * list.length)];
-    fb.setSelectedTopicId(String(next.id));
+    keepCurrentDraft(); fb.setSelectedTopicId(String(next.id));
     fb.setQuestionIndex(0);
   };
 
@@ -265,15 +292,15 @@ export function SpeakingDeskPage() {
     liveSave({ transcript, notes });
     const attemptId = crypto.randomUUID();
     const generation = microphoneGeneration.current;
-    const stillCurrent = () => owner === accountId() && generation === microphoneGeneration.current;
+    const stillCurrent = () => owner === accountId() && generation === microphoneGeneration.current && scopeRef.current === scope;
     let audioId = null;
     if (audioBlob && !transcriptOnly) {
       setUploading(true);
       setUploadError(false);
       try {
-        await writePendingAudio(owner, topic.id, part, audioBlob);
+        await writePendingAudio(owner, topic.id, part, audioBlob, promptKey);
         if (!stillCurrent()) return;
-        await putAudio(attemptId, audioBlob);
+        await putAudio(attemptId, audioBlob, owner);
         if (!stillCurrent()) return;
         audioId = attemptId; setAudioSaved(true);
       }
@@ -285,9 +312,9 @@ export function SpeakingDeskPage() {
       } finally { if (stillCurrent()) setUploading(false); }
     }
     if (!stillCurrent()) return;
-    const currentDraft = fb.speakingDraft(topic.id);
+    const currentDraft = fb.speakingDraft(topic.id, promptKey);
     fb.setPendingAttempt({
-      id: attemptId, essay: text, notes, part, question: topic,
+      id: attemptId, essay: text, notes, part, question: topic, owner, ...prompt,
       parentSessionId: currentDraft.parentSessionId || null,
       planId: fb.state.activePlanId, skill: 'speaking', audioId,
       practiceMode: mode, targetErrorIds: currentDraft.targetErrorIds || [],
@@ -305,6 +332,7 @@ export function SpeakingDeskPage() {
 
   return (
     <section className="view active speaking-workspace">
+      {dialog}
       <div className="page-tools desk-tools">
         <p>
           {mockMode
@@ -326,8 +354,11 @@ export function SpeakingDeskPage() {
                   tabIndex={part === p ? 0 : -1}
                   onKeyDown={navigateTabs}
                   disabled={recording || uploading}
-                  onClick={() => {
-                    if (p !== part && audioBlob && !window.confirm('This recording has not been uploaded. Change part and discard it?')) return;
+                  onClick={async () => {
+                    if (p === part) return;
+                    if (audioBlob && !await confirm({ title: 'Change speaking part?', description: 'Your recording will stay available for this question.', confirmLabel: 'Change part' })) return;
+                    if (scopeRef.current !== scope || owner !== accountId()) return;
+                    keepCurrentDraft();
                     const wantedPart = p === '3' ? '2' : p;
                     if (String(topic.part) !== wantedPart) {
                       const next = fb.state.speakingTopics.find(item => String(item.part) === wantedPart && !item.incomplete) || fb.state.speakingTopics.find(item => String(item.part) === wantedPart);
@@ -373,7 +404,7 @@ export function SpeakingDeskPage() {
                     aria-pressed={index === qIndex}
                     disabled={recording || uploading}
                     onClick={() => {
-                      fb.setQuestionIndex(index);
+                      keepCurrentDraft(); fb.setQuestionIndex(index);
                       setSpeakRunning(false);
                     }}
                   >
@@ -383,10 +414,10 @@ export function SpeakingDeskPage() {
               )
             ) : (
               <div className="cue-card">
-                <strong>{topic.cueCard || topic.title}</strong>
-                {topic.bullets && topic.bullets.length ? (
+                <strong>{(prompt?.promptText || topic.cueCard || topic.title).split('\n')[0]}</strong>
+                {prompt?.promptText.split('\n').length > 1 ? (
                   <ul>
-                    {topic.bullets.map((item) => (
+                    {prompt.promptText.split('\n').slice(1).map((item) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
@@ -435,6 +466,7 @@ export function SpeakingDeskPage() {
                         {session.words} words · Part {session.part || ''} · {attempts.length - index}
                       </span>
                     </div>
+                    <p className="file-hint">{session.promptText || 'Unassociated earlier response'}</p>
                     {!hideAids ? <p>{session.essay}</p> : null}
                     <div className="history-actions">
                       <button
@@ -463,8 +495,10 @@ export function SpeakingDeskPage() {
                         <button
                           className="btn line"
                           type="button"
-                          onClick={() => {
-                            if (audioBlob && !window.confirm('This recording has not been uploaded. Leave this practice and discard it?')) return;
+                          onClick={async () => {
+                            if (audioBlob && !await confirm({ title: 'Leave speaking practice?', description: 'Your recording will stay available for this question.', confirmLabel: 'Leave practice' })) return;
+                            if (scopeRef.current !== scope || owner !== accountId()) return;
+                            keepCurrentDraft();
                             fb.navigate(`/review/${session.assessmentId}`);
                           }}
                         >
@@ -483,7 +517,7 @@ export function SpeakingDeskPage() {
         <div className={`editor${recording ? ' is-recording' : ''}${mobileTab === 'practice' ? ' mobile-active' : ''}`} id="speaking-practice">
           <div className="speaking-current-prompt">
             <span className="pill blue">Part {part}</span>
-            <p>{part === '2' ? topic.cueCard || topic.title : questions[qIndex] || topic.title}</p>
+            <p>{prompt?.promptText || topic.title}</p>
           </div>
           {part === '2' && !hideAids ? (
             <details className="editor-block preparation-notes" open={notesOpen} onToggle={event => setNotesOpen(event.currentTarget.open)}>
@@ -582,7 +616,8 @@ export function SpeakingDeskPage() {
                   disabled={uploading || requestingMicrophone}
                   onClick={async () => {
                     if (microphoneRequestPending.current) return;
-                    if (audioBlob && !window.confirm('This recording has not been uploaded. Replace it with a new recording?')) return;
+                    if (audioBlob && !await confirm({ title: 'Replace recording?', description: 'The current recording will be replaced when the microphone starts.', confirmLabel: 'Replace recording', destructive: true })) return;
+                    if (scopeRef.current !== scope || owner !== accountId()) return;
                     setSpeakRunning(false);
                     setMicError(null);
                     if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
@@ -598,16 +633,17 @@ export function SpeakingDeskPage() {
                     try {
                       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                       requestedStream = stream;
-                      if (generation !== microphoneGeneration.current || captureOwner !== accountId()) { stream.getTracks().forEach(track => track.stop()); return; }
+                      if (generation !== microphoneGeneration.current || captureOwner !== accountId() || scopeRef.current !== scope) { stream.getTracks().forEach(track => track.stop()); return; }
                       const recorder = new MediaRecorder(stream);
                       requestedRecorder = recorder;
                       recorder.start();
                       // Replace recoverable audio only once a new recording has started.
-                      if (audioBlob) void deletePendingAudio(captureOwner, topic.id, part);
+                      if (audioBlob) void deletePendingAudio(captureOwner, topic.id, part, promptKey);
                       resetRecording();
                       streamRef.current = stream;
                       chunksRef.current = [];
-                      activeCapture.current = { owner: captureOwner, topicId: topic.id, part };
+                      activeCapture.current = { owner: captureOwner, topicId: topic.id, part, promptKey };
+                      const recordingGeneration = microphoneGeneration.current;
                       const chunks = chunksRef.current;
                       mediaRecorderRef.current = recorder;
                       recorder.ondataavailable = (event) => {
@@ -615,14 +651,15 @@ export function SpeakingDeskPage() {
                       };
                       recorder.onstop = () => {
                         const blob = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
+                        void writePendingAudio(captureOwner, topic.id, part, blob, promptKey);
+                        stream.getTracks().forEach(track => track.stop());
+                        if (captureOwner !== accountId() || scopeRef.current !== scope || recordingGeneration !== microphoneGeneration.current) return;
                         setAudioBlob(blob);
-                        void writePendingAudio(captureOwner, topic.id, part, blob);
                         setAudioUrl((prev) => {
                           if (prev) URL.revokeObjectURL(prev);
                           return URL.createObjectURL(blob);
                         });
                         if (streamRef.current) {
-                          streamRef.current.getTracks().forEach((track) => track.stop());
                           streamRef.current = null;
                         }
                         setRecording(false);
@@ -640,10 +677,10 @@ export function SpeakingDeskPage() {
                     } catch (error) {
                       try { if (requestedRecorder?.state === 'recording') requestedRecorder.stop(); } catch { /* Release tracks even when the recorder cannot stop. */ }
                       requestedStream?.getTracks().forEach(track => track.stop());
-                      if (generation !== microphoneGeneration.current || captureOwner !== accountId()) return;
+                      if (generation !== microphoneGeneration.current || captureOwner !== accountId() || scopeRef.current !== scope) return;
                       setMicError(error?.name === 'NotAllowedError' || error?.name === 'SecurityError' ? 'Microphone permission was denied. You can still type the transcript.' : error?.name === 'NotFoundError' ? 'No microphone was found. Connect one and retry, or type the transcript.' : error?.name === 'NotReadableError' ? 'The microphone is unavailable or in use. Retry, or type the transcript.' : 'Recording could not start. Retry, or type the transcript.');
                     } finally {
-                      if (generation === microphoneGeneration.current && captureOwner === accountId()) { microphoneRequestPending.current = false; setRequestingMicrophone(false); }
+                      if (captureOwner === accountId() && scopeRef.current === scope) { microphoneRequestPending.current = false; setRequestingMicrophone(false); }
                     }
                   }}
                 >
@@ -663,13 +700,20 @@ export function SpeakingDeskPage() {
                 </button>
               )}
               {audioBlob ? (
-                <button className="btn line" type="button" onClick={() => { clearRecording(); setPhase('answer'); }} disabled={uploading}>
+                <button className="btn line" type="button" onClick={async () => { if (await confirm({ title: 'Clear recording?', description: 'This question recording will be removed.', confirmLabel: 'Clear recording', destructive: true })) { clearRecording(); setPhase('answer'); } }} disabled={uploading}>
                   Clear audio
                 </button>
               ) : null}
             </div>
           </div>
           {micError ? <p className="file-hint warn-note" role="alert">{micError}</p> : null}
+          {topicDraft.transcript || topicDraft.notes || topicDraft.text || legacyAudio ? <details className="editor-block"><summary>Unassociated earlier response</summary>{topicDraft.transcript || topicDraft.text ? <p>{topicDraft.transcript || topicDraft.text}</p> : null}{topicDraft.notes ? <p>{topicDraft.notes}</p> : null}{legacyAudioUrl ? <><RecordingPlayer src={legacyAudioUrl} label="Unassociated earlier recording" /><a className="btn line" href={legacyAudioUrl} download="ielts-earlier-recording.webm"><Download size={16} /> Download earlier recording</a></> : null}<button className="btn line" type="button" disabled={recording || uploading || requestingMicrophone} onClick={async () => {
+            if (!await confirm({ title: 'Associate earlier response?', description: `Use the earlier response for: ${prompt.promptText}`, confirmLabel: 'Associate response' })) return;
+            if (scopeRef.current !== scope || owner !== accountId()) return;
+            const text = topicDraft.transcript || topicDraft.text || '';
+            if (text || topicDraft.notes) { setTranscript(text); setNotes(topicDraft.notes || ''); liveSave({ transcript: text, notes: topicDraft.notes || '', parentSessionId: topicDraft.parentSessionId }); }
+            if (legacyAudio) { await writePendingAudio(owner, topic.id, part, legacyAudio, promptKey); if (scopeRef.current !== scope || owner !== accountId()) return; setAudioBlob(legacyAudio); setAudioUrl(previous => { if (previous) URL.revokeObjectURL(previous); return URL.createObjectURL(legacyAudio); }); setAudioSaved(false); setPhase('playback'); }
+          }}>Associate with current question</button></details> : null}
           {audioUrl ? <RecordingPlayer src={audioUrl} label="Current recording" onPlaybackChange={() => setPhase('playback')} /> : null}
           {uploadError ? <div className="recording-upload-error" role="alert"><p>The recording could not upload. It remains available until you leave this practice.</p><div className="btn-row"><button className="btn line" disabled={uploading} onClick={() => finishAttempt()}><RotateCcw size={16} /> Retry upload</button>{audioUrl ? <a className="btn line" href={audioUrl} download="ielts-recording.webm"><Download size={16} /> Download recording</a> : null}<button className="btn line" disabled={uploading} onClick={() => finishAttempt(true)}>Continue with transcript only</button></div></div> : null}
           <textarea
@@ -686,7 +730,7 @@ export function SpeakingDeskPage() {
             }}
           />
           <div className="editor-foot">
-            <p role="status">{uploading ? 'Uploading recording...' : fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Draft could not be saved.' : fb.saveStatus === 'saving' ? 'Saving draft...' : fb.saveStatus === 'saved' ? 'Draft saved.' : 'Autosave enabled.'} {audioBlob && !audioSaved ? 'Recording has not been uploaded.' : audioSaved ? 'Recording saved to your account.' : ''}</p>
+            <p role="status">{uploading ? 'Uploading recording...' : saveStatus === 'failed' || saveStatus === 'error' ? 'Draft could not be saved.' : saveStatus === 'unsaved' ? 'Draft has unsaved changes.' : saveStatus === 'pending' ? 'Waiting to save draft...' : saveStatus === 'saving' ? 'Saving draft...' : saveStatus === 'saved' ? 'Draft saved.' : 'Autosave enabled.'} {audioBlob && !audioSaved ? 'Recording has not been uploaded.' : audioSaved ? 'Recording saved to your account.' : ''}</p>
             <div>
               <button
                 className="btn line"
@@ -698,7 +742,7 @@ export function SpeakingDeskPage() {
                   if (saved) fb.toast('Draft saved.');
                 }}
               >
-                <Save size={16} /> {fb.saveStatus === 'failed' || fb.saveStatus === 'error' ? 'Retry save' : 'Save draft'}
+                <Save size={16} /> {saveStatus === 'failed' || saveStatus === 'error' ? 'Retry save' : 'Save draft'}
               </button>
               <button
                 className="btn primary"

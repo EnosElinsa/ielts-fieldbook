@@ -3,6 +3,29 @@ import { clearPendingAudioAccount, deletePendingAudio, readPendingAudio, writePe
 
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
+test('pending audio uses independent prompt keys and retains the legacy unassociated record', async () => {
+  const rows = new Map();
+  vi.stubGlobal('indexedDB', { open: () => {
+    const db = { close: vi.fn(), transaction: () => {
+      const tx: any = { objectStore: () => ({
+        put: (value: any) => { rows.set(value.key, value); queueMicrotask(() => tx.oncomplete()); },
+        delete: (key: string) => { rows.delete(key); queueMicrotask(() => tx.oncomplete()); },
+        get: (key: string) => { const request: any = {}; queueMicrotask(() => { request.result = rows.get(key); request.onsuccess(); }); return request; },
+      }) }; return tx;
+    } };
+    const request: any = { result: db }; queueMicrotask(() => request.onsuccess()); return request;
+  } });
+  const legacy = new Blob(['legacy']); const first = new Blob(['first']); const second = new Blob(['second']);
+  await writePendingAudio('owner', 'topic', '1', legacy);
+  await writePendingAudio('owner', 'topic', '1', first, 'first-prompt');
+  await writePendingAudio('owner', 'topic', '1', second, 'second-prompt');
+  expect(await readPendingAudio('owner', 'topic', '1', 'first-prompt')).toBe(first);
+  expect(await readPendingAudio('owner', 'topic', '1', 'second-prompt')).toBe(second);
+  await deletePendingAudio('owner', 'topic', '1', 'first-prompt');
+  expect(await readPendingAudio('owner', 'topic', '1')).toBe(legacy);
+  expect(await readPendingAudio('other-owner', 'topic', '1', 'second-prompt')).toBeNull();
+});
+
 test('pending audio is account scoped and degrades without an authenticated account or IndexedDB', async () => {
   const blob = new Blob(['audio'], { type: 'audio/webm' });
   await expect(writePendingAudio(null, 'topic-1', '2', blob)).resolves.toBe(false);

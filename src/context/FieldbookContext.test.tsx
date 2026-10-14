@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { act, cleanup, render, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { emptyState, normalizeDraft } from '../domain';
@@ -7,6 +7,7 @@ import { addVocabularyItem, recordVocabularyReview } from '../domain/vocabulary'
 import { readDraftRecovery } from '../storage/recovery';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { FieldbookProvider, useFieldbook } from './FieldbookContext';
+import { speakingPrompts } from '../domain/speaking';
 
 const mocks = vi.hoisted(() => ({ initial: null, statuses: null, moduleRead: vi.fn(), completeRead: vi.fn(), releasedRead: vi.fn(), teachingRead: vi.fn(), saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), catalogRead: vi.fn(), examCatalogRead:vi.fn(), examSectionsRead:vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
 vi.mock('../storage/examCatalog',()=>({loadExamCatalog:(...args)=>mocks.examCatalogRead(...args),loadExamSections:(...args)=>mocks.examSectionsRead(...args)}));
@@ -74,17 +75,217 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.useRealTimers(); fieldbook = null; });
 
+test('speaking draft status distinguishes unsaved, debounce and queue waiting, transport, failure and retry', async () => {
+  await mount(); vi.useFakeTimers();
+  const [prompt] = speakingPrompts(mocks.initial.speakingTopics[0], '2');
+  const blocker = defer(); const transport = defer();
+  mocks.saveState.mockReturnValueOnce(blocker.promise).mockReturnValueOnce(transport.promise);
+  let unrelated;
+  await act(async () => { unrelated = fieldbook.persist(draft => { draft.settings.dailyMinutes = 75; }); });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('saved');
+  await act(async () => { fieldbook.setSpeakingDraft('sp1', { ...prompt, transcript: 'Current answer' }); });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('unsaved');
+  await act(async () => { fieldbook.scheduleDraftPersist(); });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('pending');
+  await act(async () => { await vi.advanceTimersByTimeAsync(1499); });
+  expect(mocks.saveState).toHaveBeenCalledTimes(1);
+  await act(async () => { await vi.advanceTimersByTimeAsync(1); });
+  expect(mocks.saveState).toHaveBeenCalledTimes(1);
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('pending');
+  await act(async () => { blocker.resolve(true); await unrelated; await Promise.resolve(); });
+  expect(mocks.saveState).toHaveBeenCalledTimes(2);
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('saving');
+  await act(async () => { transport.resolve(false); await Promise.resolve(); });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('failed');
+  await act(async () => { expect(await fieldbook.persistNow()).toBe(true); });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('saved');
+  const count = mocks.saveState.mock.calls.length;
+  await act(async () => {
+    expect(fieldbook.setSpeakingDraft('sp1', { ...prompt, transcript: 'Current answer' })).toBe(false);
+    fieldbook.scheduleDraftPersist(); await vi.advanceTimersByTimeAsync(1500);
+  });
+  expect(mocks.saveState).toHaveBeenCalledTimes(count);
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('saved');
+});
+
+test('an old speaking acknowledgement cannot report a newer edit saved or change another prompt status', async () => {
+  const topic = { id: 'sp1', part: '1', title: 'Home', questions: ['Where?', 'Why?'] };
+  mocks.initial.speakingTopics[0] = topic;
+  await mount(); vi.useFakeTimers();
+  const [first, second] = speakingPrompts(topic, '1');
+  const old = defer(); const current = defer();
+  mocks.saveState.mockReturnValueOnce(old.promise).mockReturnValueOnce(current.promise);
+  let oldSave;
+  await act(async () => { fieldbook.setSpeakingDraft('sp1', { ...first, transcript: 'First version' }); oldSave = fieldbook.persistNow(); });
+  expect(fieldbook.draftSaveStatus('sp1', first.promptKey)).toBe('saving');
+  expect(fieldbook.draftSaveStatus('sp1', second.promptKey)).toBe('saved');
+  await act(async () => { fieldbook.setSpeakingDraft('sp1', { ...first, transcript: 'Latest version' }); });
+  expect(fieldbook.draftSaveStatus('sp1', first.promptKey)).toBe('unsaved');
+  await act(async () => { fieldbook.scheduleDraftPersist(); });
+  expect(fieldbook.draftSaveStatus('sp1', first.promptKey)).toBe('pending');
+  await act(async () => { old.resolve(true); await oldSave; });
+  expect(fieldbook.draftSaveStatus('sp1', first.promptKey)).toBe('pending');
+  expect(fieldbook.draftSaveStatus('sp1', second.promptKey)).toBe('saved');
+  await act(async () => { await vi.advanceTimersByTimeAsync(1500); });
+  expect(fieldbook.draftSaveStatus('sp1', first.promptKey)).toBe('saving');
+  expect(mocks.saveState.mock.calls[1][0].drafts.sp1.responses[first.promptKey].transcript).toBe('Latest version');
+  await act(async () => { current.resolve(true); await Promise.resolve(); });
+  expect(fieldbook.draftSaveStatus('sp1', first.promptKey)).toBe('saved');
+});
+
+test('speaking debounce waits 1500ms and an unchanged edit neither restarts it nor creates another request', async () => {
+  await mount(); vi.useFakeTimers();
+  const [prompt] = speakingPrompts(mocks.initial.speakingTopics[0], '2');
+  const transport = defer(); mocks.saveState.mockReturnValueOnce(transport.promise);
+  await act(async () => { fieldbook.setSpeakingDraft('sp1', { ...prompt, transcript: 'Debounced answer' }); fieldbook.scheduleDraftPersist(); });
+  await act(async () => { await vi.advanceTimersByTimeAsync(1000); });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('pending');
+  await act(async () => {
+    expect(fieldbook.setSpeakingDraft('sp1', { ...prompt, transcript: 'Debounced answer' })).toBe(false);
+    fieldbook.scheduleDraftPersist(); await vi.advanceTimersByTimeAsync(499);
+  });
+  expect(mocks.saveState).not.toHaveBeenCalled();
+  await act(async () => { await vi.advanceTimersByTimeAsync(1); });
+  expect(mocks.saveState).toHaveBeenCalledTimes(1);
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('saving');
+  await act(async () => { transport.resolve(true); await Promise.resolve(); });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('saved');
+  await act(async () => { fieldbook.scheduleDraftPersist(); await vi.advanceTimersByTimeAsync(1500); });
+  expect(mocks.saveState).toHaveBeenCalledTimes(1);
+});
+
+test('a repeated answer still waits for acknowledgement of its latest edit generation', async () => {
+  await mount(); vi.useFakeTimers();
+  const [prompt] = speakingPrompts(mocks.initial.speakingTopics[0], '2');
+  const old = defer(); const latest = defer();
+  mocks.saveState.mockReturnValueOnce(old.promise).mockReturnValueOnce(latest.promise);
+  let oldSave;
+  await act(async () => { fieldbook.setSpeakingDraft('sp1', { ...prompt, transcript: 'Repeated answer' }); oldSave = fieldbook.persistNow(); });
+  await act(async () => {
+    fieldbook.setSpeakingDraft('sp1', { ...prompt, transcript: 'Intermediate answer' });
+    fieldbook.setSpeakingDraft('sp1', { ...prompt, transcript: 'Repeated answer' });
+    fieldbook.scheduleDraftPersist();
+  });
+  await act(async () => { old.resolve(true); await oldSave; });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('pending');
+  await act(async () => { await vi.advanceTimersByTimeAsync(1500); });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('saving');
+  await act(async () => { latest.resolve(true); await Promise.resolve(); });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('saved');
+});
+
+test('a manual save consumes the scheduled draft without a second unchanged autosave', async () => {
+  await mount(); vi.useFakeTimers();
+  const [prompt] = speakingPrompts(mocks.initial.speakingTopics[0], '2');
+  await act(async () => { fieldbook.setSpeakingDraft('sp1', { ...prompt, transcript: 'Save this now' }); fieldbook.scheduleDraftPersist(); });
+  await act(async () => { expect(await fieldbook.persistNow()).toBe(true); });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('saved');
+  await act(async () => { await vi.advanceTimersByTimeAsync(1500); });
+  expect(mocks.saveState).toHaveBeenCalledTimes(1);
+});
+
+test('a scheduled timer does not duplicate a manual draft already waiting in the save queue', async () => {
+  await mount(); vi.useFakeTimers();
+  const [prompt] = speakingPrompts(mocks.initial.speakingTopics[0], '2');
+  const blocker = defer(); mocks.saveState.mockReturnValueOnce(blocker.promise);
+  let first; let manual;
+  await act(async () => { first = fieldbook.persistNow(); });
+  await act(async () => {
+    fieldbook.setSpeakingDraft('sp1', { ...prompt, transcript: 'Queued manual answer' });
+    fieldbook.scheduleDraftPersist(); manual = fieldbook.persistNow();
+  });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('pending');
+  await act(async () => { await vi.advanceTimersByTimeAsync(1500); });
+  await act(async () => { blocker.resolve(true); await first; await manual; await Promise.resolve(); });
+  expect(mocks.saveState).toHaveBeenCalledTimes(2);
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('saved');
+});
+
+test('no-op speaking edits neither dirty their scope nor delay an acknowledged save', async () => {
+  await mount();
+  const prompt = speakingPrompts(mocks.initial.speakingTopics[0], '2')[0];
+  await act(async () => { fieldbook.setSpeakingDraft('sp1', { ...prompt, transcript: 'isolated answer' }); await fieldbook.persistNow(); });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('saved');
+  const before = fieldbook.state.drafts.sp1;
+  await act(async () => { expect(fieldbook.setSpeakingDraft('sp1', { ...prompt, transcript: 'isolated answer' })).toBe(false); });
+  expect(fieldbook.state.drafts.sp1).toBe(before);
+  const pending = defer(); mocks.saveState.mockReturnValueOnce(pending.promise);
+  let saving; await act(async () => { saving = fieldbook.persist(draft => { draft.settings.dailyMinutes = 75; }); });
+  expect(fieldbook.draftSaveStatus('sp1', prompt.promptKey)).toBe('saved');
+  await act(async () => { pending.resolve(true); await saving; });
+});
+
+test('saving one speaking prompt keeps legacy and sibling drafts and advances to the unsaved prompt', async () => {
+  const topic = { id: 'sp2', part: '1', title: 'Home', questions: ['Where do you live?', 'What do you like?'] };
+  mocks.initial.speakingTopics[1] = topic;
+  const prompts = speakingPrompts(topic, '1');
+  mocks.initial.drafts.sp2 = normalizeDraft({ transcript: 'legacy retained', responses: { [prompts[0].promptKey]: { ...prompts[0], transcript: 'first' }, [prompts[1].promptKey]: { ...prompts[1], transcript: 'second' } } });
+  await mount();
+  await act(async () => { fieldbook.startSpeakingPractice('sp2', '1'); fieldbook.setPendingAttempt({ id: 'prompt-attempt', question: topic, essay: 'first', skill: 'speaking', ...prompts[0] }); });
+  await act(async () => { await fieldbook.saveAttempt(false, { focus: '', next: '', errors: '' }); });
+  expect(fieldbook.state.drafts.sp2.transcript).toBe('legacy retained');
+  expect(fieldbook.speakingDraft('sp2', prompts[1].promptKey).transcript).toBe('second');
+  expect(fieldbook.speakingDraft('sp2', prompts[0].promptKey).transcript).toBe('');
+  expect(fieldbook.state.sessions[0]).toMatchObject({ ...prompts[0], questionId: 'sp2' });
+  expect(currentPath).toBe('/speak'); expect(fieldbook.questionIndex).toBe(1);
+});
+
+test('keyed targeted speaking practice narrows completion to its saved prompt snapshot', async () => {
+  const topic = { id: 'sp2', part: '1', title: 'Home', questions: ['Where?', 'Why?'] };
+  mocks.initial.speakingTopics[1] = topic;
+  const prompt = speakingPrompts(topic, '1')[1];
+  await mount();
+  await act(async () => { expect(await fieldbook.startTargetedPractice({ id: 'earlier', questionId: 'sp2', skill: 'speaking', essay: 'Focused response', ...prompt })).toBe(true); });
+  expect(fieldbook.state.drafts.sp2.targetPrompt).toEqual(prompt);
+  expect(fieldbook.speakingDraft('sp2', prompt.promptKey)).toMatchObject({ transcript: 'Focused response', parentSessionId: 'earlier', ...prompt });
+  await act(async () => { fieldbook.setPendingAttempt({ id: 'targeted', question: topic, essay: 'Focused response', skill: 'speaking', ...prompt }); });
+  await act(async () => { await fieldbook.saveAttempt(false, { focus: '', next: '', errors: '' }); });
+  expect(currentPath).toBe('/review');
+  await act(async () => { fieldbook.startSpeakingPractice('sp2', '1'); });
+  expect(fieldbook.state.drafts.sp2.targetPrompt).toBeUndefined();
+});
+
+test('a completed plan for another topic cannot advance the speaking question selector', async () => {
+  const topic = { id: 'sp2', part: '1', title: 'Home', questions: ['Where?', 'Why?'] };
+  mocks.initial.speakingTopics[1] = topic;
+  const prompts = speakingPrompts(topic, '1');
+  mocks.initial.plans = [{ id: 'other', kind: 'speaking-p1', status: 'in_progress', startedAt: '2026-10-14T00:00:00Z', target: { type: 'question', skill: 'speaking', questionId: 'missing', mode: 'full', part: '1', prompts } }];
+  await mount();
+  await act(async () => { fieldbook.startSpeakingPractice('sp2', '1'); fieldbook.setPendingAttempt({ id: 'different-topic', question: topic, essay: 'answer', skill: 'speaking', planId: 'other', practiceMode: 'full', ...prompts[0] }); });
+  await act(async () => { await fieldbook.saveAttempt(false, { focus: '', next: '', errors: '' }); });
+  expect(fieldbook.state.plans[0].completedPromptKeys).toBeUndefined();
+  expect(fieldbook.selectedTopic.id).toBe('sp2'); expect(fieldbook.questionIndex).toBe(1);
+});
+
+test('speaking mock starts with frozen three-stage prompts and progresses only when each group is saved', async () => {
+  const short = { id: 'sp2', part: '1', title: 'Home', questions: ['Where?', 'Why?'] };
+  const long = { id: 'sp1', part: '2', title: 'Trip', cueCard: 'Describe a trip', part3: ['How?', 'When?'] };
+  mocks.initial.speakingTopics = [long, short];
+  mocks.initial.plans = [{ id: 'mock', kind: 'speaking-mock', status: 'pending', skill: 'speaking', target: { type: 'question', skill: 'speaking', questionId: 'sp2', mode: 'timed', part: '1' } }];
+  await mount(); await act(async () => { await fieldbook.startPlan('mock'); });
+  expect(fieldbook.state.plans[0].speakingGroups.p3.prompts).toHaveLength(2);
+  const firstGroup = structuredClone(fieldbook.state.plans[0].target.prompts);
+  const save = async (question, prompt) => {
+    await act(async () => { fieldbook.setPendingAttempt({ id: crypto.randomUUID(), question, ...prompt, essay: 'Answer', skill: 'speaking', planId: 'mock', practiceMode: 'timed' }); });
+    await act(async () => { await fieldbook.saveAttempt(false, { focus: '', next: '', errors: '' }); });
+  };
+  await save(short, firstGroup[0]); expect(fieldbook.state.plans[0].stage || 'p1').toBe('p1'); expect(fieldbook.questionIndex).toBe(1);
+  await save(short, firstGroup[1]); expect(fieldbook.state.plans[0].stage).toBe('p2'); expect(fieldbook.deskPart).toBe('2');
+  await save(long, fieldbook.state.plans[0].target.prompts[0]); expect(fieldbook.state.plans[0].stage).toBe('p3'); expect(fieldbook.deskPart).toBe('3');
+  const thirdGroup = structuredClone(fieldbook.state.plans[0].target.prompts);
+  await save(long, thirdGroup[0]); expect(fieldbook.state.plans[0].status).toBe('in_progress');
+  await save(long, thirdGroup[1]); expect(fieldbook.state.plans[0].status).toBe('completed'); expect(currentPath).toBe('/review');
+});
+
 test('targeted practice protects an existing draft when replacement is declined', async () => {
   await mount();
-  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false);
   const before = structuredClone(fieldbook.state.drafts.q1);
-  await act(async () => {
-    expect(await fieldbook.startTargetedPractice({ id: 'original', skill: 'writing', questionId: 'q1', essay: 'Original answer', practiceMode: 'timed' })).toBe(false);
-  });
-  expect(confirm).toHaveBeenCalledOnce();
+  let operation;
+  await act(async () => { operation = fieldbook.startTargetedPractice({ id: 'original', skill: 'writing', questionId: 'q1', essay: 'Original answer', practiceMode: 'timed' }); });
+  fireEvent.click(await screen.findByRole('button', { name: 'Cancel' }));
+  await act(async () => { expect(await operation).toBe(false); });
   expect(fieldbook.state.drafts.q1).toEqual(before);
   expect(currentPath).toBe('/');
-  confirm.mockRestore();
 });
 
 test('declining practice departure prevents any targeted draft mutation or save', async () => {
@@ -122,17 +323,18 @@ test('a deferred departure starts targeted practice only after the guard proceed
 
 test('targeted save failure stays recoverable and retry retains timed mode and selected errors', async () => {
   await mount();
-  const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
   const original = { id: 'original', skill: 'writing', questionId: 'q1', essay: 'Original answer', practiceMode: 'timed' };
   mocks.saveState.mockResolvedValueOnce(false).mockResolvedValueOnce(true);
-  await act(async () => { expect(await fieldbook.startTargetedPractice(original, 'mistake')).toBe(false); });
+  let operation;
+  await act(async () => { operation = fieldbook.startTargetedPractice(original, 'mistake'); });
+  fireEvent.click(await screen.findByRole('button', { name: 'Replace draft' }));
+  await act(async () => { expect(await operation).toBe(false); });
   expect(currentPath).toBe('/');
   expect(readDraftRecovery(mocks.owner)?.drafts.q1).toMatchObject({ text: 'Original answer', practiceMode: 'timed', parentSessionId: 'original', targetErrorIds: ['mistake'] });
   await act(async () => { expect(await fieldbook.startTargetedPractice(original, 'mistake')).toBe(true); });
   expect(currentPath).toBe('/write');
   expect(fieldbook.currentDeskMode()).toBe('timed');
-  expect(confirm).toHaveBeenCalledOnce();
-  confirm.mockRestore();
+  expect(screen.queryByRole('dialog')).toBeNull();
 });
 
 test('historical paragraph practice remains editable in its original mode', async () => {
@@ -305,6 +507,33 @@ test('a newer draft edit survives a delayed completion snapshot', async () => {
   await act(async () => { pending.resolve(true); await completion; });
   expect(fieldbook.state.sessions).toHaveLength(1);
   expect(fieldbook.state.drafts.sp1.transcript).toBe('Newer work on another practice.');
+});
+
+test('edits during every completion merge stay live and recoverable until their own acknowledgement', async () => {
+  const topic = { id: 'sp2', part: '1', title: 'Home', questions: ['Where?', 'Why?'] };
+  mocks.initial.speakingTopics[1] = topic;
+  const prompts = speakingPrompts(topic, '1');
+  mocks.initial.drafts.sp2 = normalizeDraft({ responses: { [prompts[0].promptKey]: { ...prompts[0], transcript: 'first answer' }, [prompts[1].promptKey]: { ...prompts[1], transcript: 'sibling answer' } } });
+  await mount();
+  await act(async () => { fieldbook.setPendingAttempt({ id: 'merged-attempt', question: topic, essay: 'first answer', skill: 'speaking', ...prompts[0] }); });
+  const first = defer(); const second = defer(); const third = defer();
+  mocks.saveState.mockReturnValueOnce(first.promise).mockReturnValueOnce(second.promise).mockReturnValueOnce(third.promise);
+  let completion;
+  await act(async () => { completion = fieldbook.saveAttempt(false, { focus: '', next: '', errors: '' }); });
+  await act(async () => { fieldbook.closeModal(); fieldbook.setSpeakingDraft(topic.id, { ...prompts[1], transcript: 'edit during first save' }); });
+  await act(async () => { first.resolve(true); });
+  await waitFor(() => expect(mocks.saveState).toHaveBeenCalledTimes(2));
+  await act(async () => { fieldbook.setSpeakingDraft(topic.id, { ...prompts[1], transcript: 'latest edit during merge save' }); });
+  await act(async () => { second.resolve(true); });
+  expect(fieldbook.speakingDraft(topic.id, prompts[1].promptKey).transcript).toBe('latest edit during merge save');
+  expect(readDraftRecovery('account-1')?.drafts.sp2.responses[prompts[1].promptKey].transcript).toBe('latest edit during merge save');
+  await waitFor(() => expect(mocks.saveState).toHaveBeenCalledTimes(3));
+  expect(mocks.saveState.mock.calls[2][0].drafts.sp2.responses[prompts[1].promptKey].transcript).toBe('latest edit during merge save');
+  await act(async () => { third.resolve(true); await completion; });
+  expect(fieldbook.speakingDraft(topic.id, prompts[0].promptKey).transcript).toBe('');
+  expect(fieldbook.speakingDraft(topic.id, prompts[1].promptKey).transcript).toBe('latest edit during merge save');
+  expect(fieldbook.state.sessions.filter(session => session.id === 'merged-attempt')).toHaveLength(1);
+  expect(readDraftRecovery('account-1')).toBeNull();
 });
 
 test('queued saves keep account A work from executing after ownership changes to B', async () => {
@@ -596,8 +825,8 @@ test('queued automatic drafts collapse to the latest version behind a manual sav
   const blocked = defer(); mocks.saveState.mockImplementationOnce(()=>blocked.promise);
   let manual;
   await act(async()=>{manual=fieldbook.persistNow();});
-  await act(async()=>{fieldbook.setWritingDraft('q1','Earlier');fieldbook.scheduleDraftPersist();await vi.advanceTimersByTimeAsync(801);});
-  await act(async()=>{fieldbook.setWritingDraft('q1','Latest');fieldbook.scheduleDraftPersist();await vi.advanceTimersByTimeAsync(801);});
+  await act(async()=>{fieldbook.setWritingDraft('q1','Earlier');fieldbook.scheduleDraftPersist();await vi.advanceTimersByTimeAsync(1501);});
+  await act(async()=>{fieldbook.setWritingDraft('q1','Latest');fieldbook.scheduleDraftPersist();await vi.advanceTimersByTimeAsync(1501);});
   expect(mocks.saveState).toHaveBeenCalledTimes(1);
   await act(async()=>{blocked.resolve(true);await manual;await Promise.resolve();});
   expect(mocks.saveState).toHaveBeenCalledTimes(2);
@@ -609,9 +838,9 @@ test('automatic draft coalescing cannot cross an explicit save', async () => {
   const blocked = defer(); mocks.saveState.mockImplementationOnce(() => blocked.promise);
   let first;
   await act(async () => { first = fieldbook.persistNow(); });
-  await act(async () => { fieldbook.setWritingDraft('q1','Auto A'); fieldbook.scheduleDraftPersist(); await vi.advanceTimersByTimeAsync(801); });
+  await act(async () => { fieldbook.setWritingDraft('q1','Auto A'); fieldbook.scheduleDraftPersist(); await vi.advanceTimersByTimeAsync(1501); });
   await act(async () => { fieldbook.setWritingDraft('q1','Manual B'); void fieldbook.persistNow(); });
-  await act(async () => { fieldbook.setWritingDraft('q1','Auto C'); fieldbook.scheduleDraftPersist(); await vi.advanceTimersByTimeAsync(801); });
+  await act(async () => { fieldbook.setWritingDraft('q1','Auto C'); fieldbook.scheduleDraftPersist(); await vi.advanceTimersByTimeAsync(1501); });
   await act(async () => { blocked.resolve(true); await first; await Promise.resolve(); });
   expect(mocks.saveState.mock.calls.slice(1).map(call => call[0].drafts.q1.text)).toEqual(['Auto A','Manual B','Auto C']);
 });

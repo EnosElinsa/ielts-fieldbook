@@ -58,7 +58,9 @@ import { vocabularyLists, setVocabularyManualStatus, normalizeAnswer } from '../
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
 import { ensurePlans, ensureUnifiedPlans, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan } from '../lib/planTemplates';
-import { isProtectedPlan } from '../domain/plans';
+import { bindSpeakingPlan, isProtectedPlan } from '../domain/plans';
+import { speakingPrompts, speakingResponseDraft, updateSpeakingResponse } from '../domain/speaking';
+import { useConfirmationDialog } from '../components/useConfirmationDialog';
 import { loadExamCatalog, loadExamSections } from '../storage/examCatalog';
 import { getVocabularyReviewQueue } from '../domain/vocabulary';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
@@ -133,6 +135,9 @@ function useFieldbookValue() {
   const [studySettingsError, setStudySettingsError] = useState('');
   const studySettingsErrorRef = useRef('');
   const [saveStatus, setSaveStatus] = useState('saved');
+  const [draftStatuses, setDraftStatuses] = useState({});
+  const draftStatusesRef = useRef({});
+  const { confirm: confirmReplacement, dialog: confirmationDialog } = useConfirmationDialog(`${accountId()}:${accountRoute}`);
   const [loadError, setLoadError] = useState('');
   const [loadGeneration, setLoadGeneration] = useState(0);
   const [recoveryDrafts, setRecoveryDrafts] = useState(null);
@@ -196,6 +201,47 @@ function useFieldbookValue() {
     lastSaved.current = previous;
   }
 
+  function draftScopeValue(snapshot, id, promptKey) {
+    return promptKey ? speakingResponseDraft(snapshot?.drafts?.[id], promptKey) : normalizeDraft(snapshot?.drafts?.[id]);
+  }
+
+  function changedDraftScopes(snapshot, baseline = lastSaved.current, owner = accountId(), includeTracked = true) {
+    const ids = new Set([...Object.keys(baseline?.drafts || {}), ...Object.keys(snapshot?.drafts || {})]);
+    return [...ids].flatMap(id => {
+      const before = normalizeDraft(baseline?.drafts?.[id]);
+      const current = normalizeDraft(snapshot?.drafts?.[id]);
+      return [undefined, ...new Set([...Object.keys(before.responses || {}), ...Object.keys(current.responses || {})])].flatMap(promptKey => {
+        const stamp = JSON.stringify(draftScopeValue(snapshot, id, promptKey));
+        const key = JSON.stringify([owner, id, promptKey || '']);
+        const tracked = draftStatusesRef.current[key];
+        const changed = stamp !== JSON.stringify(draftScopeValue(baseline, id, promptKey));
+        // A later edit can repeat the last acknowledged text and still await its own save.
+        const outstanding = includeTracked && tracked?.stamp === stamp && tracked.status !== 'saved';
+        return changed || outstanding ? [{ id, promptKey, key, stamp, generation: tracked?.generation || 0 }] : [];
+      });
+    });
+  }
+
+  function markDraftScopes(scopes, status, queued = false) {
+    const updated = { ...draftStatusesRef.current };
+    scopes.forEach(scope => {
+      const current = JSON.stringify(draftScopeValue(stateRef.current, scope.id, scope.promptKey));
+      if (current !== scope.stamp || (updated[scope.key]?.generation || 0) !== scope.generation) return;
+      if (status === 'pending' && updated[scope.key]?.status === 'saving') return;
+      updated[scope.key] = { status, stamp: scope.stamp, generation: scope.generation, queued: status === 'pending' && queued };
+    });
+    draftStatusesRef.current = updated;
+    setDraftStatuses(updated);
+  }
+
+  function markDraftEdited(id, before, after) {
+    const scopes = changedDraftScopes({ drafts: { [id]: after } }, { drafts: { [id]: before } }, accountId(), false);
+    const updated = { ...draftStatusesRef.current };
+    scopes.forEach(scope => { updated[scope.key] = { status: 'unsaved', stamp: scope.stamp, generation: scope.generation + 1 }; });
+    draftStatusesRef.current = updated;
+    setDraftStatuses(updated);
+  }
+
   function queueSave(next, silent = false, completion = false) {
     if (completingAttempt.current && !completion) return Promise.resolve(false);
     let generation = ++saveGeneration.current;
@@ -203,6 +249,12 @@ function useFieldbookValue() {
     const epoch = loadEpoch.current;
     let frozen = structuredClone(next);
     let collections = readySaveCollections();
+    let scopes = changedDraftScopes(frozen);
+    if (completion) {
+      const combined = new Map([...scopes, ...changedDraftScopes(stateRef.current)].map(scope => [scope.key, scope]));
+      scopes = [...combined.values()].map(scope => ({ ...scope, stamp: JSON.stringify(draftScopeValue(stateRef.current, scope.id, scope.promptKey)) }));
+    }
+    markDraftScopes(scopes, 'pending', true);
     writeDraftRecovery(owner, completion ? stateRef.current.drafts : frozen.drafts);
     setSaveStatus('saving');
     if (!silent) pendingAutomaticSave.current = null;
@@ -210,24 +262,32 @@ function useFieldbookValue() {
       pendingAutomaticSave.current.snapshot = frozen;
       pendingAutomaticSave.current.generation = generation;
       pendingAutomaticSave.current.collections = collections;
+      pendingAutomaticSave.current.scopes = scopes;
       return pendingAutomaticSave.current.operation;
     }
-    const automatic = silent ? { snapshot:frozen, generation, collections, epoch, operation:null } : null;
+    const automatic = silent ? { snapshot:frozen, generation, collections, scopes, epoch, operation:null } : null;
     if (automatic) pendingAutomaticSave.current = automatic;
     const operation = saveQueue.current.catch(() => {}).then(async () => {
       if (automatic) {
         frozen = automatic.snapshot; generation = automatic.generation;
         collections = automatic.collections;
+        scopes = automatic.scopes;
         if (pendingAutomaticSave.current === automatic) pendingAutomaticSave.current = null;
       }
       if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       applyCommittedVocabulary(frozen, owner);
+      if (!completion) {
+        const outstanding = new Set(changedDraftScopes(frozen).map(scope => scope.key));
+        scopes = scopes.filter(scope => outstanding.has(scope.key));
+      }
+      markDraftScopes(scopes, 'saving');
       let saved = false;
       const finishSave = timeOperation('save');
       try { saved = await saveState(frozen, silent ? undefined : toast, {collections}); } catch { saved = false; }
       finally { finishSave(!saved); }
       if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
       if (saved) acknowledgeSaved(frozen, collections);
+      markDraftScopes(scopes, saved ? 'saved' : 'failed');
       if (alive.current && accountId() === owner && generation === saveGeneration.current) {
         setSaveFailed(!saved);
         setSaveStatus(saved ? 'saved' : 'failed');
@@ -749,11 +809,22 @@ function useFieldbookValue() {
   }, []);
 
   const scheduleDraftPersist = useCallback(() => {
+    const scopes = changedDraftScopes(stateRef.current).filter(scope => {
+      const tracked = draftStatusesRef.current[scope.key];
+      return tracked?.stamp !== scope.stamp || tracked.status === 'unsaved' || tracked.status === 'failed';
+    });
+    if (!scopes.length) return;
+    markDraftScopes(scopes, 'pending');
     if (draftTimer.current) window.clearTimeout(draftTimer.current);
     draftTimer.current = window.setTimeout(() => {
       draftTimer.current = null;
+      const needsSave = changedDraftScopes(stateRef.current).some(scope => {
+        const tracked = draftStatusesRef.current[scope.key];
+        return tracked?.status !== 'saving' && !tracked?.queued;
+      });
+      if (!needsSave) return;
       queueSave(stateRef.current, true);
-    }, 800);
+    }, 1500);
   }, [persistNow]);
 
   const flushDraftPersist = useCallback(() => {
@@ -813,7 +884,9 @@ function useFieldbookValue() {
           text: text == null ? current.text : String(text),
         }),
       );
+      if (JSON.stringify(current) === JSON.stringify(next)) return false;
       stateRef.current.drafts[id] = next;
+      markDraftEdited(id, current, next);
       saveGeneration.current += 1;
       writeDraftRecovery(accountId(), stateRef.current.drafts);
       setSaveStatus('saving');
@@ -824,28 +897,22 @@ function useFieldbookValue() {
           [id]: next,
         },
       }));
+      return true;
     },
     [],
   );
 
   const setSpeakingDraft = useCallback((topicId: string, patch: object) => {
     const current = normalizeDraft(stateRef.current.drafts[topicId]);
-    const next = normalizeDraft(
-      Object.assign({}, current, patch, {
-        transcript: patch && (patch as any).transcript != null ? (patch as any).transcript : current.transcript,
-        notes: patch && (patch as any).notes != null ? (patch as any).notes : current.notes,
-        parentSessionId:
-          patch && Object.prototype.hasOwnProperty.call(patch, 'parentSessionId')
-            ? (patch as any).parentSessionId
-            : current.parentSessionId,
-        text: '',
-      }),
-    );
+    const next = updateSpeakingResponse(current, patch);
+    if (JSON.stringify(current) === JSON.stringify(next)) return false;
     stateRef.current.drafts[topicId] = next;
+    markDraftEdited(topicId, current, next);
     saveGeneration.current += 1;
     writeDraftRecovery(accountId(), stateRef.current.drafts);
     setSaveStatus('saving');
     setState((prev) => ({ ...prev, drafts: { ...prev.drafts, [topicId]: next } }));
+    return true;
   }, []);
 
   const repairAssessments = useCallback((draft) => {
@@ -889,6 +956,8 @@ function useFieldbookValue() {
   useEffect(() => {
     let cancelled = false;
     loadEpoch.current += 1;
+    draftStatusesRef.current = {};
+    setDraftStatuses({});
     hydratedCollections.current.clear();
     moduleReads.current.clear(); bankReads.current.clear(); vocabularyCatalogReads.current.clear();
     setBooted(false);
@@ -998,6 +1067,10 @@ function useFieldbookValue() {
         const list = usable.length ? usable : pool.length ? pool : topics;
         topic = list.length ? list[Math.floor(Math.random() * list.length)] : null;
       }
+      if (topic && normalizeDraft(stateRef.current.drafts[topic.id]).targetPrompt) {
+        setSpeakingDraft(topic.id, { targetPrompt: undefined });
+        scheduleDraftPersist();
+      }
       if (topic) setSelectedTopicId(String(topic.id));
       setDeskPart(String(part || (topic && topic.part) || '2'));
       setQuestionIndex(0);
@@ -1016,7 +1089,7 @@ function useFieldbookValue() {
           ]
             .filter(Boolean)
             .join('\n');
-          setSpeakingDraft(topic.id, { notes });
+          setSpeakingDraft(topic.id, { ...speakingPrompts(topic, '2')[0], notes });
           persistNow();
         }
       }
@@ -1204,7 +1277,8 @@ function useFieldbookValue() {
         const candidates=bank.filter(row=>skill==='writing'?String(row.type)===kind:String(row.part)===topicPart&&!row.incomplete).slice().sort((a,b)=>String(a.id).localeCompare(String(b.id)));
         const question=wanted?bank.find(row=>String(row.id)===String(wanted)):candidates[0];
         if(!question)throw new Error('The selected question is unavailable. Retry loading its bank.');
-        target={type:'question',skill,questionId:String(question.id),mode:inferredDeskMode(plan),...(skill==='speaking'?{part:stagePart}:{})};
+        target={...target,type:'question',skill,questionId:String(question.id),mode:inferredDeskMode(plan),...(skill==='speaking'?{part:stagePart}:{})};
+        if (skill === 'speaking') { const bound = { ...plan, target }; bindSpeakingPlan(bound, question, stagePart, plan.targetPrompt, bank); target = bound.target; if (bound.speakingGroups) plan.speakingGroups = bound.speakingGroups; }
         plan.questionId=String(question.id);
       }
     } else if(skill==='vocabulary'){
@@ -1269,7 +1343,7 @@ function useFieldbookValue() {
     const saved=await mutatePlans(draft=>{
       const current=draft.plans.find(row=>row.id===planId);
       if(!current||JSON.stringify(current)!==initial)throw new Error('This task changed while loading. Retry to open the current task.');
-      Object.assign(current,{target,questionId:plan.questionId,sectionId:plan.sectionId,sentenceId:plan.sentenceId,attemptId:plan.attemptId});
+      Object.assign(current,{target,questionId:plan.questionId,sectionId:plan.sectionId,sentenceId:plan.sentenceId,attemptId:plan.attemptId,...(plan.speakingGroups ? {speakingGroups:plan.speakingGroups} : {})});
       domainStartPlan(draft,planId);
       if(skill!=='vocabulary')draft.settings.activeSkill=skill;
     });
@@ -1284,7 +1358,7 @@ function useFieldbookValue() {
     } else if(skill==='reading'||skill==='listening'){
       const path=receptivePlanPath({...plan,target},skill);const params=new URLSearchParams({planId});if(target.questionIds)params.set('questions',JSON.stringify(target.questionIds));navigate(`${path}${path.includes('?')?'&':'?'}${params}`);
     } else if(plan.kind==='review')navigate('/review');
-    else if(skill==='speaking') {startSpeakingPractice(plan.questionId,target.part,plan.storyId);setSpeakingDraft(plan.questionId,{practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});}
+    else if(skill==='speaking') {startSpeakingPractice(plan.questionId,target.part,plan.storyId); const nextPrompt = target.prompts?.find(prompt => !(plan.completedPromptKeys || []).includes(prompt.promptKey)) || target.prompts?.[0]; setQuestionIndex(Math.max(0, target.prompts?.indexOf(nextPrompt) || 0)); setSpeakingDraft(plan.questionId,{...nextPrompt,practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});}
     else {chooseQuestion(plan.questionId);const existing=normalizeDraft(stateRef.current.drafts[plan.questionId]);setWritingDraft(plan.questionId,existing.text,{practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});navigate('/write');}
     return true;
   },[legacyStartPlan,ensureAccountModule,ensureQuestionBank,loadVocabularyCatalog,mutatePlans,navigate,startSpeakingPractice,chooseQuestion,setSpeakingDraft,setWritingDraft]);
@@ -1293,6 +1367,8 @@ function useFieldbookValue() {
     async (exportForReview: boolean, saveFields: { focus: string; next: string; errors: string }) => {
       if (!pendingAttempt || completingAttempt.current) return;
       const completionOwner = accountId();
+      const completionEpoch = loadEpoch.current;
+      if (pendingAttempt.owner && pendingAttempt.owner !== completionOwner) return false;
       completingAttempt.current = true;
       try { await ensureAccountModule('productive'); await ensureAccountModule('vocabulary'); } catch {
         completingAttempt.current = false; toast('Could not load your study data. Your response is still here.'); return;
@@ -1319,6 +1395,7 @@ function useFieldbookValue() {
           part: speaking ? pendingAttempt.part : '',
           notes: speaking ? pendingAttempt.notes : '',
           audioId: speaking ? pendingAttempt.audioId || null : null,
+          ...(speaking && pendingAttempt.promptKey ? { promptKey: pendingAttempt.promptKey, promptText: pendingAttempt.promptText, promptIndex: pendingAttempt.promptIndex } : {}),
           practiceMode: pendingAttempt.practiceMode || currentDeskMode(),
           targetErrorIds: pendingAttempt.targetErrorIds || [],
         },
@@ -1343,33 +1420,56 @@ function useFieldbookValue() {
             resolved: false,
           });
         });
-      if (pendingAttempt.planId) completePlanIfMatched(draft, pendingAttempt.planId, attempt);
+      const matchedPlan = pendingAttempt.planId ? completePlanIfMatched(draft, pendingAttempt.planId, attempt) : null;
       if (!speaking && pendingAttempt.reviewErrorId) reviewError(draft, pendingAttempt.reviewErrorId);
-      if (speaking) draft.drafts[question.id] = normalizeDraft({ transcript: '', notes: '' });
+      if (speaking) {
+        if (pendingAttempt.promptKey) draft.drafts[question.id] = updateSpeakingResponse(draft.drafts[question.id], { ...pendingAttempt, transcript: '', notes: '', parentSessionId: null });
+        else draft.drafts[question.id] = normalizeDraft({ ...normalizeDraft(draft.drafts[question.id]), transcript: '', notes: '', parentSessionId: null });
+      }
       else {
         const current = normalizeDraft(draft.drafts[selectedQuestion.id]);
         draft.drafts[selectedQuestion.id] = Object.assign({}, current, { text: '', parentSessionId: null, sections: undefined });
       }
-      const completionGeneration = saveGeneration.current + 1;
-      const saved = await queueSave(draft, false, true);
-      completingAttempt.current = false;
-      if (!alive.current || accountId() !== completionOwner) return false;
-      if (!saved) { writeDraftRecovery(completionOwner, stateRef.current.drafts); return false; }
-      const newerDraftEdits = saveGeneration.current !== completionGeneration;
       let committed = draft;
-      if (newerDraftEdits) {
-        committed = structuredClone(draft);
-        Object.entries(stateRef.current.drafts).forEach(([id, value]) => {
-          if (JSON.stringify(value) !== JSON.stringify(completionDrafts[id])) committed.drafts[id] = value;
+      let liveBaseline = completionDrafts;
+      let firstCommit = true;
+      while (true) {
+        const saved = await queueSave(committed, !firstCommit, true);
+        firstCommit = false;
+        if (!alive.current || accountId() !== completionOwner || loadEpoch.current !== completionEpoch) { completingAttempt.current = false; return false; }
+        if (!saved) { completingAttempt.current = false; writeDraftRecovery(completionOwner, stateRef.current.drafts); return false; }
+        const liveDrafts = structuredClone(stateRef.current.drafts);
+        const mergedDrafts = structuredClone(committed.drafts);
+        // Rebase only edits made during this RPC. Unchanged response fields retain
+        // the acknowledged completion (including the cleared submitted response).
+        new Set([...Object.keys(liveBaseline), ...Object.keys(liveDrafts)]).forEach(id => {
+          if (JSON.stringify(liveDrafts[id]) === JSON.stringify(liveBaseline[id])) return;
+          if (!Object.prototype.hasOwnProperty.call(liveDrafts, id)) { delete mergedDrafts[id]; return; }
+          const before = normalizeDraft(liveBaseline[id]); const live = normalizeDraft(liveDrafts[id]);
+          const merged = normalizeDraft(mergedDrafts[id]);
+          new Set([...Object.keys(before), ...Object.keys(live)]).forEach(field => {
+            if (field === 'responses' || JSON.stringify(before[field]) === JSON.stringify(live[field])) return;
+            if (Object.prototype.hasOwnProperty.call(live, field)) merged[field] = live[field]; else delete merged[field];
+          });
+          if (before.responses || live.responses) {
+            const responses = { ...merged.responses };
+            new Set([...Object.keys(before.responses || {}), ...Object.keys(live.responses || {})]).forEach(key => {
+              if (JSON.stringify(before.responses?.[key]) === JSON.stringify(live.responses?.[key])) return;
+              if (Object.prototype.hasOwnProperty.call(live.responses || {}, key)) responses[key] = live.responses[key]; else delete responses[key];
+            });
+            merged.responses = responses;
+          }
+          mergedDrafts[id] = normalizeDraft(merged);
         });
-        const mergedSaved = await queueSave(committed, true, true);
-        if (!alive.current || accountId() !== completionOwner) return false;
-        if (!mergedSaved) { writeDraftRecovery(completionOwner, committed.drafts); return false; }
+        if (JSON.stringify(mergedDrafts) === JSON.stringify(committed.drafts)) break;
+        committed = { ...committed, drafts: mergedDrafts };
+        liveBaseline = liveDrafts;
       }
+      completingAttempt.current = false;
       stateRef.current = committed;
       setState(committed);
       discardDraftRecovery(completionOwner);
-      if (speaking && pendingAttempt.audioId) void deletePendingAudio(completionOwner, question.id, pendingAttempt.part);
+      if (speaking && pendingAttempt.audioId) void deletePendingAudio(completionOwner, question.id, pendingAttempt.part, pendingAttempt.promptKey);
       setPendingAttempt(null);
       closeModal();
       if (exportForReview) {
@@ -1396,9 +1496,17 @@ function useFieldbookValue() {
         }
       }
 
-      const activePlan = pendingAttempt.planId
+      const activePlan = matchedPlan && pendingAttempt.planId
         ? draft.plans.find((item) => item.id === pendingAttempt.planId)
         : null;
+      if (speaking && pendingAttempt.promptKey) {
+        const target = normalizeDraft(committed.drafts[question.id]).targetPrompt;
+        const sameGroup = activePlan?.status === 'in_progress' && String(activePlan.target?.part) === String(pendingAttempt.part) && String(activePlan.target?.questionId) === String(question.id);
+        const prompts = sameGroup ? activePlan.target.prompts : target?.promptKey ? [target] : speakingPrompts(question, pendingAttempt.part);
+        const completed = sameGroup ? new Set(activePlan.completedPromptKeys || []) : new Set(committed.sessions.filter(session => session.skill === 'speaking' && String(session.questionId) === String(question.id) && String(session.part) === String(pendingAttempt.part) && (session.planId || null) === (pendingAttempt.planId || null)).map(session => session.promptKey));
+        const next = prompts.findIndex(prompt => !completed.has(prompt.promptKey));
+        if (next >= 0 && (!activePlan || sameGroup)) { setQuestionIndex(next); setDraftRevision(value => value + 1); toast('Response saved. Next question.'); return true; }
+      }
       if (activePlan && activePlan.kind === 'writing-mock' && activePlan.status === 'in_progress' && activePlan.stage === 'task2') {
         setActiveDeskMode('timed');
         const next = activePlan.target?.questionId ? draft.questions.find(question=>String(question.id)===activePlan.target.questionId) :
@@ -1411,7 +1519,7 @@ function useFieldbookValue() {
       }
       if (activePlan && activePlan.kind === 'speaking-mock' && activePlan.status === 'in_progress') {
         setActiveDeskMode('timed');
-        const part = activePlan.stage === 'p2' ? '2' : '3';
+        const part = activePlan.stage === 'p1' ? '1' : activePlan.stage === 'p2' ? '2' : '3';
         const topicId = activePlan.questionId || question.id;
         startSpeakingPractice(topicId, part);
         toast(
@@ -1482,16 +1590,20 @@ function useFieldbookValue() {
     if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return false;
     const source = (speaking ? stateRef.current.speakingTopics : stateRef.current.questions).find(item => String(item.id) === id);
     if (!source) { toast('The source question is unavailable. Your draft has been kept.'); return false; }
-    const draft = structuredClone(stateRef.current);
-    const targetErrorIds = errorId ? [errorId] : draft.errors.filter((error) => error.sourceSessionId === session.id && !error.resolved).map((error) => error.id);
+    const targetErrorIds = errorId ? [errorId] : stateRef.current.errors.filter((error) => error.sourceSessionId === session.id && !error.resolved).map((error) => error.id);
     const practiceMode = ['overview', 'outline', 'compare', 'body', 'timed', 'speak-blind', 'speak-notes', 'speak-full', 'speaking'].includes(session.practiceMode) ? session.practiceMode : 'full';
-    const nextDraft = normalizeDraft({ text: speaking ? '' : session.essay, transcript: speaking ? session.essay : '', notes: session.notes || '', sections: speaking ? undefined : attemptSections(practiceMode, session.essay, session.sections), parentSessionId: session.id, targetErrorIds, practiceMode });
-    const existing = normalizeDraft(draft.drafts[id]);
+    const targetedPrompt = speaking && session.promptKey ? { promptKey: session.promptKey, promptText: session.promptText || '', promptIndex: session.promptIndex || 0, part: String(session.part || source.part || '2') } : null;
+    const nextDraft = normalizeDraft({ text: speaking ? '' : session.essay, transcript: speaking ? session.essay : '', notes: session.notes || '', sections: speaking ? undefined : attemptSections(practiceMode, session.essay, session.sections), parentSessionId: session.id, targetErrorIds, practiceMode, ...targetedPrompt });
+    const existing = speaking && targetedPrompt ? speakingResponseDraft(stateRef.current.drafts[id], targetedPrompt.promptKey) : normalizeDraft(stateRef.current.drafts[id]);
     const content = value => JSON.stringify([value.text, value.transcript, value.notes, value.sections || null]);
     const hasWork = Boolean(existing.text.trim() || existing.transcript.trim() || existing.notes.trim() || Object.values(existing.sections || {}).some(value => String(value).trim()));
-    if (hasWork && content(existing) !== content(nextDraft) && !window.confirm('Replace the existing draft for this question with this attempt?')) return false;
+    if (hasWork && content(existing) !== content(nextDraft) && !await confirmReplacement({ title: 'Replace existing draft?', description: 'Replace the existing response for this question with this attempt?', confirmLabel: 'Replace draft', destructive: true })) return false;
+    if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return false;
+    const live = speaking && targetedPrompt ? speakingResponseDraft(stateRef.current.drafts[id], targetedPrompt.promptKey) : normalizeDraft(stateRef.current.drafts[id]);
+    if (content(live) !== content(existing)) { toast('The draft changed while confirmation was open. Try again.'); return false; }
+    const draft = structuredClone(stateRef.current);
     draft.activePlanId = null;
-    draft.drafts[id] = nextDraft;
+    draft.drafts[id] = speaking ? normalizeDraft({ ...updateSpeakingResponse(draft.drafts[id], nextDraft), ...(targetedPrompt ? { targetPrompt: targetedPrompt } : { targetPrompt: undefined }) }) : nextDraft;
     draft.settings.activeSkill = speaking ? 'speaking' : 'writing';
     const saved = await persistNow(draft);
     if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return false;
@@ -1513,7 +1625,7 @@ function useFieldbookValue() {
       });
     });
     return operation;
-  }, [persistNow, navigate, ensureQuestionBank, toast, closeModal]);
+  }, [persistNow, navigate, ensureQuestionBank, toast, closeModal, confirmReplacement]);
 
   const resolveDraftRecovery = useCallback((restore) => {
     if (restore && recoveryDrafts) { persist((draft) => { draft.drafts = { ...draft.drafts, ...recoveryDrafts }; }); setDraftRevision((value) => value + 1); }
@@ -1618,7 +1730,15 @@ function useFieldbookValue() {
         return plans;
       },
       writingDraft: (id: string) => draftText(state.drafts[id], 'writing'),
-      speakingDraft: (id: string) => normalizeDraft(state.drafts[id]),
+      confirmationDialog,
+      draftSaveStatus: (id: string, promptKey?: string) => {
+        const current = promptKey ? speakingResponseDraft(state.drafts[id], promptKey) : normalizeDraft(state.drafts[id]);
+        const baseline = promptKey ? speakingResponseDraft(lastSaved.current?.drafts?.[id], promptKey) : normalizeDraft(lastSaved.current?.drafts?.[id]);
+        const scoped = draftStatuses[JSON.stringify([accountId(), id, promptKey || ''])];
+        if (scoped?.stamp === JSON.stringify(current) && scoped.status !== 'saved') return scoped.status;
+        return JSON.stringify(current) === JSON.stringify(baseline) ? 'saved' : 'unsaved';
+      },
+      speakingDraft: (id: string, promptKey?: string) => speakingResponseDraft(state.drafts[id], promptKey),
       wordCount,
       FALLBACK_QUESTIONS,
       navigate,
@@ -1676,6 +1796,8 @@ function useFieldbookValue() {
       saveFailed,
       studySettingsError,
       saveStatus,
+      draftStatuses,
+      confirmationDialog,
       loadError,
       recoveryDrafts,
       draftRevision,
@@ -1729,7 +1851,7 @@ function useFieldbookValue() {
 
 export function FieldbookProvider({ children }: { children: ReactNode }) {
   const value = useFieldbookValue();
-  return <FieldbookContext.Provider value={value}>{children}</FieldbookContext.Provider>;
+  return <FieldbookContext.Provider value={value}>{children}{value.confirmationDialog}</FieldbookContext.Provider>;
 }
 
 export function useFieldbook() {

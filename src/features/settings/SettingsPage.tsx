@@ -9,6 +9,7 @@ import { VOCABULARY_PRACTICE_MODES, type VocabularyPreferences } from '../../dom
 import { DateField } from '../../components/ui';
 import { type PracticeNavigationRequest } from '../../lib/practiceNavigation';
 import { accountId } from '../../storage/remote';
+import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 import { requestSettingsBackup } from './backupActions';
 import { settingsChanges, settingsDraft, settingsPlanPreview, type SettingsDraft } from './settingsDraft';
 import './settings.css';
@@ -25,6 +26,7 @@ export function SettingsPage() {
   const fb = useFieldbook();
   const { theme, setTheme } = useTheme();
   const owner = accountId();
+  const { confirm, dialog } = useConfirmationDialog(owner || 'anonymous');
   const navigate = useNavigate();
   const location = useLocation();
   const { category: routeCategory } = useParams();
@@ -56,10 +58,14 @@ export function SettingsPage() {
   }, [owner, fb.state.settings, theme]);
 
   useEffect(() => {
-    const allow = (path: string) => /^\/settings(?:\/|$)/.test(path) || !savingRef.current && (!dirty || window.confirm('Discard your unsaved settings changes?'));
+    const blocked = (path: string) => !/^\/settings(?:\/|$)/.test(path) && (dirty || savingRef.current);
+    const decide = (proceed: () => void) => {
+      if (savingRef.current) return;
+      void confirm({ title: 'Discard unsaved settings?', description: 'Your settings changes have not been saved.', confirmLabel: 'Discard and leave', destructive: true }).then(accepted => { if (accepted && accountId() === owner && !savingRef.current) proceed(); });
+    };
     const requested = (event: Event) => {
       const request = (event as CustomEvent<PracticeNavigationRequest>).detail;
-      if (request && !allow(request.path)) event.preventDefault();
+      if (request && blocked(request.path)) { event.preventDefault(); decide(request.proceed); }
     };
     const leave = (event: MouseEvent) => {
       if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
@@ -67,25 +73,27 @@ export function SettingsPage() {
       if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download') || anchor.hasAttribute('data-practice-navigation')) return;
       const url = new URL(anchor.href, window.location.href);
       if (url.origin !== window.location.origin) return;
-      if (!allow(url.pathname + url.search)) { event.preventDefault(); event.stopPropagation(); }
+      if (blocked(url.pathname + url.search)) { event.preventDefault(); event.stopPropagation(); decide(() => navigate(url.pathname + url.search + url.hash)); }
     };
     const unload = (event: BeforeUnloadEvent) => { if (dirty || savingRef.current) { event.preventDefault(); event.returnValue = ''; } };
     const pop = (event: PopStateEvent) => {
       if (restoringHistory.current) { restoringHistory.current = false; return; }
-      if (allow(window.location.pathname + window.location.search)) return;
+      if (!blocked(window.location.pathname + window.location.search)) return;
       event.stopImmediatePropagation();
       const previous = historySnapshot.current;
+      const destination = window.location.pathname + window.location.search + window.location.hash;
       const distance = Number(previous.state?.idx) - Number(event.state?.idx);
       // Restore the history cursor before React Router observes a canceled departure.
       if (Number.isFinite(distance) && distance !== 0) { restoringHistory.current = true; window.history.go(distance); }
       else window.history.replaceState(previous.state, '', previous.url);
+      decide(() => navigate(destination));
     };
     document.addEventListener('fieldbook:before-navigate', requested);
     document.addEventListener('click', leave, true);
     window.addEventListener('beforeunload', unload);
     window.addEventListener('popstate', pop, true);
     return () => { document.removeEventListener('fieldbook:before-navigate', requested); document.removeEventListener('click', leave, true); window.removeEventListener('beforeunload', unload); window.removeEventListener('popstate', pop, true); };
-  }, [dirty]);
+  }, [dirty, owner, confirm, navigate]);
 
   const discard = () => { setDraft(structuredClone(baseline.current.draft)); setAppearance(baseline.current.appearance); setError(''); setNote(''); };
   async function save() {
@@ -161,5 +169,6 @@ export function SettingsPage() {
       {preview.rebuild && <section className="settings-plan-preview" aria-label="Affected study tasks"><details><summary><RotateCcw size={16}/><span>{preview.affected.length} pending task{preview.affected.length === 1 ? '' : 's'} will be rebuilt</span></summary>{affectedDates.map(date=><div className="settings-preview-day" key={date}><time>{new Date(`${date}T00:00:00`).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})}</time><ul>{preview.affected.filter(plan=>plan.dateKey===date).map(plan=><li key={plan.id}>{plan.title}</li>)}</ul></div>)}</details></section>}
       <footer className="settings-actions"><div className="settings-save-status">{error?<p role="alert">{error}</p>:note?<p role="status"><Check size={16}/>{note}</p>:<p>{dirty?'Unsaved changes':'All changes saved'}</p>}</div><div className="settings-save-buttons"><button className="btn line" type="button" disabled={saving || !dirty} onClick={discard}><RotateCcw size={15}/>Discard changes</button><button className="btn primary" type="button" disabled={saving || !dirty} onClick={() => void save()}><Save size={16} />{saving ? 'Saving...' : error ? 'Retry save' : 'Save settings'}</button></div></footer>
     </div>
+    {dialog}
   </section>;
 }

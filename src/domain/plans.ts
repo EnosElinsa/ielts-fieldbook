@@ -3,10 +3,33 @@
 import { weakestCriterion, criterionBucket, isBandScore } from './assessment';
 import { firstSentence, daysUntilExam, addLocalDays, dateKey, nowIso } from './utils';
 import { dueVocabulary } from './vocabulary';
+import { speakingPrompts } from './speaking';
+
+export function bindSpeakingPlan(plan, topic, part, targetedPrompt, topics: any[] = []) {
+  if (!plan || plan.status === 'completed' || !topic) return plan;
+  if (plan.kind !== 'speaking-mock' && plan.target?.prompts?.length) return plan;
+  const group = (source, resolved) => ({ questionId: String(source.id), part: resolved, prompts: speakingPrompts(source, resolved) });
+  if (plan.kind === 'speaking-mock') {
+    const short = String(topic.part) === '1' ? topic : topics.find(row => String(row.part) === '1' && !row.incomplete);
+    const long = String(topic.part) === '2' ? topic : topics.find(row => String(row.part) === '2' && !row.incomplete);
+    if (!short || !long) throw new Error('Both speaking mock topics must be available. Retry loading the bank.');
+    plan.speakingGroups = plan.speakingGroups || {};
+    if (short && !plan.speakingGroups.p1) plan.speakingGroups.p1 = group(short, '1');
+    if (long) {
+      if (!plan.speakingGroups.p2) plan.speakingGroups.p2 = group(long, '2');
+      if (!plan.speakingGroups.p3) plan.speakingGroups.p3 = group(long, '3');
+    }
+  }
+  if (plan.target?.prompts?.length) return plan;
+  const bound = (plan.kind === 'speaking-mock' ? plan.speakingGroups?.[plan.stage || 'p1'] : null) || group(topic, String(part));
+  plan.target = { ...plan.target, type: 'question', skill: 'speaking', ...bound, prompts: targetedPrompt?.promptKey ? [{ ...targetedPrompt, part: String(part) }] : bound.prompts };
+  plan.questionId = bound.questionId;
+  return plan;
+}
 
 export type StudySkill = 'writing' | 'speaking' | 'reading' | 'listening' | 'vocabulary';
 export type PlanTarget =
-  | { type: 'question'; skill: 'writing' | 'speaking'; questionId: string | null; part?: string; mode: string }
+  | { type: 'question'; skill: 'writing' | 'speaking'; questionId: string | null; part?: string; mode: string; prompts?: { promptKey: string; promptText: string; promptIndex: number; part: string }[] }
   | { type: 'section'; skill: 'reading' | 'listening'; sectionId: string | null; mode: 'practice' | 'mock'; questionIds?: string[] }
   | { type: 'exam-review'; skill: 'reading' | 'listening'; attemptId: string }
   | { type: 'intensive'; skill: 'listening'; sectionId: string; sentenceId: string }
@@ -148,6 +171,12 @@ export function planMatchesAttempt(plan, attempt) {
 export function completePlanIfMatched(state, planId, attempt) {
   const plan = (state.plans || []).find(item => item.id === planId);
   if (!plan || !planMatchesAttempt(plan, attempt)) return null;
+  if (attempt.skill === 'speaking' && plan.target?.prompts?.length) {
+    if (!plan.target.prompts.some(prompt => prompt.promptKey === attempt.promptKey) || String(plan.target.part) !== String(attempt.part)) return null;
+    plan.completedPromptKeys = [...new Set([...(plan.completedPromptKeys || []), attempt.promptKey])];
+    plan.linkedSessionId = attempt.id || plan.linkedSessionId;
+    if (!plan.target.prompts.every(prompt => plan.completedPromptKeys.includes(prompt.promptKey))) return plan;
+  }
   if (plan.kind === 'writing-mock') {
     const stage = plan.stage || 'task1';
     if (stage === 'task1') {
@@ -163,14 +192,16 @@ export function completePlanIfMatched(state, planId, attempt) {
     const stage = plan.stage || 'p1';
     if (stage === 'p1') {
       plan.stage = 'p2';
-      if(plan.target){const next=(state.speakingTopics||[]).find(topic=>String(topic.part)==='2'&&!topic.incomplete);if(next){plan.questionId=String(next.id);plan.target={...plan.target,questionId:String(next.id),part:'2'};}}
+      if(plan.speakingGroups?.p2) { plan.target = { ...plan.target, ...plan.speakingGroups.p2 }; plan.questionId = plan.target.questionId; }
+      else if(plan.target){const next=(state.speakingTopics||[]).find(topic=>String(topic.part)==='2'&&!topic.incomplete);if(next){plan.questionId=String(next.id);plan.target={...plan.target,questionId:String(next.id),part:'2'};}}
       plan.status = 'in_progress';
       plan.linkedSessionId = attempt && attempt.id || plan.linkedSessionId;
       return plan;
     }
     if (stage === 'p2') {
       plan.stage = 'p3';
-      if(plan.target)plan.target={...plan.target,part:'3'};
+      if(plan.speakingGroups?.p3) { plan.target = { ...plan.target, ...plan.speakingGroups.p3 }; plan.questionId = plan.target.questionId; }
+      else if(plan.target)plan.target={...plan.target,part:'3'};
       plan.status = 'in_progress';
       plan.linkedSessionId = attempt && attempt.id || plan.linkedSessionId;
       return plan;

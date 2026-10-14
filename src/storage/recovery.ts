@@ -19,10 +19,13 @@ export function discardDraftRecovery(accountId: string | null) {
 }
 export function differentDrafts(local: Drafts, remote: Drafts): Drafts {
   const result: Drafts = {};
-  Object.entries(local).forEach(([id, value]) => {
+  const content = (value: unknown): boolean => {
     const draft = value && typeof value === 'object' ? value as Record<string, unknown> : {};
-    const hasContent = [draft.text, draft.transcript, draft.notes, ...Object.values((draft.sections || {}) as object)].some((part) => String(part || '').trim());
-    if (hasContent && JSON.stringify(value) !== JSON.stringify(remote[id])) result[id] = value;
+    return [draft.text, draft.transcript, draft.notes, ...Object.values((draft.sections || {}) as object)].some(part => String(part || '').trim())
+      || Object.values((draft.responses || {}) as object).some(content);
+  };
+  Object.entries(local).forEach(([id, value]) => {
+    if (content(value) && JSON.stringify(value) !== JSON.stringify(remote[id])) result[id] = value;
   });
   return result;
 }

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { act, cleanup, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
@@ -18,12 +18,35 @@ test('calendar includes seven days, rest days and overdue tasks',async()=>{
 });
 test('replace and reschedule save explicit actions',async()=>{
   mount();await userEvent.click(screen.getByRole('button',{name:'Replace task'}));
-  await userEvent.selectOptions(screen.getByRole('combobox',{name:'Skill'}),'listening');
+  await userEvent.click(screen.getByRole('button',{name:'Skill'}));
+  await userEvent.click(screen.getByRole('option',{name:'Listening'}));
   await userEvent.click(screen.getByRole('button',{name:'Save change'}));
   expect(mocks.change).toHaveBeenCalledWith('task',{type:'replace',skill:'listening'});
   await userEvent.click(screen.getByRole('button',{name:'Reschedule task'}));
-  const dialog=screen.getByRole('dialog');expect(within(dialog).getByLabelText('Study date')).toHaveValue(dateKey(new Date()));
+  const dialog=screen.getByRole('dialog');expect(within(dialog).getByRole('button',{name:'Study date'})).toHaveTextContent(new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}));
   await userEvent.click(within(dialog).getByRole('button',{name:'Save change'}));expect(mocks.change).toHaveBeenLastCalledWith('task',{type:'reschedule',dateKey:dateKey(new Date())});
+});
+test('the themed date picker saves its chosen date and cannot change during saving',async()=>{
+  let finish; mocks.change.mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
+  mount();await userEvent.click(screen.getByRole('button',{name:'Reschedule task'}));
+  await userEvent.click(screen.getByRole('button',{name:'Study date'}));
+  await userEvent.click(within(screen.getByRole('dialog',{name:'Study date'})).getByRole('button',{name:'Today'}));
+  await userEvent.click(screen.getByRole('button',{name:'Save change'}));
+  expect(screen.getByRole('button',{name:'Study date'})).toBeDisabled();
+  expect(screen.getByRole('button',{name:'Close dialog'})).toBeDisabled();
+  expect(mocks.change).toHaveBeenCalledWith('task',{type:'reschedule',dateKey:dateKey(new Date())});
+  await act(async()=>finish(true));
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+});
+test('skill selection stays disabled while its replacement saves',async()=>{
+  let finish; mocks.change.mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
+  mount();await userEvent.click(screen.getByRole('button',{name:'Replace task'}));
+  await userEvent.click(screen.getByRole('button',{name:'Skill'}));
+  await userEvent.click(screen.getByRole('option',{name:'Speaking mock - 15 min'}));
+  await userEvent.click(screen.getByRole('button',{name:'Save change'}));
+  expect(screen.getByRole('button',{name:'Skill'})).toBeDisabled();
+  expect(mocks.change).toHaveBeenCalledWith('task',{type:'replace',skill:'speaking',kind:'speaking-mock'});
+  await act(async()=>finish(true));
 });
 test('skip and restore preserve explicit tasks',async()=>{
   const view=mount();await userEvent.click(screen.getByRole('button',{name:'Skip task'}));expect(mocks.change).toHaveBeenCalledWith('task',{type:'skip'});

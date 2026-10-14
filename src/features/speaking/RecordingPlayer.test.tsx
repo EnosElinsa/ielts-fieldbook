@@ -15,7 +15,7 @@ afterEach(() => { cleanup(); vi.clearAllMocks(); });
 
 test('waveform decodes the actual source and playback controls use decoded timing', async () => {
   const view = render(<RecordingPlayer src="blob:actual-recording" />);
-  expect(player.load).toHaveBeenCalledWith('blob:actual-recording');
+  expect(create.mock.calls[0][0]).toMatchObject({url:'blob:actual-recording',media:view.container.querySelector('audio')});
   expect(create.mock.calls[0][0]).not.toHaveProperty('peaks');
   expect(screen.getByText('Loading audio waveform…')).toBeInTheDocument();
   act(() => { events.ready(120); events.timeupdate(30); });
@@ -37,4 +37,23 @@ test('a missing account recording offers a working retry', async () => {
   expect(await screen.findByText('Recording unavailable on this account.')).toBeInTheDocument();
   await userEvent.click(screen.getByRole('button', { name: 'Retry recording' }));
   await waitFor(() => expect(getAudio).toHaveBeenCalledTimes(2));
+});
+test('decode failure retains the same native media, transport slots, download and retry',async()=>{
+  const playback=vi.fn();const {container}=render(<RecordingPlayer src="blob:playable-recording" onPlaybackChange={playback}/>);
+  const audio=container.querySelector('audio');
+  expect(audio).not.toBeNull();expect(audio).toHaveAttribute('controls');expect(audio).toHaveAttribute('src','blob:playable-recording');
+  expect(create.mock.calls.at(-1)?.[0]).toMatchObject({media:audio});
+  const seek=screen.getByRole('slider',{name:'Recording playback position'});expect(seek).toBeDisabled();
+  const transport=screen.getByRole('button',{name:'Play recording'});expect(transport).toBeDisabled();
+  fireEvent.play(audio!);expect(playback).toHaveBeenLastCalledWith(true);
+  act(()=>events.error(new Error('unsupported decode')));
+  expect(screen.getByRole('alert')).toHaveTextContent('waveform could not load');
+  expect(container.querySelector('audio')).toBe(audio);expect(audio).toHaveAttribute('controls');
+  expect(screen.getByRole('slider',{name:'Recording playback position'})).toBe(seek);
+  expect(screen.getByRole('link',{name:'Download'})).toHaveAttribute('href','blob:playable-recording');
+  await userEvent.click(screen.getByRole('button',{name:'Retry waveform'}));
+  expect(container.querySelector('audio')).toBe(audio);
+  act(()=>events.ready(60));expect(seek).toBeEnabled();
+  expect(screen.getByRole('button',{name:'Pause recording'})).toBeEnabled();
+  fireEvent.pause(audio!);expect(playback).toHaveBeenLastCalledWith(false);
 });

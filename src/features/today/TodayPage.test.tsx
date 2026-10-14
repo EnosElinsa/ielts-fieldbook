@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
@@ -17,7 +17,7 @@ const renderPage=()=>render(<MemoryRouter><TodayPage/></MemoryRouter>);
 test('one next task is unified and does not depend on the active skill',async()=>{
   mocks.state.plans=[plan('listen','listening')];mocks.skill='writing';renderPage();
   await screen.findByRole('heading',{name:'listening task'});
-  expect(screen.getAllByText('20 min')).toHaveLength(2);
+  expect(screen.getAllByText(/20 min/)).toHaveLength(2);
   await userEvent.click(screen.getByRole('button',{name:'Start'}));expect(mocks.start).toHaveBeenCalledWith('listen',{force:false});
 });
 test('resumes existing progress before overdue or new tasks',async()=>{
@@ -42,4 +42,34 @@ test('plan persistence failure exposes a retry and never displays unsaved genera
   mocks.generate.mockResolvedValueOnce(false);renderPage();
   await screen.findByRole('button',{name:'Retry plan'});
   await userEvent.click(screen.getByRole('button',{name:'Retry plan'}));expect(mocks.generate).toHaveBeenCalledTimes(2);
+});
+test('today progress takes priority over old work and previous tasks keep their own dates and actions',async()=>{
+  mocks.state.plans=[plan('old','reading','in_progress','2020-01-01'),plan('current','speaking','in_progress')];
+  const {container}=renderPage();
+  const next=container.querySelector('.study-next');
+  expect(within(next).getByRole('heading',{name:'speaking task'})).toBeInTheDocument();
+  expect(next).toHaveAttribute('data-plan-id','current');
+  await userEvent.click(within(next).getByRole('button',{name:'Resume'}));
+  expect(mocks.start).toHaveBeenLastCalledWith('current',{force:false});
+  const previous=screen.getByRole('region',{name:'Continue previous tasks'});
+  const old=within(previous).getByRole('article');
+  expect(old).toHaveAttribute('data-plan-id','old');expect(old).toHaveTextContent('Due 2020-01-01');
+  await userEvent.click(within(old).getByRole('button',{name:'Resume'}));
+  expect(mocks.start).toHaveBeenLastCalledWith('old',{force:false});
+});
+test('the active eligible task takes priority and its overdue detail resumes that exact plan',async()=>{
+  mocks.state.activePlanId='chosen';mocks.state.plans=[plan('old','reading','in_progress','2020-01-01'),plan('today','speaking','in_progress'),plan('chosen','listening','in_progress','2020-01-02')];
+  const {container}=renderPage();const next=container.querySelector('.study-next');
+  expect(next).toHaveAttribute('data-plan-id','chosen');expect(next).toHaveTextContent('Due 2020-01-02');
+  await userEvent.click(within(next).getByRole('button',{name:'Resume'}));
+  expect(mocks.start).toHaveBeenLastCalledWith('chosen',{force:false});
+  expect(screen.getByRole('region',{name:'Continue previous tasks'}).querySelector('[data-plan-id="chosen"]')).toBeNull();
+});
+test('future and completed active plans cannot displace today or an unfinished exam hijack its detail',async()=>{
+  mocks.state.activePlanId='future';mocks.state.plans=[plan('future','reading','in_progress','2099-01-01'),plan('today','speaking')];
+  mocks.state.examAttempts=[{id:'attempt-old',status:'paused',skill:'listening',mode:'practice',sourceId:'paper',sectionIds:['section'],remainingSeconds:1200,updatedAt:'2020-01-01'}];
+  const {container,rerender}=renderPage();expect(within(container.querySelector('.study-next')).getByRole('heading',{name:'speaking task'})).toBeInTheDocument();
+  expect(within(screen.getByRole('region',{name:'Continue previous tasks'})).getByRole('link',{name:'Resume'})).toHaveAttribute('href','/listening/section?attempt=attempt-old');
+  mocks.state.plans[0].status='completed';rerender(<MemoryRouter><TodayPage/></MemoryRouter>);
+  expect(within(container.querySelector('.study-next')).getByRole('heading',{name:'speaking task'})).toBeInTheDocument();
 });

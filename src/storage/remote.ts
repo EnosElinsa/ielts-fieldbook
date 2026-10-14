@@ -37,12 +37,25 @@ function assertAccount(generation: number, id: string | null) {
   if (generation !== accountGeneration() || id !== accountId()) throw new Error('Account load superseded');
 }
 
-function accountRpc(supabase, name: string, args, session) {
-  const request = supabase.rpc(name, args);
+function accountRpc(supabase, name: string, args, session, deadline = false) {
+  let request = supabase.rpc(name, args);
   // Pin the verified session across an auth switch while the request starts.
-  return session.access_token && typeof request.setHeader === 'function'
+  request = session.access_token && typeof request.setHeader === 'function'
     ? request.setHeader('Authorization', `Bearer ${session.access_token}`)
     : request;
+  if (!deadline) return request;
+  const controller = new AbortController();
+  if (typeof request.abortSignal === 'function') request = request.abortSignal(controller.signal);
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => controller.abort(), 20_000);
+    const abort = () => reject(new Error('Workspace save timeout'));
+    controller.signal.addEventListener('abort', abort, { once: true });
+    Promise.resolve(request).then(value => {
+      if (!controller.signal.aborted) resolve(value);
+    }, error => { if (!controller.signal.aborted) reject(error); }).finally(() => {
+      clearTimeout(timeout); controller.signal.removeEventListener('abort', abort);
+    });
+  });
 }
 
 export function accountStoreAvailable() {
@@ -334,7 +347,7 @@ export async function saveState(state, onQuotaToast?: (message: string) => void,
     const stamp = JSON.stringify(changes);
     const batch = pendingCommit?.stamp === stamp ? pendingCommit.batch : { id: crypto.randomUUID(), ...changes };
     pendingCommit = { stamp, batch };
-    const { data: receipt, error } = await accountRpc(supabase, 'commit_workspace_changes', { batch }, sessionData.session);
+    const { data: receipt, error } = await accountRpc(supabase, 'commit_workspace_changes', { batch }, sessionData.session, true);
     if (error) throw error;
     assertAccount(generation, expectedAccount);
     if (receipt?.id !== batch.id || typeof receipt.alreadyCommitted !== 'boolean') throw new Error('Invalid workspace acknowledgement');

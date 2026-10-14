@@ -2,6 +2,7 @@ import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
 import type { StudyPlan } from '../domain/plans';
 import type { ExamCatalog } from '../domain/exam/types';
 import { displayName } from './format';
+import { bindSpeakingPlan } from '../domain/plans';
 
 type Sources = {
   bank: (skill: 'writing' | 'speaking') => Promise<any[]>;
@@ -17,19 +18,20 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
   for (const plan of state.plans as StudyPlan[]) {
     if (plan.status !== 'pending' || !plan.target) continue;
     const target = plan.target;
-    if (target.type === 'question' && !target.questionId) {
+    if (target.type === 'question' && (!target.questionId || target.skill === 'speaking' && !target.prompts?.length)) {
       const skill = target.skill;
       if (!banks.has(skill)) banks.set(skill, await sources.bank(skill));
       const mock = plan.kind === 'writing-mock' || plan.kind === 'speaking-mock';
       const part = mock ? '1' : target.part === '3' ? '2' : target.part;
       const kind = plan.kind === 'writing-mock' ? '1' : plan.kind;
       const candidates = banks.get(skill)!.filter(row => skill === 'writing' ? String(row.type) === kind : String(row.part) === part && !row.incomplete).sort((a,b)=>String(a.id).localeCompare(String(b.id)));
-      const selected = candidates[Number(plan.rotationIndex || 0) % candidates.length];
+      const selected = target.questionId ? banks.get(skill)!.find(row => String(row.id) === String(target.questionId)) : candidates[Number(plan.rotationIndex || 0) % candidates.length];
       if (!selected) throw new Error(`The ${skill} question bank is unavailable. Retry your plan.`);
       target.questionId = String(selected.id);plan.questionId = target.questionId;
       if (mock && skill === 'speaking') target.part = '1';
+      if (skill === 'speaking') bindSpeakingPlan(plan, selected, target.part || plan.kind.slice(-1), plan.targetPrompt, banks.get(skill));
       plan.targetLabel = selected.name || selected.title || selected.topic || `Question ${selected.id}`;
-      plan.quantity = 1;
+      plan.quantity = skill === 'speaking' ? plan.target.type === 'question' ? plan.target.prompts?.length || 1 : 1 : 1;
     } else if (target.type === 'section' && !target.sectionId) {
       const skill = target.skill;
       if (!catalogs.has(skill)) catalogs.set(skill, await sources.catalog(skill));
@@ -61,7 +63,10 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
 export function studyTargetSummary(plan: any): string {
   const target=plan.target;
   if (!target) return '';
-  if (target.type==='question') return `${displayName(plan.targetLabel || `Question ${target.questionId || ''}`)} · 1 response`;
+  if (target.type==='question') {
+    const count = plan.kind === 'speaking-mock' && plan.speakingGroups ? Object.values(plan.speakingGroups).reduce((sum: number, group: any) => sum + (group.prompts?.length || 0), 0) : target.prompts?.length || 1;
+    return `${displayName(plan.targetLabel || `Question ${target.questionId || ''}`)} · ${count} ${count === 1 ? 'response' : 'responses'}`;
+  }
   if (target.type==='section') return `${plan.targetLabel || target.sectionId || ''} · ${target.questionIds?.length || plan.quantity || 0} questions`;
   if (target.type==='vocabulary') return `${target.mode==='learning-batch'?`Batch ${(target.batchIndex||0)+1}`:'Due review'} · ${target.cards.length || target.batchSize || plan.quantity || 0} words`;
   if (target.type==='intensive') return '1 listening sentence';

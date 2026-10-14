@@ -27,7 +27,7 @@ function NavigationProbe() {
 beforeEach(() => {
   mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); mocks.putAudio.mockReset().mockResolvedValue(undefined);
   const state = { intensiveSessions: [] };
-  mocks.fb = { state, stateRef: { current: state }, persistNow: vi.fn(async (draft: any) => { mocks.fb.state = draft; mocks.fb.stateRef.current = draft; return true; }) };
+  mocks.fb = { state, stateRef: { current: state }, setEditingVocabularyId: vi.fn(), setVocabularySeed: vi.fn(), openModal: vi.fn(), persistNow: vi.fn(async (draft: any) => { mocks.fb.state = draft; mocks.fb.stateRef.current = draft; return true; }) };
   const NativeURL = globalThis.URL;
   vi.stubGlobal('URL', Object.assign(NativeURL, { createObjectURL: () => 'blob:recording', revokeObjectURL: vi.fn() }));
 });
@@ -114,6 +114,7 @@ it('explains pending requirements and updates the completion checklist', async (
   await user.click(compare);
   expect(screen.getByRole('list', { name: 'Sentence completion checklist' })).toHaveTextContent('Dictation compared · Complete');
 });
+
 
 it('does not report all changes saved when newer dictation is still pending', async () => {
   let resolveSave: (saved: boolean) => void = () => {};

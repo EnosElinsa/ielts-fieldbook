@@ -1,5 +1,5 @@
 export const VOCABULARY_LISTS = ['vocabulary', 'vocabularyStates', 'vocabularyEvidence', 'vocabularyReviews', 'vocabularyActivities', 'wordbookProgress', 'wordbookEnrollments', 'vocabularyImportBatches', 'vocabularySessions'] as const;
-export const USER_LISTS = ['sessions', 'assessments', 'errors', 'plans', 'stories', ...VOCABULARY_LISTS, 'examAttempts', 'intensiveSessions'] as const;
+export const USER_LISTS = ['sessions', 'assessments', 'errors', 'plans', 'stories', ...VOCABULARY_LISTS, 'examAttempts', 'intensiveSessions', 'examAnnotations'] as const;
 export const USER_TABLES = {
   sessions: 'sessions', assessments: 'assessments', errors: 'errors', plans: 'plans', stories: 'stories',
   vocabulary: 'vocabulary', vocabularyStates: 'vocabulary_states', vocabularyEvidence: 'vocabulary_evidence',
@@ -7,6 +7,7 @@ export const USER_TABLES = {
   wordbookProgress: 'wordbook_progress', wordbookEnrollments: 'wordbook_enrollments', vocabularyImportBatches: 'vocabulary_import_batches',
   vocabularySessions: 'vocabulary_sessions',
   examAttempts: 'exam_attempts', intensiveSessions: 'intensive_sessions',
+  examAnnotations: 'exam_annotations',
 } as const;
 
 export type UserListKey = (typeof USER_LISTS)[number];

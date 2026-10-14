@@ -1,7 +1,34 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { normalizeDraft } from './state';
-import { splitList } from './utils';
+import { hashText, splitList } from './utils';
+
+export function speakingPrompts(topic, part) {
+  if (!topic) return [];
+  const resolved = String(part || topic.part || '2');
+  const texts = resolved === '1' ? splitList(topic.questions).length ? splitList(topic.questions) : [topic.title]
+    : resolved === '3' ? splitList(topic.part3 || topic.questions).length ? splitList(topic.part3 || topic.questions) : ['Take the long turn a step further.']
+      : [[topic.cueCard || topic.title, ...splitList(topic.bullets)].filter(Boolean).join('\n')];
+  const seen = new Map();
+  return texts.filter(Boolean).map((promptText, promptIndex) => {
+    const identity = String(promptText).trim();
+    const occurrence = seen.get(identity) || 0; seen.set(identity, occurrence + 1);
+    return { part: resolved, promptKey: `${resolved}:${hashText(identity)}:${occurrence}`, promptText: identity, promptIndex };
+  });
+}
+
+export function speakingResponseDraft(raw, promptKey) {
+  const topicDraft = normalizeDraft(raw);
+  return promptKey ? normalizeDraft(topicDraft.responses?.[promptKey]) : topicDraft;
+}
+
+export function updateSpeakingResponse(raw, patch) {
+  const topicDraft = normalizeDraft(raw);
+  if (!patch?.promptKey) return normalizeDraft({ ...topicDraft, ...patch });
+  const current = speakingResponseDraft(topicDraft, patch.promptKey);
+  const response = normalizeDraft({ ...current, ...patch, text: '' });
+  return normalizeDraft({ ...topicDraft, responses: { ...topicDraft.responses, [patch.promptKey]: response } });
+}
 
 export function numberedList(items) {
   return splitList(items).map((item, index) => `${index + 1}. ${item}`).join('\n');
@@ -43,7 +70,7 @@ export function buildSpeakingAssessmentRequest(session, topic) {
   const part = ['1', '2', '3'].includes(String(source.part ?? card.part ?? '')) ? String(source.part ?? card.part) : String(source.part || card.part || '');
   const questionId = source.questionId != null && String(source.questionId) !== '' ? source.questionId : (card.id || '');
   const mode = source.practiceMode || 'full';
-  const prompt = speakingTopicPrompt(card, part);
+  const prompt = source.promptText || speakingTopicPrompt(card, part);
   const audioPresent = Boolean(source.audioId);
   return `# IELTS Speaking assessment request
 
@@ -52,7 +79,7 @@ skill: speaking
 part: ${part}
 session_id: ${source.id}
 question_id: ${questionId}
-practice_mode: ${mode}
+${source.promptKey ? `prompt_key: ${source.promptKey}\nprompt_index: ${source.promptIndex}\n` : ''}practice_mode: ${mode}
 target_error_ids: ${(source.targetErrorIds || []).join(', ')}
 audio_present: ${audioPresent ? 'true' : 'false'}
 
@@ -142,7 +169,7 @@ ${session.vocabularyTargets?.length ? `\n## Vocabulary practice targets\n\n${ses
 
 export function draftIsPrepared(value) {
   const draft = normalizeDraft(value);
-  return Boolean(String(draft.text || '').trim() || String(draft.transcript || '').trim() || String(draft.notes || '').trim());
+  return Boolean(String(draft.text || '').trim() || String(draft.transcript || '').trim() || String(draft.notes || '').trim() || Object.values(draft.responses || {}).some(draftIsPrepared));
 }
 
 export function speakingCoverage(state, topicId) {
@@ -152,7 +179,7 @@ export function speakingCoverage(state, topicId) {
   const sessions = Array.isArray(source.sessions) ? source.sessions : [];
   const draft = normalizeDraft(source.drafts && source.drafts[id]);
   const prepared = stories.some(story => splitList(story && story.topicIds).includes(id))
-    || Boolean(draft.text.trim() || draft.transcript.trim() || draft.notes.trim());
+    || draftIsPrepared(draft);
   const speakingSessions = sessions.filter(session => session && session.skill === 'speaking' && String(session.questionId) === id);
   if (speakingSessions.some(session => session.assessmentId)) return 'assessed';
   if (speakingSessions.length) return 'practiced';
