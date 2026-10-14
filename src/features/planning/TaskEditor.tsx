@@ -87,7 +87,7 @@ export function TaskEditor({mode,plan,dateKey,onClose}) {
       </section>}
       {materialError&&<div className="study-alert" role="alert">{materialError}<button type="button" className="btn line" onClick={()=>setRetry(value=>value+1)}>Retry materials</button></div>}
       <section className={`task-budget${over?' is-over':''}`} aria-label="Task budget"><p>Daily budget <strong>{budget} min</strong></p><dl><div><dt>Other tasks</dt><dd>{used} min</dd></div><div><dt>After this change</dt><dd>{used+duration} min</dd></div><div><dt>{over?'Extra time':'Remaining'}</dt><dd>{over||Math.max(0,budget-used-duration)} min</dd></div></dl>
-        {over>0&&<label className="settings-toggle"><input type="checkbox" checked={allowOverBudget} onChange={event=>setAllowOverBudget(event.target.checked)}/>Keep extra {over} minutes on this day</label>}
+        {over>0&&<label className="check-field task-overage-confirm"><input type="checkbox" checked={allowOverBudget} onChange={event=>setAllowOverBudget(event.target.checked)}/>Keep extra {over} minutes on this day</label>}
       </section>
       {preview.task&&<section className="task-preview"><h3>{editing?preview.task.title:'Completion condition'}</h3><p>{preview.task.completion?.description||'Save the selected practice result.'}</p><small>{editing?'This task will be kept when automatic plans are rebuilt.':'The chosen material and progress are preserved.'}</small></section>}
       {preview.error&&<p className="study-alert" role="alert">{preview.error}</p>}{error&&<p className="study-alert" role="alert">{error}</p>}

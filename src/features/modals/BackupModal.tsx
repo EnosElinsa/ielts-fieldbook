@@ -55,7 +55,7 @@ export function BackupModal() {
             <p>Nothing to preview.</p>
           )}
         </div>
-        <label className="day import-settings">
+        <label className="check-field import-settings">
           <input type="checkbox" checked={importSettings} onChange={(e) => setImportSettings(e.target.checked)} />
           Also import study settings
         </label>

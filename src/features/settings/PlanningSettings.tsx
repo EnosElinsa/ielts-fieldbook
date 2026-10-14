@@ -19,8 +19,10 @@ export function PlanningSettings({draft,update,section='schedule'}:{draft:Settin
       {config.vocabularyMode==='ratio'?<label className="field">Percent<input aria-label="Vocabulary percent" type="number" min={0} max={100} value={config.vocabularyPercent} onChange={event=>change({vocabularyPercent:Number(event.target.value)})}/></label>:<label className="field">Minutes<input aria-label="Vocabulary minutes" type="number" min={0} max={180} value={config.vocabularyMinutes} onChange={event=>change({vocabularyMinutes:Number(event.target.value)})}/></label>}
     </div></section>
     <section className="settings-planning-section"><h3>Task size</h3><div className="settings-planning-grid"><label className="field">Task block minutes<input aria-label="Task block minutes" type="number" min={10} max={90} value={config.blockMinutes} onChange={event=>change({blockMinutes:Number(event.target.value)})}/></label><p className="settings-field-help">Long study days are split into manageable tasks across your selected modules.</p></div>
-      <label className="settings-toggle"><input type="checkbox" checked={config.multipleTasks} onChange={event=>change({multipleTasks:event.target.checked})}/>Split practice across multiple tasks</label>
-      <label className="settings-toggle"><input type="checkbox" checked={config.preferFullTasks} onChange={event=>change({preferFullTasks:event.target.checked})}/>Prefer full responses when time allows</label>
+      <div className="settings-task-options">
+        <label className="settings-toggle check-field"><input type="checkbox" checked={config.multipleTasks} onChange={event=>change({multipleTasks:event.target.checked})}/>Split practice across multiple tasks</label>
+        <label className="settings-toggle check-field"><input type="checkbox" checked={config.preferFullTasks} onChange={event=>change({preferFullTasks:event.target.checked})}/>Prefer full responses when time allows</label>
+      </div>
     </section>
   </>;
 }

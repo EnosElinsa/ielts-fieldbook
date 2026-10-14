@@ -234,7 +234,7 @@ export function VocabularyPreferencesFields({
           </label>
         </div>
         <div className="practice-preference-switches">
-          <label className="practice-switch">
+          <label className="practice-switch check-field">
             <input
               type="checkbox"
               checked={value.autoPlay}
@@ -242,7 +242,7 @@ export function VocabularyPreferencesFields({
             />
             Autoplay
           </label>
-          <label className="practice-switch">
+          <label className="practice-switch check-field">
             <input
               type="checkbox"
               checked={value.audioExamples}
@@ -257,7 +257,7 @@ export function VocabularyPreferencesFields({
       </fieldset>
       <fieldset disabled={locked}>
         <legend>Shortcuts</legend>
-        <label className="practice-switch"><input type="checkbox" checked={value.autoAdvance} onChange={(event) => update({ autoAdvance: event.target.checked })} />Advance with Enter</label>
+        <label className="practice-switch check-field"><input type="checkbox" checked={value.autoAdvance} onChange={(event) => update({ autoAdvance: event.target.checked })} />Advance with Enter</label>
         <p className="practice-shortcut-hint">Use Tab to move between answers. Enter advances when enabled. Use the audio controls to replay a word.</p>
       </fieldset>
     </div>

@@ -146,7 +146,7 @@ export function SettingsPage() {
           <PlanningSettings draft={draft} update={update}/>
         </div>}
         {category === 'skills' && <div className="form">
-          <div className="field full"><span>Selected skills</span><div className="settings-skills">{skillNames.map(skill => <label key={skill}><input type="checkbox" checked={draft.skills.includes(skill)} onChange={event => update({ skills: ['writing', 'speaking', 'reading', 'listening'].filter(value => value === skill ? event.target.checked : draft.skills.includes(value)) })} />{capital(skill)}</label>)}</div></div>
+          <div className="field full"><span>Selected skills</span><div className="settings-skills">{skillNames.map(skill => <label className="check-field" key={skill}><input type="checkbox" checked={draft.skills.includes(skill)} onChange={event => update({ skills: ['writing', 'speaking', 'reading', 'listening'].filter(value => value === skill ? event.target.checked : draft.skills.includes(value)) })} />{capital(skill)}</label>)}</div></div>
           <label className="field">Writing focus<SelectField aria-label="Writing focus" value={draft.focus} onChange={event => update({ focus: event.target.value })}><option value="balanced">Task 1 and Task 2</option><option value="task1">Task 1 first</option><option value="task2">Task 2 first</option></SelectField></label>
           <label className="field">Speaking focus<SelectField aria-label="Speaking focus" value={draft.speakingFocus} onChange={event => update({ speakingFocus: event.target.value })}><option value="balanced">Part 1 and Part 2</option><option value="part1">Part 1 first</option><option value="part2">Part 2 first</option></SelectField></label>
         <PlanningSettings draft={draft} update={update} section="weights"/>
@@ -158,7 +158,7 @@ export function SettingsPage() {
           {preferenceSelect('Feedback', 'feedback', [{ value: 'end', label: 'After submission' }, { value: 'immediate', label: 'During practice' }])}
           {preferenceSelect('Order', 'order', [{ value: 'source', label: 'Source order' }, { value: 'due', label: 'Due date' }, { value: 'random', label: 'Shuffle' }])}
           <div className="field"><span>Layout</span><div className="settings-segment" role="group" aria-label="Practice layout">{(['list', 'cards'] as const).map(layout => <button type="button" key={layout} aria-pressed={draft.vocabulary.layout === layout} onClick={() => vocabulary({ layout })}>{layout === 'list' ? <List size={17} /> : <Square size={17} />}{layout === 'list' ? 'List' : 'Focus'}</button>)}</div></div>
-          <label className="settings-toggle"><input type="checkbox" checked={draft.vocabulary.autoAdvance} onChange={event => vocabulary({ autoAdvance: event.target.checked })} />Advance with Enter</label>
+          <label className="settings-toggle check-field"><input type="checkbox" checked={draft.vocabulary.autoAdvance} onChange={event => vocabulary({ autoAdvance: event.target.checked })} />Advance with Enter</label>
         </div>}
         {category === 'audio' && <>
           <div className="form">
@@ -168,7 +168,7 @@ export function SettingsPage() {
             {preferenceSelect('Repeat gap', 'repeatGapMs', [0, 500, 800, 1000, 1500, 2000, 3000].map(value => ({ value, label: `${value / 1000} seconds` })))}
             {preferenceSelect('Audio loop gap', 'audioGapMs', [0, 500, 1000, 1500, 2000, 3000, 5000].map(value => ({ value, label: `${value / 1000} seconds` })))}
             <label className="field">Volume {Math.round(draft.vocabulary.volume * 100)}%<input aria-label="Volume" type="range" min={0} max={1} step={0.05} value={draft.vocabulary.volume} onChange={event => vocabulary({ volume: Number(event.target.value) })} /></label>
-            {(['autoPlay', 'audioExamples'] as const).map(key => <label className="settings-toggle" key={key}><input type="checkbox" checked={draft.vocabulary[key]} onChange={event => vocabulary({ [key]: event.target.checked })} />{key === 'autoPlay' ? 'Autoplay' : 'Examples in audio loop'}</label>)}
+            {(['autoPlay', 'audioExamples'] as const).map(key => <label className="settings-toggle check-field" key={key}><input type="checkbox" checked={draft.vocabulary[key]} onChange={event => vocabulary({ [key]: event.target.checked })} />{key === 'autoPlay' ? 'Autoplay' : 'Examples in audio loop'}</label>)}
           </div><DeviceVoicePreferences disabled={saving} />
         </>}
         {category === 'appearance' && <div className="settings-segment" role="group" aria-label="Appearance">{([['light', Sun], ['dark', Moon], ['system', Monitor]] as const).map(([value, Icon]) => <button key={value} type="button" aria-pressed={appearance === value} onClick={() => { setAppearance(value); setNote(''); }}><Icon size={17} />{capital(value)}{appearance === value && <Check size={15} />}</button>)}</div>}

@@ -102,3 +102,19 @@
 }
 .settings-planning-section{padding:22px 0;border-top:1px solid var(--rule);min-width:0}.settings-planning-section h3{font-size:15px;margin:0 0 8px}.settings-planning-section>p,.settings-field-help{font-size:12px;color:var(--muted);line-height:1.6;margin:0 0 18px}.settings-planning-grid,.settings-weight-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.settings-planning-grid input,.settings-weight-grid input,.settings-template-row input{width:100%;min-height:42px;border:1px solid var(--rule);border-radius:6px;background:var(--sheet);color:var(--ink);padding:9px 12px;font:inherit;font-size:13px}.settings-template-row{display:grid;grid-template-columns:50px minmax(80px,1fr) minmax(0,2fr);align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--rule)}.settings-template-row>span{font-size:13px;font-weight:600}.settings-template-row small{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:3px}.settings-template-row .field{margin:0}.settings-template-row.is-disabled{opacity:.55}.settings-preview-overview{padding:16px 0;font-size:13px}.settings-preview-modules{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:10px;color:var(--muted)}.settings-preview-modules b{color:var(--ink);font-weight:500}.settings-preview-day time small{display:block;font-size:11px;margin-top:5px}.settings-time-controls{min-width:0}.settings-segment{flex-wrap:wrap}
 @media(max-width:640px){.settings-template-row{grid-template-columns:40px minmax(65px,.8fr) minmax(0,1.4fr);gap:9px}.settings-template-row .select-field{font-size:12px;padding:9px}.settings-planning-grid,.settings-weight-grid{gap:12px}.settings-template-row input{padding:9px}.settings-time-controls .settings-segment{width:100%}}
+
+.settings-week-summary { margin-bottom: 24px; }
+.settings-week-summary > div { min-width: 0; }
+.settings-week-summary dd { line-height: 1.4; font-variant-numeric: tabular-nums; }
+.settings-planning-section.full { grid-column: 1 / -1; }
+.settings-task-options { display: grid; gap: 10px; margin-top: 20px; }
+.settings-skills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.settings-skills .check-field { gap: 10px; }
+.settings-template-row.is-disabled { opacity: 1; color: var(--muted); }
+.settings-template-row.is-disabled input { opacity: .65; }
+.settings-fields .field > input[type="range"] { padding: 0; border: 0; accent-color: var(--blue); }
+.settings-fields :is(input, button), .settings-plan-preview summary { scroll-margin-block: 24px 160px; }
+@media (max-width: 640px) {
+  .settings-skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .settings-task-options { margin-top: 16px; }
+}

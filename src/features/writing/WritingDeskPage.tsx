@@ -248,7 +248,7 @@ export function WritingDeskPage() {
               {selected.type === '1' ? (
                 <>
                   {['series', 'units', 'time', 'overview'].map((key) => (
-                    <label key={key}>
+                    <label className="check-field" key={key}>
                       <input
                         type="checkbox"
                         checked={Boolean(checks[key])}
@@ -261,7 +261,7 @@ export function WritingDeskPage() {
               ) : (
                 <>
                   {['prompt', 'position', 'body'].map((key) => (
-                    <label key={key}>
+                    <label className="check-field" key={key}>
                       <input
                         type="checkbox"
                         checked={Boolean(checks[key])}
