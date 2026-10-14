@@ -53,13 +53,14 @@ must retain the compatible database table, identity functions and user data.
 | Recording, saves and study workflow | `dadcf2a` | 1,025 passed, one skipped | Run `38537012816`: passed |
 | Practice workspaces and source annotations | `fdeb632` | 1,070 passed, one skipped | Run `38543851457`: passed |
 | Part vocabulary and source review | `5ccb9ac` | 1,087 passed, one skipped | Run `38544703022`: passed |
+| Final integration corrections | `6cce90c` | 1,096 passed, one skipped | Branch `38547424344` and master `38547869191`: passed |
 
 Each independent index export also passed production build, identity/SQL checks
-and bundle budgets. Delivery three's login JavaScript is 185,402 compressed bytes
+and bundle budgets. The final build's login JavaScript is 185,403 compressed bytes
 across three assets; its largest JavaScript asset is 385,602 bytes.
 
 Actual browser acceptance used original reading/listening sections, complex
-matching/gap/diagram material, desktop/mobile viewports and 200% zoom. Switching
+matching/gap/diagram material, desktop/mobile viewports and 200% CSS zoom. Switching
 layouts preserves answers and the same audio playback. Last-answer controls
 remain visible with a static submission footer. Source notes restore in an
 independent same-account browser; another account cannot read or insert them.
@@ -83,8 +84,42 @@ result pages did not load the saved vocabulary module, and intensive backlinks
 did not carry the same-Part active-mock lookup restriction. Both are release
 blockers. The combined correction hydrates saved vocabulary with loading, retry
 and owner guards, and carries the shared cloud/local mock policy into intensive
-lookup and its live callback. Scoped re-review, final complete checks, production
-publication and disposable-account cleanup remain pending.
+lookup and its live callback. The independent scoped re-review approved both
+corrections and found no new blocker. Original probes and real preview acceptance
+both confirm the correction; the final exact-tree complete checks passed.
+
+## Production acceptance
+
+`master` was fast-forwarded from `b2584e7` to the reviewed `6cce90c`. Its accepted
+tree is `5ced8279a89f79a6885fddde0cd16f77b143ccdf`. The exact-commit Cloudflare
+deployment passed, and production's public HTML entry assets match the accepted
+preview byte-for-byte (SHA256 verified):
+
+- Accepted preview: https://c8db2f6e.ielts-fieldbook.pages.dev
+- Production deployment: https://c2befb3f.ielts-fieldbook.pages.dev
+- Production: https://ielts-fieldbook.pages.dev
+
+Production browser checks verified a cold result page showing existing saved
+vocabulary and its Part-review link. Selecting another explicit sense reused the
+same word, kept its original source occurrences, and added only an unreviewed
+state; existing FSRS state, evidence and review history were unchanged. Exact-Part
+review filters the selected source, and backlinks automatically focus the correct
+paragraph in view.
+
+A new native MediaRecorder recording was uploaded through the production speaking
+UI (483,296 bytes), saved with prompt B's transcript and question snapshot, then
+played after reload. Prompt A's original attempt and recording remained separate;
+the second account could not download either owner's protected recording. Source
+annotation RLS, cloud edit, fresh-read restoration and idempotent commit replay
+were rechecked against the deployed database.
+
+Two disposable accounts were deleted after acceptance. Their three recording
+objects were removed, all 21 private account-dependent tables were checked for
+empty cascades, and both recording prefixes were empty. The browser QA session
+was closed. Pre- and post-release backups and private verification reports are
+retained under gitignored `local/manual-test-release-2026-10-14/` in the primary
+checkout; credentials and session files are excluded from the acceptance archive.
+The post-release backup verified all 36 tables and their file SHA256 checksums.
 
 ## Implementation decisions
 
