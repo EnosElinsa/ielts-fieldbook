@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import type { ExamPassage, ExamQuestion } from '../../domain/exam/types';
 import { AnnotatedText } from './SourceAnnotations';
 
@@ -32,6 +32,32 @@ export function readingQuestionPrompt(question: ExamQuestion, questions: ExamQue
 export function HeadingList({ question }: { question: ExamQuestion }) {
   return question.type === 'heading' && question.options?.length
     ? <ul className="exam-heading-list" aria-label="List of headings">{question.options.map(option => <li key={option}>{option}</li>)}</ul> : null;
+}
+
+export function HeadingReference({ question }: { question: ExamQuestion }) {
+  const reference = useRef<HTMLDetailsElement>(null);
+  const [expanded, setExpanded] = useState(() => !window.matchMedia?.('(max-width: 740px)').matches);
+  useEffect(() => {
+    const workspace = reference.current?.parentElement;
+    if (workspace && typeof ResizeObserver !== 'undefined') {
+      let wide: boolean | undefined;
+      const observer = new ResizeObserver(entries => {
+        const nextWide = entries[0].contentRect.width >= 420;
+        if (wide !== nextWide) { wide = nextWide; setExpanded(nextWide); }
+      });
+      observer.observe(workspace);
+      return () => observer.disconnect();
+    }
+    const media = window.matchMedia?.('(max-width: 740px)');
+    if (!media) return;
+    const resize = () => setExpanded(!media.matches);
+    media.addEventListener('change', resize);
+    return () => media.removeEventListener('change', resize);
+  }, []);
+  return <details ref={reference} className="exam-heading-reference" open={expanded} onToggle={event => setExpanded(event.currentTarget.open)}>
+    <summary>List of headings <span>{question.options?.length || 0} choices</span></summary>
+    <HeadingList question={question} />
+  </details>;
 }
 
 export function ReadingPassage({ passage, sourceView = false }: { passage: ExamPassage; sourceView?: boolean }) {

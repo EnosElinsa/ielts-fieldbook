@@ -225,3 +225,56 @@
   .exam-question-actions .exam-annotations > summary,.exam-question-actions .exam-check { min-height: 44px; }
   .exam-question-compact { gap: 0 10px; }
 }
+
+/* Keep shared heading choices beside the paragraph assignments. */
+.exam-question-panel { container-type: inline-size; container-name: exam-questions; }
+.exam-heading-group { margin-bottom: 22px; }
+.exam-heading-group-header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+.exam-heading-group-header .exam-question-group-heading { padding: 8px 0; }
+.exam-group-instructions { min-width: 0; font-size: 12px; }
+.exam-group-instructions > summary { cursor: pointer; padding: 8px 0; color: var(--muted); }
+.exam-group-instructions[open] { flex-basis: 100%; }
+.exam-group-instructions .exam-stimulus { margin: 8px 0 0; padding: 12px; font-size: 13px; }
+.exam-heading-workspace { display: grid; grid-template-columns: minmax(0,1fr); align-items: start; gap: 12px; padding-top: 12px; }
+.exam-heading-reference { min-width: 0; }
+.exam-heading-reference > summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; list-style: none; cursor: pointer; font-size: 12px; font-weight: 600; padding: 10px 0; }
+.exam-heading-reference > summary::-webkit-details-marker { display: none; }
+.exam-heading-reference > summary span { color: var(--muted); font-weight: 400; }
+.exam-heading-reference > summary::after { content: '+'; color: var(--muted); }
+.exam-heading-reference[open] > summary::after { content: '−'; }
+.exam-heading-reference > summary:focus-visible,.exam-group-instructions > summary:focus-visible,.exam-notes-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+.exam-heading-reference .exam-heading-list { border: 0; background: transparent; padding: 0; margin: 4px 0 0; gap: 9px; font-size: 13px; line-height: 1.6; }
+.exam-heading-reference li { overflow-wrap: anywhere; }
+.exam-heading-answers { min-width: 0; }
+.exam-heading-answer { display: grid; grid-template-columns: 24px minmax(54px,1fr) minmax(80px,1fr) 32px; align-items: center; gap: 6px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.exam-heading-answer .exam-question-heading { display: contents; }
+.exam-heading-answer .exam-number { grid-column: 1; grid-row: 1; width: 24px; height: 24px; font-size: 11px; }
+.exam-heading-answer .exam-prompt { grid-column: 2; grid-row: 1; margin: 0; font: 500 13px/1.5 Manrope,Arial,sans-serif; }
+.exam-heading-answer > .select-field { grid-column: 3; grid-row: 1; min-width: 0; width: 100%; padding: 9px 6px; gap: 4px; font-size: 12px; }
+.exam-heading-answer .select-field .exam-heading-choice-title { display: none; }
+.exam-heading-answer .exam-notes-toggle { grid-column: 4; grid-row: 1; margin: 0; }
+.exam-heading-answer .exam-result,.exam-heading-answer .exam-word-limit,.exam-heading-answer .exam-question-actions { grid-column: 2 / -1; margin: 0; }
+.exam-heading-answer .exam-feedback { grid-column: 1 / -1; }
+.exam-heading-answers > div:last-child .exam-heading-answer { border-bottom: 0; }
+@container exam-questions (min-width: 420px) {
+  .exam-heading-workspace { grid-template-columns: minmax(0,1.1fr) minmax(229px,.9fr); gap: 16px; }
+  .exam-heading-answers { padding-left: 18px; border-left: 1px solid var(--rule); }
+}
+
+/* Notes are optional tools, so their closed state takes no extra answer row. */
+.exam-question-heading .exam-notes-toggle { margin-left: auto; }
+.exam-notes-toggle { display: inline-flex; align-items: center; justify-content: center; position: relative; flex: 0 0 auto; width: 32px; height: 32px; padding: 0; border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--muted); cursor: pointer; }
+.exam-notes-toggle:hover,.exam-notes-toggle[aria-expanded="true"] { background: var(--soft-blue); color: var(--blue); }
+.exam-note-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); position: absolute; top: 4px; right: 4px; }
+.exam-notes-panel { margin: 12px 0 0; padding: 12px; background: var(--surface-soft); border: 1px solid var(--rule); border-radius: 8px; grid-column: 1 / -1; }
+.exam-notes-panel h4 { margin: 0 0 10px; font: 600 12px/1.5 Manrope,Arial,sans-serif; }
+.exam-notes-panel label { display: grid; gap: 6px; margin-top: 8px; }
+.exam-notes-panel input,.exam-notes-panel textarea { width: 100%; min-width: 0; }
+.exam-question-compact:has(.exam-notes-toggle) { grid-template-columns: 28px minmax(0,1fr) 32px; }
+.exam-question-compact .exam-notes-toggle { grid-column: 3; grid-row: 1; margin: 0; }
+@media(max-width:740px) {
+  .exam-heading-answer { grid-template-columns: 24px minmax(0,1fr) minmax(76px,.85fr) 44px; gap: 6px; }
+  .exam-notes-toggle { width: 44px; height: 44px; }
+  .exam-question-compact:has(.exam-notes-toggle) { grid-template-columns: 28px minmax(0,1fr) 44px; }
+  .exam-heading-reference > summary,.exam-group-instructions > summary { min-height: 44px; }
+}

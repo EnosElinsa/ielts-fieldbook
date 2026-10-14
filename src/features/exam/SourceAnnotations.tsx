@@ -158,6 +158,9 @@ export function SourceAnnotations({ sourceId, skill, mock = false, disabled = fa
     onRevealBlock?.(anchor.blockId);
     requestAnimationFrame(() => {
       const node = [...(container.current?.querySelectorAll<HTMLElement>('[data-source-block]') || [])].find(item => item.dataset.sourceBlock === anchor.blockId);
+      for (let parent = node?.parentElement; parent && parent !== container.current; parent = parent.parentElement) {
+        if (parent instanceof HTMLDetailsElement) parent.open = true;
+      }
       node?.scrollIntoView?.({ block: 'center', behavior: 'smooth' }); node?.focus({ preventScroll: true });
     });
   };

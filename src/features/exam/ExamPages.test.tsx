@@ -8,6 +8,7 @@ import { ExamBankPage } from './ExamBankPage';
 import { ExamImage, ExamPracticePage, ExamStimulus } from './ExamPracticePage';
 import { ExamReviewPage } from './ExamReviewPage';
 import { ExamSourcePage } from './ExamSourcePage';
+import { HeadingReference } from './ReadingPassage';
 import { examCatalogKey, loadExamCatalog } from '../../storage/examCatalog';
 import { cachedRead, clearReadCache } from '../../lib/readCache';
 
@@ -47,6 +48,80 @@ test('heading tasks display the complete shared list and name the real source pa
   expect(screen.getByText('Paragraph A')).toBeInTheDocument();
   expect(screen.getByText('Paragraph B')).toBeInTheDocument();
   expect(screen.queryByText(/Complete the marked gap/)).not.toBeInTheDocument();
+});
+
+test('heading assignments share a group with their reference and keep full choices in the compact answer menu', async () => {
+  mocks.catalog.questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, type: 'heading', maxWords: undefined, groupId: 'headings', prompt: `Paragraph ${String.fromCharCode(64 + number)}`, options: ['I. A garden', 'II. A closure'], answer: 'I. A garden', stimulusHtml: '<p>Choose the correct heading for each paragraph.</p>' }));
+  practice();
+  await screen.findByRole('combobox', { name: 'Answer 1' });
+  const group = screen.getByRole('group', { name: 'Questions 1–2 · Matching headings' });
+  expect(within(group).getByRole('list', { name: 'List of headings' })).toBeVisible();
+  expect(within(group).getByRole('combobox', { name: 'Answer 2' })).toBeVisible();
+  const instruction = within(group).getByText('Choose the correct heading for each paragraph.');
+  expect(instruction).not.toBeVisible();
+  await userEvent.setup().click(within(group).getByText('Instructions'));
+  expect(instruction).toBeVisible();
+  await userEvent.setup().click(within(group).getByRole('combobox', { name: 'Answer 1' }));
+  await userEvent.setup().click(screen.getByRole('option', { name: /^II\s*\. A closure$/ }));
+  expect(mocks.recovery.get('one:reading:practice:section').responses.q1).toBe('II. A closure');
+});
+
+test('question notes open from a compact accessible button and retain their content after collapsing', async () => {
+  practice();
+  await screen.findByRole('textbox', { name: 'Answer 1' });
+  const user = userEvent.setup();
+  const toggle = screen.getByRole('button', { name: 'Evidence & paraphrase for question 1' });
+  expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  expect(screen.queryByRole('textbox', { name: 'Evidence for question 1' })).not.toBeInTheDocument();
+  await user.click(toggle);
+  await user.type(screen.getByRole('textbox', { name: 'Evidence for question 1' }), 'opened in 1990');
+  await user.click(toggle);
+  expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  expect(within(toggle).getByLabelText('Notes added')).toBeInTheDocument();
+  await user.click(toggle);
+  expect(screen.getByRole('textbox', { name: 'Evidence for question 1' })).toHaveValue('opened in 1990');
+});
+
+test('heading references adapt to the available panel width without undoing manual collapse on content changes', async () => {
+  let resize!: (entries: { contentRect: { width: number } }[]) => void;
+  const disconnect = vi.fn();
+  vi.stubGlobal('ResizeObserver', class { constructor(callback: typeof resize) { resize = callback; } observe() {} disconnect = disconnect; });
+  try {
+    const page = render(<div><HeadingReference question={{ ...catalog.questions[0], type: 'heading', options: ['I. A garden'] }} /></div>);
+    const reference = page.container.querySelector('details')!;
+    act(() => resize([{ contentRect: { width: 500 } }]));
+    expect(reference.open).toBe(true);
+    await userEvent.setup().click(screen.getByText('List of headings'));
+    expect(reference.open).toBe(false);
+    act(() => resize([{ contentRect: { width: 500 } }]));
+    expect(reference.open).toBe(false);
+    act(() => resize([{ contentRect: { width: 300 } }]));
+    expect(reference.open).toBe(false);
+    act(() => resize([{ contentRect: { width: 500 } }]));
+    expect(reference.open).toBe(true);
+    page.unmount();
+    expect(disconnect).toHaveBeenCalled();
+  } finally { vi.unstubAllGlobals(); }
+});
+
+test('question navigation focuses the custom heading answer control', async () => {
+  mocks.catalog.questions = [{ ...catalog.questions[0], type: 'heading', options: ['I. A garden'], prompt: 'Paragraph A' }];
+  practice();
+  const answer = await screen.findByRole('combobox', { name: 'Answer 1' });
+  await userEvent.setup().click(screen.getByRole('link', { name: 'Go to question 1 · unanswered' }));
+  await waitFor(() => expect(answer).toHaveFocus());
+});
+
+test('saved annotations reveal the original text inside collapsed heading instructions', async () => {
+  const quote = 'Choose the correct heading for each paragraph.';
+  mocks.catalog.questions = [{ ...catalog.questions[0], type: 'heading', groupId: 'headings', options: ['I. A garden'], prompt: 'Paragraph A', stimulusHtml: `<p>${quote}</p>` }];
+  mocks.fb.state.examAnnotations = [{ id: 'instruction-note', skill: 'reading', sourceId: 'section', color: 'yellow', quote, note: 'Original instructions', updatedAt: '2026-10-14', anchors: [{ blockId: 'stimulus:headings:0-0:0', quote, start: 0, end: quote.length, prefix: '', suffix: '', contentVersion: 'hash' }] }];
+  practice();
+  await screen.findByRole('combobox', { name: 'Answer 1' });
+  const instruction = within(screen.getByRole('group', { name: 'Question 1 · Matching headings' })).getByText(quote);
+  expect(instruction).not.toBeVisible();
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Go to annotation' }));
+  await waitFor(() => expect(instruction).toBeVisible());
 });
 
 test('exam autosave scopes its records and shows the server error with a working retry', async () => {
@@ -202,7 +277,7 @@ test('listening intensive bank mode opens the sentence workbench directly', asyn
 test('practice submission stays on the page on save failure and retries the same attempt', async () => { mocks.fb.persistNow.mockResolvedValueOnce(false); practice(); const user = userEvent.setup(); await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), '1990'); await user.click(screen.getByRole('radio', { name: 'FALSE' })); await user.click(screen.getByRole('button', { name: 'Submit answers' })); expect(await screen.findByRole('alert')).toHaveTextContent('Could not save'); expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/section'); const firstId = mocks.fb.persistNow.mock.calls[0][0].examAttempts[0].id; await user.click(screen.getByRole('button', { name: 'Retry submission' })); await waitFor(() => expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/review/')); expect(mocks.fb.persistNow.mock.calls[1][0].examAttempts[0].id).toBe(firstId); expect(await screen.findByLabelText('Attempt score')).toHaveTextContent('2 / 2'); });
 test('practice recovers answers after leaving without carrying them into another account', async () => { const view = practice(); const user = userEvent.setup(); await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), '1990'); view.unmount(); const resumed = practice(); expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990'); resumed.unmount(); mocks.owner = 'two'; practice(); expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue(''); });
 test('mock begins explicitly and never exposes method hints or per-question checks', async () => { mocks.catalog.sections = [1, 2, 3].map(part => ({ ...catalog.sections[0], id: part === 1 ? 'section' : `section${part}`, part })); mocks.catalog.questions = [1, 2, 3].flatMap(part => catalog.questions.map(question => ({ ...question, id: `${question.id}-${part}`, sectionId: part === 1 ? 'section' : `section${part}` }))); mocks.catalog.passages = mocks.catalog.sections.map((section: any) => ({ ...catalog.passages[0], id: `p-${section.id}`, sectionId: section.id })); mocks.catalog.sections.forEach((section: any) => section.questionCount = 2); practice('/reading/mock/paper'); expect(await screen.findByRole('button', { name: 'Start mock' })).toBeInTheDocument(); expect(screen.queryByText('Locate · prove · paraphrase')).not.toBeInTheDocument(); await userEvent.setup().click(screen.getByRole('button', { name: 'Start mock' })); expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toBeInTheDocument(); expect(screen.queryByRole('button', { name: 'Check answer 1' })).not.toBeInTheDocument(); });
-test('wrong-only retry starts with blank answers and evidence and grades only the retry questions', async () => { mocks.fb.state.examAttempts = [{ id: 'previous', skill: 'reading', sourceId: 'section', sectionIds: ['section'], mode: 'practice', status: 'completed', responses: { q1: '1990', q2: 'TRUE' }, results: { q1: true, q2: false }, evidence: { q2: 'Old proof' }, keywords: {}, errorReasons: {}, score: 1, total: 2, startedAt: '2026-01-01', updatedAt: '2026-01-01', elapsedSeconds: 0, hintsEnabled: true }]; practice('/reading/section?retry=previous'); await screen.findByRole('radio', { name: 'FALSE' }); expect(screen.queryByRole('textbox', { name: 'Answer 1' })).not.toBeInTheDocument(); await userEvent.setup().click(screen.getByText('Evidence & paraphrase')); expect(screen.getByRole('textbox', { name: 'Evidence for question 2' })).toHaveValue(''); await userEvent.setup().click(screen.getByRole('radio', { name: 'FALSE' })); await userEvent.setup().click(screen.getByRole('button', { name: 'Submit answers' })); expect(await screen.findByRole('alert')).toHaveTextContent('Add fresh passage evidence for question 2'); expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/section'); expect(screen.getByRole('radio', { name: 'FALSE' })).toBeChecked(); await userEvent.setup().type(screen.getByRole('textbox', { name: 'Evidence for question 2' }), 'The garden opened in 1990.'); await userEvent.setup().click(screen.getByRole('button', { name: 'Submit answers' })); expect(await screen.findByLabelText('Attempt score')).toHaveTextContent('1 / 1'); });
+test('wrong-only retry starts with blank answers and evidence and grades only the retry questions', async () => { mocks.fb.state.examAttempts = [{ id: 'previous', skill: 'reading', sourceId: 'section', sectionIds: ['section'], mode: 'practice', status: 'completed', responses: { q1: '1990', q2: 'TRUE' }, results: { q1: true, q2: false }, evidence: { q2: 'Old proof' }, keywords: {}, errorReasons: {}, score: 1, total: 2, startedAt: '2026-01-01', updatedAt: '2026-01-01', elapsedSeconds: 0, hintsEnabled: true }]; practice('/reading/section?retry=previous'); await screen.findByRole('radio', { name: 'FALSE' }); expect(screen.queryByRole('textbox', { name: 'Answer 1' })).not.toBeInTheDocument(); await userEvent.setup().click(screen.getByRole('button', { name: 'Evidence & paraphrase for question 2' })); expect(screen.getByRole('textbox', { name: 'Evidence for question 2' })).toHaveValue(''); await userEvent.setup().click(screen.getByRole('radio', { name: 'FALSE' })); await userEvent.setup().click(screen.getByRole('button', { name: 'Submit answers' })); expect(await screen.findByRole('alert')).toHaveTextContent('Add fresh passage evidence for question 2'); expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/section'); expect(screen.getByRole('radio', { name: 'FALSE' })).toBeChecked(); await userEvent.setup().type(screen.getByRole('textbox', { name: 'Evidence for question 2' }), 'The garden opened in 1990.'); await userEvent.setup().click(screen.getByRole('button', { name: 'Submit answers' })); expect(await screen.findByLabelText('Attempt score')).toHaveTextContent('1 / 1'); });
 test('review preserves the submitted question snapshot when the live source changes', async () => { mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', sourceId: 'section', sectionIds: ['section'], mode: 'practice', status: 'completed', responses: { q1: '1990' }, results: { q1: true }, questionSnapshot: [catalog.questions[0]], evidence: {}, keywords: {}, errorReasons: {}, score: 1, total: 1, startedAt: '2026-01-01', updatedAt: '2026-01-01', elapsedSeconds: 0, hintsEnabled: true }]; mocks.catalog.questions[0].answer = '2000'; practice('/reading/review/saved'); expect(await screen.findByRole('heading', { name: 'The garden opened in _____.' })).toBeInTheDocument(); expect(screen.queryByText('2000')).not.toBeInTheDocument(); expect(screen.getAllByText('1990')).toHaveLength(2); });
 test('source stimulus keeps tables and numbered gaps while stripping active HTML', () => { const { container } = render(<ExamStimulus html={'<table><tr><td colspan="2" onclick="alert(1)">Opened #####-1-#####<br>Source note</td></tr></table><script>steal()</script><iframe src="https://example.org"></iframe><p><a href="javascript:alert(1)">Safe text</a></p>'} />); expect(screen.getByRole('cell')).toHaveTextContent('Opened 〔1〕'); expect(screen.getByRole('cell')).toHaveAttribute('colspan', '2'); expect(container.querySelector('script,iframe,a,[onclick]')).toBeNull(); expect(screen.getByText('Safe text')).toBeInTheDocument(); expect(container.querySelector('br')).not.toBeNull(); });
 test('integrated source gaps render controlled answers in the original table', () => {
@@ -233,7 +308,7 @@ test('imported numbered blanks stay in the source while shared instructions and 
   expect(view.container.querySelectorAll('.exam-question-material')).toHaveLength(0);
   expect(screen.getAllByText('Complete the notes below.')).toHaveLength(1);
   expect(screen.getAllByText('Maximum 1 word')).toHaveLength(1);
-  await user.click(screen.getAllByText('Evidence & paraphrase')[1]);
+  await user.click(screen.getByRole('button', { name: 'Evidence & paraphrase for question 2' }));
   await user.type(screen.getByRole('textbox', { name: 'Evidence for question 2' }), 'Fresh proof');
   expect(mocks.recovery.get('one:reading:practice:section').evidence).toMatchObject({ q2: 'Fresh proof' });
 });
@@ -423,7 +498,7 @@ test('pause disables evidence editing and capture until resumed', async () => {
   practice(); const user = userEvent.setup(); await screen.findByRole('textbox', { name: 'Answer 1' });
   fireEvent.keyDown(screen.getByText('The garden opened in 1990.'), { key: 'Enter' });
   await user.click(screen.getByRole('button', { name: 'Pause' }));
-  await user.click(screen.getAllByText('Evidence & paraphrase')[0]);
+  await user.click(screen.getByRole('button', { name: 'Evidence & paraphrase for question 1' }));
   expect(screen.getByRole('textbox', { name: 'Evidence for question 1' })).toBeDisabled();
   expect(screen.getByRole('textbox', { name: 'Keywords & synonyms for question 1' })).toBeDisabled();
   expect(screen.getByRole('combobox', { name: 'Question for selected evidence' })).toBeDisabled();
