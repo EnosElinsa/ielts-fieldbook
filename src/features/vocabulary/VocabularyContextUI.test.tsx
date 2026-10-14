@@ -117,6 +117,14 @@ function mount(path: string) {
 }
 const book = "ielts-vocabulary";
 const core = () => release.entries.find((entry: any) => entry.term === "core");
+test('word detail preserves exact exam occurrences and links to the original source', async () => {
+  const raw = structuredClone(core());
+  raw.sources = [{ type: 'reading', id: 'part-one', senseId: raw.senses[0].id, context: 'The core of the argument.', exam: { sectionId: 'part-one', paragraphId: 'A', blockId: 'passage:p:A', quote: 'core', start: 4, end: 8 } }];
+  mocks.fb.state.vocabulary = [raw];
+  mount(`/vocabulary/entry/${raw.id}`);
+  await screen.findByRole('region', { name: 'Exam sources' });
+  expect(screen.getByRole('link', { name: 'Original source' })).toHaveAttribute('href', expect.stringContaining('/reading/source/part-one?paragraph=A&block=passage%3Ap%3AA&quote=core'));
+});
 test("group browsing works before enrollment, deduplicates source order, includes archived, and play creates no learning writes", async () => {
   const raw = core();
   mocks.fb.state.vocabulary = [{ ...structuredClone(raw), tags: ["archived"] }];

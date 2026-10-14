@@ -4,6 +4,7 @@ import { evaluateVocabularySessionAnswer, type VocabularyPracticeSession } from 
 import type { ReviewCard, VocabularyResult } from "../../domain/vocabulary";
 import { conceal, modeLabel, resultName, senseFor } from "./practicePresentation";
 import type { VocabularyPracticeController } from "./useVocabularyPracticeController";
+import { VocabularySourceLinks } from './VocabularySourceLinks';
 
 export function VocabularyPracticeSession({ controller, session }: {
   controller: VocabularyPracticeController;
@@ -65,6 +66,7 @@ export function VocabularyPracticeSession({ controller, session }: {
         senseFor(card)?.distinctionTask?.explanation ? (
           <p>{senseFor(card)?.distinctionTask?.explanation}</p>
         ) : null}
+        <VocabularySourceLinks sources={card.sources} senseId={card.senseId} filter={session.filter} />
       </div>
     );
   }

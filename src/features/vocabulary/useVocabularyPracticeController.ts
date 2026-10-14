@@ -35,7 +35,7 @@ export function useVocabularyPracticeController() {
   const location = useLocation();
   const { sessionId: historySessionId } = useParams();
   const navigate = useNavigate();
-  const legacyStudy = location.pathname === '/vocabulary/review' && Boolean(params.get('bookId') && params.get('unitId') && params.get('dueOnly') === 'false' && params.get('wrongOnly') !== 'true' && !['entryId', 'senseId', 'sourceType', 'dimension', 'skill'].some(key => params.has(key)));
+  const legacyStudy = location.pathname === '/vocabulary/review' && Boolean(params.get('bookId') && params.get('unitId') && params.get('dueOnly') === 'false' && params.get('wrongOnly') !== 'true' && !['entryId', 'senseId', 'sourceType', 'sourceId', 'dimension', 'skill'].some(key => params.has(key)));
   const study = location.pathname === '/vocabulary/study' || legacyStudy;
   const back = useVocabularyReturn(historySessionId ? '/vocabulary/history' : study && params.get('bookId') && params.get('unitId') ? `/vocabulary/wordbooks/${encodeURIComponent(params.get('bookId')!)}/groups/${encodeURIComponent(params.get('unitId')!)}/words` : '/vocabulary');
   const initialPreferences = normalizeVocabularyPreferences(
@@ -222,8 +222,9 @@ export function useVocabularyPracticeController() {
         ...(params.get("senseId") ? { senseId: params.get("senseId")! } : {}),
         ...(bookId !== "all" ? { bookId } : {}),
         ...((study || params.has("entryId")) && unitId !== "all" ? { unitId } : {}),
-        ...(study && sourceType !== "all" ? { sourceType } : {}),
-        ...(study && skill !== "all" ? { skill } : {}),
+        ...(sourceType !== "all" ? { sourceType } : {}),
+        ...(params.get('sourceId') ? { sourceId: params.get('sourceId')! } : {}),
+        ...(skill !== "all" ? { skill } : {}),
         ...(dimension !== "all" && mode !== "audio" ? { dimension } : {}),
         mode: mode === "audio" ? "dictation" : mode,
         dueOnly,
@@ -266,7 +267,7 @@ export function useVocabularyPracticeController() {
     const queueState = explicit && virtualEntry ? { ...fb.state, vocabulary: [virtualEntry] } : fb.state;
     let available = getVocabularyReviewQueue(queueState, filter).filter(
       (card) =>
-        (explicit || learned.has(card.entryId)) && (!wrongOnly ||
+        (explicit || Boolean(filter.sourceId) || learned.has(card.entryId)) && (!wrongOnly ||
         ((fb.state.vocabularyStates as VocabularyState[]) || []).some(
           (item) =>
             item.entryId === card.entryId &&
@@ -991,7 +992,7 @@ export function useVocabularyPracticeController() {
   }, [params.get('resume'), resume?.id, session, results, fb.booted]);
 
   return {
-    state: fb.state, study, explicitEntry, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit,
+    state: fb.state, filter, study, explicitEntry, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit,
     sourceType, setSource, skill, setSkill, dimension, setDimension,
     dueOnly, setDue, wrongOnly, setWrong, session, cards, resume, results,
     settingsOpen, setSettingsOpen, exitOpen, setExitOpen, incompleteOpen, setIncompleteOpen,

@@ -14,6 +14,7 @@ import { Pronunciation } from './Pronunciation';
 import { entryUrl } from './vocabularyNavigation';
 import { closestAcceptedAnswer } from './answerDiff';
 import { VocabularyAnswerDiff } from './VocabularyAnswerDiff';
+import { VocabularySourceLinks } from './VocabularySourceLinks';
 import type { VocabularySessionResult } from '../../domain/vocabulary/session';
 import type { VocabularyPracticeController } from "./useVocabularyPracticeController";
 
@@ -164,6 +165,7 @@ export function VocabularyPracticeResults({ controller, results }: {
                     Details
                     <ArrowRight size={12} />
                   </Link>
+                  <VocabularySourceLinks sources={results.cardSnapshots?.find(card => card.id === row.cardId)?.sources || current.raw.sources} senseId={row.senseId} filter={results.filter} />
                 </td>
               </tr>
             );})}

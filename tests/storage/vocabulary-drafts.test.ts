@@ -7,6 +7,11 @@ const card = { id: 'entry:sense:dictation', entryId: 'entry', senseId: 'sense', 
 beforeEach(() => { localStorage.clear(); vi.restoreAllMocks(); });
 
 describe('vocabulary draft recovery', () => {
+  test('recovers exact Part source filters without replacing them with broader skill filters', () => {
+    const session = createVocabularySession([card], 'dictation', {}, { sourceType: 'reading', sourceId: 'part-one', dueOnly: false });
+    expect(writeVocabularyDraft('alice', session)).toBe(true);
+    expect(readVocabularyDraft('alice')?.filter).toEqual({ sourceType: 'reading', sourceId: 'part-one', dueOnly: false });
+  });
   test('rejects a batch draft whose saved cards differ from its fixed selection', () => {
     const session = createVocabularySession([card], 'dictation', {});
     const selection = {kind:'learning-batch' as const,bookId:'book',unitId:'group',batchIndex:0,batchSize:10,cards:[{entryId:'another',senseId:'sense'}]};

@@ -24,11 +24,12 @@ function practice(path = '/reading/section') { return render(<MemoryRouter initi
 beforeEach(() => { clearReadCache(); mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); sessionStorage.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.useRealTimers(); });
 
-test('submitted mock results provide explanations and reading evidence backlinks', async () => {
+test('submitted mock results provide exact Part vocabulary and reading evidence backlinks', async () => {
   const question = { ...catalog.questions[0], explanation: 'The opening year is stated in paragraph A.', sourceExplanation: 'Original explanation.', evidence: { paragraphId: 'A', text: 'opened in 1990' } };
   mocks.fb.state.examAttempts = [{ id: 'submitted', skill: 'reading', mode: 'mock', status: 'completed', sourceId: 'paper', sectionIds: ['section'], questionSnapshot: [question], responses: { q1: '1990' }, results: { q1: true }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-10-14', startedAt: '2026-10-14' }];
   render(<MemoryRouter initialEntries={['/reading/review/submitted']}><Routes><Route path='/reading/review/:attemptId' element={<ExamReviewPage skill='reading' />} /></Routes></MemoryRouter>);
-  await screen.findByRole('link', { name: 'View source evidence' });
+  await screen.findByRole('region', { name: 'Part vocabulary' });
+  expect(screen.getByRole('button', { name: /Saved/ })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'View source evidence' })).toHaveAttribute('href', expect.stringContaining('/reading/source/section?paragraph=A'));
   expect(screen.getByText('Original source explanation')).toBeInTheDocument();
   expect(screen.getByText('The opening year is stated in paragraph A.')).toBeInTheDocument();

@@ -70,7 +70,7 @@ function snapshot(value: unknown): VocabularyPracticeSession | null {
   if (typeof input.index !== 'number' || !Number.isInteger(input.index) || input.index < 0 || input.index > cardIds.length) return null;
   const filterInput = object(input.filter) || {};
   const filter: ReviewQueueFilter = {};
-  for (const name of ['entryId', 'senseId', 'bookId', 'unitId', 'sourceType'] as const) if (identifier(filterInput[name])) filter[name] = filterInput[name];
+  for (const name of ['entryId', 'senseId', 'bookId', 'unitId', 'sourceType', 'sourceId'] as const) if (identifier(filterInput[name])) filter[name] = filterInput[name];
   if (['writing', 'speaking', 'listening', 'reading'].includes(String(filterInput.skill))) filter.skill = filterInput.skill as ReviewQueueFilter['skill'];
   if (['meaning', 'listening', 'spelling', 'usage'].includes(String(filterInput.dimension))) filter.dimension = filterInput.dimension as ReviewQueueFilter['dimension'];
   if (modes.includes(filterInput.mode as VocabularyPracticeMode) && filterInput.mode !== 'audio') filter.mode = filterInput.mode as ReviewQueueFilter['mode'];

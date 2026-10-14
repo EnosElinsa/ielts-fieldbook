@@ -26,6 +26,7 @@ const sourceSense = {
   license: "CC-BY-SA-4.0",
   sourceUrl: "https://en.wiktionary.org/wiki/mitigate",
 };
+const dictionaryFetch = (senses = [sourceSense]) => vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { mitigate: 'aa.json' } : { senses } }));
 function fixture() {
   const state = emptyState();
   const entry = addVocabularyItem(state, {
@@ -48,8 +49,8 @@ test('slow dictionary retry starts a fresh fetch and an older rejection cannot c
   const { entry } = fixture();
   let rejectOld!: (error: Error) => void;
   const fetcher = vi.fn().mockImplementationOnce(() => new Promise((_, reject) => { rejectOld = reject; }))
-    .mockResolvedValueOnce({ ok: true, json: async () => ({}) })
-    .mockResolvedValueOnce({ ok: true, json: async () => ({ entries: [{ term: entry.term, senses: [sourceSense] }] }) });
+    .mockResolvedValueOnce({ ok: true, json: async () => ({ mitigate: 'aa.json' }) })
+    .mockResolvedValueOnce({ ok: true, json: async () => ({ senses: [sourceSense] }) });
   vi.stubGlobal('fetch', fetcher);
   render(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
   fireEvent.click(screen.getByText(/Other dictionary meanings/));
@@ -70,13 +71,7 @@ test("dictionary reports deduplicated credits to the parent and explicit study p
   const sources = vi.fn();
   vi.stubGlobal(
     "fetch",
-    vi.fn(async () => ({
-      ok: true,
-      json: async () => ({
-        entries: [
-          {
-            term: "mitigate",
-            senses: [
+    dictionaryFetch([
               sourceSense,
               {
                 ...sourceSense,
@@ -90,11 +85,7 @@ test("dictionary reports deduplicated credits to the parent and explicit study p
                 definition: entry.senses[0].definition,
                 pos: entry.senses[0].pos,
               },
-            ],
-          },
-        ],
-      }),
-    })),
+            ]),
   );
   render(
     <MemoryRouter
@@ -162,19 +153,14 @@ test("loading is distinct from empty and failed index requests are retried", asy
   expect(
     await screen.findByText("No additional dictionary senses available."),
   ).toBeInTheDocument();
-  expect(fetchMock).toHaveBeenCalledTimes(3);
+  expect(fetchMock).toHaveBeenCalledTimes(2);
 });
 test("failed manual save leaves the sense and offers a repeat attempt", async () => {
   const { entry, save } = fixture();
   save.mockResolvedValueOnce(false);
   vi.stubGlobal(
     "fetch",
-    vi.fn(async () => ({
-      ok: true,
-      json: async () => ({
-        entries: [{ term: "mitigate", senses: [sourceSense] }],
-      }),
-    })),
+    dictionaryFetch(),
   );
   render(
     <MemoryRouter>
@@ -202,12 +188,7 @@ test("exclusions update without reloading the term and relation fragments are no
     example: "Meronym: [[stock animal]]",
     usage: "usually",
   };
-  const fetchMock = vi.fn(async () => ({
-    ok: true,
-    json: async () => ({
-      entries: [{ term: entry.term, senses: [relationSense] }],
-    }),
-  }));
+  const fetchMock = dictionaryFetch([relationSense]);
   vi.stubGlobal("fetch", fetchMock);
   const view = render(
     <MemoryRouter>
@@ -289,12 +270,7 @@ test("a save completed after changing term does not navigate away from the new d
   );
   vi.stubGlobal(
     "fetch",
-    vi.fn(async () => ({
-      ok: true,
-      json: async () => ({
-        entries: [{ term: entry.term, senses: [sourceSense] }],
-      }),
-    })),
+    dictionaryFetch(),
   );
   const view = render(
     <MemoryRouter initialEntries={["/vocabulary/entry/original"]}>

@@ -11,6 +11,7 @@ import { getVocabularyReviewQueue } from "../../domain/vocabulary";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { createVocabularySession, evaluateVocabularySessionAnswer } from '../../domain/vocabulary/session';
+import { readVocabularyDraft } from '../../storage/vocabularyDrafts';
 
 const { fb, player, owner } = vi.hoisted(() => ({
   fb: { current: null as any },
@@ -304,6 +305,18 @@ function mount(query = "") {
     </MemoryRouter>,
   );
 }
+
+test('exact Part review includes collected words without advancing learning before submission', async () => {
+  const entry = fb.current.state.vocabulary[0];
+  entry.sources = [{ type: 'reading', id: 'part-one', senseId: entry.senses[0].id, exam: { sectionId: 'part-one', paragraphId: 'A', quote: 'resilient' } }];
+  fb.current.state.vocabularyEvidence = [];
+  mount('?sourceType=reading&sourceId=part-one&mode=definition&dueOnly=false');
+  await userEvent.setup().click(await screen.findByRole('button', { name: 'Start session' }));
+  expect(screen.getAllByRole('textbox')).toHaveLength(1);
+  expect(fb.current.state.vocabularyEvidence).toEqual([]);
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+  expect(readVocabularyDraft(owner.current)?.filter).toMatchObject({ sourceType: 'reading', sourceId: 'part-one' });
+});
 
 test('a saved result has a return to history and New session opens setup rather than its origin',async()=>{
   const log={id:'saved-return',mode:'dictation',status:'submitted',filter:{dueOnly:false},selection:{kind:'review'},preferences:{},results:[],summary:{total:0,correct:0,incorrect:0,pending:0},submittedAt:'2026-10-12',startedAt:'2026-10-12'};

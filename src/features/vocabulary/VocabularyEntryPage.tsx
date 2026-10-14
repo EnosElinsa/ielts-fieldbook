@@ -35,8 +35,10 @@ import { getVocabularyMastery } from "../../domain/vocabulary/mastery";
 import { vocabularyLearningTimeline } from "../../domain/vocabulary/timeline";
 import { vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
 import { VocabularySenseContent } from "./VocabularySenseContent";
+import { VocabularySourceLinks } from './VocabularySourceLinks';
 import "../../styles/vocabulary-entry.css";
 import { DictionarySenses } from "./DictionarySenses";
+import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 import { VocabularyCredits, senseCredits } from "./VocabularyCredits";
 import { VocabularyIllustration } from "./VocabularyIllustration";
 import { VocabularyNavigation } from "./VocabularyPages";
@@ -72,6 +74,8 @@ export function VocabularyEntryPage() {
     };
   };
   const { id, entryId } = useParams();
+  const confirmOwner = accountId();
+  const { confirm, dialog } = useConfirmationDialog(`${confirmOwner}:${entryId || id}`);
   const [params] = useVocabularySearchParams();
   const location = useLocation();
   const bookId = params.get("bookId") || undefined;
@@ -401,7 +405,7 @@ export function VocabularyEntryPage() {
                     className="icon-button"
                     aria-label="Archive vocabulary"
                     onClick={async () => {
-                      if (!window.confirm(`Archive ${entry.term}?`)) return;
+                      if (!await confirm({ title: 'Archive this vocabulary?', description: entry.term, confirmLabel: 'Archive vocabulary', destructive: true }) || accountId() !== confirmOwner) return;
                       const draft = structuredClone(
                         fb.stateRef.current,
                       ) as unknown as VocabularyStore;
@@ -709,6 +713,10 @@ export function VocabularyEntryPage() {
               </ol>
             )}
           </details>
+          {entry.sources.some(source => source.exam) && <section className="vocabulary-exam-sources" aria-label="Exam sources">
+            <h3>Exam sources</h3><p className="vocabulary-muted">Return to the original paragraph or sentence for this word. Each saved occurrence keeps its source.</p>
+            <VocabularySourceLinks sources={entry.sources} />
+          </section>}
           <section
             className="vocabulary-source-locations"
             aria-label="Wordbook sources"
@@ -763,6 +771,7 @@ export function VocabularyEntryPage() {
           <VocabularyCredits credits={credits} />
         </>
       )}
+      {dialog}
     </section>
   );
 }

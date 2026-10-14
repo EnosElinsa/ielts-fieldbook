@@ -48,6 +48,17 @@ The one-time Git title migration uses an isolated mirror and verifies every comm
 
 ## Recovery
 
+The October 14 manual-test upgrade adds state v13 and the compatible
+`exam_annotations` table through `20261014120000_exam_annotations.sql`.
+Apply and register it before the frontend; verify its RLS, account cascade and
+`commit_workspace_changes_neutral_rows` allowlist. The existing public explanations
+require no catalogue reimport. Run complete tests, production build, identity/SQL
+checks and bundle budget checks for each delivery. Confirm actual recorded audio,
+per-prompt saves, annotation recovery and exact-source vocabulary review in a
+preview and production. The administrator backup now verifies 36 tables. Preserve
+the additive annotation table and user data when rolling back the frontend.
+See [manual-test release record](releases/2026-10-14-manual-test-fixes.md).
+
 A failed import RPC rolls back its entire batch. Retry the same batch ID after resolving the cause. Do not manually delete immutable history to retry.
 
 If frontend release verification fails, roll back to the previous Cloudflare Pages deployment. Keep the additive vocabulary schema and its backup; do not drop populated private tables as a frontend rollback. The legacy table and the pre-release snapshot permit recovery of old data.
