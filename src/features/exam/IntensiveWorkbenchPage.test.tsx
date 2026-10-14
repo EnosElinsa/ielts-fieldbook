@@ -1,17 +1,18 @@
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, useLocation, useNavigate } from 'react-router-dom';
+import { Link, MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { IntensiveWorkbenchPage } from './IntensiveWorkbenchPage';
 import type { ExamCatalog } from '../../domain/exam/types';
 import { createIntensiveSession } from '../../domain/exam/intensive';
+import { useExamAttempt } from './useExamAttempt';
 
 const mocks = vi.hoisted(() => ({ owner: 'one', fb: null as any, catalog: null as any, recovery: new Map(), putAudio: vi.fn().mockResolvedValue(undefined) }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
 vi.mock('../../storage/remote', () => ({ accountId: () => mocks.owner }));
 vi.mock('../../storage/examCatalog', async importOriginal => ({ ...await importOriginal<typeof import('../../storage/examCatalog')>(), loadExamSections: async () => mocks.catalog, resolveExamAsset: async () => '/audio.mp3' }));
-vi.mock('../../storage/examRecovery', () => ({ readExamRecovery: (owner: string, key: string) => mocks.recovery.get(`${owner}:${key}`), writeExamRecovery: (owner: string, key: string, data: unknown) => mocks.recovery.set(`${owner}:${key}`, structuredClone(data)), clearExamRecovery: (owner: string, key: string) => mocks.recovery.delete(`${owner}:${key}`) }));
+vi.mock('../../storage/examRecovery', () => ({ readExamRecovery: (owner: string, key: string) => mocks.recovery.get(`${owner}:${key}`), readExamRecoveries: (owner: string, scope: string) => [...mocks.recovery].filter(([key]) => key === `${owner}:${scope}` || key.startsWith(`${owner}:${scope}:`)).map(([, data]) => structuredClone(data)), writeExamRecovery: (owner: string, key: string, data: unknown) => mocks.recovery.set(`${owner}:${key}`, structuredClone(data)), clearExamRecovery: (owner: string, key: string) => mocks.recovery.delete(`${owner}:${key}`) }));
 vi.mock('../../storage/audio', () => ({ putAudio: mocks.putAudio, getAudio: async () => null }));
 vi.mock('../../storage/pendingAudio', () => ({ readPendingAudio: async () => null, writePendingAudio: async () => true, deletePendingAudio: async () => true }));
 vi.mock('../../components/SessionAudioPlayer', () => ({ RecordingPlayer: () => <p>Recording preview</p>, SessionAudioPlayer: () => <p>Saved recording</p> }));
@@ -126,6 +127,52 @@ it('captures source vocabulary after comparison and hides source tools for blind
   await user.click(screen.getByRole('button', { name: 'Hide transcript for blind re-listening' }));
   expect(screen.queryByText('The train leaves at nine.')).not.toBeInTheDocument();
   expect(screen.queryByRole('toolbar', { name: 'Selected text tools' })).not.toBeInTheDocument();
+});
+
+function MockSourceBacklink({ planId, retryId }: { planId?: string; retryId?: string }) {
+  const controller = useExamAttempt('listening', 'paper', 'mock', mocks.catalog, undefined, retryId, planId);
+  return <><button onClick={controller.start}>Start mock</button><Link to='/listening/intensive/part?sentence=s1'>Play source sentence</Link></>;
+}
+
+it.each([{}, { planId: 'planned' }, { retryId: 'previous', planId: 'retry-plan' }])('local active mock gates the source sentence backlink lookup for scope %j while retaining notes', async scope => {
+  mocks.fb.state.intensiveSessions = [{ ...createIntensiveSession('part', 's1'), stage: 2, listened: true, revealed: true, dictationResult: 'correct' }];
+  const user = userEvent.setup();
+  render(<MemoryRouter initialEntries={['/mock-source']}><Routes><Route path='/mock-source' element={<MockSourceBacklink {...scope} />} /><Route path='/listening/intensive/:sectionId' element={<IntensiveWorkbenchPage />} /></Routes></MemoryRouter>);
+  await user.click(screen.getByRole('button', { name: 'Start mock' }));
+  expect(mocks.fb.state.examAttempts || []).toEqual([]);
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('link', { name: 'Play source sentence' }));
+  fireEvent.keyDown(await screen.findByText('The train leaves at nine.'), { key: 'Enter' });
+  expect(screen.getByRole('button', { name: 'Add note' })).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Add selected text to vocabulary' })).not.toBeInTheDocument();
+  expect(mocks.fb.setVocabularySeed).not.toHaveBeenCalled();
+});
+
+it('cloud active mock gates intensive lookup and a later submission restores it', async () => {
+  mocks.fb.state.intensiveSessions = [{ ...createIntensiveSession('part', 's1'), stage: 2, listened: true, revealed: true, dictationResult: 'correct' }];
+  const active = { id: 'mock', skill: 'listening', mode: 'mock', status: 'active', sourceId: 'paper', sectionIds: ['part'], updatedAt: '2026-10-14T00:00:00Z' };
+  mocks.fb.state.examAttempts = [active];
+  mocks.recovery.set('one:listening:mock:paper', structuredClone(active));
+  const rendered = open('/?sentence=s1');
+  fireEvent.keyDown(await screen.findByText('The train leaves at nine.'), { key: 'Enter' });
+  expect(screen.queryByRole('button', { name: 'Add selected text to vocabulary' })).not.toBeInTheDocument();
+  mocks.fb.state.examAttempts = [{ ...active, status: 'completed', updatedAt: '2026-10-14T00:01:00Z' }];
+  rendered.rerender(<MemoryRouter><IntensiveWorkbenchPage sectionId='part' /></MemoryRouter>);
+  fireEvent.keyDown(document.querySelector('[data-source-block="sentence:s1"]')!, { key: 'Enter' });
+  expect(screen.getByRole('button', { name: 'Add selected text to vocabulary' })).toBeInTheDocument();
+});
+
+it('intensive lookup ignores another account mock and guards a newly active recovery after toolbar selection', async () => {
+  mocks.fb.state.intensiveSessions = [{ ...createIntensiveSession('part', 's1'), stage: 2, listened: true, revealed: true, dictationResult: 'correct' }];
+  const active = { id: 'mock', skill: 'listening', mode: 'mock', status: 'active', sourceId: 'paper', sectionIds: ['part'], updatedAt: '2026-10-14T00:00:00Z' };
+  mocks.recovery.set('other:listening:mock:paper', active);
+  const user = userEvent.setup(); open('/?sentence=s1');
+  fireEvent.keyDown(await screen.findByText('The train leaves at nine.'), { key: 'Enter' });
+  const lookup = screen.getByRole('button', { name: 'Add selected text to vocabulary' });
+  mocks.recovery.set('one:listening:mock:paper:retry:previous:plan:next', active);
+  await user.click(lookup);
+  expect(mocks.fb.setVocabularySeed).not.toHaveBeenCalled();
+  expect(mocks.fb.openModal).not.toHaveBeenCalled();
 });
 
 it('does not report all changes saved when newer dictation is still pending', async () => {

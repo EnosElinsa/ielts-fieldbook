@@ -33,12 +33,27 @@ export function PartVocabularyPanel({ catalog, attempt, sectionId }: { catalog: 
   const [chosen, setChosen] = useState<Record<string, string[]>>({});
   const [limit, setLimit] = useState(30);
   const [savedRevision, setSavedRevision] = useState(0);
+  const [savedRetry, setSavedRetry] = useState(0);
+  const [savedLoad, setSavedLoad] = useState<{ identity: string; status: 'loading' | 'ready' | 'error' }>({ identity, status: 'loading' });
   const available = attempt.status === 'completed' && attempt.sectionIds.includes(sectionId);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; generation.current++; }; }, []);
   useEffect(() => {
     generation.current++; termGeneration.current.clear(); lock.current = false; setTab('saved'); setIndex(null); setLoading(false); setError(''); setStatus('');
     setSaving(false); setMeanings({}); setTermLoading({}); setTermErrors({}); setChosen({}); setLimit(30);
   }, [identity]);
+  useEffect(() => {
+    if (!available) return;
+    const requested = identity; const version = generation.current;
+    let active = true;
+    const isCurrent = () => active && mounted.current && live.current === requested && accountId() === owner && generation.current === version;
+    setSavedLoad({ identity: requested, status: 'loading' });
+    Promise.resolve().then(() => isCurrent() ? fb.ensureAccountModule('vocabulary') : undefined).then(() => {
+      if (!isCurrent()) return;
+      setSavedRevision(value => value + 1);
+      setSavedLoad({ identity: requested, status: 'ready' });
+    }).catch(() => { if (isCurrent()) setSavedLoad({ identity: requested, status: 'error' }); });
+    return () => { active = false; };
+  }, [identity, available, savedRetry, fb.ensureAccountModule]);
   useEffect(() => {
     if (tab !== 'candidates' || !available) return;
     let active = true; setLoading(true); setError('');
@@ -47,6 +62,8 @@ export function PartVocabularyPanel({ catalog, attempt, sectionId }: { catalog: 
   }, [tab, identity, revision, available]);
   const candidates = useMemo(() => index ? buildPartVocabularyCandidates(catalog, attempt, sectionId, index) : [], [index, catalog, attempt, sectionId]);
   const saved = useMemo(() => ((fb.stateRef.current.vocabulary || []) as VocabularyEntry[]).filter(entry => !entry.tags.includes('archived') && entry.sources.some(source => source.type === attempt.skill && source.id === sectionId)), [fb.state, sectionId, attempt.skill, savedRevision]);
+  const savedReady = savedLoad.identity === identity && savedLoad.status === 'ready';
+  const savedFailed = savedLoad.identity === identity && savedLoad.status === 'error';
   const selectedCount = Object.values(chosen).reduce((count, ids) => count + ids.length, 0);
   const current = (requested: string, version: number) => mounted.current && live.current === requested && accountId() === owner && generation.current === version;
   async function loadMeanings(term: string) {
@@ -87,13 +104,13 @@ export function PartVocabularyPanel({ catalog, attempt, sectionId }: { catalog: 
   if (!available) return null;
   return <section className="part-vocabulary" aria-label="Part vocabulary">
     <header><div><span className="exam-eyebrow">Source learning</span><h3>Part vocabulary</h3></div><div className="exam-part-tabs" role="group" aria-label="Part vocabulary views">
-      <button type="button" aria-pressed={tab === 'saved'} className={tab === 'saved' ? 'active' : ''} onClick={() => setTab('saved')}>Saved ({saved.length})</button>
+      <button type="button" aria-pressed={tab === 'saved'} className={tab === 'saved' ? 'active' : ''} onClick={() => setTab('saved')}>Saved{savedReady ? ` (${saved.length})` : ''}</button>
       <button type="button" aria-pressed={tab === 'candidates'} className={tab === 'candidates' ? 'active' : ''} onClick={() => setTab('candidates')}>Vocabulary candidates</button>
     </div></header>
     {error && <StateMessage kind="error" message={error} onRetry={!index ? () => { resetDictionaryCache(); setRevision(value => value + 1); } : undefined} />}
     {status && <p role="status">{status}</p>}
     {tab === 'saved' ? <>
-      {saved.length ? <><Link className="btn line" to={partVocabularyReviewUrl(attempt.skill, sectionId)}>Review this Part vocabulary</Link><ul className="part-vocabulary-saved">{saved.map(entry => {
+      {!savedReady ? savedFailed ? <StateMessage kind="error" message="Saved vocabulary could not be loaded. Check your connection and retry." retryLabel="Retry saved vocabulary" onRetry={() => setSavedRetry(value => value + 1)} /> : <InlineLoadingState message="Loading saved vocabulary…" /> : saved.length ? <><Link className="btn line" to={partVocabularyReviewUrl(attempt.skill, sectionId)}>Review this Part vocabulary</Link><ul className="part-vocabulary-saved">{saved.map(entry => {
         const sources = entry.sources.filter(source => source.type === attempt.skill && source.id === sectionId);
         const senseIds = new Set(sources.map(source => source.senseId));
         return <li key={entry.id}><div><Link to={`/vocabulary/entry/${encodeURIComponent(entry.id)}`}>{entry.term}</Link>{entry.senses.filter(sense => senseIds.has(undefined) || senseIds.has(sense.id)).map(sense => <p key={sense.id}>{sense.definition}</p>)}</div><div>{sources.map((source, i) => { const url = examVocabularySourceUrl(source); return url ? <Link key={i} to={url}>Original source{sources.length > 1 ? ` ${i + 1}` : ''}</Link> : null; })}</div></li>;

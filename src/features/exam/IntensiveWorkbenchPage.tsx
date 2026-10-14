@@ -6,9 +6,10 @@ import { useFieldbook } from '../../context/FieldbookContext';
 import { RecordingPlayer, SessionAudioPlayer } from '../../components/SessionAudioPlayer';
 import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 import { applyIntensiveStage, calculateDictationResult, createIntensiveSession, lcsDiff, sentenceProgress } from '../../domain/exam/intensive';
-import type { ExamAsset, ExamCatalog, ExamSentence, IntensiveSession } from '../../domain/exam/types';
+import type { ExamAsset, ExamAttempt, ExamCatalog, ExamSentence, IntensiveSession } from '../../domain/exam/types';
+import { hasActiveSourceMock } from '../../domain/exam/sourceAccess';
 import { loadExamSections, resolveExamAsset } from '../../storage/examCatalog';
-import { clearExamRecovery, readExamRecovery, writeExamRecovery } from '../../storage/examRecovery';
+import { clearExamRecovery, readExamRecoveries, readExamRecovery, writeExamRecovery } from '../../storage/examRecovery';
 import { accountId } from '../../storage/remote';
 import { putAudio } from '../../storage/audio';
 import { deletePendingAudio, readPendingAudio, writePendingAudio } from '../../storage/pendingAudio';
@@ -194,6 +195,11 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
   }, [sectionId, owner, retry]);
 
   const section = catalog?.sections.find(row => row.id === sectionId);
+  function sourceMockActive() {
+    const local = section?.paperId ? readExamRecoveries<ExamAttempt>(owner, `listening:mock:${section.paperId}`).filter(attempt => attempt.sourceId === section.paperId) : [];
+    return hasActiveSourceMock(sectionId, 'listening', [...local, ...(fb.stateRef.current.examAttempts || [])]);
+  }
+  const activeMock = sourceMockActive();
   useEffect(() => {
     if (!section?.sentences.length) return;
     const requested = search.get('sentence') || search.get('sentenceId');
@@ -294,7 +300,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
   }
 
   function captureVocabulary(selection: SourceSelection) {
-    if (!sentence || blind || !session?.revealed || session.dictationResult === 'pending') return;
+    if (accountId() !== owner || sourceMockActive() || !sentence || blind || !session?.revealed || session.dictationResult === 'pending') return;
     const sources = examVocabularySources(selection, { catalog: catalog!, sectionId, skill: 'listening' }).filter(source => source.exam?.sentenceId === sentence.id);
     if (!sources.length) return;
     fb.setEditingVocabularyId(null);
@@ -337,7 +343,7 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
         {!blind ? <div id="intensive-dictation" className="panel intensive-step"><h2>2 · Dictate, compare, diagnose</h2><p>Type what you hear. Keep uncertain gaps visible, then compare once you have tried.</p><label htmlFor="sentence-dictation">Sentence dictation</label><textarea id="sentence-dictation" value={session.transcriptInput} onChange={event => change(value => ({ ...value, transcriptInput: event.target.value, dictationResult: 'pending' }))} rows={3} disabled={session.stage === 6} placeholder="Write what you hear; use … for uncertain words." />
           <button className="btn primary" aria-describedby="intensive-compare-hint" disabled={saving || !session.listened || !session.transcriptInput.trim() || !sentence.text.trim() || blind} onClick={() => { change(value => applyIntensiveStage({ ...value, dictationResult: calculateDictationResult(value.transcriptInput, sentence.text) }, 'reveal')); void save(); }}>Compare with transcript</button>
           <p id="intensive-compare-hint" className="intensive-action-hint">{!session.listened ? 'Play this sentence to the end before comparing.' : !session.transcriptInput.trim() ? 'Write your first attempt before comparing.' : !sentence.text.trim() ? 'The source transcript is unavailable for comparison.' : 'Compare your attempt, then mark why you missed a word.'}</p>
-          {session.revealed && !blind && session.dictationResult !== 'pending' ? <div className="dictation-comparison"><p className="dictation-text">{lcsDiff(session.transcriptInput, sentence.text).map((token, tokenIndex) => <span key={tokenIndex} className={`dictation-${token.kind}`}>{token.text} </span>)}</p><p className="file-hint"><span className="dictation-missing">Missing words</span> · <span className="dictation-extra">Extra words</span> · Result: {session.dictationResult}</p><SourceAnnotations key={`${owner}:${sectionId}:${sentence.id}`} sourceId={sectionId} skill="listening" allowedBlockIds={[`sentence:${sentence.id}`]} onVocabulary={captureVocabulary}><div className="intensive-source-transcript"><h3>Original transcript</h3><p><AnnotatedText blockId={`sentence:${sentence.id}`} text={sentence.text} version={section.provenance.contentHash || section.provenance.sourceVersion} /></p></div></SourceAnnotations><fieldset><legend>Why did you miss it?</legend>{reasons.map(reason => <label key={reason}><input type="checkbox" checked={session.errorReasons.includes(reason)} onChange={() => change(value => ({ ...value, errorReasons: value.errorReasons.includes(reason) ? value.errorReasons.filter(row => row !== reason) : [...value.errorReasons, reason] }))} />{reason}</label>)}</fieldset></div> : null}
+          {session.revealed && !blind && session.dictationResult !== 'pending' ? <div className="dictation-comparison"><p className="dictation-text">{lcsDiff(session.transcriptInput, sentence.text).map((token, tokenIndex) => <span key={tokenIndex} className={`dictation-${token.kind}`}>{token.text} </span>)}</p><p className="file-hint"><span className="dictation-missing">Missing words</span> · <span className="dictation-extra">Extra words</span> · Result: {session.dictationResult}</p><SourceAnnotations key={`${owner}:${sectionId}:${sentence.id}`} sourceId={sectionId} skill="listening" mock={activeMock} allowedBlockIds={[`sentence:${sentence.id}`]} onVocabulary={captureVocabulary}><div className="intensive-source-transcript"><h3>Original transcript</h3><p><AnnotatedText blockId={`sentence:${sentence.id}`} text={sentence.text} version={section.provenance.contentHash || section.provenance.sourceVersion} /></p></div></SourceAnnotations><fieldset><legend>Why did you miss it?</legend>{reasons.map(reason => <label key={reason}><input type="checkbox" checked={session.errorReasons.includes(reason)} onChange={() => change(value => ({ ...value, errorReasons: value.errorReasons.includes(reason) ? value.errorReasons.filter(row => row !== reason) : [...value.errorReasons, reason] }))} />{reason}</label>)}</fieldset></div> : null}
         </div> : null}
         <div id="intensive-shadow" className="panel intensive-step"><h2>3 · Shadow, record, listen again</h2><ShadowingRecorder key={`${owner}:${sentence.id}`} owner={owner} sectionId={sectionId} sentenceId={sentence.id} enabled={session.stage >= 2} audioId={session.shadowingAudioId} onSaved={recordingSaved} />
           <div className="intensive-actions"><button className="btn primary" aria-describedby="intensive-blind-hint" disabled={session.stage < 3 || !audioUrl || !audioReady || !hasTiming} onClick={() => { audioPlayer.current?.stop(); change(value => ({ ...value, revealed: false, blindReplayDone: false })); blindReplayStarted.current=false; setBlind(true); setBlindReplayRequest(value=>value+1); }}>Play original blind</button><button className="btn line" aria-describedby="intensive-blind-hint" disabled={session.stage < 3 || !audioUrl || blind} aria-pressed={blind} onClick={() => { audioPlayer.current?.stop(); change(value => ({ ...value, revealed: false, blindReplayDone: false })); blindReplayStarted.current = false; setBlind(true); }}>Hide transcript for blind re-listening</button></div><p id="intensive-blind-hint" className="intensive-action-hint" role={blind ? 'status' : undefined}>{blind ? 'Transcript hidden. Play the whole sentence without pausing or seeking before finishing.' : session.stage < 3 ? 'Save your shadowing recording before blind re-listening.' : !audioUrl || !audioReady ? 'Wait for the source recording to load.' : !hasTiming ? 'Set valid sentence A/B timing before blind re-listening.' : 'Play original blind hides the transcript and plays this sentence from the beginning.'}</p>
