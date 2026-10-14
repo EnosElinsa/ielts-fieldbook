@@ -9,6 +9,8 @@ export type VocabularyResult = 'success' | 'partial' | 'failure' | 'pending';
 export type VocabularySource = {
   type: 'personal' | 'wordbook' | 'assessment' | VocabularySkill;
   id: string; skill?: VocabularySkill; bookId?: string; unitId?: string; senseId?: string; context?: string;
+  /** Text offsets are within blockId; sentence playback uses the sentence's audio alignment. */
+  exam?: { sectionId: string; attemptId?: string; blockId?: string; passageId?: string; paragraphId?: string; sentenceId?: string; quote?: string; start?: number; end?: number };
 };
 export type VocabularySense = {
   id: string; definition: string; example: string; pos: string; collocations?: string[]; usage?: string;
@@ -57,7 +59,7 @@ export type VocabularyStore = {
 export type ReviewQueueFilter = {
   wrongOnly?: boolean;
   entryId?: string; senseId?: string;
-  bookId?: string; unitId?: string; skill?: VocabularySkill; sourceType?: string;
+  bookId?: string; unitId?: string; skill?: VocabularySkill; sourceType?: string; sourceId?: string;
   dimension?: VocabularyDimension; mode?: VocabularyMode; dueOnly?: boolean; now?: string | Date;
 };
 export type ReviewCard = {

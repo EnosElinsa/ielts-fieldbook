@@ -8,11 +8,22 @@ import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { VocabularyGroupLearnPage } from './VocabularyGroupLearnPage';
 import { buildLearningBatch } from '../../domain/vocabulary/learningBatch';
 
-const mocks = vi.hoisted(() => ({ fb: null as any, owner: 'account-one' as string | null }));
+const mocks = vi.hoisted(() => ({ fb: null as any, owner: 'account-one' as string | null, onCardReady: undefined as (() => void) | undefined }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
 vi.mock('../../storage/remote', () => ({ accountId: () => mocks.owner }));
 vi.mock('./VocabularyPages', () => ({ VocabularyNavigation: () => <nav>Vocabulary</nav> }));
-vi.mock('./Pronunciation', () => ({ Pronunciation: ({entry}: any) => <button>Play {entry.term}</button> }));
+vi.mock('./Pronunciation', async () => {
+  const { useEffect } = await import('react');
+  return { Pronunciation: ({entry}: any) => {
+    useEffect(() => {
+      // The child sees the committed card before the page's passive effects run.
+      const onReady = mocks.onCardReady;
+      mocks.onCardReady = undefined;
+      onReady?.();
+    }, []);
+    return <button>Play {entry.term}</button>;
+  } };
+});
 const original = structuredClone(VOCABULARY_CATALOG);
 test('planned learning retains its required fixed batch mode and whole-group assessments clear binding', async () => {
   const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'definition');
@@ -31,6 +42,7 @@ function entry(index: number) {
 }
 beforeEach(() => {
   mocks.owner='account-one';
+  mocks.onCardReady=undefined;
   const entries=Array.from({length:12},(_,i)=>entry(i+1));
   Object.assign(VOCABULARY_CATALOG,{books:[{id:'book',title:'Wordbook'}],units:[{bookId:'book',id:'chapter',title:'Confirmed theme',kind:'chapter'},{bookId:'book',id:'group',title:'Group 1',parentId:'chapter',kind:'group',entryIds:entries.map(e=>e.id),totalSourceWords:12,contentStatus:'complete'}],memberships:entries.map((e,i)=>({bookId:'book',unitId:'group',entryId:e.id,order:i+1})),entries});
   const state={vocabulary:[],vocabularyStates:[],vocabularyEvidence:[],vocabularyReviews:[],vocabularyActivities:[],vocabularySessions:[],wordbookProgress:[],wordbookEnrollments:[],vocabularyImportBatches:[],settings:{}};
@@ -250,6 +262,38 @@ test('successful save after leaving clears pending device progress',async()=>{
   view.unmount();resolve(true);
   await waitFor(()=>expect(sessionStorage.getItem('fieldbook:vocabulary-learning-pending:account-one:book:group')).toBeNull());
   expect(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-one:book:group')).toBeNull();
+});
+
+test('keeps both viewed words when the first click happens as the learning card appears',async()=>{
+  vi.useFakeTimers();
+  mocks.onCardReady=()=>screen.getByRole('button',{name:'Mark viewed & next'}).click();
+  await act(async()=>{mount();});
+  expect(screen.getByRole('heading',{name:'Word 2'})).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:'Mark viewed & next'}));
+  expect(screen.getByRole('heading',{name:'Word 3'})).toBeInTheDocument();
+  expect(JSON.parse(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-one:book:group')!)).toMatchObject({currentEntryId:'word-3',viewedEntryIds:['word-1','word-2']});
+  expect(screen.getByText('Viewed 2 / 12')).toBeInTheDocument();
+  vi.spyOn(document,'visibilityState','get').mockReturnValue('hidden');
+  fireEvent(document,new Event('visibilitychange'));
+  expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalledWith('book','group',expect.objectContaining({currentEntryId:'word-3',viewedEntryIds:['word-1','word-2']}));
+  await act(async()=>{await vi.advanceTimersByTimeAsync(1);});
+  expect(screen.getByText('Progress saved')).toBeInTheDocument();
+});
+
+test('retains an immediate first-click draft for its owner when accounts change',async()=>{
+  vi.useFakeTimers();
+  mocks.onCardReady=()=>screen.getByRole('button',{name:'Mark viewed & next'}).click();
+  let view!: ReturnType<typeof mount>;
+  await act(async()=>{view=mount();});
+  expect(screen.getByRole('heading',{name:'Word 2'})).toBeInTheDocument();
+  mocks.owner='account-two';
+  view.rerender(<MemoryRouter initialEntries={[path]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes></MemoryRouter>);
+  await act(async()=>{await vi.advanceTimersByTimeAsync(1000);});
+  expect(screen.getByRole('heading',{name:'Word 1'})).toBeInTheDocument();
+  expect(screen.getByText('Viewed 0 / 12')).toBeInTheDocument();
+  expect(mocks.fb.saveVocabularyLearning).not.toHaveBeenCalled();
+  expect(JSON.parse(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-one:book:group')!)).toMatchObject({currentEntryId:'word-2',viewedEntryIds:['word-1']});
+  expect(localStorage.getItem('fieldbook:vocabulary-learning-pending:account-two:book:group')).toBeNull();
 });
 
 test('hiding the page flushes the latest draft before the debounce expires',async()=>{

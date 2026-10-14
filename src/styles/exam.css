@@ -92,7 +92,7 @@
 .exam-submit-progress { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--muted); }
 .exam-method-details>summary { cursor: pointer; color: var(--muted); font-size: 12px; padding-block: 10px; }
 .exam-method-details>summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
-.exam-workspace .exam-submit { position: sticky; bottom: 12px; z-index: 6; background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 16px; box-shadow: var(--shadow); gap: 12px; align-items: center; }
+.exam-workspace .exam-submit { position: static; background: var(--sheet); border-top: 1px solid var(--rule); border-radius: 0; padding: 16px 0; gap: 12px; align-items: center; }
 .exam-workspace .exam-submit p { flex: 1; margin: 0; }
 .exam-question-nav { position: sticky; top: 0; z-index: 4; background: var(--sheet); padding-top: 10px; }
 .exam-question { scroll-margin-top: 90px; }
@@ -101,7 +101,7 @@
   .exam-method-details>summary { min-height: 44px; display: flex; align-items: center; gap: 8px; }
   .exam-method-details>summary::before { content: '+'; }
   .exam-method-details[open]>summary::before { content: '−'; }
-  .exam-workspace .exam-submit { bottom: calc(76px + env(safe-area-inset-bottom)); display: grid; grid-template-columns: minmax(0,1fr) auto; padding: 10px; }
+  .exam-workspace .exam-submit { display: grid; grid-template-columns: minmax(0,1fr) auto; padding: 16px 0 calc(16px + env(safe-area-inset-bottom)); }
   .exam-workspace .exam-submit p { display: none; }
   .exam-workspace .exam-submit .btn { width: auto; padding-inline: 12px; }
   .exam-workspace-listening .exam-question-nav { top: 126px; }
@@ -149,6 +149,22 @@
 .exam-review-queue .exam-empty p { max-width: 48ch; margin: 10px auto 20px; font-size: 14px; line-height: 1.7; }
 .exam-bank .icon-btn { min-width: 40px; min-height: 40px; }
 .exam-bank .icon-btn[aria-pressed=true] { color: var(--gold); background: color-mix(in srgb,var(--gold) 12%,var(--sheet)); }
+.exam-layout-controls{display:flex;gap:4px;justify-content:flex-end;margin:0 0 12px}
+.exam-layout-controls .icon-button{width:40px;height:40px;border:1px solid var(--rule);border-radius:4px}
+.exam-layout-controls .icon-button[aria-pressed=true]{background:var(--soft-blue);color:var(--blue);border-color:var(--blue)}
+.exam-single-panel{grid-template-columns:minmax(0,1fr)}
+.exam-three-panels{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(240px,.8fr)}
+.exam-panel-title{font:600 16px/1.5 Manrope,Arial,sans-serif;margin:0 0 16px}
+.exam-question-material{padding:12px 0;border-bottom:1px solid var(--rule)}
+.exam-inline-answer{display:inline-flex;align-items:center;gap:6px;max-width:100%;vertical-align:middle}
+.exam-inline-number{font:500 11px 'DM Mono',monospace;color:var(--blue)}
+.exam-inline-answer .exam-gap{width:150px;max-width:100%;min-height:36px;padding:6px 8px;font-size:14px}
+.exam-inline-gap{display:inline;max-width:100%}
+.exam-source-panel,.exam-question-panel{min-height:0}
+.exam-answer-panel{min-width:0}
+@media(min-width:901px) and (max-width:1250px){.exam-three-panels{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.exam-three-panels>.exam-source-panel{grid-row:1/span 2}.exam-three-panels>.exam-answer-panel{grid-column:2}}
+@media(max-width:900px){.exam-split,.exam-three-panels,.exam-single-panel{grid-template-columns:minmax(0,1fr)}.exam-source-panel:not(.mobile-active),.exam-question-panel:not(.mobile-active){display:none}}
+@media(max-width:740px){.exam-layout-controls .icon-button{width:44px;height:44px}.exam-inline-answer .exam-gap{font-size:16px;min-height:44px}.exam-source-panel,.exam-question-panel{border-radius:4px}.exam-stimulus{padding:10px}.exam-question-material{padding:16px 0}}
 @media(max-width:740px) {
   .exam-gap,.exam-question select,.exam-annotations input,.exam-annotations textarea,.exam-evidence-capture select,.exam-error-tag select { font-size: 16px; min-height: 44px; }
   .exam-annotations>summary,.exam-method-head .btn { min-height: 44px; }
@@ -159,3 +175,6 @@
   .exam-review-queue .exam-part-tabs { width: 100%; }
   .exam-review-queue .exam-part-tabs button { flex: 1; padding-inline: 10px; font-size: 12px; }
 }
+.exam-source-document { max-width: 850px; margin: 20px auto; line-height: 1.8; }
+.exam-source-sentence { display: flex; gap: 12px; align-items: baseline; }
+.exam-source-sentence > [data-source-block] { min-width: 0; }

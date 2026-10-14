@@ -27,6 +27,7 @@ const VocabularyReviewPage = lazy(() => import('./features/vocabulary/Vocabulary
 const ExamBankPage = lazy(() => import('./features/exam/ExamBankPage').then(module => ({default:module.ExamBankPage})));
 const ExamPracticePage = lazy(() => import('./features/exam/ExamPracticePage').then(module => ({default:module.ExamPracticePage})));
 const ExamReviewPage = lazy(() => import('./features/exam/ExamReviewPage').then(module => ({default:module.ExamReviewPage})));
+const ExamSourcePage = lazy(() => import('./features/exam/ExamSourcePage').then(module => ({default:module.ExamSourcePage})));
 const IntensiveWorkbenchPage = lazy(() => import('./features/exam/IntensiveWorkbenchPage').then(module => ({default:module.IntensiveWorkbenchPage})));
 const ExamReviewQueuePage = lazy(() => import('./features/exam/ExamReviewQueuePage').then(module => ({default:module.ExamReviewQueuePage})));
 
@@ -56,6 +57,7 @@ export function AppRoutes() {
             <Route path={skill} element={<ExamBankPage skill={skill}/>} />
             <Route path={`${skill}/review`} element={<ExamReviewQueuePage skill={skill}/>} />
             <Route path={`${skill}/review/:attemptId`} element={<ExamReviewPage skill={skill}/>} />
+            <Route path={`${skill}/source/:sectionId`} element={<ExamSourcePage skill={skill}/>} />
             <Route path={`${skill}/mock/:paperId`} element={<ExamPracticePage skill={skill}/>} />
             <Route path={`${skill}/:sectionId`} element={<ExamPracticePage skill={skill}/>} />
           </Route>)}

@@ -3,11 +3,13 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-libra
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { emptyState, normalizeDraft } from '../domain';
-import { addVocabularyItem, recordVocabularyReview } from '../domain/vocabulary';
+import { addVocabularyItem, getVocabularyReviewQueue, recordVocabularyReview } from '../domain/vocabulary';
+import { readFileSync } from 'node:fs';
 import { readDraftRecovery } from '../storage/recovery';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 import { speakingPrompts } from '../domain/speaking';
+import { ACCOUNT_MODULES, emptyCollectionStatuses } from '../storage/accountModules';
 
 const mocks = vi.hoisted(() => ({ initial: null, statuses: null, moduleRead: vi.fn(), completeRead: vi.fn(), releasedRead: vi.fn(), teachingRead: vi.fn(), saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), catalogRead: vi.fn(), examCatalogRead:vi.fn(), examSectionsRead:vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
 vi.mock('../storage/examCatalog',()=>({loadExamCatalog:(...args)=>mocks.examCatalogRead(...args),loadExamSections:(...args)=>mocks.examSectionsRead(...args)}));
@@ -36,8 +38,8 @@ vi.mock('../storage/remote', () => ({ accountId: () => mocks.owner }));
 let fieldbook;
 let currentPath;
 function Probe() { fieldbook = useFieldbook(); currentPath = useLocation().pathname + useLocation().search; return null; }
-async function mount() {
-  render(<MemoryRouter><FieldbookProvider><Probe /></FieldbookProvider></MemoryRouter>);
+async function mount(path = '/') {
+  render(<MemoryRouter initialEntries={[path]}><FieldbookProvider><Probe /></FieldbookProvider></MemoryRouter>);
   await waitFor(() => expect(fieldbook.booted).toBe(true));
 }
 function defer() {
@@ -747,6 +749,105 @@ test('dictionary sense additions survive a delayed save without overwriting late
   await waitFor(()=>expect(mocks.saveState).toHaveBeenCalledTimes(2));
   expect(fieldbook.state.vocabulary[0].senses.map(s=>s.definition)).toEqual(['My updated note.','A subject of study.']);
   expect(mocks.saveState.mock.calls.at(-1)[0].vocabulary[0].senses).toHaveLength(2);
+});
+
+test('provider preserves same-word exam occurrences after sequential collection and a later full persist', async () => {
+  await mount();
+  const input = paragraphId => ({ term: 'riverbank', senses: [{ id: 'river', definition: 'Land beside a river.', example: '', pos: 'noun' }], sources: [{ type: 'reading', id: 'part', senseId: 'river', exam: { sectionId: 'part', paragraphId, blockId: `passage:p:${paragraphId}`, quote: 'riverbank', start: 2, end: 11 } }] });
+  await act(async () => { expect(await fieldbook.saveVocabularyEntry(input('A'))).toBe(true); });
+  await act(async () => { expect(await fieldbook.saveVocabularyEntry(input('B'))).toBe(true); });
+  expect(fieldbook.state.vocabulary[0].sources.map(source => source.exam.paragraphId)).toEqual(['A', 'B']);
+  await act(async () => { expect(await fieldbook.persistNow()).toBe(true); });
+  expect(mocks.saveState.mock.calls.at(-1)[0].vocabulary[0].sources.map(source => source.exam.paragraphId)).toEqual(['A', 'B']);
+  expect(fieldbook.state.vocabularyStates[0]).toMatchObject({ reviewCount: 0, cards: {} });
+  expect(fieldbook.state.vocabularyEvidence).toEqual([]);
+});
+
+test('a real dictionary hull sense stays reviewable from its exact Part after provider save and replay', async () => {
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.hull}`, 'utf8'));
+  await mount();
+  const input = { term: 'hull', senses: [dictionary.senses[0]], sources: Array.from({ length: 10 }, (_, position) => ({ type: 'reading', id: 'source:1004', skill: 'reading', senseId: dictionary.senses[0].id, exam: { sectionId: 'source:1004', attemptId: 'attempt', blockId: 'passage:p:A', paragraphId: 'A', quote: 'hull', start: position * 10, end: position * 10 + 4 } })) };
+  await act(async () => { expect(await fieldbook.saveVocabularyEntry(input)).toBe(true); });
+  const filter = { sourceType: 'reading', sourceId: 'source:1004', mode: 'definition', dueOnly: false };
+  const queue = getVocabularyReviewQueue(fieldbook.state, filter);
+  expect(queue).toHaveLength(1);
+  expect(queue[0].senseId).toBe(dictionary.senses[0].id);
+  expect(queue[0].sources).toHaveLength(10);
+  expect(queue[0].entry.senses.find(sense => sense.id === queue[0].senseId).definition).toBe('The outer covering of a fruit or seed.');
+  await act(async () => { expect(await fieldbook.persistNow()).toBe(true); });
+  expect(getVocabularyReviewQueue(mocks.saveState.mock.calls.at(-1)[0], filter)).toHaveLength(1);
+});
+
+function receptiveCollectionStatuses() {
+  const statuses = emptyCollectionStatuses();
+  ['profile', 'plans', 'drafts', ...ACCOUNT_MODULES.receptive].forEach(key => { statuses[key] = 'ready'; });
+  return statuses;
+}
+
+function vocabularyModuleData(vocabulary = []) {
+  return Object.fromEntries(ACCOUNT_MODULES.vocabulary.map(key => [key, key === 'vocabulary' ? vocabulary : []]));
+}
+
+test('exam collection waits for unloaded vocabulary and durably preserves the chosen hull sense and remote words', async () => {
+  mocks.statuses = receptiveCollectionStatuses();
+  const pending = defer();
+  mocks.moduleRead.mockImplementationOnce(() => pending.promise.then(result => {
+    ACCOUNT_MODULES.vocabulary.forEach(key => { mocks.statuses[key] = 'ready'; });
+    return result;
+  }));
+  const remote = addVocabularyItem(emptyState(), { term: 'remote', meaning: 'Already saved elsewhere.' }).item;
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.hull}`, 'utf8'));
+  const input = { term: 'hull', senses: [dictionary.senses[0]], sources: [{ type: 'reading', id: 'source:1004', senseId: dictionary.senses[0].id, exam: { sectionId: 'source:1004', blockId: 'passage:p:A', quote: 'hull', start: 0, end: 4 } }] };
+  await mount('/reading/review/attempt');
+  let saving;
+  await act(async () => { saving = fieldbook.saveVocabularyEntry(input); await Promise.resolve(); });
+  expect(mocks.moduleRead).toHaveBeenCalledWith('vocabulary');
+  expect(mocks.saveState).not.toHaveBeenCalled();
+  expect(fieldbook.state.vocabulary).toHaveLength(0);
+  await act(async () => { pending.resolve({ data: vocabularyModuleData([remote]), statuses: mocks.statuses }); expect(await saving).toBe(true); });
+  const saved = mocks.saveState.mock.calls.at(-1);
+  expect(saved[2].collections).toEqual(expect.arrayContaining(['vocabulary', 'vocabularyStates']));
+  expect(saved[0].vocabulary.map(entry => entry.term)).toEqual(['remote', 'hull']);
+  const filter = { sourceType: 'reading', sourceId: 'source:1004', mode: 'definition', dueOnly: false };
+  expect(getVocabularyReviewQueue(saved[0], filter)).toHaveLength(1);
+  expect(getVocabularyReviewQueue(saved[0], filter)[0].senseId).toBe(dictionary.senses[0].id);
+  await act(async () => { await fieldbook.ensureAccountModule('vocabulary'); await fieldbook.persistNow(); });
+  expect(getVocabularyReviewQueue(mocks.saveState.mock.calls.at(-1)[0], filter)).toHaveLength(1);
+  expect(fieldbook.state.vocabularyEvidence).toEqual([]);
+});
+
+test('exam collection returns failure without mutation when vocabulary hydration fails and can retry', async () => {
+  mocks.statuses = receptiveCollectionStatuses();
+  mocks.moduleRead.mockRejectedValueOnce(new Error('Offline')).mockImplementationOnce(async () => {
+    ACCOUNT_MODULES.vocabulary.forEach(key => { mocks.statuses[key] = 'ready'; });
+    return { data: vocabularyModuleData(), statuses: mocks.statuses };
+  });
+  await mount('/reading/review/attempt');
+  const input = { term: 'harbor', meaning: 'A sheltered port.', sources: [{ type: 'reading', id: 'part' }] };
+  await act(async () => { expect(await fieldbook.saveVocabularyEntry(input)).toBe(false); });
+  expect(mocks.saveState).not.toHaveBeenCalled();
+  expect(fieldbook.state.vocabulary).toEqual([]);
+  expect(fieldbook.saveStatus).toBe('failed');
+  await act(async () => { expect(await fieldbook.saveVocabularyEntry(input)).toBe(true); });
+  expect(mocks.moduleRead).toHaveBeenCalledTimes(2);
+  expect(fieldbook.state.vocabulary[0].term).toBe('harbor');
+});
+
+test('exam collection does not write or merge when the account changes during vocabulary hydration', async () => {
+  mocks.statuses = receptiveCollectionStatuses();
+  const pending = defer(); mocks.moduleRead.mockImplementationOnce(() => pending.promise);
+  await mount('/reading/review/attempt');
+  let saving;
+  await act(async () => { saving = fieldbook.saveVocabularyEntry({ term: 'old-owner-word', meaning: 'Private to account one.' }); await Promise.resolve(); });
+  expect(mocks.moduleRead).toHaveBeenCalledWith('vocabulary');
+  mocks.owner = 'account-2';
+  await act(async () => { fieldbook.retryLoad(); });
+  await waitFor(() => expect(fieldbook.booted).toBe(true));
+  await act(async () => { pending.resolve({ data: vocabularyModuleData([{ id: 'private-old-entry', term: 'private' }]), statuses: mocks.statuses }); expect(await saving).toBe(false); });
+  expect(mocks.saveState).not.toHaveBeenCalled();
+  expect(fieldbook.state.vocabulary).toEqual([]);
 });
 
 test('manual status resolves canonical legacy entry and sense when a catalog source uses different ids',async()=>{

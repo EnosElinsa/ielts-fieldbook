@@ -7,6 +7,19 @@ export function readExamRecovery<T>(owner: string | null, key: string): T | null
     return raw && raw.version === 1 && raw.owner === owner ? raw.data as T : null;
   } catch { return null; }
 }
+/** Read this account's exact recovery scope and its plan/retry child scopes. */
+export function readExamRecoveries<T>(owner: string | null, scope: string): T[] {
+  if (!owner) return [];
+  try {
+    const base = keyFor(owner, scope);
+    const keys = Array.from({ length: localStorage.length }, (_, index) => localStorage.key(index));
+    return keys.flatMap(key => {
+      if (!key || (key !== base && !key.startsWith(`${base}:`))) return [];
+      const data = readExamRecovery<T>(owner, key.slice(keyFor(owner, '').length));
+      return data ? [data] : [];
+    });
+  } catch { return []; }
+}
 export function writeExamRecovery<T>(owner: string | null, key: string, data: T): boolean {
   if (!owner) return false;
   try { localStorage.setItem(keyFor(owner, key), JSON.stringify({ version: 1, owner, data, savedAt: new Date().toISOString() })); return true; }

@@ -1,0 +1,74 @@
+import { useEffect, useMemo, useRef } from 'react';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, Headphones } from 'lucide-react';
+import { PageLoadingState, StateMessage } from '../../components/AsyncState';
+import { useFieldbook } from '../../context/FieldbookContext';
+import type { ExamAttempt, ExamSkill, IntensiveSession } from '../../domain/exam/types';
+import { hasActiveSourceMock, listeningTranscriptAccess } from '../../domain/exam/sourceAccess';
+import { readExamRecoveries, readExamRecovery } from '../../storage/examRecovery';
+import { accountId } from '../../storage/remote';
+import { useExamCatalog } from './useExamCatalog';
+import { AnnotatedText, SourceAnnotations } from './SourceAnnotations';
+import { ExamImage, ExamStimulus, examStimulusBlockIds } from './ExamPracticePage';
+import { examVocabularySources } from './vocabularyCapture';
+import '../../styles/exam.css';
+
+export function ExamSourcePage({ skill }: { skill: ExamSkill }) {
+  const { sectionId = '' } = useParams();
+  const [params] = useSearchParams();
+  const fb = useFieldbook();
+  const { catalog, loading, error, reload } = useExamCatalog(skill, undefined, [sectionId]);
+  const container = useRef<HTMLDivElement>(null);
+  const section = catalog.sections.find(row => row.id === sectionId && row.skill === skill);
+  const passages = catalog.passages.filter(row => row.sectionId === sectionId);
+  const questions = (catalog.questions || []).filter(row => row.sectionId === sectionId && row.skill === skill).slice().sort((a, b) => a.number - b.number);
+  const requestedBlock = params.get('block') || '';
+  const paragraphId = params.get('paragraph');
+  const sentenceId = params.get('sentence');
+  const quote = params.get('quote') || '';
+  const recovery = skill === 'listening' ? readExamRecovery<Record<string, IntensiveSession>>(accountId(), `intensive:${sectionId}`) : null;
+  const access = listeningTranscriptAccess(sectionId, fb.state.examAttempts || [], [...(fb.state.intensiveSessions || []), ...Object.values(recovery || {})]);
+  const visibleSentences = section?.sentences.filter(sentence => access.fullTranscript || access.sentenceIds.has(sentence.id)) || [];
+  const localMocks = section?.paperId ? readExamRecoveries<ExamAttempt>(accountId(), `${skill}:mock:${section.paperId}`).filter(attempt => attempt.sourceId === section.paperId) : [];
+  const activeMock = hasActiveSourceMock(sectionId, skill, [...localMocks, ...(fb.state.examAttempts || [])]);
+  const materialBlockIds = useMemo(() => questions.flatMap((question, index) => [`question:${question.id}`, ...(question.stimulusHtml && (!question.groupId || questions[index - 1]?.groupId !== question.groupId) ? examStimulusBlockIds(question.stimulusHtml, `stimulus:${question.groupId || question.id}`) : [])]), [catalog, sectionId, skill]);
+  useEffect(() => {
+    if (!section || !container.current) return;
+    const blocks = [...container.current.querySelectorAll<HTMLElement>('[data-source-block]')];
+    const candidates = requestedBlock ? blocks.filter(row => row.dataset.sourceBlock === requestedBlock)
+      : sentenceId ? blocks.filter(row => row.dataset.sourceBlock === `sentence:${sentenceId}`)
+      : paragraphId ? blocks.filter(row => passages.some(passage => row.dataset.sourceBlock === `passage:${passage.id}:${paragraphId}`))
+      : quote ? blocks.filter(row => row.textContent?.includes(quote)) : [];
+    if (candidates.length !== 1) return;
+    candidates[0].scrollIntoView?.({ block: 'center' }); candidates[0].focus({ preventScroll: true });
+  }, [section, requestedBlock, paragraphId, sentenceId, quote]);
+  if (loading) return <section className="view active"><PageLoadingState message="Loading source material…" onRetry={reload} /></section>;
+  if (error) return <section className="view active"><StateMessage kind="error" message={error} onRetry={reload} /></section>;
+  if (!section) return <section className="view active"><StateMessage title="Source unavailable." message="This material could not be found." /></section>;
+  const version = section.provenance.contentHash || section.provenance.sourceVersion;
+  return <section className="view active exam-source-view">
+    <Link className="btn text back-link" to={`/${skill}`}><ArrowLeft size={15} />Bank</Link>
+    <div className="exam-workspace-head"><div><span className="exam-eyebrow">{skill === 'reading' ? 'Passage' : 'Part'} {section.part}</span><h2>{section.title}</h2></div>{skill === 'listening' && <Link className="btn line" to={`/listening/intensive/${encodeURIComponent(sectionId)}${sentenceId ? `?sentence=${encodeURIComponent(sentenceId)}` : ''}`}><Headphones size={16} />Play source sentence</Link>}</div>
+    <SourceAnnotations key={`${skill}:${sectionId}`} skill={skill} sourceId={sectionId} mock={activeMock} allowedBlockIds={skill === 'listening' && !access.fullTranscript ? [...visibleSentences.map(sentence => `sentence:${sentence.id}`), ...materialBlockIds] : undefined} onVocabulary={selection => {
+      if (activeMock) return;
+      const sources = examVocabularySources(selection, { catalog, sectionId, skill }, container.current || document);
+      if (!sources.length) return;
+      fb.setEditingVocabularyId(null);
+      fb.setVocabularySeed({ term: selection.quote, skill, sourceId: sectionId, sourceType: skill, context: selection.context, example: selection.context, sources });
+      fb.openModal('vocabulary');
+    }}>
+      <div ref={container} className="exam-source-document">
+        {questions.length > 0 && <section className="exam-source-questions" aria-label="Original questions"><h3>Original questions</h3>{questions.map((question, index) => <article key={question.id} className="exam-question-material">
+          {question.stimulusHtml && (!question.groupId || questions[index - 1]?.groupId !== question.groupId) && <ExamStimulus html={question.stimulusHtml} assets={catalog.assets || []} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />}
+          <span className="exam-number">{question.number}</span>{question.instructions && <p className="exam-instruction">{question.instructions}</p>}
+          <p className="exam-prompt"><AnnotatedText blockId={`question:${question.id}`} text={question.prompt} version={question.provenance.contentHash || question.provenance.sourceVersion} /></p>
+          <ExamImage asset={(catalog.assets || []).find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`Question ${question.number} diagram`} />
+          {question.options?.length ? <ul>{question.options.map(option => <li key={option}>{option}</li>)}</ul> : null}
+        </article>)}</section>}
+        {skill === 'reading' ? passages.map(passage => <article className="exam-passage" key={passage.id}><h3>{passage.title}</h3>{passage.paragraphs.map((paragraph, index) => <p key={paragraph.id}><span className="exam-paragraph-id">{/^[A-Z]$/.test(paragraph.id) ? paragraph.id : index + 1}</span><AnnotatedText blockId={`passage:${passage.id}:${paragraph.id}`} text={paragraph.text} version={passage.provenance.contentHash || passage.provenance.sourceVersion} /></p>)}</article>) : visibleSentences.map(sentence => <p className="exam-source-sentence" key={sentence.id}><Link className="icon-button" title={`Play sentence ${section.sentences.indexOf(sentence) + 1}`} aria-label={`Play sentence ${section.sentences.indexOf(sentence) + 1}`} to={`/listening/intensive/${encodeURIComponent(sectionId)}?sentence=${encodeURIComponent(sentence.id)}`}><Headphones size={16} /></Link><AnnotatedText blockId={`sentence:${sentence.id}`} text={sentence.text} version={version} /></p>)}
+        {skill === 'listening' && section.sentences.length > visibleSentences.length && <StateMessage title="Transcript hidden." message="Submit this listening part to view the full transcript, or compare an intensive sentence to unlock its text." />}
+        {skill === 'listening' && !section.sentences.length && <StateMessage title="Transcript unavailable." message="The source does not include a transcript for this part." />}
+      </div>
+    </SourceAnnotations>
+  </section>;
+}

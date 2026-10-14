@@ -10,6 +10,7 @@ import type { VocabularySessionSelection } from './selection';
 import { VOCABULARY_CATALOG } from './catalog';
 import { isVocabularyLearningContext } from './context';
 import type { VocabularyLearningContext } from './context';
+import { matchesVocabularySource } from './sources';
 export type { VocabularySessionSelection } from './selection';
 
 export type VocabularySessionAnswer = {
@@ -155,7 +156,7 @@ export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S
         if (activity) Object.assign(activity, { id: `${session.id}:${ref.id}:audio`, sessionId: session.id });
       }
     } else {
-      const source = (selection ? card.sources?.find(source => source.bookId === selection.bookId && source.unitId === selection.unitId) : undefined) || card.sources?.find(source => source.type === session.filter.sourceType) || card.sources?.[0];
+      const source = (selection ? card.sources?.find(source => source.bookId === selection.bookId && source.unitId === selection.unitId) : undefined) || card.sources?.find(source => matchesVocabularySource(source, session.filter, ref.senseId));
       recordVocabularyReview(targetState, { id: `${session.id}:${ref.id}`, entryId: ref.entryId, senseId: ref.senseId, mode: card.mode, result: result.result, response: result.response, occurredAt: submittedAt, durationMs: answer?.durationMs, verification: result.result === 'pending' ? 'pending' : card.mode === 'production' ? 'self-reported' : 'objective',
         sourceType: source?.type, sourceId: source?.id, bookId: selection?.bookId || session.filter.bookId || source?.bookId, unitId: selection?.unitId || session.filter.unitId || source?.unitId, skill: session.filter.skill || source?.skill,
       });

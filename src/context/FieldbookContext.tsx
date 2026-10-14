@@ -55,6 +55,8 @@ import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { genericWordbook } from '../domain/vocabulary/wordbookNames';
 import { resolveRegionalSpellingWrongWords } from '../domain/vocabulary/regionalWrongWords';
 import { vocabularyLists, setVocabularyManualStatus, normalizeAnswer } from '../domain/vocabulary';
+import type { VocabularyEntry, VocabularySkill, VocabularySource } from '../domain/vocabulary';
+import { vocabularySourceKey } from '../domain/vocabulary/sources';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
 import { ensurePlans, ensureUnifiedPlans, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan } from '../lib/planTemplates';
@@ -125,7 +127,7 @@ function useFieldbookValue() {
   const [pendingBackup, setPendingBackup] = useState(null);
   const [viewedSession, setViewedSession] = useState(null);
   const [editingVocabularyId, setEditingVocabularyId] = useState(null);
-  const [vocabularySeed, setVocabularySeed] = useState(null);
+  const [vocabularySeed, setVocabularySeed] = useState<(Partial<VocabularyEntry> & { skill?: VocabularySkill; sourceId?: string; sourceType?: VocabularySource['type']; context?: string; sessionId?: string; source?: string }) | null>(null);
   const [editingStoryId, setEditingStoryId] = useState(null);
   const [storyPresetTopicIds, setStoryPresetTopicIds] = useState([]);
   const [checklistToastNeeded, setChecklistToastNeeded] = useState(false);
@@ -484,7 +486,7 @@ function useFieldbookValue() {
     if (!row) { row = structuredClone(change.seed); rows.push(row); }
     Object.entries(change.after).forEach(([field, value]) => {
       if (change.key === 'vocabulary' && ['senses','sources'].includes(field)) {
-        const identity = item => field === 'senses' ? item.id : JSON.stringify([item.type,item.id,item.senseId]);
+        const identity = item => field === 'senses' ? item.id : vocabularySourceKey(item);
         const before = JSON.parse(change.before[field] || '[]');
         const prior = new Map(before.map(item=>[identity(item),JSON.stringify(item)]));
         const current = row[field] || (row[field] = []);
@@ -508,6 +510,13 @@ function useFieldbookValue() {
     setSaveStatus('saving');
     pendingAutomaticSave.current = null;
     const operation = saveQueue.current.catch(() => {}).then(async () => {
+      if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current || completingAttempt.current) return false;
+      try { await ensureAccountModule('vocabulary'); } catch {
+        if (alive.current && accountId() === owner && epoch === loadEpoch.current && generation === saveGeneration.current) {
+          setSaveStatus('failed'); setSaveFailed(true);
+        }
+        return false;
+      }
       if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current || completingAttempt.current) return false;
       const before = structuredClone(stateRef.current);
       applyCommittedVocabulary(before, owner);
@@ -536,7 +545,7 @@ function useFieldbookValue() {
     });
     saveQueue.current = operation;
     return operation;
-  }, [toast]);
+  }, [toast, ensureAccountModule]);
 
   const saveVocabularyLearning = useCallback((bookId, unitId, learning) => {
     const frozen = structuredClone(learning);

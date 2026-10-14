@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation, useNavigate } from 'react-router-dom';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
@@ -115,6 +115,18 @@ it('explains pending requirements and updates the completion checklist', async (
   expect(screen.getByRole('list', { name: 'Sentence completion checklist' })).toHaveTextContent('Dictation compared · Complete');
 });
 
+it('captures source vocabulary after comparison and hides source tools for blind listening', async () => {
+  const ready = { ...createIntensiveSession('part', 's1'), stage: 3, listened: true, revealed: true, transcriptInput: 'The train leaves', dictationResult: 'partial' as const, shadowingAudioId: 'recording' };
+  mocks.fb.state.intensiveSessions = [ready];
+  const user = userEvent.setup(); open();
+  const original = await screen.findByText('The train leaves at nine.');
+  fireEvent.keyDown(original, { key: 'Enter' });
+  await user.click(screen.getByRole('button', { name: 'Add selected text to vocabulary' }));
+  expect(mocks.fb.setVocabularySeed).toHaveBeenCalledWith(expect.objectContaining({ sourceId: 'part', sources: [expect.objectContaining({ exam: expect.objectContaining({ sectionId: 'part', sentenceId: 's1', blockId: 'sentence:s1', start: 0, end: 25 }) })] }));
+  await user.click(screen.getByRole('button', { name: 'Hide transcript for blind re-listening' }));
+  expect(screen.queryByText('The train leaves at nine.')).not.toBeInTheDocument();
+  expect(screen.queryByRole('toolbar', { name: 'Selected text tools' })).not.toBeInTheDocument();
+});
 
 it('does not report all changes saved when newer dictation is still pending', async () => {
   let resolveSave: (saved: boolean) => void = () => {};

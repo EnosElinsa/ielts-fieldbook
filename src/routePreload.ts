@@ -14,6 +14,7 @@ export function preloadRoute(path: string) {
   if (path === '/progress') return import('./features/progress/ProgressPage');
   if (path === '/stories') return import('./features/speaking/StoriesPage');
   if (path.startsWith('/listening/intensive')) return import('./features/exam/IntensiveWorkbenchPage');
+  if (/^\/(reading|listening)\/source\//.test(path)) return import('./features/exam/ExamSourcePage');
   if (/^\/(reading|listening)\/review\//.test(path)) return import('./features/exam/ExamReviewPage');
   if (/^\/(reading|listening)\/review$/.test(path)) return import('./features/exam/ExamReviewQueuePage');
   if (/^\/(reading|listening)\//.test(path)) return import('./features/exam/ExamPracticePage');

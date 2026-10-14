@@ -1,6 +1,7 @@
 import { learningTask } from './content';
 import { resolveVocabularyLearningContext } from './context';
 import { vocabularyStatusSource } from './mastery';
+import { matchesVocabularySource, vocabularySourceKey, normalizeVocabularySource, normalizeVocabularySources } from './sources';
 export { getVocabularyMastery, vocabularyStatusSource } from './mastery';
 export type { VocabularyMastery } from './mastery';
 export { resolveVocabularyLearningContext, VOCABULARY_CONTEXT_VERSION } from './context';
@@ -99,8 +100,8 @@ export function addVocabularyItem(state: Partial<VocabularyStore>, input: Partia
   const sources: VocabularySource[] = input.sources?.length ? input.sources : [{ type: input.sourceType || input.skill || 'personal', id: english(input.sourceId || input.source) || 'personal', ...(input.skill ? { skill: input.skill } : {}) }];
   sources.forEach(raw => {
     const sourceSenseId = (raw.senseId ? senseAliases.get(raw.senseId) || raw.senseId : undefined) || (addedSenseIds.length === 1 ? addedSenseIds[0] : input.senseId);
-    const source = { ...raw, context: english(raw.context), id: english(raw.id) || raw.type, ...(sourceSenseId ? { senseId: sourceSenseId } : {}) };
-    if (!item!.sources.some(current => current.type === source.type && current.id === source.id && current.bookId === source.bookId && current.unitId === source.unitId && current.senseId === source.senseId && current.skill === source.skill)) item!.sources.push(source);
+    const source = normalizeVocabularySource({ ...raw, context: english(raw.context), id: english(raw.id) || raw.type, ...(sourceSenseId ? { senseId: sourceSenseId } : {}) });
+    if (!item!.sources.some(current => vocabularySourceKey(current) === vocabularySourceKey(source))) item!.sources.push(source);
   });
   item.updatedAt = timestamp;
   senses.forEach(raw => {
@@ -258,8 +259,8 @@ export function getVocabularyReviewQueue(state: Partial<VocabularyStore>, filter
     const senses = selectedOnly ? (resolved.sense ? [resolved.sense] : []) : entry.senses;
     senses.forEach(sense => {
     if (filter.senseId && sense.id !== filter.senseId) return;
-    const sources = entry.sources.filter(s => (!s.senseId || s.senseId === sense.id) && (!filter.bookId || s.bookId === filter.bookId) && (!filter.unitId || s.unitId === filter.unitId) && (!filter.skill || s.skill === filter.skill) && (!filter.sourceType || s.type === filter.sourceType));
-    if ((filter.bookId || filter.unitId || filter.skill || filter.sourceType) && !sources.length) return;
+    const sources = entry.sources.filter(s => matchesVocabularySource(s, filter, sense.id));
+    if ((filter.bookId || filter.unitId || filter.skill || filter.sourceType || filter.sourceId) && !sources.length) return;
     const learning = learningBySense.get(`${entry.id}:${sense.id}`);
     const modes = filter.mode ? [filter.mode] : VOCABULARY_MODES;
     modes.forEach(mode => {
@@ -281,7 +282,7 @@ export function getActiveWrongWords(state: VocabularyStore, filter: ReviewQueueF
   return state.vocabularyStates.filter(learning => learning.wrong.active).flatMap(learning => {
     const entry = state.vocabulary.find(e => e.id === learning.entryId); if (!entry || entry.tags.includes('archived')) return [];
     if (filter.dimension && !Object.entries(learning.wrong.modes).some(([mode, wrong]) => wrong?.active && modeDimensions[mode as VocabularyMode].includes(filter.dimension!))) return [];
-    if ((filter.bookId || filter.unitId || filter.skill || filter.sourceType) && !entry.sources.some(s => (!s.senseId || s.senseId === learning.senseId) && (!filter.bookId || s.bookId === filter.bookId) && (!filter.unitId || s.unitId === filter.unitId) && (!filter.skill || s.skill === filter.skill) && (!filter.sourceType || s.type === filter.sourceType))) return [];
+    if ((filter.bookId || filter.unitId || filter.skill || filter.sourceType || filter.sourceId) && !entry.sources.some(s => matchesVocabularySource(s, filter, learning.senseId))) return [];
     return [{ ...learning, entry, learningState: learning }];
   }).sort((a, b) => (b.wrong.lastFailureAt || '').localeCompare(a.wrong.lastFailureAt || ''));
 }
@@ -329,7 +330,7 @@ export function normalizeVocabularyCollections(source: Partial<VocabularyStore>)
     ids.add(entry.id);terms.add(key);return true;
   });
   if(canonical){
-    data.vocabulary=raw.map(entry=>({...entry,term:english(entry.term),tags:englishList(entry.tags),sources:(entry.sources||[]).map(source=>({...source,context:english(source.context)})),senses:entry.senses.map(sense=>({...sense,definition:english(sense.definition),example:english(sense.example),pos:english(sense.pos)||'expression',collocations:englishList(sense.collocations),usage:english(sense.usage),synonyms:englishList(sense.synonyms),antonyms:englishList(sense.antonyms),distinctions:englishList(sense.distinctions),wordFamily:sense.wordFamily === undefined ? undefined : englishList(sense.wordFamily),register:sense.register === undefined ? undefined : english(sense.register),source:english(sense.source),license:english(sense.license)})),meaning:english(entry.senses[0].definition),example:english(entry.senses[0].example)}));
+    data.vocabulary=raw.map(entry=>({...entry,term:english(entry.term),tags:englishList(entry.tags),sources:normalizeVocabularySources((entry.sources||[]).map(source=>({...source,context:english(source.context)}))),senses:entry.senses.map(sense=>({...sense,definition:english(sense.definition),example:english(sense.example),pos:english(sense.pos)||'expression',collocations:englishList(sense.collocations),usage:english(sense.usage),synonyms:englishList(sense.synonyms),antonyms:englishList(sense.antonyms),distinctions:englishList(sense.distinctions),wordFamily:sense.wordFamily === undefined ? undefined : englishList(sense.wordFamily),register:sense.register === undefined ? undefined : english(sense.register),source:english(sense.source),license:english(sense.license)})),meaning:english(entry.senses[0].definition),example:english(entry.senses[0].example)}));
     const prior=new Map(states.map(learning=>[`${learning.entryId}:${learning.senseId}`,learning]));
     data.vocabulary.forEach(entry=>entry.senses.forEach(sense=>{
       const existing=prior.get(`${entry.id}:${sense.id}`);

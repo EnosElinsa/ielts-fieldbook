@@ -4,7 +4,7 @@ import { normalizeVocabularyScope } from '../../domain/vocabulary/identities';
 import { PageLoadingState, StateMessage } from '../../components/AsyncState';
 import { VocabularyLearningVisual } from './VocabularyLearningVisual';
 import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useParams, } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
@@ -62,7 +62,8 @@ export function VocabularyGroupLearnPage() {
   const accountPositionReset = useRef(false);
   const frozenBatches = useRef(new Map<string, {entryId:string;senseId:string}[]>());
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
-  useEffect(() => {
+  // The ready card must have its queue and restored progress before accepting input.
+  useLayoutEffect(() => {
     if (status !== 'ready') return;
     const queue = acquireVocabularyLearningSync({ owner, bookId, unitId, currentOwner:accountId, save:learning => saveLearning.current(bookId, unitId, learning) });
     sync.current = queue;
@@ -77,7 +78,7 @@ export function VocabularyGroupLearnPage() {
       release();
     };
   }, [key, status]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (status !== 'ready') return;
     const identity = `${key}:${idsKey}`;
     if (initialized.current === identity) return;
