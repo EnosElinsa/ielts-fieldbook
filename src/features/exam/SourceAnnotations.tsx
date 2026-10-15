@@ -20,7 +20,7 @@ const SourceContext = createContext<{
   edit: (id: string) => void; register: (id: string, block: Block) => () => void;
 } | null>(null);
 
-export function AnnotatedText({ blockId, text, version }: { blockId: string; text: string; version: string }) {
+export function AnnotatedText({ blockId, text, version, hiddenPrefixLength = 0 }: { blockId: string; text: string; version: string; hiddenPrefixLength?: number }) {
   const context = useContext(SourceContext);
   const register = context?.register;
   useEffect(() => register?.(blockId, { text, version }), [register, blockId, text, version]);
@@ -28,9 +28,15 @@ export function AnnotatedText({ blockId, text, version }: { blockId: string; tex
   return <span data-source-block={blockId} data-source-version={version} tabIndex={context ? 0 : undefined}
     title={context ? 'Annotate this text' : undefined}
     onKeyDown={event => { if (event.target === event.currentTarget && ['Enter', ' '].includes(event.key)) { event.preventDefault(); context?.selectBlock(blockId, text, version); } }}>
-    {segments.map(segment => segment.annotationIds.length ? <mark key={segment.start} className={`source-highlight source-highlight-${segment.color}`} title="Edit annotation" tabIndex={0}
+    {segments.map(segment => {
+      // Keep the complete source in the DOM and registry so saved ranges retain their offsets.
+      const hiddenLength = Math.max(0, Math.min(segment.text.length, hiddenPrefixLength - segment.start));
+      const visible = segment.text.slice(hiddenLength);
+      const content = visible && (segment.annotationIds.length ? <mark key={segment.start} className={`source-highlight source-highlight-${segment.color}`} title="Edit annotation" tabIndex={0}
       onClick={() => context?.edit(segment.annotationIds.at(-1)!)}
-      onKeyDown={event => { if (['Enter', ' '].includes(event.key)) { event.preventDefault(); event.stopPropagation(); context?.edit(segment.annotationIds.at(-1)!); } }}>{segment.text}</mark> : segment.text)}
+      onKeyDown={event => { if (['Enter', ' '].includes(event.key)) { event.preventDefault(); event.stopPropagation(); context?.edit(segment.annotationIds.at(-1)!); } }}>{visible}</mark> : visible);
+      return hiddenLength ? <span key={segment.start}><span hidden aria-hidden="true">{segment.text.slice(0, hiddenLength)}</span>{content}</span> : content;
+    })}
   </span>;
 }
 

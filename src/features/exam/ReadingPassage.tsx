@@ -5,20 +5,25 @@ import { AnnotatedText } from './SourceAnnotations';
 const paragraphMarker = /^([A-Z])(?:\s+(\d{1,3}))?$/;
 
 export function readingParagraphs(paragraphs: ExamPassage['paragraphs']) {
-  const groups: { label: string; marker?: ExamPassage['paragraphs'][number]; fragments: ExamPassage['paragraphs'] }[] = [];
+  const groups: { label: string; marker?: ExamPassage['paragraphs'][number]; fragments: ExamPassage['paragraphs']; prefixLength?: number }[] = [];
   const markers = paragraphs.filter(row => paragraphMarker.test(row.text.trim()));
   const lettered = markers.length > 0 && markers.every((row, index) => row.text.trim().match(paragraphMarker)![1] === String.fromCharCode(65 + index));
+  // Some imports attach the letter to the paragraph. A preceding title beginning
+  // with the article "A" is not itself paragraph A.
+  const embeddedStart = !lettered ? paragraphs.findIndex((row, index) => /^A\s+\S/.test(row.text) && /^B\s+\S/.test(paragraphs[index + 1]?.text || '')) : -1;
+  const embedded = embeddedStart >= 0 && paragraphs.slice(embeddedStart).every((row, index) => new RegExp(`^${String.fromCharCode(65 + index)}\\s+\\S`).test(row.text));
   for (const [index, paragraph] of paragraphs.entries()) {
     const marker = lettered && paragraph.text.trim().match(paragraphMarker);
     if (marker) groups.push({ label: marker[1], marker: paragraph, fragments: [] });
     else if (lettered && groups.length) groups.at(-1)!.fragments.push(paragraph);
+    else if (embedded) groups.push({ label: index < embeddedStart ? '' : String.fromCharCode(65 + index - embeddedStart), prefixLength: index < embeddedStart ? 0 : paragraph.text.match(/^[A-Z]\s+/)![0].length, fragments: [paragraph] });
     else groups.push({ label: /^[A-Z]$/.test(paragraph.id) ? paragraph.id : String(index + 1), fragments: [paragraph] });
   }
   return groups;
 }
 
 export function headingParagraphLabel(questionNumber: number, index: number, paragraphs: ExamPassage['paragraphs']) {
-  const groups = readingParagraphs(paragraphs);
+  const groups = readingParagraphs(paragraphs).filter(group => group.label);
   return groups.find(group => Number(group.marker?.text.trim().match(paragraphMarker)?.[2]) === questionNumber)?.label
     || groups[index]?.label || String.fromCharCode(65 + index);
 }
@@ -71,8 +76,8 @@ export function ReadingPassage({ passage, sourceView = false }: { passage: ExamP
     <Heading>{passage.title}</Heading>
     {readingParagraphs(passage.paragraphs).map(group => <Fragment key={group.marker?.id || group.fragments[0]?.id}>
       {group.marker && <span hidden aria-hidden="true"><AnnotatedText blockId={`passage:${passage.id}:${group.marker.id}`} text={group.marker.text} version={version} /></span>}
-      <p><span className="exam-paragraph-id" aria-label={`Paragraph ${group.label}`}>{group.label}</span>{' '}
-      {group.fragments.map((fragment, index) => <span key={fragment.id}>{index > 0 && ' '}<AnnotatedText blockId={`passage:${passage.id}:${fragment.id}`} text={fragment.text} version={version} /></span>)}
+      <p>{group.label && <><span className="exam-paragraph-id" aria-label={`Paragraph ${group.label}`}>{group.label}</span>{' '}</>}
+      {group.fragments.map((fragment, index) => <span key={fragment.id}>{index > 0 && ' '}<AnnotatedText blockId={`passage:${passage.id}:${fragment.id}`} text={fragment.text} version={version} hiddenPrefixLength={index === 0 ? group.prefixLength : 0} /></span>)}
       </p></Fragment>)}
   </article>;
 }

@@ -44,6 +44,22 @@ test('direct source navigation hides unrevealed transcript and vocabulary tools'
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
 
+test('question location still works for inline gaps whose generated scaffold is hidden', () => {
+  mocks.catalog.questions = [{ id: 'q1', sectionId: 'part', skill: 'listening', number: 1, type: 'gap', groupId: 'notes', prompt: 'Question 1 · Complete the marked gap in the text above.', stimulusHtml: '<p>Destination [1 ____]</p>', provenance: { sourceVersion: '1' } }];
+  mocks.catalog.assets = [];
+  render(<MemoryRouter initialEntries={['/listening/source/part?block=question%3Aq1&question=q1']}><Routes><Route path="/listening/source/:sectionId" element={<ExamSourcePage skill="listening" />} /></Routes></MemoryRouter>);
+  expect(document.activeElement).toHaveAttribute('data-exam-gap', '1');
+  expect(document.activeElement?.closest('p')).toHaveTextContent('Destination');
+});
+
+test('a later inline question locates its numbered gap in the shared source', () => {
+  mocks.catalog.questions = [1, 2].map(number => ({ id: `q${number}`, sectionId: 'part', skill: 'listening', number, type: 'gap', groupId: 'notes', prompt: `Question ${number} · Complete the marked gap in the text above.`, stimulusHtml: '<p>Destination [1 ____]</p><p>Date [2 ____]</p>', provenance: { sourceVersion: '1' } }));
+  mocks.catalog.assets = [];
+  render(<MemoryRouter initialEntries={['/listening/source/part?block=question%3Aq2&question=q2']}><Routes><Route path="/listening/source/:sectionId" element={<ExamSourcePage skill="listening" />} /></Routes></MemoryRouter>);
+  expect(document.activeElement).toHaveAttribute('data-exam-gap', '2');
+  expect(document.activeElement?.closest('p')).toHaveTextContent('Date');
+});
+
 test('comparison unlocks only the selected intensive sentence and its capture action', () => {
   mocks.fb.state.intensiveSessions = [{ ...createIntensiveSession('part', 'one'), stage: 2, revealed: true, dictationResult: 'correct' }];
   view();

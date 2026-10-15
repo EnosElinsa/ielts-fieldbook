@@ -17,6 +17,25 @@ function view(mock = false) {
     <p><AnnotatedText blockId="p:A" text="The garden opened in 1990." version="1" /></p>
   </SourceAnnotations>);
 }
+
+test('hidden question labels preserve saved highlights and new selection offsets', async () => {
+  const text = '1. The garden opened in 1990.';
+  const page = () => <SourceAnnotations sourceId="s" skill="reading"><p><AnnotatedText blockId="question:q1" text={text} version="1" hiddenPrefixLength={3} /></p></SourceAnnotations>;
+  const first = render(page());
+  const block = first.container.querySelector('[data-source-block]')!;
+  expect(block).toHaveTextContent(text);
+  expect(screen.getByText('1.')).not.toBeVisible();
+  const visible = block.firstElementChild!.lastChild!;
+  const range = document.createRange(); range.setStart(visible, 4); range.setEnd(visible, 10);
+  const selection = window.getSelection()!; selection.removeAllRanges(); selection.addRange(range);
+  fireEvent.mouseUp(block); fireEvent.click(screen.getByRole('button', { name: 'Highlight yellow' }));
+  await waitFor(() => expect(mocks.fb.stateRef.current.examAnnotations).toHaveLength(1));
+  expect(mocks.fb.stateRef.current.examAnnotations[0].anchors).toMatchObject([{ start: 7, end: 13, quote: 'garden' }]);
+  selection.removeAllRanges(); first.unmount();
+  const reopened = render(page());
+  expect(reopened.container.querySelector('mark')).toHaveTextContent('garden');
+  expect(screen.getByText('1.')).not.toBeVisible();
+});
 test('keyboard selection creates a cloud-owned highlight and restores it after remount', async () => {
   const first = view();
   fireEvent.keyDown(screen.getByText('The garden opened in 1990.'), { key: 'Enter' });

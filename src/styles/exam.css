@@ -265,6 +265,37 @@
   .exam-heading-answers { padding-left: 18px; border-left: 1px solid var(--rule); }
 }
 
+/* Matching prompts need the full panel, even when the shared choices are terse. */
+.exam-group-matching .exam-heading-workspace { grid-template-columns: minmax(0,1fr); gap: 4px; }
+.exam-group-matching .exam-heading-answers { padding-left: 0; border-left: 0; }
+.exam-group-matching .exam-heading-list { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(180px,100%),1fr)); gap: 6px 18px; }
+.exam-letter-choices .exam-heading-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.exam-letter-choices .exam-heading-list li { display: inline-flex; justify-content: center; align-items: center; min-width: 30px; min-height: 30px; padding: 2px 8px; background: var(--surface-soft); border: 1px solid var(--rule); border-radius: 5px; }
+.exam-group-matching .exam-heading-answer { grid-template-columns: 24px minmax(0,1fr) 80px 32px; align-items: start; gap: 8px; padding: 14px 0; }
+.exam-group-matching .exam-heading-answer .exam-prompt { grid-column: 2 / -1; grid-row: 1; font-size: 14px; line-height: 1.65; }
+.exam-group-matching .exam-heading-answer > .select-field { grid-column: 2 / 4; grid-row: 2; max-width: 180px; min-height: 38px; padding: 8px 12px; }
+.exam-group-matching .exam-heading-answer .exam-notes-toggle { grid-column: 4; grid-row: 2; }
+.exam-group-matching .exam-heading-answer .exam-number { align-self: start; margin-top: 2px; }
+.exam-evidence-context { display: flex; align-items: start; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; padding: 12px; border: 1px solid var(--blue); background: var(--soft-blue); border-radius: 6px; font: 13px/1.65 Manrope,Arial,sans-serif; }
+.exam-evidence-context > div { flex: 1 1 200px; min-width: 0; }
+.exam-evidence-context p { margin: 4px 0 0; }
+.exam-evidence-context > p { flex-basis: 100%; }
+.exam-source-panel > .exam-evidence-context { position: sticky; top: 0; z-index: 2; background: var(--sheet); }
+.exam-source-view > .back-link { position: sticky; top: 0; z-index: 3; background: var(--sheet); box-shadow: 0 4px 0 var(--sheet); }
+[data-source-block][data-located="true"],.exam-source-document [data-located="true"] { background: var(--soft-blue); outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 2px; }
+.exam-source-questions > summary { cursor: pointer; padding: 12px 0; font-weight: 600; }
+.exam-review-card:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+@media(max-width:740px) {
+  .exam-group-matching .exam-heading-answer { grid-template-columns: 24px minmax(0,1fr) 64px 44px; }
+  .exam-group-matching .exam-heading-answer > .select-field { min-height: 44px; }
+}
+@media(max-width:900px) {
+  .exam-source-panel > .exam-evidence-context { position: fixed; top: auto; bottom: calc(70px + env(safe-area-inset-bottom,0px)); left: 12px; right: 12px; margin: 0; padding: 10px; align-items: center; gap: 8px; box-shadow: 0 4px 18px #0002; }
+  .exam-source-panel > .exam-evidence-context > div { flex: 1 1 80px; font-size: 12px; }
+  .exam-source-panel > .exam-evidence-context > div p { display: none; }
+  .exam-source-panel > .exam-evidence-context .btn { flex: 0 0 auto; font-size: 12px; min-height: 44px; }
+}
+
 /* Notes are optional tools, so their closed state takes no extra answer row. */
 .exam-question-heading .exam-notes-toggle { margin-left: auto; }
 .exam-notes-toggle { display: inline-flex; align-items: center; justify-content: center; position: relative; flex: 0 0 auto; width: 32px; height: 32px; padding: 0; border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--muted); cursor: pointer; }

@@ -38,6 +38,18 @@ test('legacy letter and question markers restore real paragraphs without changin
   expect(screen.getByText('Then it closed.').closest('p')).toHaveTextContent('B Then it closed.');
 });
 
+test('embedded paragraph letters replace generated numbers while preserving source blocks', async () => {
+  mocks.catalog.passages[0].paragraphs = [{ id: 'title', text: 'A garden in the city' }, { id: 'old-A', text: 'A The garden opened.' }, { id: 'old-B', text: 'B Then it closed.' }];
+  practice(); await screen.findByRole('textbox', { name: 'Answer 1' });
+  const source = document.getElementById('exam-panel-source')!;
+  expect(within(source).getByLabelText('Paragraph A')).toBeVisible();
+  expect(within(source).getByLabelText('Paragraph B')).toBeVisible();
+  expect(within(source).queryByLabelText('Paragraph 1')).not.toBeInTheDocument();
+  const block = source.querySelector<HTMLElement>('[data-source-block="passage:passage:old-A"]')!;
+  expect(block.textContent).toBe('A The garden opened.');
+  expect(within(block).getByText('A')).not.toBeVisible();
+});
+
 test('heading tasks display the complete shared list and name the real source paragraphs', async () => {
   mocks.catalog.passages[0].paragraphs = [{ id: 'legacy-0', text: 'A 1' }, { id: 'legacy-1', text: 'The garden opened.' }, { id: 'legacy-2', text: 'B 2' }, { id: 'legacy-3', text: 'Then it closed.' }];
   mocks.catalog.questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, type: 'heading', groupId: 'headings', prompt: `Question ${number} · Complete the marked gap in the text above.`, options: ['I. A garden', 'II. A closure'], answer: 'I. A garden', stimulusHtml: '<p>List of Headings:</p>' }));
@@ -99,6 +111,45 @@ test('different matching choices are not presented as a shared reference', async
   practice();
   await screen.findByRole('combobox', { name: 'Answer 1' });
   expect(screen.queryByRole('list', { name: 'Answer choices' })).not.toBeInTheDocument();
+});
+
+test.each(['reading', 'listening'] as const)('%s question numbers appear once while original annotation offsets remain intact', async skill => {
+  mocks.catalog.sections[0].skill = skill;
+  mocks.catalog.questions = [{ ...catalog.questions[0], skill, type: 'matching', prompt: '1. a description of an early timekeeping invention affected by cold temperatures', options: ['A', 'B'], answer: 'B' }];
+  if (skill === 'listening') mocks.catalog.assets = [{ id: 'audio', sectionId: 'section', paperId: 'paper', kind: 'audio', storagePath: 'audio.mp3', provenance }];
+  render(<MemoryRouter initialEntries={[`/${skill}/section`]}><Routes><Route path={`/${skill}/:sectionId`} element={<ExamPracticePage skill={skill} />} /></Routes></MemoryRouter>);
+  await screen.findByRole('combobox', { name: 'Answer 1' });
+  const block = document.querySelector<HTMLElement>('[data-source-block="question:q1"]')!;
+  expect(block.textContent).toBe(mocks.catalog.questions[0].prompt);
+  expect(within(block).getByText('1.')).not.toBeVisible();
+  expect(screen.getByText('a description of an early timekeeping invention affected by cold temperatures')).toBeVisible();
+});
+
+test('reading evidence locates the passage in place and returns to the same answer', async () => {
+  mocks.catalog.questions[0].evidence = { text: 'The garden opened in 1990.' };
+  practice(); const user = userEvent.setup();
+  const answer = await screen.findByRole('textbox', { name: 'Answer 1' });
+  await user.type(answer, '2000'); await user.click(screen.getByRole('button', { name: 'Check answer 1' }));
+  await user.click(screen.getByRole('button', { name: 'Locate evidence' }));
+  await waitFor(() => expect(document.querySelector('[data-source-block="passage:passage:A"]')).toHaveFocus());
+  expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/section');
+  await user.click(screen.getByRole('button', { name: 'Back to question 1' }));
+  await waitFor(() => expect(answer).toHaveFocus()); expect(answer).toHaveValue('2000');
+});
+
+test('review source navigation returns to the same question, filter and unsaved notes', async () => {
+  savedReview();
+  render(<MemoryRouter initialEntries={['/reading/review/saved?planId=plan']}><Routes><Route path="/reading/review/:attemptId" element={<ExamReviewPage skill="reading" />} /><Route path="/reading/source/:sectionId" element={<ExamSourcePage skill="reading" />} /></Routes></MemoryRouter>);
+  const user = userEvent.setup();
+  await user.click(screen.getByRole('button', { name: 'All answers (2)' }));
+  await user.type(screen.getByRole('textbox', { name: 'Evidence for question 2' }), 'my unsaved evidence');
+  const card = screen.getByRole('heading', { name: 'The garden opened in 2000.' }).closest('article')!;
+  await user.click(within(card).getByRole('link', { name: 'Locate question' }));
+  await waitFor(() => expect(document.activeElement).toHaveAttribute('data-source-block', 'question:q2'));
+  await user.click(screen.getByRole('link', { name: 'Back to results' }));
+  expect(await screen.findByRole('textbox', { name: 'Evidence for question 2' })).toHaveValue('my unsaved evidence');
+  expect(screen.getByRole('button', { name: 'All answers (2)' })).toHaveAttribute('aria-pressed', 'true');
+  expect(document.activeElement).toHaveAttribute('id', 'exam-review-q2');
 });
 
 test('map answers can open the source beside the current answer and return without losing it', async () => {
@@ -357,7 +408,8 @@ test('source simplification preserves real stems, missing-gap scaffolds, diagram
   mocks.catalog.assets = [{ id: 'diagram', paperId: 'paper', kind: 'image', storagePath: 'diagram', sourceUrl: '', provenance }];
   practice(); await screen.findByRole('textbox', { name: 'Answer 1' });
   expect(screen.getByText('The garden opened in _____.')).toBeInTheDocument();
-  expect(screen.getByText('Question 2 · Complete the marked gap in the text above.')).toBeInTheDocument();
+  expect(screen.getByText('Complete the marked gap in the text above.')).toBeVisible();
+  expect(document.querySelector('[data-source-block="question:q2"]')).toHaveTextContent('Question 2 · Complete the marked gap in the text above.');
   expect(screen.getAllByText('Answer the questions.')).toHaveLength(1);
   expect(await screen.findByRole('img', { name: 'Question 1 diagram' })).toBeInTheDocument();
   expect(screen.getByText('Maximum 1 word')).toBeInTheDocument();
