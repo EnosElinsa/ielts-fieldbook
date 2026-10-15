@@ -1,3 +1,4 @@
+import { PageLoadingState } from './components/AsyncState';
 import { lazy, StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -19,7 +20,7 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <PageErrorBoundary standalone>
       <AuthGate>
-        <Suspense fallback={<main className="auth-screen" role="status">Loading workspace...</main>}>
+        <Suspense fallback={<main className="workspace-loading"><PageLoadingState variant="workbench" message="Opening your workspace…" /></main>}>
           <AppRoutes />
         </Suspense>
       </AuthGate>

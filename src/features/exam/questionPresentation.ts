@@ -39,8 +39,15 @@ export function questionPresentation(questions: ExamQuestion[]) {
 }
 
 /** Only hide an explicit, matching question label; quantities and dates remain source text. */
-export function questionNumberPrefixLength(text: string, number: number) {
+export function questionNumberPrefixLength(text: string, number: number, endNumber = number) {
   if (!Number.isInteger(number) || number < 1) return 0;
+  if (Number.isInteger(endNumber) && endNumber > number) {
+    const range = `${number}\\s*[-–—]\\s*${endNumber}`;
+    const label = new RegExp(`^\\s*(?:Questions?\\s+${range}(?:\\s*[.:)·]\\s*|\\s+)|\\(\\s*${range}\\s*\\)\\s*|${range}(?:[.)．、:](?!\\d)\\s*|\\s+))(?=\\S)`, 'i');
+    const match = text.match(label);
+    if (match) return match[0].length;
+  }
+  if (new RegExp(`^\\s*(?:Questions?\\s+|\\(\\s*)?${number}\\s*[-–—]\\s*\\d+`, 'i').test(text)) return 0;
   const label = new RegExp(`^\\s*(?:Question\\s+${number}(?:\\s*[.:)·-]\\s*|\\s+)|\\(\\s*${number}\\s*\\)\\s*|${number}(?:[.)．、:](?!\\d)\\s*|\\s+))(?=\\S)`, 'i');
   return text.match(label)?.[0].length || 0;
 }

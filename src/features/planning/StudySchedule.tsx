@@ -6,7 +6,7 @@ import { planningSettingsKey } from '../../lib/planTemplates';
 import { dateKey } from '../../domain';
 
 export function useStudySchedule() {
-  const fb=useFieldbook();const [saving,setSaving]=useState(false);const [error,setError]=useState('');
+  const fb=useFieldbook();const [saving,setSaving]=useState(true);const [error,setError]=useState('');
   const settingsKey=planningSettingsKey(fb.state.settings);const today=dateKey(new Date());
   const refresh=useCallback(async()=>{
     setSaving(true);setError('');

@@ -325,6 +325,18 @@
 }
 
 /* Notes are optional tools, so their closed state takes no extra answer row. */
+.exam-number.is-range { width: auto; min-width: 52px; padding-inline: 8px; flex-shrink: 0; border-radius: 8px; white-space: nowrap; }
+.exam-question-nav a { width: auto; min-width: 32px; padding-inline: 6px; }
+.exam-question-nav a.partial { background: var(--surface-soft); border-color: var(--gold); border-style: dashed; }
+.exam-multiple { min-width: 0; margin: 12px 0 0; padding: 0; border: 0; }
+.exam-multiple legend { padding: 0; color: var(--ink); font-size: 13px; font-weight: 600; }
+.exam-choice-count { margin: 5px 0 10px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.exam-choice-count.is-complete { color: var(--blue); }
+.exam-multiple .exam-options { margin-top: 0; }
+.exam-options label:has(input:disabled) { opacity: 1; }
+.exam-options label:has(input:disabled:not(:checked)) { color: var(--muted); cursor: default; }
+.exam-options input { flex-shrink: 0; margin-top: 3px; }
+@media(max-width:740px) { .exam-question-nav a { min-width: 44px; min-height: 44px; } .exam-options label { min-height: 44px; align-items: center; } .exam-options input { margin-top: 0; } }
 .exam-question-heading .exam-notes-toggle { margin-left: auto; }
 .exam-notes-toggle { display: inline-flex; align-items: center; justify-content: center; position: relative; flex: 0 0 auto; width: 32px; height: 32px; padding: 0; border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--muted); cursor: pointer; }
 .exam-notes-toggle:hover,.exam-notes-toggle[aria-expanded="true"] { background: var(--soft-blue); color: var(--blue); }

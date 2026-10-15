@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { PanelLoadingState } from '../../components/AsyncState';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CalendarDays, Check, Clock3 } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
@@ -37,8 +38,8 @@ function UnifiedToday() {
     {schedule.error && <div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
     <div className="study-today-main">
       <section className="study-next" aria-busy={schedule.saving} data-plan-id={next?.id}>
-        <p className="kicker">{next?.dateKey<today?'Overdue · In progress':next?.status==='in_progress'?'In progress':'Next task'}</p>
-        <h3>{next?.title || (schedule.saving?'Loading your plan':'Today is complete')}</h3>
+        <p className="kicker">{next?.dateKey<today?'Overdue · In progress':next?.status==='in_progress'?'In progress':next?'Next task':"Today's plan"}</p>
+        {!next&&schedule.saving?<PanelLoadingState variant="document" message="Preparing your plan…"/>:<h3>{next?.title || (schedule.error?'Plan unavailable':budget===0?'Rest day':done.length?'Today is complete':'No tasks planned yet')}</h3>}
         {next&&<p>{studyTargetSummary(next)}</p>}
         {next ? <><div className="study-task-meta"><span className={`study-skill study-skill-${next.skill||'writing'}`}>{next.skill || 'Practice'}</span><span><Clock3 size={15}/>{next.estimatedMinutes || fb.state.settings.dailyMinutes} min</span>{next.dateKey<today&&<span>Due {next.dateKey}</span>}</div><p>{next.description}</p><p className="study-completion-condition">{next.completion?.description}</p><TaskStartButton key={next.id} plan={next}/></> : <>{budget===0&&<p>Rest day. You can still add a task in Planning.</p>}{upcoming&&<p>Next study day: {new Date(`${upcoming.dateKey}T00:00:00`).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'})}</p>}<Link className="btn line" to="/planning">Open plan <ArrowRight size={16}/></Link></>}
       </section>

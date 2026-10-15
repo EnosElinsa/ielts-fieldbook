@@ -1,3 +1,4 @@
+import { PanelLoadingState } from '../../components/AsyncState';
 import { useVocabularySearchParams } from './vocabularyNavigation';
 import { VocabularyLink as Link, VocabularyBackLink, useVocabularyReturn, vocabularyReturnLabel } from './VocabularyRouteLink';
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -353,7 +354,7 @@ export function VocabularyEntryPage() {
       <VocabularyBackLink label={returnLabel}/>
       {!entry ? (
         status === "loading" ? (
-          <p role="status">Loading vocabulary entry…</p>
+          <PanelLoadingState variant="document" message="Loading vocabulary entry…" onRetry={retry} retryLabel="Retry entry" />
         ) : status === "error" ? (
           <div role="alert">
             Vocabulary entry could not be loaded.{" "}

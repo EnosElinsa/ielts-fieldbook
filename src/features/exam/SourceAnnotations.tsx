@@ -1,3 +1,4 @@
+import { questionLabel } from '../../domain/exam/questionSlots';
 import { SelectField } from '../../components/SelectField';
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { BookmarkPlus, BookOpen, Eraser, MessageSquarePlus, Pencil, Trash2, LocateFixed, X } from 'lucide-react';
@@ -7,7 +8,7 @@ import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 import { accountId } from '../../storage/remote';
 import { readExamRecovery, writeExamRecovery, clearExamRecovery } from '../../storage/examRecovery';
 import { annotationSegments, HIGHLIGHT_COLORS, makeTextAnchor, normalizeExamAnnotations, resolveTextAnchor, type ExamAnnotation, type HighlightColor, type TextAnchor } from '../../domain/exam/annotations';
-import type { ExamSkill } from '../../domain/exam/types';
+import type { ExamSkill, ExamQuestion } from '../../domain/exam/types';
 import type { EvidenceRange } from './evidenceLocation';
 import { snapTextSelection, vocabularySelectionText } from '../../domain/exam/textSelection';
 import './source-annotations.css';
@@ -82,7 +83,7 @@ function applyRecovery(rows: ExamAnnotation[], pending: Recovery): ExamAnnotatio
 
 export function SourceAnnotations({ sourceId, skill, mock = false, disabled = false, allowedBlockIds, questions = [], focusedQuestion = '', onQuestionChange, onEvidence, onVocabulary, onRevealBlock, children }: {
   sourceId: string; skill: ExamSkill; mock?: boolean; disabled?: boolean;
-  questions?: { id: string; number: number }[]; focusedQuestion?: string;
+  questions?: (Pick<ExamQuestion, 'id' | 'number'> & Partial<Pick<ExamQuestion, 'type' | 'points'>>)[]; focusedQuestion?: string;
   onQuestionChange?: (id: string) => void; onEvidence?: (id: string, quote: string) => void;
   onVocabulary?: (selection: SelectionData) => void; children: ReactNode;
   onRevealBlock?: (blockId: string) => void;
@@ -273,7 +274,7 @@ export function SourceAnnotations({ sourceId, skill, mock = false, disabled = fa
       {selection.annotationIds && selection.annotationIds.length > 1 && <label className="source-overlap-picker">Overlapping annotations<SelectField aria-label="Overlapping annotation" value={selectedRow?.id || ''} disabled={saving || disabled} onChange={event => { if (selectionTrigger.current) open(event.target.value, selectionTrigger.current, false, selection.annotationIds); }}>{selection.annotationIds.map((id, index) => { const row = rows.find(item => item.id === id); return row && <option key={id} value={id}>{index + 1}. {row.highlighted === false ? 'Note' : row.color} · {row.note || row.quote}</option>; })}</SelectField></label>}
       {selectedRow && selectedRow.highlighted !== false && <button className="source-remove-highlight" aria-label="Remove highlight" type="button" disabled={disabled || saving} onClick={() => void removeHighlight(selectedRow)}><Eraser size={15} />Remove highlight{selectedRow.note.trim() ? ' · keep note' : ''}</button>}
       <p className="source-selection-hint">{selectedRow ? 'Change color, edit a note, or remove the highlight.' : 'Whole words selected.'}{!mock && onVocabulary ? ' Collect a word or phrase with the book icon.' : ''}</p>
-      {!mock && onEvidence && <div className="source-evidence-tools"><SelectField aria-label="Question for selected evidence" disabled={disabled} value={questionId} onChange={event => { setQuestionId(event.target.value); onQuestionChange?.(event.target.value); }}><option value="">Choose a question</option>{questions.map(question => <option key={question.id} value={question.id}>Question {question.number}</option>)}</SelectField><button className="icon-button" type="button" title="Attach selected evidence" aria-label="Attach selected evidence" disabled={disabled || !questionId} onClick={() => { onEvidence(questionId, selection.quote); closeSelection(); setStatus(`Evidence attached to question ${questions.find(question => question.id === questionId)?.number}.`); }}><BookmarkPlus size={17} /></button></div>}
+      {!mock && onEvidence && <div className="source-evidence-tools"><SelectField aria-label="Question for selected evidence" disabled={disabled} value={questionId} onChange={event => { setQuestionId(event.target.value); onQuestionChange?.(event.target.value); }}><option value="">Choose a question</option>{questions.map(question => <option key={question.id} value={question.id}>{questionLabel(question)}</option>)}</SelectField><button className="icon-button" type="button" title="Attach selected evidence" aria-label="Attach selected evidence" disabled={disabled || !questionId} onClick={() => { onEvidence(questionId, selection.quote); closeSelection(); const target = questions.find(question => question.id === questionId); setStatus(target ? `Evidence attached to ${questionLabel(target).toLowerCase()}.` : 'Evidence attached.'); }}><BookmarkPlus size={17} /></button></div>}
     </div>}
     {error && !noteOpen && <div className="source-annotation-error" role="alert">{error}<button className="btn line" disabled={saving} onClick={() => void persist(pendingRef.current)} aria-label="Retry annotation save">Retry save</button></div>}
     {status && <p className="source-annotation-status" role="status">{status}</p>}

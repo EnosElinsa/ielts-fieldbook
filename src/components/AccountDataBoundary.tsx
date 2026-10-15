@@ -30,6 +30,6 @@ export function AccountDataBoundary({ children, modules, banks }: Requirements &
   const fb = useFieldbook();
   const refreshError = error || (banks || []).map(bank => fb.bankErrors?.[bank]).find(Boolean);
   if (!ready && refreshError) return <StateMessage kind="error" title="Study data could not be loaded" message={refreshError} onRetry={retry} />;
-  if (!ready) return <PageLoadingState message="Loading study data..." />;
+  if (!ready) return <PageLoadingState message="Loading study data…" onRetry={retry} retryLabel="Retry study data" />;
   return <>{refreshError && <p role="alert">{refreshError} <button className="btn text" onClick={retry}>Retry</button></p>}{children}</>;
 }

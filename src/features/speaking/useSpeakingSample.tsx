@@ -1,3 +1,4 @@
+import { InlineLoadingState } from '../../components/AsyncState';
 import { useEffect, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
 
@@ -16,7 +17,7 @@ export function useSpeakingSample(topicId?: string) {
 }
 
 export function SpeakingSampleStatus({status, retry}: ReturnType<typeof useSpeakingSample>) {
-  if (status === 'loading') return <p role="status">Loading sample...</p>;
+  if (status === 'loading') return <InlineLoadingState message="Loading sample…" onRetry={retry} retryLabel="Retry sample" />;
   if (status === 'error') return <p role="alert">Sample could not be loaded. <button className="btn text" onClick={retry}>Retry</button></p>;
   return null;
 }

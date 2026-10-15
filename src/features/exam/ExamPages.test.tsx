@@ -254,6 +254,49 @@ test('older multiple-choice content without a slot limit still allows multiple s
   expect(screen.getByRole('checkbox', { name: 'B. Second' })).toBeChecked();
 });
 
+test.each(['reading', 'listening'] as const)('%s pooled questions show a range and keep partial selections in submission checks', async skill => {
+  mocks.catalog.sections[0].skill = skill;
+  mocks.catalog.questions = [{ ...catalog.questions[0], skill, type: 'multiple', number: 25, points: 2, prompt: '25-26 On what points do they disagree?', maxWords: undefined, options: ['A. First', 'B. Second', 'C. Third'], answer: ['A. First', 'B. Second'] }];
+  if (skill === 'listening') mocks.catalog.assets = [{ id: 'audio', sectionId: 'section', paperId: 'paper', kind: 'audio', storagePath: 'audio.mp3', provenance }];
+  render(<MemoryRouter initialEntries={[`/${skill}/section`]}><Routes><Route path={`/${skill}/:sectionId`} element={<ExamPracticePage skill={skill} />} /></Routes></MemoryRouter>);
+  const first = await screen.findByRole('checkbox', { name: 'A. First' });
+  expect(screen.getByRole('link', { name: 'Go to questions 25–26 · unanswered' })).toHaveTextContent('25–26');
+  const card = screen.getByRole('article', { name: 'Questions 25–26 details' });
+  expect(within(card).getByText('25–26')).toBeVisible();
+  const prompt = card.querySelector('[data-source-block="question:q1"]')!;
+  expect(prompt.textContent).toBe('25-26 On what points do they disagree?');
+  expect(within(prompt as HTMLElement).getByText('25-26')).not.toBeVisible();
+  expect(within(card).getByText('Choose 2 options')).toBeVisible();
+  fireEvent.click(first);
+  expect(screen.getByRole('link', { name: 'Go to questions 25–26 · 1 of 2 answered' })).toHaveClass('partial');
+  expect(within(card).getByText('1 / 2 selected')).toBeVisible();
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Submit answers' }));
+  const confirm = screen.getByRole('dialog', { name: 'Submit with unanswered questions?' });
+  expect(confirm).toHaveTextContent('1 answer still missing');
+  expect(confirm).toHaveTextContent('25–26 (1 more selection needed)');
+  await userEvent.setup().click(within(confirm).getByRole('button', { name: 'Return to unanswered' }));
+  expect(first).toBeChecked();
+  fireEvent.click(screen.getByRole('checkbox', { name: 'B. Second' }));
+  expect(screen.getByRole('link', { name: 'Go to questions 25–26 · answered' })).toHaveClass('answered');
+  expect(within(card).getByText('2 / 2 selected · Deselect an option to change your choices.')).toBeVisible();
+  expect(screen.queryByRole('button', { name: 'Next unanswered' })).not.toBeInTheDocument();
+});
+
+test('pooled question ranges stay consistent in results, evidence, and original text', async () => {
+  mocks.catalog.questions = [{ ...catalog.questions[0], type: 'multiple', number: 25, points: 2, prompt: '25-26 On what points do they disagree?', options: ['A', 'B', 'C'], answer: ['A', 'B'], evidence: { text: 'opened in 1990' } }];
+  savedReview();
+  const page = practice('/reading/review/saved');
+  expect(await screen.findByRole('heading', { name: 'On what points do they disagree?' })).toBeVisible();
+  expect(screen.getByText('25–26')).toBeVisible();
+  expect(screen.getByRole('button', { name: 'All answer groups (1)' })).toBeVisible();
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Locate evidence' }));
+  expect(screen.getByRole('region', { name: 'Source evidence for questions 25–26' }).querySelector('mark')).toHaveTextContent('opened in 1990');
+  page.unmount();
+  render(<MemoryRouter initialEntries={['/reading/source/section?question=q1']}><Routes><Route path="/reading/source/:sectionId" element={<ExamSourcePage skill="reading" />} /></Routes></MemoryRouter>);
+  expect(await screen.findByText('Questions 25–26 · Original question')).toBeVisible();
+  expect(screen.getByText('25–26')).toBeVisible();
+});
+
 test('submitted mock results provide exact Part vocabulary and reading evidence backlinks', async () => {
   const question = { ...catalog.questions[0], explanation: 'The opening year is stated in paragraph A.', sourceExplanation: 'Original explanation.', evidence: { paragraphId: 'A', text: 'opened in 1990' } };
   mocks.fb.state.examAttempts = [{ id: 'submitted', skill: 'reading', mode: 'mock', status: 'completed', sourceId: 'paper', sectionIds: ['section'], questionSnapshot: [question], responses: { q1: '1990' }, results: { q1: true }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-10-14', startedAt: '2026-10-14' }];
@@ -565,7 +608,7 @@ test('manual submission confirms blanks and returns to the first unanswered ques
   practice(); const user = userEvent.setup();
   await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), '1990');
   await user.click(screen.getByRole('button', { name: 'Submit answers' }));
-  expect(screen.getByRole('dialog')).toHaveTextContent('1 question still unanswered');
+  expect(screen.getByRole('dialog')).toHaveTextContent('1 answer still missing');
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();
   await user.click(screen.getByRole('button', { name: 'Return to unanswered' }));
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument();

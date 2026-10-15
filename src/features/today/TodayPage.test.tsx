@@ -41,7 +41,17 @@ test('completion summary includes every selected skill and vocabulary',async()=>
 test('plan persistence failure exposes a retry and never displays unsaved generated tasks',async()=>{
   mocks.generate.mockResolvedValueOnce(false);renderPage();
   await screen.findByRole('button',{name:'Retry plan'});
+  expect(screen.getByRole('heading',{name:'Plan unavailable'})).toBeInTheDocument();
+  expect(screen.queryByRole('heading',{name:'Today is complete'})).not.toBeInTheDocument();
   await userEvent.click(screen.getByRole('button',{name:'Retry plan'}));expect(mocks.generate).toHaveBeenCalledTimes(2);
+});
+test('an empty day waits for planning and never claims unearned completion',async()=>{
+  let finish; mocks.generate.mockImplementation(()=>new Promise(resolve=>{finish=resolve;}));
+  renderPage();
+  expect(screen.getByRole('status')).toHaveTextContent('Preparing your plan…');
+  expect(screen.queryByRole('heading',{name:'Today is complete'})).not.toBeInTheDocument();
+  finish(true);
+  expect(await screen.findByRole('heading',{name:'No tasks planned yet'})).toBeInTheDocument();
 });
 test('today progress takes priority over old work and previous tasks keep their own dates and actions',async()=>{
   mocks.state.plans=[plan('old','reading','in_progress','2020-01-01'),plan('current','speaking','in_progress')];

@@ -1,4 +1,5 @@
 import { FormEvent, lazy, Suspense, useEffect, useState, type ReactNode } from 'react';
+import { InlineLoadingState } from '../components/AsyncState';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import { authError, type Mode } from './errors';
 import { Moon, Sun } from 'lucide-react';
@@ -173,7 +174,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
         <section className="auth-card">
           <p className="kicker">Fieldbook</p>
           <h2>Checking your sign-in</h2>
-          <p>Please wait while we check your saved session.</p>
+          <InlineLoadingState message="Checking your saved session…" />
         </section>
       </main>
     );

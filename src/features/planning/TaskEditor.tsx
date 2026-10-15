@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { PanelLoadingState } from '../../components/AsyncState';
 import { useEffect, useMemo, useState } from 'react';
 import { ModalFrame } from '../../components/ModalFrame';
 import { DateField, FilterMenu } from '../../components/ui';
@@ -79,7 +80,7 @@ export function TaskEditor({mode,plan,dateKey,onClose}) {
       {(editing||mode==='resize')&&<label className="study-edit-field">Task minutes<input aria-label="Task minutes" type="number" min={1} max={180} value={minutes||''} onChange={event=>{setMinutes(Number(event.target.value));setAllowOverBudget(false);}}/></label>}
       {['add','duplicate','reschedule'].includes(mode)&&<div className="study-edit-field"><label htmlFor="task-study-date">Study date</label><DateField id="task-study-date" label="Study date" value={date} onChange={value=>{setDate(value);setAllowOverBudget(false);}}/></div>}
       {editing&&!practice.endsWith('-mock')&&practice!=='due-review'&&<section className="task-materials"><h3>Study material</h3><p>Use the recommendation or choose a specific source.</p>
-        {loading?<p role="status">Loading available materials…</p>:<><label className="study-edit-field">Search material<input type="search" aria-label="Search material" value={search} onChange={event=>setSearch(event.target.value)} placeholder="Search questions, passages or groups"/></label>
+        {loading?<PanelLoadingState message="Loading available materials…" onRetry={()=>setRetry(value=>value+1)} retryLabel="Retry materials" />:<><label className="study-edit-field">Search material<input type="search" aria-label="Search material" value={search} onChange={event=>setSearch(event.target.value)} placeholder="Search questions, passages or groups"/></label>
           <label className="study-edit-field">Material<SelectField aria-label="Material" disabled={saving} value={material} onValueChange={value=>{setMaterial(value);setBatch(1);}} options={[{value:'',label:practice==='listening-intensive'?'Choose a listening part':'Recommended material'},...visible.map(row=>({value:row.id,label:row.label}))]}/></label>
           {!visible.length&&<p className="settings-field-help">{search?'No matching materials. Try another search.':'No selectable materials loaded. You can retry or use a recommendation.'}</p>}
         </>}
