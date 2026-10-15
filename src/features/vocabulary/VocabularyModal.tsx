@@ -31,6 +31,7 @@ export function VocabularyModal() {
   const editing = (fb.state.vocabulary || []).find(
     (item) => item.id === fb.editingVocabularyId,
   );
+  const sourceQuote = (editing || fb.vocabularySeed)?.sources?.filter(source => source.exam?.quote).map(source => source.exam.quote).join(' ');
   useEffect(() => {
     if (!open) return;
     const item = editing || fb.vocabularySeed || {};
@@ -160,6 +161,7 @@ export function VocabularyModal() {
     >
       <form className="modal vocabulary-modal" onSubmit={save}>
         <h3>{editing ? "Edit vocabulary" : "Add vocabulary"}</h3>
+        {sourceQuote && <div className="vocabulary-capture-context"><strong>Original selection</strong><blockquote>{sourceQuote}</blockquote><p>You can edit the term to its dictionary form. The original wording and source link are kept.</p></div>}
         <div className="form">
           <div className="field">
             <label>Type</label>

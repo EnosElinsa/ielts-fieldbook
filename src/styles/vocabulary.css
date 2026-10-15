@@ -601,3 +601,7 @@
     min-height: 40px;
   }
 }
+.vocabulary-capture-context{padding:12px;border:1px solid var(--rule);border-radius:6px;margin:0 0 16px;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.vocabulary-capture-context strong{font-size:11px;color:var(--muted)}
+.vocabulary-capture-context blockquote{margin:6px 0;max-height:76px;overflow:auto}
+.vocabulary-capture-context p{margin:6px 0 0;color:var(--muted)}

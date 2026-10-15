@@ -7,7 +7,7 @@ import { InlineLoadingState, PageLoadingState, StateMessage } from '../../compon
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Pause, Play, Compass, Send, Columns2, Rows3, NotebookPen, Map as MapIcon } from 'lucide-react';
 import type { ExamAsset, ExamQuestion, ExamSkill } from '../../domain/exam/types';
-import { examVocabularySources } from './vocabularyCapture';
+import { examVocabularySeed } from './vocabularyCapture';
 import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 import { accountId } from '../../storage/remote';
 import { ExamSessionHistory } from './ExamSessionHistory';
@@ -172,11 +172,10 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   const requestSubmit = () => { if (attempt?.status !== 'completed' && unanswered.length) setConfirmSubmit(true); else void controller.submit(); };
   const captureVocabulary = (selection: SourceSelection) => {
     if (!selection.quote || mode === 'mock') return;
-    const count = selection.quote.split(/\s+/).length;
-    const sources = examVocabularySources(selection, { catalog, sectionId: activeSection!.id, skill, attemptId: attempt?.id });
-    if (!sources.length) return;
+    const seed = examVocabularySeed(selection, { catalog, sectionId: activeSection!.id, skill, attemptId: attempt?.id });
+    if (!seed) return;
     fb.setEditingVocabularyId(null);
-    fb.setVocabularySeed({ term: selection.quote, category: count === 1 ? 'word' : count > 6 ? 'sentence' : 'phrase', skill, sourceId: activeSection?.id, sourceType: skill, context: selection.context, example: selection.context, sources });
+    fb.setVocabularySeed(seed);
     fb.openModal('vocabulary');
   };
   const chooseLayout = (next: 'integrated' | 'split') => {

@@ -17,7 +17,7 @@ import { deletePendingAudio, readPendingAudio, writePendingAudio } from '../../s
 import { IntensiveAudio, type IntensiveAudioHandle } from './IntensiveAudio';
 import { IntensivePlayerPanel } from './IntensivePlayerPanel';
 import { SourceAnnotations, AnnotatedText, type SourceSelection } from './SourceAnnotations';
-import { examVocabularySources } from './vocabularyCapture';
+import { examVocabularySeed } from './vocabularyCapture';
 import '../../styles/intensive.css';
 
 const stages = ['Blind listening', 'Sentence dictation', 'Compare and diagnose', 'Shadow and record', 'Listen without text', 'Delayed review'];
@@ -304,10 +304,10 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
 
   function captureVocabulary(selection: SourceSelection) {
     if (accountId() !== owner || sourceMockActive() || !sentence || blind || !session?.revealed || session.dictationResult === 'pending') return;
-    const sources = examVocabularySources(selection, { catalog: catalog!, sectionId, skill: 'listening' }).filter(source => source.exam?.sentenceId === sentence.id);
-    if (!sources.length) return;
+    const seed = examVocabularySeed(selection, { catalog: catalog!, sectionId, skill: 'listening' });
+    if (!seed || seed.sources.some(source => source.exam?.sentenceId !== sentence.id)) return;
     fb.setEditingVocabularyId(null);
-    fb.setVocabularySeed({ term: selection.quote, skill: 'listening', sourceId: sectionId, sourceType: 'listening', context: selection.context, example: selection.context, sources });
+    fb.setVocabularySeed(seed);
     fb.openModal('vocabulary');
   }
 

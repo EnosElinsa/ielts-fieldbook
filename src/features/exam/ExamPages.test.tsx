@@ -595,6 +595,7 @@ test('pause disables evidence editing and capture until resumed', async () => {
   await user.click(screen.getByRole('button', { name: 'Evidence & paraphrase for question 1' }));
   expect(screen.getByRole('textbox', { name: 'Evidence for question 1' })).toBeDisabled();
   expect(screen.getByRole('textbox', { name: 'Keywords & synonyms for question 1' })).toBeDisabled();
+  fireEvent.keyDown(screen.getByText('The garden opened in 1990.'), { key: 'Enter' });
   expect(screen.getByRole('combobox', { name: 'Question for selected evidence' })).toBeDisabled();
   await user.click(screen.getByRole('button', { name: 'Resume' }));
   expect(screen.getByRole('textbox', { name: 'Evidence for question 1' })).toBeEnabled();

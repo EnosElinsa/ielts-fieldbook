@@ -11,7 +11,7 @@ import { useExamCatalog } from './useExamCatalog';
 import { AnnotatedText, SourceAnnotations } from './SourceAnnotations';
 import { ReadingPassage, readingQuestionPrompt, HeadingList } from './ReadingPassage';
 import { ExamImage, ExamStimulus, examStimulusBlockIds } from './ExamPracticePage';
-import { examVocabularySources } from './vocabularyCapture';
+import { examVocabularySeed } from './vocabularyCapture';
 import { findSourceBlock, revealSourceBlock } from './sourceLocation';
 import { questionPresentation, questionNumberPrefixLength } from './questionPresentation';
 import '../../styles/exam.css';
@@ -61,10 +61,10 @@ export function ExamSourcePage({ skill }: { skill: ExamSkill }) {
     {contextQuestion && <div className="exam-evidence-context"><div><strong>Question {contextQuestion.number} · {quote ? 'Source evidence' : 'Original question'}</strong><p>{contextQuestion.prompt.slice(questionNumberPrefixLength(contextQuestion.prompt, contextQuestion.number))}</p></div>{locationMissing && <p role="status">The exact evidence position is unavailable. The original question is shown below for reference.</p>}</div>}
     <SourceAnnotations key={`${skill}:${sectionId}`} skill={skill} sourceId={sectionId} mock={activeMock} allowedBlockIds={skill === 'listening' && !access.fullTranscript ? [...visibleSentences.map(sentence => `sentence:${sentence.id}`), ...materialBlockIds] : undefined} onVocabulary={selection => {
       if (activeMock) return;
-      const sources = examVocabularySources(selection, { catalog, sectionId, skill }, container.current || document);
-      if (!sources.length) return;
+      const seed = examVocabularySeed(selection, { catalog, sectionId, skill }, container.current || document);
+      if (!seed) return;
       fb.setEditingVocabularyId(null);
-      fb.setVocabularySeed({ term: selection.quote, skill, sourceId: sectionId, sourceType: skill, context: selection.context, example: selection.context, sources });
+      fb.setVocabularySeed(seed);
       fb.openModal('vocabulary');
     }}>
       <div ref={container} className="exam-source-document">

@@ -3,7 +3,7 @@ import type { ExamSkill } from './types';
 export const HIGHLIGHT_COLORS = ['yellow', 'green', 'blue', 'pink'] as const;
 export type HighlightColor = typeof HIGHLIGHT_COLORS[number];
 export type TextAnchor = { blockId: string; quote: string; prefix: string; suffix: string; start: number; end: number; contentVersion: string };
-export type ExamAnnotation = { id: string; skill: ExamSkill; sourceId: string; color: HighlightColor; quote: string; note: string; anchors: TextAnchor[]; updatedAt: string };
+export type ExamAnnotation = { id: string; skill: ExamSkill; sourceId: string; color: HighlightColor; highlighted?: boolean; quote: string; note: string; anchors: TextAnchor[]; updatedAt: string };
 
 export function makeTextAnchor(blockId: string, text: string, start: number, end: number, contentVersion: string): TextAnchor {
   const from = Math.max(0, Math.min(text.length, start));
@@ -25,13 +25,14 @@ export function resolveTextAnchor(anchor: TextAnchor, text: string, version: str
 export function annotationSegments(blockId: string, text: string, version: string, annotations: ExamAnnotation[]) {
   const ranges = annotations.flatMap(row => row.anchors.filter(anchor => anchor.blockId === blockId).flatMap(anchor => {
     const range = resolveTextAnchor(anchor, text, version);
-    return range ? [{ ...range, id: row.id, color: row.color }] : [];
+    return range ? [{ ...range, id: row.id, color: row.highlighted === false ? undefined : row.color }] : [];
   }));
   const points = [...new Set([0, text.length, ...ranges.flatMap(range => [range.start, range.end])])].sort((a, b) => a - b);
   return points.slice(0, -1).map((start, index) => {
     const end = points[index + 1];
     const active = ranges.filter(range => range.start <= start && range.end >= end);
-    return { text: text.slice(start, end), start, annotationIds: [...new Set(active.map(range => range.id))], color: active.at(-1)?.color };
+    const highlights = active.filter(range => range.color);
+    return { text: text.slice(start, end), start, annotationIds: [...new Set(active.map(range => range.id))], primaryAnnotationId: highlights.at(-1)?.id || active.at(-1)?.id, color: highlights.at(-1)?.color };
   });
 }
 
@@ -39,7 +40,7 @@ export function normalizeExamAnnotations(input: unknown): ExamAnnotation[] {
   if (!Array.isArray(input)) return [];
   return input.filter(row => row && typeof row.id === 'string' && typeof row.sourceId === 'string' && ['reading', 'listening'].includes(row.skill) && Array.isArray(row.anchors))
     .map(row => ({ id: row.id, skill: row.skill, sourceId: row.sourceId,
-      color: HIGHLIGHT_COLORS.includes(row.color) ? row.color : 'yellow', quote: String(row.quote || ''), note: String(row.note || ''), updatedAt: String(row.updatedAt || ''),
+      color: HIGHLIGHT_COLORS.includes(row.color) ? row.color : 'yellow', ...(row.highlighted === false ? { highlighted: false } : {}), quote: String(row.quote || ''), note: String(row.note || ''), updatedAt: String(row.updatedAt || ''),
       anchors: row.anchors.filter((anchor: TextAnchor) => anchor && typeof anchor.blockId === 'string' && typeof anchor.quote === 'string' && anchor.quote && Number.isInteger(anchor.start) && Number.isInteger(anchor.end) && anchor.start >= 0 && anchor.end > anchor.start)
         .map((anchor: TextAnchor) => ({ ...anchor, prefix: String(anchor.prefix || ''), suffix: String(anchor.suffix || ''), contentVersion: String(anchor.contentVersion || '') })),
     })).filter(row => row.anchors.length > 0);

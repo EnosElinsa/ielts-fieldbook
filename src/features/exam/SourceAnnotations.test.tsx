@@ -1,7 +1,9 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
+import userEvent from '@testing-library/user-event';
 import { SourceAnnotations, AnnotatedText } from './SourceAnnotations';
+import { makeTextAnchor } from '../../domain/exam/annotations';
 
 const mocks = vi.hoisted(() => ({ owner: 'one', fb: null as any }));
 vi.mock('../../storage/remote', () => ({ accountId: () => mocks.owner }));
@@ -11,12 +13,114 @@ beforeEach(() => {
   const state = { examAnnotations: [], settings: {} };
   mocks.fb = { state, stateRef: { current: state }, persistNow: vi.fn(async (next: any) => { mocks.fb.state = next; mocks.fb.stateRef.current = next; return true; }), toast: vi.fn() };
 });
-afterEach(cleanup);
+afterEach(() => { cleanup(); window.getSelection()?.removeAllRanges(); });
 function view(mock = false) {
   return render(<SourceAnnotations sourceId="s" skill="reading" mock={mock} questions={[{ id: 'q', number: 1 }]} focusedQuestion="q" onEvidence={vi.fn()}>
     <p><AnnotatedText blockId="p:A" text="The garden opened in 1990." version="1" /></p>
   </SourceAnnotations>);
 }
+
+function selectText(block: Element, start: number, end: number) {
+  const range = document.createRange(); range.setStart(block.firstChild!, start); range.setEnd(block.firstChild!, end);
+  const selection = window.getSelection()!; selection.removeAllRanges(); selection.addRange(range);
+  fireEvent.mouseUp(block);
+}
+
+test('partial word selection expands both the displayed selection and vocabulary anchors', () => {
+  const onVocabulary = vi.fn();
+  render(<SourceAnnotations sourceId="s" skill="reading" onVocabulary={onVocabulary}><AnnotatedText blockId="p:A" text="The garden opened." version="1" /></SourceAnnotations>);
+  selectText(screen.getByText('The garden opened.'), 6, 8);
+  expect(window.getSelection()?.toString()).toBe('garden');
+  fireEvent.click(screen.getByRole('button', { name: 'Add selected text to vocabulary' }));
+  expect(onVocabulary).toHaveBeenCalledWith(expect.objectContaining({ quote: 'garden', anchors: [expect.objectContaining({ start: 4, end: 10, quote: 'garden' })] }));
+});
+
+test('clicking a highlight offers direct removal which persists after reload', async () => {
+  const first = view();
+  selectText(screen.getByText('The garden opened in 1990.'), 6, 8);
+  fireEvent.click(screen.getByRole('button', { name: 'Highlight yellow' }));
+  await waitFor(() => expect(mocks.fb.stateRef.current.examAnnotations).toHaveLength(1));
+  fireEvent.click(first.container.querySelector('.source-highlight')!);
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Remove highlight' }));
+  await waitFor(() => expect(mocks.fb.stateRef.current.examAnnotations).toHaveLength(0));
+  first.unmount(); const next = view();
+  expect(next.container.querySelector('.source-highlight')).toBeNull();
+});
+
+test('changing the same highlight color updates it instead of stacking duplicates', async () => {
+  const page = view();
+  fireEvent.keyDown(screen.getByText('The garden opened in 1990.'), { key: 'Enter' });
+  fireEvent.click(screen.getByRole('button', { name: 'Highlight yellow' }));
+  await waitFor(() => expect(mocks.fb.stateRef.current.examAnnotations).toHaveLength(1));
+  const id = mocks.fb.stateRef.current.examAnnotations[0].id;
+  fireEvent.keyDown(page.container.querySelector('.source-highlight')!, { key: 'Enter' });
+  fireEvent.click(screen.getByRole('button', { name: 'Highlight green' }));
+  await waitFor(() => expect(mocks.fb.stateRef.current.examAnnotations).toMatchObject([{ id, color: 'green' }]));
+  expect(mocks.fb.stateRef.current.examAnnotations).toHaveLength(1);
+});
+
+test('removing highlight preserves its note, source anchor and future editability', async () => {
+  const first = view();
+  fireEvent.keyDown(screen.getByText('The garden opened in 1990.'), { key: 'Enter' });
+  fireEvent.click(screen.getByRole('button', { name: 'Add note' }));
+  fireEvent.change(screen.getByRole('textbox', { name: 'Note' }), { target: { value: 'Keep this explanation' } });
+  fireEvent.click(screen.getByRole('button', { name: 'Save note' }));
+  await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  fireEvent.click(first.container.querySelector('.source-highlight')!);
+  fireEvent.click(screen.getByRole('button', { name: 'Remove highlight' }));
+  await waitFor(() => expect(mocks.fb.stateRef.current.examAnnotations[0]).toMatchObject({ note: 'Keep this explanation', highlighted: false }));
+  first.unmount(); const next = view();
+  expect(next.container.querySelector('.source-highlight')).toBeNull();
+  expect(next.container.querySelector('.source-note-anchor')).toHaveTextContent('The garden opened in 1990.');
+  fireEvent.keyDown(next.container.querySelector('.source-note-anchor')!, { key: 'Enter' });
+  fireEvent.click(screen.getByRole('button', { name: 'Edit note' }));
+  expect(screen.getByRole('textbox', { name: 'Note' })).toHaveValue('Keep this explanation');
+});
+
+test('failed highlight removal stays removed locally and retries after remount', async () => {
+  const first = view();
+  fireEvent.keyDown(screen.getByText('The garden opened in 1990.'), { key: 'Enter' });
+  fireEvent.click(screen.getByRole('button', { name: 'Highlight yellow' }));
+  await waitFor(() => expect(mocks.fb.stateRef.current.examAnnotations).toHaveLength(1));
+  mocks.fb.persistNow.mockResolvedValueOnce(false);
+  fireEvent.click(first.container.querySelector('.source-highlight')!);
+  fireEvent.click(screen.getByRole('button', { name: 'Remove highlight' }));
+  await screen.findByRole('alert'); first.unmount(); const next = view();
+  expect(next.container.querySelector('.source-highlight')).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: 'Retry annotation save' }));
+  await waitFor(() => expect(mocks.fb.stateRef.current.examAnnotations).toHaveLength(0));
+});
+
+test('legacy highlights with truncated words collect the complete original word', () => {
+  const text = 'The garden opened.'; const onVocabulary = vi.fn();
+  mocks.fb.stateRef.current.examAnnotations = [{ id: 'legacy', sourceId: 's', skill: 'reading', color: 'yellow', quote: 'rd', note: '', updatedAt: '2026-10-14', anchors: [makeTextAnchor('p:A', text, 6, 8, '1')] }];
+  const page = render(<SourceAnnotations sourceId="s" skill="reading" onVocabulary={onVocabulary}><AnnotatedText blockId="p:A" text={text} version="1" /></SourceAnnotations>);
+  fireEvent.click(page.container.querySelector('.source-highlight')!);
+  fireEvent.click(screen.getByRole('button', { name: 'Add selected text to vocabulary' }));
+  expect(onVocabulary).toHaveBeenCalledWith(expect.objectContaining({ quote: 'garden', anchors: [expect.objectContaining({ quote: 'garden', start: 4, end: 10 })] }));
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test('overlapping notes never block removal of the visible highlight and remain separately editable', async () => {
+  const text = 'The garden opened in 1990.';
+  const highlight = { id: 'highlight', sourceId: 's', skill: 'reading', color: 'yellow', quote: 'garden', note: '', updatedAt: '2026-10-14', anchors: [makeTextAnchor('p:A', text, 4, 10, '1')] };
+  mocks.fb.stateRef.current.examAnnotations = [highlight, { ...highlight, id: 'note', note: 'A separate note', highlighted: false }];
+  const page = view(); const user = userEvent.setup();
+  await user.click(page.container.querySelector('.source-highlight')!);
+  expect(screen.getByRole('button', { name: 'Remove highlight' })).toBeEnabled();
+  await user.click(screen.getByRole('combobox', { name: 'Overlapping annotation' }));
+  await user.click(screen.getByRole('option', { name: '2. Note · A separate note' }));
+  expect(screen.getByRole('button', { name: 'Edit note' })).toBeEnabled();
+  expect(screen.queryByRole('button', { name: 'Remove highlight' })).not.toBeInTheDocument();
+  await user.click(screen.getByRole('combobox', { name: 'Overlapping annotation' }));
+  await user.click(screen.getByRole('option', { name: '1. yellow · garden' }));
+  await user.click(screen.getByRole('button', { name: 'Remove highlight' }));
+  await waitFor(() => expect(mocks.fb.stateRef.current.examAnnotations).toHaveLength(1));
+  expect(mocks.fb.stateRef.current.examAnnotations[0]).toMatchObject({ id: 'note', note: 'A separate note', highlighted: false });
+  expect(page.container.querySelector('.source-highlight')).toBeNull();
+  expect(page.container.querySelector('.source-note-anchor')).toHaveTextContent('garden');
+});
 
 test('hidden question labels preserve saved highlights and new selection offsets', async () => {
   const text = '1. The garden opened in 1990.';

@@ -40,4 +40,8 @@ test('source annotations are normalized, persisted, backed up and registered for
   expect(USER_TABLES.examAnnotations).toBe('exam_annotations');
   expect(ACCOUNT_MODULES.receptive).toContain('examAnnotations');
   expect(normalizeExamAnnotations([{ ...row, color: 'invalid' }])[0].color).toBe('yellow');
+  const noteOnly = { ...row, highlighted: false };
+  expect(persistShape(migrateState({ examAnnotations: [noteOnly] })).examAnnotations).toEqual([noteOnly]);
+  expect(mergeBackup(migrateState({}), { examAnnotations: [noteOnly] }, {}).examAnnotations).toEqual([noteOnly]);
+  expect(annotationSegments('p:A', 'garden', '1', [noteOnly as any])).toMatchObject([{ text: 'garden', annotationIds: ['note'], color: undefined }]);
 });
