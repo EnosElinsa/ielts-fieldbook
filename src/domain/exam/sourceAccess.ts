@@ -1,26 +1,10 @@
 import type { ExamAttempt, IntensiveSession } from './types';
+import { mergeExamSessions, unfinishedExamSession } from './sessions';
 
-/** Resolve local/cloud revisions and the newest attempt in each plan/retry scope. */
+/** Completing one session must not unlock source helpers for another unfinished mock. */
 export function hasActiveSourceMock(sectionId: string, skill: ExamAttempt['skill'], attempts: ExamAttempt[]) {
-  const latestById = new Map<string, ExamAttempt>();
-  const newer = (next: ExamAttempt, prior: ExamAttempt) => {
-    const nextTime = next.updatedAt || next.completedAt || next.startedAt || '';
-    const priorTime = prior.updatedAt || prior.completedAt || prior.startedAt || '';
-    return nextTime > priorTime || (nextTime === priorTime && next.status === 'completed');
-  };
-  attempts.forEach((attempt, index) => {
-    if (!attempt || attempt.skill !== skill || attempt.mode !== 'mock' || !Array.isArray(attempt.sectionIds) || !attempt.sectionIds.includes(sectionId)) return;
-    const key = attempt.id || `legacy:${index}`;
-    const prior = latestById.get(key);
-    if (!prior || newer(attempt, prior)) latestById.set(key, attempt);
-  });
-  const latestByScope = new Map<string, ExamAttempt>();
-  latestById.forEach(attempt => {
-    const key = JSON.stringify([attempt.sourceId, attempt.retryOfAttemptId, attempt.planId]);
-    const prior = latestByScope.get(key);
-    if (!prior || newer(attempt, prior)) latestByScope.set(key, attempt);
-  });
-  return [...latestByScope.values()].some(attempt => attempt.status === 'active' || attempt.status === 'paused');
+  const revisions = attempts.filter(Boolean).map((attempt, index) => ({ ...attempt, id: attempt.id || `legacy:${index}`, updatedAt: attempt.updatedAt || attempt.completedAt || attempt.startedAt || '' }));
+  return mergeExamSessions(revisions).some(attempt => attempt.skill === skill && attempt.mode === 'mock' && attempt.sectionIds.includes(sectionId) && unfinishedExamSession(attempt));
 }
 
 /** Apply the same reveal boundary to source back-links as to intensive practice. */

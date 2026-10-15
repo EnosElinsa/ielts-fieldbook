@@ -8,6 +8,7 @@ import { accountId } from '../../storage/remote';
 import { readExamRecovery, writeExamRecovery, clearExamRecovery } from '../../storage/examRecovery';
 import { annotationSegments, HIGHLIGHT_COLORS, makeTextAnchor, normalizeExamAnnotations, resolveTextAnchor, type ExamAnnotation, type HighlightColor, type TextAnchor } from '../../domain/exam/annotations';
 import type { ExamSkill } from '../../domain/exam/types';
+import type { EvidenceRange } from './evidenceLocation';
 import './source-annotations.css';
 
 type SelectionData = { quote: string; anchors: TextAnchor[]; context: string; x?: number; y?: number };
@@ -20,21 +21,26 @@ const SourceContext = createContext<{
   edit: (id: string) => void; register: (id: string, block: Block) => () => void;
 } | null>(null);
 
-export function AnnotatedText({ blockId, text, version, hiddenPrefixLength = 0 }: { blockId: string; text: string; version: string; hiddenPrefixLength?: number }) {
+export function AnnotatedText({ blockId, text, version, hiddenPrefixLength = 0, evidenceRanges = [] }: { blockId: string; text: string; version: string; hiddenPrefixLength?: number; evidenceRanges?: EvidenceRange[] }) {
   const context = useContext(SourceContext);
   const register = context?.register;
   useEffect(() => register?.(blockId, { text, version }), [register, blockId, text, version]);
-  const segments = annotationSegments(blockId, text, version, context?.rows || []);
-  return <span data-source-block={blockId} data-source-version={version} tabIndex={context ? 0 : undefined}
+  const segments = annotationSegments(blockId, text, version, context?.rows || []).flatMap(segment => {
+    const end = segment.start + segment.text.length;
+    const boundaries = [...new Set([segment.start, end, ...evidenceRanges.flatMap(range => [range.start, range.end]).filter(offset => offset > segment.start && offset < end)])].sort((a, b) => a - b);
+    return boundaries.slice(0, -1).map((start, index) => ({ ...segment, start, text: text.slice(start, boundaries[index + 1]), evidence: evidenceRanges.some(range => start >= range.start && boundaries[index + 1] <= range.end) }));
+  });
+  return <span data-source-block={blockId} data-source-version={version} data-evidence-block={evidenceRanges.length ? true : undefined} tabIndex={context ? 0 : evidenceRanges.length ? -1 : undefined}
     title={context ? 'Annotate this text' : undefined}
     onKeyDown={event => { if (event.target === event.currentTarget && ['Enter', ' '].includes(event.key)) { event.preventDefault(); context?.selectBlock(blockId, text, version); } }}>
     {segments.map(segment => {
       // Keep the complete source in the DOM and registry so saved ranges retain their offsets.
       const hiddenLength = Math.max(0, Math.min(segment.text.length, hiddenPrefixLength - segment.start));
       const visible = segment.text.slice(hiddenLength);
+      const highlighted = segment.evidence ? <mark key={segment.start} className="exam-evidence-highlight" data-evidence-highlight>{visible}</mark> : visible;
       const content = visible && (segment.annotationIds.length ? <mark key={segment.start} className={`source-highlight source-highlight-${segment.color}`} title="Edit annotation" tabIndex={0}
       onClick={() => context?.edit(segment.annotationIds.at(-1)!)}
-      onKeyDown={event => { if (['Enter', ' '].includes(event.key)) { event.preventDefault(); event.stopPropagation(); context?.edit(segment.annotationIds.at(-1)!); } }}>{visible}</mark> : visible);
+      onKeyDown={event => { if (['Enter', ' '].includes(event.key)) { event.preventDefault(); event.stopPropagation(); context?.edit(segment.annotationIds.at(-1)!); } }}>{highlighted}</mark> : highlighted);
       return hiddenLength ? <span key={segment.start}><span hidden aria-hidden="true">{segment.text.slice(0, hiddenLength)}</span>{content}</span> : content;
     })}
   </span>;

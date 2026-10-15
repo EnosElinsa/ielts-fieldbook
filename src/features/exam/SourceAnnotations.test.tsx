@@ -36,6 +36,22 @@ test('hidden question labels preserve saved highlights and new selection offsets
   expect(reopened.container.querySelector('mark')).toHaveTextContent('garden');
   expect(screen.getByText('1.')).not.toBeVisible();
 });
+
+test('temporary evidence highlighting preserves saved annotations and original selection offsets', async () => {
+  const text = 'The garden opened in 1990.';
+  mocks.fb.stateRef.current.examAnnotations = [{ id: 'saved', sourceId: 's', skill: 'reading', color: 'yellow', quote: 'garden', note: '', updatedAt: '2026-10-14', anchors: [{ blockId: 'p:A', quote: 'garden', start: 4, end: 10, prefix: 'The ', suffix: ' opened in 1990.', contentVersion: '1' }] }];
+  const page = (located: boolean) => <SourceAnnotations sourceId="s" skill="reading"><AnnotatedText blockId="p:A" text={text} version="1" evidenceRanges={located ? [{ start: 4, end: 20 }] : []} /></SourceAnnotations>;
+  const view = render(page(true));
+  const block = view.container.querySelector('[data-source-block]')!;
+  expect(block.textContent).toBe(text);
+  expect(view.container.querySelector('.source-highlight')).toHaveTextContent('garden');
+  expect([...view.container.querySelectorAll('[data-evidence-highlight]')].map(mark => mark.textContent).join('')).toBe('garden opened in');
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+  view.rerender(page(false));
+  expect(view.container.querySelector('[data-evidence-highlight]')).toBeNull();
+  expect(view.container.querySelector('.source-highlight')).toHaveTextContent('garden');
+  expect(block.textContent).toBe(text);
+});
 test('keyboard selection creates a cloud-owned highlight and restores it after remount', async () => {
   const first = view();
   fireEvent.keyDown(screen.getByText('The garden opened in 1990.'), { key: 'Enter' });

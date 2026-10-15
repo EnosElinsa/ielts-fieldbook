@@ -21,7 +21,7 @@ const provenance = { sourceUrl: 'https://example.org/source', sourceVersion: '1'
 const catalog: ExamCatalog = { schemaVersion: 1, papers: [{ id: 'paper', book: 8, test: 1, title: 'Cambridge 8 Test 1', provenance }], sections: [{ id: 'section', paperId: 'paper', skill: 'reading', part: 1, title: 'The city garden', questionTypes: ['gap', 'true-false'], questionCount: 2, sentences: [], status: 'ready', provenance }], passages: [{ id: 'passage', sectionId: 'section', title: 'The city garden', paragraphs: [{ id: 'A', text: 'The garden opened in 1990.' }], provenance }], questions: [{ id: 'q1', paperId: 'paper', sectionId: 'section', skill: 'reading', number: 1, type: 'gap', prompt: 'The garden opened in _____.', answer: '1990', maxWords: 1, provenance }, { id: 'q2', paperId: 'paper', sectionId: 'section', skill: 'reading', number: 2, type: 'true-false', prompt: 'The garden opened in 2000.', answer: 'FALSE', explanation: 'The source gives 1990.', provenance }], assets: [] };
 function Location() { return <output aria-label="URL">{useLocation().pathname}</output>; }
 function SearchLocation() { return <output aria-label="Search URL">{useLocation().search}</output>; }
-function practice(path = '/reading/section') { return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/reading/:sectionId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/mock/:paperId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/review/:attemptId" element={<ExamReviewPage skill="reading" />} /></Routes><Location /></MemoryRouter>); }
+function practice(path = '/reading/section') { return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/reading" element={<ExamBankPage skill="reading" />} /><Route path="/reading/:sectionId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/mock/:paperId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/review/:attemptId" element={<ExamReviewPage skill="reading" />} /></Routes><Location /></MemoryRouter>); }
 beforeEach(() => { clearReadCache(); mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); sessionStorage.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, ensureAccountModule: vi.fn().mockResolvedValue(undefined), persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.useRealTimers(); });
 
@@ -125,31 +125,38 @@ test.each(['reading', 'listening'] as const)('%s question numbers appear once wh
   expect(screen.getByText('a description of an early timekeeping invention affected by cold temperatures')).toBeVisible();
 });
 
-test('reading evidence locates the passage in place and returns to the same answer', async () => {
-  mocks.catalog.questions[0].evidence = { text: 'The garden opened in 1990.' };
-  practice(); const user = userEvent.setup();
-  const answer = await screen.findByRole('textbox', { name: 'Answer 1' });
-  await user.type(answer, '2000'); await user.click(screen.getByRole('button', { name: 'Check answer 1' }));
-  await user.click(screen.getByRole('button', { name: 'Locate evidence' }));
-  await waitFor(() => expect(document.querySelector('[data-source-block="passage:passage:A"]')).toHaveFocus());
-  expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/section');
-  await user.click(screen.getByRole('button', { name: 'Back to question 1' }));
-  await waitFor(() => expect(answer).toHaveFocus()); expect(answer).toHaveValue('2000');
-});
-
-test('review source navigation returns to the same question, filter and unsaved notes', async () => {
-  savedReview();
-  render(<MemoryRouter initialEntries={['/reading/review/saved?planId=plan']}><Routes><Route path="/reading/review/:attemptId" element={<ExamReviewPage skill="reading" />} /><Route path="/reading/source/:sectionId" element={<ExamSourcePage skill="reading" />} /></Routes></MemoryRouter>);
+test('review evidence opens and highlights the original passage without leaving answers or notes', async () => {
+  mocks.catalog.questions[1].evidence = { text: 'opened in 1990' };
+  savedReview(); practice('/reading/review/saved?planId=plan');
   const user = userEvent.setup();
   await user.click(screen.getByRole('button', { name: 'All answers (2)' }));
   await user.type(screen.getByRole('textbox', { name: 'Evidence for question 2' }), 'my unsaved evidence');
   const card = screen.getByRole('heading', { name: 'The garden opened in 2000.' }).closest('article')!;
-  await user.click(within(card).getByRole('link', { name: 'Locate question' }));
-  await waitFor(() => expect(document.activeElement).toHaveAttribute('data-source-block', 'question:q2'));
-  await user.click(screen.getByRole('link', { name: 'Back to results' }));
-  expect(await screen.findByRole('textbox', { name: 'Evidence for question 2' })).toHaveValue('my unsaved evidence');
+  await user.click(within(card).getByRole('button', { name: 'Locate evidence' }));
+  const source = await screen.findByRole('region', { name: 'Source evidence for question 2' });
+  expect(source.querySelector('mark')).toHaveTextContent('opened in 1990');
+  expect(source).toHaveTextContent('The garden');
+  expect(within(card).getByText('TRUE')).toBeVisible();
+  expect(within(card).getByText('FALSE')).toBeVisible();
+  expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/review/saved');
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+  await user.click(within(source).getByRole('button', { name: 'Close evidence' }));
+  expect(screen.getByRole('textbox', { name: 'Evidence for question 2' })).toHaveValue('my unsaved evidence');
   expect(screen.getByRole('button', { name: 'All answers (2)' })).toHaveAttribute('aria-pressed', 'true');
-  expect(document.activeElement).toHaveAttribute('id', 'exam-review-q2');
+  expect(within(card).getByRole('button', { name: 'Locate evidence' })).toHaveFocus();
+});
+
+test.each(['reading', 'listening'] as const)('%s sessions never reveal answers before submission, including legacy checked drafts', async skill => {
+  mocks.catalog.sections[0].skill = skill;
+  mocks.catalog.questions.forEach((q: any) => { q.skill = skill; q.explanation = 'Hidden answer explanation'; q.evidence = { text: 'Hidden answer evidence' }; });
+  if (skill === 'listening') mocks.catalog.assets = [{ id: 'audio', sectionId: 'section', paperId: 'paper', kind: 'audio', storagePath: 'audio.mp3', provenance }];
+  mocks.recovery.set(`one:${skill}:practice:section`, { id: 'old-draft', skill, sourceId: 'section', sectionIds: ['section'], mode: 'practice', status: 'active', responses: { q1: '2000' }, checkedQuestionIds: ['q1'], answerRevealed: true, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-10-15', startedAt: '2026-10-15', elapsedSeconds: 0 });
+  render(<MemoryRouter initialEntries={[`/${skill}/section`]}><Routes><Route path={`/${skill}/:sectionId`} element={<ExamPracticePage skill={skill} />} /></Routes></MemoryRouter>);
+  expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue('2000');
+  expect(screen.queryByRole('button', { name: /Check answer/ })).not.toBeInTheDocument();
+  expect(screen.queryByText('Hidden answer explanation')).not.toBeInTheDocument();
+  expect(screen.queryByText('Hidden answer evidence')).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Discard session' })).toBeEnabled();
 });
 
 test('map answers can open the source beside the current answer and return without losing it', async () => {
@@ -253,7 +260,7 @@ test('submitted mock results provide exact Part vocabulary and reading evidence 
   render(<MemoryRouter initialEntries={['/reading/review/submitted']}><Routes><Route path='/reading/review/:attemptId' element={<ExamReviewPage skill='reading' />} /></Routes></MemoryRouter>);
   await screen.findByRole('region', { name: 'Part vocabulary' });
   expect(screen.getByRole('button', { name: /Saved/ })).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: 'View source evidence' })).toHaveAttribute('href', expect.stringContaining('/reading/source/section?paragraph=A'));
+  expect(screen.getByRole('button', { name: 'Locate evidence' })).toBeEnabled();
   expect(screen.getByText('Original source explanation')).toBeInTheDocument();
   expect(screen.getByText('The opening year is stated in paragraph A.')).toBeInTheDocument();
 });
@@ -356,7 +363,7 @@ test('recent work prioritises unfinished attempts and retains source and retry n
   expect(links[0]).toHaveTextContent('Cambridge 8 / Test 1');
   expect(links[0]).toHaveTextContent('The city garden');
   expect(links[0]).toHaveTextContent('Paused');
-  expect(links[0]).toHaveAttribute('href', '/reading/section?attempt=paused&retry=old%20retry');
+  expect(new URL(links[0].getAttribute('href')!, 'https://example.org').searchParams.get('retry')).toBe('old retry');
   expect(links[1]).toHaveAttribute('href', '/reading/review/done3');
   expect(screen.getByRole('link', { name: 'Review mistakes' })).toHaveAttribute('href', '/reading/review');
 });
@@ -384,8 +391,7 @@ test('imported numbered blanks stay in the source while shared instructions and 
   expect(view.container.querySelectorAll('.exam-question')).toHaveLength(1);
   expect(screen.queryByRole('button', { name: 'Check answer 1' })).not.toBeInTheDocument();
   await user.type(answer, '1990');
-  await user.click(screen.getByRole('button', { name: 'Check answer 1' }));
-  expect(screen.getByText('Correct')).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Check answer 1' })).not.toBeInTheDocument();
   await user.click(screen.getByRole('link', { name: 'Go to question 2 · unanswered' }));
   expect(screen.getByRole('article', { name: 'Question 2 details' })).toBeInTheDocument();
   expect(screen.queryByRole('article', { name: 'Question 1 details' })).not.toBeInTheDocument();
@@ -595,7 +601,7 @@ test('pause disables evidence editing and capture until resumed', async () => {
 });
 
 function savedReview() {
-  mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', sourceId: 'section', sectionIds: ['section'], mode: 'practice', status: 'completed', responses: { q1: '1990', q2: 'TRUE' }, results: { q1: true, q2: false }, questionSnapshot: catalog.questions, evidence: {}, keywords: {}, errorReasons: {}, score: 1, total: 2, startedAt: '2026-01-01', updatedAt: '2026-01-01', elapsedSeconds: 0, hintsEnabled: true }];
+  mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', sourceId: 'section', sectionIds: ['section'], mode: 'practice', status: 'completed', responses: { q1: '1990', q2: 'TRUE' }, results: { q1: true, q2: false }, questionSnapshot: structuredClone(mocks.catalog.questions), evidence: {}, keywords: {}, errorReasons: {}, score: 1, total: 2, startedAt: '2026-01-01', updatedAt: '2026-01-01', elapsedSeconds: 0, hintsEnabled: true }];
 }
 
 test('review filters wrong answers, keeps local notes across navigation and clears recovery only after saving', async () => {
@@ -701,6 +707,130 @@ test('leaving ordinary practice pauses it and retains responses for resume', asy
   expect(screen.getByRole('button', { name: /^Resume$/ })).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: /^Resume$/ }));
   expect(screen.getByRole('textbox', { name: 'Answer 1' })).toBeEnabled();
+});
+
+test('new sessions for the same passage keep independent recoveries and resume the requested snapshot', async () => {
+  const user = userEvent.setup(); const view = practice();
+  await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), 'first answer');
+  const first = structuredClone(mocks.recovery.get('one:reading:practice:section'));
+  await user.click(screen.getByRole('button', { name: 'New session' }));
+  await user.click(screen.getByRole('button', { name: 'Start new session' }));
+  await waitFor(() => expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue(''));
+  const second = mocks.recovery.get('one:reading:practice:section');
+  expect(second.id).not.toBe(first.id);
+  await user.type(screen.getByRole('textbox', { name: 'Answer 1' }), 'second answer');
+  expect(mocks.recovery.get(`one:reading:practice:section:session:${first.id}`).responses.q1).toBe('first answer');
+  view.unmount(); mocks.catalog.questions[0].prompt = 'The source changed after the first session.';
+  const resumed = practice(`/reading/section?attempt=${first.id}`);
+  expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue('first answer');
+  expect(screen.getByText('The garden opened in _____.')).toBeVisible();
+  expect(screen.queryByText('The source changed after the first session.')).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Resume' })).toBeEnabled();
+  resumed.unmount(); practice(`/reading/section?attempt=${second.id}`);
+  expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue('second answer');
+});
+
+test('discard is confirmed, keeps other sessions, and cannot resurrect the discarded draft', async () => {
+  savedReview();
+  const user = userEvent.setup(); const view = practice();
+  await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), 'unfinished');
+  const id = mocks.recovery.get('one:reading:practice:section').id;
+  await user.click(screen.getByRole('button', { name: 'Discard session' }));
+  await user.click(screen.getByRole('button', { name: 'Cancel' }));
+  expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('unfinished');
+  await user.click(screen.getByRole('button', { name: 'Discard session' }));
+  await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Discard session' }));
+  await waitFor(() => expect(mocks.fb.stateRef.current.examAttempts.find((a: any) => a.id === id)?.status).toBe('discarded'));
+  expect(mocks.fb.stateRef.current.examAttempts.find((a: any) => a.id === 'saved')?.status).toBe('completed');
+  view.unmount(); const stale = practice(`/reading/section?attempt=${id}`);
+  expect(await screen.findByText(/This session was discarded/)).toBeVisible();
+  expect(screen.queryByRole('textbox', { name: 'Answer 1' })).not.toBeInTheDocument();
+  stale.unmount(); practice();
+  expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue('');
+  expect(mocks.recovery.get('one:reading:practice:section').id).not.toBe(id);
+});
+
+test('failed discard keeps answers available after remount and can be retried', async () => {
+  const user = userEvent.setup(); const view = practice();
+  await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), 'kept-answer');
+  const id = mocks.recovery.get('one:reading:practice:section').id;
+  mocks.fb.persistNow.mockImplementationOnce(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return false; });
+  await user.click(screen.getByRole('button', { name: 'Discard session' }));
+  await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Discard session' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Could not discard');
+  expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('kept-answer');
+  view.unmount(); practice(`/reading/section?attempt=${id}`);
+  expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue('kept-answer');
+  await user.click(screen.getByRole('button', { name: 'Discard session' }));
+  await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Discard session' }));
+  await waitFor(() => expect(mocks.fb.stateRef.current.examAttempts.find((a: any) => a.id === id)?.status).toBe('discarded'));
+});
+
+test('bank discovers unsynced local sessions and groups same-passage history', async () => {
+  const view = practice();
+  await userEvent.setup().type(await screen.findByRole('textbox', { name: 'Answer 1' }), 'local answer');
+  const id = mocks.recovery.get('one:reading:practice:section').id;
+  view.unmount();
+  render(<MemoryRouter><ExamBankPage skill="reading" /></MemoryRouter>);
+  const resume = await screen.findByRole('link', { name: 'Resume session' });
+  expect(resume).toHaveAttribute('href', expect.stringContaining(`attempt=${id}`));
+  expect(screen.getByRole('link', { name: 'New session' })).toHaveAttribute('href', '/reading/section?new=1');
+  await userEvent.setup().click(screen.getByText('0 completed · 1 unfinished sessions'));
+  expect(screen.getByRole('link', { name: `Resume session ${id}` })).toBeVisible();
+});
+
+test('save and exit syncs a paused session before leaving, retaining a failed save for retry', async () => {
+  const user = userEvent.setup(); practice();
+  await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), '1990');
+  const id = mocks.recovery.get('one:reading:practice:section').id;
+  mocks.fb.persistNow.mockResolvedValueOnce(false);
+  await user.click(screen.getByRole('button', { name: 'Save & exit' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Could not save this session');
+  expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990');
+  expect(screen.getByRole('button', { name: 'Resume' })).toBeEnabled();
+  expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/section');
+  await user.click(screen.getByRole('button', { name: 'Save & exit' }));
+  await waitFor(() => expect(screen.getByLabelText('URL')).toHaveTextContent(/^\/reading$/));
+  expect(mocks.fb.stateRef.current.examAttempts.find((a: any) => a.id === id)).toMatchObject({ status: 'paused', responses: { q1: '1990' } });
+});
+
+test('starting another listening session resets audio while preserving the previous session position', async () => {
+  vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+  mocks.catalog.sections[0].skill = 'listening'; mocks.catalog.sections[0].assetId = 'recording';
+  mocks.catalog.questions.forEach((q: any) => q.skill = 'listening');
+  mocks.catalog.assets = [{ id: 'recording', sectionId: 'section', paperId: 'paper', kind: 'audio', storagePath: 'recording.mp3', sourceUrl: '', duration: 100, provenance }];
+  const { container } = render(<MemoryRouter initialEntries={['/listening/section']}><Routes><Route path="/listening/:sectionId" element={<ExamPracticePage skill="listening" />} /></Routes></MemoryRouter>);
+  await screen.findByRole('textbox', { name: 'Answer 1' });
+  const id = mocks.recovery.get('one:listening:practice:section').id;
+  const audio = container.querySelector('audio')!;
+  await waitFor(() => expect(audio).toHaveAttribute('src', '/audio.mp3'));
+  audio.currentTime = 25; fireEvent.timeUpdate(audio);
+  await userEvent.setup().click(screen.getByRole('button', { name: 'New session' }));
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Start new session' }));
+  await waitFor(() => expect(container.querySelector('audio')).not.toBe(audio));
+  expect(container.querySelector('audio')?.currentTime).toBe(0);
+  expect(mocks.recovery.get(`one:listening:practice:section:session:${id}`)).toMatchObject({ status: 'paused', audioPosition: 25 });
+});
+
+test('discard waits for an in-flight autosave so the stale active revision cannot resurrect it', async () => {
+  const user = userEvent.setup(); practice();
+  await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), '1990');
+  const id = mocks.recovery.get('one:reading:practice:section').id;
+  let resolveSave!: (value: boolean) => void;
+  const commits: string[] = [];
+  mocks.fb.persistNow.mockImplementationOnce(async (draft: any) => {
+    await new Promise<boolean>(resolve => { resolveSave = resolve; });
+    mocks.fb.stateRef.current = draft; mocks.fb.state = draft; commits.push(draft.examAttempts.find((a: any) => a.id === id).status); return true;
+  }).mockImplementationOnce(async (draft: any) => {
+    mocks.fb.stateRef.current = draft; mocks.fb.state = draft; commits.push(draft.examAttempts.find((a: any) => a.id === id).status); return true;
+  });
+  await waitFor(() => expect(mocks.fb.persistNow).toHaveBeenCalledTimes(1), { timeout: 2500 });
+  await user.click(screen.getByRole('button', { name: 'Discard session' }));
+  await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Discard session' }));
+  expect(mocks.fb.persistNow).toHaveBeenCalledTimes(1);
+  await act(async () => resolveSave(true));
+  await waitFor(() => expect(commits).toEqual(['active', 'discarded']));
+  expect(mocks.fb.stateRef.current.examAttempts.find((a: any) => a.id === id)?.status).toBe('discarded');
 });
 
 test('source image network failure offers a real reload in both image layouts', async () => {

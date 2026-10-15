@@ -7,6 +7,10 @@ import { FilterMenu } from '../../components/ui';
 import type { ExamAttempt, ExamSkill, QuestionType } from '../../domain/exam/types';
 import { QUESTION_TYPE_NAMES, useExamCatalog } from './useExamCatalog';
 import '../../styles/exam.css';
+import { ExamSessionHistory } from './ExamSessionHistory';
+import { recoveredExamSessions } from './sessionRecovery';
+import { accountId } from '../../storage/remote';
+import { examSessionUrl, unfinishedExamSession } from '../../domain/exam/sessions';
 
 const PAPERS_PER_PAGE = 8;
 
@@ -31,7 +35,8 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
   const search = params.get('q') || '';
   const { catalog, loading, error, reload } = useExamCatalog(skill, book === 'all' ? undefined : Number(book));
   const hasCatalogSections = catalog.sections.some(section => section.skill === skill);
-  const attempts = (fb.state.examAttempts || []) as ExamAttempt[];
+  const owner = accountId();
+  const attempts = useMemo(() => recoveredExamSessions(owner, skill, (fb.state.examAttempts || []) as ExamAttempt[]), [owner, skill, fb.state.examAttempts]);
   const favorites = new Set<string>(fb.state.settings.favoriteExamSectionIds || []);
   const update = (key: string, value: string) => setParams(current => {
     const next = new URLSearchParams(current);
@@ -76,7 +81,7 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
     } catch { setSaveError('Could not save your favourite.'); setFailedFavorite({ id, wanted }); }
     finally { favoriteLock.current = false; setSavingFavorite(false); }
   };
-  const recent = attempts.filter(attempt => attempt.skill === skill).sort((a, b) => Number(a.status === 'completed') - Number(b.status === 'completed') || b.updatedAt.localeCompare(a.updatedAt)).slice(0, 4);
+  const recent = attempts.filter(attempt => attempt.skill === skill && attempt.status !== 'discarded').sort((a, b) => Number(a.status === 'completed') - Number(b.status === 'completed') || b.updatedAt.localeCompare(a.updatedAt)).slice(0, 4);
   return <section className="view active exam-bank">
     <div className="exam-intro">
       <span className="exam-eyebrow">Cambridge 8–21 · {skill}</span>
@@ -93,7 +98,7 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
       <FilterMenu label="Practice status" value={status} onChange={value => update('status', value)} options={[{ value: 'all', label: 'Any status' }, { value: 'ready', label: 'Ready' }, { value: 'incomplete', label: 'Source incomplete' }, { value: 'new', label: 'Not practised' }, { value: 'practised', label: 'Practised' }, { value: 'favorites', label: 'Favourites' }]} />
     </div>
     {saveError && <div role="alert" className="exam-notice">{saveError} {failedFavorite && <button className="btn line" disabled={savingFavorite} onClick={() => void toggleFavorite(failedFavorite.id, failedFavorite.wanted)}>Retry favourite save</button>}</div>}
-    {recent.length > 0 && <aside className="exam-recent" aria-label="Your recent work"><span className="exam-eyebrow">Your recent work</span>{recent.map(attempt => { const section = catalog.sections.find(row => row.id === attempt.sectionIds[0]); const paper = catalog.papers.find(row => row.id === (attempt.mode === 'mock' ? attempt.sourceId : section?.paperId)); return <Link key={attempt.id} to={attempt.status === 'completed' ? `/${skill}/review/${attempt.id}` : attempt.mode === 'mock' ? `/${skill}/mock/${attempt.sourceId}?attempt=${attempt.id}` : `/${skill}/${attempt.sectionIds[0]}?attempt=${attempt.id}${attempt.retryOfAttemptId ? `&retry=${encodeURIComponent(attempt.retryOfAttemptId)}` : ''}`}>
+    {recent.length > 0 && <aside className="exam-recent" aria-label="Your recent work"><span className="exam-eyebrow">Your recent work</span>{recent.map(attempt => { const section = catalog.sections.find(row => row.id === attempt.sectionIds[0]); const paper = catalog.papers.find(row => row.id === (attempt.mode === 'mock' ? attempt.sourceId : section?.paperId)); return <Link key={attempt.id} to={examSessionUrl(attempt)}>
       <span className="exam-eyebrow">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : `${skill} · saved practice`}</span><strong>{attempt.mode === 'mock' ? 'Full mock' : section?.title || `${sectionLabel} practice`}</strong>
       <span className="exam-recent-meta">{attempt.mode === 'mock' ? 'Full mock' : `${sectionLabel} practice`} · {attempt.status === 'completed' ? `${attempt.score ?? '—'} / ${attempt.total ?? '—'} marks` : attempt.status === 'paused' ? 'Paused' : 'In progress'}</span><b>{attempt.status === 'completed' ? 'Review' : 'Resume'} <ArrowRight size={14} /></b>
     </Link>; })}</aside>}
@@ -103,13 +108,17 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
       {sections.length === 0 ? <StateMessage message="No sections match these filters." /> : <div className="exam-paper-list">{visiblePapers.map(paper => {
         const all = catalog.sections.filter(section => section.paperId === paper.id && section.skill === skill);
         const complete = all.length === (skill === 'reading' ? 3 : 4) && all.every(section => section.status === 'ready' && section.questionCount > 0);
+        const mockHistory = attempts.filter(attempt => attempt.mode === 'mock' && attempt.sourceId === paper.id);
+        const pendingMock = mockHistory.find(attempt => unfinishedExamSession(attempt) && !attempt.planId && !attempt.retryOfAttemptId);
         return <article className="exam-paper" key={paper.id}>
-          <header><div><span className="exam-eyebrow">Cambridge {paper.book} / Test {paper.test}</span><h3>{paper.title}</h3></div>{complete ? <Link className="btn line" to={`/${skill}/mock/${paper.id}`}>Full mock <ArrowRight size={15} /></Link> : <button className="btn line" disabled aria-label="Full mock unavailable">Full mock unavailable</button>}</header>
-          <div className={`exam-section-grid exam-section-grid-${skill}`}>{sections.filter(section => section.paperId === paper.id).sort((a, b) => a.part - b.part).map(section => <div className="exam-section-card" key={section.id}>
+          <header><div><span className="exam-eyebrow">Cambridge {paper.book} / Test {paper.test}</span><h3>{paper.title}</h3></div>{complete ? <div className="btn-row"><Link className="btn line" to={pendingMock ? examSessionUrl(pendingMock) : `/${skill}/mock/${paper.id}`}>{pendingMock ? 'Resume mock' : 'Full mock'} <ArrowRight size={15} /></Link>{pendingMock && <Link className="btn line" to={`/${skill}/mock/${paper.id}?new=1`}>New mock session</Link>}</div> : <button className="btn line" disabled aria-label="Full mock unavailable">Full mock unavailable</button>}</header>
+          <ExamSessionHistory sessions={mockHistory} />
+          <div className={`exam-section-grid exam-section-grid-${skill}`}>{sections.filter(section => section.paperId === paper.id).sort((a, b) => a.part - b.part).map(section => { const history = attempts.filter(attempt => attempt.mode === 'practice' && attempt.sectionIds.includes(section.id)); const pending = history.find(attempt => unfinishedExamSession(attempt) && !attempt.planId && !attempt.retryOfAttemptId); return <div className="exam-section-card" key={section.id}>
             <div className="exam-section-top"><span className="pill blue">{sectionLabel} {section.part}</span><button className="btn text icon-btn" aria-label={`${favorites.has(section.id) ? 'Remove' : 'Add'} favourite: ${section.title}`} aria-pressed={favorites.has(section.id)} disabled={savingFavorite} onClick={() => void toggleFavorite(section.id)}><Star size={17} fill={favorites.has(section.id) ? 'currentColor' : 'none'} /></button></div>
             <h4>{section.title}</h4><p>{section.questionCount} questions · {section.questionTypes.map(value => QUESTION_TYPE_NAMES[value]).join(' · ')}</p>
-            {section.status === 'ready' ? <div className="btn-row"><Link className="btn primary" to={`/${skill}/${section.id}`}>Practise {sectionLabel.toLowerCase()} {section.part} <ArrowRight size={15} /></Link>{skill === 'listening' && <Link className="btn line" to={`/listening/intensive/${section.id}`}>Open intensive part {section.part}</Link>}</div> : <div className="exam-source-status">Source incomplete · practice unavailable</div>}
-          </div>)}</div>
+            {section.status === 'ready' ? <div className="btn-row"><Link className="btn primary" to={pending ? examSessionUrl(pending) : `/${skill}/${encodeURIComponent(section.id)}`}>{pending ? 'Resume session' : `Practise ${sectionLabel.toLowerCase()} ${section.part}`} <ArrowRight size={15} /></Link>{pending && <Link className="btn line" to={`/${skill}/${encodeURIComponent(section.id)}?new=1`}>New session</Link>}{skill === 'listening' && <Link className="btn line" to={`/listening/intensive/${section.id}`}>Open intensive part {section.part}</Link>}</div> : <div className="exam-source-status">Source incomplete · practice unavailable</div>}
+            <ExamSessionHistory sessions={history} />
+          </div>; })}</div>
           {!complete && <p className="exam-source-foot">A full mock requires {skill === 'reading' ? 'all passages and question materials' : 'all parts and audio recordings'}.</p>}
         </article>;
       })}</div>}

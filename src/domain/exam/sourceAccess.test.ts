@@ -42,8 +42,9 @@ test('source mock access resolves newest revisions and completed ties independen
   expect(hasActiveSourceMock('part', 'reading', [active, completed])).toBe(false);
   expect(hasActiveSourceMock('part', 'reading', [completed, active])).toBe(false);
   const newerCompleted = { ...completed, id: 'later', updatedAt: '2026-10-14T00:01:00Z' };
-  expect(hasActiveSourceMock('part', 'reading', [active, newerCompleted])).toBe(false);
+  expect(hasActiveSourceMock('part', 'reading', [active, newerCompleted])).toBe(true);
   const plannedRetry = { ...active, id: 'retry', planId: 'plan', retryOfAttemptId: 'later', updatedAt: '2026-10-14T00:02:00Z' };
   expect(hasActiveSourceMock('part', 'reading', [active, newerCompleted, plannedRetry])).toBe(true);
-  expect(hasActiveSourceMock('part', 'reading', [plannedRetry, newerCompleted, active, { ...plannedRetry, status: 'completed' }])).toBe(false);
+  expect(hasActiveSourceMock('part', 'reading', [plannedRetry, newerCompleted, active, { ...plannedRetry, status: 'completed' }])).toBe(true);
+  expect(hasActiveSourceMock('part', 'reading', [active, { ...active, status: 'discarded' }])).toBe(false);
 });

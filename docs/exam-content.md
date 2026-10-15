@@ -121,3 +121,13 @@ The adjacent-interval audit checked 9,922 consecutive sentence pairs. The only f
 Numerically valid source intervals can be replaced only with reviewed JSON and explicit IDs, e.g. `--replace-sentence source:77691`. The script rejects unknown IDs, missing reviewed rows, mismatched optional source text and out-of-duration replacement intervals. Other valid intervals remain unchanged; replacement provenance retains the previous timing and review evidence. The final review additionally corrected 15 explicitly identified adjacent intervals. Every replacement preserves the old timing and review evidence in provenance.
 
 Release verification reported by the parent: 602 automated tests and production build passed; live per-account RLS, all catalog counts, 28 per-book samples, private media sizes and signed audio were verified. The final v4 seed completed and was verified; its immutable bytes have SHA-256 `8dd491d4e0770336e7b529218af562ccdc1b76e77923e659597a88ff8bc82da0`.
+
+## Practice sessions and answer review
+
+Reading and listening check answers only after the whole session is submitted. Submitting with blanks requires confirmation and ends the session; it does not reveal answers inside an editable draft. Historical assisted attempts retain their original support labels.
+
+Each session has a stable attempt ID and its own question snapshot, responses, review notes, elapsed time and listening position. Repeating the same material creates a separate ID. New session saves and pauses the previous practice session; Save & exit syncs before leaving. Resume links target an exact ID, including planned and wrong-answer retry sessions. Retries keep a link to the original result. Mock clocks continue while away.
+
+Browser recovery keeps revisions per account and session, including legacy material-scoped drafts. Discard records a terminal state without a score. Old links cannot create a replacement draft, and discard saves follow pending autosaves so earlier active revisions cannot overwrite them. Other sessions and source annotations remain available. Source annotations belong to the material; answer evidence, keywords and error reasons belong to a session.
+
+Locate evidence expands the original passage or transcript within the result card. Exact quotes are highlighted across imported fragments without changing source text or saved annotation offsets. Paragraph references highlight that paragraph. When the imported quotation differs, only reliably matched wording is highlighted and the difference is explained; missing evidence is reported explicitly. Listening practice links resolve against the current transcript rather than obsolete imported sentence IDs.

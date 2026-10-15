@@ -11,6 +11,7 @@ export function createExamAttempt(sections: ExamSection[], questions: ExamQuesti
     id: makeId('exam'), skill: first.skill, sourceId: first.paperId, sectionIds: [...new Set(sections.map(section => section.id))],
     mode, status: 'active', responses: {}, evidence: {}, keywords: {}, errorReasons: {},
     questionTypes: Object.fromEntries(selected.map(question => [question.id, question.type])),
+    questionSnapshot: structuredClone(selected),
     startedAt: now, updatedAt: now, hintsEnabled: mode === 'practice', elapsedSeconds: 0,
     ...(mode === 'mock' ? { timeLimitSeconds: first.skill === 'reading' ? sections.length >= 3 ? 3600 : sections.length * 1200 : sections.length >= 4 ? 2400 : sections.length * 600 } : {}),
     contentVersion: [...new Set(sections.map(section => section.provenance.sourceVersion))].join(','),
@@ -29,7 +30,7 @@ export function normalizeExamStore(input: unknown): ExamStore {
   const examAttempts = attempts.filter(row => row && typeof row === 'object' && typeof row.id === 'string' && ['reading', 'listening'].includes(row.skill)).map(row => {
     const responses = Object.fromEntries(Object.entries(object(row.responses)).filter(([, value]) => typeof value === 'string' || Array.isArray(value) && value.every(item => typeof item === 'string')));
     return { ...row, sectionIds: strings(row.sectionIds), sourceId: String(row.sourceId || ''), mode: row.mode === 'mock' ? 'mock' : 'practice',
-      status: ['active', 'paused', 'completed'].includes(row.status) ? row.status : 'active', responses,
+      status: ['active', 'paused', 'completed', 'discarded'].includes(row.status) ? row.status : 'active', responses,
       evidence: stringMap(row.evidence), keywords: stringMap(row.keywords), errorReasons: stringMap(row.errorReasons),
       startedAt: row.startedAt || row.updatedAt || '', updatedAt: row.updatedAt || row.startedAt || '',
       hintsEnabled: typeof row.hintsEnabled === 'boolean' ? row.hintsEnabled : row.mode !== 'mock', elapsedSeconds: Math.max(0, number(row.elapsedSeconds)),

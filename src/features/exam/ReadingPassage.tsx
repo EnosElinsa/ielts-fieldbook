@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useRef, useState, type ReactNode } from 'react';
 import type { ExamPassage, ExamQuestion } from '../../domain/exam/types';
 import { AnnotatedText } from './SourceAnnotations';
+import type { EvidenceRange } from './evidenceLocation';
 
 const paragraphMarker = /^([A-Z])(?:\s+(\d{1,3}))?$/;
 
@@ -69,7 +70,7 @@ export function QuestionReference({ label, count, children }: { label: string; c
   </details>;
 }
 
-export function ReadingPassage({ passage, sourceView = false }: { passage: ExamPassage; sourceView?: boolean }) {
+export function ReadingPassage({ passage, sourceView = false, evidenceRanges = {} }: { passage: ExamPassage; sourceView?: boolean; evidenceRanges?: Record<string, EvidenceRange[]> }) {
   const Heading = sourceView ? 'h3' : 'h4';
   const version = passage.provenance.contentHash || passage.provenance.sourceVersion;
   return <article className="exam-passage">
@@ -77,7 +78,7 @@ export function ReadingPassage({ passage, sourceView = false }: { passage: ExamP
     {readingParagraphs(passage.paragraphs).map(group => <Fragment key={group.marker?.id || group.fragments[0]?.id}>
       {group.marker && <span hidden aria-hidden="true"><AnnotatedText blockId={`passage:${passage.id}:${group.marker.id}`} text={group.marker.text} version={version} /></span>}
       <p>{group.label && <><span className="exam-paragraph-id" aria-label={`Paragraph ${group.label}`}>{group.label}</span>{' '}</>}
-      {group.fragments.map((fragment, index) => <span key={fragment.id}>{index > 0 && ' '}<AnnotatedText blockId={`passage:${passage.id}:${fragment.id}`} text={fragment.text} version={version} hiddenPrefixLength={index === 0 ? group.prefixLength : 0} /></span>)}
+      {group.fragments.map((fragment, index) => <span key={fragment.id}>{index > 0 && ' '}<AnnotatedText blockId={`passage:${passage.id}:${fragment.id}`} text={fragment.text} version={version} hiddenPrefixLength={index === 0 ? group.prefixLength : 0} evidenceRanges={evidenceRanges[`passage:${passage.id}:${fragment.id}`]} /></span>)}
       </p></Fragment>)}
   </article>;
 }
