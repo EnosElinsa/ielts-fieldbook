@@ -1,5 +1,6 @@
 import {
   cleanup,
+  act,
   render,
   screen,
   waitFor,
@@ -18,6 +19,7 @@ import { resetDictionaryCache } from "./DictionarySenses";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { resolveVocabularyLearningContext } from "../../domain/vocabulary/context";
 import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
+import { registerVocabularyTeaching, vocabularyTeaching } from '../../domain/vocabulary/runtimeData';
 const mocks = vi.hoisted(() => ({
   fb: null as any,
   player: { play: vi.fn(), stop: vi.fn() },
@@ -117,6 +119,47 @@ function mount(path: string) {
 }
 const book = "ielts-vocabulary";
 const core = () => release.entries.find((entry: any) => entry.term === "core");
+
+test('a saved meaning refreshes after scoped teaching arrives without replacing personal edits', async () => {
+  const sense = { id: 'late-source', definition: 'A source meaning.', example: 'The original example.', pos: 'noun', source: 'English Wiktionary' };
+  const entry = { ...core(), id: 'vocab:late-teaching', term: 'lateword', senses: [sense] };
+  VOCABULARY_CATALOG.entries = [...VOCABULARY_CATALOG.entries, entry];
+  mocks.fb.state.vocabulary = [entry];
+  let finish!: (value: boolean) => void;
+  mocks.fb.loadVocabularyCatalog = vi.fn(() => new Promise(resolve => { finish = resolve; }));
+  const corrections = vocabularyTeaching.readiness.corrections;
+  const view = mount(`/vocabulary/entry/${entry.id}?senseId=${sense.id}`);
+  try {
+    expect(screen.getByText(sense.example)).toBeInTheDocument();
+    await act(async () => {
+      registerVocabularyTeaching({ ...vocabularyTeaching, readiness: { ...vocabularyTeaching.readiness, corrections: [
+        { entryId: entry.id, senseId: sense.id, originalSense: sense, definition: sense.definition, example: 'The reviewed example.' },
+      ] } });
+      mocks.fb.vocabularyCatalogRevision = 1;
+      finish(true);
+    });
+    expect(await screen.findByText('The reviewed example.')).toBeInTheDocument();
+    expect(mocks.fb.state.vocabulary[0]).toBe(entry);
+    mocks.fb.state.vocabulary = [{ ...entry, senses: [{ ...sense, example: 'My own example.' }] }];
+    view.rerender(<MemoryRouter initialEntries={[`/vocabulary/entry/${entry.id}?senseId=${sense.id}`]}><Routes><Route path="/vocabulary/entry/:id" element={<VocabularyEntryPage />} /></Routes></MemoryRouter>);
+    expect(screen.getByText('My own example.')).toBeInTheDocument();
+  } finally {
+    vocabularyTeaching.readiness.corrections = corrections;
+    registerVocabularyTeaching(vocabularyTeaching);
+  }
+});
+
+test('a saved spelling-error reference explains the correct form without a main or secondary practice link', () => {
+  const entry = release.entries.find((entry: any) => entry.term === 'effect');
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const reference = JSON.parse(readFileSync(`public/dictionary/${index.effect}`, 'utf8')).senses.find((sense: any) => sense.id === 'kaikki:fe6c98c80e453fd028');
+  mocks.fb.state.vocabulary = [{ ...entry, senses: [reference] }];
+  mount(`/vocabulary/entry/${entry.id}?senseId=${encodeURIComponent(reference.id)}`);
+  expect(screen.getByText('A recorded spelling error for affect when the intended meaning is influence.')).toBeInTheDocument();
+  expect(screen.getByText(/Spelling reference · Choose a valid meaning/)).toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: /Practise this word/ })).not.toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: /Practise this sense/ })).not.toBeInTheDocument();
+});
 
 test('an explicitly selected river meaning displays its diagram and learning notes in word details', () => {
   const bank = release.entries.find((entry: any) => entry.term === 'bank');

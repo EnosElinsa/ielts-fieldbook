@@ -1,0 +1,449 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:2114daefbbfa5151d9"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:0ac72ada5dc305d735"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:0db9519546605bdcd4"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:6552c5f6edcafbcb73"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:2da09d525c9ed5b0d4"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:770e16535d966d945d"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:eb32814476be6c13d6"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:f6a07b86153c63b45c"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:06e74bba70ca1240a6"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:bc6f58a77a50e38c47"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:ea49207da0f08af0df"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:d7a0154a4e94e21add"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:c997a7bafc52d03bac"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:e555176d08472fbfd5"
+    },
+    {
+      "entryId": "vocab:affect",
+      "senseId": "kaikki:1ae427f6a684ab3524"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:7df9fe0ca5374e80eb"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:ff1f8762a5fc3beb2d"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:beb6e3b7cc19e6998a"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:aca12a41599a24d270"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:913061df484cc96349"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:8a18656304a6f9a03e"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:fb536b8414642fc94f"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:7df03f6c1bec2df1d0"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:f3f2a47f8e4c89c0cb"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:92dd8ad4beddac1156"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:7581edcd2d43a595d0"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:1bf3e45366457171ea"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "kaikki:fe6c98c80e453fd028"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:dbef76c6c54b02d394"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:bd6f8abc2916c21b17"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:d587054b05f66297b4"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:235b352594d5cdb2af"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:ccd68c9c8ef8a25411"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:ca23003c05ae605601"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:a11b529e218a624c87"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:733500c8ef76bdfe92"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:cacf278675183c8106"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:b1a45235c9ca6b3e14"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:9fd055f7288d9291c3"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:449673307bce1fb7a5"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:2b972c1487e45fcb2a"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:eeaa1cb12a8814f9e7"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:88c836f61a8d6ca62b"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:e3d65e1a6b14437343"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "kaikki:0405c10266aab13a4d"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:a43ca61d7ab10c4758"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:4e4d3c32f4ece44837"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:7c7cb3cb40410bb329"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:180944adcacdf48fa5"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:acbaac940508ed3bb9"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:9914f108003be17a3a"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:fa1c0f8408f3198981"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:4174d8fd5e524ff909"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:018d6f19b967ba73ee"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:4a9b7b8cad8f2edc59"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:df561576f03aa8f167"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:59db145022e8ffca49"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:b77e7e63046b5fa020"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:23d16d2703a6949a5e"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:14b833504ceacfb812"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:2294bb252b4dc437b4"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:61543ffa87ce60491f"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:5fa5edeb9ab284c536"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:fb2bfb6fc1d9d572bf"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "kaikki:15273a85b1a1c3de70"
+    },
+    {
+      "entryId": "ve-cfe02e5e",
+      "senseId": "kaikki:fe15e75a83626f5df5"
+    },
+    {
+      "entryId": "ve-cfe02e5e",
+      "senseId": "kaikki:4a03d560578d06ab61"
+    },
+    {
+      "entryId": "ve-cfe02e5e",
+      "senseId": "kaikki:49e2bc7c96759b3f39"
+    },
+    {
+      "entryId": "ve-cfe02e5e",
+      "senseId": "kaikki:492a730048f3db1f5b"
+    },
+    {
+      "entryId": "vocab:effect",
+      "senseId": "wiktionary:restored:58b5ddc2149e0cd3d7"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:59d18fb4561e9b20d5"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:3a1047a5ad89f5ba7f"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:9dee5567a38a0ffd42"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:fb6269ca8e927fc771"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:b887c46d221b90e694"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:5c2fc3b8f10bd1ccb1"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:4ce46e31f913af3bf1"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:024f7e8a527054cdf2"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:198210e3639c2f8cc5"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:989ef9c90c185233e9"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:e7c190988ab0f50eaa"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:b54de052da73d1169f"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:f85194b9d9132b04ad"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:b0340252e6bafd266d"
+    },
+    {
+      "entryId": "vocab:raise",
+      "senseId": "wiktionary:restored:c549e3a3249dcb6a40"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:83b074eb7b151c81be"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:c93a53e8913a831f1b"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:0cf2fce8553f2b5705"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:eaf5045d3641d73c71"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:8b40e84c3d11c64caf"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:0bfb429ab2f083e681"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:5b41290a6834be23e7"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:76a279542e8242867b"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:d779b1987877ac7f99"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:24ad2e9f1be2f9ba13"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:841a0bbd04ae59a4bc"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:32320c56393eb94278"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:7bee040d3adcb0d987"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:95f1e50546fb8928dc"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:6d7945a17b79e51d33"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:0ab771eba158101b9b"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:61340d656fef64e2ff"
+    },
+    {
+      "entryId": "vocab:rise",
+      "senseId": "wiktionary:restored:0cb86948bc8399eb79"
+    },
+    {
+      "entryId": "ve-cfe02e5e",
+      "senseId": "wiktionary:restored:7d2ea9c31fe231bb57"
+    },
+    {
+      "entryId": "ve-cfe02e5e",
+      "senseId": "wiktionary:restored:c91e77217e0a8ff4fc"
+    },
+    {
+      "entryId": "ve-cfe02e5e",
+      "senseId": "wiktionary:restored:621318748463b1acf4"
+    },
+    {
+      "entryId": "ve-cfe02e5e",
+      "senseId": "wiktionary:restored:9ebd36947b76ef59c7"
+    },
+    {
+      "entryId": "ve-cfe02e5e",
+      "senseId": "wiktionary:restored:0a054fb60037b7b5eb"
+    },
+    {
+      "entryId": "ve-cfe02e5e",
+      "senseId": "wiktionary:restored:a4fb49e0b6a9f61c65"
+    },
+    {
+      "entryId": "ve-cfe02e5e",
+      "senseId": "wiktionary:restored:99df09f6911ac6974b"
+    },
+    {
+      "entryId": "ve-cfe02e5e",
+      "senseId": "wiktionary:restored:e4a6ebec71c2d4596d"
+    }
+  ],
+  "restoreCorrections": []
+}

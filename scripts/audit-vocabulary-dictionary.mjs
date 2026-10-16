@@ -54,7 +54,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
   }
   for (const row of corrections) if (row.dictionaryParentSenseId && !restoredKeys.has(identity(row.entryId, row.senseId))) errors.push(`Missing restored source evidence: ${row.entryId}/${row.senseId}`);
   const seen = new Set(), reviewed = new Set();
-  let tasks = 0;
+  let tasks = 0, spellingReferences = 0;
   for (const review of records) {
     const key = identity(review.entryId, review.senseId), start = errors.length;
     if (seen.has(key)) errors.push(`Duplicate review: ${review.term}/${review.senseId}`);
@@ -67,6 +67,8 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
     if (!row) errors.push(`Missing supplement: ${review.term}/${review.senseId}`);
     else {
       if (hash(row.originalSense) !== review.sourceHash) errors.push(`Supplement source hash mismatch: ${review.term}/${review.senseId}`);
+      if (row.referenceOnly !== undefined && typeof row.referenceOnly !== 'boolean') errors.push(`Invalid spelling reference flag: ${review.term}/${review.senseId}`);
+      if (row.referenceOnly && (!/\bmisspelling\b/i.test(`${original?.definition || ''} ${original?.usage || ''}`) || row.distinctionTask || diagrams.some(diagram => identity(diagram.entryId, diagram.senseId) === key))) errors.push(`Invalid spelling reference: ${review.term}/${review.senseId}`);
       for (const area of areas) if (!review.reviewedAreas.includes(area) || !row[area]?.length) errors.push(`Incomplete ${area}: ${review.term}/${review.senseId}`);
       if (row.distinctionTask) {
         const task = row.distinctionTask;
@@ -74,7 +76,10 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
         else tasks++;
       }
     }
-    if (errors.length === start) reviewed.add(JSON.stringify([review.term, review.senseId]));
+    if (errors.length === start) {
+      reviewed.add(JSON.stringify([review.term, review.senseId]));
+      if (row?.referenceOnly) spellingReferences++;
+    }
   }
   const diagramKeys = new Set();
   for (const diagram of diagrams) {
@@ -89,7 +94,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
   for (const item of byTerm) item.reviewed = inventory.filter(sense => sense.term === item.term && sense.status === 'reviewed').length;
   const summary = {
     terms: byTerm.length, senses: inventory.length, preservedSenses, restoredSenses: restoredSources.length, reviewed: reviewed.size, pending: inventory.length-reviewed.size,
-    diagrams: diagrams.length, tasks,
+    diagrams: diagrams.length, tasks, spellingReferences,
     rawMissingExamples: inventory.filter(row => row.flags.includes('missing-example')).length,
     rawExampleReviewSignals: inventory.filter(row => row.flags.includes('example-review-signal')).length,
     rawMissingCollocations: inventory.filter(row => row.flags.includes('missing-collocations')).length,
@@ -110,6 +115,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     fs.writeFileSync('local/audits/vocabulary-dictionary.json', JSON.stringify(result, null, 2)+'\n');
     const { summary: s } = result;
     const table = result.byTerm.filter(row => row.reviewed).map(row => `| ${row.term} | ${row.reviewed} | ${row.senses} | ${row.senses-row.reviewed} |`).join('\n');
-    fs.writeFileSync('docs/vocabulary-dictionary-audit.md', `# Full dictionary editorial audit\n\nRun: \`node scripts/audit-vocabulary-dictionary.mjs\`. Source records and stable identities are retained.\n\nThe complete index has **${s.terms.toLocaleString('en-US')} terms, ${s.preservedSenses.toLocaleString('en-US')} preserved raw senses and ${s.restoredSenses} restored submeanings** (${s.senses.toLocaleString('en-US')} total). This ledger verifies **${s.reviewed} senses** across definition, example, collocations and distinctions; **${s.pending.toLocaleString('en-US')} remain pending**. Earlier default-learning patches are not counted as full dictionary review. ${s.tasks} reviewed distinction exercises and ${s.diagrams} exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense.\n\n| Term | Reviewed text senses | Raw + restored senses | Pending |\n| --- | ---: | ---: | ---: |\n${table}\n\n## Raw-source signals\n\n${s.rawMissingExamples.toLocaleString('en-US')} raw senses lack examples; ${s.rawMissingCollocations.toLocaleString('en-US')} lack collocations; ${s.rawMissingDistinctions.toLocaleString('en-US')} lack distinction notes. ${s.rawExampleReviewSignals.toLocaleString('en-US')} examples trigger an archaic, truncated or relation-text signal. These counts describe preserved raw source data. They do not describe all currently displayed defaults, and flags do not prove linguistic errors.\n\n## Review rules\n\nEach ledger row binds a catalogue entry, dictionary sense and SHA-256 of its original record. The audit rejects stale hashes, missing identities, incomplete reviewed fields, invalid exercises and diagrams that do not match the exact reviewed definition and part of speech. Restored submeanings additionally require a preserved parent fingerprint, a revision-bound Wiktionary URL, the exact source definition line and independent source/evidence alignment. Their counts are separate from preserved raw-source signals. Personal edits and frozen sessions are outside this public editorial ledger. Specialised, historical and proper-name senses remain pending until examined; they are not silently excluded.\n\nThe ignored \`local/audits/vocabulary-dictionary.json\` contains every source identity, fingerprint, status and signal for subsequent batches. Run with \`--check\` to validate without rewriting reports. Passing this check verifies accounting and bindings, not completion of the dictionary.\n`);
+    fs.writeFileSync('docs/vocabulary-dictionary-audit.md', `# Full dictionary editorial audit\n\nRun: \`node scripts/audit-vocabulary-dictionary.mjs\`. Source records and stable identities are retained.\n\nThe complete index has **${s.terms.toLocaleString('en-US')} terms, ${s.preservedSenses.toLocaleString('en-US')} preserved raw senses and ${s.restoredSenses} restored submeanings** (${s.senses.toLocaleString('en-US')} total). This ledger verifies **${s.reviewed} senses** across definition, example, collocations and distinctions; **${s.pending.toLocaleString('en-US')} remain pending**. Earlier default-learning patches are not counted as full dictionary review. ${s.tasks} reviewed distinction exercises and ${s.diagrams} exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. ${s.spellingReferences} reviewed records are spelling-error references, retained for reading and excluded from new practice queues.\n\n| Term | Reviewed text senses | Raw + restored senses | Pending |\n| --- | ---: | ---: | ---: |\n${table}\n\n## Raw-source signals\n\n${s.rawMissingExamples.toLocaleString('en-US')} raw senses lack examples; ${s.rawMissingCollocations.toLocaleString('en-US')} lack collocations; ${s.rawMissingDistinctions.toLocaleString('en-US')} lack distinction notes. ${s.rawExampleReviewSignals.toLocaleString('en-US')} examples trigger an archaic, truncated or relation-text signal. These counts describe preserved raw source data. They do not describe all currently displayed defaults, and flags do not prove linguistic errors.\n\n## Review rules\n\nEach ledger row binds a catalogue entry, dictionary sense and SHA-256 of its original record. The audit rejects stale hashes, missing identities, incomplete reviewed fields, invalid exercises and diagrams that do not match the exact reviewed definition and part of speech. Restored submeanings additionally require a preserved parent fingerprint, a revision-bound Wiktionary URL, the exact source definition line and independent source/evidence alignment. Their counts are separate from preserved raw-source signals. Personal edits and frozen sessions are outside this public editorial ledger. Specialised, historical and proper-name senses remain pending until examined; they are not silently excluded.\n\nThe ignored \`local/audits/vocabulary-dictionary.json\` contains every source identity, fingerprint, status and signal for subsequent batches. Run with \`--check\` to validate without rewriting reports. Passing this check verifies accounting and bindings, not completion of the dictionary.\n`);
   }
 }

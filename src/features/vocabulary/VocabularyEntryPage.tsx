@@ -37,6 +37,7 @@ import { accountId } from "../../storage/remote";
 import { getVocabularyMastery } from "../../domain/vocabulary/mastery";
 import { vocabularyLearningTimeline } from "../../domain/vocabulary/timeline";
 import { vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
+import { isVocabularySpellingReference } from '../../domain/vocabulary/readiness';
 import { VocabularySenseContent } from "./VocabularySenseContent";
 import { VocabularySourceLinks } from './VocabularySourceLinks';
 import "../../styles/vocabulary-entry.css";
@@ -150,7 +151,7 @@ export function VocabularyEntryPage() {
             senseId: requestedSense,
           })
         : null,
-    [raw, bookId, unitId, requestedSense, validGroup],
+    [raw, bookId, unitId, requestedSense, validGroup, status, fb.vocabularyCatalogRevision],
   );
   const {to: returnTo} = useVocabularyReturn();
   const returnLabel = location.state?.vocabularyReturn ? vocabularyReturnLabel(returnTo) :
@@ -356,7 +357,7 @@ export function VocabularyEntryPage() {
             )}
           </details>
         ) : null}
-        {!main ? (
+        {!main && !isVocabularySpellingReference(entry!.id, sense) ? (
           <Link
             className="btn line"
             to={practiceUrl(entry!.id, sense.id, context, origin, "definition")}
@@ -465,7 +466,7 @@ export function VocabularyEntryPage() {
             onMedia={setRecordings}
           />
           <div className="vocabulary-entry-practice">
-            {primary && !entry.tags.includes("archived") ? (
+            {primary && !entry.tags.includes("archived") && !isVocabularySpellingReference(entry.id, primary) ? (
               <Link
                 className="btn primary"
                 to={practiceUrl(entry.id, primary.id, context, origin)}
@@ -474,6 +475,7 @@ export function VocabularyEntryPage() {
                 <ArrowRight size={16} />
               </Link>
             ) : null}
+            {primary && isVocabularySpellingReference(entry.id, primary) ? <p className="vocabulary-muted">Spelling reference · Choose a valid meaning below to practise this word.</p> : null}
             {entry.tags.includes("archived") ? (
               <span className="pill">Archived · Excluded from practice</span>
             ) : null}

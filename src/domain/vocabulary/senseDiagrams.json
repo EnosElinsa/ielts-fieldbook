@@ -358,5 +358,77 @@
     "definition": "The top part of a column, supporting the structure above it.",
     "pos": "noun",
     "kind": "column-capital"
+  },
+  {
+    "entryId": "vocab:effect",
+    "senseId": "kaikki:7df9fe0ca5374e80eb",
+    "term": "effect",
+    "definition": "A result or consequence of a cause.",
+    "pos": "noun",
+    "kind": "cause-effect"
+  },
+  {
+    "entryId": "vocab:raise",
+    "senseId": "kaikki:dbef76c6c54b02d394",
+    "term": "raise",
+    "definition": "To move someone or something to a higher position.",
+    "pos": "verb",
+    "kind": "raise-rise"
+  },
+  {
+    "entryId": "vocab:rise",
+    "senseId": "kaikki:a43ca61d7ab10c4758",
+    "term": "rise",
+    "definition": "To move or appear to move upwards.",
+    "pos": "verb",
+    "kind": "raise-rise"
+  },
+  {
+    "entryId": "vocab:raise",
+    "senseId": "kaikki:ccd68c9c8ef8a25411",
+    "term": "raise",
+    "definition": "To take a number or expression to a specified power.",
+    "pos": "verb",
+    "kind": "number-power"
+  },
+  {
+    "entryId": "vocab:raise",
+    "senseId": "wiktionary:restored:198210e3639c2f8cc5",
+    "term": "raise",
+    "definition": "To collect or obtain money or other resources for a purpose.",
+    "pos": "verb",
+    "kind": "fundraising-total"
+  },
+  {
+    "entryId": "vocab:rise",
+    "senseId": "kaikki:df561576f03aa8f167",
+    "term": "rise",
+    "definition": "An increase in an amount, quantity or price.",
+    "pos": "noun",
+    "kind": "numerical-rise"
+  },
+  {
+    "entryId": "vocab:rise",
+    "senseId": "wiktionary:restored:6d7945a17b79e51d33",
+    "term": "rise",
+    "definition": "Of a river, to have its source in a particular place.",
+    "pos": "verb",
+    "kind": "river-source"
+  },
+  {
+    "entryId": "vocab:rise",
+    "senseId": "kaikki:5fa5edeb9ab284c536",
+    "term": "rise",
+    "definition": "The vertical height of an arch above its springing line, or of a step from one tread to the next.",
+    "pos": "noun",
+    "kind": "step-rise"
+  },
+  {
+    "entryId": "ve-cfe02e5e",
+    "senseId": "kaikki:49e2bc7c96759b3f39",
+    "term": "practice",
+    "definition": "Actual action, operation or experience, contrasted with theory.",
+    "pos": "noun",
+    "kind": "theory-practice"
   }
 ]

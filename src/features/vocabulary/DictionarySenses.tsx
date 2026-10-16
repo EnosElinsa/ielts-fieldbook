@@ -10,6 +10,7 @@ import { accountId } from "../../storage/remote";
 import { VocabularySenseContent } from "./VocabularySenseContent";
 import { SelectField } from '../../components/SelectField';
 import { vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
+import { isVocabularySpellingReference } from '../../domain/vocabulary/readiness';
 import { getVocabularySenseDiagram, type VocabularySenseDiagram } from '../../domain/vocabulary/media';
 import { VocabularyMeaningDiagram } from './VocabularyMeaningDiagram';
 import { practiceUrl } from "./vocabularyNavigation";
@@ -53,13 +54,15 @@ export function DictionarySenses({
   const [posFilter, setPosFilter] = useState('');
   const searchId = useId();
   useEffect(() => {
+    setShowAll(false);
+    setQuery('');
+    setPosFilter('');
+  }, [entry.term, entry.id, revision]);
+  useEffect(() => {
     let active = true;
     setLoaded([]);
     setError("");
     setLoading(true);
-    setShowAll(false);
-    setQuery('');
-    setPosFilter('');
     onSources?.([]);
     loadTermDictionary(entry.term, entry.id)
       .then((data) => {
@@ -76,7 +79,8 @@ export function DictionarySenses({
     return () => {
       active = false;
     };
-  }, [entry.term, entry.id, revision]);
+  // Reapply late scoped teaching to the cached raw dictionary, retaining the reader's filters.
+  }, [entry.term, entry.id, revision, fb.vocabularyCatalogRevision]);
   const excludeKey = JSON.stringify(
     excludeSenses.map((sense) => [sense.id, key(sense)]).sort(),
   );
@@ -250,7 +254,7 @@ export function DictionarySenses({
               <section className="vocabulary-sense" key={sense.id}>
                 <div className="vocabulary-sense-head">
                   <h4>Meaning {meaningNumbers.get(sense.id)}</h4>
-                  <button
+                  {isVocabularySpellingReference(entry.id, sense) ? <span className="pill">Spelling reference</span> : <button
                     type="button"
                     className="btn line"
                     disabled={saving !== null}
@@ -258,7 +262,7 @@ export function DictionarySenses({
                   >
                     <BookOpen size={15} />
                     {saving === sense.id ? "Saving…" : "Practise this sense"}
-                  </button>
+                  </button>}
                 </div>
                 <VocabularySenseContent sense={sense} showLearningNotes />
                 {diagram ? <DiagramPreview diagram={diagram} number={meaningNumbers.get(sense.id)} /> : null}

@@ -891,5 +891,803 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "effect",
+    "entryId": "vocab:effect",
+    "parentSenseId": "kaikki:beb6e3b7cc19e6998a",
+    "parentSourceHash": "ab6108142e559b98f01d3c267fe5c270e53cf88023cf5c39002284879ae14444",
+    "sourcePage": "effect",
+    "revision": 93554700,
+    "sourceGloss": "## {{lb|en|uncountable}} The state of being binding and enforceable, as in a rule, policy, or law.",
+    "sense": {
+      "id": "wiktionary:restored:58b5ddc2149e0cd3d7",
+      "pos": "noun",
+      "definition": "The state of being binding and enforceable, as in a rule, policy, or law.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=effect&oldid=93554700",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:dbef76c6c54b02d394",
+    "parentSourceHash": "d76e39aca8650ed05deeaf49a64bc997cf6ea18b75bceef7578bce08f1eeb8b9",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## To form by the accumulation of materials or constituent parts; to build up; to erect.",
+    "sense": {
+      "id": "wiktionary:restored:59d18fb4561e9b20d5",
+      "pos": "verb",
+      "definition": "To form by the accumulation of materials or constituent parts; to build up; to erect.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:dbef76c6c54b02d394",
+    "parentSourceHash": "d76e39aca8650ed05deeaf49a64bc997cf6ea18b75bceef7578bce08f1eeb8b9",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## To cause something to come to the surface of water.",
+    "sense": {
+      "id": "wiktionary:restored:3a1047a5ad89f5ba7f",
+      "pos": "verb",
+      "definition": "To cause something to come to the surface of water.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:dbef76c6c54b02d394",
+    "parentSourceHash": "d76e39aca8650ed05deeaf49a64bc997cf6ea18b75bceef7578bce08f1eeb8b9",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## {{lb|en|nautical}} To cause (the land or any other object) to seem higher by drawing nearer to it.",
+    "sense": {
+      "id": "wiktionary:restored:9dee5567a38a0ffd42",
+      "pos": "verb",
+      "definition": "To cause (the land or any other object) to seem higher by drawing nearer to it.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:dbef76c6c54b02d394",
+    "parentSourceHash": "d76e39aca8650ed05deeaf49a64bc997cf6ea18b75bceef7578bce08f1eeb8b9",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## To make (bread, etc.) light, as by [[yeast]] or [[leaven]].",
+    "sense": {
+      "id": "wiktionary:restored:fb6269ca8e927fc771",
+      "pos": "verb",
+      "definition": "To make (bread, etc.) light, as by yeast or leaven.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:dbef76c6c54b02d394",
+    "parentSourceHash": "d76e39aca8650ed05deeaf49a64bc997cf6ea18b75bceef7578bce08f1eeb8b9",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## {{lb|en|figurative}} To cause (a dead person) to live again; to [[resurrect]].",
+    "sense": {
+      "id": "wiktionary:restored:b887c46d221b90e694",
+      "pos": "verb",
+      "definition": "To cause (a dead person) to live again; to resurrect.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:dbef76c6c54b02d394",
+    "parentSourceHash": "d76e39aca8650ed05deeaf49a64bc997cf6ea18b75bceef7578bce08f1eeb8b9",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## {{lb|en|military}} To remove or break up (a blockade), either by withdrawing the ships or forces employed in enforcing it, or by driving them away or dispersing them.",
+    "sense": {
+      "id": "wiktionary:restored:5c2fc3b8f10bd1ccb1",
+      "pos": "verb",
+      "definition": "To remove or break up (a blockade), either by withdrawing the ships or forces employed in enforcing it, or by driving them away or dispersing them.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:dbef76c6c54b02d394",
+    "parentSourceHash": "d76e39aca8650ed05deeaf49a64bc997cf6ea18b75bceef7578bce08f1eeb8b9",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## {{lb|en|military|transitive}} To relinquish (a [[siege]]), or cause this to be done.",
+    "sense": {
+      "id": "wiktionary:restored:4ce46e31f913af3bf1",
+      "pos": "verb",
+      "definition": "To relinquish (a siege), or cause this to be done.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:dbef76c6c54b02d394",
+    "parentSourceHash": "d76e39aca8650ed05deeaf49a64bc997cf6ea18b75bceef7578bce08f1eeb8b9",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## {{lb|en|metalworking|transitive}} To emboss (sheet metal), or to form it into cup-shaped or hollow articles, by hammering, stamping{{,}} or spinning.",
+    "sense": {
+      "id": "wiktionary:restored:024f7e8a527054cdf2",
+      "pos": "verb",
+      "definition": "To emboss (sheet metal), or to form it into cup-shaped or hollow articles, by hammering, stamping or spinning.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:bd6f8abc2916c21b17",
+    "parentSourceHash": "6580249ef3d002b78d71ec373223f60c7ac26a91ddb0c3eda84a6a4bddd26f2d",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## To [[collect]] or [[amass]].",
+    "sense": {
+      "id": "wiktionary:restored:198210e3639c2f8cc5",
+      "pos": "verb",
+      "definition": "To collect or amass.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:bd6f8abc2916c21b17",
+    "parentSourceHash": "6580249ef3d002b78d71ec373223f60c7ac26a91ddb0c3eda84a6a4bddd26f2d",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## {{lb|en|obsolete}} To [[call up]] the [[force]]s of, to raise the [[troop]]s from.",
+    "sense": {
+      "id": "wiktionary:restored:989ef9c90c185233e9",
+      "pos": "verb",
+      "definition": "To call up the forces of, to raise the troops from.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:bd6f8abc2916c21b17",
+    "parentSourceHash": "6580249ef3d002b78d71ec373223f60c7ac26a91ddb0c3eda84a6a4bddd26f2d",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## To [[bring up]]; to [[grow]].",
+    "sense": {
+      "id": "wiktionary:restored:e7c190988ab0f50eaa",
+      "pos": "verb",
+      "definition": "To bring up; to grow.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:bd6f8abc2916c21b17",
+    "parentSourceHash": "6580249ef3d002b78d71ec373223f60c7ac26a91ddb0c3eda84a6a4bddd26f2d",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## To [[promote]].",
+    "sense": {
+      "id": "wiktionary:restored:b54de052da73d1169f",
+      "pos": "verb",
+      "definition": "To promote.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:bd6f8abc2916c21b17",
+    "parentSourceHash": "6580249ef3d002b78d71ec373223f60c7ac26a91ddb0c3eda84a6a4bddd26f2d",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## To [[mention]] (a question, issue) for discussion.",
+    "sense": {
+      "id": "wiktionary:restored:f85194b9d9132b04ad",
+      "pos": "verb",
+      "definition": "To mention (a question, issue) for discussion.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:bd6f8abc2916c21b17",
+    "parentSourceHash": "6580249ef3d002b78d71ec373223f60c7ac26a91ddb0c3eda84a6a4bddd26f2d",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## {{lb|en|legal}} To create; to constitute (a ''[[use]]'', or a beneficial interest in property).",
+    "sense": {
+      "id": "wiktionary:restored:b0340252e6bafd266d",
+      "pos": "verb",
+      "definition": "To create; to constitute (a use, or a beneficial interest in property).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "raise",
+    "entryId": "vocab:raise",
+    "parentSenseId": "kaikki:bd6f8abc2916c21b17",
+    "parentSourceHash": "6580249ef3d002b78d71ec373223f60c7ac26a91ddb0c3eda84a6a4bddd26f2d",
+    "sourcePage": "raise",
+    "revision": 93599570,
+    "sourceGloss": "## To bring into being; to produce; to cause to arise, come forth, or appear.",
+    "sense": {
+      "id": "wiktionary:restored:c549e3a3249dcb6a40",
+      "pos": "verb",
+      "definition": "To bring into being; to produce; to cause to arise, come forth, or appear.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=raise&oldid=93599570",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:a43ca61d7ab10c4758",
+    "parentSourceHash": "3d10f3eb2fb9c2342c0eb6081a4cfe822531a41a42a7ea7c355856448927a473",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## To [[grow]] upward; to [[attain]] a certain height.",
+    "sense": {
+      "id": "wiktionary:restored:83b074eb7b151c81be",
+      "pos": "verb",
+      "definition": "To grow upward; to attain a certain height.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:a43ca61d7ab10c4758",
+    "parentSourceHash": "3d10f3eb2fb9c2342c0eb6081a4cfe822531a41a42a7ea7c355856448927a473",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## To [[slope#Verb|slope]] upward.",
+    "sense": {
+      "id": "wiktionary:restored:c93a53e8913a831f1b",
+      "pos": "verb",
+      "definition": "To slope upward.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:a43ca61d7ab10c4758",
+    "parentSourceHash": "3d10f3eb2fb9c2342c0eb6081a4cfe822531a41a42a7ea7c355856448927a473",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## {{lb|en|of a [[celestial body]]}} To [[appear]] to move upwards from behind the [[horizon]] of a [[planet]] as a result of the planet's rotation.",
+    "sense": {
+      "id": "wiktionary:restored:0cf2fce8553f2b5705",
+      "pos": "verb",
+      "definition": "To appear to move upwards from behind the horizon of a planet as a result of the planet's rotation.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:a43ca61d7ab10c4758",
+    "parentSourceHash": "3d10f3eb2fb9c2342c0eb6081a4cfe822531a41a42a7ea7c355856448927a473",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## To become [[erect]]; to [[assume]] an upright position.",
+    "sense": {
+      "id": "wiktionary:restored:eaf5045d3641d73c71",
+      "pos": "verb",
+      "definition": "To become erect; to assume an upright position.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:a43ca61d7ab10c4758",
+    "parentSourceHash": "3d10f3eb2fb9c2342c0eb6081a4cfe822531a41a42a7ea7c355856448927a473",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## To [[leave]] one's bed; to [[get up]].",
+    "sense": {
+      "id": "wiktionary:restored:8b40e84c3d11c64caf",
+      "pos": "verb",
+      "definition": "To leave one's bed; to get up.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:a43ca61d7ab10c4758",
+    "parentSourceHash": "3d10f3eb2fb9c2342c0eb6081a4cfe822531a41a42a7ea7c355856448927a473",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## {{lb|en|figurative}} To be [[resurrect]]ed.",
+    "sense": {
+      "id": "wiktionary:restored:0bfb429ab2f083e681",
+      "pos": "verb",
+      "definition": "To be resurrected.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:a43ca61d7ab10c4758",
+    "parentSourceHash": "3d10f3eb2fb9c2342c0eb6081a4cfe822531a41a42a7ea7c355856448927a473",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## {{lb|en|figurative}} To [[terminate]] an official [[sitting#Noun|sitting]]; to [[adjourn]].",
+    "sense": {
+      "id": "wiktionary:restored:5b41290a6834be23e7",
+      "pos": "verb",
+      "definition": "To terminate an official sitting; to adjourn.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:4e4d3c32f4ece44837",
+    "parentSourceHash": "078b626e0c9de1c7923a41d58ce7fbd9f2bdfb5cff58f44050f11d86e923276c",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## To attain a higher [[status]].",
+    "sense": {
+      "id": "wiktionary:restored:76a279542e8242867b",
+      "pos": "verb",
+      "definition": "To attain a higher status.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:4e4d3c32f4ece44837",
+    "parentSourceHash": "078b626e0c9de1c7923a41d58ce7fbd9f2bdfb5cff58f44050f11d86e923276c",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## Of a quantity, price, etc., to [[increase]].",
+    "sense": {
+      "id": "wiktionary:restored:d779b1987877ac7f99",
+      "pos": "verb",
+      "definition": "Of a quantity, price, etc., to increase.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:4e4d3c32f4ece44837",
+    "parentSourceHash": "078b626e0c9de1c7923a41d58ce7fbd9f2bdfb5cff58f44050f11d86e923276c",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## To become more and more [[dignified]] or [[forcible]]; to increase in interest or power; said of style, thought, or discourse.",
+    "sense": {
+      "id": "wiktionary:restored:24ad2e9f1be2f9ba13",
+      "pos": "verb",
+      "definition": "To become more and more dignified or forcible; to increase in interest or power; said of style, thought, or discourse.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:4e4d3c32f4ece44837",
+    "parentSourceHash": "078b626e0c9de1c7923a41d58ce7fbd9f2bdfb5cff58f44050f11d86e923276c",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## {{lb|en|music}} To [[ascend]] on a [[musical scale]]; to take a higher [[pitch]].",
+    "sense": {
+      "id": "wiktionary:restored:841a0bbd04ae59a4bc",
+      "pos": "verb",
+      "definition": "To ascend on a musical scale; to take a higher pitch.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:7c7cb3cb40410bb329",
+    "parentSourceHash": "51737e98949114d1b317adbc866da827e02d8c6875dbc4b5b1e94cc3abc44e6a",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## To become [[active]], [[effective]] or [[operational]], especially in [[response]] to an [[external]] or [[internal]] [[stimulus]].",
+    "sense": {
+      "id": "wiktionary:restored:32320c56393eb94278",
+      "pos": "verb",
+      "definition": "To become active, effective or operational, especially in response to an external or internal stimulus.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:7c7cb3cb40410bb329",
+    "parentSourceHash": "51737e98949114d1b317adbc866da827e02d8c6875dbc4b5b1e94cc3abc44e6a",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## To [[develop]], to [[come about]] or [[intensify]].",
+    "sense": {
+      "id": "wiktionary:restored:7bee040d3adcb0d987",
+      "pos": "verb",
+      "definition": "To develop, to come about or intensify.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:7c7cb3cb40410bb329",
+    "parentSourceHash": "51737e98949114d1b317adbc866da827e02d8c6875dbc4b5b1e94cc3abc44e6a",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## To [[swell]] or [[puff up]] in the process of [[fermentation]]; to become light.",
+    "sense": {
+      "id": "wiktionary:restored:95f1e50546fb8928dc",
+      "pos": "verb",
+      "definition": "To swell or puff up in the process of fermentation; to become light.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:7c7cb3cb40410bb329",
+    "parentSourceHash": "51737e98949114d1b317adbc866da827e02d8c6875dbc4b5b1e94cc3abc44e6a",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## {{lb|en|of a river}} To have its source (in a particular place).",
+    "sense": {
+      "id": "wiktionary:restored:6d7945a17b79e51d33",
+      "pos": "verb",
+      "definition": "To have its source (in a particular place).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:7c7cb3cb40410bb329",
+    "parentSourceHash": "51737e98949114d1b317adbc866da827e02d8c6875dbc4b5b1e94cc3abc44e6a",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## To become [[perceptible]] to the senses (other than sight).",
+    "sense": {
+      "id": "wiktionary:restored:0ab771eba158101b9b",
+      "pos": "verb",
+      "definition": "To become perceptible to the senses (other than sight).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:7c7cb3cb40410bb329",
+    "parentSourceHash": "51737e98949114d1b317adbc866da827e02d8c6875dbc4b5b1e94cc3abc44e6a",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## To become agitated, opposed, or hostile; to [[go to war]]; to [[take up arms]]; to [[rebel#Verb|rebel]].",
+    "sense": {
+      "id": "wiktionary:restored:61340d656fef64e2ff",
+      "pos": "verb",
+      "definition": "To become agitated, opposed, or hostile; to go to war; to take up arms; to rebel.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "rise",
+    "entryId": "vocab:rise",
+    "parentSenseId": "kaikki:7c7cb3cb40410bb329",
+    "parentSourceHash": "51737e98949114d1b317adbc866da827e02d8c6875dbc4b5b1e94cc3abc44e6a",
+    "sourcePage": "rise",
+    "revision": 93552544,
+    "sourceGloss": "## To [[come to mind]]; to be suggested; to [[occur]].",
+    "sense": {
+      "id": "wiktionary:restored:0cb86948bc8399eb79",
+      "pos": "verb",
+      "definition": "To come to mind; to be suggested; to occur.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=rise&oldid=93552544",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "practice",
+    "entryId": "ve-cfe02e5e",
+    "parentSenseId": "kaikki:fe15e75a83626f5df5",
+    "parentSourceHash": "ccfdab85fdcc66c80228b6f67ed8f3f4e805e46cf27dbbba9e100f0c85a18661",
+    "sourcePage": "practice",
+    "revision": 92711882,
+    "sourceGloss": "## An organized event for the purpose of performing such repetition.",
+    "sense": {
+      "id": "wiktionary:restored:7d2ea9c31fe231bb57",
+      "pos": "noun",
+      "definition": "An organized event for the purpose of performing such repetition.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=practice&oldid=92711882",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "practice",
+    "entryId": "ve-cfe02e5e",
+    "parentSenseId": "kaikki:fe15e75a83626f5df5",
+    "parentSourceHash": "ccfdab85fdcc66c80228b6f67ed8f3f4e805e46cf27dbbba9e100f0c85a18661",
+    "sourcePage": "practice",
+    "revision": 92711882,
+    "sourceGloss": "## The state of being proficient due to repetition of a skill.",
+    "sense": {
+      "id": "wiktionary:restored:c91e77217e0a8ff4fc",
+      "pos": "noun",
+      "definition": "The state of being proficient due to repetition of a skill.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=practice&oldid=92711882",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "practice",
+    "entryId": "ve-cfe02e5e",
+    "parentSenseId": "kaikki:4a03d560578d06ab61",
+    "parentSourceHash": "157835ffcd7807b5b4dbf49821b2adb24809444b035c24bb005b4c8a66f69de9",
+    "sourcePage": "practice",
+    "revision": 92711882,
+    "sourceGloss": "## Skilful or artful management; dexterity in contrivance or the use of means; stratagem; artifice.",
+    "sense": {
+      "id": "wiktionary:restored:621318748463b1acf4",
+      "pos": "noun",
+      "definition": "Skilful or artful management; dexterity in contrivance or the use of means; stratagem; artifice.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=practice&oldid=92711882",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "practice",
+    "entryId": "ve-cfe02e5e",
+    "parentSenseId": "kaikki:4a03d560578d06ab61",
+    "parentSourceHash": "157835ffcd7807b5b4dbf49821b2adb24809444b035c24bb005b4c8a66f69de9",
+    "sourcePage": "practice",
+    "revision": 92711882,
+    "sourceGloss": "## {{lb|en|math}} An easy and concise method of applying the rules of [[arithmetic]] to questions which occur in trade and business.",
+    "sense": {
+      "id": "wiktionary:restored:9ebd36947b76ef59c7",
+      "pos": "noun",
+      "definition": "An easy and concise method of applying the rules of arithmetic to questions which occur in trade and business.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=practice&oldid=92711882",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "practice",
+    "entryId": "ve-cfe02e5e",
+    "parentSenseId": "kaikki:4a03d560578d06ab61",
+    "parentSourceHash": "157835ffcd7807b5b4dbf49821b2adb24809444b035c24bb005b4c8a66f69de9",
+    "sourcePage": "practice",
+    "revision": 92711882,
+    "sourceGloss": "## {{lb|en|religion}} The observance of [[religious]] duties that an spiritual institution requires of its members.",
+    "sense": {
+      "id": "wiktionary:restored:0a054fb60037b7b5eb",
+      "pos": "noun",
+      "definition": "The observance of religious duties that an spiritual institution requires of its members.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=practice&oldid=92711882",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "practice",
+    "entryId": "ve-cfe02e5e",
+    "parentSenseId": "kaikki:4a03d560578d06ab61",
+    "parentSourceHash": "157835ffcd7807b5b4dbf49821b2adb24809444b035c24bb005b4c8a66f69de9",
+    "sourcePage": "practice",
+    "revision": 92711882,
+    "sourceGloss": "## {{lb|en|legal}} The form, manner, and order of conducting and carrying on [[suit]]s and [[prosecution]]s through their various stages, according to the principles of law and the rules laid down by the courts.",
+    "sense": {
+      "id": "wiktionary:restored:a4fb49e0b6a9f61c65",
+      "pos": "noun",
+      "definition": "The form, manner, and order of conducting and carrying on suits and prosecutions through their various stages, according to the principles of law and the rules laid down by the courts.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=practice&oldid=92711882",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "practice",
+    "entryId": "ve-cfe02e5e",
+    "parentSenseId": "kaikki:4a03d560578d06ab61",
+    "parentSourceHash": "157835ffcd7807b5b4dbf49821b2adb24809444b035c24bb005b4c8a66f69de9",
+    "sourcePage": "practice",
+    "revision": 92711882,
+    "sourceGloss": "## {{lb|en|countable}} A place where a [[professional service]] is provided, such as a [[general practice]].",
+    "sense": {
+      "id": "wiktionary:restored:99df09f6911ac6974b",
+      "pos": "noun",
+      "definition": "A place where a professional service is provided, such as a general practice.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=practice&oldid=92711882",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "practice",
+    "entryId": "ve-cfe02e5e",
+    "parentSenseId": "kaikki:49e2bc7c96759b3f39",
+    "parentSourceHash": "7ad1791134f35793769a9851f67ce6c174e1bf93f4af0ededad5012440a3920a",
+    "sourcePage": "practice",
+    "revision": 92711882,
+    "sourceGloss": "## A [[customary]] [[action]], [[habit]], or [[behaviour]]; a [[manner]] or [[routine]].",
+    "sense": {
+      "id": "wiktionary:restored:e4a6ebec71c2d4596d",
+      "pos": "noun",
+      "definition": "A customary action, habit, or behaviour; a manner or routine.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=practice&oldid=92711882",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

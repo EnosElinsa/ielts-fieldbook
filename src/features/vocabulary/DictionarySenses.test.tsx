@@ -9,6 +9,7 @@ import "@testing-library/jest-dom/vitest";
 import { readFileSync } from 'node:fs';
 import { selectChoice } from '../../../tests/selectChoice';
 import diagrams from '../../domain/vocabulary/senseDiagrams.json';
+import { registerVocabularyTeaching, vocabularyTeaching } from '../../domain/vocabulary/runtimeData';
 const mocks = vi.hoisted(() => ({ current: null as any }));
 vi.mock("../../context/FieldbookContext", () => ({
   useFieldbook: () => mocks.current,
@@ -30,6 +31,50 @@ const sourceSense = {
   sourceUrl: "https://en.wiktionary.org/wiki/mitigate",
 };
 const dictionaryFetch = (senses = [sourceSense]) => vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { mitigate: 'aa.json' } : { senses } }));
+
+test('late teaching updates displayed meanings while retaining filters and the cached source', async () => {
+  const { entry } = fixture();
+  const fetch = dictionaryFetch();
+  vi.stubGlobal('fetch', fetch);
+  const corrections = vocabularyTeaching.readiness.corrections;
+  const view = render(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
+  try {
+    await screen.findByText(sourceSense.definition);
+    fireEvent.click(screen.getByText(/Other dictionary meanings/));
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'mitigate' } });
+    await selectChoice(screen.getByRole('combobox'), 'Verb');
+    registerVocabularyTeaching({ ...vocabularyTeaching, readiness: { ...vocabularyTeaching.readiness, corrections: [
+      { entryId: entry.id, senseId: sourceSense.id, originalSense: sourceSense,
+        definition: sourceSense.definition, example: 'New measures mitigate flood damage.',
+        collocations: ['mitigate flood damage'], distinctions: ['Reduce has a broader meaning.'] },
+    ] } });
+    mocks.current = { ...mocks.current, vocabularyCatalogRevision: 1 };
+    view.rerender(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
+    expect(await screen.findByText('New measures mitigate flood damage.')).toBeInTheDocument();
+    expect(screen.getByRole('searchbox')).toHaveValue('mitigate');
+    expect(screen.getByRole('combobox')).toHaveTextContent('Verb');
+    expect(fetch).toHaveBeenCalledTimes(2);
+  } finally {
+    vocabularyTeaching.readiness.corrections = corrections;
+    registerVocabularyTeaching(vocabularyTeaching);
+  }
+});
+
+test('a spelling-error reference remains readable without offering it as a correct meaning to practise', async () => {
+  fixture();
+  const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+  const entry = catalog.entries.find((entry: any) => entry.term === 'effect');
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.effect}`, 'utf8'));
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? index : dictionary })));
+  render(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
+  const definition = await screen.findByText('A recorded spelling error for affect when the intended meaning is influence.');
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  const note = definition.closest('section')!;
+  expect(within(note).getByText('Spelling reference')).toBeInTheDocument();
+  expect(within(note).queryByRole('button', { name: 'Practise this sense' })).not.toBeInTheDocument();
+  expect(screen.getAllByRole('button', { name: 'Practise this sense' }).length).toBeGreaterThan(0);
+});
 
 test('the completed bank review exposes learning notes for every meaning in either coverage view', async () => {
   const { entry } = fixture();

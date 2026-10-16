@@ -65,7 +65,11 @@ test.each(ledger.records)('$term/$senseId survives selection, reopening and targ
   const reopened = resolveVocabularyLearningContext(saved, { senseId: selected.id });
   expect(reopened.sense?.definition).toBe(selected.definition);
   expect(reopened.sense?.collocations).toEqual(selected.collocations);
-  if ('distinctionTask' in expected && expected.distinctionTask) expect(learningTask(reopened.entry, reopened.sense!, 'distinction')?.acceptedAnswers).toEqual([expected.distinctionTask.answer]);
+  if ('distinctionTask' in expected && expected.distinctionTask) {
+    const task = learningTask(reopened.entry, reopened.sense!, 'distinction');
+    expect(task?.acceptedAnswers).toEqual([expected.distinctionTask.answer]);
+    expect(task?.prompt).toBe(expected.distinctionTask.prompt);
+  }
 });
 
 test('serializing the same distinction task in a different key order is not a learner edit', () => {

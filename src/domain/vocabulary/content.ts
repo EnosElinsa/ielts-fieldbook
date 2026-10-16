@@ -2,7 +2,7 @@ import { vocabularyTeaching } from './runtimeData';
 import { VOCABULARY_CATALOG } from './catalog';
 import { vocabularyCurriculumBaselines } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
-import { applyVocabularyReadiness, supplementVocabularySense, VOCABULARY_READINESS_VERSION } from './readiness';
+import { applyVocabularyReadiness, isVocabularySpellingReference, supplementVocabularySense, VOCABULARY_READINESS_VERSION } from './readiness';
 import { vocabularySensePresentation } from './dictionaryPresentation';
 export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-10.1/${VOCABULARY_READINESS_VERSION}`;
 const learningSenses = vocabularyTeaching.learning;
@@ -204,6 +204,7 @@ const confusion: Record<string, VocabularyLearningTask> = {
 'lend':{prompt:'Could you _____ me your dictionary?',acceptedAnswers:['lend'],options:['lend','borrow'],explanation:'Lend means give temporarily; borrow means receive temporarily.'}
 };
 export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mode: string): VocabularyLearningTask | undefined {
+ if (isVocabularySpellingReference(entry.id, sense)) return;
  const eligible = entry.id.startsWith('vocab:') || entry.id.startsWith('guixue:') || entry.senses.some(sense => sense.source?.includes('Kaikki') || sense.source === 'Fieldbook editorial');
  const catalogEntry = catalogVocabularyEntry(entry.id);
  const originalSenses = catalogVocabularySenses(entry.id);

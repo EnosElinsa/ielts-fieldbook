@@ -1,4 +1,5 @@
 import { learningTask } from './content';
+import { isVocabularySpellingReference } from './readiness';
 import { resolveVocabularyLearningContext } from './context';
 import { vocabularyStatusSource } from './mastery';
 import { matchesVocabularySource, vocabularySourceKey, normalizeVocabularySource, normalizeVocabularySources } from './sources';
@@ -245,6 +246,7 @@ export function recordVocabularyReview(state: VocabularyStore, input: { entryId:
 }
 
 function supportsMode(entry: VocabularyEntry, sense: VocabularySense, mode: VocabularyMode) {
+  if (isVocabularySpellingReference(entry.id, sense)) return false;
   if (mode === 'definition') return Boolean(sense.definition);
   if (mode === 'cloze' || mode === 'synonym') return Boolean(learningTask(entry, sense, mode));
   if (mode === 'distinction') return Boolean(learningTask(entry, sense, mode) || (sense.source === 'Personal note' && sense.synonyms?.length && sense.distinctions?.length));

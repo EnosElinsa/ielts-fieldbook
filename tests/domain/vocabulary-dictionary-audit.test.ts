@@ -24,6 +24,15 @@ test('orphaned identities, duplicate reviews and mismatched diagrams fail the au
 });
 
 const hash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+
+test('spelling references require a source spelling-error record and cannot contain an exercise', () => {
+  expect(inspectDictionaryReview({ ...input, corrections: [{ ...row, referenceOnly: true }] }).errors.join(' ')).toMatch(/spelling reference/i);
+  const source = { ...original, definition: 'Misspelling of another word.', usage: 'misspelling' };
+  const referenceInput = { ...input, dictionaries: { bank: { senses: [source] } }, records: [{ ...review, sourceHash: hash(source) }], corrections: [{ ...row, originalSense: source, referenceOnly: true }] };
+  expect(inspectDictionaryReview(referenceInput).summary.spellingReferences).toBe(1);
+  expect(inspectDictionaryReview(referenceInput).errors).toEqual([]);
+  expect(inspectDictionaryReview({ ...referenceInput, corrections: [{ ...referenceInput.corrections[0], distinctionTask: { prompt: 'Choose _____.', options: ['a','b'], answer: 'a', explanation: 'A task.' } }] }).errors.join(' ')).toMatch(/spelling reference/i);
+});
 const restored = { id: 'restored', pos: 'noun', definition: 'A river edge.', example: '', sourceUrl: 'https://en.wiktionary.org/w/index.php?title=bank&oldid=123', source: 'English Wiktionary, restored submeaning', license: 'CC-BY-SA-4.0', attribution: 'English Wiktionary contributors' };
 const evidence = { term: 'bank', entryId: 'bank', parentSenseId: original.id, parentSourceHash: hash(original), revision: 123, sourcePage: 'bank', sourceGloss: '## A river edge.', sense: restored };
 const restoredInput = { ...input, restoredSources: [evidence], corrections: [...input.corrections, { ...row, senseId: restored.id, originalSense: restored, dictionaryParentSenseId: original.id }], records: [...input.records, { ...review, senseId: restored.id, sourceHash: hash(restored) }] };

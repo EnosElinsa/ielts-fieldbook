@@ -1,7 +1,7 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default } from './runtimeData';
 import type { VocabularyEntry, VocabularySense } from './types';
 
-export const VOCABULARY_READINESS_VERSION = 'core-2026-10-17.3';
+export const VOCABULARY_READINESS_VERSION = 'core-2026-10-17.4';
 const identity = (entryId:string, senseId:string) => `${entryId}\u0000${senseId}`;
 const core = new Map<string,Supplement>();
 const additions = new Map<string,Supplement>();
@@ -36,6 +36,15 @@ export function hasVocabularyReadinessNotes(entryId: string, sense: VocabularySe
  const row = additions.get(identity(entryId, sense.id)) || core.get(identity(entryId, sense.id));
  return Boolean(row?.collocations?.length && row.distinctions?.length && row.definition === sense.definition &&
   (row.pos || row.originalSense?.pos) === sense.pos && JSON.stringify(row.collocations) === JSON.stringify(sense.collocations) && JSON.stringify(row.distinctions) === JSON.stringify(sense.distinctions));
+}
+
+/** Editorial spelling-error records stay readable without teaching the error as a valid meaning. */
+export function isVocabularySpellingReference(entryId: string, sense: VocabularySense): boolean {
+ ensureReadiness();
+ const row = additions.get(identity(entryId, sense.id));
+ if (!row?.referenceOnly || sense.source === 'Personal note') return false;
+ return [{ definition: row.definition, pos: row.pos || row.originalSense?.pos }, row.originalSense, ...(row.previousSenses || [])]
+  .some(baseline => baseline?.definition === sense.definition && baseline.pos === sense.pos);
 }
 
 /** Public content only. A caller supplies historical public baselines to protect personal edits. */
