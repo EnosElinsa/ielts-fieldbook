@@ -1,12 +1,17 @@
-import { expect, test } from 'vitest';
+import { beforeAll, expect, test } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { buildVocabularyResources, vocabularyResourceHeaders } from '../../scripts/vocabularyResources';
 
+let release: ReturnType<typeof buildVocabularyResources>;
+// Every assertion reads the same release. Generate it once; the determinism test
+// still compares a second independent build of the complete retained corpus.
+beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 15_000);
+
 test('manifest and group packs preserve the released membership order and complete teaching content', () => {
   const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
-  const { manifest, resources } = buildVocabularyResources(process.cwd());
+  const { manifest, resources } = release;
   expect(manifest.books).toEqual(catalog.books);
   expect(manifest.entryCount).toBe(catalog.entries.length);
   expect(Object.keys(manifest.entryShards)).toHaveLength(catalog.entries.length);
@@ -26,7 +31,7 @@ test('manifest and group packs preserve the released membership order and comple
 });
 
 test('deployment headers revalidate discovery indexes and cache hashed packs immutably', () => {
-  const generated = buildVocabularyResources(process.cwd());
+  const generated = release;
   const headers = vocabularyResourceHeaders(generated.manifestUrl, generated.teachingIndexUrl);
   expect(headers).toContain(`${generated.manifestUrl}\n  Cache-Control: public, max-age=0, must-revalidate`);
   expect(headers).toContain(`${generated.teachingIndexUrl}\n  Cache-Control: public, max-age=0, must-revalidate`);
@@ -36,7 +41,7 @@ test('deployment headers revalidate discovery indexes and cache hashed packs imm
 });
 
 test('resources use deterministic content-addressed URLs', () => {
-  const first = buildVocabularyResources(process.cwd());
+  const first = release;
   const second = buildVocabularyResources(process.cwd());
   expect(second.manifestUrl).toBe(first.manifestUrl);
   expect(first.manifestUrl).toMatch(/manifest\.[a-f0-9]{16}\.json$/);
@@ -51,7 +56,7 @@ test('resources use deterministic content-addressed URLs', () => {
 });
 
 test('previously released discovery and teaching URLs remain available with legacy identities', () => {
-  const generated = buildVocabularyResources(process.cwd());
+  const generated = release;
   const manifestUrl='/vocabulary-resources/manifest.594ea6a804861668.json';
   const teachingIndexUrl='/vocabulary-resources/teaching-index.61322c9fd3ccb3d1.json';
   expect(generated.resources.has(manifestUrl)).toBe(true);
@@ -69,7 +74,7 @@ test('previously released discovery and teaching URLs remain available with lega
 });
 
 test('the October 16 UI release keeps all of its immutable packs after content expansion', () => {
-  const generated=buildVocabularyResources(process.cwd());
+  const generated=release;
   const previous=JSON.parse(generated.resources.get('/vocabulary-resources/manifest.c12cb3c08c34cfa9.json')!);
   expect(previous.entryCount).toBe(7021);
   for(const unit of previous.units) {
@@ -81,7 +86,7 @@ test('the October 16 UI release keeps all of its immutable packs after content e
 
 test.skipIf(!process.env.LEGACY_VOCABULARY_RESOURCE_DIRECTORY)('all archived release assets retain their exact bytes and URLs', () => {
   const archive=process.env.LEGACY_VOCABULARY_RESOURCE_DIRECTORY!;
-  const generated=buildVocabularyResources(process.cwd());
+  const generated=release;
   const files=readdirSync(archive,{recursive:true,withFileTypes:true}).filter(item=>item.isFile());
   expect(files).toHaveLength(460);
   for(const item of files) {
