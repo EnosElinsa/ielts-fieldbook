@@ -408,6 +408,23 @@ test("submits the complete attempt once and retries the same frozen commit after
   expect(fb.current.persistVocabularySession.mock.calls[2][1]).not.toEqual(id);
 });
 
+test.each([
+  ['definition', 'sense-0', true],
+  ['dictation', 'sense-0', false],
+  ['definition', 'another-sense', false],
+])('successful results explain remaining mistake recovery only for their own mode and meaning (%s / %s)', async (mode,senseId,shown) => {
+  fb.current.state.vocabularyStates=[{id:'recovering-state',entryId:'entry-0',senseId,cards:{},dimensions:Object.fromEntries(['meaning','listening','spelling','usage'].map(key=>[key,{successes:0,failures:0,partials:0}])),manualStatus:'new',reviewCount:1,wrong:{active:true,successesSinceFailure:1,modes:{[mode]:{active:true,successesSinceFailure:1}}}}];
+  fb.current.state.vocabularySessions=[{id:'recovery-result',mode:'definition',status:'submitted',filter:{},preferences:{},entryIds:['entry-0'],startedAt:'2026-10-16',submittedAt:'2026-10-16',summary:{total:1,correct:1,incorrect:0,pending:0},results:[{cardId:'entry-0:sense-0:definition',entryId:'entry-0',senseId:'sense-0',term:'resilient',definition:'Definition 0',example:'A resilient community.',response:'resilient',expectedAnswer:'resilient',result:'success'}]}];
+  render(<MemoryRouter initialEntries={['/vocabulary/review?sessionId=recovery-result']}><VocabularyPracticePage/></MemoryRouter>);
+  await screen.findByRole('heading',{name:'1 of 1 correct'});
+  const hint=screen.queryByText('1 word remains in mistake review.');
+  if(shown) {
+    expect(hint).toBeInTheDocument();
+    expect(screen.getByText(/at least 24 hours between the first and last/)).toBeInTheDocument();
+    expect(screen.getByRole('link',{name:'Open mistake review'})).toHaveAttribute('href','/vocabulary/review?wrongOnly=true&dueOnly=false&mode=definition');
+  } else expect(hint).not.toBeInTheDocument();
+});
+
 test("keeps responses locally when exiting and resumes without persisting a review", async () => {
   const user = userEvent.setup();
   mount();

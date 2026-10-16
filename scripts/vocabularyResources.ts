@@ -27,6 +27,25 @@ export function buildVocabularyResources(root: string) {
     learning: data('learningSenseOverlay'), tasks: data('taskSenseBindings'), context: data('contextSenseOverlay'),
   };
   const generated = buildResourceCatalog(source, teaching);
+  const learningBaseline = data('resourceLearningBaseline') as {
+    removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections'];
+    removeDefaults: string[]; restoreDefaults: VocabularyTeachingData['readiness']['defaults'];
+    removeModern: string[]; restoreModern: VocabularyTeachingData['curriculum']['modern'];
+  };
+  const removedLearningCorrections = new Set(learningBaseline.removeCorrections.map(row => JSON.stringify([row.entryId,row.senseId])));
+  const restoredLearningCorrections = new Map(learningBaseline.restoreCorrections.map(row => [JSON.stringify([row.entryId,row.senseId]),row]));
+  const removedLearningDefaults = new Set(learningBaseline.removeDefaults);
+  const restoredLearningDefaults = new Map(learningBaseline.restoreDefaults.map(row => [row.entryId,row]));
+  const removedLearningModern = new Set(learningBaseline.removeModern);
+  const restoredLearningModern = new Map(learningBaseline.restoreModern.map(row => [row.entryId,row]));
+  const beforeLearningExpansion: VocabularyTeachingData = {
+    ...teaching,
+    readiness: { ...teaching.readiness,
+      corrections: teaching.readiness.corrections.filter(row => !removedLearningCorrections.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restoredLearningCorrections.get(JSON.stringify([row.entryId,row.senseId])) || row),
+      defaults: teaching.readiness.defaults.filter(row => !removedLearningDefaults.has(row.entryId)).map(row => restoredLearningDefaults.get(row.entryId) || row),
+    },
+    curriculum: { ...teaching.curriculum, modern: teaching.curriculum.modern.filter(row => !removedLearningModern.has(row.entryId)).map(row => restoredLearningModern.get(row.entryId) || row) },
+  };
   const mapping = data('identityMapping') as { books: {id: string; oldId: string}[]; units: {id: string; oldId: string}[]; memberships: {id: string; oldId: string}[] };
   const legacyIds = new Map([...mapping.books, ...mapping.units, ...mapping.memberships].map(row => [row.id, row.oldId]));
   // Restore the previous teaching content as well as its legacy identities.
@@ -36,9 +55,9 @@ export function buildVocabularyResources(root: string) {
   const removedCorrections = new Set(baseline.removeCorrections.map(row=>JSON.stringify([row.entryId,row.senseId])));
   const restoredRepairs = new Map(baseline.restoreRepairs.map(row=>[JSON.stringify([row.entryId,row.sense.id]),row]));
   const previousTeaching: VocabularyTeachingData = {
-    ...teaching,
-    readiness: { ...teaching.readiness, defaults: teaching.readiness.defaults.filter(row=>!removedDefaults.has(row.entryId)), corrections: teaching.readiness.corrections.filter(row=>!removedCorrections.has(JSON.stringify([row.entryId,row.senseId]))) },
-    curriculum: { ...teaching.curriculum, repairs: teaching.curriculum.repairs.map(row=>restoredRepairs.get(JSON.stringify([row.entryId,row.sense.id])) || row) },
+    ...beforeLearningExpansion,
+    readiness: { ...beforeLearningExpansion.readiness, defaults: beforeLearningExpansion.readiness.defaults.filter(row=>!removedDefaults.has(row.entryId)), corrections: beforeLearningExpansion.readiness.corrections.filter(row=>!removedCorrections.has(JSON.stringify([row.entryId,row.senseId]))) },
+    curriculum: { ...beforeLearningExpansion.curriculum, repairs: beforeLearningExpansion.curriculum.repairs.map(row=>restoredRepairs.get(JSON.stringify([row.entryId,row.sense.id])) || row) },
   };
   const legacyValue = <T>(value: T): T => {
     if (typeof value === 'string') return (legacyIds.get(value) || value) as T;
@@ -46,7 +65,7 @@ export function buildVocabularyResources(root: string) {
     if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, row]) => [legacyIds.get(key) || key, legacyValue(row)])) as T;
     return value;
   };
-  const retained = [buildResourceCatalog(source,previousTeaching),buildResourceCatalog(legacyValue(source),legacyValue(previousTeaching))];
+  const retained = [buildResourceCatalog(source,beforeLearningExpansion),buildResourceCatalog(source,previousTeaching),buildResourceCatalog(legacyValue(source),legacyValue(previousTeaching))];
   for (const previous of retained) for (const [url, content] of previous.resources) {
     const existing = generated.resources.get(url);
     if (existing !== undefined && existing !== content) throw new Error(`Vocabulary resource hash collision: ${url}`);

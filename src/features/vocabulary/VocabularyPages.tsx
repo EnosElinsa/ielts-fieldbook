@@ -762,7 +762,7 @@ export function VocabularyWrongPage() {
   return (
     <VocabularyLayout>
       <div className="page-tools"><h2>Words to retry</h2></div>
-      <div className="vocabulary-recovery"><div><span className="vocabulary-eyebrow">Mistake review</span><h3>{wrong.length ? `${wrong.length} words to retry` : "Your retry queue"}</h3><p>Review words you answered incorrectly.</p></div>
+      <div className="vocabulary-recovery"><div><span className="vocabulary-eyebrow">Mistake review</span><h3>{wrong.length ? `${wrong.length} words to retry` : "Your retry queue"}</h3><p>Review words you answered incorrectly. Recovery needs 3 correct retries in each affected mode, with at least 24 hours between the first and last.</p></div>
         <Link className="btn primary" to={`/vocabulary/review?${new URLSearchParams({ wrongOnly: 'true', dueOnly: 'false', ...(source !== 'all' ? { sourceType: source } : {}), ...(bookId !== 'all' ? { bookId } : {}), ...(skill !== 'all' ? { skill } : {}), ...(dimension !== 'all' ? { dimension } : {}) }).toString()}`}><RotateCcw size={16} />Retry words<ArrowRight size={15} /></Link>
       </div>
       <div className="toolbar">

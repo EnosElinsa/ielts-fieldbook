@@ -10,7 +10,7 @@ import type { VocabularySessionRecord } from "../../domain/vocabulary/session";
 import { dateLabel, modeLabel, resultName } from "./practicePresentation";
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
-import type { VocabularyEntry } from '../../domain/vocabulary/types';
+import type { VocabularyEntry, VocabularyState } from '../../domain/vocabulary/types';
 import { Pronunciation } from './Pronunciation';
 import { entryUrl } from './vocabularyNavigation';
 import { closestAcceptedAnswer } from './answerDiff';
@@ -60,6 +60,11 @@ export function VocabularyPracticeResults({ controller, results }: {
     return {raw,resolved,detail:entryUrl(row.entryId,{...context,senseId},resultReturnTo)};
   };
   const hasMistakes = results.mode !== "audio" && results.results.some(row => row.result === "failure" || row.result === "partial");
+  const recoveryMode = results.mode === 'audio' ? undefined : results.mode;
+  const learningStates = controller.state.vocabularyStates as VocabularyState[];
+  const recoveringWords = new Set(results.results.filter(row => row.result === 'success' && recoveryMode && learningStates?.some(learning =>
+    learning.entryId === row.entryId && learning.senseId === row.senseId && learning.wrong?.modes?.[recoveryMode]?.active,
+  )).map(row => `${row.entryId}:${row.senseId}`)).size;
   return (
     <section className="practice-results">
       <div className="practice-result-title">
@@ -103,6 +108,11 @@ export function VocabularyPracticeResults({ controller, results }: {
           </>
         )}
       </dl>
+      {recoveringWords ? <aside className="practice-recovery-note" aria-label="Mistake review status">
+        <strong>{recoveringWords} {recoveringWords === 1 ? 'word remains' : 'words remain'} in mistake review.</strong>
+        <p>Recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last. A single correct retry is a useful first step.</p>
+        <Link className="btn text" to={`/vocabulary/review?wrongOnly=true&dueOnly=false&mode=${encodeURIComponent(results.mode)}`}>Open mistake review<ArrowRight size={14}/></Link>
+      </aside> : null}
       <div className="practice-result-controls">
         <FilterMenu label="Result filter" value={resultFilter} onChange={setResultFilter} options={[
           { value: 'all', label: 'All results' }, { value: 'incorrect', label: 'Incorrect' },

@@ -14,6 +14,10 @@ The release includes 5,853 open English dictionary entries and 51,354 senses. Pe
 
 The 2026-10-16 content inspection corrected 34 terms. Seven preferred meanings now select existing dictionary identities for modern general study: *field work*, *equipment*, *adult*, *information*, *leave*, *boring* and *insane*. The remaining 27 terms received 28 same-sense example repairs, replacing truncated quotations, irrelevant passages or unclear demonstrations. *Supplement* now uses an income example for its general addition meaning; its health-topic example remains separate. The original dictionary records and historical sense identities remain available, and learner edits take precedence over public corrections. These changes are Fieldbook editorial adaptations, with the dictionary attribution retained.
 
+The subsequent `core-2026-10-16.2` expansion improves 135 further terms: 121 same-sense learning examples replace archaic, truncated, overly long or distracting quotations, 15 of those definitions become more concise, and 14 common modern defaults replace unsuitable priorities. The defaults cover *staff*, *dietary*, *cashier*, *shuttle*, *flyover*, *aisle*, *club*, *determine*, *administer*, *strategy*, *conference*, *technique*, *unit* and *accuse*. Their examples, common combinations and relevant usage notes are authored separately from retained dictionary originals. Topic-specific and source-specific selections still take precedence, and a group recommendation is not evidence of the original book's intended meaning.
+
+A TypeScript resolver scan of all 9,205 default membership positions finds no empty display definitions or examples. Sentence-gap eligibility rises from 7,768 to 7,828 membership positions; these are practice opportunities, not additional words or learning evidence. A heuristic for long-s, older pronouns and quotation/truncation markers falls from 318 to 169 positions, while examples longer than 260 characters fall from 328 to 242. These are candidate signals: bracketed material can be legitimate, and unflagged text is not automatically good English. Supplementary dictionary meanings still need further example and usage review.
+
 Word details exclude the original version of a revised learning meaning by its stable sense identity. Original notes are shown only for legacy top-level content absent from the stored senses and public baseline. Dictionary relation labels and citation-page navigation are filtered from example displays. Corpus-wide structural scans and targeted semantic checks do not constitute a linguistic review of all 51,354 dictionary senses.
 
 The public importer accepts CSV vocabulary files. `src/domain/vocabulary/import.ts` retains internal legacy snapshot parsing for existing backups and migrated account data. It preserves source identity and dated evidence without fabricating scheduling events from undated summaries. CSV entries remain personal notes. Chinese definitions/examples are excluded from the runtime vocabulary and batch fingerprints.
@@ -29,15 +33,15 @@ node scripts/enrich-vocabulary.mjs --input dictionary.jsonl --terms guixue-snaps
 
 The `reviewed-2026-10-10.1` learning supplement is applied at read time. It preserves original entry and dictionary sense identities, learner notes, historical marks and scheduling. Its dictionary priority audit checks all 7,021 catalogue terms and 51,354 dictionary senses; conservative automated ranking corrects 143 default senses, including medical care for *treat* and cooking instructions for *recipe*. Automated ranking is not an exhaustive human review. Dictionary-derived additions retain their CC-BY-SA-4.0 license and attribution. Original contextual exercises are Fieldbook editorial material under CC-BY-4.0.
 
-Synonym/paraphrase and confusing-word exercises use explicit contextual answers, independently of raw dictionary synonym lists. Cloze tasks use complete word boundaries and explicit sentence forms, such as *began*. Counts below describe primary learning content before personal edits or archival; the application reports the actual available subset for each group.
+Synonym/paraphrase and confusing-word exercises use explicit contextual answers, independently of raw dictionary synonym lists. Cloze tasks use complete word boundaries and explicit sentence forms, such as *began*. The sentence-gap counts below resolve default group meanings and deduplicate words within each book, before personal edits or archival. The application reports the actual available subset for each group and meaning.
 
-| Wordbook | Unique words | Cloze | Synonym/paraphrase | Confusing words |
-| --- | ---: | ---: | ---: | ---: |
-| IELTS Vocabulary | 3,592 | 2,210 | 68 | 8 |
-| IELTS Reading Keywords | 376 | 240 | 59 | 1 |
-| IELTS Listening Vocabulary | 3,012 | 1,217 | 26 | 6 |
-| IELTS Listening Essentials | 1,351 | 591 | 16 | 4 |
-| IELTS Listening Practice 21 | 344 | 224 | 10 | 2 |
-| IELTS Listening Practice 20 | 375 | 218 | 6 | 2 |
+| Wordbook | Unique words | Sentence gaps |
+| --- | ---: | ---: |
+| IELTS Vocabulary | 3,592 | 3,009 |
+| IELTS Reading Keywords | 376 | 319 |
+| IELTS Listening Vocabulary | 3,012 | 2,644 |
+| IELTS Listening Essentials | 1,351 | 1,097 |
+| IELTS Listening Practice 21 | 344 | 304 |
+| IELTS Listening Practice 20 | 375 | 328 |
 
 Authored task coverage is incomplete. Unsupported words remain available for dictation; an explicitly started specialist subset never completes the whole group. New sessions freeze prompts, accepted answers, explanations and content version. Legacy drafts retain their original scoring behavior.

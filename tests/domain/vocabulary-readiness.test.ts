@@ -13,6 +13,53 @@ beforeEach(()=>Object.assign(VOCABULARY_CATALOG,released));
 afterEach(()=>Object.assign(VOCABULARY_CATALOG,original));
 
 test.each([
+ ['staff','kaikki:daf17bc0e811ca1e04',/employed|employees/],
+ ['dietary','kaikki:013e39baa133945b80',/eat|food|diet/],
+ ['cashier','kaikki:85c64ad17f4f3f30ea',/payments/],
+ ['shuttle','kaikki:67a110dd3d5d48e2de',/transport/],
+ ['flyover','kaikki:ec1c81776117ccd8fc',/road|railway/],
+ ['aisle','kaikki:4511cb5c4fa45b7021',/passage|seating/],
+ ['club','kaikki:7ea59b1b96c7ed8ef4',/members|association/],
+ ['determine','kaikki:3542aeddc929695a96',/find|investigat/],
+ ['administer','kaikki:9a1e9aad64907c7a72',/manage|organis/],
+ ['strategy','kaikki:2fa5eadcb42c15ab57',/plan/],
+ ['conference','kaikki:814204adfc9d8b50e9',/research|academic/],
+ ['technique','kaikki:7a7f5f7e8e5421f6e7',/method/],
+ ['unit','kaikki:ccbdcd385564a53bec',/measure/],
+ ['accuse','kaikki:24331ec34c786d34ce',/crime|offence/],
+])('modern default for %s is useful for study and keeps the original dictionary meaning accessible', (term,id,definition) => {
+ const raw=structuredClone(released.entries.find((entry:VocabularyEntry)=>entry.term===term));
+ const before=structuredClone(raw);
+ const general=released.memberships.find((row:any)=>row.entryId===raw.id&&row.bookId!=='ielts-vocabulary'&&!row.bookId.startsWith('ielts-listening-practice'));
+ for(const request of [{}, ...(general?[general]:[])]) {
+  const resolved=resolveVocabularyLearningContext(raw,request);
+  expect(resolved.sense?.id).toBe(id);
+  expect(resolved.sense?.definition).toMatch(definition);
+  expect(resolved.sense?.example.length).toBeLessThan(160);
+  expect(resolved.entry.senses.some(s=>s.id===raw.senses[0].id)).toBe(true);
+ }
+ expect(raw).toEqual(before);
+ raw.senses[0].example='My own example from class.';
+ expect(resolveVocabularyLearningContext(raw,general).sense?.example).toBe('My own example from class.');
+});
+
+test.each([
+ ['electricity','The building uses solar panels to generate electricity.'],
+ ['demonstration','The instructor gave a demonstration of the safety equipment.'],
+ ['grandfather','My grandfather taught me how to grow vegetables.'],
+ ['personal trainer','The personal trainer designed an exercise programme for the client.'],
+])('the %s learning example replaces an unsuitable quotation in standalone and group study', (term,example) => {
+ const raw=structuredClone(released.entries.find((entry:VocabularyEntry)=>entry.term===term));
+ for(const scope of [{},...released.memberships.filter((row:any)=>row.entryId===raw.id)]) {
+  const resolved=resolveVocabularyLearningContext(raw,scope);
+  if(resolved.sense?.id===raw.senses[0].id) expect(resolved.sense.example).toBe(example);
+ }
+ const saved=structuredClone(resolveVocabularyLearningContext(raw).entry);
+ saved.senses[0].example='';
+ expect(resolveVocabularyLearningContext(saved).sense?.example).toBe('');
+});
+
+test.each([
  ['field work','kaikki:0295461999c1952d87',/research|data/i,'The students carried out field work along the river.'],
  ['equipment','kaikki:8d82739194a584c438',/tools|machines/i,'The laboratory needs new safety equipment.'],
  ['adult','kaikki:af051e9f8856aca835',/person/i,'The museum charges twelve pounds per adult.'],

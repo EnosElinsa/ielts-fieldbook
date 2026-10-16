@@ -16,7 +16,7 @@ This measures fresh public content, not browser execution or exhaustive linguist
 | Authored file | Rows |
 |---|---:|
 | src/domain/vocabulary/groupCurriculumCommon.json | 166 |
-| src/domain/vocabulary/groupCurriculumModernDefaults.json | 31 |
+| src/domain/vocabulary/groupCurriculumModernDefaults.json | 45 |
 | src/domain/vocabulary/groupCurriculumRepairs.json | 425 |
 | src/domain/vocabulary/groupCurriculumSource.json | 99 |
 | src/domain/vocabulary/groupCurriculumTopicsA.json | 469 |

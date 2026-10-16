@@ -13,6 +13,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
   const { study, explicitEntry, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit, dueOnly, setDue, wrongOnly, setWrong, catalogStatus, queue, unitQueue, books, selectedUnit, selectedBook, chapter, catalogReady, studyReady, resume, recent, changeFilter, changeMode, begin, recover, discardResume, showRecentSession, retryCatalog } = controller;
   const [pickerOpen, setPickerOpen] = useState(false);
   const specialist = isSpecialistVocabularyMode(mode);
+  const launchCount = study ? queue.length : Math.min(preferences.sessionSize, queue.length);
   return (
     <>
       <div className="practice-context-card">
@@ -21,6 +22,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
         <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : explicitEntry ? queue[0]?.entry.senses.find(sense => sense.id === queue[0]?.senseId)?.definition || 'This selected meaning is unavailable.' : 'Review due words, retry mistakes, or build a custom review.'}</p>
         {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
         {mode === 'production' ? <p>Your sentences are saved for review. A self-rating does not verify correct usage.</p> : null}
+        {wrongOnly ? <p>Mistake recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last.</p> : null}
         {controller.batchRequest ? <strong>{queue.length} words in this batch</strong> : study && unitQueue ? <strong>{unitQueue.totalWords} words in this group · {unitQueue.eligibleWords} ready for {modeLabel(mode).toLowerCase()}</strong> : null}
         {controller.filter.sourceId ? <p>Source Part: {controller.filter.sourceId} · {queue.length} matching {queue.length === 1 ? 'word' : 'words'}</p> : null}
         {controller.learningBatch.error ? <p role="alert">{controller.learningBatch.error}</p> : null}
@@ -117,7 +119,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
                 }),
               )
             }
-          /> : <span className="practice-switch">Wordbook source order · whole group</span>}
+          /> : <span className="practice-switch">Wordbook source order · {controller.batchRequest ? 'selected batch' : 'whole group'}</span>}
           <FilterMenu
             label="Feedback"
             value={preferences.feedback}
@@ -217,7 +219,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
           <h3>{modeLabel(mode)}</h3>
           <p>
             {queue.length
-              ? `${study ? queue.length : Math.min(preferences.sessionSize, queue.length)} words · ${preferences.layout === "list" ? "List" : "Focus"} · ${preferences.feedback === "end" ? "Results after submission" : "Feedback during practice"}`
+              ? `${launchCount} ${launchCount === 1 ? 'word' : 'words'} · ${preferences.layout === "list" ? "List" : "Focus"} · ${preferences.feedback === "end" ? "Results after submission" : "Feedback during practice"}`
               : "No words match these filters."}
           </p>
           {study && !controller.batchRequest && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? <p role="status">{specialist ? <>{controller.unitQueue.eligibleWords} of {controller.unitQueue.totalWords} words have a {modeLabel(mode).toLowerCase()} exercise. This optional practice covers these words only. Choose Dictation to study the complete group.</> : <>Some words are unavailable for this mode. Reload the wordbook or choose Dictation to study the complete group.</>}</p> : null}

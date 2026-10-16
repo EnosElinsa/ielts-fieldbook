@@ -68,6 +68,17 @@ test('previously released discovery and teaching URLs remain available with lega
   for(const url of [...Object.values(legacy.entryResources),...Object.values(legacy.entryTeachingResources)] as string[]) expect(generated.resources.has(url)).toBe(true);
 });
 
+test('the October 16 UI release keeps all of its immutable packs after content expansion', () => {
+  const generated=buildVocabularyResources(process.cwd());
+  const previous=JSON.parse(generated.resources.get('/vocabulary-resources/manifest.c12cb3c08c34cfa9.json')!);
+  expect(previous.entryCount).toBe(7021);
+  for(const unit of previous.units) {
+    if(unit.resource) expect(generated.resources.has(unit.resource),unit.resource).toBe(true);
+    if(unit.teachingResource) expect(generated.resources.has(unit.teachingResource),unit.teachingResource).toBe(true);
+  }
+  for(const url of [...Object.values(previous.entryResources),...Object.values(previous.entryTeachingResources)] as string[]) expect(generated.resources.has(url),url).toBe(true);
+});
+
 test.skipIf(!process.env.LEGACY_VOCABULARY_RESOURCE_DIRECTORY)('all archived release assets retain their exact bytes and URLs', () => {
   const archive=process.env.LEGACY_VOCABULARY_RESOURCE_DIRECTORY!;
   const generated=buildVocabularyResources(process.cwd());

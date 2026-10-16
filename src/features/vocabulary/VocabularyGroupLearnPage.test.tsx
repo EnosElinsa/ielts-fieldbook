@@ -54,6 +54,43 @@ afterEach(async()=>{vi.useRealTimers();cleanup();await act(async()=>{await Promi
 function Location(){const location=useLocation();return <output aria-label="Route">{location.pathname+location.search}</output>;}
 function mount(url=path){return render(<MemoryRouter initialEntries={[url]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes><Location/></MemoryRouter>);}
 
+test('recall first hides the answer until revealed and resets for each word without recording evidence', async () => {
+  const before = structuredClone(mocks.fb.state);
+  mount();
+  await screen.findByRole('heading', { name: 'Word 1' });
+  fireEvent.click(screen.getByRole('button', { name: 'Recall first' }));
+  expect(screen.queryByText('Meaning 1')).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Mark viewed & next' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: 'Reveal meaning' }));
+  expect(screen.getByText('Meaning 1')).toBeInTheDocument();
+  expect(mocks.fb.state).toEqual(before);
+  expect(mocks.fb.saveVocabularyLearning).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: 'Next word' }));
+  expect(screen.queryByText('Meaning 2')).not.toBeInTheDocument();
+  expect(screen.queryByText('Example 2.')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Reveal meaning' }));
+  expect(screen.getByText('Example 2.')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Previous word' }));
+  expect(screen.queryByText('Meaning 1')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Read first' }));
+  expect(screen.getByText('Meaning 1')).toBeInTheDocument();
+});
+
+test('the batch checkpoint can return to an unviewed word and never counts skipped words as viewed', async () => {
+  mocks.fb.state.wordbookProgress=[{bookId:'book',unitId:'group',learning:{viewedEntryIds:['word-1','word-3','word-11'],currentEntryId:'word-10',updatedAt:'2026-01-01'}}];
+  mount();
+  await screen.findByRole('heading', { name: 'Word 10' });
+  expect(screen.getByText('2 of 10 words viewed in this batch')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Continue learning this batch' }));
+  expect(screen.getByRole('heading', { name: 'Word 2' })).toBeInTheDocument();
+  expect(screen.getByText('Viewed 3 / 12')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Batch 2: words 11–12' }));
+  expect(screen.getByText('1 of 2 words viewed in this batch')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Next word' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Mark viewed' }));
+  expect(screen.getByText('All 2 words viewed. Ready to test your recall?')).toBeInTheDocument();
+});
+
 test('learning cards omit dictionary references instead of presenting them as examples', async () => {
   VOCABULARY_CATALOG.entries[0].senses[0].example='Near-synonyms: see Thesaurus:adjunct';
   mount();

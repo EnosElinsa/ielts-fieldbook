@@ -997,3 +997,7 @@
     transition: none;
   }
 }
+.practice-recovery-note { margin:20px 0; padding:16px; border:1px solid var(--rule); border-radius:10px; background:var(--soft-blue); line-height:1.6; }
+.practice-recovery-note strong { font-size:14px; }
+.practice-recovery-note p { margin:6px 0; color:var(--muted); font-size:13px; max-width:72ch; }
+.practice-recovery-note .btn { min-height:44px; white-space:normal; }
