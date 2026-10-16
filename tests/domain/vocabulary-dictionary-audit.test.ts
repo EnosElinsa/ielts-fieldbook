@@ -46,6 +46,19 @@ const restored = { id: 'restored', pos: 'noun', definition: 'A river edge.', exa
 const evidence = { term: 'bank', entryId: 'bank', parentSenseId: original.id, parentSourceHash: hash(original), revision: 123, sourcePage: 'bank', sourceGloss: '## A river edge.', sense: restored };
 const restoredInput = { ...input, restoredSources: [evidence], corrections: [...input.corrections, { ...row, senseId: restored.id, originalSense: restored, dictionaryParentSenseId: original.id }], records: [...input.records, { ...review, senseId: restored.id, sourceHash: hash(restored) }] };
 
+test('a source grouping needs a non-gloss heading, independently bound children and no exercise', () => {
+  const grouping = { ...row, referenceUrl: restored.sourceUrl, meaningGroup: { sourceGloss: '# {{ng|Land beside a river.}}' } };
+  const groupedInput = { ...restoredInput, corrections: [grouping, restoredInput.corrections[1]] };
+  const valid = inspectDictionaryReview(groupedInput);
+  expect(valid.errors).toEqual([]);
+  expect(valid.summary.meaningGroups).toBe(1);
+  for (const patch of [
+    { restoredSources: [], corrections: [grouping], records: [review] },
+    { corrections: [{ ...grouping, meaningGroup: { sourceGloss: '# A lexical definition.' } }, restoredInput.corrections[1]] },
+    { corrections: [{ ...grouping, distinctionTask: { prompt: 'Choose _____.', options: ['a', 'b'], answer: 'a', explanation: 'A question.' } }, restoredInput.corrections[1]] },
+  ]) expect(inspectDictionaryReview({ ...groupedInput, ...patch }).errors.join(' ')).toMatch(/meaning group/i);
+});
+
 test('restored submeanings require independent revision evidence and preserve raw counts', () => {
   const valid = inspectDictionaryReview(restoredInput);
   expect(valid.errors).toEqual([]);

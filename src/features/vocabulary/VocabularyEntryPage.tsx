@@ -37,7 +37,7 @@ import { accountId } from "../../storage/remote";
 import { getVocabularyMastery } from "../../domain/vocabulary/mastery";
 import { vocabularyLearningTimeline } from "../../domain/vocabulary/timeline";
 import { vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
-import { isVocabularySpellingReference } from '../../domain/vocabulary/readiness';
+import { isVocabularyMeaningGroup, isVocabularyPracticeReference, isVocabularySpellingReference } from '../../domain/vocabulary/readiness';
 import { VocabularySenseContent } from "./VocabularySenseContent";
 import { VocabularySourceLinks } from './VocabularySourceLinks';
 import "../../styles/vocabulary-entry.css";
@@ -310,13 +310,13 @@ export function VocabularyEntryPage() {
       >
         <div className="vocabulary-sense-head">
           <h3>
-            {main ? "Meaning" : sense.pos || "Other meaning"}
+            {isVocabularyMeaningGroup(entry!.id, sense) ? "Meaning group" : main ? "Meaning" : sense.pos || "Other meaning"}
           </h3>
         </div>
         {sense.pos ? (
           <span className="vocabulary-part-of-speech">{sense.pos}</span>
         ) : null}
-        <VocabularySenseContent entryId={entry?.id} sense={sense} learningExample={entry ? publicVocabularyExample(entry.id, sense)?.example : undefined} showMissingExample={main} showLearningNotes={!personalNotes && Boolean(sense.editorial || main && resolved?.contentReviewed)} />
+        <VocabularySenseContent entryId={entry?.id} sense={sense} learningExample={entry ? publicVocabularyExample(entry.id, sense) : undefined} showMissingExample={main} showLearningNotes={!personalNotes && Boolean(sense.editorial || main && resolved?.contentReviewed)} />
         {personalNotes &&
         sense.collocations?.length ? (
           <div className="vocabulary-detail">
@@ -357,7 +357,7 @@ export function VocabularyEntryPage() {
             )}
           </details>
         ) : null}
-        {!main && !isVocabularySpellingReference(entry!.id, sense) ? (
+        {!main && !isVocabularyPracticeReference(entry!.id, sense) ? (
           <Link
             className="btn line"
             to={practiceUrl(entry!.id, sense.id, context, origin, "definition")}
@@ -466,7 +466,7 @@ export function VocabularyEntryPage() {
             onMedia={setRecordings}
           />
           <div className="vocabulary-entry-practice">
-            {primary && !entry.tags.includes("archived") && !isVocabularySpellingReference(entry.id, primary) ? (
+            {primary && !entry.tags.includes("archived") && !isVocabularyPracticeReference(entry.id, primary) ? (
               <Link
                 className="btn primary"
                 to={practiceUrl(entry.id, primary.id, context, origin)}
@@ -476,6 +476,7 @@ export function VocabularyEntryPage() {
               </Link>
             ) : null}
             {primary && isVocabularySpellingReference(entry.id, primary) ? <p className="vocabulary-muted">Spelling reference · Choose a valid meaning below to practise this word.</p> : null}
+            {primary && isVocabularyMeaningGroup(entry.id, primary) ? <p className="vocabulary-muted">Meaning group · Choose a specific meaning below to practise this word.</p> : null}
             {entry.tags.includes("archived") ? (
               <span className="pill">Archived · Excluded from practice</span>
             ) : null}

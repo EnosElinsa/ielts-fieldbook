@@ -13967,5 +13967,55 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/accuse#English",
       "license": "CC-BY-SA-4.0"
     }
+  },
+  {
+    "entryId": "ve-4955373",
+    "originalSense": {
+      "id": "wiktionary:restored:5371986fc8a7a05d49",
+      "pos": "noun",
+      "definition": "A description of the location of a property, usually with at least a street name and number, name of a town, and now also a postal code; such a description as superscribed for direction on an envelope or letter.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "sense": {
+      "id": "wiktionary:restored:5371986fc8a7a05d49",
+      "pos": "noun",
+      "definition": "The delivery details identifying a property or recipient’s location.",
+      "example": "Please write the return address on the envelope.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "usage": "Noun. Unlike some noun–verb pairs, address does not require a stress change: British English commonly stresses the second syllable in both.",
+      "collocations": [
+        "postal address",
+        "return address",
+        "street address"
+      ],
+      "distinctions": [
+        "An address describes a location for delivery; it is not the physical place itself in this sense. Address formats differ by country."
+      ],
+      "distinctionTask": {
+        "prompt": "Unlike a fixed noun–verb stress rule, British address commonly stresses the _____ syllable in both uses.",
+        "options": [
+          "second",
+          "first"
+        ],
+        "answer": "second",
+        "explanation": "British English commonly uses adDRESS for both noun and verb. Other accent and use variants are recorded."
+      },
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "register": "",
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

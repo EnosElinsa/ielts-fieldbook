@@ -9,6 +9,15 @@ let release: ReturnType<typeof buildVocabularyResources>;
 // still compares a second independent build of the complete retained corpus.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 15_000);
 
+test('changing the address default preserves the preceding release and all earlier discovery resources', () => {
+  const previousUrl = '/vocabulary-resources/manifest.25780c3fa8522230.json';
+  const previous = JSON.parse(release.resources.get(previousUrl)!);
+  const addressPack = (manifest: typeof release.manifest) => JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards['ve-4955373']])!).teaching;
+  expect(addressPack(previous).readiness.defaults.some((row: any) => row.entryId === 've-4955373')).toBe(false);
+  expect(addressPack(release.manifest).readiness.defaults.find((row: any) => row.entryId === 've-4955373').sense.id).toBe('wiktionary:restored:5371986fc8a7a05d49');
+  for (const url of [...Object.values(previous.entryResources), ...Object.values(previous.entryTeachingResources), ...previous.units.flatMap((unit: any) => [unit.resource, unit.teachingResource]).filter(Boolean)] as string[]) expect(release.resources.has(url), url).toBe(true);
+});
+
 test('the second dictionary batch remains intact after restoring nested meanings', () => {
   const manifestUrl = '/vocabulary-resources/manifest.a03965af94647481.json';
   expect(release.resources.has(manifestUrl)).toBe(true);

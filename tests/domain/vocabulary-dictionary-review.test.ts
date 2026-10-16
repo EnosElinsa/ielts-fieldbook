@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
-import { hasVocabularySenseEdits, learningTask, reviewedEntry } from '../../src/domain/vocabulary/content';
+import { hasVocabularySenseEdits, learningTask, publicVocabularyExample, reviewedEntry } from '../../src/domain/vocabulary/content';
 import { isVocabularyReadingNote, supplementVocabularySense } from '../../src/domain/vocabulary/readiness';
 import type { VocabularyEntry, VocabularySense } from '../../src/domain/vocabulary/types';
 import { resolveVocabularyLearningContext } from '../../src/domain/vocabulary/context';
@@ -14,6 +14,17 @@ const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
 const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
 const entry = catalog.entries.find((e: VocabularyEntry) => e.term === 'bank') as VocabularyEntry;
 const raw = JSON.parse(readFileSync(`public/dictionary/${index.bank}`, 'utf8')).senses.find((s: VocabularySense) => s.id === 'kaikki:c130710755a265600e') as VocabularySense;
+
+test('a cleared additional dictionary example can display a separate exact public reading without replacing the saved notes', () => {
+  const row = corrections.find(row => row.entryId === 've-6ae618ee' && row.senseId === 'kaikki:9675d890071f3124f9')!;
+  const selected = supplementVocabularySense(row.entryId, row.originalSense as VocabularySense, [], () => false);
+  const personal = { ...selected, example: '' };
+  const fallback = publicVocabularyExample(row.entryId, personal);
+  expect(fallback?.example).toBe(row.example);
+  expect(isVocabularyReadingNote(row.entryId, fallback!.sense)).toBe(true);
+  expect(personal.example).toBe('');
+  expect(publicVocabularyExample(row.entryId, { ...personal, definition: 'A different meaning from our class.' })).toBeUndefined();
+});
 
 test.each(corrections.filter(row => 'exampleKind' in row && row.exampleKind === 'reading-note'))('a reading explanation for $entryId/$senseId is not a sentence-gap exercise', row => {
   const base = catalog.entries.find((e: VocabularyEntry) => e.id === row.entryId) as VocabularyEntry;

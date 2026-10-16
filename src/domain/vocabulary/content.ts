@@ -2,7 +2,7 @@ import { vocabularyTeaching } from './runtimeData';
 import { VOCABULARY_CATALOG } from './catalog';
 import { vocabularyCurriculumBaselines } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
-import { applyVocabularyReadiness, isVocabularyReadingNote, isVocabularySpellingReference, supplementVocabularySense, VOCABULARY_READINESS_VERSION } from './readiness';
+import { applyVocabularyReadiness, isVocabularyReadingNote, isVocabularyPracticeReference, supplementVocabularySense, vocabularyReadinessBaselines, VOCABULARY_READINESS_VERSION } from './readiness';
 import { vocabularySensePresentation } from './dictionaryPresentation';
 export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-10.1/${VOCABULARY_READINESS_VERSION}`;
 const learningSenses = vocabularyTeaching.learning;
@@ -146,6 +146,13 @@ function existingReviewedEntry(entry: VocabularyEntry): VocabularyEntry {
  const item = reviewed[entry.term.toLowerCase()];
  const replacement = (learningSenses as Record<string, VocabularySense>)[entry.term.toLowerCase()];
  if (replacement) {
+  const primary = entry.senses[0];
+  if (primary && primary.id !== replacement.id) {
+   const baselines = [...catalogVocabularySenses(entry.id).filter(sense => sense.id === primary.id),
+    ...vocabularyReadinessBaselines(entry.id, primary.id), ...vocabularyCurriculumBaselines(entry.id, primary.id),
+    ...[...contextSenses.bindings, ...contextSenses.defaults].filter(row => row.entryId === entry.id && row.sense.id === primary.id).flatMap(row => [row.sense, ...(row.originalSense ? [row.originalSense] : [])])];
+   if (hasVocabularySenseEdits(primary, [...baselines, ...baselines.map(sense => supplementVocabularySense(entry.id, sense, [sense], () => false))])) return entry;
+  }
   const found = entry.senses.find(sense => sense.id === replacement.id);
   return {...entry,meaning:replacement.definition,example:replacement.example,senses:[found || replacement,...entry.senses.filter(sense => sense.id !== replacement.id)]};
  }
@@ -172,7 +179,7 @@ export function reviewedEntry(entry:VocabularyEntry):VocabularyEntry {
 export function publicVocabularyExample(entryId: string, sense: VocabularySense): { example: string; sense: VocabularySense } | undefined {
  const current = vocabularySensePresentation(sense);
  if (current.example || !current.definition) return;
- const originals = catalogVocabularySenses(entryId).filter(row => row.id === sense.id);
+ const originals = [...catalogVocabularySenses(entryId).filter(row => row.id === sense.id), ...vocabularyReadinessBaselines(entryId, sense.id)];
  const candidates = [
   ...originals.map(row => supplementVocabularySense(entryId, row, originals, () => false)),
   ...vocabularyCurriculumBaselines(entryId, sense.id),
@@ -204,7 +211,7 @@ const confusion: Record<string, VocabularyLearningTask> = {
 'lend':{prompt:'Could you _____ me your dictionary?',acceptedAnswers:['lend'],options:['lend','borrow'],explanation:'Lend means give temporarily; borrow means receive temporarily.'}
 };
 export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mode: string): VocabularyLearningTask | undefined {
- if (isVocabularySpellingReference(entry.id, sense)) return;
+ if (isVocabularyPracticeReference(entry.id, sense)) return;
  const eligible = entry.id.startsWith('vocab:') || entry.id.startsWith('guixue:') || entry.senses.some(sense => sense.source?.includes('Kaikki') || sense.source === 'Fieldbook editorial');
  const catalogEntry = catalogVocabularyEntry(entry.id);
  const originalSenses = catalogVocabularySenses(entry.id);

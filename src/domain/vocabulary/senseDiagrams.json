@@ -550,5 +550,85 @@
     "definition": "The final undertaking in bridge to win at least six plus the bid level in tricks, with a specified trump suit or no trumps.",
     "pos": "noun",
     "kind": "bridge-contract"
+  },
+  {
+    "entryId": "ve-6ae618ee",
+    "senseId": "kaikki:b2ea5acbd36008e941",
+    "term": "present",
+    "definition": "The current moment or period of time.",
+    "pos": "noun",
+    "kind": "past-present-future"
+  },
+  {
+    "entryId": "ve-4955373",
+    "senseId": "wiktionary:restored:5371986fc8a7a05d49",
+    "term": "address",
+    "definition": "The delivery details identifying a property or recipient’s location.",
+    "pos": "noun",
+    "kind": "postal-address"
+  },
+  {
+    "entryId": "ve-4955373",
+    "senseId": "wiktionary:restored:2e09ad5e20a71aec26",
+    "term": "address",
+    "definition": "A numerical identifier for a location in a computer’s memory address space.",
+    "pos": "noun",
+    "kind": "memory-address"
+  },
+  {
+    "entryId": "ve-6b8e6fb0",
+    "senseId": "kaikki:cf025197ce416ec9dc",
+    "term": "project",
+    "definition": "A planned undertaking with a goal, often completed through several stages.",
+    "pos": "noun",
+    "kind": "project-stages"
+  },
+  {
+    "entryId": "ve-6b8e6fb0",
+    "senseId": "kaikki:9e0f7f7e4b6f5e7879",
+    "term": "project",
+    "definition": "To cast an image, shadow or other visible form onto a surface.",
+    "pos": "verb",
+    "kind": "projected-image"
+  },
+  {
+    "entryId": "ve-6b8e6fb0",
+    "senseId": "kaikki:7daffc727cfd6b9d4f",
+    "term": "project",
+    "definition": "To plan for or estimate a future state or result.",
+    "pos": "verb",
+    "kind": "projected-estimate"
+  },
+  {
+    "entryId": "ve-6b8e6fb0",
+    "senseId": "kaikki:4f9ea7a040d626098d",
+    "term": "project",
+    "definition": "To transform spatial coordinates into another map projection or coordinate reference system.",
+    "pos": "verb",
+    "kind": "coordinate-projection"
+  },
+  {
+    "entryId": "ve-6b8e6fb0",
+    "senseId": "kaikki:1cd9b9fcff8aac123f",
+    "term": "project",
+    "definition": "To form a new geometric figure by drawing rays from a fixed point through the original figure to a receiving surface.",
+    "pos": "verb",
+    "kind": "central-projection"
+  },
+  {
+    "entryId": "ve-6b91edff",
+    "senseId": "kaikki:d256d8e4247a3afb52",
+    "term": "produce",
+    "definition": "To extend a line segment or side beyond an endpoint along the same straight line.",
+    "pos": "verb",
+    "kind": "extended-side"
+  },
+  {
+    "entryId": "ve-7e9d6477",
+    "senseId": "kaikki:2ce6d3e637cf03dcd1",
+    "term": "refuse",
+    "definition": "Waste material that has been discarded.",
+    "pos": "noun",
+    "kind": "refuse-refusal"
   }
 ]

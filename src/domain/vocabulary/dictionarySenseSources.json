@@ -2031,5 +2031,252 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:c8d8a0fefe987511d9",
+    "parentSourceHash": "197b5bbbeb011593bdc18f560a9f76ac26e401796c6f3d448f1955b757aa65db",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "## {{lb|en|obsolete}} [[guidance|Guidance]]; [[help]]. {{defdate|15th–17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:7e92820f79b5c33586",
+      "pos": "noun",
+      "definition": "Guidance; help.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:c8d8a0fefe987511d9",
+    "parentSourceHash": "197b5bbbeb011593bdc18f560a9f76ac26e401796c6f3d448f1955b757aa65db",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "## {{lb|en|chiefly|in plural|now|archaic}} A polite [[approach]] made to another person, especially of a romantic nature; an amorous [[advance]]. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:952b006d0dfd4d52fb",
+      "pos": "noun",
+      "definition": "A polite approach made to another person, especially of a romantic nature; an amorous advance.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:c8d8a0fefe987511d9",
+    "parentSourceHash": "197b5bbbeb011593bdc18f560a9f76ac26e401796c6f3d448f1955b757aa65db",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "## A manner of speaking or writing to another; [[language]], [[style]]. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:df4bb974d2de76f5b9",
+      "pos": "noun",
+      "definition": "A manner of speaking or writing to another; language, style.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:c8d8a0fefe987511d9",
+    "parentSourceHash": "197b5bbbeb011593bdc18f560a9f76ac26e401796c6f3d448f1955b757aa65db",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "## {{senseid|en|formal approach}} {{lb|en|diplomacy|politics}} A formal approach to a [[sovereign]] or [[head of state]], especially an official [[appeal]] or [[petition]]. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:9cddb67c2d29c9b786",
+      "pos": "noun",
+      "definition": "A formal approach to a sovereign or head of state, especially an official appeal or petition.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:c8d8a0fefe987511d9",
+    "parentSourceHash": "197b5bbbeb011593bdc18f560a9f76ac26e401796c6f3d448f1955b757aa65db",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "### {{lb|en|Commonwealth|politics}} A response given by each of the [[Houses of Parliament]] to the sovereign's speech at the opening of Parliament.",
+    "sense": {
+      "id": "wiktionary:restored:dc48ef4cec84486668",
+      "pos": "noun",
+      "definition": "A response given by each of the Houses of Parliament to the sovereign's speech at the opening of Parliament.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:c8d8a0fefe987511d9",
+    "parentSourceHash": "197b5bbbeb011593bdc18f560a9f76ac26e401796c6f3d448f1955b757aa65db",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "## {{senseid|en|speech}} An act of addressing oneself to a person or group; a [[discourse]] or [[speech]], or a record of this. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:3a5f0800a8735c5d0b",
+      "pos": "noun",
+      "definition": "An act of addressing oneself to a person or group; a discourse or speech, or a record of this.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:c8d8a0fefe987511d9",
+    "parentSourceHash": "197b5bbbeb011593bdc18f560a9f76ac26e401796c6f3d448f1955b757aa65db",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "## {{senseid|en|description}} A description of the location of a property, usually with at least a street name and number, name of a town, and now also a postal code; such a description as superscribed for direction on an envelope or letter. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:5371986fc8a7a05d49",
+      "pos": "noun",
+      "definition": "A description of the location of a property, usually with at least a street name and number, name of a town, and now also a postal code; such a description as superscribed for direction on an envelope or letter.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:c8d8a0fefe987511d9",
+    "parentSourceHash": "197b5bbbeb011593bdc18f560a9f76ac26e401796c6f3d448f1955b757aa65db",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "## {{senseid|en|location}} The location of a property. {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:d8ff2ca439753c6519",
+      "pos": "noun",
+      "definition": "The location of a property.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:c8d8a0fefe987511d9",
+    "parentSourceHash": "197b5bbbeb011593bdc18f560a9f76ac26e401796c6f3d448f1955b757aa65db",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "## {{senseid|en|memory}} {{lb|en|computing}} A number identifying a specific storage location in computer [[memory]]. {{defdate|from 1940s}}",
+    "sense": {
+      "id": "wiktionary:restored:2e09ad5e20a71aec26",
+      "pos": "noun",
+      "definition": "A number identifying a specific storage location in computer memory.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:c8d8a0fefe987511d9",
+    "parentSourceHash": "197b5bbbeb011593bdc18f560a9f76ac26e401796c6f3d448f1955b757aa65db",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "## {{senseid|en|networking}} {{lb|en|networking|Internet}} A [[string]] of [[character]]s identifying a [[node]] or [[range]] of nodes on a [[network]] (especially the [[Internet]]), such as an [[e-mail address]], [[IP address]] or [[URL]]. {{defdate|from 1960s}}",
+    "sense": {
+      "id": "wiktionary:restored:9526c2e4a8976cc06b",
+      "pos": "noun",
+      "definition": "A string of characters identifying a node or range of nodes on a network (especially the Internet), such as an e-mail address, IP address or URL.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:349c5a1fabc9000f5b",
+    "parentSourceHash": "f446da2f9ac6160be7dd196cd67b15e6ec4fa1495da4a4eba7eb722b01e82ca8",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "## {{lb|en|now|rare}} [[preparedness|Preparedness]] for some task; [[resourcefulness]]; [[skill]], [[ability]]. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:55d8e656045e01bd12",
+      "pos": "noun",
+      "definition": "Preparedness for some task; resourcefulness; skill, ability.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:349c5a1fabc9000f5b",
+    "parentSourceHash": "f446da2f9ac6160be7dd196cd67b15e6ec4fa1495da4a4eba7eb722b01e82ca8",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "## {{lb|en|obsolete}} The act of getting ready; [[preparation]]. {{defdate|17th–18th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:1140b3c4a4d32c7deb",
+      "pos": "noun",
+      "definition": "The act of getting ready; preparation.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "address",
+    "entryId": "ve-4955373",
+    "parentSenseId": "kaikki:349c5a1fabc9000f5b",
+    "parentSourceHash": "f446da2f9ac6160be7dd196cd67b15e6ec4fa1495da4a4eba7eb722b01e82ca8",
+    "sourcePage": "address",
+    "revision": 92334633,
+    "sourceGloss": "## {{lb|en|golf|Scotland}} The act of bringing the head of the [[club]] up to the [[ball]] in preparation for swinging. {{defdate|from 19th c.}}<ref name=DSL>{{R:DSL|pos=v., n}}</ref>",
+    "sense": {
+      "id": "wiktionary:restored:1c78c6b7442f71fd3d",
+      "pos": "noun",
+      "definition": "The act of bringing the head of the club up to the ball in preparation for swinging. <ref name=DSL></ref>",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=address&oldid=92334633",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

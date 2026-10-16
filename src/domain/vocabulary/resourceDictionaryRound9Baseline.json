@@ -1,0 +1,493 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:639d878dc02160a47c"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:7c563e09a937c88971"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:9675d890071f3124f9"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:0a3a11c04b83f13910"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:b0d3a774a54db1d70b"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:a3197ee7f1da31838b"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:6537f72c4016608629"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:469c085ffa9f7b99f0"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:aa929eaeac5da405e7"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:b2ea5acbd36008e941"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:fd15a1bbdf35a0ff65"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:c695c3de1bdafde5d2"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:ceb422bc8fcfb44137"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:c2fe7f1e744f6e014b"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:40e41329b227d2f52a"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:c1ce50ad3d79ad8d55"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:4706a713b6a140f4a8"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:28ac8ca91bf5b0258e"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:bc8d3a3406d8ddbafe"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:18fa369b2c326ae2b3"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:dcfc716e3c0c2d09d0"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:9419ac622a67392449"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:4f6b0c09a82b1c2821"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:ec8077367aca2ae6d3"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:1e0430db7b5b33eed1"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:70fc16924139ad995b"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:e41a647f0d147ce815"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:297b56eaef773c6c1b"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:ee70ef53a4639ced7a"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:f0c659e4e0e902808e"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:6dd70f0e3d911fbb7d"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:24000acb04f7d763af"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:035152702c5bc7f5ca"
+    },
+    {
+      "entryId": "ve-6ae618ee",
+      "senseId": "kaikki:485a5a263655df34c0"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:c8d8a0fefe987511d9"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:349c5a1fabc9000f5b"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:f81655257aba77ed29"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:49ec8bc5ad59c20b7f"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:7f6baf144a6931d4d8"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:0c28a8ddf8f26ffa35"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:34a9ff4239df40969a"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:8bf234a31732e21dfe"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:30ba2cfaa414944aff"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:783e4731cb8017c0ee"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:613dc28ee3ec685224"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:228be98faa1bd74de7"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:dec2c3e2afcdca7687"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:0294881f94516652a8"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:d045e1300c35fea30a"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:abc42e57d0ddff7798"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:644cc7ad35f4391fee"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "kaikki:2cc88f3b52a6610dc8"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:cf025197ce416ec9dc"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:3c33020a294c66394e"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:ed1f6b6249ffebe359"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:870f02a9898f6e3926"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:1f2f95b941a6d08fdc"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:9e0f7f7e4b6f5e7879"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:9463acb5db9c762dda"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:7daffc727cfd6b9d4f"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:737ff9c3210584141b"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:1194c37b4d3d10a4c7"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:4f9ea7a040d626098d"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:1cd9b9fcff8aac123f"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:959c46f0b151c2ef81"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:016ec002ca25484db6"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:1d1b8fdd0e86e75095"
+    },
+    {
+      "entryId": "ve-6b8e6fb0",
+      "senseId": "kaikki:62d496bee91de8fdda"
+    },
+    {
+      "entryId": "ve-6b91edff",
+      "senseId": "kaikki:32830c776c36c3be0d"
+    },
+    {
+      "entryId": "ve-6b91edff",
+      "senseId": "kaikki:a904fd66d8dee21d8b"
+    },
+    {
+      "entryId": "ve-6b91edff",
+      "senseId": "kaikki:cabf574aac6b861810"
+    },
+    {
+      "entryId": "ve-6b91edff",
+      "senseId": "kaikki:d256d8e4247a3afb52"
+    },
+    {
+      "entryId": "ve-6b91edff",
+      "senseId": "kaikki:8f5f2c7c14acc33b28"
+    },
+    {
+      "entryId": "ve-6b91edff",
+      "senseId": "kaikki:5a17e452b9f8931d88"
+    },
+    {
+      "entryId": "ve-6b91edff",
+      "senseId": "kaikki:4c06e919537331f428"
+    },
+    {
+      "entryId": "ve-6b91edff",
+      "senseId": "kaikki:782eabca13ecd1d9a9"
+    },
+    {
+      "entryId": "ve-6b91edff",
+      "senseId": "kaikki:d49b929b0033acf05e"
+    },
+    {
+      "entryId": "ve-6b91edff",
+      "senseId": "kaikki:6567315fe5d1135d92"
+    },
+    {
+      "entryId": "ve-7e9d6477",
+      "senseId": "kaikki:d9ad4f4e59cc6d675c"
+    },
+    {
+      "entryId": "ve-7e9d6477",
+      "senseId": "kaikki:c228758d7c6d27ba36"
+    },
+    {
+      "entryId": "ve-7e9d6477",
+      "senseId": "kaikki:e67eda9792fc683433"
+    },
+    {
+      "entryId": "ve-7e9d6477",
+      "senseId": "kaikki:475d97937116d7d617"
+    },
+    {
+      "entryId": "ve-7e9d6477",
+      "senseId": "kaikki:562ae85a5edf34f476"
+    },
+    {
+      "entryId": "ve-7e9d6477",
+      "senseId": "kaikki:dafa18f47b34f8fff7"
+    },
+    {
+      "entryId": "ve-7e9d6477",
+      "senseId": "kaikki:1f45c4610eb25c3c1c"
+    },
+    {
+      "entryId": "ve-7e9d6477",
+      "senseId": "kaikki:62d20c159fbc81a325"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:952b006d0dfd4d52fb"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:df4bb974d2de76f5b9"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:9cddb67c2d29c9b786"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:dc48ef4cec84486668"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:3a5f0800a8735c5d0b"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:5371986fc8a7a05d49"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:d8ff2ca439753c6519"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:2e09ad5e20a71aec26"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:9526c2e4a8976cc06b"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:55d8e656045e01bd12"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:1140b3c4a4d32c7deb"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:1c78c6b7442f71fd3d"
+    },
+    {
+      "entryId": "ve-4955373",
+      "senseId": "wiktionary:restored:7e92820f79b5c33586"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-7e9d6477",
+      "senseId": "kaikki:2ce6d3e637cf03dcd1",
+      "term": "refuse",
+      "example": "The council collects household refuse every Friday.",
+      "definition": "Waste materials that have been discarded.",
+      "pos": "noun",
+      "usage": "Selected the waste noun rather than an uncommon adjective. The noun is pronounced differently from the verb refuse.",
+      "originalSense": {
+        "id": "kaikki:2ce6d3e637cf03dcd1",
+        "definition": "Collectively, items or material that have been discarded; rubbish, garbage.",
+        "example": "",
+        "pos": "noun",
+        "synonyms": [
+          "discards",
+          "garbage",
+          "rubbish",
+          "trash"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "uncountable",
+        "wordFamily": []
+      }
+    },
+    {
+      "entryId": "ve-6b91edff",
+      "senseId": "kaikki:11f27e5737eb3aa0d8",
+      "originalSense": {
+        "id": "kaikki:11f27e5737eb3aa0d8",
+        "definition": "To bring forth, to yield, make, manufacture, or otherwise generate.",
+        "example": "[chapter XIII, page 264:] […] the greatest jurist that his country had produced. […] [chapter XVI, page 644:] At Rome the news from Ireland produced a sensation of a very different kind.",
+        "pos": "verb",
+        "synonyms": [
+          "make",
+          "generate",
+          "yield",
+          "create",
+          "bring forth",
+          "cause",
+          "contrive",
+          "create",
+          "ferment",
+          "forge",
+          "develop",
+          "engender",
+          "evolve",
+          "generate",
+          "gin up",
+          "innate",
+          "form",
+          "forthbring",
+          "make",
+          "produce",
+          "spawn"
+        ],
+        "antonyms": [
+          "destroy",
+          "ruin"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [
+          "coproduce",
+          "executive produce",
+          "exec-produce",
+          "handproduce",
+          "hyperproduce",
+          "interproduce",
+          "mass-produce",
+          "misproduce",
+          "outproduce",
+          "overproduce",
+          "preproduce",
+          "producement",
+          "reproduce",
+          "underproduce"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/produce#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "example": "The new factory will produce components for electric vehicles."
+    }
+  ],
+  "removeDefaults": [
+    "ve-4955373"
+  ],
+  "restoreDefaults": []
+}

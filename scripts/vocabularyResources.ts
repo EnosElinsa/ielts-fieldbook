@@ -31,11 +31,14 @@ export function buildVocabularyResources(root: string) {
   const retainedDictionaryCatalogs = [];
   let beforeDictionaryExpansion = teaching;
   for (const filename of data('resourceDictionaryRevisions') as string[]) {
-    const baseline = data(filename) as { removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections'] };
+    const baseline = data(filename) as { removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections']; removeDefaults?: string[]; restoreDefaults?: VocabularyTeachingData['readiness']['defaults'] };
     const removed = new Set(baseline.removeCorrections.map(row => JSON.stringify([row.entryId,row.senseId])));
     const restored = new Map(baseline.restoreCorrections.map(row => [JSON.stringify([row.entryId,row.senseId]),row]));
+    const removedDefaults = new Set(baseline.removeDefaults || []);
+    const restoredDefaults = new Map((baseline.restoreDefaults || []).map(row => [row.entryId,row]));
     beforeDictionaryExpansion = { ...beforeDictionaryExpansion, readiness: { ...beforeDictionaryExpansion.readiness,
       corrections: beforeDictionaryExpansion.readiness.corrections.filter(row => !removed.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restored.get(JSON.stringify([row.entryId,row.senseId])) || row),
+      defaults: beforeDictionaryExpansion.readiness.defaults.filter(row => !removedDefaults.has(row.entryId)).map(row => restoredDefaults.get(row.entryId) || row),
     } };
     retainedDictionaryCatalogs.push(buildResourceCatalog(source, beforeDictionaryExpansion));
   }
@@ -54,7 +57,7 @@ export function buildVocabularyResources(root: string) {
     ...beforeDictionaryExpansion,
     readiness: { ...beforeDictionaryExpansion.readiness,
       corrections: beforeDictionaryExpansion.readiness.corrections.filter(row => !removedLearningCorrections.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restoredLearningCorrections.get(JSON.stringify([row.entryId,row.senseId])) || row),
-      defaults: teaching.readiness.defaults.filter(row => !removedLearningDefaults.has(row.entryId)).map(row => restoredLearningDefaults.get(row.entryId) || row),
+      defaults: beforeDictionaryExpansion.readiness.defaults.filter(row => !removedLearningDefaults.has(row.entryId)).map(row => restoredLearningDefaults.get(row.entryId) || row),
     },
     curriculum: { ...teaching.curriculum, modern: teaching.curriculum.modern.filter(row => !removedLearningModern.has(row.entryId)).map(row => restoredLearningModern.get(row.entryId) || row) },
   };

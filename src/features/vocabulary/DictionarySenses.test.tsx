@@ -32,6 +32,25 @@ const sourceSense = {
 };
 const dictionaryFetch = (senses = [sourceSense]) => vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { mitigate: 'aa.json' } : { senses } }));
 
+test('source headings remain in All meanings without being offered as meanings to practise', async () => {
+  fixture();
+  const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+  const entry = catalog.entries.find((entry: any) => entry.term === 'address');
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.address}`, 'utf8'));
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? index : dictionary })));
+  render(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[]} /></MemoryRouter>);
+  await screen.findByText('Please write the return address on the envelope.');
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  expect(screen.queryByText('Source grouping: uses involving direction, communication and location.')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: /^All meanings/ }));
+  const heading = screen.getByText('Source grouping: uses involving direction, communication and location.');
+  const group = within(heading.closest('section')!);
+  expect(group.getByText('Meaning group')).toBeInTheDocument();
+  expect(group.queryByRole('button', { name: 'Practise this sense' })).not.toBeInTheDocument();
+  expect(group.getByRole('heading', { name: 'Examples of grouped uses' })).toBeInTheDocument();
+});
+
 test('late teaching updates displayed meanings while retaining filters and the cached source', async () => {
   const { entry } = fixture();
   const fetch = dictionaryFetch();
