@@ -118,6 +118,16 @@ function mount(path: string) {
 const book = "ielts-vocabulary";
 const core = () => release.entries.find((entry: any) => entry.term === "core");
 
+test('an explicitly selected river meaning displays its diagram and learning notes in word details', () => {
+  const bank = release.entries.find((entry: any) => entry.term === 'bank');
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const river = JSON.parse(readFileSync(`public/dictionary/${index.bank}`, 'utf8')).senses.find((sense: any) => sense.id === 'kaikki:c130710755a265600e');
+  mocks.fb.state.vocabulary = [{ ...bank, senses: [river, ...bank.senses] }];
+  mount(`/vocabulary/entry/${bank.id}?senseId=${encodeURIComponent(river.id)}`);
+  expect(screen.getByText('We sat on the bank of the river and watched the boats.')).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: 'bank: Land beside a flowing river' })).toBeInTheDocument();
+});
+
 test('pea details show the food meaning with the same illustration as its learning card', () => {
   const pea = release.entries.find((entry: any) => entry.term === 'pea');
   mount(`/vocabulary/entry/${pea.id}?bookId=${book}&unitId=ielts-vocabulary-chapter-12-group-02`);

@@ -1,0 +1,287 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:23c53eb2c991ed791c"
+    },
+    {
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:cdb7a962aa1f098ca3"
+    },
+    {
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:37eef87266f9b4a5fe"
+    },
+    {
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:0071db0736e6db3763"
+    },
+    {
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:25a8836e6908042f06"
+    },
+    {
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:b3e47834e253b87b25"
+    },
+    {
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:c4a361474ad6a04a1a"
+    },
+    {
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:ed24627f5342380b5e"
+    },
+    {
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:2b83474b1f1cc9ccfd"
+    },
+    {
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:6a69182b26113a8a10"
+    },
+    {
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:e5996da3360a183795"
+    },
+    {
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:de9f181e2e65a347ba"
+    },
+    {
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:2bf191eb92a37f6b78"
+    },
+    {
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:3de3deb5fbdec813f4"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:7295cc51c0f1c64efa"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:39943c22cb50fdcc33"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:646afcd59b3430609a"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:56afa9a33ae20eff2c"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:99cb16fd52851df5f0"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:4978ffa68febf9b828"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:246c821725ea67d124"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:c8e50e0c31f1e6c6bd"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:59925e10795db0d5b2"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:f8e71441399009b456"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:1716b1c04ca67e741d"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:90ddae7a772496ea36"
+    },
+    {
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:b3ea562ada4ecc92b7"
+    },
+    {
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:d912ad70bc43404b66"
+    },
+    {
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:aa6509c26b6acef393"
+    },
+    {
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:06448a9791920bfcef"
+    },
+    {
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:b221135e71e58a3ae3"
+    },
+    {
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:6b8287fbb677d5a3ad"
+    },
+    {
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:11b3fe2ab59a7e5c2a"
+    },
+    {
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:8738a224d2e67e0459"
+    },
+    {
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:688322921de701000b"
+    },
+    {
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:00afe87cd3cd1fe600"
+    },
+    {
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:871cc8b4a427024d7c"
+    },
+    {
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:48b94a665020f2b24f"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:aefe9c53af85571d2a"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:d38d714a840ea63b44"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:9ed9a8ef0f15130d4d"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:c9d43969056d6da675"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:b2ac55a66cbd35455c"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:a6b1002ac8f06588b5"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:c130710755a265600e"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:8198fd2a4d77a3b098"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:d561f049cf0d10e47e"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:cedb278bae8dd3922a"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:b95a7ee4f364343195"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:55238a6d6fa224f376"
+    },
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:5042be096e4363fcc8"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:0753afdde8cf8be72d"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:7fd87483081b8fffb2"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:b4530313bc205eeb80"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:bc2dbe01646a608a86"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:bf74ef33e5ffd3f329"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:7baa6ea680b9dbf14c"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:a76c2a8d3686fafaa9"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:f29a0f59e4422581be"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:e05e332daebb09a979"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:0ca8269d19272bde96"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:24310f3a6d09714a46"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:b74f1aa5203f5fbe02"
+    },
+    {
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:e7a5045ac2c0142596"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:b4179eb2a082e520ba",
+      "originalSense": {
+        "id": "kaikki:b4179eb2a082e520ba",
+        "definition": "An institution where one can place and borrow money and take care of financial affairs.",
+        "example": "Finance is seldom romantic. But the idea of peer-to-peer lending comes close. This is an industry that brings together individual savers and lenders on online platforms.[…]Banks and credit-card firms are kept out of the picture. Talk to enough people in the field and someone is bound to mention the “democratisation of finance”.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "countable",
+        "wordFamily": [
+          "bancassurance",
+          "banco",
+          "bankrupt"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/bank#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "example": "She opened a savings account at the local bank."
+    }
+  ]
+}

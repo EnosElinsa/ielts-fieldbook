@@ -32,13 +32,15 @@ export function DictionarySenses({
   const [revision, setRevision] = useState(0);
   const retryDictionary = () => { resetDictionaryCache(); setRevision(value => value + 1); };
   const [saving, setSaving] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
   useEffect(() => {
     let active = true;
     setLoaded([]);
     setError("");
     setLoading(true);
+    setShowAll(false);
     onSources?.([]);
-    loadTermDictionary(entry.term)
+    loadTermDictionary(entry.term, entry.id)
       .then((data) => {
         if (active) {
           setLoaded(data);
@@ -53,7 +55,7 @@ export function DictionarySenses({
     return () => {
       active = false;
     };
-  }, [entry.term, revision]);
+  }, [entry.term, entry.id, revision]);
   const excludeKey = JSON.stringify(
     excludeSenses.map((sense) => [sense.id, key(sense)]).sort(),
   );
@@ -78,9 +80,11 @@ export function DictionarySenses({
   useEffect(() => {
     onSources?.(senses);
   }, [senses, onSources]);
+  const withNotes = senses.filter(sense => sense.editorial && sense.collocations?.length && sense.distinctions?.length);
+  const visible = !showAll && withNotes.length ? withNotes : senses;
   const groups = [
     ...new Set(
-      senses.map((sense) => sense.pos.trim().toLowerCase() || "Meaning"),
+      visible.map((sense) => sense.pos.trim().toLowerCase() || "Meaning"),
     ),
   ];
   const saveLock = useRef(false);
@@ -171,6 +175,10 @@ export function DictionarySenses({
         Dictionary meanings beyond the selected learning meanings. Choose a
         meaning to practise it separately.
       </p>
+      {withNotes.length ? <div className="vocabulary-dictionary-filter" role="group" aria-label="Dictionary meaning filter">
+        <button type="button" className="btn line" aria-pressed={!showAll} onClick={() => setShowAll(false)}>With learning notes ({withNotes.length})</button>
+        <button type="button" className="btn line" aria-pressed={showAll} onClick={() => setShowAll(true)}>All meanings ({senses.length})</button>
+      </div> : null}
       {loading ? (
         <InlineLoadingState message="Loading dictionary meanings…" onRetry={saving === null ? retryDictionary : undefined} retryLabel="Retry dictionary" />
       ) : null}
@@ -183,7 +191,7 @@ export function DictionarySenses({
       {groups.map((pos) => (
         <section className="vocabulary-dictionary-pos" key={pos}>
           <h3>{pos.replace(/^./, (char) => char.toUpperCase())}</h3>
-          {senses
+          {visible
             .filter(
               (sense) => (sense.pos.trim().toLowerCase() || "Meaning") === pos,
             )
@@ -201,7 +209,7 @@ export function DictionarySenses({
                     {saving === sense.id ? "Saving…" : "Practise this sense"}
                   </button>
                 </div>
-                <VocabularySenseContent sense={sense} />
+                <VocabularySenseContent sense={sense} showLearningNotes />
               </section>
             ))}
         </section>

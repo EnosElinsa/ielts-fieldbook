@@ -1,7 +1,7 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default } from './runtimeData';
 import type { VocabularyEntry, VocabularySense } from './types';
 
-export const VOCABULARY_READINESS_VERSION = 'core-2026-10-16.2';
+export const VOCABULARY_READINESS_VERSION = 'core-2026-10-17.1';
 const identity = (entryId:string, senseId:string) => `${entryId}\u0000${senseId}`;
 const core = new Map<string,Supplement>();
 const additions = new Map<string,Supplement>();
@@ -24,6 +24,14 @@ export function vocabularyReadinessBaselines(entryId:string,senseId:string):Voca
  return [selected?.sense.id===senseId?selected.sense:undefined,selected?.originalSense?.id===senseId?selected.originalSense:undefined,row?.originalSense?.id===senseId?row.originalSense:undefined].filter((sense):sense is VocabularySense=>Boolean(sense));
 }
 
+/** Review of these notes is independent of whether a wordbook's source meaning is confirmed. */
+export function hasVocabularyReadinessNotes(entryId: string, sense: VocabularySense): boolean {
+ ensureReadiness();
+ const row = additions.get(identity(entryId, sense.id)) || core.get(identity(entryId, sense.id));
+ return Boolean(row?.collocations?.length && row.distinctions?.length && row.definition === sense.definition &&
+  (row.pos || row.originalSense?.pos) === sense.pos && JSON.stringify(row.collocations) === JSON.stringify(sense.collocations) && JSON.stringify(row.distinctions) === JSON.stringify(sense.distinctions));
+}
+
 /** Public content only. A caller supplies historical public baselines to protect personal edits. */
 export function supplementVocabularySense(entryId:string, sense:VocabularySense, baselines:VocabularySense[], edited:(sense:VocabularySense, baselines:VocabularySense[])=>boolean):VocabularySense {
  ensureReadiness();
@@ -34,7 +42,10 @@ export function supplementVocabularySense(entryId:string, sense:VocabularySense,
  const supplemented:VocabularySense={...sense,
   ...(row.definition ? {definition:row.definition}:{}),
   ...(row.pos ? {pos:row.pos}:{}),example:row.example,
-  ...(row.usage ? {usage:row.usage}:{}),
+  ...(row.usage !== undefined ? {usage:row.usage}:{}),
+  ...(row.collocations ? {collocations:row.collocations}:{}),
+  ...(row.distinctions ? {distinctions:row.distinctions}:{}),
+  ...(row.distinctionTask ? {distinctionTask:row.distinctionTask}:{}),
   ...(missing ? {source:'Fieldbook editorial',license:'CC-BY-4.0',attribution:editorial.attribution}:{}),
   editorial,
  };

@@ -1,7 +1,7 @@
 import type { VocabularySense } from "../../domain/vocabulary/types";
 import { vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
 
-export function VocabularySenseContent({ sense, learningExample, showMissingExample = false }: { sense: VocabularySense; learningExample?: string; showMissingExample?: boolean }) {
+export function VocabularySenseContent({ sense, learningExample, showMissingExample = false, showLearningNotes = false }: { sense: VocabularySense; learningExample?: string; showMissingExample?: boolean; showLearningNotes?: boolean }) {
   const content = vocabularySensePresentation(sense);
   const example = content.example || learningExample;
   return (
@@ -19,6 +19,13 @@ export function VocabularySenseContent({ sense, learningExample, showMissingExam
           <p>{content.usage}</p>
         </div>
       ) : null}
+      {showLearningNotes && sense.collocations?.length ? <div className="vocabulary-detail">
+        <h4>Collocations</h4><p>{sense.collocations.join(' · ')}</p>
+      </div> : null}
+      {showLearningNotes && sense.distinctions?.length ? <div className="vocabulary-detail">
+        <h4>Compare meanings</h4>
+        {sense.distinctions.map(note => <p key={note}>{note}</p>)}
+      </div> : null}
       {content.relations.map((relation) => (
         <div className="vocabulary-detail" key={relation.label}>
           <h4>{relation.label}</h4>

@@ -119,12 +119,27 @@ reviewed['unbiased'] = {definition:'Not favouring any particular side.',example:
 export function escapePattern(text: string) { return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 export function concealWord(text: string, answer: string) { return text.replace(new RegExp(`(?<![\\p{L}\\p{N}_])${escapePattern(answer)}(?![\\p{L}\\p{N}_])`, 'giu'), '_____'); }
 const editableSenseFields = ['definition', 'example', 'pos', 'collocations', 'usage', 'synonyms', 'antonyms', 'distinctions', 'distinctionTask', 'wordFamily', 'register'] as const;
+const comparableText = (value: unknown) => typeof value === 'string' ? value.trim() : '';
+const comparableList = (value: unknown) => Array.isArray(value) ? [...new Set(value.map(comparableText).filter(text => text && !/\p{Script=Han}/u.test(text)))] : [];
+function comparableSenseValue(value: unknown): string {
+ if (Array.isArray(value)) return JSON.stringify(comparableList(value));
+ if (value && typeof value === 'object') {
+  const task = value as NonNullable<VocabularySense['distinctionTask']>;
+  return JSON.stringify([comparableText(task.prompt), comparableList(task.options), comparableText(task.answer), comparableText(task.explanation)]);
+ }
+ return JSON.stringify(comparableText(value));
+}
 /** Provenance survives editing; compare actual learner-editable content to known baselines. */
 export function hasVocabularySenseEdits(sense: VocabularySense, baselines: (VocabularySense | undefined | null)[]): boolean {
  const known = baselines.filter((item): item is VocabularySense => Boolean(item));
  // Older saved snapshots omit optional dictionary fields. Missing metadata is not a learner edit;
  // explicitly stored empty values still are, so clearing a field remains respected.
- return sense.source === 'Personal note' || Boolean(known.length && editableSenseFields.some(field => sense[field] !== undefined && !known.some(item => JSON.stringify(item[field] ?? (Array.isArray(sense[field]) ? [] : '')) === JSON.stringify(sense[field] ?? (Array.isArray(item[field]) ? [] : '')))));
+ // Match one complete public snapshot. Mixing fields from old and new snapshots
+ // would mistake a deliberately cleared learning note for untouched source data.
+ return sense.source === 'Personal note' || Boolean(known.length && !known.some(item =>
+  editableSenseFields.every(field => sense[field] === undefined ||
+   comparableSenseValue(item[field] ?? (Array.isArray(sense[field]) ? [] : '')) === comparableSenseValue(sense[field]))
+ ));
 }
 function existingReviewedEntry(entry: VocabularyEntry): VocabularyEntry {
  if (!entry.id.startsWith('vocab:') && !entry.id.startsWith('guixue:') && !entry.senses.some(sense => sense.source?.includes('Kaikki') || sense.source === 'Fieldbook editorial')) return entry;

@@ -27,6 +27,13 @@ export function buildVocabularyResources(root: string) {
     learning: data('learningSenseOverlay'), tasks: data('taskSenseBindings'), context: data('contextSenseOverlay'),
   };
   const generated = buildResourceCatalog(source, teaching);
+  const dictionaryBaseline = data('resourceDictionaryBaseline') as { removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections'] };
+  const removedDictionaryCorrections = new Set(dictionaryBaseline.removeCorrections.map(row => JSON.stringify([row.entryId,row.senseId])));
+  const restoredDictionaryCorrections = new Map(dictionaryBaseline.restoreCorrections.map(row => [JSON.stringify([row.entryId,row.senseId]),row]));
+  const beforeDictionaryExpansion: VocabularyTeachingData = {
+    ...teaching,
+    readiness: { ...teaching.readiness, corrections: teaching.readiness.corrections.filter(row => !removedDictionaryCorrections.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restoredDictionaryCorrections.get(JSON.stringify([row.entryId,row.senseId])) || row) },
+  };
   const learningBaseline = data('resourceLearningBaseline') as {
     removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections'];
     removeDefaults: string[]; restoreDefaults: VocabularyTeachingData['readiness']['defaults'];
@@ -39,9 +46,9 @@ export function buildVocabularyResources(root: string) {
   const removedLearningModern = new Set(learningBaseline.removeModern);
   const restoredLearningModern = new Map(learningBaseline.restoreModern.map(row => [row.entryId,row]));
   const beforeLearningExpansion: VocabularyTeachingData = {
-    ...teaching,
-    readiness: { ...teaching.readiness,
-      corrections: teaching.readiness.corrections.filter(row => !removedLearningCorrections.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restoredLearningCorrections.get(JSON.stringify([row.entryId,row.senseId])) || row),
+    ...beforeDictionaryExpansion,
+    readiness: { ...beforeDictionaryExpansion.readiness,
+      corrections: beforeDictionaryExpansion.readiness.corrections.filter(row => !removedLearningCorrections.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restoredLearningCorrections.get(JSON.stringify([row.entryId,row.senseId])) || row),
       defaults: teaching.readiness.defaults.filter(row => !removedLearningDefaults.has(row.entryId)).map(row => restoredLearningDefaults.get(row.entryId) || row),
     },
     curriculum: { ...teaching.curriculum, modern: teaching.curriculum.modern.filter(row => !removedLearningModern.has(row.entryId)).map(row => restoredLearningModern.get(row.entryId) || row) },
@@ -65,7 +72,7 @@ export function buildVocabularyResources(root: string) {
     if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, row]) => [legacyIds.get(key) || key, legacyValue(row)])) as T;
     return value;
   };
-  const retained = [buildResourceCatalog(source,beforeLearningExpansion),buildResourceCatalog(source,previousTeaching),buildResourceCatalog(legacyValue(source),legacyValue(previousTeaching))];
+  const retained = [buildResourceCatalog(source,beforeDictionaryExpansion),buildResourceCatalog(source,beforeLearningExpansion),buildResourceCatalog(source,previousTeaching),buildResourceCatalog(legacyValue(source),legacyValue(previousTeaching))];
   for (const previous of retained) for (const [url, content] of previous.resources) {
     const existing = generated.resources.get(url);
     if (existing !== undefined && existing !== content) throw new Error(`Vocabulary resource hash collision: ${url}`);

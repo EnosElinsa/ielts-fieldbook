@@ -6,6 +6,7 @@ import { addVocabularyItem } from "../../domain/vocabulary";
 import { emptyState } from "../../domain";
 import { DictionarySenses, resetDictionaryCache } from "./DictionarySenses";
 import "@testing-library/jest-dom/vitest";
+import { readFileSync } from 'node:fs';
 const mocks = vi.hoisted(() => ({ current: null as any }));
 vi.mock("../../context/FieldbookContext", () => ({
   useFieldbook: () => mocks.current,
@@ -27,6 +28,21 @@ const sourceSense = {
   sourceUrl: "https://en.wiktionary.org/wiki/mitigate",
 };
 const dictionaryFetch = (senses = [sourceSense]) => vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { mitigate: 'aa.json' } : { senses } }));
+
+test('study notes are easy to find while the complete source dictionary stays accessible', async () => {
+  const { entry } = fixture();
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.bank}`, 'utf8'));
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { bank: index.bank } : dictionary })));
+  render(<MemoryRouter><DictionarySenses entry={{ ...entry, id: 've-7c704483', term: 'bank' }} excludeSenses={[]} /></MemoryRouter>);
+  await screen.findByText('We sat on the bank of the river and watched the boats.');
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  expect(screen.queryByText('A surname.')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'All meanings (45)' }));
+  expect(screen.getByText('A surname.')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'With learning notes (14)' }));
+  expect(screen.queryByText('A surname.')).not.toBeInTheDocument();
+});
 
 test('a revised learning meaning excludes its original dictionary version by sense identity', async () => {
   const { entry } = fixture();

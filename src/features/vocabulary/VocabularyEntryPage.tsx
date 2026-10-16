@@ -28,6 +28,7 @@ import {
   aggregateMediaCredits,
   getVocabularyIllustration,
   getVocabularyVisualConcept,
+  getVocabularySenseDiagram,
   type VocabularyRecording,
 } from "../../domain/vocabulary/media";
 import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
@@ -166,7 +167,7 @@ export function VocabularyEntryPage() {
   const entry = resolved?.entry;
   const primary = resolved?.sense;
   const image = resolved ? getVocabularyIllustration(resolved) : undefined;
-  const hasVisual = Boolean(image || resolved && getVocabularyVisualConcept(resolved));
+  const hasVisual = Boolean(image || resolved && (getVocabularyVisualConcept(resolved) || getVocabularySenseDiagram(resolved)));
   const saved = state.vocabulary?.some((item) => item.id === entry?.id);
   const timeline = entry ? vocabularyLearningTimeline(state, entry.id) : [];
   const locations = [
@@ -314,8 +315,8 @@ export function VocabularyEntryPage() {
         {sense.pos ? (
           <span className="vocabulary-part-of-speech">{sense.pos}</span>
         ) : null}
-        <VocabularySenseContent sense={sense} learningExample={entry ? publicVocabularyExample(entry.id, sense)?.example : undefined} showMissingExample={main} />
-        {((main && resolved?.contentReviewed) || personalNotes) &&
+        <VocabularySenseContent sense={sense} learningExample={entry ? publicVocabularyExample(entry.id, sense)?.example : undefined} showMissingExample={main} showLearningNotes={!personalNotes && Boolean(sense.editorial || main && resolved?.contentReviewed)} />
+        {personalNotes &&
         sense.collocations?.length ? (
           <div className="vocabulary-detail">
             <h4>{personalNotes ? "Your collocation notes" : "Collocations"}</h4>

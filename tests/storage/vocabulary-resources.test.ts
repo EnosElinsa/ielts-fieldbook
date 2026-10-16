@@ -9,6 +9,13 @@ let release: ReturnType<typeof buildVocabularyResources>;
 // still compares a second independent build of the complete retained corpus.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 15_000);
 
+test('the release before additional-sense expansion remains available with its immutable manifest', () => {
+  const previous = release.resources.get('/vocabulary-resources/manifest.877ae53793cdeac8.json');
+  expect(previous).toBeDefined();
+  const manifest = JSON.parse(previous!);
+  for (const url of [...Object.values(manifest.entryResources), ...Object.values(manifest.entryTeachingResources), ...manifest.units.flatMap((unit: any) => [unit.resource, unit.teachingResource]).filter(Boolean)] as string[]) expect(release.resources.has(url), url).toBe(true);
+});
+
 test('manifest and group packs preserve the released membership order and complete teaching content', () => {
   const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
   const { manifest, resources } = release;

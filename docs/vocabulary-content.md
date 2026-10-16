@@ -45,3 +45,7 @@ Synonym/paraphrase and confusing-word exercises use explicit contextual answers,
 | IELTS Listening Practice 20 | 375 | 328 |
 
 Authored task coverage is incomplete. Unsupported words remain available for dictation; an explicitly started specialist subset never completes the whole group. New sessions freeze prompts, accepted answers, explanations and content version. Legacy drafts retain their original scoring behavior.
+
+The October 17 dictionary batch adds 65 sense-specific text reviews for current, interest, rate, capital, bank and charge, 15 distinction tasks and 18 diagram bindings. Additional dictionary meanings now use the same attributed readiness supplements as selected learning senses. Meanings with learning notes appear first; the complete original dictionary remains available. A saved choice retains both original dictionary attribution and editorial attribution. Edit detection compares complete historical snapshots so clearing a supplemented note is respected.
+
+`dictionaryReviewLedger.json` records reviewed source fingerprints. Run `node scripts/audit-vocabulary-dictionary.mjs --check` for binding validation; [the complete-scope audit](vocabulary-dictionary-audit.md) reports reviewed and pending identities independently of default-learning coverage. A passing audit does not establish completion of the entire dictionary.

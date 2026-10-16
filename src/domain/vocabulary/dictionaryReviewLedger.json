@@ -1,0 +1,804 @@
+{
+  "version": 1,
+  "date": "2026-10-17",
+  "records": [
+    {
+      "term": "current",
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:23c53eb2c991ed791c",
+      "sourceHash": "0037156f79b5c3b5af67c8d31c3d1fca34d0f6b609ee009c8cb54dbcbfce8839",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "current",
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:cdb7a962aa1f098ca3",
+      "sourceHash": "327cde7c1fcf7d6e9278608724ab6a5af18af4ea98ad1c4029f52b73a7d7797b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "current",
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:37eef87266f9b4a5fe",
+      "sourceHash": "8c914f61d6dc8558cc390cf5c1a72eedbd1193220bac81dd3e107f12accc4cf7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "current",
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:0071db0736e6db3763",
+      "sourceHash": "f0a0c9c4ce3763b52e4084f88bdbcfa335e1b3892e2930743d3b792721147ed4",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "current",
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:25a8836e6908042f06",
+      "sourceHash": "038638bf03e590b0d090185069e15da21929087fa76e6fa5c2053cfb1cdc3e5b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "current",
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:b3e47834e253b87b25",
+      "sourceHash": "739f1113daec8455d7240625b7dd8ce2e3b6584969cba195357cdd500d9f9f9a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:c4a361474ad6a04a1a",
+      "sourceHash": "c2de9779a2297c5b2e110929163e5fb82eae0a672bc3cca6af0ee15bc76c6362",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:ed24627f5342380b5e",
+      "sourceHash": "e3bb8de792efdc5d81a3defdfbde2af2c45c424c63d5a41132d137cf99b346e4",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:2b83474b1f1cc9ccfd",
+      "sourceHash": "651de864755833b448a5e1d9287deb7d8d10d98273d1e9dccd8ee7188e29a3e0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:6a69182b26113a8a10",
+      "sourceHash": "7d49fea220a1e9460e1a9268d07ef44ad5ec4042c9c546a8f4bd836ba045bcf6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:e5996da3360a183795",
+      "sourceHash": "1cb3b5afefed7e218d62ba80e913b9a8ec4f065ed8d47f5a6f9f9319cea450b6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:de9f181e2e65a347ba",
+      "sourceHash": "dc201d32ee882078bc63809dc5a96ebf9228eb18e344596c22e64d372824f8f5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:2bf191eb92a37f6b78",
+      "sourceHash": "6845d2ba0b68d93ad51f83a135d118aac3e5fe8c5eb0ba025522ef129667fe0a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:3de3deb5fbdec813f4",
+      "sourceHash": "9fbb3d3e193b690ffd2d5aa4e2a7e477f99a508036605f900cb7ff14cd19b565",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:7295cc51c0f1c64efa",
+      "sourceHash": "a4197d8b21e71b971feec7c84dfb837937152da1c40e7dd06b068da7d887c783",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:39943c22cb50fdcc33",
+      "sourceHash": "486c36ffed65f95dc0e224ab3a3f0ea3f748b03e7743df4c7d4b46b1e1c43fbd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:646afcd59b3430609a",
+      "sourceHash": "88b7c31d6be70ecb920450e2ffc80175ec6abedf4174c4daaaf5a8ef388d31c9",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:56afa9a33ae20eff2c",
+      "sourceHash": "adaf8bdf897d6baa97f0f3b82aa94de2e1e878a1631b295db352ca32464819d2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:99cb16fd52851df5f0",
+      "sourceHash": "1a9ce6e4c97b4af8a2ce54d801349137a286224e02e7983f9f21baf14ea3bb12",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:4978ffa68febf9b828",
+      "sourceHash": "75c0718f51684d8ea1d7deb15341b711b1ca0661b65460c3d964fb867b28e2ea",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:246c821725ea67d124",
+      "sourceHash": "40562fc98f6298a63e0f0820ee2f5ce2bc99935b0406cc145f34e4b3508f8fbe",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:c8e50e0c31f1e6c6bd",
+      "sourceHash": "8d03a04cee67e02a4b366fd44ca3ab73dff80ddd193e7c9510a0c7564d80e144",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:59925e10795db0d5b2",
+      "sourceHash": "bec576c1146e8a9b93fa93ed4b913fd9c5a6a2b1e1e80dc1a85f43ecdd128779",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:f8e71441399009b456",
+      "sourceHash": "04ab99a338965ec5d80655c854c90816c8949bc7b605720ca16101d0a51071a1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:1716b1c04ca67e741d",
+      "sourceHash": "dddd59875efde2a4aadd306bb7a7fd8a7a88ad61dc20fa86cd2ee80faf5d1b96",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:90ddae7a772496ea36",
+      "sourceHash": "fc90ed344dff5aaa2b68ebf65f199ba4bd27ca7f63b1979fb5fb00073f3e99b5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:b3ea562ada4ecc92b7",
+      "sourceHash": "709da9d8ff9c2f96cf75c244daac728d3cb046d6b97e4ccc7d1b91b58388cfde",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:d912ad70bc43404b66",
+      "sourceHash": "284cd9fe1e8b47209a6c299757973d94b875c611152f65fc37fd5698582ef3dc",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:aa6509c26b6acef393",
+      "sourceHash": "4480143554a49fb6f93916e05dae383b68b3df5de62f88521c8e48ccbd137d5b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:06448a9791920bfcef",
+      "sourceHash": "9d0e8a84b0ad297554fc5e507c6abd2ebf15e8194bc19ba4dcc5bc146bf394fd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:b221135e71e58a3ae3",
+      "sourceHash": "d2f6835bc2d2e9ce6b0a1c982493b5171820c3f2b1ba787e87418b31df48fd71",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:6b8287fbb677d5a3ad",
+      "sourceHash": "35d8167474d9b86ea2074f4e922c425411bf13f5d73a89b78ec45184dbe1d95d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:11b3fe2ab59a7e5c2a",
+      "sourceHash": "cdc27306a727ed23ab08c4808c78917d57bfaefcd42e4a494cd47d94d2accaa2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:8738a224d2e67e0459",
+      "sourceHash": "b7acd2756fbd7a2961bc5af7c227900777f8fcbc01aeab52ed8ff354e10ba74e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:688322921de701000b",
+      "sourceHash": "381102547aca65fbd57938864e95e623aa81ef2e09b2f21089798e5050692ca3",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:00afe87cd3cd1fe600",
+      "sourceHash": "ca4eed4fc08052a96e08bd238869e702b0ffe7e1e9c691f3278b620c139e89d2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:871cc8b4a427024d7c",
+      "sourceHash": "b7322db3a224e83eb4f19a12b5c2d5878125941101e0e2a5c42cdbf024a156c9",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:48b94a665020f2b24f",
+      "sourceHash": "bba0c91eea9127c9c1486790532f79f3af9c889a63012af4ca247e3f10a17b29",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:b4179eb2a082e520ba",
+      "sourceHash": "23cd95e3a3354d0e965cff5bae006ba2b2a70d29873e54ff4280c378f08b65cd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:aefe9c53af85571d2a",
+      "sourceHash": "0d4fe557ab37b020d3197631489a98c36d3ee26c2d9f1b67916e7f376e6d5d37",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:d38d714a840ea63b44",
+      "sourceHash": "4b36b52d1682e360988338caecaada78d51ee70fef9e2ac3275d95421dc871ee",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:9ed9a8ef0f15130d4d",
+      "sourceHash": "f3fdf3214c1d608653c0fdcd7bad002fd8761921b185402cca52432b5df55f4e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:c9d43969056d6da675",
+      "sourceHash": "f5d6e1944f9efd1f85111ceb10a18f93a85e07df58e5b7ab3760857a34853be5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:b2ac55a66cbd35455c",
+      "sourceHash": "1553c3a3d6829dbfeef5a6ab521d30ff725d541c8964ee2f8d3c7e9b74f8d1de",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:a6b1002ac8f06588b5",
+      "sourceHash": "f618f2b8aee47f76db7619c69d2bbd4276b8ccadaa2566395459c41fbcc69c28",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:c130710755a265600e",
+      "sourceHash": "55c8a48b879fa9a080b61b0642224133b589bca8bf618afbff0218620c278ef1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:8198fd2a4d77a3b098",
+      "sourceHash": "e9726a4e962aefecaf76569126b93afa611bca5762cb3a549cf28617df33d9ce",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:d561f049cf0d10e47e",
+      "sourceHash": "6e11103a593f62d296e1e5c9ca027a512de8770c5063660800eb4f950920e5a2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:cedb278bae8dd3922a",
+      "sourceHash": "e03b55968eb5fa4fe0c10afc9e1009c167d940544372b2d714d04723d9b3773e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:b95a7ee4f364343195",
+      "sourceHash": "e97c885f29b5d79604b94a75bb2c4a5158894715a258091b8b6915ff65173038",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:55238a6d6fa224f376",
+      "sourceHash": "23cd9fd7cc00347252ea25f0b21f95cb1d4a8a3874be0607d7d6297abc29e62c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:5042be096e4363fcc8",
+      "sourceHash": "02f727726a270f090d14addb00eab26555397bc26347d655ef1affce4f02234e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:0753afdde8cf8be72d",
+      "sourceHash": "8717a366b0f8cd122f40554933d44796b57a61bf4a28363fb87a173cfeaeb8c7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:7fd87483081b8fffb2",
+      "sourceHash": "7f065f018ff4e943a082dae326c54337bd600425508f2cac496c59820b8e55dd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:b4530313bc205eeb80",
+      "sourceHash": "b2ff806c80063d1d9263b4247b632561af71d92dce0401b651f746823f6dd1f9",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:bc2dbe01646a608a86",
+      "sourceHash": "67422947f71f862e72de7ce7423851f9a36bf9b2562b7a153401c9b65e970a85",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:bf74ef33e5ffd3f329",
+      "sourceHash": "08546ffc8f3a660c8a93829a6223988cb8ce57cc33dbd5ba791d77debebd86aa",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:7baa6ea680b9dbf14c",
+      "sourceHash": "eb2eb7bd3abb38e2addcba7daf486d32250a38977c2d1cf9bbd860a8decd594d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:a76c2a8d3686fafaa9",
+      "sourceHash": "327d1eb6c6e0b61c3fc0db2c270078a73eecd46f6927928c38130d1be52fd2ba",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:f29a0f59e4422581be",
+      "sourceHash": "16792bddbc162aa729d1d0e962c78ab773266160018022115e740d711b174b28",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:e05e332daebb09a979",
+      "sourceHash": "d7a4fd3878d8832eec2fdf27178803a9d7afb5865381b50dbb8ae234936340d5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:0ca8269d19272bde96",
+      "sourceHash": "26041051c6d1db8cc61d01a958e4e3e5a3c451083ed0bcce23629f8262922570",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:24310f3a6d09714a46",
+      "sourceHash": "5d1071f5bf6b201f00f452b5fa8703a99e3847222f55acbd99a006eafbed08d3",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:b74f1aa5203f5fbe02",
+      "sourceHash": "79d012ba4cb456e2a43266b5ede7f55c8b47b486b9ee5cab9c2ebf7694a01dda",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:e7a5045ac2c0142596",
+      "sourceHash": "379fe4473f6a6fd81c18bc7138207e7c5eee3ff8f104f9b550979c000ef6e7a1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    }
+  ]
+}

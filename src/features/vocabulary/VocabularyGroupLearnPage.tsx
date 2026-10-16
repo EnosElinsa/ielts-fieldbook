@@ -13,7 +13,8 @@ import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
 import { catalogVocabularyEntry, hasVocabularySenseEdits } from '../../domain/vocabulary/content';
 import { vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
-import { getVocabularyIllustration, getVocabularyVisualConcept } from '../../domain/vocabulary/media';
+import { getVocabularyIllustration, getVocabularyVisualConcept, getVocabularySenseDiagram } from '../../domain/vocabulary/media';
+import { hasVocabularyReadinessNotes } from '../../domain/vocabulary/readiness';
 import { getVocabularyMastery } from '../../domain/vocabulary/mastery';
 import { getLearnedVocabularyIds, vocabularyGroupProgress } from '../../domain/vocabulary/progress';
 import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
@@ -179,11 +180,12 @@ export function VocabularyGroupLearnPage() {
   const meaningVisible = !recallFirst || revealedKey === learningCardKey;
   useLayoutEffect(() => { setRevealedKey(''); }, [learningCardKey]);
   const activeResolved=word && selectedSense ? resolveVocabularyLearningContext(word.entry,{bookId,unitId,senseId:selectedSense.id}) : word?.resolved;
-  const hasVisual = Boolean(activeResolved && (getVocabularyIllustration(activeResolved) || getVocabularyVisualConcept(activeResolved)));
+  const hasVisual = Boolean(activeResolved && (getVocabularyIllustration(activeResolved) || getVocabularyVisualConcept(activeResolved) || getVocabularySenseDiagram(activeResolved)));
   const presentation = selectedSense ? vocabularySensePresentation(selectedSense) : undefined;
   const publicEntry = word ? catalogVocabularyEntry(word.entry.id) : undefined;
   const publicSense = publicEntry && selectedSense ? resolveVocabularyLearningContext(publicEntry, { bookId, unitId, senseId:selectedSense.id }).sense : undefined;
-  const reliableCollocations = activeResolved?.contentReviewed || selectedSense?.source === 'Personal note' || Boolean(state.vocabulary.some(entry=>entry.id===word?.entry.id) && publicSense && selectedSense && hasVocabularySenseEdits(selectedSense,[publicSense]));
+  const reviewedNotes = Boolean(word && selectedSense && hasVocabularyReadinessNotes(word.entry.id, selectedSense));
+  const reliableCollocations = reviewedNotes || activeResolved?.contentReviewed || selectedSense?.source === 'Personal note' || Boolean(state.vocabulary.some(entry=>entry.id===word?.entry.id) && publicSense && selectedSense && hasVocabularySenseEdits(selectedSense,[publicSense]));
   const meaningSource = selectedSense?.source === 'Personal note'
     ? 'Your personal notes.'
     : activeResolved?.curriculumCurrent
@@ -222,6 +224,7 @@ export function VocabularyGroupLearnPage() {
           {presentation?.example ? <div className="vocabulary-learning-example"><h4>Example</h4><p>{presentation.example}</p></div> : null}
           {reliableCollocations && selectedSense?.collocations?.length ? <div className="vocabulary-learning-collocations"><h4>Common combinations</h4><ul>{selectedSense.collocations.map(item=><li key={item}>{item}</li>)}</ul></div> : null}
           {presentation?.usage ? <div className="vocabulary-learning-usage"><h4>Usage note</h4><p>{presentation.usage}</p></div> : null}
+          {reviewedNotes && selectedSense?.distinctions?.length ? <div className="vocabulary-learning-usage"><h4>Compare meanings</h4>{selectedSense.distinctions.map(note => <p key={note}>{note}</p>)}</div> : null}
           <details className="vocabulary-learning-provenance" key={`${word.entry.id}:${selectedSense?.id}`}><summary>Meaning source</summary><p>{meaningSource} See Word details for references and other meanings.</p></details>
           <Link className="btn text" to={entryUrl(word.entry.id,{bookId,unitId,senseId:selectedSense?.id},origin)} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Word details<ArrowRight size={14}/></Link>
           {word.resolved.curriculum?.basis==='multiple' ? <div className="vocabulary-learning-selected-practice"><Link className="btn primary" to={practiceUrl(word.entry.id,selectedSense?.id,{bookId,unitId},origin,'definition')}>Practise this meaning<ArrowRight size={14}/></Link><p className="vocabulary-muted">This checks the selected meaning and keeps its own review progress. The whole-group assessment uses the first learning meaning for each word.</p></div> : null}

@@ -22,3 +22,8 @@
 .visual-map-arrow { fill:none; stroke:var(--muted); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
 .vocabulary-visual-recovery { margin-top:12px; }
 .vocabulary-visual-recovery p { font-size:12px; color:var(--muted); line-height:1.6; }
+.meaning-diagram-label { font:600 23px Manrope,sans-serif; fill:var(--ink); }
+.meaning-diagram-small { font:500 17px Manrope,sans-serif; fill:var(--ink); }
+.meaning-diagram-letter { font:500 140px 'Source Serif 4',Georgia,serif; fill:var(--ink); }
+.meaning-diagram-line { fill:none; stroke:var(--ink); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+.vocabulary-dictionary-filter { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }

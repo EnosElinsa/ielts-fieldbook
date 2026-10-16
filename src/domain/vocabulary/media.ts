@@ -2,6 +2,7 @@ import type { VocabularyEntry } from './types';
 import type { ResolvedVocabularyLearningContext } from './context';
 import { vocabularySensePresentation } from './dictionaryPresentation';
 import imageManifest from './illustrations.json';
+import senseDiagrams from './senseDiagrams.json';
 export type VocabularyAccent = 'uk' | 'us';
 export type MediaCredit = { sourceUrl: string; author: string; license: string; licenseUrl: string; changes: string };
 export type VocabularyRecording = MediaCredit & { url: string; aliases?: string[]; title: string; accent: VocabularyAccent | 'other' | 'unknown'; status: 'verified' | 'unknown' | 'rejected' | 'missing'; availability: 'http-audio' | 'metadata-only' | 'network-unverified' | 'failed'; reason: string; wordformConfirmed?: boolean };
@@ -57,6 +58,13 @@ export function getVocabularyIllustration(resolved: ResolvedVocabularyLearningCo
 }
 export function aggregateMediaCredits(recordings: VocabularyRecording[], image?: VocabularyIllustrationAsset): MediaCredit[] {
   return [...new Map([...recordings, ...(image ? [image] : [])].filter(item => item.sourceUrl).map(item => [item.sourceUrl, { sourceUrl: item.sourceUrl, author: item.author, license: item.license, licenseUrl: item.licenseUrl, changes: item.changes }])).values()];
+}
+export type VocabularySenseDiagram = typeof senseDiagrams[number];
+/** An edited definition or another sense cannot inherit this editorial diagram. */
+export function getVocabularySenseDiagram(resolved: ResolvedVocabularyLearningContext): VocabularySenseDiagram | undefined {
+  const sense = resolved.sense;
+  if (!sense || sense.source === 'Personal note') return;
+  return senseDiagrams.find(row => row.entryId === resolved.entry.id && row.term === resolved.entry.term && row.senseId === sense.id && row.definition === sense.definition && row.pos === sense.pos);
 }
 export type VocabularyVisualConcept = 'pea' | 'carrot' | 'apple' | 'banana' | 'grape' | 'lemon' | 'orange' | 'vegetable' | 'fruit' | 'paste'
  | 'wheat' | 'grain' | 'rice' | 'corn' | 'flour' | 'bread' | 'tomato' | 'potato' | 'onion' | 'garlic' | 'mushroom' | 'egg' | 'cheese' | 'nut'

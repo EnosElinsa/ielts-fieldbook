@@ -127,3 +127,22 @@ Learning cards offer Read first or Recall first. Recall hides definitions, examp
 A correct retry can remain in mistake review because recovery requires three correct reviews in that mode and at least 24 hours between the first and last. Results now explain the current active recovery and link back to the matching review mode. An active mistake in a different meaning or mode cannot produce this notice. The practice setup and mistake list explain the same existing rule. Browsing, recovery and mastery thresholds remain distinct.
 
 Validation: 144 test files / 1,339 tests pass with one conditional skip; the final batch-navigation change also passes its 27 component tests. Production build, identity/SQL checks, content/readiness audits, bundle budgets and whitespace checks pass. With the Browser plugin unavailable, bundled Playwright/Chrome checked 36 states at 1440px light/dark, 390px dark and 320px light. The loop covers read/recall/reveal, next-word reset, unviewed-word return, compact batch navigation and keyboard focus, five-word meaning assessment, incorrect result, one-word retry, recovery explanation, mistake review and persisted progress after reload. Page identity, nonblank content, error overlays, console health and document width pass throughout; screenshots were opened and inspected. Saves and account records use intercepted synthetic fixtures. Supplementary dictionary senses, every example's language quality and real cloud-account persistence are outside this review's verified coverage.
+
+## Additional dictionary meanings and exact diagrams — October 17
+
+The first complete-scope editorial ledger covers 65 common senses of current, interest, rate, capital, bank and charge. Each has a modern same-sense definition/example, collocations and distinction notes; 15 have a contextual distinction task and 18 have an original diagram bound to entry ID, sense ID, exact definition and part of speech. Additional dictionary meanings now receive the same supplements as saved learning meanings. The default view selects meanings with learning notes; All meanings retains the full source dictionary. Details and learning cards display the reviewed notes, and Recall first conceals them until reveal.
+
+Saving a dictionary choice retains source and editorial attribution. Edit detection compares a complete public snapshot, allowing the same trimming/deduplication as saved account normalization and ignoring object-key order. It preserves intentionally cleared examples, collocations and distinctions. Extraction tags such as abbreviation/alt-of/ellipsis are cleared from reviewed usage notes. Original records, stable identities, frozen sessions and all 1,342 pre-batch resource URLs/bytes are preserved.
+
+Validation: 148 test files / 1,436 passing tests with one conditional skip; the final learning-card change also passes 173 relevant domain/component tests. TypeScript, production build, identity/PGlite SQL checks, dictionary accounting, bundle budgets and whitespace checks pass. The Browser plugin is unavailable, so bundled Playwright/Chrome checked 140 local states across 1440px light/dark, 390px dark and 320px light using intercepted synthetic accounts.
+
+| Browser check | Local result |
+| --- | --- |
+| Page title and route | Pass |
+| Meaningful rendered content | Pass |
+| Framework error overlay | None |
+| Console errors/warnings | None |
+| Screenshots and document width | Inspected; no document overflow |
+| Interaction | Source/study filter, sense save, meaning recall, distinction task, result-to-sense return, exact diagram selection, learning-card reveal/hide and details return pass |
+
+The first 65 example/collocation/distinction sets were checked in the rendered dictionary; all 18 diagrams were opened for their selected meanings. This validates the authored batch, not every dictionary record. The full source index contains 51,354 senses, of which 51,289 remain pending in the new strict review ledger. Earlier default-learning fixes are not counted as complete additional-sense reviews. Real account persistence, non-Chrome browsers and the remaining linguistic/diagram scope are not established by these synthetic browser checks. See [the dictionary audit](vocabulary-dictionary-audit.md).

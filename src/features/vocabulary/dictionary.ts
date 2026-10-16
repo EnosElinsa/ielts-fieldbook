@@ -1,5 +1,7 @@
 import { normalizeAnswer } from '../../domain/vocabulary';
 import type { VocabularySense } from '../../domain/vocabulary';
+import { supplementVocabularySense } from '../../domain/vocabulary/readiness';
+import { hasVocabularySenseEdits } from '../../domain/vocabulary/content';
 
 export type DictionaryIndex = Record<string, string>;
 let indexRequest: Promise<DictionaryIndex> | null = null;
@@ -20,7 +22,13 @@ export function loadDictionaryIndex(): Promise<DictionaryIndex> {
   return indexRequest;
 }
 
-export function loadTermDictionary(term: string): Promise<VocabularySense[]> {
+export async function loadTermDictionary(term: string, entryId?: string): Promise<VocabularySense[]> {
+  const raw = await loadRawTermDictionary(term);
+  // Cache source records only. Scoped teaching packs can arrive after an earlier lookup.
+  return entryId ? raw.map(sense => supplementVocabularySense(entryId, sense, [sense], hasVocabularySenseEdits)) : raw;
+}
+
+function loadRawTermDictionary(term: string): Promise<VocabularySense[]> {
   const normalized = normalizeAnswer(term);
   const cached = terms.get(normalized);
   if (cached) return cached;

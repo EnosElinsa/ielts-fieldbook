@@ -1,0 +1,146 @@
+[
+  {
+    "entryId": "ve-eab4f1ac",
+    "senseId": "kaikki:23c53eb2c991ed791c",
+    "term": "current",
+    "definition": "The movement of a gas or liquid in a particular direction.",
+    "pos": "noun",
+    "kind": "air-flow"
+  },
+  {
+    "entryId": "ve-eab4f1ac",
+    "senseId": "kaikki:cdb7a962aa1f098ca3",
+    "term": "current",
+    "definition": "A continuous flow of water in a particular direction.",
+    "pos": "noun",
+    "kind": "water-flow"
+  },
+  {
+    "entryId": "ve-eab4f1ac",
+    "senseId": "kaikki:37eef87266f9b4a5fe",
+    "term": "current",
+    "definition": "A flow of electric charge.",
+    "pos": "noun",
+    "kind": "electric-current"
+  },
+  {
+    "entryId": "ve-eab4f1ac",
+    "senseId": "kaikki:25a8836e6908042f06",
+    "term": "current",
+    "definition": "Existing or happening now.",
+    "pos": "adj",
+    "kind": "present-time"
+  },
+  {
+    "entryId": "ve-2517b783",
+    "senseId": "kaikki:c4a361474ad6a04a1a",
+    "term": "interest",
+    "definition": "Money paid for borrowing money, or earned on money lent or saved.",
+    "pos": "noun",
+    "kind": "loan-interest"
+  },
+  {
+    "entryId": "ve-2517b783",
+    "senseId": "kaikki:e5996da3360a183795",
+    "term": "interest",
+    "definition": "A share, right or financial involvement in a business or property.",
+    "pos": "noun",
+    "kind": "ownership-share"
+  },
+  {
+    "entryId": "ve-7c790847",
+    "senseId": "kaikki:39943c22cb50fdcc33",
+    "term": "rate",
+    "definition": "The speed at which something happens or moves.",
+    "pos": "noun",
+    "kind": "production-rate"
+  },
+  {
+    "entryId": "ve-7c790847",
+    "senseId": "kaikki:646afcd59b3430609a",
+    "term": "rate",
+    "definition": "The speed at which something changes or progresses.",
+    "pos": "noun",
+    "kind": "growth-rate"
+  },
+  {
+    "entryId": "ve-7c790847",
+    "senseId": "kaikki:4978ffa68febf9b828",
+    "term": "rate",
+    "definition": "An amount of pay calculated for a unit of working time.",
+    "pos": "noun",
+    "kind": "hourly-pay"
+  },
+  {
+    "entryId": "ve-d15d09a7",
+    "senseId": "kaikki:d912ad70bc43404b66",
+    "term": "capital",
+    "definition": "Money or wealth available to start a business or produce goods and services.",
+    "pos": "noun",
+    "kind": "business-capital"
+  },
+  {
+    "entryId": "ve-d15d09a7",
+    "senseId": "kaikki:b221135e71e58a3ae3",
+    "term": "capital",
+    "definition": "A city that serves as a seat of government for a country or region.",
+    "pos": "noun",
+    "kind": "government-city"
+  },
+  {
+    "entryId": "ve-d15d09a7",
+    "senseId": "kaikki:11b3fe2ab59a7e5c2a",
+    "term": "capital",
+    "definition": "An uppercase letter.",
+    "pos": "noun",
+    "kind": "uppercase"
+  },
+  {
+    "entryId": "ve-d15d09a7",
+    "senseId": "kaikki:871cc8b4a427024d7c",
+    "term": "capital",
+    "definition": "Written in uppercase form.",
+    "pos": "adj",
+    "kind": "uppercase"
+  },
+  {
+    "entryId": "ve-7c704483",
+    "senseId": "kaikki:b4179eb2a082e520ba",
+    "term": "bank",
+    "definition": "An institution that holds money, lends money and provides financial services.",
+    "pos": "noun",
+    "kind": "financial-bank"
+  },
+  {
+    "entryId": "ve-7c704483",
+    "senseId": "kaikki:c130710755a265600e",
+    "term": "bank",
+    "definition": "The land along the edge of a river, lake or other watercourse.",
+    "pos": "noun",
+    "kind": "river-bank"
+  },
+  {
+    "entryId": "ve-5c46053f",
+    "senseId": "kaikki:0753afdde8cf8be72d",
+    "term": "charge",
+    "definition": "An amount of money that must be paid for a service.",
+    "pos": "noun",
+    "kind": "delivery-fee"
+  },
+  {
+    "entryId": "ve-5c46053f",
+    "senseId": "kaikki:bf74ef33e5ffd3f329",
+    "term": "charge",
+    "definition": "An electrical property of matter that can be positive or negative.",
+    "pos": "noun",
+    "kind": "electric-charge"
+  },
+  {
+    "entryId": "ve-5c46053f",
+    "senseId": "kaikki:7baa6ea680b9dbf14c",
+    "term": "charge",
+    "definition": "Responsibility for supervising or looking after someone or something.",
+    "pos": "noun",
+    "kind": "responsibility"
+  }
+]

@@ -54,6 +54,18 @@ afterEach(async()=>{vi.useRealTimers();cleanup();await act(async()=>{await Promi
 function Location(){const location=useLocation();return <output aria-label="Route">{location.pathname+location.search}</output>;}
 function mount(url=path){return render(<MemoryRouter initialEntries={[url]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes><Location/></MemoryRouter>);}
 
+test('an exact dictionary diagram uses the learning card illustration layout', async () => {
+  const released = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+  Object.assign(VOCABULARY_CATALOG, released);
+  const bank = released.entries.find((entry: any) => entry.term === 'bank');
+  const member = released.memberships.find((row: any) => row.entryId === bank.id);
+  mount(`/vocabulary/wordbooks/${member.bookId}/groups/${member.unitId}/learn?word=${bank.id}`);
+  const image = await screen.findByRole('img', { name: 'bank: A bank accepting savings and offering loans' });
+  expect(image.closest('#learning-meaning')).toHaveClass('has-visual');
+  expect(screen.getByText('a commercial bank', { exact: true })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Compare meanings' })).toBeInTheDocument();
+});
+
 test('recall first hides the answer until revealed and resets for each word without recording evidence', async () => {
   const before = structuredClone(mocks.fb.state);
   mount();
