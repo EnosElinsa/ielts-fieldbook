@@ -630,5 +630,85 @@
     "definition": "Waste material that has been discarded.",
     "pos": "noun",
     "kind": "refuse-refusal"
+  },
+  {
+    "entryId": "ve-7c6f4e69",
+    "senseId": "kaikki:6c4af84b649b2187ca",
+    "term": "lead",
+    "definition": "The heavy metallic element with symbol Pb and atomic number 82.",
+    "pos": "noun",
+    "kind": "lead-pronunciation"
+  },
+  {
+    "entryId": "ve-7c6f4e69",
+    "senseId": "kaikki:a0fa64127cc51fad0a",
+    "term": "lead",
+    "definition": "The thin writing core of a pencil, usually made from graphite.",
+    "pos": "noun",
+    "kind": "pencil-graphite"
+  },
+  {
+    "entryId": "ve-7c6f4e69",
+    "senseId": "kaikki:164479ea57dc2a8e1f",
+    "term": "lead",
+    "definition": "The position of being ahead, or the amount by which someone is ahead.",
+    "pos": "noun",
+    "kind": "score-lead"
+  },
+  {
+    "entryId": "ve-7c6f4e69",
+    "senseId": "kaikki:8317afcc53bd10f609",
+    "term": "lead",
+    "definition": "The axial distance a screw advances in one full revolution.",
+    "pos": "noun",
+    "kind": "screw-lead"
+  },
+  {
+    "entryId": "ve-56b9c26b",
+    "senseId": "kaikki:743cc6ac48226bdb77",
+    "term": "minute",
+    "definition": "A unit of time equal to sixty seconds, or one-sixtieth of an hour.",
+    "pos": "noun",
+    "kind": "time-minute"
+  },
+  {
+    "entryId": "ve-56b9c26b",
+    "senseId": "kaikki:497c6fb3c2e3807256",
+    "term": "minute",
+    "definition": "An angular unit equal to one-sixtieth of a degree, also called an arcminute.",
+    "pos": "noun",
+    "kind": "angular-minute"
+  },
+  {
+    "entryId": "ve-56b9c26b",
+    "senseId": "kaikki:e9990863a191afdc6c",
+    "term": "minute",
+    "definition": "Extremely small in size or amount.",
+    "pos": "adj",
+    "kind": "minute-pronunciation"
+  },
+  {
+    "entryId": "ve-7c6e3401",
+    "senseId": "wiktionary:restored:ba2f69fd93e223375f",
+    "term": "fine",
+    "definition": "Made up of very small particles or pieces.",
+    "pos": "adj",
+    "kind": "fine-coarse"
+  },
+  {
+    "entryId": "ve-7c6e3401",
+    "senseId": "wiktionary:restored:623864fd25d4ee5839",
+    "term": "fine",
+    "definition": "Containing a specified proportion of pure metal.",
+    "pos": "adj",
+    "kind": "metal-fineness"
+  },
+  {
+    "entryId": "ve-a672296",
+    "senseId": "kaikki:885f1d39d5197848fe",
+    "term": "match",
+    "definition": "To satisfy a rule or a regular-expression pattern.",
+    "pos": "verb",
+    "kind": "regex-match"
   }
 ]

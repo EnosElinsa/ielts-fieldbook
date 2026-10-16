@@ -51,6 +51,25 @@ test('source headings remain in All meanings without being offered as meanings t
   expect(group.getByRole('heading', { name: 'Examples of grouped uses' })).toBeInTheDocument();
 });
 
+test('a source phrase list is accessible under All meanings as a usage reference', async () => {
+  fixture();
+  const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+  const entry = catalog.entries.find((entry: any) => entry.term === 'lead');
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.lead}`, 'utf8'));
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? index : dictionary })));
+  render(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[]} /></MemoryRouter>);
+  await screen.findByText('She leads a team of six researchers.');
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  expect(screen.queryByText('Source usage note: lead occurs in several phrasal verbs.')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: /^All meanings/ }));
+  const section = within(screen.getByText('Source usage note: lead occurs in several phrasal verbs.').closest('section')!);
+  expect(section.getByText('Usage reference')).toBeInTheDocument();
+  expect(section.getByText('Reading note')).toBeInTheDocument();
+  expect(section.getByRole('heading', { name: 'Related phrases' })).toBeInTheDocument();
+  expect(section.queryByRole('button', { name: 'Practise this sense' })).not.toBeInTheDocument();
+});
+
 test('late teaching updates displayed meanings while retaining filters and the cached source', async () => {
   const { entry } = fixture();
   const fetch = dictionaryFetch();

@@ -11,6 +11,7 @@ import { VOCABULARY_CATALOG } from './catalog';
 import { isVocabularyLearningContext } from './context';
 import type { VocabularyLearningContext } from './context';
 import { matchesVocabularySource } from './sources';
+import { isRegisteredRestoredVocabularySense } from './readiness';
 export type { VocabularySessionSelection } from './selection';
 
 export type VocabularySessionAnswer = {
@@ -139,7 +140,7 @@ export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S
         entriesById.set(entry.id, entry);
       }
     }
-    if (!card || card.entryId !== ref.entryId || card.senseId !== ref.senseId || !entry || entry.tags.includes('archived') || !(entry.senses.some(sense => sense.id === ref.senseId) || (session.cardSnapshots || cards).some(snapshot => snapshot.entryId === ref.entryId && snapshot.senseId === ref.senseId && snapshot.entry.senses.some(sense => sense.id === ref.senseId && (sense.id.startsWith('kaikki:') || sense.id.startsWith('editorial:') && sense.source === 'Fieldbook editorial' && isVocabularyLearningContext(snapshot.context, snapshot))))) || normalizeAnswer(card.entry.term) !== normalizeAnswer(entry.term) || ref.mode !== session.mode || (session.mode !== 'audio' && card.mode !== session.mode)) throw new Error('Vocabulary session card is stale.');
+    if (!card || card.entryId !== ref.entryId || card.senseId !== ref.senseId || !entry || entry.tags.includes('archived') || !(entry.senses.some(sense => sense.id === ref.senseId) || (session.cardSnapshots || cards).some(snapshot => snapshot.entryId === ref.entryId && snapshot.senseId === ref.senseId && snapshot.entry.senses.some(sense => sense.id === ref.senseId && (sense.id.startsWith('kaikki:') || isRegisteredRestoredVocabularySense(ref.entryId, sense) || sense.id.startsWith('editorial:') && sense.source === 'Fieldbook editorial' && isVocabularyLearningContext(snapshot.context, snapshot))))) || normalizeAnswer(card.entry.term) !== normalizeAnswer(entry.term) || ref.mode !== session.mode || (session.mode !== 'audio' && card.mode !== session.mode)) throw new Error('Vocabulary session card is stale.');
     if (!entry.senses.some(sense => sense.id === ref.senseId) ) { const sense = card?.entry.senses.find(item => item.id === ref.senseId); if (sense) entry.senses.push(structuredClone(sense)); }
     if (selection && !entry.sources.some(source => source.bookId === selection.bookId && source.unitId === selection.unitId)) entry.sources.push({ type: 'wordbook', id: `${selection.bookId}:${selection.unitId}:${entry.id}`, bookId: selection.bookId, unitId: selection.unitId });
   });

@@ -1,7 +1,7 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default } from './runtimeData';
 import type { VocabularyEntry, VocabularySense } from './types';
 
-export const VOCABULARY_READINESS_VERSION = 'core-2026-10-17.7';
+export const VOCABULARY_READINESS_VERSION = 'core-2026-10-17.8';
 const identity = (entryId:string, senseId:string) => `${entryId}\u0000${senseId}`;
 const core = new Map<string,Supplement>();
 const additions = new Map<string,Supplement>();
@@ -23,6 +23,15 @@ export function restoredDictionarySenses(entryId: string, sourceIds: Set<string>
  return [...additions.values()].filter(row => row.entryId === entryId && row.dictionaryParentSenseId && sourceIds.has(row.dictionaryParentSenseId) && row.originalSense?.id === row.senseId).map(row => row.originalSense!);
 }
 
+/** A frozen restored meaning must belong to this entry and an exact released public baseline. */
+export function isRegisteredRestoredVocabularySense(entryId: string, sense: VocabularySense): boolean {
+ ensureReadiness();
+ const row = additions.get(identity(entryId, sense.id));
+ if (!row?.dictionaryParentSenseId || row.originalSense?.id !== sense.id || sense.source === 'Personal note') return false;
+ return [row.originalSense, ...(row.previousSenses || []), { definition: row.definition, pos: row.pos || row.originalSense.pos }]
+  .some(baseline => baseline.definition === sense.definition && baseline.pos === sense.pos);
+}
+
 export function vocabularyReadinessBaselines(entryId:string,senseId:string):VocabularySense[] {
  ensureReadiness();
  const selected=preferred.get(entryId);
@@ -33,7 +42,7 @@ export function vocabularyReadinessBaselines(entryId:string,senseId:string):Voca
 /** Review of these notes is independent of whether a wordbook's source meaning is confirmed. */
 export function hasVocabularyReadinessNotes(entryId: string, sense: VocabularySense): boolean {
  ensureReadiness();
- if (isVocabularyMeaningGroup(entryId, sense)) return false;
+ if (isVocabularyMeaningGroup(entryId, sense) || isVocabularyUsageReference(entryId, sense)) return false;
  const row = additions.get(identity(entryId, sense.id)) || core.get(identity(entryId, sense.id));
  return Boolean(row?.collocations?.length && row.distinctions?.length && row.definition === sense.definition &&
   (row.pos || row.originalSense?.pos) === sense.pos && JSON.stringify(row.collocations) === JSON.stringify(sense.collocations) && JSON.stringify(row.distinctions) === JSON.stringify(sense.distinctions));
@@ -67,7 +76,16 @@ export function isVocabularyMeaningGroup(entryId: string, sense: VocabularySense
 }
 
 export function isVocabularyPracticeReference(entryId: string, sense: VocabularySense): boolean {
- return isVocabularySpellingReference(entryId, sense) || isVocabularyMeaningGroup(entryId, sense);
+ return isVocabularySpellingReference(entryId, sense) || isVocabularyMeaningGroup(entryId, sense) || isVocabularyUsageReference(entryId, sense);
+}
+
+/** A source list of phrases is useful reading guidance, not a lexical meaning to rehearse. */
+export function isVocabularyUsageReference(entryId: string, sense: VocabularySense): boolean {
+ ensureReadiness();
+ const row = additions.get(identity(entryId, sense.id));
+ if (!row?.usageReference || sense.source === 'Personal note') return false;
+ return [{ definition: row.definition, pos: row.pos || row.originalSense?.pos }, row.originalSense, ...(row.previousSenses || [])]
+  .some(baseline => baseline?.definition === sense.definition && baseline.pos === sense.pos);
 }
 
 /** Public content only. A caller supplies historical public baselines to protect personal edits. */

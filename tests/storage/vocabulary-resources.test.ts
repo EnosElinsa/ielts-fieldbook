@@ -9,6 +9,15 @@ let release: ReturnType<typeof buildVocabularyResources>;
 // still compares a second independent build of the complete retained corpus.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 15_000);
 
+test('the concrete fine default retains the previous complete teaching release', () => {
+  const previous = JSON.parse(release.resources.get('/vocabulary-resources/manifest.b6144fe901eb7de7.json')!);
+  const teaching = (manifest: typeof release.manifest) => JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards['ve-7c6e3401']])!).teaching;
+  expect(teaching(previous).readiness.defaults.some((row: any) => row.entryId === 've-7c6e3401')).toBe(false);
+  expect(teaching(previous).readiness.corrections.some((row: any) => row.entryId === 've-7c6e3401')).toBe(false);
+  expect(teaching(release.manifest).readiness.defaults.find((row: any) => row.entryId === 've-7c6e3401').sense.definition).toBe('Of very good or excellent quality.');
+  for (const url of [...Object.values(previous.entryResources), ...Object.values(previous.entryTeachingResources), ...previous.units.flatMap((unit: any) => [unit.resource, unit.teachingResource]).filter(Boolean)] as string[]) expect(release.resources.has(url), url).toBe(true);
+});
+
 test('changing the address default preserves the preceding release and all earlier discovery resources', () => {
   const previousUrl = '/vocabulary-resources/manifest.25780c3fa8522230.json';
   const previous = JSON.parse(release.resources.get(previousUrl)!);

@@ -18,6 +18,12 @@ Direct entry navigation also revealed a loading race: starter or saved meanings 
 
 ## Next priorities
 
+The tenth batch adds 150 reviews (115 original records and 35 restored children), 33 exercises and ten diagrams for lead, minute, fine and match. The ledger now contains 972 reviews among 51,509 preserved or restored records, with 97 explicitly typed reading explanations. Four further source headings and lead's phrase list are excluded from the initial learning-notes list and every new practice mode; the phrase list has its own Usage reference label. Fine opens with a concrete quality meaning. This improves meaning selection, but does not yet implement the learning-priority metadata proposed below. Entry-level audio also remains independent of the pronunciation contrasts now explained in the text and diagrams.
+
+The next implementation should prioritise common learning meanings over reviewed specialist material, then give a supported next-practice action for the selected meaning. These changes need explicit sense-level metadata and evidence-aware scheduling. Pronunciation must also be bound to a reviewed sense before homographs can reliably support audio-based practice. More diagrams alone would not resolve these selection and audio limitations.
+
+The first practice of a restored default now saves successfully even when the learner has not previously saved that child meaning. Validation recognises exact registered restored snapshots, while keeping entry ownership and stale-card checks. This closes a gap that the dictionary's save-before-practice route had hidden.
+
 | Priority | Observed limitation | Proposed behavior | Acceptance evidence |
 | --- | --- | --- | --- |
 | 1 | With learning notes distinguishes enriched content, but reviewed historical, regional and technical senses appear beside everyday meanings. A fully reviewed word such as ground still has 39 senses. | Add editorial learning-priority metadata and subject/register labels tied to each sense, including general learning, specialist, historical and proper-name uses. Prefer general learning in the initial list, with explicit access to every other meaning. Keep source labels and never infer priority from definition wording alone. | Representative multi-sense words show common study choices first; all original IDs remain reachable and searchable; personal choices and existing sessions retain their meaning. |

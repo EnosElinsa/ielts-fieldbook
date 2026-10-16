@@ -10,7 +10,7 @@ import { accountId } from "../../storage/remote";
 import { VocabularySenseContent } from "./VocabularySenseContent";
 import { SelectField } from '../../components/SelectField';
 import { vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
-import { isVocabularyMeaningGroup, isVocabularySpellingReference } from '../../domain/vocabulary/readiness';
+import { isVocabularyMeaningGroup, isVocabularySpellingReference, isVocabularyUsageReference } from '../../domain/vocabulary/readiness';
 import { getVocabularySenseDiagram, type VocabularySenseDiagram } from '../../domain/vocabulary/media';
 import { VocabularyMeaningDiagram } from './VocabularyMeaningDiagram';
 import { practiceUrl } from "./vocabularyNavigation";
@@ -105,7 +105,7 @@ export function DictionarySenses({
   useEffect(() => {
     onSources?.(senses);
   }, [senses, onSources]);
-  const withNotes = senses.filter(sense => !isVocabularyMeaningGroup(entry.id, sense) && sense.editorial && sense.collocations?.length && sense.distinctions?.length);
+  const withNotes = senses.filter(sense => !isVocabularyMeaningGroup(entry.id, sense) && !isVocabularyUsageReference(entry.id, sense) && sense.editorial && sense.collocations?.length && sense.distinctions?.length);
   const scope = !showAll && withNotes.length ? withNotes : senses;
   const words = normalizeAnswer(query).split(' ').filter(Boolean);
   const visible = scope.filter(sense => {
@@ -254,7 +254,7 @@ export function DictionarySenses({
               <section className="vocabulary-sense" key={sense.id}>
                 <div className="vocabulary-sense-head">
                   <h4>Meaning {meaningNumbers.get(sense.id)}</h4>
-                  {isVocabularyMeaningGroup(entry.id, sense) ? <span className="pill">Meaning group</span> : isVocabularySpellingReference(entry.id, sense) ? <span className="pill">Spelling reference</span> : <button
+                  {isVocabularyMeaningGroup(entry.id, sense) ? <span className="pill">Meaning group</span> : isVocabularyUsageReference(entry.id, sense) ? <span className="pill">Usage reference</span> : isVocabularySpellingReference(entry.id, sense) ? <span className="pill">Spelling reference</span> : <button
                     type="button"
                     className="btn line"
                     disabled={saving !== null}

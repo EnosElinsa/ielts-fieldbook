@@ -59,6 +59,23 @@ test('a source grouping needs a non-gloss heading, independently bound children 
   ]) expect(inspectDictionaryReview({ ...groupedInput, ...patch }).errors.join(' ')).toMatch(/meaning group/i);
 });
 
+test('an explicitly labelled source heading also needs independently bound children', () => {
+  const grouping = { ...row, referenceUrl: restored.sourceUrl, meaningGroup: { sourceGloss: "# {{lb|en|heading|transitive}} ''Land beside a river.''" } };
+  expect(inspectDictionaryReview({ ...restoredInput, corrections: [grouping, restoredInput.corrections[1]] }).errors).toEqual([]);
+  expect(inspectDictionaryReview({ ...input, corrections: [grouping] }).errors.join(' ')).toMatch(/meaning group/i);
+});
+
+test('a phrasal-verb usage reference needs exact source wording and a revision, with no exercise', () => {
+  const source = { ...original, definition: 'Used in phrasal verbs: lead off, lead on.' };
+  const reference = { ...row, originalSense: source, referenceUrl: 'https://en.wiktionary.org/w/index.php?title=bank&oldid=123', usageReference: { sourceGloss: '# {{used in phrasal verbs|lead off|lead on|lang=en}}' } };
+  const value = { ...input, dictionaries: { bank: { senses: [source] } }, records: [{ ...review, sourceHash: hash(source) }], corrections: [reference] };
+  expect(inspectDictionaryReview(value).errors).toEqual([]);
+  expect(inspectDictionaryReview(value).summary.usageReferences).toBe(1);
+  for (const patch of [{ referenceUrl: 'https://en.wiktionary.org/wiki/bank' }, { usageReference: { sourceGloss: '# {{used in phrasal verbs|made up|lang=en}}' } }, { referenceOnly: true }, { distinctionTask: { prompt: 'Choose _____.', options: ['a','b'], answer: 'a', explanation: 'A task.' } }]) {
+    expect(inspectDictionaryReview({ ...value, corrections: [{ ...reference, ...patch }] }).errors.join(' ')).toMatch(/usage reference/i);
+  }
+});
+
 test('restored submeanings require independent revision evidence and preserve raw counts', () => {
   const valid = inspectDictionaryReview(restoredInput);
   expect(valid.errors).toEqual([]);

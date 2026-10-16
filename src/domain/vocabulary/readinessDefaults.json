@@ -14017,5 +14017,46 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-7c6e3401",
+    "originalSense": {
+      "id": "wiktionary:restored:c0258912eae575c823",
+      "pos": "adj",
+      "definition": "Of superior quality.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=fine&oldid=93538644",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "sense": {
+      "id": "wiktionary:restored:c0258912eae575c823",
+      "pos": "adj",
+      "definition": "Of very good or excellent quality.",
+      "example": "The gallery has a fine collection of landscape paintings.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=fine&oldid=93538644",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "usage": "Adjective /faɪn/.",
+      "collocations": [
+        "fine work",
+        "a fine collection",
+        "a fine example"
+      ],
+      "distinctions": [
+        "Fine can mean excellent; I’m fine can instead mean satisfactory or well. Context determines the strength of praise."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "register": "",
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

@@ -1,10 +1,11 @@
 import type { VocabularySense } from "../../domain/vocabulary/types";
 import { vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
-import { isVocabularyMeaningGroup, isVocabularyReadingNote } from '../../domain/vocabulary/readiness';
+import { isVocabularyMeaningGroup, isVocabularyReadingNote, isVocabularyUsageReference } from '../../domain/vocabulary/readiness';
 
 export function VocabularySenseContent({ sense, entryId, learningExample, showMissingExample = false, showLearningNotes = false }: { sense: VocabularySense; entryId?: string; learningExample?: { example: string; sense: VocabularySense }; showMissingExample?: boolean; showLearningNotes?: boolean }) {
   const content = vocabularySensePresentation(sense);
   const meaningGroup = Boolean(entryId && isVocabularyMeaningGroup(entryId, sense));
+  const usageReference = Boolean(entryId && isVocabularyUsageReference(entryId, sense));
   const readingNote = Boolean(entryId && isVocabularyReadingNote(entryId, sense));
   const example = content.example || learningExample?.example;
   const fallbackReadingNote = Boolean(!content.example && entryId && learningExample && isVocabularyReadingNote(entryId, learningExample.sense));
@@ -24,10 +25,10 @@ export function VocabularySenseContent({ sense, entryId, learningExample, showMi
         </div>
       ) : null}
       {showLearningNotes && sense.collocations?.length ? <div className="vocabulary-detail">
-        <h4>{meaningGroup ? 'Examples of grouped uses' : readingNote ? 'Reading cues' : 'Collocations'}</h4><p>{sense.collocations.join(' · ')}</p>
+        <h4>{meaningGroup ? 'Examples of grouped uses' : usageReference ? 'Related phrases' : readingNote ? 'Reading cues' : 'Collocations'}</h4><p>{sense.collocations.join(' · ')}</p>
       </div> : null}
       {showLearningNotes && sense.distinctions?.length ? <div className="vocabulary-detail">
-        <h4>{meaningGroup ? 'How to choose a meaning' : 'Compare meanings'}</h4>
+        <h4>{meaningGroup || usageReference ? 'How to choose a meaning' : 'Compare meanings'}</h4>
         {sense.distinctions.map(note => <p key={note}>{note}</p>)}
       </div> : null}
       {content.relations.map((relation) => (

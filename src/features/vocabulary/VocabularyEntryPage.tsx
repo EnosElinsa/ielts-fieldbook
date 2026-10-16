@@ -37,7 +37,7 @@ import { accountId } from "../../storage/remote";
 import { getVocabularyMastery } from "../../domain/vocabulary/mastery";
 import { vocabularyLearningTimeline } from "../../domain/vocabulary/timeline";
 import { vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
-import { isVocabularyMeaningGroup, isVocabularyPracticeReference, isVocabularySpellingReference } from '../../domain/vocabulary/readiness';
+import { isVocabularyMeaningGroup, isVocabularyPracticeReference, isVocabularySpellingReference, isVocabularyUsageReference } from '../../domain/vocabulary/readiness';
 import { VocabularySenseContent } from "./VocabularySenseContent";
 import { VocabularySourceLinks } from './VocabularySourceLinks';
 import "../../styles/vocabulary-entry.css";
@@ -310,7 +310,7 @@ export function VocabularyEntryPage() {
       >
         <div className="vocabulary-sense-head">
           <h3>
-            {isVocabularyMeaningGroup(entry!.id, sense) ? "Meaning group" : main ? "Meaning" : sense.pos || "Other meaning"}
+            {isVocabularyMeaningGroup(entry!.id, sense) ? "Meaning group" : isVocabularyUsageReference(entry!.id, sense) ? "Usage reference" : main ? "Meaning" : sense.pos || "Other meaning"}
           </h3>
         </div>
         {sense.pos ? (
@@ -477,6 +477,7 @@ export function VocabularyEntryPage() {
             ) : null}
             {primary && isVocabularySpellingReference(entry.id, primary) ? <p className="vocabulary-muted">Spelling reference · Choose a valid meaning below to practise this word.</p> : null}
             {primary && isVocabularyMeaningGroup(entry.id, primary) ? <p className="vocabulary-muted">Meaning group · Choose a specific meaning below to practise this word.</p> : null}
+            {primary && isVocabularyUsageReference(entry.id, primary) ? <p className="vocabulary-muted">Usage reference · This note lists phrases. Choose a specific meaning below to practise.</p> : null}
             {entry.tags.includes("archived") ? (
               <span className="pill">Archived · Excluded from practice</span>
             ) : null}
