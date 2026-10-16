@@ -85,7 +85,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
       for (const area of areas) if (!review.reviewedAreas.includes(area) || !row[area]?.length) errors.push(`Incomplete ${area}: ${review.term}/${review.senseId}`);
       if (row.distinctionTask) {
         const task = row.distinctionTask;
-        if (!task.prompt?.includes('_____') || !task.options?.includes(task.answer) || new Set(task.options).size < 2 || !task.explanation?.trim()) errors.push(`Invalid distinction task: ${review.term}/${review.senseId}`);
+        if (!task.prompt?.includes('_____') || !task.options?.includes(task.answer) || new Set(task.options).size < 2 || new Set(task.options.map(option => option.trim().toLowerCase())).size !== task.options.length || !task.explanation?.trim()) errors.push(`Invalid distinction task: ${review.term}/${review.senseId}`);
         else tasks++;
       }
     }

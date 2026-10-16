@@ -1,0 +1,83 @@
+{
+  "removeCorrections": [],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-a672296",
+      "senseId": "kaikki:885f1d39d5197848fe",
+      "definition": "To satisfy a rule or a regular-expression pattern.",
+      "example": "With no flags, the regular expression ^[A-Z]{2}$ matches AB but not Ab or ABC.",
+      "collocations": [
+        "match a pattern",
+        "match a regular expression",
+        "a matching string"
+      ],
+      "distinctions": [
+        "For the stated whole-string test, two uppercase ASCII letters match. Matching depends on the pattern, flags and engine; partial search is a different operation."
+      ],
+      "usage": "Programming; verb /mætʃ/. The example uses no flags and the literal strings shown.",
+      "originalSense": {
+        "id": "kaikki:885f1d39d5197848fe",
+        "definition": "To be an example of a rule or regex.",
+        "example": "The behavior matched one or more rules and was rejected by an edit filter.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [
+          "differ"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [
+          "aftermatch",
+          "beer match",
+          "be no match for",
+          "cage match",
+          "cockmatch",
+          "deathmatch",
+          "exhibition match",
+          "first class match",
+          "football match",
+          "friendly match",
+          "game, set, match",
+          "grudge match",
+          "hair match",
+          "hatch, match and dispatch",
+          "intermatch",
+          "ladder match",
+          "looksmatch",
+          "love match",
+          "man of the match",
+          "match ball",
+          "matchboard",
+          "matchbreaker",
+          "match cut",
+          "match day",
+          "match dissolve",
+          "match factor",
+          "match fixing",
+          "matchgate",
+          "matchless",
+          "matchlike"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/match#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=match&oldid=93552156",
+      "distinctionTask": {
+        "prompt": "With no flags, ^[A-Z]{2}$ matches _____.",
+        "options": [
+          "AB",
+          "Ab"
+        ],
+        "answer": "AB",
+        "explanation": "The pattern requires exactly two uppercase ASCII letters in the stated whole-string test."
+      },
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "register": ""
+    }
+  ]
+}

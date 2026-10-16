@@ -9,6 +9,13 @@ let release: ReturnType<typeof buildVocabularyResources>;
 // still compares a second independent build of the complete retained corpus.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 15_000);
 
+test('correcting a case-sensitive choice retains the preceding immutable teaching pack', () => {
+  const preceding = JSON.parse(release.resources.get('/vocabulary-resources/manifest.6e9b003dc89eac70.json')!);
+  const task = (manifest: typeof release.manifest) => JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards['ve-a672296']])!).teaching.readiness.corrections.find((row: any) => row.senseId === 'kaikki:885f1d39d5197848fe').distinctionTask;
+  expect(task(preceding).options).toEqual(['AB', 'Ab']);
+  expect(task(release.manifest).options).toEqual(['AB (both letters uppercase)', 'Ab (second letter lowercase)']);
+});
+
 test('the concrete fine default retains the previous complete teaching release', () => {
   const previous = JSON.parse(release.resources.get('/vocabulary-resources/manifest.b6144fe901eb7de7.json')!);
   const teaching = (manifest: typeof release.manifest) => JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards['ve-7c6e3401']])!).teaching;

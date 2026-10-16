@@ -105397,16 +105397,50 @@
     "distinctionTask": {
       "prompt": "With no flags, ^[A-Z]{2}$ matches _____.",
       "options": [
-        "AB",
-        "Ab"
+        "AB (both letters uppercase)",
+        "Ab (second letter lowercase)"
       ],
-      "answer": "AB",
+      "answer": "AB (both letters uppercase)",
       "explanation": "The pattern requires exactly two uppercase ASCII letters in the stated whole-string test."
     },
     "synonyms": [],
     "antonyms": [],
     "wordFamily": [],
-    "register": ""
+    "register": "",
+    "previousSenses": [
+      {
+        "id": "kaikki:885f1d39d5197848fe",
+        "definition": "To satisfy a rule or a regular-expression pattern.",
+        "example": "With no flags, the regular expression ^[A-Z]{2}$ matches AB but not Ab or ABC.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [
+          "match a pattern",
+          "match a regular expression",
+          "a matching string"
+        ],
+        "usage": "Programming; verb /mætʃ/. The example uses no flags and the literal strings shown.",
+        "register": "",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/match#English",
+        "license": "CC-BY-SA-4.0",
+        "distinctions": [
+          "For the stated whole-string test, two uppercase ASCII letters match. Matching depends on the pattern, flags and engine; partial search is a different operation."
+        ],
+        "distinctionTask": {
+          "prompt": "With no flags, ^[A-Z]{2}$ matches _____.",
+          "options": [
+            "AB",
+            "Ab"
+          ],
+          "answer": "AB",
+          "explanation": "The pattern requires exactly two uppercase ASCII letters in the stated whole-string test."
+        }
+      }
+    ]
   },
   {
     "entryId": "ve-a672296",

@@ -16,6 +16,11 @@ test('explicit reading-note metadata is counted and unknown example types fail r
   expect(invalid.summary.reviewed).toBe(0);
 });
 
+test('distinction options cannot differ only in case under case-insensitive scoring', () => {
+  const distinctionTask = { prompt: 'Choose _____.', options: ['AB', 'Ab'], answer: 'AB', explanation: 'The uppercase string is required.' };
+  expect(inspectDictionaryReview({ ...input, corrections: [{ ...row, distinctionTask }] }).errors.join(' ')).toMatch(/distinction task/i);
+});
+
 test('review accounting reconciles every source sense and flags changed source fingerprints', () => {
   const valid = inspectDictionaryReview(input);
   expect(valid.summary).toMatchObject({ terms: 1, senses: 1, reviewed: 1, pending: 0 });

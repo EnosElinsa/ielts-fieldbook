@@ -7,13 +7,24 @@ import { resolveVocabularyLearningContext } from '../../src/domain/vocabulary/co
 import ledger from '../../src/domain/vocabulary/dictionaryReviewLedger.json';
 import corrections from '../../src/domain/vocabulary/readinessCorrections.json';
 import previousRelease from '../../src/domain/vocabulary/resourceDictionaryRound2Baseline.json';
+import previousPatternTask from '../../src/domain/vocabulary/resourceDictionaryRound10TaskBaseline.json';
 import restoredSources from '../../src/domain/vocabulary/dictionarySenseSources.json';
 import { addVocabularyItem, normalizeVocabularyCollections } from '../../src/domain/vocabulary';
+import { evaluateVocabularySessionAnswer } from '../../src/domain/vocabulary/session';
+import type { ReviewCard } from '../../src/domain/vocabulary/types';
 import { emptyState } from '../../src/domain';
 const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
 const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
 const entry = catalog.entries.find((e: VocabularyEntry) => e.term === 'bank') as VocabularyEntry;
 const raw = JSON.parse(readFileSync(`public/dictionary/${index.bank}`, 'utf8')).senses.find((s: VocabularySense) => s.id === 'kaikki:c130710755a265600e') as VocabularySense;
+
+test('the clarified pattern choices upgrade an untouched saved task while preserving a custom exercise', () => {
+  const row = previousPatternTask.restoreCorrections[0];
+  const previous = { ...row.originalSense, definition: row.definition, example: row.example, usage: row.usage, collocations: row.collocations, distinctions: row.distinctions, distinctionTask: row.distinctionTask, synonyms: row.synonyms, antonyms: row.antonyms, wordFamily: row.wordFamily, register: row.register } as VocabularySense;
+  expect(supplementVocabularySense(row.entryId, previous, [], hasVocabularySenseEdits).distinctionTask?.answer).toBe('AB (both letters uppercase)');
+  const personal = { ...previous, distinctionTask: { ...previous.distinctionTask!, prompt: 'Choose _____ for our classroom exercise.' } };
+  expect(supplementVocabularySense(row.entryId, personal, [], hasVocabularySenseEdits)).toEqual(personal);
+});
 
 test('a cleared additional dictionary example can display a separate exact public reading without replacing the saved notes', () => {
   const row = corrections.find(row => row.entryId === 've-6ae618ee' && row.senseId === 'kaikki:9675d890071f3124f9')!;
@@ -100,6 +111,8 @@ test.each(ledger.records)('$term/$senseId survives selection, reopening and targ
     const task = learningTask(reopened.entry, reopened.sense!, 'distinction');
     expect(task?.acceptedAnswers).toEqual([expected.distinctionTask.answer]);
     expect(task?.prompt).toBe(expected.distinctionTask.prompt);
+    const card = { id: `${base.id}:${selected.id}:distinction`, entryId: base.id, senseId: selected.id, entry: saved, mode: 'distinction', task } as ReviewCard;
+    for (const option of expected.distinctionTask.options) expect(evaluateVocabularySessionAnswer(card, option).result, `option: ${option}`).toBe(option === expected.distinctionTask.answer ? 'success' : 'failure');
   }
 });
 
