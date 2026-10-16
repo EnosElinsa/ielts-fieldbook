@@ -190,5 +190,53 @@
     "definition": "A number or other mathematical object assigned to, measured for or calculated from an expression or variable.",
     "pos": "noun",
     "kind": "variable-value"
+  },
+  {
+    "entryId": "ve-7c6e2f13",
+    "senseId": "kaikki:905e73ebd2d7f8b261",
+    "term": "form",
+    "definition": "A particular grammatical shape of a word, such as its past tense or plural.",
+    "pos": "noun",
+    "kind": "word-forms"
+  },
+  {
+    "entryId": "ve-70d0ce19",
+    "senseId": "kaikki:c7ec78a619beba0a6d",
+    "term": "subject",
+    "definition": "The grammatical element about which a clause makes a statement, often agreeing with its verb.",
+    "pos": "noun",
+    "kind": "passive-subject"
+  },
+  {
+    "entryId": "ve-70d0ce19",
+    "senseId": "kaikki:bc2b34cfc8ab1ff1d3",
+    "term": "subject",
+    "definition": "A variable isolated on one side of an equation and expressed in terms of other quantities.",
+    "pos": "noun",
+    "kind": "formula-subject"
+  },
+  {
+    "entryId": "ve-a34ea67",
+    "senseId": "wiktionary:restored:edfe2e61bb103dd1ad",
+    "term": "field",
+    "definition": "A space in a form for entering one item of information.",
+    "pos": "noun",
+    "kind": "form-field"
+  },
+  {
+    "entryId": "ve-a34ea67",
+    "senseId": "wiktionary:restored:c8401dcbd71b405568",
+    "term": "field",
+    "definition": "A component of a database record that stores one type or unit of information.",
+    "pos": "noun",
+    "kind": "database-field"
+  },
+  {
+    "entryId": "ve-abad7dc",
+    "senseId": "wiktionary:restored:cdc753eab959130201",
+    "term": "issue",
+    "definition": "One published instalment of a newspaper, magazine or other periodical.",
+    "pos": "noun",
+    "kind": "periodical-issue"
   }
 ]

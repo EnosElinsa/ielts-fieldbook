@@ -27,20 +27,18 @@ export function buildVocabularyResources(root: string) {
     learning: data('learningSenseOverlay'), tasks: data('taskSenseBindings'), context: data('contextSenseOverlay'),
   };
   const generated = buildResourceCatalog(source, teaching);
-  const round2Baseline = data('resourceDictionaryRound2Baseline') as { removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections'] };
-  const removedRound2 = new Set(round2Baseline.removeCorrections.map(row => JSON.stringify([row.entryId,row.senseId])));
-  const restoredRound2 = new Map(round2Baseline.restoreCorrections.map(row => [JSON.stringify([row.entryId,row.senseId]),row]));
-  const beforeRound2: VocabularyTeachingData = {
-    ...teaching,
-    readiness: { ...teaching.readiness, corrections: teaching.readiness.corrections.filter(row => !removedRound2.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restoredRound2.get(JSON.stringify([row.entryId,row.senseId])) || row) },
-  };
-  const dictionaryBaseline = data('resourceDictionaryBaseline') as { removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections'] };
-  const removedDictionaryCorrections = new Set(dictionaryBaseline.removeCorrections.map(row => JSON.stringify([row.entryId,row.senseId])));
-  const restoredDictionaryCorrections = new Map(dictionaryBaseline.restoreCorrections.map(row => [JSON.stringify([row.entryId,row.senseId]),row]));
-  const beforeDictionaryExpansion: VocabularyTeachingData = {
-    ...beforeRound2,
-    readiness: { ...beforeRound2.readiness, corrections: beforeRound2.readiness.corrections.filter(row => !removedDictionaryCorrections.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restoredDictionaryCorrections.get(JSON.stringify([row.entryId,row.senseId])) || row) },
-  };
+  // Reverse each published correction batch in order to preserve its exact URLs and bytes.
+  const retainedDictionaryCatalogs = [];
+  let beforeDictionaryExpansion = teaching;
+  for (const filename of data('resourceDictionaryRevisions') as string[]) {
+    const baseline = data(filename) as { removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections'] };
+    const removed = new Set(baseline.removeCorrections.map(row => JSON.stringify([row.entryId,row.senseId])));
+    const restored = new Map(baseline.restoreCorrections.map(row => [JSON.stringify([row.entryId,row.senseId]),row]));
+    beforeDictionaryExpansion = { ...beforeDictionaryExpansion, readiness: { ...beforeDictionaryExpansion.readiness,
+      corrections: beforeDictionaryExpansion.readiness.corrections.filter(row => !removed.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restored.get(JSON.stringify([row.entryId,row.senseId])) || row),
+    } };
+    retainedDictionaryCatalogs.push(buildResourceCatalog(source, beforeDictionaryExpansion));
+  }
   const learningBaseline = data('resourceLearningBaseline') as {
     removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections'];
     removeDefaults: string[]; restoreDefaults: VocabularyTeachingData['readiness']['defaults'];
@@ -79,7 +77,7 @@ export function buildVocabularyResources(root: string) {
     if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, row]) => [legacyIds.get(key) || key, legacyValue(row)])) as T;
     return value;
   };
-  const retained = [buildResourceCatalog(source,beforeRound2),buildResourceCatalog(source,beforeDictionaryExpansion),buildResourceCatalog(source,beforeLearningExpansion),buildResourceCatalog(source,previousTeaching),buildResourceCatalog(legacyValue(source),legacyValue(previousTeaching))];
+  const retained = [...retainedDictionaryCatalogs,buildResourceCatalog(source,beforeLearningExpansion),buildResourceCatalog(source,previousTeaching),buildResourceCatalog(legacyValue(source),legacyValue(previousTeaching))];
   for (const previous of retained) for (const [url, content] of previous.resources) {
     const existing = generated.resources.get(url);
     if (existing !== undefined && existing !== content) throw new Error(`Vocabulary resource hash collision: ${url}`);

@@ -1,0 +1,591 @@
+[
+  {
+    "term": "field",
+    "entryId": "ve-a34ea67",
+    "parentSenseId": "kaikki:0a29a87022fa9fdb77",
+    "parentSourceHash": "4de8b2bbe541f5342b739ab9030fe41685d02052ecca286daa697224a594a49b",
+    "sourcePage": "field",
+    "revision": 93519531,
+    "sourceGloss": "### {{senseid|en|course of study or domain of knowledge or practice}} A domain of study, [[knowledge]] or [[practice]].",
+    "sense": {
+      "id": "wiktionary:restored:39136cb5a71eb610d0",
+      "pos": "noun",
+      "definition": "A domain of study, knowledge or practice.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "field",
+    "entryId": "ve-a34ea67",
+    "parentSenseId": "kaikki:0a29a87022fa9fdb77",
+    "parentSourceHash": "4de8b2bbe541f5342b739ab9030fe41685d02052ecca286daa697224a594a49b",
+    "sourcePage": "field",
+    "revision": 93519531,
+    "sourceGloss": "### A realm of practical, direct or natural operation, ''contrasted with an office, classroom, or laboratory''.",
+    "sense": {
+      "id": "wiktionary:restored:4b246e9f34e9861f7f",
+      "pos": "noun",
+      "definition": "A realm of practical, direct or natural operation, contrasted with an office, classroom, or laboratory.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "field",
+    "entryId": "ve-a34ea67",
+    "parentSenseId": "kaikki:0a29a87022fa9fdb77",
+    "parentSourceHash": "4de8b2bbe541f5342b739ab9030fe41685d02052ecca286daa697224a594a49b",
+    "sourcePage": "field",
+    "revision": 93519531,
+    "sourceGloss": "### The extent of a given perception.",
+    "sense": {
+      "id": "wiktionary:restored:dc9d5cff0208282861",
+      "pos": "noun",
+      "definition": "The extent of a given perception.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "field",
+    "entryId": "ve-a34ea67",
+    "parentSenseId": "kaikki:0a29a87022fa9fdb77",
+    "parentSourceHash": "4de8b2bbe541f5342b739ab9030fe41685d02052ecca286daa697224a594a49b",
+    "sourcePage": "field",
+    "revision": 93519531,
+    "sourceGloss": "### A section of a [[form]] which is supposed to be filled with [[data]].",
+    "sense": {
+      "id": "wiktionary:restored:edfe2e61bb103dd1ad",
+      "pos": "noun",
+      "definition": "A section of a form which is supposed to be filled with data.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "field",
+    "entryId": "ve-a34ea67",
+    "parentSenseId": "kaikki:0a29a87022fa9fdb77",
+    "parentSourceHash": "4de8b2bbe541f5342b739ab9030fe41685d02052ecca286daa697224a594a49b",
+    "sourcePage": "field",
+    "revision": 93519531,
+    "sourceGloss": "### A component of a database in which a single unit of information is stored.",
+    "sense": {
+      "id": "wiktionary:restored:c8401dcbd71b405568",
+      "pos": "noun",
+      "definition": "A component of a database in which a single unit of information is stored.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "field",
+    "entryId": "ve-a34ea67",
+    "parentSenseId": "kaikki:0a29a87022fa9fdb77",
+    "parentSourceHash": "4de8b2bbe541f5342b739ab9030fe41685d02052ecca286daa697224a594a49b",
+    "sourcePage": "field",
+    "revision": 93519531,
+    "sourceGloss": "### {{senseid|en|in mathematics}}{{lb|en|algebra}} A non-[[zero ring|zero]] [[commutative ring]] in which all non-zero [[element|elements]] are [[invertible]]; a [[simple]] commutative ring.",
+    "sense": {
+      "id": "wiktionary:restored:e954e45e6d0108ceff",
+      "pos": "noun",
+      "definition": "A non-zero commutative ring in which all non-zero elements are invertible; a simple commutative ring.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "field",
+    "entryId": "ve-a34ea67",
+    "parentSenseId": "kaikki:0a29a87022fa9fdb77",
+    "parentSourceHash": "4de8b2bbe541f5342b739ab9030fe41685d02052ecca286daa697224a594a49b",
+    "sourcePage": "field",
+    "revision": 93519531,
+    "sourceGloss": "### {{senseid|en|heraldry: background of the shield}}{{lb|en|heraldry}} The background of the [[shield#English:_heraldry|shield]].",
+    "sense": {
+      "id": "wiktionary:restored:00ac062b640a535bb5",
+      "pos": "noun",
+      "definition": "The background of the shield.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "field",
+    "entryId": "ve-a34ea67",
+    "parentSenseId": "kaikki:0a29a87022fa9fdb77",
+    "parentSourceHash": "4de8b2bbe541f5342b739ab9030fe41685d02052ecca286daa697224a594a49b",
+    "sourcePage": "field",
+    "revision": 93519531,
+    "sourceGloss": "### {{senseid|en|vexillology: background of the flag}}{{lb|en|vexillology}} The background of the [[flag]].",
+    "sense": {
+      "id": "wiktionary:restored:a4a498c4e20da7a5fb",
+      "pos": "noun",
+      "definition": "The background of the flag.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "field",
+    "entryId": "ve-a34ea67",
+    "parentSenseId": "kaikki:73961923ad4eaa1016",
+    "parentSourceHash": "83336061a49f91bc75193418b62fcd21ff9be53d6f84a122178f804c2c05a51b",
+    "sourcePage": "field",
+    "revision": 93519531,
+    "sourceGloss": "## {{senseid|en|place where a battle is fought}} A place where a [[battle]] is fought; a [[battlefield]].",
+    "sense": {
+      "id": "wiktionary:restored:38f35908036bc9d95d",
+      "pos": "noun",
+      "definition": "A place where a battle is fought; a battlefield.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "field",
+    "entryId": "ve-a34ea67",
+    "parentSenseId": "kaikki:73961923ad4eaa1016",
+    "parentSourceHash": "83336061a49f91bc75193418b62fcd21ff9be53d6f84a122178f804c2c05a51b",
+    "sourcePage": "field",
+    "revision": 93519531,
+    "sourceGloss": "## {{senseid|en|sports: area reserved for playing a game}} An area reserved for playing a game or race with one’s physical force.",
+    "sense": {
+      "id": "wiktionary:restored:81b01cb9b441811d53",
+      "pos": "noun",
+      "definition": "An area reserved for playing a game or race with one’s physical force.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "field",
+    "entryId": "ve-a34ea67",
+    "parentSenseId": "kaikki:73961923ad4eaa1016",
+    "parentSourceHash": "83336061a49f91bc75193418b62fcd21ff9be53d6f84a122178f804c2c05a51b",
+    "sourcePage": "field",
+    "revision": 93519531,
+    "sourceGloss": "## {{lb|en|metonymically}} All of the [[competitor]]s in any outdoor contest or trial, or all except the favourites in the betting.",
+    "sense": {
+      "id": "wiktionary:restored:89242db43a03cb2ab8",
+      "pos": "noun",
+      "definition": "All of the competitors in any outdoor contest or trial, or all except the favourites in the betting.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "form",
+    "entryId": "ve-7c6e2f13",
+    "parentSenseId": "kaikki:1881fc1db43863deb3",
+    "parentSourceHash": "07fa0b93ce8d3dbf96d469d2c2a147566505c0f1bae33e8b72a9657d414a413f",
+    "sourcePage": "form",
+    "revision": 93549628,
+    "sourceGloss": "## A thing that gives shape to other things as in a [[mold]].",
+    "sense": {
+      "id": "wiktionary:restored:9fc8f05406d688267f",
+      "pos": "noun",
+      "definition": "A thing that gives shape to other things as in a mold.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "form",
+    "entryId": "ve-7c6e2f13",
+    "parentSenseId": "kaikki:1881fc1db43863deb3",
+    "parentSourceHash": "07fa0b93ce8d3dbf96d469d2c2a147566505c0f1bae33e8b72a9657d414a413f",
+    "sourcePage": "form",
+    "revision": 93549628,
+    "sourceGloss": "## {{lb|en|dated}} A long [[bench]] with no back.",
+    "sense": {
+      "id": "wiktionary:restored:1d16e353d8fe3fdde5",
+      "pos": "noun",
+      "definition": "A long bench with no back.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "form",
+    "entryId": "ve-7c6e2f13",
+    "parentSenseId": "kaikki:1881fc1db43863deb3",
+    "parentSourceHash": "07fa0b93ce8d3dbf96d469d2c2a147566505c0f1bae33e8b72a9657d414a413f",
+    "sourcePage": "form",
+    "revision": 93549628,
+    "sourceGloss": "## {{lb|en|philosophy}} The [[inherent]] [[nature]] of an object; that which the mind itself contributes as the condition of knowing; that in which the [[essence]] of a thing consists.",
+    "sense": {
+      "id": "wiktionary:restored:46e63438df3e19a8bf",
+      "pos": "noun",
+      "definition": "The inherent nature of an object; that which the mind itself contributes as the condition of knowing; that in which the essence of a thing consists.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "form",
+    "entryId": "ve-7c6e2f13",
+    "parentSenseId": "kaikki:1881fc1db43863deb3",
+    "parentSourceHash": "07fa0b93ce8d3dbf96d469d2c2a147566505c0f1bae33e8b72a9657d414a413f",
+    "sourcePage": "form",
+    "revision": 93549628,
+    "sourceGloss": "## {{lb|en|fine arts}} The boundary line of a material object. In painting, more generally, the human body.",
+    "sense": {
+      "id": "wiktionary:restored:7564045e8078c2fe94",
+      "pos": "noun",
+      "definition": "The boundary line of a material object. In painting, more generally, the human body.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "form",
+    "entryId": "ve-7c6e2f13",
+    "parentSenseId": "kaikki:1881fc1db43863deb3",
+    "parentSourceHash": "07fa0b93ce8d3dbf96d469d2c2a147566505c0f1bae33e8b72a9657d414a413f",
+    "sourcePage": "form",
+    "revision": 93549628,
+    "sourceGloss": "## {{lb|en|crystallography}} The combination of [[plane]]s included under a general crystallographic symbol. It is not necessarily a closed solid.",
+    "sense": {
+      "id": "wiktionary:restored:8a4dfbbd4c8729aebf",
+      "pos": "noun",
+      "definition": "The combination of planes included under a general crystallographic symbol. It is not necessarily a closed solid.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "form",
+    "entryId": "ve-7c6e2f13",
+    "parentSenseId": "kaikki:716a3a9f29b57e1c66",
+    "parentSourceHash": "c052c2132de2b4032658c6a43363975e528bcabb8d13ea0de4294775721915c6",
+    "sourcePage": "form",
+    "revision": 93549628,
+    "sourceGloss": "## Constitution; mode of construction, organization, etc.; system.",
+    "sense": {
+      "id": "wiktionary:restored:a50ed3187e2d8fc5c7",
+      "pos": "noun",
+      "definition": "Constitution; mode of construction, organization, etc.; system.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "form",
+    "entryId": "ve-7c6e2f13",
+    "parentSenseId": "kaikki:716a3a9f29b57e1c66",
+    "parentSourceHash": "c052c2132de2b4032658c6a43363975e528bcabb8d13ea0de4294775721915c6",
+    "sourcePage": "form",
+    "revision": 93549628,
+    "sourceGloss": "## Show without substance; empty, outside appearance; vain, trivial, or conventional ceremony; conventionality; formality.",
+    "sense": {
+      "id": "wiktionary:restored:75e952d9b213c282e6",
+      "pos": "noun",
+      "definition": "Show without substance; empty, outside appearance; vain, trivial, or conventional ceremony; conventionality; formality.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "form",
+    "entryId": "ve-7c6e2f13",
+    "parentSenseId": "kaikki:716a3a9f29b57e1c66",
+    "parentSourceHash": "c052c2132de2b4032658c6a43363975e528bcabb8d13ea0de4294775721915c6",
+    "sourcePage": "form",
+    "revision": 93549628,
+    "sourceGloss": "## {{lb|en|archaic}} A class or rank in society.",
+    "sense": {
+      "id": "wiktionary:restored:747d243e98d43f1cee",
+      "pos": "noun",
+      "definition": "A class or rank in society.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "form",
+    "entryId": "ve-7c6e2f13",
+    "parentSenseId": "kaikki:716a3a9f29b57e1c66",
+    "parentSourceHash": "c052c2132de2b4032658c6a43363975e528bcabb8d13ea0de4294775721915c6",
+    "sourcePage": "form",
+    "revision": 93549628,
+    "sourceGloss": "## {{lb|en|UK}} Past history (in a given area); a [[habit]] of doing something.",
+    "sense": {
+      "id": "wiktionary:restored:3b199424071924958b",
+      "pos": "noun",
+      "definition": "Past history (in a given area); a habit of doing something.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "form",
+    "entryId": "ve-7c6e2f13",
+    "parentSenseId": "kaikki:716a3a9f29b57e1c66",
+    "parentSourceHash": "c052c2132de2b4032658c6a43363975e528bcabb8d13ea0de4294775721915c6",
+    "sourcePage": "form",
+    "revision": 93549628,
+    "sourceGloss": "## Level of performance.",
+    "sense": {
+      "id": "wiktionary:restored:502ee2933831964b7f",
+      "pos": "noun",
+      "definition": "Level of performance.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "form",
+    "entryId": "ve-7c6e2f13",
+    "parentSenseId": "kaikki:716a3a9f29b57e1c66",
+    "parentSourceHash": "c052c2132de2b4032658c6a43363975e528bcabb8d13ea0de4294775721915c6",
+    "sourcePage": "form",
+    "revision": 93549628,
+    "sourceGloss": "## {{lb|en|UK|education}} A [[class]] or [[year]] of school pupils.",
+    "sense": {
+      "id": "wiktionary:restored:cda73110825dcba904",
+      "pos": "noun",
+      "definition": "A class or year of school pupils.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "issue",
+    "entryId": "ve-abad7dc",
+    "parentSenseId": "kaikki:56b9958fb9a6e545b0",
+    "parentSourceHash": "677f53a70b375d624434c84890da131979c53e5fe34828a0070f2a03c3929ed1",
+    "sourcePage": "issue",
+    "revision": 93548780,
+    "sourceGloss": "## {{label|en|publishing}} A [[single]] [[edition]] of a [[newspaper]] or other [[periodical]] [[publication]].",
+    "sense": {
+      "id": "wiktionary:restored:cdc753eab959130201",
+      "pos": "noun",
+      "definition": "A single edition of a newspaper or other periodical publication.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "issue",
+    "entryId": "ve-abad7dc",
+    "parentSenseId": "kaikki:56b9958fb9a6e545b0",
+    "parentSourceHash": "677f53a70b375d624434c84890da131979c53e5fe34828a0070f2a03c3929ed1",
+    "sourcePage": "issue",
+    "revision": 93548780,
+    "sourceGloss": "## {{label|en|now|_|usually|_|historical|_|or|_|law}} [[offspring|Offspring]]: [[one]]'s [[natural]] [[child]] or [[children]].",
+    "sense": {
+      "id": "wiktionary:restored:8b964c052f5972d8ac",
+      "pos": "noun",
+      "definition": "Offspring: one's natural child or children.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "issue",
+    "entryId": "ve-abad7dc",
+    "parentSenseId": "kaikki:56b9958fb9a6e545b0",
+    "parentSourceHash": "677f53a70b375d624434c84890da131979c53e5fe34828a0070f2a03c3929ed1",
+    "sourcePage": "issue",
+    "revision": 93548780,
+    "sourceGloss": "## {{label|en|figuratively}} [[progeny|Progeny]]: all [[one's]] [[lineal]] [[descendant]]s.",
+    "sense": {
+      "id": "wiktionary:restored:c52b5cdca20e383b5c",
+      "pos": "noun",
+      "definition": "Progeny: all one's lineal descendants.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "issue",
+    "entryId": "ve-abad7dc",
+    "parentSenseId": "kaikki:56b9958fb9a6e545b0",
+    "parentSourceHash": "677f53a70b375d624434c84890da131979c53e5fe34828a0070f2a03c3929ed1",
+    "sourcePage": "issue",
+    "revision": 93548780,
+    "sourceGloss": "## {{lb|en|finance}} Any [[financial instrument]] issued by a [[company]].",
+    "sense": {
+      "id": "wiktionary:restored:5394dd15f9aaf7538d",
+      "pos": "noun",
+      "definition": "Any financial instrument issued by a company.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "issue",
+    "entryId": "ve-abad7dc",
+    "parentSenseId": "kaikki:56b9958fb9a6e545b0",
+    "parentSourceHash": "677f53a70b375d624434c84890da131979c53e5fe34828a0070f2a03c3929ed1",
+    "sourcePage": "issue",
+    "revision": 93548780,
+    "sourceGloss": "## The [[loan]] of a [[book]] etc. from a [[library]] to a [[patron]]; all such loans by a given library during a given [[period]].",
+    "sense": {
+      "id": "wiktionary:restored:3c3c65fa21798e3170",
+      "pos": "noun",
+      "definition": "The loan of a book etc. from a library to a patron; all such loans by a given library during a given period.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "issue",
+    "entryId": "ve-abad7dc",
+    "parentSenseId": "kaikki:db35c036e7ee34467c",
+    "parentSourceHash": "17bf4c12a152adf13e5cb241fd81aca93d41cffe3dd4776d9fef03fcd8a7f7cb",
+    "sourcePage": "issue",
+    "revision": 93548780,
+    "sourceGloss": "## The [[distribution]] of [[something]] (''particularly'' [[rations]] or [[standardize]]d [[provisions]]) to someone or some [[group]].",
+    "sense": {
+      "id": "wiktionary:restored:9452931aac3ed88f78",
+      "pos": "noun",
+      "definition": "The distribution of something (particularly rations or standardized provisions) to someone or some group.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "issue",
+    "entryId": "ve-abad7dc",
+    "parentSenseId": "kaikki:db35c036e7ee34467c",
+    "parentSourceHash": "17bf4c12a152adf13e5cb241fd81aca93d41cffe3dd4776d9fef03fcd8a7f7cb",
+    "sourcePage": "issue",
+    "revision": 93548780,
+    "sourceGloss": "## {{lb|en|finance}} The action or an [[instance]] of a [[company]] [[sell]]ing [[bond]]s, [[stock]], or other [[securities]].",
+    "sense": {
+      "id": "wiktionary:restored:8b0ad11df496609867",
+      "pos": "noun",
+      "definition": "The action or an instance of a company selling bonds, stock, or other securities.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "issue",
+    "entryId": "ve-abad7dc",
+    "parentSenseId": "kaikki:80c1ad587c0afbe12b",
+    "parentSourceHash": "7fc4562737031ed4bf844967411d42eaa3d7183373f7504bf925aced39065005",
+    "sourcePage": "issue",
+    "revision": 93548780,
+    "sourceGloss": "## {{label|en|figuratively}} [[anything|Anything]] in [[dispute]], an [[area]] of [[disagreement]] whose [[resolution]] is being [[debate]]d or [[decide]]d.",
+    "sense": {
+      "id": "wiktionary:restored:fc81f2c93966eb66eb",
+      "pos": "noun",
+      "definition": "Anything in dispute, an area of disagreement whose resolution is being debated or decided.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "issue",
+    "entryId": "ve-abad7dc",
+    "parentSenseId": "kaikki:80c1ad587c0afbe12b",
+    "parentSourceHash": "7fc4562737031ed4bf844967411d42eaa3d7183373f7504bf925aced39065005",
+    "sourcePage": "issue",
+    "revision": 93548780,
+    "sourceGloss": "## {{senseid|en|psychological or emotional difficulty, or any intractable problem}} {{label|en|US|originally|_|psychology|usually|in the plural}} A [[psychological]] or [[emotional]] [[difficulty]], {{label|en|now|_|informal|figurative|_|and|_|usually|_|euphemistic}} any [[problem]] or [[concern]] [[consider]]ed as a [[vague]] and [[intractable]] [[difficulty]].",
+    "sense": {
+      "id": "wiktionary:restored:e39feed297a2505333",
+      "pos": "noun",
+      "definition": "A psychological or emotional difficulty, any problem or concern considered as a vague and intractable difficulty.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  }
+]

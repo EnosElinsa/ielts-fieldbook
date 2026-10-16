@@ -17,6 +17,7 @@
 - [x] Verify selection, saving, practice, attribution and return navigation with synthetic records. Commit and deploy a verified batch under the existing release authorization.
 - [x] Review all 50 indexed senses of account, state, matter and value; give historical constructions explicit reading guidance and preserve complete earlier public snapshots for saved-content updates. Add eight contextual exercises and six exact diagrams.
 - [x] Add search across displayed definitions, examples, usage and learning notes, combined with part-of-speech filtering, stable meaning numbers and an explicit empty/reset state.
+- [x] Review 82 preserved senses of field, form, issue and subject. Restore 31 independently selectable child meanings with exact revision/source-line evidence; retain the two issue senses without reliable use examples as pending. Add ten exercises and six diagrams, correct future Kaikki imports, preserve distinct source IDs through caching, and retain all previously released resource bytes.
 - [ ] Continue subsequent batches from the complete audit's pending identities, including specialised, historical and proper-name senses. Verify source context where a meaning is uncertain; do not silently omit these records or count them as finished.
 - [ ] Audit completion against every indexed sense and all four requested learning-content areas. The goal stays active while any required identity or content is pending or unverified.
 

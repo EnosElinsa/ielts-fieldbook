@@ -1,6 +1,6 @@
 import { normalizeAnswer } from '../../domain/vocabulary';
 import type { VocabularySense } from '../../domain/vocabulary';
-import { supplementVocabularySense } from '../../domain/vocabulary/readiness';
+import { restoredDictionarySenses, supplementVocabularySense } from '../../domain/vocabulary/readiness';
 import { hasVocabularySenseEdits } from '../../domain/vocabulary/content';
 
 export type DictionaryIndex = Record<string, string>;
@@ -25,7 +25,10 @@ export function loadDictionaryIndex(): Promise<DictionaryIndex> {
 export async function loadTermDictionary(term: string, entryId?: string): Promise<VocabularySense[]> {
   const raw = await loadRawTermDictionary(term);
   // Cache source records only. Scoped teaching packs can arrive after an earlier lookup.
-  return entryId ? raw.map(sense => supplementVocabularySense(entryId, sense, [sense], hasVocabularySenseEdits)) : raw;
+  if (!entryId) return raw;
+  const sourceIds = new Set(raw.map(sense => sense.id));
+  const restored = restoredDictionarySenses(entryId, sourceIds).filter(sense => !sourceIds.has(sense.id));
+  return [...raw, ...restored].map(sense => supplementVocabularySense(entryId, sense, [sense], hasVocabularySenseEdits));
 }
 
 function loadRawTermDictionary(term: string): Promise<VocabularySense[]> {
@@ -42,9 +45,8 @@ function loadRawTermDictionary(term: string): Promise<VocabularySense[]> {
     const seen = new Set<string>();
     return (data as { senses: VocabularySense[] }).senses.filter(sense => {
       if (!sense || typeof sense.id !== 'string' || typeof sense.pos !== 'string' || typeof sense.definition !== 'string' || !sense.definition.trim()) return false;
-      const key = `${normalizeAnswer(sense.pos)}:${normalizeAnswer(sense.definition)}`;
-      if (seen.has(key)) return false;
-      seen.add(key); return true;
+      if (seen.has(sense.id)) return false;
+      seen.add(sense.id); return true;
     });
   }).catch(error => { if (terms.get(normalized) === request) terms.delete(normalized); throw error; });
   terms.set(normalized, request);

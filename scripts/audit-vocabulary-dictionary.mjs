@@ -6,9 +6,10 @@ import { fileURLToPath } from 'node:url';
 const identity = (entryId, senseId) => JSON.stringify([entryId, senseId]);
 const hash = value => createHash('sha256').update(JSON.stringify(value) ?? 'null').digest('hex');
 const areas = ['definition', 'example', 'collocations', 'distinctions'];
+const plainSourceGloss = value => value.replace(/^#+\s*/, '').replace(/\{\{[^{}]*\}\}/g, '').replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2').replace(/\[\[([^\]]+)\]\]/g, '$1').replace(/'{2,}/g, '').replace(/\s+/g, ' ').trim();
 
 /** Pending records are a work queue, never inferred linguistic approval. */
-export function inspectDictionaryReview({ entries, dictionaries, corrections, records, diagrams }) {
+export function inspectDictionaryReview({ entries, dictionaries, corrections, records, diagrams, restoredSources = [] }) {
   const errors = [], inventory = [], byTerm = [];
   const entryById = new Map(entries.map(entry => [entry.id, entry]));
   const supplements = new Map(corrections.map(row => [identity(row.entryId, row.senseId), row]));
@@ -28,6 +29,30 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
     }
     byTerm.push({ term, senses: dictionary.senses.length, reviewed: 0 });
   }
+  const preservedSenses = inventory.length;
+  const sourceIds = new Set([...sources.values()].map(sense => sense.id));
+  const restoredKeys = new Set();
+  for (const evidence of restoredSources) {
+    const { term, entryId, parentSenseId, parentSourceHash, sense, sourcePage, revision, sourceGloss } = evidence;
+    const key = identity(entryId, sense.id), start = errors.length;
+    const parent = dictionaries[term]?.senses.find(source => source.id === parentSenseId);
+    if (!parent || sourceIds.has(sense.id) || restoredKeys.has(key)) errors.push(`Invalid restored parent or duplicate source: ${term}/${sense.id}`);
+    if (!parent || hash(parent) !== parentSourceHash) errors.push(`Restored parent hash mismatch: ${term}/${sense.id}`);
+    if (entryById.get(entryId)?.term !== term || sourcePage !== term) errors.push(`Invalid restored entry identity: ${term}/${entryId}`);
+    let url;
+    try { url = new URL(sense.sourceUrl); } catch { /* Invalid evidence is reported below. */ }
+    if (!Number.isSafeInteger(revision) || revision <= 0 || url?.origin !== 'https://en.wiktionary.org' || url.pathname !== '/w/index.php' || url.searchParams.get('title') !== sourcePage || url.searchParams.get('oldid') !== String(revision)) errors.push(`Invalid restored source revision: ${term}/${sense.id}`);
+    if (!/^#{2,4}[^#:*]/.test(sourceGloss || '') || plainSourceGloss(sourceGloss || '') !== sense.definition || !sense.definition?.trim() || !sense.pos?.trim() || sense.license !== 'CC-BY-SA-4.0' || sense.attribution !== 'English Wiktionary contributors') errors.push(`Invalid restored source attribution or gloss: ${term}/${sense.id}`);
+    const row = supplements.get(key);
+    if (!row || row.dictionaryParentSenseId !== parentSenseId || hash(row.originalSense) !== hash(sense)) errors.push(`Restored supplement parent or source mismatch: ${term}/${sense.id}`);
+    restoredKeys.add(key);
+    sourceIds.add(sense.id);
+    inventory.push({ term, senseId: sense.id, sourceHash: hash(sense), status: 'pending', restored: true, flags: [] });
+    const termRow = byTerm.find(row => row.term === term);
+    if (termRow) termRow.senses++;
+    if (errors.length === start) sources.set(JSON.stringify([term, sense.id]), sense);
+  }
+  for (const row of corrections) if (row.dictionaryParentSenseId && !restoredKeys.has(identity(row.entryId, row.senseId))) errors.push(`Missing restored source evidence: ${row.entryId}/${row.senseId}`);
   const seen = new Set(), reviewed = new Set();
   let tasks = 0;
   for (const review of records) {
@@ -63,7 +88,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
   for (const item of inventory) if (reviewed.has(JSON.stringify([item.term, item.senseId]))) item.status = 'reviewed';
   for (const item of byTerm) item.reviewed = inventory.filter(sense => sense.term === item.term && sense.status === 'reviewed').length;
   const summary = {
-    terms: byTerm.length, senses: inventory.length, reviewed: reviewed.size, pending: inventory.length-reviewed.size,
+    terms: byTerm.length, senses: inventory.length, preservedSenses, restoredSenses: restoredSources.length, reviewed: reviewed.size, pending: inventory.length-reviewed.size,
     diagrams: diagrams.length, tasks,
     rawMissingExamples: inventory.filter(row => row.flags.includes('missing-example')).length,
     rawExampleReviewSignals: inventory.filter(row => row.flags.includes('example-review-signal')).length,
@@ -77,7 +102,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const read = file => JSON.parse(fs.readFileSync(file, 'utf8'));
   const index = read('public/dictionary/index.json');
   const dictionaries = Object.fromEntries(Object.entries(index).map(([term, file]) => [term, read(`public/dictionary/${file}`)]));
-  const result = inspectDictionaryReview({ entries: read('public/vocabulary-catalog.json').entries, dictionaries, corrections: read('src/domain/vocabulary/readinessCorrections.json'), records: read('src/domain/vocabulary/dictionaryReviewLedger.json').records, diagrams: read('src/domain/vocabulary/senseDiagrams.json') });
+  const result = inspectDictionaryReview({ entries: read('public/vocabulary-catalog.json').entries, dictionaries, corrections: read('src/domain/vocabulary/readinessCorrections.json'), records: read('src/domain/vocabulary/dictionaryReviewLedger.json').records, diagrams: read('src/domain/vocabulary/senseDiagrams.json'), restoredSources: read('src/domain/vocabulary/dictionarySenseSources.json') });
   console.log(JSON.stringify({ ...result.summary, errors: result.errors }, null, 2));
   if (result.errors.length) process.exitCode = 1;
   else if (!process.argv.includes('--check')) {
@@ -85,6 +110,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     fs.writeFileSync('local/audits/vocabulary-dictionary.json', JSON.stringify(result, null, 2)+'\n');
     const { summary: s } = result;
     const table = result.byTerm.filter(row => row.reviewed).map(row => `| ${row.term} | ${row.reviewed} | ${row.senses} | ${row.senses-row.reviewed} |`).join('\n');
-    fs.writeFileSync('docs/vocabulary-dictionary-audit.md', `# Full dictionary editorial audit\n\nRun: \`node scripts/audit-vocabulary-dictionary.mjs\`. Source records and stable identities are retained.\n\nThe complete index has **${s.terms.toLocaleString('en-US')} terms and ${s.senses.toLocaleString('en-US')} senses**. This ledger verifies **${s.reviewed} senses** across definition, example, collocations and distinctions; **${s.pending.toLocaleString('en-US')} remain pending**. Earlier default-learning patches are not counted as full dictionary review. ${s.tasks} reviewed distinction exercises and ${s.diagrams} exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense.\n\n| Term | Reviewed text senses | Source senses | Pending |\n| --- | ---: | ---: | ---: |\n${table}\n\n## Raw-source signals\n\n${s.rawMissingExamples.toLocaleString('en-US')} raw senses lack examples; ${s.rawMissingCollocations.toLocaleString('en-US')} lack collocations; ${s.rawMissingDistinctions.toLocaleString('en-US')} lack distinction notes. ${s.rawExampleReviewSignals.toLocaleString('en-US')} examples trigger an archaic, truncated or relation-text signal. These counts describe preserved raw source data. They do not describe all currently displayed defaults, and flags do not prove linguistic errors.\n\n## Review rules\n\nEach ledger row binds a catalogue entry, dictionary sense and SHA-256 of its original record. The audit rejects stale hashes, missing identities, incomplete reviewed fields, invalid exercises and diagrams that do not match the exact reviewed definition and part of speech. Personal edits and frozen sessions are outside this public editorial ledger. Specialised, historical and proper-name senses remain pending until examined; they are not silently excluded.\n\nThe ignored \`local/audits/vocabulary-dictionary.json\` contains every source identity, fingerprint, status and signal for subsequent batches. Run with \`--check\` to validate without rewriting reports. Passing this check verifies accounting and bindings, not completion of the dictionary.\n`);
+    fs.writeFileSync('docs/vocabulary-dictionary-audit.md', `# Full dictionary editorial audit\n\nRun: \`node scripts/audit-vocabulary-dictionary.mjs\`. Source records and stable identities are retained.\n\nThe complete index has **${s.terms.toLocaleString('en-US')} terms, ${s.preservedSenses.toLocaleString('en-US')} preserved raw senses and ${s.restoredSenses} restored submeanings** (${s.senses.toLocaleString('en-US')} total). This ledger verifies **${s.reviewed} senses** across definition, example, collocations and distinctions; **${s.pending.toLocaleString('en-US')} remain pending**. Earlier default-learning patches are not counted as full dictionary review. ${s.tasks} reviewed distinction exercises and ${s.diagrams} exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense.\n\n| Term | Reviewed text senses | Raw + restored senses | Pending |\n| --- | ---: | ---: | ---: |\n${table}\n\n## Raw-source signals\n\n${s.rawMissingExamples.toLocaleString('en-US')} raw senses lack examples; ${s.rawMissingCollocations.toLocaleString('en-US')} lack collocations; ${s.rawMissingDistinctions.toLocaleString('en-US')} lack distinction notes. ${s.rawExampleReviewSignals.toLocaleString('en-US')} examples trigger an archaic, truncated or relation-text signal. These counts describe preserved raw source data. They do not describe all currently displayed defaults, and flags do not prove linguistic errors.\n\n## Review rules\n\nEach ledger row binds a catalogue entry, dictionary sense and SHA-256 of its original record. The audit rejects stale hashes, missing identities, incomplete reviewed fields, invalid exercises and diagrams that do not match the exact reviewed definition and part of speech. Restored submeanings additionally require a preserved parent fingerprint, a revision-bound Wiktionary URL, the exact source definition line and independent source/evidence alignment. Their counts are separate from preserved raw-source signals. Personal edits and frozen sessions are outside this public editorial ledger. Specialised, historical and proper-name senses remain pending until examined; they are not silently excluded.\n\nThe ignored \`local/audits/vocabulary-dictionary.json\` contains every source identity, fingerprint, status and signal for subsequent batches. Run with \`--check\` to validate without rewriting reports. Passing this check verifies accounting and bindings, not completion of the dictionary.\n`);
   }
 }

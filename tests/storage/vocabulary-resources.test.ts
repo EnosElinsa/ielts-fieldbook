@@ -9,6 +9,16 @@ let release: ReturnType<typeof buildVocabularyResources>;
 // still compares a second independent build of the complete retained corpus.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 15_000);
 
+test('the second dictionary batch remains intact after restoring nested meanings', () => {
+  const manifestUrl = '/vocabulary-resources/manifest.a03965af94647481.json';
+  expect(release.resources.has(manifestUrl)).toBe(true);
+  const manifest = JSON.parse(release.resources.get(manifestUrl)!);
+  for (const url of [...Object.values(manifest.entryResources), ...Object.values(manifest.entryTeachingResources), ...manifest.units.flatMap((unit: any) => [unit.resource, unit.teachingResource]).filter(Boolean)] as string[]) expect(release.resources.has(url), url).toBe(true);
+  const pack = JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards['ve-18c82a44']])!);
+  expect(pack.teaching.readiness.corrections.filter((row: any) => row.entryId === 've-18c82a44')).toHaveLength(13);
+  expect(pack.teaching.readiness.corrections.some((row: any) => row.dictionaryParentSenseId)).toBe(false);
+});
+
 test('the first dictionary review release retains its complete immutable teaching packs', () => {
   const manifestUrl = '/vocabulary-resources/manifest.75bcfefaa9b04417.json';
   expect(release.resources.has(manifestUrl)).toBe(true);
@@ -69,7 +79,7 @@ test('resources use deterministic content-addressed URLs', () => {
     expect(url).toMatch(/^\/[a-zA-Z0-9._/-]+$/);
     expect(decodeURIComponent(url)).toBe(url);
   }
-});
+}, 15000); // Reconstruct all retained release catalogs twice, including on slower CI hosts.
 
 test('previously released discovery and teaching URLs remain available with legacy identities', () => {
   const generated = release;

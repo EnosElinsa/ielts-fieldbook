@@ -13,9 +13,9 @@ import { resolve } from 'node:path';
 import { Readable } from 'node:stream';
 import { createHash } from 'node:crypto';
 
-const args = Object.fromEntries(process.argv.slice(2).reduce((all,arg,index,argv) => {
+const args = process.argv.slice(2).reduce((all,arg,index,argv) => {
   if (arg.startsWith('--')) all[arg.slice(2)] = argv[index+1]; return all;
-}, {}));
+}, {});
 if (!args.input || !args.terms || !args.output) throw new Error('Usage: --input dictionary.jsonl --terms terms.txt --output enrichments.json');
 const termInput=await readFile(resolve(args.terms),'utf8');
 const requestedTerms=/^\s*[\[{]/.test(termInput)?(()=>{const snapshot=JSON.parse(termInput);return (snapshot.records || snapshot.entries || snapshot.vocabulary || snapshot).map(item=>typeof item==='string'?item:item.term);})():termInput.split(/\r?\n/);
@@ -38,7 +38,7 @@ for await (const line of lines) {
   const term=String(item.word || item.lemma || '').trim();
   if (!terms.has(term.toLowerCase()) || (item.lang_code && item.lang_code!=='en')) continue;
   const senses=(item.senses || []).map((sense,index)=>({
-    id:`kaikki:${item.pos || 'expression'}:${createHash('sha256').update(JSON.stringify([term,item.etymology_number,item.etymology_text,sense.glosses || sense.definition,index])).digest('hex').slice(0,16)}`,definition:english(sense.glosses?.[0] || sense.definition || ''),
+    id:`kaikki:${item.pos || 'expression'}:${createHash('sha256').update(JSON.stringify([term,item.etymology_number,item.etymology_text,sense.glosses || sense.definition,index])).digest('hex').slice(0,16)}`,definition:sense.tags?.includes('heading') && (sense.glosses?.length || 0) <= 1 ? '' : english(sense.glosses?.at(-1) || sense.definition || ''),
     example:english(sense.examples?.[0]?.text || sense.examples?.[0] || ''),pos:english(item.pos || ''),
     synonyms:relations(sense.synonyms || item.synonyms),antonyms:relations(sense.antonyms || item.antonyms),
     source:'Kaikki.org English Wiktionary export',license:'CC-BY-SA-4.0',attribution:'English Wiktionary contributors',sourceUrl:`https://en.wiktionary.org/wiki/${encodeURIComponent(term)}`,

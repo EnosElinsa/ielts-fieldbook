@@ -7,6 +7,7 @@ import { resolveVocabularyLearningContext } from '../../src/domain/vocabulary/co
 import ledger from '../../src/domain/vocabulary/dictionaryReviewLedger.json';
 import corrections from '../../src/domain/vocabulary/readinessCorrections.json';
 import previousRelease from '../../src/domain/vocabulary/resourceDictionaryRound2Baseline.json';
+import restoredSources from '../../src/domain/vocabulary/dictionarySenseSources.json';
 import { addVocabularyItem, normalizeVocabularyCollections } from '../../src/domain/vocabulary';
 import { emptyState } from '../../src/domain';
 const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
@@ -50,12 +51,14 @@ test('saving a dictionary choice retains the exercise and both source and editor
 
 test.each(ledger.records)('$term/$senseId survives selection, reopening and targeted practice', row => {
   const base = catalog.entries.find((e: VocabularyEntry) => e.id === row.entryId) as VocabularyEntry;
-  const original = JSON.parse(readFileSync(`public/dictionary/${index[row.term]}`, 'utf8')).senses.find((s: VocabularySense) => s.id === row.senseId) as VocabularySense;
+  const original = (JSON.parse(readFileSync(`public/dictionary/${index[row.term]}`, 'utf8')).senses.find((s: VocabularySense) => s.id === row.senseId) || restoredSources.find(s => s.term === row.term && s.sense.id === row.senseId)?.sense) as VocabularySense;
+  expect(original, `missing independent source for ${row.term}/${row.senseId}`).toBeDefined();
   const expected = corrections.find(s => s.entryId === row.entryId && s.senseId === row.senseId)!;
   const selected = supplementVocabularySense(row.entryId, original, [original], hasVocabularySenseEdits);
   expect(selected.definition).toBe(expected.definition);
   expect(selected.example).toBe(expected.example);
   expect(selected.collocations).toEqual(expected.collocations);
+  for (const field of ['synonyms', 'antonyms', 'wordFamily', 'register'] as const) if (field in expected) expect(selected[field]).toEqual(expected[field as keyof typeof expected]);
   const normalized = normalizeVocabularyCollections({ vocabulary: [{ ...base, senses: [original] }] }).vocabulary[0];
   expect(resolveVocabularyLearningContext(normalized, { senseId: row.senseId }).sense?.example).toBe(expected.example);
   const saved = { ...base, senses: [selected, ...base.senses.filter(s => s.id !== selected.id)] };

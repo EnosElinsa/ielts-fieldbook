@@ -1405,6 +1405,1481 @@
         "collocations",
         "distinctions"
       ]
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:6c73c7a8e18d7be3c5",
+      "sourceHash": "33f1cdba8c02ff1c741bc99740523dcb99363b5b7aa323436c616330e9b1f66a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:59e8ba6ed4beedab05",
+      "sourceHash": "2737cdcd9c01b272b62052d5139a4f7e4fb75c6fb241f3b4d86900341a2bf35c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:b6ea6400dbb011a6cc",
+      "sourceHash": "86d09b04ec31ffd118a49cc1a94367b3014b7d12395f9d6d296690e9f7ecf7c3",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:fb70786748d3c0c23e",
+      "sourceHash": "3bf37345dca2120baa94398596776eb5180a19c4d14e3d6b58db355e1ee84aa3",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:73961923ad4eaa1016",
+      "sourceHash": "83336061a49f91bc75193418b62fcd21ff9be53d6f84a122178f804c2c05a51b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:0a29a87022fa9fdb77",
+      "sourceHash": "4de8b2bbe541f5342b739ab9030fe41685d02052ecca286daa697224a594a49b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:52dfbea668f94d1283",
+      "sourceHash": "16f5b2fc27281fd5713a57d93986fd1d053ed7d02570fbd1cc21dcb4d200b84d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:ab1dfaaf405edbbb66",
+      "sourceHash": "ad51387d90d4623a1ebd72457c01aad7835a59d7dea8268a4117cc777d3b6833",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:48880e7a04a1da4e89",
+      "sourceHash": "14c22e6538f344ff5c96436aec90526414eec113bf1eab1e47905f2f6eb45ac3",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:cc4632dd642dcf8d50",
+      "sourceHash": "b14ba6cbcdb2ff28084cf5586444445207ac4077e078127e5277d6a26e8dece0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:bae7bee202d426b5dd",
+      "sourceHash": "b20f504faa87810b6684c39df53d8d41a4f86a68bd565b1207baa05aaf553000",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:e2ce6ba94044906d9f",
+      "sourceHash": "e8a5b13e156d0b44f9fc2e9183f5bed8dbb0093607b0fb54e4d7bbb581164455",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:3ba90860fcdf911ddc",
+      "sourceHash": "dbe78447b668d2a70e41823b205644aaac4c27263bc49086e111c4c12b147835",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:b88dc2d7b4a8f95451",
+      "sourceHash": "bff93bd1dcafbfcc8bd02ba0a8c94c9cd59685dce2c6f401e4b76917f5e9104e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Field&oldid=89750888"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:02d88a54701afec612",
+      "sourceHash": "e665f9e04398c35530f571e559fae184079a07d614016a54aa8255e8533f11b7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Field&oldid=89750888"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:0724b12844d2024267",
+      "sourceHash": "415e805d437eedaab93c5e8223be6e7248e318b83ef3418216e2392a57fa035f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Field&oldid=89750888"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:5e93c8a109a55c9b6c",
+      "sourceHash": "a058a4eba8f13896fa9bcbdf42db449629e8cf7ff043f8d24ea046028d5c5f17",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Field&oldid=89750888"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:c653869ca2a7f09eb7",
+      "sourceHash": "e6b7eee3fe51c3fcc1eb4d891578307c8d350f4a5f1a02427a610a87ecb306c8",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Field&oldid=89750888"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:ffa3d495fb49ad7b61",
+      "sourceHash": "dd0983609c5de9d7160d706e910e6e442c97055ec9cec59eee9dfab2196a12bb",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Field&oldid=89750888"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:e293c4e98159a778fd",
+      "sourceHash": "10cf23c3c71a2da328dc99988298cc2d89d3fedee2599e7693993d3300b30166",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Field&oldid=89750888"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:e9aef6e2b622b9a772",
+      "sourceHash": "35a1716b3d2fb2f24840199780db65a7b42fbdf4d11fd09a263bc4c078b94241",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Field&oldid=89750888"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:91f8ef321fd1216d29",
+      "sourceHash": "8c4f9e84b8fe0f2ef1a8e4d55ad9070470a1d199086f26bf4d419a9f264eea44",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Field&oldid=89750888"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:1881fc1db43863deb3",
+      "sourceHash": "07fa0b93ce8d3dbf96d469d2c2a147566505c0f1bae33e8b72a9657d414a413f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:716a3a9f29b57e1c66",
+      "sourceHash": "c052c2132de2b4032658c6a43363975e528bcabb8d13ea0de4294775721915c6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:9144f1d282a2ee34fc",
+      "sourceHash": "3bf1c95406d249b85a3cdf7bf8cf39c2c188254faa98d6eb4159373acc4922bb",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:b7d35a8560c673fcd5",
+      "sourceHash": "f0b95758232c45896833a42b4c9d693983c66000276a98805a427810b31e46fd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:905e73ebd2d7f8b261",
+      "sourceHash": "2998b00a2149a83835cd105135d014e61257559575ec9bc4b198f9b12338ec6a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628",
+      "diagramReviewed": true
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:52402e3224e01bbb04",
+      "sourceHash": "322af438872f4e2cc98b8e9d73a26e2a4339ba35f88e7619d57259bd22a400c6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:aed003c0af66b543aa",
+      "sourceHash": "adde592b5c3574bb42e43b725c84af8b254bde779c6fe08e83348c9a53d10353",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:b27b8b98abc1ab7c81",
+      "sourceHash": "9d3cc8defdec5762a48b6968992bd8c86747330a6000eda4558f0f0c29086988",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:4ea7ab061bcf3b62ff",
+      "sourceHash": "e73407b1ecad79ab74ca1dde32f5f83109f54283a6f595a3f85c7943faabe73b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:851a378554397741e2",
+      "sourceHash": "59112844249828955e312ea2210a3ea41ddf6a379dc3e3734a02c877068ebe9c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:9ac2f8a62fa776fdcf",
+      "sourceHash": "936c6988b6ba35277a09f8019b7144fc8609a48f97be37f675b5a6e81eab3620",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:c9557e9ea07d0b5a95",
+      "sourceHash": "923eeb407833cead6be6d2fa914d07446b98a3b4a2a9f9557e8f4cf246449cfa",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:10d2e8f2ca1bbed557",
+      "sourceHash": "b93f7c9263c55c804d98bfc7cee05e83b25d35da9da688f9fb92c65900de2fde",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:a6ff271c8789771349",
+      "sourceHash": "18627caa228ee27d169642ec7da843c901e0dedb555fc2a51b0bc5f3cb65d830",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:15006fced80db24a9d",
+      "sourceHash": "3bdf41232042609f6101ae8c72c953839ee6ef2f04e5a86fab6f402e47e4ef96",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:c2b14a57281e600264",
+      "sourceHash": "b1242b5cdf2b85ac93ab0c8b615bbb622cde8d498963cfb9fa077d733f4a430f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:17c9651a5dc203e433",
+      "sourceHash": "be3d4f331e8513faa5abec62637431f971d5271279de64cdbd88b36b6b4b8c10",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:15b4889aa54f27181a",
+      "sourceHash": "16a447d8c9b916a8bf6fa7517798ff5f2b22d6f05aeffe653dfae4230c48a185",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:e48096d6a6b879213a",
+      "sourceHash": "86cd3a046977cd47ba8537eb761fe3e0b6033aeec008ec262b7769879a53ca4d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:6d4a27a0a5e1e6854d",
+      "sourceHash": "1807b041ac3e8cb65ba161278143b13617b784e86ddf048e7e5332f736940b2f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:1410a68788779ca61e",
+      "sourceHash": "a4579c3281680ef9084f11376557af08db5fb671b79e0823e67dfbffe4bd5689",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=FORM&oldid=85200642"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:c20012ddfaf39b23b7",
+      "sourceHash": "eecad21ad663ec7edcd4ded8130a021134607f95081f36c7a14341e9efd58ac8",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:aba05dffc1740caa0c",
+      "sourceHash": "c443da000f1d3d589caed11f475d8b6f3d5c0dc99975fe93c5060c7745d27552",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:528bd27ebc936305df",
+      "sourceHash": "8c0bcbd70bc4bf40ae22755cd5fb8f5a82ea57da9e960a8ce34fd9f79d9d0cd2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:d8419bac965a523c04",
+      "sourceHash": "e0f7078a5003f336b3ae5f5acaa32880d3265df11ecc1ec74a183139b8f41686",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:c7ec78a619beba0a6d",
+      "sourceHash": "7ef6afca19d412e32013b934b12d99902bc6092e9b58627bfe946976e8d5ab72",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090",
+      "diagramReviewed": true
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:d12884d933f42427d3",
+      "sourceHash": "c03a2f55f4b93ca17f4c1b9ddbd7026146148dc0ecc70e26045c5ecfae90f3c7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:3fd58b544656a78b44",
+      "sourceHash": "0452e7f9b6a5225d20daaaeacff7a52aeb34916f33e96b9cbd0691e58fee5214",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:1252c89628cbaf900c",
+      "sourceHash": "a35e5bdf6e8f0288156be3a3d294e0dcd85b76073da8be61c5593d378fb9e988",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:fe729d89d9f0d01ce6",
+      "sourceHash": "6c773ab27c30626372374c2d984990431a2d15363ec5c7e86d42f00e38c2e9df",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:fb4ec5fabd8d73e72b",
+      "sourceHash": "bd1f08537e28c71c6960567553a8b3d9b8d6163a1da6d9d2112d1c6646226d6e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:44d0ecc9211271dd2f",
+      "sourceHash": "d114bfea21c02f884aa28f84e1e092c69ad1b99c43bf853ed5859cb1a918d7cf",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:561cacac09f1bda031",
+      "sourceHash": "e26ec2f604b25f205564d2c5e6913b690521b7c77d3f412138061be5050414ff",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:46a3633cac5d3c75f1",
+      "sourceHash": "3362c50ad596706e9badb12e5c71092fb175d33a9a99f8fb5cbcafca1a79fc0b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:5dc2bf490246f394c7",
+      "sourceHash": "833a9f8f63ccc1b164f08f114cbd320e63631e4942b54f70a38f42072dce1f7c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:bc2b34cfc8ab1ff1d3",
+      "sourceHash": "6a1e3f5c752bbaa5e46e1ce5ab0fa017ac569612057e3259e6fb6fc693404035",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090",
+      "diagramReviewed": true
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:2c642b68badbf91db9",
+      "sourceHash": "9f4153b51f603b589d0e1f8af5ce747971cacfe895f1eaf2c67c4390ee1b0f6a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "subject",
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:8e58dbacf3a0a810d0",
+      "sourceHash": "0bd164a17514c1b0a5a7b08ef7ee5a2cf73d7269bef7da319a4d0c5c2f47bb3b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:b281f10a696be4cf84",
+      "sourceHash": "a52358f762ca21a1e7013ae2e1eeac15adfed8b0809b9105faefec26b2f04ec5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:56b9958fb9a6e545b0",
+      "sourceHash": "677f53a70b375d624434c84890da131979c53e5fe34828a0070f2a03c3929ed1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:2f2c2f84e51cb6249d",
+      "sourceHash": "fb37dbfd7b6a73f1b1566ef8763b4a25a9dfd25bd9c83372ec7fb298347f2d8d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:42fd485f1a724d6ddb",
+      "sourceHash": "8ee2fe9c7c5037f720949135faa174c966f57e0632a9d3a940d0e7db2f54b7a7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:036ee9e87609bddc55",
+      "sourceHash": "b199d53cc63a176a2a8cf35bc05b8651981e7211264f3dde6b70289d5d4b4de7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:db35c036e7ee34467c",
+      "sourceHash": "17bf4c12a152adf13e5cb241fd81aca93d41cffe3dd4776d9fef03fcd8a7f7cb",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:c84ba7115ff6bd6fe5",
+      "sourceHash": "023281be75edbb2ed5f12458df9620a53eab6200f3898b7aae1f83f46b8fd434",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:80c1ad587c0afbe12b",
+      "sourceHash": "7fc4562737031ed4bf844967411d42eaa3d7183373f7504bf925aced39065005",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:105315487a80abddae",
+      "sourceHash": "cbef0eb1c243e80b6848076e2cb3144fe33bbe9f3e38ec9526a95e5762574cee",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:316391103810ca99a2",
+      "sourceHash": "162c03d9be6471c954900066b0c4d655e4c02d29947bee785f41f40359f27393",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:dc0dd7b4dd1404d535",
+      "sourceHash": "9734821f581810a16500964df510251102f3b41048bdd0fcfbd64a8192bd709c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:f6b023f8df3ab19435",
+      "sourceHash": "b1a35537cb47bfa3428fc4f05b8add2f743c5fa6ebab7c49c73a7ec8a1d74fd0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:b77c35876fee0603fb",
+      "sourceHash": "0b506ffae7c7ef90d088d948efa6cd748fe29865d032f839076612d1ad49f413",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:f8b26083f774e24189",
+      "sourceHash": "9cde9347b76d48e91fa37eff8e09bf9be85e476ae679b80b09a0536bcc0643e9",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:ea321524cde62630b6",
+      "sourceHash": "fe371522ded107b538da5586f732d4aeee5dcf0beab5b8b6140e38be09f9c3e8",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:c896822d1e453633eb",
+      "sourceHash": "d32aed62a66f7f2a140ce9ade1090b057a00b10fc1fdc05ee816ff6f0b4fcd24",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:c54559024456cde0b3",
+      "sourceHash": "44f1c3de256d299ec888e3f20814c46e36dfc2f1db2bac2ebf368d44fefb5641",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:beebc8013574790815",
+      "sourceHash": "b18dfaf5b830d006485725b76c95cabde8eecf6ec95c886931d9c14ff99a8e14",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:32c39fd2b7e6631986",
+      "sourceHash": "9748e5986e86cfedb74f168fbf5eed45dd03f54d5adba093f5313e61d31cb270",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:32379bc9fdda5d441a",
+      "sourceHash": "2cc2c6f7483614d1de6e47d5c57f1151d315b8cb113c1bb4269884559edde221",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:f85e111ddab228d30f",
+      "sourceHash": "b6a9c9d0706329e6995ab1061777758255bc88a07bcd334a82ff9fbeb4374b7d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:f783486308649d6eb6",
+      "sourceHash": "62b3aba5a0dc2f9bf11116f21c02df622574683a4529bf9914d71e7a5849b7f7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Issue&oldid=92187564"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:39136cb5a71eb610d0",
+      "sourceHash": "e8bc8cb127ab7597d58eb390f57c6ea0087a8ead46d6405a9775d2e89cc7624b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:4b246e9f34e9861f7f",
+      "sourceHash": "19cf0ac762f49e1ece759396f885e93cd0725e4a47033433f819ae9aeecc7c2e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:dc9d5cff0208282861",
+      "sourceHash": "cbc63dbc6c6c851bebcdad66cf495e9b194de77682368564761c287390dc6df5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:edfe2e61bb103dd1ad",
+      "sourceHash": "bf0bb5861458f651b86f8e3f1f241d95e61c1a852167c47da4369640456f7dce",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "diagramReviewed": true
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:c8401dcbd71b405568",
+      "sourceHash": "241f68a2c1bffd82225ba9a20678381c4aca50dcf1e3ef13a8042581ca168b59",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531",
+      "diagramReviewed": true
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:e954e45e6d0108ceff",
+      "sourceHash": "3a9d33beb5b21bdcec509d51a7365904aea9d4e1eced5de28469d7508f1f536a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:00ac062b640a535bb5",
+      "sourceHash": "67a9d9ec265f27ba1d49cc52a6dc1ac73337b84a46ddc6447cc65021c6057a4b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:a4a498c4e20da7a5fb",
+      "sourceHash": "31b088ac6143e31f4451ae3841e92d147d1c2602de2f225efe27f15d1689e025",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:38f35908036bc9d95d",
+      "sourceHash": "0f84f9223aa4c3c580c89d3d2e07d5eac79302016e2d1aecda187c7a6586d2ba",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:81b01cb9b441811d53",
+      "sourceHash": "22d2339df99dfc75a67c3aae9e55c823e120d3f4d447722099797edc2571d1cc",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "field",
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:89242db43a03cb2ab8",
+      "sourceHash": "460d6e2b6ef3291ca0f34531e45866d17e1841a314655a897a514e0c4319b17f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=field&oldid=93519531"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:9fc8f05406d688267f",
+      "sourceHash": "791bdd5734a0ee8a26fe2f5692fd4d26c3177451ae13744279c6e6ffba98e2ba",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:1d16e353d8fe3fdde5",
+      "sourceHash": "8e8afd4db88079625eabfbf7b353dae5f0c4968e994f9ebc68d45d2c02c06c7e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:46e63438df3e19a8bf",
+      "sourceHash": "b97794db5dd1f9b7118011e9125897bf2f57bb84a3131d52542ef0d07cc61e76",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:7564045e8078c2fe94",
+      "sourceHash": "cf7949acae91677585cce08f7f6f5805dc043f874ea52ff684ccc5c09c5dff0a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:8a4dfbbd4c8729aebf",
+      "sourceHash": "051332e903b640b00929019156a49ccca08b4d5e1bb71c3141a09e1af3c05d55",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:a50ed3187e2d8fc5c7",
+      "sourceHash": "6a31745241e654583b516ac4a46d34c34d203ddb49e0860ba55b7b6747b548c0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:75e952d9b213c282e6",
+      "sourceHash": "99872fa1293c4e3f9d6403925547fd9c4615db8a9a9b3fa61c094734a10278ba",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:747d243e98d43f1cee",
+      "sourceHash": "435538743d4c61b61cd500759543b6c6d1d74600ae4ad5511a618799c0757ed4",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:3b199424071924958b",
+      "sourceHash": "a8d095b8a0c039ee13222b209765ae43b152652b0215acaebfa7102fd9d007b3",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:502ee2933831964b7f",
+      "sourceHash": "414c569fa58b34cd1af499a7ada95d892487f583d32c8e31e9e4f131e23fade1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "form",
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:cda73110825dcba904",
+      "sourceHash": "95b9dac74a0cff45a8acedf11c0ebc5625f0aa26e7b4bc3322dcc496115870b7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=form&oldid=93549628"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:cdc753eab959130201",
+      "sourceHash": "ef6121c03f9953f186791fd399ca94055e00c6574d48b71b00b12fabeb59c441",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780",
+      "diagramReviewed": true
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:8b964c052f5972d8ac",
+      "sourceHash": "940192b8cc781f52fb44360fc08f7a1a60512fcc291f152c8e91a63c40030176",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:c52b5cdca20e383b5c",
+      "sourceHash": "404472c378c7b82cbe2b072d22bbe16ff28e1fb16b18e083d27b9bf188834b0c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:5394dd15f9aaf7538d",
+      "sourceHash": "6e9886836cd4a1d0a3862021ecd76358935dd981ce9f2b5395726f2c81efcddc",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:3c3c65fa21798e3170",
+      "sourceHash": "bf22fdb399a6b496ed554152770423eae5c10968e83e64f02a1a5e5f4b9e28f2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:9452931aac3ed88f78",
+      "sourceHash": "9ed80e30dd81d03a3ce069fa0230dfefd1dd143feb3866c76f2289f65bc10fc9",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:8b0ad11df496609867",
+      "sourceHash": "2c8a024ea5531bf1eb70e165796da3eb1b779fb3696315cdc15357230ef0d3fb",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:fc81f2c93966eb66eb",
+      "sourceHash": "337a195d31937f36d96200f5a34a86114325ab496a87a90d6be4190de2ca7231",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
+    },
+    {
+      "term": "issue",
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:e39feed297a2505333",
+      "sourceHash": "93b41dd695a2f74dcbc440d9efdc01e04bc501843b408bf5b62b356c96b752a3",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=issue&oldid=93548780"
     }
   ]
 }

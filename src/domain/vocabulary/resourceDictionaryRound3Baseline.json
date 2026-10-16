@@ -1,0 +1,505 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:6c73c7a8e18d7be3c5"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:59e8ba6ed4beedab05"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:b6ea6400dbb011a6cc"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:fb70786748d3c0c23e"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:73961923ad4eaa1016"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:0a29a87022fa9fdb77"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:52dfbea668f94d1283"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:ab1dfaaf405edbbb66"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:48880e7a04a1da4e89"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:cc4632dd642dcf8d50"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:bae7bee202d426b5dd"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:e2ce6ba94044906d9f"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:3ba90860fcdf911ddc"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:b88dc2d7b4a8f95451"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:02d88a54701afec612"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:0724b12844d2024267"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:5e93c8a109a55c9b6c"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:c653869ca2a7f09eb7"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:ffa3d495fb49ad7b61"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:e293c4e98159a778fd"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:e9aef6e2b622b9a772"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "kaikki:91f8ef321fd1216d29"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:1881fc1db43863deb3"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:716a3a9f29b57e1c66"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:9144f1d282a2ee34fc"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:b7d35a8560c673fcd5"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:905e73ebd2d7f8b261"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:52402e3224e01bbb04"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:aed003c0af66b543aa"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:b27b8b98abc1ab7c81"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:4ea7ab061bcf3b62ff"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:851a378554397741e2"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:9ac2f8a62fa776fdcf"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:c9557e9ea07d0b5a95"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:10d2e8f2ca1bbed557"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:a6ff271c8789771349"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:15006fced80db24a9d"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:c2b14a57281e600264"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:17c9651a5dc203e433"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:15b4889aa54f27181a"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:e48096d6a6b879213a"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:6d4a27a0a5e1e6854d"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "kaikki:1410a68788779ca61e"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:c20012ddfaf39b23b7"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:aba05dffc1740caa0c"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:528bd27ebc936305df"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:d8419bac965a523c04"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:c7ec78a619beba0a6d"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:d12884d933f42427d3"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:3fd58b544656a78b44"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:1252c89628cbaf900c"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:fe729d89d9f0d01ce6"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:fb4ec5fabd8d73e72b"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:44d0ecc9211271dd2f"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:561cacac09f1bda031"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:46a3633cac5d3c75f1"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:5dc2bf490246f394c7"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:bc2b34cfc8ab1ff1d3"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:2c642b68badbf91db9"
+    },
+    {
+      "entryId": "ve-70d0ce19",
+      "senseId": "kaikki:8e58dbacf3a0a810d0"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:b281f10a696be4cf84"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:56b9958fb9a6e545b0"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:2f2c2f84e51cb6249d"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:42fd485f1a724d6ddb"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:036ee9e87609bddc55"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:db35c036e7ee34467c"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:c84ba7115ff6bd6fe5"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:80c1ad587c0afbe12b"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:316391103810ca99a2"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:dc0dd7b4dd1404d535"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:f6b023f8df3ab19435"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:b77c35876fee0603fb"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:f8b26083f774e24189"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:ea321524cde62630b6"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:c896822d1e453633eb"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:c54559024456cde0b3"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:beebc8013574790815"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:32c39fd2b7e6631986"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:32379bc9fdda5d441a"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:f85e111ddab228d30f"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:f783486308649d6eb6"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:39136cb5a71eb610d0"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:4b246e9f34e9861f7f"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:dc9d5cff0208282861"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:edfe2e61bb103dd1ad"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:c8401dcbd71b405568"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:e954e45e6d0108ceff"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:00ac062b640a535bb5"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:a4a498c4e20da7a5fb"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:38f35908036bc9d95d"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:81b01cb9b441811d53"
+    },
+    {
+      "entryId": "ve-a34ea67",
+      "senseId": "wiktionary:restored:89242db43a03cb2ab8"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:9fc8f05406d688267f"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:1d16e353d8fe3fdde5"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:46e63438df3e19a8bf"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:7564045e8078c2fe94"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:8a4dfbbd4c8729aebf"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:a50ed3187e2d8fc5c7"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:75e952d9b213c282e6"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:747d243e98d43f1cee"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:3b199424071924958b"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:502ee2933831964b7f"
+    },
+    {
+      "entryId": "ve-7c6e2f13",
+      "senseId": "wiktionary:restored:cda73110825dcba904"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:cdc753eab959130201"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:8b964c052f5972d8ac"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:c52b5cdca20e383b5c"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:5394dd15f9aaf7538d"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:3c3c65fa21798e3170"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:9452931aac3ed88f78"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:8b0ad11df496609867"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:fc81f2c93966eb66eb"
+    },
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "wiktionary:restored:e39feed297a2505333"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-abad7dc",
+      "senseId": "kaikki:105315487a80abddae",
+      "term": "issue",
+      "example": "The committee discussed the issue of rising travel costs.",
+      "definition": "A matter or problem that needs discussion or resolution.",
+      "pos": "noun",
+      "originalSense": {
+        "id": "kaikki:105315487a80abddae",
+        "definition": "Any question or situation to be resolved",
+        "example": "The issue before the court is whether participation in a group blog makes the plaintiff a public figure under the relevant statute.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "at issue",
+          "back issue",
+          "bank of issue",
+          "bond issue",
+          "bread-and-butter issue",
+          "bring to issue",
+          "bring to an issue",
+          "cyberissue",
+          "feigned issue",
+          "force an issue",
+          "force the issue",
+          "fudge the issue",
+          "general issue",
+          "genuine issue of material fact",
+          "GI",
+          "glamor issue",
+          "glamour issue",
+          "government issue",
+          "have an issue with",
+          "in issue",
+          "in the issue",
+          "issue-based",
+          "issue-blessed",
+          "issue book",
+          "issue boot",
+          "issue cigarette",
+          "issue date",
+          "issue day",
+          "issue department",
+          "issue desk"
+        ]
+      }
+    }
+  ]
+}

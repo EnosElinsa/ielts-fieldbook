@@ -22,3 +22,19 @@ test('orphaned identities, duplicate reviews and mismatched diagrams fail the au
   expect(result.errors.join(' ')).toMatch(/source sense/i);
   expect(result.errors.join(' ')).toMatch(/diagram/i);
 });
+
+const hash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+const restored = { id: 'restored', pos: 'noun', definition: 'A river edge.', example: '', sourceUrl: 'https://en.wiktionary.org/w/index.php?title=bank&oldid=123', source: 'English Wiktionary, restored submeaning', license: 'CC-BY-SA-4.0', attribution: 'English Wiktionary contributors' };
+const evidence = { term: 'bank', entryId: 'bank', parentSenseId: original.id, parentSourceHash: hash(original), revision: 123, sourcePage: 'bank', sourceGloss: '## A river edge.', sense: restored };
+const restoredInput = { ...input, restoredSources: [evidence], corrections: [...input.corrections, { ...row, senseId: restored.id, originalSense: restored, dictionaryParentSenseId: original.id }], records: [...input.records, { ...review, senseId: restored.id, sourceHash: hash(restored) }] };
+
+test('restored submeanings require independent revision evidence and preserve raw counts', () => {
+  const valid = inspectDictionaryReview(restoredInput);
+  expect(valid.errors).toEqual([]);
+  expect(valid.summary).toMatchObject({ senses: 2, preservedSenses: 1, restoredSenses: 1, reviewed: 2, pending: 0, rawMissingExamples: 1 });
+  for (const patch of [{ parentSourceHash: 'changed' }, { parentSenseId: 'absent' }, { entryId: 'another-entry' }, { revision: 124 }, { sense: { ...restored, id: original.id } }, { sourceGloss: 'not a definition line' }]) {
+    expect(inspectDictionaryReview({ ...restoredInput, restoredSources: [{ ...evidence, ...patch }] }).errors.length).toBeGreaterThan(0);
+  }
+  expect(inspectDictionaryReview({ ...restoredInput, restoredSources: [] }).errors.join(' ')).toMatch(/restored|source sense/i);
+  expect(inspectDictionaryReview({ ...restoredInput, corrections: [...input.corrections, { ...restoredInput.corrections[1], dictionaryParentSenseId: 'other-parent' }] }).errors.join(' ')).toMatch(/parent/i);
+});

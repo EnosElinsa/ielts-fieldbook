@@ -1,7 +1,7 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default } from './runtimeData';
 import type { VocabularyEntry, VocabularySense } from './types';
 
-export const VOCABULARY_READINESS_VERSION = 'core-2026-10-17.2';
+export const VOCABULARY_READINESS_VERSION = 'core-2026-10-17.3';
 const identity = (entryId:string, senseId:string) => `${entryId}\u0000${senseId}`;
 const core = new Map<string,Supplement>();
 const additions = new Map<string,Supplement>();
@@ -16,6 +16,12 @@ function ensureReadiness() {
  for (const row of vocabularyTeaching.readiness.defaults) preferred.set(row.entryId,row);
 }
 const editorial = {source:'Fieldbook core content review',license:'CC-BY-4.0',attribution:'Fieldbook editorial contributors'};
+
+/** Restored child meanings belong only to their catalogue entry and source parent. */
+export function restoredDictionarySenses(entryId: string, sourceIds: Set<string>): VocabularySense[] {
+ ensureReadiness();
+ return [...additions.values()].filter(row => row.entryId === entryId && row.dictionaryParentSenseId && sourceIds.has(row.dictionaryParentSenseId) && row.originalSense?.id === row.senseId).map(row => row.originalSense!);
+}
 
 export function vocabularyReadinessBaselines(entryId:string,senseId:string):VocabularySense[] {
  ensureReadiness();
@@ -46,6 +52,7 @@ export function supplementVocabularySense(entryId:string, sense:VocabularySense,
   ...(row.collocations ? {collocations:row.collocations}:{}),
   ...(row.distinctions ? {distinctions:row.distinctions}:{}),
   ...(row.distinctionTask ? {distinctionTask:row.distinctionTask}:{}),
+  ...Object.fromEntries((['synonyms','antonyms','wordFamily','register'] as const).filter(field => row[field] !== undefined).map(field => [field,row[field]])),
   ...(missing ? {source:'Fieldbook editorial',license:'CC-BY-4.0',attribution:editorial.attribution}:{}),
   editorial,
  };

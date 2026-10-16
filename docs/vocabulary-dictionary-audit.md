@@ -2,19 +2,23 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms and 51,354 senses**. This ledger verifies **115 senses** across definition, example, collocations and distinctions; **51,239 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 23 reviewed distinction exercises and 24 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 31 restored submeanings** (51,385 total). This ledger verifies **228 senses** across definition, example, collocations and distinctions; **51,157 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 33 reviewed distinction exercises and 30 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense.
 
-| Term | Reviewed text senses | Source senses | Pending |
+| Term | Reviewed text senses | Raw + restored senses | Pending |
 | --- | ---: | ---: | ---: |
 | account | 13 | 13 | 0 |
 | bank | 14 | 45 | 31 |
 | capital | 11 | 18 | 7 |
 | charge | 13 | 34 | 21 |
 | current | 6 | 9 | 3 |
+| field | 33 | 33 | 0 |
+| form | 32 | 32 | 0 |
 | interest | 8 | 14 | 6 |
+| issue | 31 | 33 | 2 |
 | matter | 12 | 12 | 0 |
 | rate | 13 | 27 | 14 |
 | state | 11 | 11 | 0 |
+| subject | 17 | 17 | 0 |
 | value | 14 | 14 | 0 |
 
 ## Raw-source signals
@@ -23,6 +27,6 @@ The complete index has **5,853 terms and 51,354 senses**. This ledger verifies *
 
 ## Review rules
 
-Each ledger row binds a catalogue entry, dictionary sense and SHA-256 of its original record. The audit rejects stale hashes, missing identities, incomplete reviewed fields, invalid exercises and diagrams that do not match the exact reviewed definition and part of speech. Personal edits and frozen sessions are outside this public editorial ledger. Specialised, historical and proper-name senses remain pending until examined; they are not silently excluded.
+Each ledger row binds a catalogue entry, dictionary sense and SHA-256 of its original record. The audit rejects stale hashes, missing identities, incomplete reviewed fields, invalid exercises and diagrams that do not match the exact reviewed definition and part of speech. Restored submeanings additionally require a preserved parent fingerprint, a revision-bound Wiktionary URL, the exact source definition line and independent source/evidence alignment. Their counts are separate from preserved raw-source signals. Personal edits and frozen sessions are outside this public editorial ledger. Specialised, historical and proper-name senses remain pending until examined; they are not silently excluded.
 
 The ignored `local/audits/vocabulary-dictionary.json` contains every source identity, fingerprint, status and signal for subsequent batches. Run with `--check` to validate without rewriting reports. Passing this check verifies accounting and bindings, not completion of the dictionary.
