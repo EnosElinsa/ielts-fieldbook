@@ -194,10 +194,34 @@ export function VocabularyEntryPage() {
     entry?.senses.filter(
       (sense) =>
         sense.id !== primary?.id &&
+        ((saved && raw?.senses.some((item) => item.id === sense.id)) ||
+          resolved?.curriculum?.senses.some((item) => item.id === sense.id)) &&
         !(
           sense.pos === primary?.pos && sense.definition === primary?.definition
         ),
     ) || [];
+  // Legacy top-level notes only add information when no stored sense contains it.
+  // Public dictionary snapshots and learning revisions are already represented above.
+  const publicEntry = raw &&
+    (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).find(
+      (item) => item.id === raw.id,
+    );
+  const originalNotes = raw
+    ? vocabularySensePresentation({
+        id: 'original-notes',
+        pos: '',
+        definition:
+          raw.meaning !== publicEntry?.meaning &&
+          !raw.senses.some((sense) => sense.definition === raw.meaning)
+            ? raw.meaning
+            : '',
+        example:
+          raw.example !== publicEntry?.example &&
+          !raw.senses.some((sense) => sense.example === raw.example)
+            ? raw.example
+            : '',
+      })
+    : undefined;
   const changeStatus = async (value: string, senseId: string) => {
     if (saveLock.current) return;
     saveLock.current = true;
@@ -376,11 +400,6 @@ export function VocabularyEntryPage() {
                 </p>
               ) : null}
               <h2>{entry.term}</h2>
-              {entry.pronunciation?.ipa ? (
-                <p className="vocabulary-muted vocabulary-ipa">
-                  {entry.pronunciation.ipa}
-                </p>
-              ) : null}
             </div>
             <div className="actions">
               <FilterMenu
@@ -763,13 +782,11 @@ export function VocabularyEntryPage() {
               </p>
             )}
           </section>
-          {raw &&
-          ((raw.meaning && raw.meaning !== primary?.definition) ||
-            (raw.example && raw.example !== primary?.example)) ? (
+          {originalNotes && (originalNotes.definition || originalNotes.example) ? (
             <details className="vocabulary-secondary">
               <summary>Original notes</summary>
-              {raw.meaning ? <p>{raw.meaning}</p> : null}
-              {raw.example ? <blockquote>{raw.example}</blockquote> : null}
+              {originalNotes.definition ? <p>{originalNotes.definition}</p> : null}
+              {originalNotes.example ? <blockquote>{originalNotes.example}</blockquote> : null}
             </details>
           ) : null}
           <VocabularyCredits credits={credits} />

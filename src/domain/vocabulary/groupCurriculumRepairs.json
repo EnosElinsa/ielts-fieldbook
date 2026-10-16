@@ -811,7 +811,7 @@
     "sense": {
       "id": "kaikki:ee89cbe3b30cf59656",
       "definition": "Something added; especially, such an addition added to make up for a deficiency.",
-      "example": "The weekly supplement includes extra articles about science.",
+      "example": "The grant provides a supplement to her regular income.",
       "pos": "noun",
       "synonyms": [
         "accessory",
@@ -832,8 +832,8 @@
       ],
       "antonyms": [],
       "collocations": [
-        "newspaper supplement",
-        "dietary supplement"
+        "a supplement to income",
+        "a supplement to the main text"
       ],
       "usage": "",
       "register": "",
@@ -852,7 +852,7 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/supplement#English",
       "license": "CC-BY-SA-4.0",
       "editorial": {
-        "source": "Fieldbook group curriculum",
+        "source": "Fieldbook meaning and example review",
         "license": "CC-BY-4.0",
         "attribution": "Fieldbook editorial contributors"
       }

@@ -30,3 +30,39 @@ test("real examples remain and labeled usage relations have display-only cleanup
     relations: [{ label: "Synonyms", values: ["cattle", "stock"] }],
   });
 });
+
+test.each([
+  "Near-synonyms: see Thesaurus:adjunct",
+  "See also [[Thesaurus:adjunct]]",
+  "Thesaurus:adjunct",
+  "For quotations using this term, see Citations:accounting.",
+  "See also [[Citations:animal]]",
+  "Citations:accounting",
+])("dictionary cross-reference %s is not an example or a relation value", (example) => {
+  const original = { ...sense, example };
+  expect(vocabularySensePresentation(original)).toMatchObject({
+    example: "",
+    relations: [],
+  });
+  expect(original.example).toBe(example);
+});
+
+test("near-synonyms are shown as relations without dictionary navigation references", () => {
+  expect(vocabularySensePresentation({
+    ...sense,
+    example: "Near-synonyms: [[addition]], extra; see also Thesaurus:adjunct",
+    usage: "Synonyms: see Thesaurus:adjunct",
+  })).toMatchObject({
+    example: "",
+    usage: "",
+    relations: [{ label: "Near-synonyms", values: ["addition", "extra"] }],
+  });
+});
+
+test.each([
+  "See you tomorrow.",
+  "The supplement contains an appendix: see page 12 for details.",
+  "She wrote ‘Thesaurus:adjunct’ in her notes.",
+])("a real sentence containing reference-like words remains: %s", (example) => {
+  expect(vocabularySensePresentation({ ...sense, example }).example).toBe(example);
+});

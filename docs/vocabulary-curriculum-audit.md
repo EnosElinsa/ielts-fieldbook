@@ -23,7 +23,7 @@ This measures fresh public content, not browser execution or exhaustive linguist
 | src/domain/vocabulary/groupCurriculumTopicsB.json | 455 |
 | src/domain/vocabulary/groupCurriculumTopicsC.json | 465 |
 
-Structural defects: **0**. Selected-content repair candidates: **27 membership occurrences / 21 unique entry/sense/type identities**. Authored-row repair candidates: **0**.
+Structural defects: **0**. Selected-content repair candidates: **6 membership occurrences / 6 unique entry/sense/type identities**. Authored-row repair candidates: **0**.
 
 Sentence heuristics flag fragments, pseudo dictionary relations and cross-reference definitions for inspection. These candidates are not a definitive linguistic defect count. Exact group membership selections, source hashes and complete candidates are in the JSON.
 
@@ -70,7 +70,7 @@ Sentence heuristics flag fragments, pseudo dictionary relations and cross-refere
 | ielts-vocabulary / ielts-vocabulary-chapter-14-group-01 | 68 | 68 | theme | 0 |
 | ielts-vocabulary / ielts-vocabulary-chapter-14-group-02 | 66 | 66 | theme | 0 |
 | ielts-vocabulary / ielts-vocabulary-chapter-15-group-01 | 74 | 74 | theme | 0 |
-| ielts-vocabulary / ielts-vocabulary-chapter-15-group-02 | 75 | 75 | theme | 1 |
+| ielts-vocabulary / ielts-vocabulary-chapter-15-group-02 | 75 | 75 | theme | 0 |
 | ielts-vocabulary / ielts-vocabulary-chapter-16-group-01 | 56 | 56 | theme | 0 |
 | ielts-vocabulary / ielts-vocabulary-chapter-16-group-02 | 58 | 58 | theme | 0 |
 | ielts-vocabulary / ielts-vocabulary-chapter-16-group-03 | 57 | 57 | theme | 0 |
@@ -102,24 +102,24 @@ Sentence heuristics flag fragments, pseudo dictionary relations and cross-refere
 | ielts-reading-keywords / ielts-reading-keywords-chapter-03-group-01 | 50 | 50 | common | 0 |
 | ielts-reading-keywords / ielts-reading-keywords-chapter-03-group-02 | 50 | 50 | common | 0 |
 | ielts-reading-keywords / ielts-reading-keywords-chapter-03-group-03 | 50 | 50 | common | 0 |
-| ielts-reading-keywords / ielts-reading-keywords-chapter-03-group-04 | 50 | 50 | common | 1 |
-| ielts-reading-keywords / ielts-reading-keywords-chapter-03-group-05 | 56 | 56 | common | 1 |
-| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-01 | 112 | 112 | common | 1 |
-| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-02 | 143 | 143 | common | 2 |
-| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-03 | 113 | 113 | common | 2 |
+| ielts-reading-keywords / ielts-reading-keywords-chapter-03-group-04 | 50 | 50 | common | 0 |
+| ielts-reading-keywords / ielts-reading-keywords-chapter-03-group-05 | 56 | 56 | common | 0 |
+| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-01 | 112 | 112 | common | 0 |
+| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-02 | 143 | 143 | common | 0 |
+| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-03 | 113 | 113 | common | 0 |
 | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-04 | 112 | 112 | common | 0 |
-| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-05 | 145 | 145 | common | 1 |
+| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-05 | 145 | 145 | common | 0 |
 | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-06 | 113 | 113 | common | 0 |
-| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-07 | 104 | 104 | common | 1 |
-| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-08 | 151 | 151 | common | 2 |
-| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-09 | 142 | 142 | common | 1 |
-| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-02-group-01 | 104 | 104 | common | 1 |
+| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-07 | 104 | 104 | common | 0 |
+| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-08 | 151 | 151 | common | 0 |
+| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-01-group-09 | 142 | 142 | common | 0 |
+| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-02-group-01 | 104 | 104 | common | 0 |
 | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-02-group-02 | 104 | 104 | common | 0 |
 | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-02-group-03 | 126 | 126 | common | 0 |
-| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-02-group-04 | 12 | 12 | common | 1 |
+| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-02-group-04 | 12 | 12 | common | 0 |
 | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-01 | 115 | 115 | common | 0 |
-| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-02 | 111 | 111 | common | 1 |
-| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-03 | 114 | 114 | common | 1 |
+| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-02 | 111 | 111 | common | 0 |
+| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-03 | 114 | 114 | common | 0 |
 | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-04 | 105 | 105 | common | 0 |
 | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-05 | 100 | 100 | common | 0 |
 | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-06 | 108 | 108 | common | 0 |
@@ -128,7 +128,7 @@ Sentence heuristics flag fragments, pseudo dictionary relations and cross-refere
 | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-09 | 139 | 139 | common | 0 |
 | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-10 | 142 | 142 | common | 0 |
 | ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-11 | 127 | 127 | common | 0 |
-| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-12 | 235 | 235 | common | 1 |
+| ielts-listening-vocabulary / ielts-listening-vocabulary-chapter-03-group-12 | 235 | 235 | common | 0 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-01-group-01 | 30 | 30 | common | 0 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-01-group-02 | 30 | 30 | common | 0 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-01-group-03 | 31 | 31 | common | 0 |
@@ -142,7 +142,7 @@ Sentence heuristics flag fragments, pseudo dictionary relations and cross-refere
 | ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-05 | 100 | 100 | common | 0 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-06 | 54 | 54 | common | 0 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-07 | 22 | 22 | common | 0 |
-| ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-08 | 67 | 67 | common | 1 |
+| ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-08 | 67 | 67 | common | 0 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-09 | 44 | 44 | common | 1 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-10 | 48 | 48 | common | 0 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-11 | 58 | 58 | common | 0 |
@@ -151,8 +151,8 @@ Sentence heuristics flag fragments, pseudo dictionary relations and cross-refere
 | ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-14 | 45 | 45 | common | 0 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-15 | 25 | 25 | common | 0 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-16 | 23 | 23 | common | 0 |
-| ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-17 | 29 | 29 | common | 1 |
-| ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-18 | 32 | 32 | common | 1 |
+| ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-17 | 29 | 29 | common | 0 |
+| ielts-listening-essentials / ielts-listening-essentials-chapter-02-group-18 | 32 | 32 | common | 0 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-03-group-01 | 26 | 26 | common | 0 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-03-group-02 | 61 | 61 | common | 0 |
 | ielts-listening-essentials / ielts-listening-essentials-chapter-03-group-03 | 59 | 59 | common | 0 |

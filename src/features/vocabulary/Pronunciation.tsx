@@ -51,8 +51,8 @@ export function Pronunciation({ entry, accent = 'uk', options = {}, compact = fa
     ? `${playback.accent === 'uk' ? 'British' : playback.accent === 'us' ? 'American' : playback.accent === 'other' ? 'Other accent' : 'Unverified accent'} · ${playback.source === 'speech' ? 'Device voice' : 'Recorded pronunciation'}`
     : message;
   return <div className={`vocabulary-pronunciation${compact ? ' is-compact' : ''}`}>
+    {entry.pronunciation?.ipa && !compact ? <span className="vocabulary-ipa">{entry.pronunciation.ipa}</span> : null}
     <div className="vocabulary-pronunciation-actions" role="group" aria-label="Word pronunciation">
-      {entry.pronunciation?.ipa && !compact ? <span className="vocabulary-ipa">{entry.pronunciation.ipa}</span> : null}
       {(compact ? [accent] : ['uk', 'us'] as const).map(target => {
         const action = target === accent ? 'target' : `accent:${target}`;
         return <button key={target} className="btn line" type="button" aria-label={`${activeAction === action ? 'Stop' : 'Play'} ${target.toUpperCase()} pronunciation of ${entry.term}`} onClick={() => void play(undefined, target)}>{activeAction === action ? 'Stop' : compact ? `Play ${target.toUpperCase()}` : target === 'uk' ? 'Listen · UK' : 'Listen · US'}</button>;

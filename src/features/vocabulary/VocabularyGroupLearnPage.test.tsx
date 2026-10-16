@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
@@ -53,6 +53,20 @@ beforeEach(() => {
 afterEach(async()=>{vi.useRealTimers();cleanup();await act(async()=>{await Promise.resolve();});Object.assign(VOCABULARY_CATALOG,structuredClone(original));vi.restoreAllMocks();});
 function Location(){const location=useLocation();return <output aria-label="Route">{location.pathname+location.search}</output>;}
 function mount(url=path){return render(<MemoryRouter initialEntries={[url]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes><Location/></MemoryRouter>);}
+
+test('learning cards omit dictionary references instead of presenting them as examples', async () => {
+  VOCABULARY_CATALOG.entries[0].senses[0].example='Near-synonyms: see Thesaurus:adjunct';
+  mount();
+  await screen.findByRole('heading',{name:'Word 1'});
+  const card=within(screen.getByRole('article',{name:'Current learning word'}));
+  expect(card.queryByText(/Thesaurus:/)).not.toBeInTheDocument();
+  expect(card.queryByRole('heading',{name:'Example'})).not.toBeInTheDocument();
+  expect(card.queryByText(/An example has not been added/)).not.toBeInTheDocument();
+  expect(card.getByRole('link',{name:'Word details'})).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:'Next word'}));
+  expect(card.getByRole('heading',{name:'Example'})).toBeInTheDocument();
+  expect(card.getByText('Example 2.')).toBeInTheDocument();
+});
 
 test('primary assessment freezes the current ten words and preserves its plan', async () => {
   const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'dictation');

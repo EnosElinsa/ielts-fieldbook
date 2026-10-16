@@ -1,0 +1,223 @@
+{
+  "description": "Reverse the 2026-10-16 meaning review to reconstruct the immutable vocabulary resources served before it. Keep this snapshot when authoring later content revisions.",
+  "removeDefaults": [
+    "ve-5451bf86",
+    "ve-356a1d6f",
+    "ve-a1d0fcd",
+    "ve-1dc7c769",
+    "ve-a591dbe",
+    "ve-597a245a",
+    "ve-5fb4469b"
+  ],
+  "removeCorrections": [
+    {
+      "entryId": "ve-4b22824c",
+      "senseId": "kaikki:be34c2e6d35e227aba"
+    },
+    {
+      "entryId": "ve-cca434",
+      "senseId": "kaikki:fd992aa6dd13aeb91f"
+    },
+    {
+      "entryId": "ve-6fb7240e",
+      "senseId": "kaikki:5d8e6b2eeec54f1589"
+    },
+    {
+      "entryId": "ve-7c74d811",
+      "senseId": "kaikki:7f9c20f960fd5d25b2"
+    },
+    {
+      "entryId": "ve-42d1e79c",
+      "senseId": "kaikki:5e7e4b10c1eb06e2da"
+    },
+    {
+      "entryId": "ve-2560aad1",
+      "senseId": "kaikki:1bd735c3ac895d947e"
+    },
+    {
+      "entryId": "ve-c68674f",
+      "senseId": "kaikki:478328d6a8984a3489"
+    },
+    {
+      "entryId": "ve-61f91481",
+      "senseId": "kaikki:8a35a70b962abc8bbf"
+    },
+    {
+      "entryId": "ve-25e98b7b",
+      "senseId": "kaikki:5fe657542f42afdd8e"
+    },
+    {
+      "entryId": "ve-a8b6eec",
+      "senseId": "kaikki:6a5fb8ccb20c9e4698"
+    },
+    {
+      "entryId": "ve-1280d661",
+      "senseId": "kaikki:4d9aa1212ffcfc18e1"
+    },
+    {
+      "entryId": "ve-54f92dcb",
+      "senseId": "kaikki:c6841d3293679f3179"
+    },
+    {
+      "entryId": "ve-c819f20c",
+      "senseId": "kaikki:853b09fe0612111f0d"
+    },
+    {
+      "entryId": "ve-c819f20c",
+      "senseId": "kaikki:afb3579ad30361c4b7"
+    },
+    {
+      "entryId": "ve-2e4df764",
+      "senseId": "kaikki:2849523550105615d4"
+    },
+    {
+      "entryId": "ve-b33d56a",
+      "senseId": "kaikki:7511e4e044fbba753d"
+    },
+    {
+      "entryId": "ve-52e756bb",
+      "senseId": "kaikki:d2ceb0e87f1df31a03"
+    },
+    {
+      "entryId": "ve-54374566",
+      "senseId": "kaikki:1060349474a578b75e"
+    },
+    {
+      "entryId": "ve-a8ed93d",
+      "senseId": "kaikki:e0b23a8d93bcc1f26a"
+    },
+    {
+      "entryId": "ve-43192d86",
+      "senseId": "kaikki:e8b795d6db065c6a22"
+    },
+    {
+      "entryId": "ve-d0d961d2",
+      "senseId": "kaikki:8981fdd0cf3550304a"
+    },
+    {
+      "entryId": "ve-7c799ac3",
+      "senseId": "kaikki:2ae8a3b536bcc9e4cb"
+    },
+    {
+      "entryId": "ve-7359e832",
+      "senseId": "kaikki:a2c85564db6d020d17"
+    },
+    {
+      "entryId": "ve-6a7b15e8",
+      "senseId": "kaikki:e020242ce85d9a937d"
+    },
+    {
+      "entryId": "ve-f848593d",
+      "senseId": "kaikki:c1fef492322a66bf91"
+    },
+    {
+      "entryId": "ve-b3eecdf7",
+      "senseId": "kaikki:d5446b388e6e28366a"
+    },
+    {
+      "entryId": "ve-7410b2fb",
+      "senseId": "kaikki:46c54cdc8069ab19cc"
+    },
+    {
+      "entryId": "ve-270f4298",
+      "senseId": "kaikki:ee89cbe3b30cf59656"
+    }
+  ],
+  "restoreRepairs": [
+    {
+      "entryId": "ve-270f4298",
+      "term": "supplement",
+      "sense": {
+        "id": "kaikki:ee89cbe3b30cf59656",
+        "definition": "Something added; especially, such an addition added to make up for a deficiency.",
+        "example": "The weekly supplement includes extra articles about science.",
+        "pos": "noun",
+        "synonyms": [
+          "accessory",
+          "accompaniment",
+          "addition",
+          "add-on",
+          "adjunct",
+          "affix",
+          "annex",
+          "infusion",
+          "apanage",
+          "appendage",
+          "appendix",
+          "extra",
+          "increase",
+          "increment",
+          "supplement"
+        ],
+        "antonyms": [],
+        "collocations": [
+          "newspaper supplement",
+          "dietary supplement"
+        ],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "colour supplement",
+          "dietary supplement",
+          "food supplement",
+          "herbal supplement",
+          "market supplement",
+          "single supplement",
+          "sports supplement",
+          "viscosupplement"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/supplement#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook group curriculum",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      },
+      "originalSense": {
+        "id": "kaikki:ee89cbe3b30cf59656",
+        "definition": "Something added; especially, such an addition added to make up for a deficiency.",
+        "example": "Near-synonyms: see Thesaurus:adjunct",
+        "pos": "noun",
+        "synonyms": [
+          "accessory",
+          "accompaniment",
+          "addition",
+          "add-on",
+          "adjunct",
+          "affix",
+          "annex",
+          "infusion",
+          "apanage",
+          "appendage",
+          "appendix",
+          "extra",
+          "increase",
+          "increment",
+          "supplement"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "colour supplement",
+          "dietary supplement",
+          "food supplement",
+          "herbal supplement",
+          "market supplement",
+          "single supplement",
+          "sports supplement",
+          "viscosupplement"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/supplement#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "reason": "Same-sense learning repair after inspecting the selected dictionary example and definition; replaces fragments, relation lists, spelling cross-references or inaccessible old text."
+    }
+  ]
+}

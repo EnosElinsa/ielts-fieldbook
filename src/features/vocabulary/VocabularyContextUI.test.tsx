@@ -117,6 +117,38 @@ function mount(path: string) {
 }
 const book = "ielts-vocabulary";
 const core = () => release.entries.find((entry: any) => entry.term === "core");
+
+test('public dictionary snapshots are not presented as personal original notes', () => {
+  const raw=release.entries.find((entry:any)=>entry.term==='supplement');
+  mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-03`);
+  expect(screen.getByText('A vitamin supplement can help address a diagnosed deficiency.')).toBeInTheDocument();
+  expect(screen.queryByText('Original notes')).not.toBeInTheDocument();
+  expect(screen.queryByText(/Thesaurus:adjunct/)).not.toBeInTheDocument();
+});
+
+test('an unselected original dictionary sense is kept in the dictionary rather than added to learning progress', async () => {
+  const raw=release.entries.find((entry:any)=>entry.term==='field work');
+  const index=JSON.parse(readFileSync('public/dictionary/index.json','utf8'));
+  const dictionary=JSON.parse(readFileSync(`public/dictionary/${index['field work']}`,'utf8'));
+  vi.stubGlobal('fetch',vi.fn(async(url:string)=>({ok:true,json:async()=>url.endsWith('index.json')?{'field work':'aa.json'}:dictionary})));
+  mount(`/vocabulary/entry/${raw.id}?bookId=ielts-listening-vocabulary&unitId=ielts-listening-vocabulary-chapter-03-group-04`);
+  await screen.findByText('A temporary fortification in the field');
+  const originalSense=screen.getByText('A temporary fortification in the field');
+  expect(originalSense.closest('.vocabulary-dictionary')).not.toBeNull();
+  expect(screen.queryByText(/Other learning meanings/)).not.toBeInTheDocument();
+  expect(screen.getAllByRole('heading',{name:'Progress for this meaning'})).toHaveLength(1);
+});
+
+test('legacy notes absent from every stored sense remain available without dictionary markup', () => {
+  const raw=structuredClone(core());
+  raw.meaning='My [[geology]] meaning.';
+  raw.example='We examined the [[core]] from the borehole.';
+  mocks.fb.state.vocabulary=[raw];
+  mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-01-group-01`);
+  expect(screen.getByText('Original notes')).toBeInTheDocument();
+  expect(screen.getByText('My geology meaning.')).toBeInTheDocument();
+  expect(screen.getByText('We examined the core from the borehole.')).toBeInTheDocument();
+});
 test('word detail preserves exact exam occurrences and links to the original source', async () => {
   const raw = structuredClone(core());
   raw.sources = [{ type: 'reading', id: 'part-one', senseId: raw.senses[0].id, context: 'The core of the argument.', exam: { sectionId: 'part-one', paragraphId: 'A', blockId: 'passage:p:A', quote: 'core', start: 4, end: 8 } }];
@@ -213,8 +245,9 @@ test("detail uses distinct confirmed core group content, one bottom credits coll
     screen.getByText("Sources & licenses").closest("details"),
   ).not.toHaveAttribute("open");
   expect(
-    screen.getByText("Other learning meanings · 1").closest("details"),
+    screen.getByText(/Other dictionary meanings/).closest("details"),
   ).not.toHaveAttribute("open");
+  expect(screen.queryByText(/Other learning meanings/)).not.toBeInTheDocument();
   expect(screen.queryByText("Sense 1")).not.toBeInTheDocument();
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
@@ -494,8 +527,11 @@ test("raw evidence without a review retains response, verification, result and d
   expect(JSON.stringify(mocks.fb.state)).toBe(before);
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
-test("confirmed register content is labelled reviewed while raw public register is not promoted", () => {
+test("confirmed register content is labelled reviewed while raw public register is not promoted", async () => {
   const raw = core();
+  const index=JSON.parse(readFileSync('public/dictionary/index.json','utf8'));
+  const dictionary=JSON.parse(readFileSync(`public/dictionary/${index.core}`,'utf8'));
+  vi.stubGlobal('fetch',vi.fn(async(url:string)=>({ok:true,json:async()=>url.endsWith('index.json')?{core:'aa.json'}:dictionary})));
   mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-02`);
   const main = screen
     .getByRole("heading", { name: "Current learning meaning" })
@@ -504,9 +540,7 @@ test("confirmed register content is labelled reviewed while raw public register 
     within(main).getByRole("heading", { name: "Reviewed register" }),
   ).toBeInTheDocument();
   expect(within(main).getByText("General modern English")).toBeInTheDocument();
-  const other = screen
-    .getByText("Other learning meanings · 1")
-    .closest("details")!;
+  const other = (await screen.findByText(/Other dictionary meanings \([1-9]/)).closest("details")!;
   expect(
     within(other).queryByRole("heading", { name: "Reviewed register" }),
   ).not.toBeInTheDocument();

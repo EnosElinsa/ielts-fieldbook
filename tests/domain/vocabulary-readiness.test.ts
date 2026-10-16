@@ -12,6 +12,41 @@ const released=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'))
 beforeEach(()=>Object.assign(VOCABULARY_CATALOG,released));
 afterEach(()=>Object.assign(VOCABULARY_CATALOG,original));
 
+test.each([
+ ['field work','kaikki:0295461999c1952d87',/research|data/i,'The students carried out field work along the river.'],
+ ['equipment','kaikki:8d82739194a584c438',/tools|machines/i,'The laboratory needs new safety equipment.'],
+ ['adult','kaikki:af051e9f8856aca835',/person/i,'The museum charges twelve pounds per adult.'],
+ ['information','kaikki:ad01edc92fe290ea33',/facts|details/i,'The website provides information about local bus services.'],
+ ['leave','kaikki:928e340320239c3229',/depart|go away/i,'The train leaves the station at six.'],
+ ['boring','kaikki:89438881f91bb113ab',/not interesting/i,'The lecture was boring, so it was difficult to concentrate.'],
+ ['insane','kaikki:f8feb09013eb41108c',/unreasonable|impractical/i,'It would be insane to spend the entire budget on one event.'],
+])('the common %s meaning and example use the same modern dictionary sense', (term,id,definition,example) => {
+ const raw=structuredClone(released.entries.find((entry:VocabularyEntry)=>entry.term===term));
+ const membership=released.memberships.find((row:any)=>row.entryId===raw.id&&row.bookId!=='ielts-vocabulary'&&row.bookId!=='ielts-listening-practice-21'&&row.bookId!=='ielts-listening-practice-20') || released.memberships.find((row:any)=>row.entryId===raw.id);
+ const before=structuredClone(raw);
+ for(const request of [{},membership]) {
+  const result=resolveVocabularyLearningContext(raw,request);
+  expect(result.sense?.id).toBe(id);
+  expect(result.sense?.definition).toMatch(definition);
+  expect(result.sense?.example).toBe(example);
+  expect(result.entry.senses).toContainEqual(raw.senses[0]);
+ }
+ expect(raw).toEqual(before);
+ raw.senses[0].definition='My own course meaning.';
+ raw.senses[0].example='My own example for this course.';
+ expect(resolveVocabularyLearningContext(raw,membership).sense?.example).toBe('My own example for this course.');
+});
+
+test.each([
+ ['delete','Please delete the duplicate file from the folder.'],
+ ['effectively','The new system processes applications more effectively.'],
+ ['cream','Add the cream to the soup and stir gently.'],
+ ['supplement','The grant provides a supplement to her regular income.'],
+])('the %s example illustrates its definition without a fragment or unrelated quotation', (term,example) => {
+ const raw=released.entries.find((entry:VocabularyEntry)=>entry.term===term);
+ expect(resolveVocabularyLearningContext(raw).sense?.example).toBe(example);
+});
+
 test('all public words have a complete core definition and usable example',()=>{
  const failures:string[]=[];
  for (const entry of released.entries as VocabularyEntry[]) {

@@ -29,16 +29,25 @@ export function buildVocabularyResources(root: string) {
   const generated = buildResourceCatalog(source, teaching);
   const mapping = data('identityMapping') as { books: {id: string; oldId: string}[]; units: {id: string; oldId: string}[]; memberships: {id: string; oldId: string}[] };
   const legacyIds = new Map([...mapping.books, ...mapping.units, ...mapping.memberships].map(row => [row.id, row.oldId]));
-  // Rebuild the prior release from the same content. Its immutable URLs must
-  // remain available to clients that still hold the previous manifest.
+  // Restore the previous teaching content as well as its legacy identities.
+  // Rebuilding old resources with today's corrections would change their hashes.
+  const baseline = data('resourceReleaseBaseline') as { removeDefaults: string[]; removeCorrections: {entryId: string; senseId: string}[]; restoreRepairs: VocabularyTeachingData['curriculum']['repairs'] };
+  const removedDefaults = new Set(baseline.removeDefaults);
+  const removedCorrections = new Set(baseline.removeCorrections.map(row=>JSON.stringify([row.entryId,row.senseId])));
+  const restoredRepairs = new Map(baseline.restoreRepairs.map(row=>[JSON.stringify([row.entryId,row.sense.id]),row]));
+  const previousTeaching: VocabularyTeachingData = {
+    ...teaching,
+    readiness: { ...teaching.readiness, defaults: teaching.readiness.defaults.filter(row=>!removedDefaults.has(row.entryId)), corrections: teaching.readiness.corrections.filter(row=>!removedCorrections.has(JSON.stringify([row.entryId,row.senseId]))) },
+    curriculum: { ...teaching.curriculum, repairs: teaching.curriculum.repairs.map(row=>restoredRepairs.get(JSON.stringify([row.entryId,row.sense.id])) || row) },
+  };
   const legacyValue = <T>(value: T): T => {
     if (typeof value === 'string') return (legacyIds.get(value) || value) as T;
     if (Array.isArray(value)) return value.map(legacyValue) as T;
     if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, row]) => [legacyIds.get(key) || key, legacyValue(row)])) as T;
     return value;
   };
-  const legacy = buildResourceCatalog(legacyValue(source), legacyValue(teaching));
-  for (const [url, content] of legacy.resources) {
+  const retained = [buildResourceCatalog(source,previousTeaching),buildResourceCatalog(legacyValue(source),legacyValue(previousTeaching))];
+  for (const previous of retained) for (const [url, content] of previous.resources) {
     const existing = generated.resources.get(url);
     if (existing !== undefined && existing !== content) throw new Error(`Vocabulary resource hash collision: ${url}`);
     if (existing === undefined) generated.resources.set(url, content);

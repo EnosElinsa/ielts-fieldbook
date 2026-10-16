@@ -54,19 +54,24 @@ export function DictionarySenses({
       active = false;
     };
   }, [entry.term, revision]);
-  const excludeKey = excludeSenses.map(key).sort().join("\n");
+  const excludeKey = JSON.stringify(
+    excludeSenses.map((sense) => [sense.id, key(sense)]).sort(),
+  );
   const senses = useMemo(() => {
     const seen = new Set(excludeSenses.map(key));
+    const seenIds = new Set(excludeSenses.map((sense) => sense.id));
     return loaded.filter((sense) => {
       if (
         !sense ||
         typeof sense.id !== "string" ||
         typeof sense.definition !== "string" ||
         typeof sense.pos !== "string" ||
+        seenIds.has(sense.id) ||
         seen.has(key(sense))
       )
         return false;
       seen.add(key(sense));
+      seenIds.add(sense.id);
       return true;
     });
   }, [loaded, excludeKey]);

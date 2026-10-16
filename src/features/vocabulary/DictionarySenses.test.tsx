@@ -27,6 +27,19 @@ const sourceSense = {
   sourceUrl: "https://en.wiktionary.org/wiki/mitigate",
 };
 const dictionaryFetch = (senses = [sourceSense]) => vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { mitigate: 'aa.json' } : { senses } }));
+
+test('a revised learning meaning excludes its original dictionary version by sense identity', async () => {
+  const { entry } = fixture();
+  const revised = { ...sourceSense, definition: 'To make something harmful less severe.', example: 'The new barriers mitigate flood damage.' };
+  vi.stubGlobal('fetch', dictionaryFetch([sourceSense, { ...sourceSense, id:'wiki:other', definition:'To make a punishment less severe.' }]));
+  const view=render(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[revised]} /></MemoryRouter>);
+  await screen.findByText('To make a punishment less severe.');
+  expect(screen.queryByText('To lessen severity.')).not.toBeInTheDocument();
+  expect(screen.getByText('Other dictionary meanings (1)')).toBeInTheDocument();
+  view.rerender(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[{...revised,id:'wiki:other'}]} /></MemoryRouter>);
+  expect(await screen.findByText('To lessen severity.')).toBeInTheDocument();
+  expect(screen.queryByText('To make a punishment less severe.')).not.toBeInTheDocument();
+});
 function fixture() {
   const state = emptyState();
   const entry = addVocabularyItem(state, {
