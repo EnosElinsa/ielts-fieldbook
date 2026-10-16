@@ -1,0 +1,563 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:51611f88bd16de13de"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:0d9d41a295dc00486d"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:193a1222dedcfa9bb4"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:4597ac7b021a1d8ee0"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:181f4600e2b77cacbd"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:75bf9a227b0106126e"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:c4b8d22335554f6ced"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:ed87bc8ae65423ebb3"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:cb14007226d6c6c860"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:75cc0288a2062ba35d"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:da1bd667eb7e45826d"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:f1e9eb6b8d9feabc71"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:121524bbf0c1da4124"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "kaikki:200043ed7b6e7d7ffd"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "wiktionary:restored:6ebad6eda2819e386f"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "wiktionary:restored:d3a4ccacebb756cb95"
+    },
+    {
+      "entryId": "ve-4aeadd56",
+      "senseId": "wiktionary:restored:0eb830a4d681b3ae5d"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:dc49dd97e3f1d7ed64"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:d3f156be902eafa479"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:1f14272d773d20fe2e"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:b2fa156b479b40b93c"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:56fd115a6b627f4f2e"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:d20a4018e0ee61df5d"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:81476afbc72fb500f7"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:50225947b7c5900e7c"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:f7f157dd0913c04f5a"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:3beec847d9e72fc5fb"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:d7e06161e1c88b5360"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:9098bf84aa8a6a1d12"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:c6d280c7ba31d3df9a"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:aa8c433dcd2ba02491"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:5b87ed7c8b282cef88"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:38dbfea861e4b43d95"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:a29df25da0a493b899"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:4518261cb271c96d6d"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:392151f320af924953"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:26cb24e559b3212043"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:9e5de3bf0406b2caca"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:b4a300492dcf250e46"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:4a5f6e9569f3b3dc01"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:b5ec745b4207a3ff58"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:25cd4845ae46b16f4b"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:0a607cca4c2e809424"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:71bef03f695882e116"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:884c8736abe47265a2"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:6c8340aa3d780253ce"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:62758c9395733a8438"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:c3dd9077c55a96bcf3"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:13a6f93a9da8920005"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:d6b731f9d5e70a07c7"
+    },
+    {
+      "entryId": "ve-bab517d",
+      "senseId": "kaikki:6a86f874243ef49ecf"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:c8051abf02b733cace"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:f95bb821d396bdb939"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:e1cbc03fab3be5d8e5"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:0e35eb4f61462b6b93"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:2c4cfaeddafae2311b"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:3aa9669ae40afd0cae"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:5408719281d9733c20"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:f788d0f8b7e765fe94"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:b6d32982d847ee74c2"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:3671aac82a4f5e3be6"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:acf625338d0f54bf30"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:b6465a1600decd9f50"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:c55c15e2e9b9ba866e"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:ff239af195cc3d4eff"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:6bb8758b4b84d09332"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:fb03a706e26d7e37fc"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:28c6b6653bc73ed2a6"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:1179308b7f120d6a5b"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:da4e1123c84e4aaf23"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:f72880ea678279556d"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:8f74b88f696e425b84"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:bbe4c0be7a589143e3"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:cab5487347214dd4fa"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:b557f4d2f381e0e858"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:e542953922537b96ed"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:3b067d9485d2a34516"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:afa7a0060e4d50ea8d"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:2b46be6b7cc48c301f"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:ee9aab2c510472cd04"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:a44fc6e6f59788ff47"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:5f65c36c575bbed2c0"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:784597635896bd6381"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:4d5dad7f450e167e02"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:3cb099e77e102a0611"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:b8ae207c10ded36010"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:9f17f35dd2c7c6e4ce"
+    },
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:5069eb5663cf863cb5"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:9bb7e0781766057877"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:ea7446331fca24227c"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:a49270e871cce1dd9c"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:02535ad2de2bf5baba"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:cc02541c6fdf3a3b0c"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:16f0f42a1a28e93e8f"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:949800956c41ac8311"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:44c2644e6850c4719e"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:015127a7c923ae3fe5"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:50fa8851e54e53670c"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:6ac286a04f3c6a35bf"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:855f23f9101091d01f"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:31456187a0916d7bdd"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:3a0c182b80986e0b2b"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:118e89194d670130fb"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:85d12929745195ccc1"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:14cfee28b67ce58397"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:1ca01402d7052d1b58"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:cb52932e5a28b25a7e"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:973bdc476245efba99"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:afd56d2a4d418f8d19"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:c74e1485deeeeb7b42"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:36ee1cb623ad820846"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:f95bd13ed6e58f2715"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:ec2ea2013d30a5d936"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:6a12c10614e23a0946"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:fb5172e2170d2e34b6"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:17cd0999c6569f9c37"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:ac8290faa4ea215d7c"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:f99f4472b2580afec6"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:51f2d8913871b97711"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:0c93e3a8154e5be296"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:5179814400803e3d40"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:46c36a0a419f889027"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:cf7da0e968e75eda97"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:74eddd488ce6420417"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:146d17931641eb7287"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:1fecb98a9fd2c19e65"
+    },
+    {
+      "entryId": "ve-531cc540",
+      "senseId": "kaikki:c814968868a276f5a0"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-b9a5e1a",
+      "senseId": "kaikki:798af9ba445137177d",
+      "term": "range",
+      "example": "A mountain range separates the two valleys.",
+      "originalSense": {
+        "id": "kaikki:798af9ba445137177d",
+        "definition": "A line or series of mountains, buildings, etc.",
+        "example": "",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "Alaska Range",
+          "Avenue Range",
+          "azran",
+          "basin and range topography",
+          "Basket Range",
+          "Biban Range",
+          "bitrange",
+          "Bitterroot Range",
+          "Black Range",
+          "Border Ranges",
+          "Brooks Range",
+          "Brown Range",
+          "Bugle Ranges",
+          "Cape Range National Park",
+          "Cascade Range",
+          "Central Mountain Range",
+          "Clear Range",
+          "close-range",
+          "close range",
+          "close the range",
+          "crossrange",
+          "Darling Range",
+          "disrange",
+          "downrange",
+          "driving range",
+          "dynamic range",
+          "ear range",
+          "Flinders Ranges",
+          "Forest Range",
+          "Fraser Range"
+        ]
+      }
+    }
+  ]
+}

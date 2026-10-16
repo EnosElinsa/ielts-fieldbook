@@ -38,3 +38,13 @@ test('restored submeanings require independent revision evidence and preserve ra
   expect(inspectDictionaryReview({ ...restoredInput, restoredSources: [] }).errors.join(' ')).toMatch(/restored|source sense/i);
   expect(inspectDictionaryReview({ ...restoredInput, corrections: [...input.corrections, { ...restoredInput.corrections[1], dictionaryParentSenseId: 'other-parent' }] }).errors.join(' ')).toMatch(/parent/i);
 });
+
+test('source comments remain in evidence without becoming part of the displayed definition', () => {
+  const sourceGloss = '## A [[river]] <!-- editorial note\nwith [[markup]] --> edge.';
+  const result = inspectDictionaryReview({ ...restoredInput, restoredSources: [{ ...evidence, sourceGloss }] });
+  expect(result.errors).toEqual([]);
+  expect(result.summary.reviewed).toBe(2);
+  expect(sourceGloss).toContain('<!-- editorial note');
+  const changed = inspectDictionaryReview({ ...restoredInput, restoredSources: [{ ...evidence, sourceGloss: '## A [[different]] <!-- comment --> edge.' }] });
+  expect(changed.errors.join(' ')).toMatch(/gloss/i);
+});

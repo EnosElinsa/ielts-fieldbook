@@ -10,6 +10,8 @@ import { accountId } from "../../storage/remote";
 import { VocabularySenseContent } from "./VocabularySenseContent";
 import { SelectField } from '../../components/SelectField';
 import { vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
+import { getVocabularySenseDiagram, type VocabularySenseDiagram } from '../../domain/vocabulary/media';
+import { VocabularyMeaningDiagram } from './VocabularyMeaningDiagram';
 import { practiceUrl } from "./vocabularyNavigation";
 import { loadTermDictionary, resetDictionaryCache } from './dictionary';
 export { resetDictionaryCache } from './dictionary';
@@ -20,6 +22,13 @@ const partOfSpeech = (sense: VocabularySense) => {
   return ({ adj: 'adjective', adv: 'adverb', name: 'proper name' } as Record<string, string>)[pos] || pos || 'other';
 };
 const label = (value: string) => value.replace(/^./, char => char.toUpperCase());
+function DiagramPreview({ diagram, number }: { diagram: VocabularySenseDiagram; number: number | undefined }) {
+  const [open, setOpen] = useState(false);
+  return <details className="vocabulary-dictionary-diagram" aria-label={`Diagram for meaning ${number}`} onToggle={event => setOpen(event.currentTarget.open)}>
+    <summary>View diagram</summary>
+    {open ? <VocabularyMeaningDiagram diagram={diagram} /> : null}
+  </details>;
+}
 export function DictionarySenses({
   entry,
   excludeSenses = entry.senses,
@@ -235,7 +244,9 @@ export function DictionarySenses({
             .filter(
               (sense) => partOfSpeech(sense) === pos,
             )
-            .map((sense) => (
+            .map((sense) => {
+              const diagram = getVocabularySenseDiagram({ entry, sense });
+              return (
               <section className="vocabulary-sense" key={sense.id}>
                 <div className="vocabulary-sense-head">
                   <h4>Meaning {meaningNumbers.get(sense.id)}</h4>
@@ -250,8 +261,9 @@ export function DictionarySenses({
                   </button>
                 </div>
                 <VocabularySenseContent sense={sense} showLearningNotes />
+                {diagram ? <DiagramPreview diagram={diagram} number={meaningNumbers.get(sense.id)} /> : null}
               </section>
-            ))}
+            );})}
         </section>
       ))}
     </details>

@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, cleanup, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, cleanup, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
@@ -8,6 +8,7 @@ import { DictionarySenses, resetDictionaryCache } from "./DictionarySenses";
 import "@testing-library/jest-dom/vitest";
 import { readFileSync } from 'node:fs';
 import { selectChoice } from '../../../tests/selectChoice';
+import diagrams from '../../domain/vocabulary/senseDiagrams.json';
 const mocks = vi.hoisted(() => ({ current: null as any }));
 vi.mock("../../context/FieldbookContext", () => ({
   useFieldbook: () => mocks.current,
@@ -43,6 +44,27 @@ test('study notes are easy to find while the complete source dictionary stays ac
   expect(screen.getByText('A surname.')).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'With learning notes (14)' }));
   expect(screen.queryByText('A surname.')).not.toBeInTheDocument();
+});
+
+test('a dictionary diagram can be previewed and closed without saving a meaning or leaving the page', async () => {
+  const { entry, save } = fixture();
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.bank}`, 'utf8'));
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { bank: index.bank } : dictionary })));
+  render(<MemoryRouter initialEntries={['/vocabulary/entry/bank']}><DictionarySenses entry={{ ...entry, id: 've-7c704483', term: 'bank' }} excludeSenses={[]} /><Route /></MemoryRouter>);
+  const diagram = diagrams.find(row => row.kind === 'river-bank')!;
+  const definition = await screen.findByText(diagram.definition);
+  const meaning = within(definition.closest('section')!);
+  const user = userEvent.setup();
+  await user.click(screen.getByText(/Other dictionary meanings/));
+  expect(meaning.queryByRole('img')).not.toBeInTheDocument();
+  await user.click(meaning.getByText('View diagram'));
+  expect(await meaning.findByRole('img', { name: /^bank:/ })).toBeVisible();
+  await user.click(meaning.getByText('View diagram'));
+  await waitFor(() => expect(meaning.queryByRole('img')).not.toBeInTheDocument());
+  expect(save).not.toHaveBeenCalled();
+  expect(screen.getByText('/vocabulary/entry/bank')).toBeInTheDocument();
+  expect(mocks.current.stateRef.current.vocabularyEvidence).toEqual([]);
 });
 
 test('a revised learning meaning excludes its original dictionary version by sense identity', async () => {

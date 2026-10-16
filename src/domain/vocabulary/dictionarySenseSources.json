@@ -587,5 +587,62 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "condition",
+    "entryId": "ve-4aeadd56",
+    "parentSenseId": "kaikki:51611f88bd16de13de",
+    "parentSourceHash": "84eec179fe4441ad8e209c923b10665288578c96edecad439da9d7951d8b56e8",
+    "sourcePage": "condition",
+    "revision": 92411264,
+    "sourceGloss": "## The [[health]] status of a medical patient.",
+    "sense": {
+      "id": "wiktionary:restored:6ebad6eda2819e386f",
+      "pos": "noun",
+      "definition": "The health status of a medical patient.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=condition&oldid=92411264",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "condition",
+    "entryId": "ve-4aeadd56",
+    "parentSenseId": "kaikki:51611f88bd16de13de",
+    "parentSourceHash": "84eec179fe4441ad8e209c923b10665288578c96edecad439da9d7951d8b56e8",
+    "sourcePage": "condition",
+    "revision": 92411264,
+    "sourceGloss": "### A certain abnormal state of health; a [[malady]] or [[sickness]].<!-- Oxford English Dictionary, sense 9e: \"A state of health, esp. one which is poor or abnormal; a malady or sickness.\" The sense outside the \"esp.\" part is covered in the previous sense here. -->",
+    "sense": {
+      "id": "wiktionary:restored:d3a4ccacebb756cb95",
+      "pos": "noun",
+      "definition": "A certain abnormal state of health; a malady or sickness.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=condition&oldid=92411264",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "condition",
+    "entryId": "ve-4aeadd56",
+    "parentSenseId": "kaikki:51611f88bd16de13de",
+    "parentSourceHash": "84eec179fe4441ad8e209c923b10665288578c96edecad439da9d7951d8b56e8",
+    "sourcePage": "condition",
+    "revision": 92411264,
+    "sourceGloss": "## {{lb|en|obsolete}} The situation of a person or persons, particularly their social and/or economic class, [[rank]].",
+    "sense": {
+      "id": "wiktionary:restored:0eb830a4d681b3ae5d",
+      "pos": "noun",
+      "definition": "The situation of a person or persons, particularly their social and/or economic class, rank.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=condition&oldid=92411264",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

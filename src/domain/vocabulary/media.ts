@@ -61,7 +61,7 @@ export function aggregateMediaCredits(recordings: VocabularyRecording[], image?:
 }
 export type VocabularySenseDiagram = typeof senseDiagrams[number];
 /** An edited definition or another sense cannot inherit this editorial diagram. */
-export function getVocabularySenseDiagram(resolved: ResolvedVocabularyLearningContext): VocabularySenseDiagram | undefined {
+export function getVocabularySenseDiagram(resolved: Pick<ResolvedVocabularyLearningContext, 'entry' | 'sense'>): VocabularySenseDiagram | undefined {
   const sense = resolved.sense;
   if (!sense || sense.source === 'Personal note') return;
   return senseDiagrams.find(row => row.entryId === resolved.entry.id && row.term === resolved.entry.term && row.senseId === sense.id && row.definition === sense.definition && row.pos === sense.pos);

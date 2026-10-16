@@ -161,6 +161,17 @@
 .vocabulary-dictionary .vocabulary-sense-head h4 {
   margin: 0;
 }
+.vocabulary-dictionary-diagram { margin-top: 12px; }
+.vocabulary-dictionary-diagram > summary {
+  width: fit-content;
+  min-height: 44px;
+  padding: 12px 0;
+  cursor: pointer;
+  color: var(--blue);
+  font-size: 13px;
+}
+.vocabulary-dictionary-diagram > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.vocabulary-dictionary-diagram .vocabulary-learning-visual { width: 100%; max-width: 520px; margin: 8px 0 0; }
 @media (max-width: 600px) {
   .vocabulary-dictionary-controls { grid-template-columns: minmax(0, 1fr); }
   .vocabulary-learning-progress,

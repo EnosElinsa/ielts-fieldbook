@@ -238,5 +238,69 @@
     "definition": "One published instalment of a newspaper, magazine or other periodical.",
     "pos": "noun",
     "kind": "periodical-issue"
+  },
+  {
+    "entryId": "ve-4aeadd56",
+    "senseId": "kaikki:193a1222dedcfa9bb4",
+    "term": "condition",
+    "definition": "A statement or expression whose truth determines a branch of a logical or conditional statement.",
+    "pos": "noun",
+    "kind": "logical-condition"
+  },
+  {
+    "entryId": "ve-bab517d",
+    "senseId": "kaikki:d3f156be902eafa479",
+    "term": "scale",
+    "definition": "An ordered system of marks or values used to measure or rate something.",
+    "pos": "noun",
+    "kind": "rating-scale"
+  },
+  {
+    "entryId": "ve-bab517d",
+    "senseId": "kaikki:b2fa156b479b40b93c",
+    "term": "scale",
+    "definition": "The ratio between a distance in a representation and the corresponding real distance.",
+    "pos": "noun",
+    "kind": "map-scale"
+  },
+  {
+    "entryId": "ve-bab517d",
+    "senseId": "kaikki:3beec847d9e72fc5fb",
+    "term": "scale",
+    "definition": "To change size or output, often by applying a proportional factor.",
+    "pos": "verb",
+    "kind": "proportional-scaling"
+  },
+  {
+    "entryId": "ve-b9a5e1a",
+    "senseId": "kaikki:5408719281d9733c20",
+    "term": "range",
+    "definition": "The distance a vehicle can travel before it needs more fuel or stored energy.",
+    "pos": "noun",
+    "kind": "vehicle-range"
+  },
+  {
+    "entryId": "ve-b9a5e1a",
+    "senseId": "kaikki:3671aac82a4f5e3be6",
+    "term": "range",
+    "definition": "The set of output values actually attained by a function on its domain.",
+    "pos": "noun",
+    "kind": "function-range"
+  },
+  {
+    "entryId": "ve-b9a5e1a",
+    "senseId": "kaikki:acf625338d0f54bf30",
+    "term": "range",
+    "definition": "The difference between the largest and smallest observations in a data set.",
+    "pos": "noun",
+    "kind": "statistical-range"
+  },
+  {
+    "entryId": "ve-531cc540",
+    "senseId": "kaikki:1fecb98a9fd2c19e65",
+    "term": "ground",
+    "definition": "Crushed into small particles or powder.",
+    "pos": "adj",
+    "kind": "ground-coffee"
   }
 ]

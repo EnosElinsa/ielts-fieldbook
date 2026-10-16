@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const identity = (entryId, senseId) => JSON.stringify([entryId, senseId]);
 const hash = value => createHash('sha256').update(JSON.stringify(value) ?? 'null').digest('hex');
 const areas = ['definition', 'example', 'collocations', 'distinctions'];
-const plainSourceGloss = value => value.replace(/^#+\s*/, '').replace(/\{\{[^{}]*\}\}/g, '').replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2').replace(/\[\[([^\]]+)\]\]/g, '$1').replace(/'{2,}/g, '').replace(/\s+/g, ' ').trim();
+const plainSourceGloss = value => value.replace(/<!--[^]*?-->/g, '').replace(/^#+\s*/, '').replace(/\{\{[^{}]*\}\}/g, '').replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2').replace(/\[\[([^\]]+)\]\]/g, '$1').replace(/'{2,}/g, '').replace(/\s+/g, ' ').trim();
 
 /** Pending records are a work queue, never inferred linguistic approval. */
 export function inspectDictionaryReview({ entries, dictionaries, corrections, records, diagrams, restoredSources = [] }) {
