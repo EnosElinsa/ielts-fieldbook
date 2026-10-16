@@ -49,6 +49,8 @@
 .async-state p { margin:0 0 14px; color:var(--muted); line-height:1.65; }
 .async-state p:last-child { margin-bottom:0; }
 .async-state > .btn,.async-state > a { margin-top:14px; }
+.async-state-actions { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:16px; min-width:0; }
+.async-state-actions .btn { min-height:44px; max-width:100%; white-space:normal; text-align:center; }
 .async-state-error { border-inline-start:3px solid var(--red); }
 .async-state-error p { color:var(--ink); }
 .async-state-inline { display:inline-flex; align-items:center; flex-wrap:wrap; gap:8px; margin:0; padding:8px 12px; font-size:13px; }

@@ -22,11 +22,12 @@ import type {
   VocabularyStatus,
 } from "../../domain/vocabulary/types";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
-import { hasVocabularySenseEdits } from "../../domain/vocabulary/content";
+import { catalogVocabularySenses, hasVocabularySenseEdits, publicVocabularyExample } from "../../domain/vocabulary/content";
 import { resolveVocabularyLearningContext } from "../../domain/vocabulary/context";
 import {
   aggregateMediaCredits,
   getVocabularyIllustration,
+  getVocabularyVisualConcept,
   type VocabularyRecording,
 } from "../../domain/vocabulary/media";
 import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
@@ -41,7 +42,7 @@ import "../../styles/vocabulary-entry.css";
 import { DictionarySenses } from "./DictionarySenses";
 import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 import { VocabularyCredits, senseCredits } from "./VocabularyCredits";
-import { VocabularyIllustration } from "./VocabularyIllustration";
+import { VocabularyLearningVisual } from "./VocabularyLearningVisual";
 import { VocabularyNavigation } from "./VocabularyPages";
 import { Pronunciation } from "./Pronunciation";
 import {
@@ -165,6 +166,7 @@ export function VocabularyEntryPage() {
   const entry = resolved?.entry;
   const primary = resolved?.sense;
   const image = resolved ? getVocabularyIllustration(resolved) : undefined;
+  const hasVisual = Boolean(image || resolved && getVocabularyVisualConcept(resolved));
   const saved = state.vocabulary?.some((item) => item.id === entry?.id);
   const timeline = entry ? vocabularyLearningTimeline(state, entry.id) : [];
   const locations = [
@@ -206,6 +208,17 @@ export function VocabularyEntryPage() {
     (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).find(
       (item) => item.id === raw.id,
     );
+  const publicSenses = raw ? catalogVocabularySenses(raw.id) : [];
+  const referenceEntry = publicEntry || (raw && publicSenses.length ? { ...raw, senses: publicSenses } : undefined);
+  const referenceMeaning = referenceEntry && primary
+    ? resolveVocabularyLearningContext(referenceEntry, { ...context, senseId: primary.id }).sense
+    : undefined;
+  const personalMeaning = Boolean(primary && (primary.source === 'Personal note' || saved && referenceMeaning && hasVocabularySenseEdits(primary, [referenceMeaning, ...publicSenses.filter(sense => sense.id === primary.id)])));
+  const groupMeaning = validGroup && referenceEntry
+    ? resolveVocabularyLearningContext(referenceEntry, context).sense
+    : undefined;
+  const groupMeaningParams = new URLSearchParams(params);
+  if (groupMeaning) groupMeaningParams.set('senseId', groupMeaning.id);
   const originalNotes = raw
     ? vocabularySensePresentation({
         id: 'original-notes',
@@ -295,19 +308,13 @@ export function VocabularyEntryPage() {
       >
         <div className="vocabulary-sense-head">
           <h3>
-            {main
-              ? resolved?.curriculum
-                ? "Current learning meaning"
-                : resolved?.reviewed
-                ? "Meaning in this group"
-                : "Common meaning"
-              : sense.pos || "Other meaning"}
+            {main ? "Meaning" : sense.pos || "Other meaning"}
           </h3>
         </div>
         {sense.pos ? (
           <span className="vocabulary-part-of-speech">{sense.pos}</span>
         ) : null}
-        <VocabularySenseContent sense={sense} />
+        <VocabularySenseContent sense={sense} learningExample={entry ? publicVocabularyExample(entry.id, sense)?.example : undefined} showMissingExample={main} />
         {((main && resolved?.contentReviewed) || personalNotes) &&
         sense.collocations?.length ? (
           <div className="vocabulary-detail">
@@ -364,6 +371,10 @@ export function VocabularyEntryPage() {
     ...senseCredits([
       ...(primary ? [primary] : []),
       ...others,
+      ...[...(primary ? [primary] : []), ...others].flatMap(sense => {
+        const example = entry && publicVocabularyExample(entry.id, sense);
+        return example ? [example.sense] : [];
+      }),
       ...dictionarySources,
     ]),
     ...aggregateMediaCredits(recordings, image).map((credit) => ({
@@ -478,47 +489,36 @@ export function VocabularyEntryPage() {
             </p>
           ) : null}
           <div
-            className={`vocabulary-meaning-layout${image ? " has-illustration" : ""}`}
+            className={`vocabulary-meaning-layout${hasVisual ? " has-illustration" : ""}`}
           >
             <div>
               {primary ? (
                 <>
-                  {validGroup ? (
-                    resolved?.curriculum ? (
-                      <details className="vocabulary-context-notice">
-                        <summary>{!resolved.curriculumCurrent ? 'Your selected meaning' : resolved.curriculum.basis === 'source' ? 'Meaning in this listening passage' : resolved.curriculum.basis === 'theme' ? 'Theme learning meaning' : resolved.curriculum.basis === 'multiple' ? 'Multiple meanings to learn' : 'Common meaning to learn'}</summary>
-                        <p>{resolved.curriculumCurrent ? resolved.curriculum.explanation : 'You are viewing a different dictionary meaning or your own edited learning notes. This selection is separate from the group learning recommendation.'}</p>
-                      </details>
-                    ) : resolved?.reviewed ? (
-                      <p className="vocabulary-context-label">
-                        Selected group meaning
-                      </p>
-                    ) : (
-                      <details className="vocabulary-context-notice">
-                        <summary>General dictionary meaning</summary>
-                        <p>
-                          This dictionary meaning is available for general study. Source-group interpretation has not been verified.
-                        </p>
-                      </details>
-                    )
-                  ) : null}
                   {renderSense(primary, true)}
+                  <div className="vocabulary-meaning-meta">
+                    <details className="vocabulary-context-notice">
+                      <summary>Meaning source</summary>
+                      <p>{personalMeaning ? 'Your saved meaning and notes.' : resolved?.curriculumCurrent ? resolved.curriculum?.explanation : resolved?.reviewed ? 'Selected from the listening passage. The example is written for practice.' : 'A dictionary meaning of this word.'}</p>
+                      {personalMeaning && groupMeaning?.id === primary.id && !resolved?.curriculumCurrent ? <div className="vocabulary-group-comparison">
+                        <h4>Group meaning</h4>
+                        <VocabularySenseContent sense={groupMeaning} />
+                      </div> : null}
+                    </details>
+                    {groupMeaning && groupMeaning.id !== primary.id ? <Link className="vocabulary-group-meaning-link" to={`${location.pathname}?${groupMeaningParams}`}>
+                      View group meaning <ArrowRight size={14} aria-hidden="true" />
+                    </Link> : null}
+                  </div>
                 </>
               ) : (
                 <section className="vocabulary-sense">
-                  <h3>
-                    {resolved?.reviewed
-                      ? "Meaning in this group"
-                      : "Common meaning"}
-                  </h3>
+                  <h3>Meaning</h3>
                   <p>Definition not available yet</p>
-                  <p>Example not available yet</p>
                 </section>
               )}
             </div>
-            {image ? (
-              <VocabularyIllustration
-                image={image}
+            {hasVisual && resolved ? (
+              <VocabularyLearningVisual
+                resolved={resolved}
                 creditHref="#vocabulary-sources"
               />
             ) : null}

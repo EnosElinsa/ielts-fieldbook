@@ -78,3 +78,29 @@ test('paste illustration represents the mixture but never the computer verb', ()
   view.rerender(<VocabularyLearningVisual resolved={meaning('paste','To insert copied text.','verb')} />);
   expect(screen.queryByRole('img')).not.toBeInTheDocument();
 });
+
+test.each([
+  ['wheat', 'A cereal plant grown for its grain.', 'noun', /Ears of wheat/],
+  ['flour', 'Powder made by grinding grain, used for baking.', 'noun', /Grain ground into flour/],
+  ['boil', 'To heat a liquid until it bubbles and turns to vapour.', 'verb', /Bubbles rising/],
+  ['evaporate', 'To change from a liquid into a gas.', 'verb', /Liquid changing into gas/],
+  ['increase', 'To become greater in amount or number.', 'verb', /An amount becoming larger/],
+  ['fork', 'A tool with several prongs used for eating food.', 'noun', /A fork with four prongs/],
+])('%s has a diagram that explains its selected meaning', (term, definition, pos, label) => {
+  render(<VocabularyLearningVisual resolved={meaning(term, definition, pos)} />);
+  expect(screen.getByRole('img', { name: label })).toBeInTheDocument();
+});
+
+test.each([
+  ['grain', 'The texture of wood.', 'noun'],
+  ['boil', 'A painful swelling on the skin.', 'noun'],
+  ['fork', 'A division in a road or path.', 'noun'],
+  ['steam', 'To be extremely angry.', 'verb'],
+  ['rise', 'A promotion in social status.', 'noun'],
+  ['flour', 'To sprinkle a surface with powder.', 'verb'],
+  ['egg', 'An ovum or female gamete.', 'noun'],
+  ['rice', 'A cereal plant, Oryza sativa.', 'noun'],
+])('%s never inherits a diagram belonging to another sense', (term, definition, pos) => {
+  render(<VocabularyLearningVisual resolved={meaning(term, definition, pos)} />);
+  expect(screen.queryByRole('img')).not.toBeInTheDocument();
+});

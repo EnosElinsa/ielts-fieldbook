@@ -10,6 +10,7 @@ import {
   ArrowRight,
   BookOpen,
   Check,
+  History,
   Pencil,
   Plus,
   RotateCcw,
@@ -162,6 +163,13 @@ function dateLabel(value) {
       })
     : "Due now";
 }
+function revealVocabularyTab(nav: HTMLElement, tab: HTMLElement) {
+  const bounds = nav.getBoundingClientRect();
+  const target = tab.getBoundingClientRect();
+  // Scroll only this navigation strip; the document keeps its reading position.
+  if (target.right > bounds.right) nav.scrollLeft += target.right - bounds.right + 6;
+  else if (target.left < bounds.left) nav.scrollLeft -= bounds.left - target.left + 6;
+}
 export function VocabularyNavigation() {
   const { pathname } = useLocation();
   const inStudy = pathname === "/vocabulary/study";
@@ -170,13 +178,7 @@ export function VocabularyNavigation() {
     const nav = navigation.current;
     const active = nav?.querySelector<HTMLElement>('[aria-current="page"]');
     if (!nav || !active) return;
-    const reveal = () => {
-      const bounds = nav.getBoundingClientRect();
-      const tab = active.getBoundingClientRect();
-      // Scroll only the tabs: scrollIntoView can also move the document.
-      if (tab.right > bounds.right) nav.scrollLeft += tab.right - bounds.right + 6;
-      else if (tab.left < bounds.left) nav.scrollLeft -= bounds.left - tab.left + 6;
-    };
+    const reveal = () => revealVocabularyTab(nav, active);
     reveal();
     if (typeof ResizeObserver === 'undefined') return;
     const observer = new ResizeObserver(reveal);
@@ -185,7 +187,10 @@ export function VocabularyNavigation() {
     return () => observer.disconnect();
   }, [pathname]);
   return (
-    <nav className="vocabulary-tabs" aria-label="Vocabulary views" ref={navigation}>
+    <nav className="vocabulary-tabs" aria-label="Vocabulary views" ref={navigation} onFocusCapture={event => {
+      const tab = (event.target as HTMLElement).closest('a');
+      if (tab && event.currentTarget.contains(tab)) revealVocabularyTab(event.currentTarget, tab);
+    }}>
       {[
         ["/vocabulary", "Overview"],
         ["/vocabulary/wordbooks", "Wordbooks"],
@@ -293,7 +298,12 @@ function VocabularyHomePage() {
       {catalogStatus === 'loading' && !saved && !due.length ? <PanelLoadingState message="Loading your wordbooks..." /> : catalogStatus === 'error' && !saved && !due.length ? <StateMessage kind="error" message="Wordbooks could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16}/></Link>}
     </section>
     <VocabularyStats values={[["Due cards", dueCards.length], ["Words to retry", getActiveWrongWords(fb.state).length], ["Saved words", (fb.state.vocabulary || []).filter(entry => !entry.tags.includes('archived')).length]]}/>
-    <nav className="vocabulary-home-links" aria-label="More vocabulary tasks"><Link to="/vocabulary/wordbooks"><BookOpen size={17}/>Wordbooks<ArrowRight size={15}/></Link><Link to="/vocabulary/review"><RotateCcw size={17}/>Review vocabulary<ArrowRight size={15}/></Link><Link to="/vocabulary/words"><Pencil size={17}/>Manage my words<ArrowRight size={15}/></Link><Link to="/vocabulary/history">Session history<ArrowRight size={15}/></Link></nav>
+    <nav className="vocabulary-home-links" aria-label="More vocabulary tasks">
+      <Link to="/vocabulary/wordbooks"><BookOpen size={18} aria-hidden="true"/><span>Wordbooks</span><ArrowRight size={16} aria-hidden="true"/></Link>
+      <Link to="/vocabulary/review"><RotateCcw size={18} aria-hidden="true"/><span>Review vocabulary</span><ArrowRight size={16} aria-hidden="true"/></Link>
+      <Link to="/vocabulary/words"><Pencil size={18} aria-hidden="true"/><span>Manage my words</span><ArrowRight size={16} aria-hidden="true"/></Link>
+      <Link to="/vocabulary/history"><History size={18} aria-hidden="true"/><span>Session history</span><ArrowRight size={16} aria-hidden="true"/></Link>
+    </nav>
   </VocabularyLayout>;
 }
 

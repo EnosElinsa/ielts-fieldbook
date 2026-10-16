@@ -6,7 +6,12 @@
 .settings-categories a, .mobile-more-links button {
   transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
 }
-.rail-activity-link { display: inline-block; margin-top: 7px; font-size: 13px; text-underline-offset: 3px; }
+.rail-foot > span { display: block; }
+.rail-activity-link,.rail-activity-link:visited { display: flex; align-items: center; gap: 8px; width: fit-content; max-width: 100%; min-height: 32px; margin-top: 5px; padding: 4px 0; border-radius: 4px; color: var(--ink); font-size: 13px; line-height: 1.4; text-decoration: none; }
+.rail-activity-link svg { flex: none; color: var(--muted); }
+.rail-activity-link:hover { color: var(--blue); }
+.rail-activity-link:hover svg { color: currentColor; }
+.rail-activity-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 .mobile-more-links button.active { background: var(--soft-blue); color: var(--blue); }
 .dropdown-item[data-disabled] { opacity: .45; cursor: not-allowed; }
 .task-chart-error { padding: 20px; border: 1px dashed var(--rule); border-radius: 8px; background: var(--surface-soft); text-align: center; }

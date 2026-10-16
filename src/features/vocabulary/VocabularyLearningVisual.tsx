@@ -2,25 +2,27 @@ import { useState } from 'react';
 import type { ResolvedVocabularyLearningContext } from '../../domain/vocabulary/context';
 import { getVocabularyIllustration, getVocabularyVisualConcept, type VocabularyVisualConcept } from '../../domain/vocabulary/media';
 import '../../styles/vocabulary-visual.css';
+import { VocabularyConceptScene, vocabularyConceptDescription } from './VocabularyConceptScene';
 
 /** Edits and navigation reset a failed photo by keying the actual selected meaning. */
-export function VocabularyLearningVisual({ resolved }: { resolved: ResolvedVocabularyLearningContext }) {
+export function VocabularyLearningVisual({ resolved, creditHref }: { resolved: ResolvedVocabularyLearningContext; creditHref?: string }) {
   const image = getVocabularyIllustration(resolved);
-  return <LearningVisual key={JSON.stringify([resolved.entry.id, resolved.entry.term, resolved.sense?.id, resolved.sense?.definition, resolved.sense?.example, resolved.sense?.pos, image?.src])} resolved={resolved} />;
+  return <LearningVisual key={JSON.stringify([resolved.entry.id, resolved.entry.term, resolved.sense?.id, resolved.sense?.definition, resolved.sense?.example, resolved.sense?.pos, image?.src])} resolved={resolved} creditHref={creditHref} />;
 }
-function LearningVisual({ resolved }: { resolved: ResolvedVocabularyLearningContext }) {
+function LearningVisual({ resolved, creditHref }: { resolved: ResolvedVocabularyLearningContext; creditHref?: string }) {
   const image = getVocabularyIllustration(resolved);
   const concept = getVocabularyVisualConcept(resolved);
+  const description = concept ? vocabularyConceptDescription(concept) : undefined;
   const [failed, setFailed] = useState(false);
   if (image && !failed) return <figure className="vocabulary-learning-visual is-photo">
     <div className="vocabulary-visual-frame"><img src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" onError={() => setFailed(true)} /></div>
     <figcaption>{image.caption}</figcaption>
-    <details className="vocabulary-visual-credits"><summary>Image credits</summary><p>{image.author} · {image.license}</p><p>{image.changes}</p><div><a href={image.sourceUrl} target="_blank" rel="noreferrer">Source</a><a href={image.licenseUrl} target="_blank" rel="noreferrer">License</a></div></details>
+    {creditHref ? <a className="vocabulary-visual-credits" href={creditHref}>Image credits</a> : <details className="vocabulary-visual-credits"><summary>Image credits</summary><p>{image.author} · {image.license}</p><p>{image.changes}</p><div><a href={image.sourceUrl} target="_blank" rel="noreferrer">Source</a><a href={image.licenseUrl} target="_blank" rel="noreferrer">License</a></div></details>}
   </figure>;
   if (!concept && !image) return null;
   return <figure className="vocabulary-learning-visual is-illustration">
-    {concept ? <FoodScene concept={concept} term={resolved.entry.term} /> : null}
-    <figcaption>{concept ? `Illustration · ${resolved.entry.term}` : null}</figcaption>
+    {concept ? description ? <VocabularyConceptScene concept={concept} term={resolved.entry.term} /> : <FoodScene concept={concept} term={resolved.entry.term} /> : null}
+    <figcaption>{description?.caption || (concept ? `Illustration · ${resolved.entry.term}` : null)}</figcaption>
     {failed ? <div className="vocabulary-visual-recovery"><p role="status">Image could not load. You can keep learning from the definition and example.</p><button type="button" className="btn line" onClick={() => setFailed(false)}>Retry image</button></div> : null}
   </figure>;
 }

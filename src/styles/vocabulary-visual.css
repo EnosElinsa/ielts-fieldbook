@@ -8,6 +8,8 @@
 .vocabulary-visual-credits p { margin:8px 0; overflow-wrap:anywhere; }
 .vocabulary-visual-credits div { display:flex; flex-wrap:wrap; gap:14px; }
 .vocabulary-visual-credits a { color:var(--blue); }
+.vocabulary-learning-visual > a.vocabulary-visual-credits { display:inline-block; min-height:32px; }
+.visual-diagram-text { font:500 23px Manrope,sans-serif; fill:var(--ink); }
 .visual-scene-background,.visual-map-background { fill:var(--sheet); stroke:var(--rule); }
 .visual-scene-ground { fill:var(--ink); opacity:.07; }
 .visual-map-word { fill:var(--soft-blue); stroke:var(--rule); }

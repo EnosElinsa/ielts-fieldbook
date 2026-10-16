@@ -241,6 +241,20 @@ test('the active vocabulary tab is brought into its own scroll area without movi
   } finally { bounds.mockRestore(); }
 });
 
+test('keyboard focus reveals an offscreen vocabulary tab before navigation', () => {
+  render(<MemoryRouter initialEntries={['/vocabulary/entry/word']}><VocabularyNavigation /></MemoryRouter>);
+  const nav = screen.getByRole('navigation', { name: 'Vocabulary views' });
+  const history = within(nav).getByRole('link', { name: 'History' });
+  vi.spyOn(nav, 'getBoundingClientRect').mockReturnValue({ left: 18, right: 302 } as DOMRect);
+  vi.spyOn(history, 'getBoundingClientRect').mockReturnValue({ left: 287, right: 339 } as DOMRect);
+  fireEvent.focus(history);
+  expect(nav.scrollLeft).toBe(43);
+  const overview = within(nav).getByRole('link', { name: 'Overview' });
+  vi.spyOn(overview, 'getBoundingClientRect').mockReturnValue({ left: 0, right: 63 } as DOMRect);
+  fireEvent.focus(overview);
+  expect(nav.scrollLeft).toBe(19);
+});
+
 test("failed enrollment save offers an actionable error", async () => {
   fixture();
   fb.current.state.wordbookEnrollments = [];

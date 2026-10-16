@@ -8,10 +8,12 @@ import * as Tooltip from '@radix-ui/react-tooltip';
 import './styles/index.css';
 import { startPerformanceTelemetry } from './lib/performanceTelemetry';
 import { PageErrorBoundary } from './components/PageErrorBoundary';
+import { installPageLoadRecovery } from './lib/pageLoadRecovery';
 
 const AppRoutes = lazy(() => import('./App').then(module => ({ default: module.AppRoutes })));
 
 applyTheme(initialTheme());
+installPageLoadRecovery();
 startPerformanceTelemetry();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

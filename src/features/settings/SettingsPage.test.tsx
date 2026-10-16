@@ -41,6 +41,24 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); window.history.replaceState(null, '', '/'); });
 
+test.each(['account', 'backup'])('%s hides unrelated save controls when there are no settings edits', category => {
+  setup(category);
+  expect(screen.queryByRole('button', { name: 'Save settings' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Discard changes' })).not.toBeInTheDocument();
+  expect(screen.queryByText('All changes saved')).not.toBeInTheDocument();
+});
+
+test('pending learning settings remain saveable from the account category', async () => {
+  setup(); const user = userEvent.setup();
+  fireEvent.change(screen.getByRole('spinbutton', { name: 'Minutes a day' }), { target: { value: '45' } });
+  await user.click(screen.getByRole('link', { name: 'Account' }));
+  expect(screen.getByText('Account controls')).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Save settings' })).toBeEnabled();
+  await user.click(screen.getByRole('button', { name: 'Save settings' }));
+  expect(context.current.saveStudySettings).toHaveBeenCalledWith({ dailyMinutes: 45 });
+  expect(screen.queryByRole('button', { name: 'Save settings' })).not.toBeInTheDocument();
+});
+
 test('weekly overrides and vocabulary allocation can be saved as actionable settings',async()=>{
  setup(); const user=userEvent.setup();
  fireEvent.change(screen.getByRole('spinbutton',{name:'Mon study minutes'}),{target:{value:'90'}});

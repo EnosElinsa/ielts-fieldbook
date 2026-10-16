@@ -58,14 +58,61 @@ export function getVocabularyIllustration(resolved: ResolvedVocabularyLearningCo
 export function aggregateMediaCredits(recordings: VocabularyRecording[], image?: VocabularyIllustrationAsset): MediaCredit[] {
   return [...new Map([...recordings, ...(image ? [image] : [])].filter(item => item.sourceUrl).map(item => [item.sourceUrl, { sourceUrl: item.sourceUrl, author: item.author, license: item.license, licenseUrl: item.licenseUrl, changes: item.changes }])).values()];
 }
-export type VocabularyVisualConcept = 'pea' | 'carrot' | 'apple' | 'banana' | 'grape' | 'lemon' | 'orange' | 'vegetable' | 'fruit' | 'paste';
-/** A drawn food scene needs both the exact word and a concrete selected noun meaning. */
+export type VocabularyVisualConcept = 'pea' | 'carrot' | 'apple' | 'banana' | 'grape' | 'lemon' | 'orange' | 'vegetable' | 'fruit' | 'paste'
+ | 'wheat' | 'grain' | 'rice' | 'corn' | 'flour' | 'bread' | 'tomato' | 'potato' | 'onion' | 'garlic' | 'mushroom' | 'egg' | 'cheese' | 'nut'
+ | 'fork' | 'spoon' | 'knife' | 'cutlery' | 'bowl' | 'plate' | 'cup' | 'glass' | 'kettle' | 'pan' | 'pot'
+ | 'boil' | 'steam' | 'bake' | 'fry' | 'slice' | 'grind' | 'evaporate' | 'condense' | 'freeze' | 'melt' | 'increase' | 'decrease';
+const noun = /^noun\b/i;
+const verb = /^verb\b/i;
+const visualConcepts: { words: string[]; concept: VocabularyVisualConcept; meaning: RegExp; pos: RegExp }[] = [
+ { words: ['wheat'], concept: 'wheat', pos: noun, meaning: /\b(cereal|grain|triticum)\b/ },
+ { words: ['grain', 'grains'], concept: 'grain', pos: noun, meaning: /\b(cereal|wheat|rice|crop)\b|\bseed\b.*\b(food|grass)\b/ },
+ { words: ['rice'], concept: 'rice', pos: noun, meaning: /\b(grains?|seeds?)\b/ },
+ { words: ['corn', 'maize'], concept: 'corn', pos: noun, meaning: /\b(maize|cereal|grain|zea|seed|cob)\b/ },
+ { words: ['flour'], concept: 'flour', pos: noun, meaning: /\b(powder|grind|ground)\b.*\b(grain|cereal|wheat|seed)\b/ },
+ { words: ['bread'], concept: 'bread', pos: noun, meaning: /\b(food|flour|dough|baked|baking)\b/ },
+ { words: ['tomato', 'tomatoes'], concept: 'tomato', pos: noun, meaning: /\b(fruit|plant|vegetable|edible|lycopersicum)\b/ },
+ { words: ['potato', 'potatoes'], concept: 'potato', pos: noun, meaning: /\b(tuber|tubers|vegetable|edible|starchy)\b/ },
+ { words: ['onion', 'onions'], concept: 'onion', pos: noun, meaning: /\b(bulb|vegetable|allium)\b/ },
+ { words: ['garlic'], concept: 'garlic', pos: noun, meaning: /\b(bulb|allium|clove|cloves)\b/ },
+ { words: ['mushroom', 'mushrooms'], concept: 'mushroom', pos: noun, meaning: /\b(fungus|fungi|fruiting|edible)\b/ },
+ { words: ['egg', 'eggs'], concept: 'egg', pos: noun, meaning: /\b(bird|birds|shell|yolk|food)\b/ },
+ { words: ['cheese'], concept: 'cheese', pos: noun, meaning: /\b(milk|curd|curds|dairy|food)\b/ },
+ { words: ['nut', 'nuts'], concept: 'nut', pos: noun, meaning: /\b(seed|seeds|fruit|fruits|edible|shelled)\b/ },
+ { words: ['fork', 'forks'], concept: 'fork', pos: noun, meaning: /\b(prong|prongs|tines)\b.*\b(food|eating)\b|\b(eating|food)\b.*\b(prong|prongs|tines)\b/ },
+ { words: ['spoon', 'spoons'], concept: 'spoon', pos: noun, meaning: /\b(utensil|eating|serving|scooped)\b/ },
+ { words: ['knife', 'knives'], concept: 'knife', pos: noun, meaning: /\b(blade|cutting|utensil)\b/ },
+ { words: ['cutlery'], concept: 'cutlery', pos: noun, meaning: /\b(knives|forks|spoons|eating|utensils)\b/ },
+ { words: ['bowl', 'bowls'], concept: 'bowl', pos: noun, meaning: /\b(container|vessel|dish)\b/ },
+ { words: ['plate', 'dish'], concept: 'plate', pos: noun, meaning: /\b(vessel|plate|container)\b.*\b(food|serving|holding)\b|\b(food|serving)\b.*\b(vessel|plate|container)\b/ },
+ { words: ['cup', 'mug'], concept: 'cup', pos: noun, meaning: /\b(beverage|beverages|drinking|drink|tea|coffee)\b/ },
+ { words: ['glass'], concept: 'glass', pos: noun, meaning: /\b(drinking|drink|beverage|beverages)\b/ },
+ { words: ['kettle'], concept: 'kettle', pos: noun, meaning: /\b(boiling|heating)\b.*\b(water|liquid)\b/ },
+ { words: ['pan'], concept: 'pan', pos: noun, meaning: /\b(cooking|frying)\b/ },
+ { words: ['pot'], concept: 'pot', pos: noun, meaning: /\b(cooking|cook|boiling)\b/ },
+ { words: ['boil', 'boiling'], concept: 'boil', pos: /^(verb|noun)\b/i, meaning: /\b(liquid|water)\b.*\b(heat|heating|bubbl\w*|vapou?r|gas)\b|\b(heat|heating|bubbl\w*)\b.*\b(liquid|water)\b/ },
+ { words: ['steam'], concept: 'steam', pos: verb, meaning: /\bcook\b.*\b(steam|vapou?r)\b/ },
+ { words: ['bake', 'baking', 'roast'], concept: 'bake', pos: verb, meaning: /\bcook\b.*\boven\b/ },
+ { words: ['fry', 'frying'], concept: 'fry', pos: verb, meaning: /\bcook\b.*\b(oil|fat)\b/ },
+ { words: ['slice'], concept: 'slice', pos: /^(noun|verb)\b/i, meaning: /\bthin\b.*\b(piece|pieces|cut)\b/ },
+ { words: ['grind'], concept: 'grind', pos: verb, meaning: /\b(crushing|crush|powder|smaller pieces)\b/ },
+ { words: ['evaporate', 'evaporation'], concept: 'evaporate', pos: /^(verb|noun)\b/i, meaning: /\bliquid\b.*\b(gas|vapou?r)\b/ },
+ { words: ['condense', 'condensation'], concept: 'condense', pos: /^(verb|noun)\b/i, meaning: /\b(gas|vapou?r)\b.*\bliquid\b/ },
+ { words: ['freeze', 'freezing'], concept: 'freeze', pos: /^(verb|noun)\b/i, meaning: /\bliquid\b.*\bsolid\b|\b(ice|solid)\b.*\b(cold|cool|temperature)\b/ },
+ { words: ['melt', 'melting'], concept: 'melt', pos: /^(verb|noun)\b/i, meaning: /\bsolid\b.*\bliquid\b|\bliquid\b.*\b(heat|warm)\b/ },
+ { words: ['increase', 'rise', 'increment'], concept: 'increase', pos: /^(verb|noun)\b/i, meaning: /\b(amount|number|quantity|greater|larger)\b/ },
+ { words: ['decrease', 'reduce', 'reduction', 'decline', 'diminish'], concept: 'decrease', pos: /^(verb|noun)\b/i, meaning: /\b(amount|number|quantity|smaller)\b/ },
+];
+/** Match the selected definition and part of speech, never the word's spelling alone. */
 export function getVocabularyVisualConcept(resolved: ResolvedVocabularyLearningContext): VocabularyVisualConcept | undefined {
   const sense = resolved.sense;
-  if (!sense || !/^noun\b/i.test(sense.pos.trim())) return undefined;
+  if (!sense) return undefined;
   const definition = vocabularySensePresentation(sense).definition.toLowerCase();
-  if (/\b(company|corporation|software|computer|device|person|reward|incentive|metaphor|figurative|result|outcome|profit|colour|color|political|currency)\b/.test(definition)) return undefined;
+  if (/\b(company|corporation|software|computer|person|reward|incentive|metaphor|figurative|outcome|profit|colour|color|political|currency)\b/.test(definition)) return undefined;
   const term = resolved.entry.term.trim().toLowerCase();
+  const concept = visualConcepts.find(candidate => candidate.words.includes(term) && candidate.pos.test(sense.pos.trim()) && candidate.meaning.test(definition))?.concept;
+  if (concept) return concept;
+  if (!noun.test(sense.pos.trim()) || /\b(result|device)\b/.test(definition)) return undefined;
   const candidates: { words: string[]; concept: VocabularyVisualConcept; meaning: RegExp }[] = [
     { words: ['paste'], concept: 'paste', meaning: /\b(mixture|substance)\b/ },
     { words: ['pea', 'peas'], concept: 'pea', meaning: /\b(legume|pod|vegetable)\b|\b(round|spherical|green|edible|small)\b.*\bseed/ },

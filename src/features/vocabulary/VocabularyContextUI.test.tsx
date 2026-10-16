@@ -118,6 +118,58 @@ function mount(path: string) {
 const book = "ielts-vocabulary";
 const core = () => release.entries.find((entry: any) => entry.term === "core");
 
+test('pea details show the food meaning with the same illustration as its learning card', () => {
+  const pea = release.entries.find((entry: any) => entry.term === 'pea');
+  mount(`/vocabulary/entry/${pea.id}?bookId=${book}&unitId=ielts-vocabulary-chapter-12-group-02`);
+  expect(screen.getByText('Add the peas to the soup near the end of cooking.')).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: 'pea: Green peas in an open pod' })).toBeInTheDocument();
+  expect(screen.getByText('Meaning source')).toBeInTheDocument();
+  expect(screen.queryByText('Theme learning meaning')).not.toBeInTheDocument();
+});
+
+test('an explicit plant meaning keeps its identity and offers a direct route to the group meaning', async () => {
+  const pea = release.entries.find((entry: any) => entry.term === 'pea');
+  const origin = '/vocabulary/history?bookId=ielts-vocabulary';
+  mount(`/vocabulary/entry/${pea.id}?bookId=${book}&unitId=ielts-vocabulary-chapter-12-group-02&senseId=${pea.senses[0].id}&returnTo=${encodeURIComponent(origin)}`);
+  expect(screen.getByText('The pea plant climbed the garden support.')).toBeInTheDocument();
+  expect(screen.queryByText('Your selected meaning')).not.toBeInTheDocument();
+  expect(screen.queryByRole('img', { name: /Green peas/ })).not.toBeInTheDocument();
+  const target = screen.getByRole('link', { name: 'View group meaning' });
+  expect(new URL(target.getAttribute('href')!, 'https://test.test').searchParams.get('returnTo')).toBe(origin);
+  await userEvent.setup().click(target);
+  expect(screen.getByText('The small edible seed of the pea plant.')).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: /Green peas/ })).toBeInTheDocument();
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test('an empty personal example can show a separate public learning example for exactly the same meaning', () => {
+  const pea = structuredClone(release.entries.find((entry: any) => entry.term === 'pea'));
+  pea.senses[0].source = 'Personal note';
+  pea.senses[0].register = 'My garden vocabulary.';
+  mocks.fb.state.vocabulary = [pea];
+  const before = JSON.stringify(mocks.fb.state);
+  mount(`/vocabulary/entry/${pea.id}?bookId=${book}&unitId=ielts-vocabulary-chapter-12-group-02`);
+  const primary = document.querySelector('.vocabulary-primary-meaning')!;
+  expect(within(primary as HTMLElement).getByText('Learning example')).toBeInTheDocument();
+  expect(within(primary as HTMLElement).getByText('The pea plant climbed the garden support.')).toBeInTheDocument();
+  expect(within(screen.getByText('Sources & licenses').closest('details')!).getByText('Fieldbook core content review')).toBeInTheDocument();
+  expect(screen.getByText('My garden vocabulary.')).toBeInTheDocument();
+  expect(screen.queryByText('Example not available yet')).not.toBeInTheDocument();
+  expect(JSON.stringify(mocks.fb.state)).toBe(before);
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test('a personal changed meaning never borrows an example from a different meaning', () => {
+  const pea = structuredClone(release.entries.find((entry: any) => entry.term === 'pea'));
+  pea.senses[0] = { ...pea.senses[0], definition: 'My nickname for a tiny room.', source: 'Personal note', example: '' };
+  mocks.fb.state.vocabulary = [pea];
+  mount(`/vocabulary/entry/${pea.id}?bookId=${book}&unitId=ielts-vocabulary-chapter-12-group-02`);
+  const primary = document.querySelector('.vocabulary-primary-meaning')!;
+  expect(within(primary as HTMLElement).getByText('No example for this meaning.')).toBeInTheDocument();
+  expect(within(primary as HTMLElement).queryByText(/soup|garden support/)).not.toBeInTheDocument();
+  expect(screen.queryByRole('img')).not.toBeInTheDocument();
+});
+
 test('public dictionary snapshots are not presented as personal original notes', () => {
   const raw=release.entries.find((entry:any)=>entry.term==='supplement');
   mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-03`);
@@ -220,7 +272,7 @@ test("detail uses distinct confirmed core group content, one bottom credits coll
   const origin = `/vocabulary/entry/${raw.id}?bookId=${encodeURIComponent(book)}&unitId=ielts-vocabulary-chapter-12-group-02&returnTo=${encodeURIComponent(`/vocabulary/wordbooks/${book}/groups/ielts-vocabulary-chapter-12-group-02/words?search=core&page=0`)}`;
   mount(origin);
   expect(
-    screen.getByRole("heading", { name: "Current learning meaning" }),
+    screen.getByRole("heading", { name: "Meaning" }),
   ).toBeInTheDocument();
   expect(screen.getByText(resolved.sense!.definition)).toBeInTheDocument();
   const practice = new URL(
@@ -254,9 +306,9 @@ test("detail uses distinct confirmed core group content, one bottom credits coll
 test("common-list group has an explicit learning syllabus without claiming source confirmation", async () => {
   const raw = release.entries.find((entry: any) => entry.term === "cashier");
   mount(`/vocabulary/entry/${raw.id}?bookId=ielts-listening-vocabulary&unitId=ielts-listening-vocabulary-chapter-01-group-02`);
-  await screen.findByText("Common meaning to learn");
+  await screen.findByText("Meaning source");
   expect(
-    screen.getByRole("heading", { name: "Current learning meaning" }),
+    screen.getByRole("heading", { name: "Meaning" }),
   ).toBeInTheDocument();
   expect(
     screen.queryByText("Meaning in this listening passage"),
@@ -425,7 +477,7 @@ test("edited learner notes remain visible as notes without a context-reviewed he
   mocks.fb.state.vocabulary = [raw];
   mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-01-group-01`);
   expect(
-    screen.getByRole("heading", { name: "Current learning meaning" }),
+    screen.getByRole("heading", { name: "Meaning" }),
   ).toBeInTheDocument();
   expect(screen.getByText("My geology note.")).toBeInTheDocument();
   expect(screen.getByText("Your collocation notes")).toBeInTheDocument();
@@ -534,7 +586,7 @@ test("confirmed register content is labelled reviewed while raw public register 
   vi.stubGlobal('fetch',vi.fn(async(url:string)=>({ok:true,json:async()=>url.endsWith('index.json')?{core:'aa.json'}:dictionary})));
   mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-02`);
   const main = screen
-    .getByRole("heading", { name: "Current learning meaning" })
+    .getByRole("heading", { name: "Meaning" })
     .closest("section")!;
   expect(
     within(main).getByRole("heading", { name: "Reviewed register" }),
@@ -692,7 +744,7 @@ test("source switching removes the old requested sense and preserves the list re
   ).toHaveAttribute("href", "/vocabulary?search=core");
   expect(
     screen
-      .getByRole("heading", { name: "Current learning meaning" })
+      .getByRole("heading", { name: "Meaning" })
       .closest("section"),
   ).not.toHaveTextContent("The hard central part of a fruit");
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();

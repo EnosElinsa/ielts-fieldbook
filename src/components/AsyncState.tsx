@@ -81,6 +81,6 @@ export function StateMessage({ kind = 'empty', title, message, onRetry, retryLab
   if (inline) return <span className={`async-state async-state-inline async-state-${kind} ${className}`} role={kind === 'error' ? 'alert' : undefined}>{title ? <strong>{title}</strong> : null}{message}{action}{children}</span>;
   return <div className={`async-state async-state-${kind} ${className}`}>
     <div role={kind === 'error' ? 'alert' : undefined}>{title ? <h3>{title}</h3> : null}{message ? <p>{message}</p> : null}</div>
-    {action}{children}
+    {action || children ? <div className="async-state-actions">{action}{children}</div> : null}
   </div>;
 }

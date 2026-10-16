@@ -400,7 +400,8 @@
   margin-top: 20px;
   padding-bottom: 0;
 }
-.vocabulary-meaning-layout .vocabulary-illustration {
+.vocabulary-meaning-layout .vocabulary-illustration,
+.vocabulary-meaning-layout .vocabulary-learning-visual {
   margin-top: 8px;
   max-width: 320px;
 }
@@ -544,6 +545,9 @@
   }
   .vocabulary-meaning-layout .vocabulary-illustration {
     max-width: 280px;
+  }
+  .vocabulary-meaning-layout .vocabulary-learning-visual {
+    justify-self: center;
   }
   .vocabulary-entry-heading h2 {
     font-size: 28px;

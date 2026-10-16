@@ -55,6 +55,26 @@
   line-height: 1.65;
   margin: 0 0 12px;
 }
+.vocabulary-meaning-meta {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 8px 24px;
+  flex-wrap: wrap;
+}
+.vocabulary-meaning-meta .vocabulary-context-notice { flex: 1 1 180px; }
+.vocabulary-group-meaning-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: 13px;
+  color: var(--blue);
+}
+.vocabulary-group-meaning-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.vocabulary-example-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.vocabulary-group-comparison { padding: 12px 16px; border-left: 2px solid var(--rule); }
+.vocabulary-group-comparison h4 { margin: 0 0 12px; }
 .vocabulary-timeline ol,
 .vocabulary-source-locations ul {
   list-style: none;

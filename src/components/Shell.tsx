@@ -9,7 +9,7 @@ import { NavIcons, Toast } from './ui';
 import { useAuthUser } from '../auth/useAuthUser';
 import { AccountMark } from '../features/account/AccountMark';
 import { SaveFailure } from './SaveFailure';
-import { Search, PanelLeftClose, PanelLeftOpen, Upload } from 'lucide-react';
+import { ArrowRight, Search, PanelLeftClose, PanelLeftOpen, Upload } from 'lucide-react';
 import { IconButton } from './IconButton';
 import { AccountMenu, CommandSearch, MobileNavigation } from './WorkbenchNavigation';
 import { ModalFrame } from './ModalFrame';
@@ -258,7 +258,7 @@ export function Shell() {
           </button></RailHint>
           <div className="rail-foot">
             <span>Streak</span>
-            {streak === null ? <Link to="/progress" className="rail-activity-link">View activity</Link> : <strong>{streak} {streak === 1 ? 'day' : 'days'}</strong>}
+            {streak === null ? <Link to="/progress" className="rail-activity-link">View activity<ArrowRight size={14} aria-hidden="true"/></Link> : <strong>{streak} {streak === 1 ? 'day' : 'days'}</strong>}
           </div>
         </aside></Tooltip.Provider>
         <main className="main">
@@ -332,6 +332,7 @@ export function Shell() {
       <MobileNavigation onMore={() => setMoreOpen(true)} onSelectModule={resumeModule} />
       <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}{workspaceModules.filter(link => ['planning', 'progress', 'settings'].includes(link.id)).map(link => <button type="button" key={link.id} className={module === link.id ? 'active' : undefined} onClick={() => { setMoreOpen(false); resumeModule(link.id); }}><link.Icon size={20} />{link.label}</button>)}<button type="button" onClick={() => goFromMore('/settings/account')}>Account</button></div></div></ModalFrame>
       {searchOpen && <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
+      <PageErrorBoundary resetKey={`${accountId()}:${fb.modal}:${legalView}`} onDismiss={() => { fb.closeModal(); setLegalView(null); }}>
       <Suspense fallback={<PageLoadingState message="Opening dialog…" />}>
         {fb.modal === 'assessment' && <AssessmentImportModal />}
         {legalView && <LegalModal view={legalView} onClose={() => setLegalView(null)} />}
@@ -343,6 +344,7 @@ export function Shell() {
         {fb.modal === 'story' && <AccountDataBoundary modules={['productive']} banks={['speaking']}><StoryModal /></AccountDataBoundary>}
         {fb.modal === 'backup' && <BackupModal />}
       </Suspense>
+      </PageErrorBoundary>
       <Toast message={fb.toastMessage} visible={fb.toastVisible} />
     </>
   );

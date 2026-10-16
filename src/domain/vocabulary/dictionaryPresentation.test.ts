@@ -66,3 +66,12 @@ test.each([
 ])("a real sentence containing reference-like words remains: %s", (example) => {
   expect(vocabularySensePresentation({ ...sense, example }).example).toBe(example);
 });
+
+test('editorial selection metadata is not presented as an English usage rule', () => {
+  const usage = 'Recommended learning meaning selected from the chapter topic; the original source meaning is unverified.';
+  const original = { ...sense, usage, editorial: { source: 'Fieldbook group curriculum', license: 'CC-BY-4.0', attribution: 'Fieldbook editorial contributors' } };
+  expect(vocabularySensePresentation(original).usage).toBe('');
+  expect(original.usage).toBe(usage);
+  expect(vocabularySensePresentation({ ...original, source: 'Personal note' }).usage).toBe(usage);
+  expect(vocabularySensePresentation({ ...original, usage: 'Usually followed by an infinitive.' }).usage).toBe('Usually followed by an infinitive.');
+});

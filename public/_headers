@@ -1,0 +1,47 @@
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/today
+  Cache-Control: public, max-age=0, must-revalidate
+
+/planning
+  Cache-Control: public, max-age=0, must-revalidate
+
+/vocabulary
+  Cache-Control: public, max-age=0, must-revalidate
+
+/vocabulary/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/reading*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/listening*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/write*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/speak*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/stories
+  Cache-Control: public, max-age=0, must-revalidate
+
+/review*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/progress
+  Cache-Control: public, max-age=0, must-revalidate
+
+/settings*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/account
+  Cache-Control: public, max-age=0, must-revalidate
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

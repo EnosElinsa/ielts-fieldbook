@@ -46,11 +46,12 @@ export function vocabularySensePresentation(sense: VocabularySense): {
   };
   const example = extract(sense.example);
   const usage = extract(sense.usage);
+  const selectionMetadata = sense.source !== 'Personal note' && sense.editorial && /^(?:Recommended learning meaning selected from the chapter topic;|Common learner sense selected in place of |Selected the .+ rather than )/.test(usage);
   return {
     definition: dictionaryDisplayText(sense.definition),
     example,
     usage:
-      /^(usually|often|sometimes|chiefly|especially|typically)[.,;:]?$/i.test(
+      selectionMetadata || /^(usually|often|sometimes|chiefly|especially|typically)[.,;:]?$/i.test(
         usage,
       )
         ? ""

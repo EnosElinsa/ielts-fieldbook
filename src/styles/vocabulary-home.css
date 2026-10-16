@@ -3,6 +3,11 @@
 .vocabulary-home-next p{margin:0 0 20px;overflow-wrap:anywhere;}
 .vocabulary-home-next .btn{margin-top:12px;}
 .vocabulary-home-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px;margin-top:20px;}
-.vocabulary-home-links a{display:flex;align-items:center;gap:12px;padding:18px 0;border-bottom:1px solid var(--rule);min-width:0;overflow-wrap:anywhere;}
-.vocabulary-home-links a svg:last-child{margin-left:auto;flex-shrink:0;}
+.vocabulary-home-links a,.vocabulary-home-links a:visited{display:grid;grid-template-columns:20px minmax(0,1fr) 16px;align-items:center;gap:12px;min-height:64px;padding:16px 12px;border-bottom:1px solid var(--rule);border-radius:6px;min-width:0;color:var(--ink);font-size:14px;font-weight:600;line-height:1.5;text-decoration:none;transition:background-color 160ms ease,color 160ms ease;}
+.vocabulary-home-links a>span{min-width:0;overflow-wrap:anywhere;}
+.vocabulary-home-links a svg{color:var(--muted);}
+.vocabulary-home-links a svg:last-child{justify-self:end;}
+.vocabulary-home-links a:hover{background:var(--surface-hover);color:var(--blue);}
+.vocabulary-home-links a:hover svg{color:currentColor;}
+.vocabulary-home-links a:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;background:var(--soft-blue);}
 @media(max-width:640px){.vocabulary-home-links{grid-template-columns:minmax(0,1fr);}.vocabulary-home-next h3{font-size:23px;}}

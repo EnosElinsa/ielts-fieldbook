@@ -61,7 +61,7 @@ export function vocabularyCurriculum(entry:VocabularyEntry, request:{bookId?:str
   const rows=sourceRow?[sourceRow]:topicRow?[topicRow]:!theme?multiple&&commonChoices.length?commonChoices:modernRow?[modernRow]:commonChoices.length?commonChoices:repair?[repair]:[]:[];
   const basis=sourceRow?'source':multiple?'multiple':theme?'theme':'common';
   const senses=rows.length?(multiple?rows.map(row=>row.sense):[rows[0].sense]):[fallback];
-  const explanation=basis==='source'?'Selected after checking the word in the corresponding listening transcript. Examples on this page are learning examples.':basis==='theme'?`Learn this meaning in the ${chapter?.title||unit.title} theme. The selection is a teaching recommendation based on the topic and vocabulary, rather than a quotation from the source wordbook.`:basis==='multiple'?senses.length>1?'Learn these different everyday meanings separately. Each meaning has its own progress and review schedule.':'This word has one common modern learning meaning. The chapter title does not imply that every word needs an invented second meaning.':'Learn a common modern meaning first. This word list does not prescribe a single contextual meaning; other dictionary meanings remain available.';
+  const explanation=basis==='source'?'Selected from the listening passage. The example is written for practice.':basis==='theme'?`Recommended for the ${chapter?.title||unit.title} topic.`:basis==='multiple'?senses.length>1?'Each meaning has its own practice and review progress.':'A common everyday meaning for this word.':'A common everyday meaning for this word.';
   return {curriculum:{basis,title:[chapter?.title,unit.title].filter(Boolean).join(' · '),explanation,senses},rows};
 }
 

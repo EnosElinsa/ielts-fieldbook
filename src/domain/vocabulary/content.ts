@@ -2,7 +2,8 @@ import { vocabularyTeaching } from './runtimeData';
 import { VOCABULARY_CATALOG } from './catalog';
 import { vocabularyCurriculumBaselines } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
-import { applyVocabularyReadiness, VOCABULARY_READINESS_VERSION } from './readiness';
+import { applyVocabularyReadiness, supplementVocabularySense, VOCABULARY_READINESS_VERSION } from './readiness';
+import { vocabularySensePresentation } from './dictionaryPresentation';
 export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-10.1/${VOCABULARY_READINESS_VERSION}`;
 const learningSenses = vocabularyTeaching.learning;
 const taskSenseBindings = vocabularyTeaching.tasks;
@@ -151,6 +152,21 @@ export function reviewedEntry(entry:VocabularyEntry):VocabularyEntry {
  const originals=catalogVocabularySenses(entry.id);
  const canonical=(learningSenses as Record<string,VocabularySense>)[entry.term.toLowerCase()];
  return applyVocabularyReadiness(existing,[...originals,...(canonical ? [canonical]:[])],hasVocabularySenseEdits);
+}
+/** A separate display example, never an update to a learner's deliberately empty notes. */
+export function publicVocabularyExample(entryId: string, sense: VocabularySense): { example: string; sense: VocabularySense } | undefined {
+ const current = vocabularySensePresentation(sense);
+ if (current.example || !current.definition) return;
+ const originals = catalogVocabularySenses(entryId).filter(row => row.id === sense.id);
+ const candidates = [
+  ...originals.map(row => supplementVocabularySense(entryId, row, originals, () => false)),
+  ...vocabularyCurriculumBaselines(entryId, sense.id),
+  ...[...contextSenses.bindings, ...contextSenses.defaults].filter(row => row.entryId === entryId && row.sense.id === sense.id).map(row => row.sense),
+ ];
+ for (const candidate of candidates) {
+  const content = vocabularySensePresentation(candidate);
+  if (content.definition === current.definition && candidate.pos.trim() === sense.pos.trim() && content.example) return { example: content.example, sense: candidate };
+ }
 }
 const confusion: Record<string, VocabularyLearningTask> = {
 'affect':{prompt:'Noise can _____ concentration.',acceptedAnswers:['affect'],options:['affect','effect'],explanation:'Affect is the verb influence. Effect is usually a noun meaning result.'},
