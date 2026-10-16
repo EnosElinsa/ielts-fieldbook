@@ -1,0 +1,28 @@
+/* Keep route motion independent from stateful forms and lazy-loading placeholders. */
+.page { min-width: 0; }
+.top .page-title { animation: heading-arrive 240ms var(--ease); }
+.nav-children { animation: heading-arrive 200ms var(--ease); }
+.nav a, .mobile-navigation a, .mobile-navigation button, .vocabulary-tabs a,
+.settings-categories a, .mobile-more-links button {
+  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+.rail-activity-link { display: inline-block; margin-top: 7px; font-size: 13px; text-underline-offset: 3px; }
+.mobile-more-links button.active { background: var(--soft-blue); color: var(--blue); }
+.dropdown-item[data-disabled] { opacity: .45; cursor: not-allowed; }
+.task-chart-error { padding: 20px; border: 1px dashed var(--rule); border-radius: 8px; background: var(--surface-soft); text-align: center; }
+.task-chart-error p { margin: 0 0 12px; color: var(--muted); font-size: 13px; }
+
+@keyframes heading-arrive {
+  from { opacity: .35; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 740px) {
+  .page .vocabulary-tabs { scroll-padding-inline: 6px; overscroll-behavior-x: contain; }
+  .page .vocabulary-tabs a { flex: 1 0 auto; padding: 12px 6px; min-height: 44px; text-align: center; font-size: 12px; }
+  .mobile-more-links button { min-height: 44px; text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top .page-title, .nav-children { animation: none; }
+}

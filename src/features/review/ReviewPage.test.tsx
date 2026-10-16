@@ -109,3 +109,19 @@ test('listening skill dispatches to the receptive review queue', () => {
   mount('/review?skill=listening');
   expect(screen.getByText('Listening review queue')).toBeInTheDocument();
 });
+
+test('attempts and feedback use newest dates first regardless of database row order', () => {
+  const state = mockFieldbook.current.state;
+  state.assessments.push({ id: 'a2', sessionId: 'pending', skill: 'writing', date: '2026-10-08T12:00:00Z', overall: '7', nextExercise: 'Older feedback' });
+  state.assessments[0].nextExercise = 'Newer feedback';
+  const view = mount();
+  expect([...view.container.querySelectorAll('.review-grid > div:first-child .assessment > strong')].map(node => node.textContent)).toEqual(['Cities essay', 'Education essay']);
+  expect([...view.container.querySelectorAll('.review-grid > div:last-child .assessment > p')].map(node => node.textContent)).toEqual(['Newer feedback', 'Older feedback']);
+});
+
+test('pasted search text ignores surrounding whitespace', async () => {
+  mount();
+  await userEvent.setup().type(screen.getByRole('textbox', { name: 'Search attempts' }), '  Cities  ');
+  expect(screen.getByText('Cities essay')).toBeInTheDocument();
+  expect(screen.queryByText('Education essay')).not.toBeInTheDocument();
+});

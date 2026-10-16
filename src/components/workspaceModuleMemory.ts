@@ -4,6 +4,26 @@ import { normalizeVocabularyRoute } from '../domain/vocabulary/identities';
 export type ModuleContext = { url: string; state: unknown; scroll: { x: number; y: number } };
 type ModuleMemory = { version: 1; owner: string | null; modules: Partial<Record<WorkspaceModule, ModuleContext>> };
 export const moduleMemoryKey = (owner: string | null) => `fieldbook:module-memory:v1:${JSON.stringify(owner)}`;
+type HistoryPosition = Pick<ModuleContext, 'url' | 'scroll'>;
+const historyMemoryKey = (owner: string | null) => `fieldbook:history-scroll:v1:${JSON.stringify(owner)}`;
+
+export function readHistoryScrollMemory(owner: string | null): Map<string, HistoryPosition> {
+  try {
+    const value = JSON.parse(sessionStorage.getItem(historyMemoryKey(owner)) || 'null');
+    if (value?.version === 1 && value.owner === owner && Array.isArray(value.positions)) {
+      return new Map(value.positions.slice(-80).filter((entry: unknown): entry is [string, HistoryPosition] => {
+        if (!Array.isArray(entry) || typeof entry[0] !== 'string') return false;
+        const position = entry[1];
+        return typeof position?.url === 'string' && Number.isFinite(position.scroll?.x) && position.scroll.x >= 0 && Number.isFinite(position.scroll?.y) && position.scroll.y >= 0;
+      }));
+    }
+  } catch { /* History still works when storage is unavailable. */ }
+  return new Map();
+}
+
+export function rememberHistoryScrollMemory(owner: string | null, positions: Map<string, HistoryPosition>) {
+  try { sessionStorage.setItem(historyMemoryKey(owner), JSON.stringify({ version: 1, owner, positions: [...positions] })); } catch { /* Session storage is optional. */ }
+}
 
 export function safeModuleUrl(value: unknown, module: WorkspaceModule): value is string {
   if (typeof value !== 'string' || !value.startsWith('/') || value.startsWith('//') || /[\s\\]/.test(value)) return false;

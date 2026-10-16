@@ -20,6 +20,8 @@ import { useWorkspaceModuleMemory } from './useWorkspaceModuleMemory';
 import { accountId } from '../storage/remote';
 import { AccountDataBoundary } from './AccountDataBoundary';
 import { PageErrorBoundary } from './PageErrorBoundary';
+import { PageTransition } from './PageTransition';
+import { WorkspaceScrollRestoration } from './WorkspaceScrollRestoration';
 import { SETTINGS_BACKUP_EVENT, type SettingsBackupAction } from '../features/settings/backupActions';
 
 const SettingsModal = lazy(()=>import('../features/modals/SettingsModal').then(m=>({default:m.SettingsModal})));
@@ -108,11 +110,13 @@ export function Shell() {
   const [moreOpen, setMoreOpen] = useState(false);
   const [legalView, setLegalView] = useState<string | null>(null);
   const module = moduleFor(location.pathname, location.search, fb.activeSkill);
-  const { selectModule: resumeModule } = useWorkspaceModuleMemory({ owner: accountId(), ready: fb.booted, activeSkill: fb.activeSkill, setSkill: fb.setSkill });
+  const { selectModule: resumeModule, scrollRestoration } = useWorkspaceModuleMemory({ owner: accountId(), ready: fb.booted, activeSkill: fb.activeSkill, setSkill: fb.setSkill });
   const speaking = module === 'speaking';
   const secondaryLinks = studyLinks[module] || [];
   const vocabularyOwnHeading = location.pathname.startsWith('/vocabulary');
-  const streak = !fb.moduleStatus || fb.moduleStatus.productive === 'ready' && fb.moduleStatus.receptive === 'ready' ? studyStreak(fb.state) : '...';
+  const streak = !fb.moduleStatus || fb.moduleStatus.productive === 'ready' && fb.moduleStatus.receptive === 'ready' ? studyStreak(fb.state) : null;
+  // Filters and answer edits stay still; changing the reviewed skill is a new view.
+  const transitionKey = location.pathname + (location.pathname === '/review' ? `:${new URLSearchParams(location.search).get('skill') || fb.activeSkill}` : location.pathname === '/progress' ? `:${new URLSearchParams(location.search).get('category') || fb.activeSkill}` : '');
   const deskName = displayName(fb.selectedQuestion?.name) || 'Writing';
   const topicName = fb.selectedTopic?.title || 'Speaking practice';
   const chrome = useMemo(
@@ -254,7 +258,7 @@ export function Shell() {
           </button></RailHint>
           <div className="rail-foot">
             <span>Streak</span>
-            <strong>{streak} days</strong>
+            {streak === null ? <Link to="/progress" className="rail-activity-link">View activity</Link> : <strong>{streak} {streak === 1 ? 'day' : 'days'}</strong>}
           </div>
         </aside></Tooltip.Provider>
         <main className="main">
@@ -320,9 +324,9 @@ export function Shell() {
           {fb.loadError ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
           {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
           {!fb.booted && !fb.loadError ? <PageLoadingState message="Loading workspace…" variant="bank" /> : null}
-          <div className="page" key={module === 'settings' ? 'settings' : location.pathname}>
-            <Suspense fallback={<PageLoadingState message="Loading page…" />}>{fb.booted || fb.state.questions.length ? <WorkspaceRoute /> : null}</Suspense>
-          </div>
+          <PageTransition transitionKey={transitionKey} key={module === 'settings' ? 'settings' : location.pathname}>
+            <WorkspaceScrollRestoration.Provider value={scrollRestoration}><Suspense fallback={<PageLoadingState message="Loading page…" />}>{fb.booted || fb.state.questions.length ? <WorkspaceRoute /> : null}</Suspense></WorkspaceScrollRestoration.Provider>
+          </PageTransition>
         </main>
       </div>
       <MobileNavigation onMore={() => setMoreOpen(true)} onSelectModule={resumeModule} />

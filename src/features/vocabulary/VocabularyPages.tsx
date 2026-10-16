@@ -3,7 +3,7 @@ import { useVocabularySearchParams } from './vocabularyNavigation';
 import { normalizeVocabularyScope } from '../../domain/vocabulary/identities';
 import { PanelLoadingState, StateMessage } from '../../components/AsyncState';
 import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { NavLink, useParams, useLocation } from "react-router-dom";
 import {
   ArrowLeft,
@@ -165,8 +165,27 @@ function dateLabel(value) {
 export function VocabularyNavigation() {
   const { pathname } = useLocation();
   const inStudy = pathname === "/vocabulary/study";
+  const navigation = useRef<HTMLElement>(null);
+  useLayoutEffect(() => {
+    const nav = navigation.current;
+    const active = nav?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!nav || !active) return;
+    const reveal = () => {
+      const bounds = nav.getBoundingClientRect();
+      const tab = active.getBoundingClientRect();
+      // Scroll only the tabs: scrollIntoView can also move the document.
+      if (tab.right > bounds.right) nav.scrollLeft += tab.right - bounds.right + 6;
+      else if (tab.left < bounds.left) nav.scrollLeft -= bounds.left - tab.left + 6;
+    };
+    reveal();
+    if (typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(reveal);
+    observer.observe(nav);
+    observer.observe(active);
+    return () => observer.disconnect();
+  }, [pathname]);
   return (
-    <nav className="vocabulary-tabs" aria-label="Vocabulary views">
+    <nav className="vocabulary-tabs" aria-label="Vocabulary views" ref={navigation}>
       {[
         ["/vocabulary", "Overview"],
         ["/vocabulary/wordbooks", "Wordbooks"],

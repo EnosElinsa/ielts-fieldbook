@@ -21,7 +21,7 @@ export function ReviewPage() {
   if (reviewSkill === 'reading' || reviewSkill === 'listening') return <Navigate to={`/${reviewSkill}/review`} replace />;
   const speaking = reviewSkill === 'speaking';
   const allSessions = fb.state.sessions.filter((s) => sessionSkill(s) === reviewSkill);
-  const sessions = allSessions.filter((session) => (filter === 'all' || (filter === 'pending' && !session.assessmentId) || (filter === 'assessed' && session.assessmentId) || (filter === 'rewrite' && session.parentSessionId)) && `${session.name} ${session.focus || ''}`.toLowerCase().includes(search.toLowerCase()));
+  const sessions = allSessions.filter((session) => (filter === 'all' || (filter === 'pending' && !session.assessmentId) || (filter === 'assessed' && session.assessmentId) || (filter === 'rewrite' && session.parentSessionId)) && `${session.name} ${session.focus || ''}`.toLowerCase().includes(search.trim().toLowerCase()));
   const assessments = fb.state.assessments.filter((assessment) => {
     if (assessment && assessment.skill === 'speaking') return speaking;
     const sess = assessment?.sessionId ? fb.state.sessions.find((item) => item.id === assessment.sessionId) : null;
@@ -61,7 +61,7 @@ export function ReviewPage() {
             <div className="panel">
               {sessions
                 .slice()
-                .reverse()
+                .sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0))
                 .map((session) => (
                   <div className="assessment" key={session.id}>
                     <strong>{displayName(session.name)}</strong>
@@ -113,7 +113,7 @@ export function ReviewPage() {
             <div className="panel">
               {assessments
                 .slice()
-                .reverse()
+                .sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0))
                 .map((assessment) => (
                   <div className="assessment" key={assessment.id}>
                     <strong>Score</strong>
@@ -159,7 +159,7 @@ export function ReviewPage() {
         <div className="panel">
           {errors
             .slice()
-            .reverse()
+            .sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0))
             .map((error) => (
               <div className="error-item" key={error.id}>
                 <span className="error-code">{error.code}</span>

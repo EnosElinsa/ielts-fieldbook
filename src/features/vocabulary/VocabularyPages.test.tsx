@@ -231,6 +231,16 @@ test("group study keeps the wordbook navigation entry active", () => {
   expect(screen.getByRole("link", { name: "Wordbooks" })).toHaveAttribute("aria-current", "page");
 });
 
+test('the active vocabulary tab is brought into its own scroll area without moving the page', () => {
+  const bounds = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function(this: HTMLElement) {
+    return { left: this.tagName === 'NAV' ? 0 : 130, right: this.tagName === 'NAV' ? 100 : 180, width: this.tagName === 'NAV' ? 100 : 50, top: 0, bottom: 44, height: 44, x: 0, y: 0, toJSON: () => ({}) };
+  });
+  try {
+    render(<MemoryRouter initialEntries={['/vocabulary/history']}><VocabularyNavigation /></MemoryRouter>);
+    expect(screen.getByRole('navigation', { name: 'Vocabulary views' }).scrollLeft).toBeGreaterThan(0);
+  } finally { bounds.mockRestore(); }
+});
+
 test("failed enrollment save offers an actionable error", async () => {
   fixture();
   fb.current.state.wordbookEnrollments = [];

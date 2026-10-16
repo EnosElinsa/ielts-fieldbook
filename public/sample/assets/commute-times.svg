@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
-  <title id="title">Average one-way commute time, 20002020</title>
+  <title id="title">Average one-way commute time, 2000–2020</title>
   <desc id="desc">Line chart of commute minutes for Northport, Riverton, Hillside, and Lakeside.</desc>
   <rect width="640" height="420" fill="#fafaf8"/>
-  <text x="320" y="28" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#1a1a1a">Average one-way commute time (minutes), 20002020</text>
+  <text x="320" y="28" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#1a1a1a">Average one-way commute time (minutes), 2000–2020</text>
 
   <!-- axes -->
   <line x1="72" y1="60" x2="72" y2="340" stroke="#333" stroke-width="1.5"/>
   <line x1="72" y1="340" x2="580" y2="340" stroke="#333" stroke-width="1.5"/>
 
-  <!-- y grid and labels: 060 -->
+  <!-- y grid and labels: 0–60 -->
   <g font-family="system-ui, sans-serif" font-size="11" fill="#555">
     <line x1="72" y1="340" x2="580" y2="340" stroke="#ddd" stroke-width="1"/>
     <text x="64" y="344" text-anchor="end">0</text>

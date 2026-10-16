@@ -1,8 +1,9 @@
 // @ts-nocheck
 import { CardSkeleton, InlineLoadingState } from '../../components/AsyncState';
 import { useState } from 'react';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Link } from 'react-router-dom';
-import { CalendarClock, Clock3, Replace, RotateCcw, SkipForward, ArrowLeft, Check, Plus, Copy, SlidersHorizontal, ArrowUp, ArrowDown, Settings2 } from 'lucide-react';
+import { CalendarClock, Clock3, Replace, RotateCcw, SkipForward, ArrowLeft, Check, Plus, Copy, SlidersHorizontal, ArrowUp, ArrowDown, Settings2, MoreHorizontal } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { AccountDataBoundary } from '../../components/AccountDataBoundary';
 import { IconButton } from '../../components/IconButton';
@@ -40,7 +41,26 @@ function PlanTask({plan}){
   return <article className={`study-task ${plan.status}`}>
     <div className="study-task-meta"><span className={`study-skill study-skill-${plan.skill||'writing'}`}>{plan.skill || 'Practice'}</span><span><Clock3 size={14}/>{plan.estimatedMinutes || fb.state.settings.dailyMinutes} min</span>{plan.dateKey<dateKey(new Date())&&<span>Due {plan.dateKey}</span>}</div>
     <h4>{plan.title}</h4><p>{studyTargetSummary(plan)}</p><p>{plan.description}</p><small className="study-completion-condition">{plan.completion?.description}</small>
-    <footer><span className="study-task-status">{completed&&<Check size={14}/>} {({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status}{plan.origin==='manual'?' · Edited':''}</span><div className="study-task-tools">{plan.status==='skipped'?<IconButton label="Restore task" disabled={saving} onClick={()=>setDialog('restore')}><RotateCcw size={16}/></IconButton>:<><IconButton label="Replace task" disabled={saving||completed||plan.status==='in_progress'} onClick={()=>{setError('');setDialog('replace');}}><Replace size={16}/></IconButton><IconButton label="Reschedule task" disabled={saving||completed} onClick={()=>{setError('');setDialog('reschedule');}}><CalendarClock size={16}/></IconButton><IconButton label="Edit duration" disabled={saving||completed||plan.status==='in_progress'} onClick={()=>setDialog('resize')}><SlidersHorizontal size={16}/></IconButton><IconButton label="Duplicate task" disabled={saving} onClick={()=>setDialog('duplicate')}><Copy size={16}/></IconButton><IconButton label="Move task up" disabled={saving} onClick={()=>void change({type:'reorder',direction:'up'})}><ArrowUp size={16}/></IconButton><IconButton label="Move task down" disabled={saving} onClick={()=>void change({type:'reorder',direction:'down'})}><ArrowDown size={16}/></IconButton><IconButton label="Skip task" disabled={saving||completed} onClick={()=>void change({type:'skip'})}><SkipForward size={16}/></IconButton><TaskStartButton plan={plan}/></>}</div></footer>
+    <footer><span className="study-task-status">{completed&&<Check size={14}/>} {({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status}{plan.origin==='manual'?' · Edited':''}</span><div className="study-task-tools">{plan.status==='skipped'?<button type="button" className="btn line" disabled={saving} onClick={()=>{setError('');setDialog('restore');}}><RotateCcw size={16}/>Restore task</button>:<>
+      <TaskStartButton plan={plan}/>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger asChild><button type="button" className="btn line study-task-menu" aria-label={`Task actions: ${plan.title}`} disabled={saving}><MoreHorizontal size={18}/></button></DropdownMenu.Trigger>
+        <DropdownMenu.Portal><DropdownMenu.Content className="dropdown-content study-task-actions" align="end" sideOffset={6} collisionPadding={12}>
+          <DropdownMenu.Label className="dropdown-label">Task actions</DropdownMenu.Label>
+          {[
+            ['replace','Replace task',Replace,completed||plan.status==='in_progress'],
+            ['reschedule','Reschedule task',CalendarClock,completed],
+            ['resize','Edit duration',SlidersHorizontal,completed||plan.status==='in_progress'],
+            ['duplicate','Duplicate task',Copy,false],
+          ].map(([mode,label,Icon,disabled])=><DropdownMenu.Item key={mode} className="dropdown-item" disabled={disabled} onSelect={()=>{setError('');setDialog(mode);}}><Icon size={16}/>{label}</DropdownMenu.Item>)}
+          <DropdownMenu.Separator className="dropdown-separator"/>
+          <DropdownMenu.Item className="dropdown-item" onSelect={()=>void change({type:'reorder',direction:'up'})}><ArrowUp size={16}/>Move task up</DropdownMenu.Item>
+          <DropdownMenu.Item className="dropdown-item" onSelect={()=>void change({type:'reorder',direction:'down'})}><ArrowDown size={16}/>Move task down</DropdownMenu.Item>
+          <DropdownMenu.Separator className="dropdown-separator"/>
+          <DropdownMenu.Item className="dropdown-item study-task-skip" disabled={completed} onSelect={()=>void change({type:'skip'})}><SkipForward size={16}/>Skip task</DropdownMenu.Item>
+        </DropdownMenu.Content></DropdownMenu.Portal>
+      </DropdownMenu.Root>
+    </>}</div></footer>
     {error&&!dialog&&<p className="study-alert" role="alert">{error}</p>}
     {dialog&&<TaskEditor key={`${accountId()}:${plan.id}:${dialog}`} mode={dialog} plan={plan} dateKey={plan.dateKey} onClose={()=>setDialog(null)}/>}
 

@@ -3,11 +3,11 @@ import { MemoryRouter, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { ProgressPage } from './ProgressPage';
-const mock = vi.hoisted(() => ({ state: { sessions: [] as any[], assessments: [] as any[], plans: [], settings: {} } }));
+const mock = vi.hoisted(() => ({ state: { sessions: [] as any[], assessments: [] as any[], plans: [] as any[], settings: {} } }));
 vi.mock('../../context/FieldbookContext',()=>({useFieldbook:()=>({activeSkill:'writing',state:mock.state})}));
 vi.mock('recharts', () => ({ ResponsiveContainer: ({ children }: any) => children, LineChart: ({ children }: any) => <div>{children}</div>, CartesianGrid: () => null, Line: () => null, ReferenceLine: () => null, Tooltip: () => null, XAxis: () => null, YAxis: () => null }));
 vi.mock('../vocabulary/VocabularyPages',()=>({VocabularyProgressPage:({since}: {since?: number})=> <div>Vocabulary evidence panel<output aria-label="Vocabulary range">{since}</output></div>}));
-beforeEach(() => { mock.state.sessions = []; mock.state.assessments = []; });
+beforeEach(() => { mock.state.sessions = []; mock.state.assessments = []; mock.state.plans = []; });
 afterEach(() => { cleanup(); vi.useRealTimers(); });
 function Location(){return <output>{useLocation().search}</output>}
 test('legacy vocabulary category opens vocabulary and selector persists category',()=>{
@@ -39,4 +39,13 @@ test('feedback in the selected range retains the task and mode of an older sourc
   expect(screen.getByRole('link', { name: 'View feedback' })).toHaveAttribute('href', '/review/score');
   expect(screen.getByRole('heading', { name: 'Daily practice' })).toBeInTheDocument();
   expect(document.querySelectorAll('.week-bar')).toHaveLength(7);
+});
+
+test('skipped study tasks have a visible status and can be selected in the status filter', () => {
+  mock.state.plans = [{ id: 'skip', title: 'Skipped essay task', skill: 'writing', kind: '2', dateKey: '2026-10-13', status: 'skipped' }];
+  render(<MemoryRouter initialEntries={['/progress?category=writing&range=all']}><ProgressPage /></MemoryRouter>);
+  expect(screen.getByText('Skipped')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Plan status' }));
+  fireEvent.click(screen.getByRole('option', { name: 'Skipped' }));
+  expect(screen.getByText('Skipped essay task')).toBeInTheDocument();
 });

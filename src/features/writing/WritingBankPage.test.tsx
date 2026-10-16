@@ -53,3 +53,8 @@ test('question pagination preserves filters and resets when the search changes',
   expect(screen.getAllByRole('article')).toHaveLength(1);
   expect(screen.getByRole('heading', { name: 'Question 25' })).toBeInTheDocument();
 });
+
+test('search accepts a pasted topic with surrounding whitespace', () => {
+  render(<MemoryRouter initialEntries={['/write/questions?q=%20Education%20']}><WritingBankPage /></MemoryRouter>);
+  expect(screen.getByRole('heading', { name: 'Education' })).toBeInTheDocument();
+});

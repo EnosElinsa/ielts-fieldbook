@@ -60,7 +60,7 @@ export function ProgressPage() {
   const weeks = activity.buckets;
   const max = Math.max(1, ...weeks.map((week) => week.count));
   const plans = fb.state.plans.filter((plan) => planMatchesSkill(plan, skill) && inRange(plan.dateKey) && (status === 'all' || status === plan.status)).slice().sort((a, b) => b.dateKey.localeCompare(a.dateKey));
-  const statusNames = { pending: 'Not started', in_progress: 'In progress', completed: 'Completed' };
+  const statusNames = { pending: 'Not started', in_progress: 'In progress', completed: 'Completed', skipped: 'Skipped' };
   return (
     <section className="view active progress-view">
       <div className="page-tools"><p>Practice results and imported feedback.</p><Link to={skill === 'vocabulary' ? '/vocabulary/review' : receptive ? `/${skill}` : `/review?skill=${skill}`} className="btn line">{skill === 'vocabulary' ? 'Review vocabulary' : receptive ? 'Open practice bank' : 'Review attempts'} <ArrowUpRight size={16} /></Link></div>
@@ -86,7 +86,7 @@ export function ProgressPage() {
       </div>
       <div className="evidence-grid">
         <section className="progress-section"><h3>{activity.period} practice</h3><div className="week-bars">{weeks.map((week) => <div className="week-bar" key={week.start}><span>{week.label}</span><div className="track"><div className="fill" style={{ width: `${week.count / max * 100}%` }} /></div><strong>{week.count}</strong></div>)}</div></section>
-        <section className="progress-section"><div className="section-head"><h3>Study plans</h3><FilterMenu label="Plan status" value={status} onChange={setStatus} options={[{ value: 'all', label: 'Any status' }, { value: 'pending', label: 'Not started' }, { value: 'in_progress', label: 'In progress' }, { value: 'completed', label: 'Completed' }]} /></div>{plans.length ? <div className="plan-list">{plans.map((plan) => <div className="work-row" key={plan.id}><div className="work-name">{plan.title}<small>{plan.dateKey}</small></div><span className={`pill ${plan.status === 'completed' ? 'green' : ''}`}>{statusNames[plan.status]}</span></div>)}</div> : <Empty message="No plans in this range." />}</section>
+        <section className="progress-section"><div className="section-head"><h3>Study plans</h3><FilterMenu label="Plan status" value={status} onChange={setStatus} options={[{ value: 'all', label: 'Any status' }, ...Object.entries(statusNames).map(([value, label]) => ({ value, label }))]} /></div>{plans.length ? <div className="plan-list">{plans.map((plan) => <div className="work-row" key={plan.id}><div className="work-name">{plan.title}<small>{plan.dateKey}</small></div><span className={`pill ${plan.status === 'completed' ? 'green' : ''}`}>{statusNames[plan.status]}</span></div>)}</div> : <Empty message="No plans in this range." />}</section>
       </div>
       </>}
     </section>

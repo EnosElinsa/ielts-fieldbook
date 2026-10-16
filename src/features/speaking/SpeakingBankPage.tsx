@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useMemo, useEffect } from 'react';
+import { useMemo, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Star, List, LayoutGrid, ArrowUpRight } from 'lucide-react';
 import { speakingCoverage } from '../../domain';
@@ -17,6 +17,7 @@ export function SpeakingBankPage() {
   const fb = useFieldbook();
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
+  const results = useRef<HTMLElement>(null);
   const search = params.get('q') || '';
   const part = params.get('part') || 'all';
   const filter = params.get('progress') || 'all';
@@ -30,16 +31,10 @@ export function SpeakingBankPage() {
     if (key !== 'view') next.delete('page');
     return next;
   }, { replace: true });
-  useEffect(() => {
-    const key = `fieldbook:bank-scroll:speaking:${params.toString()}`;
-    const previous = Number(sessionStorage.getItem(key) || 0);
-    const frame = requestAnimationFrame(() => window.scrollTo(0, previous));
-    return () => { cancelAnimationFrame(frame); sessionStorage.setItem(key, String(window.scrollY)); };
-  }, [params.toString()]);
   const topics = fb.state.speakingTopics || [];
 
   const filtered = useMemo(() => {
-    const q = search.toLowerCase();
+    const q = search.trim().toLowerCase();
     return topics.filter((topic) => {
       const haystack =
         `${topic.title} ${topic.cueCard || ''} ${(topic.questions || []).join(' ')} ${(topic.part3 || []).join(' ')}`.toLowerCase();
@@ -61,14 +56,17 @@ export function SpeakingBankPage() {
   const page = bankPage(params.get('page'), ordered.length);
   const visible = ordered.slice((page - 1) * BANK_PAGE_SIZE, page * BANK_PAGE_SIZE);
   const groups = [1, 2].map(part => ({ part, title: `Part ${part}`, items: visible.filter(topic => Number(topic.part) === part) })).filter(group => group.items.length);
-  const changePage = value => setParams(current => {
-    const next = new URLSearchParams(current);
-    if (value === 1) next.delete('page'); else next.set('page', String(value));
-    return next;
-  });
+  const changePage = value => {
+    setParams(current => {
+      const next = new URLSearchParams(current);
+      if (value === 1) next.delete('page'); else next.set('page', String(value));
+      return next;
+    });
+    results.current?.scrollIntoView?.({ block: 'start', behavior: 'instant' });
+  };
 
   return (
-    <section className="view active">
+    <section className="view active" ref={results}>
       <div className="page-tools">
         <p>
           {topics.length} topics. Not seen {counts.unseen}, has a story {counts.prepared}, practised{' '}

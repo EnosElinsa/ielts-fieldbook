@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useMemo, useEffect } from 'react';
+import { useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Star, List, LayoutGrid, PenLine } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
@@ -10,6 +10,7 @@ import { BANK_PAGE_SIZE, BankPagination, bankPage } from '../../components/BankP
 export function WritingBankPage() {
   const fb = useFieldbook();
   const [params, setParams] = useSearchParams();
+  const results = useRef<HTMLElement>(null);
   const search = params.get('q') || '';
   const task = params.get('task') || 'all';
   const format = params.get('format') || 'all';
@@ -25,14 +26,8 @@ export function WritingBankPage() {
   }, { replace: true });
   const practiced = new Set(fb.state.sessions.filter((session) => session.skill !== 'speaking').map((session) => String(session.questionId)));
   const favorites = new Set(fb.state.settings.favoriteQuestions || []);
-  useEffect(() => {
-    const key = `fieldbook:bank-scroll:writing:${params.toString()}`;
-    const previous = Number(sessionStorage.getItem(key) || 0);
-    const frame = requestAnimationFrame(() => window.scrollTo(0, previous));
-    return () => { cancelAnimationFrame(frame); sessionStorage.setItem(key, String(window.scrollY)); };
-  }, [params.toString()]);
   const questions = useMemo(() => {
-    const q = search.toLowerCase();
+    const q = search.trim().toLowerCase();
     return fb.state.questions.filter(
       (question) =>
         (task === 'all' || question.type === task) &&
@@ -43,14 +38,17 @@ export function WritingBankPage() {
   }, [fb.state, search, task, format, progress, sort]);
   const page = bankPage(params.get('page'), questions.length);
   const visible = questions.slice((page - 1) * BANK_PAGE_SIZE, page * BANK_PAGE_SIZE);
-  const changePage = value => setParams(current => {
-    const next = new URLSearchParams(current);
-    if (value === 1) next.delete('page'); else next.set('page', String(value));
-    return next;
-  });
+  const changePage = value => {
+    setParams(current => {
+      const next = new URLSearchParams(current);
+      if (value === 1) next.delete('page'); else next.set('page', String(value));
+      return next;
+    });
+    results.current?.scrollIntoView?.({ block: 'start', behavior: 'instant' });
+  };
 
   return (
-    <section className="view active">
+    <section className="view active" ref={results}>
       <div className="page-tools">
         <p>{questions.length === 1 ? '1 question' : `${questions.length} questions`}</p>
       </div>

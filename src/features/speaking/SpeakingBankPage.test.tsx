@@ -26,3 +26,8 @@ test('topic pagination spans Parts without losing matches and resets on filterin
   fireEvent.change(screen.getByRole('textbox', { name: 'Search speaking topics' }), { target: { value: 'Unmatched' } });
   expect(screen.getAllByText('No topics match.')).toHaveLength(1);
 });
+
+test('search accepts a pasted topic with surrounding whitespace', () => {
+  render(<MemoryRouter initialEntries={['/speak/questions?q=%20Topic%2025%20']}><SpeakingBankPage /></MemoryRouter>);
+  expect(screen.getByRole('heading', { name: 'Topic 25' })).toBeInTheDocument();
+});

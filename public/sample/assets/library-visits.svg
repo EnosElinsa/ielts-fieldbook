@@ -29,9 +29,9 @@
     bar width 28, gap 6 between pair
     scale: value * 2.333 (120 -> 280px from baseline)
     Under 18: 45, 62
-    1830: 70, 88
-    3145: 55, 60
-    4660: 80, 72
+    18–30: 70, 88
+    31–45: 55, 60
+    46–60: 80, 72
     61+: 95, 110
   -->
   <!-- Under 18 -->
@@ -52,9 +52,9 @@
 
   <g font-family="system-ui, sans-serif" font-size="11" fill="#333" text-anchor="middle">
     <text x="124" y="358">Under 18</text>
-    <text x="224" y="358">1830</text>
-    <text x="324" y="358">3145</text>
-    <text x="424" y="358">4660</text>
+    <text x="224" y="358">18–30</text>
+    <text x="324" y="358">31–45</text>
+    <text x="424" y="358">46–60</text>
     <text x="524" y="358">61+</text>
   </g>
 

@@ -5,6 +5,10 @@ import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { useWorkspaceModuleMemory } from './useWorkspaceModuleMemory';
 import { readModuleContext, moduleMemoryKey, rememberModuleContext, restoredModuleState, safeModuleUrl } from './workspaceModuleMemory';
+import { useVocabularyPosition } from '../features/vocabulary/vocabularyNavigation';
+import { WorkspaceScrollRestoration } from './WorkspaceScrollRestoration';
+
+vi.mock('../storage/remote', () => ({ accountId: () => 'one' }));
 
 const originState = { vocabularyReturn: { owner: 'one', url: '/vocabulary/words?tag=fruit', index: 0, parent: { owner: 'one', url: '/vocabulary' } } };
 
@@ -20,8 +24,11 @@ function Harness({ owner = 'one', ready = true }: { owner?: string; ready?: bool
     <button onClick={() => navigate('/vocabulary/entry/apple?bookId=fruit#sense', { state: originState })}>Apple</button>
     <button onClick={() => navigate('/vocabulary/words?tag=fruit')}>Words</button>
     <button onClick={() => navigate('/write/questions?tag=task2')}>Questions</button>
+    <button onClick={() => navigate('/settings/schedule')}>Study time</button>
+    <button onClick={() => navigate('/write')}>Practice</button>
     <button onClick={() => navigate(-1)}>Back</button>
     <button onClick={() => navigate(1)}>Forward</button>
+    <button onClick={() => memory.scrollRestoration.current.restoreAfterLayout?.()}>Refresh layout</button>
   </>;
 }
 
@@ -184,4 +191,115 @@ test('today alias, planning and registered settings categories are valid memory 
   expect(safeModuleUrl('/planning?date=2026-10-20', 'planning')).toBe(true);
   expect(safeModuleUrl('/settings/audio', 'settings')).toBe(true);
   expect(safeModuleUrl('/settings/unknown', 'settings')).toBe(false);
+});
+
+test('a new page starts at the top instead of inheriting the previous page scroll', async () => {
+  render(<MemoryRouter initialEntries={['/write/questions']}><Harness /></MemoryRouter>);
+  Object.defineProperty(window, 'scrollY', { value: 560, configurable: true });
+  fireEvent.scroll(window);
+  await userEvent.setup().click(screen.getByText('Study time'));
+  await waitFor(() => expect(window.scrollTo).toHaveBeenLastCalledWith(0, 0));
+});
+
+test('a layout restoration request replaces an already queued restoration frame', async () => {
+  rememberModuleContext('one', 'writing', { url: '/write', state: null, scroll: { x: 0, y: 300 } });
+  vi.stubGlobal('scrollTo', vi.fn((_x: number, y: number) => {
+    Object.defineProperty(window, 'scrollY', { value: y, configurable: true });
+  }));
+  render(<MemoryRouter initialEntries={['/write']}><Harness /></MemoryRouter>);
+  fireEvent.click(screen.getByText('Refresh layout'));
+  await waitFor(() => expect(window.scrollY).toBe(300));
+});
+
+test('back and forward restore each history entry rather than the latest scroll in its module', async () => {
+  vi.stubGlobal('scrollTo', vi.fn((_x: number, y: number) => {
+    Object.defineProperty(window, 'scrollY', { value: y, configurable: true });
+  }));
+  render(<MemoryRouter initialEntries={['/write/questions']}><Harness /></MemoryRouter>);
+  const user = userEvent.setup();
+  Object.defineProperty(window, 'scrollY', { value: 560, configurable: true }); fireEvent.scroll(window);
+  await user.click(screen.getByText('Practice'));
+  Object.defineProperty(window, 'scrollY', { value: 180, configurable: true }); fireEvent.scroll(window);
+  await user.click(screen.getByText('Back'));
+  await waitFor(() => expect(window.scrollY).toBe(560));
+  await user.click(screen.getByText('Forward'));
+  await waitFor(() => expect(window.scrollY).toBe(180));
+});
+
+test('history entries keep their separate scroll positions after reloading the workspace', async () => {
+  vi.stubGlobal('scrollTo', vi.fn((_x: number, y: number) => {
+    Object.defineProperty(window, 'scrollY', { value: y, configurable: true });
+  }));
+  const entries = [
+    { pathname: '/write/questions', key: 'bank' },
+    { pathname: '/write', key: 'desk' },
+    { pathname: '/settings/schedule', key: 'settings' },
+  ];
+  const first = render(<MemoryRouter initialEntries={entries} initialIndex={0}><Harness /></MemoryRouter>);
+  const user = userEvent.setup();
+  Object.defineProperty(window, 'scrollY', { value: 650, configurable: true }); fireEvent.scroll(window);
+  await user.click(screen.getByText('Forward'));
+  Object.defineProperty(window, 'scrollY', { value: 180, configurable: true }); fireEvent.scroll(window);
+  await user.click(screen.getByText('Forward'));
+  first.unmount();
+  render(<MemoryRouter initialEntries={entries} initialIndex={2}><Harness /></MemoryRouter>);
+  await user.click(screen.getByText('Back'));
+  await waitFor(() => expect(window.scrollY).toBe(180));
+  await user.click(screen.getByText('Back'));
+  await waitFor(() => expect(window.scrollY).toBe(650));
+});
+
+function VocabularyPositionHarness() {
+  const { scrollRestoration } = useWorkspaceModuleMemory({ owner: 'one', ready: true, activeSkill: 'writing', setSkill: () => {} });
+  return <WorkspaceScrollRestoration.Provider value={scrollRestoration}><VocabularyPositionContent /></WorkspaceScrollRestoration.Provider>;
+}
+
+function VocabularyPositionContent() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  useVocabularyPosition(location.pathname + location.search, true);
+  return <>
+    <output aria-label="Location">{location.pathname}</output>
+    <button onClick={() => navigate('/vocabulary/words?tag=scroll-regression')}>My words</button>
+    <button onClick={() => navigate('/vocabulary/history')}>History</button>
+    <button onClick={() => navigate(-1)}>Back</button>
+    <details><summary>Chapter</summary><div id="hash-target">Saved group</div></details>
+  </>;
+}
+
+test('vocabulary URL recovery does not overwrite an earlier history entry scroll', async () => {
+  vi.stubGlobal('scrollTo', vi.fn((_x: number, y: number) => {
+    Object.defineProperty(window, 'scrollY', { value: y, configurable: true });
+  }));
+  render(<MemoryRouter initialEntries={['/vocabulary/words?tag=scroll-regression']}><VocabularyPositionHarness /></MemoryRouter>);
+  const user = userEvent.setup();
+  // Let each route's delayed vocabulary restoration finish before scrolling.
+  const settle = () => new Promise(resolve => requestAnimationFrame(resolve));
+  await settle();
+  Object.defineProperty(window, 'scrollY', { value: 100, configurable: true }); fireEvent.scroll(window);
+  await user.click(screen.getByText('History')); await settle();
+  await user.click(screen.getByText('My words')); await settle();
+  Object.defineProperty(window, 'scrollY', { value: 500, configurable: true }); fireEvent.scroll(window);
+  await user.click(screen.getByText('History')); await settle();
+  await user.click(screen.getByText('Back')); await settle();
+  await user.click(screen.getByText('Back')); await settle();
+  await user.click(screen.getByText('Back')); await settle();
+  expect(window.scrollY).toBe(100);
+});
+
+test.each([true, false])('a restored hash target expands its chapter without overriding history scroll (cached=%s)', async cached => {
+  const origin = `/vocabulary/wordbooks/ielts-vocabulary?cached=${cached}`;
+  const url = origin + '#hash-target';
+  if (cached) sessionStorage.setItem(`fieldbook:vocabulary-position:one:${origin}`, JSON.stringify({ scroll: 500, focus: '' }));
+  rememberModuleContext('one', 'vocabulary', { url, state: null, scroll: { x: 0, y: 250 } });
+  const intoView = vi.fn();
+  const original = Element.prototype.scrollIntoView;
+  Element.prototype.scrollIntoView = intoView;
+  try {
+    render(<MemoryRouter initialEntries={[url]}><VocabularyPositionHarness /></MemoryRouter>);
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    expect(screen.getByText('Saved group').closest('details')).toHaveAttribute('open');
+    expect(intoView).not.toHaveBeenCalled();
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 250);
+  } finally { Element.prototype.scrollIntoView = original; }
 });

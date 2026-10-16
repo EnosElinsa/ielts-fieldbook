@@ -12,6 +12,7 @@ import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { createVocabularySession, evaluateVocabularySessionAnswer } from '../../domain/vocabulary/session';
 import { readVocabularyDraft } from '../../storage/vocabularyDrafts';
+import { WorkspaceScrollRestoration } from '../../components/WorkspaceScrollRestoration';
 
 const { fb, player, owner } = vi.hoisted(() => ({
   fb: { current: null as any },
@@ -73,6 +74,19 @@ beforeEach(() => {
   };
 });
 const originalCatalog = { books: [...VOCABULARY_CATALOG.books], units: [...VOCABULARY_CATALOG.units], entries: [...VOCABULARY_CATALOG.entries], memberships: [...VOCABULARY_CATALOG.memberships] };
+test.each([true, false])('saved result table recovery preserves workspace scroll ownership (%s)', async restored => {
+  fb.current.state.vocabularySessions = [{ id: 'scroll-history', mode: 'dictation', status: 'submitted', filter: {}, selection: { kind: 'review' }, preferences: {}, results: [], summary: { total: 0, correct: 0, incorrect: 0, pending: 0 }, startedAt: '2026-10-12', submittedAt: '2026-10-12' }];
+  sessionStorage.setItem('fieldbook:session-position:account-one:scroll-history:all', JSON.stringify({ y: 500, x: 37, tableY: 18 }));
+  const scroll = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+  try {
+    render(<MemoryRouter initialEntries={[{ pathname: '/vocabulary/history/scroll-history', key: 'result-entry' }]}><WorkspaceScrollRestoration.Provider value={{ current: { key: 'result-entry', restored } }}><Routes><Route path="/vocabulary/history/:sessionId" element={<VocabularyPracticePage />} /></Routes></WorkspaceScrollRestoration.Provider></MemoryRouter>);
+    const table = await screen.findByRole('region', { name: 'Session word results' });
+    await waitFor(() => expect(table.scrollLeft).toBe(37));
+    expect(table.scrollTop).toBe(18);
+    if (restored) expect(scroll).not.toHaveBeenCalled();
+    else expect(scroll).toHaveBeenCalledWith(0, 500);
+  } finally { scroll.mockRestore(); }
+});
 test('planned batch ignores query mode mutation and submits exact frozen cards in target mode', async () => {
   groupFixture(2);
   const refs=VOCABULARY_CATALOG.memberships.filter(member=>member.bookId==='test-book').map(member=>({entryId:member.entryId,senseId:`group-sense-${member.order}`}));

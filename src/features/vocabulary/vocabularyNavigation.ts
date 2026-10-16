@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useContext, useEffect, useState, useRef, useMemo } from "react";
+import { WorkspaceScrollRestoration } from '../../components/WorkspaceScrollRestoration';
 import { useLocation, useNavigationType, useSearchParams } from 'react-router-dom';
 import { normalizeVocabularyRoute, normalizeVocabularyScope } from '../../domain/vocabulary/identities';
 import { migrateVocabularyRecovery } from '../../storage/vocabularyRecovery';
@@ -129,6 +130,7 @@ export function rememberVocabularyPosition(origin: string, focus: string) {
 }
 export function useVocabularyPosition(origin: string, ready: boolean) {
   const location = useLocation();
+  const workspaceScroll = useContext(WorkspaceScrollRestoration);
   const navigationType = useNavigationType();
   const prior = useRef(origin);
   const owner = accountId();
@@ -142,22 +144,25 @@ export function useVocabularyPosition(origin: string, ready: boolean) {
       );
     } catch {}
     const frame = requestAnimationFrame(() => {
+      const restoredByWorkspace = workspaceScroll?.current.key === location.key && workspaceScroll.current.restored;
+      let layoutChanged = false;
       if (value && (navigationType === 'POP' || location.state?.vocabularyRestore)) {
         value.chapters?.forEach(chapter=>{
           const node = document.getElementById(chapter.id);
-          if (node instanceof HTMLDetailsElement) node.open = chapter.open;
+          if (node instanceof HTMLDetailsElement && node.open !== chapter.open) { node.open = chapter.open; layoutChanged = true; }
         });
-        window.scrollTo?.(0, value.scroll);
+        if (!restoredByWorkspace) window.scrollTo?.(0, value.scroll);
         document.getElementById(value.focus)?.focus({ preventScroll: true });
-      } else if (prior.current.split('?')[0] !== origin.split('?')[0] || navigationType === 'PUSH') {
+      } else if (!restoredByWorkspace && (prior.current.split('?')[0] !== origin.split('?')[0] || navigationType === 'PUSH')) {
         window.scrollTo?.(0, 0);
       }
-      if (location.hash && !value) try {
+      if (location.hash) try {
         const node = document.getElementById(decodeURIComponent(location.hash.slice(1)));
         let parent = node?.parentElement;
-        while (parent) { if (parent instanceof HTMLDetailsElement) parent.open = true; parent = parent.parentElement; }
-        node?.scrollIntoView?.();
+        while (parent) { if (parent instanceof HTMLDetailsElement && !parent.open) { parent.open = true; layoutChanged = true; } parent = parent.parentElement; }
+        if (!value && !restoredByWorkspace) node?.scrollIntoView?.();
       } catch {}
+      if (restoredByWorkspace && layoutChanged) workspaceScroll.current.restoreAfterLayout?.();
       prior.current = origin;
     });
     const key = positionKey(origin);
@@ -172,7 +177,7 @@ export function useVocabularyPosition(origin: string, ready: boolean) {
       const latest = positions.get(key);
       if (latest) try { sessionStorage.setItem(key, JSON.stringify(latest)); } catch {}
     };
-  }, [origin, ready, owner, navigationType, location.state, location.hash]);
+  }, [origin, ready, owner, navigationType, location.state, location.hash, location.key, workspaceScroll]);
 }
 export function useVocabularyCatalog(
   load: ((bookId?: string, options?: ReleasedVocabularyOptions) => Promise<unknown>) | undefined,

@@ -1,6 +1,7 @@
 import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
 import { useLocation, useNavigationType } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
+import { WorkspaceScrollRestoration } from '../../components/WorkspaceScrollRestoration';
 import { accountId } from '../../storage/remote';
 import { isRegionalSpellingDifference } from '../../domain/vocabulary/spelling';
 import { ArrowRight, Check, RotateCcw } from "lucide-react";
@@ -25,6 +26,7 @@ export function VocabularyPracticeResults({ controller, results }: {
   const { resultFilter, setResultFilter, resultRows, nextGroup, nextBatch, resetResults, resultReturnTo, retryMistakes, retryPreparing } = controller;
   const table = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const workspaceScroll = useContext(WorkspaceScrollRestoration);
   const navigationType = useNavigationType();
   const positionKey = `fieldbook:session-position:${accountId()}:${results.id}:${resultFilter}`;
   useEffect(() => {
@@ -32,15 +34,17 @@ export function VocabularyPracticeResults({ controller, results }: {
     try {
       const position = JSON.parse(sessionStorage.getItem(positionKey) || 'null');
       if (position && (navigationType === 'POP' || location.state?.vocabularyRestore)) frame = requestAnimationFrame(() => {
-        window.scrollTo(0, position.y);
+        if (workspaceScroll?.current.key !== location.key || !workspaceScroll.current.restored) window.scrollTo(0, position.y);
         if (table.current) { table.current.scrollLeft = position.x; table.current.scrollTop = position.tableY || 0; }
         const rowId = position.cardId || position.entryId;
         if (rowId) document.getElementById(`session-row-${rowId}`)?.querySelector<HTMLAnchorElement>('a')?.focus({ preventScroll: true });
       });
-      else if (navigationType === 'PUSH') frame = requestAnimationFrame(()=>window.scrollTo?.(0,0));
+      else if (navigationType === 'PUSH') frame = requestAnimationFrame(() => {
+        if (workspaceScroll?.current.key !== location.key || !workspaceScroll.current.restored) window.scrollTo?.(0, 0);
+      });
     } catch { /* Browser storage may be disabled. */ }
     return () => cancelAnimationFrame(frame);
-  }, [positionKey, navigationType, location.state]);
+  }, [positionKey, navigationType, location.state, location.key, workspaceScroll]);
   const rememberPosition = (cardId: string) => {
     try { sessionStorage.setItem(positionKey, JSON.stringify({ y: window.scrollY, x: table.current?.scrollLeft || 0, tableY: table.current?.scrollTop || 0, cardId })); } catch { /* Navigation works without storage. */ }
   };
