@@ -510,8 +510,14 @@ test('source simplification preserves real stems, missing-gap scaffolds, diagram
 test('layout switching preserves the attempt and responses while showing real question material', async () => {
   practice();
   fireEvent.change(await screen.findByRole('textbox', { name: 'Answer 1' }), { target: { value: '1990' } });
+  const workspace = screen.getByRole('region', { name: 'Questions and answers' });
+  const layout = within(workspace).getByRole('group', { name: 'Question layout' });
+  expect(within(layout).getByRole('button', { name: 'Integrated view' })).toHaveTextContent('With questions');
+  expect(within(layout).getByRole('button', { name: 'Split view' })).toHaveTextContent('Separate panel');
+  expect(within(layout).getByRole('button', { name: 'Integrated view' })).toHaveAttribute('aria-pressed', 'true');
   const original = mocks.recovery.get('one:reading:practice:section').id;
   await userEvent.setup().click(screen.getByRole('button', { name: 'Split view' }));
+  expect(within(layout).getByRole('button', { name: 'Split view' })).toHaveAttribute('aria-pressed', 'true');
   expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990');
   expect(mocks.recovery.get('one:reading:practice:section').id).toBe(original);
   await userEvent.setup().click(screen.getByRole('button', { name: 'Integrated view' }));
@@ -731,7 +737,7 @@ test('listening recording and position survive layout and mobile panel changes',
   expect(audio.closest('.exam-source-panel')).toBeNull();
   audio.currentTime = 23;
   fireEvent.timeUpdate(audio);
-  expect(screen.getByRole('button', { name: 'Questions & answers' })).toHaveAttribute('aria-pressed', 'true');
+  expect(screen.queryByRole('group', { name: 'Practice panels' })).not.toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'Split view' }));
   await user.click(screen.getByRole('button', { name: 'Answers' }));
   expect(screen.getByRole('button', { name: 'Answers' })).toHaveAttribute('aria-pressed', 'true');
@@ -740,6 +746,7 @@ test('listening recording and position survive layout and mobile panel changes',
   expect(audio.currentTime).toBe(23);
   await user.click(screen.getByRole('button', { name: 'Integrated view' }));
   expect(container.querySelector('audio')).toBe(audio);
+  expect(screen.queryByRole('group', { name: 'Practice panels' })).not.toBeInTheDocument();
   expect(audio.currentTime).toBe(23);
   fireEvent.error(audio);
   expect(screen.getByRole('alert')).toHaveTextContent('The recording could not play');
