@@ -430,5 +430,61 @@
     "definition": "Actual action, operation or experience, contrasted with theory.",
     "pos": "noun",
     "kind": "theory-practice"
+  },
+  {
+    "entryId": "ve-7c6fc9c2",
+    "senseId": "wiktionary:restored:9225eb6aa6df65b80f",
+    "term": "mean",
+    "definition": "The arithmetic average: the sum of the values divided by the number of values.",
+    "pos": "noun",
+    "kind": "arithmetic-mean"
+  },
+  {
+    "entryId": "ve-7c6fc9c2",
+    "senseId": "kaikki:af34a5afad42cfd370",
+    "term": "mean",
+    "definition": "Either of the two inner terms in a proportion written as two equal ratios.",
+    "pos": "noun",
+    "kind": "proportion-means"
+  },
+  {
+    "entryId": "vocab:principal",
+    "senseId": "kaikki:fb5f56255fa74a0f9f",
+    "term": "principal",
+    "definition": "Selected by convention from the possible values of a multivalued mathematical relation.",
+    "pos": "adj",
+    "kind": "principal-root"
+  },
+  {
+    "entryId": "vocab:principal",
+    "senseId": "kaikki:c86d2c9aca7b9d8c3d",
+    "term": "principal",
+    "definition": "Money originally invested or borrowed, distinct from interest or returns.",
+    "pos": "noun",
+    "kind": "principal-interest"
+  },
+  {
+    "entryId": "vocab:principal",
+    "senseId": "kaikki:72568ac17f39ac1b47",
+    "term": "principal",
+    "definition": "A person or legal entity on whose behalf an agent acts.",
+    "pos": "noun",
+    "kind": "principal-agent"
+  },
+  {
+    "entryId": "ve-9596bd16",
+    "senseId": "kaikki:6b52e6e21acf3a9d49",
+    "term": "patient",
+    "definition": "The participant affected or changed by an action, often expressed by a noun phrase.",
+    "pos": "noun",
+    "kind": "semantic-patient"
+  },
+  {
+    "entryId": "vocab:adapt",
+    "senseId": "kaikki:57ca9f86d0b42bc12f",
+    "term": "adapt",
+    "definition": "To modify or remodel something for a different purpose or medium.",
+    "pos": "verb",
+    "kind": "text-adaptation"
   }
 ]

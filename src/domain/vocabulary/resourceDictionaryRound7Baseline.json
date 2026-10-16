@@ -1,0 +1,341 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:64894ec52685137f06"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:96a1e34787d610d5e3"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:9e7666df66228b8a71"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:60674bcc07a79eaf4d"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:326a4d5b22d1580212"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:fa43b47109f2f2e1f5"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:59839811e9e9f597c1"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:8a5d5cc76c39601a23"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:8e49051832fac62440"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:ffe96598453293bbf2"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:2322d8c36a129a1321"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:9a810c8bf332d2c383"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:cccf383c2973915b6f"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:6f731a2ba25488cfbd"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:087a14846a7fabea75"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:1b1f56082a91a3d6c5"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:199fd02c0b5454a7b5"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:b44582ad15cd787051"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:a99a20cfd02a588329"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:392291c341cf62679d"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:85c52e15a96f086e72"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:54890d5023fc37a025"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:cd5881aec7f80a000d"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:6130c741e310f6932a"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:af34a5afad42cfd370"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "kaikki:8c479ac2cb6399aff1"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:07aa9867270335c126"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:960fdcc0631bd0d55f"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:fb5f56255fa74a0f9f"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:c86d2c9aca7b9d8c3d"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:f1a56e50be80b92822"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:d02ca39f43d3ceba40"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:72568ac17f39ac1b47"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:ce9ed3e3a60e794e03"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:71f62cc3ccfea62c43"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:eddb1c87b8ab531ad0"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:b23aec737dbd3feaa6"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:0cb635494f58822f9a"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:fea3d48aea9a5768d6"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:1a2ffa26ac1bd71cdb"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:ca633ad47a48f071bd"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:b817fb428b52f41c92"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:7c7a27f9671cee9aee"
+    },
+    {
+      "entryId": "vocab:principal",
+      "senseId": "kaikki:1d582e8eb6080802ec"
+    },
+    {
+      "entryId": "vocab:principle",
+      "senseId": "kaikki:1baa15744405590372"
+    },
+    {
+      "entryId": "vocab:principle",
+      "senseId": "kaikki:a05b748bc9848bfbae"
+    },
+    {
+      "entryId": "vocab:principle",
+      "senseId": "kaikki:9c248808d798621853"
+    },
+    {
+      "entryId": "vocab:principle",
+      "senseId": "kaikki:fecbfe57fafd5a3897"
+    },
+    {
+      "entryId": "vocab:principle",
+      "senseId": "kaikki:4b96e47913f487e0fb"
+    },
+    {
+      "entryId": "vocab:principle",
+      "senseId": "kaikki:7e22a9b38ecefc9551"
+    },
+    {
+      "entryId": "vocab:principle",
+      "senseId": "kaikki:2f17e4e8dd9c57249a"
+    },
+    {
+      "entryId": "vocab:principle",
+      "senseId": "kaikki:c5e6c228180125c676"
+    },
+    {
+      "entryId": "vocab:principle",
+      "senseId": "kaikki:3a0b89a474b31b510e"
+    },
+    {
+      "entryId": "vocab:principle",
+      "senseId": "kaikki:2cd01f3bd4a0484d84"
+    },
+    {
+      "entryId": "ve-9596bd16",
+      "senseId": "kaikki:93b27b1299b55baa8b"
+    },
+    {
+      "entryId": "ve-9596bd16",
+      "senseId": "kaikki:dc1443b21f8c534ac0"
+    },
+    {
+      "entryId": "ve-9596bd16",
+      "senseId": "kaikki:8dcb6448bb66bf7449"
+    },
+    {
+      "entryId": "ve-9596bd16",
+      "senseId": "kaikki:31ae88528c0fe6ccc4"
+    },
+    {
+      "entryId": "ve-9596bd16",
+      "senseId": "kaikki:6b52e6e21acf3a9d49"
+    },
+    {
+      "entryId": "ve-9596bd16",
+      "senseId": "kaikki:82da971899f2949965"
+    },
+    {
+      "entryId": "ve-9596bd16",
+      "senseId": "kaikki:eaf4604ec2e8d9588c"
+    },
+    {
+      "entryId": "vocab:adapt",
+      "senseId": "kaikki:ef5997c3855c279b2a"
+    },
+    {
+      "entryId": "vocab:adapt",
+      "senseId": "kaikki:57ca9f86d0b42bc12f"
+    },
+    {
+      "entryId": "vocab:adapt",
+      "senseId": "kaikki:c31ade81ff9fbe8d7b"
+    },
+    {
+      "entryId": "vocab:adapt",
+      "senseId": "kaikki:345af12a704f4fb2a2"
+    },
+    {
+      "entryId": "vocab:adapt",
+      "senseId": "kaikki:229355c592fdba8c0c"
+    },
+    {
+      "entryId": "vocab:adopt",
+      "senseId": "kaikki:881343ad5a37721259"
+    },
+    {
+      "entryId": "vocab:adopt",
+      "senseId": "kaikki:24b2db5d8b2a296864"
+    },
+    {
+      "entryId": "vocab:adopt",
+      "senseId": "kaikki:fb00f6f8bd508b5623"
+    },
+    {
+      "entryId": "vocab:adopt",
+      "senseId": "kaikki:d365d4b3cb68297680"
+    },
+    {
+      "entryId": "vocab:adopt",
+      "senseId": "kaikki:1c6f39521f4ba7f45e"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "wiktionary:restored:9114b09ae651ff7562"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "wiktionary:restored:acd3ccaf0f2ab03533"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "wiktionary:restored:73e9ecfa146e3a885a"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "wiktionary:restored:e8d43a1f00618638e9"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "wiktionary:restored:8420ac34d963369041"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "wiktionary:restored:8baa87dd2a56ab6450"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "wiktionary:restored:3a75f6af14be1104e4"
+    },
+    {
+      "entryId": "ve-7c6fc9c2",
+      "senseId": "wiktionary:restored:9225eb6aa6df65b80f"
+    },
+    {
+      "entryId": "vocab:principle",
+      "senseId": "wiktionary:restored:71c13e8b834b9523fc"
+    },
+    {
+      "entryId": "vocab:adopt",
+      "senseId": "wiktionary:restored:c1d59d7ff894c4c2bb"
+    },
+    {
+      "entryId": "vocab:adopt",
+      "senseId": "wiktionary:restored:990934ee5e60b126e1"
+    },
+    {
+      "entryId": "vocab:adopt",
+      "senseId": "wiktionary:restored:9bead361cd1b727ba4"
+    },
+    {
+      "entryId": "vocab:adopt",
+      "senseId": "wiktionary:restored:68ff5d648a77366bf0"
+    }
+  ],
+  "restoreCorrections": []
+}

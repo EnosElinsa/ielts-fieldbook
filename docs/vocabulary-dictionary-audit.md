@@ -2,11 +2,13 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 89 restored submeanings** (51,443 total). This ledger verifies **562 senses** across definition, example, collocations and distinctions; **50,881 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 87 reviewed distinction exercises and 54 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 2 reviewed records are spelling-error references, retained for reading and excluded from new practice queues.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 102 restored submeanings** (51,456 total). This ledger verifies **646 senses** across definition, example, collocations and distinctions; **50,810 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 111 reviewed distinction exercises and 61 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 3 reviewed records are spelling-error references, retained for reading and excluded from new practice queues.
 
 | Term | Reviewed text senses | Raw + restored senses | Pending |
 | --- | ---: | ---: | ---: |
 | account | 13 | 13 | 0 |
+| adapt | 5 | 5 | 0 |
+| adopt | 9 | 9 | 0 |
 | affect | 15 | 15 | 0 |
 | bank | 45 | 45 | 0 |
 | capital | 19 | 19 | 0 |
@@ -20,7 +22,11 @@ The complete index has **5,853 terms, 51,354 preserved raw senses and 89 restore
 | interest | 14 | 14 | 0 |
 | issue | 31 | 33 | 2 |
 | matter | 12 | 12 | 0 |
+| mean | 34 | 35 | 1 |
+| patient | 7 | 7 | 0 |
 | practice | 12 | 12 | 0 |
+| principal | 18 | 18 | 0 |
+| principle | 11 | 11 | 0 |
 | raise | 32 | 32 | 0 |
 | range | 38 | 38 | 0 |
 | rate | 27 | 27 | 0 |

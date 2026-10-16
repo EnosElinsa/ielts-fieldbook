@@ -1689,5 +1689,252 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "mean",
+    "entryId": "ve-7c6fc9c2",
+    "parentSenseId": "kaikki:64894ec52685137f06",
+    "parentSourceHash": "f5a0642a8665f12a240810feb3a77120481f42d8854f25865c43bcee036ee48a",
+    "sourcePage": "mean",
+    "revision": 93602448,
+    "sourceGloss": "## {{lb|en|transitive}} To [[intend]], to [[plan]] (to do); to have as one's intention. {{defdate|from 8th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:9114b09ae651ff7562",
+      "pos": "verb",
+      "definition": "To intend, to plan (to do); to have as one's intention.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mean&oldid=93602448",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mean",
+    "entryId": "ve-7c6fc9c2",
+    "parentSenseId": "kaikki:64894ec52685137f06",
+    "parentSourceHash": "f5a0642a8665f12a240810feb3a77120481f42d8854f25865c43bcee036ee48a",
+    "sourcePage": "mean",
+    "revision": 93602448,
+    "sourceGloss": "## {{lb|en|intransitive}} To have as intentions of a given kind. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:acd3ccaf0f2ab03533",
+      "pos": "verb",
+      "definition": "To have as intentions of a given kind.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mean&oldid=93602448",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mean",
+    "entryId": "ve-7c6fc9c2",
+    "parentSenseId": "kaikki:64894ec52685137f06",
+    "parentSourceHash": "f5a0642a8665f12a240810feb3a77120481f42d8854f25865c43bcee036ee48a",
+    "sourcePage": "mean",
+    "revision": 93602448,
+    "sourceGloss": "## {{lb|en|transitive|usually in passive}} To [[intend]] (something) for a given purpose or fate; to [[predestine]]. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:73e9ecfa146e3a885a",
+      "pos": "verb",
+      "definition": "To intend (something) for a given purpose or fate; to predestine.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mean&oldid=93602448",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mean",
+    "entryId": "ve-7c6fc9c2",
+    "parentSenseId": "kaikki:64894ec52685137f06",
+    "parentSourceHash": "f5a0642a8665f12a240810feb3a77120481f42d8854f25865c43bcee036ee48a",
+    "sourcePage": "mean",
+    "revision": 93602448,
+    "sourceGloss": "## {{lb|en|transitive}} To [[intend]] an ensuing comment or statement as an explanation.",
+    "sense": {
+      "id": "wiktionary:restored:e8d43a1f00618638e9",
+      "pos": "verb",
+      "definition": "To intend an ensuing comment or statement as an explanation.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mean&oldid=93602448",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mean",
+    "entryId": "ve-7c6fc9c2",
+    "parentSenseId": "kaikki:96a1e34787d610d5e3",
+    "parentSourceHash": "608363ebb5a5589558645c30542c84d1e128e84c344681eb6aee2b158f7b527b",
+    "sourcePage": "mean",
+    "revision": 93602448,
+    "sourceGloss": "## {{lb|en|transitive}} To [[convey]] (a given sense); to [[signify]], or [[indicate]] (an object or idea). {{defdate|from 8th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:8420ac34d963369041",
+      "pos": "verb",
+      "definition": "To convey (a given sense); to signify, or indicate (an object or idea).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mean&oldid=93602448",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mean",
+    "entryId": "ve-7c6fc9c2",
+    "parentSenseId": "kaikki:96a1e34787d610d5e3",
+    "parentSourceHash": "608363ebb5a5589558645c30542c84d1e128e84c344681eb6aee2b158f7b527b",
+    "sourcePage": "mean",
+    "revision": 93602448,
+    "sourceGloss": "## {{lb|en|transitive}} Of a word, symbol etc: to have reference to, to [[signify]]. {{defdate|from 8th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:8baa87dd2a56ab6450",
+      "pos": "verb",
+      "definition": "Of a word, symbol etc: to have reference to, to signify.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mean&oldid=93602448",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mean",
+    "entryId": "ve-7c6fc9c2",
+    "parentSenseId": "kaikki:96a1e34787d610d5e3",
+    "parentSourceHash": "608363ebb5a5589558645c30542c84d1e128e84c344681eb6aee2b158f7b527b",
+    "sourcePage": "mean",
+    "revision": 93602448,
+    "sourceGloss": "## {{lb|en|transitive}} Of a person (or animal etc): to intend to [[express]], to [[imply]], to [[hint]] at, to [[allude]].",
+    "sense": {
+      "id": "wiktionary:restored:3a75f6af14be1104e4",
+      "pos": "verb",
+      "definition": "Of a person (or animal etc): to intend to express, to imply, to hint at, to allude.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mean&oldid=93602448",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mean",
+    "entryId": "ve-7c6fc9c2",
+    "parentSenseId": "kaikki:6130c741e310f6932a",
+    "parentSourceHash": "22887f2eda98182e2d82924668834d2b2835edb802bf9afde87bd4705d76982a",
+    "sourcePage": "mean",
+    "revision": 93602448,
+    "sourceGloss": "## {{senseid|en|Q19033}} {{lb|en|statistics}} The [[average]] of a set of values, calculated by summing them together and dividing by the number of terms. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:9225eb6aa6df65b80f",
+      "pos": "noun",
+      "definition": "The average of a set of values, calculated by summing them together and dividing by the number of terms.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mean&oldid=93602448",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "principle",
+    "entryId": "vocab:principle",
+    "parentSenseId": "kaikki:4b96e47913f487e0fb",
+    "parentSourceHash": "60318fd7022ff5a62912d5e48be4a36939cda81872319f49755a7d08f6941fdb",
+    "sourcePage": "principle",
+    "revision": 93514782,
+    "sourceGloss": "## A chemical compound within plant or animal tissue that is [[characteristic]] of it and [[more or less#English:_to varying extents|more or less]] peculiar to it, such that it defines the character of that tissue from a human viewpoint (as for example [[nicotine]] in [[tobacco]]).",
+    "sense": {
+      "id": "wiktionary:restored:71c13e8b834b9523fc",
+      "pos": "noun",
+      "definition": "A chemical compound within plant or animal tissue that is characteristic of it and more or less peculiar to it, such that it defines the character of that tissue from a human viewpoint (as for example nicotine in tobacco).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=principle&oldid=93514782",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "adopt",
+    "entryId": "vocab:adopt",
+    "parentSenseId": "kaikki:881343ad5a37721259",
+    "parentSourceHash": "0a8a3514e9276b6f5ca1e2b4cbc7a50162c0a48386f399da8e51ec36fefda03d",
+    "sourcePage": "adopt",
+    "revision": 93550532,
+    "sourceGloss": "## To take voluntarily (a child of other parents) to be in the place of, or as, one's own child.",
+    "sense": {
+      "id": "wiktionary:restored:c1d59d7ff894c4c2bb",
+      "pos": "verb",
+      "definition": "To take voluntarily (a child of other parents) to be in the place of, or as, one's own child.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=adopt&oldid=93550532",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "adopt",
+    "entryId": "vocab:adopt",
+    "parentSenseId": "kaikki:881343ad5a37721259",
+    "parentSourceHash": "0a8a3514e9276b6f5ca1e2b4cbc7a50162c0a48386f399da8e51ec36fefda03d",
+    "sourcePage": "adopt",
+    "revision": 93550532,
+    "sourceGloss": "## To obtain (a pet) from a shelter or the wild.",
+    "sense": {
+      "id": "wiktionary:restored:990934ee5e60b126e1",
+      "pos": "verb",
+      "definition": "To obtain (a pet) from a shelter or the wild.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=adopt&oldid=93550532",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "adopt",
+    "entryId": "vocab:adopt",
+    "parentSenseId": "kaikki:881343ad5a37721259",
+    "parentSourceHash": "0a8a3514e9276b6f5ca1e2b4cbc7a50162c0a48386f399da8e51ec36fefda03d",
+    "sourcePage": "adopt",
+    "revision": 93550532,
+    "sourceGloss": "## To [[contribute]] towards the [[upkeep]] of (a child or animal), in exchange for occasional stories, pictures, etc.",
+    "sense": {
+      "id": "wiktionary:restored:9bead361cd1b727ba4",
+      "pos": "verb",
+      "definition": "To contribute towards the upkeep of (a child or animal), in exchange for occasional stories, pictures, etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=adopt&oldid=93550532",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "adopt",
+    "entryId": "vocab:adopt",
+    "parentSenseId": "kaikki:881343ad5a37721259",
+    "parentSourceHash": "0a8a3514e9276b6f5ca1e2b4cbc7a50162c0a48386f399da8e51ec36fefda03d",
+    "sourcePage": "adopt",
+    "revision": 93550532,
+    "sourceGloss": "## {{senseid|en|responsibility}} To take by choice into the scope of one's responsibility.",
+    "sense": {
+      "id": "wiktionary:restored:68ff5d648a77366bf0",
+      "pos": "verb",
+      "definition": "To take by choice into the scope of one's responsibility.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=adopt&oldid=93550532",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]
