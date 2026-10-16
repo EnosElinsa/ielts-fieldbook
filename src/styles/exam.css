@@ -345,12 +345,53 @@
 .exam-notes-panel h4 { margin: 0 0 10px; font: 600 12px/1.5 Manrope,Arial,sans-serif; }
 .exam-notes-panel label { display: grid; gap: 6px; margin-top: 8px; }
 .exam-notes-panel input,.exam-notes-panel textarea { width: 100%; min-width: 0; }
+.exam-stimulus { font-size: 16px; line-height: 1.85; }
+.exam-stimulus table { font-size: inherit; line-height: inherit; }
+.exam-stimulus td,.exam-stimulus th { padding: 12px 16px; }
+/* A paragraph nested inside emphasis is an imported inline fragment, not a new answer row. */
+.exam-stimulus :is(strong,b,span) > p { display: inline; margin: 0; }
+.exam-inline-answer .exam-gap { font-size: 16px; font-weight: 400; min-height: 44px; width: 160px; }
+.exam-inline-field { display: inline-grid; min-width: 0; max-width: 100%; }
+.exam-inline-field .exam-word-limit-error { max-width: 160px; white-space: normal; line-height: 1.5; font-weight: 400; }
+.exam-inline-number { font-size: 12px; }
+.exam-stimulus .exam-inline-answer { margin-block: 5px; gap: 7px; }
+.exam-inline-answer .exam-inline-notes-button { width: 32px; height: 36px; border-color: var(--rule); background: var(--sheet); }
+.exam-inline-answer .exam-inline-notes-button[aria-expanded=true] { border-color: var(--blue); background: var(--soft-blue); }
+.exam-inline-group { min-width: 0; margin-bottom: 20px; }
+.exam-inline-notes { margin-top: 12px; border: 1px solid var(--rule); border-radius: 10px; background: var(--sheet); scroll-margin-top: 100px; }
+.exam-inline-notes-toggle { display: flex; align-items: center; gap: 12px; width: 100%; padding: 14px 16px; background: transparent; border: 0; border-radius: 10px; color: var(--ink); text-align: left; cursor: pointer; }
+.exam-inline-notes-toggle:hover { background: var(--surface-soft); }
+.exam-inline-notes-toggle > svg { flex: none; color: var(--blue); }
+.exam-inline-notes-toggle > span:first-of-type { display: grid; gap: 4px; flex: 1; min-width: 0; }
+.exam-inline-notes-toggle strong { font-size: 14px; }
+.exam-inline-notes-toggle small,.exam-inline-notes-count { font-size: 12px; line-height: 1.6; color: var(--muted); }
+.exam-inline-notes-count { flex: none; }
+.exam-inline-notes-editor { padding: 0 16px 16px; }
+.exam-inline-notes-controls { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 10px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.exam-inline-notes-controls > label { flex: 1; min-width: min(180px,100%); display: grid; gap: 6px; font-size: 13px; color: var(--muted); }
+.exam-inline-notes-controls .icon-button { flex: none; min-width: 40px; min-height: 42px; }
+.exam-inline-notes-controls .btn { min-height: 42px; }
+.exam-inline-notes-editor .exam-notes-panel { scroll-margin-top: 100px; }
+.exam-notes-panel h4 { font-size: 14px; }
+.exam-notes-panel label { font-size: 13px; }
+.exam-notes-panel input,.exam-notes-panel textarea { font-size: 15px; line-height: 1.65; }
+.exam-notes-panel textarea { min-height: 100px; }
 .exam-question-compact:has(.exam-notes-toggle) { grid-template-columns: 28px minmax(0,1fr) 32px; }
 .exam-question-compact .exam-notes-toggle { grid-column: 3; grid-row: 1; margin: 0; }
 @media(max-width:740px) {
   .exam-heading-answer { grid-template-columns: 24px minmax(0,1fr) minmax(76px,.85fr) 44px; gap: 6px; }
   .exam-notes-toggle { width: 44px; height: 44px; }
   .exam-question-compact:has(.exam-notes-toggle) { grid-template-columns: 28px minmax(0,1fr) 44px; }
+  .exam-inline-answer .exam-inline-notes-button { width: 44px; height: 44px; }
+  .exam-inline-answer .exam-gap { width: 140px; }
+  .exam-stimulus td,.exam-stimulus th { padding: 10px; }
+  .exam-inline-notes-toggle { padding: 12px; gap: 9px; }
+  .exam-inline-notes { scroll-margin-top: 210px; }
+  .exam-inline-notes-editor { padding: 0 12px 12px; }
+  .exam-inline-notes-controls > label { flex-basis: 100%; }
+  .exam-inline-notes-controls .icon-button { margin-left: auto; width: 44px; height: 44px; }
+  .exam-inline-notes-editor .exam-notes-panel { scroll-margin-top: 210px; }
+  .exam-notes-panel input,.exam-notes-panel textarea { font-size: 16px; }
   .exam-heading-reference > summary,.exam-group-instructions > summary { min-height: 44px; }
   .exam-heading-answer.exam-map-answer { grid-template-columns: 24px minmax(0,1fr) 44px 44px; }
   .exam-map-answer .exam-prompt { grid-column: 2 / -1; grid-row: 1; }

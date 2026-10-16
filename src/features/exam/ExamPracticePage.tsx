@@ -12,6 +12,7 @@ import { examVocabularySeed } from './vocabularyCapture';
 import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 import { accountId } from '../../storage/remote';
 import { ExamSessionHistory } from './ExamSessionHistory';
+import { InlineQuestionNotes, QuestionNotes } from './QuestionNotes';
 import { recoveredExamSessions } from './sessionRecovery';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { MethodGuide } from './MethodGuide';
@@ -63,7 +64,7 @@ export function ExamStimulus({ html, assets = [], renderGap, blockPrefix = 'stim
         const text = node.textContent || ''; const result: ReactNode[] = []; let offset = 0;
         for (const match of examGapMatches(text)) {
           if (match.index! > offset) result.push(<AnnotatedText key={`${key}:${offset}`} blockId={`${blockPrefix}:${key}:${offset}`} text={text.slice(offset, match.index)} version={version} />);
-          result.push(<span key={`${key}:gap:${match.index}`} className="exam-inline-gap" data-exam-gap={examGapNumber(match)} tabIndex={renderGap ? undefined : -1}>{renderGap?.(examGapNumber(match)) || (match[2] ? match[0] : `〔${examGapNumber(match)}〕`)}</span>);
+          result.push(<span key={`${key}:gap:${match.index}`} className="exam-inline-gap" data-exam-gap={examGapNumber(match)} tabIndex={renderGap ? undefined : -1}>{renderGap && <wbr />}{renderGap?.(examGapNumber(match)) || (match[2] ? match[0] : `〔${examGapNumber(match)}〕`)}{renderGap && <wbr />}</span>);
           offset = match.index! + match[0].length;
         }
         if (offset < text.length) result.push(<AnnotatedText key={`${key}:${offset}`} blockId={`${blockPrefix}:${key}:${offset}`} text={text.slice(offset)} version={version} />);
@@ -154,7 +155,8 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   const [layoutError, setLayoutError] = useState('');
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [openNotes, setOpenNotes] = useState<string[]>([]);
-  useEffect(() => { setOpenNotes([]); setFocusedQuestion(''); }, [attempt?.id]);
+  const [inlineNotesId, setInlineNotesId] = useState('');
+  useEffect(() => { setOpenNotes([]); setInlineNotesId(''); setFocusedQuestion(''); }, [attempt?.id]);
   useEffect(() => { if (selectedIds.length && !selectedIds.includes(activeSectionId)) setActiveSectionId(selectedIds[0]); setFocusedQuestion(''); }, [sourceId, selectedIds.join('|')]);
   const activeSection = sections.find(section => section.id === activeSectionId) || sections[0]; const currentQuestions = questions.filter(question => question.sectionId === activeSection?.id); const passages = catalog.passages.filter(passage => passage.sectionId === activeSection?.id);
   const paper = metadata.catalog.papers.find(row => row.id === sections[0]?.paperId); const disabled = !attempt || attempt.status !== 'active' || controller.saving;
@@ -217,6 +219,15 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   const inlineQuestions = new Set(layout === 'integrated' ? currentQuestions.filter(question => gapCounts.get(question.number) === 1 && !question.options?.length && ['gap', 'summary', 'map', 'flow'].includes(question.type)).map(question => question.id) : []);
   const limitId = (question: ExamQuestion) => { const info = presentation[currentQuestions.indexOf(question)]; return `exam-limit-${info.sharedLimit ? info.group[0].id : question.id}`; };
   const wordLimit = (question: ExamQuestion) => question.maxWords ? `Maximum ${question.maxWords} ${question.maxWords === 1 ? 'word' : 'words'}` : '';
+  const noteAdded = (question: ExamQuestion) => Boolean(attempt?.evidence[question.id]?.trim() || attempt?.keywords[question.id]?.trim());
+  const selectInlineNotes = (id: string, focus = false) => {
+    setInlineNotesId(id);
+    if (focus) requestAnimationFrame(() => { const panel = document.getElementById(`exam-notes-${id}`); panel?.closest('.exam-inline-notes')?.scrollIntoView?.({ block: 'start' }); panel?.querySelector('textarea')?.focus({ preventScroll: true }); });
+  };
+  const closeInlineNotes = () => {
+    const id = inlineNotesId; setInlineNotesId('');
+    requestAnimationFrame(() => { const trigger = document.getElementById(`exam-inline-notes-toggle-${id}`); trigger?.scrollIntoView?.({ block: 'center' }); trigger?.focus({ preventScroll: true }); });
+  };
   const groupHeading = (question: ExamQuestion, index: number) => {
     const info = presentation[index];
     if (!info.groupStart || info.group.length < 2) return null;
@@ -224,7 +235,12 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   };
   const renderGap = (number: number) => {
     const question = currentQuestions.find(row => row.number === number && inlineQuestions.has(row.id));
-    return question ? <span id={`exam-inline-${question.id}`} className="exam-inline-answer" onFocus={() => setFocusedQuestion(question.id)}><span className="exam-inline-number">{number}</span><ExamAnswerInput question={question} value={attempt?.responses[question.id] || ''} disabled={disabled} describedBy={limitId(question)} onChange={value => response(question, value)} /></span> : null;
+    if (!question) return null;
+    const value = attempt?.responses[question.id] || '';
+    const info = presentation[currentQuestions.indexOf(question)];
+    const exceeded = Boolean(question.maxWords && typeof value === 'string' && value.trim().split(/\s+/).filter(Boolean).length > question.maxWords);
+    const errorId = `exam-inline-limit-error-${question.id}`;
+    return <span id={`exam-inline-${question.id}`} className="exam-inline-answer" onFocus={() => setFocusedQuestion(question.id)}><span className="exam-inline-number">{number}</span><span className="exam-inline-field"><ExamAnswerInput question={question} value={value} disabled={disabled} describedBy={`${limitId(question)}${exceeded ? ` ${errorId}` : ''}`} onChange={value => response(question, value)} />{question.maxWords && !info.sharedLimit && <span id={limitId(question)} className="exam-word-limit">{wordLimit(question)}</span>}{exceeded && <span id={errorId} className="exam-word-limit exam-word-limit-error" role="alert">Question {number} · word limit exceeded</span>}</span>{mode === 'practice' && attempt && <button id={`exam-inline-notes-toggle-${question.id}`} type="button" className="exam-notes-toggle exam-inline-notes-button" aria-label={`Evidence & paraphrase for ${questionLabel(question).toLowerCase()}`} aria-expanded={inlineNotesId === question.id} aria-controls={`exam-notes-${question.id}`} title={`Notes for ${questionLabel(question).toLowerCase()}${noteAdded(question) ? ' · Notes added' : ''}`} onClick={() => inlineNotesId === question.id ? closeInlineNotes() : selectInlineNotes(question.id, true)}><NotebookPen size={16} aria-hidden="true" />{noteAdded(question) && <span className="exam-note-dot" aria-label="Notes added" />}</button>}</span>;
   };
   const headingPrompt = (question: ExamQuestion) => readingQuestionPrompt(question, catalog.questions, passages.flatMap(passage => passage.paragraphs));
   const headingList = (question: ExamQuestion) => <HeadingList question={question} />;
@@ -244,27 +260,34 @@ export function ExamPracticePage({ skill }: { skill: ExamSkill }) {
   const renderAnswer = (question: ExamQuestion, index: number, grouped = false) => {
     const info = presentation[index]; const value = attempt?.responses[question.id] || (question.type === 'multiple' ? [] : '');
     const exceeded = Boolean(question.maxWords && typeof value === 'string' && value.trim().split(/\s+/).filter(Boolean).length > question.maxWords);
-    const showTools = !inlineQuestions.has(question.id) || info.showPrompt || Boolean(question.assetId) || question.id === (focusedQuestion || currentQuestions[0]?.id);
+    const showTools = !inlineQuestions.has(question.id) || info.showPrompt || Boolean(question.assetId);
     const showStimulus = layout === 'integrated' && question.stimulusHtml && (!question.groupId || currentQuestions[index - 1]?.groupId !== question.groupId);
     const compact = layout === 'split' && !question.options?.length && ['gap', 'summary', 'map', 'flow'].includes(question.type);
     const headingAnswer = layout === 'integrated' && (grouped || question.type === 'heading');
     const notesOpen = openNotes.includes(question.id);
     const hasNotes = Boolean(attempt?.evidence[question.id]?.trim() || attempt?.keywords[question.id]?.trim());
     return <div key={question.id}>{!grouped && <>{groupHeading(question, index)}{layout === 'integrated' && info.showInstructions && <p className="exam-instruction">{question.instructions}</p>}{showStimulus && <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} renderGap={renderGap} blockPrefix={`stimulus:${question.groupId || question.id}`} version={question.provenance.contentHash || question.provenance.sourceVersion} />}{layout === 'integrated' && info.groupStart && headingList(question)}</>}
-      {!showTools && question.maxWords && !info.sharedLimit && <span id={limitId(question)} className="sr-only">{wordLimit(question)}</span>}
       {showTools && <article id={`exam-question-${question.id}`} tabIndex={-1} aria-label={`${questionLabel(question)} details`} className={`exam-question${compact ? ' exam-question-compact' : ''}${headingAnswer ? ' exam-heading-answer' : ''}${grouped && question.type === 'map' ? ' exam-map-answer' : ''}`} onFocus={() => setFocusedQuestion(question.id)}>
-        <div className="exam-question-heading"><span className={`exam-number${questionSlotCount(question) > 1 ? " is-range" : ""}`}>{questionNumberLabel(question)}</span>{!info.sharedType && !headingAnswer && <span className="exam-eyebrow">{QUESTION_TYPE_NAMES[question.type]}</span>}{mode === 'practice' && attempt && <button type="button" className="exam-notes-toggle" aria-label={`Evidence & paraphrase for ${questionLabel(question).toLowerCase()}`} aria-expanded={notesOpen} aria-controls={`exam-notes-${question.id}`} title={hasNotes ? 'Evidence & paraphrase · Notes added' : 'Evidence & paraphrase'} onClick={() => setOpenNotes(ids => notesOpen ? ids.filter(id => id !== question.id) : [...ids, question.id])}><NotebookPen size={16} aria-hidden="true" />{hasNotes && <span className="exam-note-dot" aria-label="Notes added" />}</button>}</div>
+        <div className="exam-question-heading"><span className={`exam-number${questionSlotCount(question) > 1 ? " is-range" : ""}`}>{questionNumberLabel(question)}</span>{!info.sharedType && !headingAnswer && <span className="exam-eyebrow">{QUESTION_TYPE_NAMES[question.type]}</span>}{mode === 'practice' && attempt && !inlineQuestions.has(question.id) && <button type="button" className="exam-notes-toggle" aria-label={`Evidence & paraphrase for ${questionLabel(question).toLowerCase()}`} aria-expanded={notesOpen} aria-controls={`exam-notes-${question.id}`} title={hasNotes ? 'Evidence & paraphrase · Notes added' : 'Evidence & paraphrase'} onClick={() => setOpenNotes(ids => notesOpen ? ids.filter(id => id !== question.id) : [...ids, question.id])}><NotebookPen size={16} aria-hidden="true" />{hasNotes && <span className="exam-note-dot" aria-label="Notes added" />}</button>}</div>
         {layout === 'integrated' && <>{info.showPrompt && <p className="exam-prompt"><AnnotatedText blockId={`question:${question.id}`} text={headingPrompt(question)} hiddenPrefixLength={questionNumberPrefixLength(headingPrompt(question), question.number, questionEndNumber(question))} version={question.provenance.contentHash || question.provenance.sourceVersion} /></p>}<ExamImage asset={catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`${questionLabel(question)} diagram`} /></>}
         {!inlineQuestions.has(question.id) && <ExamAnswerInput question={question} value={value} disabled={disabled} compactOptions={grouped} describedBy={limitId(question)} onChange={value => response(question, value)} />}
         {grouped && question.type === 'map' && <button type="button" className="exam-notes-toggle exam-map-toggle" aria-label={`View map for ${questionLabel(question).toLowerCase()}`} title="View map" onClick={event => { mapTrigger.current = event.currentTarget; setMapPreview(question); }}><MapIcon size={16} aria-hidden="true" /></button>}
-        {question.maxWords && !info.sharedLimit && <span id={limitId(question)} className="exam-word-limit">{wordLimit(question)}</span>}
-        {exceeded && <span className="exam-word-limit exam-word-limit-error" role="alert">Question {question.number} · word limit exceeded</span>}
-        {mode === 'practice' && attempt && notesOpen && <div className="exam-annotations exam-notes-panel" id={`exam-notes-${question.id}`} role="region" aria-label={`Evidence & paraphrase for ${questionLabel(question).toLowerCase()}`}><h4>Evidence & paraphrase</h4><label>Evidence for {questionLabel(question).toLowerCase()}<textarea disabled={disabled} value={attempt.evidence[question.id] || ''} onChange={event => update({ evidence: { ...attempt.evidence, [question.id]: event.target.value } })} placeholder={skill === 'reading' ? 'Quote the source words that prove your answer…' : 'Note the words or time in the recording…'} /></label><label>Keywords & synonyms for {questionLabel(question).toLowerCase()}<input disabled={disabled} value={attempt.keywords[question.id] || ''} onChange={event => update({ keywords: { ...attempt.keywords, [question.id]: event.target.value } })} placeholder="question wording → source wording" /></label></div>}
+        {question.maxWords && !info.sharedLimit && !inlineQuestions.has(question.id) && <span id={limitId(question)} className="exam-word-limit">{wordLimit(question)}</span>}
+        {exceeded && !inlineQuestions.has(question.id) && <span className="exam-word-limit exam-word-limit-error" role="alert">Question {question.number} · word limit exceeded</span>}
+        {mode === 'practice' && attempt && !inlineQuestions.has(question.id) && notesOpen && <QuestionNotes question={question} skill={skill} disabled={disabled} evidence={attempt.evidence[question.id] || ''} keywords={attempt.keywords[question.id] || ''} onEvidence={value => update({ evidence: { ...attempt.evidence, [question.id]: value } })} onKeywords={value => update({ keywords: { ...attempt.keywords, [question.id]: value } })} />}
 
       </article>}</div>;
   };
   const renderIntegratedQuestions = () => currentQuestions.flatMap((question, index) => {
     const info = presentation[index];
+    const inlineRows = info.group.filter(row => inlineQuestions.has(row.id));
+    if (inlineRows.length) {
+      if (!info.groupStart) return [];
+      return [<section key={question.id} className="exam-inline-group" role="group" aria-label={info.group.length > 1 ? `Questions ${question.number}–${questionEndNumber(info.group.at(-1)!)} · ${QUESTION_TYPE_NAMES[question.type]}` : questionLabel(question)}>
+        {info.group.map(row => renderAnswer(row, currentQuestions.indexOf(row)))}
+        {mode === 'practice' && attempt && <InlineQuestionNotes questions={inlineRows} selectedId={inlineNotesId} onSelect={id => selectInlineNotes(id)} onClose={closeInlineNotes} onReturn={focusAnswer} skill={skill} disabled={disabled} evidence={attempt.evidence} keywords={attempt.keywords} onEvidence={(id, value) => update({ evidence: { ...attempt.evidence, [id]: value } })} onKeywords={(id, value) => update({ keywords: { ...attempt.keywords, [id]: value } })} />}
+      </section>];
+    }
     const sharedChoices = question.options?.length && info.group.every(row => row.type === question.type && JSON.stringify(row.options) === JSON.stringify(question.options) && row.stimulusHtml === question.stimulusHtml && !catalog.assets.some(asset => asset.id === row.assetId && asset.kind === 'image'));
     if (!['heading', 'matching', 'map'].includes(question.type) || !sharedChoices || (question.type === 'map' && !question.stimulusHtml)) return [renderAnswer(question, index)];
     if (!info.groupStart) return [];

@@ -431,12 +431,12 @@ test('imported numbered blanks stay in the source while shared instructions and 
   expect(screen.queryByText(/Complete the marked gap/)).not.toBeInTheDocument();
   expect(screen.getAllByText('Complete the notes below.')).toHaveLength(1);
   expect(screen.getAllByText('Maximum 1 word')).toHaveLength(1);
-  expect(view.container.querySelectorAll('.exam-question')).toHaveLength(1);
+  expect(view.container.querySelectorAll('.exam-question')).toHaveLength(0);
   expect(screen.queryByRole('button', { name: 'Check answer 1' })).not.toBeInTheDocument();
   await user.type(answer, '1990');
   expect(screen.queryByRole('button', { name: 'Check answer 1' })).not.toBeInTheDocument();
   await user.click(screen.getByRole('link', { name: 'Go to question 2 · unanswered' }));
-  expect(screen.getByRole('article', { name: 'Question 2 details' })).toBeInTheDocument();
+  await waitFor(() => expect(screen.getByRole('textbox', { name: 'Answer 2' })).toHaveFocus());
   expect(screen.queryByRole('article', { name: 'Question 1 details' })).not.toBeInTheDocument();
   expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990');
   await user.click(screen.getByRole('button', { name: 'Split view' }));
@@ -447,6 +447,46 @@ test('imported numbered blanks stay in the source while shared instructions and 
   await user.click(screen.getByRole('button', { name: 'Evidence & paraphrase for question 2' }));
   await user.type(screen.getByRole('textbox', { name: 'Evidence for question 2' }), 'Fresh proof');
   expect(mocks.recovery.get('one:reading:practice:section').evidence).toMatchObject({ q2: 'Fresh proof' });
+});
+
+test.each(['reading', 'listening'] as const)('%s inline gaps expose independent notes without a detached current-question card', async skill => {
+  mocks.catalog.sections[0].skill = skill;
+  mocks.catalog.sections[0].questionCount = 10;
+  const stimulusHtml = '<table><tr><td>Application notes</td></tr><tr><td>' + Array.from({ length: 10 }, (_, i) => `<p>Detail ${i + 1}: [${i + 1} ____]</p>`).join('') + '</td></tr></table>';
+  mocks.catalog.questions = Array.from({ length: 10 }, (_, i) => ({ ...catalog.questions[0], skill, id: `q${i + 1}`, number: i + 1, type: 'gap', groupId: 'form', prompt: `Question ${i + 1} · Complete the marked gap in the text above.`, stimulusHtml }));
+  if (skill === 'listening') mocks.catalog.assets = [{ id: 'audio', sectionId: 'section', paperId: 'paper', kind: 'audio', storagePath: 'audio.mp3', provenance }];
+  const page = render(<MemoryRouter initialEntries={[`/${skill}/section`]}><Routes><Route path={`/${skill}/:sectionId`} element={<ExamPracticePage skill={skill} />} /></Routes></MemoryRouter>);
+  const answer1 = await screen.findByRole('textbox', { name: 'Answer 1' });
+  const user = userEvent.setup();
+  expect(page.container.querySelectorAll('.exam-stimulus')).toHaveLength(1);
+  expect(page.container.querySelectorAll('.exam-question')).toHaveLength(0);
+  expect(screen.getAllByRole('button', { name: /^Evidence & paraphrase for question \d+$/ })).toHaveLength(10);
+  for (const number of [1, 5, 10]) expect(within(screen.getByRole('textbox', { name: `Answer ${number}` }).closest('.exam-inline-answer') as HTMLElement).getByRole('button', { name: `Evidence & paraphrase for question ${number}` })).toHaveAttribute('aria-expanded', 'false');
+  await user.type(answer1, 'first');
+  await user.click(screen.getByRole('button', { name: 'Evidence & paraphrase for question 10' }));
+  const evidence = screen.getByRole('textbox', { name: 'Evidence for question 10' });
+  fireEvent.change(evidence, { target: { value: 'The last source detail' } });
+  fireEvent.change(screen.getByRole('textbox', { name: 'Keywords & synonyms for question 10' }), { target: { value: 'plan → presentation' } });
+  expect(screen.getByRole('combobox', { name: 'Question for notes' })).toHaveTextContent('Question 10');
+  await user.click(screen.getByRole('combobox', { name: 'Question for notes' }));
+  await user.click(screen.getByRole('option', { name: 'Question 1' }));
+  expect(screen.getByRole('textbox', { name: 'Evidence for question 1' })).toHaveValue('');
+  fireEvent.change(screen.getByRole('textbox', { name: 'Evidence for question 1' }), { target: { value: 'The first source detail' } });
+  await user.click(screen.getByRole('button', { name: 'Return to answer 1' }));
+  await waitFor(() => expect(answer1).toHaveFocus());
+  await user.click(screen.getByRole('button', { name: 'Evidence & paraphrase for question 10' }));
+  expect(screen.getByRole('textbox', { name: 'Evidence for question 10' })).toHaveValue('The last source detail');
+  expect(screen.getByRole('textbox', { name: 'Keywords & synonyms for question 10' })).toHaveValue('plan → presentation');
+  const saved = mocks.recovery.get(`one:${skill}:practice:section`);
+  expect(saved.evidence).toMatchObject({ q1: 'The first source detail', q10: 'The last source detail' });
+  expect(saved.responses.q1).toBe('first');
+  await user.click(screen.getByRole('button', { name: 'Close question notes' }));
+  expect(screen.queryByRole('textbox', { name: 'Evidence for question 10' })).not.toBeInTheDocument();
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Evidence & paraphrase for question 10' })).toHaveFocus());
+  expect(within(screen.getByRole('button', { name: 'Evidence & paraphrase for question 10' })).getByLabelText('Notes added')).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Split view' }));
+  await user.click(screen.getByRole('button', { name: 'Evidence & paraphrase for question 10' }));
+  expect(screen.getByRole('textbox', { name: 'Evidence for question 10' })).toHaveValue('The last source detail');
 });
 
 test('source simplification preserves real stems, missing-gap scaffolds, diagrams and differing limits', async () => {
@@ -495,10 +535,14 @@ test('selecting an embedded answer keeps other real stems and unique word limits
     { ...catalog.questions[0], id: 'q2', number: 2, groupId: 'notes', prompt: 'Question 2 · Complete the marked gap in the text above.', maxWords: 2, stimulusHtml: '<p>Opened [1 ____], closed [2 ____]</p>' },
   ];
   practice(); await screen.findByRole('textbox', { name: 'Answer 1' });
-  expect(screen.getByText('Maximum 2 words')).toHaveClass('sr-only');
-  await userEvent.setup().click(screen.getByRole('textbox', { name: 'Answer 2' }));
+  expect(screen.getByText('Maximum 2 words')).not.toHaveClass('sr-only');
+  const user = userEvent.setup(); const answer = screen.getByRole('textbox', { name: 'Answer 2' });
+  await user.click(answer);
   expect(screen.getByText('The garden opened in _____.')).toBeInTheDocument();
   expect(screen.getByText('Maximum 2 words')).not.toHaveClass('sr-only');
+  await user.type(answer, 'more than two');
+  expect(answer).toHaveAttribute('aria-invalid', 'true');
+  expect(within(answer.closest('.exam-inline-answer') as HTMLElement).getByRole('alert')).toHaveTextContent('Question 2 · word limit exceeded');
 });
 
 test('an annotation on an old bracket blank remains viewable when the blank becomes an input', async () => {
