@@ -2,7 +2,7 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 102 restored submeanings** (51,456 total). This ledger verifies **646 senses** across definition, example, collocations and distinctions; **50,810 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 111 reviewed distinction exercises and 61 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 3 reviewed records are spelling-error references, retained for reading and excluded from new practice queues.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 107 restored submeanings** (51,461 total). This ledger verifies **722 senses** across definition, examples or reading explanations, collocations and distinctions; **50,739 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 139 reviewed distinction exercises and 69 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 3 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 21 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. Earlier batches still need example-type annotation.
 
 | Term | Reviewed text senses | Raw + restored senses | Pending |
 | --- | ---: | ---: | ---: |
@@ -14,6 +14,9 @@ The complete index has **5,853 terms, 51,354 preserved raw senses and 102 restor
 | capital | 19 | 19 | 0 |
 | charge | 45 | 45 | 0 |
 | condition | 17 | 17 | 0 |
+| conduct | 14 | 14 | 0 |
+| content | 17 | 18 | 1 |
+| contract | 18 | 18 | 0 |
 | current | 10 | 10 | 0 |
 | effect | 14 | 14 | 0 |
 | field | 33 | 33 | 0 |
@@ -23,6 +26,7 @@ The complete index has **5,853 terms, 51,354 preserved raw senses and 102 restor
 | issue | 31 | 33 | 2 |
 | matter | 12 | 12 | 0 |
 | mean | 34 | 35 | 1 |
+| object | 11 | 11 | 0 |
 | patient | 7 | 7 | 0 |
 | practice | 12 | 12 | 0 |
 | principal | 18 | 18 | 0 |
@@ -30,6 +34,7 @@ The complete index has **5,853 terms, 51,354 preserved raw senses and 102 restor
 | raise | 32 | 32 | 0 |
 | range | 38 | 38 | 0 |
 | rate | 27 | 27 | 0 |
+| record | 16 | 17 | 1 |
 | rise | 38 | 38 | 0 |
 | scale | 34 | 34 | 0 |
 | state | 11 | 11 | 0 |

@@ -1,7 +1,8 @@
 import type { VocabularySense } from "../../domain/vocabulary/types";
 import { vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
+import { isVocabularyReadingNote } from '../../domain/vocabulary/readiness';
 
-export function VocabularySenseContent({ sense, learningExample, showMissingExample = false, showLearningNotes = false }: { sense: VocabularySense; learningExample?: string; showMissingExample?: boolean; showLearningNotes?: boolean }) {
+export function VocabularySenseContent({ sense, entryId, learningExample, showMissingExample = false, showLearningNotes = false }: { sense: VocabularySense; entryId?: string; learningExample?: string; showMissingExample?: boolean; showLearningNotes?: boolean }) {
   const content = vocabularySensePresentation(sense);
   const example = content.example || learningExample;
   return (
@@ -10,7 +11,7 @@ export function VocabularySenseContent({ sense, learningExample, showMissingExam
         {content.definition || "Definition not available yet"}
       </p>
       {example ? <>
-        {!content.example ? <p className="vocabulary-example-label">Learning example</p> : null}
+        {entryId && isVocabularyReadingNote(entryId, sense) ? <p className="vocabulary-example-label">Reading note</p> : !content.example ? <p className="vocabulary-example-label">Learning example</p> : null}
         <blockquote>{example}</blockquote>
       </> : showMissingExample ? <p className="vocabulary-muted">No example for this meaning.</p> : null}
       {content.usage ? (

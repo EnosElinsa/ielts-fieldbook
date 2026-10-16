@@ -2,7 +2,7 @@ import { vocabularyTeaching } from './runtimeData';
 import { VOCABULARY_CATALOG } from './catalog';
 import { vocabularyCurriculumBaselines } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
-import { applyVocabularyReadiness, isVocabularySpellingReference, supplementVocabularySense, VOCABULARY_READINESS_VERSION } from './readiness';
+import { applyVocabularyReadiness, isVocabularyReadingNote, isVocabularySpellingReference, supplementVocabularySense, VOCABULARY_READINESS_VERSION } from './readiness';
 import { vocabularySensePresentation } from './dictionaryPresentation';
 export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-10.1/${VOCABULARY_READINESS_VERSION}`;
 const learningSenses = vocabularyTeaching.learning;
@@ -226,6 +226,7 @@ export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mod
  if (mode === 'distinction' && eligible && !customContent && primary && confusion[entry.term.toLowerCase()]) return confusion[entry.term.toLowerCase()];
  if (mode === 'distinction' && sense.distinctionTask) return {prompt:sense.distinctionTask.prompt,acceptedAnswers:[sense.distinctionTask.answer],options:sense.distinctionTask.options,explanation:sense.distinctionTask.explanation};
  if (mode === 'cloze') {
+  if (isVocabularyReadingNote(entry.id, sense)) return;
   const context = item && primary ? item.example : sense.example;
   const candidates = item && primary ? item.forms || [entry.term] : [entry.term];
   const answer = candidates.find(form => concealWord(context,form) !== context);

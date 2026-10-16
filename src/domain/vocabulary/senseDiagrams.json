@@ -486,5 +486,69 @@
     "definition": "To modify or remodel something for a different purpose or medium.",
     "pos": "verb",
     "kind": "text-adaptation"
+  },
+  {
+    "entryId": "ve-649a8d90",
+    "senseId": "kaikki:f94c1140080e11fb54",
+    "term": "object",
+    "definition": "A noun phrase functioning as a complement of a verb or preposition.",
+    "pos": "noun",
+    "kind": "grammatical-object"
+  },
+  {
+    "entryId": "ve-649a8d90",
+    "senseId": "kaikki:bbf74cf797c6ab6a20",
+    "term": "object",
+    "definition": "One of the entities of a category, with morphisms having objects as their sources and targets.",
+    "pos": "noun",
+    "kind": "category-objects"
+  },
+  {
+    "entryId": "ve-dd835701",
+    "senseId": "kaikki:9b222c72862e5e8a9c",
+    "term": "conduct",
+    "definition": "To transmit heat, electricity or another physical quantity through a medium.",
+    "pos": "verb",
+    "kind": "heat-conduction"
+  },
+  {
+    "entryId": "ve-7e9f7328",
+    "senseId": "kaikki:00057ea728a5735e78",
+    "term": "record",
+    "definition": "A collection of related data about one person or item.",
+    "pos": "noun",
+    "kind": "database-record"
+  },
+  {
+    "entryId": "ve-dd8bd9ac",
+    "senseId": "kaikki:15565707a332d012e0",
+    "term": "content",
+    "definition": "The amount or proportion of a substance present in something.",
+    "pos": "noun",
+    "kind": "substance-content"
+  },
+  {
+    "entryId": "ve-dd8bd9ac",
+    "senseId": "kaikki:59a860761cb522a1a9",
+    "term": "content",
+    "definition": "A greatest common divisor of a polynomial’s coefficients, where such a divisor exists in the coefficient domain.",
+    "pos": "noun",
+    "kind": "polynomial-content"
+  },
+  {
+    "entryId": "ve-8efc8817",
+    "senseId": "kaikki:a5a95f0954d0c41b10",
+    "term": "contract",
+    "definition": "To become or make something shorter, smaller, narrower or more closely drawn together.",
+    "pos": "verb",
+    "kind": "elastic-contraction"
+  },
+  {
+    "entryId": "ve-8efc8817",
+    "senseId": "kaikki:2f795ca34e70074176",
+    "term": "contract",
+    "definition": "The final undertaking in bridge to win at least six plus the bid level in tricks, with a specified trump suit or no trumps.",
+    "pos": "noun",
+    "kind": "bridge-contract"
   }
 ]

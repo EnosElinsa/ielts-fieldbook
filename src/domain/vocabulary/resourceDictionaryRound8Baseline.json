@@ -1,0 +1,359 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-649a8d90",
+      "senseId": "kaikki:ebf8dd64f829633517"
+    },
+    {
+      "entryId": "ve-649a8d90",
+      "senseId": "kaikki:f94c1140080e11fb54"
+    },
+    {
+      "entryId": "ve-649a8d90",
+      "senseId": "kaikki:d1cf6a385280a8fbfc"
+    },
+    {
+      "entryId": "ve-649a8d90",
+      "senseId": "kaikki:4a8bc367a542dace81"
+    },
+    {
+      "entryId": "ve-649a8d90",
+      "senseId": "kaikki:bbf74cf797c6ab6a20"
+    },
+    {
+      "entryId": "ve-649a8d90",
+      "senseId": "kaikki:a0e69a49931b08846d"
+    },
+    {
+      "entryId": "ve-649a8d90",
+      "senseId": "kaikki:32ef4998a39ea98f2c"
+    },
+    {
+      "entryId": "ve-649a8d90",
+      "senseId": "kaikki:1add2949d767357f64"
+    },
+    {
+      "entryId": "ve-649a8d90",
+      "senseId": "kaikki:90cbe2e2c68572b450"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:a0b4d71cbc60a381eb"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:1b6bd1c44b9b4fbffe"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:b4f5ffac04342b439e"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:402220a1cc825f0528"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:af7a62a21d92994a1c"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:6943660293be05e866"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:081bda89b5e541f783"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:2ce7c7c3e5c25ff99b"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:e8d5ada599173e96b7"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:02e2c5849c06534afa"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:9b222c72862e5e8a9c"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:11e93043467a8f0483"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:f1e641f69c9c91ec60"
+    },
+    {
+      "entryId": "ve-dd835701",
+      "senseId": "kaikki:31093446945ef0e5c0"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:5386f9871d2cf75669"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:0d5287ab9357a90163"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:a18d8c79232568f972"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:00057ea728a5735e78"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:87a050bba2c422eb5e"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:572d74d69f63af261a"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:092dbc8aa51dde18b2"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:a81bc2a2a960622df9"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:b7c249d857701c4ead"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:2d40a84cb228ab6afd"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:3eace4d5e66a9593f2"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:13a4fd3108c21f359d"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:380498e5206e6bd47a"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:c6a46fa893c409f193"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "kaikki:da6271c9e9c95cc4a8"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:a7e8ca22fa6620ba4f"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:b85fb2ce3fb3943303"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:e34989fd3d159844ca"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:5fe3110eb3ac11e08d"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:a8723a805cbd38e167"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:ea13a1c00b5f14ef5b"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:ae28729d5a542f64c9"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:96e28027450ddcf58b"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:8f6f320ff9c3e7295b"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:7e795bec2fbbccb4a6"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:5a5935d8ba8a15d8f7"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:15565707a332d012e0"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:7a8b6dfe72a3ccce1b"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:319051949ecadfca99"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "kaikki:59a860761cb522a1a9"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:71127f696d39f8ebdc"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:e09ef2d9c0d867a6e7"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:76d3a0e7f7087b5d44"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:60f55d5bdea98876dc"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:abd02f4af3d5e454a3"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:2f795ca34e70074176"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:62caf6876ccf09f02e"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:0b679a53830ff26654"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:a5a95f0954d0c41b10"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:9c22fefa065b25228a"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:73ed9ddb710dc9fb43"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:552e1097fb0a5d2a4d"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:1bf079bfe4b9c6f1a0"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:0f83f13fcf1686bcb9"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:ef774de5abb4d0cfea"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:7adc1cd3e73bbad745"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "kaikki:c249c5ee04232e1a1f"
+    },
+    {
+      "entryId": "ve-649a8d90",
+      "senseId": "wiktionary:restored:5a0cb2c7ecaa03453e"
+    },
+    {
+      "entryId": "ve-7e9f7328",
+      "senseId": "wiktionary:restored:d572150768ef8b1704"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "wiktionary:restored:053efc7d898ba6d04a"
+    },
+    {
+      "entryId": "ve-dd8bd9ac",
+      "senseId": "wiktionary:restored:907bb353dda5f65c55"
+    },
+    {
+      "entryId": "ve-8efc8817",
+      "senseId": "wiktionary:restored:fe3f956ab9874bbce5"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-649a8d90",
+      "senseId": "kaikki:6de32a49723c010e1e",
+      "term": "object",
+      "example": "A metal object was blocking the drain.",
+      "originalSense": {
+        "id": "kaikki:6de32a49723c010e1e",
+        "definition": "A thing that has physical existence but is not alive.",
+        "example": "",
+        "pos": "noun",
+        "synonyms": [
+          "article",
+          "item",
+          "thing"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "anti-object art",
+          "BL Lac object",
+          "blobject",
+          "blogject",
+          "bright shiny object",
+          "business object",
+          "cognate object",
+          "data access object",
+          "data object",
+          "data transfer object",
+          "Edgeworth-Kuiper object",
+          "eternally collapsing object",
+          "group object",
+          "HH object",
+          "hidden-object game",
+          "instrument-shaped object",
+          "interobject",
+          "logject",
+          "massive and compact halo object",
+          "massive astronomical compact halo object",
+          "massive astrophysical compact halo object",
+          "massive compact halo object",
+          "metaobject",
+          "money is no object",
+          "multiobject",
+          "nanoobject",
+          "natural numbers object",
+          "near-Earth object",
+          "nonobject",
+          "object adapter pattern"
+        ]
+      }
+    }
+  ]
+}

@@ -1936,5 +1936,100 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "object",
+    "entryId": "ve-649a8d90",
+    "parentSenseId": "kaikki:d1cf6a385280a8fbfc",
+    "parentSourceHash": "cda9e8daf3f043d53719c32cbd4a6e5202f8c6990bc0fee077de0a99645063c6",
+    "sourcePage": "object",
+    "revision": 93417662,
+    "sourceGloss": "## {{lb|en|chiefly in the negative}} A cause for [[attention]] or [[concern]].",
+    "sense": {
+      "id": "wiktionary:restored:5a0cb2c7ecaa03453e",
+      "pos": "noun",
+      "definition": "A cause for attention or concern.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=object&oldid=93417662",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "record",
+    "entryId": "ve-7e9f7328",
+    "parentSenseId": "kaikki:a18d8c79232568f972",
+    "parentSourceHash": "5efff17fb4a503f9d9201ae33eb7bbb995d5ac230d9ed014f73f9b1c96884916",
+    "sourcePage": "record",
+    "revision": 93533916,
+    "sourceGloss": "## {{lb|en|by extension|informal}} A music [[album]]; broadly, any music released as a single, EP, etc.",
+    "sense": {
+      "id": "wiktionary:restored:d572150768ef8b1704",
+      "pos": "noun",
+      "definition": "A music album; broadly, any music released as a single, EP, etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=record&oldid=93533916",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "content",
+    "entryId": "ve-dd8bd9ac",
+    "parentSenseId": "kaikki:5a5935d8ba8a15d8f7",
+    "parentSourceHash": "3169662daa6f7ac8433bec74da6dc6f6cdc21b257d61263fced4923cefab084e",
+    "sourcePage": "content",
+    "revision": 93575225,
+    "sourceGloss": "## {{lb|en|by extension|uncountable}} One or more [[creative work]]s.",
+    "sense": {
+      "id": "wiktionary:restored:053efc7d898ba6d04a",
+      "pos": "noun",
+      "definition": "One or more creative works.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=content&oldid=93575225",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "content",
+    "entryId": "ve-dd8bd9ac",
+    "parentSenseId": "kaikki:5a5935d8ba8a15d8f7",
+    "parentSourceHash": "3169662daa6f7ac8433bec74da6dc6f6cdc21b257d61263fced4923cefab084e",
+    "sourcePage": "content",
+    "revision": 93575225,
+    "sourceGloss": "### {{lb|en|internet|colloquial}} The [[potential]] of creative work for a [[content creator]].",
+    "sense": {
+      "id": "wiktionary:restored:907bb353dda5f65c55",
+      "pos": "noun",
+      "definition": "The potential of creative work for a content creator.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=content&oldid=93575225",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "contract",
+    "entryId": "ve-8efc8817",
+    "parentSenseId": "kaikki:71127f696d39f8ebdc",
+    "parentSourceHash": "a61a9728fc0d26c92a0af1359ea2e65056a66fac0dd311dbf0b57709580ae7ed",
+    "sourcePage": "contract",
+    "revision": 93454859,
+    "sourceGloss": "## A period of work agreed to under a temporary contract.",
+    "sense": {
+      "id": "wiktionary:restored:fe3f956ab9874bbce5",
+      "pos": "noun",
+      "definition": "A period of work agreed to under a temporary contract.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=contract&oldid=93454859",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

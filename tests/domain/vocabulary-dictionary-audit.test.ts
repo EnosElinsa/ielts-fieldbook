@@ -7,6 +7,15 @@ const row = { entryId: 'bank', senseId: 'river', originalSense: original, defini
 const review = { term: 'bank', entryId: 'bank', senseId: 'river', sourceHash: createHash('sha256').update(JSON.stringify(original)).digest('hex'), reviewedAreas: ['definition','example','collocations','distinctions'] };
 const input = { entries: [{ id: 'bank', term: 'bank' }], dictionaries: { bank: { senses: [original] } }, corrections: [row], records: [review], diagrams: [] };
 
+test('explicit reading-note metadata is counted and unknown example types fail review', () => {
+  const result = inspectDictionaryReview({ ...input, corrections: [{ ...row, exampleKind: 'reading-note' }] });
+  expect(result.errors).toEqual([]);
+  expect(result.summary.readingNotes).toBe(1);
+  const invalid = inspectDictionaryReview({ ...input, corrections: [{ ...row, exampleKind: 'guessed-from-text' }] });
+  expect(invalid.errors.join(' ')).toMatch(/example kind/i);
+  expect(invalid.summary.reviewed).toBe(0);
+});
+
 test('review accounting reconciles every source sense and flags changed source fingerprints', () => {
   const valid = inspectDictionaryReview(input);
   expect(valid.summary).toMatchObject({ terms: 1, senses: 1, reviewed: 1, pending: 0 });

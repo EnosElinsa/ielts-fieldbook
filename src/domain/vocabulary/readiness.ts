@@ -1,7 +1,7 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default } from './runtimeData';
 import type { VocabularyEntry, VocabularySense } from './types';
 
-export const VOCABULARY_READINESS_VERSION = 'core-2026-10-17.5';
+export const VOCABULARY_READINESS_VERSION = 'core-2026-10-17.6';
 const identity = (entryId:string, senseId:string) => `${entryId}\u0000${senseId}`;
 const core = new Map<string,Supplement>();
 const additions = new Map<string,Supplement>();
@@ -36,6 +36,15 @@ export function hasVocabularyReadinessNotes(entryId: string, sense: VocabularySe
  const row = additions.get(identity(entryId, sense.id)) || core.get(identity(entryId, sense.id));
  return Boolean(row?.collocations?.length && row.distinctions?.length && row.definition === sense.definition &&
   (row.pos || row.originalSense?.pos) === sense.pos && JSON.stringify(row.collocations) === JSON.stringify(sense.collocations) && JSON.stringify(row.distinctions) === JSON.stringify(sense.distinctions));
+}
+
+/** Example type belongs to exact public text; a learner's replacement is independent. */
+export function isVocabularyReadingNote(entryId: string, sense: VocabularySense): boolean {
+ ensureReadiness();
+ const row = additions.get(identity(entryId, sense.id)) || core.get(identity(entryId, sense.id));
+ return Boolean(row?.exampleKind === 'reading-note' && sense.source !== 'Personal note' &&
+  row.definition === sense.definition && row.example === sense.example &&
+  (row.pos || row.originalSense?.pos) === sense.pos);
 }
 
 /** Editorial spelling-error records stay readable without teaching the error as a valid meaning. */

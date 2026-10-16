@@ -316,7 +316,7 @@ export function VocabularyEntryPage() {
         {sense.pos ? (
           <span className="vocabulary-part-of-speech">{sense.pos}</span>
         ) : null}
-        <VocabularySenseContent sense={sense} learningExample={entry ? publicVocabularyExample(entry.id, sense)?.example : undefined} showMissingExample={main} showLearningNotes={!personalNotes && Boolean(sense.editorial || main && resolved?.contentReviewed)} />
+        <VocabularySenseContent entryId={entry?.id} sense={sense} learningExample={entry ? publicVocabularyExample(entry.id, sense)?.example : undefined} showMissingExample={main} showLearningNotes={!personalNotes && Boolean(sense.editorial || main && resolved?.contentReviewed)} />
         {personalNotes &&
         sense.collocations?.length ? (
           <div className="vocabulary-detail">
@@ -504,7 +504,7 @@ export function VocabularyEntryPage() {
                       <p>{personalMeaning ? 'Your saved meaning and notes.' : resolved?.curriculumCurrent ? resolved.curriculum?.explanation : resolved?.reviewed ? 'Selected from the listening passage. The example is written for practice.' : 'A dictionary meaning of this word.'}</p>
                       {personalMeaning && groupMeaning?.id === primary.id && !resolved?.curriculumCurrent ? <div className="vocabulary-group-comparison">
                         <h4>Group meaning</h4>
-                        <VocabularySenseContent sense={groupMeaning} />
+                        <VocabularySenseContent entryId={entry?.id} sense={groupMeaning} />
                       </div> : null}
                     </details>
                     {groupMeaning && groupMeaning.id !== primary.id ? <Link className="vocabulary-group-meaning-link" to={`${location.pathname}?${groupMeaningParams}`}>

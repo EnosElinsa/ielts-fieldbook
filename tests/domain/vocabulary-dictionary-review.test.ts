@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { hasVocabularySenseEdits, learningTask, reviewedEntry } from '../../src/domain/vocabulary/content';
-import { supplementVocabularySense } from '../../src/domain/vocabulary/readiness';
+import { isVocabularyReadingNote, supplementVocabularySense } from '../../src/domain/vocabulary/readiness';
 import type { VocabularyEntry, VocabularySense } from '../../src/domain/vocabulary/types';
 import { resolveVocabularyLearningContext } from '../../src/domain/vocabulary/context';
 import ledger from '../../src/domain/vocabulary/dictionaryReviewLedger.json';
@@ -14,6 +14,26 @@ const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
 const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
 const entry = catalog.entries.find((e: VocabularyEntry) => e.term === 'bank') as VocabularyEntry;
 const raw = JSON.parse(readFileSync(`public/dictionary/${index.bank}`, 'utf8')).senses.find((s: VocabularySense) => s.id === 'kaikki:c130710755a265600e') as VocabularySense;
+
+test.each(corrections.filter(row => 'exampleKind' in row && row.exampleKind === 'reading-note'))('a reading explanation for $entryId/$senseId is not a sentence-gap exercise', row => {
+  const base = catalog.entries.find((e: VocabularyEntry) => e.id === row.entryId) as VocabularyEntry;
+  const selected = supplementVocabularySense(row.entryId, row.originalSense as VocabularySense, [row.originalSense as VocabularySense], hasVocabularySenseEdits);
+  expect(isVocabularyReadingNote(base.id, selected)).toBe(true);
+  expect(learningTask({ ...base, senses: [selected] }, selected, 'cloze')).toBeUndefined();
+  expect(isVocabularyReadingNote('another-entry', selected)).toBe(false);
+  for (const patch of [{ definition: 'My own interpretation.' }, { example: 'My personal sentence.' }, { pos: 'other' }, { source: 'Personal note' }]) {
+    expect(isVocabularyReadingNote(base.id, { ...selected, ...patch })).toBe(false);
+  }
+});
+
+test('a learner’s replacement sentence can be used for a sentence gap after a historical reading explanation', () => {
+  const row = corrections.find(row => row.entryId === 've-649a8d90' && row.senseId === 'kaikki:a0e69a49931b08846d')!;
+  const base = catalog.entries.find((e: VocabularyEntry) => e.id === row.entryId) as VocabularyEntry;
+  const selected = supplementVocabularySense(row.entryId, row.originalSense as VocabularySense, [], hasVocabularySenseEdits);
+  const personal = { ...selected, example: 'In the historical passage, object refers to an outward appearance.' };
+  expect(isVocabularyReadingNote(base.id, personal)).toBe(false);
+  expect(learningTask({ ...base, senses: [personal] }, personal, 'cloze')?.acceptedAnswers).toEqual(['object']);
+});
 
 test('a selected additional sense keeps its enrichment and its own distinction exercise on reopening', () => {
   const selected = supplementVocabularySense(entry.id, raw, [raw], hasVocabularySenseEdits);

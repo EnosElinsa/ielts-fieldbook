@@ -45,12 +45,13 @@ test('late teaching updates displayed meanings while retaining filters and the c
     await selectChoice(screen.getByRole('combobox'), 'Verb');
     registerVocabularyTeaching({ ...vocabularyTeaching, readiness: { ...vocabularyTeaching.readiness, corrections: [
       { entryId: entry.id, senseId: sourceSense.id, originalSense: sourceSense,
-        definition: sourceSense.definition, example: 'New measures mitigate flood damage.',
+        definition: sourceSense.definition, example: 'In this older passage, mitigate means lessen severity.', exampleKind: 'reading-note',
         collocations: ['mitigate flood damage'], distinctions: ['Reduce has a broader meaning.'] },
     ] } });
     mocks.current = { ...mocks.current, vocabularyCatalogRevision: 1 };
     view.rerender(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
-    expect(await screen.findByText('New measures mitigate flood damage.')).toBeInTheDocument();
+    expect(await screen.findByText('In this older passage, mitigate means lessen severity.')).toBeInTheDocument();
+    expect(screen.getByText('Reading note')).toBeInTheDocument();
     expect(screen.getByRole('searchbox')).toHaveValue('mitigate');
     expect(screen.getByRole('combobox')).toHaveTextContent('Verb');
     expect(fetch).toHaveBeenCalledTimes(2);
