@@ -302,5 +302,61 @@
     "definition": "Crushed into small particles or powder.",
     "pos": "adj",
     "kind": "ground-coffee"
+  },
+  {
+    "entryId": "ve-7c790847",
+    "senseId": "kaikki:90b1ad8a02d6b85d5f",
+    "term": "rate",
+    "definition": "The amount by which a timepiece gains or loses time per unit of elapsed time.",
+    "pos": "noun",
+    "kind": "watch-rate"
+  },
+  {
+    "entryId": "ve-7c704483",
+    "senseId": "kaikki:ccc65272ea94450904",
+    "term": "bank",
+    "definition": "A stored group of instrument sounds or preset data on a digital synthesizer.",
+    "pos": "noun",
+    "kind": "preset-bank"
+  },
+  {
+    "entryId": "ve-7c704483",
+    "senseId": "kaikki:225a1f4e3fe3f510f5",
+    "term": "bank",
+    "definition": "A hardware-defined group or block of memory that can be selected or accessed as a unit.",
+    "pos": "noun",
+    "kind": "memory-banks"
+  },
+  {
+    "entryId": "ve-5c46053f",
+    "senseId": "kaikki:b746cf2ca023e2833c",
+    "term": "charge",
+    "definition": "An emblem or figure displayed on a heraldic shield.",
+    "pos": "noun",
+    "kind": "heraldic-charge"
+  },
+  {
+    "entryId": "ve-5c46053f",
+    "senseId": "wiktionary:restored:6ad41735b093c0fb1e",
+    "term": "charge",
+    "definition": "To replenish the energy stored in a rechargeable battery or a device containing one.",
+    "pos": "verb",
+    "kind": "battery-charging"
+  },
+  {
+    "entryId": "ve-5c46053f",
+    "senseId": "wiktionary:restored:9e0aebed5c093fa127",
+    "term": "charge",
+    "definition": "To give an object a net electric charge.",
+    "pos": "verb",
+    "kind": "electrostatic-charging"
+  },
+  {
+    "entryId": "ve-d15d09a7",
+    "senseId": "kaikki:48b94a665020f2b24f",
+    "term": "capital",
+    "definition": "The top part of a column, supporting the structure above it.",
+    "pos": "noun",
+    "kind": "column-capital"
   }
 ]

@@ -469,7 +469,8 @@
         "example",
         "collocations",
         "distinctions"
-      ]
+      ],
+      "diagramReviewed": true
     },
     {
       "term": "bank",
@@ -4552,6 +4553,1247 @@
         "distinctions"
       ],
       "referenceUrl": "https://en.wiktionary.org/w/index.php?title=ground&oldid=93543732"
+    },
+    {
+      "term": "current",
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:7c0d97eaa6c3b5386a",
+      "sourceHash": "82543db9b69768b067df0d57df69d29161c707e9cbab5de3455f017b211451bf",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=current&oldid=93555189"
+    },
+    {
+      "term": "current",
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:447042976ff41db918",
+      "sourceHash": "49ed77295a81dd79d0fb7ff91e1577671a750a0391d5f36f9426729716965ece",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=current&oldid=93555189"
+    },
+    {
+      "term": "current",
+      "entryId": "ve-eab4f1ac",
+      "senseId": "kaikki:4f5df0a5224e233a44",
+      "sourceHash": "4eed5466826be36aace06710e3b59ae85e7c804d1ffe09c44b6e4c7f250fc202",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Current&oldid=87352750"
+    },
+    {
+      "term": "current",
+      "entryId": "ve-eab4f1ac",
+      "senseId": "wiktionary:restored:f2aeafada64a386569",
+      "sourceHash": "655af73425794a4b00f388c3d287ebe9030d66d60f6c1df8597c429b7d4302e2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=current&oldid=93555189"
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:eb5c4769068f41bebe",
+      "sourceHash": "740bc086aa0a408d138e6e4a7ca2622baffef043b27a0aee8121d09b618fecbd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=interest&oldid=93538532"
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:6b5511f8eacafc9140",
+      "sourceHash": "37ae297e1af50399ea5e7882be4c16d5d97cbaf87dc77ae9954dc4d4666e1573",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=interest&oldid=93538532"
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:a2faf56782bd649c41",
+      "sourceHash": "c3dbe4d41100fdda10e6acfcd421ccb4dc0944ac5a6cc9c170bcbb08ff9fa1ac",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=interest&oldid=93538532"
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:857c706f050ac434d3",
+      "sourceHash": "7bb8c83b578c91c26d3809b138b17bac6f965ce8255e1ca0d7d7df0de6c056d2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=interest&oldid=93538532"
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:a8d1e50c779868dc92",
+      "sourceHash": "32eecd4b89104328d6812c361e549950f13fc3e369fe885e3cc3931b9a43da75",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=interest&oldid=93538532"
+    },
+    {
+      "term": "interest",
+      "entryId": "ve-2517b783",
+      "senseId": "kaikki:fe9477f60d673df9ee",
+      "sourceHash": "778ad200e3eb7eaf5cdc70881a9f420df1d82792fda42e00c950d9ab7b8033f7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=interest&oldid=93538532"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:a8f306abaaa34131e3",
+      "sourceHash": "777903e2469138716e8a57476905063a5d66d1710233488004d0027200758d25",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:ce001f5957091b97f7",
+      "sourceHash": "703d95a20a397ebe19d7c3914d09a60f706ab2af02d28e9a0a058820c34efe93",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:08a39f79758df7fc53",
+      "sourceHash": "91dea4e8ccd554bfa0d2473de2c912e3b3e575dad962e32375a1465883cf95b4",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:5d7cd0e0a249648be5",
+      "sourceHash": "4129a04f7f276c301445f68d19fdb0d22345195702e8b450ce904cab960d4385",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:bc1f2d1d64d700da9b",
+      "sourceHash": "fa44a59a91dfc3e86f9e9feba90d8aa9edd741d3e9c4b5a8f5e7d7f9c7917c0c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:90b1ad8a02d6b85d5f",
+      "sourceHash": "313e1e2bdf911e8bf23667e0fcccf17c8da772000897dcd49014f508551ecf39",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423",
+      "diagramReviewed": true
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:f7a3905bfb7e77f8fe",
+      "sourceHash": "a0bae20a6161cc4d450c28bf603c33f5240596795aef83f05631aa5891bf4921",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:1e9ef91f40ec4c2a64",
+      "sourceHash": "9b799e0c18f3e6d5b91cfb233f5360a8faf325fe9a4c0c6c73fe7a577cce3e35",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:3fa23c86fd7156667d",
+      "sourceHash": "925ed231ef0231bdaa1f84565dcfcf01d7713dd4134de68e7dfc6394ab15d7e2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:2d53de1194146b2ccf",
+      "sourceHash": "6a04b9321ef8b1cd064e1ee342fed06d4221fd6a11f5142ffaab5002f749bc5e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:8aa982171d6e732329",
+      "sourceHash": "b5bf74f79bb75c8797fd3132ff2e1ad38bd83850104905010c6f273afd3cea99",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:34465cef4cce7385f5",
+      "sourceHash": "4dca94accf33d382aab5b4c4ca957552b06b016483e52c89f006a0bf76338592",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:0d3aaf6defd875e23f",
+      "sourceHash": "3ad81b121f735e8983eeb78916fe98542d3ac18e76935070b3ead838661d824c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "rate",
+      "entryId": "ve-7c790847",
+      "senseId": "kaikki:428c35584f5d4262f8",
+      "sourceHash": "e9f6559a54ab65a3ba6116f1a4161ea89f205ce892a1f0432fd4c9790bee4d28",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rate&oldid=93525423"
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:42f222a76a0fc8d6cd",
+      "sourceHash": "937d0ad626ddb664eac414e18275f270079a1826f756098da513ad890d986773",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=capital&oldid=93571995"
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:145c3a52c7bc2d5eab",
+      "sourceHash": "bb9450a36deb1895e937520040fdaf55976e67a7481c6551cff351a5ec7e458f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=capital&oldid=93571995"
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:e4fc72d3179d1c249d",
+      "sourceHash": "00783b7528194dd69172f0da67b0dd1ae4093801e4b0c758ad4e26b710d66a4e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=capital&oldid=93571995"
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:745fe67d546c6ef7fb",
+      "sourceHash": "abdd2329f5ca0110dab5241db590b90fc0907cd8eabe92a2bc0ca90254c08237",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=capital&oldid=93571995"
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:ba152a9704d7ba5d54",
+      "sourceHash": "a1722548fa0e55fb20836259cea36515f969022a8b2f46453cc42b3c26baafca",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=capital&oldid=93571995"
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:1727cc24b55c3cfb9c",
+      "sourceHash": "5d4e1159b874eb9927316dea3a5a7ced2ea4af15f7c821f9994b99c2b89fd195",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Capital&oldid=90254098"
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "kaikki:1f77136bb9f18ddd35",
+      "sourceHash": "16e59b919f0c5450b977e38e242ed7fa710278d2c649c312c49f121a08a996e7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Capital&oldid=90254098"
+    },
+    {
+      "term": "capital",
+      "entryId": "ve-d15d09a7",
+      "senseId": "wiktionary:restored:894362baa02e609158",
+      "sourceHash": "0401d866b784aeefbd8b24f04568f4409b9b88ff2aa53fea799a67089ec31681",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=capital&oldid=93571995"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:c839f90b3e495d1bcc",
+      "sourceHash": "7c7c4d126dc54fc5dfa34a0ae8e36da87201c03b5161a4444b55fae073d97c5a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:8d11cc2d041198ed58",
+      "sourceHash": "84e33b62a4bdf0b42286b4b550f44575fb641a02d88f0410aa5a2bf12b9922da",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:540dbe60ff00ead06f",
+      "sourceHash": "0d52e27cbf4fdc703fef493bebfce3505f2b11612d1a8bcd08f103a822d1181b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:05d283edf66cb9fafc",
+      "sourceHash": "ea074f43cf734f14f289390c314e37230905705e593ef74b99430c109cbbfd79",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:e1ca905c5cd17ea8c5",
+      "sourceHash": "d07c3a78234d856d0ce610f0cf854a667c0320d58f0cf038143dc053f75f7e12",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:ccc65272ea94450904",
+      "sourceHash": "387c8caf87b19c8a2643e965737e4a77751d8f866fbec5160ea9ae2a7afef2a3",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399",
+      "diagramReviewed": true
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:92f4844b3cd513298a",
+      "sourceHash": "3d8f229737b8ece7e735ad121518e901de52dfd3207543afa7c7e67a1e1c50ba",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:a53d1aa69ec5b44443",
+      "sourceHash": "9c6755c0eff6a5ef8679514a94f8727e0cf2a5af60131f55e79f9f24b7d980fd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:fac081be0cabccf549",
+      "sourceHash": "514c017fc043464198abe0958ed998fd5b33523fc7c3fe6cd036f4a6f8050075",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:7b27abc259ad3a2014",
+      "sourceHash": "6ae861f706618db0e237d984eab3a4873d8968a0bb9dbbd4cd711f6f2b076d6a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:35e5a5abeb3cdf2126",
+      "sourceHash": "af8797878b6917eb7d9d9ba619042af64cb6db1eb3d12c6da5ffd29a7ae13bf2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:8878e58aa32a99a0fb",
+      "sourceHash": "fdd312052ba027f11353ea3abf8ad60eab561c712c3379334051da3298b1299a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:2680ca3e8cdcb31270",
+      "sourceHash": "d57b41c267be439bcb9cbc31c8f4363799edc1bfaf7cb2d003d469cc62d92d07",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:1bf7d78819a12c0ee3",
+      "sourceHash": "136812f48ae89bb8c713af1bf66f4c5a34bd04f5f6e77177a6592f685ab909f0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:7e6ecaa468f31202ec",
+      "sourceHash": "060c1d9cd6833f85ff204f0f5c3ea23fa98bd3e94931c4fdba5b598bae036908",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:1f2ecdc54839ed054b",
+      "sourceHash": "d9cffbd1c48922db7e54d2752bba9109a8c13c225206f0ee018659efe77b66e3",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:0da73d9d4d3e7814cb",
+      "sourceHash": "66edda72230df2301401912dd0e321cb8a9741a95e550b1d410215f8a8690772",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:04195fcfb2b734ee20",
+      "sourceHash": "597e9b136e18a118778da7d5b257ba3fa82b96f92b07bcd3f57e12fc3b2b6581",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:b5e86bc3c71adc7c04",
+      "sourceHash": "9ed2dffdc80c9a84736c0fd4556c00bfd887872e9bff52be94bc968a5766730d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:0eab73b710b8a1cd48",
+      "sourceHash": "7f55e6660cbf5cbee89dcbfda8c5dd9add8245c7fcf91b3ed03e7abb3c75ad03",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:225a1f4e3fe3f510f5",
+      "sourceHash": "155d5effc4875154d743ef0f9b3f8d472a0136def6b832a6362928a79a4e55d2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399",
+      "diagramReviewed": true
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:011d8ea8c5e03a3551",
+      "sourceHash": "768de249ba7a1eec89552c113120c9d4a83b15328e5c9abd277bed5abb2f000a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:c683382b509081ac53",
+      "sourceHash": "69cc1977c18840b63523714b8c7f1c1e6418e8d9d4d9a19a910400197e4142dd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:9ad55ed627dac1dac6",
+      "sourceHash": "fb7488d863b44b29fddc85605929f7a1ce3bbdc0733ea72f26146922e9352ab1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:1c82f5ab2144a8abfc",
+      "sourceHash": "ff8afa5b6b2a4dd28812a5cc3688499da2034cdd53dbe517b853f6efdb7d6881",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:5a92f14784d76ab94e",
+      "sourceHash": "002d66a9c1551a560aa775750e480573905eaff8e2395b5d9d8878a53d7397ae",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:5fdf8f1c215aa770b9",
+      "sourceHash": "2aefab942fe78efa4091fec792fe83147f45a2babb1b213331105309092ab22a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:847310536bdf2e0079",
+      "sourceHash": "43f02e5f1718205567cb418361ca665d0a394e32df8699da1d7f685b0feec889",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=93548399"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:1a43d52535a2b65840",
+      "sourceHash": "ea0b7212b64b97cb5e910d89d5fbeccfa72e0ed1151cb59d65400ed1ecc2fe81",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Bank&oldid=92398691"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:8c572254a49fcaab8d",
+      "sourceHash": "079dcf836adfb32019ff972beec6e75b31218bd4093399ff6883649e93ac6567",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Bank&oldid=92398691"
+    },
+    {
+      "term": "bank",
+      "entryId": "ve-7c704483",
+      "senseId": "kaikki:da5ced1fce400fdf54",
+      "sourceHash": "6baa3b5c169dc27fb78bb8dc47eebff810194433d77f0767575987f51d42c4cb",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Bank&oldid=92398691"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:b6727a066a84df94fe",
+      "sourceHash": "46be03408dcc346714015f9b80d8a0bf0e722e1df51a9a1835d7cf1814fbe133",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:76e0f9941abef2e475",
+      "sourceHash": "566ce058527e65fffab7dff349589e97e6207562e9ac03c56d30e6912f0c3169",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:49517353c46f7e5cba",
+      "sourceHash": "518dd4d35955e28ea859493923e676619d93b4c3e36184d818c1af370d7fc2c7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:9ee42e2919935b3b85",
+      "sourceHash": "b0e9bc0cfae246b287181e56864aa3561a786f103350d68abc7cee2d8137a58f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:2ea4ccf28ebc1a25a8",
+      "sourceHash": "89beb5ea8ebefebbbc90066eba19d19d8e964cfe72cfc1519834db861a9f9d13",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:7586f732be3253d3cf",
+      "sourceHash": "81b66cb14dd43a710cbe3a0c52fdbcd027469488a6ec465278524abda21a0d86",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:b746cf2ca023e2833c",
+      "sourceHash": "253ef08c412f88e5d408e05b13a90255fa0f538c6d762ccf7dad984560a4fffb",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "diagramReviewed": true
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:3f10180610f079d43d",
+      "sourceHash": "3375180bc8d9a2bf3aaa0c5a10b31594ba2e1aeb8ddc1907b4720cfa098df40f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:f106a57767e29ba082",
+      "sourceHash": "a6ff561c1362102d33d9c5fe645e50df8b66448430e59e8c5567d309fc6308b1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:66815cdd753ddd648d",
+      "sourceHash": "b804a6cef6fcae44c9f34830320918c247f6f20272510b5ee83b50dbade8adae",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:6db48909ecae10b776",
+      "sourceHash": "b1c6c0e58bcb7ece276acaa29260128b003e8cac0761e07239c2ef4bb3a06d3f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:d0fe0c44ec106b826c",
+      "sourceHash": "5c7db15e885529177b28408a2fefcb2e21ab3ac361bf51f1ddbd78c61fc0135a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:cf3f44270ad8693843",
+      "sourceHash": "a1ba9ebb30c071f735546fb01b675c0b351e882d2de1481ee8b79699890537a0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:5ef06410cdcd0a13c0",
+      "sourceHash": "acd67e67c9e90c8b85d52a752ebcb03247a67e96f7b5c4c63092e63bf5c3b46d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:5729d66b5eda0a62d0",
+      "sourceHash": "7ea8618f74c08f7b3924874ae99a3e9778ae8ebb846937a4558dbea4a1f94eae",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:83b39ebeac52e06d6d",
+      "sourceHash": "a85fcbd5ee6cec9aae23139f8f0e735c44058481bf8f816a9c667dc3240a3091",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:5ea9c58d0f71fa1cb2",
+      "sourceHash": "e9f461e982f4755d99d4d50d262b470add3ff9ce814126b78bf72630a147777c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:449be39f4a61b2f279",
+      "sourceHash": "db8edddd5f300eb7229a0ac90cd9e72eae4f395e487ef09a8a48f6afee473346",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:64e4ce6fce6c9b34e6",
+      "sourceHash": "60463c8de9239ef306f72dafe02bce71026662364a9447aea7453f7457d3e07b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:774cb49919caac669c",
+      "sourceHash": "0b3f670b6fc41a7f2aefb2f4e5780bb0974bd4f762cf4cfc6612b4fbab452e36",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "kaikki:348c1155d779a81e31",
+      "sourceHash": "0e9a5be74715cb90707d22832edf41a48fdd22b7de4042b4e29eb6045422552d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=CHARGE&oldid=85377719"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "wiktionary:restored:1f5c98e508089f3bc5",
+      "sourceHash": "5e20f2a70eaba521a09fa18b5618f6d484af63dcbad3c45c89a19f5ce86b1292",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "wiktionary:restored:2881c7e49a37f34d06",
+      "sourceHash": "b8027c4b542ec4f9642766bc5793e1687f5e58b0bd9b3d31ba234a9cf53eeef1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "wiktionary:restored:6f5300135737f1f917",
+      "sourceHash": "f913a7c08d14c4aa9efcb9369882595b3b1eeab27554ca82accf49eb822ff46e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "wiktionary:restored:bf63a3d64ac6ac4826",
+      "sourceHash": "b64980dd315f2aca79a96cfdf4a57ebfa4f7bbe877016cee9aad47c7b91ae29b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "wiktionary:restored:33c31ab70607b70931",
+      "sourceHash": "6ef2cc1200396f3489ef270ad5a449678e1a6008fd6a23d2c2f45e4b27593095",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "wiktionary:restored:9e0aebed5c093fa127",
+      "sourceHash": "9fcf0c2a7b1f906d3f060112460dcce44bfe610c0aa4b9469dbc165c90d6762d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "diagramReviewed": true
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "wiktionary:restored:6ad41735b093c0fb1e",
+      "sourceHash": "49dcf290ad16bb6b4d9c02403d69e4e39bcad52f33e2ea5e148e63b8bf88beff",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "diagramReviewed": true
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "wiktionary:restored:d4d73d5533e2d264bd",
+      "sourceHash": "25d647a74628285930e8a11641464c9df96392f95df457127c73f5f4ebba43ca",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "wiktionary:restored:a67d3d47a9dae61640",
+      "sourceHash": "5ef2d3c7c2fbd03450f5a7c7f2e7d74661afd5f4bf732ffe979033dcbaf580fd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "wiktionary:restored:2dfd25f0def481cb6f",
+      "sourceHash": "b41fb9873443dbb0c50e08f75b4c0e73cd132b76592838f9726adbfcbde62273",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
+    },
+    {
+      "term": "charge",
+      "entryId": "ve-5c46053f",
+      "senseId": "wiktionary:restored:f753a8e09201abf9cb",
+      "sourceHash": "ba3247a1bcd6edcadde42cb1053f7668b1b776420d7fe78a505cd0b3c5efcc93",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861"
     }
   ]
 }

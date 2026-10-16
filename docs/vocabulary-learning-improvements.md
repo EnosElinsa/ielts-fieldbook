@@ -6,7 +6,7 @@ The October 17 review follows dictionary selection through saving, practice and 
 
 Dictionary meanings with an exact-bound diagram offer a View diagram disclosure before the learner saves or practises the meaning. Previewing does not create a saved meaning or learning evidence. Diagrams load into the rendered disclosure only when it opens. Existing identity, definition and part-of-speech checks still prevent artwork for another meaning from appearing.
 
-The condition, scale, range and ground batch adds 128 reviewed text senses, 15 contextual exercises and eight diagrams. The complete ledger now has 356 reviewed senses out of 51,388 preserved or restored senses; this is progress, not dictionary completion. Content quality remains the largest constraint on useful practice.
+The condition, scale, range and ground batch added 128 reviewed text senses, 15 contextual exercises and eight diagrams. The subsequent completion of the first six terms adds another 95 reviews, 16 exercises and seven diagrams, including 13 restored child meanings. The complete ledger now has 451 reviewed senses out of 51,401 preserved or restored senses; this is progress, not dictionary completion. Content quality remains the largest constraint on useful practice.
 
 ## Next priorities
 

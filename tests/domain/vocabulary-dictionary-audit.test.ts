@@ -48,3 +48,12 @@ test('source comments remain in evidence without becoming part of the displayed 
   const changed = inspectDictionaryReview({ ...restoredInput, restoredSources: [{ ...evidence, sourceGloss: '## A [[different]] <!-- comment --> edge.' }] });
   expect(changed.errors.join(' ')).toMatch(/gloss/i);
 });
+
+test('non-gloss definition templates retain their explanatory text in restored evidence', () => {
+  const sourceGloss = '## {{n-g|A [[river]] edge.}}';
+  const valid = inspectDictionaryReview({ ...restoredInput, restoredSources: [{ ...evidence, sourceGloss }] });
+  expect(valid.errors).toEqual([]);
+  expect(valid.summary.reviewed).toBe(2);
+  const changed = inspectDictionaryReview({ ...restoredInput, restoredSources: [{ ...evidence, sourceGloss: '## {{n-g|A [[different]] edge.}}' }] });
+  expect(changed.errors.join(' ')).toMatch(/gloss/i);
+});

@@ -2,24 +2,24 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 34 restored submeanings** (51,388 total). This ledger verifies **356 senses** across definition, example, collocations and distinctions; **51,032 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 48 reviewed distinction exercises and 38 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 47 restored submeanings** (51,401 total). This ledger verifies **451 senses** across definition, example, collocations and distinctions; **50,950 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 64 reviewed distinction exercises and 45 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense.
 
 | Term | Reviewed text senses | Raw + restored senses | Pending |
 | --- | ---: | ---: | ---: |
 | account | 13 | 13 | 0 |
-| bank | 14 | 45 | 31 |
-| capital | 11 | 18 | 7 |
-| charge | 13 | 34 | 21 |
+| bank | 45 | 45 | 0 |
+| capital | 19 | 19 | 0 |
+| charge | 45 | 45 | 0 |
 | condition | 17 | 17 | 0 |
-| current | 6 | 9 | 3 |
+| current | 10 | 10 | 0 |
 | field | 33 | 33 | 0 |
 | form | 32 | 32 | 0 |
 | ground | 39 | 39 | 0 |
-| interest | 8 | 14 | 6 |
+| interest | 14 | 14 | 0 |
 | issue | 31 | 33 | 2 |
 | matter | 12 | 12 | 0 |
 | range | 38 | 38 | 0 |
-| rate | 13 | 27 | 14 |
+| rate | 27 | 27 | 0 |
 | scale | 34 | 34 | 0 |
 | state | 11 | 11 | 0 |
 | subject | 17 | 17 | 0 |

@@ -644,5 +644,252 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "current",
+    "entryId": "ve-eab4f1ac",
+    "parentSenseId": "kaikki:37eef87266f9b4a5fe",
+    "parentSourceHash": "8c914f61d6dc8558cc390cf5c1a72eedbd1193220bac81dd3e107f12accc4cf7",
+    "sourcePage": "current",
+    "revision": 93555189,
+    "sourceGloss": "## {{lb|en|by extension|South Asia}} [[electricity]], [[power]] in general.",
+    "sense": {
+      "id": "wiktionary:restored:f2aeafada64a386569",
+      "pos": "noun",
+      "definition": "electricity, power in general.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=current&oldid=93555189",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "capital",
+    "entryId": "ve-d15d09a7",
+    "parentSenseId": "kaikki:871cc8b4a427024d7c",
+    "parentSourceHash": "b7322db3a224e83eb4f19a12b5c2d5878125941101e0e2a5c42cdbf024a156c9",
+    "sourcePage": "capital",
+    "revision": 93571995,
+    "sourceGloss": "## {{n-g|Used to emphasise greatness or absoluteness}}.",
+    "sense": {
+      "id": "wiktionary:restored:894362baa02e609158",
+      "pos": "adj",
+      "definition": "Used to emphasise greatness or absoluteness.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=capital&oldid=93571995",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "charge",
+    "entryId": "ve-5c46053f",
+    "parentSenseId": "kaikki:bc2dbe01646a608a86",
+    "parentSourceHash": "67422947f71f862e72de7ce7423851f9a36bf9b2562b7a153401c9b65e970a85",
+    "sourcePage": "charge",
+    "revision": 93385861,
+    "sourceGloss": "## An official description (by the police or a court) of a crime that somebody may be guilty of.",
+    "sense": {
+      "id": "wiktionary:restored:1f5c98e508089f3bc5",
+      "pos": "noun",
+      "definition": "An official description (by the police or a court) of a crime that somebody may be guilty of.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "charge",
+    "entryId": "ve-5c46053f",
+    "parentSenseId": "kaikki:bc2dbe01646a608a86",
+    "parentSourceHash": "67422947f71f862e72de7ce7423851f9a36bf9b2562b7a153401c9b65e970a85",
+    "sourcePage": "charge",
+    "revision": 93385861,
+    "sourceGloss": "## An accusation by a person or organization.",
+    "sense": {
+      "id": "wiktionary:restored:2881c7e49a37f34d06",
+      "pos": "noun",
+      "definition": "An accusation by a person or organization.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "charge",
+    "entryId": "ve-5c46053f",
+    "parentSenseId": "kaikki:449be39f4a61b2f279",
+    "parentSourceHash": "db8edddd5f300eb7229a0ac90cd9e72eae4f395e487ef09a8a48f6afee473346",
+    "sourcePage": "charge",
+    "revision": 93385861,
+    "sourceGloss": "## To [[ornament]] with or cause to [[bear]].",
+    "sense": {
+      "id": "wiktionary:restored:6f5300135737f1f917",
+      "pos": "verb",
+      "definition": "To ornament with or cause to bear.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "charge",
+    "entryId": "ve-5c46053f",
+    "parentSenseId": "kaikki:449be39f4a61b2f279",
+    "parentSourceHash": "db8edddd5f300eb7229a0ac90cd9e72eae4f395e487ef09a8a48f6afee473346",
+    "sourcePage": "charge",
+    "revision": 93385861,
+    "sourceGloss": "## {{lb|en|heraldry}} To [[assume]] as a [[bearing]].",
+    "sense": {
+      "id": "wiktionary:restored:bf63a3d64ac6ac4826",
+      "pos": "verb",
+      "definition": "To assume as a bearing.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "charge",
+    "entryId": "ve-5c46053f",
+    "parentSenseId": "kaikki:449be39f4a61b2f279",
+    "parentSourceHash": "db8edddd5f300eb7229a0ac90cd9e72eae4f395e487ef09a8a48f6afee473346",
+    "sourcePage": "charge",
+    "revision": 93385861,
+    "sourceGloss": "## {{lb|en|heraldry}} To [[add]] to or [[represent]] on.",
+    "sense": {
+      "id": "wiktionary:restored:33c31ab70607b70931",
+      "pos": "verb",
+      "definition": "To add to or represent on.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "charge",
+    "entryId": "ve-5c46053f",
+    "parentSenseId": "kaikki:64e4ce6fce6c9b34e6",
+    "parentSourceHash": "60463c8de9239ef306f72dafe02bce71026662364a9447aea7453f7457d3e07b",
+    "sourcePage": "charge",
+    "revision": 93385861,
+    "sourceGloss": "## {{lb|en|transitive}} To cause to take on an [[electric charge]].",
+    "sense": {
+      "id": "wiktionary:restored:9e0aebed5c093fa127",
+      "pos": "verb",
+      "definition": "To cause to take on an electric charge.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "charge",
+    "entryId": "ve-5c46053f",
+    "parentSenseId": "kaikki:64e4ce6fce6c9b34e6",
+    "parentSourceHash": "60463c8de9239ef306f72dafe02bce71026662364a9447aea7453f7457d3e07b",
+    "sourcePage": "charge",
+    "revision": 93385861,
+    "sourceGloss": "## {{lb|en|transitive}} To [[replenish]] energy to (a battery, or a device containing a battery) by use of an electrical device plugged into a power outlet.",
+    "sense": {
+      "id": "wiktionary:restored:6ad41735b093c0fb1e",
+      "pos": "verb",
+      "definition": "To replenish energy to (a battery, or a device containing a battery) by use of an electrical device plugged into a power outlet.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "charge",
+    "entryId": "ve-5c46053f",
+    "parentSenseId": "kaikki:64e4ce6fce6c9b34e6",
+    "parentSourceHash": "60463c8de9239ef306f72dafe02bce71026662364a9447aea7453f7457d3e07b",
+    "sourcePage": "charge",
+    "revision": 93385861,
+    "sourceGloss": "## {{lb|en|intransitive|of a battery or a device containing a battery}} To replenish energy.",
+    "sense": {
+      "id": "wiktionary:restored:d4d73d5533e2d264bd",
+      "pos": "verb",
+      "definition": "To replenish energy.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "charge",
+    "entryId": "ve-5c46053f",
+    "parentSenseId": "kaikki:e7a5045ac2c0142596",
+    "parentSourceHash": "379fe4473f6a6fd81c18bc7138207e7c5eee3ff8f104f9b550979c000ef6e7a1",
+    "sourcePage": "charge",
+    "revision": 93385861,
+    "sourceGloss": "## {{lb|en|military|transitive|and|intransitive}} To [[attack]] by moving forward quickly in a [[group]].",
+    "sense": {
+      "id": "wiktionary:restored:a67d3d47a9dae61640",
+      "pos": "verb",
+      "definition": "To attack by moving forward quickly in a group.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "charge",
+    "entryId": "ve-5c46053f",
+    "parentSenseId": "kaikki:e7a5045ac2c0142596",
+    "parentSourceHash": "379fe4473f6a6fd81c18bc7138207e7c5eee3ff8f104f9b550979c000ef6e7a1",
+    "sourcePage": "charge",
+    "revision": 93385861,
+    "sourceGloss": "## {{lb|en|basketball}} To commit a [[charging]] [[foul]].",
+    "sense": {
+      "id": "wiktionary:restored:2dfd25f0def481cb6f",
+      "pos": "verb",
+      "definition": "To commit a charging foul.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "charge",
+    "entryId": "ve-5c46053f",
+    "parentSenseId": "kaikki:e7a5045ac2c0142596",
+    "parentSourceHash": "379fe4473f6a6fd81c18bc7138207e7c5eee3ff8f104f9b550979c000ef6e7a1",
+    "sourcePage": "charge",
+    "revision": 93385861,
+    "sourceGloss": "## {{lb|en|cricket|of a|[[batsman]]}} To take a few steps down the [[pitch]] towards the [[bowler]] as they [[deliver]] the ball, either to [[disrupt]] the length of the delivery, or to get into a better [[position]] to hit the ball.",
+    "sense": {
+      "id": "wiktionary:restored:f753a8e09201abf9cb",
+      "pos": "verb",
+      "definition": "To take a few steps down the pitch towards the bowler as they deliver the ball, either to disrupt the length of the delivery, or to get into a better position to hit the ball.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=charge&oldid=93385861",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

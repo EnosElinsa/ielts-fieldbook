@@ -31,7 +31,7 @@ const sourceSense = {
 };
 const dictionaryFetch = (senses = [sourceSense]) => vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { mitigate: 'aa.json' } : { senses } }));
 
-test('study notes are easy to find while the complete source dictionary stays accessible', async () => {
+test('the completed bank review exposes learning notes for every meaning in either coverage view', async () => {
   const { entry } = fixture();
   const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
   const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.bank}`, 'utf8'));
@@ -40,10 +40,15 @@ test('study notes are easy to find while the complete source dictionary stays ac
   await screen.findByText('We sat on the bank of the river and watched the boats.');
   fireEvent.click(screen.getByText(/Other dictionary meanings/));
   expect(screen.queryByText('A surname.')).not.toBeInTheDocument();
+  expect(screen.getByText('A family name.')).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'With learning notes (45)' })).toHaveAttribute('aria-pressed', 'true');
   fireEvent.click(screen.getByRole('button', { name: 'All meanings (45)' }));
-  expect(screen.getByText('A surname.')).toBeInTheDocument();
-  fireEvent.click(screen.getByRole('button', { name: 'With learning notes (14)' }));
+  expect(screen.getByText('A family name.')).toBeInTheDocument();
+  expect(screen.getByText('Dr Bank presented the opening lecture.')).toBeInTheDocument();
+  expect(screen.getByRole('status')).toHaveTextContent('45 of 45 meanings');
+  fireEvent.click(screen.getByRole('button', { name: 'With learning notes (45)' }));
   expect(screen.queryByText('A surname.')).not.toBeInTheDocument();
+  expect(screen.getByRole('status')).toHaveTextContent('45 of 45 meanings');
 });
 
 test('a dictionary diagram can be previewed and closed without saving a meaning or leaving the page', async () => {
