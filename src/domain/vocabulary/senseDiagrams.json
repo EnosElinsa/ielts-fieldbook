@@ -142,5 +142,53 @@
     "definition": "Responsibility for supervising or looking after someone or something.",
     "pos": "noun",
     "kind": "responsibility"
+  },
+  {
+    "entryId": "ve-18c82a44",
+    "senseId": "kaikki:1701191635a7df0f75",
+    "term": "account",
+    "definition": "A record or statement of financial transactions, including money received and spent.",
+    "pos": "noun",
+    "kind": "financial-record"
+  },
+  {
+    "entryId": "ve-18c82a44",
+    "senseId": "kaikki:dad1d2ecbe1abaea08",
+    "term": "account",
+    "definition": "An arrangement with a bank for holding money and recording deposits and withdrawals.",
+    "pos": "noun",
+    "kind": "account-balance"
+  },
+  {
+    "entryId": "ve-b9ff0d2",
+    "senseId": "kaikki:eefe20ae06e6ddb020",
+    "term": "state",
+    "definition": "A possible value or configuration of a stochastic process.",
+    "pos": "noun",
+    "kind": "model-states"
+  },
+  {
+    "entryId": "ve-574b25de",
+    "senseId": "kaikki:9c84392aba2ed333db",
+    "term": "matter",
+    "definition": "Physical material or substance.",
+    "pos": "noun",
+    "kind": "physical-matter"
+  },
+  {
+    "entryId": "ve-b52344e",
+    "senseId": "kaikki:0bfb1ef5313c607465",
+    "term": "value",
+    "definition": "How light or dark a colour is.",
+    "pos": "noun",
+    "kind": "lightness-scale"
+  },
+  {
+    "entryId": "ve-b52344e",
+    "senseId": "kaikki:47247c88dac4b70eab",
+    "term": "value",
+    "definition": "A number or other mathematical object assigned to, measured for or calculated from an expression or variable.",
+    "pos": "noun",
+    "kind": "variable-value"
   }
 ]

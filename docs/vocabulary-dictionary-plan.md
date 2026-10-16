@@ -14,11 +14,13 @@
 - [x] Apply same-sense supplements to additional dictionary meanings. Support reviewed collocations, distinction notes and sense-specific distinction exercises while preserving intentional edits.
 - [x] Review 65 common senses in the first high-frequency batch: current, interest, rate, capital, bank and charge. Record exactly which senses were examined, retain the other 82 senses of these six terms for later verification, and never transfer an example between meanings.
 - [x] Bind original diagrams to exact entry ID, sense ID, definition and part of speech; test wrong meanings and edited definitions.
-- [ ] Verify selection, saving, practice, attribution and return navigation with synthetic records. Commit and deploy a verified batch under the existing release authorization.
+- [x] Verify selection, saving, practice, attribution and return navigation with synthetic records. Commit and deploy a verified batch under the existing release authorization.
+- [x] Review all 50 indexed senses of account, state, matter and value; give historical constructions explicit reading guidance and preserve complete earlier public snapshots for saved-content updates. Add eight contextual exercises and six exact diagrams.
+- [x] Add search across displayed definitions, examples, usage and learning notes, combined with part-of-speech filtering, stable meaning numbers and an explicit empty/reset state.
 - [ ] Continue subsequent batches from the complete audit's pending identities, including specialised, historical and proper-name senses. Verify source context where a meaning is uncertain; do not silently omit these records or count them as finished.
 - [ ] Audit completion against every indexed sense and all four requested learning-content areas. The goal stays active while any required identity or content is pending or unverified.
 
-The first batch passes local selection, saving, attribution, practice and return checks. Publication is verified separately against the release commit. The complete pending queue is recorded in the dictionary audit; this checklist does not declare the full dictionary finished.
+The first batch was published in `9baf01e` and passed 50 production browser states. Subsequent releases require their own local and production verification. The complete pending queue is recorded in the dictionary audit; this checklist does not declare the full dictionary finished.
 
 ## Completion evidence
 

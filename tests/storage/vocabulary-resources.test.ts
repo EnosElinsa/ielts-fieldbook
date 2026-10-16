@@ -9,6 +9,15 @@ let release: ReturnType<typeof buildVocabularyResources>;
 // still compares a second independent build of the complete retained corpus.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 15_000);
 
+test('the first dictionary review release retains its complete immutable teaching packs', () => {
+  const manifestUrl = '/vocabulary-resources/manifest.75bcfefaa9b04417.json';
+  expect(release.resources.has(manifestUrl)).toBe(true);
+  const manifest = JSON.parse(release.resources.get(manifestUrl)!);
+  for (const url of [...Object.values(manifest.entryResources), ...Object.values(manifest.entryTeachingResources), ...manifest.units.flatMap((unit: any) => [unit.resource, unit.teachingResource]).filter(Boolean)] as string[]) expect(release.resources.has(url), url).toBe(true);
+  const bankPack = JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards['ve-7c704483']])!);
+  expect(bankPack.teaching.readiness.corrections.some((row: any) => row.senseId === 'kaikki:c130710755a265600e' && row.collocations.includes('river bank'))).toBe(true);
+});
+
 test('the release before additional-sense expansion remains available with its immutable manifest', () => {
   const previous = release.resources.get('/vocabulary-resources/manifest.877ae53793cdeac8.json');
   expect(previous).toBeDefined();

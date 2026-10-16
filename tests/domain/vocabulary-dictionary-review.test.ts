@@ -6,6 +6,7 @@ import type { VocabularyEntry, VocabularySense } from '../../src/domain/vocabula
 import { resolveVocabularyLearningContext } from '../../src/domain/vocabulary/context';
 import ledger from '../../src/domain/vocabulary/dictionaryReviewLedger.json';
 import corrections from '../../src/domain/vocabulary/readinessCorrections.json';
+import previousRelease from '../../src/domain/vocabulary/resourceDictionaryRound2Baseline.json';
 import { addVocabularyItem, normalizeVocabularyCollections } from '../../src/domain/vocabulary';
 import { emptyState } from '../../src/domain';
 const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
@@ -75,4 +76,16 @@ test('reviewed examples do not expose dictionary extraction tags as usage advice
   const source = JSON.parse(readFileSync(`public/dictionary/${index.current}`, 'utf8')).senses.find((s: VocabularySense) => s.id === 'kaikki:37eef87266f9b4a5fe');
   const selected = supplementVocabularySense('ve-eab4f1ac', source, [source], hasVocabularySenseEdits);
   expect(selected.usage).toBe('');
+});
+
+test('a previously published example upgrades while edited personal notes stay untouched', () => {
+  const previous = previousRelease.restoreCorrections.find(row => row.entryId === 've-574b25de')!;
+  const original = previous.originalSense;
+  const saved = { ...original, example: previous.example } as VocabularySense;
+  const base = catalog.entries.find((row: VocabularyEntry) => row.id === previous.entryId) as VocabularyEntry;
+  const current = corrections.find(row => row.entryId === previous.entryId && row.senseId === previous.senseId)!;
+  expect(supplementVocabularySense(base.id, saved, [original], hasVocabularySenseEdits).example).toBe(current.example);
+  expect(resolveVocabularyLearningContext({ ...base, senses: [saved] }, { senseId: saved.id }).sense?.example).toBe(current.example);
+  const personal = { ...saved, definition: 'The physical substance from our class.', example: '' };
+  expect(supplementVocabularySense(base.id, personal, [saved], hasVocabularySenseEdits)).toEqual(personal);
 });

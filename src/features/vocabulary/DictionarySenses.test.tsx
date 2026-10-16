@@ -7,6 +7,7 @@ import { emptyState } from "../../domain";
 import { DictionarySenses, resetDictionaryCache } from "./DictionarySenses";
 import "@testing-library/jest-dom/vitest";
 import { readFileSync } from 'node:fs';
+import { selectChoice } from '../../../tests/selectChoice';
 const mocks = vi.hoisted(() => ({ current: null as any }));
 vi.mock("../../context/FieldbookContext", () => ({
   useFieldbook: () => mocks.current,
@@ -69,6 +70,63 @@ function fixture() {
   mocks.current = { stateRef: { current: state }, persistNow: save };
   return { entry, save };
 }
+
+test('dictionary search finds examples and learning notes, combines with part of speech and clears empty results', async () => {
+  const { entry } = fixture();
+  const noun = { ...sourceSense, id: 'noun', pos: 'noun', definition: 'A lessening of severity.', example: 'The barriers provided protection.' };
+  const noted = { ...sourceSense, collocations: ['mitigate flood damage'], distinctions: ['Reduce is a broader word.'] };
+  vi.stubGlobal('fetch', dictionaryFetch([noted, noun]));
+  const sources = vi.fn();
+  render(<MemoryRouter><DictionarySenses entry={entry} onSources={sources} /></MemoryRouter>);
+  await screen.findByText(noun.definition);
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  const search = screen.getByRole('searchbox', { name: 'Search dictionary meanings' });
+  fireEvent.change(search, { target: { value: ' FLOOD   DAMAGE ' } });
+  expect(screen.getByText(sourceSense.definition)).toBeInTheDocument();
+  expect(screen.queryByText(noun.definition)).not.toBeInTheDocument();
+  expect(screen.getByRole('status')).toHaveTextContent('1 of 2 meanings');
+  await selectChoice(screen.getByRole('combobox', { name: 'Dictionary part of speech' }), 'Noun');
+  expect(screen.getByText('No meanings match your filters.')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Clear filters' }));
+  expect(search).toHaveValue('');
+  expect(screen.getByText(noun.definition)).toBeInTheDocument();
+  fireEvent.change(search, { target: { value: 'protection' } });
+  expect(screen.getByText(noun.definition)).toBeInTheDocument();
+  expect(screen.queryByText(sourceSense.definition)).not.toBeInTheDocument();
+  await waitFor(() => expect(sources).toHaveBeenLastCalledWith([noted, noun]));
+});
+
+test('switching dictionary coverage preserves search and makes unreviewed matches available explicitly', async () => {
+  const { entry } = fixture();
+  const noted = { ...sourceSense, editorial: { source: 'Review', license: 'CC-BY-4.0', attribution: 'Contributors' }, collocations: ['mitigate risk'], distinctions: ['Reduce is broader.'] };
+  const historical = { ...sourceSense, id: 'historical', pos: 'noun', definition: 'A historical consideration.', usage: 'Archaic.' };
+  vi.stubGlobal('fetch', dictionaryFetch([noted, historical]));
+  render(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
+  await screen.findByText(noted.definition);
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  const search = screen.getByRole('searchbox', { name: 'Search dictionary meanings' });
+  fireEvent.change(search, { target: { value: 'archaic' } });
+  expect(screen.getByText('No meanings match your filters.')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'All meanings (2)' }));
+  expect(search).toHaveValue('archaic');
+  expect(screen.getByText(historical.definition)).toBeInTheDocument();
+  expect(screen.getByRole('status')).toHaveTextContent('1 of 2 meanings');
+});
+
+test('changing the word resets dictionary search and part of speech', async () => {
+  const { entry } = fixture();
+  const other = { ...sourceSense, id: 'other', pos: 'noun', definition: 'Another word’s meaning.' };
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { mitigate: 'aa.json', other: 'bb.json' } : { senses: [url.includes('aa.json') ? sourceSense : other] } })));
+  const view = render(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
+  await screen.findByText(sourceSense.definition);
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  fireEvent.change(screen.getByRole('searchbox', { name: 'Search dictionary meanings' }), { target: { value: 'severity' } });
+  await selectChoice(screen.getByRole('combobox', { name: 'Dictionary part of speech' }), 'Verb');
+  view.rerender(<MemoryRouter><DictionarySenses entry={{ ...entry, id: 'other', term: 'other' }} /></MemoryRouter>);
+  await screen.findByText(other.definition);
+  expect(screen.getByRole('searchbox', { name: 'Search dictionary meanings' })).toHaveValue('');
+  expect(screen.getByRole('combobox', { name: 'Dictionary part of speech' })).toHaveTextContent('All parts of speech');
+});
 function Route() {
   const location = useLocation();
   return <output>{location.pathname + location.search}</output>;

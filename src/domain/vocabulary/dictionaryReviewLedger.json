@@ -799,6 +799,612 @@
         "collocations",
         "distinctions"
       ]
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:1701191635a7df0f75",
+      "sourceHash": "79d7316f69a63c83a0ee3cee9d782408697485a82c7dc94713dd656b1a03955e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:dad1d2ecbe1abaea08",
+      "sourceHash": "29a86fe5f9b3b63ef3290474a32c10bc8d9d6896163c40078866914ec53242a1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:74b22230e9bcb86c64",
+      "sourceHash": "92ed55d236f057262ba9826408c48afc70eb68c924f9ec42ce9d74ba3581ab82",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:03cff4fff06804a0c9",
+      "sourceHash": "758ce8299588ff21604e5f0e89074fc26fd8c7c08fb91ddd48801d80101b7fd1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:fa8ec8c3c04df1b570",
+      "sourceHash": "94d5efea53655250f894f0e40c5d6ba46917f6f4b0f857f2d4c64203d88e3db4",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:90bede9f5d3f84e386",
+      "sourceHash": "46bb8a89380341501fd71df4ad7915ce18cccbb1794fb38abb594a78c578ea58",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:3c73af97f234ad47e9",
+      "sourceHash": "41d1cc8b1890bcfccc74ebe3db7513d9d465f35ff349173d7887a08df9456b2a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:0ee265a34a511b8d0f",
+      "sourceHash": "d8e8f3bb0f9a814f3b2242b0cb9f73feb25be0c70deb15b8b45dde09a02c190f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:bd0158f70f68047c61",
+      "sourceHash": "e051cabbe5b9f8613945c215e7b357a4120835b06578df86ed0f38a48242fac8",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:cbbdd38ccc10805271",
+      "sourceHash": "a5df81bd9ad75df70a59d954d748f8e6f21d613fbc7db8e3d24f1cae58f9df01",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:4b6af68b726f533de3",
+      "sourceHash": "d66234e3fca83c4f7a1db5256ca50e89cc8fcdeb49a60177e9ed117851f84d2b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:39d496e7d0b76bec49",
+      "sourceHash": "0249b6ebb1c227cd87176a5f1b6ab491c4faff1d528f2207886a27bd4cf82b47",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "account",
+      "entryId": "ve-18c82a44",
+      "senseId": "kaikki:e0b6284a3c44a5791e",
+      "sourceHash": "122cfbd54c1e4c2c25acbd994084bb9a0ee3e47d51665489a2c42144452c1af0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "state",
+      "entryId": "ve-b9ff0d2",
+      "senseId": "kaikki:310bc729ed5f49ba2d",
+      "sourceHash": "8846f35680cd4c80b0c69360ec2b8fe7ca685a7ee127dab4ee0f557b96368f90",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "state",
+      "entryId": "ve-b9ff0d2",
+      "senseId": "kaikki:b0d5fadafac0e54820",
+      "sourceHash": "5cb8cc98f216a1cdb864c650e1162a97263cacd7fa92221bff377e9ac59a9c86",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "state",
+      "entryId": "ve-b9ff0d2",
+      "senseId": "kaikki:76c04dcce4c0e748e9",
+      "sourceHash": "51bf3f21d20a16771c8e28a7937dc23c29c8d67b730528439dbffa5feaaa204e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "state",
+      "entryId": "ve-b9ff0d2",
+      "senseId": "kaikki:eefe20ae06e6ddb020",
+      "sourceHash": "0a55195b612484fc5a1711ed2fedcae531cedee3301e8d6859e185ea37828890",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "state",
+      "entryId": "ve-b9ff0d2",
+      "senseId": "kaikki:fbe7e3d51e40464f23",
+      "sourceHash": "1a6847ad144fa05a96d4387d1d3a92dbeaf5900f95ac004c85ac4f5f10c7d527",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "state",
+      "entryId": "ve-b9ff0d2",
+      "senseId": "kaikki:ff9d08287a7ca9751f",
+      "sourceHash": "14f03b200d257255701284196b9a0c6d60324cd30b7a466e42fe1bfd73076353",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "state",
+      "entryId": "ve-b9ff0d2",
+      "senseId": "kaikki:da0712d167129d150a",
+      "sourceHash": "c328bfca632c1c968227a4f9eec844e8e980dfa9b20527b6494f4f6df5beb1a2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "state",
+      "entryId": "ve-b9ff0d2",
+      "senseId": "kaikki:435f035a35b0917eaa",
+      "sourceHash": "f62be2755c26ea09ce071d9392074680f22a25380550a947bf88bdd73f23c812",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "state",
+      "entryId": "ve-b9ff0d2",
+      "senseId": "kaikki:71b9c9929b03813b15",
+      "sourceHash": "6294c9dfebc6cf6d9b5d4934feba01806a771f90c419846b579fac2afa33e48a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "state",
+      "entryId": "ve-b9ff0d2",
+      "senseId": "kaikki:c6d83f7bd2e9ea51e1",
+      "sourceHash": "e18a04093013710086123ec251ea466f66c6b1a5b499a20e077d4c2e982bcb05",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "state",
+      "entryId": "ve-b9ff0d2",
+      "senseId": "kaikki:b3231463b0cd0c9109",
+      "sourceHash": "1a277e97ccf8ed1a4a7fa9017a8a002d197483d27951179907ad248e30797146",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "matter",
+      "entryId": "ve-574b25de",
+      "senseId": "kaikki:9c84392aba2ed333db",
+      "sourceHash": "7f553ade805daf63b2762a63e80ae6126ba6a55ca72c7e365b893835921e5068",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "matter",
+      "entryId": "ve-574b25de",
+      "senseId": "kaikki:cc137aaf734d4ff0f8",
+      "sourceHash": "6aa1499de8df1f0e42bd843b0d55daf4cb84d4973536d80d74b33e079682dc61",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "matter",
+      "entryId": "ve-574b25de",
+      "senseId": "kaikki:b1d5bff7be92c9baec",
+      "sourceHash": "647061e09077b5ba64a4df16d6361d9ed8c02ff0f6b5c7e057eae94b37faa1ae",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "matter",
+      "entryId": "ve-574b25de",
+      "senseId": "kaikki:b3f0feea303690916b",
+      "sourceHash": "f85a53c95f54f49b62cbee367f714ed75da8652b9616225e61d2e582f0896830",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "matter",
+      "entryId": "ve-574b25de",
+      "senseId": "kaikki:d098cbbbd971339eda",
+      "sourceHash": "c1c49489df726dcab953594e1f3bbac291c4db626a172a4e70efbafd726117ef",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "matter",
+      "entryId": "ve-574b25de",
+      "senseId": "kaikki:65e3e89ab10fb8793e",
+      "sourceHash": "328bd4671a27718725a3066826aa26b6ae744e3541168af69d002f0506fe589c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "matter",
+      "entryId": "ve-574b25de",
+      "senseId": "kaikki:2354188913ff689ef9",
+      "sourceHash": "acb849984c524137835af43be97954fe84e1e0b6ff3197c776e4546bc1e405e6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "matter",
+      "entryId": "ve-574b25de",
+      "senseId": "kaikki:4fe541dc1f4bb02d2e",
+      "sourceHash": "22881e893e0bf60f59c216a6fe054c0f3fe964f05bb58bf976f569dc085de024",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "matter",
+      "entryId": "ve-574b25de",
+      "senseId": "kaikki:2a6a80c4066d976d8e",
+      "sourceHash": "aec00e67b8f2f0a155386efbd0cbdbc0510e2f11a2e39b941257135dd8cbdfb7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "matter",
+      "entryId": "ve-574b25de",
+      "senseId": "kaikki:04f60ed7d83c495169",
+      "sourceHash": "2eb91836470d3417d038375ff1df08e89b179b56e9ca58eea29cfcdec5c9d0b8",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "matter",
+      "entryId": "ve-574b25de",
+      "senseId": "kaikki:63bcfeef6deb8fba33",
+      "sourceHash": "036ca3792f693477bdbb0a95ec8fa10d1f1e64346f2d811c3790ad2605d5c131",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "matter",
+      "entryId": "ve-574b25de",
+      "senseId": "kaikki:2bbfd0663449ac1711",
+      "sourceHash": "12da1a90001c2ac1cfd24a95025becda2f13cf9cca61272d3a84ed869c85e2ef",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:0d7af11f77fa819e15",
+      "sourceHash": "737e3a6bfbb5774f5377d55d1f8fe746f6e9c9c907c61bc17d5c64b692984b6e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:7445cf306e43ab9d34",
+      "sourceHash": "2ac4ccd117688ffdac3626da132bbf30a69812651e999b1916d93ac0f65d8198",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:4dafcac125207e2a73",
+      "sourceHash": "0d04fe2471bfcb9a758557b835d537dba61bdc25cbcc9ffdba2ce30b1d968263",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:80f563505e0a67f298",
+      "sourceHash": "266b6605247b9ea0ec9f043bd9bd7bf6981d68bfa249c28509ac00cc3482652d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:82499d7bc06c908f3f",
+      "sourceHash": "1f9d61a3663182a7c037d97e21147608fa480e36d147cb730fe2b4387b8cc227",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:0bfb1ef5313c607465",
+      "sourceHash": "b8d55501f2aa8468acb8680cde57a4e9dc0b3a21df94d4eab1c1f4da897e9fda",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:47247c88dac4b70eab",
+      "sourceHash": "caf1020f5e57534e9eb565e36c1b94c66817dcd75b05d39287facf34feb97737",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "diagramReviewed": true
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:ae43946cf5305ec41d",
+      "sourceHash": "3ca9d135d603d618403bfb28ea936c550572656aafbab705fa9d0675fc767253",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:7bc8e2685c1caf22a5",
+      "sourceHash": "3f5dfd39d6e931b7065952fc7d05b04a29e98e46b7177a186f04f2974395ddd0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:a179917653fd5d0987",
+      "sourceHash": "b64395348e026ecf552423bf7dac71a267fd9aab4372734b57bc1d21e5cc3a5e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:bcaf7bb882652d03fa",
+      "sourceHash": "8d5414d4a4ece3f947dd0c6f41b509ab0adb905dcf04f31b79b26a3636daebe0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:2cc14b3a05516b8956",
+      "sourceHash": "79fc5b0e92eee758651fcdfca97ca077f20b5c94c24ae64acd3ca58fe75564a8",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:1c13c213cd49ee9adb",
+      "sourceHash": "3356729551d17e3efeb9e675040c14ff935814918f5e1f1a0eae4da1ac3fa326",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "value",
+      "entryId": "ve-b52344e",
+      "senseId": "kaikki:20f2206d37f54de822",
+      "sourceHash": "519332bc0c492d36f32ef4dd511d820bec300e9ce750192884f5ce63f48b0cb2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
     }
   ]
 }

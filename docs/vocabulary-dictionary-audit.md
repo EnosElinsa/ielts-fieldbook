@@ -2,16 +2,20 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms and 51,354 senses**. This ledger verifies **65 senses** across definition, example, collocations and distinctions; **51,289 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 15 reviewed distinction exercises and 18 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense.
+The complete index has **5,853 terms and 51,354 senses**. This ledger verifies **115 senses** across definition, example, collocations and distinctions; **51,239 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 23 reviewed distinction exercises and 24 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense.
 
 | Term | Reviewed text senses | Source senses | Pending |
 | --- | ---: | ---: | ---: |
+| account | 13 | 13 | 0 |
 | bank | 14 | 45 | 31 |
 | capital | 11 | 18 | 7 |
 | charge | 13 | 34 | 21 |
 | current | 6 | 9 | 3 |
 | interest | 8 | 14 | 6 |
+| matter | 12 | 12 | 0 |
 | rate | 13 | 27 | 14 |
+| state | 11 | 11 | 0 |
+| value | 14 | 14 | 0 |
 
 ## Raw-source signals
 

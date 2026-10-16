@@ -20,6 +20,12 @@ const descriptions: Record<string, [string, string]> = {
   'delivery-fee': ['An item price plus a delivery charge giving a total', 'Example: a £20 item + a £5 delivery charge = £25 total.'],
   'electric-charge': ['A proton with positive charge and an electron with negative charge', 'A proton has charge +e; an electron has charge −e.'],
   responsibility: ['A manager responsible for a team and project', 'The manager is in charge of the team and the project.'],
+  'financial-record': ['Income and spending recorded in financial accounts', 'Accounts record money received and spent; they are different from a bank account.'],
+  'account-balance': ['A bank account balance after a deposit and a withdrawal', 'Example: £100 starting balance + £50 deposited − £20 withdrawn = £130.'],
+  'model-states': ['A process moving between working and failed states', 'Working and failed are two possible states. Arrows show transitions, without specifying probabilities.'],
+  'physical-matter': ['Particles shown as a solid, liquid and gas', 'Matter is physical substance. Solid, liquid and gas are three common states of matter.'],
+  'lightness-scale': ['Five shades from light to dark', 'Value describes lightness or darkness. Hue describes colour type.'],
+  'variable-value': ['The variable x assigned three and the expression two times x evaluated as six', 'Example: when x = 3, the value of 2 × x is 6.'],
 };
 function Label({ x, y, children, small = false }: { x: number; y: number; children: ReactNode; small?: boolean }) {
   return <text x={x} y={y} textAnchor="middle" className={small ? 'meaning-diagram-small' : 'meaning-diagram-label'}>{children}</text>;
@@ -36,6 +42,12 @@ function Building({ x = 190, y = 95, label = 'BANK' }: { x?: number; y?: number;
 }
 function Scene({ kind }: { kind: string }): ReactNode {
   switch (kind) {
+    case 'financial-record': return <><Label x={260} y={44}>Financial accounts</Label><Box x={38} y={100} width={200} label="Income: £200" sub="Money received" color={green} /><Box x={282} y={100} width={200} label="Costs: £80" sub="Money spent" color={gold} /><Arrow x1={138} y1={203} x2={208} y2={256} /><Arrow x1={382} y1={203} x2={312} y2={256} /><Label x={260} y={300}>Record transactions</Label></>;
+    case 'account-balance': return <><Label x={260} y={44}>Bank account</Label><Box x={155} y={74} width={210} label="£100 at start" /><Label x={260} y={201}>+ £50 in − £20 out</Label><Arrow x1={260} y1={222} x2={260} y2={249} /><Box x={145} y={265} width={230} label="£130 balance" color={green} /></>;
+    case 'model-states': return <><Box x={28} y={130} width={180} label="Working" color={green} /><Box x={312} y={130} width={180} label="Failed" color={gold} /><path d="M118 115V65H402V115" className="meaning-diagram-line" /><Arrow x1={402} y1={92} x2={402} y2={120} /><Label x={260} y={42}>Failure</Label><path d="M402 226V278H118V226" className="meaning-diagram-line" /><Arrow x1={118} y1={254} x2={118} y2={223} /><Label x={260} y={319}>Repair</Label></>;
+    case 'physical-matter': return <>{[85,260,435].map((cx,i)=><g key={cx}><rect x={cx-72} y={70} width={144} height={186} rx={16} className="visual-scene-background" />{Array.from({length:9},(_,j)=>{const x=i===0?cx-27+(j%3)*27:i===1?cx-36+(j%3)*33+(j%2)*10:cx-47+(j%3)*47;const y=i===0?169+Math.floor(j/3)*27:i===1?158+Math.floor(j/3)*29+(j%2)*8:98+Math.floor(j/3)*60+(j%2)*9;return <circle key={j} cx={x} cy={y} r={9} fill={i===0?blue:i===1?green:gold} />;})}<Label x={cx} y={300}>{['Solid','Liquid','Gas'][i]}</Label></g>)}</>;
+    case 'lightness-scale': return <><Label x={260} y={52}>Value in art</Label>{['#f2f2f2','#bebebe','#868686','#4d4d4d','#171717'].map((fill,i)=><rect key={fill} x={40+i*88} y={104} width={88} height={120} fill={fill} stroke={blue} strokeWidth={1} />)}<Label x={84} y={266}>Light</Label><Label x={436} y={266}>Dark</Label><Arrow x1={100} y1={302} x2={420} y2={302} /></>;
+    case 'variable-value': return <><Box x={150} y={48} width={220} label="x = 3" sub="Assigned value" /><Arrow x1={260} y1={148} x2={260} y2={197} /><Box x={80} y={220} width={360} label="2 × x = 2 × 3 = 6" sub="Value of the expression" color={green} /></>;
     case 'air-flow': return <><Box x={175} y={230} width={170} label="Heater" color={gold} />{[200,260,320].map(x=><g key={x}><path d={`M${x} 210q-26-36 0-72t0-66`} className="meaning-diagram-line" /><Arrow x1={x} y1={84} x2={x} y2={57} /></g>)}<Label x={260} y={34}>Warm air current</Label></>;
     case 'water-flow': return <><path d="M1 105Q130 75 260 110T519 100V258Q390 280 260 245T1 260Z" fill={blue} fillOpacity=".3" />{[130,260,390].map(x=><Arrow key={x} x1={x-40} y1={180} x2={x+40} y2={180} />)}<Label x={260} y={64}>Flowing water</Label><Label x={260} y={307}>Downstream →</Label></>;
     case 'electric-current': return <><rect x="36" y="128" width="448" height="70" rx="20" fill={blue} fillOpacity=".22" />{[105,208,311,414].map(x=><g key={x}><circle cx={x} cy="163" r="18" fill={gold} /><Label x={x} y={170}>+</Label></g>)}<Arrow x1={115} y1={245} x2={405} y2={245} /><Label x={260} y={70}>Positive charge flow</Label><Label x={260} y={292}>Conventional current</Label></>;
