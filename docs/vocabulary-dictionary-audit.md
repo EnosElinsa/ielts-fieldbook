@@ -2,7 +2,7 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 155 restored submeanings** (51,509 total). This ledger verifies **972 records** across definition, examples or reading explanations, collocations and distinctions; **50,537 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 203 reviewed distinction exercises and 89 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 97 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 6 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 193 restored submeanings** (51,547 total). This ledger verifies **1137 records** across definition, examples or reading explanations, collocations and distinctions; **50,410 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 247 reviewed distinction exercises and 100 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 180 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 7 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
 | Term | Reviewed records | Raw + restored records | Pending |
 | --- | ---: | ---: | ---: |
@@ -12,6 +12,7 @@ The complete index has **5,853 terms, 51,354 preserved raw senses and 155 restor
 | adopt | 9 | 9 | 0 |
 | affect | 15 | 15 | 0 |
 | bank | 45 | 45 | 0 |
+| bear | 61 | 61 | 0 |
 | capital | 19 | 19 | 0 |
 | charge | 45 | 45 | 0 |
 | condition | 17 | 17 | 0 |
@@ -20,13 +21,16 @@ The complete index has **5,853 terms, 51,354 preserved raw senses and 155 restor
 | contract | 18 | 18 | 0 |
 | current | 10 | 10 | 0 |
 | effect | 14 | 14 | 0 |
+| fair | 35 | 35 | 0 |
 | field | 33 | 33 | 0 |
 | fine | 44 | 44 | 0 |
 | form | 32 | 32 | 0 |
 | ground | 39 | 39 | 0 |
 | interest | 14 | 14 | 0 |
 | issue | 31 | 33 | 2 |
+| lay | 46 | 46 | 0 |
 | lead | 69 | 69 | 0 |
+| lie | 23 | 23 | 0 |
 | match | 21 | 21 | 0 |
 | matter | 12 | 12 | 0 |
 | mean | 34 | 35 | 1 |

@@ -2943,5 +2943,727 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:c5ed35d73f46be2f7c",
+    "parentSourceHash": "62813490b15be8fdf38df2c7ed138220ecec500bd56692497cc146cbc38ceda1",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|culinary|uncountable}} The [[meat]] of this animal.",
+    "sense": {
+      "id": "wiktionary:restored:a342b55ba0ba860adb",
+      "pos": "noun",
+      "definition": "The meat of this animal.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To carry (weapons, flags or symbols of rank, office, etc.) upon one's person, especially visibly; to be [[equip]]ped with (weapons, etc.).",
+    "sense": {
+      "id": "wiktionary:restored:fea753008c2aff1515",
+      "pos": "verb",
+      "definition": "To carry (weapons, flags or symbols of rank, office, etc.) upon one's person, especially visibly; to be equipped with (weapons, etc.).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To [[wear]] (garments, pieces of jewellery, etc.).",
+    "sense": {
+      "id": "wiktionary:restored:c9dda158d2bc855e4c",
+      "pos": "verb",
+      "definition": "To wear (garments, pieces of jewellery, etc.).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive|rarely|_|intransitive|of a woman or female animal}} To carry ([[offspring]] in the [[womb]]), to be [[pregnant]] (with).",
+    "sense": {
+      "id": "wiktionary:restored:295f84e3351dcf6eb9",
+      "pos": "verb",
+      "definition": "To carry (offspring in the womb), to be pregnant (with).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To have or display (a mark or other feature).",
+    "sense": {
+      "id": "wiktionary:restored:42630630d242335f1b",
+      "pos": "verb",
+      "definition": "To have or display (a mark or other feature).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To [[display]] (a particular heraldic device) on a shield or coat of arms; to be entitled to wear or use (a heraldic device) as a coat of arms. {{defdate|1400}}",
+    "sense": {
+      "id": "wiktionary:restored:4abe5ce5ea730f84a3",
+      "pos": "verb",
+      "definition": "To display (a particular heraldic device) on a shield or coat of arms; to be entitled to wear or use (a heraldic device) as a coat of arms.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To present or exhibit (a particular outward appearance); to have (a certain look). {{defdate|1200}}",
+    "sense": {
+      "id": "wiktionary:restored:060c60ffa6ddf33d74",
+      "pos": "verb",
+      "definition": "To present or exhibit (a particular outward appearance); to have (a certain look).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To have (a name, title, or designation). {{defdate|1225}}",
+    "sense": {
+      "id": "wiktionary:restored:7464f563c0418239d5",
+      "pos": "verb",
+      "definition": "To have (a name, title, or designation).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To possess or enjoy (recognition, renown, a reputation, etc.); to have (a particular price, value, or worth). {{defdate|1393}}",
+    "sense": {
+      "id": "wiktionary:restored:010358752e4383234b",
+      "pos": "verb",
+      "definition": "To possess or enjoy (recognition, renown, a reputation, etc.); to have (a particular price, value, or worth).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive|of an investment, loan, etc.}} To have ([[interest]] or a specified [[rate]] of interest) [[stipulate]]d in its [[term]]s. {{defdate|1686}}",
+    "sense": {
+      "id": "wiktionary:restored:15483bb70b9cdd07ce",
+      "pos": "verb",
+      "definition": "To have (interest or a specified rate of interest) stipulated in its terms.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive|of a person or animal}} To have (an appendage, organ, etc.) as part of the body; {{lb|en|of a part of the body}} to have (an appendage).",
+    "sense": {
+      "id": "wiktionary:restored:dd71b2cb49877e7393",
+      "pos": "verb",
+      "definition": "To have (an appendage, organ, etc.) as part of the body; to have (an appendage).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To carry or hold in the mind; to experience, entertain, harbour (an idea, feeling, or emotion).",
+    "sense": {
+      "id": "wiktionary:restored:496bd34ecff1873809",
+      "pos": "verb",
+      "definition": "To carry or hold in the mind; to experience, entertain, harbour (an idea, feeling, or emotion).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive|rare}} To feel and show (respect, reverence, loyalty, etc.) to, towards, or unto a person or thing.",
+    "sense": {
+      "id": "wiktionary:restored:5478173709c1ae6cb8",
+      "pos": "verb",
+      "definition": "To feel and show (respect, reverence, loyalty, etc.) to, towards, or unto a person or thing.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To possess inherently (a quality, attribute, power, or capacity); to have and display as an essential characteristic.",
+    "sense": {
+      "id": "wiktionary:restored:d0e9e8ec79af9f551a",
+      "pos": "verb",
+      "definition": "To possess inherently (a quality, attribute, power, or capacity); to have and display as an essential characteristic.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive|of a thing}} To have (a relation, correspondence, etc.) to something else. {{defdate|1556}}",
+    "sense": {
+      "id": "wiktionary:restored:c8cf913d2fb37181e3",
+      "pos": "verb",
+      "definition": "To have (a relation, correspondence, etc.) to something else.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To give (written or oral testimony or evidence); (figurative) to provide or constitute (evidence or proof), give [[witness]].",
+    "sense": {
+      "id": "wiktionary:restored:0d94a756f3863d2ed3",
+      "pos": "verb",
+      "definition": "To give (written or oral testimony or evidence); (figurative) to provide or constitute (evidence or proof), give witness.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To have (a certain meaning, intent, or effect).",
+    "sense": {
+      "id": "wiktionary:restored:23b67ea11dce351324",
+      "pos": "verb",
+      "definition": "To have (a certain meaning, intent, or effect).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|reflexive|transitive}} To behave or conduct (oneself).",
+    "sense": {
+      "id": "wiktionary:restored:5cb7e6a3f7b191f291",
+      "pos": "verb",
+      "definition": "To behave or conduct (oneself).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive|rare}} To possess and use, to exercise (power or influence); to hold (an office, rank, or position).",
+    "sense": {
+      "id": "wiktionary:restored:820a8563d88a333642",
+      "pos": "verb",
+      "definition": "To possess and use, to exercise (power or influence); to hold (an office, rank, or position).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|intransitive|obsolete}} To carry a burden or burdens. {{defdate|1450}}",
+    "sense": {
+      "id": "wiktionary:restored:3db90a9384c6065822",
+      "pos": "verb",
+      "definition": "To carry a burden or burdens.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:95c79f04148117a005",
+    "parentSourceHash": "a8487ce7f6218bee06678cf581392d2aa93c37ff6354807476938642d1363620",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive|obsolete|rare}} To take or bring (a person) with oneself; to [[conduct]]. {{defdate|1590}}",
+    "sense": {
+      "id": "wiktionary:restored:106db06b435c9bb85e",
+      "pos": "verb",
+      "definition": "To take or bring (a person) with oneself; to conduct.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:57831df93040eba00f",
+    "parentSourceHash": "d3b5c44fa16f65371e97d5c49849d8a0a64688588d833eb3c890623c1928a6be",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{senseid|en|support}} {{lb|en|transitive}} To [[support]] or [[sustain]]; to [[hold up]].",
+    "sense": {
+      "id": "wiktionary:restored:74aee6b6d0239b702f",
+      "pos": "verb",
+      "definition": "To support or sustain; to hold up.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:57831df93040eba00f",
+    "parentSourceHash": "d3b5c44fa16f65371e97d5c49849d8a0a64688588d833eb3c890623c1928a6be",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{senseid|en|endure}}{{lb|en|now|_|transitive|_|outside certain set patterns such as 'bear with'; formerly also|_|intransitive}} To [[endure]] or [[withstand]] ([[hardship]], [[scrutiny]], etc.); to [[tolerate]]; to be [[patient]] (with).",
+    "sense": {
+      "id": "wiktionary:restored:c19b8f17eaf3c56c1d",
+      "pos": "verb",
+      "definition": "To endure or withstand (hardship, scrutiny, etc.); to tolerate; to be patient (with).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:57831df93040eba00f",
+    "parentSourceHash": "d3b5c44fa16f65371e97d5c49849d8a0a64688588d833eb3c890623c1928a6be",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To sustain, or be answerable for (blame, expense, responsibility, etc.).",
+    "sense": {
+      "id": "wiktionary:restored:693cea33130b905085",
+      "pos": "verb",
+      "definition": "To sustain, or be answerable for (blame, expense, responsibility, etc.).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:57831df93040eba00f",
+    "parentSourceHash": "d3b5c44fa16f65371e97d5c49849d8a0a64688588d833eb3c890623c1928a6be",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To admit or be capable of (a meaning); to suffer or sustain without violence, injury, or change.",
+    "sense": {
+      "id": "wiktionary:restored:5babea86b6d648ef35",
+      "pos": "verb",
+      "definition": "To admit or be capable of (a meaning); to suffer or sustain without violence, injury, or change.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:57831df93040eba00f",
+    "parentSourceHash": "d3b5c44fa16f65371e97d5c49849d8a0a64688588d833eb3c890623c1928a6be",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To [[warrant]], [[justify]] the need for.",
+    "sense": {
+      "id": "wiktionary:restored:8dae900c2542d8752a",
+      "pos": "verb",
+      "definition": "To warrant, justify the need for.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:aba57d7cf2beac4bdb",
+    "parentSourceHash": "542fa62d70f105ca7faf16ae3c8976dd94d87a289afd6c60974a04ae7faa2bf0",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To afford, to be something to someone, to supply with something. {{rfex|en}} <!-- Seeking modern English examples. -->",
+    "sense": {
+      "id": "wiktionary:restored:024b4e99fe13f13288",
+      "pos": "verb",
+      "definition": "To afford, to be something to someone, to supply with something.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:aba57d7cf2beac4bdb",
+    "parentSourceHash": "542fa62d70f105ca7faf16ae3c8976dd94d87a289afd6c60974a04ae7faa2bf0",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|transitive}} To carry on, or maintain; to have. {{rfex|en}} <!-- Seeking modern English examples. -->",
+    "sense": {
+      "id": "wiktionary:restored:f2eef2274e19795ca3",
+      "pos": "verb",
+      "definition": "To carry on, or maintain; to have.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:10253aa0fd27c10c93",
+    "parentSourceHash": "677105888b61dfbfbd8dde57b80491352a18514aefadb02433e70d212c13b302",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|intransitive|usually with ''on'', ''upon'', or ''against''}} To push, thrust, [[press]].",
+    "sense": {
+      "id": "wiktionary:restored:ff1a853ff885991d98",
+      "pos": "verb",
+      "definition": "To push, thrust, press.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:10253aa0fd27c10c93",
+    "parentSourceHash": "677105888b61dfbfbd8dde57b80491352a18514aefadb02433e70d212c13b302",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|intransitive|figuratively}} To take effect; to have influence or force; to be relevant.",
+    "sense": {
+      "id": "wiktionary:restored:798e0d07438f388660",
+      "pos": "verb",
+      "definition": "To take effect; to have influence or force; to be relevant.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:10253aa0fd27c10c93",
+    "parentSourceHash": "677105888b61dfbfbd8dde57b80491352a18514aefadb02433e70d212c13b302",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{lb|en|intransitive|military|usually with ''on'' or ''upon''}} Of a weapon, to be aimed at an enemy or other target.",
+    "sense": {
+      "id": "wiktionary:restored:90051ee4a743a59700",
+      "pos": "verb",
+      "definition": "Of a weapon, to be aimed at an enemy or other target.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:d5bd2518fd9a755c96",
+    "parentSourceHash": "b8e3bea0c1fd3bb75926c93ea9dce4d9165c0085ffc481c8f45b69e456958528",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{senseid|en|give birth}}{{lb|en|transitive|ditransitive}} To [[give birth]] to (someone or something) {{qualifier|may take the father of the direct object as an indirect object}}.",
+    "sense": {
+      "id": "wiktionary:restored:7edc2bb3d85ccecd66",
+      "pos": "verb",
+      "definition": "To give birth to (someone or something) .",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:d5bd2518fd9a755c96",
+    "parentSourceHash": "b8e3bea0c1fd3bb75926c93ea9dce4d9165c0085ffc481c8f45b69e456958528",
+    "sourcePage": "bear",
+    "revision": 93437236,
+    "sourceGloss": "## {{sid|en|yield}} {{lb|en|transitive|less commonly|_|intransitive}} To [[produce]] or [[yield]] something, such as fruit or crops.",
+    "sense": {
+      "id": "wiktionary:restored:1f894e30b7b8c85403",
+      "pos": "verb",
+      "definition": "To produce or yield something, such as fruit or crops.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=bear&oldid=93437236",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:749e5414c81fdc765c",
+    "parentSourceHash": "4c7cf86352ef8cec73456652ee2b1f3172310b0ee9943b88088e18f2d0192936",
+    "sourcePage": "Bear",
+    "revision": 93572106,
+    "sourceGloss": "## {{place|en|ucomm|co/Garland County|s/Arkansas}}.",
+    "sense": {
+      "id": "wiktionary:restored:51d65f63071555bbe1",
+      "pos": "name",
+      "definition": "An unincorporated community in Garland County, Arkansas.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=Bear&oldid=93572106",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:749e5414c81fdc765c",
+    "parentSourceHash": "4c7cf86352ef8cec73456652ee2b1f3172310b0ee9943b88088e18f2d0192936",
+    "sourcePage": "Bear",
+    "revision": 93572106,
+    "sourceGloss": "## {{place|en|CDP|co/New Castle County|s/Delaware}}.",
+    "sense": {
+      "id": "wiktionary:restored:4d19a312ec5f314ccb",
+      "pos": "name",
+      "definition": "A census-designated place in New Castle County, Delaware.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=Bear&oldid=93572106",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "bear",
+    "entryId": "ve-7c7033b1",
+    "parentSenseId": "kaikki:749e5414c81fdc765c",
+    "parentSourceHash": "4c7cf86352ef8cec73456652ee2b1f3172310b0ee9943b88088e18f2d0192936",
+    "sourcePage": "Bear",
+    "revision": 93572106,
+    "sourceGloss": "## {{place|en|ucomm|co/Adams County|s/Idaho}}.",
+    "sense": {
+      "id": "wiktionary:restored:fc2c17b8732d18419e",
+      "pos": "name",
+      "definition": "An unincorporated community in Adams County, Idaho.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=Bear&oldid=93572106",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "fair",
+    "entryId": "ve-7c6e1439",
+    "parentSenseId": "kaikki:95a593a48be7600675",
+    "parentSourceHash": "34916074f1f69ad32eca1a7b99af86d6f55622be090ca93b8953f1440c1ffc13",
+    "sourcePage": "fair",
+    "revision": 93341953,
+    "sourceGloss": "## {{senseid|en|good weather}} Not overcast; cloudless; clear.",
+    "sense": {
+      "id": "wiktionary:restored:264648720337d2623c",
+      "pos": "adj",
+      "definition": "Not overcast; cloudless; clear.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=fair&oldid=93341953",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "fair",
+    "entryId": "ve-7c6e1439",
+    "parentSenseId": "kaikki:95a593a48be7600675",
+    "parentSourceHash": "34916074f1f69ad32eca1a7b99af86d6f55622be090ca93b8953f1440c1ffc13",
+    "sourcePage": "fair",
+    "revision": 93341953,
+    "sourceGloss": "## {{senseid|en|unobstructed path}} Free from obstacles or hindrances; unobstructed; unencumbered; open; direct; said of a road, passage, etc.",
+    "sense": {
+      "id": "wiktionary:restored:f5ad73a51c62074d77",
+      "pos": "adj",
+      "definition": "Free from obstacles or hindrances; unobstructed; unencumbered; open; direct; said of a road, passage, etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=fair&oldid=93341953",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

@@ -204,6 +204,8 @@ export function DictionarySenses({
       if (active()) setSaving(null);
     }
   };
+  // Loaded meanings already displayed elsewhere need no empty secondary section.
+  if (!loading && !error && loaded.length > 0 && senses.length === 0) return null;
   return (
     <details className="vocabulary-secondary vocabulary-dictionary">
       <summary>

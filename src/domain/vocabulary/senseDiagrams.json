@@ -710,5 +710,93 @@
     "definition": "To satisfy a rule or a regular-expression pattern.",
     "pos": "verb",
     "kind": "regex-match"
+  },
+  {
+    "entryId": "ve-b873ee5",
+    "senseId": "kaikki:479e8947f8532459ae",
+    "term": "lie",
+    "definition": "To rest with the body or an object in a horizontal position.",
+    "pos": "verb",
+    "kind": "lie-lay-forms"
+  },
+  {
+    "entryId": "ve-b873ff1",
+    "senseId": "kaikki:2497e6492cb6d85430",
+    "term": "lay",
+    "definition": "To put someone or something down, especially in a resting or horizontal position.",
+    "pos": "verb",
+    "kind": "lie-lay-forms"
+  },
+  {
+    "entryId": "ve-b873ee5",
+    "senseId": "kaikki:39d83b71cef4d921d5",
+    "term": "lie",
+    "definition": "To be located or situated in a place.",
+    "pos": "verb",
+    "kind": "situated-north"
+  },
+  {
+    "entryId": "ve-7c7033b1",
+    "senseId": "kaikki:516b7f2a9a9f62d935",
+    "term": "bear",
+    "definition": "A trader or investor who sells in anticipation of falling prices.",
+    "pos": "noun",
+    "kind": "bear-market"
+  },
+  {
+    "entryId": "ve-7c7033b1",
+    "senseId": "wiktionary:restored:74aee6b6d0239b702f",
+    "term": "bear",
+    "definition": "To hold up or support a physical load.",
+    "pos": "verb",
+    "kind": "bear-load"
+  },
+  {
+    "entryId": "ve-7c7033b1",
+    "senseId": "wiktionary:restored:15483bb70b9cdd07ce",
+    "term": "bear",
+    "definition": "Of an investment or loan, to carry a stated interest rate in its terms.",
+    "pos": "verb",
+    "kind": "bear-interest"
+  },
+  {
+    "entryId": "ve-7c7033b1",
+    "senseId": "wiktionary:restored:1f894e30b7b8c85403",
+    "term": "bear",
+    "definition": "To produce or yield fruit, crops or another result.",
+    "pos": "verb",
+    "kind": "bear-fruit"
+  },
+  {
+    "entryId": "ve-7c6e1439",
+    "senseId": "kaikki:437a461019b8d883c3",
+    "term": "fair",
+    "definition": "Just, impartial or reasonable in the treatment of people.",
+    "pos": "adj",
+    "kind": "fair-procedure"
+  },
+  {
+    "entryId": "ve-7c6e1439",
+    "senseId": "kaikki:8f3f4d501ac6920aa7",
+    "term": "fair",
+    "definition": "Of a coin or die, giving its possible faces equal probability under the stated model.",
+    "pos": "adj",
+    "kind": "fair-coin"
+  },
+  {
+    "entryId": "ve-7c6e1439",
+    "senseId": "kaikki:80c93034945f80a042",
+    "term": "fair",
+    "definition": "To smooth or even a surface, especially across a joint.",
+    "pos": "verb",
+    "kind": "fair-surface"
+  },
+  {
+    "entryId": "ve-7c6e1439",
+    "senseId": "kaikki:db924b34c29ed455a2",
+    "term": "fair",
+    "definition": "An exhibition where people in a trade meet, display products and do business.",
+    "pos": "noun",
+    "kind": "trade-fair"
   }
 ]

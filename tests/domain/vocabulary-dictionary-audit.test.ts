@@ -51,6 +51,26 @@ const restored = { id: 'restored', pos: 'noun', definition: 'A river edge.', exa
 const evidence = { term: 'bank', entryId: 'bank', parentSenseId: original.id, parentSourceHash: hash(original), revision: 123, sourcePage: 'bank', sourceGloss: '## A river edge.', sense: restored };
 const restoredInput = { ...input, restoredSources: [evidence], corrections: [...input.corrections, { ...row, senseId: restored.id, originalSense: restored, dictionaryParentSenseId: original.id }], records: [...input.records, { ...review, senseId: restored.id, sourceHash: hash(restored) }] };
 
+test('restored evidence preserves the exact capitalised source page of its parent', () => {
+  const parent = { ...original, sourceUrl: 'https://en.wiktionary.org/wiki/Bank#English' };
+  const child = { ...restored, sourceUrl: 'https://en.wiktionary.org/w/index.php?title=Bank&oldid=123' };
+  const data = { ...input, dictionaries: { bank: { senses: [parent] } }, restoredSources: [{ ...evidence, sourcePage: 'Bank', parentSourceHash: hash(parent), sense: child }], corrections: [{ ...row, originalSense: parent }, { ...row, senseId: child.id, originalSense: child, dictionaryParentSenseId: parent.id }], records: [{ ...review, sourceHash: hash(parent) }, { ...review, senseId: child.id, sourceHash: hash(child) }] };
+  expect(inspectDictionaryReview(data).errors).toEqual([]);
+  expect(inspectDictionaryReview({ ...data, restoredSources: [{ ...data.restoredSources[0], sourcePage: 'bank', sense: { ...child, sourceUrl: restored.sourceUrl } }] }).errors.join(' ')).toMatch(/entry identity/i);
+});
+
+test('a geographic place heading and independently restored place preserve their rendered source meanings', () => {
+  const parent = { ...original, definition: 'A place in the United States:', sourceUrl: 'https://en.wiktionary.org/wiki/Bank#English' };
+  const child = { ...restored, definition: 'An unincorporated community in Garland County, Arkansas.', sourceUrl: 'https://en.wiktionary.org/w/index.php?title=Bank&oldid=123' };
+  const grouping = { ...row, originalSense: parent, referenceUrl: child.sourceUrl, meaningGroup: { sourceGloss: '# {{place|en|place|c/USA}}:' } };
+  const childEvidence = { ...evidence, sourcePage: 'Bank', parentSourceHash: hash(parent), sourceGloss: '## {{place|en|ucomm|co/Garland County|s/Arkansas}}.', sense: child };
+  const data = { ...input, dictionaries: { bank: { senses: [parent] } }, restoredSources: [childEvidence], corrections: [grouping, { ...row, senseId: child.id, originalSense: child, dictionaryParentSenseId: parent.id }], records: [{ ...review, sourceHash: hash(parent) }, { ...review, senseId: child.id, sourceHash: hash(child) }] };
+  expect(inspectDictionaryReview(data).errors).toEqual([]);
+  expect(inspectDictionaryReview(data).summary.meaningGroups).toBe(1);
+  expect(inspectDictionaryReview({ ...data, restoredSources: [{ ...childEvidence, sourceGloss: '## {{place|en|ucomm|co/Adams County|s/Idaho}}.' }] }).errors.join(' ')).toMatch(/gloss/i);
+  expect(inspectDictionaryReview({ ...data, corrections: [{ ...grouping, meaningGroup: { sourceGloss: '# {{place|en|city|c/USA}}:' } }, data.corrections[1]] }).errors.join(' ')).toMatch(/meaning group/i);
+});
+
 test('a source grouping needs a non-gloss heading, independently bound children and no exercise', () => {
   const grouping = { ...row, referenceUrl: restored.sourceUrl, meaningGroup: { sourceGloss: '# {{ng|Land beside a river.}}' } };
   const groupedInput = { ...restoredInput, corrections: [grouping, restoredInput.corrections[1]] };

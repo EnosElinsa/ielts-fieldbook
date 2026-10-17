@@ -6,7 +6,17 @@ import { fileURLToPath } from 'node:url';
 const identity = (entryId, senseId) => JSON.stringify([entryId, senseId]);
 const hash = value => createHash('sha256').update(JSON.stringify(value) ?? 'null').digest('hex');
 const areas = ['definition', 'example', 'collocations', 'distinctions'];
-const plainSourceGloss = value => value.replace(/<!--[^]*?-->/g, '').replace(/^#+\s*/, '').replace(/\{\{(?:ng|n-g|non-gloss)\|([^{}]*)\}\}/g, '$1').replace(/\{\{[^{}]*\}\}/g, '').replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2').replace(/\[\[([^\]]+)\]\]/g, '$1').replace(/'{2,}/g, '').replace(/\s+/g, ' ').trim();
+const plainSourceGloss = value => value.replace(/<!--[^]*?-->/g, '').replace(/^#+\s*/, '')
+  .replace(/\{\{place\|en\|(place|ucomm|CDP)\|((?:c|co|s)\/[^{}|]+(?:\|(?:c|co|s)\/[^{}|]+)*)\}\}/g, (_, kind, locations) => `${({ place: 'A place', ucomm: 'An unincorporated community', CDP: 'A census-designated place' })[kind]} in ${locations.split('|').map(location => location.slice(location.indexOf('/') + 1)).map(location => location === 'USA' ? 'the United States' : location).join(', ')}`)
+  .replace(/\{\{(?:ng|n-g|non-gloss)\|([^{}]*)\}\}/g, '$1').replace(/\{\{[^{}]*\}\}/g, '').replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2').replace(/\[\[([^\]]+)\]\]/g, '$1').replace(/'{2,}/g, '').replace(/\s+/g, ' ').trim();
+function dictionarySourcePage(sense, fallback) {
+  if (!sense?.sourceUrl) return fallback;
+  try {
+    const url = new URL(sense.sourceUrl);
+    if (url.origin !== 'https://en.wiktionary.org') return undefined;
+    return url.pathname.startsWith('/wiki/') ? decodeURIComponent(url.pathname.slice(6)) : url.pathname === '/w/index.php' ? url.searchParams.get('title') : undefined;
+  } catch { return undefined; }
+}
 
 /** Pending records are a work queue, never inferred linguistic approval. */
 export function inspectDictionaryReview({ entries, dictionaries, corrections, records, diagrams, restoredSources = [] }) {
@@ -38,7 +48,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
     const parent = dictionaries[term]?.senses.find(source => source.id === parentSenseId);
     if (!parent || sourceIds.has(sense.id) || restoredKeys.has(key)) errors.push(`Invalid restored parent or duplicate source: ${term}/${sense.id}`);
     if (!parent || hash(parent) !== parentSourceHash) errors.push(`Restored parent hash mismatch: ${term}/${sense.id}`);
-    if (entryById.get(entryId)?.term !== term || sourcePage !== term) errors.push(`Invalid restored entry identity: ${term}/${entryId}`);
+    if (entryById.get(entryId)?.term !== term || sourcePage !== dictionarySourcePage(parent, term)) errors.push(`Invalid restored entry identity: ${term}/${entryId}`);
     let url;
     try { url = new URL(sense.sourceUrl); } catch { /* Invalid evidence is reported below. */ }
     if (!Number.isSafeInteger(revision) || revision <= 0 || url?.origin !== 'https://en.wiktionary.org' || url.pathname !== '/w/index.php' || url.searchParams.get('title') !== sourcePage || url.searchParams.get('oldid') !== String(revision)) errors.push(`Invalid restored source revision: ${term}/${sense.id}`);
@@ -73,7 +83,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
       if (row.meaningGroup !== undefined) {
         const gloss = row.meaningGroup?.sourceGloss;
         const children = restoredSources.filter(source => source.entryId === review.entryId && source.parentSenseId === review.senseId && sources.has(JSON.stringify([source.term, source.sense.id])));
-        const heading = /^#\s*\{\{(?:ng|n-g|non-gloss)\|/.test(gloss || '') || (/^#[^#]/.test(gloss || '') && /\{\{lb\|en\|(?:[^{}|]+\|)*heading(?:\||\}\})/.test(gloss || ''));
+        const heading = /^#\s*\{\{(?:ng|n-g|non-gloss)\|/.test(gloss || '') || (/^#[^#]/.test(gloss || '') && /\{\{lb\|en\|(?:[^{}|]+\|)*heading(?:\||\}\})/.test(gloss || '')) || /^#\s*\{\{place\|en\|place\|(?:c|co|s)\/[^{}|]+\}\}\s*:\s*$/.test(gloss || '');
         if (!heading || plainSourceGloss(gloss || '') !== original?.definition || !children.length || children.some(child => child.sense.sourceUrl !== row.referenceUrl) || row.referenceOnly || row.usageReference || row.distinctionTask || diagrams.some(diagram => identity(diagram.entryId, diagram.senseId) === key)) errors.push(`Invalid meaning group: ${review.term}/${review.senseId}`);
       }
       if (row.usageReference !== undefined) {

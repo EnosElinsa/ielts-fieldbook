@@ -9,6 +9,14 @@ let release: ReturnType<typeof buildVocabularyResources>;
 // still compares a second independent build of the complete retained corpus.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 15_000);
 
+test('the common fair default preserves the preceding complete teaching release', () => {
+  const previous = JSON.parse(release.resources.get('/vocabulary-resources/manifest.24951e93b8e57f5f.json')!);
+  const teaching = (manifest: typeof release.manifest) => JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards['ve-7c6e1439']])!).teaching;
+  expect(teaching(previous).readiness.defaults.some((row: any) => row.entryId === 've-7c6e1439')).toBe(false);
+  expect(teaching(release.manifest).readiness.defaults.find((row: any) => row.entryId === 've-7c6e1439').sense.id).toBe('kaikki:437a461019b8d883c3');
+  for (const url of [...Object.values(previous.entryResources), ...Object.values(previous.entryTeachingResources), ...previous.units.flatMap((unit: any) => [unit.resource, unit.teachingResource]).filter(Boolean)] as string[]) expect(release.resources.has(url), url).toBe(true);
+});
+
 test('correcting a case-sensitive choice retains the preceding immutable teaching pack', () => {
   const preceding = JSON.parse(release.resources.get('/vocabulary-resources/manifest.6e9b003dc89eac70.json')!);
   const task = (manifest: typeof release.manifest) => JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards['ve-a672296']])!).teaching.readiness.corrections.find((row: any) => row.senseId === 'kaikki:885f1d39d5197848fe').distinctionTask;

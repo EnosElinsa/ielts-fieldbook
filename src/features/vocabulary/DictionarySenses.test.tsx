@@ -403,7 +403,13 @@ test("exclusions update without reloading the term and relation fragments are no
     </MemoryRouter>,
   );
   expect(screen.queryByText("To lessen severity.")).not.toBeInTheDocument();
-  expect(screen.getByText("Other dictionary meanings (0)")).toBeInTheDocument();
+  expect(screen.queryByText(/Other dictionary meanings/)).not.toBeInTheDocument();
+  view.rerender(
+    <MemoryRouter>
+      <DictionarySenses entry={entry} excludeSenses={[]} />
+    </MemoryRouter>,
+  );
+  expect(screen.getByText("Other dictionary meanings (1)")).toBeInTheDocument();
   expect(fetchMock).toHaveBeenCalledTimes(2);
 });
 

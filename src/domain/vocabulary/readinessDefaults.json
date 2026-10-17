@@ -14058,5 +14058,98 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-7c6e1439",
+    "originalSense": {
+      "id": "kaikki:437a461019b8d883c3",
+      "definition": "Just.",
+      "example": "He must be given a fair trial.",
+      "pos": "adj",
+      "synonyms": [
+        "honest",
+        "equitable",
+        "rightful",
+        "clean"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "a fair bit",
+        "a fair booty makes many a thief",
+        "a fair few",
+        "all's fair in love and war",
+        "by fair means or foul",
+        "culture-fair",
+        "everything is fair in love and war",
+        "faint heart never won fair lady",
+        "faint heart never won fair maiden",
+        "fair as the day",
+        "fair ball",
+        "Fairbank",
+        "Fairbanks",
+        "fair bet",
+        "fair-built",
+        "fair cake-cutting",
+        "fair catch",
+        "fair coin",
+        "fair comment",
+        "fair cop",
+        "fair copy",
+        "fair crack of the whip",
+        "fair dealing",
+        "fair dinks",
+        "fair dinkum",
+        "fair division",
+        "fair doos",
+        "fair do's",
+        "fair dos",
+        "fair enough"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/fair#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:437a461019b8d883c3",
+      "definition": "Just, impartial or reasonable in the treatment of people.",
+      "example": "Every applicant should receive a fair assessment.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "fair treatment",
+        "a fair assessment",
+        "a fair trial",
+        "a fair decision"
+      ],
+      "usage": "Adjective; common general learning meaning.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/fair#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Fair concerns justified treatment or procedure. It does not always require identical outcomes, because circumstances and needs can differ."
+      ],
+      "distinctionTask": {
+        "prompt": "An impartial assessment is a _____ assessment.",
+        "options": [
+          "fair",
+          "fare"
+        ],
+        "answer": "fair",
+        "explanation": "Fair is the adjective concerning justice. Fare is a separate noun or verb."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

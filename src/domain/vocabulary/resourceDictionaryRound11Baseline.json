@@ -1,0 +1,719 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:479e8947f8532459ae"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:39d83b71cef4d921d5"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:74f2374c90a695033b"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:84fb3a9d73de95977e"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:8bcdebea2897a55d02"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:baa7fa04ae198029e6"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:2357798314526ac85d"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:bdc803107a503ec6a6"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:42d70ac68f898b7bf0"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:906ca1ecdbd7b59525"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:2fb7f040278bc91e0f"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:4cfea157b74a60a5b9"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:4377049224da4a7453"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:4d0411f2b1395612bd"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:c127ccaa08acb4c61e"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:727e3863f6dc1678f1"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:69eccd41aa055bf2e2"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:f4f21a4f4be3a818cd"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:f6357ad1b6b2dc4a3f"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:76ada67c7bec20b051"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:281526ac3af6b2afad"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:09647aad54e0086535"
+    },
+    {
+      "entryId": "ve-b873ee5",
+      "senseId": "kaikki:4aa0ed2a6d55c50ca9"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:2497e6492cb6d85430"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:f9c556c888cb85434e"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:d7c0053ad8fbd2d8f4"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:4949180150f30d8252"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:5e16422bb15497aaac"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:a5c08205482e61ca21"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:fea84a5520c92fa321"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:893efa44be1e2da032"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:3ccec59e4b9f85a37a"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:6e43002356692e234f"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:f700da7054f724b789"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:ae2ec807693f69cde2"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:3d83e4a32883c10c53"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:1b6dc7b6de1aa8c2d7"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:9fd7c414bdc234e8b8"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:7135341ce94ce42c00"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:43500b3420dd83f58e"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:a71b7f26c28d19a045"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:72b5309f89dab412e7"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:87df4206b96d252342"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:f623443a06ed0d1b5d"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:ad4d777073f175f461"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:9d97f55cb8b88c4ac2"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:51516d535a2f459740"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:b6bba890404568642d"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:40d95a33476c91c999"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:22228c9d36bf8596a9"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:e92f848767b91d772b"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:ee567382c1738041e9"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:82c3ca3e6d6bed32d8"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:c60795febaf8321125"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:25876303e6daf16485"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:4a3553cfc682a67c48"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:34416c9c638fa86a13"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:6df61dbfea37192f88"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:93c3aadd7ac98d3170"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:d5498adecbe2dc6a8c"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:20f638056efd61d12a"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:92083c5aafdbba2415"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:d2c78fb82720ef1974"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:ad05ca05163a9b15a4"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:f7d9904d02619c9550"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:1eee07d884e6229689"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:2f424759a195fcbb86"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:cabe55d3dee7d8a0ed"
+    },
+    {
+      "entryId": "ve-b873ff1",
+      "senseId": "kaikki:2788008a98be4e4eb2"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:64aeaaf60258fbc9df"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:516b7f2a9a9f62d935"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:dfa45781614203479f"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:098df948fe39d98589"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:102ac7b41df35445f9"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:e9ebed5cbf8ed52011"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:db7b3cdc7aeabd399a"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:459b8a6c03061c3682"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:5f33d1c0f860ef661b"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:e332c311a3816e434a"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:e21eebba01840dd6a7"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:95c79f04148117a005"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:57831df93040eba00f"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:aba57d7cf2beac4bdb"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:10253aa0fd27c10c93"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:d5bd2518fd9a755c96"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:d4ef9e6ebeba8f3541"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:245de3f1facb006f45"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:397b0874f2abc2fd24"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:301ceb8917c6194b66"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:1b1481b5321969d39b"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:a84c85ccc0bd03d787"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:0a3d1d434c16a82b3c"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:749e5414c81fdc765c"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:a342b55ba0ba860adb"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:fea753008c2aff1515"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:c9dda158d2bc855e4c"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:295f84e3351dcf6eb9"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:42630630d242335f1b"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:4abe5ce5ea730f84a3"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:060c60ffa6ddf33d74"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:7464f563c0418239d5"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:010358752e4383234b"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:15483bb70b9cdd07ce"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:dd71b2cb49877e7393"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:496bd34ecff1873809"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:5478173709c1ae6cb8"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:d0e9e8ec79af9f551a"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:c8cf913d2fb37181e3"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:0d94a756f3863d2ed3"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:23b67ea11dce351324"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:5cb7e6a3f7b191f291"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:820a8563d88a333642"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:3db90a9384c6065822"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:106db06b435c9bb85e"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:74aee6b6d0239b702f"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:c19b8f17eaf3c56c1d"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:693cea33130b905085"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:5babea86b6d648ef35"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:8dae900c2542d8752a"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:024b4e99fe13f13288"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:f2eef2274e19795ca3"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:ff1a853ff885991d98"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:798e0d07438f388660"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:90051ee4a743a59700"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:7edc2bb3d85ccecd66"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:1f894e30b7b8c85403"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:51d65f63071555bbe1"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:4d19a312ec5f314ccb"
+    },
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "wiktionary:restored:fc2c17b8732d18419e"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:1781a4d89716b96da2"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:e724d22d34bdd28828"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:b026928523b2a40715"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:437a461019b8d883c3"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:4c3902f33fa08c3ca4"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:f421b9b72afba8113a"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:95a593a48be7600675"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:3f9192a506aa71c11f"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:b26594e55cc7c4a858"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:0c50f07f3d7abc5541"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:e57269c04fc61d51ba"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:8f3f4d501ac6920aa7"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:3f0ee52885eabe8d6c"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:e20881107a0bb0d0a2"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:3c68f3463067b46eb6"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:452dd3cdef4af99087"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:4df7ff90468764b9e2"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:80c93034945f80a042"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:7d35b138b4cbdcfa93"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:29e20e17b41b6d1625"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:58fda092cf337d3370"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:08736a52920bb1c4b4"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:0fe53c9288f3b780af"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:080f74140a83964ab9"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:e34a30f6e5647ce926"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:3620ce2f9723368e94"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:840637decd4ebdef99"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:db924b34c29ed455a2"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:af330ac76c515a553e"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:17cad4bab681d438ba"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:0bd11aa850ecb81f87"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:80d6bd2f4f09a84b09"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "kaikki:7b1d4c2db1ad33e928"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "wiktionary:restored:264648720337d2623c"
+    },
+    {
+      "entryId": "ve-7c6e1439",
+      "senseId": "wiktionary:restored:f5ad73a51c62074d77"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-7c7033b1",
+      "senseId": "kaikki:c5ed35d73f46be2f7c",
+      "term": "bear",
+      "example": "A bear emerged from the forest beside the lake.",
+      "originalSense": {
+        "id": "kaikki:c5ed35d73f46be2f7c",
+        "definition": "A large, generally omnivorous mammal (a few species are purely carnivorous or herbivorous) of the family Ursidae; having shaggy fur, a very small tail, and flat feet.",
+        "example": "",
+        "pos": "noun",
+        "synonyms": [
+          "bruin",
+          "ursid",
+          "bear"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [
+          "American black bear",
+          "ant bear",
+          "ant-bear",
+          "antibear",
+          "Arctic bear",
+          "arctic bear",
+          "Asian black bear",
+          "Atlas bear",
+          "Australian bear",
+          "Auvergne bear",
+          "average bear",
+          "bear animalcule",
+          "bear bag",
+          "bearbait",
+          "bear bait",
+          "bear-bait",
+          "bearbaiter",
+          "bear-baiting",
+          "bear baiting",
+          "bearbaiting",
+          "bear banger",
+          "bearberry",
+          "bear board",
+          "bear cage",
+          "bear cat",
+          "bearcat",
+          "bear claw",
+          "bear crawl",
+          "Bear Creek",
+          "bear cub"
+        ]
+      }
+    }
+  ],
+  "removeDefaults": [
+    "ve-7c6e1439"
+  ],
+  "restoreDefaults": []
+}
