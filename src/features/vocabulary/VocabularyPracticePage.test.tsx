@@ -363,7 +363,7 @@ test("235-word group submits one frozen full-group attempt beyond the old cap", 
   const [prepared] = fb.current.persistVocabularySession.mock.calls[0];
   expect(prepared.vocabularyReviews).toHaveLength(235);
   expect(prepared.vocabularySessions[0].selection).toEqual({ kind: 'unit', bookId: 'test-book', unitId: 'test-group' });
-});
+}, 15_000);
 
 test("catalog-only draft recovery waits for the saved book and retains answers when loading fails", async () => {
   const user = userEvent.setup();

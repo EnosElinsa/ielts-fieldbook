@@ -11227,5 +11227,157 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "economy",
+    "entryId": "ve-e5aff959",
+    "parentSenseId": "kaikki:b36bc4f7147033f1d4",
+    "parentSourceHash": "40b877dc6829d9c604edcf9f2ac94c14e30ce147f274f8ff70ad762b1c4036b6",
+    "sourcePage": "economy",
+    "revision": 93599234,
+    "sourceGloss": "## {{label|en|obsolete}} The regular operation of nature in the generation, nutrition and preservation of animals or plants.",
+    "sense": {
+      "id": "wiktionary:restored:f036bb50b931215e4f",
+      "pos": "noun",
+      "definition": "The regular operation of nature in the generation, nutrition and preservation of animals or plants.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "economy",
+    "entryId": "ve-e5aff959",
+    "parentSenseId": "kaikki:b36bc4f7147033f1d4",
+    "parentSourceHash": "40b877dc6829d9c604edcf9f2ac94c14e30ce147f274f8ff70ad762b1c4036b6",
+    "sourcePage": "economy",
+    "revision": 93599234,
+    "sourceGloss": "## {{label|en|obsolete}} System of management; general regulation and disposition of the affairs of a state or nation, or of any department of government.",
+    "sense": {
+      "id": "wiktionary:restored:bafcd8161f82269775",
+      "pos": "noun",
+      "definition": "System of management; general regulation and disposition of the affairs of a state or nation, or of any department of government.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "economy",
+    "entryId": "ve-e5aff959",
+    "parentSenseId": "kaikki:b36bc4f7147033f1d4",
+    "parentSourceHash": "40b877dc6829d9c604edcf9f2ac94c14e30ce147f274f8ff70ad762b1c4036b6",
+    "sourcePage": "economy",
+    "revision": 93599234,
+    "sourceGloss": "## {{label|en|obsolete}} A system of rules, regulations, rites and ceremonies.",
+    "sense": {
+      "id": "wiktionary:restored:aac59b0a1012876f36",
+      "pos": "noun",
+      "definition": "A system of rules, regulations, rites and ceremonies.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "economy",
+    "entryId": "ve-e5aff959",
+    "parentSenseId": "kaikki:b36bc4f7147033f1d4",
+    "parentSourceHash": "40b877dc6829d9c604edcf9f2ac94c14e30ce147f274f8ff70ad762b1c4036b6",
+    "sourcePage": "economy",
+    "revision": 93599234,
+    "sourceGloss": "## {{label|en|obsolete}} The disposition or arrangement of any work.",
+    "sense": {
+      "id": "wiktionary:restored:4c13b84980d3be896c",
+      "pos": "noun",
+      "definition": "The disposition or arrangement of any work.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "economics",
+    "entryId": "ve-11936339",
+    "parentSenseId": "kaikki:4a8c0397c4f5422c90",
+    "parentSourceHash": "6c8cbe809ee029dabcb370f90acb12ce3a0e902f689193ba4f78a14f02bfc375",
+    "sourcePage": "economics",
+    "revision": 93623138,
+    "sourceGloss": "## Management of household {{l|en|finances|id=funds}}; also, the [[financial#Adjective|financial]] [[situation]] of a household.",
+    "sense": {
+      "id": "wiktionary:restored:edf1ce27e68a81cd24",
+      "pos": "noun",
+      "definition": "Management of household finances; also, the financial situation of a household.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=economics&oldid=93623138",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "economics",
+    "entryId": "ve-11936339",
+    "parentSenseId": "kaikki:815505c0662b65198e",
+    "parentSourceHash": "68ae822a1ada51b799de5842ab7173756ada470ef1deeb48d77ae48459dc8385",
+    "sourcePage": "economics",
+    "revision": 93623138,
+    "sourceGloss": "## ''Chiefly with a [[descriptive#Adjective|descriptive]] [[word#Noun|word]]'': the [[application]] of this study to a [[particular#Adjective|particular]] [[domain]].",
+    "sense": {
+      "id": "wiktionary:restored:b0ddde62191c0eeea4",
+      "pos": "noun",
+      "definition": "Chiefly with a descriptive word: the application of this study to a particular domain.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=economics&oldid=93623138",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "economics",
+    "entryId": "ve-11936339",
+    "parentSenseId": "kaikki:815505c0662b65198e",
+    "parentSourceHash": "68ae822a1ada51b799de5842ab7173756ada470ef1deeb48d77ae48459dc8385",
+    "sourcePage": "economics",
+    "revision": 93623138,
+    "sourceGloss": "## The financial situation of a [[nation#Noun|nation]], [[state#Noun|state]], etc.",
+    "sense": {
+      "id": "wiktionary:restored:d2bd62d930c78b5cdc",
+      "pos": "noun",
+      "definition": "The financial situation of a nation, state, etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=economics&oldid=93623138",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "economics",
+    "entryId": "ve-11936339",
+    "parentSenseId": "kaikki:815505c0662b65198e",
+    "parentSourceHash": "68ae822a1ada51b799de5842ab7173756ada470ef1deeb48d77ae48459dc8385",
+    "sourcePage": "economics",
+    "revision": 93623138,
+    "sourceGloss": "## {{lb|en|with {{lg|plural}} [[agreement]]}} ''Chiefly followed by'' '''[[of#Preposition|of]]''': the financial [[aspect#Noun|aspects]] of an [[activity]], [[enterprise#Noun|enterprise]], etc.",
+    "sense": {
+      "id": "wiktionary:restored:097476abbbfd4e08fd",
+      "pos": "noun",
+      "definition": "Chiefly followed by of: the financial aspects of an activity, enterprise, etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=economics&oldid=93623138",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

@@ -2094,5 +2094,173 @@
     "definition": "The result or scoreline of a sporting contest.",
     "pos": "noun",
     "kind": "outcome-score"
+  },
+  {
+    "entryId": "vocab:economic",
+    "senseId": "kaikki:57917eb6f12094a982",
+    "term": "economic",
+    "definition": "Relating to the production, distribution or consumption of goods and services in an economy.",
+    "pos": "adj",
+    "kind": "economic-economy"
+  },
+  {
+    "entryId": "vocab:economic",
+    "senseId": "kaikki:f31c970a6927ed72d4",
+    "term": "economic",
+    "definition": "Using resources efficiently or offering good value; economical.",
+    "pos": "adj",
+    "kind": "economic-value"
+  },
+  {
+    "entryId": "vocab:economic",
+    "senseId": "kaikki:7be522d319911ea68d",
+    "term": "economic",
+    "definition": "Relating to economics: the study of resources, money and the economy.",
+    "pos": "adj",
+    "kind": "economic-model"
+  },
+  {
+    "entryId": "ve-e5aff959",
+    "senseId": "kaikki:b36bc4f7147033f1d4",
+    "term": "economy",
+    "definition": "Careful management of a community, system or its resources.",
+    "pos": "noun",
+    "kind": "economy-management"
+  },
+  {
+    "entryId": "ve-e5aff959",
+    "senseId": "kaikki:6aa05cb36e263d7fbd",
+    "term": "economy",
+    "definition": "Careful use of resources with little unnecessary waste.",
+    "pos": "noun",
+    "kind": "economy-words"
+  },
+  {
+    "entryId": "ve-e5aff959",
+    "senseId": "kaikki:c5164bec5784a7e029",
+    "term": "economy",
+    "definition": "A system of production, distribution and consumption of goods and services.",
+    "pos": "noun",
+    "kind": "economy-system"
+  },
+  {
+    "entryId": "ve-e5aff959",
+    "senseId": "kaikki:5a517545c39f26865b",
+    "term": "economy",
+    "definition": "The lower standard-fare class or section of passenger travel, especially on an aircraft or train.",
+    "pos": "noun",
+    "kind": "economy-class"
+  },
+  {
+    "entryId": "ve-e5aff959",
+    "senseId": "kaikki:87fdec28fe4cca4793",
+    "term": "economy",
+    "definition": "Designed to use few resources, cost little to run or offer good value.",
+    "pos": "adj",
+    "kind": "economy-model"
+  },
+  {
+    "entryId": "ve-e5aff959",
+    "senseId": "kaikki:9ff59caa348f2c54d6",
+    "term": "economy",
+    "definition": "By economy class when travelling by air.",
+    "pos": "adv",
+    "kind": "economy-fly"
+  },
+  {
+    "entryId": "ve-11936339",
+    "senseId": "kaikki:815505c0662b65198e",
+    "term": "economics",
+    "definition": "The study of how resources and wealth are allocated, produced, distributed and consumed.",
+    "pos": "noun",
+    "kind": "economics-study"
+  },
+  {
+    "entryId": "ve-11936339",
+    "senseId": "wiktionary:restored:edf1ce27e68a81cd24",
+    "term": "economics",
+    "definition": "Management of household finances, or a household’s financial situation.",
+    "pos": "noun",
+    "kind": "economics-household"
+  },
+  {
+    "entryId": "ve-11936339",
+    "senseId": "wiktionary:restored:b0ddde62191c0eeea4",
+    "term": "economics",
+    "definition": "The application of economics to a particular field, usually named by a descriptive word.",
+    "pos": "noun",
+    "kind": "economics-applied"
+  },
+  {
+    "entryId": "ve-11936339",
+    "senseId": "wiktionary:restored:d2bd62d930c78b5cdc",
+    "term": "economics",
+    "definition": "The financial situation of a nation, state or similar political unit.",
+    "pos": "noun",
+    "kind": "economics-nation"
+  },
+  {
+    "entryId": "ve-11936339",
+    "senseId": "wiktionary:restored:097476abbbfd4e08fd",
+    "term": "economics",
+    "definition": "The financial aspects or feasibility of an activity or enterprise, usually in the economics of something.",
+    "pos": "noun",
+    "kind": "economics-aspects"
+  },
+  {
+    "entryId": "ve-7e96b96c",
+    "senseId": "kaikki:cc3a68547df14ff2be",
+    "term": "result",
+    "definition": "To arise or follow as a consequence of a cause or process.",
+    "pos": "verb",
+    "kind": "result-from"
+  },
+  {
+    "entryId": "ve-7e96b96c",
+    "senseId": "kaikki:4da9b8c56c3df217b2",
+    "term": "result",
+    "definition": "To lead to or produce a consequence, with in introducing the outcome.",
+    "pos": "verb",
+    "kind": "result-in"
+  },
+  {
+    "entryId": "ve-7e96b96c",
+    "senseId": "kaikki:79aeef10e68be6905f",
+    "term": "result",
+    "definition": "An outcome, effect, conclusion or value obtained from an action or process.",
+    "pos": "noun",
+    "kind": "result-value"
+  },
+  {
+    "entryId": "ve-7e96b96c",
+    "senseId": "kaikki:89d14c4a1244ecc471",
+    "term": "result",
+    "definition": "A tangible or beneficial achievement produced by effort.",
+    "pos": "noun",
+    "kind": "result-achievement"
+  },
+  {
+    "entryId": "ve-7e96b96c",
+    "senseId": "kaikki:b82457a7c62e9ea4e0",
+    "term": "result",
+    "definition": "The final score of a sporting game.",
+    "pos": "noun",
+    "kind": "result-score"
+  },
+  {
+    "entryId": "ve-7e96b96c",
+    "senseId": "kaikki:860f64660c6c8e0257",
+    "term": "result",
+    "definition": "A favourable outcome or success for someone.",
+    "pos": "noun",
+    "kind": "result-success"
+  },
+  {
+    "entryId": "ve-7e96b96c",
+    "senseId": "kaikki:78a38c3d2878df67e8",
+    "term": "result",
+    "definition": "An exclamation expressing pleasure at a favourable outcome.",
+    "pos": "intj",
+    "kind": "result-exclamation"
   }
 ]

@@ -10201,27 +10201,6 @@
   },
   {
     "entryId": "ve-e5aff959",
-    "sense": {
-      "id": "kaikki:c5164bec5784a7e029",
-      "definition": "The system through which goods and services are produced, distributed, and consumed.",
-      "example": "Tourism contributes significantly to the local economy.",
-      "pos": "noun",
-      "synonyms": [],
-      "antonyms": [],
-      "collocations": [],
-      "usage": "",
-      "register": "countable, uncountable",
-      "wordFamily": [],
-      "source": "English Wiktionary via Kaikki.org",
-      "attribution": "English Wiktionary contributors",
-      "sourceUrl": "https://en.wiktionary.org/wiki/economy#English",
-      "license": "CC-BY-SA-4.0",
-      "editorial": {
-        "source": "Fieldbook core content review",
-        "license": "CC-BY-4.0",
-        "attribution": "Fieldbook editorial contributors"
-      }
-    },
     "originalSense": {
       "id": "kaikki:c5164bec5784a7e029",
       "definition": "The system of production and distribution and consumption. The overall measure of a currency system; as the national economy.",
@@ -10268,6 +10247,74 @@
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/economy#English",
       "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:c5164bec5784a7e029",
+      "definition": "A system of production, distribution and consumption of goods and services.",
+      "example": "Tourism is an important part of the island economy.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "the national economy",
+        "a local economy",
+        "a growing economy"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "agroeconomy",
+        "agro-economy",
+        "attention economy",
+        "bioeconomy",
+        "black economy",
+        "blue economy",
+        "centrally planned economy",
+        "circular economy",
+        "collaborative economy",
+        "command economy",
+        "cybereconomy",
+        "diseconomy",
+        "domestic economy",
+        "dual economy",
+        "economic",
+        "economical",
+        "economism",
+        "economist",
+        "economize",
+        "economocracy",
+        "economy car",
+        "economy class",
+        "economy class syndrome",
+        "economy model",
+        "economy of means",
+        "economy of scale",
+        "economy picking",
+        "economy rate",
+        "economy rice",
+        "economywide"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/economy#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "An economy is the actual system of economic activity; economics studies such systems. The economy is broader than its currency, government budget or a single statistic such as GDP."
+      ],
+      "distinctionTask": {
+        "prompt": "An island economy is _____.",
+        "options": [
+          "a system of production, distribution and consumption",
+          "only the academic study of that system"
+        ],
+        "answer": "a system of production, distribution and consumption",
+        "explanation": "Economics is the field of study; an economy is the system studied."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
     }
   },
   {
@@ -16890,6 +16937,348 @@
         ],
         "answer": "the stated result of the meeting",
         "explanation": "An agreement can be an outcome without proving subsequent implementation."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "vocab:economic",
+    "originalSense": {
+      "id": "kaikki:57917eb6f12094a982",
+      "definition": "Pertaining to an economy.",
+      "example": "Economics is a messy discipline: too fluid to be a science, too rigorous to be an art. Perhaps it is fitting that economists’ most-used metric, gross domestic product (GDP), is a tangle too. GDP measures the total value of output in an economic territory. Its apparent simplicity explains why it is scrutinised down to tenths of a percentage point every month.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "agro-economic",
+        "agroeconomic",
+        "antieconomic",
+        "bioeconomic",
+        "clinicoeconomic",
+        "countereconomic",
+        "economical",
+        "economic capital",
+        "economic corridor",
+        "economic crisis",
+        "economic determinism",
+        "economic emigrant",
+        "economic equilibrium",
+        "economic freedom",
+        "economic growth",
+        "economic human",
+        "economic immigrant",
+        "economic indicator",
+        "economic liberal",
+        "economic liberalism",
+        "economic life",
+        "economic man",
+        "economic migrant",
+        "economic moat",
+        "economic mobility",
+        "economic nationalism",
+        "economicology",
+        "economic output",
+        "economic rationalism",
+        "economic refugee"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/economic#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:57917eb6f12094a982",
+      "definition": "Relating to the production, distribution or consumption of goods and services in an economy.",
+      "example": "The new railway may support economic growth in the region.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "economic growth",
+        "economic policy",
+        "economic conditions"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "agro-economic",
+        "agroeconomic",
+        "antieconomic",
+        "bioeconomic",
+        "clinicoeconomic",
+        "countereconomic",
+        "economical",
+        "economic capital",
+        "economic corridor",
+        "economic crisis",
+        "economic determinism",
+        "economic emigrant",
+        "economic equilibrium",
+        "economic freedom",
+        "economic growth",
+        "economic human",
+        "economic immigrant",
+        "economic indicator",
+        "economic liberal",
+        "economic liberalism",
+        "economic life",
+        "economic man",
+        "economic migrant",
+        "economic moat",
+        "economic mobility",
+        "economic nationalism",
+        "economicology",
+        "economic output",
+        "economic rationalism",
+        "economic refugee"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/economic#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Economic usually concerns the economy; economical usually concerns avoiding waste. Economic growth does not mean every household becomes better off."
+      ],
+      "distinctionTask": {
+        "prompt": "Economic growth concerns _____.",
+        "options": [
+          "activity in an economy",
+          "a guarantee that every household avoids waste"
+        ],
+        "answer": "activity in an economy",
+        "explanation": "Economic concerns the economy; growth alone does not establish each household’s outcome."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-11936339",
+    "originalSense": {
+      "id": "kaikki:815505c0662b65198e",
+      "definition": "The study of resource and wealth allocation, consumption, and distribution, of capital and investment, and of management of the factors of production.",
+      "example": "Mary studied economics for five years before going into banking.",
+      "pos": "noun",
+      "synonyms": [
+        "dismal science",
+        "political economy"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "broadly, plural, singular",
+      "register": "broadly, plural, singular",
+      "wordFamily": [
+        "agroeconomics",
+        "applied economics",
+        "behavioral economics",
+        "bioeconomics",
+        "Buddhist economics",
+        "burgernomics",
+        "Bushonomics",
+        "business economics",
+        "Carternomics",
+        "clinicoeconomics",
+        "Clintonomics",
+        "counter-economics",
+        "countereconomics",
+        "demand-side economics",
+        "economese",
+        "economics of scale",
+        "Enronomics",
+        "exergoeconomics",
+        "financial economics",
+        "Fordonomics",
+        "freeconomics",
+        "genoeconomics",
+        "geoeconomics",
+        "Hitlernomics",
+        "home economics",
+        "hydroeconomics",
+        "Johnsonomics",
+        "Kennedynomics",
+        "Lincolnomics",
+        "macroeconomics"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/economics#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:815505c0662b65198e",
+      "definition": "The study of how resources and wealth are allocated, produced, distributed and consumed.",
+      "example": "Economics is the study of how people allocate scarce resources.",
+      "pos": "noun",
+      "synonyms": [
+        "dismal science",
+        "political economy"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "study economics",
+        "an economics course",
+        "the study of economics"
+      ],
+      "usage": "Social science; singular agreement for the field of study.",
+      "register": "broadly, plural, singular",
+      "wordFamily": [
+        "agroeconomics",
+        "applied economics",
+        "behavioral economics",
+        "bioeconomics",
+        "Buddhist economics",
+        "burgernomics",
+        "Bushonomics",
+        "business economics",
+        "Carternomics",
+        "clinicoeconomics",
+        "Clintonomics",
+        "counter-economics",
+        "countereconomics",
+        "demand-side economics",
+        "economese",
+        "economics of scale",
+        "Enronomics",
+        "exergoeconomics",
+        "financial economics",
+        "Fordonomics",
+        "freeconomics",
+        "genoeconomics",
+        "geoeconomics",
+        "Hitlernomics",
+        "home economics",
+        "hydroeconomics",
+        "Johnsonomics",
+        "Kennedynomics",
+        "Lincolnomics",
+        "macroeconomics"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/economics#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Economics as an academic subject normally takes singular agreement: economics is. The economy is the actual system studied. The economics of an activity has a separate financial-aspects sense, usually with plural agreement."
+      ],
+      "distinctionTask": {
+        "prompt": "Economics _____ a social science.",
+        "options": [
+          "is",
+          "are"
+        ],
+        "answer": "is",
+        "explanation": "The academic subject economics takes singular agreement."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7e96b96c",
+    "originalSense": {
+      "id": "kaikki:79aeef10e68be6905f",
+      "definition": "That which results; the conclusion or end to which any course or condition of things leads, or which is obtained by any process or operation; consequence or effect.",
+      "example": "the result of a course of action;  the result of a mathematical operation",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "resultance",
+        "result in",
+        "resultive",
+        "as a result",
+        "as a result of",
+        "end result",
+        "misresult",
+        "nonresult",
+        "no result",
+        "null result",
+        "resultative",
+        "result clause",
+        "resultful",
+        "resultfulness",
+        "resultless",
+        "resultlessness",
+        "result noun",
+        "result-oriented",
+        "resultset",
+        "result type",
+        "search result"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/result#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:79aeef10e68be6905f",
+      "definition": "An outcome, effect, conclusion or value obtained from an action or process.",
+      "example": "The result of adding 7 and 5 is 12.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "the result of",
+        "as a result",
+        "a test result"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "resultance",
+        "result in",
+        "resultive",
+        "as a result",
+        "as a result of",
+        "end result",
+        "misresult",
+        "nonresult",
+        "no result",
+        "null result",
+        "resultative",
+        "result clause",
+        "resultful",
+        "resultfulness",
+        "resultless",
+        "resultlessness",
+        "result noun",
+        "result-oriented",
+        "resultset",
+        "result type",
+        "search result"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/result#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A result can be positive, negative or neutral. A test result is an observation or report, not automatically a diagnosis; an arithmetic result is obtained by the stated operation."
+      ],
+      "distinctionTask": {
+        "prompt": "The result of adding 7 and 5 is _____.",
+        "options": [
+          "12, the value obtained from the operation",
+          "7, because the result must be the first input"
+        ],
+        "answer": "12, the value obtained from the operation",
+        "explanation": "The result is the output of the stated operation."
       },
       "editorial": {
         "source": "Fieldbook core content review",

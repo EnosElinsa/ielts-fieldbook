@@ -7,6 +7,7 @@ const identity = (entryId, senseId) => JSON.stringify([entryId, senseId]);
 const hash = value => createHash('sha256').update(JSON.stringify(value) ?? 'null').digest('hex');
 const areas = ['definition', 'example', 'collocations', 'distinctions'];
 export const plainSourceGloss = value => value.replace(/<!--[^]*?-->/g, '').replace(/^#+\s*/, '')
+  .replace(/\{\{(?:lb|label)\|(?:[^{}]|\{\{[^{}]*\}\})*\}\}/g, '')
   .replace(/\[\[(?:File|Image):[^]*?\]\]/g, '')
   .replace(/\{\{(?:U|cap)\|([^{}|]+)\}\}/g, (_, term) => term[0].toUpperCase() + term.slice(1))
   .replace(/\{\{ellipsis of\|en\|([^{}|]+)\}\}/g, 'Ellipsis of $1')

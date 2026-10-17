@@ -29814,6 +29814,521 @@
       ],
       "referenceUrl": "https://en.wiktionary.org/w/index.php?title=outcome&oldid=93517328",
       "diagramReviewed": true
+    },
+    {
+      "term": "economic",
+      "entryId": "vocab:economic",
+      "senseId": "kaikki:57917eb6f12094a982",
+      "sourceHash": "791644ea910e1137ff8ee5a7d7694254d15f7dbca8da65cc10b06fc7d2ea2930",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economic&oldid=93623133",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economic",
+      "entryId": "vocab:economic",
+      "senseId": "kaikki:f31c970a6927ed72d4",
+      "sourceHash": "bba04a2f39239b5ecf91485e00217e669b2f8339409480fa53676205f5478e00",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economic&oldid=93623133",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economic",
+      "entryId": "vocab:economic",
+      "senseId": "kaikki:7be522d319911ea68d",
+      "sourceHash": "2d7a51679e60666c95d56747533030448c3b9aacfc50182702dee328f16b8bb6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economic&oldid=93623133",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economic",
+      "entryId": "vocab:economic",
+      "senseId": "kaikki:9fc72694709794876d",
+      "sourceHash": "72fb20e267cea418aab513686d46363bfde85cea4021b238aaf32dab2eef17fe",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economic&oldid=93623133"
+    },
+    {
+      "term": "economic",
+      "entryId": "vocab:economic",
+      "senseId": "kaikki:b80837dd7a8c47ce1b",
+      "sourceHash": "cc95e8e16fc3554a345f407093b0fa0227788bad8d0756bace07044a2da57991",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economic&oldid=93623133"
+    },
+    {
+      "term": "economic",
+      "entryId": "vocab:economic",
+      "senseId": "kaikki:3dd7c2b580086728e5",
+      "sourceHash": "e3fabeea2e2588368da7d4273a7942d3e71f43cb0b7087f980e15ae4ff38fb18",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economic&oldid=93623133"
+    },
+    {
+      "term": "economic",
+      "entryId": "vocab:economic",
+      "senseId": "kaikki:43e9424dfdfe394333",
+      "sourceHash": "5730c7a3d5e2d7006eb909265b50d762728e78382bc022e9d9c2b329e6e9a2d9",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economic&oldid=93623133"
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "kaikki:b36bc4f7147033f1d4",
+      "sourceHash": "40b877dc6829d9c604edcf9f2ac94c14e30ce147f274f8ff70ad762b1c4036b6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "kaikki:9c29a12a4b2bfdab43",
+      "sourceHash": "6808c205e674fae45e2b4b561a1f3a6853d4d967e092b99249be2c53208c1725",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234"
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "kaikki:6aa05cb36e263d7fbd",
+      "sourceHash": "c489b2a749dea5297b24abf2e791aeff1ffdcdccc7bed4359e3590c7b183d137",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "kaikki:c5164bec5784a7e029",
+      "sourceHash": "dc1bc468da4c914a38071326aae7af7d79bff0b6e2c33adb3287f8df6cc7444e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "kaikki:2d598f3ecdbf6f5aff",
+      "sourceHash": "feae3c55eb9433a819c4dfc22983d96663c3d1387e75173167c36696401bc1cb",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234"
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "kaikki:5a517545c39f26865b",
+      "sourceHash": "adc11897bd51e0c865c0a2070b681a31fdc0094dd0b235c654b713b407f578fa",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "kaikki:63f1c78ead7f9884a7",
+      "sourceHash": "e15222bfb7a9aa6975ac7c3e887af81eec6e2f58e63f4593e22a29b8a3c8c1a0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234"
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "kaikki:87fdec28fe4cca4793",
+      "sourceHash": "a33ec9e0a667f49af248a9cf47d79363ed5162b1d1bdeb3001cb5a02fac04997",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "kaikki:9ff59caa348f2c54d6",
+      "sourceHash": "87e098e899603ba2200b9a960bd0645992d45a6509397a335b5f9010bb38adb4",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "wiktionary:restored:f036bb50b931215e4f",
+      "sourceHash": "f18acddc5db318c54fd72cc363ca6d33f32211bcefc4b10d2207b2021f9d85c6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234"
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "wiktionary:restored:bafcd8161f82269775",
+      "sourceHash": "264b69f92504580fd9d48f9186a12847aafdebb764489e721766869c053c5b1e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234"
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "wiktionary:restored:aac59b0a1012876f36",
+      "sourceHash": "dc89bc7c68a94371ccf1d0bc028ca7da231b468953edad3e10ad18ddffbf6b77",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234"
+    },
+    {
+      "term": "economy",
+      "entryId": "ve-e5aff959",
+      "senseId": "wiktionary:restored:4c13b84980d3be896c",
+      "sourceHash": "e8f748339c201ffd72ea5c1cd3dc4e450727dd5c94333314d1f37d9e2c602569",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economy&oldid=93599234"
+    },
+    {
+      "term": "economics",
+      "entryId": "ve-11936339",
+      "senseId": "kaikki:4a8c0397c4f5422c90",
+      "sourceHash": "6c8cbe809ee029dabcb370f90acb12ce3a0e902f689193ba4f78a14f02bfc375",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economics&oldid=93623138"
+    },
+    {
+      "term": "economics",
+      "entryId": "ve-11936339",
+      "senseId": "kaikki:815505c0662b65198e",
+      "sourceHash": "68ae822a1ada51b799de5842ab7173756ada470ef1deeb48d77ae48459dc8385",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economics&oldid=93623138",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economics",
+      "entryId": "ve-11936339",
+      "senseId": "kaikki:7caa7e6d91129b7c40",
+      "sourceHash": "97e76e47225280070dacdc77336afc7bc7eb9a3d01a7deaeddf2e7229b57d5f1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economics&oldid=93623138"
+    },
+    {
+      "term": "economics",
+      "entryId": "ve-11936339",
+      "senseId": "wiktionary:restored:edf1ce27e68a81cd24",
+      "sourceHash": "e8c866d337647588c5995ecb3716cfa82c2a3b09ce75ed3b25bbcfeb8c7bfad2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economics&oldid=93623138",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economics",
+      "entryId": "ve-11936339",
+      "senseId": "wiktionary:restored:b0ddde62191c0eeea4",
+      "sourceHash": "8bc0be94541effe6d38ddb9a475dff8b0353dc7a2999de95e3351c07b594941d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economics&oldid=93623138",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economics",
+      "entryId": "ve-11936339",
+      "senseId": "wiktionary:restored:d2bd62d930c78b5cdc",
+      "sourceHash": "ee2e3728f1a23f082d66a16c9fc5656f26934dc8928bcfce5cae070088a23530",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economics&oldid=93623138",
+      "diagramReviewed": true
+    },
+    {
+      "term": "economics",
+      "entryId": "ve-11936339",
+      "senseId": "wiktionary:restored:097476abbbfd4e08fd",
+      "sourceHash": "ef9c9c5717d9dd99266b85bce7deaa61a0fe9fc2a44cbe26a0357fa117069147",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=economics&oldid=93623138",
+      "diagramReviewed": true
+    },
+    {
+      "term": "result",
+      "entryId": "ve-7e96b96c",
+      "senseId": "kaikki:cc3a68547df14ff2be",
+      "sourceHash": "f9b5972237936776456cf9f25d0bcefdb7e23fa025627d2f55c3975e07f0baa5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=result&oldid=93525403",
+      "diagramReviewed": true
+    },
+    {
+      "term": "result",
+      "entryId": "ve-7e96b96c",
+      "senseId": "kaikki:4da9b8c56c3df217b2",
+      "sourceHash": "ba5ba259de281e34422c83c335e019f4f08f45f8ca0ca2023a488b3f52d4a6ec",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=result&oldid=93525403",
+      "diagramReviewed": true
+    },
+    {
+      "term": "result",
+      "entryId": "ve-7e96b96c",
+      "senseId": "kaikki:71d42607adeccdbfa7",
+      "sourceHash": "29806e36b462ace3a4a4b0d768fddd6df943f460da243a26704f5a1671232c11",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=result&oldid=93525403"
+    },
+    {
+      "term": "result",
+      "entryId": "ve-7e96b96c",
+      "senseId": "kaikki:d7c768f1f7c0bbe705",
+      "sourceHash": "cac4d4fbaa0c859685e7d1d9e0428d9168e6e514e4a29bf079a8135e78962a5b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=result&oldid=93525403"
+    },
+    {
+      "term": "result",
+      "entryId": "ve-7e96b96c",
+      "senseId": "kaikki:79aeef10e68be6905f",
+      "sourceHash": "0877909f11783e5d98aee2b31c3b9595cbf06de380634b50a969c599b5aa2bfe",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=result&oldid=93525403",
+      "diagramReviewed": true
+    },
+    {
+      "term": "result",
+      "entryId": "ve-7e96b96c",
+      "senseId": "kaikki:89d14c4a1244ecc471",
+      "sourceHash": "d7b4b78da2a01fd2de1ccae69cbe82fc283242ed8dd9d1bfffbb66dab003c5a2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=result&oldid=93525403",
+      "diagramReviewed": true
+    },
+    {
+      "term": "result",
+      "entryId": "ve-7e96b96c",
+      "senseId": "kaikki:74174176591c4be076",
+      "sourceHash": "1e3082424b7525b5cd64f4d7fb364b3f3674eb787551e474ce6adef23e0daacf",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=result&oldid=93525403"
+    },
+    {
+      "term": "result",
+      "entryId": "ve-7e96b96c",
+      "senseId": "kaikki:b8e9efac2452bcec66",
+      "sourceHash": "c5de09052cbf3d00d971644b6f658d60b6cfc55e074da3ddc60f244daf4899f0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=result&oldid=93525403"
+    },
+    {
+      "term": "result",
+      "entryId": "ve-7e96b96c",
+      "senseId": "kaikki:b82457a7c62e9ea4e0",
+      "sourceHash": "87257f31ef29eb9ac0e889bd601e79c87db6fe32e971b087807ff4bab5781ca5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=result&oldid=93525403",
+      "diagramReviewed": true
+    },
+    {
+      "term": "result",
+      "entryId": "ve-7e96b96c",
+      "senseId": "kaikki:860f64660c6c8e0257",
+      "sourceHash": "36fec4561769407b42fff0851781a90318aa398b6fb032ae4f2298fc4ac8c6dd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=result&oldid=93525403",
+      "diagramReviewed": true
+    },
+    {
+      "term": "result",
+      "entryId": "ve-7e96b96c",
+      "senseId": "kaikki:78a38c3d2878df67e8",
+      "sourceHash": "eec14c9b37140e65282e04d6b64b05395b2034328ad157443ae27e2770d45522",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=result&oldid=93525403",
+      "diagramReviewed": true
     }
   ]
 }

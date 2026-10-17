@@ -58,6 +58,10 @@ test('orphaned identities, duplicate reviews and mismatched diagrams fail the au
 
 const hash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 
+test('a nested grammatical label does not leak into a restored definition', () => {
+  expect(plainSourceGloss('## {{lb|en|with {{lg|plural}} [[agreement]]}} The financial aspects of an activity.')).toBe('The financial aspects of an activity.');
+});
+
 test('spelling references require a source spelling-error record and cannot contain an exercise', () => {
   expect(inspectDictionaryReview({ ...input, corrections: [{ ...row, referenceOnly: true }] }).errors.join(' ')).toMatch(/spelling reference/i);
   const source = { ...original, definition: 'Misspelling of another word.', usage: 'misspelling' };
