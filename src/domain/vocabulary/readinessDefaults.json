@@ -17772,5 +17772,471 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-7e9de7c1",
+    "originalSense": {
+      "id": "kaikki:6f0035548e63d9910c",
+      "definition": "A cause:",
+      "example": "The reason this tree fell is that it had rotted.",
+      "pos": "noun",
+      "synonyms": [
+        "occasion"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "13th reason",
+        "age of reason",
+        "antireason",
+        "beyond a reason of a doubt",
+        "beyond reason of a doubt",
+        "by reason of",
+        "compassionate reason",
+        "counterreason",
+        "everything happens for a reason",
+        "for no good reason",
+        "for one reason or another",
+        "for some reason",
+        "for XYZ reasons",
+        "have reason",
+        "in reason",
+        "instrumental reason",
+        "law of sufficient reason",
+        "misreason",
+        "nonreason",
+        "one will know the reason why",
+        "practical reason",
+        "principle of insufficient reason",
+        "principle of sufficient reason",
+        "reasonist",
+        "reasonless",
+        "reasonous",
+        "rhyme nor reason",
+        "rhyme or reason",
+        "rule of reason",
+        "stand to reason"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reason#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:6f0035548e63d9910c",
+      "definition": "A cause or explanation for something.",
+      "example": "The reason for the delay was a signalling fault.",
+      "pos": "noun",
+      "synonyms": [
+        "occasion"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "the reason for",
+        "a reason why",
+        "for this reason"
+      ],
+      "usage": "Broad noun meaning; countable or uncountable according to construction.",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "13th reason",
+        "age of reason",
+        "antireason",
+        "beyond a reason of a doubt",
+        "beyond reason of a doubt",
+        "by reason of",
+        "compassionate reason",
+        "counterreason",
+        "everything happens for a reason",
+        "for no good reason",
+        "for one reason or another",
+        "for some reason",
+        "for XYZ reasons",
+        "have reason",
+        "in reason",
+        "instrumental reason",
+        "law of sufficient reason",
+        "misreason",
+        "nonreason",
+        "one will know the reason why",
+        "practical reason",
+        "principle of insufficient reason",
+        "principle of sufficient reason",
+        "reasonist",
+        "reasonless",
+        "reasonous",
+        "rhyme nor reason",
+        "rhyme or reason",
+        "rule of reason",
+        "stand to reason"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reason#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Reason can name a cause as well as a motive or an offered explanation. Do not impose a rule that cause is always physical and reason always mental. The broad source meaning has lexical content even though its gloss ends in a colon."
+      ],
+      "distinctionTask": {
+        "prompt": "The reason for the delay was a signalling fault. Reason names _____.",
+        "options": [
+          "a causal explanation",
+          "only a person’s private motive"
+        ],
+        "answer": "a causal explanation",
+        "explanation": "Reason can name a cause; it is not restricted to mental motives."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-a88f1c4",
+    "originalSense": {
+      "id": "kaikki:c5092e72f7a6a29f7a",
+      "definition": "The source of, or reason for, an event or action; that which produces or effects a result.",
+      "example": "They identified a burst pipe as the cause of the flooding.",
+      "pos": "noun",
+      "synonyms": [
+        "basis",
+        "genesis"
+      ],
+      "antonyms": [
+        "effect",
+        "result"
+      ],
+      "collocations": [],
+      "usage": "often, with-of",
+      "register": "countable, often, with-of",
+      "wordFamily": [
+        "all-cause",
+        "because",
+        "by-cause",
+        "bycause",
+        "causal",
+        "causality",
+        "causative",
+        "cause and effect",
+        "cause celebre",
+        "cause célèbre",
+        "causeful",
+        "causeless",
+        "cause of action",
+        "cause of death",
+        "common cause",
+        "concause",
+        "countercause",
+        "efficient cause",
+        "external cause",
+        "false cause",
+        "final cause",
+        "first cause",
+        "forcause",
+        "for cause",
+        "formal cause",
+        "good cause",
+        "hour of cause",
+        "intervening cause",
+        "just cause",
+        "lost cause"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cause#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:c5092e72f7a6a29f7a",
+      "definition": "Something that produces an event or result.",
+      "example": "The investigation identified a blocked drain as the cause of the flooding.",
+      "pos": "noun",
+      "synonyms": [
+        "basis",
+        "genesis"
+      ],
+      "antonyms": [
+        "effect",
+        "result"
+      ],
+      "collocations": [
+        "the cause of",
+        "a direct cause",
+        "identify the cause"
+      ],
+      "usage": "Countable noun; often cause of.",
+      "register": "countable, often, with-of",
+      "wordFamily": [
+        "all-cause",
+        "because",
+        "by-cause",
+        "bycause",
+        "causal",
+        "causality",
+        "causative",
+        "cause and effect",
+        "cause celebre",
+        "cause célèbre",
+        "causeful",
+        "causeless",
+        "cause of action",
+        "cause of death",
+        "common cause",
+        "concause",
+        "countercause",
+        "efficient cause",
+        "external cause",
+        "false cause",
+        "final cause",
+        "first cause",
+        "forcause",
+        "for cause",
+        "formal cause",
+        "good cause",
+        "hour of cause",
+        "intervening cause",
+        "just cause",
+        "lost cause"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cause#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Cause can name a source of an event, including human actions. It overlaps with reason in some contexts. A reported causal finding is distinct from mere correlation; cause of introduces the event being explained."
+      ],
+      "distinctionTask": {
+        "prompt": "The cause of the flooding names _____.",
+        "options": [
+          "what brought the flooding about",
+          "only the goal of the investigation"
+        ],
+        "answer": "what brought the flooding about",
+        "explanation": "Cause of points to the event being explained."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-69d8f55b",
+    "originalSense": {
+      "id": "kaikki:881e97954837ed8f25",
+      "definition": "The end for which something is done, is made or exists.",
+      "example": "What is the purpose of your visit?",
+      "pos": "noun",
+      "synonyms": [
+        "end",
+        "point",
+        "aim"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "all-purpose",
+        "all-purpose flour",
+        "apurpose",
+        "by-purpose",
+        "cross-purpose",
+        "cross purpose",
+        "dative of purpose",
+        "defeat the purpose",
+        "dispurpose",
+        "dual-purpose",
+        "fit for purpose",
+        "for all intents and purposes",
+        "forepurpose",
+        "game with a purpose",
+        "general-purpose",
+        "infinitive of purpose",
+        "mispurpose",
+        "multi-purpose",
+        "multipurpose",
+        "purpose-built",
+        "purpose clause",
+        "purposeful",
+        "purposeless",
+        "purposelike",
+        "purpose-like",
+        "purpose loan",
+        "purposely",
+        "purpose-made",
+        "purpose statement",
+        "purpositive"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/purpose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:881e97954837ed8f25",
+      "definition": "The intended end for which something is done, made or exists.",
+      "example": "The purpose of the meeting is to agree on a timetable.",
+      "pos": "noun",
+      "synonyms": [
+        "end",
+        "point",
+        "aim"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "the purpose of",
+        "for the purpose of",
+        "serve a purpose"
+      ],
+      "usage": "Countable or uncountable noun.",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "all-purpose",
+        "all-purpose flour",
+        "apurpose",
+        "by-purpose",
+        "cross-purpose",
+        "cross purpose",
+        "dative of purpose",
+        "defeat the purpose",
+        "dispurpose",
+        "dual-purpose",
+        "fit for purpose",
+        "for all intents and purposes",
+        "forepurpose",
+        "game with a purpose",
+        "general-purpose",
+        "infinitive of purpose",
+        "mispurpose",
+        "multi-purpose",
+        "multipurpose",
+        "purpose-built",
+        "purpose clause",
+        "purposeful",
+        "purposeless",
+        "purposelike",
+        "purpose-like",
+        "purpose loan",
+        "purposely",
+        "purpose-made",
+        "purpose statement",
+        "purpositive"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/purpose#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Purpose identifies an intended end. A meeting with that purpose may still finish without agreement. Cause can explain what brought the meeting about, while purpose explains its intended end; context can allow overlap."
+      ],
+      "distinctionTask": {
+        "prompt": "The meeting’s purpose is to agree on a timetable. This gives _____.",
+        "options": [
+          "its intended end, without guaranteeing agreement",
+          "proof that agreement has already been reached"
+        ],
+        "answer": "its intended end, without guaranteeing agreement",
+        "explanation": "An intended end and an achieved result are separate."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-b8733a0",
+    "originalSense": {
+      "id": "kaikki:795be06b6139e8d5e9",
+      "definition": "Intention or goal.",
+      "example": "My number one aim in life is to make money to make my parents, siblings, and kids happy.",
+      "pos": "noun",
+      "synonyms": [
+        "purpose",
+        "design",
+        "scheme",
+        "aspiration"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aim assist",
+        "aimbot",
+        "aim community",
+        "aim-crier",
+        "aimful",
+        "aimless",
+        "aimpoint",
+        "aimworthy",
+        "cry aim",
+        "take aim"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/aim#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:795be06b6139e8d5e9",
+      "definition": "An intention or goal.",
+      "example": "Our aim is to reduce food waste.",
+      "pos": "noun",
+      "synonyms": [
+        "purpose",
+        "design",
+        "scheme",
+        "aspiration"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "the aim of a project",
+        "our main aim",
+        "with the aim of"
+      ],
+      "usage": "Noun; intention or goal.",
+      "register": "",
+      "wordFamily": [
+        "aim assist",
+        "aimbot",
+        "aim community",
+        "aim-crier",
+        "aimful",
+        "aimless",
+        "aimpoint",
+        "aimworthy",
+        "cry aim",
+        "take aim"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/aim#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Aim and purpose can both name an intended goal. A stated aim does not establish achievement. With the aim of takes a noun or an -ing form, as in with the aim of reducing waste."
+      ],
+      "distinctionTask": {
+        "prompt": "With the aim _____ reducing waste is the intended construction.",
+        "options": [
+          "of",
+          "to"
+        ],
+        "answer": "of",
+        "explanation": "With the aim of takes an -ing form; aim to reduce uses a different construction."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

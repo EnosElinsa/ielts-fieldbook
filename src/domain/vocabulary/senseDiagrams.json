@@ -2374,5 +2374,261 @@
     "definition": "To make forecasts or predictions, without naming a direct object.",
     "pos": "verb",
     "kind": "predict-intransitive"
+  },
+  {
+    "entryId": "ve-7e9de7c1",
+    "senseId": "kaikki:6f0035548e63d9910c",
+    "term": "reason",
+    "definition": "A cause or explanation for something.",
+    "pos": "noun",
+    "kind": "reason-cause"
+  },
+  {
+    "entryId": "ve-7e9de7c1",
+    "senseId": "kaikki:f76c70a0043264099b",
+    "term": "reason",
+    "definition": "The capacity for rational thought, judgement and inference.",
+    "pos": "noun",
+    "kind": "reason-faculty"
+  },
+  {
+    "entryId": "ve-7e9de7c1",
+    "senseId": "kaikki:566e46a6bbcbaa5105",
+    "term": "reason",
+    "definition": "To reach a conclusion through rational thought.",
+    "pos": "verb",
+    "kind": "reason-infer"
+  },
+  {
+    "entryId": "ve-7e9de7c1",
+    "senseId": "kaikki:a481eef9029b6a1553",
+    "term": "reason",
+    "definition": "To argue through deduction or induction in order to convince or refute.",
+    "pos": "verb",
+    "kind": "reason-with"
+  },
+  {
+    "entryId": "ve-7e9de7c1",
+    "senseId": "kaikki:23852293f6d4384143",
+    "term": "reason",
+    "definition": "To examine or discuss a matter by presenting arguments for and against.",
+    "pos": "verb",
+    "kind": "reason-discuss"
+  },
+  {
+    "entryId": "ve-7e9de7c1",
+    "senseId": "kaikki:28e5b1d535f4df86b8",
+    "term": "reason",
+    "definition": "To persuade someone through reasoning or argument.",
+    "pos": "verb",
+    "kind": "reason-persuade"
+  },
+  {
+    "entryId": "ve-7e9de7c1",
+    "senseId": "kaikki:43c6bfdf0146014882",
+    "term": "reason",
+    "definition": "To work something out or explain it through logical argument.",
+    "pos": "verb",
+    "kind": "reason-out"
+  },
+  {
+    "entryId": "ve-7e9de7c1",
+    "senseId": "wiktionary:restored:d425804192ea3e3887",
+    "term": "reason",
+    "definition": "Something that causes an event or result.",
+    "pos": "noun",
+    "kind": "reason-event"
+  },
+  {
+    "entryId": "ve-7e9de7c1",
+    "senseId": "wiktionary:restored:9f09f6c1e4cce6f726",
+    "term": "reason",
+    "definition": "A motive for an action or decision.",
+    "pos": "noun",
+    "kind": "reason-motive"
+  },
+  {
+    "entryId": "ve-7e9de7c1",
+    "senseId": "wiktionary:restored:f6ceee840cd559be2c",
+    "term": "reason",
+    "definition": "An explanation or excuse offered in support of a decision or opinion.",
+    "pos": "noun",
+    "kind": "reason-explanation"
+  },
+  {
+    "entryId": "ve-7e9de7c1",
+    "senseId": "wiktionary:restored:3c66e070c6cdfb102f",
+    "term": "reason",
+    "definition": "In the source’s logical terminology, a premise stated after its conclusion.",
+    "pos": "noun",
+    "kind": "reason-premise"
+  },
+  {
+    "entryId": "ve-a88f1c4",
+    "senseId": "kaikki:c5092e72f7a6a29f7a",
+    "term": "cause",
+    "definition": "Something that produces an event or result.",
+    "pos": "noun",
+    "kind": "cause-source"
+  },
+  {
+    "entryId": "ve-a88f1c4",
+    "senseId": "kaikki:bccec298784f3756c7",
+    "term": "cause",
+    "definition": "Sufficient grounds for a feeling, judgement or action.",
+    "pos": "noun",
+    "kind": "cause-grounds"
+  },
+  {
+    "entryId": "ve-a88f1c4",
+    "senseId": "kaikki:e32d80ae50589ac130",
+    "term": "cause",
+    "definition": "A goal, principle or movement that people support.",
+    "pos": "noun",
+    "kind": "cause-principle"
+  },
+  {
+    "entryId": "ve-a88f1c4",
+    "senseId": "kaikki:6105e7a180e30dc4d8",
+    "term": "cause",
+    "definition": "A legal case, action or proceeding to obtain a claimed right.",
+    "pos": "noun",
+    "kind": "cause-case"
+  },
+  {
+    "entryId": "ve-a88f1c4",
+    "senseId": "kaikki:02d53ad2204b9ac635",
+    "term": "cause",
+    "definition": "To bring about an event or result.",
+    "pos": "verb",
+    "kind": "cause-bring-about"
+  },
+  {
+    "entryId": "ve-a88f1c4",
+    "senseId": "kaikki:4e6e9dcb8d8cc1ce53",
+    "term": "cause",
+    "definition": "To produce a result for someone or something, including by force or authority.",
+    "pos": "verb",
+    "kind": "cause-recipient"
+  },
+  {
+    "entryId": "ve-a88f1c4",
+    "senseId": "kaikki:25809d73e155d8f988",
+    "term": "cause",
+    "definition": "An informal form of because.",
+    "pos": "conj",
+    "kind": "cause-because"
+  },
+  {
+    "entryId": "ve-69d8f55b",
+    "senseId": "kaikki:881e97954837ed8f25",
+    "term": "purpose",
+    "definition": "The intended end for which something is done, made or exists.",
+    "pos": "noun",
+    "kind": "purpose-end"
+  },
+  {
+    "entryId": "ve-69d8f55b",
+    "senseId": "kaikki:cac8d3553355b2db86",
+    "term": "purpose",
+    "definition": "The function or role of something.",
+    "pos": "noun",
+    "kind": "purpose-function"
+  },
+  {
+    "entryId": "ve-69d8f55b",
+    "senseId": "kaikki:2f25ffe94b3cce6409",
+    "term": "purpose",
+    "definition": "A sense of meaning in existing or doing something.",
+    "pos": "noun",
+    "kind": "purpose-meaning"
+  },
+  {
+    "entryId": "ve-69d8f55b",
+    "senseId": "kaikki:f4ac63b2bb2dab2f6b",
+    "term": "purpose",
+    "definition": "Determination or firmness of resolve.",
+    "pos": "noun",
+    "kind": "purpose-resolve"
+  },
+  {
+    "entryId": "ve-69d8f55b",
+    "senseId": "kaikki:b9182766627bc923e1",
+    "term": "purpose",
+    "definition": "To intend or plan to accomplish something.",
+    "pos": "verb",
+    "kind": "purpose-intend"
+  },
+  {
+    "entryId": "ve-b8733a0",
+    "senseId": "kaikki:1c9506076fdf6a6b7d",
+    "term": "aim",
+    "definition": "The direction of an object or action towards an intended point or target.",
+    "pos": "noun",
+    "kind": "aim-direction"
+  },
+  {
+    "entryId": "ve-b8733a0",
+    "senseId": "kaikki:b452cde9904ff8f0ce",
+    "term": "aim",
+    "definition": "The accuracy of a weapon.",
+    "pos": "noun",
+    "kind": "aim-instrument"
+  },
+  {
+    "entryId": "ve-b8733a0",
+    "senseId": "kaikki:0cfccaf6cbdccac62a",
+    "term": "aim",
+    "definition": "The point or object intended to be hit, attained or affected.",
+    "pos": "noun",
+    "kind": "aim-target"
+  },
+  {
+    "entryId": "ve-b8733a0",
+    "senseId": "kaikki:795be06b6139e8d5e9",
+    "term": "aim",
+    "definition": "An intention or goal.",
+    "pos": "noun",
+    "kind": "aim-goal"
+  },
+  {
+    "entryId": "ve-b8733a0",
+    "senseId": "kaikki:b3e79eef5737fbc1bd",
+    "term": "aim",
+    "definition": "A person’s ability to direct something accurately at a physical target.",
+    "pos": "noun",
+    "kind": "aim-skill"
+  },
+  {
+    "entryId": "ve-b8733a0",
+    "senseId": "kaikki:eb28d96f13c80874b0",
+    "term": "aim",
+    "definition": "To point towards an object or spot with the intention of hitting it.",
+    "pos": "verb",
+    "kind": "aim-intransitive"
+  },
+  {
+    "entryId": "ve-b8733a0",
+    "senseId": "kaikki:0b2ae84f54c76aed6b",
+    "term": "aim",
+    "definition": "To try or intend to achieve a purpose.",
+    "pos": "verb",
+    "kind": "aim-intend"
+  },
+  {
+    "entryId": "ve-b8733a0",
+    "senseId": "kaikki:1ded3b9153f6cf5485",
+    "term": "aim",
+    "definition": "To direct or point something towards a particular object.",
+    "pos": "verb",
+    "kind": "aim-transitive"
+  },
+  {
+    "entryId": "ve-b8733a0",
+    "senseId": "kaikki:a2ac50dd6100651815",
+    "term": "aim",
+    "definition": "To direct words or other verbal communication towards someone or something.",
+    "pos": "verb",
+    "kind": "aim-verbal"
   }
 ]

@@ -11379,5 +11379,81 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "reason",
+    "entryId": "ve-7e9de7c1",
+    "parentSenseId": "kaikki:6f0035548e63d9910c",
+    "parentSourceHash": "e1b0107e153af0c38f2f2bac3cd8b3145edd2c82b80c094bf84d91119ad64d04",
+    "sourcePage": "reason",
+    "revision": 93425366,
+    "sourceGloss": "## That which [[cause]]s something: an [[efficient cause]], a [[proximate cause]].",
+    "sense": {
+      "id": "wiktionary:restored:d425804192ea3e3887",
+      "pos": "noun",
+      "definition": "That which causes something: an efficient cause, a proximate cause.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=reason&oldid=93425366",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "reason",
+    "entryId": "ve-7e9de7c1",
+    "parentSenseId": "kaikki:6f0035548e63d9910c",
+    "parentSourceHash": "e1b0107e153af0c38f2f2bac3cd8b3145edd2c82b80c094bf84d91119ad64d04",
+    "sourcePage": "reason",
+    "revision": 93425366,
+    "sourceGloss": "## A [[motive]] for an action or a determination.",
+    "sense": {
+      "id": "wiktionary:restored:9f09f6c1e4cce6f726",
+      "pos": "noun",
+      "definition": "A motive for an action or a determination.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=reason&oldid=93425366",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "reason",
+    "entryId": "ve-7e9de7c1",
+    "parentSenseId": "kaikki:6f0035548e63d9910c",
+    "parentSourceHash": "e1b0107e153af0c38f2f2bac3cd8b3145edd2c82b80c094bf84d91119ad64d04",
+    "sourcePage": "reason",
+    "revision": 93425366,
+    "sourceGloss": "## An [[excuse]]: a [[thought]] or a [[consideration]] offered in support of a determination or an opinion; that which is offered or accepted as an explanation.",
+    "sense": {
+      "id": "wiktionary:restored:f6ceee840cd559be2c",
+      "pos": "noun",
+      "definition": "An excuse: a thought or a consideration offered in support of a determination or an opinion; that which is offered or accepted as an explanation.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=reason&oldid=93425366",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "reason",
+    "entryId": "ve-7e9de7c1",
+    "parentSenseId": "kaikki:6f0035548e63d9910c",
+    "parentSourceHash": "e1b0107e153af0c38f2f2bac3cd8b3145edd2c82b80c094bf84d91119ad64d04",
+    "sourcePage": "reason",
+    "revision": 93425366,
+    "sourceGloss": "## {{lb|en|logic}} A [[premise]] placed after its [[conclusion]].",
+    "sense": {
+      "id": "wiktionary:restored:3c66e070c6cdfb102f",
+      "pos": "noun",
+      "definition": "A premise placed after its conclusion.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=reason&oldid=93425366",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]
