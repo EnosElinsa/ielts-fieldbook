@@ -2,7 +2,7 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 563 restored submeanings** (51,917 total). This ledger verifies **2001 records** across definition, examples or reading explanations, collocations and distinctions; **49,916 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 518 reviewed distinction exercises and 172 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 537 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 14 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 588 restored submeanings** (51,942 total). This ledger verifies **2139 records** across definition, examples or reading explanations, collocations and distinctions; **49,803 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 567 reviewed distinction exercises and 191 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 609 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
 | Term | Reviewed records | Raw + restored records | Pending |
 | --- | ---: | ---: | ---: |
@@ -30,6 +30,7 @@ The complete index has **5,853 terms, 51,354 preserved raw senses and 563 restor
 | effect | 14 | 14 | 0 |
 | fair | 35 | 35 | 0 |
 | field | 33 | 33 | 0 |
+| figure | 29 | 29 | 0 |
 | fine | 44 | 44 | 0 |
 | form | 32 | 32 | 0 |
 | ground | 39 | 39 | 0 |
@@ -44,10 +45,12 @@ The complete index has **5,853 terms, 51,354 preserved raw senses and 563 restor
 | matter | 12 | 12 | 0 |
 | mean | 34 | 35 | 1 |
 | minute | 16 | 16 | 0 |
+| note | 35 | 35 | 0 |
 | object | 11 | 11 | 0 |
 | order | 33 | 33 | 0 |
 | patient | 7 | 7 | 0 |
 | point | 91 | 91 | 0 |
+| post | 51 | 51 | 0 |
 | practice | 12 | 12 | 0 |
 | present | 34 | 35 | 1 |
 | principal | 18 | 18 | 0 |
@@ -66,6 +69,7 @@ The complete index has **5,853 terms, 51,354 preserved raw senses and 563 restor
 | spring | 71 | 71 | 0 |
 | state | 11 | 11 | 0 |
 | subject | 17 | 17 | 0 |
+| support | 23 | 23 | 0 |
 | table | 43 | 43 | 0 |
 | term | 29 | 29 | 0 |
 | value | 14 | 14 | 0 |
@@ -76,6 +80,6 @@ The complete index has **5,853 terms, 51,354 preserved raw senses and 563 restor
 
 ## Review rules
 
-Each ledger row binds a catalogue entry, dictionary sense and SHA-256 of its original record. The audit rejects stale hashes, missing identities, incomplete reviewed fields, invalid exercises and diagrams that do not match the exact reviewed definition and part of speech. Restored submeanings additionally require a preserved parent fingerprint, a revision-bound Wiktionary URL, the exact source definition line and independent source/evidence alignment. Grouping references require an exact top-level nongloss or explicitly labelled source heading, independently bound restored children at the same source revision, and no exercise or diagram. Usage references require a source phrasal-verb template with wording consistent with the original record, a revision-bound URL and no exercise or diagram. Their counts are separate from preserved raw-source signals. Personal edits and frozen sessions are outside this public editorial ledger. Specialised, historical and proper-name senses remain pending until examined; they are not silently excluded.
+Each ledger row binds a catalogue entry, dictionary sense and SHA-256 of its original record. The audit rejects stale hashes, missing identities, incomplete reviewed fields, invalid exercises and diagrams that do not match the exact reviewed definition and part of speech. Restored submeanings additionally require a preserved parent fingerprint, a revision-bound Wiktionary URL, the exact source definition line and independent source/evidence alignment. Grouping references require an exact top-level nongloss, explicitly labelled or fully italic source heading, independently bound restored children at the same source revision, and no exercise or diagram. Fully italic directories require at least two restored children; partial italics and nested headings do not qualify. Usage references require a source phrasal-verb template with wording consistent with the original record, a revision-bound URL and no exercise or diagram. Their counts are separate from preserved raw-source signals. Personal edits and frozen sessions are outside this public editorial ledger. Specialised, historical and proper-name senses remain pending until examined; they are not silently excluded.
 
 The ignored `local/audits/vocabulary-dictionary.json` contains every source identity, fingerprint, status and signal for subsequent batches. Run with `--check` to validate without rewriting reports. Passing this check verifies accounting and bindings, not completion of the dictionary.

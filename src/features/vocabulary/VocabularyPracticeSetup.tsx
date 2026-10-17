@@ -15,6 +15,8 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
   const specialist = isSpecialistVocabularyMode(mode);
   const launchCount = study ? queue.length : Math.min(preferences.sessionSize, queue.length);
   const preparing = !catalogReady && catalogStatus.status !== 'error';
+  const batchOptions = !study && !explicitEntry;
+  const reviewFilters = !study && (!explicitEntry || dueOnly || wrongOnly);
   return (
     <>
       <div className="practice-context-card">
@@ -37,7 +39,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
           options={controller.groupModes ? controller.groupModes.filter(item => !controller.batchRequest || item.value !== 'audio' && controller.learningBatch.batch?.selection.cards.every(ref => item.queue.cards.some(card => card.entryId === ref.entryId && card.senseId === ref.senseId))).map(item=>{ const count = controller.batchRequest ? queue.length : item.queue.eligibleWords; return {value:item.value,label:`${item.label} · ${count} ${count === 1 ? 'word' : 'words'}${item.value==='audio'?' · Listening activity':''}`}; }) : MODES}
           onChange={changeMode}
         />}
-        <FilterMenu
+        {!explicitEntry ? <FilterMenu
           label="Wordbook"
           value={bookId}
           options={[
@@ -52,14 +54,14 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
             setUnit("all");
             changeFilter("bookId", value);
           }}
-        />
+        /> : null}
         {study ? <button className="btn line" type="button" disabled={bookId === 'all'} onClick={() => setPickerOpen(true)}>{selectedUnit?.title || 'Choose a group'}</button> : explicitEntry ? null : <FilterMenu label="Review preset" value={wrongOnly ? 'wrong' : dueOnly ? 'due' : 'custom'} options={[{value:'due',label:'Due for review'},{value:'wrong',label:'Words to retry'},{value:'custom',label:'Custom selection'}]} onChange={value => { setDue(value === 'due'); setWrong(value === 'wrong'); controller.setReviewPreset(value); }} />}
         {pickerOpen ? <VocabularyGroupPicker state={controller.state} bookId={bookId} currentUnitId={unitId} onClose={() => setPickerOpen(false)} onSelect={(value: string) => { setUnit(value); changeFilter('unitId',value); }} /> : null}
       </div>
       {controller.modeNotice ? <p role="status">{controller.modeNotice}</p> : null}
-      <details className="practice-setup-details" open={!study || undefined}><summary>{study ? 'Practice options' : 'Review options'}</summary>
+      <details className="practice-setup-details" open={!study || undefined}><summary>{study || explicitEntry ? 'Practice options' : 'Review options'}</summary>
       <div className="practice-setup-options">
-        {!study ?
+        {reviewFilters ?
         <div className="practice-filter-checks">
           <label className="practice-switch">
             <input
@@ -86,7 +88,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
         </div>
         : null}
         <div className="practice-configuration">
-          {!study ?
+          {batchOptions ?
           <FilterMenu
             label="Session size"
             value={String(preferences.sessionSize)}
@@ -104,7 +106,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
             }
           />
           : null}
-          {!study ? <FilterMenu
+          {batchOptions ? <FilterMenu
             label="Order"
             value={preferences.order}
             options={[
@@ -120,7 +122,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
                 }),
               )
             }
-          /> : <span className="practice-switch">Wordbook source order · {controller.batchRequest ? 'selected batch' : 'whole group'}</span>}
+          /> : study ? <span className="practice-switch">Wordbook source order · {controller.batchRequest ? 'selected batch' : 'whole group'}</span> : null}
           <FilterMenu
             label="Feedback"
             value={preferences.feedback}

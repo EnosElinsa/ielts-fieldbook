@@ -1374,5 +1374,157 @@
     "definition": "Elasticity: the ability to return toward the original form after deformation.",
     "pos": "noun",
     "kind": "spring-resilience"
+  },
+  {
+    "entryId": "ve-724c71ea",
+    "senseId": "kaikki:85f560c5029d5eabcf",
+    "term": "support",
+    "definition": "To hold something up or help keep it from falling.",
+    "pos": "verb",
+    "kind": "support-load"
+  },
+  {
+    "entryId": "ve-724c71ea",
+    "senseId": "kaikki:9c9349c4ba5c5c5353",
+    "term": "support",
+    "definition": "To provide evidence for a statement or explanation.",
+    "pos": "verb",
+    "kind": "support-evidence"
+  },
+  {
+    "entryId": "ve-724c71ea",
+    "senseId": "kaikki:7aef4943be89eee478",
+    "term": "support",
+    "definition": "To have the capacity or compatibility needed to use a feature, format or component.",
+    "pos": "verb",
+    "kind": "support-compatibility"
+  },
+  {
+    "entryId": "ve-724c71ea",
+    "senseId": "kaikki:38be8d82ce521afa5a",
+    "term": "support",
+    "definition": "Financial or other assistance.",
+    "pos": "noun",
+    "kind": "support-assistance"
+  },
+  {
+    "entryId": "ve-7c75d83d",
+    "senseId": "kaikki:16765bb7b8b0e90aaa",
+    "term": "post",
+    "definition": "An upright piece of timber, metal or similar material set in the ground.",
+    "pos": "noun",
+    "kind": "post-upright"
+  },
+  {
+    "entryId": "ve-7c75d83d",
+    "senseId": "kaikki:cd6287b736c79ebce9",
+    "term": "post",
+    "definition": "To display a notice where people can see it.",
+    "pos": "verb",
+    "kind": "post-notice"
+  },
+  {
+    "entryId": "ve-7c75d83d",
+    "senseId": "kaikki:9238e1b0ab7f833c8c",
+    "term": "post",
+    "definition": "A message or item published on an Internet forum, blog or similar service.",
+    "pos": "noun",
+    "kind": "post-message"
+  },
+  {
+    "entryId": "ve-7c75d83d",
+    "senseId": "kaikki:b0e1136f0585d9556d",
+    "term": "post",
+    "definition": "An appointed job or position in an organisation.",
+    "pos": "noun",
+    "kind": "post-job"
+  },
+  {
+    "entryId": "ve-7c75d83d",
+    "senseId": "kaikki:a5e17935ddcf575aec",
+    "term": "post",
+    "definition": "After a specified date, event or period.",
+    "pos": "prep",
+    "kind": "post-after"
+  },
+  {
+    "entryId": "ve-50d385af",
+    "senseId": "kaikki:52c7b68925bdabee86",
+    "term": "figure",
+    "definition": "A drawing or diagram that conveys information.",
+    "pos": "noun",
+    "kind": "figure-diagram"
+  },
+  {
+    "entryId": "ve-50d385af",
+    "senseId": "kaikki:fe48fa84704b6a38f4",
+    "term": "figure",
+    "definition": "A written numeral or numerical character.",
+    "pos": "noun",
+    "kind": "figure-numerals"
+  },
+  {
+    "entryId": "ve-50d385af",
+    "senseId": "kaikki:e4af19855cbe94973b",
+    "term": "figure",
+    "definition": "A number or amount, especially one used in a calculation or report.",
+    "pos": "noun",
+    "kind": "figure-amount"
+  },
+  {
+    "entryId": "ve-50d385af",
+    "senseId": "kaikki:2779dec6fa3625b293",
+    "term": "figure",
+    "definition": "A shape, especially a geometrical form.",
+    "pos": "noun",
+    "kind": "figure-shape"
+  },
+  {
+    "entryId": "ve-7c724dd5",
+    "senseId": "wiktionary:restored:4fc435e3627c63f074",
+    "term": "note",
+    "definition": "A brief comment or explanation attached to a text.",
+    "pos": "noun",
+    "kind": "note-annotation"
+  },
+  {
+    "entryId": "ve-7c724dd5",
+    "senseId": "wiktionary:restored:a02a794908635e782c",
+    "term": "note",
+    "definition": "A short written record made to help someone remember something.",
+    "pos": "noun",
+    "kind": "note-reminder"
+  },
+  {
+    "entryId": "ve-7c724dd5",
+    "senseId": "wiktionary:restored:a0c74e7a44ab4df720",
+    "term": "note",
+    "definition": "A written or digital document acknowledging a debt and promising payment.",
+    "pos": "noun",
+    "kind": "note-promise"
+  },
+  {
+    "entryId": "ve-7c724dd5",
+    "senseId": "wiktionary:restored:141f16a0a1812d93db",
+    "term": "note",
+    "definition": "A piece of paper or polymer currency; a banknote.",
+    "pos": "noun",
+    "kind": "note-currency"
+  },
+  {
+    "entryId": "ve-7c724dd5",
+    "senseId": "wiktionary:restored:440fd5aead8dedc2a3",
+    "term": "note",
+    "definition": "A written musical character whose form and position help indicate duration and pitch.",
+    "pos": "noun",
+    "kind": "note-symbol"
+  },
+  {
+    "entryId": "ve-7c724dd5",
+    "senseId": "wiktionary:restored:7174a70f2447bbcfda",
+    "term": "note",
+    "definition": "A musical tone or sounded event.",
+    "pos": "noun",
+    "kind": "note-sound"
   }
 ]

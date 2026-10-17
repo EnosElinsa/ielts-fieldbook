@@ -139,6 +139,25 @@ test('an explicitly labelled source heading also needs independently bound child
   expect(inspectDictionaryReview({ ...input, corrections: [grouping] }).errors.join(' ')).toMatch(/meaning group/i);
 });
 
+test.each(["# ''Land beside a river.''", "# {{lb|en|geography}} ''Land beside a river.''"])(
+  'a fully italic source grouping requires multiple independently restored children: %s', sourceGloss => {
+    const second = { ...restored, id: 'second-restored', definition: 'A sloping river edge.' };
+    const grouping = { ...row, referenceUrl: restored.sourceUrl, meaningGroup: { sourceGloss } };
+    const data = {
+      ...restoredInput,
+      restoredSources: [...restoredInput.restoredSources, { ...evidence, sourceGloss: '## A sloping river edge.', sense: second }],
+      corrections: [grouping, restoredInput.corrections[1], { ...row, senseId: second.id, originalSense: second, dictionaryParentSenseId: original.id }],
+      records: [...restoredInput.records, { ...review, senseId: second.id, sourceHash: hash(second) }],
+    };
+    expect(inspectDictionaryReview(data).errors).toEqual([]);
+    expect(inspectDictionaryReview(data).summary.meaningGroups).toBe(1);
+    expect(inspectDictionaryReview({ ...restoredInput, corrections: [grouping, restoredInput.corrections[1]] }).errors.join(' ')).toMatch(/meaning group/i);
+    for (const invalid of ["## ''Land beside a river.''", "# ''Land'' beside a river.", '# Land beside a river.']) {
+      expect(inspectDictionaryReview({ ...data, corrections: [{ ...grouping, meaningGroup: { sourceGloss: invalid } }, ...data.corrections.slice(1)] }).errors.join(' ')).toMatch(/meaning group/i);
+    }
+  },
+);
+
 test('a phrasal-verb usage reference needs exact source wording and a revision, with no exercise', () => {
   const source = { ...original, definition: 'Used in phrasal verbs: lead off, lead on.' };
   const reference = { ...row, originalSense: source, referenceUrl: 'https://en.wiktionary.org/w/index.php?title=bank&oldid=123', usageReference: { sourceGloss: '# {{used in phrasal verbs|lead off|lead on|lang=en}}' } };

@@ -7,7 +7,7 @@ import {
   within,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
+import { MemoryRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { beforeEach, afterEach, expect, test, vi } from "vitest";
 import { readFileSync } from "node:fs";
 import "@testing-library/jest-dom/vitest";
@@ -20,6 +20,7 @@ import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { resolveVocabularyLearningContext } from "../../domain/vocabulary/context";
 import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
 import { registerVocabularyTeaching, vocabularyTeaching } from '../../domain/vocabulary/runtimeData';
+import { resetAccountIdentity, setAccountIdentity } from '../../storage/accountIdentity';
 const mocks = vi.hoisted(() => ({
   fb: null as any,
   player: { play: vi.fn(), stop: vi.fn() },
@@ -91,6 +92,7 @@ beforeEach(() => {
 });
 afterEach(() => {
   cleanup();
+  resetAccountIdentity();
   Object.assign(VOCABULARY_CATALOG, structuredClone(original));
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
@@ -112,6 +114,7 @@ function mount(path: string) {
           element={<VocabularyGroupWordsPage />}
         />
         <Route path="/vocabulary/entry/:id" element={<VocabularyEntryPage />} />
+        <Route path="/vocabulary/review" element={<p>Practice setup</p>} />
       </Routes>
       <Location />
     </MemoryRouter>,
@@ -119,6 +122,147 @@ function mount(path: string) {
 }
 const book = "ielts-vocabulary";
 const core = () => release.entries.find((entry: any) => entry.term === "core");
+
+const linkedMeaning = { id: 'dictionary:linked-meaning', pos: 'noun', definition: 'Evidence in favour of a proposal.', example: 'There is support for this proposal.', source: 'English Wiktionary' };
+function linkedDictionary(delay?: Promise<void>) {
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+    if (!url.endsWith('index.json')) await delay;
+    return { ok: true, json: async () => url.endsWith('index.json') ? { core: 'aa.json' } : { senses: [linkedMeaning] } };
+  }));
+}
+function ChangeEntry({ to }: { to: string }) {
+  const navigate = useNavigate();
+  return <button onClick={() => navigate(to)}>Change entry</button>;
+}
+
+test('an unsaved dictionary deep link resolves after lookup without saving or learning evidence', async () => {
+  let finish!: () => void;
+  linkedDictionary(new Promise(resolve => { finish = resolve; }));
+  const before = JSON.stringify(mocks.fb.state);
+  const view = mount(`/vocabulary/entry/${core().id}?senseId=${linkedMeaning.id}`);
+  expect(screen.queryByText('Definition not available yet')).not.toBeInTheDocument();
+  await act(async () => finish());
+  await waitFor(() => expect(view.container.querySelector('.vocabulary-primary-meaning')).toHaveTextContent(linkedMeaning.definition));
+  expect(JSON.stringify(mocks.fb.state)).toBe(before);
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test('practising a linked dictionary meaning saves only that sense before navigating', async () => {
+  linkedDictionary();
+  mocks.fb.persistNow.mockResolvedValue(true);
+  const view = mount(`/vocabulary/entry/${core().id}?senseId=${linkedMeaning.id}`);
+  await waitFor(() => expect(view.container.querySelector('.vocabulary-primary-meaning')).toHaveTextContent(linkedMeaning.definition));
+  await userEvent.click(screen.getByRole('button', { name: 'Practise this word' }));
+  const draft = mocks.fb.persistNow.mock.calls[0][0];
+  expect(draft.vocabulary[0].senses.map((sense: any) => sense.id)).toEqual([linkedMeaning.id]);
+  expect(draft.vocabularyEvidence).toEqual([]);
+  expect(draft.vocabularyReviews).toEqual([]);
+  const route = new URL(screen.getByLabelText('Current route').textContent!, 'https://example.test');
+  expect(route.pathname).toBe('/vocabulary/review');
+  expect(route.searchParams.get('senseId')).toBe(linkedMeaning.id);
+});
+
+test('a failed linked-meaning save stays on the detail page and can be retried', async () => {
+  linkedDictionary();
+  mocks.fb.persistNow.mockResolvedValueOnce(false).mockResolvedValueOnce(true);
+  const path = `/vocabulary/entry/${core().id}?senseId=${linkedMeaning.id}`;
+  const view = mount(path);
+  await waitFor(() => expect(view.container.querySelector('.vocabulary-primary-meaning')).toHaveTextContent(linkedMeaning.definition));
+  await userEvent.click(screen.getByRole('button', { name: 'Practise this word' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('This sense could not be saved. Try again.');
+  expect(screen.getByLabelText('Current route')).toHaveTextContent(path);
+  expect(mocks.fb.state.vocabulary).toEqual([]);
+  await userEvent.click(screen.getByRole('button', { name: 'Practise this word' }));
+  expect(screen.getByLabelText('Current route')).toHaveTextContent('/vocabulary/review?');
+});
+
+test('saved edits to a dictionary deep link win over fetched dictionary content', async () => {
+  linkedDictionary();
+  mocks.fb.state.vocabulary = [{ ...core(), senses: [{ ...linkedMeaning, definition: 'My own meaning.' }] }];
+  const view = mount(`/vocabulary/entry/${core().id}?senseId=${linkedMeaning.id}`);
+  await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
+  expect(view.container.querySelector('.vocabulary-primary-meaning')).toHaveTextContent('My own meaning.');
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test('a dictionary deep link never borrows a different entry’s loaded meanings', async () => {
+  linkedDictionary();
+  const next = release.entries.find((entry: any) => entry.term === 'support');
+  const view = render(<MemoryRouter initialEntries={[`/vocabulary/entry/${core().id}?senseId=${linkedMeaning.id}`]}>
+    <ChangeEntry to={`/vocabulary/entry/${next.id}?senseId=${linkedMeaning.id}`} />
+    <Routes><Route path="/vocabulary/entry/:id" element={<VocabularyEntryPage />} /></Routes>
+  </MemoryRouter>);
+  await waitFor(() => expect(view.container.querySelector('.vocabulary-primary-meaning')).toHaveTextContent(linkedMeaning.definition));
+  await userEvent.click(screen.getByRole('button', { name: 'Change entry' }));
+  expect(view.container.querySelector('.vocabulary-primary-meaning')).toBeNull();
+  await waitFor(() => expect(screen.getByText('This dictionary meaning could not be found.')).toBeInTheDocument());
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test('unknown explicit meanings show an honest missing state after dictionary lookup', async () => {
+  linkedDictionary();
+  mount(`/vocabulary/entry/${core().id}?senseId=unknown-meaning`);
+  expect(await screen.findByText('This dictionary meaning could not be found.')).toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: /Practise this word/ })).not.toBeInTheDocument();
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test('a failed explicit dictionary lookup offers a retry that resolves the same meaning', async () => {
+  let available = false;
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: url.endsWith('index.json') || available,
+    json: async () => url.endsWith('index.json') ? { core: 'aa.json' } : { senses: [linkedMeaning] } })));
+  const view = mount(`/vocabulary/entry/${core().id}?senseId=${linkedMeaning.id}`);
+  expect(await screen.findByText('This dictionary meaning could not be loaded.')).toBeInTheDocument();
+  available = true;
+  await userEvent.click(screen.getByRole('button', { name: 'Retry meaning' }));
+  await waitFor(() => expect(view.container.querySelector('.vocabulary-primary-meaning')).toHaveTextContent(linkedMeaning.definition));
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test('a dictionary response arriving after changing entries cannot replace the new selection', async () => {
+  let finish!: () => void;
+  linkedDictionary(new Promise(resolve => { finish = resolve; }));
+  const next = release.entries.find((entry: any) => entry.term === 'support');
+  const view = render(<MemoryRouter initialEntries={[`/vocabulary/entry/${core().id}?senseId=${linkedMeaning.id}`]}>
+    <ChangeEntry to={`/vocabulary/entry/${next.id}?senseId=${linkedMeaning.id}`} />
+    <Routes><Route path="/vocabulary/entry/:id" element={<VocabularyEntryPage />} /></Routes>
+  </MemoryRouter>);
+  await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
+  await userEvent.click(screen.getByRole('button', { name: 'Change entry' }));
+  await act(async () => finish());
+  expect(view.container.querySelector('.vocabulary-primary-meaning')).toBeNull();
+  expect(await screen.findByText('This dictionary meaning could not be found.')).toBeInTheDocument();
+});
+
+test('a linked-meaning save completing after navigation cannot reopen the old practice', async () => {
+  linkedDictionary();
+  let finish!: (value: boolean) => void;
+  mocks.fb.persistNow.mockImplementation(() => new Promise(resolve => { finish = resolve; }));
+  const next = release.entries.find((entry: any) => entry.term === 'support');
+  const view = render(<MemoryRouter initialEntries={[`/vocabulary/entry/${core().id}?senseId=${linkedMeaning.id}`]}>
+    <ChangeEntry to={`/vocabulary/entry/${next.id}`} />
+    <Routes><Route path="/vocabulary/entry/:id" element={<VocabularyEntryPage />} /></Routes><Location />
+  </MemoryRouter>);
+  await waitFor(() => expect(view.container.querySelector('.vocabulary-primary-meaning')).toHaveTextContent(linkedMeaning.definition));
+  await userEvent.click(screen.getByRole('button', { name: 'Practise this word' }));
+  await userEvent.click(screen.getByRole('button', { name: 'Change entry' }));
+  await act(async () => finish(true));
+  expect(screen.getByLabelText('Current route')).toHaveTextContent(`/vocabulary/entry/${next.id}`);
+});
+
+test('switching accounts during a linked-meaning save does not navigate the new account', async () => {
+  setAccountIdentity('owner-a');
+  linkedDictionary();
+  let finish!: (value: boolean) => void;
+  mocks.fb.persistNow.mockImplementation(() => new Promise(resolve => { finish = resolve; }));
+  const path = `/vocabulary/entry/${core().id}?senseId=${linkedMeaning.id}`;
+  const view = mount(path);
+  await waitFor(() => expect(view.container.querySelector('.vocabulary-primary-meaning')).toHaveTextContent(linkedMeaning.definition));
+  await userEvent.click(screen.getByRole('button', { name: 'Practise this word' }));
+  setAccountIdentity('owner-b');
+  await act(async () => finish(true));
+  expect(screen.getByLabelText('Current route')).toHaveTextContent(path);
+});
 
 test('a saved meaning refreshes after scoped teaching arrives without replacing personal edits', async () => {
   const sense = { id: 'late-source', definition: 'A source meaning.', example: 'The original example.', pos: 'noun', source: 'English Wiktionary' };

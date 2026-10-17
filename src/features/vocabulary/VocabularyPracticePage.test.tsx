@@ -74,6 +74,44 @@ beforeEach(() => {
   };
 });
 const originalCatalog = { books: [...VOCABULARY_CATALOG.books], units: [...VOCABULARY_CATALOG.units], entries: [...VOCABULARY_CATALOG.entries], memberships: [...VOCABULARY_CATALOG.memberships] };
+test('single-word practice keeps its meaning and feedback without bulk settings or resetting saved preferences', async () => {
+  fb.current.state.settings.vocabulary = { sessionSize: 50, order: 'random', feedback: 'end', layout: 'list', autoPlay: false };
+  const user = userEvent.setup();
+  mount('?entryId=entry-0&senseId=sense-0&dueOnly=false&mode=definition');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
+  expect(screen.getByText('Definition 0')).toBeInTheDocument();
+  for (const name of ['Wordbook', 'Session size', 'Order']) expect(screen.queryByRole('button', { name })).not.toBeInTheDocument();
+  for (const name of ['Due only', 'Mistakes only']) expect(screen.queryByRole('checkbox', { name })).not.toBeInTheDocument();
+  expect(screen.getByRole('group', { name: 'Practice layout' })).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Feedback' }));
+  await user.click(screen.getByRole('option', { name: 'During practice' }));
+  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  expect(screen.getAllByRole('textbox')).toHaveLength(1);
+  await user.type(screen.getByRole('textbox', { name: 'Answer 1' }), 'resilient');
+  await user.click(screen.getByRole('button', { name: 'Submit session' }));
+  await waitFor(() => expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1));
+  const [prepared] = fb.current.persistVocabularySession.mock.calls[0];
+  expect(prepared.vocabularySessions[0]).toMatchObject({
+    preferences: { sessionSize: 50, order: 'random', feedback: 'immediate', layout: 'list' },
+    results: [expect.objectContaining({ entryId: 'entry-0', senseId: 'sense-0' })],
+  });
+});
+
+test('an explicitly filtered single-word link keeps its active filters removable', async () => {
+  mount('?entryId=entry-0&senseId=sense-0&dueOnly=true&mode=definition');
+  const due = await screen.findByRole('checkbox', { name: 'Due only' });
+  expect(due).toBeChecked();
+  await userEvent.setup().click(due);
+  expect(screen.queryByRole('checkbox', { name: 'Due only' })).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled();
+});
+
+test('general vocabulary review retains wordbook, batch size, order and scheduling controls', async () => {
+  mount('?dueOnly=false');
+  for (const name of ['Wordbook', 'Session size', 'Order']) expect(screen.getByRole('button', { name })).toBeInTheDocument();
+  for (const name of ['Due only', 'Mistakes only']) expect(screen.getByRole('checkbox', { name })).toBeInTheDocument();
+});
+
 test.each(['ready', 'error'])('single-word launch distinguishes content preparation from %s outcome', async outcome => {
   let resolve!: () => void, reject!: (error: Error) => void;
   fb.current.loadVocabularyCatalog = vi.fn(() => new Promise<void>((yes, no) => { resolve = yes; reject = no; }));

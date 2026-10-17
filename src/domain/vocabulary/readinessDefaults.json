@@ -14764,5 +14764,315 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-724c71ea",
+    "originalSense": {
+      "id": "kaikki:5e81b0b077782a139d",
+      "definition": "To back or favor a cause, party, etc., mentally or with concrete aid",
+      "example": "I support France in the World Cup.",
+      "pos": "verb",
+      "synonyms": [
+        "adhere"
+      ],
+      "antonyms": [
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "countersupport",
+        "supportability",
+        "supportable",
+        "supportance",
+        "supported",
+        "supportive",
+        "supportment",
+        "undersupport"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/support#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:5e81b0b077782a139d",
+      "definition": "To favour or back a person, cause, group or proposal.",
+      "example": "Most residents support the plan for a new park.",
+      "pos": "verb",
+      "synonyms": [
+        "adhere"
+      ],
+      "antonyms": [
+        "oppose"
+      ],
+      "collocations": [
+        "support a proposal",
+        "support a candidate",
+        "support a cause"
+      ],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "countersupport",
+        "supportability",
+        "supportable",
+        "supportance",
+        "supported",
+        "supportive",
+        "supportment",
+        "undersupport"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/support#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This expresses approval or backing. It does not by itself prove that the proposal is correct or identify a financial payment."
+      ],
+      "distinctionTask": {
+        "prompt": "Residents favour the park proposal: they _____ it.",
+        "options": [
+          "support",
+          "have proved every prediction in"
+        ],
+        "answer": "support",
+        "explanation": "Supporting a proposal expresses backing, without establishing proof."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7c75d83d",
+    "originalSense": {
+      "id": "kaikki:b0e1136f0585d9556d",
+      "definition": "An appointed position in an organization, job.",
+      "example": "As hard as this may seem for some people to understand, my adamant stand in favor of President Clinton leaving his post was not personal.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "ale post",
+        "antepost",
+        "A-post",
+        "back post",
+        "backpost",
+        "barpost",
+        "bedpost",
+        "behind post",
+        "be left at the post",
+        "Bell Post Hill",
+        "B-post",
+        "cattlepost",
+        "checkpost",
+        "C-post",
+        "crownpost",
+        "deaf as a post",
+        "doorpost",
+        "D-post",
+        "dumb as a post",
+        "far post",
+        "fencepost",
+        "fingerpost",
+        "first past the post",
+        "flagpost",
+        "footpost",
+        "pillar to post",
+        "post to pillar",
+        "gatepost",
+        "goalpost",
+        "gradient post"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/post#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:b0e1136f0585d9556d",
+      "definition": "An appointed job or position in an organisation.",
+      "example": "She applied for the post of research assistant.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "apply for a post",
+        "hold a senior post",
+        "a teaching post"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "ale post",
+        "antepost",
+        "A-post",
+        "back post",
+        "backpost",
+        "barpost",
+        "bedpost",
+        "behind post",
+        "be left at the post",
+        "Bell Post Hill",
+        "B-post",
+        "cattlepost",
+        "checkpost",
+        "C-post",
+        "crownpost",
+        "deaf as a post",
+        "doorpost",
+        "D-post",
+        "dumb as a post",
+        "far post",
+        "fencepost",
+        "fingerpost",
+        "first past the post",
+        "flagpost",
+        "footpost",
+        "pillar to post",
+        "post to pillar",
+        "gatepost",
+        "goalpost",
+        "gradient post"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/post#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Here post means a job or appointment. It is distinct from a message on a website and from the physical place where a guard stands."
+      ],
+      "distinctionTask": {
+        "prompt": "An appointed job as research assistant is a _____.",
+        "options": [
+          "post",
+          "published forum message"
+        ],
+        "answer": "post",
+        "explanation": "Here post means an organisational appointment."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-50d385af",
+    "originalSense": {
+      "id": "kaikki:52c7b68925bdabee86",
+      "definition": "A drawing or diagram conveying information.",
+      "example": "For example, while Figure 1 shows information for 516 visitor groups, Figure 3 presents data for 1,625 individuals. A note above each graph or table specifies the information illustrated. ... For example, although Joshua Tree NP visitors returned 525 questionnaires, Figure 1 shows data for only 516 respondents.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "figurine",
+        "figurative",
+        "figuratively"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/figure#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:52c7b68925bdabee86",
+      "definition": "A drawing or diagram that conveys information.",
+      "example": "Figure 2 shows the parts of the flower.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "as shown in Figure 2",
+        "a labelled figure",
+        "refer to the figure"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "figurine",
+        "figurative",
+        "figuratively"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/figure#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "In a report, figure names an illustration or diagram. It need not be a numerical amount; table and figure may be separately numbered."
+      ],
+      "distinctionTask": {
+        "prompt": "The labelled illustration in the report is referred to as _____.",
+        "options": [
+          "Figure 2",
+          "the total attendance by definition"
+        ],
+        "answer": "Figure 2",
+        "explanation": "In this selected meaning, figure names an information diagram."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7c724dd5",
+    "originalSense": {
+      "id": "wiktionary:restored:a02a794908635e782c",
+      "pos": "noun",
+      "definition": "A brief piece of writing intended to assist the memory; a memorandum; a minute.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=note&oldid=93131932",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "sense": {
+      "id": "wiktionary:restored:a02a794908635e782c",
+      "pos": "noun",
+      "definition": "A short written record made to help someone remember something.",
+      "example": "I made a note of the appointment time.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=note&oldid=93131932",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "usage": "",
+      "collocations": [
+        "make a note of",
+        "a reminder note",
+        "take notes during a lecture"
+      ],
+      "distinctions": [
+        "This note records information for memory. It is not a promise to pay or a musical character."
+      ],
+      "distinctionTask": {
+        "prompt": "Write down the time to remember it: make a _____ of it.",
+        "options": [
+          "note",
+          "musical sound"
+        ],
+        "answer": "note",
+        "explanation": "The selected noun is a written memory aid."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

@@ -1,9 +1,10 @@
-import { PanelLoadingState } from '../../components/AsyncState';
+import { InlineLoadingState, PanelLoadingState, StateMessage } from '../../components/AsyncState';
 import { useVocabularySearchParams } from './vocabularyNavigation';
-import { VocabularyLink as Link, VocabularyBackLink, useVocabularyReturn, vocabularyReturnLabel } from './VocabularyRouteLink';
+import { VocabularyLink as Link, VocabularyBackLink, useVocabularyReturn, vocabularyReturnLabel, vocabularyForwardState } from './VocabularyRouteLink';
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   useLocation,
+  useNavigate,
   useParams,
   } from "react-router-dom";
 import { ArrowRight, Pencil, RotateCcw, Trash2 } from "lucide-react";
@@ -42,6 +43,7 @@ import { VocabularySenseContent } from "./VocabularySenseContent";
 import { VocabularySourceLinks } from './VocabularySourceLinks';
 import "../../styles/vocabulary-entry.css";
 import { DictionarySenses } from "./DictionarySenses";
+import { loadTermDictionary, resetDictionaryCache } from './dictionary';
 import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 import { VocabularyCredits, senseCredits } from "./VocabularyCredits";
 import { VocabularyLearningVisual } from "./VocabularyLearningVisual";
@@ -82,6 +84,7 @@ export function VocabularyEntryPage() {
   const { confirm, dialog } = useConfirmationDialog(`${confirmOwner}:${entryId || id}`);
   const [params] = useVocabularySearchParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const bookId = params.get("bookId") || undefined;
   const unitId = params.get("unitId") || undefined;
   const requestedSense = params.get("senseId") || undefined;
@@ -100,9 +103,10 @@ export function VocabularyEntryPage() {
   const [recordings, setRecordings] = useState<VocabularyRecording[]>([]);
   const [saveError, setSaveError] = useState("");
   const [saving, setSaving] = useState(false);
+  const [savingPractice, setSavingPractice] = useState(false);
   const saveLock = useRef(false);
   const mounted = useRef(true);
-  const routeKey = location.pathname + location.search;
+  const routeKey = `${confirmOwner}:${location.pathname}${location.search}`;
   const routeRef = useRef(routeKey);
   routeRef.current = routeKey;
   useEffect(() => {
@@ -113,6 +117,7 @@ export function VocabularyEntryPage() {
   }, []);
   useEffect(() => {
     setSaving(false);
+    setSavingPractice(false);
     setSaveError("");
   }, [routeKey]);
   useEffect(() => {
@@ -143,7 +148,7 @@ export function VocabularyEntryPage() {
       )),
   );
   const context = validGroup ? { bookId, unitId } : {};
-  const resolved = useMemo(
+  const baseResolved = useMemo(
     () =>
       raw
         ? resolveVocabularyLearningContext(raw, {
@@ -153,6 +158,29 @@ export function VocabularyEntryPage() {
         : null,
     [raw, bookId, unitId, requestedSense, validGroup, status, fb.vocabularyCatalogRevision],
   );
+  // Look up explicit meanings absent from the small saved/catalogue snapshot.
+  // Keep this separate from DictionarySenses' filtered credit list: selecting a
+  // meaning excludes it from that list and must not make the selection disappear.
+  const lookupKey = JSON.stringify([confirmOwner, raw?.id, raw?.term, requestedSense, fb.vocabularyCatalogRevision]);
+  const needsLookup = Boolean(raw && requestedSense && !baseResolved?.sense);
+  const [lookup, setLookup] = useState<{ key: string; sense?: VocabularySense; error?: boolean }>();
+  const [lookupRevision, setLookupRevision] = useState(0);
+  useEffect(() => {
+    if (!needsLookup || !raw) return;
+    let active = true;
+    setLookup(undefined);
+    loadTermDictionary(raw.term, raw.id).then(senses => {
+      if (active && confirmOwner === accountId()) setLookup({ key: lookupKey, sense: senses.find(sense => sense.id === requestedSense) });
+    }).catch(() => {
+      if (active && confirmOwner === accountId()) setLookup({ key: lookupKey, error: true });
+    });
+    return () => { active = false; };
+  }, [needsLookup, lookupKey, lookupRevision]);
+  const selectedDictionarySense = lookup?.key === lookupKey ? lookup.sense : undefined;
+  const resolved = useMemo(() => raw && needsLookup && selectedDictionarySense
+    ? resolveVocabularyLearningContext({ ...raw, senses: [...raw.senses, selectedDictionarySense] }, { ...context, senseId: requestedSense })
+    : baseResolved,
+  [baseResolved, raw, needsLookup, selectedDictionarySense, bookId, unitId, validGroup, requestedSense]);
   const {to: returnTo} = useVocabularyReturn();
   const returnLabel = location.state?.vocabularyReturn ? vocabularyReturnLabel(returnTo) :
     returnTo === "/vocabulary"
@@ -167,6 +195,7 @@ export function VocabularyEntryPage() {
   const origin = location.pathname + location.search;
   const entry = resolved?.entry;
   const primary = resolved?.sense;
+  const dictionaryPreview = Boolean(primary && !baseResolved?.sense);
   const image = resolved ? getVocabularyIllustration(resolved) : undefined;
   const hasVisual = Boolean(image || resolved && (getVocabularyVisualConcept(resolved) || getVocabularySenseDiagram(resolved)));
   const saved = state.vocabulary?.some((item) => item.id === entry?.id);
@@ -285,6 +314,36 @@ export function VocabularyEntryPage() {
     } finally {
       saveLock.current = false;
       if (active()) setSaving(false);
+    }
+  };
+  const practiseDictionaryMeaning = async () => {
+    if (!entry || !primary || saveLock.current) return;
+    saveLock.current = true;
+    const owner = accountId(), requestedRoute = routeRef.current;
+    const active = () => mounted.current && owner === accountId() && requestedRoute === routeRef.current;
+    setSavingPractice(true);
+    setSaveError('');
+    try {
+      const input: VocabularyEntry = { ...entry, senses: [primary], sources: [
+        ...entry.sources, { type: 'personal', id: `dictionary:${primary.id}`, senseId: primary.id },
+      ] };
+      const draft = structuredClone(fb.stateRef.current) as unknown as VocabularyStore;
+      const result = addVocabularyItem(draft, input);
+      let feedback = '';
+      const options = { onError: (message: string) => { feedback = message; } };
+      const didSave = result.item && (fb.saveVocabularyEntry
+        ? await fb.saveVocabularyEntry(input, options)
+        : await fb.persistNow(draft, { ...options, collections: ['vocabulary', 'vocabularyStates'] }));
+      if (!active()) return;
+      if (didSave && result.item) {
+        const savedSense = result.item.senses.find(sense => sense.id === primary.id) || result.item.senses.find(sense => sense.definition === primary.definition);
+        navigate(practiceUrl(result.item.id, savedSense?.id || primary.id, context, origin), { state: vocabularyForwardState(location) });
+      } else setSaveError(feedback || 'This sense could not be saved. Try again.');
+    } catch {
+      if (active()) setSaveError('This sense could not be saved. Try again.');
+    } finally {
+      saveLock.current = false;
+      if (active()) setSavingPractice(false);
     }
   };
   const renderSense = (sense: VocabularySense, main = false) => {
@@ -467,7 +526,10 @@ export function VocabularyEntryPage() {
           />
           <div className="vocabulary-entry-practice">
             {primary && !entry.tags.includes("archived") && !isVocabularyPracticeReference(entry.id, primary) ? (
-              <Link
+              dictionaryPreview ? <button className="btn primary" disabled={saving || savingPractice} onClick={() => void practiseDictionaryMeaning()}>
+                {savingPractice ? 'Saving…' : 'Practise this word'}
+                <ArrowRight size={16} />
+              </button> : <Link
                 className="btn primary"
                 to={practiceUrl(entry.id, primary.id, context, origin)}
               >
@@ -517,7 +579,10 @@ export function VocabularyEntryPage() {
               ) : (
                 <section className="vocabulary-sense">
                   <h3>Meaning</h3>
-                  <p>Definition not available yet</p>
+                  {needsLookup ? lookup?.key !== lookupKey ? <InlineLoadingState message="Loading selected meaning…" />
+                    : lookup.error ? <StateMessage kind="error" message="This dictionary meaning could not be loaded." onRetry={() => { resetDictionaryCache(); setLookupRevision(value => value + 1); }} retryLabel="Retry meaning" />
+                    : <p>This dictionary meaning could not be found.</p>
+                    : <p>Definition not available yet</p>}
                 </section>
               )}
             </div>
@@ -588,7 +653,7 @@ export function VocabularyEntryPage() {
                   {saved ? (
                     <div className="vocabulary-mastery-actions">
                       <fieldset
-                        disabled={saving}
+                        disabled={saving || savingPractice}
                         aria-label="Mastery adjustment"
                       >
                         <FilterMenu
