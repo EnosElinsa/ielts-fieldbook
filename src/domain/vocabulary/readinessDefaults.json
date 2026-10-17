@@ -14198,5 +14198,97 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-5c15f4b8",
+    "originalSense": {
+      "id": "wiktionary:restored:d95f8dc8983ac5672d",
+      "pos": "noun",
+      "definition": "a series of lectures or lessons in a particular subject",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=course&oldid=93593504",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "sense": {
+      "id": "wiktionary:restored:d95f8dc8983ac5672d",
+      "pos": "noun",
+      "definition": "A series of lessons or lectures on a subject.",
+      "example": "She enrolled in an evening course in English.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=course&oldid=93593504",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "usage": "Education.",
+      "collocations": [
+        "take a course in English",
+        "enrol in a course",
+        "complete an online course"
+      ],
+      "distinctions": [
+        "Course names the organised series; a lesson is one meeting or unit. Coarse is an adjective meaning rough."
+      ],
+      "distinctionTask": {
+        "prompt": "She enrolled in a French _____ with ten weekly lessons.",
+        "options": [
+          "course",
+          "coarse"
+        ],
+        "answer": "course",
+        "explanation": "The organised series of lessons is a course."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7c73af4b",
+    "originalSense": {
+      "id": "wiktionary:restored:12292395a390d20c91",
+      "pos": "noun",
+      "definition": "A word or phrase (e.g., noun phrase, verb phrase, open compound), especially one from a specialised area of knowledge; a name for a concept.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=term&oldid=93584016",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "sense": {
+      "id": "wiktionary:restored:12292395a390d20c91",
+      "pos": "noun",
+      "definition": "A word or phrase naming a concept, especially in a field of knowledge.",
+      "example": "Algorithm is a technical term in computing.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=term&oldid=93584016",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "usage": "",
+      "collocations": [
+        "a technical term",
+        "define a term",
+        "a term for a concept"
+      ],
+      "distinctions": [
+        "A term can contain more than one word, such as red blood cell. It names a concept rather than necessarily being one written word."
+      ],
+      "distinctionTask": {
+        "prompt": "Red blood cell is a medical _____.",
+        "options": [
+          "term",
+          "single written word"
+        ],
+        "answer": "term",
+        "explanation": "A term may be a multiword expression naming a concept."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

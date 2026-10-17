@@ -10,7 +10,10 @@ export const plainSourceGloss = value => value.replace(/<!--[^]*?-->/g, '').repl
   .replace(/\[\[(?:File|Image):[^]*?\]\]/g, '')
   .replace(/\{\{ellipsis of\|en\|([^{}|]+)\}\}/g, 'Ellipsis of $1')
   .replace(/\{\{(?:m|l)\|en\|([^{}|]+)\|([^{}|=]+)\}\}/g, '$2')
-  .replace(/\{\{(?:m|l)\|en\|([^{}|]+)(?:\|t=([^{}]+)|\|id=[^{}|]+)?\}\}/g, (_, term, gloss) => gloss ? `${term} (${gloss})` : term)
+  .replace(/\{\{(?:m|l)\|en\|([^{}|]+)(?:\|t=([^{}]+)|\|id=[^{}|]+)?\}\}/g, (_, term, gloss) => {
+    const display = term.replace(/#.+$/, '');
+    return gloss ? `${display} (${gloss})` : display;
+  })
   .replace(/\{\{w\|([^{}|]+)(?:\|([^{}|]+))?\}\}/g, (_, title, display) => display || title)
   .replace(/\{\{place\|en\|lgarea\|north of \[\[([^\]|]+)\]\],\|s\/([^{}|]+)\|named after ([^{}|]+)\|full=([^{}|]+)\}\}/g, (_, city, state, namesake, name) => name + ', a local government area north of ' + city + ', ' + state + ', named after ' + namesake)
   .replace(/\{\{place\|en\|river\|r:suf\/([^{}|]+)\|s\/([^{}|]+)\|named after ([^{}|]+)\|full=([^{}|]+)\}\}/g, (_, region, state, namesake, name) => name[0].toUpperCase() + name.slice(1) + ', a river in the ' + region + ' region, ' + state + ', named after ' + namesake)

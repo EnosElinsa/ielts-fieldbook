@@ -158,7 +158,14 @@ function existingReviewedEntry(entry: VocabularyEntry): VocabularyEntry {
  }
  if (!item) return entry;
  // Supplement tasks without mutating learner notes or stable sense identifiers.
- return {...entry, senses:entry.senses.map((sense,index)=> index !== 0 ? sense : {...sense, ...(entry.term === 'order' || entry.term === 'treat' || entry.term === 'recipe' ? {synonyms:[]} : {})})};
+ return {...entry, senses:entry.senses.map((sense,index)=> {
+  if (index !== 0 || !['order','treat','recipe'].includes(entry.term)) return sense;
+  const baselines = [...catalogVocabularySenses(entry.id).filter(original => original.id === sense.id), ...vocabularyReadinessBaselines(entry.id, sense.id)];
+  const supplemented = supplementVocabularySense(entry.id, sense, baselines, hasVocabularySenseEdits);
+  // Apply exact teaching before a legacy cleanup can look like a learner edit.
+  if (supplemented !== sense || hasVocabularySenseEdits(sense, baselines)) return supplemented;
+  return {...sense, synonyms:[]};
+ })};
 }
 const catalogIndexes=new WeakMap<object,Map<string,VocabularyEntry>>();
 export function catalogVocabularyEntry(id:string):VocabularyEntry | undefined {

@@ -1070,5 +1070,165 @@
     "definition": "To measure or investigate water depth using a line or other sounding device.",
     "pos": "verb",
     "kind": "water-sounding"
+  },
+  {
+    "entryId": "ve-5c15f4b8",
+    "senseId": "wiktionary:restored:d95f8dc8983ac5672d",
+    "term": "course",
+    "definition": "A series of lessons or lectures on a subject.",
+    "pos": "noun",
+    "kind": "course-lessons"
+  },
+  {
+    "entryId": "ve-5c15f4b8",
+    "senseId": "wiktionary:restored:18e7f566655860f978",
+    "term": "course",
+    "definition": "One stage of a meal, with its food served together.",
+    "pos": "noun",
+    "kind": "course-meal"
+  },
+  {
+    "entryId": "ve-5c15f4b8",
+    "senseId": "wiktionary:restored:e23e2f4a7483276ea8",
+    "term": "course",
+    "definition": "The intended route of a ship, aircraft or other vehicle.",
+    "pos": "noun",
+    "kind": "course-route"
+  },
+  {
+    "entryId": "ve-5c15f4b8",
+    "senseId": "wiktionary:restored:af2170c1424d50fa10",
+    "term": "course",
+    "definition": "A horizontal row of bricks or blocks in a wall.",
+    "pos": "noun",
+    "kind": "course-masonry"
+  },
+  {
+    "entryId": "ve-5c15f4b8",
+    "senseId": "wiktionary:restored:e9129de17e52fc9797",
+    "term": "course",
+    "definition": "A horizontal row of loops in weft-knitted fabric.",
+    "pos": "noun",
+    "kind": "course-knitting"
+  },
+  {
+    "entryId": "ve-ad7616b",
+    "senseId": "kaikki:c958dcb5a8822583b1",
+    "term": "order",
+    "definition": "The arrangement or sequence of people or things.",
+    "pos": "noun",
+    "kind": "order-sequence"
+  },
+  {
+    "entryId": "ve-ad7616b",
+    "senseId": "kaikki:14055df8f9ff9265dc",
+    "term": "order",
+    "definition": "A request to buy, sell or supply goods or services.",
+    "pos": "noun",
+    "kind": "order-purchase"
+  },
+  {
+    "entryId": "ve-ad7616b",
+    "senseId": "kaikki:cb4f7b0c1244761d04",
+    "term": "order",
+    "definition": "A taxonomic rank below class and above family, or a taxon at that rank.",
+    "pos": "noun",
+    "kind": "order-taxonomy"
+  },
+  {
+    "entryId": "ve-ad7616b",
+    "senseId": "kaikki:3f6dcde0b153ae61ba",
+    "term": "order",
+    "definition": "The least positive number of repetitions of a group element that gives the identity, if it exists.",
+    "pos": "noun",
+    "kind": "order-quarter-turn"
+  },
+  {
+    "entryId": "ve-ad7616b",
+    "senseId": "kaikki:54d85cb2aa953f996b",
+    "term": "order",
+    "definition": "The number of vertices in a graph.",
+    "pos": "noun",
+    "kind": "order-graph"
+  },
+  {
+    "entryId": "ve-ad7616b",
+    "senseId": "kaikki:f720700a7436b2d6dc",
+    "term": "order",
+    "definition": "The sum of a monomial’s variable exponents, also called its total degree.",
+    "pos": "noun",
+    "kind": "order-monomial"
+  },
+  {
+    "entryId": "ve-7c73af4b",
+    "senseId": "wiktionary:restored:3b845408cd6f3e7313",
+    "term": "term",
+    "definition": "A limited or defined period of time.",
+    "pos": "noun",
+    "kind": "term-duration"
+  },
+  {
+    "entryId": "ve-7c73af4b",
+    "senseId": "wiktionary:restored:dffec9e044307f3960",
+    "term": "term",
+    "definition": "One of the divisions of an academic year.",
+    "pos": "noun",
+    "kind": "term-calendar"
+  },
+  {
+    "entryId": "ve-7c73af4b",
+    "senseId": "wiktionary:restored:b0c54c3489ee4e538f",
+    "term": "term",
+    "definition": "A component of a mathematical expression or sequence, such as an addend in a sum.",
+    "pos": "noun",
+    "kind": "term-factors"
+  },
+  {
+    "entryId": "ve-7c73af4b",
+    "senseId": "wiktionary:restored:41e54f0001757c1d97",
+    "term": "term",
+    "definition": "A subject or predicate expression in a proposition, including one of the three terms of a categorical syllogism.",
+    "pos": "noun",
+    "kind": "term-syllogism"
+  },
+  {
+    "entryId": "ve-a7dd9fa",
+    "senseId": "kaikki:409a3ce1e71640aa33",
+    "term": "break",
+    "definition": "To split, crack or fracture into pieces, or to cause this to happen.",
+    "pos": "verb",
+    "kind": "break-fracture"
+  },
+  {
+    "entryId": "ve-a7dd9fa",
+    "senseId": "kaikki:a06dafa6bcac9de4da",
+    "term": "break",
+    "definition": "A short period of rest or pause from work or another activity.",
+    "pos": "noun",
+    "kind": "break-rest"
+  },
+  {
+    "entryId": "ve-a7dd9fa",
+    "senseId": "kaikki:3d7fe529fbf2e0c2d6",
+    "term": "break",
+    "definition": "A division between lines, paragraphs or pages in a text.",
+    "pos": "noun",
+    "kind": "break-page"
+  },
+  {
+    "entryId": "ve-a7dd9fa",
+    "senseId": "kaikki:73f5bba08941f8f772",
+    "term": "break",
+    "definition": "A tennis game won by the receiving player or pair.",
+    "pos": "noun",
+    "kind": "break-tennis"
+  },
+  {
+    "entryId": "ve-a7dd9fa",
+    "senseId": "kaikki:2e2bae37702856bafe",
+    "term": "break",
+    "definition": "The total points scored by one player during one visit to the table.",
+    "pos": "noun",
+    "kind": "break-snooker"
   }
 ]

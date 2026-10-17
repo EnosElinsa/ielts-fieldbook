@@ -66,6 +66,11 @@ test.each([
   ['## To come {{m|en|to}}, {{m|en|towards}} a moment.', 'To come to, towards a moment.'],
   ['## To land in the {{l|en|house|t=[[circular]] [[target]]}}.', 'To land in the house (circular target).'],
   ['## An ordinary. [[File:Example.svg|thumb|Illustration]]', 'An ordinary.'],
+  ['## The {{l|en|price#Noun}} and {{m|en|payment#Noun}}.', 'The price and payment.'],
+  ['## To {{m|en|end#Verb|id=finish}}.', 'To end.'],
+  ['## The {{l|en|price#Noun|t=the # symbol}}.', 'The price (the # symbol).'],
+  ['## The {{l|en|price#Noun|display # label}}.', 'The display # label.'],
+  ['## The {{m|en|C#}} symbol and plain # text.', 'The C# symbol and plain # text.'],
 ])('restored source rendering preserves lexical text without embedded media: %s', (sourceGloss, expected) => {
   expect(plainSourceGloss(sourceGloss)).toBe(expected);
 });
