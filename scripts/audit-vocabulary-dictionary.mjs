@@ -7,6 +7,10 @@ const identity = (entryId, senseId) => JSON.stringify([entryId, senseId]);
 const hash = value => createHash('sha256').update(JSON.stringify(value) ?? 'null').digest('hex');
 const areas = ['definition', 'example', 'collocations', 'distinctions'];
 export const plainSourceGloss = value => value.replace(/<!--[^]*?-->/g, '').replace(/^#+\s*/, '')
+  .replace(/\[\[(?:File|Image):[^]*?\]\]/g, '')
+  .replace(/\{\{ellipsis of\|en\|([^{}|]+)\}\}/g, 'Ellipsis of $1')
+  .replace(/\{\{(?:m|l)\|en\|([^{}|]+)\|([^{}|=]+)\}\}/g, '$2')
+  .replace(/\{\{(?:m|l)\|en\|([^{}|]+)(?:\|t=([^{}]+)|\|id=[^{}|]+)?\}\}/g, (_, term, gloss) => gloss ? `${term} (${gloss})` : term)
   .replace(/\{\{w\|([^{}|]+)(?:\|([^{}|]+))?\}\}/g, (_, title, display) => display || title)
   .replace(/\{\{place\|en\|lgarea\|north of \[\[([^\]|]+)\]\],\|s\/([^{}|]+)\|named after ([^{}|]+)\|full=([^{}|]+)\}\}/g, (_, city, state, namesake, name) => name + ', a local government area north of ' + city + ', ' + state + ', named after ' + namesake)
   .replace(/\{\{place\|en\|river\|r:suf\/([^{}|]+)\|s\/([^{}|]+)\|named after ([^{}|]+)\|full=([^{}|]+)\}\}/g, (_, region, state, namesake, name) => name[0].toUpperCase() + name.slice(1) + ', a river in the ' + region + ' region, ' + state + ', named after ' + namesake)
@@ -85,8 +89,9 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
       if (row.referenceOnly && (!/\bmisspelling\b/i.test(`${original?.definition || ''} ${original?.usage || ''}`) || row.distinctionTask || diagrams.some(diagram => identity(diagram.entryId, diagram.senseId) === key))) errors.push(`Invalid spelling reference: ${review.term}/${review.senseId}`);
       if (row.meaningGroup !== undefined) {
         const gloss = row.meaningGroup?.sourceGloss;
+        const headingGloss = (gloss || '').replace(/<!--[^]*?-->/g, '').replace(/^#(?!#)\s*(?:\{\{(?:senseid|sid)\|en\|[^{}]+\}\}\s*)*/, '# ');
         const children = restoredSources.filter(source => source.entryId === review.entryId && source.parentSenseId === review.senseId && sources.has(JSON.stringify([source.term, source.sense.id])));
-        const heading = /^#\s*\{\{(?:ng|n-g|non-gloss)\|/.test(gloss || '') || (/^#[^#]/.test(gloss || '') && /\{\{lb\|en\|(?:[^{}|]+\|)*heading(?:\||\}\})/.test(gloss || '')) || /^#\s*\{\{place\|en\|place\|(?:c|co|s)\/[^{}|]+\}\}\s*:\s*$/.test(gloss || '') || /^#\s*A \[\[place name\]\]:\s*$/.test(gloss || '');
+        const heading = /^#\s*\{\{(?:ng|n-g|non-gloss)\|/.test(headingGloss) || (/^#[^#]/.test(headingGloss) && /\{\{lb\|en\|(?:[^{}|]+\|)*heading(?:\||\}\})/.test(headingGloss)) || /^#\s*\{\{place\|en\|place\|(?:c|co|s)\/[^{}|]+\}\}\s*:\s*$/.test(headingGloss) || /^#\s*A \[\[place name\]\]:\s*$/.test(headingGloss);
         if (!heading || plainSourceGloss(gloss || '') !== original?.definition || !children.length || children.some(child => child.sense.sourceUrl !== row.referenceUrl) || row.referenceOnly || row.usageReference || row.distinctionTask || diagrams.some(diagram => identity(diagram.entryId, diagram.senseId) === key)) errors.push(`Invalid meaning group: ${review.term}/${review.senseId}`);
       }
       if (row.usageReference !== undefined) {

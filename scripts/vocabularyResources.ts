@@ -8,6 +8,10 @@ import type { VocabularyEntry } from '../src/domain/vocabulary/types';
 type Unit = { id: string; bookId: string; kind: string; entryIds: string[]; entryCount: number; archivedEntryIds: string[]; resource?: string; teachingResource?: string; [key: string]: unknown };
 type Membership = { id: string; bookId: string; unitId: string; entryId: string; order: number };
 type Catalog = { entries: VocabularyEntry[]; books: { id: string }[]; units: Unit[]; memberships: Membership[] };
+type ResourceBuildCache = {
+  baselines: WeakMap<VocabularyEntry, VocabularyTeachingData['senseBaselines'][string]>;
+  emissions: Map<string, { value: unknown; url: string; text: string }>;
+};
 const REVALIDATE = 'public, max-age=0, must-revalidate';
 const IMMUTABLE = 'public, max-age=31536000, immutable';
 export function vocabularyResourceHeaders(manifestUrl: string, teachingIndexUrl: string): string {
@@ -26,7 +30,9 @@ export function buildVocabularyResources(root: string) {
     readiness: { core: [...data('readinessContent0'), ...data('readinessContent1'), ...data('readinessContent2')], corrections: data('readinessCorrections'), defaults: data('readinessDefaults') },
     learning: data('learningSenseOverlay'), tasks: data('taskSenseBindings'), context: data('contextSenseOverlay'),
   };
-  const generated = buildResourceCatalog(source, teaching);
+  const cache: ResourceBuildCache = { baselines: new WeakMap(), emissions: new Map() };
+  const catalog = (entries: Catalog, content: VocabularyTeachingData) => buildResourceCatalog(entries, content, cache);
+  const generated = catalog(source, teaching);
   // Reverse each published correction batch in order to preserve its exact URLs and bytes.
   const retainedDictionaryCatalogs = [];
   let beforeDictionaryExpansion = teaching;
@@ -40,7 +46,7 @@ export function buildVocabularyResources(root: string) {
       corrections: beforeDictionaryExpansion.readiness.corrections.filter(row => !removed.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restored.get(JSON.stringify([row.entryId,row.senseId])) || row),
       defaults: beforeDictionaryExpansion.readiness.defaults.filter(row => !removedDefaults.has(row.entryId)).map(row => restoredDefaults.get(row.entryId) || row),
     } };
-    retainedDictionaryCatalogs.push(buildResourceCatalog(source, beforeDictionaryExpansion));
+    retainedDictionaryCatalogs.push(catalog(source, beforeDictionaryExpansion));
   }
   const learningBaseline = data('resourceLearningBaseline') as {
     removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections'];
@@ -80,7 +86,7 @@ export function buildVocabularyResources(root: string) {
     if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, row]) => [legacyIds.get(key) || key, legacyValue(row)])) as T;
     return value;
   };
-  const retained = [...retainedDictionaryCatalogs,buildResourceCatalog(source,beforeLearningExpansion),buildResourceCatalog(source,previousTeaching),buildResourceCatalog(legacyValue(source),legacyValue(previousTeaching))];
+  const retained = [...retainedDictionaryCatalogs,catalog(source,beforeLearningExpansion),catalog(source,previousTeaching),catalog(legacyValue(source),legacyValue(previousTeaching))];
   for (const previous of retained) for (const [url, content] of previous.resources) {
     const existing = generated.resources.get(url);
     if (existing !== undefined && existing !== content) throw new Error(`Vocabulary resource hash collision: ${url}`);
@@ -89,29 +95,71 @@ export function buildVocabularyResources(root: string) {
   return generated;
 }
 
-function buildResourceCatalog(source: Catalog, teaching: VocabularyTeachingData) {
+// Unlike ordinary deep equality, preserve property order: these values name
+// immutable JSON bytes. Shared source rows make unchanged packs cheap to compare.
+function sameResourceValue(left: unknown, right: unknown): boolean {
+  if (left === right) return true;
+  if (!left || !right || typeof left !== 'object' || typeof right !== 'object') return false;
+  if (Array.isArray(left) !== Array.isArray(right)) return false;
+  const keys = Object.keys(left), otherKeys = Object.keys(right);
+  return keys.length === otherKeys.length && keys.every((key, at) => key === otherKeys[at]
+    && sameResourceValue((left as Record<string, unknown>)[key], (right as Record<string, unknown>)[key]));
+}
+
+/** Select by identity without rescanning unrelated rows; retain source order. */
+function resourceRowIndex<T>(items: T[], identity: (row: T) => string) {
+  const indexed = new Map<string, { row: T; at: number }[]>();
+  items.forEach((row, at) => {
+    const key = identity(row), rows = indexed.get(key) || [];
+    rows.push({ row, at }); indexed.set(key, rows);
+  });
+  return (ids: Set<string>): T[] => {
+    const selected: { row: T; at: number }[] = [];
+    for (const id of ids) selected.push(...(indexed.get(id) || []));
+    return selected.sort((a, b) => a.at - b.at).map(item => item.row);
+  };
+}
+
+function buildResourceCatalog(source: Catalog, teaching: VocabularyTeachingData, cache: ResourceBuildCache) {
   const baselineFields = new Set(['id', 'definition', 'example', 'pos', 'collocations', 'usage', 'synonyms', 'antonyms', 'distinctions', 'distinctionTask', 'wordFamily', 'register', 'source']);
   const resources = new Map<string, string>();
   const emit = (name: string, value: unknown) => {
+    const previous = cache.emissions.get(name);
+    if (previous && sameResourceValue(previous.value, value)) {
+      resources.set(previous.url, previous.text);
+      return previous.url;
+    }
     const text = JSON.stringify(value);
     const hash = createHash('sha256').update(text).digest('hex').slice(0, 16);
     const url = `/vocabulary-resources/${name}.${hash}.json`;
     resources.set(url, text);
+    cache.emissions.set(name, { value, url, text });
     return url;
   };
+  const byEntry = <T extends { entryId: string }>(items: T[]) => resourceRowIndex(items, row => row.entryId);
+  const curriculum = { common: byEntry(teaching.curriculum.common), topics: byEntry(teaching.curriculum.topics), source: byEntry(teaching.curriculum.source), repairs: byEntry(teaching.curriculum.repairs), modern: byEntry(teaching.curriculum.modern) };
+  const readiness = { core: byEntry(teaching.readiness.core), corrections: byEntry(teaching.readiness.corrections), defaults: byEntry(teaching.readiness.defaults) };
+  const context = { bindings: byEntry(teaching.context.bindings), defaults: byEntry(teaching.context.defaults), unresolved: byEntry(teaching.context.unresolved) };
+  const learningRows = resourceRowIndex(Object.entries(teaching.learning), ([term]) => term);
+  const taskRows = resourceRowIndex(Object.entries(teaching.tasks.senseIds), ([term]) => term);
+  const entryMemberships = byEntry(source.memberships);
   const scopeTeaching = (entries: VocabularyEntry[]): VocabularyTeachingData => {
     const ids = new Set(entries.map(entry => entry.id));
     const terms = new Set(entries.map(entry => entry.term.toLowerCase()));
-    const rows = <T extends { entryId: string }>(items: T[]) => items.filter(row => ids.has(row.entryId));
     return {
-      senseBaselines: Object.fromEntries(entries.map(entry => [entry.id, entry.senses.map(sense => {
-        return Object.fromEntries(Object.entries(sense).filter(([field]) => baselineFields.has(field)));
-      })])) as VocabularyTeachingData['senseBaselines'],
-      curriculum: { common: rows(teaching.curriculum.common), topics: rows(teaching.curriculum.topics), source: rows(teaching.curriculum.source), repairs: rows(teaching.curriculum.repairs), modern: rows(teaching.curriculum.modern) },
-      readiness: { core: rows(teaching.readiness.core), corrections: rows(teaching.readiness.corrections), defaults: rows(teaching.readiness.defaults) },
-      learning: Object.fromEntries(Object.entries(teaching.learning).filter(([term]) => terms.has(term))),
-      tasks: { senseIds: Object.fromEntries(Object.entries(teaching.tasks.senseIds).filter(([term]) => terms.has(term))) },
-      context: { version: teaching.context.version, bindings: rows(teaching.context.bindings), defaults: rows(teaching.context.defaults), unresolved: rows(teaching.context.unresolved) },
+      senseBaselines: Object.fromEntries(entries.map(entry => {
+        let senses = cache.baselines.get(entry);
+        if (!senses) {
+          senses = entry.senses.map(sense => Object.fromEntries(Object.entries(sense).filter(([field]) => baselineFields.has(field)))) as VocabularyTeachingData['senseBaselines'][string];
+          cache.baselines.set(entry, senses);
+        }
+        return [entry.id, senses];
+      })),
+      curriculum: { common: curriculum.common(ids), topics: curriculum.topics(ids), source: curriculum.source(ids), repairs: curriculum.repairs(ids), modern: curriculum.modern(ids) },
+      readiness: { core: readiness.core(ids), corrections: readiness.corrections(ids), defaults: readiness.defaults(ids) },
+      learning: Object.fromEntries(learningRows(terms)),
+      tasks: { senseIds: Object.fromEntries(taskRows(terms)) },
+      context: { version: teaching.context.version, bindings: context.bindings(ids), defaults: context.defaults(ids), unresolved: context.unresolved(ids) },
     };
   };
   const entryIndex = new Map(source.entries.map(entry => [entry.id, entry]));
@@ -126,7 +174,7 @@ function buildResourceCatalog(source: Catalog, teaching: VocabularyTeachingData)
     const entryIds = [...new Set(members.map(row => row.entryId))];
     const entries = entryIds.map(id => entryIndex.get(id)!);
     if (entries.some(entry => !entry)) throw new Error(`Missing vocabulary entry in ${unit.bookId}/${unit.id}`);
-    const scoped = scopeTeaching(entries);
+    const scoped = unit.kind !== 'chapter' ? scopeTeaching(entries) : undefined;
     // CDN servers decode URL paths differently. Use only safe filename bytes,
     // rather than emitting literal percent escapes that Pages decodes on lookup.
     const name = `${Buffer.from(unit.bookId).toString('hex')}-${Buffer.from(unit.id).toString('hex')}`;
@@ -147,7 +195,7 @@ function buildResourceCatalog(source: Catalog, teaching: VocabularyTeachingData)
     const url = emit(`entries/${shard}`, { entries, memberships: [], teaching: scoped });
     entryResources[shard] = url;
     const ids = new Set(entries.map(entry => entry.id));
-    entryTeachingResources[shard] = emit(`teaching/entries/${shard}`, { teaching: scoped, memberships: source.memberships.filter(row => ids.has(row.entryId)) });
+    entryTeachingResources[shard] = emit(`teaching/entries/${shard}`, { teaching: scoped, memberships: entryMemberships(ids) });
     for (const entry of entries) entryShards[entry.id] = String(shard);
   }
   const teachingIndex = { version: 1, bookIds: source.books.map(book => book.id), books: source.books, units, groups: Object.fromEntries(units.filter(unit => unit.teachingResource).map(unit => [JSON.stringify([unit.bookId, unit.id]), unit.teachingResource!])), entryShards, entryTeachingResources };

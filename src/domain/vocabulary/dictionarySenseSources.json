@@ -4482,5 +4482,3824 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:7276253d64b046f70c",
+    "parentSourceHash": "84588ba3241154a12eaef96ebf99333c8579bfb4853e53e542d1c5e10bc614b7",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## Something tiny, as a pinprick; a very small mark. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:f728d1ba1aef65cbdf",
+      "pos": "noun",
+      "definition": "Something tiny, as a pinprick; a very small mark.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:7276253d64b046f70c",
+    "parentSourceHash": "84588ba3241154a12eaef96ebf99333c8579bfb4853e53e542d1c5e10bc614b7",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## A [[full stop]] or other terminal punctuation mark. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:84584c018c6e2f0b56",
+      "pos": "noun",
+      "definition": "A full stop or other terminal punctuation mark.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:7276253d64b046f70c",
+    "parentSourceHash": "84588ba3241154a12eaef96ebf99333c8579bfb4853e53e542d1c5e10bc614b7",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|mathematics}} A [[decimal point]] (now especially when reading decimal fractions aloud). {{defdate|from 18th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:5f16782f781b8c302f",
+      "pos": "noun",
+      "definition": "A decimal point (now especially when reading decimal fractions aloud).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:7276253d64b046f70c",
+    "parentSourceHash": "84588ba3241154a12eaef96ebf99333c8579bfb4853e53e542d1c5e10bc614b7",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## Each of the [[mark]]s or [[stroke]]s written above [[letter]]s, especially in Semitic languages, to indicate [[vowel]]s, stress etc. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:6642f1ba83f243925f",
+      "pos": "noun",
+      "definition": "Each of the marks or strokes written above letters, especially in Semitic languages, to indicate vowels, stress etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:7276253d64b046f70c",
+    "parentSourceHash": "84588ba3241154a12eaef96ebf99333c8579bfb4853e53e542d1c5e10bc614b7",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|music}} A dot or mark used to designate certain tones or time. In ancient music, it distinguished or characterized certain tones or styles (points of perfection, of augmentation, etc.). In modern music, it is placed on the right of a note to raise its value, or prolong its time, by one half.",
+    "sense": {
+      "id": "wiktionary:restored:0ff09d1220bea73cd5",
+      "pos": "noun",
+      "definition": "A dot or mark used to designate certain tones or time. In ancient music, it distinguished or characterized certain tones or styles (points of perfection, of augmentation, etc.). In modern music, it is placed on the right of a note to raise its value, or prolong its time, by one half.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:7276253d64b046f70c",
+    "parentSourceHash": "84588ba3241154a12eaef96ebf99333c8579bfb4853e53e542d1c5e10bc614b7",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|by extension}} A [[note]]; a [[tune]].",
+    "sense": {
+      "id": "wiktionary:restored:7630a9c739baeba338",
+      "pos": "noun",
+      "definition": "A note; a tune.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:7276253d64b046f70c",
+    "parentSourceHash": "84588ba3241154a12eaef96ebf99333c8579bfb4853e53e542d1c5e10bc614b7",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|mathematics|science}} A [[zero-dimensional]] [[mathematical]] [[object]] representing a location in one or more dimensions; something considered to have position but no magnitude or direction. {{defdate|from 14th c.}} {{C|en|Shapes}}",
+    "sense": {
+      "id": "wiktionary:restored:ba5182fabc66c5ec24",
+      "pos": "noun",
+      "definition": "A zero-dimensional mathematical object representing a location in one or more dimensions; something considered to have position but no magnitude or direction.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## An [[individual]] [[element]] in a [[larger]] [[whole]]; a particular [[detail]], [[thought]], or [[quality]]. {{defdate|from 13th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:6e22f9edee662df3e8",
+      "pos": "noun",
+      "definition": "An individual element in a larger whole; a particular detail, thought, or quality.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## A particular [[moment]] in an [[event]] or occurrence; a [[juncture]]. {{defdate|from 13th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:63e75f141085616682",
+      "pos": "noun",
+      "definition": "A particular moment in an event or occurrence; a juncture.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|archaic}} [[condition|Condition]], [[state]]. {{defdate|from 13th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:12830328abb0a09b43",
+      "pos": "noun",
+      "definition": "Condition, state.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## A [[topic]] of [[discussion]] or [[debate]]; a [[proposition]]; a [[count]]. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:84342a41d3f9c02e20",
+      "pos": "noun",
+      "definition": "A topic of discussion or debate; a proposition; a count.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|US|slang|dated}} An item of private information; a hint; a tip; a pointer.",
+    "sense": {
+      "id": "wiktionary:restored:a63cf340f9db45af3c",
+      "pos": "noun",
+      "definition": "An item of private information; a hint; a tip; a pointer.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{senseid|en|focus of attention, main idea}} A [[focus]] of [[conversation]] or [[consideration]]; the [[main]] [[idea]].",
+    "sense": {
+      "id": "wiktionary:restored:5ac1a687533ed26baf",
+      "pos": "noun",
+      "definition": "A focus of conversation or consideration; the main idea.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{senseid|en|purpose or objective}} A [[purpose]] or [[objective]], which makes something [[meaningful]]. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:f59e7ed504654f6860",
+      "pos": "noun",
+      "definition": "A purpose or objective, which makes something meaningful.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|obsolete}} The smallest quantity of something; a [[jot]], a [[whit]]. {{defdate|14th|17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:2a74e7c389b322972d",
+      "pos": "noun",
+      "definition": "The smallest quantity of something; a jot, a whit.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|obsolete}} A tiny amount of time; a [[moment]]. {{defdate|14th|17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:91410bdb6e99d2131c",
+      "pos": "noun",
+      "definition": "A tiny amount of time; a moment.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## A specific [[location]] or place, seen as a spatial position. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:6fa61bfaa9a8d2bdb6",
+      "pos": "noun",
+      "definition": "A specific location or place, seen as a spatial position.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## A distinguishing [[quality]] or [[characteristic]]. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:45a85ee6da6d150b05",
+      "pos": "noun",
+      "definition": "A distinguishing quality or characteristic.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|in the plural|dated}} The chief or excellent features.",
+    "sense": {
+      "id": "wiktionary:restored:fa1b04ba0c0c90c340",
+      "pos": "noun",
+      "definition": "The chief or excellent features.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{senseid|en|fur}}{{lb|en|usually|in the plural}} An area of contrasting [[colour]] on an [[animal]], especially a dog; a marking. {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:0b2726d799fc818934",
+      "pos": "noun",
+      "definition": "An area of contrasting colour on an animal, especially a dog; a marking.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|now only in phrases}} A [[tenth]]; formerly also a [[twelfth]]. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:4fc2e2b38bc815dba9",
+      "pos": "noun",
+      "definition": "A tenth; formerly also a twelfth.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{ellipsis of|en|percentage point}}.",
+    "sense": {
+      "id": "wiktionary:restored:28f38a661681e87848",
+      "pos": "noun",
+      "definition": "Ellipsis of percentage point.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{senseid|en|unit of scoring}}{{lb|en|sports|video games|board games}} A unit of [[scoring]] in a [[game]] or [[competition]]. {{defdate|from 18th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:6ea616c5f3d0729ca2",
+      "pos": "noun",
+      "definition": "A unit of scoring in a game or competition.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|video games|board games}} A unit of various [[numerical]] [[parameter]]s used in a game, e.g. [[health]], [[experience]], [[stamina]], [[mana]].",
+    "sense": {
+      "id": "wiktionary:restored:df0635363558ec6f53",
+      "pos": "noun",
+      "definition": "A unit of various numerical parameters used in a game, e.g. health, experience, stamina, mana.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|economics}} A unit used to express differences in prices of [[stock]]s and [[share]]s. {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:ce2a1a382e7fb28774",
+      "pos": "noun",
+      "definition": "A unit used to express differences in prices of stocks and shares.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|typography}} A unit of measure equal to 1/12 of a [[pica]], or approximately 1/72 of an [[inch]] (exactly 1/72 of an inch in the digital era). {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:2e00a15b0121e26671",
+      "pos": "noun",
+      "definition": "A unit of measure equal to 1/12 of a pica, or approximately 1/72 of an inch (exactly 1/72 of an inch in the digital era).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|UK}} An electric [[power]] socket. {{defdate|from 20th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:c9a77b43e3c0f188ef",
+      "pos": "noun",
+      "definition": "An electric power socket.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|UK|AU|NZ|obsolete}} A [[unit of measure]] for [[rain]], equal to 0.254 mm or 0.01 of an [[inch]].",
+    "sense": {
+      "id": "wiktionary:restored:d1f7b37c59b883da67",
+      "pos": "noun",
+      "definition": "A unit of measure for rain, equal to 0.254 mm or 0.01 of an inch.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:36ecf2142eb941ee1e",
+    "parentSourceHash": "087ddec9ba251c6ff610b033d941ed1b3a7896f7deb52a446a3924b0201b7927",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|automotive|mostly|in the plural}} Either of the two metal surfaces in a [[distributor]] which close or open to allow or prevent the flow of current through the [[ignition coil]]. There is usually a moving point, pushed by the distributor cam, and a fixed point, and they are built together as a unit.",
+    "sense": {
+      "id": "wiktionary:restored:fbf3b9a97ad517d419",
+      "pos": "noun",
+      "definition": "Either of the two metal surfaces in a distributor which close or open to allow or prevent the flow of current through the ignition coil. There is usually a moving point, pushed by the distributor cam, and a fixed point, and they are built together as a unit.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## The sharp [[tip]] of an [[object]]. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:8435728be7a9b4d26e",
+      "pos": "noun",
+      "definition": "The sharp tip of an object.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## Any projecting extremity of an object. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:ad27f08685093d576d",
+      "pos": "noun",
+      "definition": "Any projecting extremity of an object.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## An object which has a sharp or tapering tip. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:3c22b4f41b0a8f15e0",
+      "pos": "noun",
+      "definition": "An object which has a sharp or tapering tip.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "### {{lb|en|archaeology}} A spearhead or similar object hafted to a handle.",
+    "sense": {
+      "id": "wiktionary:restored:524c60375657495bfc",
+      "pos": "noun",
+      "definition": "A spearhead or similar object hafted to a handle.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "### {{lb|en|medicine|obsolete}} A [[vaccine point]].",
+    "sense": {
+      "id": "wiktionary:restored:374e9db4e3e2ca19fe",
+      "pos": "noun",
+      "definition": "A vaccine point.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|backgammon}} Each of the [[twelve]] [[triangular]] positions in either [[table]] of a [[backgammon]] [[board]], on which the [[stone]]s are played. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:2658dad01ce4e1d676",
+      "pos": "noun",
+      "definition": "Each of the twelve triangular positions in either table of a backgammon board, on which the stones are played.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## A [[peninsula]] or [[promontory]]. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:fa766972d35142213b",
+      "pos": "noun",
+      "definition": "A peninsula or promontory.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## The position at the front or vanguard of an advancing force. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:4b74b742a93fcb5e5b",
+      "pos": "noun",
+      "definition": "The position at the front or vanguard of an advancing force.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "### {{lb|en|by extension}} An operational or public leadership position in a risky endeavor.",
+    "sense": {
+      "id": "wiktionary:restored:157abb91beb2178689",
+      "pos": "noun",
+      "definition": "An operational or public leadership position in a risky endeavor.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "### {{ellipsis of|en|point man}}.",
+    "sense": {
+      "id": "wiktionary:restored:081ba3d27ab69de6cd",
+      "pos": "noun",
+      "definition": "Ellipsis of point man.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## Each of the main directions on a [[compass]], usually considered to be 32 in number; a direction. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:24a5d203164f33355a",
+      "pos": "noun",
+      "definition": "Each of the main directions on a compass, usually considered to be 32 in number; a direction.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|navigation|nautical}} The difference between two points of the compass; a [[unit]] of [[bearing]] equal to one thirty-second of a [[circle]], ''i.e.'' 11.25°.",
+    "sense": {
+      "id": "wiktionary:restored:dba138cb9069c24cfd",
+      "pos": "noun",
+      "definition": "The difference between two points of the compass; a unit of bearing equal to one thirty-second of a circle, i.e. 11.25°.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## [[pointedness|Pointedness]] of speech or writing; a penetrating or decisive quality of [[expression]]. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:7182f211110f39a164",
+      "pos": "noun",
+      "definition": "Pointedness of speech or writing; a penetrating or decisive quality of expression.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|railroads|UK|in the plural}} A [[railroad switch]]. {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:92edc858874d890bdf",
+      "pos": "noun",
+      "definition": "A railroad switch.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## A [[tine]] or [[snag]] of an [[antler]].",
+    "sense": {
+      "id": "wiktionary:restored:e92d9d2d3fcf195848",
+      "pos": "noun",
+      "definition": "A tine or snag of an antler.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|heraldry}} One of the \"corners\" of the [[escutcheon]]: the [[base]] (bottom center) unless a qualifier is added (''point dexter'', ''point dexter base'', ''point sinister'', ''point sinister base''), generally when separately tinctured. {{q|Compare {{m|en|terrace}}, {{m|en|champaine|point champaine}}, {{m|en|enté en point}}.}} [[File:Type pièce Vetement.svg|right|120px|thumb|This is sometimes blazoned ''argent, four points gules''; otherwise, it is {{l|fr|vêtu}}.]]",
+    "sense": {
+      "id": "wiktionary:restored:be26717520d494366d",
+      "pos": "noun",
+      "definition": "One of the \"corners\" of the escutcheon: the base (bottom center) unless a qualifier is added (point dexter, point dexter base, point sinister, point sinister base), generally when separately tinctured.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:9a806cdf667900221c",
+    "parentSourceHash": "fae92ef2ca4ee5e1987c725c7e24050fa63faf8121a8003f67983270c9cf139e",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|heraldry|by extension}} An ordinary similar to a [[pile]] (but sometimes shorter), extending upward from the [[base]]. {{q|Often termed a ''point pointed''.}}",
+    "sense": {
+      "id": "wiktionary:restored:5ea08e69ae848a832c",
+      "pos": "noun",
+      "definition": "An ordinary similar to a pile (but sometimes shorter), extending upward from the base.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:64e25e1ae196b8d246",
+    "parentSourceHash": "514dba15bdfe32c2d4029499da803f7c39d34ac82e3ae6e19c37351bc2149072",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## The act of pointing, as of the [[foot]] [[downward]] in certain [[dance]] positions.",
+    "sense": {
+      "id": "wiktionary:restored:5a2018240cd2d7809f",
+      "pos": "noun",
+      "definition": "The act of pointing, as of the foot downward in certain dance positions.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:64e25e1ae196b8d246",
+    "parentSourceHash": "514dba15bdfe32c2d4029499da803f7c39d34ac82e3ae6e19c37351bc2149072",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## The gesture of extending the index finger in a direction in order to indicate something.",
+    "sense": {
+      "id": "wiktionary:restored:5f0b2b64bbbd1726b1",
+      "pos": "noun",
+      "definition": "The gesture of extending the index finger in a direction in order to indicate something.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:64e25e1ae196b8d246",
+    "parentSourceHash": "514dba15bdfe32c2d4029499da803f7c39d34ac82e3ae6e19c37351bc2149072",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## The attitude assumed by a [[pointer]] [[dog]] when he finds [[game]].",
+    "sense": {
+      "id": "wiktionary:restored:4e2f83a153fe308d87",
+      "pos": "noun",
+      "definition": "The attitude assumed by a pointer dog when he finds game.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:64e25e1ae196b8d246",
+    "parentSourceHash": "514dba15bdfe32c2d4029499da803f7c39d34ac82e3ae6e19c37351bc2149072",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|falconry}} The [[perpendicular]] rising of a [[hawk]] over the place where its [[prey]] has gone into cover.",
+    "sense": {
+      "id": "wiktionary:restored:5cba2871103c2b69f6",
+      "pos": "noun",
+      "definition": "The perpendicular rising of a hawk over the place where its prey has gone into cover.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:64e25e1ae196b8d246",
+    "parentSourceHash": "514dba15bdfe32c2d4029499da803f7c39d34ac82e3ae6e19c37351bc2149072",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|fencing}} A [[movement]] executed with the [[sabre]] or [[foil]].",
+    "sense": {
+      "id": "wiktionary:restored:3d95d892543c9c9f81",
+      "pos": "noun",
+      "definition": "A movement executed with the sabre or foil.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:4ea5157ffeb33cc984",
+    "parentSourceHash": "5a8d1d47349e23ed96677219e5fbcd844bb75a9aba24b1f3200a30598570902a",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|cricket|countable|uncountable}} A [[fielding]] [[position]] [[square]] of the [[wicket]] on the [[off side]], between [[gully]] and [[cover]]. {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:e5a47aa12e28c4294f",
+      "pos": "noun",
+      "definition": "A fielding position square of the wicket on the off side, between gully and cover.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:4ea5157ffeb33cc984",
+    "parentSourceHash": "5a8d1d47349e23ed96677219e5fbcd844bb75a9aba24b1f3200a30598570902a",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|lacrosse|ice hockey|countable|uncountable}} The position of the player of each side who stands a short distance in front of the [[goalkeeper]].",
+    "sense": {
+      "id": "wiktionary:restored:8d4ed8302b4bda726c",
+      "pos": "noun",
+      "definition": "The position of the player of each side who stands a short distance in front of the goalkeeper.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:4ea5157ffeb33cc984",
+    "parentSourceHash": "5a8d1d47349e23ed96677219e5fbcd844bb75a9aba24b1f3200a30598570902a",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|baseball|countable|uncountable}} The position of the [[pitcher]] and [[catcher]].",
+    "sense": {
+      "id": "wiktionary:restored:f393aa88a475d65aae",
+      "pos": "noun",
+      "definition": "The position of the pitcher and catcher.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "point",
+    "entryId": "ve-b3119e9",
+    "parentSenseId": "kaikki:4ea5157ffeb33cc984",
+    "parentSourceHash": "5a8d1d47349e23ed96677219e5fbcd844bb75a9aba24b1f3200a30598570902a",
+    "sourcePage": "point",
+    "revision": 93425250,
+    "sourceGloss": "## {{lb|en|hunting}} A spot to which a straight run is made; hence, a straight run from point to point; a cross-country run.",
+    "sense": {
+      "id": "wiktionary:restored:61ece1fd4aa1768f19",
+      "pos": "noun",
+      "definition": "A spot to which a straight run is made; hence, a straight run from point to point; a cross-country run.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=point&oldid=93425250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|often|formal}} To pull (someone or something) in a [[particular#Adjective|particular]] [[direction]] or [[manner#Noun|manner]]. {{defdate|from 8th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:70f470f1c3f2151347",
+      "pos": "verb",
+      "definition": "To pull (someone or something) in a particular direction or manner.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To [[move#Verb|move]] (a [[body part]]) in a particular direction. {{defdate|from 13th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:8c503468b022bcae08",
+      "pos": "verb",
+      "definition": "To move (a body part) in a particular direction.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} ''Often followed by'' '''[[tight#Adjective|tight]]''': to pull (something, such as a [[belt#Noun|belt]] or [[string#Noun|string]]) so that it [[tighten]]s or [[wrap#Verb|wraps]] around something more [[closely]]. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:e23f956400245b7276",
+      "pos": "verb",
+      "definition": "Often followed by tight: to pull (something, such as a belt or string) so that it tightens or wraps around something more closely.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To [[drag#Verb|drag]] (something), especially along the [[ground#Noun|ground]].",
+    "sense": {
+      "id": "wiktionary:restored:daf5facf5212f5e034",
+      "pos": "verb",
+      "definition": "To drag (something), especially along the ground.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To pull ([[blind#Noun|blinds]], a [[curtain#Noun|curtain]], etc.) [[open#Adjective|open]] or [[closed#Adjective|closed]]. {{defdate|from 13th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:0832fbc9ae075f6897",
+      "pos": "verb",
+      "definition": "To pull (blinds, a curtain, etc.) open or closed.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To pull out (a [[bolt#Noun|bolt]] or [[latch#Noun|latch]]) to [[unlock#Verb|unlock]] a [[door#Noun|door]], [[gate#Noun|gate]], etc.; also, to [[push#Verb|push]] in (a bolt or latch) to [[lock#Verb|lock]] a door, gate, etc.",
+    "sense": {
+      "id": "wiktionary:restored:73b2a9928925b083ee",
+      "pos": "verb",
+      "definition": "To pull out (a bolt or latch) to unlock a door, gate, etc.; also, to push in (a bolt or latch) to lock a door, gate, etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} ''Chiefly followed by'' '''[[aside#Adverb|aside]]''' ''or'' '''to one [[side#Noun|side]]''': to move (someone) away from a [[group#Noun|group]] of people in order to [[speak#Verb|speak]] to them [[privately]].",
+    "sense": {
+      "id": "wiktionary:restored:78c3eeecd5af4c5c4c",
+      "pos": "verb",
+      "definition": "Chiefly followed by aside or to one side: to move (someone) away from a group of people in order to speak to them privately.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|reflexive}} To [[assume]] a [[specific#Adjective|specific]] [[attitude#Noun|attitude]] or [[position#Noun|position]], either by pulling in or [[stretch#Verb|stretching]] out one's [[body#Noun|body]] or [[limb#Noun|limbs]]. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:f94c0cfcbc5427fbd1",
+      "pos": "verb",
+      "definition": "To assume a specific attitude or position, either by pulling in or stretching out one's body or limbs.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[cause#Verb|cause]] (a body part) to [[contract#Verb|contract]] or [[shrink#Verb|shrink]]; also, to pull (the [[mouth#Noun|mouth]], the [[face#Noun|face]] or [[feature#Noun|features]], etc.) [[out of shape]] from [[emotion]], etc.; to [[distort]]. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:691705f079a512fdb7",
+      "pos": "verb",
+      "definition": "To cause (a body part) to contract or shrink; also, to pull (the mouth, the face or features, etc.) out of shape from emotion, etc.; to distort.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|archaic}} To cause (someone or something) to [[go#Verb|go]] from one [[place#Noun|place]] to another, or from one [[condition#Noun|condition]] to another.",
+    "sense": {
+      "id": "wiktionary:restored:744aa89afe7148ab2d",
+      "pos": "verb",
+      "definition": "To cause (someone or something) to go from one place to another, or from one condition to another.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|archaic}} To [[construct#Verb|construct]] (a [[canal#Noun|canal]], [[wall#Noun|wall]], etc.) from one [[point#Noun|point]] to another. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:a42bcfc4d51dc35c14",
+      "pos": "verb",
+      "definition": "To construct (a canal, wall, etc.) from one point to another.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|billiards}} To [[strike#Verb|strike]] (the [[cue ball]]) below the [[center#Noun|centre]] so as to [[give#Verb|give]] it a [[backward#Preposition|backward]] [[rotation]] which causes it to move backwards on striking another [[ball#Noun|ball]]. {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:b72b5af12ff39d9110",
+      "pos": "verb",
+      "definition": "To strike (the cue ball) below the centre so as to give it a backward rotation which causes it to move backwards on striking another ball.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|bowls}} To cause (a [[bowl#Noun|bowl]]) to move in a [[curve#Noun|curve]] to a certain place.",
+    "sense": {
+      "id": "wiktionary:restored:390c797d87a209eb85",
+      "pos": "verb",
+      "definition": "To cause (a bowl) to move in a curve to a certain place.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|cricket|archaic}} Of a [[batter#Noun|batter]]: to [[hit#Verb|hit]] (a ball) from the [[off side]] to the [[leg side]], especially with an [[inclined#Adjective|inclined]] [[bat#Noun|bat]]; also, to hit (a [[short#Adjective|short]]-[[length#Noun|length]] ball [[direct#Verb|directed]] at the [[leg stump]]) with an inclined bat so as to [[deflect]] the ball between the [[leg#Noun|legs]] and the [[wicket]]. {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:700807c97fb3a4e94e",
+      "pos": "verb",
+      "definition": "Of a batter: to hit (a ball) from the off side to the leg side, especially with an inclined bat; also, to hit (a short-length ball directed at the leg stump) with an inclined bat so as to deflect the ball between the legs and the wicket.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|curling}} To [[play#Verb|play]] (a [[shot#Noun|shot]] or a [[stone#Noun|stone]]) that [[land#Verb|lands]] in the {{l|en|house|t=[[circular#Adjective|circular]] [[target#Noun|target]]}}. {{defdate|from 18th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:0982ecd140a3e8fed3",
+      "pos": "verb",
+      "definition": "To play (a shot or a stone) that lands in the house (circular target).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|golf}} To hit (the ball) with the [[toe#Noun|toe]] of the [[club#Noun|club]] so that it is deflected toward the [[left#Noun|left]] (or, for a [[left-handed#Adjective|left-handed]] [[player]], toward the [[right#Noun|right]], originally in an [[uncontrolled]] and now a [[controlled#Adjective|controlled]] manner. {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:66ac77948e9410b206",
+      "pos": "verb",
+      "definition": "To hit (the ball) with the toe of the club so that it is deflected toward the left (or, for a left-handed player, toward the right, originally in an uncontrolled and now a controlled manner.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|nautical}} Of a [[vessel#Noun|vessel]]: to [[require]] (a certain [[depth]] of [[water#Noun|water]]) to [[float#Verb|float]] in. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:532f265d710eb7a3b9",
+      "pos": "verb",
+      "definition": "Of a vessel: to require (a certain depth of water) to float in.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To drag (someone) by [[tie#Verb|tying]] behind a [[horse#Noun|horse]] or on a [[frame#Noun|frame]] as a [[form#Noun|form]] of [[punishment]] or [[torture#Noun|torture]], or to [[bring#Verb|bring]] to a place of [[execution]].",
+    "sense": {
+      "id": "wiktionary:restored:26e86f6331d051b550",
+      "pos": "verb",
+      "definition": "To drag (someone) by tying behind a horse or on a frame as a form of punishment or torture, or to bring to a place of execution.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[kill#Verb|kill]] someone as a form of punishment or torture by [[tear#Verb|tearing]] apart (their body) by tying their limbs to horses which [[run#Verb|run]] in [[different#Adjective|different]] directions; also, to tear (the limbs) from someone's body in this manner.",
+    "sense": {
+      "id": "wiktionary:restored:8ad2b4f3736796610a",
+      "pos": "verb",
+      "definition": "To kill someone as a form of punishment or torture by tearing apart (their body) by tying their limbs to horses which run in different directions; also, to tear (the limbs) from someone's body in this manner.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|archery}} To pull back (an [[arrow#Noun|arrow]] or [[bowstring]]) in [[preparation]] for [[shoot#Verb|shooting]] the arrow; also, to cause (a [[bow#Noun|bow]]) to [[bend#Verb|bend]] by pulling back the bowstring. {{defdate|from 12th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:c7f6019c4d6cb78e08",
+      "pos": "verb",
+      "definition": "To pull back (an arrow or bowstring) in preparation for shooting the arrow; also, to cause (a bow) to bend by pulling back the bowstring.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|arithmetic}} To [[subject#Verb|subject]] (a [[number#Noun|number]]) to an [[arithmetic operation]].",
+    "sense": {
+      "id": "wiktionary:restored:e626654ebdb1847f24",
+      "pos": "verb",
+      "definition": "To subject (a number) to an arithmetic operation.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|fishing}} to [[haul#Verb|haul]] in (a [[fishing net]]) which has been [[cast#Verb|cast]]; also, to drag (a fishing net) alongside a [[boat#Noun|boat]].",
+    "sense": {
+      "id": "wiktionary:restored:0e60a7ab88ffcacb17",
+      "pos": "verb",
+      "definition": "to haul in (a fishing net) which has been cast; also, to drag (a fishing net) alongside a boat.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|nautical|archaic}} To [[hoist#Verb|hoist]] (a [[sail#Noun|sail]]).",
+    "sense": {
+      "id": "wiktionary:restored:4a8e0064d162e68a20",
+      "pos": "verb",
+      "definition": "To hoist (a sail).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|UK|regional}} To [[carry#Verb|carry]] (a [[load#Noun|load]]) in a vehicle; to [[cart#Verb|cart]], to haul.",
+    "sense": {
+      "id": "wiktionary:restored:3e82998431e855a13e",
+      "pos": "verb",
+      "definition": "To carry (a load) in a vehicle; to cart, to haul.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[sew#Verb|sew]] together (the [[edge#Noun|edges]] of a [[tear#Noun|tear]]); also, to [[mend#Verb|mend]] (a [[hole#Noun|hole]] or tear) in [[fabric#Noun|fabric]].",
+    "sense": {
+      "id": "wiktionary:restored:5ea75c7af229665a2f",
+      "pos": "verb",
+      "definition": "To sew together (the edges of a tear); also, to mend (a hole or tear) in fabric.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[use#Verb|use]] (a draught animal) to pull a plough or vehicle.",
+    "sense": {
+      "id": "wiktionary:restored:b0a6edc9dac2980585",
+      "pos": "verb",
+      "definition": "To use (a draught animal) to pull a plough or vehicle.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|figurative}} To [[attribute#Verb|attribute]] (something) to a person or thing; to [[ascribe]].",
+    "sense": {
+      "id": "wiktionary:restored:255806517c729357f1",
+      "pos": "verb",
+      "definition": "To attribute (something) to a person or thing; to ascribe.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|figurative}} To [[change#Verb|change]] (something) into another thing; to [[convert#Verb|convert]], to [[transform#Verb|transform]].",
+    "sense": {
+      "id": "wiktionary:restored:df491b4fb4c73025f5",
+      "pos": "verb",
+      "definition": "To change (something) into another thing; to convert, to transform.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|figurative}} To [[convert#Verb|convert]] (a [[text#Noun|passage]]) from one [[literary]] [[style#Noun|style]] to another (for example, from [[prose#Noun|prose]] to [[verse#Noun|verse]]); or to [[translate#Verb|translate]] (a text) from one [[language#Noun|language]] to another.",
+    "sense": {
+      "id": "wiktionary:restored:2319c5e8b1d706bf8a",
+      "pos": "verb",
+      "definition": "To convert (a passage) from one literary style to another (for example, from prose to verse); or to translate (a text) from one language to another.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|figurative}} To [[direct#Verb|direct]] (one's [[heart#Noun|heart]], [[thought#Noun|thoughts]], etc.) in a certain [[way#Noun|way]] or towards someone or something.",
+    "sense": {
+      "id": "wiktionary:restored:21e36017a225d2a94f",
+      "pos": "verb",
+      "definition": "To direct (one's heart, thoughts, etc.) in a certain way or towards someone or something.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|figurative}} To [[give#Verb|give]] ([[courage#Noun|courage]], [[strength#Noun|strength]], etc.) to oneself; to [[summon up]]; also, to produce ([[evil#Noun|evil]], [[wickedness]], etc.) in oneself.",
+    "sense": {
+      "id": "wiktionary:restored:d1c48a94a983d8add4",
+      "pos": "verb",
+      "definition": "To give (courage, strength, etc.) to oneself; to summon up; also, to produce (evil, wickedness, etc.) in oneself.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|figurative}} To give (words) a certain [[meaning#Noun|meaning]], especially one which is [[distorted#Adjective|distorted]]; to [[distort#Verb|distort]], to [[misrepresent]].",
+    "sense": {
+      "id": "wiktionary:restored:bd0a5661139a2a8c8e",
+      "pos": "verb",
+      "definition": "To give (words) a certain meaning, especially one which is distorted; to distort, to misrepresent.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|figurative|cooking}} ''Followed by'' '''[[through#Preposition|through]]''': to [[pass#Verb|pass]] ([[food]]) through a [[strainer]].",
+    "sense": {
+      "id": "wiktionary:restored:f0001b1a993b1d76f2",
+      "pos": "verb",
+      "definition": "Followed by through: to pass (food) through a strainer.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|figurative|cooking}} To [[mix#Verb|mix]] (an [[ingredient]]) with another ingredient or ingredients to form a [[liquid#Noun|liquid]] or [[paste#Noun|paste]]; to mix (ingredients) together to form a liquid or paste.",
+    "sense": {
+      "id": "wiktionary:restored:952bbb08cfc1745f46",
+      "pos": "verb",
+      "definition": "To mix (an ingredient) with another ingredient or ingredients to form a liquid or paste; to mix (ingredients) together to form a liquid or paste.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} To be ([[able#Adjective|able]] to be) pulled in a particular direction or manner.",
+    "sense": {
+      "id": "wiktionary:restored:6d0acd83ebdaf43fcf",
+      "pos": "verb",
+      "definition": "To be (able to be) pulled in a particular direction or manner.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} Of [[blind#Noun|blinds]], a [[curtain#Noun|curtain]], etc.: to be pulled [[open#Adjective|open]] or [[closed#Adjective|closed]].",
+    "sense": {
+      "id": "wiktionary:restored:367810facb48eeb4d8",
+      "pos": "verb",
+      "definition": "Of blinds, a curtain, etc.: to be pulled open or closed.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|bowls}} Of a bowl: to move in a curve to a certain place.",
+    "sense": {
+      "id": "wiktionary:restored:1f00ef4f63e2134607",
+      "pos": "verb",
+      "definition": "Of a bowl: to move in a curve to a certain place.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|curling}} To make a shot that lands in the house.",
+    "sense": {
+      "id": "wiktionary:restored:fec07d1d0753483578",
+      "pos": "verb",
+      "definition": "To make a shot that lands in the house.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|nautical}} ''Followed by an [[adverb]], such as'' '''[[deep#Adverb|deep]]''' ''or'' '''[[shallow#Adverb|shallow]]''': of a [[vessel#Noun|vessel]]: to require a depth of water of a certain [[characteristic#Noun|characteristic]] to [[float#Verb|float]] in.",
+    "sense": {
+      "id": "wiktionary:restored:2eccdd822df3355a49",
+      "pos": "verb",
+      "definition": "Followed by an adverb, such as deep or shallow: of a vessel: to require a depth of water of a certain characteristic to float in.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### Especially of a [[draught animal]]: to pull something, such as a [[plough#Noun|plough]] or [[vehicle#Noun|vehicle]], along; to have force to move something by pulling. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:f6707cc801fdc25bc5",
+      "pos": "verb",
+      "definition": "Especially of a draught animal: to pull something, such as a plough or vehicle, along; to have force to move something by pulling.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### Of a plough or vehicle: to be pulled along in a specified manner. {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:9b8a5d5735e23bba91",
+      "pos": "verb",
+      "definition": "Of a plough or vehicle: to be pulled along in a specified manner.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[become]] [[contracted#Adjective|contracted]]; to [[shrink#Verb|shrink]]. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:e9155258a804ded8e0",
+      "pos": "verb",
+      "definition": "To become contracted; to shrink.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive|archery}} To pull back an arrow or bowstring in preparation for shooting the arrow; also, to cause a bow to bend by pulling back the bowstring.",
+    "sense": {
+      "id": "wiktionary:restored:66ded83e7096eb085a",
+      "pos": "verb",
+      "definition": "To pull back an arrow or bowstring in preparation for shooting the arrow; also, to cause a bow to bend by pulling back the bowstring.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive|Scotland|figurative|archaic}} To [[work#Verb|work]] together towards a [[common#Adjective|common]] [[aim#Noun|aim]]; to [[cooperate]], to [[pull together]]; also, to have a [[good#Adjective|good]] [[relationship]] with; to [[get on with]].",
+    "sense": {
+      "id": "wiktionary:restored:0afa70b042fa3397d8",
+      "pos": "verb",
+      "definition": "To work together towards a common aim; to cooperate, to pull together; also, to have a good relationship with; to get on with.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To be dragged along; to drag.",
+    "sense": {
+      "id": "wiktionary:restored:2eac2485ac88f22a4e",
+      "pos": "verb",
+      "definition": "To be dragged along; to drag.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:3a39ee2e1c8b8776c2",
+    "parentSourceHash": "bc07aa1cb9541a8a62ee6e758f1f4ae203eca5e27b93f54399d8078fb1256fc3",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To pull at something; to [[tug#Verb|tug]].",
+    "sense": {
+      "id": "wiktionary:restored:f0470c25b81403a32f",
+      "pos": "verb",
+      "definition": "To pull at something; to tug.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To [[induce]] (the [[attention]], the [[eye#Noun|eyes]] or [[mind#Noun|mind]], etc.) to be [[direct#Verb|directed]] at or [[focus#Verb|focused]] on something. {{defdate|from 9th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:bb686d33d4d61a9db5",
+      "pos": "verb",
+      "definition": "To induce (the attention, the eyes or mind, etc.) to be directed at or focused on something.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To attract or cause (someone) to [[come#Verb|come]] to a particular place or to [[take#Verb|take]] a particular [[course of action]]; also, to cause (someone) to [[turn away]] from a particular [[condition#Noun|condition]] or course of action. {{defdate|from 12th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:1e175f6336dc533c8a",
+      "pos": "verb",
+      "definition": "To attract or cause (someone) to come to a particular place or to take a particular course of action; also, to cause (someone) to turn away from a particular condition or course of action.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To attract (something) [[by means of]] a [[physical#Adjective|physical]] [[force#Noun|force]], especially [[gravity]] or [[magnetism]]. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:ec8f8ee5c104f119c2",
+      "pos": "verb",
+      "definition": "To attract (something) by means of a physical force, especially gravity or magnetism.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To attract or [[provoke]] (a particular [[reaction]] or [[response]]) from someone. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:46c80e571ee251a84e",
+      "pos": "verb",
+      "definition": "To attract or provoke (a particular reaction or response) from someone.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To cause (something) to [[occur]] as a [[consequence#Noun|consequence]]; to [[bring about]]. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:791b7707d43b21a583",
+      "pos": "verb",
+      "definition": "To cause (something) to occur as a consequence; to bring about.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} ''Followed by'' '''on''' ''or'' '''upon''': to bring ([[disaster]] or [[misfortune]]) on oneself.",
+    "sense": {
+      "id": "wiktionary:restored:f4b9ac38183c5bae3d",
+      "pos": "verb",
+      "definition": "Followed by on or upon: to bring (disaster or misfortune) on oneself.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To [[receive#Verb|receive]] (a particular [[prison#Noun|prison]] [[sentence#Noun|sentence]]).",
+    "sense": {
+      "id": "wiktionary:restored:5d3b72ad62407717b8",
+      "pos": "verb",
+      "definition": "To receive (a particular prison sentence).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To take ([[air#Noun|air]], [[smoke#Noun|smoke]], etc.) into the [[lung]]s; to [[breathe in]], to [[inhale]]. {{defdate|from 13th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:66eb589bfa15c18bd2",
+      "pos": "verb",
+      "definition": "To take (air, smoke, etc.) into the lungs; to breathe in, to inhale.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To cause (air) to be [[suck#Verb|sucked]] into a [[duct#Noun|duct]], a [[room#Noun|room]], etc.",
+    "sense": {
+      "id": "wiktionary:restored:defd8ca1284b4b98de",
+      "pos": "verb",
+      "definition": "To cause (air) to be sucked into a duct, a room, etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|archaic}} To [[drag#Verb|drag]] or suck [[deeply]] on (a [[cigarette]], [[pipe#Noun|pipe]], or other [[smoking#Noun|smoking]] [[implement#Noun|implement]]).",
+    "sense": {
+      "id": "wiktionary:restored:b64a02e06f470a2cb5",
+      "pos": "verb",
+      "definition": "To drag or suck deeply on (a cigarette, pipe, or other smoking implement).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|originally|and|chiefly|military}} To attract or provoke [[gunfire]], either [[intentionally]] or [[unintentionally]].",
+    "sense": {
+      "id": "wiktionary:restored:96e123231fee0c823d",
+      "pos": "verb",
+      "definition": "To attract or provoke gunfire, either intentionally or unintentionally.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} To attract or [[influence#Verb|influence]] a person or group of people; to be an [[inducement]] or [[enticement]].",
+    "sense": {
+      "id": "wiktionary:restored:3c8162a3e683a209b8",
+      "pos": "verb",
+      "definition": "To attract or influence a person or group of people; to be an inducement or enticement.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} To take a [[drink#Noun|drink]] of a [[beverage]], especially an [[alcoholic#Adjective|alcoholic]] one; to [[swig#Verb|swig]].",
+    "sense": {
+      "id": "wiktionary:restored:584fd2b180196231ac",
+      "pos": "verb",
+      "definition": "To take a drink of a beverage, especially an alcoholic one; to swig.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} Of a duct, smoking implement, etc.: to [[allow]] air to be passed through it in order that [[combustion]] can occur. {{defdate|from 18th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:987269fdfdcafffec0",
+      "pos": "verb",
+      "definition": "Of a duct, smoking implement, etc.: to allow air to be passed through it in order that combustion can occur.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} ''Followed by'' '''[[at#Preposition|at]]''' ''or'' '''on''': to drag or suck deeply on a cigarette, pipe, or other smoking implement.",
+    "sense": {
+      "id": "wiktionary:restored:1eeeaf006b31d96672",
+      "pos": "verb",
+      "definition": "Followed by at or on: to drag or suck deeply on a cigarette, pipe, or other smoking implement.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:8df001c6fcafecb0c6",
+    "parentSourceHash": "4d536f5d282b68d42e9f80c997b483c6601f39ce179d1e623a02b0d732bcf8d2",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} ''Chiefly followed by'' '''[[about#Adverb|about]]''' ''or'' '''[[around#Adverb|around]]''': of a group of people: to [[come together]]; to [[assemble]], to [[congregate#Verb|congregate]], to [[gather#Verb|gather]].",
+    "sense": {
+      "id": "wiktionary:restored:6781ce0b9dd9710b6b",
+      "pos": "verb",
+      "definition": "Chiefly followed by about or around: of a group of people: to come together; to assemble, to congregate, to gather.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:be7b28104dd3e80424",
+    "parentSourceHash": "40a690626bbd6b3956ab141a4b1a149ece43c268bc3e920a4673d0de70e59bec",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To make (something) [[large#Adjective|larger]] or [[long#Adjective|longer]]; to [[elongate#Verb|elongate]], to stretch. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:29f9ad3bc9e204f040",
+      "pos": "verb",
+      "definition": "To make (something) larger or longer; to elongate, to stretch.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:be7b28104dd3e80424",
+    "parentSourceHash": "40a690626bbd6b3956ab141a4b1a149ece43c268bc3e920a4673d0de70e59bec",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} ''Followed by'' '''[[out#Preposition|out]]''': to [[flatten]] (a [[piece#Noun|piece]] of [[metal#Noun|metal]]), usually by [[hammer#Verb|hammering]].",
+    "sense": {
+      "id": "wiktionary:restored:00c08c99d78987f16f",
+      "pos": "verb",
+      "definition": "Followed by out: to flatten (a piece of metal), usually by hammering.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:be7b28104dd3e80424",
+    "parentSourceHash": "40a690626bbd6b3956ab141a4b1a149ece43c268bc3e920a4673d0de70e59bec",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To make ([[wire#Noun|wire]]) by pulling a [[rod#Noun|rod]] or other piece of metal through one or more [[aperture]]s; also, to [[stretch#Verb|stretch]] (a rod or other piece of metal) into a wire. {{defdate|from 13th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:6e1c5a3b4e4efeba23",
+      "pos": "verb",
+      "definition": "To make (wire) by pulling a rod or other piece of metal through one or more apertures; also, to stretch (a rod or other piece of metal) into a wire.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:be7b28104dd3e80424",
+    "parentSourceHash": "40a690626bbd6b3956ab141a4b1a149ece43c268bc3e920a4673d0de70e59bec",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To make ([[straw#Noun|straw]] [[straight#Adjective|straight]] for [[thatch#Verb|thatching]] by pulling it through the [[hand#Noun|hands]].",
+    "sense": {
+      "id": "wiktionary:restored:49f2b567d6600c811a",
+      "pos": "verb",
+      "definition": "To make (straw straight for thatching by pulling it through the hands.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:be7b28104dd3e80424",
+    "parentSourceHash": "40a690626bbd6b3956ab141a4b1a149ece43c268bc3e920a4673d0de70e59bec",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[amount#Verb|amount]] to (a certain [[quantity]] or [[sum#Noun|sum]]).",
+    "sense": {
+      "id": "wiktionary:restored:de3021c911e2eae71c",
+      "pos": "verb",
+      "definition": "To amount to (a certain quantity or sum).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:be7b28104dd3e80424",
+    "parentSourceHash": "40a690626bbd6b3956ab141a4b1a149ece43c268bc3e920a4673d0de70e59bec",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To extend the [[duration]] of (something); to [[prolong]]. {{defdate|10th|19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:7db69a1fec30870ee6",
+      "pos": "verb",
+      "definition": "To extend the duration of (something); to prolong.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:be7b28104dd3e80424",
+    "parentSourceHash": "40a690626bbd6b3956ab141a4b1a149ece43c268bc3e920a4673d0de70e59bec",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To stretch (someone) on a [[rack#Noun|rack]] as a form of punishment or torture.",
+    "sense": {
+      "id": "wiktionary:restored:ef1189eb0fcbcea43f",
+      "pos": "verb",
+      "definition": "To stretch (someone) on a rack as a form of punishment or torture.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:be7b28104dd3e80424",
+    "parentSourceHash": "40a690626bbd6b3956ab141a4b1a149ece43c268bc3e920a4673d0de70e59bec",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} To be made larger or longer; to be elongated or stretched.",
+    "sense": {
+      "id": "wiktionary:restored:11a7dff5269340885a",
+      "pos": "verb",
+      "definition": "To be made larger or longer; to be elongated or stretched.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:be7b28104dd3e80424",
+    "parentSourceHash": "40a690626bbd6b3956ab141a4b1a149ece43c268bc3e920a4673d0de70e59bec",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} To make straw straight for thatching by pulling it through the hands.",
+    "sense": {
+      "id": "wiktionary:restored:0aa2d1ea0c4a41daaf",
+      "pos": "verb",
+      "definition": "To make straw straight for thatching by pulling it through the hands.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:be7b28104dd3e80424",
+    "parentSourceHash": "40a690626bbd6b3956ab141a4b1a149ece43c268bc3e920a4673d0de70e59bec",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive|nautical}} Of a sail: to [[fill#Verb|fill]] with [[wind#Noun|wind]] and become [[taut#Adjective|taut]]. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:dc711685bb36aadde7",
+      "pos": "verb",
+      "definition": "Of a sail: to fill with wind and become taut.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:be7b28104dd3e80424",
+    "parentSourceHash": "40a690626bbd6b3956ab141a4b1a149ece43c268bc3e920a4673d0de70e59bec",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To amount to a certain quantity or sum.",
+    "sense": {
+      "id": "wiktionary:restored:be3309c0829cf7f1a0",
+      "pos": "verb",
+      "definition": "To amount to a certain quantity or sum.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:be7b28104dd3e80424",
+    "parentSourceHash": "40a690626bbd6b3956ab141a4b1a149ece43c268bc3e920a4673d0de70e59bec",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To extend in [[area]] or [[space#Noun|space]]; to [[spread#Verb|spread]], to stretch.",
+    "sense": {
+      "id": "wiktionary:restored:4626f38834c2edb4d4",
+      "pos": "verb",
+      "definition": "To extend in area or space; to spread, to stretch.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To pull (something) out; to extract, to [[remove#Verb|remove]].",
+    "sense": {
+      "id": "wiktionary:restored:39a17635471d1c4fce",
+      "pos": "verb",
+      "definition": "To pull (something) out; to extract, to remove.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To extract (a [[tooth#Noun|tooth]]); to pull. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:92d3b0e662a48795c2",
+      "pos": "verb",
+      "definition": "To extract (a tooth); to pull.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To extract ([[juice#Noun|juice]], [[oil#Noun|oil]], or some other [[fluid#Noun|fluid]]) from something by [[osmosis]], [[pressure#Noun|pressure]], or another [[process#Noun|process]]. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:55d36e99625c4d9c01",
+      "pos": "verb",
+      "definition": "To extract (juice, oil, or some other fluid) from something by osmosis, pressure, or another process.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To extract (a [[small#Adjective|small]] [[amount#Noun|amount]] of liquid, especially [[blood#Noun|blood]]) by [[puncture#Verb|puncturing]] a surface, or by using a [[pipette#Noun|pipette]], [[syringe#Noun|syringe]], or other [[suction#Noun|suction]] [[device]].",
+    "sense": {
+      "id": "wiktionary:restored:94bce44d778de812fc",
+      "pos": "verb",
+      "definition": "To extract (a small amount of liquid, especially blood) by puncturing a surface, or by using a pipette, syringe, or other suction device.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[leave#Verb|leave]] ([[tea#Noun|tea]]) [[temporarily]] in water to allow the [[flavor#Noun|flavour]] to [[increase#Verb|increase]]; to [[infuse]], to [[steep#Verb|steep]]. {{defdate|from 18th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:33024b4373134b53b1",
+      "pos": "verb",
+      "definition": "To leave (tea) temporarily in water to allow the flavour to increase; to infuse, to steep.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To pull out (a [[firearm]], [[sword#Noun|sword]], or other [[weapon#Noun|weapon]]) from a [[holster#Noun|holster]], [[sheath#Noun|sheath]], etc.; to [[unsheathe]]. {{defdate|from 12th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:37ea707df061207589",
+      "pos": "verb",
+      "definition": "To pull out (a firearm, sword, or other weapon) from a holster, sheath, etc.; to unsheathe.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To take (a beverage) from a [[cask#Noun|cask]] or [[keg#Noun|keg]] using a [[pump#Noun|pump]] or [[tap#Noun|tap]]; to [[tap#Verb|tap]].",
+    "sense": {
+      "id": "wiktionary:restored:11f0362ed033463615",
+      "pos": "verb",
+      "definition": "To take (a beverage) from a cask or keg using a pump or tap; to tap.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To take up (water) from a [[well#Noun|well]] or other [[source#Noun|source]], especially by [[lift#Verb|lifting]] in a [[container]] or [[pump#Verb|pumping]]. {{defdate|from 13th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:80096ca048345a222b",
+      "pos": "verb",
+      "definition": "To take up (water) from a well or other source, especially by lifting in a container or pumping.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[soak up]] (a liquid, etc.); to [[absorb]]; specifically, of an [[organism]] (especially a [[plant#Noun|plant]]) or one of its [[part#Noun|parts]]: to take in ([[nutrient]]s, water, etc.).",
+    "sense": {
+      "id": "wiktionary:restored:f247bc5a5a131600ec",
+      "pos": "verb",
+      "definition": "To soak up (a liquid, etc.); to absorb; specifically, of an organism (especially a plant) or one of its parts: to take in (nutrients, water, etc.).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### Of a [[channel#Noun|channel]], [[drain#Noun|drain]], etc.: to carry (water) away.",
+    "sense": {
+      "id": "wiktionary:restored:5970923465794d7ea4",
+      "pos": "verb",
+      "definition": "Of a channel, drain, etc.: to carry (water) away.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|historical}} ''Chiefly in'' '''[[draw and quarter]]''' ''and'' '''[[hang, draw and quarter]]''': to [[disembowel]] (someone), especially after [[hang#Verb|hanging]] as a punishment for [[high treason]]. {{defdate|from 13th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:4565f192cc062a7476",
+      "pos": "verb",
+      "definition": "Chiefly in draw and quarter and hang, draw and quarter: to disembowel (someone), especially after hanging as a punishment for high treason.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|cooking}} To remove the [[viscera]] from (an [[animal#Noun|animal]], especially a [[bird#Noun|bird]]) before [[cook#Verb|cooking]].",
+    "sense": {
+      "id": "wiktionary:restored:3ae51995b79a6d21f0",
+      "pos": "verb",
+      "definition": "To remove the viscera from (an animal, especially a bird) before cooking.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|medicine|archaic}} To attract ([[humour#Noun|humours]], [[pus]], etc.), chiefly by bringing to the [[surface#Noun|surface]] of the body, so it can be [[disperse]]d or removed; also, to [[treat#Verb|treat]] (a [[wound#Noun|wound]]) in this way. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:39c00740fcb9a4cac3",
+      "pos": "verb",
+      "definition": "To attract (humours, pus, etc.), chiefly by bringing to the surface of the body, so it can be dispersed or removed; also, to treat (a wound) in this way.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|mining}} To [[raise#Verb|raise]] ([[coal#Noun|coal]] or [[ore#Noun|ore]]) from an [[underground#Adjective|underground]] [[mine#Noun|mine]] to the surface.",
+    "sense": {
+      "id": "wiktionary:restored:6b9f0244910575c79d",
+      "pos": "verb",
+      "definition": "To raise (coal or ore) from an underground mine to the surface.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To select (one or more things) [[at random]] from a [[collection]] of [[similar#Adjective|similar]] things to [[decide]] which of a group of people will receive something such as a [[prize#Noun|prize]], or [[undergo]] something such as an [[assignment]]; also, to select (someone) by this process; to [[win#Verb|win]] (a prize) in a [[lottery]] or [[lucky draw]]. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:cb79f3b63696313494",
+      "pos": "verb",
+      "definition": "To select (one or more things) at random from a collection of similar things to decide which of a group of people will receive something such as a prize, or undergo something such as an assignment; also, to select (someone) by this process; to win (a prize) in a lottery or lucky draw.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To [[conduct#Verb|conduct]], or select the [[winning#Adjective|winning]] [[number#Noun|numbers]], [[ticket#Noun|tickets]], etc., for, (a lottery). {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:5b1f69c0a9b7179244",
+      "pos": "verb",
+      "definition": "To conduct, or select the winning numbers, tickets, etc., for, (a lottery).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To remove the [[contents#Noun|contents]] of (something, especially a [[kiln#Noun|kiln]] or [[oven#Noun|oven]]); to [[empty#Verb|empty]].",
+    "sense": {
+      "id": "wiktionary:restored:0070752d9342e5027e",
+      "pos": "verb",
+      "definition": "To remove the contents of (something, especially a kiln or oven); to empty.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To fill a [[bathtub]] with (water for a [[bath#Noun|bath]]); to [[run#Verb|run]] (a bath). {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:75204b135fc7757830",
+      "pos": "verb",
+      "definition": "To fill a bathtub with (water for a bath); to run (a bath).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[withdraw#Verb|withdraw]] (something); specifically {{lb|en|betting}}, to withdraw (a [[bet#Noun|bet]] or [[wager#Noun|wager]]); also {{lb|en|horse racing}}, to withdraw (a horse) from a [[race#Noun|race]]. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:1b20a308171af28b6f",
+      "pos": "verb",
+      "definition": "To withdraw (something); specifically , to withdraw (a bet or wager); also , to withdraw (a horse) from a race.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|UK|regional|agriculture|horticulture}} Of a plant or its [[root#Noun|roots]]: to [[deplete]] ([[soil#Noun|soil]]) of nutrients.",
+    "sense": {
+      "id": "wiktionary:restored:b601b09d81aea129c9",
+      "pos": "verb",
+      "definition": "Of a plant or its roots: to deplete (soil) of nutrients.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|agriculture}} To [[separate#Verb|separate]] ([[sheep]]) from a [[flock#Noun|flock]] for a particular [[purpose#Noun|purpose]], such as [[breed#Verb|breeding]] or [[sell#Verb|selling]].",
+    "sense": {
+      "id": "wiktionary:restored:fa24a94099611cfa84",
+      "pos": "verb",
+      "definition": "To separate (sheep) from a flock for a particular purpose, such as breeding or selling.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|card games}} To be [[deal#Verb|dealt]] or to take (a [[playing card]]) from the [[deck#Noun|deck]]; also, to have (a particular hand) as a [[result#Noun|result]] of this. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:6a6d7bb165ebf3a2d5",
+      "pos": "verb",
+      "definition": "To be dealt or to take (a playing card) from the deck; also, to have (a particular hand) as a result of this.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|fishing}} To [[fish#Verb|fish]] by dragging a fishing net along (a [[shore#Noun|shore]]) or in (a [[body of water]]).",
+    "sense": {
+      "id": "wiktionary:restored:66712678f653a0dd51",
+      "pos": "verb",
+      "definition": "To fish by dragging a fishing net along (a shore) or in (a body of water).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|hunting}} To [[search#Verb|search]] (a [[covert#Noun|covert]], a [[wood#Noun|wood]], etc.) for [[game#Noun|game]] or a [[quarry#Noun|quarry]].",
+    "sense": {
+      "id": "wiktionary:restored:98256ceff5c352c0bd",
+      "pos": "verb",
+      "definition": "To search (a covert, a wood, etc.) for game or a quarry.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|sports}} To [[end#Verb|end]] (a game or [[match#Noun|match]]) with neither [[side#Noun|side]] winning, that is, in a [[draw#Noun|draw]]. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:61247150f933db748b",
+      "pos": "verb",
+      "definition": "To end (a game or match) with neither side winning, that is, in a draw.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|transitive|cricket}} In a match [[schedule#Verb|scheduled]] to [[last#Verb|last]] for a certain [[period of time]]: to end (a match) with neither side winning because the [[team#Noun|team]] [[bat#Verb|batting]] [[last#Adjective|last]] has not [[complete#Verb|completed]] its [[innings#Noun|innings]] when the [[playing time]] [[conclude]]s.",
+    "sense": {
+      "id": "wiktionary:restored:da5edb4825922b4e58",
+      "pos": "verb",
+      "definition": "In a match scheduled to last for a certain period of time: to end (a match) with neither side winning because the team batting last has not completed its innings when the playing time concludes.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|manufacturing|historical}} To separate (a length of [[lace#Noun|lace]] [[make#Verb|made]] by [[machine#Noun|machine]]) into [[section#Noun|sections]] by removing the [[thread#Noun|threads]] [[connect#Verb|connecting]] the sections.",
+    "sense": {
+      "id": "wiktionary:restored:5039ee61c6d56a0886",
+      "pos": "verb",
+      "definition": "To separate (a length of lace made by machine) into sections by removing the threads connecting the sections.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|northern|_|Scotland}} To take [[milk#Noun|milk]] from (a [[cow#Noun|cow]]); to [[milk#Verb|milk]].",
+    "sense": {
+      "id": "wiktionary:restored:38019e40cb912f0f82",
+      "pos": "verb",
+      "definition": "To take milk from (a cow); to milk.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|agriculture}} To separate ([[seed#Noun|seeds]]) from the [[husk#Noun|husks]] of [[clover]] or [[trefoil]]; also, to separate seeds from the husks of (clover or trefoil).",
+    "sense": {
+      "id": "wiktionary:restored:8931843ff1b8802296",
+      "pos": "verb",
+      "definition": "To separate (seeds) from the husks of clover or trefoil; also, to separate seeds from the husks of (clover or trefoil).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|cricket|rare}} To take (a wicket).",
+    "sense": {
+      "id": "wiktionary:restored:98017c8e01541c8450",
+      "pos": "verb",
+      "definition": "To take (a wicket).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|falconry}} To remove (a [[hawk#Noun|hawk]]) from a [[mew#Noun|mew]] after it has [[moult#Verb|moulted]].",
+    "sense": {
+      "id": "wiktionary:restored:9a468b5c16261274cc",
+      "pos": "verb",
+      "definition": "To remove (a hawk) from a mew after it has moulted.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|thieves' cant}} To [[steal#Verb|steal]] (something) from a person, especially by [[pick#Verb|picking]] a [[pocket#Noun|pocket]]; also to pick the pocket of (someone); to steal from (a place).",
+    "sense": {
+      "id": "wiktionary:restored:b3f57452174479c745",
+      "pos": "verb",
+      "definition": "To steal (something) from a person, especially by picking a pocket; also to pick the pocket of (someone); to steal from (a place).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## <!--Needs editing--> {{lb|en|analogous}} To consume ([[power]]).",
+    "sense": {
+      "id": "wiktionary:restored:96cc7339c0214d1f2e",
+      "pos": "verb",
+      "definition": "To consume (power).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## To obtain, elicit.",
+    "sense": {
+      "id": "wiktionary:restored:dc55e49e396313f9e3",
+      "pos": "verb",
+      "definition": "To obtain, elicit.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[take]] (something) from a particular source, especially of information; to [[derive]]. {{defdate|from 13th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:9ed0e7b065d0766613",
+      "pos": "verb",
+      "definition": "To take (something) from a particular source, especially of information; to derive.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[call forth]] (something) from a person, to [[elicit]]. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:a096c3956c83e5bfd7",
+      "pos": "verb",
+      "definition": "To call forth (something) from a person, to elicit.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[deduce]] or [[infer]] (a conclusion); to make (a deduction). {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:1b3b8bfb8ddbc88dc7",
+      "pos": "verb",
+      "definition": "To deduce or infer (a conclusion); to make (a deduction).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[receive]] (a salary); to [[withdraw]] (money) from a bank etc. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:ff40a1d8cf77018734",
+      "pos": "verb",
+      "definition": "To receive (a salary); to withdraw (money) from a bank etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[elicit]] information from (someone); to induce (a person) to speak {{m|en|on}} some subject. (Now frequently in passive.) {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:7907b101465de7a3b6",
+      "pos": "verb",
+      "definition": "To elicit information from (someone); to induce (a person) to speak on some subject. (Now frequently in passive.)",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} To pull out a firearm, sword, or other weapon from a holster, sheath, etc.",
+    "sense": {
+      "id": "wiktionary:restored:1a374d66939dde4b29",
+      "pos": "verb",
+      "definition": "To pull out a firearm, sword, or other weapon from a holster, sheath, etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} To take up water from a well or other source, especially by lifting it in a container or pumping it.",
+    "sense": {
+      "id": "wiktionary:restored:149d28e0051aaeedf9",
+      "pos": "verb",
+      "definition": "To take up water from a well or other source, especially by lifting it in a container or pumping it.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} To select one or more things at random from a collection of similar things to decide which of a group of people will receive or undergo something.",
+    "sense": {
+      "id": "wiktionary:restored:af411e679fd064e7cf",
+      "pos": "verb",
+      "definition": "To select one or more things at random from a collection of similar things to decide which of a group of people will receive or undergo something.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} To leave tea temporarily in water to allow the flavour to increase; to infuse, to steep; also, of a [[teapot]]: to cause tea to infuse.",
+    "sense": {
+      "id": "wiktionary:restored:838556a3241ed398bc",
+      "pos": "verb",
+      "definition": "To leave tea temporarily in water to allow the flavour to increase; to infuse, to steep; also, of a teapot: to cause tea to infuse.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} Of a bathtub: to be filled with water for a bath; to be run.",
+    "sense": {
+      "id": "wiktionary:restored:d3dbfd6a1661e5eebb",
+      "pos": "verb",
+      "definition": "Of a bathtub: to be filled with water for a bath; to be run.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} Of a channel, drain, etc.: to carry water away.",
+    "sense": {
+      "id": "wiktionary:restored:546384d95374ea5427",
+      "pos": "verb",
+      "definition": "Of a channel, drain, etc.: to carry water away.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} Of a liquid: to [[drain#Verb|drain]] away, to [[percolate#Verb|percolate]].",
+    "sense": {
+      "id": "wiktionary:restored:1750f51c0c33e18733",
+      "pos": "verb",
+      "definition": "Of a liquid: to drain away, to percolate.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive|medicine|archaic}} To treat a wound by attracting humours, pus, etc., chiefly by bringing such [[material#Noun|material]] to the surface of the body, so it can be dispersed or removed.",
+    "sense": {
+      "id": "wiktionary:restored:cbb0f10033e4d7440a",
+      "pos": "verb",
+      "definition": "To treat a wound by attracting humours, pus, etc., chiefly by bringing such material to the surface of the body, so it can be dispersed or removed.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive|card games}} To be dealt or to take a playing card from the deck.",
+    "sense": {
+      "id": "wiktionary:restored:f60964c69f204ad182",
+      "pos": "verb",
+      "definition": "To be dealt or to take a playing card from the deck.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive|dominoes}} To take a [[domino#Noun|domino]] from the [[stock#Noun|stock]].",
+    "sense": {
+      "id": "wiktionary:restored:6eef08eee83a335da1",
+      "pos": "verb",
+      "definition": "To take a domino from the stock.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive|sports}} To end a game or match with neither side winning, that is, in a draw; to tie.",
+    "sense": {
+      "id": "wiktionary:restored:1ad07446a2f111c0b8",
+      "pos": "verb",
+      "definition": "To end a game or match with neither side winning, that is, in a draw; to tie.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To take alcoholic beverages from casks or kegs in an [[inn#Noun|inn]] or [[tavern]]; to work as a [[drawer]] or [[barman]].",
+    "sense": {
+      "id": "wiktionary:restored:7a2cd48806551c64a7",
+      "pos": "verb",
+      "definition": "To take alcoholic beverages from casks or kegs in an inn or tavern; to work as a drawer or barman.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:4683907da6c86d0617",
+    "parentSourceHash": "14434feee8c750c7f5a1f3e96dacb5a6df2ee8466fd7d97186d9e3fcd659eea4",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### {{lb|en|falconry}} To remove a hawk from a mew after it has moulted.",
+    "sense": {
+      "id": "wiktionary:restored:7bbd502779e0206aec",
+      "pos": "verb",
+      "definition": "To remove a hawk from a mew after it has moulted.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:dce2fce97368b46b66",
+    "parentSourceHash": "9299327b799a8f669580bbdf23cb2559b20b208f088d560088c288c4202a05ad",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|reflexive|now|rare}} To [[move]] in a specific direction. {{defdate|from 12th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:5854c910f45a60b091",
+      "pos": "verb",
+      "definition": "To move in a specific direction.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:dce2fce97368b46b66",
+    "parentSourceHash": "9299327b799a8f669580bbdf23cb2559b20b208f088d560088c288c4202a05ad",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive|used with prepositions and adverbs}} To move steadily in a particular direction or into a specific position. {{defdate|from 13th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:3a6652831d742fc613",
+      "pos": "verb",
+      "definition": "To move steadily in a particular direction or into a specific position.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:dce2fce97368b46b66",
+    "parentSourceHash": "9299327b799a8f669580bbdf23cb2559b20b208f088d560088c288c4202a05ad",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## To [[come]] {{m|en|to}}, {{m|en|towards}} (a particular moment in time); to [[approach]] (a time). {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:6a275769b19f10032e",
+      "pos": "verb",
+      "definition": "To come to, towards (a particular moment in time); to approach (a time).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:dce2fce97368b46b66",
+    "parentSourceHash": "9299327b799a8f669580bbdf23cb2559b20b208f088d560088c288c4202a05ad",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|hunting|now|rare}} To [[search]] for game; to [[track]] a quarry. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:5f2e8664eb55bc2881",
+      "pos": "verb",
+      "definition": "To search for game; to track a quarry.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:60700e1e7e07d79e61",
+    "parentSourceHash": "b2a3ac3b6262c4f0b9f170010d0971a491129009d3fc881df62ff9a0cc97cb68",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To [[produce#Verb|produce]] (a [[figure#Noun|figure]], [[line#Noun|line]], [[picture#Noun|picture]], [[representation]] of something, etc.) with a piece of [[chalk#Noun|chalk]], a [[crayon#Noun|crayon]], a [[pen#Noun|pen]], a [[pencil#Noun|pencil]], or other [[instrument#Noun|instrument]]. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:a6e3687882c62929b3",
+      "pos": "verb",
+      "definition": "To produce (a figure, line, picture, representation of something, etc.) with a piece of chalk, a crayon, a pen, a pencil, or other instrument.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:60700e1e7e07d79e61",
+    "parentSourceHash": "b2a3ac3b6262c4f0b9f170010d0971a491129009d3fc881df62ff9a0cc97cb68",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To [[carve#Verb|carve]] or [[shape#Verb|shape]] (something) by [[cut#Verb|cutting]] off [[thin#Adjective|thin]] pieces.",
+    "sense": {
+      "id": "wiktionary:restored:371ce4422623b98a7d",
+      "pos": "verb",
+      "definition": "To carve or shape (something) by cutting off thin pieces.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:60700e1e7e07d79e61",
+    "parentSourceHash": "b2a3ac3b6262c4f0b9f170010d0971a491129009d3fc881df62ff9a0cc97cb68",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} To [[make#Verb|make]] (a [[comparison]] or [[contrast#Noun|contrast]]) between two or more [[thing]]s; to [[compare#Verb|compare]]; to [[contrast#Verb|contrast]], to [[distinguish]].",
+    "sense": {
+      "id": "wiktionary:restored:c774ab60b71e69f18e",
+      "pos": "verb",
+      "definition": "To make (a comparison or contrast) between two or more things; to compare; to contrast, to distinguish.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:60700e1e7e07d79e61",
+    "parentSourceHash": "b2a3ac3b6262c4f0b9f170010d0971a491129009d3fc881df62ff9a0cc97cb68",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} ''Often followed by'' '''[[on#Preposition|on]]''' ''or'' '''[[upon]]''' ''and the person or [[institution]] [[provide|providing]] the [[money#Noun|money]]'': to [[write#Verb|write]] (a [[bill#Noun|bill]], [[cheque#Noun|cheque]], or [[draft#Noun|draft]]) to [[authorize]] [[payment]] of money.",
+    "sense": {
+      "id": "wiktionary:restored:4bb6e4572ac1407e43",
+      "pos": "verb",
+      "definition": "Often followed by on or upon and the person or institution providing the money: to write (a bill, cheque, or draft) to authorize payment of money.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:60700e1e7e07d79e61",
+    "parentSourceHash": "b2a3ac3b6262c4f0b9f170010d0971a491129009d3fc881df62ff9a0cc97cb68",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive}} ''Now chiefly in the form'' '''[[draw up]]''': to [[compose]] or write (a piece of text, especially a [[formal#Adjective|formal]] [[document#Noun|document]]). {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:5d7859c8faa09556c8",
+      "pos": "verb",
+      "definition": "Now chiefly in the form draw up: to compose or write (a piece of text, especially a formal document).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:60700e1e7e07d79e61",
+    "parentSourceHash": "b2a3ac3b6262c4f0b9f170010d0971a491129009d3fc881df62ff9a0cc97cb68",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|figurative}} To depict (something) [[linguistically]]; to [[portray]] (something) in [[word#Noun|words]]; to [[describe]]. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:87723c54c24778f708",
+      "pos": "verb",
+      "definition": "To depict (something) linguistically; to portray (something) in words; to describe.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:60700e1e7e07d79e61",
+    "parentSourceHash": "b2a3ac3b6262c4f0b9f170010d0971a491129009d3fc881df62ff9a0cc97cb68",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|transitive|agriculture}} To [[create#Verb|create]] (a [[furrow#Noun|furrow]]) by pulling a plough through soil.",
+    "sense": {
+      "id": "wiktionary:restored:1e1a0350dd3bb23c64",
+      "pos": "verb",
+      "definition": "To create (a furrow) by pulling a plough through soil.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:60700e1e7e07d79e61",
+    "parentSourceHash": "b2a3ac3b6262c4f0b9f170010d0971a491129009d3fc881df62ff9a0cc97cb68",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To [[arrange#Verb|arrange]] or [[devise#Verb|devise]] (something); to [[contrive]].",
+    "sense": {
+      "id": "wiktionary:restored:e2e5e409ed0e922f48",
+      "pos": "verb",
+      "definition": "To arrange or devise (something); to contrive.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:60700e1e7e07d79e61",
+    "parentSourceHash": "b2a3ac3b6262c4f0b9f170010d0971a491129009d3fc881df62ff9a0cc97cb68",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "### To produce (a [[three-dimensional]] figure of something); to [[model#Verb|model]], to [[mold#Verb|mould]], to [[sculpt#Verb|sculpt]].",
+    "sense": {
+      "id": "wiktionary:restored:cfd47f1d70c381d946",
+      "pos": "verb",
+      "definition": "To produce (a three-dimensional figure of something); to model, to mould, to sculpt.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:60700e1e7e07d79e61",
+    "parentSourceHash": "b2a3ac3b6262c4f0b9f170010d0971a491129009d3fc881df62ff9a0cc97cb68",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|intransitive}} To produce an [[image#Noun|image]] of something with a piece of chalk, a crayon, a pen, a pencil, or other instrument; to make a [[drawing#Noun|drawing]] or drawings. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:68429a6ebfdcf495b4",
+      "pos": "verb",
+      "definition": "To produce an image of something with a piece of chalk, a crayon, a pen, a pencil, or other instrument; to make a drawing or drawings.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:f1f3036b081086aca0",
+    "parentSourceHash": "517f0cd0d99ec28aa83ce464ddc9e76ee703cb132ee5636b5366ab3b4fb01991",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## The act of [[#Verb|draw]]ing a gun from a holster, etc.",
+    "sense": {
+      "id": "wiktionary:restored:697830aec76e93fc95",
+      "pos": "noun",
+      "definition": "The act of drawing a gun from a holster, etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:f1f3036b081086aca0",
+    "parentSourceHash": "517f0cd0d99ec28aa83ce464ddc9e76ee703cb132ee5636b5366ab3b4fb01991",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## The [[procedure]] by which the [[result]] of a [[lottery]] is [[determine]]d.",
+    "sense": {
+      "id": "wiktionary:restored:97f8ab7182a4b6c665",
+      "pos": "noun",
+      "definition": "The procedure by which the result of a lottery is determined.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:f1f3036b081086aca0",
+    "parentSourceHash": "517f0cd0d99ec28aa83ce464ddc9e76ee703cb132ee5636b5366ab3b4fb01991",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|archery}} The act of pulling back the strings in preparation of firing;<!--separate sense?--> the distance the strings are pulled back.",
+    "sense": {
+      "id": "wiktionary:restored:56beee483f7de46005",
+      "pos": "noun",
+      "definition": "The act of pulling back the strings in preparation of firing; the distance the strings are pulled back.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:b88f18a8abe1b0e945",
+    "parentSourceHash": "f44ec5bc17fe4a0f27e46aea2d40b7d47ee5c617dda0a2ddc9ed71ee3da73c93",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{senseid|en|neither a win nor a loss}} The [[result]] of a [[contest]] that neither side [[win|has won]].",
+    "sense": {
+      "id": "wiktionary:restored:70e6990b7494ff3b89",
+      "pos": "noun",
+      "definition": "The result of a contest that neither side has won.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:b88f18a8abe1b0e945",
+    "parentSourceHash": "f44ec5bc17fe4a0f27e46aea2d40b7d47ee5c617dda0a2ddc9ed71ee3da73c93",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## {{lb|en|cricket}} The [[result]] of a two-[[innings]] match in which at least one side did not complete all their innings before time ran out (as distinguished from a [[tie]]).",
+    "sense": {
+      "id": "wiktionary:restored:3002292b8711a8a539",
+      "pos": "noun",
+      "definition": "The result of a two-innings match in which at least one side did not complete all their innings before time ran out (as distinguished from a tie).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "draw",
+    "entryId": "ve-7c6b11a5",
+    "parentSenseId": "kaikki:b2324f3aecf61f13f0",
+    "parentSourceHash": "e214b7c1b0e9b43edb075c989649ffb4bd5d3bf0ffed93bfb03eb2f3fd801b9c",
+    "sourcePage": "draw",
+    "revision": 93618473,
+    "sourceGloss": "## In a commission-based job, an advance on future (potential) [[commission]]s given to an employee by the employer.",
+    "sense": {
+      "id": "wiktionary:restored:075c298dbf277517e9",
+      "pos": "noun",
+      "definition": "In a commission-based job, an advance on future (potential) commissions given to an employee by the employer.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

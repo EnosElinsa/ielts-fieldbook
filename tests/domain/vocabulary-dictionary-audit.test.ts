@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { expect, test } from 'vitest';
 // @ts-expect-error The audit is also an executable ES module.
-import { inspectDictionaryReview } from '../../scripts/audit-vocabulary-dictionary.mjs';
+import { inspectDictionaryReview, plainSourceGloss } from '../../scripts/audit-vocabulary-dictionary.mjs';
 const original = { id: 'river', pos: 'noun', definition: 'Land beside a river.', example: '' };
 const row = { entryId: 'bank', senseId: 'river', originalSense: original, definition: 'Land along a river.', example: 'We sat on the river bank.', collocations: ['river bank'], distinctions: ['Shore is usual beside a sea.'] };
 const review = { term: 'bank', entryId: 'bank', senseId: 'river', sourceHash: createHash('sha256').update(JSON.stringify(original)).digest('hex'), reviewedAreas: ['definition','example','collocations','distinctions'] };
@@ -50,6 +50,30 @@ test('spelling references require a source spelling-error record and cannot cont
 const restored = { id: 'restored', pos: 'noun', definition: 'A river edge.', example: '', sourceUrl: 'https://en.wiktionary.org/w/index.php?title=bank&oldid=123', source: 'English Wiktionary, restored submeaning', license: 'CC-BY-SA-4.0', attribution: 'English Wiktionary contributors' };
 const evidence = { term: 'bank', entryId: 'bank', parentSenseId: original.id, parentSourceHash: hash(original), revision: 123, sourcePage: 'bank', sourceGloss: '## A river edge.', sense: restored };
 const restoredInput = { ...input, restoredSources: [evidence], corrections: [...input.corrections, { ...row, senseId: restored.id, originalSense: restored, dictionaryParentSenseId: original.id }], records: [...input.records, { ...review, senseId: restored.id, sourceHash: hash(restored) }] };
+
+test.each([
+  '# <!--Needs editing--> {{non-gloss|Land beside a river.}}',
+  '# {{senseid|en|river-bank}}{{non-gloss|Land beside a river.}}',
+])('source comments and sense identifiers do not turn a grouping into a practice meaning: %s', sourceGloss => {
+  const grouping = { ...row, referenceUrl: restored.sourceUrl, meaningGroup: { sourceGloss } };
+  expect(inspectDictionaryReview({ ...restoredInput, corrections: [grouping, restoredInput.corrections[1]] }).errors).toEqual([]);
+  expect(inspectDictionaryReview({ ...restoredInput, corrections: [{ ...grouping, meaningGroup: { sourceGloss: sourceGloss.replace('Land beside a river.', 'A different heading.') } }, restoredInput.corrections[1]] }).errors.join(' ')).toMatch(/meaning group/i);
+});
+
+test.each([
+  ['## {{ellipsis of|en|percentage point}}.', 'Ellipsis of percentage point.'],
+  ['## A point. {{q|Compare {{m|en|champaine|point champaine}}.}}', 'A point.'],
+  ['## To come {{m|en|to}}, {{m|en|towards}} a moment.', 'To come to, towards a moment.'],
+  ['## To land in the {{l|en|house|t=[[circular]] [[target]]}}.', 'To land in the house (circular target).'],
+  ['## An ordinary. [[File:Example.svg|thumb|Illustration]]', 'An ordinary.'],
+])('restored source rendering preserves lexical text without embedded media: %s', (sourceGloss, expected) => {
+  expect(plainSourceGloss(sourceGloss)).toBe(expected);
+});
+
+test.each(['##', '###'])('a nested source heading cannot qualify as a top-level meaning group: %s', prefix => {
+  const grouping = { ...row, referenceUrl: restored.sourceUrl, meaningGroup: { sourceGloss: `${prefix} {{lb|en|heading}} Land beside a river.` } };
+  expect(inspectDictionaryReview({ ...restoredInput, corrections: [grouping, restoredInput.corrections[1]] }).errors.join(' ')).toMatch(/meaning group/i);
+});
 
 test('restored evidence preserves the exact capitalised source page of its parent', () => {
   const parent = { ...original, sourceUrl: 'https://en.wiktionary.org/wiki/Bank#English' };

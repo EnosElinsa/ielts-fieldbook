@@ -910,5 +910,165 @@
     "definition": "The flat topmost facet of a cut diamond.",
     "pos": "noun",
     "kind": "gem-table"
+  },
+  {
+    "entryId": "ve-a8daf23",
+    "senseId": "kaikki:ca6ee17ea7c4e317ee",
+    "term": "check",
+    "definition": "A chess position in which a king is attacked by an opposing piece.",
+    "pos": "noun",
+    "kind": "chess-check"
+  },
+  {
+    "entryId": "ve-a8daf23",
+    "senseId": "kaikki:a053d91a9c61616aba",
+    "term": "check",
+    "definition": "A written order instructing a bank to pay a specified sum.",
+    "pos": "noun",
+    "kind": "check-cheque-bill"
+  },
+  {
+    "entryId": "ve-a8daf23",
+    "senseId": "kaikki:72a1b3e1dc8dd4460e",
+    "term": "check",
+    "definition": "A bill, especially for a restaurant meal.",
+    "pos": "noun",
+    "kind": "check-cheque-bill"
+  },
+  {
+    "entryId": "ve-a8daf23",
+    "senseId": "kaikki:445611a5b95380722e",
+    "term": "check",
+    "definition": "To mark chosen, completed or verified items on a list.",
+    "pos": "verb",
+    "kind": "checklist-mark"
+  },
+  {
+    "entryId": "ve-a8daf23",
+    "senseId": "kaikki:4257a9c77d3d846948",
+    "term": "check",
+    "definition": "A pattern formed by a grid of squares in alternating colours.",
+    "pos": "noun",
+    "kind": "check-pattern"
+  },
+  {
+    "entryId": "ve-b3119e9",
+    "senseId": "wiktionary:restored:ba5182fabc66c5ec24",
+    "term": "point",
+    "definition": "A mathematical position with no size or extent.",
+    "pos": "noun",
+    "kind": "geometric-point"
+  },
+  {
+    "entryId": "ve-b3119e9",
+    "senseId": "wiktionary:restored:28f38a661681e87848",
+    "term": "point",
+    "definition": "A unit expressing the numerical difference between two percentages.",
+    "pos": "noun",
+    "kind": "percentage-points"
+  },
+  {
+    "entryId": "ve-b3119e9",
+    "senseId": "wiktionary:restored:6ea616c5f3d0729ca2",
+    "term": "point",
+    "definition": "A unit of scoring in a game or competition.",
+    "pos": "noun",
+    "kind": "score-points"
+  },
+  {
+    "entryId": "ve-b3119e9",
+    "senseId": "wiktionary:restored:2658dad01ce4e1d676",
+    "term": "point",
+    "definition": "One of the triangular playing positions on a backgammon board.",
+    "pos": "noun",
+    "kind": "backgammon-points"
+  },
+  {
+    "entryId": "ve-b3119e9",
+    "senseId": "wiktionary:restored:dba138cb9069c24cfd",
+    "term": "point",
+    "definition": "A traditional bearing unit equal to one thirty-second of a full circle: 11.25 degrees.",
+    "pos": "noun",
+    "kind": "compass-point"
+  },
+  {
+    "entryId": "ve-b3119e9",
+    "senseId": "wiktionary:restored:92edc858874d890bdf",
+    "term": "point",
+    "definition": "A railway switch that guides trains between tracks.",
+    "pos": "noun",
+    "kind": "railway-points"
+  },
+  {
+    "entryId": "ve-7c6b11a5",
+    "senseId": "wiktionary:restored:0832fbc9ae075f6897",
+    "term": "draw",
+    "definition": "To pull curtains or blinds open or closed.",
+    "pos": "verb",
+    "kind": "curtain-draw"
+  },
+  {
+    "entryId": "ve-7c6b11a5",
+    "senseId": "wiktionary:restored:532f265d710eb7a3b9",
+    "term": "draw",
+    "definition": "Of a vessel, to require a stated depth of water to float.",
+    "pos": "verb",
+    "kind": "vessel-draught"
+  },
+  {
+    "entryId": "ve-7c6b11a5",
+    "senseId": "wiktionary:restored:1b3b8bfb8ddbc88dc7",
+    "term": "draw",
+    "definition": "To infer or reach a conclusion from information.",
+    "pos": "verb",
+    "kind": "draw-inference"
+  },
+  {
+    "entryId": "ve-7c6b11a5",
+    "senseId": "wiktionary:restored:a6e3687882c62929b3",
+    "term": "draw",
+    "definition": "To produce a picture, diagram or line with a pen, pencil or other instrument.",
+    "pos": "verb",
+    "kind": "draw-picture"
+  },
+  {
+    "entryId": "ve-7c6b11a5",
+    "senseId": "wiktionary:restored:70e6990b7494ff3b89",
+    "term": "draw",
+    "definition": "A contest result in which neither side wins.",
+    "pos": "noun",
+    "kind": "drawn-match"
+  },
+  {
+    "entryId": "ve-7c6b11a5",
+    "senseId": "wiktionary:restored:3002292b8711a8a539",
+    "term": "draw",
+    "definition": "A two-innings cricket result without a winner when the required innings are unfinished at the end of playing time.",
+    "pos": "noun",
+    "kind": "drawn-match"
+  },
+  {
+    "entryId": "ve-bad4da6",
+    "senseId": "kaikki:c8d50effde2cfb16e5",
+    "term": "sound",
+    "definition": "A mechanical vibration that travels through a medium and can produce hearing sensations.",
+    "pos": "noun",
+    "kind": "sound-medium"
+  },
+  {
+    "entryId": "ve-bad4da6",
+    "senseId": "kaikki:8157529e8c98812260",
+    "term": "sound",
+    "definition": "A coastal inlet or strait, often long or narrow, joining or separating larger water and land areas.",
+    "pos": "noun",
+    "kind": "coastal-sound"
+  },
+  {
+    "entryId": "ve-bad4da6",
+    "senseId": "kaikki:0feb00ffb65613e910",
+    "term": "sound",
+    "definition": "To measure or investigate water depth using a line or other sounding device.",
+    "pos": "verb",
+    "kind": "water-sounding"
   }
 ]

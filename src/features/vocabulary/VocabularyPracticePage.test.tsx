@@ -756,6 +756,22 @@ test("recent history opens a result log without starting a completed attempt", a
 });
 
 function CurrentRoute(){return <output>{useLocation().pathname}</output>}
+test('result detail links retain the session and filtered source without nesting previous attempts', async () => {
+  const source = '/vocabulary/words?search=community&page=2';
+  const oldSession = '/vocabulary/history/old?sessionId=old&returnTo=' + encodeURIComponent(source);
+  const detail = '/vocabulary/entry/entry-0?senseId=sense-0&returnTo=' + encodeURIComponent(oldSession);
+  mount('?entryId=entry-0&senseId=sense-0&dueOnly=false&returnTo=' + encodeURIComponent(detail));
+  const user = userEvent.setup();
+  await user.click(await screen.findByRole('button', { name: 'Start session' }));
+  await user.type(screen.getByRole('textbox', { name: 'Answer 1' }), 'resilient');
+  await user.click(screen.getByRole('button', { name: 'Submit session' }));
+  const link = await screen.findByRole('link', { name: 'Details' });
+  const entry = new URL(link.getAttribute('href')!, 'https://fieldbook.test');
+  const result = new URL(entry.searchParams.get('returnTo')!, 'https://fieldbook.test');
+  expect(result.pathname).toContain('/vocabulary/history/');
+  expect(result.searchParams.get('sessionId')).not.toBe('old');
+  expect(result.searchParams.get('returnTo')).toBe(source);
+});
 function ImperativeNavigation() {
   const navigate = useNavigate();
   const [moreOpen, setMoreOpen] = useState(false);

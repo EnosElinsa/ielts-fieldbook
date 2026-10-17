@@ -1,4 +1,4 @@
-import { useVocabularySearchParams } from './vocabularyNavigation';
+import { useVocabularySearchParams, vocabularyResultUrl } from './vocabularyNavigation';
 import { boundVocabularyAssessment } from '../../domain/vocabulary/plannedAssessment';
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -376,7 +376,7 @@ export function useVocabularyPracticeController() {
 
   const resultReturnParams = new URLSearchParams(params);
   resultReturnParams.delete('sessionId');
-  const resultReturnTo = results ? `/vocabulary/history/${encodeURIComponent(results.id)}?sessionId=${encodeURIComponent(results.id)}${resultReturnParams.toString() ? `&${resultReturnParams}` : ""}` : `${location.pathname}?${resultReturnParams}`;
+  const resultReturnTo = results ? vocabularyResultUrl(results.id, params) : `${location.pathname}?${resultReturnParams}`;
 
   function changeFilter(key: string, value: string) {
     const next = new URLSearchParams(params);

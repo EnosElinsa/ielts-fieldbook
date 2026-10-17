@@ -104,6 +104,21 @@ export function practiceUrl(
   });
   return `/vocabulary/review?${params}`;
 }
+
+/** Session links keep the source destination; browser state owns intermediate returns. */
+export function vocabularyResultUrl(sessionId: string, request: URLSearchParams) {
+  const params = new URLSearchParams(request);
+  params.set('sessionId', sessionId);
+  params.delete('returnTo');
+  let origin = safeVocabularyReturn(request.get('returnTo'), '');
+  while (origin && /^\/vocabulary\/(?:entry\/[^/]+|history\/[^/]+|review|study)$/.test(origin.split(/[?#]/)[0])) {
+    const parent = safeVocabularyReturn(new URL(origin, 'https://fieldbook.invalid').searchParams.get('returnTo'), '');
+    if (!parent) break;
+    origin = parent;
+  }
+  if (origin) params.set('returnTo', origin);
+  return `/vocabulary/history/${encodeURIComponent(sessionId)}?${params}`;
+}
 const positions = new Map<
   string,
   {

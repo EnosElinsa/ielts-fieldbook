@@ -14151,5 +14151,52 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-7c6b11a5",
+    "originalSense": {
+      "id": "wiktionary:restored:a6e3687882c62929b3",
+      "pos": "verb",
+      "definition": "To produce (a figure, line, picture, representation of something, etc.) with a piece of chalk, a crayon, a pen, a pencil, or other instrument.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "sense": {
+      "id": "wiktionary:restored:a6e3687882c62929b3",
+      "pos": "verb",
+      "definition": "To produce a picture, diagram or line with a pen, pencil or other instrument.",
+      "example": "She drew a simple map to show the route.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=draw&oldid=93618473",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "usage": "Transitive picture-making verb; draw–drew–drawn.",
+      "collocations": [
+        "draw a picture",
+        "draw a diagram",
+        "draw a line",
+        "draw a map"
+      ],
+      "distinctions": [
+        "This picture-making use has a stated object. Draw a conclusion means infer, and draw a crowd means attract; neither requires a physical picture."
+      ],
+      "distinctionTask": {
+        "prompt": "She has _____ a map in her notebook.",
+        "options": [
+          "drawn",
+          "drew"
+        ],
+        "answer": "drawn",
+        "explanation": "The past participle after has is drawn, not the simple past drew."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]
