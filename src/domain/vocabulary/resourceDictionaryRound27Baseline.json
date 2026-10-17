@@ -1,0 +1,168 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:e2e3bc7f5c63a41c5f"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:8d56669d0a518e9efb"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:697709ccccaf69c187"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:a61258266880d632d6"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:c8a794a45eb8a3ca5e"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:3ef3590135d8630a90"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:a0bb8c8e6f3f3e44ff"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:b4332cbe2bfe743dcc"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:09490e9f7d20899875"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:d3c6aac54137787b58"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:71310c8d58c1740f5c"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:33b40420a406f940af"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:59fc8e23d6006f5aa3"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:19dbcab6aa39a56ad4"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:396861da42ec11d93f"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:82ab48a815f0f14398"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:4a81435de96b015a36"
+    },
+    {
+      "entryId": "ve-ba042ca",
+      "senseId": "kaikki:f0ffda93ad6b93a43e"
+    },
+    {
+      "entryId": "vocab:research",
+      "senseId": "kaikki:25e953e1febcae6a37"
+    },
+    {
+      "entryId": "vocab:research",
+      "senseId": "kaikki:d90fa790b8caa4fd18"
+    },
+    {
+      "entryId": "vocab:research",
+      "senseId": "kaikki:cc5b820a6b0f90e8ad"
+    },
+    {
+      "entryId": "vocab:research",
+      "senseId": "kaikki:201a9696e9efd438c8"
+    },
+    {
+      "entryId": "vocab:research",
+      "senseId": "kaikki:05e2ee6d48fd8c301a"
+    },
+    {
+      "entryId": "vocab:research",
+      "senseId": "kaikki:222746a4db24a0338a"
+    },
+    {
+      "entryId": "vocab:research",
+      "senseId": "kaikki:f5d5c1e83b8c8cc328"
+    },
+    {
+      "entryId": "ve-8a338f84",
+      "senseId": "kaikki:caeaa5aa9ea9a5393d"
+    },
+    {
+      "entryId": "ve-8a338f84",
+      "senseId": "kaikki:2d69aa2169bbaa3bce"
+    },
+    {
+      "entryId": "ve-8a338f84",
+      "senseId": "kaikki:eef0998b61045b4a64"
+    },
+    {
+      "entryId": "ve-8a338f84",
+      "senseId": "kaikki:2ec551dee5af38d220"
+    },
+    {
+      "entryId": "ve-8a338f84",
+      "senseId": "kaikki:85a4c5b4e0f4b9bc79"
+    },
+    {
+      "entryId": "ve-8a338f84",
+      "senseId": "kaikki:edec1346241d5c1427"
+    },
+    {
+      "entryId": "ve-8a2f33bb",
+      "senseId": "kaikki:4d6901f73e6933c5a4"
+    },
+    {
+      "entryId": "ve-8a2f33bb",
+      "senseId": "kaikki:059a7bfb63fd3b511e"
+    },
+    {
+      "entryId": "ve-8a2f33bb",
+      "senseId": "kaikki:567bc4e9b9ceac2bdb"
+    },
+    {
+      "entryId": "ve-8a2f33bb",
+      "senseId": "kaikki:e7877b21fc8ecc71bf"
+    },
+    {
+      "entryId": "ve-8a2f33bb",
+      "senseId": "kaikki:43290dc9a57eee5336"
+    },
+    {
+      "entryId": "ve-8a2f33bb",
+      "senseId": "kaikki:29347e9dced598655d"
+    },
+    {
+      "entryId": "ve-8a2f33bb",
+      "senseId": "kaikki:307ebaf39a2bf23592"
+    },
+    {
+      "entryId": "ve-8a2f33bb",
+      "senseId": "kaikki:77a6c1c59635c04d23"
+    }
+  ],
+  "restoreCorrections": [],
+  "removeDefaults": [
+    "ve-ba042ca",
+    "vocab:research",
+    "ve-8a338f84",
+    "ve-8a2f33bb"
+  ],
+  "restoreDefaults": []
+}

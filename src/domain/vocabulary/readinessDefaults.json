@@ -18774,5 +18774,442 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-ba042ca",
+    "originalSense": {
+      "id": "kaikki:8d56669d0a518e9efb",
+      "definition": "To take a course or courses on a subject.",
+      "example": "I study medicine at the university.",
+      "pos": "verb",
+      "synonyms": [
+        "con",
+        "elucubrate",
+        "research",
+        "revise",
+        "sot"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "literary",
+      "register": "literary, transitive",
+      "wordFamily": [
+        "Bible study",
+        "forestudy",
+        "prestudy",
+        "self-study",
+        "independent study",
+        "nonstudying",
+        "outstudy",
+        "overstudy",
+        "restudy",
+        "studiable",
+        "study up on"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/study#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:8d56669d0a518e9efb",
+      "definition": "To take a course or courses in a subject.",
+      "example": "She plans to study engineering at university.",
+      "pos": "verb",
+      "synonyms": [
+        "con",
+        "elucubrate",
+        "research",
+        "revise",
+        "sot"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "study engineering",
+        "study at university",
+        "study for a degree"
+      ],
+      "usage": "Transitive verb; academic courses.",
+      "register": "literary, transitive",
+      "wordFamily": [
+        "Bible study",
+        "forestudy",
+        "prestudy",
+        "self-study",
+        "independent study",
+        "nonstudying",
+        "outstudy",
+        "overstudy",
+        "restudy",
+        "studiable",
+        "study up on"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/study#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Studying a subject means taking courses here. Plans to leaves enrolment and completion open; the verb does not say that a degree has already been awarded."
+      ],
+      "distinctionTask": {
+        "prompt": "She plans to study engineering states _____.",
+        "options": [
+          "an intended course of learning, with completion still open",
+          "that she has already been awarded an engineering degree"
+        ],
+        "answer": "an intended course of learning, with completion still open",
+        "explanation": "Plans and completed qualifications are different."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "vocab:research",
+    "originalSense": {
+      "id": "kaikki:25e953e1febcae6a37",
+      "definition": "Diligent inquiry or examination to seek or revise facts, principles, theories, applications, etc. (that are currently available, or that are familiar to oneself).",
+      "example": "In an era when political leaders promise deliverance from decline through America’s purported preeminence in scientific research, the news that science is in deep trouble in the United States has been as unwelcome as a diagnosis of leukemia following the loss of health insurance.",
+      "pos": "noun",
+      "synonyms": [
+        "investigation",
+        "exploration",
+        "examination",
+        "study",
+        "inquiry",
+        "scrutiny"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "dialectal, usually",
+      "register": "countable, dialectal, uncountable, usually",
+      "wordFamily": [
+        "antiresearch",
+        "bioresearcher",
+        "consumer research",
+        "coresearcher",
+        "customer research",
+        "dual-use research of concern",
+        "eco-research",
+        "gain-of-function research",
+        "immunoresearch",
+        "metaresearch",
+        "neuroresearch",
+        "nonresearch",
+        "nonresearcher",
+        "proresearch",
+        "researchability",
+        "researchable",
+        "research and development",
+        "research assistant",
+        "research chemical",
+        "researchee",
+        "researcher",
+        "researchful",
+        "researchist",
+        "research professor",
+        "researchship",
+        "research ship",
+        "research tree",
+        "researchy",
+        "unresearchability",
+        "unresearchable"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/research#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:25e953e1febcae6a37",
+      "definition": "Careful inquiry or examination to discover, check or revise facts, theories or applications.",
+      "example": "The team conducts research into ways to reduce food waste.",
+      "pos": "noun",
+      "synonyms": [
+        "investigation",
+        "exploration",
+        "examination",
+        "study",
+        "inquiry",
+        "scrutiny"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "conduct research",
+        "research into",
+        "research on",
+        "a piece of research"
+      ],
+      "usage": "Usually uncountable; source notes countability in some dialects.",
+      "register": "countable, dialectal, uncountable, usually",
+      "wordFamily": [
+        "antiresearch",
+        "bioresearcher",
+        "consumer research",
+        "coresearcher",
+        "customer research",
+        "dual-use research of concern",
+        "eco-research",
+        "gain-of-function research",
+        "immunoresearch",
+        "metaresearch",
+        "neuroresearch",
+        "nonresearch",
+        "nonresearcher",
+        "proresearch",
+        "researchability",
+        "researchable",
+        "research and development",
+        "research assistant",
+        "research chemical",
+        "researchee",
+        "researcher",
+        "researchful",
+        "researchist",
+        "research professor",
+        "researchship",
+        "research ship",
+        "research tree",
+        "researchy",
+        "unresearchability",
+        "unresearchable"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/research#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Academic research is normally uncountable in general standard usage: research or a piece of research. The source also preserves countable use in some dialects. Inquiry can revise earlier claims; calling work research does not guarantee a discovery or a correct conclusion."
+      ],
+      "distinctionTask": {
+        "prompt": "The team conducts research into waste reduction. This describes _____.",
+        "options": [
+          "an inquiry whose conclusions still need assessment",
+          "a guaranteed discovery merely from the word research"
+        ],
+        "answer": "an inquiry whose conclusions still need assessment",
+        "explanation": "Research names inquiry, not automatic success or certainty."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-8a338f84",
+    "originalSense": {
+      "id": "kaikki:caeaa5aa9ea9a5393d",
+      "definition": "A test under controlled conditions made to either demonstrate a known truth, examine the validity of a hypothesis, or determine the efficacy or likelihood of something previously untried.",
+      "example": "conduct an experiment",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "experimental",
+        "experimentarian",
+        "experimentary",
+        "experimentation",
+        "experimentee",
+        "experimentise",
+        "experimentist",
+        "experimentize",
+        "experimentwise",
+        "interexperiment",
+        "intraexperiment",
+        "multiexperiment",
+        "preexperiment",
+        "sexperiment",
+        "subexperiment"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/experiment#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:caeaa5aa9ea9a5393d",
+      "definition": "A test under controlled conditions to demonstrate a result or investigate a hypothesis or untried effect.",
+      "example": "The class conducted an experiment to compare how two materials retain heat.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "conduct an experiment",
+        "an experiment on",
+        "a controlled experiment",
+        "an experiment to test"
+      ],
+      "usage": "Countable noun.",
+      "register": "",
+      "wordFamily": [
+        "experimental",
+        "experimentarian",
+        "experimentary",
+        "experimentation",
+        "experimentee",
+        "experimentise",
+        "experimentist",
+        "experimentize",
+        "experimentwise",
+        "interexperiment",
+        "intraexperiment",
+        "multiexperiment",
+        "preexperiment",
+        "sexperiment",
+        "subexperiment"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/experiment#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The experiment is a test, rather than accumulated practical experience. A controlled test can examine a hypothesis without confirming it, and the conclusion still depends on design, observations and analysis."
+      ],
+      "distinctionTask": {
+        "prompt": "An experiment comparing heat retention is _____.",
+        "options": [
+          "a test that may support or challenge a hypothesis",
+          "the same thing as years of work experience"
+        ],
+        "answer": "a test that may support or challenge a hypothesis",
+        "explanation": "Experiment names a test, not accumulated experience."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-8a2f33bb",
+    "originalSense": {
+      "id": "kaikki:e7877b21fc8ecc71bf",
+      "definition": "The knowledge thus gathered.",
+      "example": "In his submission to the UN, [Christof] Heyns points to the experience of drones. Unmanned aerial vehicles were intended initially only for surveillance, and their use for offensive purposes was prohibited, yet once strategists realised their perceived advantages as a means of carrying out targeted killings, all objections were swept out of the way.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "inexperience"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "boyfriend experience",
+        "chalk something up to experience",
+        "chief experience officer",
+        "coexperience",
+        "contact experience",
+        "customer experience",
+        "developer experience",
+        "eggsperience",
+        "experienced",
+        "experience effect",
+        "experience is the best teacher",
+        "experienceless",
+        "experience meeting",
+        "experience point",
+        "experience points",
+        "experiencer",
+        "experience table",
+        "experiencewise",
+        "experiential",
+        "girlfriend experience",
+        "inner experience",
+        "interexperience",
+        "learn from experience",
+        "lived experience",
+        "near-death experience",
+        "nonexperience",
+        "out-of-body experience",
+        "out-of-box experience",
+        "out-of-the-body experience",
+        "pornstar experience"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/experience#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:e7877b21fc8ecc71bf",
+      "definition": "Knowledge gained through participation in events or activities.",
+      "example": "Her experience helps her recognise common errors quickly.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "inexperience"
+      ],
+      "collocations": [
+        "gain experience",
+        "relevant experience",
+        "practical experience",
+        "experience in a field"
+      ],
+      "usage": "Uncountable knowledge noun.",
+      "register": "uncountable",
+      "wordFamily": [
+        "boyfriend experience",
+        "chalk something up to experience",
+        "chief experience officer",
+        "coexperience",
+        "contact experience",
+        "customer experience",
+        "developer experience",
+        "eggsperience",
+        "experienced",
+        "experience effect",
+        "experience is the best teacher",
+        "experienceless",
+        "experience meeting",
+        "experience point",
+        "experience points",
+        "experiencer",
+        "experience table",
+        "experiencewise",
+        "experiential",
+        "girlfriend experience",
+        "inner experience",
+        "interexperience",
+        "learn from experience",
+        "lived experience",
+        "near-death experience",
+        "nonexperience",
+        "out-of-body experience",
+        "out-of-box experience",
+        "out-of-the-body experience",
+        "pornstar experience"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/experience#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The emphasis is the knowledge gained, rather than a single countable event. Experience can help judgement without guaranteeing that every decision is right or that a qualification has been awarded."
+      ],
+      "distinctionTask": {
+        "prompt": "Experience that helps recognise common errors emphasises _____.",
+        "options": [
+          "knowledge gained through participation",
+          "one controlled laboratory test"
+        ],
+        "answer": "knowledge gained through participation",
+        "explanation": "This meaning focuses on the knowledge gained."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

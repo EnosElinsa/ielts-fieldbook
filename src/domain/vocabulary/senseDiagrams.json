@@ -2806,5 +2806,165 @@
     "definition": "In EU law, an Advocate General’s proposed legal solution in a case before the Court of Justice.",
     "pos": "noun",
     "kind": "opinion-advocate"
+  },
+  {
+    "entryId": "ve-ba042ca",
+    "senseId": "kaikki:e2e3bc7f5c63a41c5f",
+    "term": "study",
+    "definition": "To review previously learned material, usually in preparation for an examination.",
+    "pos": "verb",
+    "kind": "study-revision"
+  },
+  {
+    "entryId": "ve-ba042ca",
+    "senseId": "kaikki:8d56669d0a518e9efb",
+    "term": "study",
+    "definition": "To take a course or courses in a subject.",
+    "pos": "verb",
+    "kind": "study-course"
+  },
+  {
+    "entryId": "ve-ba042ca",
+    "senseId": "kaikki:a61258266880d632d6",
+    "term": "study",
+    "definition": "To examine something closely and carefully.",
+    "pos": "verb",
+    "kind": "study-examine"
+  },
+  {
+    "entryId": "ve-ba042ca",
+    "senseId": "kaikki:d3c6aac54137787b58",
+    "term": "study",
+    "definition": "A room in a home intended for reading, writing or similar work.",
+    "pos": "noun",
+    "kind": "study-room"
+  },
+  {
+    "entryId": "ve-ba042ca",
+    "senseId": "kaikki:71310c8d58c1740f5c",
+    "term": "study",
+    "definition": "An artwork made to practise or demonstrate a subject or technique.",
+    "pos": "noun",
+    "kind": "study-artwork"
+  },
+  {
+    "entryId": "ve-ba042ca",
+    "senseId": "kaikki:19dbcab6aa39a56ad4",
+    "term": "study",
+    "definition": "An academic publication reporting research or analysis.",
+    "pos": "noun",
+    "kind": "study-publication"
+  },
+  {
+    "entryId": "vocab:research",
+    "senseId": "kaikki:25e953e1febcae6a37",
+    "term": "research",
+    "definition": "Careful inquiry or examination to discover, check or revise facts, theories or applications.",
+    "pos": "noun",
+    "kind": "research-inquiry"
+  },
+  {
+    "entryId": "vocab:research",
+    "senseId": "kaikki:cc5b820a6b0f90e8ad",
+    "term": "research",
+    "definition": "To search or examine something with sustained care.",
+    "pos": "verb",
+    "kind": "research-object"
+  },
+  {
+    "entryId": "vocab:research",
+    "senseId": "kaikki:201a9696e9efd438c8",
+    "term": "research",
+    "definition": "To carry out an extensive investigation.",
+    "pos": "verb",
+    "kind": "research-preposition"
+  },
+  {
+    "entryId": "vocab:research",
+    "senseId": "kaikki:222746a4db24a0338a",
+    "term": "research",
+    "definition": "In market-research usage, to receive a particular response from a tested audience.",
+    "pos": "verb",
+    "kind": "research-response"
+  },
+  {
+    "entryId": "ve-8a338f84",
+    "senseId": "kaikki:caeaa5aa9ea9a5393d",
+    "term": "experiment",
+    "definition": "A test under controlled conditions to demonstrate a result or investigate a hypothesis or untried effect.",
+    "pos": "noun",
+    "kind": "experiment-test"
+  },
+  {
+    "entryId": "ve-8a338f84",
+    "senseId": "kaikki:eef0998b61045b4a64",
+    "term": "experiment",
+    "definition": "To conduct an experiment.",
+    "pos": "verb",
+    "kind": "experiment-material"
+  },
+  {
+    "entryId": "ve-8a338f84",
+    "senseId": "kaikki:edec1346241d5c1427",
+    "term": "experiment",
+    "definition": "To try something in order to observe what happens.",
+    "pos": "verb",
+    "kind": "experiment-try"
+  },
+  {
+    "entryId": "ve-8a2f33bb",
+    "senseId": "kaikki:4d6901f73e6933c5a4",
+    "term": "experience",
+    "definition": "The personal impressions or effects of directly witnessing or participating in events.",
+    "pos": "noun",
+    "kind": "experience-direct"
+  },
+  {
+    "entryId": "ve-8a2f33bb",
+    "senseId": "kaikki:059a7bfb63fd3b511e",
+    "term": "experience",
+    "definition": "An activity a person has performed or participated in.",
+    "pos": "noun",
+    "kind": "experience-event"
+  },
+  {
+    "entryId": "ve-8a2f33bb",
+    "senseId": "kaikki:567bc4e9b9ceac2bdb",
+    "term": "experience",
+    "definition": "Accumulated events or activities from which knowledge, views or skills may be gained.",
+    "pos": "noun",
+    "kind": "experience-history"
+  },
+  {
+    "entryId": "ve-8a2f33bb",
+    "senseId": "kaikki:e7877b21fc8ecc71bf",
+    "term": "experience",
+    "definition": "Knowledge gained through participation in events or activities.",
+    "pos": "noun",
+    "kind": "experience-knowledge"
+  },
+  {
+    "entryId": "ve-8a2f33bb",
+    "senseId": "kaikki:43290dc9a57eee5336",
+    "term": "experience",
+    "definition": "A business offering focused on the customer’s interaction throughout the transaction.",
+    "pos": "noun",
+    "kind": "experience-offering"
+  },
+  {
+    "entryId": "ve-8a2f33bb",
+    "senseId": "kaikki:29347e9dced598655d",
+    "term": "experience",
+    "definition": "In games, experience points awarded or accumulated by a character or player.",
+    "pos": "noun",
+    "kind": "experience-points"
+  },
+  {
+    "entryId": "ve-8a2f33bb",
+    "senseId": "kaikki:77a6c1c59635c04d23",
+    "term": "experience",
+    "definition": "To undergo events or feelings, witness processes or perform activities that may affect one’s knowledge or views.",
+    "pos": "verb",
+    "kind": "experience-undergo"
   }
 ]
