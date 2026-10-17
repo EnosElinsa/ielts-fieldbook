@@ -7,6 +7,8 @@ import { accountId } from "../../storage/remote";
 import { clearVocabularyDraft, readVocabularyDraft, writeVocabularyDraft } from "../../storage/vocabularyDrafts";
 import { getVocabularyReviewQueue, type ReviewCard, type ReviewQueueFilter, type VocabularyEntry, type VocabularyMode, type VocabularyResult, type VocabularyState } from "../../domain/vocabulary";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
+import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
+import { isVocabularyPracticeReference } from '../../domain/vocabulary/readiness';
 import { normalizeVocabularyPreferences, type VocabularyPracticeMode, type VocabularyPreferences } from "../../domain/vocabulary/preferences";
 import { buildVocabularySessionCommit, createVocabularySession, evaluateVocabularySessionAnswer, updateVocabularySessionAnswer, type VocabularyPracticeSession, type VocabularySessionSelection } from "../../domain/vocabulary/session";
 import { getLearnedVocabularyIds, vocabularyGroupProgress } from "../../domain/vocabulary/progress";
@@ -241,6 +243,21 @@ export function useVocabularyPracticeController() {
     ],
   );
   const explicitEntry = Boolean(params.get("entryId"));
+  const explicitVocabulary = useMemo(() => {
+    if (!filter.entryId) return undefined;
+    const raw = ((fb.state.vocabulary as VocabularyEntry[]) || []).find(entry => entry.id === filter.entryId) || (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).find(entry => entry.id === filter.entryId);
+    const member = raw && filter.bookId && filter.unitId && VOCABULARY_CATALOG.memberships.some(item => item.entryId === raw.id && item.bookId === filter.bookId && item.unitId === filter.unitId);
+    return raw && member && !raw.sources.some(source => source.bookId === filter.bookId && source.unitId === filter.unitId) ? { ...raw, sources: [...raw.sources, { type: 'wordbook' as const, id: `${filter.bookId}:${filter.unitId}:${raw.id}`, bookId: filter.bookId, unitId: filter.unitId }] } : raw;
+  }, [fb.state.vocabulary, filter.entryId, filter.bookId, filter.unitId, catalogStatus, fb.vocabularyCatalogRevision]);
+  // A mode or schedule can have no cards even though the selected meaning exists.
+  const focusedPractice = useMemo(() => {
+    if (study || !explicitVocabulary) return null;
+    const scope = { entryId: explicitVocabulary.id, senseId: filter.senseId, bookId: filter.bookId, unitId: filter.unitId };
+    const resolved = resolveVocabularyLearningContext(explicitVocabulary, scope);
+    const sense = resolved.sense;
+    const modes = sense ? getVocabularyReviewQueue({ vocabulary: [explicitVocabulary] }, { ...scope, senseId: sense.id, dueOnly: false }).map(card => card.mode) : [];
+    return { entry: resolved.entry, sense, modes, reference: Boolean(sense && isVocabularyPracticeReference(explicitVocabulary.id, sense)) };
+  }, [study, explicitVocabulary, filter.senseId, filter.bookId, filter.unitId, fb.vocabularyCatalogRevision]);
   const unitQueue = useMemo(() => study ? buildUnitPracticeQueue(fb.state, bookId, unitId, mode) : null, [study, fb.state, bookId, unitId, mode, catalogStatus]);
   const batchRequest = study && params.has('batch');
   const learningBatch = useMemo((): { batch: LearningBatch | null; error: string } => {
@@ -261,10 +278,7 @@ export function useVocabularyPracticeController() {
     if (unitQueue) return unitQueue.cards;
     const learned = getLearnedVocabularyIds(fb.state);
     const explicit = Boolean(filter.entryId);
-    const raw = explicit ? ((fb.state.vocabulary as VocabularyEntry[]) || []).find(entry => entry.id === filter.entryId) || (VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]).find(entry => entry.id === filter.entryId) : undefined;
-    const member = raw && filter.bookId && filter.unitId && VOCABULARY_CATALOG.memberships.some(item => item.entryId === raw.id && item.bookId === filter.bookId && item.unitId === filter.unitId);
-    const virtualEntry = raw && member && !raw.sources.some(source => source.bookId === filter.bookId && source.unitId === filter.unitId) ? { ...raw, sources: [...raw.sources, { type: 'wordbook' as const, id: `${filter.bookId}:${filter.unitId}:${raw.id}`, bookId: filter.bookId, unitId: filter.unitId }] } : raw;
-    const queueState = explicit && virtualEntry ? { ...fb.state, vocabulary: [virtualEntry] } : fb.state;
+    const queueState = explicit && explicitVocabulary ? { ...fb.state, vocabulary: [explicitVocabulary] } : fb.state;
     let available = getVocabularyReviewQueue(queueState, filter).filter(
       (card) =>
         (explicit || Boolean(filter.sourceId) || learned.has(card.entryId)) && (!wrongOnly ||
@@ -293,7 +307,7 @@ export function useVocabularyPracticeController() {
       ];
     if (plannedReview) return plannedReview.map(ref => available.find(card => card.entryId === ref.entryId && card.senseId === ref.senseId)).filter((card): card is ReviewCard => Boolean(card));
     return available;
-  }, [fb.state, filter, wrongOnly, mode, preferences.order, unitQueue, catalogStatus, batchRequest, learningBatch, plannedReview]);
+  }, [fb.state, filter, wrongOnly, mode, preferences.order, unitQueue, catalogStatus, batchRequest, learningBatch, plannedReview, explicitVocabulary]);
   const books = VOCABULARY_CATALOG.books || [];
   const units = (VOCABULARY_CATALOG.units || []).filter(
     (unit) => bookId === "all" || unit.bookId === bookId,
@@ -995,7 +1009,7 @@ export function useVocabularyPracticeController() {
   }, [params.get('resume'), resume?.id, session, results, fb.booted]);
 
   return {
-    state: fb.state, filter, study, explicitEntry, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit,
+    state: fb.state, filter, study, explicitEntry, focusedPractice, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit,
     sourceType, setSource, skill, setSkill, dimension, setDimension,
     dueOnly, setDue, wrongOnly, setWrong, session, cards, resume, results,
     settingsOpen, setSettingsOpen, exitOpen, setExitOpen, incompleteOpen, setIncompleteOpen,

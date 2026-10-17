@@ -17,12 +17,17 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
   const preparing = !catalogReady && catalogStatus.status !== 'error';
   const batchOptions = !study && !explicitEntry;
   const reviewFilters = !study && (!explicitEntry || dueOnly || wrongOnly);
+  const focused = controller.focusedPractice;
+  const queuedSense = queue[0]?.entry.senses.find(sense => sense.id === queue[0]?.senseId);
+  const selectedMeaning = controller.filter.senseId ? focused?.sense : queuedSense || focused?.sense;
+  const unsupportedMode = Boolean(catalogReady && controller.filter.senseId && focused?.sense && !focused.reference && !focused.entry.tags.includes('archived') && !focused.modes.includes(mode === 'audio' ? 'dictation' : mode));
+  const fallbackMode = unsupportedMode && !controller.boundAssessmentMode && focused?.modes.includes('definition') ? 'definition' : undefined;
   return (
     <>
       <div className="practice-context-card">
         <span className="eyebrow">{controller.batchRequest ? `Learning batch ${Number(controller.learningBatch.batch?.selection.batchIndex || 0) + 1}` : study ? 'One complete group' : explicitEntry ? 'A single word' : 'A focused review batch'}</span>
-        <h3>{study ? selectedBook?.title || 'Choose a wordbook' : explicitEntry ? queue[0]?.entry.term || 'Practise this word' : 'Vocabulary review'}</h3>
-        <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : explicitEntry ? !catalogReady ? preparing ? 'Loading your selected meaning…' : 'Retry loading to see your selected meaning.' : queue[0]?.entry.senses.find(sense => sense.id === queue[0]?.senseId)?.definition || 'This selected meaning is unavailable.' : 'Review due words, retry mistakes, or build a custom review.'}</p>
+        <h3>{study ? selectedBook?.title || 'Choose a wordbook' : explicitEntry ? focused?.entry.term || queue[0]?.entry.term || 'Practise this word' : 'Vocabulary review'}</h3>
+        <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : explicitEntry ? !catalogReady ? preparing ? 'Loading your selected meaning…' : 'Retry loading to see your selected meaning.' : selectedMeaning?.definition || 'This selected meaning is unavailable.' : 'Review due words, retry mistakes, or build a custom review.'}</p>
         {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
         {mode === 'production' ? <p>Your sentences are saved for review. A self-rating does not verify correct usage.</p> : null}
         {wrongOnly ? <p>Mistake recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last.</p> : null}
@@ -223,8 +228,9 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
           <p role={preparing ? 'status' : undefined}>
             {preparing ? 'Preparing practice…' : !catalogReady ? 'Retry loading the wordbook to prepare practice.' : queue.length
               ? `${launchCount} ${launchCount === 1 ? 'word' : 'words'} · ${preferences.layout === "list" ? "List" : "Focus"} · ${preferences.feedback === "end" ? "Results after submission" : "Feedback during practice"}`
-              : "No words match these filters."}
+              : unsupportedMode ? 'No exercise is available for this meaning in this mode.' : "No words match these filters."}
           </p>
+          {fallbackMode ? <button type="button" className="btn line" onClick={() => changeMode(fallbackMode)}>Try {modeLabel(fallbackMode)}</button> : null}
           {study && catalogReady && !controller.batchRequest && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? <p role="status">{specialist ? <>{controller.unitQueue.eligibleWords} of {controller.unitQueue.totalWords} words have a {modeLabel(mode).toLowerCase()} exercise. This optional practice covers these words only. Choose Dictation to study the complete group.</> : <>Some words are unavailable for this mode. Reload the wordbook or choose Dictation to study the complete group.</>}</p> : null}
           <button
             className="btn primary practice-start"

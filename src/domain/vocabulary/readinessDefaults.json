@@ -15074,5 +15074,445 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-6c2af973",
+    "originalSense": {
+      "id": "kaikki:c5b0c7e5be800b6245",
+      "definition": "A manner of making (a policy) or solving (a problem, etc.).",
+      "example": "Our proposed definitional approach to the data processing-communications dilemma evoked considerable discussion. There is uniform disagreement and confusion as to the regulatory implications of the proposed definitional terms.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "figuratively",
+      "register": "figuratively",
+      "wordFamily": [
+        "approachability",
+        "approachable",
+        "approachableness",
+        "approacher",
+        "approaching",
+        "approachless",
+        "approachment",
+        "reapproach",
+        "unapproachability",
+        "unapproachable",
+        "unapproachableness",
+        "unapproachably",
+        "unapproached",
+        "unapproaching",
+        "approach anxiety",
+        "approach-forcing",
+        "approach play",
+        "approach shoe",
+        "approach wedge",
+        "closest point of approach",
+        "cold approach",
+        "counterapproach",
+        "final approach",
+        "missed approach",
+        "multiapproach",
+        "non-precision approach",
+        "purposive approach",
+        "seagull approach",
+        "shotgun approach",
+        "slam dunk approach"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/approach#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:c5b0c7e5be800b6245",
+      "definition": "A method or way of dealing with a task, problem or policy.",
+      "example": "We tested a different approach to teaching pronunciation.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "an approach to a problem",
+        "adopt an approach",
+        "a systematic approach"
+      ],
+      "usage": "",
+      "register": "figuratively",
+      "wordFamily": [
+        "approachability",
+        "approachable",
+        "approachableness",
+        "approacher",
+        "approaching",
+        "approachless",
+        "approachment",
+        "reapproach",
+        "unapproachability",
+        "unapproachable",
+        "unapproachableness",
+        "unapproachably",
+        "unapproached",
+        "unapproaching",
+        "approach anxiety",
+        "approach-forcing",
+        "approach play",
+        "approach shoe",
+        "approach wedge",
+        "closest point of approach",
+        "cold approach",
+        "counterapproach",
+        "final approach",
+        "missed approach",
+        "multiapproach",
+        "non-precision approach",
+        "purposive approach",
+        "seagull approach",
+        "shotgun approach",
+        "slam dunk approach"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/approach#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This approach is a method. In the noun pattern approach to teaching, to is followed by a noun or an -ing form."
+      ],
+      "distinctionTask": {
+        "prompt": "We adopted a new approach to teaching. Approach is _____.",
+        "options": [
+          "a method",
+          "a runway arrival phase"
+        ],
+        "answer": "a method",
+        "explanation": "Teaching identifies the activity dealt with by a method."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-833f78f2",
+    "originalSense": {
+      "id": "kaikki:f8a47a6378f637f004",
+      "definition": "An advantage; help or aid from something.",
+      "example": "She can't read, so the voice recording was made for her benefit.",
+      "pos": "noun",
+      "synonyms": [
+        "foredeal",
+        "advantage",
+        "aid",
+        "assistance",
+        "boon",
+        "help",
+        "percentage"
+      ],
+      "antonyms": [
+        "harm",
+        "disadvantage",
+        "encumbrance",
+        "hindrance",
+        "malefit",
+        "nuisance",
+        "obstacle",
+        "detriment"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "beneficial",
+        "benefit cliff",
+        "benefiter",
+        "benefitless",
+        "co-benefit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/benefit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:f8a47a6378f637f004",
+      "definition": "An advantage, useful effect or help gained from something.",
+      "example": "One benefit of the new timetable is a shorter wait.",
+      "pos": "noun",
+      "synonyms": [
+        "foredeal",
+        "advantage",
+        "aid",
+        "assistance",
+        "boon",
+        "help",
+        "percentage"
+      ],
+      "antonyms": [
+        "harm",
+        "disadvantage",
+        "encumbrance",
+        "hindrance",
+        "malefit",
+        "nuisance",
+        "obstacle",
+        "detriment"
+      ],
+      "collocations": [
+        "a benefit of",
+        "bring a benefit",
+        "a health benefit"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "beneficial",
+        "benefit cliff",
+        "benefiter",
+        "benefitless",
+        "co-benefit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/benefit#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The shorter wait is an advantage. Benefit does not have to be money or an organised fundraising event."
+      ],
+      "distinctionTask": {
+        "prompt": "A shorter wait is a benefit of the new timetable. Benefit means _____.",
+        "options": [
+          "an advantage",
+          "a fundraising performance"
+        ],
+        "answer": "an advantage",
+        "explanation": "The useful result, rather than an event, is the benefit."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-d546f9c",
+    "originalSense": {
+      "id": "kaikki:2c0f577dd19e9cd3c8",
+      "definition": "Such as one may avail oneself of; capable of being used for the accomplishment of a purpose.",
+      "example": "We have an available candidate.",
+      "pos": "adj",
+      "synonyms": [
+        "usable",
+        "profitable",
+        "advantageous",
+        "disponible",
+        "vacant"
+      ],
+      "antonyms": [
+        "unavailable",
+        "taken"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "availability",
+        "availableness",
+        "availably",
+        "bioavailable",
+        "bio-available",
+        "geoavailable",
+        "inavailable",
+        "interavailable",
+        "nonavailable",
+        "phytoavailable",
+        "reavailable",
+        "re-available",
+        "unavailable"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/available#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:2c0f577dd19e9cd3c8",
+      "definition": "Ready or able to be used for a particular purpose.",
+      "example": "Two computers are available for the workshop.",
+      "pos": "adj",
+      "synonyms": [
+        "usable",
+        "profitable",
+        "advantageous",
+        "disponible",
+        "vacant"
+      ],
+      "antonyms": [
+        "unavailable",
+        "taken"
+      ],
+      "collocations": [
+        "available for use",
+        "available resources",
+        "make something available"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "availability",
+        "availableness",
+        "availably",
+        "bioavailable",
+        "bio-available",
+        "geoavailable",
+        "inavailable",
+        "interavailable",
+        "nonavailable",
+        "phytoavailable",
+        "reavailable",
+        "re-available",
+        "unavailable"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/available#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The computers can be used for the workshop. Availability does not by itself say that they are free of charge or suitable for every task."
+      ],
+      "distinctionTask": {
+        "prompt": "Two computers are available for the workshop. They are _____.",
+        "options": [
+          "ready for participants to use",
+          "necessarily free to keep"
+        ],
+        "answer": "ready for participants to use",
+        "explanation": "Available identifies access for a purpose; it does not transfer ownership."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-a8b8e6f",
+    "originalSense": {
+      "id": "kaikki:8afbe25b4a23fdde2c",
+      "definition": "A new statement of something one believes to be the truth, usually when the statement has yet to be verified or without valid evidence provided.",
+      "example": "The company's share price dropped amid claims of accounting fraud.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "ambit claim",
+        "baggage claim",
+        "Beauregard claim",
+        "claim chart",
+        "claim form",
+        "claim jumper",
+        "claim-jumping",
+        "claimless",
+        "claim shanty",
+        "claimstaker",
+        "claim to fame",
+        "clamatory",
+        "contingent claim",
+        "extraordinary claims require extraordinary evidence",
+        "face claim",
+        "healthcare claim",
+        "inclamation",
+        "Jepson claim",
+        "jump a claim",
+        "lay claim",
+        "Markush claim",
+        "multiclaim",
+        "nonclaim",
+        "quit claim deed",
+        "stake a claim",
+        "statement of claim",
+        "subclaim",
+        "third-party claim",
+        "counterclaim",
+        "crossclaim"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/claim#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:8afbe25b4a23fdde2c",
+      "definition": "A statement presented as true, often one that needs evidence or checking.",
+      "example": "The study tests the claim that exercise improves memory.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "make a claim",
+        "support a claim with evidence",
+        "a claim that"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "ambit claim",
+        "baggage claim",
+        "Beauregard claim",
+        "claim chart",
+        "claim form",
+        "claim jumper",
+        "claim-jumping",
+        "claimless",
+        "claim shanty",
+        "claimstaker",
+        "claim to fame",
+        "clamatory",
+        "contingent claim",
+        "extraordinary claims require extraordinary evidence",
+        "face claim",
+        "healthcare claim",
+        "inclamation",
+        "Jepson claim",
+        "jump a claim",
+        "lay claim",
+        "Markush claim",
+        "multiclaim",
+        "nonclaim",
+        "quit claim deed",
+        "stake a claim",
+        "statement of claim",
+        "subclaim",
+        "third-party claim",
+        "counterclaim",
+        "crossclaim"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/claim#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A claim can turn out to be true or false and can have strong, weak or no evidence. The word does not inherently mean a lie, and a claim need not be newly invented."
+      ],
+      "distinctionTask": {
+        "prompt": "The study evaluates a claim. The claim is _____.",
+        "options": [
+          "a statement presented as true",
+          "necessarily a deliberate lie"
+        ],
+        "answer": "a statement presented as true",
+        "explanation": "Claim identifies an assertion. Its truth, evidence and the speaker’s intent need separate assessment."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

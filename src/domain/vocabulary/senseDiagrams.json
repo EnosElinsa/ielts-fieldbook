@@ -1526,5 +1526,149 @@
     "definition": "A musical tone or sounded event.",
     "pos": "noun",
     "kind": "note-sound"
+  },
+  {
+    "entryId": "ve-6c2af973",
+    "senseId": "kaikki:0446f8a98fb5a59d3e",
+    "term": "approach",
+    "definition": "To move or come nearer in place or time.",
+    "pos": "verb",
+    "kind": "approach-nearer"
+  },
+  {
+    "entryId": "ve-6c2af973",
+    "senseId": "kaikki:c0fa18d8370aee801a",
+    "term": "approach",
+    "definition": "In a limit statement, to tend to a specified finite value or to positive or negative infinity.",
+    "pos": "verb",
+    "kind": "approach-limit"
+  },
+  {
+    "entryId": "ve-6c2af973",
+    "senseId": "kaikki:88ad6948f0c7fe0fcb",
+    "term": "approach",
+    "definition": "A road, path or other way by which a place can be reached.",
+    "pos": "noun",
+    "kind": "approach-access"
+  },
+  {
+    "entryId": "ve-6c2af973",
+    "senseId": "kaikki:c5b0c7e5be800b6245",
+    "term": "approach",
+    "definition": "A method or way of dealing with a task, problem or policy.",
+    "pos": "noun",
+    "kind": "approach-method"
+  },
+  {
+    "entryId": "ve-6c2af973",
+    "senseId": "kaikki:783aedabe46f5b1e3e",
+    "term": "approach",
+    "definition": "The way or phase in which an aircraft comes in to land.",
+    "pos": "noun",
+    "kind": "approach-aircraft"
+  },
+  {
+    "entryId": "ve-6c2af973",
+    "senseId": "wiktionary:restored:acbb142153134c15ad",
+    "term": "approach",
+    "definition": "In climbing, a path used to get from a road, car park or similar starting point to the climbing area.",
+    "pos": "noun",
+    "kind": "approach-climbing"
+  },
+  {
+    "entryId": "ve-833f78f2",
+    "senseId": "kaikki:f8a47a6378f637f004",
+    "term": "benefit",
+    "definition": "An advantage, useful effect or help gained from something.",
+    "pos": "noun",
+    "kind": "benefit-advantage"
+  },
+  {
+    "entryId": "ve-833f78f2",
+    "senseId": "kaikki:01ec9c48b7c042f35b",
+    "term": "benefit",
+    "definition": "A payment provided under an insurance policy or public assistance scheme.",
+    "pos": "noun",
+    "kind": "benefit-payment"
+  },
+  {
+    "entryId": "ve-833f78f2",
+    "senseId": "kaikki:e1c286cd77811b4288",
+    "term": "benefit",
+    "definition": "An event held to raise money for a person or cause.",
+    "pos": "noun",
+    "kind": "benefit-event"
+  },
+  {
+    "entryId": "ve-833f78f2",
+    "senseId": "kaikki:e76dac25404d1cdb8b",
+    "term": "benefit",
+    "definition": "To help someone or provide an advantage to them.",
+    "pos": "verb",
+    "kind": "benefit-help"
+  },
+  {
+    "entryId": "ve-833f78f2",
+    "senseId": "kaikki:225d73129af052d1df",
+    "term": "benefit",
+    "definition": "To receive an advantage or help from something.",
+    "pos": "verb",
+    "kind": "benefit-receive"
+  },
+  {
+    "entryId": "ve-d546f9c",
+    "senseId": "kaikki:2c0f577dd19e9cd3c8",
+    "term": "available",
+    "definition": "Ready or able to be used for a particular purpose.",
+    "pos": "adj",
+    "kind": "available-resources"
+  },
+  {
+    "entryId": "ve-d546f9c",
+    "senseId": "kaikki:f157a06c1123cecc4a",
+    "term": "available",
+    "definition": "Able to be obtained or bought.",
+    "pos": "adj",
+    "kind": "available-stock"
+  },
+  {
+    "entryId": "ve-d546f9c",
+    "senseId": "kaikki:616e25942e16385033",
+    "term": "available",
+    "definition": "Free to meet or speak with someone, or, in a relationship context, free to form a romantic relationship.",
+    "pos": "adj",
+    "kind": "available-time"
+  },
+  {
+    "entryId": "ve-a8b8e6f",
+    "senseId": "kaikki:1a2c8b3d40f9dd0901",
+    "term": "claim",
+    "definition": "An assertion that something belongs to someone or that they are entitled to it.",
+    "pos": "noun",
+    "kind": "claim-ownership"
+  },
+  {
+    "entryId": "ve-a8b8e6f",
+    "senseId": "kaikki:8afbe25b4a23fdde2c",
+    "term": "claim",
+    "definition": "A statement presented as true, often one that needs evidence or checking.",
+    "pos": "noun",
+    "kind": "claim-assertion"
+  },
+  {
+    "entryId": "ve-a8b8e6f",
+    "senseId": "kaikki:9fc9dcf134793e0922",
+    "term": "claim",
+    "definition": "A formal legal demand for compensation or damages.",
+    "pos": "noun",
+    "kind": "claim-compensation"
+  },
+  {
+    "entryId": "ve-a8b8e6f",
+    "senseId": "kaikki:bc69f9082c7f6d0cb1",
+    "term": "claim",
+    "definition": "To win or secure a prize, title or victory in competition.",
+    "pos": "verb",
+    "kind": "claim-prize"
   }
 ]

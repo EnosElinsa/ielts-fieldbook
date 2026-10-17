@@ -106,6 +106,105 @@ test('an explicitly filtered single-word link keeps its active filters removable
   expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled();
 });
 
+test.each(['cloze', 'synonym', 'distinction'])('an unsupported single-meaning %s task retains the meaning and offers exact meaning recall', async mode => {
+  const entry = fb.current.state.vocabulary[0];
+  entry.senses[0].example = '';
+  const before = JSON.stringify(fb.current.state);
+  mount(`?entryId=${entry.id}&senseId=${entry.senses[0].id}&dueOnly=false&mode=${mode}`);
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toHaveAttribute('aria-busy', 'false'));
+  expect(screen.getByText('Definition 0')).toBeInTheDocument();
+  expect(screen.queryByText('This selected meaning is unavailable.')).not.toBeInTheDocument();
+  expect(screen.getByText('No exercise is available for this meaning in this mode.')).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Start session' })).toBeDisabled();
+  expect(JSON.stringify(fb.current.state)).toBe(before);
+  const user = userEvent.setup();
+  await user.click(screen.getByRole('button', { name: 'Try Meaning recall' }));
+  expect(screen.getByRole('button', { name: 'Practice mode' })).toHaveTextContent('Meaning recall');
+  expect(screen.getByText('Definition 0')).toBeInTheDocument();
+  expect(fb.current.persistNow).not.toHaveBeenCalled();
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  expect(screen.getAllByRole('textbox')).toHaveLength(1);
+  await user.type(screen.getByRole('textbox', { name: 'Answer 1' }), 'resilient');
+  await user.click(screen.getByRole('button', { name: 'Submit session' }));
+  const saved = fb.current.persistVocabularySession.mock.calls[0][0].vocabularySessions[0];
+  expect(saved).toMatchObject({ mode: 'definition', filter: { entryId: entry.id, senseId: entry.senses[0].id, dueOnly: false }, results: [expect.objectContaining({ entryId: entry.id, senseId: entry.senses[0].id })] });
+});
+
+test.each(['future', 'no-mistakes'])('a %s scheduling filter does not turn an existing meaning into unavailable content', async restriction => {
+  const entry = fb.current.state.vocabulary[0];
+  fb.current.state.vocabularyStates = [{ entryId: entry.id, senseId: entry.senses[0].id, cards: { definition: { due: '2099-01-01' } }, wrong: { active: false, modes: {} } }];
+  mount(`?entryId=${entry.id}&senseId=${entry.senses[0].id}&mode=definition&dueOnly=${restriction === 'future'}&wrongOnly=${restriction === 'no-mistakes'}`);
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toHaveAttribute('aria-busy', 'false'));
+  expect(screen.getByText('Definition 0')).toBeInTheDocument();
+  expect(screen.getByText('No words match these filters.')).toBeInTheDocument();
+  expect(screen.queryByText('This selected meaning is unavailable.')).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: /^Try / })).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Start session' })).toBeDisabled();
+  expect(fb.current.persistNow).not.toHaveBeenCalled();
+});
+
+test('an archived meaning stays readable without a suggested practice bypass', async () => {
+  fb.current.state.vocabulary[0].tags = ['archived'];
+  mount('?entryId=entry-0&senseId=sense-0&dueOnly=false&mode=cloze');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toHaveAttribute('aria-busy', 'false'));
+  expect(screen.getByText('Definition 0')).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: /^Try / })).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Start session' })).toBeDisabled();
+});
+
+test('an unknown exact meaning does not offer practice of a different saved meaning', async () => {
+  mount('?entryId=entry-0&senseId=unknown-meaning&dueOnly=false&mode=cloze');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toHaveAttribute('aria-busy', 'false'));
+  expect(screen.getByText('This selected meaning is unavailable.')).toBeInTheDocument();
+  expect(screen.queryByText('Definition 0')).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: /^Try / })).not.toBeInTheDocument();
+});
+
+test('a supported-mode suggestion preserves scheduling and source restrictions', async () => {
+  const entry = fb.current.state.vocabulary[0];
+  entry.senses[0].example = '';
+  entry.sources = [{ type: 'reading', id: 'part-one', skill: 'reading', senseId: 'sense-0' }];
+  fb.current.state.vocabularyStates = [{ entryId: entry.id, senseId: 'sense-0', cards: { definition: { due: '2099-01-01' } } }];
+  const query = '?entryId=entry-0&senseId=sense-0&dueOnly=true&sourceType=reading&sourceId=part-one&skill=reading&mode=cloze';
+  function CurrentSelection() { const location = useLocation(); return <output aria-label="Focused route">{location.search}</output>; }
+  render(<MemoryRouter initialEntries={['/vocabulary/review' + query]}><VocabularyPracticePage /><CurrentSelection /></MemoryRouter>);
+  await userEvent.click(await screen.findByRole('button', { name: 'Try Meaning recall' }));
+  const params = new URLSearchParams(screen.getByLabelText('Focused route').textContent!);
+  for (const [key, value] of new URLSearchParams(query)) expect(params.get(key)).toBe(key === 'mode' ? 'definition' : value);
+  expect(screen.getByText('Definition 0')).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Start session' })).toBeDisabled();
+  expect(screen.getByText('No words match these filters.')).toBeInTheDocument();
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+});
+
+test('a meaning-group reference stays readable without a suggested practice mode', async () => {
+  const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+  const entry = catalog.entries.find((item: any) => item.term === 'note');
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const sense = JSON.parse(readFileSync('public/dictionary/' + index.note, 'utf8')).senses[0];
+  const correction = JSON.parse(readFileSync('src/domain/vocabulary/readinessCorrections.json', 'utf8')).find((row: any) => row.entryId === entry.id && row.senseId === sense.id);
+  fb.current.state.vocabulary = [{ ...entry, senses: [sense] }];
+  mount(`?entryId=${entry.id}&senseId=${sense.id}&dueOnly=false&mode=cloze`);
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toHaveAttribute('aria-busy', 'false'));
+  expect(screen.getByText(correction.definition)).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: /^Try / })).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Start session' })).toBeDisabled();
+});
+
+test('a supported-mode suggestion waits for the selected meaning’s catalogue preparation', async () => {
+  fb.current.state.vocabulary[0].senses[0].example = '';
+  let finish!: () => void;
+  fb.current.loadVocabularyCatalog = vi.fn(() => new Promise<void>(resolve => { finish = resolve; }));
+  mount('?entryId=entry-0&senseId=sense-0&dueOnly=false&mode=cloze');
+  expect(screen.getByText('Loading your selected meaning…')).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: /^Try / })).not.toBeInTheDocument();
+  await act(async () => finish());
+  expect(await screen.findByRole('button', { name: 'Try Meaning recall' })).toBeInTheDocument();
+  expect(screen.getByText('Definition 0')).toBeInTheDocument();
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+});
+
 test('general vocabulary review retains wordbook, batch size, order and scheduling controls', async () => {
   mount('?dueOnly=false');
   for (const name of ['Wordbook', 'Session size', 'Order']) expect(screen.getByRole('button', { name })).toBeInTheDocument();

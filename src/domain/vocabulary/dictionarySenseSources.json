@@ -11170,5 +11170,43 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "approach",
+    "entryId": "ve-6c2af973",
+    "parentSenseId": "kaikki:88ad6948f0c7fe0fcb",
+    "parentSourceHash": "67f0e52831aaa06c10f3dca168732e062fc14eb9e8499f3ac2cc9c953967f4a5",
+    "sourcePage": "approach",
+    "revision": 92140345,
+    "sourceGloss": "## {{lb|en|climbing}} A [[path#Noun|path]] [[take#Verb|taken]] to [[reach#Verb|reach]] the [[climbing#Noun|climbing]] [[area]], for example, from a [[car park]], [[road#Noun|road]], etc.",
+    "sense": {
+      "id": "wiktionary:restored:acbb142153134c15ad",
+      "pos": "noun",
+      "definition": "A path taken to reach the climbing area, for example, from a car park, road, etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=approach&oldid=92140345",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "approach",
+    "entryId": "ve-6c2af973",
+    "parentSenseId": "kaikki:783aedabe46f5b1e3e",
+    "parentSourceHash": "32bd8a60fc9cdaddc0df0f4c42e13d7f2f857a6d831673975ef16f3e07ed968d",
+    "sourcePage": "approach",
+    "revision": 92140345,
+    "sourceGloss": "## A specific [[procedure]] used for [[#Verb|approach]]ing and [[land]]ing at an [[airport]].",
+    "sense": {
+      "id": "wiktionary:restored:590c74ce4c637cf279",
+      "pos": "noun",
+      "definition": "A specific procedure used for approaching and landing at an airport.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=approach&oldid=92140345",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]
