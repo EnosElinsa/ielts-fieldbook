@@ -1782,5 +1782,93 @@
     "definition": "Of a measuring instrument, able to detect or respond to small changes in what it measures.",
     "pos": "adj",
     "kind": "sensitive-instrument"
+  },
+  {
+    "entryId": "ve-4f6c8c46",
+    "senseId": "kaikki:03f69c4a1cff400bce",
+    "term": "assure",
+    "definition": "To tell someone confidently that something is true or reliable.",
+    "pos": "verb",
+    "kind": "assure-confidence"
+  },
+  {
+    "entryId": "ve-4f6c8c46",
+    "senseId": "kaikki:e1adf9a163d3df6722",
+    "term": "assure",
+    "definition": "To make someone feel less worried or more confident.",
+    "pos": "verb",
+    "kind": "assure-reassurance"
+  },
+  {
+    "entryId": "ve-5fb41413",
+    "senseId": "kaikki:f3398db12f594c7807",
+    "term": "insure",
+    "definition": "To arrange or provide financial protection against a specified risk under an insurance policy.",
+    "pos": "verb",
+    "kind": "insure-risk"
+  },
+  {
+    "entryId": "ve-5fb41413",
+    "senseId": "kaikki:77192ff4a41efe8dde",
+    "term": "insure",
+    "definition": "To take out insurance or deal in insurance contracts, without stating a direct object.",
+    "pos": "verb",
+    "kind": "insure-provider"
+  },
+  {
+    "entryId": "ve-4f6c8f39",
+    "senseId": "kaikki:fb156eb049ffb431b1",
+    "term": "assume",
+    "definition": "To accept something as true without establishing it by proof.",
+    "pos": "verb",
+    "kind": "assume-belief"
+  },
+  {
+    "entryId": "ve-4f6c8f39",
+    "senseId": "kaikki:1114ca9e6a16734578",
+    "term": "assume",
+    "definition": "To take on a role, responsibility, position or form.",
+    "pos": "verb",
+    "kind": "assume-role"
+  },
+  {
+    "entryId": "ve-4f6c8f39",
+    "senseId": "kaikki:2b94050ca5525973a9",
+    "term": "assume",
+    "definition": "To put on a quality or manner that is not genuine, or claim something without right.",
+    "pos": "verb",
+    "kind": "assume-manner"
+  },
+  {
+    "entryId": "ve-6ae5d40c",
+    "senseId": "kaikki:fa5a04c50de74d8a62",
+    "term": "presume",
+    "definition": "To take the liberty of doing something without an appropriate right, authority or permission.",
+    "pos": "verb",
+    "kind": "presume-permission"
+  },
+  {
+    "entryId": "ve-6ae5d40c",
+    "senseId": "kaikki:1995ca19d4144a4c47",
+    "term": "presume",
+    "definition": "To suppose or take something as true without proof.",
+    "pos": "verb",
+    "kind": "presume-belief"
+  },
+  {
+    "entryId": "ve-6ae5d40c",
+    "senseId": "kaikki:d37f83d32e94384162",
+    "term": "presume",
+    "definition": "To accept a premise for the purpose of an argument.",
+    "pos": "verb",
+    "kind": "presume-premise"
+  },
+  {
+    "entryId": "ve-6ae5d40c",
+    "senseId": "kaikki:cd8c70314b28405357",
+    "term": "presume",
+    "definition": "To take advantage of someone’s generosity or goodwill beyond what is appropriate.",
+    "pos": "verb",
+    "kind": "presume-goodwill"
   }
 ]

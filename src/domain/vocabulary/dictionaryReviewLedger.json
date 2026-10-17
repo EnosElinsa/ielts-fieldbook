@@ -28969,6 +28969,238 @@
         "distinctions"
       ],
       "referenceUrl": "https://en.wiktionary.org/w/index.php?title=sensitive&oldid=91519597"
+    },
+    {
+      "term": "assure",
+      "entryId": "ve-4f6c8c46",
+      "senseId": "kaikki:099e3994cd47619ed3",
+      "sourceHash": "a4a2be2db3660f923bac821b9c50514a4fb7d728a75b31e7642678b008e98751",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assure&oldid=92127956"
+    },
+    {
+      "term": "assure",
+      "entryId": "ve-4f6c8c46",
+      "senseId": "kaikki:03f69c4a1cff400bce",
+      "sourceHash": "583598fd6bc28b496fd47421083aff1ab0f0888aad1b937fc54b7624b76bc9d4",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assure&oldid=92127956",
+      "diagramReviewed": true
+    },
+    {
+      "term": "assure",
+      "entryId": "ve-4f6c8c46",
+      "senseId": "kaikki:159f1a904315309b5c",
+      "sourceHash": "06c78f25db44f49ef8e9f960887adb9820c5e60b4a4a319d0bbbeddf08b87b2e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assure&oldid=92127956"
+    },
+    {
+      "term": "assure",
+      "entryId": "ve-4f6c8c46",
+      "senseId": "kaikki:e1adf9a163d3df6722",
+      "sourceHash": "714db616d18d2d3eac84828402b50a4f4fdda30fa7fb8bd23af2799ce35c735f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assure&oldid=92127956",
+      "diagramReviewed": true
+    },
+    {
+      "term": "insure",
+      "entryId": "ve-5fb41413",
+      "senseId": "kaikki:f3398db12f594c7807",
+      "sourceHash": "eb0e3be3d0e84a7b9fd324a1edc46f7f4534054ef244d58e7a5a2165aaf8adcd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insure&oldid=93621960",
+      "diagramReviewed": true
+    },
+    {
+      "term": "insure",
+      "entryId": "ve-5fb41413",
+      "senseId": "kaikki:77192ff4a41efe8dde",
+      "sourceHash": "5ce1b4ff6729dd6be5f1dd487b636c7fb0e8aa720d7fa18d058e15e347b2b12b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insure&oldid=93621960",
+      "diagramReviewed": true
+    },
+    {
+      "term": "insure",
+      "entryId": "ve-5fb41413",
+      "senseId": "kaikki:dd8f02aed548fb1c79",
+      "sourceHash": "168a8d2cde09fded1a1a63759470af3f8328b0ea95ed92ef40289357bd92e525",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insure&oldid=93621960"
+    },
+    {
+      "term": "assume",
+      "entryId": "ve-4f6c8f39",
+      "senseId": "kaikki:fb156eb049ffb431b1",
+      "sourceHash": "aaef560191c702eb6abdb623ee32171b391d24ff898a83600bd9b3bfb051cec3",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assume&oldid=91779866",
+      "diagramReviewed": true
+    },
+    {
+      "term": "assume",
+      "entryId": "ve-4f6c8f39",
+      "senseId": "kaikki:1114ca9e6a16734578",
+      "sourceHash": "cfcc0c3cea5c753d81923f27a6740c4ece563a24001616cddc18c3edf9d47133",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assume&oldid=91779866",
+      "diagramReviewed": true
+    },
+    {
+      "term": "assume",
+      "entryId": "ve-4f6c8f39",
+      "senseId": "kaikki:2b94050ca5525973a9",
+      "sourceHash": "280210401d7f75d5904dbde4d7e7bb4a75680e8b824a7a725b093987b7394760",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assume&oldid=91779866",
+      "diagramReviewed": true
+    },
+    {
+      "term": "assume",
+      "entryId": "ve-4f6c8f39",
+      "senseId": "kaikki:3a9031000ffb5c2ec4",
+      "sourceHash": "8dba3bede40883c9a28630ae150955635ab39952297a357fe89b5019d817c310",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assume&oldid=91779866"
+    },
+    {
+      "term": "assume",
+      "entryId": "ve-4f6c8f39",
+      "senseId": "kaikki:e5df7ea71f8856c7d3",
+      "sourceHash": "c3e5066068a6e3b27a102af0b1fb6430f21e22942861e13558f9b25e948501f9",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assume&oldid=91779866"
+    },
+    {
+      "term": "presume",
+      "entryId": "ve-6ae5d40c",
+      "senseId": "kaikki:fa5a04c50de74d8a62",
+      "sourceHash": "3d795bcef5fff97c828854f7bdf55ccb98577d8a66f45501cf92bfd2e947785f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=presume&oldid=92122169",
+      "diagramReviewed": true
+    },
+    {
+      "term": "presume",
+      "entryId": "ve-6ae5d40c",
+      "senseId": "kaikki:74f4296cfab4c260d9",
+      "sourceHash": "56ce0772c48b75213a683ab4cd81dadc9d4d4a61f8361b75f078de71738a369e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=presume&oldid=92122169"
+    },
+    {
+      "term": "presume",
+      "entryId": "ve-6ae5d40c",
+      "senseId": "kaikki:1995ca19d4144a4c47",
+      "sourceHash": "f655b57ebf976fd65da6a4ffa430f89b4f4c898eb033bf781c4d6f2013d3b768",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=presume&oldid=92122169",
+      "diagramReviewed": true
+    },
+    {
+      "term": "presume",
+      "entryId": "ve-6ae5d40c",
+      "senseId": "kaikki:d37f83d32e94384162",
+      "sourceHash": "b4215bac5b104146ef9b891732b9c350c985aae66b9711832353f8a697c1b625",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=presume&oldid=92122169",
+      "diagramReviewed": true
+    },
+    {
+      "term": "presume",
+      "entryId": "ve-6ae5d40c",
+      "senseId": "kaikki:cd8c70314b28405357",
+      "sourceHash": "6cedd518251557b163d95f288c05d61305ef02e09ec20854afcc3e58c0604d3a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=presume&oldid=92122169",
+      "diagramReviewed": true
     }
   ]
 }

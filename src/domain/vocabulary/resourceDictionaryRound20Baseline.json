@@ -1,0 +1,151 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-4f6c8c46",
+      "senseId": "kaikki:099e3994cd47619ed3"
+    },
+    {
+      "entryId": "ve-4f6c8c46",
+      "senseId": "kaikki:159f1a904315309b5c"
+    },
+    {
+      "entryId": "ve-4f6c8c46",
+      "senseId": "kaikki:e1adf9a163d3df6722"
+    },
+    {
+      "entryId": "ve-5fb41413",
+      "senseId": "kaikki:f3398db12f594c7807"
+    },
+    {
+      "entryId": "ve-5fb41413",
+      "senseId": "kaikki:77192ff4a41efe8dde"
+    },
+    {
+      "entryId": "ve-5fb41413",
+      "senseId": "kaikki:dd8f02aed548fb1c79"
+    },
+    {
+      "entryId": "ve-4f6c8f39",
+      "senseId": "kaikki:fb156eb049ffb431b1"
+    },
+    {
+      "entryId": "ve-4f6c8f39",
+      "senseId": "kaikki:1114ca9e6a16734578"
+    },
+    {
+      "entryId": "ve-4f6c8f39",
+      "senseId": "kaikki:2b94050ca5525973a9"
+    },
+    {
+      "entryId": "ve-4f6c8f39",
+      "senseId": "kaikki:3a9031000ffb5c2ec4"
+    },
+    {
+      "entryId": "ve-4f6c8f39",
+      "senseId": "kaikki:e5df7ea71f8856c7d3"
+    },
+    {
+      "entryId": "ve-6ae5d40c",
+      "senseId": "kaikki:fa5a04c50de74d8a62"
+    },
+    {
+      "entryId": "ve-6ae5d40c",
+      "senseId": "kaikki:74f4296cfab4c260d9"
+    },
+    {
+      "entryId": "ve-6ae5d40c",
+      "senseId": "kaikki:1995ca19d4144a4c47"
+    },
+    {
+      "entryId": "ve-6ae5d40c",
+      "senseId": "kaikki:d37f83d32e94384162"
+    },
+    {
+      "entryId": "ve-6ae5d40c",
+      "senseId": "kaikki:cd8c70314b28405357"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-4f6c8c46",
+      "senseId": "kaikki:03f69c4a1cff400bce",
+      "term": "assure",
+      "example": "The manager assured us that the booking was confirmed.",
+      "pos": "verb",
+      "definition": "To tell someone confidently that something is true or trustworthy.",
+      "originalSense": {
+        "id": "kaikki:03f69c4a1cff400bce",
+        "definition": "To give (someone) confidence in the trustworthiness of (something).",
+        "example": "I assure you that the program will work smoothly when we demonstrate it to the client.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [
+          "assuror",
+          "life assured",
+          "mutually assured destruction",
+          "over-assured",
+          "rest assured",
+          "sum assured"
+        ]
+      }
+    }
+  ],
+  "removeDefaults": [
+    "ve-5fb41413",
+    "ve-4f6c8f39",
+    "ve-6ae5d40c"
+  ],
+  "restoreDefaults": [
+    {
+      "entryId": "ve-4f6c8c46",
+      "sense": {
+        "id": "kaikki:03f69c4a1cff400bce",
+        "definition": "To tell someone confidently that something is true or trustworthy.",
+        "example": "The manager assured us that the booking was confirmed.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/assure#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook core content review",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      },
+      "originalSense": {
+        "id": "kaikki:03f69c4a1cff400bce",
+        "definition": "To give (someone) confidence in the trustworthiness of (something).",
+        "example": "I assure you that the program will work smoothly when we demonstrate it to the client.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [
+          "assuror",
+          "life assured",
+          "mutually assured destruction",
+          "over-assured",
+          "rest assured",
+          "sum assured"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/assure#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    }
+  ]
+}

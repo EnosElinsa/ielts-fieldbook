@@ -36005,10 +36005,17 @@
   {
     "entryId": "ve-4f6c8c46",
     "senseId": "kaikki:03f69c4a1cff400bce",
-    "term": "assure",
-    "example": "The manager assured us that the booking was confirmed.",
-    "pos": "verb",
-    "definition": "To tell someone confidently that something is true or trustworthy.",
+    "definition": "To tell someone confidently that something is true or reliable.",
+    "example": "I assure you that the application has been received.",
+    "collocations": [
+      "assure someone that",
+      "assure someone of something",
+      "assure a client"
+    ],
+    "distinctions": [
+      "Assure normally takes the person being addressed: assure you that or assure you of something. The assurance is a confident statement, not independent proof that its content is true. Insure usually concerns financial protection against a risk."
+    ],
+    "usage": "",
     "originalSense": {
       "id": "kaikki:03f69c4a1cff400bce",
       "definition": "To give (someone) confidence in the trustworthiness of (something).",
@@ -36026,8 +36033,48 @@
         "over-assured",
         "rest assured",
         "sum assured"
-      ]
-    }
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assure#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assure&oldid=92127956",
+    "distinctionTask": {
+      "prompt": "In “I assure you that the form arrived”, you identifies _____.",
+      "options": [
+        "the person receiving the confident statement",
+        "a risk covered by an insurance policy"
+      ],
+      "answer": "the person receiving the confident statement",
+      "explanation": "Assure you that introduces a statement addressed to you. It does not itself provide independent evidence."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general",
+    "previousSenses": [
+      {
+        "id": "kaikki:03f69c4a1cff400bce",
+        "definition": "To tell someone confidently that something is true or trustworthy.",
+        "example": "The manager assured us that the booking was confirmed.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [
+          "assuror",
+          "life assured",
+          "mutually assured destruction",
+          "over-assured",
+          "rest assured",
+          "sum assured"
+        ]
+      }
+    ]
   },
   {
     "entryId": "ve-67dc91b1",
@@ -179013,5 +179060,833 @@
     "wordFamily": [],
     "register": "",
     "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-4f6c8c46",
+    "senseId": "kaikki:099e3994cd47619ed3",
+    "definition": "To make an outcome certain or secure.",
+    "example": "The backup systems assure continued access to the records.",
+    "collocations": [
+      "assure continued access",
+      "assure the safety of something",
+      "assure a supply"
+    ],
+    "distinctions": [
+      "This outcome-focused use overlaps with ensure. In ordinary writing, ensure is often the clearer choice for making something certain; assure someone that normally focuses on giving a person confidence."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:099e3994cd47619ed3",
+      "definition": "To make sure and secure; ensure.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "assuror",
+        "life assured",
+        "mutually assured destruction",
+        "over-assured",
+        "rest assured",
+        "sum assured"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assure#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assure&oldid=92127956",
+    "distinctionTask": {
+      "prompt": "In “backup systems assure continued access”, assure means _____.",
+      "options": [
+        "make the outcome secure",
+        "sell a policy covering a possible loss"
+      ],
+      "answer": "make the outcome secure",
+      "explanation": "The object is the outcome, continued access. No insurance policy is mentioned."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-4f6c8c46",
+    "senseId": "kaikki:159f1a904315309b5c",
+    "definition": "In obsolete use, to promise or undertake to do something.",
+    "example": "In the preserved verse, the knights assure that they will observe the rule: they promise to do so.",
+    "collocations": [
+      "the knights’ promise",
+      "assure as undertake",
+      "observe a rule"
+    ],
+    "distinctions": [
+      "The source records an obsolete promise construction. Modern assure someone that is a separate, ordinary construction; the old quotation does not establish that assure to do is a useful modern replacement for promise to do."
+    ],
+    "usage": "Obsolete promise construction; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:159f1a904315309b5c",
+      "definition": "To guarantee, promise (to do something).",
+      "example": "That as a law for euer should endure; / Which to obserue in word of knights they did assure.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "assuror",
+        "life assured",
+        "mutually assured destruction",
+        "over-assured",
+        "rest assured",
+        "sum assured"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assure#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assure&oldid=92127956",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-4f6c8c46",
+    "senseId": "kaikki:e1adf9a163d3df6722",
+    "definition": "To make someone feel less worried or more confident.",
+    "example": "We assure nervous visitors that help is available.",
+    "collocations": [
+      "assure a nervous visitor",
+      "assure someone that help is available",
+      "reassure someone"
+    ],
+    "distinctions": [
+      "This use focuses on reducing someone’s worry. Reassure often makes that purpose more explicit; the confident-statement and reassurance senses overlap without being identical in emphasis."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:e1adf9a163d3df6722",
+      "definition": "To reassure.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "assuror",
+        "life assured",
+        "mutually assured destruction",
+        "over-assured",
+        "rest assured",
+        "sum assured"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assure#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assure&oldid=92127956",
+    "distinctionTask": {
+      "prompt": "The guide speaks to reduce a nervous visitor’s worry. Here assure emphasises _____.",
+      "options": [
+        "reassurance",
+        "adopting an unproved premise"
+      ],
+      "answer": "reassurance",
+      "explanation": "The guide aims to make the visitor less worried. Assuming a premise is a different action."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-5fb41413",
+    "senseId": "kaikki:f3398db12f594c7807",
+    "definition": "To arrange or provide financial protection against a specified risk under an insurance policy.",
+    "example": "We insure the building against damage from fire.",
+    "collocations": [
+      "insure a building against fire",
+      "insure a vehicle",
+      "insure against a specified risk"
+    ],
+    "distinctions": [
+      "Both a policyholder and an insurer can be the subject of insure. Insurance provides protection under the policy’s terms; it does not prevent the event or promise compensation for every loss. Ensure is normally clearer for making an outcome certain."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:f3398db12f594c7807",
+      "definition": "To provide for compensation if some specified risk occurs. Often agreed by policy (contract) to offer financial compensation in case of an accident, theft or other undesirable event.",
+      "example": "I'm not insured against burglary.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "coinsure",
+        "disinsure",
+        "insurability",
+        "insurable",
+        "insurance",
+        "insuree",
+        "insurer",
+        "overinsure",
+        "reinsure",
+        "self-insure",
+        "underinsure"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/insure#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insure&oldid=93621960",
+    "distinctionTask": {
+      "prompt": "A policy covers specified fire damage to a building. To insure the building is to _____.",
+      "options": [
+        "arrange financial protection under the policy",
+        "make a fire impossible"
+      ],
+      "answer": "arrange financial protection under the policy",
+      "explanation": "Insurance may cover specified loss; it does not prevent fire, and coverage depends on the policy."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-5fb41413",
+    "senseId": "kaikki:77192ff4a41efe8dde",
+    "definition": "To take out insurance or deal in insurance contracts, without stating a direct object.",
+    "example": "We insure with a specialist provider.",
+    "collocations": [
+      "insure with a provider",
+      "insure against theft",
+      "a company that insures"
+    ],
+    "distinctions": [
+      "This intransitive construction does not state the insured property as a direct object. Insure the building is transitive; insure with a provider identifies the provider. The word alone does not specify a policy’s exclusions or payment."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:77192ff4a41efe8dde",
+      "definition": "To deal in such contracts; subscribe to a policy of insurance",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "coinsure",
+        "disinsure",
+        "insurability",
+        "insurable",
+        "insurance",
+        "insuree",
+        "insurer",
+        "overinsure",
+        "reinsure",
+        "self-insure",
+        "underinsure"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/insure#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insure&oldid=93621960",
+    "distinctionTask": {
+      "prompt": "In “we insure with a specialist provider”, with introduces _____.",
+      "options": [
+        "the insurance provider",
+        "the property named as a direct object"
+      ],
+      "answer": "the insurance provider",
+      "explanation": "The construction names the provider after with and leaves the insured property unstated."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-5fb41413",
+    "senseId": "kaikki:dd8f02aed548fb1c79",
+    "definition": "A recorded use of insure meaning to make something certain, as a variant of ensure.",
+    "example": "In the US Constitution’s phrase insure domestic Tranquility, insure means ensure rather than buy insurance.",
+    "collocations": [
+      "insure domestic Tranquility",
+      "insure as ensure",
+      "a recorded make-certain use"
+    ],
+    "distinctions": [
+      "The source labels this make-certain variant chiefly US and dated. It is not the financial-protection meaning. For a clear modern distinction in general writing, use ensure for make certain and insure for insurance; do not claim every occurrence of insure must describe a policy."
+    ],
+    "usage": "Chiefly US, dated in the source; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:dd8f02aed548fb1c79",
+      "definition": "Alternative spelling of ensure; to make sure or certain of; guarantee.",
+      "example": "We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "US, alt-of, alternative, dated",
+      "register": "US, alt-of, alternative, dated, transitive",
+      "wordFamily": [
+        "coinsure",
+        "disinsure",
+        "insurability",
+        "insurable",
+        "insurance",
+        "insuree",
+        "insurer",
+        "overinsure",
+        "reinsure",
+        "self-insure",
+        "underinsure"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/insure#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insure&oldid=93621960",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-4f6c8f39",
+    "senseId": "kaikki:fb156eb049ffb431b1",
+    "definition": "To accept something as true without establishing it by proof.",
+    "example": "We assume that the library is open, but we have not checked.",
+    "collocations": [
+      "assume that",
+      "assume something to be true",
+      "assume without checking"
+    ],
+    "distinctions": [
+      "An assumption can later prove true or false. Assume does not authenticate a fact or verify evidence. Assume and presume overlap in the suppose sense; context and the speaker’s stance matter more than a rigid rule that one always has evidence and the other never does."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:fb156eb049ffb431b1",
+      "definition": "To authenticate by means of belief; to surmise; to suppose to be true, especially without proof.",
+      "example": "We assume that, as her parents were dentists, she knows quite a bit about dentistry.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "assumable",
+        "assume room temperature",
+        "assume the mantle",
+        "assume the position",
+        "coassume",
+        "just assume",
+        "misassume",
+        "preassume",
+        "reassume",
+        "when you assume, you make an ass out of you and me"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assume#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assume&oldid=91779866",
+    "distinctionTask": {
+      "prompt": "“We assume the library is open, but have not checked” presents its opening as _____.",
+      "options": [
+        "an unverified assumption",
+        "an independently verified fact"
+      ],
+      "answer": "an unverified assumption",
+      "explanation": "Assume marks something accepted for now. It can be correct, but the sentence supplies no verification."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-4f6c8f39",
+    "senseId": "kaikki:1114ca9e6a16734578",
+    "definition": "To take on a role, responsibility, position or form.",
+    "example": "She will assume responsibility for the project on Monday.",
+    "collocations": [
+      "assume responsibility",
+      "assume office",
+      "assume a different form"
+    ],
+    "distinctions": [
+      "Assume responsibility means take it on, not merely suppose that someone else has it. In assume a form, the form may be actual or represented; this broad sense does not by itself imply deception."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:1114ca9e6a16734578",
+      "definition": "To take on a position, duty or form.",
+      "example": "Mr. Jones will assume the position of a lifeguard until a proper replacement is found.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "assumable",
+        "assume room temperature",
+        "assume the mantle",
+        "assume the position",
+        "coassume",
+        "just assume",
+        "misassume",
+        "preassume",
+        "reassume",
+        "when you assume, you make an ass out of you and me"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assume#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assume&oldid=91779866",
+    "distinctionTask": {
+      "prompt": "A new manager will assume responsibility on Monday. She will _____.",
+      "options": [
+        "take the responsibility on",
+        "only guess who has the responsibility"
+      ],
+      "answer": "take the responsibility on",
+      "explanation": "The role-taking sense of assume concerns accepting a duty, rather than supposing a proposition true."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-4f6c8f39",
+    "senseId": "kaikki:2b94050ca5525973a9",
+    "definition": "To put on a quality or manner that is not genuine, or claim something without right.",
+    "example": "He tries to assume an air of indifference, although he is worried.",
+    "collocations": [
+      "assume an air of indifference",
+      "assume a false manner",
+      "assume authority without right"
+    ],
+    "distinctions": [
+      "The example concerns a feigned manner, so outward indifference need not match the person’s feelings. The source also includes arrogating a right or authority; that is distinct from legitimately taking on a responsibility."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:2b94050ca5525973a9",
+      "definition": "To adopt a feigned quality or manner; to claim without right; to arrogate.",
+      "example": "He assumed an air of indifference.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "assumable",
+        "assume room temperature",
+        "assume the mantle",
+        "assume the position",
+        "coassume",
+        "just assume",
+        "misassume",
+        "preassume",
+        "reassume",
+        "when you assume, you make an ass out of you and me"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assume#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assume&oldid=91779866",
+    "distinctionTask": {
+      "prompt": "Someone worried tries to assume an air of indifference. The appearance is _____.",
+      "options": [
+        "put on rather than a reliable report of the feeling",
+        "proof that the worry has ended"
+      ],
+      "answer": "put on rather than a reliable report of the feeling",
+      "explanation": "A feigned manner can differ from the person’s actual emotional state."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-4f6c8f39",
+    "senseId": "kaikki:3a9031000ffb5c2ec4",
+    "definition": "In the source’s admission sense, to receive or accept a person into a group.",
+    "example": "In the preserved novel, a knight is assumed into an honourable company: he is admitted to it.",
+    "collocations": [
+      "assumed into a company",
+      "admission to a group",
+      "receive a person"
+    ],
+    "distinctions": [
+      "This source example concerns admission to a company of people. It is not proof that the person’s claims are true, and it does not by itself describe the modern legal adoption of a child. For ordinary modern group admission, admit or accept is clearer."
+    ],
+    "usage": "Source admission construction; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:3a9031000ffb5c2ec4",
+      "definition": "To receive, adopt (a person).",
+      "example": "The sixth was a young knight of lesser renown and lower rank, assumed into that honorable company.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "assumable",
+        "assume room temperature",
+        "assume the mantle",
+        "assume the position",
+        "coassume",
+        "just assume",
+        "misassume",
+        "preassume",
+        "reassume",
+        "when you assume, you make an ass out of you and me"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assume#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assume&oldid=91779866",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4f6c8f39",
+    "senseId": "kaikki:e5df7ea71f8856c7d3",
+    "definition": "In the source’s adopt sense, to take up an idea or cause.",
+    "example": "The source’s assume an idea sense concerns taking the idea up, rather than proving that it is true.",
+    "collocations": [
+      "take up an idea",
+      "adopt a cause",
+      "the source’s adopt sense"
+    ],
+    "distinctions": [
+      "Keep this recorded adopt sense separate from assume that a proposition is true. The preserved source gives no usage example here, so this is an explanation rather than a verified natural sentence for a gap exercise."
+    ],
+    "usage": "Recorded adopt sense; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:e5df7ea71f8856c7d3",
+      "definition": "To adopt (an idea or cause).",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "assumable",
+        "assume room temperature",
+        "assume the mantle",
+        "assume the position",
+        "coassume",
+        "just assume",
+        "misassume",
+        "preassume",
+        "reassume",
+        "when you assume, you make an ass out of you and me"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assume#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assume&oldid=91779866",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6ae5d40c",
+    "senseId": "kaikki:fa5a04c50de74d8a62",
+    "definition": "To take the liberty of doing something without an appropriate right, authority or permission.",
+    "example": "I would not presume to tell you how to run your business.",
+    "collocations": [
+      "presume to tell someone",
+      "would not presume to do something",
+      "presume to give advice"
+    ],
+    "distinctions": [
+      "Presume to do something can criticise an unwarranted liberty. In the negative example, the speaker declines to take that liberty; it does not say the speaker actually gave the orders. This is separate from presuming a proposition true."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:fa5a04c50de74d8a62",
+      "definition": "To be so presumptuous as (to do something) without proper authority or permission [with to (+ infinitive)].",
+      "example": "I don't want to pretend to be an authority on this line of business, so I would never presume to tell you how to run your own company.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "presumability",
+        "presumable",
+        "presumably"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/presume#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=presume&oldid=92122169",
+    "distinctionTask": {
+      "prompt": "“I would not presume to direct your business” means the speaker _____.",
+      "options": [
+        "declines to take an unwarranted liberty",
+        "has already directed the business without permission"
+      ],
+      "answer": "declines to take an unwarranted liberty",
+      "explanation": "The negative would not shows restraint, not an assertion that the action happened."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-6ae5d40c",
+    "senseId": "kaikki:74f4296cfab4c260d9",
+    "definition": "In the source’s rare or archaic use, to do or claim something without authority.",
+    "example": "In the source’s authority sense, presume concerns doing or claiming more than one has permission for.",
+    "collocations": [
+      "presume too much",
+      "claim without permission",
+      "act without authority"
+    ],
+    "distinctions": [
+      "The preserved import labels this archaic; the checked revision now labels it rare. Keep both source contexts explicit rather than teaching this as the ordinary suppose sense. Presume to do something remains a separate usable construction."
+    ],
+    "usage": "Preserved source: archaic; checked revision: rare. Contextual reading.",
+    "originalSense": {
+      "id": "kaikki:74f4296cfab4c260d9",
+      "definition": "To perform, do (something) without authority; to lay claim to without permission.",
+      "example": "Don't make the decision yourself and presume too much.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, transitive",
+      "wordFamily": [
+        "presumability",
+        "presumable",
+        "presumably"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/presume#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=presume&oldid=92122169",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-6ae5d40c",
+    "senseId": "kaikki:1995ca19d4144a4c47",
+    "definition": "To suppose or take something as true without proof.",
+    "example": "From the pawprints, we presume that a cat visited the garden.",
+    "collocations": [
+      "presume that",
+      "presume something to be true",
+      "presume from the signs"
+    ],
+    "distinctions": [
+      "The pawprints provide a reason for the supposition in this example, but not conclusive proof. Presume and assume overlap; do not impose a universal evidence threshold that sharply separates the words in every context."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:1995ca19d4144a4c47",
+      "definition": "To assume or suggest to be true (without proof); to take for granted, to suppose.",
+      "example": "Paw-prints in the snow allow us to presume a visit from next door's cat.",
+      "pos": "verb",
+      "synonyms": [
+        "suppose"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "presumability",
+        "presumable",
+        "presumably"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/presume#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=presume&oldid=92122169",
+    "distinctionTask": {
+      "prompt": "Pawprints lead us to presume that a cat visited. The visit is _____.",
+      "options": [
+        "a supposition rather than a conclusively proved fact",
+        "conclusively proved solely by choosing the verb presume"
+      ],
+      "answer": "a supposition rather than a conclusively proved fact",
+      "explanation": "The signs support a possible explanation. The verb itself does not verify that explanation."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-6ae5d40c",
+    "senseId": "kaikki:d37f83d32e94384162",
+    "definition": "To accept a premise for the purpose of an argument.",
+    "example": "For this argument, presume that travel costs stay constant.",
+    "collocations": [
+      "presume for the sake of argument",
+      "presume a premise",
+      "presume that costs stay constant"
+    ],
+    "distinctions": [
+      "A premise is temporarily accepted to explore its consequences. This does not establish it as an observed fact; the conclusion remains conditional on the premise. The construction overlaps with assume for the sake of argument."
+    ],
+    "usage": "Argument or reasoning.",
+    "originalSense": {
+      "id": "kaikki:d37f83d32e94384162",
+      "definition": "To take as a premise; to assume for the sake of argument.",
+      "example": "If we presume that human cloning may one day become a mundane, everyday reality, then maybe it's time to start thinking more positively about our soon-to-arrive genetically engineered pseudo-siblings.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "presumability",
+        "presumable",
+        "presumably"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/presume#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=presume&oldid=92122169",
+    "distinctionTask": {
+      "prompt": "For an argument, presume that costs stay constant. A result derived from that premise is _____.",
+      "options": [
+        "conditional on the accepted premise",
+        "proof that real costs never change"
+      ],
+      "answer": "conditional on the accepted premise",
+      "explanation": "A premise adopted for reasoning is not automatically an observed fact."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-6ae5d40c",
+    "senseId": "kaikki:cd8c70314b28405357",
+    "definition": "To take advantage of someone’s generosity or goodwill beyond what is appropriate.",
+    "example": "Do not presume on her kindness by expecting free help every week.",
+    "collocations": [
+      "presume on someone’s kindness",
+      "presume upon someone’s goodwill",
+      "take liberties with hospitality"
+    ],
+    "distinctions": [
+      "Presume on or upon concerns taking an unwarranted liberty with what someone offers. It does not mean simply predict kindness; a kind act does not create an unlimited obligation to help."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:cd8c70314b28405357",
+      "definition": "To impose (on) for one's advantage; to be presumptuous; to take advantage (of); to take liberties (with) [with on or upon].",
+      "example": "Thanks, but I can't accept the money; I would not want to presume on the generosity of a stranger'",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "presumability",
+        "presumable",
+        "presumably"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/presume#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=presume&oldid=92122169",
+    "distinctionTask": {
+      "prompt": "Repeatedly demanding free help can presume on someone’s kindness by _____.",
+      "options": [
+        "taking an unwarranted liberty with their goodwill",
+        "creating an unlimited right to their help"
+      ],
+      "answer": "taking an unwarranted liberty with their goodwill",
+      "explanation": "Kindness does not grant an unlimited entitlement to someone’s time."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
   }
 ]
