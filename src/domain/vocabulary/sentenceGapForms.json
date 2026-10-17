@@ -1,0 +1,38 @@
+[
+  {
+    "entryId": "ve-808740be",
+    "senseId": "kaikki:6ff2aff2559ed35d0b",
+    "term": "evaluate",
+    "definition": "Of an expression or computation, to have or return a particular value.",
+    "pos": "verb",
+    "example": "With x = 3, the expression 4 × (x + 2) evaluates to 20.",
+    "form": "evaluates"
+  },
+  {
+    "entryId": "ve-e3661a01",
+    "senseId": "kaikki:f0ebf12626754af445",
+    "term": "calculate",
+    "definition": "To design, arrange or adapt something for a purpose or intended effect.",
+    "pos": "verb",
+    "example": "The changes are calculated to reduce waste.",
+    "form": "calculated"
+  },
+  {
+    "entryId": "ve-6adf0878",
+    "senseId": "kaikki:a0a474b0088542be43",
+    "term": "predict",
+    "definition": "Of a theory, law or model, to imply a particular result under stated conditions.",
+    "pos": "verb",
+    "example": "For x = 3, the model y = 2x predicts y = 6.",
+    "form": "predicts"
+  },
+  {
+    "entryId": "ve-b8733a0",
+    "senseId": "kaikki:a2ac50dd6100651815",
+    "term": "aim",
+    "definition": "To direct words or other verbal communication towards someone or something.",
+    "pos": "verb",
+    "example": "The speaker aimed her criticism at the policy.",
+    "form": "aimed"
+  }
+]

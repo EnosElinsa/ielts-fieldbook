@@ -4,7 +4,8 @@ import { vocabularyCurriculumBaselines } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
 import { applyVocabularyReadiness, isVocabularyReadingNote, isVocabularyPracticeReference, supplementVocabularySense, vocabularyReadinessBaselines, VOCABULARY_READINESS_VERSION } from './readiness';
 import { vocabularySensePresentation } from './dictionaryPresentation';
-export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-10.1/${VOCABULARY_READINESS_VERSION}`;
+import sentenceGapForms from './sentenceGapForms.json';
+export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-18.1/${VOCABULARY_READINESS_VERSION}`;
 const learningSenses = vocabularyTeaching.learning;
 const taskSenseBindings = vocabularyTeaching.tasks;
 const contextSenses = vocabularyTeaching.context;
@@ -241,6 +242,14 @@ export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mod
  if (mode === 'distinction' && sense.distinctionTask) return {prompt:sense.distinctionTask.prompt,acceptedAnswers:[sense.distinctionTask.answer],options:sense.distinctionTask.options,explanation:sense.distinctionTask.explanation};
  if (mode === 'cloze') {
   if (isVocabularyReadingNote(entry.id, sense)) return;
+  // A form belongs to one reviewed sentence and meaning, never to every use of the headword.
+  const authored = sense.source !== 'Personal note' ? sentenceGapForms.find(row =>
+   row.entryId === entry.id && row.senseId === sense.id && row.term === entry.term.toLowerCase() &&
+   row.definition === sense.definition && row.pos === sense.pos && row.example === sense.example) : undefined;
+  if (authored) {
+   const prompt = concealWord(sense.example, authored.form);
+   if (prompt !== sense.example) return { prompt, acceptedAnswers: [authored.form], explanation: `The context uses “${authored.form}”.` };
+  }
   const context = item && primary ? item.example : sense.example;
   const candidates = item && primary ? item.forms || [entry.term] : [entry.term];
   const answer = candidates.find(form => concealWord(context,form) !== context);
