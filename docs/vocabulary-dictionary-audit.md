@@ -2,9 +2,9 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 603 restored submeanings** (51,957 total). This ledger verifies **2393 records** across definition, examples or reading explanations, collocations and distinctions; **49,564 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 717 reviewed distinction exercises and 329 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 712 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 604 restored submeanings** (51,958 total). This ledger verifies **2442 records** across definition, examples or reading explanations, collocations and distinctions; **49,516 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 748 reviewed distinction exercises and 351 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 730 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
-Authored learning-priority metadata classifies 103 general, 31 specialist, 46 historical and 6 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
+Authored learning-priority metadata classifies 115 general, 52 specialist, 57 historical and 7 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
 
 | Term | Reviewed records | Raw + restored records | Pending |
 | --- | ---: | ---: | ---: |
@@ -15,6 +15,7 @@ Authored learning-priority metadata classifies 103 general, 31 specialist, 46 hi
 | affect | 15 | 15 | 0 |
 | aim | 20 | 20 | 0 |
 | approach | 21 | 21 | 0 |
+| argument | 17 | 17 | 0 |
 | assess | 3 | 3 | 0 |
 | assume | 5 | 5 | 0 |
 | assure | 4 | 4 | 0 |
@@ -48,6 +49,7 @@ Authored learning-priority metadata classifies 103 general, 31 specialist, 46 hi
 | effective | 8 | 8 | 0 |
 | efficient | 5 | 5 | 0 |
 | evaluate | 3 | 3 | 0 |
+| evidence | 5 | 5 | 0 |
 | fair | 35 | 35 | 0 |
 | field | 33 | 33 | 0 |
 | figure | 29 | 29 | 0 |
@@ -72,6 +74,7 @@ Authored learning-priority metadata classifies 103 general, 31 specialist, 46 hi
 | minute | 16 | 16 | 0 |
 | note | 35 | 35 | 0 |
 | object | 11 | 11 | 0 |
+| opinion | 7 | 7 | 0 |
 | order | 33 | 33 | 0 |
 | outcome | 4 | 4 | 0 |
 | patient | 7 | 7 | 0 |
@@ -86,6 +89,7 @@ Authored learning-priority metadata classifies 103 general, 31 specialist, 46 hi
 | principle | 11 | 11 | 0 |
 | produce | 11 | 11 | 0 |
 | project | 16 | 18 | 2 |
+| proof | 20 | 20 | 0 |
 | purpose | 8 | 8 | 0 |
 | raise | 32 | 32 | 0 |
 | range | 38 | 38 | 0 |

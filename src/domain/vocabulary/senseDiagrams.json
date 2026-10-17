@@ -2630,5 +2630,181 @@
     "definition": "To direct words or other verbal communication towards someone or something.",
     "pos": "verb",
     "kind": "aim-verbal"
+  },
+  {
+    "entryId": "vocab:evidence",
+    "senseId": "kaikki:982638e9c30173a7b9",
+    "term": "evidence",
+    "definition": "Facts or observations presented in support of an assertion.",
+    "pos": "noun",
+    "kind": "evidence-support"
+  },
+  {
+    "entryId": "vocab:evidence",
+    "senseId": "kaikki:4f5847568cf8c112e0",
+    "term": "evidence",
+    "definition": "Material admitted by a court to help prove or disprove alleged facts in a trial.",
+    "pos": "noun",
+    "kind": "evidence-admission"
+  },
+  {
+    "entryId": "vocab:evidence",
+    "senseId": "kaikki:a14a4e3049f0bf626b",
+    "term": "evidence",
+    "definition": "To provide evidence for, or suggest the truth of, something.",
+    "pos": "verb",
+    "kind": "evidence-indicate"
+  },
+  {
+    "entryId": "ve-b25bea1",
+    "senseId": "kaikki:7e33a02b086434cdca",
+    "term": "proof",
+    "definition": "Evidence or demonstration taken as establishing a fact or truth.",
+    "pos": "noun",
+    "kind": "proof-conclusive"
+  },
+  {
+    "entryId": "ve-b25bea1",
+    "senseId": "kaikki:c560c90ecdd588445d",
+    "term": "proof",
+    "definition": "A trial printed impression or sheet used for checking and correction.",
+    "pos": "noun",
+    "kind": "proof-printing"
+  },
+  {
+    "entryId": "ve-b25bea1",
+    "senseId": "kaikki:dde9858e6220616fa1",
+    "term": "proof",
+    "definition": "A logical sequence from stated premises to the proposition being established.",
+    "pos": "noun",
+    "kind": "proof-mathematical"
+  },
+  {
+    "entryId": "ve-b25bea1",
+    "senseId": "kaikki:da349a9b09050cbcc3",
+    "term": "proof",
+    "definition": "A check on the accuracy of a performed arithmetic operation.",
+    "pos": "noun",
+    "kind": "proof-arithmetic"
+  },
+  {
+    "entryId": "ve-b25bea1",
+    "senseId": "kaikki:49a11f984e1620104e",
+    "term": "proof",
+    "definition": "An alcohol-strength scale: in the United States, twice the alcohol percentage by volume.",
+    "pos": "noun",
+    "kind": "proof-alcohol"
+  },
+  {
+    "entryId": "ve-b25bea1",
+    "senseId": "kaikki:9e4a08d6d5ad7cbb16",
+    "term": "proof",
+    "definition": "Resistant to the specified harm or influence.",
+    "pos": "adj",
+    "kind": "proof-resistant"
+  },
+  {
+    "entryId": "ve-b25bea1",
+    "senseId": "kaikki:1033af2b639b6f279f",
+    "term": "proof",
+    "definition": "To read and check text for errors; to proofread.",
+    "pos": "verb",
+    "kind": "proof-text"
+  },
+  {
+    "entryId": "ve-b25bea1",
+    "senseId": "kaikki:676fdc402ca5343f4e",
+    "term": "proof",
+    "definition": "To allow yeast-containing dough to rise, especially after shaping.",
+    "pos": "verb",
+    "kind": "proof-dough"
+  },
+  {
+    "entryId": "ve-b25bea1",
+    "senseId": "kaikki:d88b79e8847c0668e5",
+    "term": "proof",
+    "definition": "To test whether yeast is active.",
+    "pos": "verb",
+    "kind": "proof-yeast"
+  },
+  {
+    "entryId": "ve-f7ac4276",
+    "senseId": "kaikki:dbf6ef0a3c4a73c4a3",
+    "term": "argument",
+    "definition": "A fact or statement offered as a reason in support of a proposition.",
+    "pos": "noun",
+    "kind": "argument-reason"
+  },
+  {
+    "entryId": "ve-f7ac4276",
+    "senseId": "kaikki:4c0d1b1e93e27e9445",
+    "term": "argument",
+    "definition": "A verbal disagreement or quarrel.",
+    "pos": "noun",
+    "kind": "argument-quarrel"
+  },
+  {
+    "entryId": "ve-f7ac4276",
+    "senseId": "kaikki:f3367342ba1a22724b",
+    "term": "argument",
+    "definition": "In linguistics, a phrase syntactically connected to a clause’s verb as an argument.",
+    "pos": "noun",
+    "kind": "argument-linguistic"
+  },
+  {
+    "entryId": "ve-f7ac4276",
+    "senseId": "kaikki:c1461768097de6c955",
+    "term": "argument",
+    "definition": "The independent variable of a function.",
+    "pos": "noun",
+    "kind": "argument-input"
+  },
+  {
+    "entryId": "ve-f7ac4276",
+    "senseId": "kaikki:64e6aa76b89227c5b4",
+    "term": "argument",
+    "definition": "The phase angle of a complex number.",
+    "pos": "noun",
+    "kind": "argument-angle"
+  },
+  {
+    "entryId": "ve-f7ac4276",
+    "senseId": "kaikki:f93b5621c19fd32c13",
+    "term": "argument",
+    "definition": "A value, or reference to a value, supplied to a function.",
+    "pos": "noun",
+    "kind": "argument-call"
+  },
+  {
+    "entryId": "ve-f7ac4276",
+    "senseId": "wiktionary:restored:c361b718856cf1e007",
+    "term": "argument",
+    "definition": "In logic, premises arranged with a conclusion intended to follow from them.",
+    "pos": "noun",
+    "kind": "argument-logical"
+  },
+  {
+    "entryId": "ve-2b05e6b5",
+    "senseId": "kaikki:082fcb2108e7ea08fc",
+    "term": "opinion",
+    "definition": "A belief, judgement or perspective formed about a topic, person or thing.",
+    "pos": "noun",
+    "kind": "opinion-view"
+  },
+  {
+    "entryId": "ve-2b05e6b5",
+    "senseId": "kaikki:282d916cc5b35fa66a",
+    "term": "opinion",
+    "definition": "A formal decision or expression of views by someone officially asked to consider a matter.",
+    "pos": "noun",
+    "kind": "opinion-professional"
+  },
+  {
+    "entryId": "ve-2b05e6b5",
+    "senseId": "kaikki:51de45705534051dbe",
+    "term": "opinion",
+    "definition": "In EU law, an Advocate General’s proposed legal solution in a case before the Court of Justice.",
+    "pos": "noun",
+    "kind": "opinion-advocate"
   }
 ]

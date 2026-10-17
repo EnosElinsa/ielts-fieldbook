@@ -11455,5 +11455,24 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "argument",
+    "entryId": "ve-f7ac4276",
+    "parentSenseId": "kaikki:dbf6ef0a3c4a73c4a3",
+    "parentSourceHash": "3069b1643517d603793f5bc1bd9ff354031396d440a7807a51d79f7c8b44583a",
+    "sourcePage": "argument",
+    "revision": 93058726,
+    "sourceGloss": "## {{lb|en|logic|philosophy}} A [[series]] of propositions [[organize]]d so that the [[final#Adjective|final]] proposition is a [[conclusion]] which is [[intend]]ed to [[follow]] [[logically]] from the [[preceding#Adjective|preceding]] propositions, which [[function#Verb|function]] as [[premise]]s.",
+    "sense": {
+      "id": "wiktionary:restored:c361b718856cf1e007",
+      "pos": "noun",
+      "definition": "A series of propositions organized so that the final proposition is a conclusion which is intended to follow logically from the preceding propositions, which function as premises.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

@@ -1,0 +1,258 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "vocab:evidence",
+      "senseId": "kaikki:982638e9c30173a7b9"
+    },
+    {
+      "entryId": "vocab:evidence",
+      "senseId": "kaikki:4f5847568cf8c112e0"
+    },
+    {
+      "entryId": "vocab:evidence",
+      "senseId": "kaikki:1f86d53c6644bb7bbf"
+    },
+    {
+      "entryId": "vocab:evidence",
+      "senseId": "kaikki:901d43190e43694f26"
+    },
+    {
+      "entryId": "vocab:evidence",
+      "senseId": "kaikki:a14a4e3049f0bf626b"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:6f08196427269ec318"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:7e33a02b086434cdca"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:a9982cf28a1a67a817"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:0ede21cac1277acd51"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:2d9ca9a2e4fae8d65e"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:c560c90ecdd588445d"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:3475f01a1335eb2c33"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:dde9858e6220616fa1"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:da349a9b09050cbcc3"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:8c4752f97dd35346c6"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:49a11f984e1620104e"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:8c8a33bb614cd1ffb3"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:9e4a08d6d5ad7cbb16"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:2cf7a3bb69410c08ff"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:1033af2b639b6f279f"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:f7592190b650717604"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:605c49e5f09bbf3814"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:676fdc402ca5343f4e"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:d88b79e8847c0668e5"
+    },
+    {
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:48598c04f153828224"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:dfcca5690d040f302d"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:ea873fd291542c5428"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:4c0d1b1e93e27e9445"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:bc0ebbfd8cbcef4289"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:f3367342ba1a22724b"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:c1461768097de6c955"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:64e6aa76b89227c5b4"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:1266ecc20b39a7eedd"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:f93b5621c19fd32c13"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:6fa94abfd6e2628a8c"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:fe3caedc19f28fe143"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:84b7d53e6a1345e85a"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:c2fb7df652dcb17bc3"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:306cf15dc84c04a787"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:d5436a0bc33a7df4ca"
+    },
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "wiktionary:restored:c361b718856cf1e007"
+    },
+    {
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:082fcb2108e7ea08fc"
+    },
+    {
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:9330df1698ca5f44ff"
+    },
+    {
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:2126e304fe1b684250"
+    },
+    {
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:970cfb041176058b42"
+    },
+    {
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:282d916cc5b35fa66a"
+    },
+    {
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:51de45705534051dbe"
+    },
+    {
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:2dfbae951ffa2526d8"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:dbf6ef0a3c4a73c4a3",
+      "originalSense": {
+        "id": "kaikki:dbf6ef0a3c4a73c4a3",
+        "definition": "A fact or statement used to support a proposition; a reason.",
+        "example": "There is no greater, at leaſt no more palpable and convincing Argument of the Exiſtence of a Deity than the admirable Art and Wiſdom that diſcovers itſelf in the make and conſtitution, the order and diſpoſition, the ends and uſes of all the parts and members of this ſtately fabrick of Heaven and Earth.",
+        "pos": "noun",
+        "synonyms": [
+          "argument",
+          "assertion",
+          "basis",
+          "claim",
+          "contention",
+          "proof"
+        ],
+        "antonyms": [
+          "recantation"
+        ],
+        "collocations": [],
+        "usage": "also, figuratively",
+        "register": "also, countable, figuratively",
+        "wordFamily": [
+          "argumentable",
+          "argumental",
+          "argumentary",
+          "argumentation",
+          "argumentative",
+          "argumentatively",
+          "argumentativeness",
+          "argument form",
+          "argument-form",
+          "argument from design",
+          "argument from ignorance",
+          "argument from illusion",
+          "argument from silence",
+          "argumenthood",
+          "argument instance",
+          "argumentive",
+          "argumentize",
+          "argumentless",
+          "argument mining",
+          "multiargument",
+          "sargable",
+          "an argument"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/argument#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "example": "The report presents a strong argument for investing in public transport."
+    }
+  ],
+  "removeDefaults": [
+    "vocab:evidence",
+    "ve-b25bea1",
+    "ve-f7ac4276",
+    "ve-2b05e6b5"
+  ],
+  "restoreDefaults": []
+}

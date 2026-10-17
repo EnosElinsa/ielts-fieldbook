@@ -31324,6 +31324,665 @@
         "distinctions"
       ],
       "referenceUrl": "https://en.wiktionary.org/w/index.php?title=AIM&oldid=91472559"
+    },
+    {
+      "term": "evidence",
+      "entryId": "vocab:evidence",
+      "senseId": "kaikki:982638e9c30173a7b9",
+      "sourceHash": "7674b58027c1d40191f9144565a45f0fa1f4bc9972118e328f44afef16ed5786",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=evidence&oldid=93572371",
+      "diagramReviewed": true
+    },
+    {
+      "term": "evidence",
+      "entryId": "vocab:evidence",
+      "senseId": "kaikki:4f5847568cf8c112e0",
+      "sourceHash": "a6042d038a991f10fc652faf221cc90db8cc7fb2de1389c1dc2b0f2845e9177c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=evidence&oldid=93572371",
+      "diagramReviewed": true
+    },
+    {
+      "term": "evidence",
+      "entryId": "vocab:evidence",
+      "senseId": "kaikki:1f86d53c6644bb7bbf",
+      "sourceHash": "25201dee6539828e8f1f348d5d0cd2902301fd4eefb3dd0145bdb06cbd35b019",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=evidence&oldid=93572371"
+    },
+    {
+      "term": "evidence",
+      "entryId": "vocab:evidence",
+      "senseId": "kaikki:901d43190e43694f26",
+      "sourceHash": "0d5e02548e89437730aa35fda5c6c09a996b1b05f5151afb304f2f9e7c5e563c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=evidence&oldid=93572371"
+    },
+    {
+      "term": "evidence",
+      "entryId": "vocab:evidence",
+      "senseId": "kaikki:a14a4e3049f0bf626b",
+      "sourceHash": "37bfd878f30d9ea114f5b27e4090839a262198f12b8b28519e59217f7a31ef43",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=evidence&oldid=93572371",
+      "diagramReviewed": true
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:6f08196427269ec318",
+      "sourceHash": "97372b18d6ebb96ccd69043268cc3a1fe10350fff588381df4d2bb3bbc230c7b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560"
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:7e33a02b086434cdca",
+      "sourceHash": "4c4967fe3082dd74e778ef6f393db99eafba51ff0f8cfdad62a7e953c955c430",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560",
+      "diagramReviewed": true
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:a9982cf28a1a67a817",
+      "sourceHash": "52a2e5068f34e11d9b085737242adba8c2546c2ebbddbe13f390e75b08351ded",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560"
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:0ede21cac1277acd51",
+      "sourceHash": "e30899f63a9ec7cd171ad3beeeef25009fdff53f079b51fbdf6418c22d356a8f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560"
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:2d9ca9a2e4fae8d65e",
+      "sourceHash": "07aca70688f02281134e3e901392b863684b29713343e78f0f18c2de95aa73e4",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560"
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:c560c90ecdd588445d",
+      "sourceHash": "009de2cb85abb9a705a7f9fe96961c09480b755df46b2f7fd76e258367c129f0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560",
+      "diagramReviewed": true
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:3475f01a1335eb2c33",
+      "sourceHash": "d113a0b08557aef6417ead5d51e6ed71d5220d237af2a618f8e3cdc84b1013a5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560"
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:dde9858e6220616fa1",
+      "sourceHash": "54b8e0453445e119cf7cdca9d0275912fc8abde4729a75adab7cbea4adae527c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560",
+      "diagramReviewed": true
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:da349a9b09050cbcc3",
+      "sourceHash": "5ac498b226f57514c2205872c46d9a60aafc87301a580df2b066f29a4cba28a6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560",
+      "diagramReviewed": true
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:8c4752f97dd35346c6",
+      "sourceHash": "eb7afddea44ba9ab0535d86ff22d23dc4d9d190a96275dc3b108c23eeb5778f1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560"
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:49a11f984e1620104e",
+      "sourceHash": "010bf9a640cb43802ab6440cc7cc7af9590b932d7551fb7887683b8eb61bc9d9",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560",
+      "diagramReviewed": true
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:8c8a33bb614cd1ffb3",
+      "sourceHash": "d61d9c1f669cae8a76b5f2175fc385283a7e8977770facf247c107b0dc0278ef",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560"
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:9e4a08d6d5ad7cbb16",
+      "sourceHash": "e2131018310a9bd220caa3a9b55ee15c858caf0eab673caf0742003036d1d16d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560",
+      "diagramReviewed": true
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:2cf7a3bb69410c08ff",
+      "sourceHash": "c74ab158ac581d42aff1a7efc9a5c264b39f0e63e0b1db37067c4564496b745c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560"
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:1033af2b639b6f279f",
+      "sourceHash": "a0963297ebbaeb12aa72844caa3a6170604dcc67cf91bf4cf2f505bf8099ee63",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560",
+      "diagramReviewed": true
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:f7592190b650717604",
+      "sourceHash": "ba5a04257a2e102aad4f18da3487f3c0df1d314473bf6461459e45127843aa05",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560"
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:605c49e5f09bbf3814",
+      "sourceHash": "1c74a18b20acb56539779b198b7763c2d0b583cc0f845e59a60605fa86e3d104",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560"
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:676fdc402ca5343f4e",
+      "sourceHash": "3ad5087f1e565739c29454daaa257d841b59c9dffb32873603d41942350d4fa2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560",
+      "diagramReviewed": true
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:d88b79e8847c0668e5",
+      "sourceHash": "322ffb10adfafbffeebb045354e09f15e88756e653fb7efba33f8b8c3f99c642",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=proof&oldid=92686560",
+      "diagramReviewed": true
+    },
+    {
+      "term": "proof",
+      "entryId": "ve-b25bea1",
+      "senseId": "kaikki:48598c04f153828224",
+      "sourceHash": "e72feae10abd4418d7dcf8a67c76b0455c3643444e8eb7711e1763836d4454e7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Proof&oldid=81933560"
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:dbf6ef0a3c4a73c4a3",
+      "sourceHash": "3069b1643517d603793f5bc1bd9ff354031396d440a7807a51d79f7c8b44583a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726",
+      "diagramReviewed": true
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:dfcca5690d040f302d",
+      "sourceHash": "90f403963e307cb97e6e75c5b4e53d2a47b685b288bc94a285bbae23f4cffcb0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726"
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:ea873fd291542c5428",
+      "sourceHash": "a7e227c2728b1f11fc9dc13917447dc8338fd292164a9d5adff67db84c206784",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726"
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:4c0d1b1e93e27e9445",
+      "sourceHash": "cf905a97cc33b8739a695ed06cd258a0528462b9391310eb923be56ec0dce516",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726",
+      "diagramReviewed": true
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:bc0ebbfd8cbcef4289",
+      "sourceHash": "bae6beb957716d91b6ec56115d46b93f54f1a52c51c460fa2c996f1ad4b8bac0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726"
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:f3367342ba1a22724b",
+      "sourceHash": "706c0a45828b0bcc784d909baf5680669e1d14a8b11d290e8df02002df48f485",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726",
+      "diagramReviewed": true
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:c1461768097de6c955",
+      "sourceHash": "4a2924827bef83e784619150a0c8fe901038274a88b9f3a6e88da50129535492",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726",
+      "diagramReviewed": true
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:64e6aa76b89227c5b4",
+      "sourceHash": "a54fbb8536e29f7047bc428047f1c54a77309c83568ddedf94cc876381a8ed5c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726",
+      "diagramReviewed": true
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:1266ecc20b39a7eedd",
+      "sourceHash": "b3a8cfdd24d9079aa33b9c2300d377009623895aef96863a35c1a6413345794a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726"
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:f93b5621c19fd32c13",
+      "sourceHash": "f4e5e4531bbfb0fe81121b914176df719f64a1d4dbc5aa40735860020049fde4",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726",
+      "diagramReviewed": true
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:6fa94abfd6e2628a8c",
+      "sourceHash": "86140d0796ef71afc4da310c30629f27fa4ce3466744e2090809c2d3013fc71a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726"
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:fe3caedc19f28fe143",
+      "sourceHash": "5f52084750af9cd18de154e4b3d1185f3fa8d68854ad78515576ae8cdcbe48f4",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726"
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:84b7d53e6a1345e85a",
+      "sourceHash": "54a8dcd1dd46886abcec64f4de69b7626d75c49eec9edb928c622745ad0f4910",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726"
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:c2fb7df652dcb17bc3",
+      "sourceHash": "ae2d6c65856c0993bbf3f1d035f9ec49b1eaa25b5249732078cc43ee7d3014f2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726"
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:306cf15dc84c04a787",
+      "sourceHash": "6604fbca5ca2d2fde15cb2a79658f1fba9865692127b4dcb1db6e7c5e5f9d6dd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726"
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "kaikki:d5436a0bc33a7df4ca",
+      "sourceHash": "22eb6f6bcfa255547becd74c7ff0c8f42e81f84a4217a247f73876b6cc616726",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726"
+    },
+    {
+      "term": "argument",
+      "entryId": "ve-f7ac4276",
+      "senseId": "wiktionary:restored:c361b718856cf1e007",
+      "sourceHash": "8a1aee93ec68f815ef80c0835e12c5f05f0dd009c0d90c14d81e706c8cdb84c2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=argument&oldid=93058726",
+      "diagramReviewed": true
+    },
+    {
+      "term": "opinion",
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:082fcb2108e7ea08fc",
+      "sourceHash": "ee7806eddce057ac364c549e24d844ca04f321f04e394c4b039f4a6e95ce340f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=opinion&oldid=93023845",
+      "diagramReviewed": true
+    },
+    {
+      "term": "opinion",
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:9330df1698ca5f44ff",
+      "sourceHash": "5b8537a463941e98522530edc2b4ee071afc92dee9ea96d490e463f8c5ab691e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=opinion&oldid=93023845"
+    },
+    {
+      "term": "opinion",
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:2126e304fe1b684250",
+      "sourceHash": "30da50d9e2ca6a1c209a6b6dfa3708b412124dc555a4461fae6dc3f14e49e917",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=opinion&oldid=93023845"
+    },
+    {
+      "term": "opinion",
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:970cfb041176058b42",
+      "sourceHash": "47562b06e635ab009aee77b537b48157d1753833e98ee74eb1fef1b1e99a5ac9",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=opinion&oldid=93023845"
+    },
+    {
+      "term": "opinion",
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:282d916cc5b35fa66a",
+      "sourceHash": "1888014e2858c076657b8803c6e0abbafbae98a645adbeb1bf75ae4ca7cb638c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=opinion&oldid=93023845",
+      "diagramReviewed": true
+    },
+    {
+      "term": "opinion",
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:51de45705534051dbe",
+      "sourceHash": "4f4a9b7b02b61eec545aa6e37e6e37410be70dda3a246abb2ee9ae4ed81de360",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=opinion&oldid=93023845",
+      "diagramReviewed": true
+    },
+    {
+      "term": "opinion",
+      "entryId": "ve-2b05e6b5",
+      "senseId": "kaikki:2dfbae951ffa2526d8",
+      "sourceHash": "e232baff377b79ae1cb084bd09807e7420a3d28f5cc41b11bf342f05dfd33475",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=opinion&oldid=93023845"
     }
   ]
 }
