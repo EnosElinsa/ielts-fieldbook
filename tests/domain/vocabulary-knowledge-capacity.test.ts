@@ -35,7 +35,7 @@ test('route familiarity and the capitalised Knowledge course stay separate, with
 });
 test('skill is usually acquired rather than an absolute learned versus innate division, while its AI meaning is lexical content',()=>{
  expect(at('skill',0)?.definition).toMatch(/usually acquired or learned/);expect(at('skill',0)?.distinctions.join(' ')).toMatch(/not an absolute/);
- expect(at('skill',1)?.distinctionTask?.answer).toMatch(/reusable task configuration/);expect(at('skill',1)?.distinctions.join(' ')).toMatch(/not an instruction/);
+ expect(at('skill',1)?.distinctionTask?.answer).toMatch(/reusable task configuration/);expect(at('skill',1)?.distinctions.join(' ')).toMatch(/rather than demonstrated human proficiency/);
  expect(at('skill',12)?.distinctionTask?.answer).toMatch(/spending acquired game points/);
 });
 test('unlabelled and regional skill verbs do not inherit an unsupported historical priority',()=>{

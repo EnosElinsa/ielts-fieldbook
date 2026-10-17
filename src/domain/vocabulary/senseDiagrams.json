@@ -3166,5 +3166,141 @@
     "definition": "Legal authority to perform an action.",
     "pos": "noun",
     "kind": "capacity-authority"
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:c7e210a2a3415efec6",
+    "term": "learn",
+    "definition": "To acquire, or try to acquire, knowledge or the ability to do something.",
+    "pos": "verb",
+    "kind": "learn-acquire"
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:24f9220271a6a8063c",
+    "term": "learn",
+    "definition": "To attend a course or another educational activity.",
+    "pos": "verb",
+    "kind": "learn-attend"
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:f20c7a1e300e407f34",
+    "term": "learn",
+    "definition": "To gain knowledge from an adverse experience and use it to improve.",
+    "pos": "verb",
+    "kind": "learn-experience"
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:c3a1d29b6da010e294",
+    "term": "learn",
+    "definition": "To study material.",
+    "pos": "verb",
+    "kind": "learn-study"
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:10178bb4ad53fab6f3",
+    "term": "learn",
+    "definition": "To come to know a fact; to become informed or find out.",
+    "pos": "verb",
+    "kind": "learn-discover"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:be272f122b10c4ea69",
+    "term": "teach",
+    "definition": "To pass knowledge on to someone.",
+    "pos": "verb",
+    "kind": "teach-recipient"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:35614a2f7d89773fc3",
+    "term": "teach",
+    "definition": "To act as a teacher or pass on knowledge generally, especially as a profession.",
+    "pos": "verb",
+    "kind": "teach-profession"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:d46d051268c0902f8e",
+    "term": "teach",
+    "definition": "To cause someone to learn or understand something.",
+    "pos": "verb",
+    "kind": "teach-cause-learning"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:c6feb878d886884a3d",
+    "term": "teach",
+    "definition": "To make someone learn the disagreeable consequences of an action.",
+    "pos": "verb",
+    "kind": "teach-consequence"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:70f202bfaa3908b320",
+    "term": "teach",
+    "definition": "An informal noun for a teacher, usually used when addressing one.",
+    "pos": "noun",
+    "kind": "teach-address"
+  },
+  {
+    "entryId": "ve-1fcc2fa5",
+    "senseId": "kaikki:26f9b9d1e00e1842c2",
+    "term": "training",
+    "definition": "The present participle and gerund of train.",
+    "pos": "verb",
+    "kind": "training-progressive"
+  },
+  {
+    "entryId": "ve-1fcc2fa5",
+    "senseId": "kaikki:cd739c7d13f55512da",
+    "term": "training",
+    "definition": "The action of training someone or something.",
+    "pos": "noun",
+    "kind": "training-action"
+  },
+  {
+    "entryId": "ve-1fcc2fa5",
+    "senseId": "kaikki:07e7a9d747edfa4234",
+    "term": "training",
+    "definition": "The activity of imparting and acquiring skills.",
+    "pos": "noun",
+    "kind": "training-skills"
+  },
+  {
+    "entryId": "ve-1fcc2fa5",
+    "senseId": "kaikki:a6d69ab278a8b19a6a",
+    "term": "training",
+    "definition": "In computing, the process in which modems determine a protocol and speed to use; handshaking.",
+    "pos": "noun",
+    "kind": "training-modems"
+  },
+  {
+    "entryId": "ve-1fcc2fa5",
+    "senseId": "kaikki:4b8c3ad50d7c838159",
+    "term": "training",
+    "definition": "In voice recognition, recording multiple samples of a user’s voice to aid pattern recognition.",
+    "pos": "noun",
+    "kind": "training-voice"
+  },
+  {
+    "entryId": "ve-c68674f",
+    "senseId": "kaikki:478328d6a8984a3489",
+    "term": "education",
+    "definition": "The process of imparting knowledge, skills and judgement.",
+    "pos": "noun",
+    "kind": "education-process"
+  },
+  {
+    "entryId": "ve-c68674f",
+    "senseId": "kaikki:e4f24a5656ea310ec1",
+    "term": "education",
+    "definition": "The facts, skills and ideas someone has learned, especially through formal instruction.",
+    "pos": "noun",
+    "kind": "education-acquired"
   }
 ]

@@ -9817,27 +9817,6 @@
   },
   {
     "entryId": "ve-1fcc2fa5",
-    "sense": {
-      "id": "kaikki:07e7a9d747edfa4234",
-      "definition": "The activity of teaching or learning practical skills.",
-      "example": "New employees receive training before operating the machinery.",
-      "pos": "noun",
-      "synonyms": [],
-      "antonyms": [],
-      "collocations": [],
-      "usage": "usually",
-      "register": "uncountable, usually",
-      "wordFamily": [],
-      "source": "English Wiktionary via Kaikki.org",
-      "attribution": "English Wiktionary contributors",
-      "sourceUrl": "https://en.wiktionary.org/wiki/training#English",
-      "license": "CC-BY-SA-4.0",
-      "editorial": {
-        "source": "Fieldbook core content review",
-        "license": "CC-BY-4.0",
-        "attribution": "Fieldbook editorial contributors"
-      }
-    },
     "originalSense": {
       "id": "kaikki:07e7a9d747edfa4234",
       "definition": "The activity of imparting and acquiring skills.",
@@ -9884,6 +9863,75 @@
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/training#English",
       "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:07e7a9d747edfa4234",
+      "definition": "The activity of imparting and acquiring skills.",
+      "example": "Staff receive training in safe handling before using the equipment.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "receive training",
+        "provide training",
+        "training in a skill",
+        "staff training"
+      ],
+      "usage": "Skills instruction and acquisition; normally uncountable.",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "auditory integration training",
+        "autogenic training",
+        "basic training",
+        "borstal training",
+        "circuit training",
+        "conflict training",
+        "cross-training",
+        "cross training",
+        "cybertraining",
+        "ear training",
+        "e-training",
+        "field training officer",
+        "functional training",
+        "high-intensity interval training",
+        "high intensity training",
+        "home training",
+        "interval training",
+        "jump training",
+        "large group awareness training",
+        "large-group awareness training",
+        "personal training",
+        "physical training",
+        "posttraining",
+        "potty-training",
+        "potty training",
+        "pretraining",
+        "quenouille training",
+        "remote training collar",
+        "resistance training",
+        "self-training"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/training#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Training concerns developing skills through instruction or practice. Receiving training does not alone establish competence on every task, a qualification or permission to operate every machine. Knowledge, demonstrated skill and the course activity remain separate."
+      ],
+      "distinctionTask": {
+        "prompt": "Receiving training in safe handling establishes participation in _____.",
+        "options": [
+          "skills instruction",
+          "proof of competence on every task"
+        ],
+        "answer": "skills instruction",
+        "explanation": "Instruction and demonstrated competence are separate."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
     }
   },
   {
@@ -19698,6 +19746,383 @@
         ],
         "answer": "ability to absorb water",
         "explanation": "The sentence describes an ability without quantifying present contents."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-a591e31",
+    "originalSense": {
+      "id": "kaikki:c7e210a2a3415efec6",
+      "definition": "To acquire, or attempt to acquire knowledge or an ability to do something.",
+      "example": "It's time Dad learned (how) to change the oil in the car.",
+      "pos": "verb",
+      "synonyms": [
+        "study"
+      ],
+      "antonyms": [
+        "forget",
+        "teach"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "belearn",
+        "forelearn",
+        "learnability",
+        "learnable",
+        "learn Arabic",
+        "learn Chinese",
+        "learned",
+        "learner",
+        "learnfare",
+        "learn from experience",
+        "learnification",
+        "learning",
+        "learnling",
+        "learn one's lesson",
+        "learn one's place",
+        "learn the hard way",
+        "learn the ropes",
+        "learn to walk before one can run",
+        "learny",
+        "lessons learned",
+        "live and learn",
+        "lunch-and-learn",
+        "mislearn",
+        "must-learn",
+        "outlearn",
+        "overlearn",
+        "relearn",
+        "that'll learn someone",
+        "unlearn",
+        "who keeps company with the wolf will learn to howl"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/learn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:c7e210a2a3415efec6",
+      "definition": "To acquire, or try to acquire, knowledge or the ability to do something.",
+      "example": "The students learn how to compare the two arguments.",
+      "pos": "verb",
+      "synonyms": [
+        "study"
+      ],
+      "antonyms": [
+        "forget",
+        "teach"
+      ],
+      "collocations": [
+        "learn how to",
+        "learn to do something",
+        "learn a skill",
+        "learn about a subject"
+      ],
+      "usage": "Acquiring or attempting to acquire knowledge or ability.",
+      "register": "",
+      "wordFamily": [
+        "belearn",
+        "forelearn",
+        "learnability",
+        "learnable",
+        "learn Arabic",
+        "learn Chinese",
+        "learned",
+        "learner",
+        "learnfare",
+        "learn from experience",
+        "learnification",
+        "learning",
+        "learnling",
+        "learn one's lesson",
+        "learn one's place",
+        "learn the hard way",
+        "learn the ropes",
+        "learn to walk before one can run",
+        "learny",
+        "lessons learned",
+        "live and learn",
+        "lunch-and-learn",
+        "mislearn",
+        "must-learn",
+        "outlearn",
+        "overlearn",
+        "relearn",
+        "that'll learn someone",
+        "unlearn",
+        "who keeps company with the wolf will learn to howl"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/learn#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The source includes attempting to acquire knowledge or ability. Taking part in learning does not establish complete mastery or a successful result on every task. Learn concerns acquisition or the attempt, while teach concerns passing on knowledge or causing learning."
+      ],
+      "distinctionTask": {
+        "prompt": "Students who learn a technique are _____.",
+        "options": [
+          "acquiring or attempting to acquire it",
+          "necessarily demonstrating complete mastery already"
+        ],
+        "answer": "acquiring or attempting to acquire it",
+        "explanation": "The preserved meaning includes the attempt, not just a completed acquisition."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "originalSense": {
+      "id": "kaikki:be272f122b10c4ea69",
+      "definition": "To pass on knowledge to.",
+      "example": "Can you teach me to sew?  Can you teach sewing to me?",
+      "pos": "verb",
+      "synonyms": [
+        "educate",
+        "instruct"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ditransitive",
+      "register": "ditransitive",
+      "wordFamily": [
+        "beteach",
+        "coteach",
+        "co-teach",
+        "don't teach your grandmother how to milk ducks",
+        "don't teach your grandmother to steal sheep",
+        "don't try to teach grandma how to suck eggs",
+        "foreteach",
+        "forteach",
+        "give a man a fish and you feed him for a day",
+        "teach a man to fish and you feed him for a lifetime",
+        "home teach",
+        "microteach",
+        "misteach",
+        "nonteaching",
+        "overteach",
+        "pre-teach",
+        "reteach",
+        "teachability",
+        "teachable",
+        "teach away",
+        "teacher",
+        "teacherly",
+        "teach grandma how to suck eggs",
+        "teach-in",
+        "teaching",
+        "teachingly",
+        "teachless",
+        "teach out",
+        "teach-out",
+        "teach school"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/teach#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:be272f122b10c4ea69",
+      "definition": "To pass knowledge on to someone.",
+      "example": "The instructors teach newcomers the safety rules.",
+      "pos": "verb",
+      "synonyms": [
+        "educate",
+        "instruct"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "teach someone something",
+        "teach a class",
+        "teach someone how to",
+        "teach the rules"
+      ],
+      "usage": "Ditransitive; a recipient and subject matter.",
+      "register": "ditransitive",
+      "wordFamily": [
+        "beteach",
+        "coteach",
+        "co-teach",
+        "don't teach your grandmother how to milk ducks",
+        "don't teach your grandmother to steal sheep",
+        "don't try to teach grandma how to suck eggs",
+        "foreteach",
+        "forteach",
+        "give a man a fish and you feed him for a day",
+        "teach a man to fish and you feed him for a lifetime",
+        "home teach",
+        "microteach",
+        "misteach",
+        "nonteaching",
+        "overteach",
+        "pre-teach",
+        "reteach",
+        "teachability",
+        "teachable",
+        "teach away",
+        "teacher",
+        "teacherly",
+        "teach grandma how to suck eggs",
+        "teach-in",
+        "teaching",
+        "teachingly",
+        "teachless",
+        "teach out",
+        "teach-out",
+        "teach school"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/teach#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The example gives two objects: newcomers receive instruction and the safety rules are its subject matter. Teaching an activity does not automatically establish that every learner has mastered it; the separately preserved causative meaning foregrounds actual learning."
+      ],
+      "distinctionTask": {
+        "prompt": "In teach newcomers the safety rules, newcomers names _____.",
+        "options": [
+          "the people receiving instruction",
+          "the subject matter being taught"
+        ],
+        "answer": "the people receiving instruction",
+        "explanation": "The two objects identify the recipients and the content separately."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-c68674f",
+    "originalSense": {
+      "id": "kaikki:478328d6a8984a3489",
+      "definition": "The process of imparting knowledge, skill and judgment.",
+      "example": "For though education, in the true sense of the word, is necessary to excellence, yet a question still lies open, What is education? Is it certain old rules of thinking which require to be forced on the individual by others, more particularly than those which, by the exercise of his own faculties, he perceives in nature and life within and around him, and seizes, concentrates, abstracts, and digests for himself? Some do this spontaneously with unaccountable facility, such as Shakespeare, Burns, and Ebenezer Elliot; while others never can be tutored into any method of it by old rules, and often, when even stuffed in \"the schools\" to repletion, feel only besotted from a mind full of old abstruse indigestibles.",
+      "pos": "noun",
+      "synonyms": [
+        "education"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "adult education",
+        "adventure education",
+        "all-round education",
+        "antieducation",
+        "autoeducation",
+        "auto-education",
+        "basic education",
+        "board of education",
+        "coeducation",
+        "compulsory education",
+        "continuing education",
+        "countereducation",
+        "cybereducation",
+        "democratic education",
+        "distance education",
+        "distributive education",
+        "driver's education",
+        "early childhood education",
+        "edjamacation",
+        "edjewcation",
+        "edu-babble",
+        "edubusiness",
+        "educationable",
+        "educational",
+        "education assistant",
+        "educationese",
+        "educationism",
+        "educationist",
+        "educationless",
+        "educationlike"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/education#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:478328d6a8984a3489",
+      "definition": "The process of imparting knowledge, skills and judgement.",
+      "example": "Education can develop knowledge, skills and judgement.",
+      "pos": "noun",
+      "synonyms": [
+        "education"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "access to education",
+        "provide education",
+        "formal education",
+        "education and training"
+      ],
+      "usage": "Uncountable; an educational process.",
+      "register": "uncountable",
+      "wordFamily": [
+        "adult education",
+        "adventure education",
+        "all-round education",
+        "antieducation",
+        "autoeducation",
+        "auto-education",
+        "basic education",
+        "board of education",
+        "coeducation",
+        "compulsory education",
+        "continuing education",
+        "countereducation",
+        "cybereducation",
+        "democratic education",
+        "distance education",
+        "distributive education",
+        "driver's education",
+        "early childhood education",
+        "edjamacation",
+        "edjewcation",
+        "edu-babble",
+        "edubusiness",
+        "educationable",
+        "educational",
+        "education assistant",
+        "educationese",
+        "educationism",
+        "educationist",
+        "educationless",
+        "educationlike"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/education#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This uncountable sense concerns a process. Education can take place in formal or informal settings and does not necessarily involve a qualification. Participation does not automatically establish the same knowledge or mastery for every learner."
+      ],
+      "distinctionTask": {
+        "prompt": "Education as a process involves _____.",
+        "options": [
+          "imparting knowledge, skills and judgement",
+          "a guarantee that every participant gains identical mastery"
+        ],
+        "answer": "imparting knowledge, skills and judgement",
+        "explanation": "An educational process and each learner’s assessed outcome are different."
       },
       "editorial": {
         "source": "Fieldbook core content review",

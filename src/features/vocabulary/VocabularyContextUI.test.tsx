@@ -123,6 +123,21 @@ function mount(path: string) {
 const book = "ielts-vocabulary";
 const core = () => release.entries.find((entry: any) => entry.term === "core");
 
+test('personal notes on a saved additional dictionary meaning remain visible when the small catalogue omits that meaning',async()=>{
+ const source=release.entries.find((entry:any)=>entry.term==='skill');
+ const row=vocabularyTeaching.readiness.corrections.find(item=>item.entryId===source.id&&item.definition?.startsWith('In AI,'))!;
+ expect(source.senses.some((sense:any)=>sense.id===row.senseId)).toBe(false);
+ const personal={...structuredClone(row.originalSense),definition:row.definition,example:row.example,distinctions:['Personal bibliography advice from a tutor.']};
+ mocks.fb.state.vocabulary=[{...structuredClone(source),senses:[personal]}];
+ const before=structuredClone(mocks.fb.state);
+ mount(`/vocabulary/entry/${source.id}?senseId=${encodeURIComponent(row.senseId)}`);
+ await userEvent.click(await screen.findByText('Meaning source',{exact:true}));
+ expect(await screen.findByText('Your saved meaning and notes.')).toBeVisible();
+ await userEvent.click(await screen.findByText('Your other learning notes',{exact:true}));
+ expect(screen.getByText(personal.distinctions[0])).toBeVisible();
+ expect(mocks.fb.state).toEqual(before);expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
 test('next practice preserves the selected group meaning and return destination without recording evidence', async () => {
   const raw=core(),unitId='ielts-vocabulary-chapter-12-group-02';
   const origin=`/vocabulary/entry/${raw.id}?bookId=${book}&unitId=${unitId}&returnTo=%2Fvocabulary%3Fsearch%3Dcore`;

@@ -41,7 +41,7 @@ import { getVocabularyNextPractice } from '../../domain/vocabulary/nextPractice'
 import { VocabularyNextPractice } from './VocabularyNextPractice';
 import { vocabularyLearningTimeline } from "../../domain/vocabulary/timeline";
 import { vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
-import { isVocabularyMeaningGroup, isVocabularyPracticeReference, isVocabularySpellingReference, isVocabularyUsageReference } from '../../domain/vocabulary/readiness';
+import { isVocabularyMeaningGroup, isVocabularyPracticeReference, isVocabularySpellingReference, isVocabularyUsageReference, vocabularyReadinessBaselines } from '../../domain/vocabulary/readiness';
 import { VocabularySenseContent } from "./VocabularySenseContent";
 import { VocabularySourceLinks } from './VocabularySourceLinks';
 import "../../styles/vocabulary-entry.css";
@@ -262,9 +262,16 @@ export function VocabularyEntryPage() {
     );
   const publicSenses = raw ? catalogVocabularySenses(raw.id) : [];
   const referenceEntry = publicEntry || (raw && publicSenses.length ? { ...raw, senses: publicSenses } : undefined);
-  const referenceMeaning = referenceEntry && primary
-    ? resolveVocabularyLearningContext(referenceEntry, { ...context, senseId: primary.id }).sense
-    : undefined;
+  const publicMeaning = (sense: VocabularySense) => {
+    if (!referenceEntry) return;
+    const baseline = publicSenses.find(item => item.id === sense.id)
+      || vocabularyReadinessBaselines(referenceEntry.id, sense.id)[0];
+    const reference = baseline
+      ? { ...referenceEntry, senses: [baseline, ...referenceEntry.senses.filter(item => item.id !== sense.id)] }
+      : referenceEntry;
+    return resolveVocabularyLearningContext(reference, { ...context, senseId: sense.id }).sense;
+  };
+  const referenceMeaning = primary ? publicMeaning(primary) : undefined;
   const personalMeaning = Boolean(primary && (primary.source === 'Personal note' || saved && referenceMeaning && hasVocabularySenseEdits(primary, [referenceMeaning, ...publicSenses.filter(sense => sense.id === primary.id)])));
   const groupMeaning = validGroup && referenceEntry
     ? resolveVocabularyLearningContext(referenceEntry, context).sense
@@ -368,15 +375,7 @@ export function VocabularyEntryPage() {
     }
   };
   const renderSense = (sense: VocabularySense, main = false) => {
-    const publicEntry = (
-      VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]
-    ).find((item) => item.id === entry?.id);
-    const publicSense = publicEntry
-      ? resolveVocabularyLearningContext(publicEntry, {
-          ...context,
-          senseId: sense.id,
-        }).sense
-      : undefined;
+    const publicSense = publicMeaning(sense);
     const personalNotes =
       sense.source === "Personal note" ||
       Boolean(

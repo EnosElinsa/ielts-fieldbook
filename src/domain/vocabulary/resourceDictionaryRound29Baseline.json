@@ -1,0 +1,388 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-a591e31",
+      "senseId": "kaikki:c7e210a2a3415efec6"
+    },
+    {
+      "entryId": "ve-a591e31",
+      "senseId": "kaikki:24f9220271a6a8063c"
+    },
+    {
+      "entryId": "ve-a591e31",
+      "senseId": "kaikki:f20c7a1e300e407f34"
+    },
+    {
+      "entryId": "ve-a591e31",
+      "senseId": "kaikki:c3a1d29b6da010e294"
+    },
+    {
+      "entryId": "ve-a591e31",
+      "senseId": "kaikki:10178bb4ad53fab6f3"
+    },
+    {
+      "entryId": "ve-a591e31",
+      "senseId": "kaikki:61ca45f098b7057b7e"
+    },
+    {
+      "entryId": "ve-a591e31",
+      "senseId": "kaikki:24a07646a14d66326a"
+    },
+    {
+      "entryId": "ve-a591e31",
+      "senseId": "kaikki:5408e1fd406831222f"
+    },
+    {
+      "entryId": "ve-ae9e05e",
+      "senseId": "kaikki:be272f122b10c4ea69"
+    },
+    {
+      "entryId": "ve-ae9e05e",
+      "senseId": "kaikki:35614a2f7d89773fc3"
+    },
+    {
+      "entryId": "ve-ae9e05e",
+      "senseId": "kaikki:d46d051268c0902f8e"
+    },
+    {
+      "entryId": "ve-ae9e05e",
+      "senseId": "kaikki:c6feb878d886884a3d"
+    },
+    {
+      "entryId": "ve-ae9e05e",
+      "senseId": "kaikki:e3a64b54048cd1f380"
+    },
+    {
+      "entryId": "ve-ae9e05e",
+      "senseId": "kaikki:70f202bfaa3908b320"
+    },
+    {
+      "entryId": "ve-ae9e05e",
+      "senseId": "kaikki:c86a0a33d409afbbd2"
+    },
+    {
+      "entryId": "ve-ae9e05e",
+      "senseId": "kaikki:8a336e40193d00ee7e"
+    },
+    {
+      "entryId": "ve-1fcc2fa5",
+      "senseId": "kaikki:26f9b9d1e00e1842c2"
+    },
+    {
+      "entryId": "ve-1fcc2fa5",
+      "senseId": "kaikki:cd739c7d13f55512da"
+    },
+    {
+      "entryId": "ve-1fcc2fa5",
+      "senseId": "kaikki:3488819e20ffad8d4b"
+    },
+    {
+      "entryId": "ve-1fcc2fa5",
+      "senseId": "kaikki:a6d69ab278a8b19a6a"
+    },
+    {
+      "entryId": "ve-1fcc2fa5",
+      "senseId": "kaikki:4b8c3ad50d7c838159"
+    },
+    {
+      "entryId": "ve-c68674f",
+      "senseId": "kaikki:e4f24a5656ea310ec1"
+    },
+    {
+      "entryId": "ve-c68674f",
+      "senseId": "kaikki:dec9f565dae3b6bbd6"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-1fcc2fa5",
+      "senseId": "kaikki:07e7a9d747edfa4234",
+      "term": "training",
+      "example": "New employees receive training before operating the machinery.",
+      "definition": "The activity of teaching or learning practical skills.",
+      "pos": "noun",
+      "usage": "Common learner sense selected in place of an unsuitable or less useful source default.",
+      "originalSense": {
+        "id": "kaikki:07e7a9d747edfa4234",
+        "definition": "The activity of imparting and acquiring skills.",
+        "example": "Becoming more aware of the progress that scientists have made on behavioral fronts can reduce the risk that other natural scientists will resort to mystical agential accounts when they exceed the limits of their own disciplinary training.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "usually",
+        "register": "uncountable, usually",
+        "wordFamily": [
+          "auditory integration training",
+          "autogenic training",
+          "basic training",
+          "borstal training",
+          "circuit training",
+          "conflict training",
+          "cross-training",
+          "cross training",
+          "cybertraining",
+          "ear training",
+          "e-training",
+          "field training officer",
+          "functional training",
+          "high-intensity interval training",
+          "high intensity training",
+          "home training",
+          "interval training",
+          "jump training",
+          "large group awareness training",
+          "large-group awareness training",
+          "personal training",
+          "physical training",
+          "posttraining",
+          "potty-training",
+          "potty training",
+          "pretraining",
+          "quenouille training",
+          "remote training collar",
+          "resistance training",
+          "self-training"
+        ]
+      }
+    },
+    {
+      "entryId": "ve-c68674f",
+      "senseId": "kaikki:478328d6a8984a3489",
+      "example": "Education helps people develop new skills.",
+      "originalSense": {
+        "id": "kaikki:478328d6a8984a3489",
+        "definition": "The process of imparting knowledge, skill and judgment.",
+        "example": "For though education, in the true sense of the word, is necessary to excellence, yet a question still lies open, What is education? Is it certain old rules of thinking which require to be forced on the individual by others, more particularly than those which, by the exercise of his own faculties, he perceives in nature and life within and around him, and seizes, concentrates, abstracts, and digests for himself? Some do this spontaneously with unaccountable facility, such as Shakespeare, Burns, and Ebenezer Elliot; while others never can be tutored into any method of it by old rules, and often, when even stuffed in \"the schools\" to repletion, feel only besotted from a mind full of old abstruse indigestibles.",
+        "pos": "noun",
+        "synonyms": [
+          "education"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "uncountable",
+        "wordFamily": [
+          "adult education",
+          "adventure education",
+          "all-round education",
+          "antieducation",
+          "autoeducation",
+          "auto-education",
+          "basic education",
+          "board of education",
+          "coeducation",
+          "compulsory education",
+          "continuing education",
+          "countereducation",
+          "cybereducation",
+          "democratic education",
+          "distance education",
+          "distributive education",
+          "driver's education",
+          "early childhood education",
+          "edjamacation",
+          "edjewcation",
+          "edu-babble",
+          "edubusiness",
+          "educationable",
+          "educational",
+          "education assistant",
+          "educationese",
+          "educationism",
+          "educationist",
+          "educationless",
+          "educationlike"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/education#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    },
+    {
+      "entryId": "ve-baf9274",
+      "senseId": "kaikki:579e6163e54eac7c40",
+      "definition": "In AI, a reusable configuration or prompt defining how an agent performs a task.",
+      "example": "The agent loads a skill that describes how to format a bibliography.",
+      "collocations": [
+        "an agent skill",
+        "a reusable skill",
+        "load a skill",
+        "task configuration"
+      ],
+      "distinctions": [
+        "This specialist noun names a configuration, not demonstrated human proficiency. A configuration does not guarantee correct output or grant permissions by itself. This dictionary example is not an instruction to load a file, run a workflow or alter the learner’s system."
+      ],
+      "usage": "AI; reusable task configuration.",
+      "originalSense": {
+        "id": "kaikki:579e6163e54eac7c40",
+        "definition": "A reusable configuration (prompt) that defines how an AI agent performs a specific task.",
+        "example": "",
+        "pos": "noun",
+        "synonyms": [
+          "ability",
+          "technique",
+          "aptitude",
+          "capacity",
+          "craft",
+          "capability",
+          "competency",
+          "competence",
+          "cunning",
+          "dexterity",
+          "ease",
+          "facility",
+          "hand",
+          "knack",
+          "list",
+          "prowess",
+          "moxie",
+          "potential",
+          "proficiency",
+          "skill",
+          "talent",
+          "tekkers",
+          "touch"
+        ],
+        "antonyms": [
+          "incompetence",
+          "inability",
+          "ineptitude"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [
+          "cyberskills",
+          "deskill",
+          "de-skill",
+          "Dreyfus model of skill acquisition",
+          "everyday skill",
+          "game of skill",
+          "hard skill",
+          "life skill",
+          "metaskill",
+          "microskill",
+          "midskill",
+          "motor skill",
+          "multiskill",
+          "multiskills",
+          "outskill",
+          "person having ordinary skill in the art",
+          "person of ordinary skill in the art",
+          "pseudoskill",
+          "re-skill",
+          "reskill",
+          "shilling",
+          "skilful",
+          "skillful",
+          "skillage",
+          "skill ceiling",
+          "skill crane",
+          "skill'd",
+          "skilled",
+          "skill floor",
+          "skillfull"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/skill#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=skill&oldid=93552038",
+      "distinctionTask": {
+        "prompt": "An AI agent skill in this example is _____.",
+        "options": [
+          "a reusable task configuration",
+          "proof that its output is always correct"
+        ],
+        "answer": "a reusable task configuration",
+        "explanation": "The configuration describes how to perform a task without guaranteeing the result."
+      },
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "register": "",
+      "learningPriority": "specialist"
+    }
+  ],
+  "removeDefaults": [
+    "ve-a591e31",
+    "ve-ae9e05e",
+    "ve-c68674f"
+  ],
+  "restoreDefaults": [
+    {
+      "entryId": "ve-1fcc2fa5",
+      "sense": {
+        "id": "kaikki:07e7a9d747edfa4234",
+        "definition": "The activity of teaching or learning practical skills.",
+        "example": "New employees receive training before operating the machinery.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "usually",
+        "register": "uncountable, usually",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/training#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook core content review",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      },
+      "originalSense": {
+        "id": "kaikki:07e7a9d747edfa4234",
+        "definition": "The activity of imparting and acquiring skills.",
+        "example": "Becoming more aware of the progress that scientists have made on behavioral fronts can reduce the risk that other natural scientists will resort to mystical agential accounts when they exceed the limits of their own disciplinary training.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "usually",
+        "register": "uncountable, usually",
+        "wordFamily": [
+          "auditory integration training",
+          "autogenic training",
+          "basic training",
+          "borstal training",
+          "circuit training",
+          "conflict training",
+          "cross-training",
+          "cross training",
+          "cybertraining",
+          "ear training",
+          "e-training",
+          "field training officer",
+          "functional training",
+          "high-intensity interval training",
+          "high intensity training",
+          "home training",
+          "interval training",
+          "jump training",
+          "large group awareness training",
+          "large-group awareness training",
+          "personal training",
+          "physical training",
+          "posttraining",
+          "potty-training",
+          "potty training",
+          "pretraining",
+          "quenouille training",
+          "remote training collar",
+          "resistance training",
+          "self-training"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/training#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    }
+  ]
+}

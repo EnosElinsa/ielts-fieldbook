@@ -4493,11 +4493,18 @@
   {
     "entryId": "ve-1fcc2fa5",
     "senseId": "kaikki:07e7a9d747edfa4234",
-    "term": "training",
-    "example": "New employees receive training before operating the machinery.",
-    "definition": "The activity of teaching or learning practical skills.",
-    "pos": "noun",
-    "usage": "Common learner sense selected in place of an unsuitable or less useful source default.",
+    "definition": "The activity of imparting and acquiring skills.",
+    "example": "Staff receive training in safe handling before using the equipment.",
+    "collocations": [
+      "receive training",
+      "provide training",
+      "training in a skill",
+      "staff training"
+    ],
+    "distinctions": [
+      "Training concerns developing skills through instruction or practice. Receiving training does not alone establish competence on every task, a qualification or permission to operate every machine. Knowledge, demonstrated skill and the course activity remain separate."
+    ],
+    "usage": "Skills instruction and acquisition; normally uncountable.",
     "originalSense": {
       "id": "kaikki:07e7a9d747edfa4234",
       "definition": "The activity of imparting and acquiring skills.",
@@ -4539,8 +4546,72 @@
         "remote training collar",
         "resistance training",
         "self-training"
-      ]
-    }
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/training#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=training&oldid=93381160",
+    "distinctionTask": {
+      "prompt": "Receiving training in safe handling establishes participation in _____.",
+      "options": [
+        "skills instruction",
+        "proof of competence on every task"
+      ],
+      "answer": "skills instruction",
+      "explanation": "Instruction and demonstrated competence are separate."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general",
+    "previousSenses": [
+      {
+        "id": "kaikki:07e7a9d747edfa4234",
+        "definition": "The activity of teaching or learning practical skills.",
+        "example": "New employees receive training before operating the machinery.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "Common learner sense selected in place of an unsuitable or less useful source default.",
+        "register": "uncountable, usually",
+        "wordFamily": [
+          "auditory integration training",
+          "autogenic training",
+          "basic training",
+          "borstal training",
+          "circuit training",
+          "conflict training",
+          "cross-training",
+          "cross training",
+          "cybertraining",
+          "ear training",
+          "e-training",
+          "field training officer",
+          "functional training",
+          "high-intensity interval training",
+          "high intensity training",
+          "home training",
+          "interval training",
+          "jump training",
+          "large group awareness training",
+          "large-group awareness training",
+          "personal training",
+          "physical training",
+          "posttraining",
+          "potty-training",
+          "potty training",
+          "pretraining",
+          "quenouille training",
+          "remote training collar",
+          "resistance training",
+          "self-training"
+        ]
+      }
+    ]
   },
   {
     "entryId": "ve-7c73c8be",
@@ -43448,7 +43519,18 @@
   {
     "entryId": "ve-c68674f",
     "senseId": "kaikki:478328d6a8984a3489",
-    "example": "Education helps people develop new skills.",
+    "definition": "The process of imparting knowledge, skills and judgement.",
+    "example": "Education can develop knowledge, skills and judgement.",
+    "collocations": [
+      "access to education",
+      "provide education",
+      "formal education",
+      "education and training"
+    ],
+    "distinctions": [
+      "This uncountable sense concerns a process. Education can take place in formal or informal settings and does not necessarily involve a qualification. Participation does not automatically establish the same knowledge or mastery for every learner."
+    ],
+    "usage": "Uncountable; an educational process.",
     "originalSense": {
       "id": "kaikki:478328d6a8984a3489",
       "definition": "The process of imparting knowledge, skill and judgment.",
@@ -43497,7 +43579,73 @@
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/education#English",
       "license": "CC-BY-SA-4.0"
-    }
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=education&oldid=92708063",
+    "distinctionTask": {
+      "prompt": "Education as a process involves _____.",
+      "options": [
+        "imparting knowledge, skills and judgement",
+        "a guarantee that every participant gains identical mastery"
+      ],
+      "answer": "imparting knowledge, skills and judgement",
+      "explanation": "An educational process and each learner’s assessed outcome are different."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general",
+    "previousSenses": [
+      {
+        "id": "kaikki:478328d6a8984a3489",
+        "definition": "The process of imparting knowledge, skill and judgment.",
+        "example": "Education helps people develop new skills.",
+        "pos": "noun",
+        "synonyms": [
+          "education"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "uncountable",
+        "wordFamily": [
+          "adult education",
+          "adventure education",
+          "all-round education",
+          "antieducation",
+          "autoeducation",
+          "auto-education",
+          "basic education",
+          "board of education",
+          "coeducation",
+          "compulsory education",
+          "continuing education",
+          "countereducation",
+          "cybereducation",
+          "democratic education",
+          "distance education",
+          "distributive education",
+          "driver's education",
+          "early childhood education",
+          "edjamacation",
+          "edjewcation",
+          "edu-babble",
+          "edubusiness",
+          "educationable",
+          "educational",
+          "education assistant",
+          "educationese",
+          "educationism",
+          "educationist",
+          "educationless",
+          "educationlike"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/education#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ]
   },
   {
     "entryId": "ve-61f91481",
@@ -197788,7 +197936,7 @@
       "task configuration"
     ],
     "distinctions": [
-      "This specialist noun names a configuration, not demonstrated human proficiency. A configuration does not guarantee correct output or grant permissions by itself. This dictionary example is not an instruction to load a file, run a workflow or alter the learner’s system."
+      "This specialist noun names a configuration rather than demonstrated human proficiency. The configuration guides a task; the example does not establish that the resulting bibliography is correct."
     ],
     "usage": "AI; reusable task configuration.",
     "originalSense": {
@@ -197880,7 +198028,42 @@
     "antonyms": [],
     "wordFamily": [],
     "register": "",
-    "learningPriority": "specialist"
+    "learningPriority": "specialist",
+    "previousSenses": [
+      {
+        "id": "kaikki:579e6163e54eac7c40",
+        "definition": "In AI, a reusable configuration or prompt defining how an agent performs a task.",
+        "example": "The agent loads a skill that describes how to format a bibliography.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [
+          "an agent skill",
+          "a reusable skill",
+          "load a skill",
+          "task configuration"
+        ],
+        "usage": "AI; reusable task configuration.",
+        "register": "",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/skill#English",
+        "license": "CC-BY-SA-4.0",
+        "distinctions": [
+          "This specialist noun names a configuration, not demonstrated human proficiency. A configuration does not guarantee correct output or grant permissions by itself. This dictionary example is not an instruction to load a file, run a workflow or alter the learner’s system."
+        ],
+        "distinctionTask": {
+          "prompt": "An AI agent skill in this example is _____.",
+          "options": [
+            "a reusable task configuration",
+            "proof that its output is always correct"
+          ],
+          "answer": "a reusable task configuration",
+          "explanation": "The configuration describes how to perform a task without guaranteeing the result."
+        }
+      }
+    ]
   },
   {
     "entryId": "ve-baf9274",
@@ -199859,5 +200042,1722 @@
     "wordFamily": [],
     "register": "",
     "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:c7e210a2a3415efec6",
+    "definition": "To acquire, or try to acquire, knowledge or the ability to do something.",
+    "example": "The students learn how to compare the two arguments.",
+    "collocations": [
+      "learn how to",
+      "learn to do something",
+      "learn a skill",
+      "learn about a subject"
+    ],
+    "distinctions": [
+      "The source includes attempting to acquire knowledge or ability. Taking part in learning does not establish complete mastery or a successful result on every task. Learn concerns acquisition or the attempt, while teach concerns passing on knowledge or causing learning."
+    ],
+    "usage": "Acquiring or attempting to acquire knowledge or ability.",
+    "originalSense": {
+      "id": "kaikki:c7e210a2a3415efec6",
+      "definition": "To acquire, or attempt to acquire knowledge or an ability to do something.",
+      "example": "It's time Dad learned (how) to change the oil in the car.",
+      "pos": "verb",
+      "synonyms": [
+        "study"
+      ],
+      "antonyms": [
+        "forget",
+        "teach"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "belearn",
+        "forelearn",
+        "learnability",
+        "learnable",
+        "learn Arabic",
+        "learn Chinese",
+        "learned",
+        "learner",
+        "learnfare",
+        "learn from experience",
+        "learnification",
+        "learning",
+        "learnling",
+        "learn one's lesson",
+        "learn one's place",
+        "learn the hard way",
+        "learn the ropes",
+        "learn to walk before one can run",
+        "learny",
+        "lessons learned",
+        "live and learn",
+        "lunch-and-learn",
+        "mislearn",
+        "must-learn",
+        "outlearn",
+        "overlearn",
+        "relearn",
+        "that'll learn someone",
+        "unlearn",
+        "who keeps company with the wolf will learn to howl"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/learn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=learn&oldid=93582931",
+    "distinctionTask": {
+      "prompt": "Students who learn a technique are _____.",
+      "options": [
+        "acquiring or attempting to acquire it",
+        "necessarily demonstrating complete mastery already"
+      ],
+      "answer": "acquiring or attempting to acquire it",
+      "explanation": "The preserved meaning includes the attempt, not just a completed acquisition."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:24f9220271a6a8063c",
+    "definition": "To attend a course or another educational activity.",
+    "example": "They learn at the community centre every Thursday.",
+    "collocations": [
+      "learn at a centre",
+      "learn on a course",
+      "an educational activity"
+    ],
+    "distinctions": [
+      "This separately preserved sense foregrounds attending an educational activity. It can overlap with learning knowledge or skills, but attendance alone does not establish what a participant has mastered."
+    ],
+    "usage": "Attendance at an educational activity.",
+    "originalSense": {
+      "id": "kaikki:24f9220271a6a8063c",
+      "definition": "To attend a course or other educational activity.",
+      "example": "For, as he took delight to introduce me, I took delight to learn.",
+      "pos": "verb",
+      "synonyms": [
+        "study"
+      ],
+      "antonyms": [
+        "forget",
+        "teach"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "belearn",
+        "forelearn",
+        "learnability",
+        "learnable",
+        "learn Arabic",
+        "learn Chinese",
+        "learned",
+        "learner",
+        "learnfare",
+        "learn from experience",
+        "learnification",
+        "learning",
+        "learnling",
+        "learn one's lesson",
+        "learn one's place",
+        "learn the hard way",
+        "learn the ropes",
+        "learn to walk before one can run",
+        "learny",
+        "lessons learned",
+        "live and learn",
+        "lunch-and-learn",
+        "mislearn",
+        "must-learn",
+        "outlearn",
+        "overlearn",
+        "relearn",
+        "that'll learn someone",
+        "unlearn",
+        "who keeps company with the wolf will learn to howl"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/learn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=learn&oldid=93582931",
+    "distinctionTask": {
+      "prompt": "Learn at the community centre foregrounds _____.",
+      "options": [
+        "attendance at an educational activity",
+        "proof of everything the learner has mastered"
+      ],
+      "answer": "attendance at an educational activity",
+      "explanation": "Participation and demonstrated mastery are separate."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:f20c7a1e300e407f34",
+    "definition": "To gain knowledge from an adverse experience and use it to improve.",
+    "example": "They learn from mistakes and change their checking procedure.",
+    "collocations": [
+      "learn from mistakes",
+      "learn from experience",
+      "learn a lesson"
+    ],
+    "distinctions": [
+      "Learn from mistakes focuses on what is gained from an adverse experience. The example includes a changed procedure; it does not claim that every setback automatically teaches a lesson or prevents all future errors."
+    ],
+    "usage": "Learning from an adverse experience.",
+    "originalSense": {
+      "id": "kaikki:f20c7a1e300e407f34",
+      "definition": "To gain knowledge from a bad experience so as to improve.",
+      "example": "learn from one's mistakes",
+      "pos": "verb",
+      "synonyms": [
+        "study"
+      ],
+      "antonyms": [
+        "forget",
+        "teach"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "belearn",
+        "forelearn",
+        "learnability",
+        "learnable",
+        "learn Arabic",
+        "learn Chinese",
+        "learned",
+        "learner",
+        "learnfare",
+        "learn from experience",
+        "learnification",
+        "learning",
+        "learnling",
+        "learn one's lesson",
+        "learn one's place",
+        "learn the hard way",
+        "learn the ropes",
+        "learn to walk before one can run",
+        "learny",
+        "lessons learned",
+        "live and learn",
+        "lunch-and-learn",
+        "mislearn",
+        "must-learn",
+        "outlearn",
+        "overlearn",
+        "relearn",
+        "that'll learn someone",
+        "unlearn",
+        "who keeps company with the wolf will learn to howl"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/learn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=learn&oldid=93582931",
+    "distinctionTask": {
+      "prompt": "Learn from mistakes here includes _____.",
+      "options": [
+        "gaining insight and changing the checking procedure",
+        "a claim that every mistake automatically prevents all later errors"
+      ],
+      "answer": "gaining insight and changing the checking procedure",
+      "explanation": "The example states a changed procedure without a universal guarantee."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:c3a1d29b6da010e294",
+    "definition": "To study material.",
+    "example": "Before rehearsal, I learn my lines each evening.",
+    "collocations": [
+      "learn one’s lines",
+      "learn vocabulary",
+      "learn material for a test"
+    ],
+    "distinctions": [
+      "This source sense foregrounds studying material. It overlaps with acquisition or memorisation in other learn meanings; the preserved records are not mutually exclusive categories for every sentence. Learning lines does not establish a successful performance."
+    ],
+    "usage": "Study material; often followed by the material studied.",
+    "originalSense": {
+      "id": "kaikki:c3a1d29b6da010e294",
+      "definition": "To study.",
+      "example": "I learn medicine.",
+      "pos": "verb",
+      "synonyms": [
+        "study"
+      ],
+      "antonyms": [
+        "forget",
+        "teach"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "belearn",
+        "forelearn",
+        "learnability",
+        "learnable",
+        "learn Arabic",
+        "learn Chinese",
+        "learned",
+        "learner",
+        "learnfare",
+        "learn from experience",
+        "learnification",
+        "learning",
+        "learnling",
+        "learn one's lesson",
+        "learn one's place",
+        "learn the hard way",
+        "learn the ropes",
+        "learn to walk before one can run",
+        "learny",
+        "lessons learned",
+        "live and learn",
+        "lunch-and-learn",
+        "mislearn",
+        "must-learn",
+        "outlearn",
+        "overlearn",
+        "relearn",
+        "that'll learn someone",
+        "unlearn",
+        "who keeps company with the wolf will learn to howl"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/learn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=learn&oldid=93582931",
+    "distinctionTask": {
+      "prompt": "Learn my lines before rehearsal means _____.",
+      "options": [
+        "study the lines",
+        "find out tomorrow’s examination result"
+      ],
+      "answer": "study the lines",
+      "explanation": "The material studied is the direct object in this context."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:10178bb4ad53fab6f3",
+    "definition": "To come to know a fact; to become informed or find out.",
+    "example": "We will learn the result tomorrow.",
+    "collocations": [
+      "learn that",
+      "learn of a decision",
+      "learn the result",
+      "learn about a change"
+    ],
+    "distinctions": [
+      "Here learn concerns finding out information, rather than attending a course or practising a technique. Will places the discovery in the future; the sentence does not supply the result or establish that it is already known."
+    ],
+    "usage": "Become informed; find out.",
+    "originalSense": {
+      "id": "kaikki:10178bb4ad53fab6f3",
+      "definition": "To come to know; to become informed of; to find out.",
+      "example": "He just learned that he will be sacked.",
+      "pos": "verb",
+      "synonyms": [
+        "study"
+      ],
+      "antonyms": [
+        "forget",
+        "teach"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "belearn",
+        "forelearn",
+        "learnability",
+        "learnable",
+        "learn Arabic",
+        "learn Chinese",
+        "learned",
+        "learner",
+        "learnfare",
+        "learn from experience",
+        "learnification",
+        "learning",
+        "learnling",
+        "learn one's lesson",
+        "learn one's place",
+        "learn the hard way",
+        "learn the ropes",
+        "learn to walk before one can run",
+        "learny",
+        "lessons learned",
+        "live and learn",
+        "lunch-and-learn",
+        "mislearn",
+        "must-learn",
+        "outlearn",
+        "overlearn",
+        "relearn",
+        "that'll learn someone",
+        "unlearn",
+        "who keeps company with the wolf will learn to howl"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/learn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=learn&oldid=93582931",
+    "distinctionTask": {
+      "prompt": "We will learn the result tomorrow means _____.",
+      "options": [
+        "we expect to find it out tomorrow",
+        "we are necessarily already aware of the result"
+      ],
+      "answer": "we expect to find it out tomorrow",
+      "explanation": "The discovery is future, and the result itself is not given."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:61ca45f098b7057b7e",
+    "definition": "A non-standard or dialectal meaning: to teach.",
+    "example": "In some non-standard speech and dialects, learn can mean teach someone something. In standard learner writing, keep learn from and teach someone distinct.",
+    "collocations": [
+      "learn as teach",
+      "dialectal learning-and-teaching construction",
+      "teach someone"
+    ],
+    "distinctions": [
+      "The source says now only in non-standard speech and dialects. That does not make the meaning a spelling error or universally obsolete. The ordinary acquire-knowledge meaning of learn remains standard."
+    ],
+    "usage": "Now only in non-standard speech and dialects.",
+    "originalSense": {
+      "id": "kaikki:61ca45f098b7057b7e",
+      "definition": "To teach.",
+      "example": "Give him a clip round the ear. That'll learn him!",
+      "pos": "verb",
+      "synonyms": [
+        "study"
+      ],
+      "antonyms": [
+        "forget",
+        "teach"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "belearn",
+        "forelearn",
+        "learnability",
+        "learnable",
+        "learn Arabic",
+        "learn Chinese",
+        "learned",
+        "learner",
+        "learnfare",
+        "learn from experience",
+        "learnification",
+        "learning",
+        "learnling",
+        "learn one's lesson",
+        "learn one's place",
+        "learn the hard way",
+        "learn the ropes",
+        "learn to walk before one can run",
+        "learny",
+        "lessons learned",
+        "live and learn",
+        "lunch-and-learn",
+        "mislearn",
+        "must-learn",
+        "outlearn",
+        "overlearn",
+        "relearn",
+        "that'll learn someone",
+        "unlearn",
+        "who keeps company with the wolf will learn to howl"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/learn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=learn&oldid=93582931",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:24a07646a14d66326a",
+    "definition": "A noun meaning an act of learning something.",
+    "example": "The source separately records learn as a noun for an act of learning. It is distinct from the verb and from learned knowledge as an outcome.",
+    "collocations": [
+      "an act of learning",
+      "learn as a noun",
+      "learning activity"
+    ],
+    "distinctions": [
+      "The source supplies no historical or regional label for this noun. This reading note preserves the grammatical identity without inventing a typical everyday noun sentence or declaring it obsolete."
+    ],
+    "usage": "Noun; an act of learning.",
+    "originalSense": {
+      "id": "kaikki:24a07646a14d66326a",
+      "definition": "The act of learning something.",
+      "example": "I did a quick learn of the place by watching the people shuffle in. There was a healthy mix of beautiful and freaky people, who shared a few common denominators[…]",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "belearn",
+        "forelearn",
+        "learnability",
+        "learnable",
+        "learn Arabic",
+        "learn Chinese",
+        "learned",
+        "learner",
+        "learnfare",
+        "learn from experience",
+        "learnification",
+        "learning",
+        "learnling",
+        "learn one's lesson",
+        "learn one's place",
+        "learn the hard way",
+        "learn the ropes",
+        "learn to walk before one can run",
+        "learny",
+        "lessons learned",
+        "live and learn",
+        "lunch-and-learn",
+        "mislearn",
+        "must-learn",
+        "outlearn",
+        "overlearn",
+        "relearn",
+        "that'll learn someone",
+        "unlearn",
+        "who keeps company with the wolf will learn to howl"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/learn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=learn&oldid=93582931",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a591e31",
+    "senseId": "kaikki:5408e1fd406831222f",
+    "definition": "Learn: a surname of Scottish Gaelic origin.",
+    "example": "Capitalised Learn is recorded as a surname from Scottish Gaelic. It is separate from the lowercase verb and learning-act noun.",
+    "collocations": [
+      "the surname Learn",
+      "Scottish Gaelic origin",
+      "capitalised family name"
+    ],
+    "distinctions": [
+      "The origin applies to this surname record. It does not establish every bearer’s present nationality or a family relationship between people sharing the spelling."
+    ],
+    "usage": "Proper name; surname from Scottish Gaelic.",
+    "originalSense": {
+      "id": "kaikki:5408e1fd406831222f",
+      "definition": "A surname from Scottish Gaelic.",
+      "example": "",
+      "pos": "name",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "belearn",
+        "forelearn",
+        "learnability",
+        "learnable",
+        "learn Arabic",
+        "learn Chinese",
+        "learned",
+        "learner",
+        "learnfare",
+        "learn from experience",
+        "learnification",
+        "learning",
+        "learnling",
+        "learn one's lesson",
+        "learn one's place",
+        "learn the hard way",
+        "learn the ropes",
+        "learn to walk before one can run",
+        "learny",
+        "lessons learned",
+        "live and learn",
+        "lunch-and-learn",
+        "mislearn",
+        "must-learn",
+        "outlearn",
+        "overlearn",
+        "relearn",
+        "that'll learn someone",
+        "unlearn",
+        "who keeps company with the wolf will learn to howl"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/Learn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Learn&oldid=87355956",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "proper-name"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:be272f122b10c4ea69",
+    "definition": "To pass knowledge on to someone.",
+    "example": "The instructors teach newcomers the safety rules.",
+    "collocations": [
+      "teach someone something",
+      "teach a class",
+      "teach someone how to",
+      "teach the rules"
+    ],
+    "distinctions": [
+      "The example gives two objects: newcomers receive instruction and the safety rules are its subject matter. Teaching an activity does not automatically establish that every learner has mastered it; the separately preserved causative meaning foregrounds actual learning."
+    ],
+    "usage": "Ditransitive; a recipient and subject matter.",
+    "originalSense": {
+      "id": "kaikki:be272f122b10c4ea69",
+      "definition": "To pass on knowledge to.",
+      "example": "Can you teach me to sew?  Can you teach sewing to me?",
+      "pos": "verb",
+      "synonyms": [
+        "educate",
+        "instruct"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ditransitive",
+      "register": "ditransitive",
+      "wordFamily": [
+        "beteach",
+        "coteach",
+        "co-teach",
+        "don't teach your grandmother how to milk ducks",
+        "don't teach your grandmother to steal sheep",
+        "don't try to teach grandma how to suck eggs",
+        "foreteach",
+        "forteach",
+        "give a man a fish and you feed him for a day",
+        "teach a man to fish and you feed him for a lifetime",
+        "home teach",
+        "microteach",
+        "misteach",
+        "nonteaching",
+        "overteach",
+        "pre-teach",
+        "reteach",
+        "teachability",
+        "teachable",
+        "teach away",
+        "teacher",
+        "teacherly",
+        "teach grandma how to suck eggs",
+        "teach-in",
+        "teaching",
+        "teachingly",
+        "teachless",
+        "teach out",
+        "teach-out",
+        "teach school"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/teach#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=teach&oldid=93582921",
+    "distinctionTask": {
+      "prompt": "In teach newcomers the safety rules, newcomers names _____.",
+      "options": [
+        "the people receiving instruction",
+        "the subject matter being taught"
+      ],
+      "answer": "the people receiving instruction",
+      "explanation": "The two objects identify the recipients and the content separately."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:35614a2f7d89773fc3",
+    "definition": "To act as a teacher or pass on knowledge generally, especially as a profession.",
+    "example": "Both of her parents teach at local schools.",
+    "collocations": [
+      "teach at a school",
+      "teach for a living",
+      "teach part-time"
+    ],
+    "distinctions": [
+      "The intransitive profession meaning can omit a subject or recipient after teach. It does not imply that the teachers know every subject or that teaching occurs only in paid employment."
+    ],
+    "usage": "Intransitive; stative, often describing a profession.",
+    "originalSense": {
+      "id": "kaikki:35614a2f7d89773fc3",
+      "definition": "To pass on knowledge generally, especially as one's profession; to act as a teacher.",
+      "example": "She used to teach at university.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "learn"
+      ],
+      "collocations": [],
+      "usage": "stative",
+      "register": "intransitive, stative",
+      "wordFamily": [
+        "beteach",
+        "coteach",
+        "co-teach",
+        "don't teach your grandmother how to milk ducks",
+        "don't teach your grandmother to steal sheep",
+        "don't try to teach grandma how to suck eggs",
+        "foreteach",
+        "forteach",
+        "give a man a fish and you feed him for a day",
+        "teach a man to fish and you feed him for a lifetime",
+        "home teach",
+        "microteach",
+        "misteach",
+        "nonteaching",
+        "overteach",
+        "pre-teach",
+        "reteach",
+        "teachability",
+        "teachable",
+        "teach away",
+        "teacher",
+        "teacherly",
+        "teach grandma how to suck eggs",
+        "teach-in",
+        "teaching",
+        "teachingly",
+        "teachless",
+        "teach out",
+        "teach-out",
+        "teach school"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/teach#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=teach&oldid=93582921",
+    "distinctionTask": {
+      "prompt": "Both parents teach at schools uses teach _____.",
+      "options": [
+        "intransitively to describe their work",
+        "with a required direct object immediately after it"
+      ],
+      "answer": "intransitively to describe their work",
+      "explanation": "The professional use can stand without a named subject matter or recipient."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:d46d051268c0902f8e",
+    "definition": "To cause someone to learn or understand something.",
+    "example": "The error did teach him to check the units.",
+    "collocations": [
+      "teach someone to do something",
+      "teach someone a lesson",
+      "experience can teach"
+    ],
+    "distinctions": [
+      "This causative sense presents the lesson as learned in the example. It differs from asserting that every attempt to teach succeeds. Did teach uses the base form after did; him is the learner and checking units is the lesson."
+    ],
+    "usage": "Ditransitive; causing learning or understanding.",
+    "originalSense": {
+      "id": "kaikki:d46d051268c0902f8e",
+      "definition": "To cause (someone) to learn or understand (something).",
+      "example": "The humor of my proposition appealed more strongly to Miss Trevor than I had looked for, and from that time forward she became her old self again;[…]. Now she had come to look upon the matter in its true proportions, and her anticipation of a possible chance of teaching him a lesson was a pleasure to behold.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ditransitive",
+      "register": "ditransitive",
+      "wordFamily": [
+        "beteach",
+        "coteach",
+        "co-teach",
+        "don't teach your grandmother how to milk ducks",
+        "don't teach your grandmother to steal sheep",
+        "don't try to teach grandma how to suck eggs",
+        "foreteach",
+        "forteach",
+        "give a man a fish and you feed him for a day",
+        "teach a man to fish and you feed him for a lifetime",
+        "home teach",
+        "microteach",
+        "misteach",
+        "nonteaching",
+        "overteach",
+        "pre-teach",
+        "reteach",
+        "teachability",
+        "teachable",
+        "teach away",
+        "teacher",
+        "teacherly",
+        "teach grandma how to suck eggs",
+        "teach-in",
+        "teaching",
+        "teachingly",
+        "teachless",
+        "teach out",
+        "teach-out",
+        "teach school"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/teach#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=teach&oldid=93582921",
+    "distinctionTask": {
+      "prompt": "The error did teach him to check units presents _____.",
+      "options": [
+        "a lesson learned from the error",
+        "a rule that every teaching attempt must succeed"
+      ],
+      "answer": "a lesson learned from the error",
+      "explanation": "This exact causative use presents a learned lesson without a universal claim."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:c6feb878d886884a3d",
+    "definition": "To make someone learn the disagreeable consequences of an action.",
+    "example": "That penalty will teach them not to ignore the warning.",
+    "collocations": [
+      "that will teach someone",
+      "teach someone not to",
+      "teach someone the consequences"
+    ],
+    "distinctions": [
+      "This meaning concerns learning through disagreeable consequences. In this future construction the speaker anticipates a lesson; it does not independently prove that the recipients have learned it or will never repeat the action."
+    ],
+    "usage": "Ditransitive; disagreeable consequences.",
+    "originalSense": {
+      "id": "kaikki:c6feb878d886884a3d",
+      "definition": "To cause to know the disagreeable consequences of some action.",
+      "example": "I'll teach you to make fun of me!",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ditransitive",
+      "register": "ditransitive",
+      "wordFamily": [
+        "beteach",
+        "coteach",
+        "co-teach",
+        "don't teach your grandmother how to milk ducks",
+        "don't teach your grandmother to steal sheep",
+        "don't try to teach grandma how to suck eggs",
+        "foreteach",
+        "forteach",
+        "give a man a fish and you feed him for a day",
+        "teach a man to fish and you feed him for a lifetime",
+        "home teach",
+        "microteach",
+        "misteach",
+        "nonteaching",
+        "overteach",
+        "pre-teach",
+        "reteach",
+        "teachability",
+        "teachable",
+        "teach away",
+        "teacher",
+        "teacherly",
+        "teach grandma how to suck eggs",
+        "teach-in",
+        "teaching",
+        "teachingly",
+        "teachless",
+        "teach out",
+        "teach-out",
+        "teach school"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/teach#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=teach&oldid=93582921",
+    "distinctionTask": {
+      "prompt": "That penalty will teach them expresses _____.",
+      "options": [
+        "an expected lesson from disagreeable consequences",
+        "proof that they have already learned the lesson"
+      ],
+      "answer": "an expected lesson from disagreeable consequences",
+      "explanation": "The future construction does not independently establish a completed lesson."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:e3a64b54048cd1f380",
+    "definition": "An obsolete meaning: to guide, conduct, show the way, point or indicate.",
+    "example": "In older writing, teach can mean guide or show someone the way, rather than provide a lesson in a subject.",
+    "collocations": [
+      "teach as guide",
+      "show the way",
+      "point or indicate"
+    ],
+    "distinctions": [
+      "The source explicitly labels this transitive guiding meaning obsolete. The ordinary modern instructional and professional meanings of teach remain current."
+    ],
+    "usage": "Obsolete; transitive guiding meaning.",
+    "originalSense": {
+      "id": "kaikki:e3a64b54048cd1f380",
+      "definition": "To show (someone) the way; to guide, conduct; to point, indicate.",
+      "example": "‘The bliss is there’, mumbled the old man and taught to Heaven.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "beteach",
+        "coteach",
+        "co-teach",
+        "don't teach your grandmother how to milk ducks",
+        "don't teach your grandmother to steal sheep",
+        "don't try to teach grandma how to suck eggs",
+        "foreteach",
+        "forteach",
+        "give a man a fish and you feed him for a day",
+        "teach a man to fish and you feed him for a lifetime",
+        "home teach",
+        "microteach",
+        "misteach",
+        "nonteaching",
+        "overteach",
+        "pre-teach",
+        "reteach",
+        "teachability",
+        "teachable",
+        "teach away",
+        "teacher",
+        "teacherly",
+        "teach grandma how to suck eggs",
+        "teach-in",
+        "teaching",
+        "teachingly",
+        "teachless",
+        "teach out",
+        "teach-out",
+        "teach school"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/teach#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=teach&oldid=93582921",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:70f202bfaa3908b320",
+    "definition": "An informal noun for a teacher, usually used when addressing one.",
+    "example": "Thanks, teach, for explaining the problem.",
+    "collocations": [
+      "thanks, teach",
+      "addressing a teacher",
+      "informal term of address"
+    ],
+    "distinctions": [
+      "Teach is a noun used to address the teacher here, not an imperative asking someone to teach. The source says usually, rather than restricting every possible occurrence to direct address. It is informal and can sound overfamiliar in some settings."
+    ],
+    "usage": "Informal; usually a term of address.",
+    "originalSense": {
+      "id": "kaikki:70f202bfaa3908b320",
+      "definition": "teacher",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "informal, term-of-address, usually",
+      "register": "informal, term-of-address, usually",
+      "wordFamily": [
+        "beteach",
+        "coteach",
+        "co-teach",
+        "don't teach your grandmother how to milk ducks",
+        "don't teach your grandmother to steal sheep",
+        "don't try to teach grandma how to suck eggs",
+        "foreteach",
+        "forteach",
+        "give a man a fish and you feed him for a day",
+        "teach a man to fish and you feed him for a lifetime",
+        "home teach",
+        "microteach",
+        "misteach",
+        "nonteaching",
+        "overteach",
+        "pre-teach",
+        "reteach",
+        "teachability",
+        "teachable",
+        "teach away",
+        "teacher",
+        "teacherly",
+        "teach grandma how to suck eggs",
+        "teach-in",
+        "teaching",
+        "teachingly",
+        "teachless",
+        "teach out",
+        "teach-out",
+        "teach school"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/teach#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=teach&oldid=93582921",
+    "distinctionTask": {
+      "prompt": "In Thanks, teach, teach is _____.",
+      "options": [
+        "an informal noun addressing the teacher",
+        "an imperative instruction to begin teaching"
+      ],
+      "answer": "an informal noun addressing the teacher",
+      "explanation": "The comma-marked address is a noun in this sentence."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:c86a0a33d409afbbd2",
+    "definition": "Teach: a slang nickname for a teacher.",
+    "example": "Capitalised Teach can be a nickname for a teacher, separately recorded from the lowercase informal address noun.",
+    "collocations": [
+      "the nickname Teach",
+      "capitalised nickname",
+      "teacher nickname"
+    ],
+    "distinctions": [
+      "This proper-name record concerns a nickname. It does not make every person with the surname Teach a teacher or equate the nickname with every surname bearer."
+    ],
+    "usage": "Slang; proper-name nickname.",
+    "originalSense": {
+      "id": "kaikki:c86a0a33d409afbbd2",
+      "definition": "Nickname for a teacher.",
+      "example": "I'm not in trouble again, am I, Teach?",
+      "pos": "name",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "slang",
+      "register": "slang",
+      "wordFamily": [
+        "beteach",
+        "coteach",
+        "co-teach",
+        "don't teach your grandmother how to milk ducks",
+        "don't teach your grandmother to steal sheep",
+        "don't try to teach grandma how to suck eggs",
+        "foreteach",
+        "forteach",
+        "give a man a fish and you feed him for a day",
+        "teach a man to fish and you feed him for a lifetime",
+        "home teach",
+        "microteach",
+        "misteach",
+        "nonteaching",
+        "overteach",
+        "pre-teach",
+        "reteach",
+        "teachability",
+        "teachable",
+        "teach away",
+        "teacher",
+        "teacherly",
+        "teach grandma how to suck eggs",
+        "teach-in",
+        "teaching",
+        "teachingly",
+        "teachless",
+        "teach out",
+        "teach-out",
+        "teach school"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/Teach#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Teach&oldid=81005768",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "proper-name"
+  },
+  {
+    "entryId": "ve-ae9e05e",
+    "senseId": "kaikki:8a336e40193d00ee7e",
+    "definition": "Teach: a surname, associated in the source with the pirate Blackbeard.",
+    "example": "The source records Teach as a surname and reports Edward Teach, Thatch or Tack among the names associated with Blackbeard.",
+    "collocations": [
+      "the surname Teach",
+      "Edward Teach",
+      "reported family-name spellings"
+    ],
+    "distinctions": [
+      "The source preserves alternative reported names. Do not silently settle them into one historically certain spelling, assume that every bearer is related to Blackbeard or confuse the surname with a teacher’s nickname."
+    ],
+    "usage": "Proper name; surname.",
+    "originalSense": {
+      "id": "kaikki:8a336e40193d00ee7e",
+      "definition": "A surname. Most commonly associated with the pirate Blackbeard, who gave his real name as Edward Teach, Thatch, or Tack.",
+      "example": "",
+      "pos": "name",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "beteach",
+        "coteach",
+        "co-teach",
+        "don't teach your grandmother how to milk ducks",
+        "don't teach your grandmother to steal sheep",
+        "don't try to teach grandma how to suck eggs",
+        "foreteach",
+        "forteach",
+        "give a man a fish and you feed him for a day",
+        "teach a man to fish and you feed him for a lifetime",
+        "home teach",
+        "microteach",
+        "misteach",
+        "nonteaching",
+        "overteach",
+        "pre-teach",
+        "reteach",
+        "teachability",
+        "teachable",
+        "teach away",
+        "teacher",
+        "teacherly",
+        "teach grandma how to suck eggs",
+        "teach-in",
+        "teaching",
+        "teachingly",
+        "teachless",
+        "teach out",
+        "teach-out",
+        "teach school"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/Teach#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Teach&oldid=81005768",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "proper-name"
+  },
+  {
+    "entryId": "ve-1fcc2fa5",
+    "senseId": "kaikki:26f9b9d1e00e1842c2",
+    "definition": "The present participle and gerund of train.",
+    "example": "The runners are training for a marathon.",
+    "collocations": [
+      "are training for",
+      "training to do something",
+      "the ing-form of train"
+    ],
+    "distinctions": [
+      "In are training, training is part of a progressive verb phrase. The same form can also function as a gerund in other constructions. This form-of record is usable grammar, separate from the noun for skills instruction."
+    ],
+    "usage": "Present participle and gerund; the example is a progressive verb phrase.",
+    "originalSense": {
+      "id": "kaikki:26f9b9d1e00e1842c2",
+      "definition": "present participle and gerund of train",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "form-of, gerund, participle, present",
+      "register": "form-of, gerund, participle, present",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/training#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=training&oldid=93381160",
+    "distinctionTask": {
+      "prompt": "In The runners are training, training is _____.",
+      "options": [
+        "part of a progressive verb phrase",
+        "necessarily the noun for a completed qualification"
+      ],
+      "answer": "part of a progressive verb phrase",
+      "explanation": "The ing-form follows are as part of the verb phrase here."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-1fcc2fa5",
+    "senseId": "kaikki:cd739c7d13f55512da",
+    "definition": "The action of training someone or something.",
+    "example": "The training of the young horse took several weeks.",
+    "collocations": [
+      "the training of",
+      "animal training",
+      "a period of training"
+    ],
+    "distinctions": [
+      "This broad action noun can apply to training an animal as well as people. The example describes the activity and its duration, without guaranteeing a particular performance outcome or reducing the noun to one professional course."
+    ],
+    "usage": "Action noun; the action of train.",
+    "originalSense": {
+      "id": "kaikki:cd739c7d13f55512da",
+      "definition": "Action of the verb to train.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "usually",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "auditory integration training",
+        "autogenic training",
+        "basic training",
+        "borstal training",
+        "circuit training",
+        "conflict training",
+        "cross-training",
+        "cross training",
+        "cybertraining",
+        "ear training",
+        "e-training",
+        "field training officer",
+        "functional training",
+        "high-intensity interval training",
+        "high intensity training",
+        "home training",
+        "interval training",
+        "jump training",
+        "large group awareness training",
+        "large-group awareness training",
+        "personal training",
+        "physical training",
+        "posttraining",
+        "potty-training",
+        "potty training",
+        "pretraining",
+        "quenouille training",
+        "remote training collar",
+        "resistance training",
+        "self-training"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/training#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=training&oldid=93381160",
+    "distinctionTask": {
+      "prompt": "The training of the horse names _____.",
+      "options": [
+        "the activity of training it",
+        "a guarantee of success in every later performance"
+      ],
+      "answer": "the activity of training it",
+      "explanation": "The action noun does not establish every possible outcome."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-1fcc2fa5",
+    "senseId": "kaikki:3488819e20ffad8d4b",
+    "definition": "The result of good social upbringing.",
+    "example": "In this meaning, training concerns habits or conduct resulting from social upbringing, rather than attendance at a skills course.",
+    "collocations": [
+      "good home training",
+      "social upbringing",
+      "learned conduct"
+    ],
+    "distinctions": [
+      "The checked source supplies no explicit historical or regional label. This reading note keeps the upbringing-result meaning separate without declaring it obsolete or judging a particular person’s upbringing."
+    ],
+    "usage": "Result of social upbringing.",
+    "originalSense": {
+      "id": "kaikki:3488819e20ffad8d4b",
+      "definition": "The result of good social upbringing.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "usually",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "auditory integration training",
+        "autogenic training",
+        "basic training",
+        "borstal training",
+        "circuit training",
+        "conflict training",
+        "cross-training",
+        "cross training",
+        "cybertraining",
+        "ear training",
+        "e-training",
+        "field training officer",
+        "functional training",
+        "high-intensity interval training",
+        "high intensity training",
+        "home training",
+        "interval training",
+        "jump training",
+        "large group awareness training",
+        "large-group awareness training",
+        "personal training",
+        "physical training",
+        "posttraining",
+        "potty-training",
+        "potty training",
+        "pretraining",
+        "quenouille training",
+        "remote training collar",
+        "resistance training",
+        "self-training"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/training#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=training&oldid=93381160",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-1fcc2fa5",
+    "senseId": "kaikki:a6d69ab278a8b19a6a",
+    "definition": "In computing, the process in which modems determine a protocol and speed to use; handshaking.",
+    "example": "During training, the modems try to establish a compatible protocol and speed.",
+    "collocations": [
+      "modem training",
+      "a training sequence",
+      "protocol negotiation",
+      "handshaking"
+    ],
+    "distinctions": [
+      "This specialist meaning concerns setting up communication parameters. It is separate from transferring the actual user data. An attempted negotiation does not guarantee a compatible setting or a successful connection."
+    ],
+    "usage": "Computing; modem handshaking.",
+    "originalSense": {
+      "id": "kaikki:a6d69ab278a8b19a6a",
+      "definition": "The process by which two modems determine which protocol and speed to use; handshaking.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "usually",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "auditory integration training",
+        "autogenic training",
+        "basic training",
+        "borstal training",
+        "circuit training",
+        "conflict training",
+        "cross-training",
+        "cross training",
+        "cybertraining",
+        "ear training",
+        "e-training",
+        "field training officer",
+        "functional training",
+        "high-intensity interval training",
+        "high intensity training",
+        "home training",
+        "interval training",
+        "jump training",
+        "large group awareness training",
+        "large-group awareness training",
+        "personal training",
+        "physical training",
+        "posttraining",
+        "potty-training",
+        "potty training",
+        "pretraining",
+        "quenouille training",
+        "remote training collar",
+        "resistance training",
+        "self-training"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/training#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=training&oldid=93381160",
+    "distinctionTask": {
+      "prompt": "Modem training is used to _____.",
+      "options": [
+        "determine compatible communication parameters",
+        "transfer the actual user data as its defining purpose"
+      ],
+      "answer": "determine compatible communication parameters",
+      "explanation": "Protocol and speed negotiation is separate from the later user-data transfer."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-1fcc2fa5",
+    "senseId": "kaikki:4b8c3ad50d7c838159",
+    "definition": "In voice recognition, recording multiple samples of a user’s voice to aid pattern recognition.",
+    "example": "Voice training records several speech samples for the recogniser.",
+    "collocations": [
+      "voice training",
+      "speech samples",
+      "train a recogniser",
+      "pattern recognition"
+    ],
+    "distinctions": [
+      "In this exact meaning, training uses voice samples to help a recognition system. It is separate from practising singing or public speaking, and collecting samples does not guarantee perfect recognition of every later utterance."
+    ],
+    "usage": "Voice recognition; multiple recorded samples.",
+    "originalSense": {
+      "id": "kaikki:4b8c3ad50d7c838159",
+      "definition": "The recording of multiple samples of a user's voice to aid pattern recognition.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "usually",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "auditory integration training",
+        "autogenic training",
+        "basic training",
+        "borstal training",
+        "circuit training",
+        "conflict training",
+        "cross-training",
+        "cross training",
+        "cybertraining",
+        "ear training",
+        "e-training",
+        "field training officer",
+        "functional training",
+        "high-intensity interval training",
+        "high intensity training",
+        "home training",
+        "interval training",
+        "jump training",
+        "large group awareness training",
+        "large-group awareness training",
+        "personal training",
+        "physical training",
+        "posttraining",
+        "potty-training",
+        "potty training",
+        "pretraining",
+        "quenouille training",
+        "remote training collar",
+        "resistance training",
+        "self-training"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/training#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=training&oldid=93381160",
+    "distinctionTask": {
+      "prompt": "Voice training in this recognition-system example records _____.",
+      "options": [
+        "speech samples to aid recognition",
+        "proof that every later utterance will be recognised correctly"
+      ],
+      "answer": "speech samples to aid recognition",
+      "explanation": "Samples may help pattern recognition without guaranteeing perfect accuracy."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-c68674f",
+    "senseId": "kaikki:e4f24a5656ea310ec1",
+    "definition": "The facts, skills and ideas someone has learned, especially through formal instruction.",
+    "example": "She has a broad education in science and history.",
+    "collocations": [
+      "a broad education",
+      "a good education",
+      "an education in",
+      "the benefits of an education"
+    ],
+    "distinctions": [
+      "This countable sense foregrounds the learning acquired, rather than only the process of instruction. Especially through formal instruction is not a restriction to school: learning can also occur elsewhere. An education does not make every belief held by its recipient correct."
+    ],
+    "usage": "Countable; acquired knowledge, skills and ideas.",
+    "originalSense": {
+      "id": "kaikki:e4f24a5656ea310ec1",
+      "definition": "Facts, skills and ideas that have been learned, especially through formal instruction.",
+      "example": "Nuh-nuh-doin'-duh... Nuh-nuh-doin'-duh... We don't need no education...\nYes, you do. You've just used a double negative.",
+      "pos": "noun",
+      "synonyms": [
+        "education"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "adult education",
+        "adventure education",
+        "all-round education",
+        "antieducation",
+        "autoeducation",
+        "auto-education",
+        "basic education",
+        "board of education",
+        "coeducation",
+        "compulsory education",
+        "continuing education",
+        "countereducation",
+        "cybereducation",
+        "democratic education",
+        "distance education",
+        "distributive education",
+        "driver's education",
+        "early childhood education",
+        "edjamacation",
+        "edjewcation",
+        "edu-babble",
+        "edubusiness",
+        "educationable",
+        "educational",
+        "education assistant",
+        "educationese",
+        "educationism",
+        "educationist",
+        "educationless",
+        "educationlike"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/education#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=education&oldid=92708063",
+    "distinctionTask": {
+      "prompt": "A broad education in science and history foregrounds _____.",
+      "options": [
+        "knowledge, skills and ideas acquired",
+        "only the current act of teaching a lesson"
+      ],
+      "answer": "knowledge, skills and ideas acquired",
+      "explanation": "This countable sense concerns the learning acquired."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-c68674f",
+    "senseId": "kaikki:dec9f565dae3b6bbd6",
+    "definition": "A now-rare meaning: upbringing or rearing.",
+    "example": "The source retains education meaning upbringing or rearing. It is broader than classroom instruction and is now labelled rare.",
+    "collocations": [
+      "education as upbringing",
+      "upbringing and rearing",
+      "rare broader meaning"
+    ],
+    "distinctions": [
+      "The source label is now rare, not obsolete. Rarity does not automatically supply historical learning priority, and the separate modern process and acquired-learning senses remain current."
+    ],
+    "usage": "Now rare; upbringing or rearing.",
+    "originalSense": {
+      "id": "kaikki:dec9f565dae3b6bbd6",
+      "definition": "Upbringing, rearing.",
+      "example": "I found them [my children] all I could wish and progressing rapidly under the truly maternal care of the kind Sisters who cared for their education.",
+      "pos": "noun",
+      "synonyms": [
+        "education"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, countable, uncountable",
+      "wordFamily": [
+        "adult education",
+        "adventure education",
+        "all-round education",
+        "antieducation",
+        "autoeducation",
+        "auto-education",
+        "basic education",
+        "board of education",
+        "coeducation",
+        "compulsory education",
+        "continuing education",
+        "countereducation",
+        "cybereducation",
+        "democratic education",
+        "distance education",
+        "distributive education",
+        "driver's education",
+        "early childhood education",
+        "edjamacation",
+        "edjewcation",
+        "edu-babble",
+        "edubusiness",
+        "educationable",
+        "educational",
+        "education assistant",
+        "educationese",
+        "educationism",
+        "educationist",
+        "educationless",
+        "educationlike"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/education#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=education&oldid=92708063",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]
