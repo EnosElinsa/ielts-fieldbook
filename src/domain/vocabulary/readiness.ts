@@ -1,4 +1,4 @@
-import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default } from './runtimeData';
+import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default, type VocabularyLearningPriority } from './runtimeData';
 import type { VocabularyEntry, VocabularySense } from './types';
 
 export const VOCABULARY_READINESS_VERSION = 'core-2026-10-17.13';
@@ -16,6 +16,17 @@ function ensureReadiness() {
  for (const row of vocabularyTeaching.readiness.defaults) preferred.set(row.entryId,row);
 }
 const editorial = {source:'Fieldbook core content review',license:'CC-BY-4.0',attribution:'Fieldbook editorial contributors'};
+
+const learningPriorities = new Set<VocabularyLearningPriority>(['general', 'specialist', 'historical', 'proper-name']);
+/** Editorial learning scope applies only to this exact public meaning, never to mastery. */
+export function getVocabularyLearningPriority(entryId: string, sense: VocabularySense): VocabularyLearningPriority | undefined {
+ ensureReadiness();
+ const row = additions.get(identity(entryId, sense.id)) || core.get(identity(entryId, sense.id));
+ if (!row?.learningPriority || !learningPriorities.has(row.learningPriority) || sense.source === 'Personal note' ||
+  row.definition !== sense.definition || (row.pos || row.originalSense?.pos) !== sense.pos ||
+  isVocabularyPracticeReference(entryId, sense)) return undefined;
+ return row.learningPriority;
+}
 
 /** Restored child meanings belong only to their catalogue entry and source parent. */
 export function restoredDictionarySenses(entryId: string, sourceIds: Set<string>): VocabularySense[] {

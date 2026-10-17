@@ -7,6 +7,25 @@ const row = { entryId: 'bank', senseId: 'river', originalSense: original, defini
 const review = { term: 'bank', entryId: 'bank', senseId: 'river', sourceHash: createHash('sha256').update(JSON.stringify(original)).digest('hex'), reviewedAreas: ['definition','example','collocations','distinctions'] };
 const input = { entries: [{ id: 'bank', term: 'bank' }], dictionaries: { bank: { senses: [original] } }, corrections: [row], records: [review], diagrams: [] };
 
+test.each(['general', 'specialist', 'historical', 'proper-name'])('authored %s learning priority is counted separately from textual review', learningPriority => {
+  const result = inspectDictionaryReview({ ...input, corrections: [{ ...row, learningPriority }] });
+  expect(result.errors).toEqual([]);
+  expect(result.summary.reviewed).toBe(1);
+  expect(result.summary.learningPriorities[learningPriority]).toBe(1);
+});
+
+test.each([
+  { learningPriority: 'automatic' },
+  { learningPriority: null },
+  { learningPriority: 'general', definition: '' },
+  { learningPriority: 'general', originalSense: { ...original, pos: '' } },
+  { learningPriority: 'general', entryId: 'absent' },
+  { learningPriority: 'general', senseId: 'absent' },
+])('learning-priority metadata rejects invalid or unbound classification: %j', change => {
+  const result = inspectDictionaryReview({ ...input, corrections: [{ ...row, ...change }] });
+  expect(result.errors.join(' ')).toMatch(/learning priority/i);
+});
+
 test('explicit reading-note metadata is counted and unknown example types fail review', () => {
   const result = inspectDictionaryReview({ ...input, corrections: [{ ...row, exampleKind: 'reading-note' }] });
   expect(result.errors).toEqual([]);

@@ -9,6 +9,25 @@ let release: ReturnType<typeof buildVocabularyResources>;
 // still compares a second independent build of the complete retained corpus.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 15_000);
 
+test('learning priority is delivered in scoped teaching while the preceding complete release keeps its original bytes', () => {
+  const baseline = JSON.parse(readFileSync('src/domain/vocabulary/resourceDictionaryRound19Baseline.json', 'utf8'));
+  const before = JSON.parse(readFileSync('src/domain/vocabulary/resourceDictionaryRound18Baseline.json', 'utf8'));
+  expect(baseline.restoreCorrections).toHaveLength(33);
+  expect(baseline.restoreCorrections.every((row: any) => row.learningPriority === undefined)).toBe(true);
+  // The latest previous manifest is reconstructed by reversing the priority-only batch.
+  const previous = [...release.resources].filter(([url]) => url.startsWith('/vocabulary-resources/manifest.')).map(([, text]) => JSON.parse(text)).find(value =>
+    value.entryTeachingResources && value.entryShards && Object.values(value.entryTeachingResources).some(url => {
+      const rows = JSON.parse(release.resources.get(url as string)!).teaching.readiness.corrections;
+      return rows.some((row: any) => row.senseId === 'kaikki:b1a831f5de690f1a08' && row.definition === baseline.restoreCorrections[0].definition && row.learningPriority === undefined);
+    }));
+  expect(previous).toBeDefined();
+  const entryId = baseline.restoreCorrections[0].entryId;
+  const currentRows = JSON.parse(release.resources.get(release.manifest.entryTeachingResources[release.manifest.entryShards[entryId]])!).teaching.readiness.corrections;
+  expect(currentRows.find((row: any) => row.entryId === entryId && row.senseId === baseline.restoreCorrections[0].senseId).learningPriority).toBe('general');
+  expect(before.removeCorrections.length).toBe(33);
+  for (const url of [...Object.values(previous.entryResources), ...Object.values(previous.entryTeachingResources), ...previous.units.flatMap((unit: any) => [unit.resource, unit.teachingResource]).filter(Boolean)] as string[]) expect(release.resources.has(url), url).toBe(true);
+});
+
 test('the light right left table batch retains the entire preceding teaching release', () => {
   const previous = JSON.parse(release.resources.get('/vocabulary-resources/manifest.ceba35ae9f9890bc.json')!);
   const light = (manifest: typeof release.manifest) => JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards['ve-a5291fb']])!).teaching;

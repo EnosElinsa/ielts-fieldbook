@@ -32,6 +32,87 @@ const sourceSense = {
 };
 const dictionaryFetch = (senses = [sourceSense]) => vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { mitigate: 'aa.json' } : { senses } }));
 
+function priorityFixture(term: string) {
+  const { save } = fixture();
+  const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+  const entry = catalog.entries.find((entry: any) => entry.term === term);
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const dictionary = JSON.parse(readFileSync(`public/dictionary/${index[term]}`, 'utf8'));
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? index : dictionary })));
+  return { entry, dictionary, save };
+}
+
+test('everyday meanings keep source numbers while All retains specialist and historical meanings without browsing writes', async () => {
+  const { entry, dictionary, save } = priorityFixture('sensitive');
+  const sources = vi.fn();
+  render(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[dictionary.senses[2]]} onSources={sources} /></MemoryRouter>);
+  await screen.findByText('Other dictionary meanings (9)');
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  expect(screen.getByRole('button', { name: 'Everyday meanings (5)' })).toHaveAttribute('aria-pressed', 'true');
+  expect(screen.getAllByRole('button', { name: 'Practise this sense' })).toHaveLength(5);
+  const general = vocabularyTeaching.readiness.corrections.find(row => row.entryId === entry.id && row.senseId === dictionary.senses[1].id)!;
+  expect(within(screen.getByText(general.definition!).closest('section')!).getByRole('heading', { name: 'Meaning 2' })).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'All meanings (9)' }));
+  expect(screen.getAllByRole('button', { name: 'Practise this sense' })).toHaveLength(9);
+  expect(screen.getAllByText('Specialist')).toHaveLength(3);
+  expect(screen.getByText('Historical')).toBeInTheDocument();
+  expect(within(screen.getByText(general.definition!).closest('section')!).getByRole('heading', { name: 'Meaning 2' })).toBeInTheDocument();
+  await waitFor(() => expect(sources).toHaveBeenLastCalledWith(expect.arrayContaining(dictionary.senses.filter((_: any, at: number) => at !== 2).map((sense: any) => expect.objectContaining({ id: sense.id })))));
+  fireEvent.click(screen.getByRole('button', { name: 'Everyday meanings (5)' }));
+  expect(save).not.toHaveBeenCalled();
+  expect(mocks.current.stateRef.current.vocabularyEvidence).toEqual([]);
+});
+
+test('a word with its only everyday meaning already displayed retains the useful learning-notes fallback', async () => {
+  const { entry, dictionary } = priorityFixture('efficient');
+  render(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[dictionary.senses[0]]} /></MemoryRouter>);
+  await screen.findByText('Other dictionary meanings (4)');
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  expect(screen.getByRole('button', { name: 'With learning notes (4)' })).toHaveAttribute('aria-pressed', 'true');
+  expect(screen.queryByRole('button', { name: /^Everyday meanings/ })).not.toBeInTheDocument();
+  expect(screen.getAllByRole('button', { name: 'Practise this sense' })).toHaveLength(4);
+});
+
+test('explicit All, search and POS survive late priority teaching while unclassified source meanings stay reachable', async () => {
+  const { entry } = fixture();
+  const originalCorrections = vocabularyTeaching.readiness.corrections;
+  const noun = { ...sourceSense, id: 'priority-noun', definition: 'A consideration of severity.', pos: 'noun' };
+  const fetch = dictionaryFetch([sourceSense, noun]);
+  vi.stubGlobal('fetch', fetch);
+  const view = render(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
+  try {
+    await screen.findByText(noun.definition);
+    fireEvent.click(screen.getByText(/Other dictionary meanings/));
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'severity' } });
+    await selectChoice(screen.getByRole('combobox'), 'Noun');
+    registerVocabularyTeaching({ ...vocabularyTeaching, readiness: { ...vocabularyTeaching.readiness, corrections: [
+      { entryId: entry.id, senseId: sourceSense.id, originalSense: sourceSense, definition: sourceSense.definition, example: sourceSense.example,
+        collocations: ['mitigate risk'], distinctions: ['Reduce is broader.'] },
+    ] } });
+    mocks.current = { ...mocks.current, vocabularyCatalogRevision: 1 };
+    view.rerender(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
+    await screen.findByRole('button', { name: 'All meanings (2)' });
+    fireEvent.click(screen.getByRole('button', { name: 'All meanings (2)' }));
+    registerVocabularyTeaching({ ...vocabularyTeaching, readiness: { ...vocabularyTeaching.readiness, corrections: [
+      { ...vocabularyTeaching.readiness.corrections.find(row => row.entryId === entry.id && row.senseId === sourceSense.id)!, learningPriority: 'general' } as any,
+    ] } });
+    mocks.current = { ...mocks.current, vocabularyCatalogRevision: 2 };
+    view.rerender(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
+    expect(await screen.findByText(noun.definition)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'All meanings (2)' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: 'Everyday meanings (1)' })).toHaveAttribute('aria-pressed', 'false');
+    expect(screen.getByRole('searchbox')).toHaveValue('severity');
+    expect(screen.getByRole('combobox')).toHaveTextContent('Noun');
+    fireEvent.click(screen.getByRole('button', { name: 'Everyday meanings (1)' }));
+    expect(screen.getByText('No meanings match your filters.')).toBeInTheDocument();
+    expect(screen.getByText('Try different words or choose All meanings.')).toBeInTheDocument();
+    expect(fetch).toHaveBeenCalledTimes(2);
+  } finally {
+    vocabularyTeaching.readiness.corrections = originalCorrections;
+    registerVocabularyTeaching(vocabularyTeaching);
+  }
+});
+
 test('source headings remain in All meanings without being offered as meanings to practise', async () => {
   fixture();
   const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));

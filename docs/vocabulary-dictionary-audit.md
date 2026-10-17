@@ -4,6 +4,8 @@ Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable i
 
 The complete index has **5,853 terms, 51,354 preserved raw senses and 590 restored submeanings** (51,944 total). This ledger verifies **2220 records** across definition, examples or reading explanations, collocations and distinctions; **49,724 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 613 reviewed distinction exercises and 223 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 643 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
+Authored learning-priority metadata classifies 13 general, 10 specialist, 10 historical and 0 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
+
 | Term | Reviewed records | Raw + restored records | Pending |
 | --- | ---: | ---: | ---: |
 | account | 13 | 13 | 0 |

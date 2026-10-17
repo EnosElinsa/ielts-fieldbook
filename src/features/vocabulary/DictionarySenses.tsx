@@ -10,7 +10,7 @@ import { accountId } from "../../storage/remote";
 import { VocabularySenseContent } from "./VocabularySenseContent";
 import { SelectField } from '../../components/SelectField';
 import { vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
-import { isVocabularyMeaningGroup, isVocabularySpellingReference, isVocabularyUsageReference } from '../../domain/vocabulary/readiness';
+import { getVocabularyLearningPriority, isVocabularyMeaningGroup, isVocabularySpellingReference, isVocabularyUsageReference } from '../../domain/vocabulary/readiness';
 import { getVocabularySenseDiagram, type VocabularySenseDiagram } from '../../domain/vocabulary/media';
 import { VocabularyMeaningDiagram } from './VocabularyMeaningDiagram';
 import { practiceUrl } from "./vocabularyNavigation";
@@ -106,7 +106,9 @@ export function DictionarySenses({
     onSources?.(senses);
   }, [senses, onSources]);
   const withNotes = senses.filter(sense => !isVocabularyMeaningGroup(entry.id, sense) && !isVocabularyUsageReference(entry.id, sense) && sense.editorial && sense.collocations?.length && sense.distinctions?.length);
-  const scope = !showAll && withNotes.length ? withNotes : senses;
+  const everyday = senses.filter(sense => getVocabularyLearningPriority(entry.id, sense) === 'general');
+  const recommended = everyday.length ? everyday : withNotes;
+  const scope = !showAll && recommended.length ? recommended : senses;
   const words = normalizeAnswer(query).split(' ').filter(Boolean);
   const visible = scope.filter(sense => {
     if (posFilter && partOfSpeech(sense) !== posFilter) return false;
@@ -215,8 +217,8 @@ export function DictionarySenses({
         Dictionary meanings beyond the selected learning meanings. Choose a
         meaning to practise it separately.
       </p>
-      {withNotes.length ? <div className="vocabulary-dictionary-filter" role="group" aria-label="Dictionary meaning filter">
-        <button type="button" className="btn line" aria-pressed={!showAll} onClick={() => setShowAll(false)}>With learning notes ({withNotes.length})</button>
+      {recommended.length ? <div className="vocabulary-dictionary-filter" role="group" aria-label="Dictionary meaning filter">
+        <button type="button" className="btn line" aria-pressed={!showAll} onClick={() => setShowAll(false)}>{everyday.length ? 'Everyday meanings' : 'With learning notes'} ({recommended.length})</button>
         <button type="button" className="btn line" aria-pressed={showAll} onClick={() => setShowAll(true)}>All meanings ({senses.length})</button>
       </div> : null}
       {!loading && !error && senses.length ? <>
@@ -232,7 +234,7 @@ export function DictionarySenses({
           <p className="vocabulary-muted" role="status" aria-live="polite" aria-atomic="true">{visible.length} of {scope.length} meanings</p>
           {query || posFilter ? <button type="button" className="btn line" onClick={clearFilters}>Clear filters</button> : null}
         </div>
-        {!visible.length ? <p className="vocabulary-muted">No meanings match your filters. <span>Try different words{!showAll && withNotes.length ? ' or choose All meanings' : ''}.</span></p> : null}
+        {!visible.length ? <p className="vocabulary-muted">No meanings match your filters. <span>Try different words{!showAll && recommended.length ? ' or choose All meanings' : ''}.</span></p> : null}
       </> : null}
       {loading ? (
         <InlineLoadingState message="Loading dictionary meanings…" onRetry={saving === null ? retryDictionary : undefined} retryLabel="Retry dictionary" />
@@ -252,10 +254,13 @@ export function DictionarySenses({
             )
             .map((sense) => {
               const diagram = getVocabularySenseDiagram({ entry, sense });
+              const priority = getVocabularyLearningPriority(entry.id, sense);
+              const priorityLabel = priority && priority !== 'general' ? { specialist: 'Specialist', historical: 'Historical', 'proper-name': 'Proper name' }[priority] : undefined;
               return (
               <section className="vocabulary-sense" key={sense.id}>
                 <div className="vocabulary-sense-head">
                   <h4>Meaning {meaningNumbers.get(sense.id)}</h4>
+                  {priorityLabel ? <span className="pill">{priorityLabel}</span> : null}
                   {isVocabularyMeaningGroup(entry.id, sense) ? <span className="pill">Meaning group</span> : isVocabularyUsageReference(entry.id, sense) ? <span className="pill">Usage reference</span> : isVocabularySpellingReference(entry.id, sense) ? <span className="pill">Spelling reference</span> : <button
                     type="button"
                     className="btn line"
