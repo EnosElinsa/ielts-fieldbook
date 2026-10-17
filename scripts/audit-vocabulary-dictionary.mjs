@@ -8,6 +8,7 @@ const hash = value => createHash('sha256').update(JSON.stringify(value) ?? 'null
 const areas = ['definition', 'example', 'collocations', 'distinctions'];
 export const plainSourceGloss = value => value.replace(/<!--[^]*?-->/g, '').replace(/^#+\s*/, '')
   .replace(/\[\[(?:File|Image):[^]*?\]\]/g, '')
+  .replace(/\{\{(?:U|cap)\|([^{}|]+)\}\}/g, (_, term) => term[0].toUpperCase() + term.slice(1))
   .replace(/\{\{ellipsis of\|en\|([^{}|]+)\}\}/g, 'Ellipsis of $1')
   .replace(/\{\{(?:m|l)\|en\|([^{}|]+)\|([^{}|=]+)\}\}/g, '$2')
   .replace(/\{\{(?:m|l)\|en\|([^{}|]+)(?:\|t=([^{}]+)|\|id=[^{}|]+)?\}\}/g, (_, term, gloss) => {

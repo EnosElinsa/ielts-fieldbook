@@ -74,6 +74,27 @@ beforeEach(() => {
   };
 });
 const originalCatalog = { books: [...VOCABULARY_CATALOG.books], units: [...VOCABULARY_CATALOG.units], entries: [...VOCABULARY_CATALOG.entries], memberships: [...VOCABULARY_CATALOG.memberships] };
+test.each(['ready', 'error'])('single-word launch distinguishes content preparation from %s outcome', async outcome => {
+  let resolve!: () => void, reject!: (error: Error) => void;
+  fb.current.loadVocabularyCatalog = vi.fn(() => new Promise<void>((yes, no) => { resolve = yes; reject = no; }));
+  render(<MemoryRouter initialEntries={['/vocabulary/review?entryId=missing-entry&dueOnly=false']}><VocabularyPracticePage /></MemoryRouter>);
+  expect(screen.getByRole('button', { name: 'Start session' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: 'Start session' })).toHaveAttribute('aria-busy', 'true');
+  expect(screen.getByRole('status')).toHaveTextContent('Preparing practice…');
+  expect(screen.queryByText('This selected meaning is unavailable.')).not.toBeInTheDocument();
+  expect(screen.queryByText('No words match these filters.')).not.toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'Explore wordbooks' })).not.toBeInTheDocument();
+  await act(async () => { if (outcome === 'ready') resolve(); else reject(new Error('offline')); });
+  if (outcome === 'ready') {
+    expect(screen.getByText('This selected meaning is unavailable.')).toBeInTheDocument();
+    expect(screen.getByText('No words match these filters.')).toBeInTheDocument();
+  } else {
+    expect(screen.getByText('The wordbook could not be loaded.')).toBeInTheDocument();
+    expect(screen.queryByText('This selected meaning is unavailable.')).not.toBeInTheDocument();
+    expect(screen.queryByText('No words match these filters.')).not.toBeInTheDocument();
+  }
+  expect(screen.getByRole('button', { name: 'Start session' })).toBeDisabled();
+});
 test.each([true, false])('saved result table recovery preserves workspace scroll ownership (%s)', async restored => {
   fb.current.state.vocabularySessions = [{ id: 'scroll-history', mode: 'dictation', status: 'submitted', filter: {}, selection: { kind: 'review' }, preferences: {}, results: [], summary: { total: 0, correct: 0, incorrect: 0, pending: 0 }, startedAt: '2026-10-12', submittedAt: '2026-10-12' }];
   sessionStorage.setItem('fieldbook:session-position:account-one:scroll-history:all', JSON.stringify({ y: 500, x: 37, tableY: 18 }));

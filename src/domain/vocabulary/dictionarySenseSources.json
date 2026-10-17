@@ -10163,5 +10163,537 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "change",
+    "entryId": "ve-5c458f23",
+    "parentSenseId": "kaikki:4ef614eb2741213207",
+    "parentSourceHash": "29e28f0597e8e63d934d3c7a80e09383fe2651db7b39af680a5a3dd09c3f1efe",
+    "sourcePage": "change",
+    "revision": 93529325,
+    "sourceGloss": "## A [[replacement]] of a soiled [[diaper]] with a clean one; a diaper change.",
+    "sense": {
+      "id": "wiktionary:restored:866c7c8aee5338eaa4",
+      "pos": "noun",
+      "definition": "A replacement of a soiled diaper with a clean one; a diaper change.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=change&oldid=93529325",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:f29fe77dbdd46a9109",
+    "parentSourceHash": "dbd1b303ce3fba3a3c226569ba4bfde7bb7546e6c96db54666238049e7c160a8",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## To [[appear]].",
+    "sense": {
+      "id": "wiktionary:restored:603e590630a2d34642",
+      "pos": "verb",
+      "definition": "To appear.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:f29fe77dbdd46a9109",
+    "parentSourceHash": "dbd1b303ce3fba3a3c226569ba4bfde7bb7546e6c96db54666238049e7c160a8",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## To [[grow]], to sprout.",
+    "sense": {
+      "id": "wiktionary:restored:39f9e4de5f204ad2dc",
+      "pos": "verb",
+      "definition": "To grow, to sprout.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:f29fe77dbdd46a9109",
+    "parentSourceHash": "dbd1b303ce3fba3a3c226569ba4bfde7bb7546e6c96db54666238049e7c160a8",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "### {{lb|en|UK dialectal}} To mature.",
+    "sense": {
+      "id": "wiktionary:restored:bdfb25a2decad575a0",
+      "pos": "verb",
+      "definition": "To mature.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:f29fe77dbdd46a9109",
+    "parentSourceHash": "dbd1b303ce3fba3a3c226569ba4bfde7bb7546e6c96db54666238049e7c160a8",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|figurative}} To [[arise]], to [[come]] into [[existence]].",
+    "sense": {
+      "id": "wiktionary:restored:7523e0defa916ca3a8",
+      "pos": "verb",
+      "definition": "To arise, to come into existence.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:f29fe77dbdd46a9109",
+    "parentSourceHash": "dbd1b303ce3fba3a3c226569ba4bfde7bb7546e6c96db54666238049e7c160a8",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|sometimes figurative}} To [[enliven]].",
+    "sense": {
+      "id": "wiktionary:restored:4b5a74884142df709a",
+      "pos": "verb",
+      "definition": "To enliven.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:f29fe77dbdd46a9109",
+    "parentSourceHash": "dbd1b303ce3fba3a3c226569ba4bfde7bb7546e6c96db54666238049e7c160a8",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|figurative|usually with cardinal adverbs}} To [[move]] with [[great]] [[speed]] and [[energy]].",
+    "sense": {
+      "id": "wiktionary:restored:4302e45f7de7dd09db",
+      "pos": "verb",
+      "definition": "To move with great speed and energy.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:f29fe77dbdd46a9109",
+    "parentSourceHash": "dbd1b303ce3fba3a3c226569ba4bfde7bb7546e6c96db54666238049e7c160a8",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|usually with from}} To [[be born]], [[descend]], or [[originate]] from",
+    "sense": {
+      "id": "wiktionary:restored:0238491c1a973d636e",
+      "pos": "verb",
+      "definition": "To be born, descend, or originate from",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:f29fe77dbdd46a9109",
+    "parentSourceHash": "dbd1b303ce3fba3a3c226569ba4bfde7bb7546e6c96db54666238049e7c160a8",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|obsolete}} To [[rise]] in [[social]] [[position]] or [[military]] [[rank]], to be [[promoted]].",
+    "sense": {
+      "id": "wiktionary:restored:ef460e5a8dc0d0ee4c",
+      "pos": "verb",
+      "definition": "To rise in social position or military rank, to be promoted.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:fa20b7da622ed09d69",
+    "parentSourceHash": "f50d69492b1072e3ff86c661dc6537ba9ca4c4a528606c70b6f6b0635ec804da",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|of mechanisms}} To [[cause]] to [[work]] or [[open]] by [[sudden]] [[application]] of [[pressure]].",
+    "sense": {
+      "id": "wiktionary:restored:3a97ec1c6ef7985fe9",
+      "pos": "verb",
+      "definition": "To cause to work or open by sudden application of pressure.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:a948eaecbd47e79233",
+    "parentSourceHash": "ad29a9a3533d49928c7b9b4c9c08c45881f074dd7ce8dab94e8b0d29da700518",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|astronomy}} The [[period]] from the [[moment]] of [[vernal equinox]] ([[around]] [[March]] 21 in the [[Northern Hemisphere]]) to the [[moment]] of the [[summer solstice]] ([[around]] [[June]] 21); [[:w:Spring (season)|the equivalent periods]] [[reckon]]ed in [[other]] [[culture]]s and [[calendar]]s.",
+    "sense": {
+      "id": "wiktionary:restored:2aa6e44b1ca893e57f",
+      "pos": "noun",
+      "definition": "The period from the moment of vernal equinox (around March 21 in the Northern Hemisphere) to the moment of the summer solstice (around June 21); the equivalent periods reckoned in other cultures and calendars.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:a948eaecbd47e79233",
+    "parentSourceHash": "ad29a9a3533d49928c7b9b4c9c08c45881f074dd7ce8dab94e8b0d29da700518",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|meteorology}} The [[three]] [[month]]s of [[March]], [[April]], and [[May]] in the [[Northern Hemisphere]] and [[September]], [[October]], and [[November]] in the [[Southern Hemisphere]].",
+    "sense": {
+      "id": "wiktionary:restored:0cc7dd1870f3af21a2",
+      "pos": "noun",
+      "definition": "The three months of March, April, and May in the Northern Hemisphere and September, October, and November in the Southern Hemisphere.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:267bdd12ef8815c83b",
+    "parentSourceHash": "76ae2b02380b8c5a1ac2c61259edfd59c6470c36e67ba9a7ac9d63af8377fdfc",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|figurative|politics}} A [[period]] of [[political]] [[liberalization]] and [[democratization]].",
+    "sense": {
+      "id": "wiktionary:restored:d82aafa127e8b6bb56",
+      "pos": "noun",
+      "definition": "A period of political liberalization and democratization.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:b6a21ee2763858342b",
+    "parentSourceHash": "bacaa8dcb852711fc9d2418993e9f92752f7337268fa5f89a7edeaa9c744d1e7",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{senseid|en|Q124714}} {{lb|en|geology}} A [[spray]] or [[body]] of [[water]] [[#Verb|springing]] from the [[ground]].",
+    "sense": {
+      "id": "wiktionary:restored:86afa942aaca00b512",
+      "pos": "noun",
+      "definition": "A spray or body of water springing from the ground.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:b6a21ee2763858342b",
+    "parentSourceHash": "bacaa8dcb852711fc9d2418993e9f92752f7337268fa5f89a7edeaa9c744d1e7",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|oceanography|obsolete}} The [[rising]] of the [[sea]] at [[high tide]].",
+    "sense": {
+      "id": "wiktionary:restored:9e9930e93d0bdd8c05",
+      "pos": "noun",
+      "definition": "The rising of the sea at high tide.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:b6a21ee2763858342b",
+    "parentSourceHash": "bacaa8dcb852711fc9d2418993e9f92752f7337268fa5f89a7edeaa9c744d1e7",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|oceanography}} {{ellipsis of|en|spring tide}}, the [[especially]] [[high]] [[tide]] [[shortly]] after [[full moon|full]] and [[new moon]]s.",
+    "sense": {
+      "id": "wiktionary:restored:5f42ef6ce3ff06e284",
+      "pos": "noun",
+      "definition": "Ellipsis of spring tide, the especially high tide shortly after full and new moons.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:b6a21ee2763858342b",
+    "parentSourceHash": "bacaa8dcb852711fc9d2418993e9f92752f7337268fa5f89a7edeaa9c744d1e7",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{senseid|en|Q102836}} An [[elastic#Adjective|elastic]] mechanical part or device in any shape (e.g., [[flat#Adjective|flat]], [[curved]], [[coiled]]), made of [[flexible]]  [[material]] (usually [[spring steel]]) that [[exert]]s [[force]] and [[attempt]]s to [[spring back]] when [[bent]], [[compress]]ed, or [[stretch]]ed.",
+    "sense": {
+      "id": "wiktionary:restored:ba13f7fcc5c446e284",
+      "pos": "noun",
+      "definition": "An elastic mechanical part or device in any shape (e.g., flat, curved, coiled), made of flexible material (usually spring steel) that exerts force and attempts to spring back when bent, compressed, or stretched.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:b6a21ee2763858342b",
+    "parentSourceHash": "bacaa8dcb852711fc9d2418993e9f92752f7337268fa5f89a7edeaa9c744d1e7",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|nautical}} A [[line]] from a [[vessel]]'s [[end]] or [[side]] to its [[anchor]] [[cable]] [[use]]d to [[diminish]] or [[control]] its [[movement]].",
+    "sense": {
+      "id": "wiktionary:restored:6ca627e75ca48b1e03",
+      "pos": "noun",
+      "definition": "A line from a vessel's end or side to its anchor cable used to diminish or control its movement.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:b6a21ee2763858342b",
+    "parentSourceHash": "bacaa8dcb852711fc9d2418993e9f92752f7337268fa5f89a7edeaa9c744d1e7",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|nautical}} A [[line]] [[laid out]] from a [[vessel]]'s [[end]] to the [[opposite]] [[end]] of an [[adjacent]] [[vessel]] or [[mooring]] to [[diminish]] or [[control]] its [[movement]].",
+    "sense": {
+      "id": "wiktionary:restored:598a354c11fd0ab616",
+      "pos": "noun",
+      "definition": "A line laid out from a vessel's end to the opposite end of an adjacent vessel or mooring to diminish or control its movement.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:b6a21ee2763858342b",
+    "parentSourceHash": "bacaa8dcb852711fc9d2418993e9f92752f7337268fa5f89a7edeaa9c744d1e7",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|figurative}} A [[race]], a [[lineage]].",
+    "sense": {
+      "id": "wiktionary:restored:deee3725320ba3bec7",
+      "pos": "noun",
+      "definition": "A race, a lineage.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:b6a21ee2763858342b",
+    "parentSourceHash": "bacaa8dcb852711fc9d2418993e9f92752f7337268fa5f89a7edeaa9c744d1e7",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|figurative}} A [[youth]].",
+    "sense": {
+      "id": "wiktionary:restored:4e4421c4a550347c44",
+      "pos": "noun",
+      "definition": "A youth.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:b6a21ee2763858342b",
+    "parentSourceHash": "bacaa8dcb852711fc9d2418993e9f92752f7337268fa5f89a7edeaa9c744d1e7",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## A [[shoot]], a [[young]] [[tree]].",
+    "sense": {
+      "id": "wiktionary:restored:e116d4cf7061084729",
+      "pos": "noun",
+      "definition": "A shoot, a young tree.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:b6a21ee2763858342b",
+    "parentSourceHash": "bacaa8dcb852711fc9d2418993e9f92752f7337268fa5f89a7edeaa9c744d1e7",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## A [[grove]] of [[tree]]s; a [[forest]].",
+    "sense": {
+      "id": "wiktionary:restored:0b41a4b16d5e15ae24",
+      "pos": "noun",
+      "definition": "A grove of trees; a forest.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:b6a21ee2763858342b",
+    "parentSourceHash": "bacaa8dcb852711fc9d2418993e9f92752f7337268fa5f89a7edeaa9c744d1e7",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|collective}} A group of [[teal]].",
+    "sense": {
+      "id": "wiktionary:restored:12826dca835ceabc89",
+      "pos": "noun",
+      "definition": "A group of teal.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:02b1a94ff253c17667",
+    "parentSourceHash": "a43df2fad411c3cd5c717752665fc382241eb573fa6b56e48753d0f009bf5a8f",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## [[elasticity|Elasticity]]: the [[property]] of a [[body]] [[springing back]] to its [[original]] [[form]] after [[compression]], [[stretching]], etc.",
+    "sense": {
+      "id": "wiktionary:restored:55376d769eed973604",
+      "pos": "noun",
+      "definition": "Elasticity: the property of a body springing back to its original form after compression, stretching, etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:02b1a94ff253c17667",
+    "parentSourceHash": "a43df2fad411c3cd5c717752665fc382241eb573fa6b56e48753d0f009bf5a8f",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## [[elastic energy|Elastic energy]], [[power]], or [[force]].",
+    "sense": {
+      "id": "wiktionary:restored:2f8d05442da3442798",
+      "pos": "noun",
+      "definition": "Elastic energy, power, or force.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:99225f3d05e6051c56",
+    "parentSourceHash": "603b1661d39352b8659e89777a086e8b8e6c5e886d9cf399dde7af59d144c334",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## A [[cause]], a [[motive]], etc.",
+    "sense": {
+      "id": "wiktionary:restored:4365be2f47bc053e7a",
+      "pos": "noun",
+      "definition": "A cause, a motive, etc.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "spring",
+    "entryId": "ve-7fec4674",
+    "parentSenseId": "kaikki:99225f3d05e6051c56",
+    "parentSourceHash": "603b1661d39352b8659e89777a086e8b8e6c5e886d9cf399dde7af59d144c334",
+    "sourcePage": "spring",
+    "revision": 93533867,
+    "sourceGloss": "## {{lb|en|obsolete|music}} A [[lively]] [[piece]] of [[music]].",
+    "sense": {
+      "id": "wiktionary:restored:565e7c7ca3bf579e9d",
+      "pos": "noun",
+      "definition": "A lively piece of music.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=spring&oldid=93533867",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

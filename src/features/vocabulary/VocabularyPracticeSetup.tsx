@@ -14,19 +14,20 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
   const [pickerOpen, setPickerOpen] = useState(false);
   const specialist = isSpecialistVocabularyMode(mode);
   const launchCount = study ? queue.length : Math.min(preferences.sessionSize, queue.length);
+  const preparing = !catalogReady && catalogStatus.status !== 'error';
   return (
     <>
       <div className="practice-context-card">
         <span className="eyebrow">{controller.batchRequest ? `Learning batch ${Number(controller.learningBatch.batch?.selection.batchIndex || 0) + 1}` : study ? 'One complete group' : explicitEntry ? 'A single word' : 'A focused review batch'}</span>
         <h3>{study ? selectedBook?.title || 'Choose a wordbook' : explicitEntry ? queue[0]?.entry.term || 'Practise this word' : 'Vocabulary review'}</h3>
-        <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : explicitEntry ? queue[0]?.entry.senses.find(sense => sense.id === queue[0]?.senseId)?.definition || 'This selected meaning is unavailable.' : 'Review due words, retry mistakes, or build a custom review.'}</p>
+        <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : explicitEntry ? !catalogReady ? preparing ? 'Loading your selected meaning…' : 'Retry loading to see your selected meaning.' : queue[0]?.entry.senses.find(sense => sense.id === queue[0]?.senseId)?.definition || 'This selected meaning is unavailable.' : 'Review due words, retry mistakes, or build a custom review.'}</p>
         {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
         {mode === 'production' ? <p>Your sentences are saved for review. A self-rating does not verify correct usage.</p> : null}
         {wrongOnly ? <p>Mistake recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last.</p> : null}
         {controller.batchRequest ? <strong>{queue.length} words in this batch</strong> : study && unitQueue ? <strong>{unitQueue.totalWords} words in this group · {unitQueue.eligibleWords} ready for {modeLabel(mode).toLowerCase()}</strong> : null}
         {controller.filter.sourceId ? <p>Source Part: {controller.filter.sourceId} · {queue.length} matching {queue.length === 1 ? 'word' : 'words'}</p> : null}
         {controller.learningBatch.error ? <p role="alert">{controller.learningBatch.error}</p> : null}
-        {controller.plannedReview && !studyReady ? <p role="alert">The planned review could not be prepared. Your task has not been completed.</p> : null}
+        {controller.plannedReview && catalogReady && !studyReady ? <p role="alert">The planned review could not be prepared. Your task has not been completed.</p> : null}
         <Link to={study ? '/vocabulary/review' : '/vocabulary/wordbooks'}>{study ? 'Switch to vocabulary review' : 'Study a complete wordbook group'} <ArrowRight size={14} /></Link>
       </div>
       <div className="practice-setup-controls">
@@ -217,22 +218,23 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
             )}
           </span>
           <h3>{modeLabel(mode)}</h3>
-          <p>
-            {queue.length
+          <p role={preparing ? 'status' : undefined}>
+            {preparing ? 'Preparing practice…' : !catalogReady ? 'Retry loading the wordbook to prepare practice.' : queue.length
               ? `${launchCount} ${launchCount === 1 ? 'word' : 'words'} · ${preferences.layout === "list" ? "List" : "Focus"} · ${preferences.feedback === "end" ? "Results after submission" : "Feedback during practice"}`
               : "No words match these filters."}
           </p>
-          {study && !controller.batchRequest && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? <p role="status">{specialist ? <>{controller.unitQueue.eligibleWords} of {controller.unitQueue.totalWords} words have a {modeLabel(mode).toLowerCase()} exercise. This optional practice covers these words only. Choose Dictation to study the complete group.</> : <>Some words are unavailable for this mode. Reload the wordbook or choose Dictation to study the complete group.</>}</p> : null}
+          {study && catalogReady && !controller.batchRequest && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? <p role="status">{specialist ? <>{controller.unitQueue.eligibleWords} of {controller.unitQueue.totalWords} words have a {modeLabel(mode).toLowerCase()} exercise. This optional practice covers these words only. Choose Dictation to study the complete group.</> : <>Some words are unavailable for this mode. Reload the wordbook or choose Dictation to study the complete group.</>}</p> : null}
           <button
             className="btn primary practice-start"
             type="button"
             disabled={!queue.length || Boolean(resume) || !studyReady || Boolean(study && !controller.batchRequest && !specialist && unitQueue?.unavailableWords)}
+            aria-busy={preparing}
             onClick={() => begin()}
           >
             <Play size={17} />
             {study && specialist && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? 'Start specialist subset' : 'Start session'}
           </button>
-          {!queue.length ? (
+          {catalogReady && !queue.length ? (
             <Link
               className="practice-empty-link"
               to="/vocabulary/wordbooks"

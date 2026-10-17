@@ -1230,5 +1230,149 @@
     "definition": "The total points scored by one player during one visit to the table.",
     "pos": "noun",
     "kind": "break-snooker"
+  },
+  {
+    "entryId": "ve-5c458f23",
+    "senseId": "kaikki:d491f8a39f63276920",
+    "term": "change",
+    "definition": "Money returned when the amount paid is greater than the purchase price.",
+    "pos": "noun",
+    "kind": "change-balance"
+  },
+  {
+    "entryId": "ve-5c458f23",
+    "senseId": "kaikki:5a796a9704c73f4da3",
+    "term": "change",
+    "definition": "A transfer from one vehicle or transport service to another.",
+    "pos": "noun",
+    "kind": "change-transfer"
+  },
+  {
+    "entryId": "ve-a8ba07c",
+    "senseId": "kaikki:5afa87b566329fcec1",
+    "term": "clear",
+    "definition": "Transparent, so that objects can be seen through it.",
+    "pos": "adj",
+    "kind": "clear-transparency"
+  },
+  {
+    "entryId": "ve-a8ba07c",
+    "senseId": "kaikki:b89e106aab9adbb9ec",
+    "term": "clear",
+    "definition": "Remaining in full after relevant deductions; net.",
+    "pos": "adj",
+    "kind": "clear-profit"
+  },
+  {
+    "entryId": "ve-a8ba07c",
+    "senseId": "kaikki:33efb6d9762efd8ac2",
+    "term": "clear",
+    "definition": "To remove obstructions or unwanted things from a place.",
+    "pos": "verb",
+    "kind": "clear-table"
+  },
+  {
+    "entryId": "ve-a8ba07c",
+    "senseId": "kaikki:99321a2a0f6f5498c3",
+    "term": "clear",
+    "definition": "To approve or authorise someone or something for an action or purpose.",
+    "pos": "verb",
+    "kind": "clear-approval"
+  },
+  {
+    "entryId": "ve-a8ba07c",
+    "senseId": "kaikki:6e44cb9be929a642b1",
+    "term": "clear",
+    "definition": "To apply CSS clearance so an element is moved below relevant preceding floats.",
+    "pos": "verb",
+    "kind": "clear-css-floats"
+  },
+  {
+    "entryId": "ve-a8ba07c",
+    "senseId": "kaikki:2eb4c2f43c9cbf4546",
+    "term": "clear",
+    "definition": "The unobstructed inside distance between the nearest facing surfaces.",
+    "pos": "noun",
+    "kind": "clear-inner-width"
+  },
+  {
+    "entryId": "ve-7c6adc11",
+    "senseId": "kaikki:d8a7dca4714803e6fc",
+    "term": "date",
+    "definition": "A written indication of when a document, inscription or object was made or issued.",
+    "pos": "noun",
+    "kind": "date-formats"
+  },
+  {
+    "entryId": "ve-7c6adc11",
+    "senseId": "kaikki:fa339a6731f2f32be1",
+    "term": "date",
+    "definition": "To determine or estimate the age or historical period of something.",
+    "pos": "verb",
+    "kind": "date-estimate"
+  },
+  {
+    "entryId": "ve-7fec4674",
+    "senseId": "kaikki:dd630c01de6409c2b5",
+    "term": "spring",
+    "definition": "Of an arch, to rise or curve from its supporting point.",
+    "pos": "verb",
+    "kind": "spring-arch"
+  },
+  {
+    "entryId": "ve-7fec4674",
+    "senseId": "kaikki:85adbc210a9c0705e8",
+    "term": "spring",
+    "definition": "A leap or jump.",
+    "pos": "noun",
+    "kind": "spring-leap"
+  },
+  {
+    "entryId": "ve-7fec4674",
+    "senseId": "wiktionary:restored:2aa6e44b1ca893e57f",
+    "term": "spring",
+    "definition": "The astronomical season from the local spring equinox to the summer solstice.",
+    "pos": "noun",
+    "kind": "spring-seasons"
+  },
+  {
+    "entryId": "ve-7fec4674",
+    "senseId": "wiktionary:restored:86afa942aaca00b512",
+    "term": "spring",
+    "definition": "A natural outlet where groundwater emerges at the ground surface.",
+    "pos": "noun",
+    "kind": "spring-water"
+  },
+  {
+    "entryId": "ve-7fec4674",
+    "senseId": "wiktionary:restored:5f42ef6ce3ff06e284",
+    "term": "spring",
+    "definition": "A spring tide, when the tidal range is greater than usual around new and full moons.",
+    "pos": "noun",
+    "kind": "spring-tides"
+  },
+  {
+    "entryId": "ve-7fec4674",
+    "senseId": "wiktionary:restored:ba13f7fcc5c446e284",
+    "term": "spring",
+    "definition": "An elastic mechanical component that resists deformation and tends to return toward its original shape.",
+    "pos": "noun",
+    "kind": "spring-device"
+  },
+  {
+    "entryId": "ve-7fec4674",
+    "senseId": "wiktionary:restored:598a354c11fd0ab616",
+    "term": "spring",
+    "definition": "A mooring line led diagonally along a vessel to limit its fore-and-aft movement at a berth.",
+    "pos": "noun",
+    "kind": "spring-mooring"
+  },
+  {
+    "entryId": "ve-7fec4674",
+    "senseId": "wiktionary:restored:55376d769eed973604",
+    "term": "spring",
+    "definition": "Elasticity: the ability to return toward the original form after deformation.",
+    "pos": "noun",
+    "kind": "spring-resilience"
   }
 ]

@@ -71,6 +71,13 @@ test.each([
   ['## The {{l|en|price#Noun|t=the # symbol}}.', 'The price (the # symbol).'],
   ['## The {{l|en|price#Noun|display # label}}.', 'The display # label.'],
   ['## The {{m|en|C#}} symbol and plain # text.', 'The C# symbol and plain # text.'],
+  ['# {{U|transparent}} in [[colour]].', 'Transparent in colour.'],
+  ['# {{U|bright}}; [[luminous]]; not [[dark]] or [[obscure]]d.', 'Bright; luminous; not dark or obscured.'],
+  ['# {{U|distinct}}, [[sharp]], well-marked.', 'Distinct, sharp, well-marked.'],
+  ['# {{lb|en|MLE}} {{U|good}}, the [[best]].', 'Good, the best.'],
+  ['# {{lb|en|UK|IE|Commonwealth|especially|sports}} {{U|better}} than, [[superior]] to. {{q|usually with points, votes, etc.}}', 'Better than, superior to.'],
+  ['# {{U|free}} (or [[separate]]) from others.', 'Free (or separate) from others.'],
+  ['# {{cap|clear}} and {{U|C#}}.', 'Clear and C#.'],
 ])('restored source rendering preserves lexical text without embedded media: %s', (sourceGloss, expected) => {
   expect(plainSourceGloss(sourceGloss)).toBe(expected);
 });
