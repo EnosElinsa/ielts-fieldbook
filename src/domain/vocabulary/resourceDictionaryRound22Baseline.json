@@ -1,0 +1,139 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-5fc4c9c7",
+      "senseId": "kaikki:ed69f35a063e109d8f"
+    },
+    {
+      "entryId": "ve-5fc4c9c7",
+      "senseId": "kaikki:c8a07f8bbd84da9f8f"
+    },
+    {
+      "entryId": "ve-5fc4c9c7",
+      "senseId": "kaikki:841e87b6ead2f532da"
+    },
+    {
+      "entryId": "ve-5fc4c9c7",
+      "senseId": "kaikki:ef70d26d1e06f48c26"
+    },
+    {
+      "entryId": "ve-5fc4c9c7",
+      "senseId": "kaikki:9a581e9cdaa2cd5100"
+    },
+    {
+      "entryId": "ve-5fc4c9c7",
+      "senseId": "kaikki:dbc3a31fe7b7114658"
+    },
+    {
+      "entryId": "ve-5fc4c9c7",
+      "senseId": "kaikki:fa9f8e19e94fb62dfc"
+    },
+    {
+      "entryId": "ve-8e676850",
+      "senseId": "kaikki:ae806587e0cde7cea3"
+    },
+    {
+      "entryId": "ve-8e676850",
+      "senseId": "kaikki:4506e913b49d6f7915"
+    },
+    {
+      "entryId": "ve-8e676850",
+      "senseId": "kaikki:b434227d52bc175329"
+    },
+    {
+      "entryId": "ve-8e676850",
+      "senseId": "kaikki:e002f1750381091332"
+    },
+    {
+      "entryId": "ve-8e676850",
+      "senseId": "kaikki:bbee9afc870ecd736a"
+    },
+    {
+      "entryId": "ve-8e676850",
+      "senseId": "kaikki:3926448636eb17a6ea"
+    },
+    {
+      "entryId": "ve-8e676850",
+      "senseId": "kaikki:32cba743a5ee835933"
+    },
+    {
+      "entryId": "ve-8e676850",
+      "senseId": "kaikki:5f1a1f361a70b7fa02"
+    },
+    {
+      "entryId": "ve-8e676850",
+      "senseId": "kaikki:546112a185bc17ea10"
+    },
+    {
+      "entryId": "ve-a279a1b8",
+      "senseId": "kaikki:2f97b854096db2249b"
+    },
+    {
+      "entryId": "ve-a279a1b8",
+      "senseId": "kaikki:96ff8c60e822f3ab92"
+    },
+    {
+      "entryId": "ve-a279a1b8",
+      "senseId": "kaikki:3ef61f56124e5d445f"
+    },
+    {
+      "entryId": "ve-a279a1b8",
+      "senseId": "kaikki:e04333f7b71f559990"
+    },
+    {
+      "entryId": "ve-a279a1b8",
+      "senseId": "kaikki:5c81d5f1688b8f9bc8"
+    },
+    {
+      "entryId": "ve-a279a1b8",
+      "senseId": "wiktionary:restored:962c22f990ff39e24e"
+    },
+    {
+      "entryId": "ve-315a532f",
+      "senseId": "kaikki:9b62851048ed86180f"
+    },
+    {
+      "entryId": "ve-315a532f",
+      "senseId": "kaikki:f9a2960e9c4bcad6ce"
+    },
+    {
+      "entryId": "ve-315a532f",
+      "senseId": "kaikki:5a2f00730e9cb3dff0"
+    },
+    {
+      "entryId": "ve-315a532f",
+      "senseId": "kaikki:f0c64b37093fd1a4bc"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-5fc4c9c7",
+      "senseId": "kaikki:7823582e0b34d3d995",
+      "term": "impact",
+      "example": "The helmet protected his head from the impact.",
+      "originalSense": {
+        "id": "kaikki:7823582e0b34d3d995",
+        "definition": "The striking of one body against another; collision.",
+        "example": "",
+        "pos": "noun",
+        "synonyms": [
+          "percussion"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [
+          "impinge"
+        ]
+      }
+    }
+  ],
+  "removeDefaults": [
+    "ve-5fc4c9c7",
+    "ve-8e676850",
+    "ve-a279a1b8",
+    "ve-315a532f"
+  ],
+  "restoreDefaults": []
+}

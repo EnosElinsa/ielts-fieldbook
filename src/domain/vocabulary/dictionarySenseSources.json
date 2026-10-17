@@ -11208,5 +11208,24 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "consequence",
+    "entryId": "ve-a279a1b8",
+    "parentSenseId": "kaikki:2f97b854096db2249b",
+    "parentSourceHash": "673decb0956309c053e36a7f41ad8420b939a37594fa53f7935d5cf243dc4504",
+    "sourcePage": "consequence",
+    "revision": 92753178,
+    "sourceGloss": "## An unwanted or unpleasant [[effect]].",
+    "sense": {
+      "id": "wiktionary:restored:962c22f990ff39e24e",
+      "pos": "noun",
+      "definition": "An unwanted or unpleasant effect.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=consequence&oldid=92753178",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

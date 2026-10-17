@@ -29867,8 +29867,17 @@
   {
     "entryId": "ve-5fc4c9c7",
     "senseId": "kaikki:7823582e0b34d3d995",
-    "term": "impact",
-    "example": "The helmet protected his head from the impact.",
+    "definition": "The collision of one physical body with another.",
+    "example": "The test records the impact when the steel ball strikes the plate.",
+    "collocations": [
+      "on impact",
+      "the point of impact",
+      "a direct impact"
+    ],
+    "distinctions": [
+      "This is a physical collision. A policy can have an impact without any objects striking each other; that is the separate figurative effect sense."
+    ],
+    "usage": "",
     "originalSense": {
       "id": "kaikki:7823582e0b34d3d995",
       "definition": "The striking of one body against another; collision.",
@@ -29883,8 +29892,45 @@
       "register": "countable, uncountable",
       "wordFamily": [
         "impinge"
-      ]
-    }
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/impact#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=impact&oldid=93514083",
+    "distinctionTask": {
+      "prompt": "The steel ball strikes the plate. This impact is _____.",
+      "options": [
+        "a physical collision",
+        "a policy influencing an opinion"
+      ],
+      "answer": "a physical collision",
+      "explanation": "Two bodies make physical contact in the stated event."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general",
+    "previousSenses": [
+      {
+        "id": "kaikki:7823582e0b34d3d995",
+        "definition": "The striking of one body against another; collision.",
+        "example": "The helmet protected his head from the impact.",
+        "pos": "noun",
+        "synonyms": [
+          "percussion"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "countable, uncountable",
+        "wordFamily": [
+          "impinge"
+        ]
+      }
+    ]
   },
   {
     "entryId": "ve-573ee264",
@@ -180942,5 +180988,1483 @@
     "antonyms": [],
     "wordFamily": [],
     "register": ""
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:ed69f35a063e109d8f",
+    "definition": "The force or energy associated with a collision.",
+    "example": "The cushion reduces the impact when the package lands.",
+    "collocations": [
+      "absorb the impact",
+      "reduce the impact",
+      "impact energy"
+    ],
+    "distinctions": [
+      "Ordinary impact can refer loosely to the severity of a collision. In physics, force and energy are different quantities: force is measured in newtons and energy in joules. The word alone supplies neither a measurement nor a conversion between them."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:ed69f35a063e109d8f",
+      "definition": "The force or energy of a collision of two objects.",
+      "example": "The hatchet cut the wood on impact.",
+      "pos": "noun",
+      "synonyms": [
+        "percussion"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "impinge"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/impact#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=impact&oldid=93514083",
+    "distinctionTask": {
+      "prompt": "A report mentions impact force and impact energy. These are _____.",
+      "options": [
+        "different physical quantities, measured in newtons and joules",
+        "the same quantity with interchangeable units"
+      ],
+      "answer": "different physical quantities, measured in newtons and joules",
+      "explanation": "Force and energy are not interchangeable; impact alone does not provide a conversion."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:c8a07f8bbd84da9f8f",
+    "definition": "Forced impingement, especially in a medical context.",
+    "example": "The checked source uses impact for forced impingement in a medical context.",
+    "collocations": [
+      "forced impingement",
+      "medical impact",
+      "physical pressure"
+    ],
+    "distinctions": [
+      "This source sense concerns physical impingement rather than a general influence. The source illustration is not a diagnosis or a rule that contact between named vertebrae necessarily causes a particular symptom."
+    ],
+    "usage": "Preserved import unlabelled; checked revision chiefly medicine. Contextual reading.",
+    "originalSense": {
+      "id": "kaikki:c8a07f8bbd84da9f8f",
+      "definition": "A forced impinging.",
+      "example": "His spine had an impingement; L4 and L5 made impact, which caused numbness in his leg.",
+      "pos": "noun",
+      "synonyms": [
+        "percussion"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "impinge"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/impact#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=impact&oldid=93514083",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:841e87b6ead2f532da",
+    "definition": "A strong or significant influence or effect.",
+    "example": "The new bus route had a positive impact on access to the hospital.",
+    "collocations": [
+      "have an impact on",
+      "a positive impact",
+      "environmental impact"
+    ],
+    "distinctions": [
+      "A figurative impact need not involve a physical collision and can be beneficial or harmful. The source labels this use proscribed and notes objections by some editors; this records a style objection, not a claim that the use never occurs or is obsolete. Effect is often a neutral alternative."
+    ],
+    "usage": "Figurative; source labels proscribed.",
+    "originalSense": {
+      "id": "kaikki:841e87b6ead2f532da",
+      "definition": "A significant or strong influence or effect.",
+      "example": "His friend's opinion had an impact on his decision.",
+      "pos": "noun",
+      "synonyms": [
+        "percussion"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "figuratively, proscribed",
+      "register": "countable, figuratively, proscribed, uncountable",
+      "wordFamily": [
+        "impinge"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/impact#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=impact&oldid=93514083",
+    "distinctionTask": {
+      "prompt": "A bus route has a positive impact on access. This describes _____.",
+      "options": [
+        "a beneficial effect",
+        "a collision with the hospital"
+      ],
+      "answer": "a beneficial effect",
+      "explanation": "The effect is figurative and is explicitly described as positive."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:ef70d26d1e06f48c26",
+    "definition": "To strike or collide with something.",
+    "example": "Small stones can impact the outer casing during the test.",
+    "collocations": [
+      "impact a surface",
+      "impact the casing",
+      "physical impact"
+    ],
+    "distinctions": [
+      "The verb names a physical strike here. It is distinct from compacting material and from figuratively affecting a schedule. The checked source gives noun stress on the first syllable and verb stress on the second; word-level playback is not verified for this selected sense."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:ef70d26d1e06f48c26",
+      "definition": "To collide or strike, the act of impinging.",
+      "example": "When the hammer impacts the nail, it bends.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "impinge",
+        "impactable",
+        "impacter",
+        "impaction",
+        "impactor",
+        "reimpact"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/impact#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=impact&oldid=93514083",
+    "distinctionTask": {
+      "prompt": "Stones impact the casing during a test. Here impact means _____.",
+      "options": [
+        "strike the casing",
+        "persuade the casing"
+      ],
+      "answer": "strike the casing",
+      "explanation": "The objects physically collide."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:9a581e9cdaa2cd5100",
+    "definition": "To compress or pack material closely together.",
+    "example": "Heavy wheels can impact loose soil, pressing its particles closer together.",
+    "collocations": [
+      "impact the soil",
+      "compact loose material",
+      "tightly packed soil"
+    ],
+    "distinctions": [
+      "This sense describes compaction. Packing particles closer together can reduce the spaces between them; it does not mean that every particle becomes smaller or that the material has necessarily been struck by a separate projectile."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:9a581e9cdaa2cd5100",
+      "definition": "To compress; to compact; to press into something or pack together.",
+      "example": "The footprints of birds do not impact the soil in the way those of dinosaurs do.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "impinge",
+        "impactable",
+        "impacter",
+        "impaction",
+        "impactor",
+        "reimpact"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/impact#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=impact&oldid=93514083",
+    "distinctionTask": {
+      "prompt": "Wheels impact loose soil by pressing particles together. This is _____.",
+      "options": [
+        "compaction",
+        "a guarantee that each particle shrinks"
+      ],
+      "answer": "compaction",
+      "explanation": "Compaction packs particles closer; the particles themselves need not shrink."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:dbc3a31fe7b7114658",
+    "definition": "To strongly affect or influence something.",
+    "example": "A delayed delivery may impact the project schedule.",
+    "collocations": [
+      "impact the schedule",
+      "impact a decision",
+      "have an impact on"
+    ],
+    "distinctions": [
+      "The verb takes the affected object directly in impact the schedule. Compare the noun phrase have an impact on the schedule. The source records prescriptive objections to this figurative verb; affect is often a neutral editing choice. May does not assert that a change has already occurred."
+    ],
+    "usage": "Figurative; source labels proscribed.",
+    "originalSense": {
+      "id": "kaikki:dbc3a31fe7b7114658",
+      "definition": "To significantly or strongly influence or affect; to have an impact on.",
+      "example": "I can make the changes, but it will impact the schedule.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "figuratively, proscribed",
+      "register": "figuratively, proscribed, transitive",
+      "wordFamily": [
+        "impinge",
+        "impactable",
+        "impacter",
+        "impaction",
+        "impactor",
+        "reimpact"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/impact#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=impact&oldid=93514083",
+    "distinctionTask": {
+      "prompt": "Compare impact the schedule with have an impact on the schedule. The first impact is _____.",
+      "options": [
+        "a verb taking the affected object directly",
+        "a noun requiring on immediately after it"
+      ],
+      "answer": "a verb taking the affected object directly",
+      "explanation": "The verb impact takes a direct object; the noun phrase uses impact on."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:fa9f8e19e94fb62dfc",
+    "definition": "In a rare use, to stamp or impress something onto something else.",
+    "example": "The source illustration Ideas impacted on the mind uses impact in the sense of impressing something on the mind.",
+    "collocations": [
+      "an impression on the mind",
+      "stamp onto a surface",
+      "rare impact"
+    ],
+    "distinctions": [
+      "This rare stamp-or-impress sense is retained separately from collide, compact and affect. Rare is not the same label as obsolete, and the source illustration is supplied as a reading explanation rather than a new sentence-gap exercise."
+    ],
+    "usage": "Rare; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:fa9f8e19e94fb62dfc",
+      "definition": "To stamp or impress onto something.",
+      "example": "Ideas impacted on the mind.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "rare",
+      "register": "rare, transitive",
+      "wordFamily": [
+        "impinge",
+        "impactable",
+        "impacter",
+        "impaction",
+        "impactor",
+        "reimpact"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/impact#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=impact&oldid=93514083",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:ae806587e0cde7cea3",
+    "definition": "The power or ability to affect a person, decision or development.",
+    "example": "The committee has influence over the final decision.",
+    "collocations": [
+      "influence over a decision",
+      "political influence",
+      "a sphere of influence"
+    ],
+    "distinctions": [
+      "Having influence is having some power to affect an outcome. It does not necessarily mean complete control, a guaranteed decision or deliberate manipulation."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:ae806587e0cde7cea3",
+      "definition": "The power to affect, control or manipulate something or someone; the ability to change the development of fluctuating things such as conduct, thoughts or decisions.",
+      "example": "I have absolutely no influence over him.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "agent of influence",
+        "area of influence",
+        "bad influence",
+        "influenceless",
+        "influence machine",
+        "influence peddling",
+        "kidfluence",
+        "malinfluence",
+        "noninfluence",
+        "sphere of influence",
+        "trading in influence",
+        "traffic of influence",
+        "under the influence",
+        "undue influence",
+        "uninfluence",
+        "coinfluence",
+        "counterinfluence",
+        "influencer",
+        "misinfluence",
+        "thinkfluence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/influence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=influence&oldid=93517285",
+    "distinctionTask": {
+      "prompt": "The committee has influence over a decision. This guarantees _____.",
+      "options": [
+        "some ability to affect it, not complete control",
+        "the exact final decision it wants"
+      ],
+      "answer": "some ability to affect it, not complete control",
+      "explanation": "Influence is a power to affect; it need not amount to full control."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:4506e913b49d6f7915",
+    "definition": "The action of exerting power to affect someone or something.",
+    "example": "Residents exercised influence on the planning decision through written submissions.",
+    "collocations": [
+      "exercise influence",
+      "exert influence on",
+      "bring influence to bear"
+    ],
+    "distinctions": [
+      "This sense concerns influence being exerted. It differs from merely possessing the ability to influence and from naming a person who is an influence; exertion alone does not guarantee the preferred final decision."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:4506e913b49d6f7915",
+      "definition": "An action exerted by a person or thing with such power on another to cause change.",
+      "example": "I'm not able to exercise influence over him.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "agent of influence",
+        "area of influence",
+        "bad influence",
+        "influenceless",
+        "influence machine",
+        "influence peddling",
+        "kidfluence",
+        "malinfluence",
+        "noninfluence",
+        "sphere of influence",
+        "trading in influence",
+        "traffic of influence",
+        "under the influence",
+        "undue influence",
+        "uninfluence",
+        "coinfluence",
+        "counterinfluence",
+        "influencer",
+        "misinfluence",
+        "thinkfluence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/influence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=influence&oldid=93517285",
+    "distinctionTask": {
+      "prompt": "Residents exercise influence through submissions. This describes _____.",
+      "options": [
+        "the exertion of influence",
+        "proof that every request was accepted"
+      ],
+      "answer": "the exertion of influence",
+      "explanation": "Exerting influence is distinct from securing a particular final outcome."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:b434227d52bc175329",
+    "definition": "A person or thing that affects someone or something.",
+    "example": "Her first teacher was a lasting influence on her choice of career.",
+    "collocations": [
+      "a lasting influence on",
+      "a good influence",
+      "a major influence"
+    ],
+    "distinctions": [
+      "An influence can be the person or thing exerting an effect. The teacher is one influence, not necessarily the only cause of the choice; an influence is not limited to a social-media influencer."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:b434227d52bc175329",
+      "definition": "A person or thing exerting such power or action.",
+      "example": "He has been a great influence on the voters during the elections.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "agent of influence",
+        "area of influence",
+        "bad influence",
+        "influenceless",
+        "influence machine",
+        "influence peddling",
+        "kidfluence",
+        "malinfluence",
+        "noninfluence",
+        "sphere of influence",
+        "trading in influence",
+        "traffic of influence",
+        "under the influence",
+        "undue influence",
+        "uninfluence",
+        "coinfluence",
+        "counterinfluence",
+        "influencer",
+        "misinfluence",
+        "thinkfluence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/influence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=influence&oldid=93517285",
+    "distinctionTask": {
+      "prompt": "A teacher was a lasting influence on a career choice. The influence is _____.",
+      "options": [
+        "the teacher who affected the choice",
+        "necessarily a social-media account"
+      ],
+      "answer": "the teacher who affected the choice",
+      "explanation": "The person is the influence; the term is broader than social-media influencer."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:e002f1750381091332",
+    "definition": "In astrology, an influence attributed to the positions of celestial bodies at a person’s birth.",
+    "example": "The astrology sense attributes a person’s tendencies to the positions of stars and planets at birth.",
+    "collocations": [
+      "an astrological influence",
+      "planetary influence",
+      "a natal chart"
+    ],
+    "distinctions": [
+      "This describes a belief within astrology. Recording the dictionary meaning does not establish that celestial positions determine personality or provide scientific evidence for that claim."
+    ],
+    "usage": "Astrology; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:e002f1750381091332",
+      "definition": "An element believed to determine someone's character or individual tendencies, caused by the position of the stars and planets at the time of one's birth.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "agent of influence",
+        "area of influence",
+        "bad influence",
+        "influenceless",
+        "influence machine",
+        "influence peddling",
+        "kidfluence",
+        "malinfluence",
+        "noninfluence",
+        "sphere of influence",
+        "trading in influence",
+        "traffic of influence",
+        "under the influence",
+        "undue influence",
+        "uninfluence",
+        "coinfluence",
+        "counterinfluence",
+        "influencer",
+        "misinfluence",
+        "thinkfluence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/influence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=influence&oldid=93517285",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:bbee9afc870ecd736a",
+    "definition": "In obsolete use, the action of flowing in; an influx.",
+    "example": "The source’s older passage uses influence for a flowing-in action.",
+    "collocations": [
+      "an influx",
+      "a flowing-in action",
+      "obsolete influence"
+    ],
+    "distinctions": [
+      "This historical influx sense is separate from the modern power to affect a decision. It is retained for reading rather than offered as an ordinary modern sentence pattern."
+    ],
+    "usage": "Obsolete; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:bbee9afc870ecd736a",
+      "definition": "The action of flowing in; influx.",
+      "example": "God hath his influence into the very essence of all things.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "countable, obsolete, uncountable",
+      "wordFamily": [
+        "agent of influence",
+        "area of influence",
+        "bad influence",
+        "influenceless",
+        "influence machine",
+        "influence peddling",
+        "kidfluence",
+        "malinfluence",
+        "noninfluence",
+        "sphere of influence",
+        "trading in influence",
+        "traffic of influence",
+        "under the influence",
+        "undue influence",
+        "uninfluence",
+        "coinfluence",
+        "counterinfluence",
+        "influencer",
+        "misinfluence",
+        "thinkfluence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/influence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=influence&oldid=93517285",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:3926448636eb17a6ea",
+    "definition": "In electricity, electrostatic induction: a redistribution of charge caused by a nearby charged body.",
+    "example": "In the demonstration, electrostatic influence redistributes charge within an isolated neutral conductor.",
+    "collocations": [
+      "electrostatic influence",
+      "induction by a charged body",
+      "charge redistribution"
+    ],
+    "distinctions": [
+      "Here influence is the source’s electricity term for electrostatic induction. In the stated isolated conductor, charges redistribute without contact and its net charge stays zero. Grounding or contact would require a different setup; this is not electromagnetic induction from a changing magnetic field."
+    ],
+    "usage": "Electricity; a specialist term for electrostatic induction.",
+    "originalSense": {
+      "id": "kaikki:3926448636eb17a6ea",
+      "definition": "Electrostatic induction.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "agent of influence",
+        "area of influence",
+        "bad influence",
+        "influenceless",
+        "influence machine",
+        "influence peddling",
+        "kidfluence",
+        "malinfluence",
+        "noninfluence",
+        "sphere of influence",
+        "trading in influence",
+        "traffic of influence",
+        "under the influence",
+        "undue influence",
+        "uninfluence",
+        "coinfluence",
+        "counterinfluence",
+        "influencer",
+        "misinfluence",
+        "thinkfluence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/influence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=influence&oldid=93517285",
+    "distinctionTask": {
+      "prompt": "A positive rod approaches an isolated neutral conductor without contact or grounding. The conductor’s net charge _____.",
+      "options": [
+        "stays zero while charge redistributes",
+        "must become positive overall"
+      ],
+      "answer": "stays zero while charge redistributes",
+      "explanation": "Internal redistribution preserves the total charge in this isolated setup."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:32cba743a5ee835933",
+    "definition": "To affect or sway someone or something, often through indirect or subtle action.",
+    "example": "The published evidence may influence the committee’s decision.",
+    "collocations": [
+      "influence a decision",
+      "influence someone’s thinking",
+      "influence development"
+    ],
+    "distinctions": [
+      "The transitive verb takes a direct object: influence a decision. Compare the noun phrase an influence on a decision. May leaves the outcome uncertain, and influence does not necessarily mean coercion or complete control."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:32cba743a5ee835933",
+      "definition": "To have an effect on by using gentle or subtle action; to exert an influence upon; to modify, bias, or sway; to persuade or induce.",
+      "example": "The politician wants to influence the public.",
+      "pos": "verb",
+      "synonyms": [
+        "militate",
+        "govern"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "agent of influence",
+        "area of influence",
+        "bad influence",
+        "influenceless",
+        "influence machine",
+        "influence peddling",
+        "kidfluence",
+        "malinfluence",
+        "noninfluence",
+        "sphere of influence",
+        "trading in influence",
+        "traffic of influence",
+        "under the influence",
+        "undue influence",
+        "uninfluence",
+        "coinfluence",
+        "counterinfluence",
+        "influencer",
+        "misinfluence",
+        "thinkfluence",
+        "influenceability",
+        "influenceable",
+        "influencee",
+        "influencive",
+        "interinfluence",
+        "noninfluencing",
+        "outinfluence",
+        "overinfluence",
+        "reinfluence",
+        "uninfluencing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/influence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=influence&oldid=93517285",
+    "distinctionTask": {
+      "prompt": "Evidence may influence the decision. The sentence _____.",
+      "options": [
+        "leaves the effect on the decision uncertain",
+        "asserts complete control of the decision"
+      ],
+      "answer": "leaves the effect on the decision uncertain",
+      "explanation": "May leaves the result open, and influence itself does not require complete control."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:5f1a1f361a70b7fa02",
+    "definition": "To exert or make use of one’s influence, without a direct object.",
+    "example": "The source records an intransitive influence meaning to exercise one’s influence.",
+    "collocations": [
+      "exercise one’s influence",
+      "intransitive influence",
+      "use one’s influence"
+    ],
+    "distinctions": [
+      "This records the source’s intransitive construction separately from influence a decision. The short source gloss does not supply a natural contemporary sentence here, so this is a grammatical reading note, not a fabricated quotation or a historical label."
+    ],
+    "usage": "Intransitive source sense; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:5f1a1f361a70b7fa02",
+      "definition": "To exert, make use of one's influence.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "agent of influence",
+        "area of influence",
+        "bad influence",
+        "influenceless",
+        "influence machine",
+        "influence peddling",
+        "kidfluence",
+        "malinfluence",
+        "noninfluence",
+        "sphere of influence",
+        "trading in influence",
+        "traffic of influence",
+        "under the influence",
+        "undue influence",
+        "uninfluence",
+        "coinfluence",
+        "counterinfluence",
+        "influencer",
+        "misinfluence",
+        "thinkfluence",
+        "influenceability",
+        "influenceable",
+        "influencee",
+        "influencive",
+        "interinfluence",
+        "noninfluencing",
+        "outinfluence",
+        "overinfluence",
+        "reinfluence",
+        "uninfluencing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/influence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=influence&oldid=93517285",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:546112a185bc17ea10",
+    "definition": "In obsolete use, to cause something to flow in or to infuse or instil it.",
+    "example": "The obsolete verb entry uses influence for causing something to flow in or be infused.",
+    "collocations": [
+      "cause to flow in",
+      "infuse or instil",
+      "obsolete transitive influence"
+    ],
+    "distinctions": [
+      "This older causing-to-flow sense differs from affecting an opinion. The source gloss is explained without inventing a modern example of the obsolete construction."
+    ],
+    "usage": "Obsolete; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:546112a185bc17ea10",
+      "definition": "To cause to flow in or into; infuse; instill.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "agent of influence",
+        "area of influence",
+        "bad influence",
+        "influenceless",
+        "influence machine",
+        "influence peddling",
+        "kidfluence",
+        "malinfluence",
+        "noninfluence",
+        "sphere of influence",
+        "trading in influence",
+        "traffic of influence",
+        "under the influence",
+        "undue influence",
+        "uninfluence",
+        "coinfluence",
+        "counterinfluence",
+        "influencer",
+        "misinfluence",
+        "thinkfluence",
+        "influenceability",
+        "influenceable",
+        "influencee",
+        "influencive",
+        "interinfluence",
+        "noninfluencing",
+        "outinfluence",
+        "overinfluence",
+        "reinfluence",
+        "uninfluencing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/influence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=influence&oldid=93517285",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-a279a1b8",
+    "senseId": "kaikki:2f97b854096db2249b",
+    "definition": "An effect or result that follows from a cause.",
+    "example": "One consequence of the new timetable was a shorter wait between trains.",
+    "collocations": [
+      "a consequence of",
+      "as a consequence",
+      "a direct consequence"
+    ],
+    "distinctions": [
+      "A consequence can be beneficial, harmful or neutral. Following something in time alone does not establish causation; the example explicitly presents the shorter wait as a result of the timetable."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:2f97b854096db2249b",
+      "definition": "An effect; something that follows a cause as a result.",
+      "example": "The lobule margins, furthermore, are arched away from the lobe, with the consequence that (when fully inflated) the abaxial leaf surface forms the interior lining of the lobule.",
+      "pos": "noun",
+      "synonyms": [
+        "aftercome"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "actions have consequences",
+        "as a consequence of",
+        "consequenceless",
+        "inconsequence",
+        "in consequence",
+        "law of unintended consequences",
+        "legal consequence",
+        "legal effect and consequence",
+        "misconsequence",
+        "nonconsequence",
+        "of consequence",
+        "unintended consequence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/consequence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=consequence&oldid=92753178",
+    "distinctionTask": {
+      "prompt": "A shorter wait is a beneficial consequence of a timetable change. Consequence _____.",
+      "options": [
+        "can name a positive result",
+        "always means a punishment"
+      ],
+      "answer": "can name a positive result",
+      "explanation": "The general result sense is not restricted to harmful outcomes."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-a279a1b8",
+    "senseId": "kaikki:96ff8c60e822f3ab92",
+    "definition": "A chain or succession of causes and effects.",
+    "example": "The source records consequence for a chain of causes and effects, rather than only its final result.",
+    "collocations": [
+      "a causal chain",
+      "a succession of effects",
+      "consecution"
+    ],
+    "distinctions": [
+      "This source meaning names the connected sequence. The short gloss supplies no contemporary sentence, so the explanation is retained as a reading note. Its reading-note status is not a historical classification."
+    ],
+    "usage": "Source chain sense; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:96ff8c60e822f3ab92",
+      "definition": "consecution; chain of causes and effects.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "aftercome"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "actions have consequences",
+        "as a consequence of",
+        "consequenceless",
+        "inconsequence",
+        "in consequence",
+        "law of unintended consequences",
+        "legal consequence",
+        "legal effect and consequence",
+        "misconsequence",
+        "nonconsequence",
+        "of consequence",
+        "unintended consequence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/consequence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=consequence&oldid=92753178",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a279a1b8",
+    "senseId": "kaikki:3ef61f56124e5d445f",
+    "definition": "A conclusion drawn by deduction or inference.",
+    "example": "A consequence of these premises is that the figure has four sides.",
+    "collocations": [
+      "a logical consequence",
+      "a consequence of the premises",
+      "deduce a consequence"
+    ],
+    "distinctions": [
+      "In reasoning, a consequence is a conclusion rather than a physical event caused by a premise. Whether a conclusion follows and whether the premises are true are separate questions. An inference does not become valid merely because it is called a consequence."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:3ef61f56124e5d445f",
+      "definition": "conclusion, deduction or inference; the thing concluded.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "implication"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "actions have consequences",
+        "as a consequence of",
+        "consequenceless",
+        "inconsequence",
+        "in consequence",
+        "law of unintended consequences",
+        "legal consequence",
+        "legal effect and consequence",
+        "misconsequence",
+        "nonconsequence",
+        "of consequence",
+        "unintended consequence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/consequence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=consequence&oldid=92753178",
+    "distinctionTask": {
+      "prompt": "All squares have four sides and this figure is a square. The stated logical consequence is _____.",
+      "options": [
+        "that the figure has four sides, given those premises",
+        "that one premise physically causes the figure"
+      ],
+      "answer": "that the figure has four sides, given those premises",
+      "explanation": "A logical conclusion follows from the premises; it is not a physical causal event."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-a279a1b8",
+    "senseId": "kaikki:e04333f7b71f559990",
+    "definition": "Importance or significance, especially in the expression of consequence.",
+    "example": "The typo was of little consequence because it did not alter the meaning.",
+    "collocations": [
+      "of little consequence",
+      "of no consequence",
+      "a matter of consequence"
+    ],
+    "distinctions": [
+      "Of little consequence means of little importance. It does not literally assert that the thing has no effects or that nothing happened afterward."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:e04333f7b71f559990",
+      "definition": "Importance, influence, or significance.",
+      "example": "My opinions are of no consequence whatsoever to my parents.",
+      "pos": "noun",
+      "synonyms": [
+        "moment",
+        "distinction",
+        "rank",
+        "value"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "actions have consequences",
+        "as a consequence of",
+        "consequenceless",
+        "inconsequence",
+        "in consequence",
+        "law of unintended consequences",
+        "legal consequence",
+        "legal effect and consequence",
+        "misconsequence",
+        "nonconsequence",
+        "of consequence",
+        "unintended consequence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/consequence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=consequence&oldid=92753178",
+    "distinctionTask": {
+      "prompt": "The typo is of little consequence. It is _____.",
+      "options": [
+        "of little importance",
+        "proof that no effect of any kind occurred"
+      ],
+      "answer": "of little importance",
+      "explanation": "The expression concerns significance rather than the total absence of effects."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-a279a1b8",
+    "senseId": "kaikki:5c81d5f1688b8f9bc8",
+    "definition": "To threaten or impose specified consequences for someone’s misbehaviour.",
+    "example": "The source records consequence as a transitive verb for threatening or punishing misbehaviour with specified consequences.",
+    "collocations": [
+      "consequence as a verb",
+      "specified disciplinary consequences",
+      "threaten or impose a consequence"
+    ],
+    "distinctions": [
+      "The source gloss includes both threatening and punishing, so using this verb does not by itself prove a punishment was carried out. This reading note does not present the construction as the usual general-writing choice or infer an obsolete label absent from the source."
+    ],
+    "usage": "Transitive source sense; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:5c81d5f1688b8f9bc8",
+      "definition": "To threaten or punish (a child, etc.) with specific consequences for misbehaviour.",
+      "example": "The goal of consequencing is to teach the child a lesson that leads to positive choices and behaviors. The goal of punishment is to inflict pain and seek revenge. Angry parenting is punitive and ineffectual.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "actions have consequences",
+        "as a consequence of",
+        "consequenceless",
+        "inconsequence",
+        "in consequence",
+        "law of unintended consequences",
+        "legal consequence",
+        "legal effect and consequence",
+        "misconsequence",
+        "nonconsequence",
+        "of consequence",
+        "unintended consequence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/consequence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=consequence&oldid=92753178",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a279a1b8",
+    "senseId": "wiktionary:restored:962c22f990ff39e24e",
+    "dictionaryParentSenseId": "kaikki:2f97b854096db2249b",
+    "definition": "An unwanted or unpleasant result.",
+    "example": "An unpleasant consequence of the delay was that the food spoiled.",
+    "collocations": [
+      "an unpleasant consequence",
+      "negative consequences",
+      "face the consequences"
+    ],
+    "distinctions": [
+      "This restored submeaning narrows the broader result sense to an unwanted effect. Consequence is not always negative: the general parent sense also covers beneficial and neutral results."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "wiktionary:restored:962c22f990ff39e24e",
+      "pos": "noun",
+      "definition": "An unwanted or unpleasant effect.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=consequence&oldid=92753178",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=consequence&oldid=92753178",
+    "distinctionTask": {
+      "prompt": "An unpleasant consequence of a delay is spoiled food. This narrower sense is _____.",
+      "options": [
+        "an unwanted result",
+        "every possible result, including a benefit"
+      ],
+      "answer": "an unwanted result",
+      "explanation": "The restored submeaning is specifically unwanted or unpleasant."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-315a532f",
+    "senseId": "kaikki:9b62851048ed86180f",
+    "definition": "A result produced by an event or process.",
+    "example": "The outcome of the meeting was an agreement to share the equipment.",
+    "collocations": [
+      "the outcome of",
+      "a possible outcome",
+      "a favourable outcome"
+    ],
+    "distinctions": [
+      "An outcome is a result. It need not be favourable, intended or inevitable; describing an agreed outcome does not establish that every later action has been completed."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:9b62851048ed86180f",
+      "definition": "That which is produced or occurs as a result of an event or process.",
+      "example": "A quality automobile is the outcome of the work of skilled engineers and thousands of workers.",
+      "pos": "noun",
+      "synonyms": [
+        "fate",
+        "termination"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "outcome delivery",
+        "outcome variable"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/outcome#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=outcome&oldid=93517328",
+    "distinctionTask": {
+      "prompt": "A meeting’s outcome is an agreement. This establishes _____.",
+      "options": [
+        "the stated result of the meeting",
+        "that every later action has already been completed"
+      ],
+      "answer": "the stated result of the meeting",
+      "explanation": "An agreement can be an outcome without proving subsequent implementation."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-315a532f",
+    "senseId": "kaikki:f9a2960e9c4bcad6ce",
+    "definition": "In probability, one possible result of a random trial: an element of its sample space.",
+    "example": "One possible outcome of rolling a six-sided die is 3.",
+    "collocations": [
+      "a possible outcome",
+      "an equally likely outcome",
+      "the sample space"
+    ],
+    "distinctions": [
+      "For a die modelled by its upper-face number, the sample space is {1,2,3,4,5,6}. The outcome 3 is one element. The event an even number contains the outcomes 2, 4 and 6. An event may contain one or more outcomes, and calling outcomes possible does not make them equally likely without an appropriate model."
+    ],
+    "usage": "Probability theory.",
+    "originalSense": {
+      "id": "kaikki:f9a2960e9c4bcad6ce",
+      "definition": "The result of a random trial. An element of a sample space.",
+      "example": "Three is a possible outcome of tossing a six-sided die.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "outcome delivery",
+        "outcome variable"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/outcome#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=outcome&oldid=93517328",
+    "distinctionTask": {
+      "prompt": "For a die modelled by its upper-face number, rolling 3 is _____.",
+      "options": [
+        "one outcome; an even number is an event containing 2, 4 and 6",
+        "the entire sample space of six possible numbers"
+      ],
+      "answer": "one outcome; an even number is an event containing 2, 4 and 6",
+      "explanation": "The number 3 is one element, while the event of an even result contains several elements."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-315a532f",
+    "senseId": "kaikki:5a2f00730e9cb3dff0",
+    "definition": "An intended learning result, or evidence of what a learner can do after an experience.",
+    "example": "One intended outcome of the course is that students can compare two sources.",
+    "collocations": [
+      "a learning outcome",
+      "an intended outcome",
+      "assess an outcome"
+    ],
+    "distinctions": [
+      "An intended learning outcome states a goal. Demonstrating that outcome requires evidence; listing it in a syllabus does not prove every learner has achieved it. Keep intended results separate from the results actually assessed."
+    ],
+    "usage": "Education.",
+    "originalSense": {
+      "id": "kaikki:5a2f00730e9cb3dff0",
+      "definition": "The anticipated or desired results or evidence of a learning experience.",
+      "example": "learning outcomes",
+      "pos": "noun",
+      "synonyms": [
+        "learning objective"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "outcome delivery",
+        "outcome variable"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/outcome#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=outcome&oldid=93517328",
+    "distinctionTask": {
+      "prompt": "A syllabus lists an intended learning outcome. This _____.",
+      "options": [
+        "states a goal whose achievement still needs evidence",
+        "proves every student has already achieved it"
+      ],
+      "answer": "states a goal whose achievement still needs evidence",
+      "explanation": "An intended result and demonstrated achievement are different."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-315a532f",
+    "senseId": "kaikki:f0c64b37093fd1a4bc",
+    "definition": "The result or scoreline of a sporting contest.",
+    "example": "The outcome was a 2–1 win for the visitors.",
+    "collocations": [
+      "the match outcome",
+      "the final outcome",
+      "predict the outcome"
+    ],
+    "distinctions": [
+      "This sense names the final sporting result. A prediction of the outcome is not the result itself, and a team’s possession or number of attempts does not alone determine the scoreline."
+    ],
+    "usage": "Chiefly sport.",
+    "originalSense": {
+      "id": "kaikki:f0c64b37093fd1a4bc",
+      "definition": "The scoreline; the result.",
+      "example": "Spain failed to move through the gears despite exerting control for lengthy spells and a measure of perspective must be applied immediately to the outcome.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "outcome delivery",
+        "outcome variable"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/outcome#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=outcome&oldid=93517328",
+    "distinctionTask": {
+      "prompt": "The final outcome is a 2–1 win for the visitors. It describes _____.",
+      "options": [
+        "the completed match result",
+        "a guarantee based only on possession"
+      ],
+      "answer": "the completed match result",
+      "explanation": "The scoreline records the result; possession is not itself the score."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
   }
 ]

@@ -9,8 +9,8 @@ import { TodayPage } from './TodayPage';
 
 const mocks=vi.hoisted(()=>({state:null,start:vi.fn(),generate:vi.fn(),skill:'writing'}));
 vi.mock('../../context/FieldbookContext',()=>({useFieldbook:()=>({state:mocks.state,activeSkill:mocks.skill,ensureUnifiedPlans:mocks.generate,startPlan:mocks.start})}));
-beforeEach(()=>{mocks.state=emptyState();mocks.start.mockReset().mockResolvedValue(true);mocks.generate.mockReset().mockResolvedValue(true);mocks.skill='writing';});
-afterEach(cleanup);
+beforeEach(()=>{vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(2026,9,17,12));mocks.state=emptyState();mocks.start.mockReset().mockResolvedValue(true);mocks.generate.mockReset().mockResolvedValue(true);mocks.skill='writing';});
+afterEach(()=>{cleanup();vi.useRealTimers();});
 const plan=(id,skill,status='pending',day=dateKey(new Date()))=>({id,skill,kind:`${skill}-practice`,status,dateKey:day,title:`${skill} task`,description:'Selected practice',estimatedMinutes:20,completion:{description:'Submit the selected section.'}});
 const renderPage=()=>render(<MemoryRouter><TodayPage/></MemoryRouter>);
 
@@ -52,6 +52,14 @@ test('an empty day waits for planning and never claims unearned completion',asyn
   expect(screen.queryByRole('heading',{name:'Today is complete'})).not.toBeInTheDocument();
   finish(true);
   expect(await screen.findByRole('heading',{name:'No tasks planned yet'})).toBeInTheDocument();
+});
+
+test('a Sunday rest day is distinct from completing a study day',async()=>{
+  vi.setSystemTime(new Date(2026,9,18,12));
+  renderPage();await waitFor(()=>expect(mocks.generate).toHaveBeenCalled());
+  expect(await screen.findByRole('heading',{name:'Rest day'})).toBeInTheDocument();
+  expect(screen.queryByRole('heading',{name:'Today is complete'})).not.toBeInTheDocument();
+  expect(screen.getByText('Rest day. You can still add a task in Planning.')).toBeInTheDocument();
 });
 test('today progress takes priority over old work and previous tasks keep their own dates and actions',async()=>{
   mocks.state.plans=[plan('old','reading','in_progress','2020-01-01'),plan('current','speaking','in_progress')];

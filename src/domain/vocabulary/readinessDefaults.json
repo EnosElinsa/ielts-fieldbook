@@ -16581,5 +16581,321 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "originalSense": {
+      "id": "kaikki:841e87b6ead2f532da",
+      "definition": "A significant or strong influence or effect.",
+      "example": "His friend's opinion had an impact on his decision.",
+      "pos": "noun",
+      "synonyms": [
+        "percussion"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "figuratively, proscribed",
+      "register": "countable, figuratively, proscribed, uncountable",
+      "wordFamily": [
+        "impinge"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/impact#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:841e87b6ead2f532da",
+      "definition": "A strong or significant influence or effect.",
+      "example": "The new bus route had a positive impact on access to the hospital.",
+      "pos": "noun",
+      "synonyms": [
+        "percussion"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "have an impact on",
+        "a positive impact",
+        "environmental impact"
+      ],
+      "usage": "Figurative; source labels proscribed.",
+      "register": "countable, figuratively, proscribed, uncountable",
+      "wordFamily": [
+        "impinge"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/impact#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A figurative impact need not involve a physical collision and can be beneficial or harmful. The source labels this use proscribed and notes objections by some editors; this records a style objection, not a claim that the use never occurs or is obsolete. Effect is often a neutral alternative."
+      ],
+      "distinctionTask": {
+        "prompt": "A bus route has a positive impact on access. This describes _____.",
+        "options": [
+          "a beneficial effect",
+          "a collision with the hospital"
+        ],
+        "answer": "a beneficial effect",
+        "explanation": "The effect is figurative and is explicitly described as positive."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-8e676850",
+    "originalSense": {
+      "id": "kaikki:ae806587e0cde7cea3",
+      "definition": "The power to affect, control or manipulate something or someone; the ability to change the development of fluctuating things such as conduct, thoughts or decisions.",
+      "example": "I have absolutely no influence over him.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "agent of influence",
+        "area of influence",
+        "bad influence",
+        "influenceless",
+        "influence machine",
+        "influence peddling",
+        "kidfluence",
+        "malinfluence",
+        "noninfluence",
+        "sphere of influence",
+        "trading in influence",
+        "traffic of influence",
+        "under the influence",
+        "undue influence",
+        "uninfluence",
+        "coinfluence",
+        "counterinfluence",
+        "influencer",
+        "misinfluence",
+        "thinkfluence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/influence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:ae806587e0cde7cea3",
+      "definition": "The power or ability to affect a person, decision or development.",
+      "example": "The committee has influence over the final decision.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "influence over a decision",
+        "political influence",
+        "a sphere of influence"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "agent of influence",
+        "area of influence",
+        "bad influence",
+        "influenceless",
+        "influence machine",
+        "influence peddling",
+        "kidfluence",
+        "malinfluence",
+        "noninfluence",
+        "sphere of influence",
+        "trading in influence",
+        "traffic of influence",
+        "under the influence",
+        "undue influence",
+        "uninfluence",
+        "coinfluence",
+        "counterinfluence",
+        "influencer",
+        "misinfluence",
+        "thinkfluence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/influence#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Having influence is having some power to affect an outcome. It does not necessarily mean complete control, a guaranteed decision or deliberate manipulation."
+      ],
+      "distinctionTask": {
+        "prompt": "The committee has influence over a decision. This guarantees _____.",
+        "options": [
+          "some ability to affect it, not complete control",
+          "the exact final decision it wants"
+        ],
+        "answer": "some ability to affect it, not complete control",
+        "explanation": "Influence is a power to affect; it need not amount to full control."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-a279a1b8",
+    "originalSense": {
+      "id": "kaikki:2f97b854096db2249b",
+      "definition": "An effect; something that follows a cause as a result.",
+      "example": "The lobule margins, furthermore, are arched away from the lobe, with the consequence that (when fully inflated) the abaxial leaf surface forms the interior lining of the lobule.",
+      "pos": "noun",
+      "synonyms": [
+        "aftercome"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "actions have consequences",
+        "as a consequence of",
+        "consequenceless",
+        "inconsequence",
+        "in consequence",
+        "law of unintended consequences",
+        "legal consequence",
+        "legal effect and consequence",
+        "misconsequence",
+        "nonconsequence",
+        "of consequence",
+        "unintended consequence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/consequence#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:2f97b854096db2249b",
+      "definition": "An effect or result that follows from a cause.",
+      "example": "One consequence of the new timetable was a shorter wait between trains.",
+      "pos": "noun",
+      "synonyms": [
+        "aftercome"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "a consequence of",
+        "as a consequence",
+        "a direct consequence"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "actions have consequences",
+        "as a consequence of",
+        "consequenceless",
+        "inconsequence",
+        "in consequence",
+        "law of unintended consequences",
+        "legal consequence",
+        "legal effect and consequence",
+        "misconsequence",
+        "nonconsequence",
+        "of consequence",
+        "unintended consequence"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/consequence#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A consequence can be beneficial, harmful or neutral. Following something in time alone does not establish causation; the example explicitly presents the shorter wait as a result of the timetable."
+      ],
+      "distinctionTask": {
+        "prompt": "A shorter wait is a beneficial consequence of a timetable change. Consequence _____.",
+        "options": [
+          "can name a positive result",
+          "always means a punishment"
+        ],
+        "answer": "can name a positive result",
+        "explanation": "The general result sense is not restricted to harmful outcomes."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-315a532f",
+    "originalSense": {
+      "id": "kaikki:9b62851048ed86180f",
+      "definition": "That which is produced or occurs as a result of an event or process.",
+      "example": "A quality automobile is the outcome of the work of skilled engineers and thousands of workers.",
+      "pos": "noun",
+      "synonyms": [
+        "fate",
+        "termination"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "outcome delivery",
+        "outcome variable"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/outcome#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:9b62851048ed86180f",
+      "definition": "A result produced by an event or process.",
+      "example": "The outcome of the meeting was an agreement to share the equipment.",
+      "pos": "noun",
+      "synonyms": [
+        "fate",
+        "termination"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "the outcome of",
+        "a possible outcome",
+        "a favourable outcome"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "outcome delivery",
+        "outcome variable"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/outcome#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "An outcome is a result. It need not be favourable, intended or inevitable; describing an agreed outcome does not establish that every later action has been completed."
+      ],
+      "distinctionTask": {
+        "prompt": "A meeting’s outcome is an agreement. This establishes _____.",
+        "options": [
+          "the stated result of the meeting",
+          "that every later action has already been completed"
+        ],
+        "answer": "the stated result of the meeting",
+        "explanation": "An agreement can be an outcome without proving subsequent implementation."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

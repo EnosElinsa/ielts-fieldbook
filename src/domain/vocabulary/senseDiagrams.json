@@ -1942,5 +1942,157 @@
     "definition": "To bring someone to agree, accept or act, usually through reasoning or verbal influence.",
     "pos": "verb",
     "kind": "persuade-agreement"
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:7823582e0b34d3d995",
+    "term": "impact",
+    "definition": "The collision of one physical body with another.",
+    "pos": "noun",
+    "kind": "impact-collision"
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:ed69f35a063e109d8f",
+    "term": "impact",
+    "definition": "The force or energy associated with a collision.",
+    "pos": "noun",
+    "kind": "impact-quantities"
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:841e87b6ead2f532da",
+    "term": "impact",
+    "definition": "A strong or significant influence or effect.",
+    "pos": "noun",
+    "kind": "impact-effect"
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:ef70d26d1e06f48c26",
+    "term": "impact",
+    "definition": "To strike or collide with something.",
+    "pos": "verb",
+    "kind": "impact-strike"
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:9a581e9cdaa2cd5100",
+    "term": "impact",
+    "definition": "To compress or pack material closely together.",
+    "pos": "verb",
+    "kind": "impact-compaction"
+  },
+  {
+    "entryId": "ve-5fc4c9c7",
+    "senseId": "kaikki:dbc3a31fe7b7114658",
+    "term": "impact",
+    "definition": "To strongly affect or influence something.",
+    "pos": "verb",
+    "kind": "impact-affect"
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:ae806587e0cde7cea3",
+    "term": "influence",
+    "definition": "The power or ability to affect a person, decision or development.",
+    "pos": "noun",
+    "kind": "influence-capacity"
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:4506e913b49d6f7915",
+    "term": "influence",
+    "definition": "The action of exerting power to affect someone or something.",
+    "pos": "noun",
+    "kind": "influence-action"
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:b434227d52bc175329",
+    "term": "influence",
+    "definition": "A person or thing that affects someone or something.",
+    "pos": "noun",
+    "kind": "influence-person"
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:3926448636eb17a6ea",
+    "term": "influence",
+    "definition": "In electricity, electrostatic induction: a redistribution of charge caused by a nearby charged body.",
+    "pos": "noun",
+    "kind": "influence-induction"
+  },
+  {
+    "entryId": "ve-8e676850",
+    "senseId": "kaikki:32cba743a5ee835933",
+    "term": "influence",
+    "definition": "To affect or sway someone or something, often through indirect or subtle action.",
+    "pos": "verb",
+    "kind": "influence-sway"
+  },
+  {
+    "entryId": "ve-a279a1b8",
+    "senseId": "kaikki:2f97b854096db2249b",
+    "term": "consequence",
+    "definition": "An effect or result that follows from a cause.",
+    "pos": "noun",
+    "kind": "consequence-result"
+  },
+  {
+    "entryId": "ve-a279a1b8",
+    "senseId": "kaikki:3ef61f56124e5d445f",
+    "term": "consequence",
+    "definition": "A conclusion drawn by deduction or inference.",
+    "pos": "noun",
+    "kind": "consequence-conclusion"
+  },
+  {
+    "entryId": "ve-a279a1b8",
+    "senseId": "kaikki:e04333f7b71f559990",
+    "term": "consequence",
+    "definition": "Importance or significance, especially in the expression of consequence.",
+    "pos": "noun",
+    "kind": "consequence-importance"
+  },
+  {
+    "entryId": "ve-a279a1b8",
+    "senseId": "wiktionary:restored:962c22f990ff39e24e",
+    "term": "consequence",
+    "definition": "An unwanted or unpleasant result.",
+    "pos": "noun",
+    "kind": "consequence-unwanted"
+  },
+  {
+    "entryId": "ve-315a532f",
+    "senseId": "kaikki:9b62851048ed86180f",
+    "term": "outcome",
+    "definition": "A result produced by an event or process.",
+    "pos": "noun",
+    "kind": "outcome-result"
+  },
+  {
+    "entryId": "ve-315a532f",
+    "senseId": "kaikki:f9a2960e9c4bcad6ce",
+    "term": "outcome",
+    "definition": "In probability, one possible result of a random trial: an element of its sample space.",
+    "pos": "noun",
+    "kind": "outcome-probability"
+  },
+  {
+    "entryId": "ve-315a532f",
+    "senseId": "kaikki:5a2f00730e9cb3dff0",
+    "term": "outcome",
+    "definition": "An intended learning result, or evidence of what a learner can do after an experience.",
+    "pos": "noun",
+    "kind": "outcome-learning"
+  },
+  {
+    "entryId": "ve-315a532f",
+    "senseId": "kaikki:f0c64b37093fd1a4bc",
+    "term": "outcome",
+    "definition": "The result or scoreline of a sporting contest.",
+    "pos": "noun",
+    "kind": "outcome-score"
   }
 ]
