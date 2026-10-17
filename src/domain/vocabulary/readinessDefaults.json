@@ -12762,34 +12762,10 @@
   },
   {
     "entryId": "ve-1dc7c769",
-    "sense": {
-      "id": "kaikki:ad01edc92fe290ea33",
-      "definition": "Facts or details about a person, place, event or subject.",
-      "example": "The website provides information about local bus services.",
-      "pos": "noun",
-      "synonyms": [],
-      "antonyms": [],
-      "collocations": [
-        "provide information",
-        "further information"
-      ],
-      "usage": "usually",
-      "register": "uncountable, usually",
-      "wordFamily": [],
-      "source": "English Wiktionary via Kaikki.org",
-      "attribution": "English Wiktionary contributors",
-      "sourceUrl": "https://en.wiktionary.org/wiki/information#English",
-      "license": "CC-BY-SA-4.0",
-      "editorial": {
-        "source": "Fieldbook meaning and example review",
-        "license": "CC-BY-4.0",
-        "attribution": "Fieldbook editorial contributors"
-      }
-    },
     "originalSense": {
-      "id": "kaikki:2487870c8d09234ec3",
-      "definition": "Something that provides a definitive characterization or description of the nature and attributes of a specified entity.",
-      "example": "And now we come to the third keystone, information.⁸ Information may be thought of as a reduction in entropy—as the ingredient that distinguishes an orderly, structured system from the vast set of random, useless ones.⁹ Imagine pages of random characters tapped out by a monkey at a typewriter, or a stretch of white noise from a radio tuned between channels, or a screenful of confetti from a corrupted computer file. Each of these objects can take trillions of different forms, each as boring as the next. But now suppose that the devices are controlled by a signal that arranges the characters or sound waves or pixels into a pattern that correlates with something in the world: the Declaration of Independence, the opening bars of “Hey Jude,” a cat wearing sunglasses. We say that the signal transmits information about the Declaration or the song or the cat.¹⁰",
+      "id": "kaikki:ad01edc92fe290ea33",
+      "definition": "Things that are or can be known about a given topic; communicable knowledge of something.",
+      "example": "I need some more information about this issue.",
       "pos": "noun",
       "synonyms": [],
       "antonyms": [],
@@ -12832,6 +12808,75 @@
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/information#English",
       "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:ad01edc92fe290ea33",
+      "definition": "Things that are or can be known about a topic; knowledge that can be communicated.",
+      "example": "Please send us information about the course fees.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "information about",
+        "a piece of information",
+        "further information",
+        "provide information"
+      ],
+      "usage": "Usually uncountable; communicable knowledge.",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "advermation",
+        "aesthetic information",
+        "Akaike information criterion",
+        "bioinformation",
+        "black information",
+        "chief information officer",
+        "counterinformation",
+        "cyberinformation",
+        "disinformation",
+        "esthetic information",
+        "Fisher information",
+        "flight information region",
+        "for your information",
+        "freedom of information",
+        "FYI",
+        "geographic information science",
+        "geographic information system",
+        "geoinformation",
+        "hyperinformation",
+        "info",
+        "infobesity",
+        "infocommunications",
+        "infodemic",
+        "infoganda",
+        "infohazard",
+        "infomediary",
+        "infomercial",
+        "informational",
+        "information and communications technology",
+        "information arbitrage"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/information#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Ordinary topic information is uncountable in standard learner writing: some information or a piece of information. The separate countable legal meaning does not make informations the ordinary plural for course details."
+      ],
+      "distinctionTask": {
+        "prompt": "For ordinary course details, standard learner writing uses _____.",
+        "options": [
+          "some information or a piece of information",
+          "three informations as the ordinary plural"
+        ],
+        "answer": "some information or a piece of information",
+        "explanation": "Ordinary communicable information is uncountable; the legal noun has a separate countable use."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
     }
   },
   {
@@ -20123,6 +20168,343 @@
         ],
         "answer": "imparting knowledge, skills and judgement",
         "explanation": "An educational process and each learner’s assessed outcome are different."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7c6adc15",
+    "originalSense": {
+      "id": "kaikki:d66d308cabaa7cef63",
+      "definition": "Material recorded and known or assumed as facts and used as a basis for reasoning, discussion, or calculation, represented especially in the form of numbers, and usually structured (such as statistics).",
+      "example": "Near-synonyms: dataset, data set, data points",
+      "pos": "noun",
+      "synonyms": [
+        "dataset",
+        "data set",
+        "data points"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "collective",
+      "register": "collective, uncountable",
+      "wordFamily": [
+        "abstract data type",
+        "air data",
+        "algebraic data type",
+        "anecdata",
+        "application protocol data unit",
+        "automatic data processing machine",
+        "biodata",
+        "bulk data",
+        "cellular data",
+        "champion data",
+        "dark data",
+        "data access object",
+        "data acquisition",
+        "data analysis",
+        "databack",
+        "data bank",
+        "databank",
+        "data base",
+        "database",
+        "data-base",
+        "databend",
+        "data binding",
+        "data binning",
+        "data blocker",
+        "databook",
+        "data-bound",
+        "databox",
+        "data breach",
+        "data broker",
+        "data bus"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/data#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:d66d308cabaa7cef63",
+      "definition": "Recorded material, known or assumed as facts, used as a basis for reasoning, discussion or calculation.",
+      "example": "The data include observations and assumed values used in the calculation.",
+      "pos": "noun",
+      "synonyms": [
+        "dataset",
+        "data set",
+        "data points"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "collect data",
+        "recorded data",
+        "data for analysis",
+        "assumed values"
+      ],
+      "usage": "Collective; recorded material used as a basis.",
+      "register": "collective, uncountable",
+      "wordFamily": [
+        "abstract data type",
+        "air data",
+        "algebraic data type",
+        "anecdata",
+        "application protocol data unit",
+        "automatic data processing machine",
+        "biodata",
+        "bulk data",
+        "cellular data",
+        "champion data",
+        "dark data",
+        "data access object",
+        "data acquisition",
+        "data analysis",
+        "databack",
+        "data bank",
+        "databank",
+        "data base",
+        "database",
+        "data-base",
+        "databend",
+        "data binding",
+        "data binning",
+        "data blocker",
+        "databook",
+        "data-bound",
+        "databox",
+        "data breach",
+        "data broker",
+        "data bus"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/data#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Data can include assumptions or observations with errors; being recorded does not automatically establish verified truth. This source says especially numbers and usually structured, rather than restricting all data to numerical tables. Agreement can be plural or collective according to context and style."
+      ],
+      "distinctionTask": {
+        "prompt": "The recorded assumed values are data here because they _____.",
+        "options": [
+          "serve as inputs to the reasoning or calculation",
+          "have necessarily been verified as true observations"
+        ],
+        "answer": "serve as inputs to the reasoning or calculation",
+        "explanation": "The definition includes recorded material known or assumed as facts."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-616d6257",
+    "originalSense": {
+      "id": "kaikki:9b1cff84b7d86181ee",
+      "definition": "Decomposition into components in order to study (a complex thing, concept, theory, etc.).",
+      "example": "comparative analysis",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "synthesis"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "abstract harmonic analysis",
+        "activation analysis",
+        "algebraic analysis",
+        "amortized analysis",
+        "analysis of algorithms",
+        "analysis of variance",
+        "analysis paralysis",
+        "analysis situs",
+        "analysist",
+        "asymptotic analysis",
+        "aura analysis",
+        "autoanalysis",
+        "banalysis",
+        "bioanalysis",
+        "bowling analysis",
+        "chemical analysis",
+        "cluster analysis",
+        "cluter analysis",
+        "coanalysis",
+        "competitive analysis",
+        "complex analysis",
+        "computable analysis",
+        "computer program analysis",
+        "conceptual analysis",
+        "conformational analysis",
+        "conversation analysis",
+        "cost benefit analysis",
+        "cost-benefit analysis",
+        "coverage analysis",
+        "cryptanalysis"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/analysis#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:9b1cff84b7d86181ee",
+      "definition": "Separating something complex into components in order to study it.",
+      "example": "Our analysis separates the transport plan into costs, capacity and access.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "synthesis"
+      ],
+      "collocations": [
+        "analysis of a plan",
+        "carry out an analysis",
+        "component analysis",
+        "analyse costs"
+      ],
+      "usage": "Countable process of studying components; plural analyses.",
+      "register": "countable",
+      "wordFamily": [
+        "abstract harmonic analysis",
+        "activation analysis",
+        "algebraic analysis",
+        "amortized analysis",
+        "analysis of algorithms",
+        "analysis of variance",
+        "analysis paralysis",
+        "analysis situs",
+        "analysist",
+        "asymptotic analysis",
+        "aura analysis",
+        "autoanalysis",
+        "banalysis",
+        "bioanalysis",
+        "bowling analysis",
+        "chemical analysis",
+        "cluster analysis",
+        "cluter analysis",
+        "coanalysis",
+        "competitive analysis",
+        "complex analysis",
+        "computable analysis",
+        "computer program analysis",
+        "conceptual analysis",
+        "conformational analysis",
+        "conversation analysis",
+        "cost benefit analysis",
+        "cost-benefit analysis",
+        "coverage analysis",
+        "cryptanalysis"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/analysis#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The separation can be conceptual, as with aspects of a transport plan. It need not mean physically cutting an object into pieces, and conducting an analysis does not guarantee a correct or complete conclusion."
+      ],
+      "distinctionTask": {
+        "prompt": "Analysis of costs, capacity and access separates _____.",
+        "options": [
+          "conceptual aspects of the plan for study",
+          "physical pieces cut from the transport plan"
+        ],
+        "answer": "conceptual aspects of the plan for study",
+        "explanation": "Analysis can separate aspects conceptually without physically cutting anything."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-c8187812",
+    "originalSense": {
+      "id": "kaikki:d1b4aa78649bddaeb1",
+      "definition": "To explain or tell the meaning of; to translate orally into intelligible or familiar language or terms. applied especially to language, but also to dreams, signs, conduct, mysteries, etc.",
+      "example": "to interpret an Indian speech",
+      "pos": "verb",
+      "synonyms": [
+        "translate",
+        "explain",
+        "construe",
+        "solve",
+        "render",
+        "expound",
+        "elucidate",
+        "decipher",
+        "unfold",
+        "unravel"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "interpretory",
+        "overinterpret",
+        "preinterpret"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/interpret#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:d1b4aa78649bddaeb1",
+      "definition": "To explain or state the meaning of something in intelligible or familiar terms.",
+      "example": "Experts interpret the results for the committee.",
+      "pos": "verb",
+      "synonyms": [
+        "translate",
+        "explain",
+        "construe",
+        "solve",
+        "render",
+        "expound",
+        "elucidate",
+        "decipher",
+        "unfold",
+        "unravel"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "interpret results",
+        "interpret a sign",
+        "interpret something as",
+        "interpret for an audience"
+      ],
+      "usage": "Explain or tell the meaning; applies beyond language translation.",
+      "register": "",
+      "wordFamily": [
+        "interpretory",
+        "overinterpret",
+        "preinterpret"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/interpret#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Explaining results need not involve translating between languages. Interpret something as introduces the meaning assigned to it, and competing interpretations can require evidence rather than being automatically correct."
+      ],
+      "distinctionTask": {
+        "prompt": "Interpret the results for the committee means _____.",
+        "options": [
+          "explain what the results mean",
+          "necessarily translate every result between two languages"
+        ],
+        "answer": "explain what the results mean",
+        "explanation": "Interpret has a broader explanatory use beyond language mediation."
       },
       "editorial": {
         "source": "Fieldbook core content review",

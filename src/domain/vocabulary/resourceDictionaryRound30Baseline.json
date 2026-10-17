@@ -1,0 +1,230 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:2487870c8d09234ec3"
+    },
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:ad01edc92fe290ea33"
+    },
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:52016b31672cf19966"
+    },
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:f1f651aef10efe7aba"
+    },
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:60d472628ade5d2bef"
+    },
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:87071fc3e0ce41e1b7"
+    },
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:ee730a38831b308023"
+    },
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:7f1d43d957b7be8fae"
+    },
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:38a92e2f671eb730a3"
+    },
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:8dafa71d2a4d0949ba"
+    },
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:3fa2f0f430fb8c0ac4"
+    },
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:793b0173dd95afd246"
+    },
+    {
+      "entryId": "ve-1dc7c769",
+      "senseId": "kaikki:0ea616581d9b21a668"
+    },
+    {
+      "entryId": "ve-7c6adc15",
+      "senseId": "kaikki:bf7e2d24e1b8a582e7"
+    },
+    {
+      "entryId": "ve-7c6adc15",
+      "senseId": "kaikki:aef021cef1a863288a"
+    },
+    {
+      "entryId": "ve-7c6adc15",
+      "senseId": "kaikki:d66d308cabaa7cef63"
+    },
+    {
+      "entryId": "ve-7c6adc15",
+      "senseId": "kaikki:99e2d2a86f5269ae1c"
+    },
+    {
+      "entryId": "ve-7c6adc15",
+      "senseId": "kaikki:2fafe6bfc44da5214e"
+    },
+    {
+      "entryId": "ve-616d6257",
+      "senseId": "kaikki:9b1cff84b7d86181ee"
+    },
+    {
+      "entryId": "ve-616d6257",
+      "senseId": "kaikki:2b0f0b9dc42de2e59f"
+    },
+    {
+      "entryId": "ve-616d6257",
+      "senseId": "kaikki:d3851c55b8761031f5"
+    },
+    {
+      "entryId": "ve-616d6257",
+      "senseId": "kaikki:2fd3fdf2ffec065325"
+    },
+    {
+      "entryId": "ve-616d6257",
+      "senseId": "kaikki:f64645b690eb7163ca"
+    },
+    {
+      "entryId": "ve-616d6257",
+      "senseId": "kaikki:4270beda1f3bc207b5"
+    },
+    {
+      "entryId": "ve-616d6257",
+      "senseId": "kaikki:d7596e510264efba58"
+    },
+    {
+      "entryId": "ve-c8187812",
+      "senseId": "kaikki:d1b4aa78649bddaeb1"
+    },
+    {
+      "entryId": "ve-c8187812",
+      "senseId": "kaikki:17bbda63a3a570d478"
+    },
+    {
+      "entryId": "ve-c8187812",
+      "senseId": "kaikki:8f668311090b2df506"
+    },
+    {
+      "entryId": "ve-c8187812",
+      "senseId": "kaikki:71802e299c21f6bdfd"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-c8187812",
+      "senseId": "kaikki:bd44b3627fce3c90e9",
+      "term": "interpret",
+      "example": "We need to interpret the survey results before recommending changes.",
+      "definition": "To work out and explain the meaning of something.",
+      "originalSense": {
+        "id": "kaikki:bd44b3627fce3c90e9",
+        "definition": "To decode the meaning of a topic and then act, whether to continue researching the topic, follow through, act in opposition, or further the understanding through sharing an interpretation.",
+        "example": "",
+        "pos": "verb",
+        "synonyms": [
+          "take",
+          "understand",
+          "construe"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "interpretory",
+          "overinterpret",
+          "preinterpret"
+        ]
+      }
+    }
+  ],
+  "removeDefaults": [
+    "ve-7c6adc15",
+    "ve-616d6257",
+    "ve-c8187812"
+  ],
+  "restoreDefaults": [
+    {
+      "entryId": "ve-1dc7c769",
+      "sense": {
+        "id": "kaikki:ad01edc92fe290ea33",
+        "definition": "Facts or details about a person, place, event or subject.",
+        "example": "The website provides information about local bus services.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [
+          "provide information",
+          "further information"
+        ],
+        "usage": "usually",
+        "register": "uncountable, usually",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/information#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook meaning and example review",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      },
+      "originalSense": {
+        "id": "kaikki:2487870c8d09234ec3",
+        "definition": "Something that provides a definitive characterization or description of the nature and attributes of a specified entity.",
+        "example": "And now we come to the third keystone, information.⁸ Information may be thought of as a reduction in entropy—as the ingredient that distinguishes an orderly, structured system from the vast set of random, useless ones.⁹ Imagine pages of random characters tapped out by a monkey at a typewriter, or a stretch of white noise from a radio tuned between channels, or a screenful of confetti from a corrupted computer file. Each of these objects can take trillions of different forms, each as boring as the next. But now suppose that the devices are controlled by a signal that arranges the characters or sound waves or pixels into a pattern that correlates with something in the world: the Declaration of Independence, the opening bars of “Hey Jude,” a cat wearing sunglasses. We say that the signal transmits information about the Declaration or the song or the cat.¹⁰",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "usually",
+        "register": "uncountable, usually",
+        "wordFamily": [
+          "advermation",
+          "aesthetic information",
+          "Akaike information criterion",
+          "bioinformation",
+          "black information",
+          "chief information officer",
+          "counterinformation",
+          "cyberinformation",
+          "disinformation",
+          "esthetic information",
+          "Fisher information",
+          "flight information region",
+          "for your information",
+          "freedom of information",
+          "FYI",
+          "geographic information science",
+          "geographic information system",
+          "geoinformation",
+          "hyperinformation",
+          "info",
+          "infobesity",
+          "infocommunications",
+          "infodemic",
+          "infoganda",
+          "infohazard",
+          "infomediary",
+          "infomercial",
+          "informational",
+          "information and communications technology",
+          "information arbitrage"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/information#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    }
+  ]
+}

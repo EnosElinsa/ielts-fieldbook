@@ -63,7 +63,7 @@ test.each([
  ['field work','kaikki:0295461999c1952d87',/research|data/i,'The students carried out field work along the river.'],
  ['equipment','kaikki:8d82739194a584c438',/tools|machines/i,'The laboratory needs new safety equipment.'],
  ['adult','kaikki:af051e9f8856aca835',/person/i,'The museum charges twelve pounds per adult.'],
- ['information','kaikki:ad01edc92fe290ea33',/facts|details/i,'The website provides information about local bus services.'],
+ ['information','kaikki:ad01edc92fe290ea33',/knowledge.*communicated/i,'Please send us information about the course fees.'],
  ['leave','kaikki:928e340320239c3229',/depart|go away/i,'The train leaves the station at six.'],
  ['boring','kaikki:89438881f91bb113ab',/not interesting/i,'The lecture was boring, so it was difficult to concentrate.'],
  ['insane','kaikki:f8feb09013eb41108c',/unreasonable|impractical/i,'It would be insane to spend the entire budget on one event.'],
@@ -76,7 +76,11 @@ test.each([
   expect(result.sense?.id).toBe(id);
   expect(result.sense?.definition).toMatch(definition);
   expect(result.sense?.example).toBe(example);
-  expect(result.entry.senses).toContainEqual(raw.senses[0]);
+  if(term==='information') {
+   const originalMeaning=result.entry.senses.find(sense=>sense.id===raw.senses[0].id);
+   expect(originalMeaning?.definition).toMatch(/describes.*attributes/);
+   expect(originalMeaning?.example).toContain('specimen');
+  } else expect(result.entry.senses).toContainEqual(raw.senses[0]);
  }
  expect(raw).toEqual(before);
  raw.senses[0].definition='My own course meaning.';

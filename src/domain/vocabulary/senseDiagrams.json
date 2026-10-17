@@ -3302,5 +3302,197 @@
     "definition": "The facts, skills and ideas someone has learned, especially through formal instruction.",
     "pos": "noun",
     "kind": "education-acquired"
+  },
+  {
+    "entryId": "ve-1dc7c769",
+    "senseId": "kaikki:2487870c8d09234ec3",
+    "term": "information",
+    "definition": "Something that characterises or describes the nature and attributes of an entity.",
+    "pos": "noun",
+    "kind": "information-description"
+  },
+  {
+    "entryId": "ve-1dc7c769",
+    "senseId": "kaikki:ad01edc92fe290ea33",
+    "term": "information",
+    "definition": "Things that are or can be known about a topic; knowledge that can be communicated.",
+    "pos": "noun",
+    "kind": "information-topic"
+  },
+  {
+    "entryId": "ve-1dc7c769",
+    "senseId": "kaikki:52016b31672cf19966",
+    "term": "information",
+    "definition": "The act of informing someone or imparting knowledge; notification.",
+    "pos": "noun",
+    "kind": "information-notification"
+  },
+  {
+    "entryId": "ve-1dc7c769",
+    "senseId": "kaikki:f1f651aef10efe7aba",
+    "term": "information",
+    "definition": "A formal statement of alleged criminal activity presented to a judge or magistrate in certain legal procedures.",
+    "pos": "noun",
+    "kind": "information-accusation"
+  },
+  {
+    "entryId": "ve-1dc7c769",
+    "senseId": "kaikki:7f1d43d957b7be8fae",
+    "term": "information",
+    "definition": "In formal computing usage, meaning assigned by a person to data using known conventions of representation.",
+    "pos": "noun",
+    "kind": "information-convention"
+  },
+  {
+    "entryId": "ve-1dc7c769",
+    "senseId": "kaikki:8dafa71d2a4d0949ba",
+    "term": "information",
+    "definition": "A telephone service that supplies subscribers’ listed telephone numbers.",
+    "pos": "noun",
+    "kind": "information-directory"
+  },
+  {
+    "entryId": "ve-1dc7c769",
+    "senseId": "kaikki:3fa2f0f430fb8c0ac4",
+    "term": "information",
+    "definition": "In information theory, unambiguous abstract data, with information amounts commonly measured in bits.",
+    "pos": "noun",
+    "kind": "information-bits"
+  },
+  {
+    "entryId": "ve-1dc7c769",
+    "senseId": "kaikki:793b0173dd95afd246",
+    "term": "information",
+    "definition": "In data management, structured and interpretable output produced by collecting, manipulating and organising raw data.",
+    "pos": "noun",
+    "kind": "information-output"
+  },
+  {
+    "entryId": "ve-1dc7c769",
+    "senseId": "kaikki:0ea616581d9b21a668",
+    "term": "information",
+    "definition": "In information technology, an ordered sequence of symbols or signals that could contain a message.",
+    "pos": "noun",
+    "kind": "information-sequence"
+  },
+  {
+    "entryId": "ve-7c6adc15",
+    "senseId": "kaikki:bf7e2d24e1b8a582e7",
+    "term": "data",
+    "definition": "The plural of datum: individual items of information.",
+    "pos": "noun",
+    "kind": "data-plural"
+  },
+  {
+    "entryId": "ve-7c6adc15",
+    "senseId": "kaikki:aef021cef1a863288a",
+    "term": "data",
+    "definition": "Information represented in a computer, such as symbols, numbers, sound, images or video, for storage, processing or transmission.",
+    "pos": "noun",
+    "kind": "data-representation"
+  },
+  {
+    "entryId": "ve-7c6adc15",
+    "senseId": "kaikki:d66d308cabaa7cef63",
+    "term": "data",
+    "definition": "Recorded material, known or assumed as facts, used as a basis for reasoning, discussion or calculation.",
+    "pos": "noun",
+    "kind": "data-basis"
+  },
+  {
+    "entryId": "ve-7c6adc15",
+    "senseId": "kaikki:99e2d2a86f5269ae1c",
+    "term": "data",
+    "definition": "Mobile data: digital information transmitted over a cellular telephone network rather than Wi-Fi.",
+    "pos": "noun",
+    "kind": "data-cellular"
+  },
+  {
+    "entryId": "ve-616d6257",
+    "senseId": "kaikki:9b1cff84b7d86181ee",
+    "term": "analysis",
+    "definition": "Separating something complex into components in order to study it.",
+    "pos": "noun",
+    "kind": "analysis-components"
+  },
+  {
+    "entryId": "ve-616d6257",
+    "senseId": "kaikki:2b0f0b9dc42de2e59f",
+    "term": "analysis",
+    "definition": "The result of studying something by separating it into components.",
+    "pos": "noun",
+    "kind": "analysis-result"
+  },
+  {
+    "entryId": "ve-616d6257",
+    "senseId": "kaikki:d3851c55b8761031f5",
+    "term": "analysis",
+    "definition": "A broad branch of mathematics concerned with functions, sequences, series, limits, spaces, measures and related topics.",
+    "pos": "noun",
+    "kind": "analysis-mathematics"
+  },
+  {
+    "entryId": "ve-616d6257",
+    "senseId": "kaikki:2fd3fdf2ffec065325",
+    "term": "analysis",
+    "definition": "In logic, proof by deduction from known truths.",
+    "pos": "noun",
+    "kind": "analysis-deduction"
+  },
+  {
+    "entryId": "ve-616d6257",
+    "senseId": "kaikki:f64645b690eb7163ca",
+    "term": "analysis",
+    "definition": "In chemistry, examination of a substance’s constituent parts or composition, or the result of that examination.",
+    "pos": "noun",
+    "kind": "analysis-composition"
+  },
+  {
+    "entryId": "ve-616d6257",
+    "senseId": "kaikki:4270beda1f3bc207b5",
+    "term": "analysis",
+    "definition": "In music, systematic study of melody, harmony, repetition, variation and other musical relationships.",
+    "pos": "noun",
+    "kind": "analysis-music"
+  },
+  {
+    "entryId": "ve-c8187812",
+    "senseId": "kaikki:bd44b3627fce3c90e9",
+    "term": "interpret",
+    "definition": "To work out a meaning and then respond, investigate further or share an interpretation.",
+    "pos": "verb",
+    "kind": "interpret-response"
+  },
+  {
+    "entryId": "ve-c8187812",
+    "senseId": "kaikki:d1b4aa78649bddaeb1",
+    "term": "interpret",
+    "definition": "To explain or state the meaning of something in intelligible or familiar terms.",
+    "pos": "verb",
+    "kind": "interpret-explain"
+  },
+  {
+    "entryId": "ve-c8187812",
+    "senseId": "kaikki:17bbda63a3a570d478",
+    "term": "interpret",
+    "definition": "To understand and represent something through art or an illustrative performance.",
+    "pos": "verb",
+    "kind": "interpret-art"
+  },
+  {
+    "entryId": "ve-c8187812",
+    "senseId": "kaikki:8f668311090b2df506",
+    "term": "interpret",
+    "definition": "To convey what someone says or signs in one language to a user of another language, simultaneously or shortly afterwards.",
+    "pos": "verb",
+    "kind": "interpret-languages"
+  },
+  {
+    "entryId": "ve-c8187812",
+    "senseId": "kaikki:71802e299c21f6bdfd",
+    "term": "interpret",
+    "definition": "In computing, to analyse or execute a program by processing instructions during execution rather than relying only on compilation beforehand.",
+    "pos": "verb",
+    "kind": "interpret-runtime"
   }
 ]
