@@ -6,7 +6,10 @@ import { fileURLToPath } from 'node:url';
 const identity = (entryId, senseId) => JSON.stringify([entryId, senseId]);
 const hash = value => createHash('sha256').update(JSON.stringify(value) ?? 'null').digest('hex');
 const areas = ['definition', 'example', 'collocations', 'distinctions'];
-const plainSourceGloss = value => value.replace(/<!--[^]*?-->/g, '').replace(/^#+\s*/, '')
+export const plainSourceGloss = value => value.replace(/<!--[^]*?-->/g, '').replace(/^#+\s*/, '')
+  .replace(/\{\{w\|([^{}|]+)(?:\|([^{}|]+))?\}\}/g, (_, title, display) => display || title)
+  .replace(/\{\{place\|en\|lgarea\|north of \[\[([^\]|]+)\]\],\|s\/([^{}|]+)\|named after ([^{}|]+)\|full=([^{}|]+)\}\}/g, (_, city, state, namesake, name) => name + ', a local government area north of ' + city + ', ' + state + ', named after ' + namesake)
+  .replace(/\{\{place\|en\|river\|r:suf\/([^{}|]+)\|s\/([^{}|]+)\|named after ([^{}|]+)\|full=([^{}|]+)\}\}/g, (_, region, state, namesake, name) => name[0].toUpperCase() + name.slice(1) + ', a river in the ' + region + ' region, ' + state + ', named after ' + namesake)
   .replace(/\{\{place\|en\|(place|ucomm|CDP)\|((?:c|co|s)\/[^{}|]+(?:\|(?:c|co|s)\/[^{}|]+)*)\}\}/g, (_, kind, locations) => `${({ place: 'A place', ucomm: 'An unincorporated community', CDP: 'A census-designated place' })[kind]} in ${locations.split('|').map(location => location.slice(location.indexOf('/') + 1)).map(location => location === 'USA' ? 'the United States' : location).join(', ')}`)
   .replace(/\{\{(?:ng|n-g|non-gloss)\|([^{}]*)\}\}/g, '$1').replace(/\{\{[^{}]*\}\}/g, '').replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2').replace(/\[\[([^\]]+)\]\]/g, '$1').replace(/'{2,}/g, '').replace(/\s+/g, ' ').trim();
 function dictionarySourcePage(sense, fallback) {
@@ -83,7 +86,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
       if (row.meaningGroup !== undefined) {
         const gloss = row.meaningGroup?.sourceGloss;
         const children = restoredSources.filter(source => source.entryId === review.entryId && source.parentSenseId === review.senseId && sources.has(JSON.stringify([source.term, source.sense.id])));
-        const heading = /^#\s*\{\{(?:ng|n-g|non-gloss)\|/.test(gloss || '') || (/^#[^#]/.test(gloss || '') && /\{\{lb\|en\|(?:[^{}|]+\|)*heading(?:\||\}\})/.test(gloss || '')) || /^#\s*\{\{place\|en\|place\|(?:c|co|s)\/[^{}|]+\}\}\s*:\s*$/.test(gloss || '');
+        const heading = /^#\s*\{\{(?:ng|n-g|non-gloss)\|/.test(gloss || '') || (/^#[^#]/.test(gloss || '') && /\{\{lb\|en\|(?:[^{}|]+\|)*heading(?:\||\}\})/.test(gloss || '')) || /^#\s*\{\{place\|en\|place\|(?:c|co|s)\/[^{}|]+\}\}\s*:\s*$/.test(gloss || '') || /^#\s*A \[\[place name\]\]:\s*$/.test(gloss || '');
         if (!heading || plainSourceGloss(gloss || '') !== original?.definition || !children.length || children.some(child => child.sense.sourceUrl !== row.referenceUrl) || row.referenceOnly || row.usageReference || row.distinctionTask || diagrams.some(diagram => identity(diagram.entryId, diagram.senseId) === key)) errors.push(`Invalid meaning group: ${review.term}/${review.senseId}`);
       }
       if (row.usageReference !== undefined) {

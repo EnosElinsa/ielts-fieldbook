@@ -9,6 +9,14 @@ let release: ReturnType<typeof buildVocabularyResources>;
 // still compares a second independent build of the complete retained corpus.
 beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 15_000);
 
+test('the light right left table batch retains the entire preceding teaching release', () => {
+  const previous = JSON.parse(release.resources.get('/vocabulary-resources/manifest.ceba35ae9f9890bc.json')!);
+  const light = (manifest: typeof release.manifest) => JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards['ve-a5291fb']])!).teaching;
+  expect(light(previous).readiness.corrections.some((row: any) => row.entryId === 've-a5291fb')).toBe(false);
+  expect(light(release.manifest).readiness.corrections.some((row: any) => row.entryId === 've-a5291fb' && row.senseId === 'kaikki:31db74460c03ff1195')).toBe(true);
+  for (const url of [...Object.values(previous.entryResources), ...Object.values(previous.entryTeachingResources), ...previous.units.flatMap((unit: any) => [unit.resource, unit.teachingResource]).filter(Boolean)] as string[]) expect(release.resources.has(url), url).toBe(true);
+});
+
 test('the common fair default preserves the preceding complete teaching release', () => {
   const previous = JSON.parse(release.resources.get('/vocabulary-resources/manifest.24951e93b8e57f5f.json')!);
   const teaching = (manifest: typeof release.manifest) => JSON.parse(release.resources.get(manifest.entryTeachingResources[manifest.entryShards['ve-7c6e1439']])!).teaching;

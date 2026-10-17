@@ -798,5 +798,117 @@
     "definition": "An exhibition where people in a trade meet, display products and do business.",
     "pos": "noun",
     "kind": "trade-fair"
+  },
+  {
+    "entryId": "ve-a5291fb",
+    "senseId": "kaikki:31db74460c03ff1195",
+    "term": "light",
+    "definition": "Electromagnetic radiation visible to the human eye.",
+    "pos": "noun",
+    "kind": "visible-spectrum"
+  },
+  {
+    "entryId": "ve-a5291fb",
+    "senseId": "kaikki:93a63946f6eba76a84",
+    "term": "light",
+    "definition": "Relatively pale or light in colour.",
+    "pos": "adj",
+    "kind": "light-colour"
+  },
+  {
+    "entryId": "ve-a5291fb",
+    "senseId": "kaikki:f1c838befbcf4d5f92",
+    "term": "light",
+    "definition": "Having relatively little weight; not heavy.",
+    "pos": "adj",
+    "kind": "light-weight"
+  },
+  {
+    "entryId": "ve-a5291fb",
+    "senseId": "kaikki:beebf8a5b0c875302d",
+    "term": "light",
+    "definition": "Having little mass for its volume; low in density.",
+    "pos": "adj",
+    "kind": "equal-volume-density"
+  },
+  {
+    "entryId": "ve-b9ebae5",
+    "senseId": "kaikki:6e70acbcd77e1682ee",
+    "term": "right",
+    "definition": "Of an angle, measuring ninety degrees: one quarter of a full turn.",
+    "pos": "adj",
+    "kind": "right-angle"
+  },
+  {
+    "entryId": "ve-b9ebae5",
+    "senseId": "kaikki:dd0bbd4c2b7c56ea9b",
+    "term": "right",
+    "definition": "Of certain geometric figures, having the specified perpendicular relationship between their parts.",
+    "pos": "adj",
+    "kind": "right-prism"
+  },
+  {
+    "entryId": "ve-b9ebae5",
+    "senseId": "kaikki:743b49a340788e2464",
+    "term": "right",
+    "definition": "Of a river bank, on the right of a person facing downstream.",
+    "pos": "adj",
+    "kind": "river-banks"
+  },
+  {
+    "entryId": "ve-7c6f4dde",
+    "senseId": "kaikki:e77cbe2aa16d581f1d",
+    "term": "left",
+    "definition": "Of a river bank, on the left of a person facing downstream.",
+    "pos": "adj",
+    "kind": "river-banks"
+  },
+  {
+    "entryId": "ve-b9ebae5",
+    "senseId": "kaikki:d73dc5cf73e7a52b25",
+    "term": "right",
+    "definition": "To put something back into an upright position.",
+    "pos": "verb",
+    "kind": "right-upright"
+  },
+  {
+    "entryId": "ve-7c6f4dde",
+    "senseId": "kaikki:8e231691a21c693bb1",
+    "term": "left",
+    "definition": "Remaining after other things have been used, removed or gone.",
+    "pos": "adj",
+    "kind": "remaining-count"
+  },
+  {
+    "entryId": "ve-ae7ac7b",
+    "senseId": "kaikki:2ef645d203bf7d05bb",
+    "term": "table",
+    "definition": "An organised presentation of information in rows, columns or a list.",
+    "pos": "noun",
+    "kind": "table-grid"
+  },
+  {
+    "entryId": "ve-ae7ac7b",
+    "senseId": "kaikki:a6834545a40892fb56",
+    "term": "table",
+    "definition": "To formally submit a motion or document for consideration, especially in British or other non-US usage.",
+    "pos": "verb",
+    "kind": "table-agenda"
+  },
+  {
+    "entryId": "ve-ae7ac7b",
+    "senseId": "kaikki:1f2ae177167a827b2f",
+    "term": "table",
+    "definition": "To set a matter aside or defer its consideration, chiefly in US meeting usage.",
+    "pos": "verb",
+    "kind": "table-agenda"
+  },
+  {
+    "entryId": "ve-ae7ac7b",
+    "senseId": "wiktionary:restored:3b7871b2965b5de006",
+    "term": "table",
+    "definition": "The flat topmost facet of a cut diamond.",
+    "pos": "noun",
+    "kind": "gem-table"
   }
 ]

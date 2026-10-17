@@ -71,6 +71,19 @@ test('a geographic place heading and independently restored place preserve their
   expect(inspectDictionaryReview({ ...data, corrections: [{ ...grouping, meaningGroup: { sourceGloss: '# {{place|en|city|c/USA}}:' } }, data.corrections[1]] }).errors.join(' ')).toMatch(/meaning group/i);
 });
 
+test.each([
+  ['## {{place|en|lgarea|north of [[Adelaide]],|s/South Australia|named after the River Light|full={{w|Light Regional Council}}}}.', 'Light Regional Council, a local government area north of Adelaide, South Australia, named after the River Light.'],
+  ['## {{place|en|river|r:suf/Mid North|s/South Australia|named after {{w|William Light}}|full=the {{w|Light River (South Australia)|River Light}}}}.', 'The River Light, a river in the Mid North region, South Australia, named after William Light.'],
+])('a literal place-name heading retains named-place evidence: %s', (sourceGloss, definition) => {
+  const parent = { ...original, definition: 'A place name:', sourceUrl: 'https://en.wiktionary.org/wiki/Bank#English' };
+  const child = { ...restored, definition, sourceUrl: 'https://en.wiktionary.org/w/index.php?title=Bank&oldid=123' };
+  const grouping = { ...row, originalSense: parent, referenceUrl: child.sourceUrl, meaningGroup: { sourceGloss: '# A [[place name]]:' } };
+  const source = { ...evidence, sourcePage: 'Bank', parentSourceHash: hash(parent), sourceGloss, sense: child };
+  const data = { ...input, dictionaries: { bank: { senses: [parent] } }, restoredSources: [source], corrections: [grouping, { ...row, senseId: child.id, originalSense: child, dictionaryParentSenseId: parent.id }], records: [{ ...review, sourceHash: hash(parent) }, { ...review, senseId: child.id, sourceHash: hash(child) }] };
+  expect(inspectDictionaryReview(data).errors).toEqual([]);
+  expect(inspectDictionaryReview({ ...data, restoredSources: [{ ...source, sourceGloss: sourceGloss.replace('Light Regional Council', 'Another Council').replace('full=the ', 'full=another ') }] }).errors.join(' ')).toMatch(/gloss/i);
+});
+
 test('a source grouping needs a non-gloss heading, independently bound children and no exercise', () => {
   const grouping = { ...row, referenceUrl: restored.sourceUrl, meaningGroup: { sourceGloss: '# {{ng|Land beside a river.}}' } };
   const groupedInput = { ...restoredInput, corrections: [grouping, restoredInput.corrections[1]] };

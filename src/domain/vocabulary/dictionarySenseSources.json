@@ -3665,5 +3665,822 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:e403c80e4728595845",
+    "parentSourceHash": "6d9de9b740ddb21c0d79bab11f41abb689aeccfa98d8f54ecf6b10af6226fdeb",
+    "sourcePage": "light",
+    "revision": 93466549,
+    "sourceGloss": "## A [[lightbulb#Noun|lightbulb]] or similar light-emitting [[device#Noun|device]], regardless of whether it is lit.",
+    "sense": {
+      "id": "wiktionary:restored:9320ac7989ebd36a2d",
+      "pos": "noun",
+      "definition": "A lightbulb or similar light-emitting device, regardless of whether it is lit.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=light&oldid=93466549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:e403c80e4728595845",
+    "parentSourceHash": "6d9de9b740ddb21c0d79bab11f41abb689aeccfa98d8f54ecf6b10af6226fdeb",
+    "sourcePage": "light",
+    "revision": 93466549,
+    "sourceGloss": "## A [[traffic light#Noun|traffic light]], or {{lb|en|by extension}} an [[intersection#Noun|intersection]] controlled by traffic lights.",
+    "sense": {
+      "id": "wiktionary:restored:8eb6d23968efc503b9",
+      "pos": "noun",
+      "definition": "A traffic light, or an intersection controlled by traffic lights.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=light&oldid=93466549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:be1841a59d4476ba69",
+    "parentSourceHash": "46546e63437055618ce750735bf724a5dabb923ff97b4862d6ba07805656f8bc",
+    "sourcePage": "light",
+    "revision": 93466549,
+    "sourceGloss": "## {{lb|en|slang}} A cigarette [[lighter]].",
+    "sense": {
+      "id": "wiktionary:restored:c30877fd234c8ab4d1",
+      "pos": "noun",
+      "definition": "A cigarette lighter.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=light&oldid=93466549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:04f5c943cdc5a29ecf",
+    "parentSourceHash": "72e8ad6fb86a0482e8f3dce8654b614a7f52d46549dcc8b213544f913a54e97c",
+    "sourcePage": "light",
+    "revision": 93466549,
+    "sourceGloss": "## Free from [[burden]] or [[impediment]]; [[unencumbered]].",
+    "sense": {
+      "id": "wiktionary:restored:fc64d143448c7fcd39",
+      "pos": "adj",
+      "definition": "Free from burden or impediment; unencumbered.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=light&oldid=93466549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:04f5c943cdc5a29ecf",
+    "parentSourceHash": "72e8ad6fb86a0482e8f3dce8654b614a7f52d46549dcc8b213544f913a54e97c",
+    "sourcePage": "light",
+    "revision": 93466549,
+    "sourceGloss": "## Lightly built; typically designed for speed or small loads.",
+    "sense": {
+      "id": "wiktionary:restored:d4853487835a311f9f",
+      "pos": "adj",
+      "definition": "Lightly built; typically designed for speed or small loads.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=light&oldid=93466549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:04f5c943cdc5a29ecf",
+    "parentSourceHash": "72e8ad6fb86a0482e8f3dce8654b614a7f52d46549dcc8b213544f913a54e97c",
+    "sourcePage": "light",
+    "revision": 93466549,
+    "sourceGloss": "## {{lb|en|military}} Not heavily [[armed]]; armed with light [[weapon]]s.",
+    "sense": {
+      "id": "wiktionary:restored:59f14cab673618a140",
+      "pos": "adj",
+      "definition": "Not heavily armed; armed with light weapons.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=light&oldid=93466549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:04f5c943cdc5a29ecf",
+    "parentSourceHash": "72e8ad6fb86a0482e8f3dce8654b614a7f52d46549dcc8b213544f913a54e97c",
+    "sourcePage": "light",
+    "revision": 93466549,
+    "sourceGloss": "## {{lb|en|nautical|of a [[ship]]}} [[ride|Riding]] high because of no [[cargo]]; {{n-g|by extension,}} pertaining to a ship which is light.",
+    "sense": {
+      "id": "wiktionary:restored:bc043c6055c0032f8c",
+      "pos": "adj",
+      "definition": "Riding high because of no cargo; by extension, pertaining to a ship which is light.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=light&oldid=93466549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:04f5c943cdc5a29ecf",
+    "parentSourceHash": "72e8ad6fb86a0482e8f3dce8654b614a7f52d46549dcc8b213544f913a54e97c",
+    "sourcePage": "light",
+    "revision": 93466549,
+    "sourceGloss": "## {{lb|en|rail transport|of a [[locomotive]] or [[consist]] of locomotives}} Without any piece of equipment attached or attached only to a [[caboose]].",
+    "sense": {
+      "id": "wiktionary:restored:7729ee240888f15ce5",
+      "pos": "adj",
+      "definition": "Without any piece of equipment attached or attached only to a caboose.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=light&oldid=93466549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:04f5c943cdc5a29ecf",
+    "parentSourceHash": "72e8ad6fb86a0482e8f3dce8654b614a7f52d46549dcc8b213544f913a54e97c",
+    "sourcePage": "light",
+    "revision": 93466549,
+    "sourceGloss": "## With low [[viscosity]].",
+    "sense": {
+      "id": "wiktionary:restored:2b6f942da558306bfe",
+      "pos": "adj",
+      "definition": "With low viscosity.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=light&oldid=93466549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:65bd2c2e6e472940ba",
+    "parentSourceHash": "df1f05de8627d9dc6361b1d0a65d5000606d602b158ae780e24c99baaed34c32",
+    "sourcePage": "Light",
+    "revision": 91190046,
+    "sourceGloss": "## {{place|en|ucomm|co/Greene County|s/Arkansas|c/USA}}.",
+    "sense": {
+      "id": "wiktionary:restored:40b2b4260c5029c194",
+      "pos": "name",
+      "definition": "An unincorporated community in Greene County, Arkansas, the United States.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=Light&oldid=91190046",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:65bd2c2e6e472940ba",
+    "parentSourceHash": "df1f05de8627d9dc6361b1d0a65d5000606d602b158ae780e24c99baaed34c32",
+    "sourcePage": "Light",
+    "revision": 91190046,
+    "sourceGloss": "## {{place|en|ucomm|co/Maries County|s/Missouri|c/USA}}.",
+    "sense": {
+      "id": "wiktionary:restored:35da314e7a79856522",
+      "pos": "name",
+      "definition": "An unincorporated community in Maries County, Missouri, the United States.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=Light&oldid=91190046",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:65bd2c2e6e472940ba",
+    "parentSourceHash": "df1f05de8627d9dc6361b1d0a65d5000606d602b158ae780e24c99baaed34c32",
+    "sourcePage": "Light",
+    "revision": 91190046,
+    "sourceGloss": "## {{place|en|lgarea|north of [[Adelaide]],|s/South Australia|named after the River Light|full={{w|Light Regional Council}}}}.",
+    "sense": {
+      "id": "wiktionary:restored:8ed6983dbba2d91416",
+      "pos": "name",
+      "definition": "Light Regional Council, a local government area north of Adelaide, South Australia, named after the River Light.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=Light&oldid=91190046",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "light",
+    "entryId": "ve-a5291fb",
+    "parentSenseId": "kaikki:65bd2c2e6e472940ba",
+    "parentSourceHash": "df1f05de8627d9dc6361b1d0a65d5000606d602b158ae780e24c99baaed34c32",
+    "sourcePage": "Light",
+    "revision": 91190046,
+    "sourceGloss": "## {{place|en|river|r:suf/Mid North|s/South Australia|named after {{w|William Light}}|full=the {{w|Light River (South Australia)|River Light}}}}.",
+    "sense": {
+      "id": "wiktionary:restored:850178b6d03d510852",
+      "pos": "name",
+      "definition": "The River Light, a river in the Mid North region, South Australia, named after William Light.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=Light&oldid=91190046",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "right",
+    "entryId": "ve-b9ebae5",
+    "parentSenseId": "kaikki:0118d7c41120eef69c",
+    "parentSourceHash": "4bfab10d266dda4af5d958031741b6c0ac0bfabe4a277b9749b02c7e0444dacf",
+    "sourcePage": "right",
+    "revision": 93509507,
+    "sourceGloss": "## {{lb|en|dated|still used in some titles}} To a great extent or degree.",
+    "sense": {
+      "id": "wiktionary:restored:13f1321be37f4b773c",
+      "pos": "adv",
+      "definition": "To a great extent or degree.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=right&oldid=93509507",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9229436cfa8426a8d1",
+    "parentSourceHash": "f0748e60292650811f51c034df7572054356561d231d1cc18c5a89c23a785f6a",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## An item of [[furniture]] with a [[flat]] [[top]] [[surface]] raised above the ground, usually on one or more legs.",
+    "sense": {
+      "id": "wiktionary:restored:897c1bb65b1b7d7118",
+      "pos": "noun",
+      "definition": "An item of furniture with a flat top surface raised above the ground, usually on one or more legs.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9229436cfa8426a8d1",
+    "parentSourceHash": "f0748e60292650811f51c034df7572054356561d231d1cc18c5a89c23a785f6a",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## A flat [[tray]] which can be used as a table.",
+    "sense": {
+      "id": "wiktionary:restored:f67d6f9e3d4c74ccdc",
+      "pos": "noun",
+      "definition": "A flat tray which can be used as a table.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9229436cfa8426a8d1",
+    "parentSourceHash": "f0748e60292650811f51c034df7572054356561d231d1cc18c5a89c23a785f6a",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|by extension}} A supply of food or entertainment.",
+    "sense": {
+      "id": "wiktionary:restored:59bdf4660d6e5f64a9",
+      "pos": "noun",
+      "definition": "A supply of food or entertainment.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9229436cfa8426a8d1",
+    "parentSourceHash": "f0748e60292650811f51c034df7572054356561d231d1cc18c5a89c23a785f6a",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|metonym}} A [[booth]] or [[display]] at an event such as an [[exposition]] or fair.",
+    "sense": {
+      "id": "wiktionary:restored:bd749c70741036363a",
+      "pos": "noun",
+      "definition": "A booth or display at an event such as an exposition or fair.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9229436cfa8426a8d1",
+    "parentSourceHash": "f0748e60292650811f51c034df7572054356561d231d1cc18c5a89c23a785f6a",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|Christianity}} A service of [[Holy Communion]].",
+    "sense": {
+      "id": "wiktionary:restored:e4118c874ac53636a7",
+      "pos": "noun",
+      "definition": "A service of Holy Communion.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9229436cfa8426a8d1",
+    "parentSourceHash": "f0748e60292650811f51c034df7572054356561d231d1cc18c5a89c23a785f6a",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## The [[board]] or table-like [[furniture]] on which a [[game]] is played, such as [[snooker]], [[billiards]]{{,}} or [[draughts]].",
+    "sense": {
+      "id": "wiktionary:restored:8f5b90662e44adfa04",
+      "pos": "noun",
+      "definition": "The board or table-like furniture on which a game is played, such as snooker, billiards or draughts.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9229436cfa8426a8d1",
+    "parentSourceHash": "f0748e60292650811f51c034df7572054356561d231d1cc18c5a89c23a785f6a",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|backgammon}} One [[half]] of a [[backgammon]] [[board]], which is divided into an inner and outer table.",
+    "sense": {
+      "id": "wiktionary:restored:1c968514722251d728",
+      "pos": "noun",
+      "definition": "One half of a backgammon board, which is divided into an inner and outer table.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9229436cfa8426a8d1",
+    "parentSourceHash": "f0748e60292650811f51c034df7572054356561d231d1cc18c5a89c23a785f6a",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "### {{lb|en|plural|mainly|historical}} The game of [[backgammon]], or any of several related games.",
+    "sense": {
+      "id": "wiktionary:restored:9a81a253751c291c56",
+      "pos": "noun",
+      "definition": "The game of backgammon, or any of several related games.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9e15c31f00c1f1ab06",
+    "parentSourceHash": "83827c836cfdca6e830393d7e08d20b5d29c952563a04376c5b4b0cc35dbf62f",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|uncountable}} The act of assembling to eat; a gathering to eat, especially at a restaurant.",
+    "sense": {
+      "id": "wiktionary:restored:6b8f2479e261a52ebb",
+      "pos": "noun",
+      "definition": "The act of assembling to eat; a gathering to eat, especially at a restaurant.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9e15c31f00c1f1ab06",
+    "parentSourceHash": "83827c836cfdca6e830393d7e08d20b5d29c952563a04376c5b4b0cc35dbf62f",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|poker|metonym}} The [[lineup]] of players at a given table.",
+    "sense": {
+      "id": "wiktionary:restored:f009885559441bb147",
+      "pos": "noun",
+      "definition": "The lineup of players at a given table.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9e15c31f00c1f1ab06",
+    "parentSourceHash": "83827c836cfdca6e830393d7e08d20b5d29c952563a04376c5b4b0cc35dbf62f",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|RPG|metonym}} A group of players meeting regularly to play a [[campaign]].",
+    "sense": {
+      "id": "wiktionary:restored:ade8dce381099eb805",
+      "pos": "noun",
+      "definition": "A group of players meeting regularly to play a campaign.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9e15c31f00c1f1ab06",
+    "parentSourceHash": "83827c836cfdca6e830393d7e08d20b5d29c952563a04376c5b4b0cc35dbf62f",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|waitstaff|metonym}} A group of diners at a given table or tables.",
+    "sense": {
+      "id": "wiktionary:restored:fd6229a6674ea1bc5f",
+      "pos": "noun",
+      "definition": "A group of diners at a given table or tables.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:9e15c31f00c1f1ab06",
+    "parentSourceHash": "83827c836cfdca6e830393d7e08d20b5d29c952563a04376c5b4b0cc35dbf62f",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|figurative}} A session or sessions of negotiation or diplomacy; an opportunity or place for negotiations.",
+    "sense": {
+      "id": "wiktionary:restored:9bcc5094211b3152d3",
+      "pos": "noun",
+      "definition": "A session or sessions of negotiation or diplomacy; an opportunity or place for negotiations.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:2ef645d203bf7d05bb",
+    "parentSourceHash": "d9d8ae98a65c2acc1d1fdcfd7403ab99e277cbb69b28cf44add1d2dfcf93a644",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## A [[matrix]] or [[grid]] of [[data]] arranged in [[row]]s and [[column]]s.",
+    "sense": {
+      "id": "wiktionary:restored:98ee7d4adb1d726aa4",
+      "pos": "noun",
+      "definition": "A matrix or grid of data arranged in rows and columns.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:2ef645d203bf7d05bb",
+    "parentSourceHash": "d9d8ae98a65c2acc1d1fdcfd7403ab99e277cbb69b28cf44add1d2dfcf93a644",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## A collection of [[arithmetic]] calculations arranged in a table, such as [[multiplication]]s in a [[multiplication table]].",
+    "sense": {
+      "id": "wiktionary:restored:7fd3c649586c751c70",
+      "pos": "noun",
+      "definition": "A collection of arithmetic calculations arranged in a table, such as multiplications in a multiplication table.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:2ef645d203bf7d05bb",
+    "parentSourceHash": "d9d8ae98a65c2acc1d1fdcfd7403ab99e277cbb69b28cf44add1d2dfcf93a644",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|computing|chiefly|databases}} A [[lookup table]], most often a set of [[vector]]s.",
+    "sense": {
+      "id": "wiktionary:restored:31e69d1f0c3c27caa4",
+      "pos": "noun",
+      "definition": "A lookup table, most often a set of vectors.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:2ef645d203bf7d05bb",
+    "parentSourceHash": "d9d8ae98a65c2acc1d1fdcfd7403ab99e277cbb69b28cf44add1d2dfcf93a644",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|sports}} A visual representation of a classification of teams or individuals based on their success over a predetermined period.",
+    "sense": {
+      "id": "wiktionary:restored:3b2f9d2cbc4bab8ba9",
+      "pos": "noun",
+      "definition": "A visual representation of a classification of teams or individuals based on their success over a predetermined period.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:49f740747d2c748632",
+    "parentSourceHash": "4041ee841a2cfa118fccb30f70c97362c33d860964163e57541cd7dbf6e5f0dd",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## A [[tableland]]; a flat, elevated region.",
+    "sense": {
+      "id": "wiktionary:restored:2950c4fd8de18bd767",
+      "pos": "noun",
+      "definition": "A tableland; a flat, elevated region.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:49f740747d2c748632",
+    "parentSourceHash": "4041ee841a2cfa118fccb30f70c97362c33d860964163e57541cd7dbf6e5f0dd",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|geology}} A horizontal [[stratum]] of [[rock]].",
+    "sense": {
+      "id": "wiktionary:restored:655340530d58af2711",
+      "pos": "noun",
+      "definition": "A horizontal stratum of rock.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:49f740747d2c748632",
+    "parentSourceHash": "4041ee841a2cfa118fccb30f70c97362c33d860964163e57541cd7dbf6e5f0dd",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|anatomy}} A flat length of [[bone]].",
+    "sense": {
+      "id": "wiktionary:restored:eb218fac2d115e6b48",
+      "pos": "noun",
+      "definition": "A flat length of bone.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:49f740747d2c748632",
+    "parentSourceHash": "4041ee841a2cfa118fccb30f70c97362c33d860964163e57541cd7dbf6e5f0dd",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "### The inner and outer plates that make up the [[cranium]] bones; the [[outer table]] and the [[inner table]] ([[vitreous table]]).",
+    "sense": {
+      "id": "wiktionary:restored:1bba77678046a783fa",
+      "pos": "noun",
+      "definition": "The inner and outer plates that make up the cranium bones; the outer table and the inner table (vitreous table).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:49f740747d2c748632",
+    "parentSourceHash": "4041ee841a2cfa118fccb30f70c97362c33d860964163e57541cd7dbf6e5f0dd",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|equestrian}} A [[wide]], [[flat]] [[obstacle]] for a [[horse]] to jump over.",
+    "sense": {
+      "id": "wiktionary:restored:4c99463ca8335ff716",
+      "pos": "noun",
+      "definition": "A wide, flat obstacle for a horse to jump over.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:49f740747d2c748632",
+    "parentSourceHash": "4041ee841a2cfa118fccb30f70c97362c33d860964163e57541cd7dbf6e5f0dd",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|architecture}} A [[stringcourse]]; a band of horizontal molding or other decoration around a building.",
+    "sense": {
+      "id": "wiktionary:restored:0db610a57260094f2b",
+      "pos": "noun",
+      "definition": "A stringcourse; a band of horizontal molding or other decoration around a building.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:49f740747d2c748632",
+    "parentSourceHash": "4041ee841a2cfa118fccb30f70c97362c33d860964163e57541cd7dbf6e5f0dd",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|musical instruments}} The top of a stringed instrument, particularly a member of the [[violin]] family: the side of the instrument against which the strings vibrate.",
+    "sense": {
+      "id": "wiktionary:restored:9ecf3f13370e1b79cc",
+      "pos": "noun",
+      "definition": "The top of a stringed instrument, particularly a member of the violin family: the side of the instrument against which the strings vibrate.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:49f740747d2c748632",
+    "parentSourceHash": "4041ee841a2cfa118fccb30f70c97362c33d860964163e57541cd7dbf6e5f0dd",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|jewelry}} The [[flat]] [[topmost]] [[facet]] of a [[cut]] [[diamond]].",
+    "sense": {
+      "id": "wiktionary:restored:3b7871b2965b5de006",
+      "pos": "noun",
+      "definition": "The flat topmost facet of a cut diamond.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:49f740747d2c748632",
+    "parentSourceHash": "4041ee841a2cfa118fccb30f70c97362c33d860964163e57541cd7dbf6e5f0dd",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## A [[flat]] [[gravestone]] supported on [[pillar]]s.",
+    "sense": {
+      "id": "wiktionary:restored:c98d92ea24aa6d5e88",
+      "pos": "noun",
+      "definition": "A flat gravestone supported on pillars.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:49f740747d2c748632",
+    "parentSourceHash": "4041ee841a2cfa118fccb30f70c97362c33d860964163e57541cd7dbf6e5f0dd",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|palmistry}} The [[quadrangle]], a space between the [[heart line]] and [[head line]].",
+    "sense": {
+      "id": "wiktionary:restored:5eab617f019d61b437",
+      "pos": "noun",
+      "definition": "The quadrangle, a space between the heart line and head line.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:49f740747d2c748632",
+    "parentSourceHash": "4041ee841a2cfa118fccb30f70c97362c33d860964163e57541cd7dbf6e5f0dd",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|obsolete|biblical}} A [[writing]] [[tablet]].",
+    "sense": {
+      "id": "wiktionary:restored:67128e5cf3a8c0ea2f",
+      "pos": "noun",
+      "definition": "A writing tablet.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "table",
+    "entryId": "ve-ae7ac7b",
+    "parentSenseId": "kaikki:49f740747d2c748632",
+    "parentSourceHash": "4041ee841a2cfa118fccb30f70c97362c33d860964163e57541cd7dbf6e5f0dd",
+    "sourcePage": "table",
+    "revision": 93429919,
+    "sourceGloss": "## {{lb|en|printing}} A flat surface that supports the slab on which [[ink]] is rolled to manipulate its consistency.",
+    "sense": {
+      "id": "wiktionary:restored:15f1dc92883ca6f4c3",
+      "pos": "noun",
+      "definition": "A flat surface that supports the slab on which ink is rolled to manipulate its consistency.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=table&oldid=93429919",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]
