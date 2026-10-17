@@ -11474,5 +11474,81 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "capacity",
+    "entryId": "ve-fc74dc91",
+    "parentSenseId": "kaikki:b8c27950904db106c6",
+    "parentSourceHash": "fea225b66f88a2899945d3b67b5b8088b8c08736427a55806062e310848e04c4",
+    "sourcePage": "capacity",
+    "revision": 92915499,
+    "sourceGloss": "## {{senseid|en|maximum held amount}} The [[maximum]] [[amount]] that can be held.",
+    "sense": {
+      "id": "wiktionary:restored:2998e805c943dec797",
+      "pos": "noun",
+      "definition": "The maximum amount that can be held.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=capacity&oldid=92915499",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "capacity",
+    "entryId": "ve-fc74dc91",
+    "parentSenseId": "kaikki:663a4b4f360d3be4a7",
+    "parentSourceHash": "afebd0ab7cec3ea9f5e07e46d9582629543f210545dfde4f9a2655da5e89759e",
+    "sourcePage": "capacity",
+    "revision": 92915499,
+    "sourceGloss": "## {{lb|en|operations}} The maximum that can be produced on a machine or in a facility or group.",
+    "sense": {
+      "id": "wiktionary:restored:a98cdc763b23d0b6e1",
+      "pos": "noun",
+      "definition": "The maximum that can be produced on a machine or in a facility or group.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=capacity&oldid=92915499",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "capacity",
+    "entryId": "ve-fc74dc91",
+    "parentSenseId": "kaikki:476fa3aa5242fb7236",
+    "parentSourceHash": "75d5455aae5474b5acc0db2d45b900d8f11a8187d7a5691b053bd2e5cd995f50",
+    "sourcePage": "capacity",
+    "revision": 92915499,
+    "sourceGloss": "## Mental [[ability]]; the power to [[learn]].",
+    "sense": {
+      "id": "wiktionary:restored:044eec0aa0cbba3cf3",
+      "pos": "noun",
+      "definition": "Mental ability; the power to learn.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=capacity&oldid=92915499",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "capacity",
+    "entryId": "ve-fc74dc91",
+    "parentSenseId": "kaikki:2cb384462c7335f609",
+    "parentSourceHash": "80b0ff441e945ad214a56a68364be1dfdc1da066db31c6ec98d2fec25f81f6ff",
+    "sourcePage": "capacity",
+    "revision": 92915499,
+    "sourceGloss": "## Legal [[authority]] (to make an [[arrest]] for example).",
+    "sense": {
+      "id": "wiktionary:restored:45487218b515390659",
+      "pos": "noun",
+      "definition": "Legal authority (to make an arrest for example).",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=capacity&oldid=92915499",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

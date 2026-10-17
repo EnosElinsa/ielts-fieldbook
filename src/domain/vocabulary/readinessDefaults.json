@@ -19211,5 +19211,499 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-274ddd37",
+    "originalSense": {
+      "id": "kaikki:3915c3b4a3b826f476",
+      "definition": "The fact of knowing about something; general understanding or familiarity with a subject, place, situation etc.",
+      "example": "His knowledge of Iceland was limited to what he'd seen on the Travel Channel.",
+      "pos": "noun",
+      "synonyms": [
+        "awareness",
+        "cognizance",
+        "ken",
+        "knowingness",
+        "learning",
+        "knowledge"
+      ],
+      "antonyms": [
+        "ignorance"
+      ],
+      "collocations": [],
+      "usage": "usually",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "acknowledge",
+        "afterknowledge",
+        "a little knowledge is a dangerous thing",
+        "antiknowledge",
+        "anti-knowledge",
+        "ball knowledge",
+        "beknowledge",
+        "book-knowledge",
+        "content knowledge",
+        "counterknowledge",
+        "elite ball knowledge",
+        "ethnoknowledge",
+        "foreknowledge",
+        "gendered knowledge",
+        "interknowledge",
+        "knowledgable",
+        "knowledgeable",
+        "knowledge base",
+        "knowledge-box",
+        "knowledge domain",
+        "knowledge engineer",
+        "knowledge engineering",
+        "knowledgeful",
+        "knowledge graph",
+        "knowledge is power",
+        "knowledgeless",
+        "knowledgelike",
+        "knowledge management",
+        "knowledge map",
+        "knowledgement"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/knowledge#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:3915c3b4a3b826f476",
+      "definition": "General understanding of or familiarity with a subject, place or situation.",
+      "example": "Her knowledge of the city helps visitors find their way.",
+      "pos": "noun",
+      "synonyms": [
+        "awareness",
+        "cognizance",
+        "ken",
+        "knowingness",
+        "learning",
+        "knowledge"
+      ],
+      "antonyms": [
+        "ignorance"
+      ],
+      "collocations": [
+        "knowledge of a subject",
+        "local knowledge",
+        "general knowledge",
+        "a good knowledge of"
+      ],
+      "usage": "Normally uncountable; familiarity or understanding.",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "acknowledge",
+        "afterknowledge",
+        "a little knowledge is a dangerous thing",
+        "antiknowledge",
+        "anti-knowledge",
+        "ball knowledge",
+        "beknowledge",
+        "book-knowledge",
+        "content knowledge",
+        "counterknowledge",
+        "elite ball knowledge",
+        "ethnoknowledge",
+        "foreknowledge",
+        "gendered knowledge",
+        "interknowledge",
+        "knowledgable",
+        "knowledgeable",
+        "knowledge base",
+        "knowledge-box",
+        "knowledge domain",
+        "knowledge engineer",
+        "knowledge engineering",
+        "knowledgeful",
+        "knowledge graph",
+        "knowledge is power",
+        "knowledgeless",
+        "knowledgelike",
+        "knowledge management",
+        "knowledge map",
+        "knowledgement"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/knowledge#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Knowledge usually names understanding or information and is uncountable in this ordinary use. A good knowledge of is an established construction; it does not make every piece of information a knowledge. Familiarity need not be complete or based on direct experience."
+      ],
+      "distinctionTask": {
+        "prompt": "Knowledge of the city in the example means _____.",
+        "options": [
+          "familiarity with the city",
+          "proof that every street is known perfectly"
+        ],
+        "answer": "familiarity with the city",
+        "explanation": "General familiarity can be useful without being complete."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-baf9274",
+    "originalSense": {
+      "id": "kaikki:a33da44c49239bcd07",
+      "definition": "A capacity to do something well; a technique, an ability, usually acquired or learned, as opposed to abilities that are regarded as innate.",
+      "example": "Where did you pick up that skill?",
+      "pos": "noun",
+      "synonyms": [
+        "ability"
+      ],
+      "antonyms": [
+        "incompetence",
+        "inability",
+        "ineptitude"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "cyberskills",
+        "deskill",
+        "de-skill",
+        "Dreyfus model of skill acquisition",
+        "everyday skill",
+        "game of skill",
+        "hard skill",
+        "life skill",
+        "metaskill",
+        "microskill",
+        "midskill",
+        "motor skill",
+        "multiskill",
+        "multiskills",
+        "outskill",
+        "person having ordinary skill in the art",
+        "person of ordinary skill in the art",
+        "pseudoskill",
+        "re-skill",
+        "reskill",
+        "shilling",
+        "skilful",
+        "skillful",
+        "skillage",
+        "skill ceiling",
+        "skill crane",
+        "skill'd",
+        "skilled",
+        "skill floor",
+        "skillfull"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/skill#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:a33da44c49239bcd07",
+      "definition": "A capacity to do something well, usually acquired or learned.",
+      "example": "Regular practice helps her develop the skill of summarising an argument clearly.",
+      "pos": "noun",
+      "synonyms": [
+        "ability"
+      ],
+      "antonyms": [
+        "incompetence",
+        "inability",
+        "ineptitude"
+      ],
+      "collocations": [
+        "develop a skill",
+        "practical skills",
+        "with great skill",
+        "skill in doing something"
+      ],
+      "usage": "Countable for an individual skill; uncountable for proficiency.",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "cyberskills",
+        "deskill",
+        "de-skill",
+        "Dreyfus model of skill acquisition",
+        "everyday skill",
+        "game of skill",
+        "hard skill",
+        "life skill",
+        "metaskill",
+        "microskill",
+        "midskill",
+        "motor skill",
+        "multiskill",
+        "multiskills",
+        "outskill",
+        "person having ordinary skill in the art",
+        "person of ordinary skill in the art",
+        "pseudoskill",
+        "re-skill",
+        "reskill",
+        "shilling",
+        "skilful",
+        "skillful",
+        "skillage",
+        "skill ceiling",
+        "skill crane",
+        "skill'd",
+        "skilled",
+        "skill floor",
+        "skillfull"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/skill#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Skill often emphasises proficiency developed through learning or practice, while ability is broader. This is not an absolute learned-versus-innate division: the source says usually acquired or learned. Practising can develop a skill without guaranteeing improvement on every attempt."
+      ],
+      "distinctionTask": {
+        "prompt": "Skill developed through practice is _____.",
+        "options": [
+          "usually acquired proficiency",
+          "necessarily a capacity that can never involve innate ability"
+        ],
+        "answer": "usually acquired proficiency",
+        "explanation": "Usually learned does not impose an absolute learned-versus-innate division."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-9af2c87",
+    "originalSense": {
+      "id": "kaikki:4efbcdb2a7bc35380f",
+      "definition": "The quality or state of being able; capacity to do or of doing something; having the necessary power.",
+      "example": "This phone has the ability to have its software upgraded wirelessly.",
+      "pos": "noun",
+      "synonyms": [
+        "capacity",
+        "faculty",
+        "capability",
+        "talent",
+        "cleverness",
+        "dexterity",
+        "aptitude",
+        "capability",
+        "faculty",
+        "capacity",
+        "aptness",
+        "aptitude"
+      ],
+      "antonyms": [
+        "inability",
+        "unability",
+        "disability"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "ability grouping",
+        "ability point",
+        "ability to pay",
+        "diffability",
+        "entransy",
+        "Motability",
+        "nonability",
+        "notability",
+        "subability",
+        "superability",
+        "traceability",
+        "transability"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/ability#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:4efbcdb2a7bc35380f",
+      "definition": "The quality of being able to do something; possession of the necessary power or capacity.",
+      "example": "Her ability to explain complex ideas clearly makes her an effective tutor.",
+      "pos": "noun",
+      "synonyms": [
+        "capacity",
+        "faculty",
+        "capability",
+        "talent",
+        "cleverness",
+        "dexterity",
+        "aptitude",
+        "capability",
+        "faculty",
+        "capacity",
+        "aptness",
+        "aptitude"
+      ],
+      "antonyms": [
+        "inability",
+        "unability",
+        "disability"
+      ],
+      "collocations": [
+        "ability to do something",
+        "the ability to explain",
+        "demonstrate ability",
+        "improve ability"
+      ],
+      "usage": "Uncountable in this general-capability sense.",
+      "register": "uncountable",
+      "wordFamily": [
+        "ability grouping",
+        "ability point",
+        "ability to pay",
+        "diffability",
+        "entransy",
+        "Motability",
+        "nonability",
+        "notability",
+        "subability",
+        "superability",
+        "traceability",
+        "transability"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/ability#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Ability describes being able to do something. It does not establish that the person actually performed every possible task or succeeded on a particular occasion. Skill often emphasises learned proficiency, but ability can include learned capacities too."
+      ],
+      "distinctionTask": {
+        "prompt": "Ability to explain describes _____.",
+        "options": [
+          "the capacity to explain",
+          "proof of success on every possible occasion"
+        ],
+        "answer": "the capacity to explain",
+        "explanation": "Capacity and the actual outcome of a particular performance are separate."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "originalSense": {
+      "id": "kaikki:3d3673aaff172e4cf5",
+      "definition": "The ability to hold, receive, or absorb.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "ampacity",
+        "biocapacity",
+        "breaking capacity",
+        "capacity planning",
+        "capacity utilization",
+        "capacity utilization rate",
+        "carrying capacity",
+        "cubic capacity",
+        "diminished capacity",
+        "field capacity",
+        "finite capacity planning",
+        "heat capacity",
+        "incapacity",
+        "legal capacity",
+        "lung capacity",
+        "molar heat capacity",
+        "overcapacity",
+        "pseudocapacity",
+        "Shannon capacity",
+        "specific heat capacity",
+        "subcapacity",
+        "supercapacity",
+        "supracapacity",
+        "uncapacity",
+        "vital capacity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/capacity#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:3d3673aaff172e4cf5",
+      "definition": "The ability to hold, receive or absorb something.",
+      "example": "The sponge has the capacity to absorb water.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "capacity to absorb",
+        "capacity to hold",
+        "storage capacity",
+        "absorptive capacity"
+      ],
+      "usage": "Holding, receiving or absorbing ability.",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "ampacity",
+        "biocapacity",
+        "breaking capacity",
+        "capacity planning",
+        "capacity utilization",
+        "capacity utilization rate",
+        "carrying capacity",
+        "cubic capacity",
+        "diminished capacity",
+        "field capacity",
+        "finite capacity planning",
+        "heat capacity",
+        "incapacity",
+        "legal capacity",
+        "lung capacity",
+        "molar heat capacity",
+        "overcapacity",
+        "pseudocapacity",
+        "Shannon capacity",
+        "specific heat capacity",
+        "subcapacity",
+        "supercapacity",
+        "supracapacity",
+        "uncapacity",
+        "vital capacity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/capacity#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This meaning concerns the ability to receive or hold something. It does not state the amount currently present, a measured maximum or how quickly absorption occurs."
+      ],
+      "distinctionTask": {
+        "prompt": "The sponge’s capacity in the example is its _____.",
+        "options": [
+          "ability to absorb water",
+          "stated amount of water already absorbed"
+        ],
+        "answer": "ability to absorb water",
+        "explanation": "The sentence describes an ability without quantifying present contents."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

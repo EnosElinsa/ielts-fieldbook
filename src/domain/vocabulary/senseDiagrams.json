@@ -2966,5 +2966,205 @@
     "definition": "To undergo events or feelings, witness processes or perform activities that may affect one’s knowledge or views.",
     "pos": "verb",
     "kind": "experience-undergo"
+  },
+  {
+    "entryId": "ve-274ddd37",
+    "senseId": "kaikki:3915c3b4a3b826f476",
+    "term": "knowledge",
+    "definition": "General understanding of or familiarity with a subject, place or situation.",
+    "pos": "noun",
+    "kind": "knowledge-familiarity"
+  },
+  {
+    "entryId": "ve-274ddd37",
+    "senseId": "kaikki:caa7f289aaa6bf5c86",
+    "term": "knowledge",
+    "definition": "Awareness of a particular fact or situation.",
+    "pos": "noun",
+    "kind": "knowledge-awareness"
+  },
+  {
+    "entryId": "ve-274ddd37",
+    "senseId": "kaikki:ae8fbc9b3e1501ab8d",
+    "term": "knowledge",
+    "definition": "Familiarity with a particular skill or branch of learning.",
+    "pos": "noun",
+    "kind": "knowledge-working"
+  },
+  {
+    "entryId": "ve-274ddd37",
+    "senseId": "kaikki:f018282bb72f2ac302",
+    "term": "knowledge",
+    "definition": "The collective body of what is known or has been learned.",
+    "pos": "noun",
+    "kind": "knowledge-collective"
+  },
+  {
+    "entryId": "ve-274ddd37",
+    "senseId": "kaikki:0930d7d03c40ddb9a7",
+    "term": "knowledge",
+    "definition": "Deep familiarity with the routes and places of interest required of London taxi drivers.",
+    "pos": "noun",
+    "kind": "knowledge-routes"
+  },
+  {
+    "entryId": "ve-274ddd37",
+    "senseId": "kaikki:bf1e8d48d9da0e6aed",
+    "term": "knowledge",
+    "definition": "The Knowledge: the course of learning routes and places for prospective London taxi drivers.",
+    "pos": "name",
+    "kind": "knowledge-course"
+  },
+  {
+    "entryId": "ve-baf9274",
+    "senseId": "kaikki:a33da44c49239bcd07",
+    "term": "skill",
+    "definition": "A capacity to do something well, usually acquired or learned.",
+    "pos": "noun",
+    "kind": "skill-proficiency"
+  },
+  {
+    "entryId": "ve-baf9274",
+    "senseId": "kaikki:579e6163e54eac7c40",
+    "term": "skill",
+    "definition": "In AI, a reusable configuration or prompt defining how an agent performs a task.",
+    "pos": "noun",
+    "kind": "skill-agent"
+  },
+  {
+    "entryId": "ve-baf9274",
+    "senseId": "kaikki:2050a70cb0a1c0e5f2",
+    "term": "skill",
+    "definition": "In video games, to spend acquired points in exchange for skills.",
+    "pos": "verb",
+    "kind": "skill-points"
+  },
+  {
+    "entryId": "ve-9af2c87",
+    "senseId": "kaikki:4efbcdb2a7bc35380f",
+    "term": "ability",
+    "definition": "The quality of being able to do something; possession of the necessary power or capacity.",
+    "pos": "noun",
+    "kind": "ability-capability"
+  },
+  {
+    "entryId": "ve-9af2c87",
+    "senseId": "kaikki:156d9b50ded86c3dd4",
+    "term": "ability",
+    "definition": "The legal wherewithal to act.",
+    "pos": "noun",
+    "kind": "ability-legal"
+  },
+  {
+    "entryId": "ve-9af2c87",
+    "senseId": "kaikki:43b810881ec2ae4ddb",
+    "term": "ability",
+    "definition": "A power or faculty of the mind.",
+    "pos": "noun",
+    "kind": "ability-faculty"
+  },
+  {
+    "entryId": "ve-9af2c87",
+    "senseId": "kaikki:6cb9768423d71898c6",
+    "term": "ability",
+    "definition": "An individual skill, competence, talent or aptitude.",
+    "pos": "noun",
+    "kind": "ability-talent"
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "senseId": "kaikki:3d3673aaff172e4cf5",
+    "term": "capacity",
+    "definition": "The ability to hold, receive or absorb something.",
+    "pos": "noun",
+    "kind": "capacity-absorb"
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "senseId": "kaikki:b8c27950904db106c6",
+    "term": "capacity",
+    "definition": "A measure of holding or receiving ability, especially a volume.",
+    "pos": "noun",
+    "kind": "capacity-volume"
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "senseId": "kaikki:9c1a5e49a9ce26f821",
+    "term": "capacity",
+    "definition": "The capability to perform a task.",
+    "pos": "noun",
+    "kind": "capacity-task"
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "senseId": "kaikki:663a4b4f360d3be4a7",
+    "term": "capacity",
+    "definition": "The maximum amount that can be produced under stated conditions.",
+    "pos": "noun",
+    "kind": "capacity-production"
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "senseId": "kaikki:476fa3aa5242fb7236",
+    "term": "capacity",
+    "definition": "The potential for growth or development.",
+    "pos": "noun",
+    "kind": "capacity-growth"
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "senseId": "kaikki:2cb384462c7335f609",
+    "term": "capacity",
+    "definition": "The role or position in which someone functions.",
+    "pos": "noun",
+    "kind": "capacity-role"
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "senseId": "kaikki:07e059a05762a6d43b",
+    "term": "capacity",
+    "definition": "Electrical capacitance: the charge-to-voltage relation of a capacitor or conductor.",
+    "pos": "noun",
+    "kind": "capacity-capacitance"
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "senseId": "kaikki:18875387a09312b583",
+    "term": "capacity",
+    "definition": "Filling the allotted space; reaching the available accommodation limit.",
+    "pos": "adj",
+    "kind": "capacity-crowd"
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "senseId": "wiktionary:restored:2998e805c943dec797",
+    "term": "capacity",
+    "definition": "The maximum amount that a container or place can hold.",
+    "pos": "noun",
+    "kind": "capacity-maximum"
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "senseId": "wiktionary:restored:a98cdc763b23d0b6e1",
+    "term": "capacity",
+    "definition": "In operations, the maximum output of a machine, facility or group under specified conditions.",
+    "pos": "noun",
+    "kind": "capacity-output"
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "senseId": "wiktionary:restored:044eec0aa0cbba3cf3",
+    "term": "capacity",
+    "definition": "Mental ability, especially the power to learn.",
+    "pos": "noun",
+    "kind": "capacity-learning"
+  },
+  {
+    "entryId": "ve-fc74dc91",
+    "senseId": "wiktionary:restored:45487218b515390659",
+    "term": "capacity",
+    "definition": "Legal authority to perform an action.",
+    "pos": "noun",
+    "kind": "capacity-authority"
   }
 ]
