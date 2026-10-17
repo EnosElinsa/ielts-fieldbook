@@ -2,9 +2,9 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 599 restored submeanings** (51,953 total). This ledger verifies **2320 records** across definition, examples or reading explanations, collocations and distinctions; **49,633 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 673 reviewed distinction exercises and 283 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 683 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 599 restored submeanings** (51,953 total). This ledger verifies **2337 records** across definition, examples or reading explanations, collocations and distinctions; **49,616 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 687 reviewed distinction exercises and 297 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 686 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
-Authored learning-priority metadata classifies 66 general, 19 specialist, 32 historical and 0 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
+Authored learning-priority metadata classifies 74 general, 26 specialist, 33 historical and 0 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
 
 | Term | Reviewed records | Raw + restored records | Pending |
 | --- | ---: | ---: | ---: |
@@ -14,6 +14,7 @@ Authored learning-priority metadata classifies 66 general, 19 specialist, 32 his
 | adopt | 9 | 9 | 0 |
 | affect | 15 | 15 | 0 |
 | approach | 21 | 21 | 0 |
+| assess | 3 | 3 | 0 |
 | assume | 5 | 5 | 0 |
 | assure | 4 | 4 | 0 |
 | available | 5 | 5 | 0 |
@@ -21,6 +22,7 @@ Authored learning-priority metadata classifies 66 general, 19 specialist, 32 his
 | bear | 61 | 61 | 0 |
 | benefit | 7 | 7 | 0 |
 | break | 107 | 107 | 0 |
+| calculate | 6 | 6 | 0 |
 | capital | 19 | 19 | 0 |
 | change | 19 | 19 | 0 |
 | charge | 45 | 45 | 0 |
@@ -43,6 +45,7 @@ Authored learning-priority metadata classifies 66 general, 19 specialist, 32 his
 | effect | 14 | 14 | 0 |
 | effective | 8 | 8 | 0 |
 | efficient | 5 | 5 | 0 |
+| evaluate | 3 | 3 | 0 |
 | fair | 35 | 35 | 0 |
 | field | 33 | 33 | 0 |
 | figure | 29 | 29 | 0 |
@@ -74,6 +77,7 @@ Authored learning-priority metadata classifies 66 general, 19 specialist, 32 his
 | point | 91 | 91 | 0 |
 | post | 51 | 51 | 0 |
 | practice | 12 | 12 | 0 |
+| predict | 5 | 5 | 0 |
 | present | 34 | 35 | 1 |
 | presume | 5 | 5 | 0 |
 | principal | 18 | 18 | 0 |

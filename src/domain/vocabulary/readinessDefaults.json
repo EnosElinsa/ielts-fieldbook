@@ -17286,5 +17286,491 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-4f6c4c61",
+    "originalSense": {
+      "id": "kaikki:aa670b05ec3efbd7c9",
+      "definition": "To determine, estimate or judge the value of; to evaluate; to estimate.",
+      "example": "He assessed the situation.",
+      "pos": "verb",
+      "synonyms": [
+        "esteem",
+        "rate",
+        "value",
+        "appraise",
+        "apprise",
+        "apprize",
+        "assess",
+        "esteem",
+        "evaluate",
+        "judge",
+        "price",
+        "prize",
+        "rate",
+        "valuate",
+        "value",
+        "weigh",
+        "worthen"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "assessability",
+        "assessable",
+        "assessably",
+        "assessee",
+        "assessible",
+        "assessingly",
+        "assessment",
+        "misassess",
+        "nonassessed",
+        "overassess",
+        "overassessment",
+        "preassess",
+        "reassess",
+        "risk-assess",
+        "risk-assessed",
+        "unassessability",
+        "unassessable",
+        "unassessably",
+        "unassessed",
+        "underassess",
+        "underassessment"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assess#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:aa670b05ec3efbd7c9",
+      "definition": "To examine and judge the value, amount, quality or significance of something.",
+      "example": "Inspectors assess the damage before estimating repair costs.",
+      "pos": "verb",
+      "synonyms": [
+        "esteem",
+        "rate",
+        "value",
+        "appraise",
+        "apprise",
+        "apprize",
+        "assess",
+        "esteem",
+        "evaluate",
+        "judge",
+        "price",
+        "prize",
+        "rate",
+        "valuate",
+        "value",
+        "weigh",
+        "worthen"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "assess the damage",
+        "assess a situation",
+        "assess the evidence"
+      ],
+      "usage": "Transitive; examining and judging.",
+      "register": "transitive",
+      "wordFamily": [
+        "assessability",
+        "assessable",
+        "assessably",
+        "assessee",
+        "assessible",
+        "assessingly",
+        "assessment",
+        "misassess",
+        "nonassessed",
+        "overassess",
+        "overassessment",
+        "preassess",
+        "reassess",
+        "risk-assess",
+        "risk-assessed",
+        "unassessability",
+        "unassessable",
+        "unassessably",
+        "unassessed",
+        "underassess",
+        "underassessment"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assess#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Assess and evaluate overlap when they mean examining and judging. Assessing damage is not the same as repairing it, and an assessment need not be an exact numerical calculation."
+      ],
+      "distinctionTask": {
+        "prompt": "To assess damage is to _____.",
+        "options": [
+          "examine and judge its extent or significance",
+          "complete the repairs automatically"
+        ],
+        "answer": "examine and judge its extent or significance",
+        "explanation": "An assessment examines and judges; it does not itself repair the damage."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-808740be",
+    "originalSense": {
+      "id": "kaikki:f77b7646dbcbe47372",
+      "definition": "To draw conclusions from examining; to assess; to appraise.",
+      "example": "It will take several years to evaluate the material gathered in the survey.",
+      "pos": "verb",
+      "synonyms": [
+        "assess",
+        "esteem",
+        "rate",
+        "appraise",
+        "apprise",
+        "apprize",
+        "assess",
+        "esteem",
+        "evaluate",
+        "judge",
+        "price",
+        "prize",
+        "rate",
+        "valuate",
+        "value",
+        "weigh",
+        "worthen"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "coevaluate",
+        "evaluable",
+        "evaluatable",
+        "evaluatee",
+        "evaluative",
+        "evaluator",
+        "evaluatory",
+        "misevaluate",
+        "overevaluate",
+        "reevaluate",
+        "re-evaluate",
+        "self-evaluate",
+        "underevaluate",
+        "unevaluated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/evaluate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:f77b7646dbcbe47372",
+      "definition": "To examine something and reach a judgement about its quality, significance or value.",
+      "example": "The researchers evaluate the evidence before drawing a conclusion.",
+      "pos": "verb",
+      "synonyms": [
+        "assess",
+        "esteem",
+        "rate",
+        "appraise",
+        "apprise",
+        "apprize",
+        "assess",
+        "esteem",
+        "evaluate",
+        "judge",
+        "price",
+        "prize",
+        "rate",
+        "valuate",
+        "value",
+        "weigh",
+        "worthen"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "evaluate the evidence",
+        "evaluate a proposal",
+        "evaluate the effectiveness"
+      ],
+      "usage": "Transitive; examining and judging.",
+      "register": "transitive",
+      "wordFamily": [
+        "coevaluate",
+        "evaluable",
+        "evaluatable",
+        "evaluatee",
+        "evaluative",
+        "evaluator",
+        "evaluatory",
+        "misevaluate",
+        "overevaluate",
+        "reevaluate",
+        "re-evaluate",
+        "self-evaluate",
+        "underevaluate",
+        "unevaluated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/evaluate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Evaluate and assess can both mean examining and judging. Evaluating evidence does not necessarily approve a proposal, and the act of evaluation does not guarantee that the conclusion is correct."
+      ],
+      "distinctionTask": {
+        "prompt": "Researchers evaluate the evidence. This describes _____.",
+        "options": [
+          "examining it to reach a judgement",
+          "automatically approving every proposal"
+        ],
+        "answer": "examining it to reach a judgement",
+        "explanation": "Evaluation can support a positive or negative judgement and still needs sound reasoning."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-e3661a01",
+    "originalSense": {
+      "id": "kaikki:5d8ca409bd826c0f32",
+      "definition": "To determine the value of something or the solution to something by a mathematical process.",
+      "example": "Calculate the square root of 3 to 10 decimal places.",
+      "pos": "verb",
+      "synonyms": [
+        "compute",
+        "reckon",
+        "work out"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "backcalculate",
+        "calculable",
+        "calculant",
+        "calculatable",
+        "calculated",
+        "calculate out",
+        "calculating",
+        "calculative",
+        "calculatory",
+        "miscalculate",
+        "outcalculate",
+        "overcalculate",
+        "precalculate",
+        "recalculate",
+        "retrocalculate",
+        "uncalculatable",
+        "undercalculate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/calculate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:5d8ca409bd826c0f32",
+      "definition": "To work out an amount, value or solution using mathematics.",
+      "example": "We calculate the total cost of five boxes at £12 each as £60.",
+      "pos": "verb",
+      "synonyms": [
+        "compute",
+        "reckon",
+        "work out"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "calculate the total",
+        "calculate a cost",
+        "calculate a value"
+      ],
+      "usage": "Transitive; mathematical computation.",
+      "register": "transitive",
+      "wordFamily": [
+        "backcalculate",
+        "calculable",
+        "calculant",
+        "calculatable",
+        "calculated",
+        "calculate out",
+        "calculating",
+        "calculative",
+        "calculatory",
+        "miscalculate",
+        "outcalculate",
+        "overcalculate",
+        "precalculate",
+        "recalculate",
+        "retrocalculate",
+        "uncalculatable",
+        "undercalculate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/calculate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Calculate in this transitive construction takes what is worked out as its object. Five boxes at £12 each cost 5 × £12 = £60, before any separately specified charges or discounts. A broad evaluation can also involve judgement rather than arithmetic alone."
+      ],
+      "distinctionTask": {
+        "prompt": "Five boxes at £12 each have a stated total of _____.",
+        "options": [
+          "£60",
+          "£17"
+        ],
+        "answer": "£60",
+        "explanation": "Multiply the number of boxes by the price of each: 5 × £12 = £60."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-6adf0878",
+    "originalSense": {
+      "id": "kaikki:c647e7b1abb7c553d0",
+      "definition": "To make a prediction: to forecast, foretell, or estimate a future event on the basis of knowledge and reasoning; to prophesy a future event on the basis of mystical knowledge or power.",
+      "example": "After he had renounced his fathers bishoprick of Valentia in Spaine... and to attaine by degrees the Maiesty of Cesar, was created Duke of that place, gaue for his poesie, Aut Cesar, aut nihil. which being not fauoured from the heauens, had presently the euent the same predicted.",
+      "pos": "verb",
+      "synonyms": [
+        "foretell",
+        "forespell",
+        "forespeak",
+        "halsen",
+        "call",
+        "anticipate",
+        "augur",
+        "bode",
+        "divine",
+        "forecast",
+        "foredeem",
+        "forehold",
+        "foresee",
+        "foreshadow",
+        "predict",
+        "presage",
+        "prognosticate",
+        "prophesy"
+      ],
+      "antonyms": [
+        "retrodict"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "hopedict",
+        "mispredict",
+        "outpredict",
+        "overpredict",
+        "predictedly",
+        "predicter",
+        "predictingly",
+        "predictory",
+        "repredict",
+        "underpredict",
+        "underpredicted",
+        "underpredicting",
+        "unpredict",
+        "unpredicted"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/predict#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:c647e7b1abb7c553d0",
+      "definition": "To state or estimate that a future event will happen; also, to foretell an event as a prophecy.",
+      "example": "Forecasters predict heavy rain for tomorrow.",
+      "pos": "verb",
+      "synonyms": [
+        "foretell",
+        "forespell",
+        "forespeak",
+        "halsen",
+        "call",
+        "anticipate",
+        "augur",
+        "bode",
+        "divine",
+        "forecast",
+        "foredeem",
+        "forehold",
+        "foresee",
+        "foreshadow",
+        "predict",
+        "presage",
+        "prognosticate",
+        "prophesy"
+      ],
+      "antonyms": [
+        "retrodict"
+      ],
+      "collocations": [
+        "predict an outcome",
+        "predict that",
+        "predict the weather"
+      ],
+      "usage": "Transitive; a forecast or prophecy about a future event.",
+      "register": "transitive",
+      "wordFamily": [
+        "hopedict",
+        "mispredict",
+        "outpredict",
+        "overpredict",
+        "predictedly",
+        "predicter",
+        "predictingly",
+        "predictory",
+        "repredict",
+        "underpredict",
+        "underpredicted",
+        "underpredicting",
+        "unpredict",
+        "unpredicted"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/predict#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A prediction is not an observed outcome or a guarantee. Evidence-based forecasts use knowledge, reasoning and models; the source also includes prophecy attributed to claimed mystical knowledge or power. The verb itself does not certify either the basis or reliability of a claim."
+      ],
+      "distinctionTask": {
+        "prompt": "A forecast predicting heavy rain tomorrow is _____.",
+        "options": [
+          "a prediction whose outcome still needs observation",
+          "a guarantee that the rain will occur"
+        ],
+        "answer": "a prediction whose outcome still needs observation",
+        "explanation": "A forecast concerns a future event and can be wrong."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

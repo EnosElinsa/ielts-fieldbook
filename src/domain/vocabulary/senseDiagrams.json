@@ -2262,5 +2262,117 @@
     "definition": "An exclamation expressing pleasure at a favourable outcome.",
     "pos": "intj",
     "kind": "result-exclamation"
+  },
+  {
+    "entryId": "ve-4f6c4c61",
+    "senseId": "kaikki:aa670b05ec3efbd7c9",
+    "term": "assess",
+    "definition": "To examine and judge the value, amount, quality or significance of something.",
+    "pos": "verb",
+    "kind": "assess-value"
+  },
+  {
+    "entryId": "ve-4f6c4c61",
+    "senseId": "kaikki:5db57f186862aa6966",
+    "term": "assess",
+    "definition": "To impose or charge a fee, cost or penalty.",
+    "pos": "verb",
+    "kind": "assess-charge"
+  },
+  {
+    "entryId": "ve-4f6c4c61",
+    "senseId": "kaikki:82228e7fc2e18e79f1",
+    "term": "assess",
+    "definition": "To determine and demand the amount of tax due from a person or organisation.",
+    "pos": "verb",
+    "kind": "assess-tax"
+  },
+  {
+    "entryId": "ve-808740be",
+    "senseId": "kaikki:f77b7646dbcbe47372",
+    "term": "evaluate",
+    "definition": "To examine something and reach a judgement about its quality, significance or value.",
+    "pos": "verb",
+    "kind": "evaluate-appraise"
+  },
+  {
+    "entryId": "ve-808740be",
+    "senseId": "kaikki:23db5a711cfdd177b6",
+    "term": "evaluate",
+    "definition": "In mathematics or computing, to work out the value of an expression.",
+    "pos": "verb",
+    "kind": "evaluate-expression"
+  },
+  {
+    "entryId": "ve-808740be",
+    "senseId": "kaikki:6ff2aff2559ed35d0b",
+    "term": "evaluate",
+    "definition": "Of an expression or computation, to have or return a particular value.",
+    "pos": "verb",
+    "kind": "evaluate-value"
+  },
+  {
+    "entryId": "ve-e3661a01",
+    "senseId": "kaikki:5d8ca409bd826c0f32",
+    "term": "calculate",
+    "definition": "To work out an amount, value or solution using mathematics.",
+    "pos": "verb",
+    "kind": "calculate-total"
+  },
+  {
+    "entryId": "ve-e3661a01",
+    "senseId": "kaikki:f02e9e968a5e038176",
+    "term": "calculate",
+    "definition": "To perform mathematical computation or reckoning, without naming a direct object.",
+    "pos": "verb",
+    "kind": "calculate-reckon"
+  },
+  {
+    "entryId": "ve-e3661a01",
+    "senseId": "kaikki:ac83daca7d7fe603a5",
+    "term": "calculate",
+    "definition": "To work out or forecast the timing, conditions or consequences of something by computation.",
+    "pos": "verb",
+    "kind": "calculate-forecast"
+  },
+  {
+    "entryId": "ve-e3661a01",
+    "senseId": "kaikki:f0ebf12626754af445",
+    "term": "calculate",
+    "definition": "To design, arrange or adapt something for a purpose or intended effect.",
+    "pos": "verb",
+    "kind": "calculate-purpose"
+  },
+  {
+    "entryId": "ve-e3661a01",
+    "senseId": "kaikki:924ce3a9c73036c36a",
+    "term": "calculate",
+    "definition": "In chess, to work through possible sequences of moves and replies mentally.",
+    "pos": "verb",
+    "kind": "calculate-chess"
+  },
+  {
+    "entryId": "ve-6adf0878",
+    "senseId": "kaikki:c647e7b1abb7c553d0",
+    "term": "predict",
+    "definition": "To state or estimate that a future event will happen; also, to foretell an event as a prophecy.",
+    "pos": "verb",
+    "kind": "predict-forecast"
+  },
+  {
+    "entryId": "ve-6adf0878",
+    "senseId": "kaikki:a0a474b0088542be43",
+    "term": "predict",
+    "definition": "Of a theory, law or model, to imply a particular result under stated conditions.",
+    "pos": "verb",
+    "kind": "predict-implication"
+  },
+  {
+    "entryId": "ve-6adf0878",
+    "senseId": "kaikki:eacb769c6b0c5dd6b1",
+    "term": "predict",
+    "definition": "To make forecasts or predictions, without naming a direct object.",
+    "pos": "verb",
+    "kind": "predict-intransitive"
   }
 ]

@@ -30329,6 +30329,241 @@
       ],
       "referenceUrl": "https://en.wiktionary.org/w/index.php?title=result&oldid=93525403",
       "diagramReviewed": true
+    },
+    {
+      "term": "assess",
+      "entryId": "ve-4f6c4c61",
+      "senseId": "kaikki:aa670b05ec3efbd7c9",
+      "sourceHash": "c9e094afab3ee97f2015686b76839e8994897f68fb1fbcfce51b23be77eeb9ba",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assess&oldid=93559967",
+      "diagramReviewed": true
+    },
+    {
+      "term": "assess",
+      "entryId": "ve-4f6c4c61",
+      "senseId": "kaikki:5db57f186862aa6966",
+      "sourceHash": "6687fd35a1e2f79539f769af29e88e8c8711627e3633f2b830f94d0dce2a0d32",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assess&oldid=93559967",
+      "diagramReviewed": true
+    },
+    {
+      "term": "assess",
+      "entryId": "ve-4f6c4c61",
+      "senseId": "kaikki:82228e7fc2e18e79f1",
+      "sourceHash": "02c6f1439b3b68b9b9e3b34e2f9f76706aee09a420fa410dc9c379e1238455a6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assess&oldid=93559967",
+      "diagramReviewed": true
+    },
+    {
+      "term": "evaluate",
+      "entryId": "ve-808740be",
+      "senseId": "kaikki:f77b7646dbcbe47372",
+      "sourceHash": "24f1c1fa073bfef70ef7b3d98c08ad4d3ae24d6e1f97fc92d97d3791877997fa",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=evaluate&oldid=91190969",
+      "diagramReviewed": true
+    },
+    {
+      "term": "evaluate",
+      "entryId": "ve-808740be",
+      "senseId": "kaikki:23db5a711cfdd177b6",
+      "sourceHash": "d11228bc7a3ce25accb8e3cc2ebeb860572e62b8a3935cbf4720294dbac3c70b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=evaluate&oldid=91190969",
+      "diagramReviewed": true
+    },
+    {
+      "term": "evaluate",
+      "entryId": "ve-808740be",
+      "senseId": "kaikki:6ff2aff2559ed35d0b",
+      "sourceHash": "f71208fb2543665add44536b87d90074f5f2b1c82dc0749285ba73907a4b0812",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=evaluate&oldid=91190969",
+      "diagramReviewed": true
+    },
+    {
+      "term": "calculate",
+      "entryId": "ve-e3661a01",
+      "senseId": "kaikki:5d8ca409bd826c0f32",
+      "sourceHash": "2a2be61c6fb5eff319f522d4cd7cf700ac9390d9a749a2d979fc5cb4741f87e5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=calculate&oldid=92541836",
+      "diagramReviewed": true
+    },
+    {
+      "term": "calculate",
+      "entryId": "ve-e3661a01",
+      "senseId": "kaikki:f02e9e968a5e038176",
+      "sourceHash": "3c788ed086361ec0ae16ecaafd68352a71f69674d7216a88342065c4d93166e7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=calculate&oldid=92541836",
+      "diagramReviewed": true
+    },
+    {
+      "term": "calculate",
+      "entryId": "ve-e3661a01",
+      "senseId": "kaikki:386852e42f303f26fb",
+      "sourceHash": "beec2e14741b0993e91cf67fde898a6874ea124f892d729ca4b6e8b4496f90c8",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=calculate&oldid=92541836"
+    },
+    {
+      "term": "calculate",
+      "entryId": "ve-e3661a01",
+      "senseId": "kaikki:ac83daca7d7fe603a5",
+      "sourceHash": "e61444912aa44d0b647f3bb987bff7d02b5669cbddbba18a2d2ae3ba5844fc26",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=calculate&oldid=92541836",
+      "diagramReviewed": true
+    },
+    {
+      "term": "calculate",
+      "entryId": "ve-e3661a01",
+      "senseId": "kaikki:f0ebf12626754af445",
+      "sourceHash": "b70fadebee9c79b565d27d22a631423d079a21f394ab7d26676722278ec43f2c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=calculate&oldid=92541836",
+      "diagramReviewed": true
+    },
+    {
+      "term": "calculate",
+      "entryId": "ve-e3661a01",
+      "senseId": "kaikki:924ce3a9c73036c36a",
+      "sourceHash": "38b662e308dd9eb02141f976f7a38dc6d78e5abc4fb9a776981e797b81dee131",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=calculate&oldid=92541836",
+      "diagramReviewed": true
+    },
+    {
+      "term": "predict",
+      "entryId": "ve-6adf0878",
+      "senseId": "kaikki:c647e7b1abb7c553d0",
+      "sourceHash": "3d373e5023330739de8019eff1833df4e469aa9aeb5375268c56b4d2b5ae40e8",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=predict&oldid=92549109",
+      "diagramReviewed": true
+    },
+    {
+      "term": "predict",
+      "entryId": "ve-6adf0878",
+      "senseId": "kaikki:a0a474b0088542be43",
+      "sourceHash": "522e7678bd84d99511430ec80f36d77f509e6644815f8c8d2edd4867e5c7ba73",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=predict&oldid=92549109",
+      "diagramReviewed": true
+    },
+    {
+      "term": "predict",
+      "entryId": "ve-6adf0878",
+      "senseId": "kaikki:eacb769c6b0c5dd6b1",
+      "sourceHash": "31d564ad56b21f8a8d59a43322c9ba82eca8f082d9526e6880c03cfe9d365ced",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=predict&oldid=92549109",
+      "diagramReviewed": true
+    },
+    {
+      "term": "predict",
+      "entryId": "ve-6adf0878",
+      "senseId": "kaikki:1a7cd6822bf567384d",
+      "sourceHash": "bb8fc330db81e1e19252cb4d9b09151a838a7467dbee49fb64f7e2d42556267b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=predict&oldid=92549109"
+    },
+    {
+      "term": "predict",
+      "entryId": "ve-6adf0878",
+      "senseId": "kaikki:852ec56ca844b0846b",
+      "sourceHash": "305efcbc8a78adf611aa18e29f5c60315cc54a8a8aba91174dfbec95d1b35c0a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=predict&oldid=92549109"
     }
   ]
 }
