@@ -1,0 +1,144 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-8366cba8",
+      "senseId": "kaikki:b1a831f5de690f1a08"
+    },
+    {
+      "entryId": "ve-8366cba8",
+      "senseId": "kaikki:475d406a579d8f8cb9"
+    },
+    {
+      "entryId": "ve-8366cba8",
+      "senseId": "kaikki:8b8531ea702dd9a7b7"
+    },
+    {
+      "entryId": "ve-8366cba8",
+      "senseId": "kaikki:e315082f64c1f427c0"
+    },
+    {
+      "entryId": "ve-8366cba8",
+      "senseId": "kaikki:0b5b00ffb59455dc16"
+    },
+    {
+      "entryId": "ve-8366cba8",
+      "senseId": "kaikki:5d6de36082102308b2"
+    },
+    {
+      "entryId": "ve-8366cba8",
+      "senseId": "kaikki:f82286745a973bad06"
+    },
+    {
+      "entryId": "ve-8366cba8",
+      "senseId": "kaikki:8d7d6ecbe3eb890b42"
+    },
+    {
+      "entryId": "ve-8cafeb9c",
+      "senseId": "kaikki:94ade0eb6770a24224"
+    },
+    {
+      "entryId": "ve-8cafeb9c",
+      "senseId": "kaikki:87f2931b01357d8a1e"
+    },
+    {
+      "entryId": "ve-8cafeb9c",
+      "senseId": "kaikki:a96734da5775f64c00"
+    },
+    {
+      "entryId": "ve-8cafeb9c",
+      "senseId": "kaikki:e1f6fc66c3a1e2d2b9"
+    },
+    {
+      "entryId": "ve-8cafeb9c",
+      "senseId": "kaikki:ae9d74605476863263"
+    },
+    {
+      "entryId": "ve-7457060c",
+      "senseId": "kaikki:616c301d96fabad7a5"
+    },
+    {
+      "entryId": "ve-7457060c",
+      "senseId": "kaikki:a4b13fd440a2e6d369"
+    },
+    {
+      "entryId": "ve-7457060c",
+      "senseId": "kaikki:8007475fcc1eb3699b"
+    },
+    {
+      "entryId": "ve-7457060c",
+      "senseId": "kaikki:f9cac89750db2f3372"
+    },
+    {
+      "entryId": "ve-7457060c",
+      "senseId": "kaikki:544079f22d1950d776"
+    },
+    {
+      "entryId": "ve-7457060c",
+      "senseId": "kaikki:dc3f23a013e9ea1cd0"
+    },
+    {
+      "entryId": "ve-7457060c",
+      "senseId": "kaikki:702fd23fe7d47cdaf9"
+    },
+    {
+      "entryId": "ve-7457060c",
+      "senseId": "kaikki:1497ccd2cf34e09ae7"
+    },
+    {
+      "entryId": "ve-7457060c",
+      "senseId": "kaikki:b53ccc01090815f030"
+    },
+    {
+      "entryId": "ve-7457060c",
+      "senseId": "kaikki:66f3ea78a0210372c0"
+    },
+    {
+      "entryId": "ve-ff3d6749",
+      "senseId": "kaikki:604ee0db4408931146"
+    },
+    {
+      "entryId": "ve-ff3d6749",
+      "senseId": "kaikki:fa8b155c28681d2b6b"
+    },
+    {
+      "entryId": "ve-ff3d6749",
+      "senseId": "kaikki:464b0934ca2b9c320c"
+    },
+    {
+      "entryId": "ve-ff3d6749",
+      "senseId": "kaikki:e4fbea7d7414c8bbc8"
+    },
+    {
+      "entryId": "ve-ff3d6749",
+      "senseId": "kaikki:9e7ae91396286646ee"
+    },
+    {
+      "entryId": "ve-ff3d6749",
+      "senseId": "kaikki:76a1db19db82d57857"
+    },
+    {
+      "entryId": "ve-ff3d6749",
+      "senseId": "kaikki:09f78847319a43a0c3"
+    },
+    {
+      "entryId": "ve-ff3d6749",
+      "senseId": "kaikki:459682de389e028fcb"
+    },
+    {
+      "entryId": "ve-ff3d6749",
+      "senseId": "kaikki:5d3ecdf679fa65356d"
+    },
+    {
+      "entryId": "ve-ff3d6749",
+      "senseId": "kaikki:af53f736f3b0fffbdd"
+    }
+  ],
+  "restoreCorrections": [],
+  "removeDefaults": [
+    "ve-8366cba8",
+    "ve-8cafeb9c",
+    "ve-7457060c",
+    "ve-ff3d6749"
+  ],
+  "restoreDefaults": []
+}

@@ -1670,5 +1670,117 @@
     "definition": "To win or secure a prize, title or victory in competition.",
     "pos": "verb",
     "kind": "claim-prize"
+  },
+  {
+    "entryId": "ve-8366cba8",
+    "senseId": "kaikki:b1a831f5de690f1a08",
+    "term": "effective",
+    "definition": "Producing, or capable of producing, the intended result.",
+    "pos": "adj",
+    "kind": "effective-result"
+  },
+  {
+    "entryId": "ve-8366cba8",
+    "senseId": "kaikki:8b8531ea702dd9a7b7",
+    "term": "effective",
+    "definition": "Actually usable, operative or available for a stated purpose, rather than merely nominal.",
+    "pos": "adj",
+    "kind": "effective-operational"
+  },
+  {
+    "entryId": "ve-8366cba8",
+    "senseId": "kaikki:e315082f64c1f427c0",
+    "term": "effective",
+    "definition": "In force or applying from a stated time.",
+    "pos": "adj",
+    "kind": "effective-start"
+  },
+  {
+    "entryId": "ve-8366cba8",
+    "senseId": "kaikki:5d6de36082102308b2",
+    "term": "effective",
+    "definition": "Of a group action, having only the identity element act trivially on every point.",
+    "pos": "adj",
+    "kind": "effective-action"
+  },
+  {
+    "entryId": "ve-8cafeb9c",
+    "senseId": "kaikki:94ade0eb6770a24224",
+    "term": "efficient",
+    "definition": "Using time, energy, money or other resources with little waste.",
+    "pos": "adj",
+    "kind": "efficient-resources"
+  },
+  {
+    "entryId": "ve-8cafeb9c",
+    "senseId": "kaikki:87f2931b01357d8a1e",
+    "term": "efficient",
+    "definition": "Converting a stated proportion of energy input into useful output.",
+    "pos": "adj",
+    "kind": "efficient-energy"
+  },
+  {
+    "entryId": "ve-7457060c",
+    "senseId": "kaikki:616c301d96fabad7a5",
+    "term": "sensible",
+    "definition": "Showing good judgement or making reasonable decisions.",
+    "pos": "adj",
+    "kind": "sensible-decision"
+  },
+  {
+    "entryId": "ve-7457060c",
+    "senseId": "kaikki:a4b13fd440a2e6d369",
+    "term": "sensible",
+    "definition": "Practical or comfortable rather than chosen mainly for appearance or fashion.",
+    "pos": "adj",
+    "kind": "sensible-practical"
+  },
+  {
+    "entryId": "ve-ff3d6749",
+    "senseId": "kaikki:fa8b155c28681d2b6b",
+    "term": "sensitive",
+    "definition": "Responding readily to particular stimuli or influences.",
+    "pos": "adj",
+    "kind": "sensitive-response"
+  },
+  {
+    "entryId": "ve-ff3d6749",
+    "senseId": "kaikki:464b0934ca2b9c320c",
+    "term": "sensitive",
+    "definition": "Easily affected emotionally by criticism or other people’s words and actions.",
+    "pos": "adj",
+    "kind": "sensitive-emotion"
+  },
+  {
+    "entryId": "ve-ff3d6749",
+    "senseId": "kaikki:e4fbea7d7414c8bbc8",
+    "term": "sensitive",
+    "definition": "Of a topic or issue, capable of causing offence, distress or hurt.",
+    "pos": "adj",
+    "kind": "sensitive-topic"
+  },
+  {
+    "entryId": "ve-ff3d6749",
+    "senseId": "kaikki:9e7ae91396286646ee",
+    "term": "sensitive",
+    "definition": "Intended to be kept private or disclosed only to appropriate people.",
+    "pos": "adj",
+    "kind": "sensitive-confidential"
+  },
+  {
+    "entryId": "ve-ff3d6749",
+    "senseId": "kaikki:76a1db19db82d57857",
+    "term": "sensitive",
+    "definition": "Aware of other people’s feelings and careful to avoid unnecessary hurt.",
+    "pos": "adj",
+    "kind": "sensitive-considerate"
+  },
+  {
+    "entryId": "ve-ff3d6749",
+    "senseId": "kaikki:459682de389e028fcb",
+    "term": "sensitive",
+    "definition": "Of a measuring instrument, able to detect or respond to small changes in what it measures.",
+    "pos": "adj",
+    "kind": "sensitive-instrument"
   }
 ]

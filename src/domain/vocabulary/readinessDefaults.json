@@ -15514,5 +15514,463 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-8366cba8",
+    "originalSense": {
+      "id": "kaikki:b1a831f5de690f1a08",
+      "definition": "Having the power to produce a required effect or effects.",
+      "example": "The pill is an effective method of birth control.",
+      "pos": "adj",
+      "synonyms": [
+        "efficacious"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "bioeffective",
+        "brake mean effective pressure",
+        "coeffective",
+        "cost-effective",
+        "effectivate",
+        "effective accelerationism",
+        "effective accelerationist",
+        "effective altruism",
+        "effective altruist",
+        "effective compression",
+        "effective dose",
+        "effective energy",
+        "effectively",
+        "effectiveness",
+        "effective nuclear charge",
+        "effective radiated power",
+        "effective stack size",
+        "effectivization",
+        "effectivize",
+        "Effie",
+        "equieffective",
+        "geoeffective",
+        "ineffective",
+        "isoeffective",
+        "median effective time",
+        "noneffective",
+        "subeffective",
+        "supereffective",
+        "undereffective",
+        "uneffective"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/effective#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:b1a831f5de690f1a08",
+      "definition": "Producing, or capable of producing, the intended result.",
+      "example": "The new filter is effective at removing dust.",
+      "pos": "adj",
+      "synonyms": [
+        "efficacious"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "effective at doing something",
+        "an effective method",
+        "effective against a problem"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "bioeffective",
+        "brake mean effective pressure",
+        "coeffective",
+        "cost-effective",
+        "effectivate",
+        "effective accelerationism",
+        "effective accelerationist",
+        "effective altruism",
+        "effective altruist",
+        "effective compression",
+        "effective dose",
+        "effective energy",
+        "effectively",
+        "effectiveness",
+        "effective nuclear charge",
+        "effective radiated power",
+        "effective stack size",
+        "effectivization",
+        "effectivize",
+        "Effie",
+        "equieffective",
+        "geoeffective",
+        "ineffective",
+        "isoeffective",
+        "median effective time",
+        "noneffective",
+        "subeffective",
+        "supereffective",
+        "undereffective",
+        "uneffective"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/effective#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Effective concerns achieving the intended result. Efficient concerns how resources are used; a method can work while using a great deal of time or energy."
+      ],
+      "distinctionTask": {
+        "prompt": "A filter removes the dust it is intended to remove, but uses a lot of power. Calling it effective says it _____.",
+        "options": [
+          "achieves the intended result",
+          "necessarily uses very little power"
+        ],
+        "answer": "achieves the intended result",
+        "explanation": "Effectiveness concerns the result. Resource use requires a separate judgement of efficiency."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-8cafeb9c",
+    "originalSense": {
+      "id": "kaikki:94ade0eb6770a24224",
+      "definition": "Making good, thorough, or careful use of resources; not consuming extra. Especially, making good use of time or energy.",
+      "example": "An efficient process would automate all the routine work.",
+      "pos": "adj",
+      "synonyms": [
+        "lean",
+        "businesslike"
+      ],
+      "antonyms": [
+        "inefficient",
+        "prodigal",
+        "uneconomical"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "cost-efficient",
+        "ecoefficient",
+        "efficient cause",
+        "efficient frontier",
+        "efficiently",
+        "efficient market hypothesis",
+        "efficientness",
+        "energy-efficient",
+        "energy efficient",
+        "equiefficient",
+        "hyperefficient",
+        "Kaldor-Hicks efficient",
+        "nonefficient",
+        "subefficient",
+        "superefficient",
+        "tax-efficient",
+        "ultraefficient"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/efficient#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:94ade0eb6770a24224",
+      "definition": "Using time, energy, money or other resources with little waste.",
+      "example": "An efficient process uses less time for the same task.",
+      "pos": "adj",
+      "synonyms": [
+        "lean",
+        "businesslike"
+      ],
+      "antonyms": [
+        "inefficient",
+        "prodigal",
+        "uneconomical"
+      ],
+      "collocations": [
+        "an efficient process",
+        "an efficient use of time",
+        "an efficient system"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "cost-efficient",
+        "ecoefficient",
+        "efficient cause",
+        "efficient frontier",
+        "efficiently",
+        "efficient market hypothesis",
+        "efficientness",
+        "energy-efficient",
+        "energy efficient",
+        "equiefficient",
+        "hyperefficient",
+        "Kaldor-Hicks efficient",
+        "nonefficient",
+        "subefficient",
+        "superefficient",
+        "tax-efficient",
+        "ultraefficient"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/efficient#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Efficient concerns resource use relative to the work done. Effective concerns achieving the intended result; the two judgements need not coincide."
+      ],
+      "distinctionTask": {
+        "prompt": "Two processes complete the same task equally well; one takes half the time. Calling it more efficient compares _____.",
+        "options": [
+          "resource use for the work done",
+          "the date on which a rule applies"
+        ],
+        "answer": "resource use for the work done",
+        "explanation": "With the result held equal, lower time use supports the efficiency comparison."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7457060c",
+    "originalSense": {
+      "id": "kaikki:616c301d96fabad7a5",
+      "definition": "Acting with or showing good sense; able to make good judgements based on reason or wisdom, or reflecting such ability.",
+      "example": "They ask questions of someone who thinks he's got something sensible to say on some matter when actually he hasn't.",
+      "pos": "adj",
+      "synonyms": [
+        "reasonable"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "commonsensible",
+        "electrosensible",
+        "extrasensible",
+        "nonsensible",
+        "oversensible",
+        "sensibilization",
+        "sensibleness",
+        "sensibly",
+        "subsensible",
+        "suprasensible",
+        "unsensible"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sensible#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:616c301d96fabad7a5",
+      "definition": "Showing good judgement or making reasonable decisions.",
+      "example": "Taking an umbrella was a sensible decision.",
+      "pos": "adj",
+      "synonyms": [
+        "reasonable"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "a sensible decision",
+        "a sensible precaution",
+        "a sensible suggestion"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "commonsensible",
+        "electrosensible",
+        "extrasensible",
+        "nonsensible",
+        "oversensible",
+        "sensibilization",
+        "sensibleness",
+        "sensibly",
+        "subsensible",
+        "suprasensible",
+        "unsensible"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sensible#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Sensible concerns good judgement. Sensitive can describe being easily hurt, considerate or responsive; it is not a synonym for reasonable."
+      ],
+      "distinctionTask": {
+        "prompt": "Taking an umbrella because rain is forecast is a sensible decision: it shows _____.",
+        "options": [
+          "good judgement",
+          "a measuring instrument’s responsiveness"
+        ],
+        "answer": "good judgement",
+        "explanation": "The decision is reasonable in the circumstances. Sensible is distinct from sensitive."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-ff3d6749",
+    "originalSense": {
+      "id": "kaikki:464b0934ca2b9c320c",
+      "definition": "Easily offended, upset, or hurt.",
+      "example": "Max is very sensitive; he cried today because of the bad news.",
+      "pos": "adj",
+      "synonyms": [
+        "aware",
+        "caring",
+        "classified",
+        "compassionate",
+        "nesh",
+        "precise",
+        "tender"
+      ],
+      "antonyms": [
+        "insensitive",
+        "nonsensitive",
+        "resistant",
+        "stoic",
+        "uncaring"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "barosensitive",
+        "case sensitive",
+        "chemosensitive",
+        "cold-sensitive",
+        "context-sensitive",
+        "cryosensitive",
+        "ecosensitive",
+        "electrosensitive",
+        "extrasensitive",
+        "hemosensitive",
+        "highly sensitive person",
+        "hydrosensitive",
+        "hygrosensitive",
+        "hyposensitive",
+        "immunosensitive",
+        "magnetosensitive",
+        "mechanosensitive",
+        "metabosensitive",
+        "meteorosensitive",
+        "morphosensitive",
+        "osmosensitive",
+        "oversensitive",
+        "pansensitive",
+        "pharmacosensitive",
+        "phosphosensitive",
+        "photosensitive",
+        "piezosensitive",
+        "pressure-sensitive",
+        "pseudosensitive",
+        "psychrosensitive"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sensitive#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:464b0934ca2b9c320c",
+      "definition": "Easily affected emotionally by criticism or other people’s words and actions.",
+      "example": "He is sensitive to criticism.",
+      "pos": "adj",
+      "synonyms": [
+        "aware",
+        "caring",
+        "classified",
+        "compassionate",
+        "nesh",
+        "precise",
+        "tender"
+      ],
+      "antonyms": [
+        "insensitive",
+        "nonsensitive",
+        "resistant",
+        "stoic",
+        "uncaring"
+      ],
+      "collocations": [
+        "sensitive to criticism",
+        "a sensitive person",
+        "sensitive about a subject"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "barosensitive",
+        "case sensitive",
+        "chemosensitive",
+        "cold-sensitive",
+        "context-sensitive",
+        "cryosensitive",
+        "ecosensitive",
+        "electrosensitive",
+        "extrasensitive",
+        "hemosensitive",
+        "highly sensitive person",
+        "hydrosensitive",
+        "hygrosensitive",
+        "hyposensitive",
+        "immunosensitive",
+        "magnetosensitive",
+        "mechanosensitive",
+        "metabosensitive",
+        "meteorosensitive",
+        "morphosensitive",
+        "osmosensitive",
+        "oversensitive",
+        "pansensitive",
+        "pharmacosensitive",
+        "phosphosensitive",
+        "photosensitive",
+        "piezosensitive",
+        "pressure-sensitive",
+        "pseudosensitive",
+        "psychrosensitive"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sensitive#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The person is readily hurt or upset. Being sensitive can also mean considerate of others, but that is a separate sense and is not established by this sentence."
+      ],
+      "distinctionTask": {
+        "prompt": "He is sensitive to criticism. This says he is _____.",
+        "options": [
+          "readily hurt by critical remarks",
+          "necessarily careful not to hurt anyone else"
+        ],
+        "answer": "readily hurt by critical remarks",
+        "explanation": "The phrase describes his own emotional response. Consideration for others is another sense."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]
