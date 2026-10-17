@@ -20512,5 +20512,393 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-65d20028",
+    "originalSense": {
+      "id": "kaikki:d953dfe0286405ad4e",
+      "definition": "To represent in words.",
+      "example": "The feeling is difficult to describe, but not unpleasant.",
+      "pos": "verb",
+      "synonyms": [
+        "portray",
+        "bewrite"
+      ],
+      "antonyms": [
+        "burlesque",
+        "caricature",
+        "distort",
+        "exaggerate",
+        "misrepresent"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "abovedescribed",
+        "aforedescribed",
+        "describability",
+        "describee",
+        "describer",
+        "misdescribe",
+        "overdescribe",
+        "predescribe",
+        "redescribe"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/describe#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:d953dfe0286405ad4e",
+      "definition": "To say or write what someone or something is like, or what happened.",
+      "example": "Please describe the room in a few sentences.",
+      "pos": "verb",
+      "synonyms": [
+        "portray",
+        "bewrite"
+      ],
+      "antonyms": [
+        "burlesque",
+        "caricature",
+        "distort",
+        "exaggerate",
+        "misrepresent"
+      ],
+      "collocations": [
+        "describe a place",
+        "describe what happened",
+        "describe something as",
+        "describe something to someone"
+      ],
+      "usage": "Transitive; a description in words.",
+      "register": "transitive",
+      "wordFamily": [
+        "abovedescribed",
+        "aforedescribed",
+        "describability",
+        "describee",
+        "describer",
+        "misdescribe",
+        "overdescribe",
+        "predescribe",
+        "redescribe"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/describe#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Describe gives features or an account; explain can give a meaning or a reason. Say describe the room to me, rather than describe me the room. A description can include reasons, but the verb itself does not require them."
+      ],
+      "distinctionTask": {
+        "prompt": "Please describe the room asks for _____.",
+        "options": [
+          "an account of what the room is like",
+          "only the cause of the room being built"
+        ],
+        "answer": "an account of what the room is like",
+        "explanation": "Describe asks for features or an account; a causal explanation is a different focus."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-10890c62",
+    "originalSense": {
+      "id": "kaikki:f3f07f2eaa35ae26ec",
+      "definition": "To make plain, manifest, or intelligible; to clear of obscurity; to illustrate the meaning of.",
+      "example": "The issue was explained to the governor in detail.",
+      "pos": "verb",
+      "synonyms": [
+        "absolve",
+        "clarify",
+        "describe",
+        "direct",
+        "disclose",
+        "explain",
+        "illustrate",
+        "inform",
+        "instruct",
+        "justify",
+        "specify",
+        "teach",
+        "unravel",
+        "untangle",
+        "upsolve"
+      ],
+      "antonyms": [
+        "obscure"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "afore-explained",
+        "dexify",
+        "explainability",
+        "explainable",
+        "explain away",
+        "explainee",
+        "explainer",
+        "explainify",
+        "explainingly",
+        "explanification",
+        "mansplain",
+        "misexplain",
+        "overexplain",
+        "please explain",
+        "reexplain",
+        "re-explain",
+        "retain and explain",
+        "-splain",
+        "underexplain",
+        "unexplainable",
+        "unexplained",
+        "weedsplain",
+        "Westplainer",
+        "Westsplain",
+        "Westsplaining"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:f3f07f2eaa35ae26ec",
+      "definition": "To make a meaning, idea or process clear and understandable.",
+      "example": "Could you explain the rule to me?",
+      "pos": "verb",
+      "synonyms": [
+        "absolve",
+        "clarify",
+        "describe",
+        "direct",
+        "disclose",
+        "explain",
+        "illustrate",
+        "inform",
+        "instruct",
+        "justify",
+        "specify",
+        "teach",
+        "unravel",
+        "untangle",
+        "upsolve"
+      ],
+      "antonyms": [
+        "obscure"
+      ],
+      "collocations": [
+        "explain a rule",
+        "explain how something works",
+        "explain something to someone",
+        "explain in detail"
+      ],
+      "usage": "Transitive; making meaning clear.",
+      "register": "transitive",
+      "wordFamily": [
+        "afore-explained",
+        "dexify",
+        "explainability",
+        "explainable",
+        "explain away",
+        "explainee",
+        "explainer",
+        "explainify",
+        "explainingly",
+        "explanification",
+        "mansplain",
+        "misexplain",
+        "overexplain",
+        "please explain",
+        "reexplain",
+        "re-explain",
+        "retain and explain",
+        "-splain",
+        "underexplain",
+        "unexplainable",
+        "unexplained",
+        "weedsplain",
+        "Westplainer",
+        "Westsplain",
+        "Westsplaining"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explain#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Put the thing explained directly after the verb and introduce the recipient with to: explain the rule to me. In standard English, explain me the rule does not use the normal object pattern."
+      ],
+      "distinctionTask": {
+        "prompt": "Choose the standard object pattern: _____.",
+        "options": [
+          "explain the rule to me",
+          "explain me the rule"
+        ],
+        "answer": "explain the rule to me",
+        "explanation": "The rule is the direct object; the recipient follows to."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-3f87fe5c",
+    "originalSense": {
+      "id": "kaikki:37f87cf3c8914d86f2",
+      "definition": "To clarify something by giving, or serving as, an example or a comparison.",
+      "example": "We illustrate our definitions by including quotations or simple examples.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "figuratively",
+      "register": "figuratively",
+      "wordFamily": [
+        "illustrable",
+        "illustratable",
+        "illustrator",
+        "illustratory",
+        "overillustrate",
+        "reillustrate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/illustrate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:37f87cf3c8914d86f2",
+      "definition": "To make something clearer by giving, or serving as, an example or comparison.",
+      "example": "This missed connection can illustrate how a bus delay affects a journey.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "illustrate a point",
+        "illustrate with an example",
+        "illustrate a difference",
+        "illustrate how"
+      ],
+      "usage": "Figurative; clarification by example or comparison.",
+      "register": "figuratively",
+      "wordFamily": [
+        "illustrable",
+        "illustratable",
+        "illustrator",
+        "illustratory",
+        "overillustrate",
+        "reillustrate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/illustrate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "An example makes the point concrete. A single missed connection does not prove that every bus delay disrupts every journey. Illustrate can introduce an example or describe a case that serves as one."
+      ],
+      "distinctionTask": {
+        "prompt": "A missed connection used to illustrate a bus delay gives _____.",
+        "options": [
+          "one example, not proof of what happens on every journey",
+          "proof that every delay disrupts every journey"
+        ],
+        "answer": "one example, not proof of what happens on every journey",
+        "explanation": "An illustrative case can clarify a point without establishing a universal claim."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-f3886f2d",
+    "originalSense": {
+      "id": "kaikki:52dd345e72cf99e263",
+      "definition": "To show how to use (something).",
+      "example": "Can you demonstrate the new tools for us?",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "counterdemonstrate",
+        "demonstratable",
+        "demonstratedly",
+        "demonstrative",
+        "demonstrator",
+        "demonstratory",
+        "nondemonstrating",
+        "redemonstrate",
+        "undemonstrated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demonstrate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:52dd345e72cf99e263",
+      "definition": "To show someone how to use something or perform an operation.",
+      "example": "The instructor will demonstrate how to use the new tool.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "demonstrate a tool",
+        "demonstrate how to use",
+        "demonstrate a technique",
+        "a practical demonstration"
+      ],
+      "usage": "Transitive; showing a procedure.",
+      "register": "transitive",
+      "wordFamily": [
+        "counterdemonstrate",
+        "demonstratable",
+        "demonstratedly",
+        "demonstrative",
+        "demonstrator",
+        "demonstratory",
+        "nondemonstrating",
+        "redemonstrate",
+        "undemonstrated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demonstrate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This meaning focuses on showing the procedure in action. A demonstration can accompany an explanation, but explaining a word alone need not show how to operate a tool."
+      ],
+      "distinctionTask": {
+        "prompt": "To demonstrate how to use a tool is to _____.",
+        "options": [
+          "show how to use it in practice",
+          "only supply the dictionary definition of tool"
+        ],
+        "answer": "show how to use it in practice",
+        "explanation": "The procedural sense shows the operation rather than merely defining the word."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

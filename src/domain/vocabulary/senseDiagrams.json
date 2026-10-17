@@ -3494,5 +3494,109 @@
     "definition": "In computing, to analyse or execute a program by processing instructions during execution rather than relying only on compilation beforehand.",
     "pos": "verb",
     "kind": "interpret-runtime"
+  },
+  {
+    "entryId": "ve-65d20028",
+    "senseId": "kaikki:d953dfe0286405ad4e",
+    "term": "describe",
+    "definition": "To say or write what someone or something is like, or what happened.",
+    "pos": "verb",
+    "kind": "describe-words"
+  },
+  {
+    "entryId": "ve-65d20028",
+    "senseId": "kaikki:6da19eb5cfd6379a20",
+    "term": "describe",
+    "definition": "To draw, trace or mark out a shape, line or path.",
+    "pos": "verb",
+    "kind": "describe-trace"
+  },
+  {
+    "entryId": "ve-65d20028",
+    "senseId": "kaikki:2b26e5725f3ab10e43",
+    "term": "describe",
+    "definition": "To generate or define a geometrical shape or structure.",
+    "pos": "verb",
+    "kind": "describe-geometry"
+  },
+  {
+    "entryId": "ve-65d20028",
+    "senseId": "kaikki:1961068e3026c011ba",
+    "term": "describe",
+    "definition": "In taxonomy, to introduce a new taxon to science by stating its characteristics and how it differs from other taxa.",
+    "pos": "verb",
+    "kind": "describe-taxon"
+  },
+  {
+    "entryId": "ve-10890c62",
+    "senseId": "kaikki:f3f07f2eaa35ae26ec",
+    "term": "explain",
+    "definition": "To make a meaning, idea or process clear and understandable.",
+    "pos": "verb",
+    "kind": "explain-recipient"
+  },
+  {
+    "entryId": "ve-10890c62",
+    "senseId": "kaikki:c276aee75af5ef1419",
+    "term": "explain",
+    "definition": "To give a reason, justification or cause for something.",
+    "pos": "verb",
+    "kind": "explain-reason"
+  },
+  {
+    "entryId": "ve-10890c62",
+    "senseId": "kaikki:0cce57c624b15b4d6d",
+    "term": "explain",
+    "definition": "To make something understandable, with no direct object stated.",
+    "pos": "verb",
+    "kind": "explain-intransitive"
+  },
+  {
+    "entryId": "ve-3f87fe5c",
+    "senseId": "kaikki:37f87cf3c8914d86f2",
+    "term": "illustrate",
+    "definition": "To make something clearer by giving, or serving as, an example or comparison.",
+    "pos": "verb",
+    "kind": "illustrate-example"
+  },
+  {
+    "entryId": "ve-3f87fe5c",
+    "senseId": "kaikki:70a96db121878c1f78",
+    "term": "illustrate",
+    "definition": "To supply a book or other publication with pictures, diagrams or other explanatory or decorative features.",
+    "pos": "verb",
+    "kind": "illustrate-publication"
+  },
+  {
+    "entryId": "ve-f3886f2d",
+    "senseId": "kaikki:52dd345e72cf99e263",
+    "term": "demonstrate",
+    "definition": "To show someone how to use something or perform an operation.",
+    "pos": "verb",
+    "kind": "demonstrate-procedure"
+  },
+  {
+    "entryId": "ve-f3886f2d",
+    "senseId": "kaikki:d4928cd680bb5a3238",
+    "term": "demonstrate",
+    "definition": "To show the steps of a logical argument or a mathematical derivation.",
+    "pos": "verb",
+    "kind": "demonstrate-steps"
+  },
+  {
+    "entryId": "ve-f3886f2d",
+    "senseId": "kaikki:c1273cc5ccf589f973",
+    "term": "demonstrate",
+    "definition": "To take part in or organise a public demonstration, such as a protest.",
+    "pos": "verb",
+    "kind": "demonstrate-protest"
+  },
+  {
+    "entryId": "ve-f3886f2d",
+    "senseId": "kaikki:103d1dcc793acc7e31",
+    "term": "demonstrate",
+    "definition": "To show, display or present something, or make something evident.",
+    "pos": "verb",
+    "kind": "demonstrate-quality"
   }
 ]

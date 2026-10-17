@@ -1,6 +1,6 @@
 import { vocabularyTeaching, vocabularyTeachingRevision } from './runtimeData';
 import { catalogVocabularyEntry, catalogVocabularySenses, hasVocabularySenseEdits, reviewedEntry, VOCABULARY_CONTENT_VERSION } from './content';
-import { supplementVocabularySense, vocabularyReadinessBaselines } from './readiness';
+import { hasVocabularyReadinessDefault, supplementVocabularySense, vocabularyReadinessBaselines } from './readiness';
 import { vocabularyCurriculum, vocabularyCurriculumBaselines, type VocabularyCurriculum } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
 import { normalizeVocabularyScope } from './identities';
@@ -42,7 +42,7 @@ export function resolveVocabularyLearningContext(entry: VocabularyEntry, request
   ensureContexts();
   const membershipKey = key({ ...request, entryId: entry.id });
   const membershipBinding = bindings.get(membershipKey);
-  const binding = membershipBinding || supplements.defaults.find(item => item.entryId === entry.id) as unknown as Binding | undefined;
+  const binding = membershipBinding || (!hasVocabularyReadinessDefault(entry.id) ? supplements.defaults.find(item => item.entryId === entry.id) : undefined) as unknown as Binding | undefined;
   const fallback = reviewedEntry(entry);
   const selectedBinding = binding && (!request.senseId || request.senseId === binding.sense.id) ? binding : undefined;
   // An explicit dictionary sense may not be in the learner's small catalog snapshot yet.
@@ -52,8 +52,11 @@ export function resolveVocabularyLearningContext(entry: VocabularyEntry, request
   const catalogSense = selectedBinding && publicSenses.find(item => item.id === selectedBinding.sense.id);
   const userOverride = existing && hasVocabularySenseEdits(existing, [selectedBinding?.originalSense, catalogSense, selectedBinding?.sense]);
   const selectedSense = (userOverride ? existing : selectedBinding?.sense) || (request.senseId ? fallback.senses.find(item => item.id === request.senseId) || explicitSupplement?.sense : fallback.senses[0]);
-  // The more specific reviewed group binding takes precedence over a common-content patch.
-  let sense = selectedSense ? structuredClone(selectedBinding || explicitSupplement ? selectedSense : supplementVocabularySense(entry.id,selectedSense,publicSenses.filter(s=>s.id===selectedSense.id),hasVocabularySenseEdits)) : undefined;
+  // Group teaching retains its context; a common default can receive a later same-sense review.
+  const contextSource = selectedBinding || explicitSupplement;
+  const scopedContext = Boolean(contextSource && 'bookId' in contextSource && contextSource.bookId);
+  const contextBaselines = contextSource ? [contextSource.sense, contextSource.originalSense].filter((s): s is VocabularySense => Boolean(s)) : [];
+  let sense = selectedSense ? structuredClone(scopedContext ? selectedSense : supplementVocabularySense(entry.id,selectedSense,[...publicSenses.filter(s=>s.id===selectedSense.id),...contextBaselines],hasVocabularySenseEdits)) : undefined;
   const plan=vocabularyCurriculum(entry,request,sense || fallback.senses[0]);
   const choices=plan?.curriculum.senses.map(candidate=>{
     const existing=entry.senses.find(item=>item.id===candidate.id);

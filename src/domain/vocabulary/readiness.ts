@@ -1,7 +1,7 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default, type VocabularyLearningPriority } from './runtimeData';
 import type { VocabularyEntry, VocabularySense } from './types';
 
-export const VOCABULARY_READINESS_VERSION = 'core-2026-10-18.5';
+export const VOCABULARY_READINESS_VERSION = 'core-2026-10-18.6';
 const identity = (entryId:string, senseId:string) => `${entryId}\u0000${senseId}`;
 const core = new Map<string,Supplement>();
 const additions = new Map<string,Supplement>();
@@ -48,6 +48,12 @@ export function vocabularyReadinessBaselines(entryId:string,senseId:string):Voca
  const selected=preferred.get(entryId);
  const row=additions.get(identity(entryId,senseId)) || core.get(identity(entryId,senseId));
  return [selected?.sense.id===senseId?selected.sense:undefined,selected?.originalSense?.id===senseId?selected.originalSense:undefined,row?.originalSense?.id===senseId?row.originalSense:undefined,...(row?.previousSenses || []).filter(sense=>sense.id===senseId)].filter((sense):sense is VocabularySense=>Boolean(sense));
+}
+
+/** A full dictionary review can replace an older common default, independent of group teaching. */
+export function hasVocabularyReadinessDefault(entryId: string): boolean {
+ ensureReadiness();
+ return preferred.has(entryId);
 }
 
 /** Review of these notes is independent of whether a wordbook's source meaning is confirmed. */
