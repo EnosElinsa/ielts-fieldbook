@@ -123,6 +123,84 @@ function mount(path: string) {
 const book = "ielts-vocabulary";
 const core = () => release.entries.find((entry: any) => entry.term === "core");
 
+test('next practice preserves the selected group meaning and return destination without recording evidence', async () => {
+  const raw=core(),unitId='ielts-vocabulary-chapter-12-group-02';
+  const origin=`/vocabulary/entry/${raw.id}?bookId=${book}&unitId=${unitId}&returnTo=%2Fvocabulary%3Fsearch%3Dcore`;
+  const before=JSON.stringify(mocks.fb.state);
+  mount(origin);
+  const panel=await screen.findByRole('region',{name:'Next practice'});
+  const link=within(panel).getByRole('link',{name:'Practise Meaning recall'});
+  const next=new URL(link.getAttribute('href')!,'https://test.test');
+  expect(next.searchParams.get('senseId')).toBe('editorial:core:fruit-centre');
+  expect(next.searchParams.get('bookId')).toBe(book);
+  expect(next.searchParams.get('unitId')).toBe(unitId);
+  expect(next.searchParams.get('returnTo')).toBe(origin);
+  expect(next.searchParams.get('mode')).toBe('definition');
+  expect(panel).toHaveTextContent('No verified meaning retrieval for this meaning yet.');
+  expect(JSON.stringify(mocks.fb.state)).toBe(before);
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test('next practice waits for teaching before displaying a recommendation',async()=>{
+  let finish!:()=>void;
+  mocks.fb.loadVocabularyCatalog.mockImplementation(()=>new Promise<void>(resolve=>{finish=resolve;}));
+  mount(`/vocabulary/entry/${core().id}`);
+  expect(screen.queryByRole('region',{name:'Next practice'})).not.toBeInTheDocument();
+  await act(async()=>finish());
+  expect(await screen.findByRole('region',{name:'Next practice'})).toBeInTheDocument();
+});
+
+test('next practice saves only the explicitly requested dictionary meaning and opens its recommended mode',async()=>{
+  linkedDictionary();mocks.fb.persistNow.mockResolvedValue(true);
+  mount(`/vocabulary/entry/${core().id}?senseId=${linkedMeaning.id}`);
+  const panel=await screen.findByRole('region',{name:'Next practice'});
+  await userEvent.click(within(panel).getByRole('button',{name:'Practise Meaning recall'}));
+  expect(await screen.findByText('Practice setup')).toBeInTheDocument();
+  const route=new URL(screen.getByLabelText('Current route').textContent!,'https://test.test');
+  expect(route.searchParams.get('senseId')).toBe(linkedMeaning.id);
+  expect(route.searchParams.get('mode')).toBe('definition');
+  const draft=mocks.fb.persistNow.mock.calls[0][0];
+  expect(draft.vocabulary).toHaveLength(1);
+  expect(draft.vocabulary[0].senses).toHaveLength(1);
+  expect(draft.vocabulary[0].senses[0].id).toBe(linkedMeaning.id);
+  expect(draft.vocabularyEvidence).toEqual([]);
+});
+
+test('next practice becomes due while the details page stays open',async()=>{
+  vi.useFakeTimers();
+  try {
+    vi.setSystemTime(new Date('2026-10-17T10:00:00Z'));
+    const due='2026-10-17T10:01:00.000Z',sense={id:'clock-sense',pos:'noun',definition:'A classroom term.',example:'We practise clockword in class.',source:'Personal note'};
+    const entry={id:'clock-entry',term:'clockword',category:'word',meaning:sense.definition,example:sense.example,senses:[sense],tags:[],sources:[],createdAt:'2026-10-01T00:00:00Z',updatedAt:'2026-10-01T00:00:00Z'};
+    mocks.fb.state.vocabulary=[entry];
+    mocks.fb.state.vocabularyStates=[{id:'clock-state',entryId:entry.id,senseId:sense.id,dimensions:{},cards:Object.fromEntries(['dictation','definition','cloze','production'].map(mode=>[mode,{due}])),wrong:{active:false,modes:{}},reviewCount:0}];
+    await act(async()=>{mount('/vocabulary/entry/'+entry.id+'?senseId='+sense.id);});
+    expect(screen.getByRole('region',{name:'Next practice'})).toHaveTextContent('Your next review is scheduled for');
+    await act(async()=>{vi.advanceTimersByTime(60050);});
+    expect(screen.getByRole('region',{name:'Next practice'})).toHaveTextContent('This exercise is due for this meaning.');
+    expect(screen.getByRole('link',{name:'Practise Meaning recall'})).toBeInTheDocument();
+    expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+  } finally {vi.useRealTimers();}
+});
+
+test('next practice updates a new-skill suggestion when a different mode becomes due',async()=>{
+  vi.useFakeTimers();
+  try {
+    vi.setSystemTime(new Date('2026-10-17T10:00:00Z'));
+    const due='2026-10-17T10:01:00.000Z',sense={id:'clock-sense',pos:'noun',definition:'A classroom term.',example:'We practise clockword in class.',source:'Personal note'};
+    const entry={id:'clock-entry',term:'clockword',category:'word',meaning:sense.definition,example:sense.example,senses:[sense],tags:[],sources:[],createdAt:'2026-10-01T00:00:00Z',updatedAt:'2026-10-01T00:00:00Z'};
+    mocks.fb.state.vocabulary=[entry];
+    mocks.fb.state.vocabularyStates=[{id:'clock-state',entryId:entry.id,senseId:sense.id,dimensions:{},cards:{definition:{due}},wrong:{active:false,modes:{}},reviewCount:0}];
+    mocks.fb.state.vocabularyEvidence=[{entryId:entry.id,senseId:sense.id,dimension:'meaning',mode:'definition',result:'success',verification:'objective',occurredAt:'2026-10-15T10:00:00Z',sourceType:'personal',sourceId:'clock-lesson'}];
+    await act(async()=>{mount('/vocabulary/entry/'+entry.id+'?senseId='+sense.id);});
+    expect(screen.getByRole('link',{name:'Practise Dictation'})).toBeInTheDocument();
+    await act(async()=>{vi.advanceTimersByTime(60050);});
+    expect(screen.getByRole('region',{name:'Next practice'})).toHaveTextContent('This exercise is due for this meaning.');
+    expect(screen.getByRole('link',{name:'Practise Meaning recall'})).toBeInTheDocument();
+    expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+  } finally {vi.useRealTimers();}
+});
+
 const linkedMeaning = { id: 'dictionary:linked-meaning', pos: 'noun', definition: 'Evidence in favour of a proposal.', example: 'There is support for this proposal.', source: 'English Wiktionary' };
 function linkedDictionary(delay?: Promise<void>) {
   vi.stubGlobal('fetch', vi.fn(async (url: string) => {

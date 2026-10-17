@@ -20,6 +20,7 @@ export const VOCABULARY_STATUSES: VocabularyStatus[] = ['new', 'unfamiliar', 'un
 const modeDimensions: Record<VocabularyMode, VocabularyDimension[]> = {
   dictation: ['listening', 'spelling'], definition: ['meaning'], cloze: ['meaning', 'usage'], synonym: ['meaning'], distinction: ['meaning', 'usage'], production: ['usage'],
 };
+export const VOCABULARY_MODE_DIMENSIONS = modeDimensions;
 const scheduler = fsrs({ request_retention: 0.9, maximum_interval: 365, enable_fuzz: false });
 const han = /[\u3400-\u9fff\uf900-\ufaff]/u;
 const english = (value: unknown) => typeof value === 'string' && !han.test(value) ? value.trim() : '';

@@ -16221,5 +16221,365 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-aa8e0a4",
+    "originalSense": {
+      "id": "kaikki:86bdc9b9fe634ebd43",
+      "definition": "To hint; to insinuate; to suggest tacitly and avoid a direct statement.",
+      "example": "What do you mean \"we need to be more careful with hygiene\"? Are you implying that I don't wash my hands?",
+      "pos": "verb",
+      "synonyms": [
+        "allude",
+        "hint",
+        "infer",
+        "insinuate",
+        "suggest",
+        "advert",
+        "allude",
+        "hint",
+        "imply",
+        "indicate",
+        "inkle",
+        "insinuate",
+        "intimate",
+        "moot",
+        "refer",
+        "signify",
+        "suggest"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "impliable",
+        "implier",
+        "misimply"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/imply#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:86bdc9b9fe634ebd43",
+      "definition": "To suggest something indirectly rather than state it explicitly.",
+      "example": "Her remark seems to imply that the report is incomplete.",
+      "pos": "verb",
+      "synonyms": [
+        "allude",
+        "hint",
+        "infer",
+        "insinuate",
+        "suggest",
+        "advert",
+        "allude",
+        "hint",
+        "imply",
+        "indicate",
+        "inkle",
+        "insinuate",
+        "intimate",
+        "moot",
+        "refer",
+        "signify",
+        "suggest"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "imply criticism",
+        "imply that",
+        "seem to imply"
+      ],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "impliable",
+        "implier",
+        "misimply"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/imply#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Imply concerns a suggestion conveyed by words or signs; infer concerns a conclusion someone draws from them. A perceived implication can be mistaken, and seems to does not establish the speaker’s intention or the report’s actual condition."
+      ],
+      "distinctionTask": {
+        "prompt": "Her remark seems to imply that the report is incomplete. The sentence describes _____.",
+        "options": [
+          "a perceived indirect suggestion",
+          "conclusive proof of the report’s condition"
+        ],
+        "answer": "a perceived indirect suggestion",
+        "explanation": "Seems to marks an interpretation of the remark; it does not verify the report or the speaker’s intention."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-aa83073",
+    "originalSense": {
+      "id": "kaikki:a4e6224ba82f1d9990",
+      "definition": "To introduce (something) as a reasoned conclusion; to conclude by reasoning or deduction, as from premises or evidence.",
+      "example": "It is dangerous to infer too much from martial bluster in British politics: at the first hint of trouble, channelling Churchill is a default tactic for beleaguered leaders of all sorts.",
+      "pos": "verb",
+      "synonyms": [
+        "conclude",
+        "deduce",
+        "educe",
+        "construe"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "inferability",
+        "inferable",
+        "inference",
+        "inferrable",
+        "inferral",
+        "inferrer",
+        "misinfer",
+        "reinfer",
+        "subinfer",
+        "uninferant"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/infer#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:a4e6224ba82f1d9990",
+      "definition": "To draw a conclusion by reasoning from evidence or premises.",
+      "example": "We infer from the wet pavement that it has rained, although a sprinkler could explain it.",
+      "pos": "verb",
+      "synonyms": [
+        "conclude",
+        "deduce",
+        "educe",
+        "construe"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "infer from evidence",
+        "infer that",
+        "infer a conclusion"
+      ],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "inferability",
+        "inferable",
+        "inference",
+        "inferrable",
+        "inferral",
+        "inferrer",
+        "misinfer",
+        "reinfer",
+        "subinfer",
+        "uninferant"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/infer#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A person infers a conclusion from signs or statements; those signs or a speaker’s words may imply it. Some inferences are deductive, while others are uncertain. Inferring does not by itself guarantee a true conclusion."
+      ],
+      "distinctionTask": {
+        "prompt": "Wet pavement leads us to infer that it rained, but a sprinkler is possible. Our conclusion is _____.",
+        "options": [
+          "reasoned but not guaranteed by that sign alone",
+          "certain solely because we used infer"
+        ],
+        "answer": "reasoned but not guaranteed by that sign alone",
+        "explanation": "The example illustrates an uncertain inference. The wet pavement can have more than one explanation."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-8e9ee070",
+    "originalSense": {
+      "id": "kaikki:4308bc7daf535c63cb",
+      "definition": "To make someone believe, or feel sure about something, especially by using logic, argument or evidence.",
+      "example": "I wouldn't have or do something, unless I'm convinced that it's good.",
+      "pos": "verb",
+      "synonyms": [
+        "assure",
+        "convert",
+        "convict",
+        "satisfy"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "convinceable",
+        "convincement",
+        "convincer",
+        "unconvince"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/convince#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:4308bc7daf535c63cb",
+      "definition": "To make someone believe something or feel sure about it, especially through argument or evidence.",
+      "example": "The new evidence may convince the panel that the method is reliable.",
+      "pos": "verb",
+      "synonyms": [
+        "assure",
+        "convert",
+        "convict",
+        "satisfy"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "convince someone that",
+        "convince someone of something",
+        "convince a panel"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "convinceable",
+        "convincement",
+        "convincer",
+        "unconvince"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/convince#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Convince focuses here on a person’s belief. A person can be convinced of something false; convincing someone is not the same as independently proving a claim. May convince does not assert that the panel has accepted it."
+      ],
+      "distinctionTask": {
+        "prompt": "The evidence may convince the panel that the method is reliable. This says _____.",
+        "options": [
+          "the panel might come to accept the claim",
+          "the claim has already been independently proved true"
+        ],
+        "answer": "the panel might come to accept the claim",
+        "explanation": "May marks a possibility. A person’s conviction and a claim’s truth require separate assessment."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-2bb0a2e4",
+    "originalSense": {
+      "id": "kaikki:273ad036cc46095bfc",
+      "definition": "To successfully convince (someone) to agree to, accept, or do something, usually through reasoning and verbal influence.",
+      "example": "That salesman was able to persuade me into buying this bottle of lotion.",
+      "pos": "verb",
+      "synonyms": [
+        "convince",
+        "draw",
+        "coax",
+        "wheedle"
+      ],
+      "antonyms": [
+        "deter",
+        "dissuade"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "mispersuade",
+        "overpersuade",
+        "persuadability",
+        "persuadable",
+        "persuadee",
+        "persuader",
+        "persuasion",
+        "persuasive",
+        "persuasory",
+        "repersuade",
+        "unpersuade"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/persuade#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:273ad036cc46095bfc",
+      "definition": "To bring someone to agree, accept or act, usually through reasoning or verbal influence.",
+      "example": "They hope to persuade the council to extend the opening hours.",
+      "pos": "verb",
+      "synonyms": [
+        "convince",
+        "draw",
+        "coax",
+        "wheedle"
+      ],
+      "antonyms": [
+        "deter",
+        "dissuade"
+      ],
+      "collocations": [
+        "persuade someone to do something",
+        "persuade someone into doing something",
+        "persuade someone that"
+      ],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "mispersuade",
+        "overpersuade",
+        "persuadability",
+        "persuadable",
+        "persuadee",
+        "persuader",
+        "persuasion",
+        "persuasive",
+        "persuasory",
+        "repersuade",
+        "unpersuade"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/persuade#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Unqualified persuaded someone to usually reports successful persuasion; try or hope to persuade does not assert success. Persuade can also introduce a belief with that in modern use, and convince someone to is established. Avoid an absolute belief-versus-action rule."
+      ],
+      "distinctionTask": {
+        "prompt": "They hope to persuade the council to extend opening hours. The sentence establishes _____.",
+        "options": [
+          "an intended attempt, with success still uncertain",
+          "that the council has already extended the hours"
+        ],
+        "answer": "an intended attempt, with success still uncertain",
+        "explanation": "Hope to persuade reports an intention, not completed agreement or implementation."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

@@ -1870,5 +1870,77 @@
     "definition": "To take advantage of someone’s generosity or goodwill beyond what is appropriate.",
     "pos": "verb",
     "kind": "presume-goodwill"
+  },
+  {
+    "entryId": "ve-aa8e0a4",
+    "senseId": "kaikki:bec0070912320a226d",
+    "term": "imply",
+    "definition": "Of a proposition, to have something as a necessary consequence.",
+    "pos": "verb",
+    "kind": "imply-consequence"
+  },
+  {
+    "entryId": "ve-aa8e0a4",
+    "senseId": "kaikki:a1801b8dd202ff6922",
+    "term": "imply",
+    "definition": "Of a person, to convey a consequence by logical inference.",
+    "pos": "verb",
+    "kind": "imply-inference"
+  },
+  {
+    "entryId": "ve-aa8e0a4",
+    "senseId": "kaikki:86bdc9b9fe634ebd43",
+    "term": "imply",
+    "definition": "To suggest something indirectly rather than state it explicitly.",
+    "pos": "verb",
+    "kind": "imply-hint"
+  },
+  {
+    "entryId": "ve-aa8e0a4",
+    "senseId": "kaikki:a549f8fcad2fd133a6",
+    "term": "imply",
+    "definition": "In logic, a gate implementing material implication: its output is false only when the first input is true and the second is false.",
+    "pos": "noun",
+    "kind": "imply-gate"
+  },
+  {
+    "entryId": "ve-aa83073",
+    "senseId": "kaikki:a4e6224ba82f1d9990",
+    "term": "infer",
+    "definition": "To draw a conclusion by reasoning from evidence or premises.",
+    "pos": "verb",
+    "kind": "infer-conclusion"
+  },
+  {
+    "entryId": "ve-8e9ee070",
+    "senseId": "kaikki:4308bc7daf535c63cb",
+    "term": "convince",
+    "definition": "To make someone believe something or feel sure about it, especially through argument or evidence.",
+    "pos": "verb",
+    "kind": "convince-belief"
+  },
+  {
+    "entryId": "ve-8e9ee070",
+    "senseId": "kaikki:806ce09be3597320e3",
+    "term": "convince",
+    "definition": "To persuade someone to accept or do something.",
+    "pos": "verb",
+    "kind": "convince-action"
+  },
+  {
+    "entryId": "ve-8e9ee070",
+    "senseId": "kaikki:540ca0c7ae2945959c",
+    "term": "convince",
+    "definition": "In acting, to portray a character believably.",
+    "pos": "verb",
+    "kind": "convince-role"
+  },
+  {
+    "entryId": "ve-2bb0a2e4",
+    "senseId": "kaikki:273ad036cc46095bfc",
+    "term": "persuade",
+    "definition": "To bring someone to agree, accept or act, usually through reasoning or verbal influence.",
+    "pos": "verb",
+    "kind": "persuade-agreement"
   }
 ]

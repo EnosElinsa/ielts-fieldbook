@@ -179888,5 +179888,1059 @@
     "wordFamily": [],
     "register": "",
     "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aa8e0a4",
+    "senseId": "kaikki:bec0070912320a226d",
+    "definition": "Of a proposition, to have something as a necessary consequence.",
+    "example": "Being a square does imply being a rectangle, but the reverse does not follow.",
+    "collocations": [
+      "imply a consequence",
+      "imply that",
+      "does not imply causation"
+    ],
+    "distinctions": [
+      "In this logical use, the consequence follows if the premise is true. The implication does not establish the premise, assert a causal mechanism, or license the reverse implication. The everyday hinting sense need not express a necessary consequence."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:bec0070912320a226d",
+      "definition": "To have as a necessary consequence; to lead to (something) as a consequence.",
+      "example": "Correlation does not imply causation",
+      "pos": "verb",
+      "synonyms": [
+        "entail",
+        "implicate",
+        "import"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "impliable",
+        "implier",
+        "misimply"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/imply#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=imply&oldid=91126265",
+    "distinctionTask": {
+      "prompt": "Being a square implies being a rectangle. The implication alone permits _____.",
+      "options": [
+        "the forward conclusion, given the premise",
+        "the reverse conclusion for every rectangle"
+      ],
+      "answer": "the forward conclusion, given the premise",
+      "explanation": "Every square is a rectangle, but some rectangles are not squares. The implication does not establish that a particular shape is a square."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aa8e0a4",
+    "senseId": "kaikki:a1801b8dd202ff6922",
+    "definition": "Of a person, to convey a consequence by logical inference.",
+    "example": "By saying that all three doors are locked, I imply that none of them is unlocked.",
+    "collocations": [
+      "imply a conclusion",
+      "imply by a statement",
+      "imply that none remain"
+    ],
+    "distinctions": [
+      "Here a speaker conveys a consequence of a statement. A listener may infer it. The distinction concerns the direction of communication, not a guarantee that the speaker’s original statement is true."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:a1801b8dd202ff6922",
+      "definition": "To suggest by logical inference.",
+      "example": "When I state that your dog is brown, I am not implying that all dogs are brown.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "impliable",
+        "implier",
+        "misimply"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/imply#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=imply&oldid=91126265",
+    "distinctionTask": {
+      "prompt": "A speaker’s statement that all three doors are locked implies none is unlocked. The speaker is _____.",
+      "options": [
+        "conveying a consequence of the statement",
+        "independently verifying that every lock works"
+      ],
+      "answer": "conveying a consequence of the statement",
+      "explanation": "The consequence is conveyed by the statement; its truth still depends on the premise."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aa8e0a4",
+    "senseId": "kaikki:86bdc9b9fe634ebd43",
+    "definition": "To suggest something indirectly rather than state it explicitly.",
+    "example": "Her remark seems to imply that the report is incomplete.",
+    "collocations": [
+      "imply criticism",
+      "imply that",
+      "seem to imply"
+    ],
+    "distinctions": [
+      "Imply concerns a suggestion conveyed by words or signs; infer concerns a conclusion someone draws from them. A perceived implication can be mistaken, and seems to does not establish the speaker’s intention or the report’s actual condition."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:86bdc9b9fe634ebd43",
+      "definition": "To hint; to insinuate; to suggest tacitly and avoid a direct statement.",
+      "example": "What do you mean \"we need to be more careful with hygiene\"? Are you implying that I don't wash my hands?",
+      "pos": "verb",
+      "synonyms": [
+        "allude",
+        "hint",
+        "infer",
+        "insinuate",
+        "suggest",
+        "advert",
+        "allude",
+        "hint",
+        "imply",
+        "indicate",
+        "inkle",
+        "insinuate",
+        "intimate",
+        "moot",
+        "refer",
+        "signify",
+        "suggest"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "impliable",
+        "implier",
+        "misimply"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/imply#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=imply&oldid=91126265",
+    "distinctionTask": {
+      "prompt": "Her remark seems to imply that the report is incomplete. The sentence describes _____.",
+      "options": [
+        "a perceived indirect suggestion",
+        "conclusive proof of the report’s condition"
+      ],
+      "answer": "a perceived indirect suggestion",
+      "explanation": "Seems to marks an interpretation of the remark; it does not verify the report or the speaker’s intention."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aa8e0a4",
+    "senseId": "kaikki:b53f87d07634201a7d",
+    "definition": "In archaic use, to enfold or entangle something.",
+    "example": "In the preserved poem, implyes describes a snake’s sting being enfolded.",
+    "collocations": [
+      "the enfolded sting",
+      "archaic implyes",
+      "enfold or entangle"
+    ],
+    "distinctions": [
+      "The archaic physical sense is separate from suggesting a meaning. This reading explanation interprets the source verse rather than proposing a modern sentence-gap example."
+    ],
+    "usage": "Archaic; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:b53f87d07634201a7d",
+      "definition": "To enfold, entangle.",
+      "example": "And in his bosome secretly there lay / An hatefull Snake, the which his taile vptyes / In many folds, and mortall sting implyes.",
+      "pos": "verb",
+      "synonyms": [
+        "envelop",
+        "wrap up",
+        "ensnare",
+        "implicate",
+        "enmesh",
+        "ensnare",
+        "ensnarl",
+        "entangle",
+        "foul",
+        "implicate",
+        "imply",
+        "involve",
+        "mat",
+        "ravel",
+        "snarl",
+        "tangle"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic",
+      "wordFamily": [
+        "impliable",
+        "implier",
+        "misimply"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/imply#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=imply&oldid=91126265",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-aa8e0a4",
+    "senseId": "kaikki:a549f8fcad2fd133a6",
+    "definition": "In logic, a gate implementing material implication: its output is false only when the first input is true and the second is false.",
+    "example": "An IMPLY gate outputs 0 for inputs A = 1 and B = 0.",
+    "collocations": [
+      "an IMPLY gate",
+      "material implication",
+      "the IMPLY truth table"
+    ],
+    "distinctions": [
+      "The source heading is uppercase IMPLY, separate from the ordinary verb. For A implies B, the input pairs 00, 01 and 11 output 1; only 10 outputs 0. This truth table does not describe a causal process or assert either input as a fact."
+    ],
+    "usage": "Logic; usually written IMPLY.",
+    "originalSense": {
+      "id": "kaikki:a549f8fcad2fd133a6",
+      "definition": "A logic gate that implements material implication.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "NIMPLY"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "impliable",
+        "implier",
+        "misimply"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/IMPLY#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=IMPLY&oldid=87748756",
+    "distinctionTask": {
+      "prompt": "For an IMPLY gate with inputs A = 0 and B = 0, the output is _____.",
+      "options": [
+        "1",
+        "0"
+      ],
+      "answer": "1",
+      "explanation": "Material implication is false only for A = 1 and B = 0. It is true for the 00 input pair."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-aa83073",
+    "senseId": "kaikki:a4e6224ba82f1d9990",
+    "definition": "To draw a conclusion by reasoning from evidence or premises.",
+    "example": "We infer from the wet pavement that it has rained, although a sprinkler could explain it.",
+    "collocations": [
+      "infer from evidence",
+      "infer that",
+      "infer a conclusion"
+    ],
+    "distinctions": [
+      "A person infers a conclusion from signs or statements; those signs or a speaker’s words may imply it. Some inferences are deductive, while others are uncertain. Inferring does not by itself guarantee a true conclusion."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:a4e6224ba82f1d9990",
+      "definition": "To introduce (something) as a reasoned conclusion; to conclude by reasoning or deduction, as from premises or evidence.",
+      "example": "It is dangerous to infer too much from martial bluster in British politics: at the first hint of trouble, channelling Churchill is a default tactic for beleaguered leaders of all sorts.",
+      "pos": "verb",
+      "synonyms": [
+        "conclude",
+        "deduce",
+        "educe",
+        "construe"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "inferability",
+        "inferable",
+        "inference",
+        "inferrable",
+        "inferral",
+        "inferrer",
+        "misinfer",
+        "reinfer",
+        "subinfer",
+        "uninferant"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/infer#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=infer&oldid=89357175",
+    "distinctionTask": {
+      "prompt": "Wet pavement leads us to infer that it rained, but a sprinkler is possible. Our conclusion is _____.",
+      "options": [
+        "reasoned but not guaranteed by that sign alone",
+        "certain solely because we used infer"
+      ],
+      "answer": "reasoned but not guaranteed by that sign alone",
+      "explanation": "The example illustrates an uncertain inference. The wet pavement can have more than one explanation."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aa83073",
+    "senseId": "kaikki:a3b4be745b0f183678",
+    "definition": "In a recorded and often disputed use, to imply something or lead to it as a consequence.",
+    "example": "The source’s older inferreth uses infer in the direction of implying a consequence.",
+    "collocations": [
+      "infer in the imply sense",
+      "a disputed usage",
+      "the recorded consequence sense"
+    ],
+    "distinctions": [
+      "This use is recorded and labelled often proscribed. For clear general writing, distinguish the speaker who implies from the reader who infers; do not claim the recorded use has never existed or label it obsolete solely because it is disputed."
+    ],
+    "usage": "Often proscribed in the source; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:a3b4be745b0f183678",
+      "definition": "To lead to (something) as a consequence; to imply.",
+      "example": "a. 1535, Thomas More, letter to Fryth\nthe fyrste parte is not the proofe of the second. but rather contrarywyse the seconde inferreth well yͤ fyrst.",
+      "pos": "verb",
+      "synonyms": [
+        "imply",
+        "suggest",
+        "entail"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "often, proscribed",
+      "register": "often, proscribed, transitive",
+      "wordFamily": [
+        "inferability",
+        "inferable",
+        "inference",
+        "inferrable",
+        "inferral",
+        "inferrer",
+        "misinfer",
+        "reinfer",
+        "subinfer",
+        "uninferant"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/infer#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=infer&oldid=89357175",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-aa83073",
+    "senseId": "kaikki:f75b39e031d6e0c393",
+    "definition": "In obsolete use, to inflict or cause something upon a person.",
+    "example": "In the preserved verse, inferd describes threatened harm being inflicted on Serena.",
+    "collocations": [
+      "harm inflicted",
+      "obsolete inferd",
+      "cause harm to someone"
+    ],
+    "distinctions": [
+      "The old inflict sense concerns causing harm, rather than drawing a conclusion about it. The source quotation is interpreted as a reading note."
+    ],
+    "usage": "Obsolete; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:f75b39e031d6e0c393",
+      "definition": "To cause, inflict (something) upon or to someone.",
+      "example": "faire Serena[…]fled fast away, afeard / Of villany to be to her inferd[…].",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "inferability",
+        "inferable",
+        "inference",
+        "inferrable",
+        "inferral",
+        "inferrer",
+        "misinfer",
+        "reinfer",
+        "subinfer",
+        "uninferant"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/infer#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=infer&oldid=89357175",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-aa83073",
+    "senseId": "kaikki:c71678809597f1b92e",
+    "definition": "In obsolete use, to bring forward a subject or argument in speech or writing.",
+    "example": "In the preserved play, inferring arguments means bringing those arguments forward.",
+    "collocations": [
+      "bring forward an argument",
+      "adduce a subject",
+      "obsolete inferring"
+    ],
+    "distinctions": [
+      "Introducing arguments in the old passage is separate from reaching a conclusion from evidence. Use bring forward or adduce to explain the source without teaching an obsolete construction as ordinary modern usage."
+    ],
+    "usage": "Obsolete; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:c71678809597f1b92e",
+      "definition": "To introduce (a subject) in speaking, writing etc.; to bring in, to adduce.",
+      "example": "Full well hath Clifford played the orator, / Inferring arguments of mighty force.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "inferability",
+        "inferable",
+        "inference",
+        "inferrable",
+        "inferral",
+        "inferrer",
+        "misinfer",
+        "reinfer",
+        "subinfer",
+        "uninferant"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/infer#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=infer&oldid=89357175",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-8e9ee070",
+    "senseId": "kaikki:4308bc7daf535c63cb",
+    "definition": "To make someone believe something or feel sure about it, especially through argument or evidence.",
+    "example": "The new evidence may convince the panel that the method is reliable.",
+    "collocations": [
+      "convince someone that",
+      "convince someone of something",
+      "convince a panel"
+    ],
+    "distinctions": [
+      "Convince focuses here on a person’s belief. A person can be convinced of something false; convincing someone is not the same as independently proving a claim. May convince does not assert that the panel has accepted it."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:4308bc7daf535c63cb",
+      "definition": "To make someone believe, or feel sure about something, especially by using logic, argument or evidence.",
+      "example": "I wouldn't have or do something, unless I'm convinced that it's good.",
+      "pos": "verb",
+      "synonyms": [
+        "assure",
+        "convert",
+        "convict",
+        "satisfy"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "convinceable",
+        "convincement",
+        "convincer",
+        "unconvince"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/convince#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=convince&oldid=92463707",
+    "distinctionTask": {
+      "prompt": "The evidence may convince the panel that the method is reliable. This says _____.",
+      "options": [
+        "the panel might come to accept the claim",
+        "the claim has already been independently proved true"
+      ],
+      "answer": "the panel might come to accept the claim",
+      "explanation": "May marks a possibility. A person’s conviction and a claim’s truth require separate assessment."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-8e9ee070",
+    "senseId": "kaikki:806ce09be3597320e3",
+    "definition": "To persuade someone to accept or do something.",
+    "example": "They managed to convince Lee to join the study group, and he agreed.",
+    "collocations": [
+      "convince someone to do something",
+      "convince someone to join",
+      "persuade someone"
+    ],
+    "distinctions": [
+      "Convince someone to do something is an established modern construction. Convince often focuses on belief and persuade often on agreement or action, but this is not an absolute grammatical ban or a rule that the words never overlap. Agreement does not establish that every later action has been completed."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:806ce09be3597320e3",
+      "definition": "To persuade.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "win over",
+        "bring round",
+        "convict",
+        "convince",
+        "draw",
+        "gain over",
+        "persuade",
+        "pimp",
+        "prevail upon",
+        "procure",
+        "push",
+        "suade",
+        "talk around",
+        "talk over",
+        "wash with",
+        "win over"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "convinceable",
+        "convincement",
+        "convincer",
+        "unconvince"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/convince#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=convince&oldid=92463707",
+    "distinctionTask": {
+      "prompt": "They convinced Lee to join and he agreed. Convince someone to do something is _____.",
+      "options": [
+        "an established modern construction",
+        "always ungrammatical because only persuade can take to"
+      ],
+      "answer": "an established modern construction",
+      "explanation": "Both convince someone to and persuade someone to are established constructions. Their usual emphases do not create an absolute ban."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-8e9ee070",
+    "senseId": "kaikki:8934799c8a23aad718",
+    "definition": "In obsolete use, to overcome or vanquish someone.",
+    "example": "In the preserved play, convince describes overpowering the chamberlains with wine.",
+    "collocations": [
+      "overpower with wine",
+      "obsolete convince",
+      "overcome someone"
+    ],
+    "distinctions": [
+      "The dramatic passage concerns overcoming the chamberlains, rather than winning their reasoned agreement. The obsolete sense is explained for reading, not recommended as an ordinary modern alternative to defeat."
+    ],
+    "usage": "Obsolete; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:8934799c8a23aad718",
+      "definition": "To overcome, conquer, vanquish.",
+      "example": "[…]his two Chamberlaines / Will I with Wine, and Waſſell, ſo conuince, / That Memorie, the Warder of the Braine, / Shall be a Fume,[…]",
+      "pos": "verb",
+      "synonyms": [
+        "beat",
+        "bring down",
+        "convince",
+        "chew up",
+        "eat someone for breakfast",
+        "eat someone's lunch",
+        "flog",
+        "humble",
+        "kick ass",
+        "malavogue",
+        "murdelize",
+        "outfox",
+        "outguess",
+        "outrun",
+        "outsmart",
+        "outwit",
+        "overcome",
+        "overpower",
+        "overwin",
+        "own",
+        "pulverise",
+        "pwn",
+        "rape",
+        "reduce",
+        "spank",
+        "steal the show",
+        "subdue",
+        "subvert",
+        "surmount",
+        "thrash",
+        "trounce",
+        "vanquish"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "convinceable",
+        "convincement",
+        "convincer",
+        "unconvince"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/convince#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=convince&oldid=92463707",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-8e9ee070",
+    "senseId": "kaikki:540ca0c7ae2945959c",
+    "definition": "In acting, to portray a character believably.",
+    "example": "In this scene, the actor needs to convince as an exhausted doctor.",
+    "collocations": [
+      "convince as a character",
+      "convince in a role",
+      "a believable portrayal"
+    ],
+    "distinctions": [
+      "An actor who convinces as a doctor creates a believable performance. That does not establish medical qualifications or turn the fictional character into a real person. The acting label is present in the checked revision."
+    ],
+    "usage": "Acting.",
+    "originalSense": {
+      "id": "kaikki:540ca0c7ae2945959c",
+      "definition": "To behave believably in a role; to make someone perceive oneself as the character being portrayed.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "convinceable",
+        "convincement",
+        "convincer",
+        "unconvince"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/convince#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=convince&oldid=92463707",
+    "distinctionTask": {
+      "prompt": "An actor convinces as a doctor. This establishes _____.",
+      "options": [
+        "a believable portrayal",
+        "the actor’s professional medical qualification"
+      ],
+      "answer": "a believable portrayal",
+      "explanation": "Convince in this acting sense concerns performance, not a medical licence."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-8e9ee070",
+    "senseId": "kaikki:4d59bcf6f347edb870",
+    "definition": "In obsolete use, to refute someone or prove an argument wrong.",
+    "example": "In the preserved passage, convince concerns refuting opponents through argument.",
+    "collocations": [
+      "refute an argument",
+      "the obsolete refutation sense",
+      "prove wrong"
+    ],
+    "distinctions": [
+      "The older prove-wrong sense differs from the ordinary belief sense, which concerns someone accepting a claim. Refute is clearer when explaining the older passage."
+    ],
+    "usage": "Obsolete; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:4d59bcf6f347edb870",
+      "definition": "To confute; to prove wrong.",
+      "example": "For hee mightily conuinced the Iewes, and that publikely, shewing by the scriptures, that Iesus was Christ.",
+      "pos": "verb",
+      "synonyms": [
+        "debunk",
+        "disprove",
+        "rebut",
+        "refute"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "convinceable",
+        "convincement",
+        "convincer",
+        "unconvince"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/convince#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=convince&oldid=92463707",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-8e9ee070",
+    "senseId": "kaikki:34fc4f3c57d6077da9",
+    "definition": "In obsolete use, to prove someone guilty or convict them.",
+    "example": "In the preserved question about sin, convinceth concerns proving guilt.",
+    "collocations": [
+      "prove guilty",
+      "obsolete convinceth",
+      "the convict sense"
+    ],
+    "distinctions": [
+      "The older guilt sense is separate from making someone believe a proposition. Modern convince someone of a claim does not itself mean convict that person of a crime."
+    ],
+    "usage": "Obsolete; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:34fc4f3c57d6077da9",
+      "definition": "To prove guilty; to convict.",
+      "example": "Which of you conuinceth mee of ſinne?",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "convinceable",
+        "convincement",
+        "convincer",
+        "unconvince"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/convince#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=convince&oldid=92463707",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-2bb0a2e4",
+    "senseId": "kaikki:273ad036cc46095bfc",
+    "definition": "To bring someone to agree, accept or act, usually through reasoning or verbal influence.",
+    "example": "They hope to persuade the council to extend the opening hours.",
+    "collocations": [
+      "persuade someone to do something",
+      "persuade someone into doing something",
+      "persuade someone that"
+    ],
+    "distinctions": [
+      "Unqualified persuaded someone to usually reports successful persuasion; try or hope to persuade does not assert success. Persuade can also introduce a belief with that in modern use, and convince someone to is established. Avoid an absolute belief-versus-action rule."
+    ],
+    "usage": "",
+    "originalSense": {
+      "id": "kaikki:273ad036cc46095bfc",
+      "definition": "To successfully convince (someone) to agree to, accept, or do something, usually through reasoning and verbal influence.",
+      "example": "That salesman was able to persuade me into buying this bottle of lotion.",
+      "pos": "verb",
+      "synonyms": [
+        "convince",
+        "draw",
+        "coax",
+        "wheedle"
+      ],
+      "antonyms": [
+        "deter",
+        "dissuade"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "mispersuade",
+        "overpersuade",
+        "persuadability",
+        "persuadable",
+        "persuadee",
+        "persuader",
+        "persuasion",
+        "persuasive",
+        "persuasory",
+        "repersuade",
+        "unpersuade"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/persuade#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=persuade&oldid=92177127",
+    "distinctionTask": {
+      "prompt": "They hope to persuade the council to extend opening hours. The sentence establishes _____.",
+      "options": [
+        "an intended attempt, with success still uncertain",
+        "that the council has already extended the hours"
+      ],
+      "answer": "an intended attempt, with success still uncertain",
+      "explanation": "Hope to persuade reports an intention, not completed agreement or implementation."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-2bb0a2e4",
+    "senseId": "kaikki:628d69ed187c020ab8",
+    "definition": "In the source’s obsolete construction, to cause someone to believe something by argument or reflection.",
+    "example": "In the preserved passage, we are persuaded better things of you expresses a belief about the people addressed.",
+    "collocations": [
+      "the source’s older belief construction",
+      "persuaded better things",
+      "cause to believe"
+    ],
+    "distinctions": [
+      "The source labels this separate older construction obsolete. That label does not make every modern persuade someone that construction obsolete; the ordinary source sense also has a modern belief example. Keep the historical wording and modern complement patterns distinct."
+    ],
+    "usage": "Obsolete construction in the source; contextual reading.",
+    "originalSense": {
+      "id": "kaikki:628d69ed187c020ab8",
+      "definition": "To convince of by argument, or by reasons offered or suggested from reflection, etc.; to cause to believe (something).",
+      "example": "But beloued, wee are perswaded better things of you, and things that accompany saluation, though we thus speake.",
+      "pos": "verb",
+      "synonyms": [
+        "argue",
+        "get",
+        "sway",
+        "talk into",
+        "bring round",
+        "convict",
+        "convince",
+        "draw",
+        "gain over",
+        "persuade",
+        "pimp",
+        "prevail upon",
+        "procure",
+        "push",
+        "suade",
+        "talk around",
+        "talk over",
+        "wash with",
+        "win over"
+      ],
+      "antonyms": [
+        "deter",
+        "dissuade",
+        "mispersuade",
+        "unconvince",
+        "unpersuade"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "mispersuade",
+        "overpersuade",
+        "persuadability",
+        "persuadable",
+        "persuadee",
+        "persuader",
+        "persuasion",
+        "persuasive",
+        "persuasory",
+        "repersuade",
+        "unpersuade"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/persuade#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=persuade&oldid=92177127",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-2bb0a2e4",
+    "senseId": "kaikki:36c9c4397682593512",
+    "definition": "In a rare or regional use, to urge someone or try to convince them, without necessarily succeeding.",
+    "example": "In the source’s older example, he persuaded me to go home, but I refused uses persuade for urging without success.",
+    "collocations": [
+      "urge without success",
+      "a rare or regional try sense",
+      "the refusal in the source example"
+    ],
+    "distinctions": [
+      "The preserved import labels the sense archaic and regional; the checked revision labels it now rare and regional. Its refusal example does not establish successful persuasion. In general modern writing, tried to persuade is clearer when the attempt failed."
+    ],
+    "usage": "Preserved source: archaic, regional; checked revision: now rare, regional. Contextual reading.",
+    "originalSense": {
+      "id": "kaikki:36c9c4397682593512",
+      "definition": "To urge, plead; to try to convince (someone to do something).",
+      "example": "[…] and hearken not vnto Hezekiah, when hee perswadeth you, saying, The Lord will deliuer vs.",
+      "pos": "verb",
+      "synonyms": [
+        "argue",
+        "get",
+        "sway",
+        "talk into",
+        "bring round",
+        "convict",
+        "convince",
+        "draw",
+        "gain over",
+        "persuade",
+        "pimp",
+        "prevail upon",
+        "procure",
+        "push",
+        "suade",
+        "talk around",
+        "talk over",
+        "wash with",
+        "win over"
+      ],
+      "antonyms": [
+        "deter",
+        "dissuade",
+        "mispersuade",
+        "unconvince",
+        "unpersuade"
+      ],
+      "collocations": [],
+      "usage": "archaic, regional",
+      "register": "archaic, regional, transitive",
+      "wordFamily": [
+        "mispersuade",
+        "overpersuade",
+        "persuadability",
+        "persuadable",
+        "persuadee",
+        "persuader",
+        "persuasion",
+        "persuasive",
+        "persuasory",
+        "repersuade",
+        "unpersuade"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/persuade#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=persuade&oldid=92177127",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]

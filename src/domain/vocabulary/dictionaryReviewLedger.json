@@ -29201,6 +29201,249 @@
       ],
       "referenceUrl": "https://en.wiktionary.org/w/index.php?title=presume&oldid=92122169",
       "diagramReviewed": true
+    },
+    {
+      "term": "imply",
+      "entryId": "ve-aa8e0a4",
+      "senseId": "kaikki:bec0070912320a226d",
+      "sourceHash": "3934de0c90ea8e7cb98060f2502d11c7b32d9b66bc0fdb91ca19332bc482f648",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=imply&oldid=91126265",
+      "diagramReviewed": true
+    },
+    {
+      "term": "imply",
+      "entryId": "ve-aa8e0a4",
+      "senseId": "kaikki:a1801b8dd202ff6922",
+      "sourceHash": "949761df19c23057c6c2dbfa1fe5f3e1c66abe0bf937f5afcc28c87c00acb5e4",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=imply&oldid=91126265",
+      "diagramReviewed": true
+    },
+    {
+      "term": "imply",
+      "entryId": "ve-aa8e0a4",
+      "senseId": "kaikki:86bdc9b9fe634ebd43",
+      "sourceHash": "92d72f4a6c943887c84c396657ae8c96616a8b3210608b3b81c1f1fef162435e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=imply&oldid=91126265",
+      "diagramReviewed": true
+    },
+    {
+      "term": "imply",
+      "entryId": "ve-aa8e0a4",
+      "senseId": "kaikki:b53f87d07634201a7d",
+      "sourceHash": "749f12c26eb032d8e85b6f8262a80c6be1d07008f843678e88b03aad2d569cb2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=imply&oldid=91126265"
+    },
+    {
+      "term": "imply",
+      "entryId": "ve-aa8e0a4",
+      "senseId": "kaikki:a549f8fcad2fd133a6",
+      "sourceHash": "c38ff4e91cb7cb53e18baed2a168a0e55383f8d2f7339552f56be679d5757dec",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=IMPLY&oldid=87748756",
+      "diagramReviewed": true
+    },
+    {
+      "term": "infer",
+      "entryId": "ve-aa83073",
+      "senseId": "kaikki:a4e6224ba82f1d9990",
+      "sourceHash": "25088337b93bab82202596ccf97dac2a22675b8f35701cb35ecbf803f0cae00c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=infer&oldid=89357175",
+      "diagramReviewed": true
+    },
+    {
+      "term": "infer",
+      "entryId": "ve-aa83073",
+      "senseId": "kaikki:a3b4be745b0f183678",
+      "sourceHash": "d0fca75d298516630d1afba041270f3e1924a5139f0d740ce9bdcc20ce7420e5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=infer&oldid=89357175"
+    },
+    {
+      "term": "infer",
+      "entryId": "ve-aa83073",
+      "senseId": "kaikki:f75b39e031d6e0c393",
+      "sourceHash": "2f7b848c7c8595bbd30cb75914db7a60a2f630d2e03ae296e57cddeff13517d8",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=infer&oldid=89357175"
+    },
+    {
+      "term": "infer",
+      "entryId": "ve-aa83073",
+      "senseId": "kaikki:c71678809597f1b92e",
+      "sourceHash": "49a50a30b06e7158a6b9cd90a8b22aa892d9f744d8e5ec6a7b1b546b4ce1e3b7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=infer&oldid=89357175"
+    },
+    {
+      "term": "convince",
+      "entryId": "ve-8e9ee070",
+      "senseId": "kaikki:4308bc7daf535c63cb",
+      "sourceHash": "ec2b96e020b5ee13de16160f077611d835703316740e10f01bcf34467ff02d2e",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=convince&oldid=92463707",
+      "diagramReviewed": true
+    },
+    {
+      "term": "convince",
+      "entryId": "ve-8e9ee070",
+      "senseId": "kaikki:806ce09be3597320e3",
+      "sourceHash": "34677a73ad1918e8badf0a7e3d50ce1ca9b5bb2fad247ac5893b214c694797a6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=convince&oldid=92463707",
+      "diagramReviewed": true
+    },
+    {
+      "term": "convince",
+      "entryId": "ve-8e9ee070",
+      "senseId": "kaikki:8934799c8a23aad718",
+      "sourceHash": "9245aba733cb3028b17627e372a1ac8bf45b873bcc5f12795b75bd0950ca90c1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=convince&oldid=92463707"
+    },
+    {
+      "term": "convince",
+      "entryId": "ve-8e9ee070",
+      "senseId": "kaikki:540ca0c7ae2945959c",
+      "sourceHash": "8b85e3d6918af10592ce43fd8479bd9e72374a1ad5c7655fb641bf67ea908975",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=convince&oldid=92463707",
+      "diagramReviewed": true
+    },
+    {
+      "term": "convince",
+      "entryId": "ve-8e9ee070",
+      "senseId": "kaikki:4d59bcf6f347edb870",
+      "sourceHash": "d246f1321d070456ff1ccebedecc885feab2632ef068fc344c0589f890839b8d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=convince&oldid=92463707"
+    },
+    {
+      "term": "convince",
+      "entryId": "ve-8e9ee070",
+      "senseId": "kaikki:34fc4f3c57d6077da9",
+      "sourceHash": "4efd98928e9847568012a2935fa848cda6dbd1d289088786e13854764bbc9d8c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=convince&oldid=92463707"
+    },
+    {
+      "term": "persuade",
+      "entryId": "ve-2bb0a2e4",
+      "senseId": "kaikki:273ad036cc46095bfc",
+      "sourceHash": "67b6a4f58787fbd0d56b1865e556f30b09a0f52885173887381f5a2e3ab81d4b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=persuade&oldid=92177127",
+      "diagramReviewed": true
+    },
+    {
+      "term": "persuade",
+      "entryId": "ve-2bb0a2e4",
+      "senseId": "kaikki:628d69ed187c020ab8",
+      "sourceHash": "560071d57282c4ae68120339ff9cab6e6603af32bbb0577510669e56b74ba0f9",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=persuade&oldid=92177127"
+    },
+    {
+      "term": "persuade",
+      "entryId": "ve-2bb0a2e4",
+      "senseId": "kaikki:36c9c4397682593512",
+      "sourceHash": "7084192bd0924d881ea2f2dcb08aba1329be534e75ee544de3a4d63dd58a61a8",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=persuade&oldid=92177127"
     }
   ]
 }

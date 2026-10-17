@@ -20,6 +20,7 @@ import type {
   VocabularyEntry,
   VocabularyStore,
   VocabularyDimension,
+  VocabularyMode,
   VocabularyStatus,
 } from "../../domain/vocabulary/types";
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
@@ -36,6 +37,8 @@ import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferen
 import { isRegionalSpellingDifference } from "../../domain/vocabulary/spelling";
 import { accountId } from "../../storage/remote";
 import { getVocabularyMastery } from "../../domain/vocabulary/mastery";
+import { getVocabularyNextPractice } from '../../domain/vocabulary/nextPractice';
+import { VocabularyNextPractice } from './VocabularyNextPractice';
 import { vocabularyLearningTimeline } from "../../domain/vocabulary/timeline";
 import { vocabularySensePresentation } from "../../domain/vocabulary/dictionaryPresentation";
 import { isVocabularyMeaningGroup, isVocabularyPracticeReference, isVocabularySpellingReference, isVocabularyUsageReference } from '../../domain/vocabulary/readiness';
@@ -104,6 +107,7 @@ export function VocabularyEntryPage() {
   const [saveError, setSaveError] = useState("");
   const [saving, setSaving] = useState(false);
   const [savingPractice, setSavingPractice] = useState(false);
+  const [practiceClock, setPracticeClock] = useState(0);
   const saveLock = useRef(false);
   const mounted = useRef(true);
   const routeKey = `${confirmOwner}:${location.pathname}${location.search}`;
@@ -196,6 +200,23 @@ export function VocabularyEntryPage() {
   const entry = resolved?.entry;
   const primary = resolved?.sense;
   const dictionaryPreview = Boolean(primary && !baseResolved?.sense);
+  const nextPractice = useMemo(() => entry && primary && status === 'ready'
+    ? getVocabularyNextPractice(state,entry,{...context,senseId:primary.id}) : undefined,
+  [state,entry,primary,status,bookId,unitId,validGroup,practiceClock]);
+  useEffect(() => {
+    if (!nextPractice?.nextChangeAt) return;
+    const refresh = () => setPracticeClock(value => value + 1);
+    const onVisible = () => { if (document.visibilityState === 'visible') refresh(); };
+    const delay = Math.max(1,Math.min(Date.parse(nextPractice.nextChangeAt)-Date.now()+25,3600000));
+    const timer = window.setTimeout(refresh,delay);
+    window.addEventListener('focus',refresh);
+    document.addEventListener('visibilitychange',onVisible);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('focus',refresh);
+      document.removeEventListener('visibilitychange',onVisible);
+    };
+  },[nextPractice?.nextChangeAt,practiceClock,routeKey]);
   const image = resolved ? getVocabularyIllustration(resolved) : undefined;
   const hasVisual = Boolean(image || resolved && (getVocabularyVisualConcept(resolved) || getVocabularySenseDiagram(resolved)));
   const saved = state.vocabulary?.some((item) => item.id === entry?.id);
@@ -316,7 +337,7 @@ export function VocabularyEntryPage() {
       if (active()) setSaving(false);
     }
   };
-  const practiseDictionaryMeaning = async () => {
+  const practiseDictionaryMeaning = async (mode?: VocabularyMode) => {
     if (!entry || !primary || saveLock.current) return;
     saveLock.current = true;
     const owner = accountId(), requestedRoute = routeRef.current;
@@ -337,7 +358,7 @@ export function VocabularyEntryPage() {
       if (!active()) return;
       if (didSave && result.item) {
         const savedSense = result.item.senses.find(sense => sense.id === primary.id) || result.item.senses.find(sense => sense.definition === primary.definition);
-        navigate(practiceUrl(result.item.id, savedSense?.id || primary.id, context, origin), { state: vocabularyForwardState(location) });
+        navigate(practiceUrl(result.item.id, savedSense?.id || primary.id, context, origin, mode), { state: vocabularyForwardState(location) });
       } else setSaveError(feedback || 'This sense could not be saved. Try again.');
     } catch {
       if (active()) setSaveError('This sense could not be saved. Try again.');
@@ -629,9 +650,13 @@ export function VocabularyEntryPage() {
           >
             <h3>Learning progress</h3>
             <p className="vocabulary-muted">
-              Statuses use spaced retrieval evidence across four skills. These
-              are Fieldbook learning rules; FSRS schedules reviews.
+              Progress comes from verified practice spaced over time, across
+              meaning, listening, spelling and use in context.
             </p>
+            {nextPractice && primary ? <VocabularyNextPractice recommendation={nextPractice}
+              to={mode=>practiceUrl(entry.id,primary.id,context,origin,mode)}
+              onPractice={dictionaryPreview ? mode=>void practiseDictionaryMeaning(mode) : undefined}
+              busy={saving || savingPractice} /> : null}
             {[...(primary ? [primary] : []), ...others].map((sense, index) => {
               const mastery = getVocabularyMastery(state, entry.id, sense.id);
               return (
@@ -723,7 +748,7 @@ export function VocabularyEntryPage() {
                   </p>
                   {mastery.missing.length ? (
                     <details className="vocabulary-mastery-requirements">
-                      <summary>What to practise next</summary>
+                      <summary>Mastery requirements</summary>
                       <ul>
                         {mastery.missing.map((message) => (
                           <li key={message}>{message}</li>
