@@ -1,49 +1,54 @@
-import type { VocabularyMeaningDiagram } from './VocabularyMeaningDiagram';
 import { isPageDownloadError, loadOptionalPageModule } from '../../lib/pageLoadRecovery';
+import { getVocabularyDiagramPack } from './diagramPacks';
+import type { VocabularyDiagramModule, VocabularyDiagramPack, VocabularyDiagramRenderer } from './diagramTypes';
 
-type Renderer = typeof VocabularyMeaningDiagram;
-type DiagramModule = { VocabularyMeaningDiagram: Renderer };
-
-function failedDiagramUrl(error: unknown): string | undefined {
+function failedDiagramUrl(error: unknown, moduleName: string): string | undefined {
   if (!isPageDownloadError(error)) return;
   const message = String((error as Error).message);
   for (const candidate of message.match(/https?:\/\/[^\s"'<>]+/g) || []) {
     try {
       const url = new URL(candidate);
-      if (url.origin === window.location.origin && /\/VocabularyMeaningDiagram(?:-[\w-]+\.js|\.tsx)$/.test(url.pathname)) return url.href;
+      const filename = url.pathname.slice(url.pathname.lastIndexOf('/') + 1);
+      if (url.origin === window.location.origin && /^[A-Za-z]\w*$/.test(moduleName) &&
+          (filename === `${moduleName}.tsx` || new RegExp(`^${moduleName}-[\\w-]+\\.js$`).test(filename))) return url.href;
     } catch { /* An error message need not contain a usable URL. */ }
   }
 }
 
 export function createVocabularyDiagramLoader(
-  importModule: () => Promise<DiagramModule>,
-  retryModule: (url: string) => Promise<DiagramModule> = url => import(/* @vite-ignore */ url),
+  resolvePack: (kind: string) => VocabularyDiagramPack | undefined,
+  retryModule: (url: string) => Promise<VocabularyDiagramModule> = url => import(/* @vite-ignore */ url),
 ) {
-  let loaded: Renderer | undefined;
-  let pending: Promise<Renderer> | undefined;
-  let failedUrl: string | undefined;
-  let retries = 0;
+  const cache = new Map<string, { loaded?: VocabularyDiagramRenderer; pending?: Promise<VocabularyDiagramRenderer>; failedUrl?: string; retries: number }>();
   return {
-    peek: () => loaded,
-    load: () => {
-      if (loaded) return Promise.resolve(loaded);
-      if (!pending) {
+    keyFor: (kind: string) => resolvePack(kind)?.id,
+    peek: (kind: string) => {
+      const pack = resolvePack(kind);
+      return pack ? cache.get(pack.id)?.loaded : undefined;
+    },
+    load: (kind: string): Promise<VocabularyDiagramRenderer> => {
+      const pack = resolvePack(kind);
+      if (!pack) return Promise.reject(new Error('Diagram unavailable for this meaning.'));
+      const state = cache.get(pack.id) || { retries: 0 };
+      cache.set(pack.id, state);
+      if (state.loaded) return Promise.resolve(state.loaded);
+      if (!state.pending) {
         // Browsers cache a rejected native import; retry the same asset with a fresh URL.
-        const retryUrl = failedUrl ? new URL(failedUrl) : undefined;
-        if (retryUrl) retryUrl.searchParams.set('diagramRetry', String(++retries));
-        const load = retryUrl ? () => retryModule(retryUrl.href) : importModule;
-        pending = loadOptionalPageModule('VocabularyMeaningDiagram', load).then(module => {
-          loaded = module.VocabularyMeaningDiagram;
-          return loaded;
+        const retryUrl = state.failedUrl ? new URL(state.failedUrl) : undefined;
+        if (retryUrl) retryUrl.searchParams.set('diagramRetry', String(++state.retries));
+        const load = retryUrl ? () => retryModule(retryUrl.href) : pack.load;
+        state.pending = loadOptionalPageModule(pack.moduleName, load).then(module => {
+          state.loaded = module.VocabularyMeaningDiagram;
+          return state.loaded;
         }).catch(error => {
-          failedUrl = failedDiagramUrl(error) || failedUrl;
-          pending = undefined;
+          state.failedUrl = failedDiagramUrl(error, pack.moduleName) || state.failedUrl;
+          state.pending = undefined;
           throw error;
         });
       }
-      return pending;
+      return state.pending;
     },
   };
 }
 
-export const vocabularyDiagramLoader = createVocabularyDiagramLoader(() => import('./VocabularyMeaningDiagram'));
+export const vocabularyDiagramLoader = createVocabularyDiagramLoader(getVocabularyDiagramPack);

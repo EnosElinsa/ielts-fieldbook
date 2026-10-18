@@ -1,36 +1,31 @@
 import { useEffect, useState } from 'react';
 import type { VocabularySenseDiagram } from '../../domain/vocabulary/media';
 import { vocabularyDiagramLoader } from './diagramLoader';
-import '../../styles/vocabulary-visual.css';
+import { VocabularyDiagramPlaceholder } from './diagrams/VocabularyDiagramPrimitives';
 
 type Renderer = NonNullable<ReturnType<typeof vocabularyDiagramLoader.peek>>;
-type LoadState = { status: 'loading' | 'failed' } | { status: 'ready'; Renderer: Renderer };
+type LoadState = { key: string | undefined } & ({ status: 'loading' | 'failed' } | { status: 'ready'; Renderer: Renderer });
 
 export function AsyncMeaningDiagram({ diagram }: { diagram: VocabularySenseDiagram }) {
+  const key = vocabularyDiagramLoader.keyFor(diagram.kind);
+  const cached = vocabularyDiagramLoader.peek(diagram.kind);
   const [state, setState] = useState<LoadState>(() => {
-    const Renderer = vocabularyDiagramLoader.peek();
-    return Renderer ? { status: 'ready', Renderer } : { status: 'loading' };
+    return cached ? { key, status: 'ready', Renderer: cached } : { key, status: 'loading' };
   });
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
-    const Renderer = vocabularyDiagramLoader.peek();
-    if (Renderer) { setState({ status: 'ready', Renderer }); return; }
+    const Renderer = vocabularyDiagramLoader.peek(diagram.kind);
+    if (Renderer) { setState({ key, status: 'ready', Renderer }); return; }
     let active = true;
-    setState({ status: 'loading' });
-    vocabularyDiagramLoader.load().then(
-      Renderer => { if (active) setState({ status: 'ready', Renderer }); },
-      () => { if (active) setState({ status: 'failed' }); },
+    setState({ key, status: 'loading' });
+    vocabularyDiagramLoader.load(diagram.kind).then(
+      Renderer => { if (active) setState({ key, status: 'ready', Renderer }); },
+      () => { if (active) setState({ key, status: 'failed' }); },
     );
     return () => { active = false; };
-  }, [attempt]);
-  if (state.status === 'ready') return <state.Renderer diagram={diagram} />;
-  return <figure className="vocabulary-learning-visual">
-    <div className="vocabulary-diagram-placeholder" aria-busy={state.status === 'loading'}>
-      {state.status === 'loading' ? <p role="status">Loading diagram…</p> : <div>
-        <p role="status">Diagram could not load. You can keep learning from the definition and example.</p>
-        <button type="button" className="btn line" onClick={() => setAttempt(value => value + 1)}>Retry diagram</button>
-      </div>}
-    </div>
-    <figcaption>Illustrative diagram · {diagram.term}</figcaption>
-  </figure>;
+    // Every kind in a pack uses the same renderer; current props stay current.
+  }, [key, attempt]);
+  const Ready = cached || (state.key === key && state.status === 'ready' ? state.Renderer : undefined);
+  if (Ready) return <Ready diagram={diagram} />;
+  return <VocabularyDiagramPlaceholder term={diagram.term} loading={state.key !== key || state.status !== 'failed'} onRetry={() => setAttempt(value => value + 1)} />;
 }

@@ -436,14 +436,14 @@ test('a saved spelling-error reference explains the correct form without a main 
   expect(screen.queryByRole('link', { name: /Practise this sense/ })).not.toBeInTheDocument();
 });
 
-test('an explicitly selected river meaning displays its diagram and learning notes in word details', () => {
+test('an explicitly selected river meaning displays its diagram and learning notes in word details', async () => {
   const bank = release.entries.find((entry: any) => entry.term === 'bank');
   const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
   const river = JSON.parse(readFileSync(`public/dictionary/${index.bank}`, 'utf8')).senses.find((sense: any) => sense.id === 'kaikki:c130710755a265600e');
   mocks.fb.state.vocabulary = [{ ...bank, senses: [river, ...bank.senses] }];
   mount(`/vocabulary/entry/${bank.id}?senseId=${encodeURIComponent(river.id)}`);
   expect(screen.getByText('We sat on the bank of the river and watched the boats.')).toBeInTheDocument();
-  expect(screen.getByRole('img', { name: 'bank: Land beside a flowing river' })).toBeInTheDocument();
+  expect(await screen.findByRole('img', { name: 'bank: Land beside a flowing river' })).toBeInTheDocument();
 });
 
 test('pea details show the food meaning with the same illustration as its learning card', () => {
