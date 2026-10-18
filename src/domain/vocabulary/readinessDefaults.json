@@ -24207,5 +24207,341 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-4e2c6db9",
+    "originalSense": {
+      "id": "kaikki:2ca5c330aefdaa736a",
+      "definition": "A response or reply; something said or done in reaction to a statement or question.",
+      "example": "Her answer to his proposal was a slap in the face.",
+      "pos": "noun",
+      "synonyms": [
+        "replication"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "answerability",
+        "answer engine",
+        "answer key",
+        "answerless",
+        "answer on a postcard",
+        "answer phone",
+        "answerphone",
+        "answer print",
+        "answer set programming",
+        "answer sheet",
+        "answer song",
+        "answer to someone's prayers",
+        "answer up",
+        "autoanswer",
+        "back answer",
+        "counteranswer",
+        "male answer syndrome",
+        "multianswer",
+        "non-answer",
+        "nonanswer",
+        "short-answer",
+        "take no for an answer",
+        "the answer to a maiden's prayer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/answer#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:2ca5c330aefdaa736a",
+      "definition": "A response to something said, asked or proposed.",
+      "example": "Her answer to the invitation was a polite refusal.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "an answer to an invitation",
+        "give an answer",
+        "wait for an answer"
+      ],
+      "usage": "Noun. An answer to something can be spoken, written or expressed through an action.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/answer#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The answer is her response. A refusal is still an answer; an answer need not accept a proposal or solve a problem."
+      ],
+      "distinctionTask": {
+        "prompt": "Her answer to the invitation is a refusal. It is _____.",
+        "options": [
+          "a response to the invitation",
+          "necessarily an acceptance"
+        ],
+        "answer": "a response to the invitation",
+        "explanation": "A negative response remains an answer."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-516f9034",
+    "originalSense": {
+      "id": "kaikki:f2f8245017c721ffe5",
+      "definition": "To say something in return; to answer; to reply.",
+      "example": "to respond to a question or an argument",
+      "pos": "verb",
+      "synonyms": [
+        "respond",
+        "answer",
+        "retort",
+        "answer back",
+        "react",
+        "rejoin",
+        "counter",
+        "return",
+        "reply",
+        "snap back"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive, transitive",
+      "wordFamily": [
+        "autorespond",
+        "counterrespond",
+        "hyperrespond",
+        "mechanorespond",
+        "misrespond",
+        "nonresponding",
+        "overrespond",
+        "respondee",
+        "respondence",
+        "responder",
+        "responding variable",
+        "responsive",
+        "thrombospondin",
+        "underrespond",
+        "unresponded",
+        "unresponding"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/respond#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:f2f8245017c721ffe5",
+      "definition": "To say or write something in return; to answer or reply.",
+      "example": "Please respond to the question in a full sentence.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "respond to a question",
+        "respond that + clause",
+        "respond with an explanation"
+      ],
+      "usage": "Transitive or intransitive in the source. Use to before a question noun in the ordinary learner pattern; direct speech and that clauses have different structures.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/respond#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Respond to a question is the ordinary noun-object pattern. Answer the question is also possible with answer; the verbs overlap in this context."
+      ],
+      "distinctionTask": {
+        "prompt": "For the ordinary noun-object construction, write _____.",
+        "options": [
+          "respond to the question",
+          "respond the question"
+        ],
+        "answer": "respond to the question",
+        "explanation": "To introduces the question noun; a quoted reply or that clause is a different construction."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-b97f1f7",
+    "originalSense": {
+      "id": "kaikki:e79eee9c7b66749c30",
+      "definition": "To give a written or spoken response, especially to a question, request, accusation or criticism; to answer.",
+      "example": "(intransitive) Please reply to my letter.",
+      "pos": "verb",
+      "synonyms": [
+        "respond",
+        "answer back",
+        "react",
+        "rejoin",
+        "counter",
+        "revert",
+        "follow up",
+        "get back to",
+        "answer",
+        "retort",
+        "return"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive, transitive",
+      "wordFamily": [
+        "autoreply",
+        "counterreply",
+        "misreply",
+        "nonreplying",
+        "replyer",
+        "replyingly",
+        "unrepliable",
+        "unreplied",
+        "unreplying"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reply#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:e79eee9c7b66749c30",
+      "definition": "To give a written or spoken response, especially to a question, request, accusation or criticism.",
+      "example": "Please reply to her email before noon.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "reply to an email",
+        "reply that + clause",
+        "reply with an explanation"
+      ],
+      "usage": "Transitive or intransitive in the source. Direct speech and that clauses differ from an email noun introduced by to.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reply#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Reply to her email is the ordinary noun-object pattern. Answer her email can also express a response; the verbs are not mutually exclusive here."
+      ],
+      "distinctionTask": {
+        "prompt": "With an email noun, the ordinary construction is _____.",
+        "options": [
+          "reply to her email",
+          "reply her email"
+        ],
+        "answer": "reply to her email",
+        "explanation": "Reply normally uses to before this noun object. Direct speech has a different structure."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-45ebd2eb",
+    "originalSense": {
+      "id": "kaikki:9c30529b1b79add8de",
+      "definition": "A worded or expressed sentence, phrase, or only a word on its own, which asks for information, a reply, or a response; an interrogative.",
+      "example": "What is your question?",
+      "pos": "noun",
+      "synonyms": [
+        "inquiry",
+        "enquiry",
+        "query",
+        "interrogation"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "$1,000,000 question",
+        "academic question",
+        "Adriatic Question",
+        "a question of",
+        "Armenian Question",
+        "Armenian question",
+        "ask a stupid question",
+        "ask the question",
+        "beggar the question",
+        "begging the question",
+        "beg the question",
+        "beyond question",
+        "binary question",
+        "bonus question",
+        "burning question",
+        "call into question",
+        "call the question",
+        "chicken and egg question",
+        "chicken-and-egg question",
+        "chicken-or-egg question",
+        "chicken or egg question",
+        "closed-ended question",
+        "closed question",
+        "close-ended question",
+        "complex question",
+        "counterquestion",
+        "Cripps question",
+        "cross-question",
+        "daft laddie question",
+        "direct question"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/question#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:9c30529b1b79add8de",
+      "definition": "An expressed sentence, phrase or word asking for information or a response.",
+      "example": "Her question was, “When does the library open?”",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "ask a question",
+        "a question about something",
+        "a question to someone"
+      ],
+      "usage": "Interrogative noun. A question can be a sentence, a phrase or a single word in context.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/question#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The question asks for the opening time. It does not state what that time is."
+      ],
+      "distinctionTask": {
+        "prompt": "“When does the library open?” is a question that _____.",
+        "options": [
+          "asks for an opening time",
+          "states a definite opening time"
+        ],
+        "answer": "asks for an opening time",
+        "explanation": "An interrogative requests information instead of asserting the requested fact."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

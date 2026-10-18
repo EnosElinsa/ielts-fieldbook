@@ -5422,5 +5422,237 @@
     "definition": "The process of allowing dough to rise in baking.",
     "pos": "noun",
     "kind": "prove-dough"
+  },
+  {
+    "entryId": "ve-4e2c6db9",
+    "senseId": "kaikki:2ca5c330aefdaa736a",
+    "term": "answer",
+    "definition": "A response to something said, asked or proposed.",
+    "pos": "noun",
+    "kind": "answer-response"
+  },
+  {
+    "entryId": "ve-4e2c6db9",
+    "senseId": "kaikki:73b47197ef6a110603",
+    "term": "answer",
+    "definition": "A solution to a problem.",
+    "pos": "noun",
+    "kind": "answer-solution"
+  },
+  {
+    "entryId": "ve-4e2c6db9",
+    "senseId": "kaikki:f7015ecdf3b573280f",
+    "term": "answer",
+    "definition": "A person or thing filling a role similar to another person or thing.",
+    "pos": "noun",
+    "kind": "answer-counterpart"
+  },
+  {
+    "entryId": "ve-4e2c6db9",
+    "senseId": "kaikki:960f22d2febcef17ce",
+    "term": "answer",
+    "definition": "A legal document responding to the points in a complaint.",
+    "pos": "noun",
+    "kind": "answer-pleading"
+  },
+  {
+    "entryId": "ve-4e2c6db9",
+    "senseId": "kaikki:6f69ecfe484a0d31b5",
+    "term": "answer",
+    "definition": "To give a reply or response.",
+    "pos": "verb",
+    "kind": "answer-question"
+  },
+  {
+    "entryId": "ve-4e2c6db9",
+    "senseId": "kaikki:9ed6173fcdd6ef6a95",
+    "term": "answer",
+    "definition": "To respond in defence against a charge or accusation.",
+    "pos": "verb",
+    "kind": "answer-defence"
+  },
+  {
+    "entryId": "ve-4e2c6db9",
+    "senseId": "kaikki:9d22b6f15500ccd302",
+    "term": "answer",
+    "definition": "To respond to an incoming call at a door, telephone or similar device.",
+    "pos": "verb",
+    "kind": "answer-call"
+  },
+  {
+    "entryId": "ve-4e2c6db9",
+    "senseId": "kaikki:626dd4d2caac7b218f",
+    "term": "answer",
+    "definition": "To suit a need or purpose satisfactorily.",
+    "pos": "verb",
+    "kind": "answer-suitability"
+  },
+  {
+    "entryId": "ve-4e2c6db9",
+    "senseId": "kaikki:cd2dc3400be8e834eb",
+    "term": "answer",
+    "definition": "To be accountable or responsible for something.",
+    "pos": "verb",
+    "kind": "answer-accountability"
+  },
+  {
+    "entryId": "ve-4e2c6db9",
+    "senseId": "kaikki:c6ee4cb287dab697ca",
+    "term": "answer",
+    "definition": "To file a legal response to a complaint.",
+    "pos": "verb",
+    "kind": "answer-filing"
+  },
+  {
+    "entryId": "ve-4e2c6db9",
+    "senseId": "kaikki:1056f714d4cc90e472",
+    "term": "answer",
+    "definition": "To meet an objection satisfactorily by explanation, argument or justification.",
+    "pos": "verb",
+    "kind": "answer-objection"
+  },
+  {
+    "entryId": "ve-516f9034",
+    "senseId": "kaikki:f2f8245017c721ffe5",
+    "term": "respond",
+    "definition": "To say or write something in return; to answer or reply.",
+    "pos": "verb",
+    "kind": "respond-verbal"
+  },
+  {
+    "entryId": "ve-516f9034",
+    "senseId": "kaikki:51115faed477fd75e5",
+    "term": "respond",
+    "definition": "To act or change in reaction to a force, stimulus or event.",
+    "pos": "verb",
+    "kind": "respond-stimulus"
+  },
+  {
+    "entryId": "ve-516f9034",
+    "senseId": "kaikki:fb30b460695a633e4d",
+    "term": "respond",
+    "definition": "A versicle or short anthem chanted during a reading in a religious service.",
+    "pos": "noun",
+    "kind": "respond-chant"
+  },
+  {
+    "entryId": "ve-516f9034",
+    "senseId": "kaikki:6fe37289d418081ee4",
+    "term": "respond",
+    "definition": "A half-pillar, pilaster or similar support engaged in a wall to carry the impost of an arch.",
+    "pos": "noun",
+    "kind": "respond-arch"
+  },
+  {
+    "entryId": "ve-b97f1f7",
+    "senseId": "kaikki:e79eee9c7b66749c30",
+    "term": "reply",
+    "definition": "To give a written or spoken response, especially to a question, request, accusation or criticism.",
+    "pos": "verb",
+    "kind": "reply-email"
+  },
+  {
+    "entryId": "ve-b97f1f7",
+    "senseId": "kaikki:a015ddd6fbc9ed7f6a",
+    "term": "reply",
+    "definition": "To act or gesture in response.",
+    "pos": "verb",
+    "kind": "reply-gesture"
+  },
+  {
+    "entryId": "ve-b97f1f7",
+    "senseId": "kaikki:2037a39f3f87f26ca6",
+    "term": "reply",
+    "definition": "To repeat a sound back; to echo.",
+    "pos": "verb",
+    "kind": "reply-echo"
+  },
+  {
+    "entryId": "ve-b97f1f7",
+    "senseId": "kaikki:0c5202b714e7a25450",
+    "term": "reply",
+    "definition": "A written or spoken response forming part of a conversation.",
+    "pos": "noun",
+    "kind": "reply-response"
+  },
+  {
+    "entryId": "ve-b97f1f7",
+    "senseId": "kaikki:db4de3a36e4718222d",
+    "term": "reply",
+    "definition": "Something given in response.",
+    "pos": "noun",
+    "kind": "reply-gift"
+  },
+  {
+    "entryId": "ve-b97f1f7",
+    "senseId": "kaikki:c586b142288668cbb4",
+    "term": "reply",
+    "definition": "A counterattack.",
+    "pos": "noun",
+    "kind": "reply-counterattack"
+  },
+  {
+    "entryId": "ve-b97f1f7",
+    "senseId": "kaikki:8e25f7079e10a44f19",
+    "term": "reply",
+    "definition": "A US legal document specifically replying to a responsive declaration or, in some cases, an answer.",
+    "pos": "noun",
+    "kind": "reply-pleading"
+  },
+  {
+    "entryId": "ve-45ebd2eb",
+    "senseId": "kaikki:9c30529b1b79add8de",
+    "term": "question",
+    "definition": "An expressed sentence, phrase or word asking for information or a response.",
+    "pos": "noun",
+    "kind": "question-interrogative"
+  },
+  {
+    "entryId": "ve-45ebd2eb",
+    "senseId": "kaikki:189a2b4ed6ca219871",
+    "term": "question",
+    "definition": "A subject or topic for consideration or investigation.",
+    "pos": "noun",
+    "kind": "question-topic"
+  },
+  {
+    "entryId": "ve-45ebd2eb",
+    "senseId": "kaikki:61f5b1b1308f01e9b2",
+    "term": "question",
+    "definition": "A doubt or challenge concerning the truth, accuracy or validity of something.",
+    "pos": "noun",
+    "kind": "question-doubt"
+  },
+  {
+    "entryId": "ve-45ebd2eb",
+    "senseId": "kaikki:ddd8eb0ab30499f88e",
+    "term": "question",
+    "definition": "A proposal presented to a meeting for deliberation.",
+    "pos": "noun",
+    "kind": "question-motion"
+  },
+  {
+    "entryId": "ve-45ebd2eb",
+    "senseId": "kaikki:20e516ac234508bd71",
+    "term": "question",
+    "definition": "To ask someone questions in order to obtain information.",
+    "pos": "verb",
+    "kind": "question-interview"
+  },
+  {
+    "entryId": "ve-45ebd2eb",
+    "senseId": "kaikki:47aebeae292a48b87c",
+    "term": "question",
+    "definition": "To raise or have doubts about something.",
+    "pos": "verb",
+    "kind": "question-challenge"
+  },
+  {
+    "entryId": "ve-45ebd2eb",
+    "senseId": "kaikki:23e198dd92ea8bec0b",
+    "term": "question",
+    "definition": "To ask questions, inquire or investigate.",
+    "pos": "verb",
+    "kind": "question-inquire"
   }
 ]
