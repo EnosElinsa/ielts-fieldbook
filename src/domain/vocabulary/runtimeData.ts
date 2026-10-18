@@ -2,7 +2,7 @@ import type { VocabularySense } from './types';
 import type { CurriculumRow } from './curriculum';
 
 export type VocabularyLearningPriority = 'general' | 'specialist' | 'historical' | 'proper-name';
-export type ReadinessSupplement = { entryId: string; senseId: string; dictionaryParentSenseId?: string; definition?: string; example: string; exampleKind?: 'reading-note'; learningPriority?: VocabularyLearningPriority; meaningGroup?: { sourceGloss: string }; usageReference?: { sourceGloss: string }; pos?: string; usage?: string; referenceOnly?: boolean; originalSense?: VocabularySense; previousSenses?: VocabularySense[] } & Pick<VocabularySense, 'collocations' | 'distinctions' | 'distinctionTask' | 'synonyms' | 'antonyms' | 'wordFamily' | 'register'>;
+export type ReadinessSupplement = { entryId: string; senseId: string; dictionaryParentSenseId?: string; dictionarySourceAnchorSenseId?: string; definition?: string; example: string; exampleKind?: 'reading-note'; learningPriority?: VocabularyLearningPriority; meaningGroup?: { sourceGloss: string }; usageReference?: { sourceGloss: string }; pos?: string; usage?: string; referenceOnly?: boolean; originalSense?: VocabularySense; previousSenses?: VocabularySense[] } & Pick<VocabularySense, 'collocations' | 'distinctions' | 'distinctionTask' | 'synonyms' | 'antonyms' | 'wordFamily' | 'register'>;
 export type ReadinessDefault = { entryId: string; sense: VocabularySense; originalSense?: VocabularySense };
 export type ContextBinding = { bookId?: string; unitId?: string; entryId: string; sense: VocabularySense; originalSense?: VocabularySense | null; status: 'reviewed' | 'unresolved' | 'unreviewed'; contentReviewed: boolean };
 export type VocabularyTeachingData = {

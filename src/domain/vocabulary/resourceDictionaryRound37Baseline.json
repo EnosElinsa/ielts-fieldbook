@@ -1,0 +1,172 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:47d8d5d83904eedc0d"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:1f6b807874a431bb70"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:cbd53be849ff92fb30"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:5a2c02014ffd3fda10"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:32dcf1b6b43764766d"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:f9734960eebcbb54fc"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:79d22c6ce8116b1856"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:45582cfb36e48b20e0"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:94925b1ef8e761dbe7"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:87c57f85a8b256f12f"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:4c4b4a9c12ddf201b4"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:c7f5bad264c0e49398"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:d6d45292cd42584eda"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:0e83757e29480c2dc5"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:fd458e594276fc4644"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:cfcbf75b8aeedb4707"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "kaikki:ac63d6c65dc800d2dd"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "wiktionary:restored:0a2a17fa41a5aeb8ac"
+    },
+    {
+      "entryId": "ve-7c74dd18",
+      "senseId": "wiktionary:restored:add306d1c96ee0bc61"
+    },
+    {
+      "entryId": "ve-8901ba1",
+      "senseId": "kaikki:f1d68f76d67f2c403b"
+    },
+    {
+      "entryId": "ve-8901ba1",
+      "senseId": "kaikki:0ee548a956de9a741e"
+    },
+    {
+      "entryId": "ve-8901ba1",
+      "senseId": "kaikki:b216a77a1d76b0cccb"
+    },
+    {
+      "entryId": "ve-8901ba1",
+      "senseId": "kaikki:053c6102e67c07ff0f"
+    },
+    {
+      "entryId": "ve-8901ba1",
+      "senseId": "kaikki:c910eb8252fa0a5668"
+    },
+    {
+      "entryId": "ve-8901ba1",
+      "senseId": "kaikki:fd647855262f79226f"
+    },
+    {
+      "entryId": "ve-8901ba1",
+      "senseId": "kaikki:841483d44975b4e341"
+    },
+    {
+      "entryId": "ve-8901ba1",
+      "senseId": "kaikki:b0c7f34518d380cef4"
+    },
+    {
+      "entryId": "ve-8901ba1",
+      "senseId": "wiktionary:restored:530eeb2e2966218a19"
+    },
+    {
+      "entryId": "ve-a4686f2",
+      "senseId": "kaikki:54796c73810b99d413"
+    },
+    {
+      "entryId": "ve-a4686f2",
+      "senseId": "kaikki:dc888058c923dcc917"
+    },
+    {
+      "entryId": "ve-a4686f2",
+      "senseId": "kaikki:15b21071a9355562fc"
+    },
+    {
+      "entryId": "ve-a4686f2",
+      "senseId": "kaikki:505803355ea06468be"
+    },
+    {
+      "entryId": "ve-a4686f2",
+      "senseId": "kaikki:35f0f97dea1f9bdfe4"
+    },
+    {
+      "entryId": "ve-a4686f2",
+      "senseId": "kaikki:699ac901f9b30e5400"
+    },
+    {
+      "entryId": "ve-a4686f2",
+      "senseId": "kaikki:5f304f39f6181a210b"
+    },
+    {
+      "entryId": "ve-a4686f2",
+      "senseId": "kaikki:574a186c933eae7df0"
+    },
+    {
+      "entryId": "ve-be947e9",
+      "senseId": "kaikki:a10d240ce3a6eb6dfe"
+    },
+    {
+      "entryId": "ve-be947e9",
+      "senseId": "kaikki:fd35c794eb41c100c8"
+    },
+    {
+      "entryId": "ve-be947e9",
+      "senseId": "kaikki:0b0f2f862e364c8b87"
+    },
+    {
+      "entryId": "ve-be947e9",
+      "senseId": "kaikki:cdec6f1433260fb465"
+    }
+  ],
+  "restoreCorrections": [],
+  "removeDefaults": [
+    "ve-7c74dd18",
+    "ve-8901ba1",
+    "ve-a4686f2",
+    "ve-be947e9"
+  ],
+  "restoreDefaults": []
+}

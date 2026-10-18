@@ -22836,5 +22836,297 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "originalSense": {
+      "id": "kaikki:47d8d5d83904eedc0d",
+      "definition": "To perceive the truth or factuality of; to be certain of; to be certain that.",
+      "example": "Question things. I have the most fun when I'm writing questioning things that people do not question- the assumptions that everybody knows are true.",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:47d8d5d83904eedc0d",
+      "definition": "To be certain that something is true or factual.",
+      "example": "I know that the shop is closed today because I checked its opening hours.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "know that",
+        "know for certain",
+        "know a fact"
+      ],
+      "usage": "Transitive; know a fact or know that + clause.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Know presents something as known to be true. Think and suppose can express an opinion or an uncertain belief; the speaker’s claim alone is not independent verification."
+      ],
+      "distinctionTask": {
+        "prompt": "I know that the shop is closed. The speaker presents the closure as _____.",
+        "options": [
+          "something they know to be true",
+          "only a guess they have not accepted"
+        ],
+        "answer": "something they know to be true",
+        "explanation": "Know presents knowledge, whereas I think it is closed can leave more uncertainty."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "originalSense": {
+      "id": "kaikki:f1d68f76d67f2c403b",
+      "definition": "To know the meaning of; to parse or have parsed correctly; to comprehend.",
+      "example": "Can you repeat what you just said? I didn't understand.",
+      "pos": "verb",
+      "synonyms": [
+        "apprehend",
+        "comprehend",
+        "grasp",
+        "know",
+        "perceive",
+        "pick up what someone is putting down",
+        "realise",
+        "get",
+        "compass",
+        "conceive",
+        "discern",
+        "grok"
+      ],
+      "antonyms": [
+        "misunderstand"
+      ],
+      "collocations": [],
+      "usage": "usually",
+      "register": "intransitive, transitive, usually",
+      "wordFamily": [
+        "do you understand",
+        "give someone to understand",
+        "I don’t understand",
+        "overstand",
+        "reunderstand",
+        "underdig",
+        "understandability",
+        "understandable",
+        "understander",
+        "understanding",
+        "understand the assignment",
+        "understand trap",
+        "understood",
+        "you understood"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/understand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:f1d68f76d67f2c403b",
+      "definition": "To comprehend the meaning of words, statements, signs or other communication.",
+      "example": "I understand the instructions, so I can explain what they ask us to do.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "understand the instructions",
+        "understand a language",
+        "understand what someone means"
+      ],
+      "usage": "Transitive or intransitive; communication is the focus of this source record.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/understand#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Understanding a message concerns its meaning. Hearing its sounds or reading its words does not by itself establish comprehension or agreement."
+      ],
+      "distinctionTask": {
+        "prompt": "I understand the instructions. This means I _____.",
+        "options": [
+          "comprehend what they mean",
+          "necessarily agree with every instruction"
+        ],
+        "answer": "comprehend what they mean",
+        "explanation": "Comprehension is separate from agreement."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "originalSense": {
+      "id": "kaikki:dc888058c923dcc917",
+      "definition": "To understand.",
+      "example": "I have never been able to grasp the concept of infinity.",
+      "pos": "verb",
+      "synonyms": [
+        "comprehend",
+        "fathom"
+      ],
+      "antonyms": [
+        "let go",
+        "release"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "a drowning man will grasp at a straw",
+        "a drowning man will grasp at straws",
+        "begrasp",
+        "engrasp",
+        "foregrasp",
+        "graspability",
+        "graspable",
+        "grasp at a straw",
+        "grasp at straws",
+        "grasper",
+        "grasp for straws",
+        "grasp the nettle",
+        "ungrasp",
+        "misgrasp",
+        "regrasp"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/grasp#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:dc888058c923dcc917",
+      "definition": "To understand an idea, explanation or situation.",
+      "example": "After seeing the diagram, he grasped how the pump worked.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "grasp an idea",
+        "grasp how something works",
+        "grasp the significance of"
+      ],
+      "usage": "Verb; grasp an idea or grasp how/that + clause.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/grasp#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Grasp emphasises getting an intellectual hold of something. Knowing that a pump exists does not establish understanding of how it works."
+      ],
+      "distinctionTask": {
+        "prompt": "He grasped how the pump worked. This means he _____.",
+        "options": [
+          "understood its operation",
+          "held the pump in his hand by definition"
+        ],
+        "answer": "understood its operation",
+        "explanation": "The how clause identifies intellectual comprehension."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-be947e9",
+    "originalSense": {
+      "id": "kaikki:a10d240ce3a6eb6dfe",
+      "definition": "To be grateful or thankful for.",
+      "example": "I appreciate your efforts.",
+      "pos": "verb",
+      "synonyms": [
+        "esteem",
+        "acknowledge"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "appreciatable",
+        "appreciater",
+        "appreciator",
+        "apprecihate",
+        "disappreciate",
+        "misappreciate",
+        "much appreciated",
+        "reappreciate",
+        "underappreciate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/appreciate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:a10d240ce3a6eb6dfe",
+      "definition": "To feel grateful or thankful for something.",
+      "example": "I appreciate your help with the application.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "appreciate someone’s help",
+        "appreciate your time",
+        "would appreciate it if"
+      ],
+      "usage": "Transitive; appreciate + noun phrase or -ing form.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/appreciate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Appreciate your help takes the thing appreciated as its direct object. Say thank you for your help or I am grateful to you; appreciate is not normally followed directly by a person meaning thank that person."
+      ],
+      "distinctionTask": {
+        "prompt": "I appreciate your help with the application. I am expressing _____.",
+        "options": [
+          "gratitude for the help",
+          "a rise in the application’s price"
+        ],
+        "answer": "gratitude for the help",
+        "explanation": "The object your help identifies gratitude."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

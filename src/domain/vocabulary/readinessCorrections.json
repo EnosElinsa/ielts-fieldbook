@@ -214155,5 +214155,2241 @@
     "wordFamily": [],
     "register": "",
     "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:47d8d5d83904eedc0d",
+    "definition": "To be certain that something is true or factual.",
+    "example": "I know that the shop is closed today because I checked its opening hours.",
+    "collocations": [
+      "know that",
+      "know for certain",
+      "know a fact"
+    ],
+    "distinctions": [
+      "Know presents something as known to be true. Think and suppose can express an opinion or an uncertain belief; the speaker’s claim alone is not independent verification."
+    ],
+    "usage": "Transitive; know a fact or know that + clause.",
+    "originalSense": {
+      "id": "kaikki:47d8d5d83904eedc0d",
+      "definition": "To perceive the truth or factuality of; to be certain of; to be certain that.",
+      "example": "Question things. I have the most fun when I'm writing questioning things that people do not question- the assumptions that everybody knows are true.",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "distinctionTask": {
+      "prompt": "I know that the shop is closed. The speaker presents the closure as _____.",
+      "options": [
+        "something they know to be true",
+        "only a guess they have not accepted"
+      ],
+      "answer": "something they know to be true",
+      "explanation": "Know presents knowledge, whereas I think it is closed can leave more uncertainty."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:1f6b807874a431bb70",
+    "definition": "To be aware or become aware, without stating a direct object.",
+    "example": "The route has changed. I did not know until this morning.",
+    "collocations": [
+      "already know",
+      "did not know",
+      "as far as I know"
+    ],
+    "distinctions": [
+      "The information is supplied by the previous sentence. This intransitive use differs grammatically from I know the route, which states an object."
+    ],
+    "usage": "Intransitive; the surrounding context supplies what is known.",
+    "originalSense": {
+      "id": "kaikki:1f6b807874a431bb70",
+      "definition": "To be or become aware or cognizant.",
+      "example": "Did you know Michelle and Jack were getting divorced? ― Yes, I knew.",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "distinctionTask": {
+      "prompt": "The route has changed. I did not know. Here the information is _____.",
+      "options": [
+        "supplied by the preceding sentence",
+        "stated as a direct object after know"
+      ],
+      "answer": "supplied by the preceding sentence",
+      "explanation": "There is no direct object after know in this example."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:cbd53be849ff92fb30",
+    "definition": "To be aware of a fact or situation.",
+    "example": "I know the risks of travelling without insurance.",
+    "collocations": [
+      "know the risks",
+      "know the reason",
+      "know the details"
+    ],
+    "distinctions": [
+      "Being aware of risks does not mean approving of them or having personally experienced them. Know the risks states an object; I already know leaves the information implicit."
+    ],
+    "usage": "Transitive; know + noun phrase.",
+    "originalSense": {
+      "id": "kaikki:cbd53be849ff92fb30",
+      "definition": "To be aware of; to be cognizant of.",
+      "example": "Did you know Michelle and Jack were getting divorced? ― Yes, I knew.",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "distinctionTask": {
+      "prompt": "I know the risks of travelling without insurance. I am _____.",
+      "options": [
+        "aware of those risks",
+        "necessarily willing to accept those risks"
+      ],
+      "answer": "aware of those risks",
+      "explanation": "Awareness alone does not establish acceptance."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:5a2c02014ffd3fda10",
+    "definition": "An obsolete intransitive use meaning to be acquainted with another person.",
+    "example": "The preserved source records an obsolete intransitive acquaintance use. For present-day learning, use a direct object in I know her, or say I am acquainted with her.",
+    "collocations": [
+      "obsolete intransitive acquaintance use",
+      "be acquainted with someone",
+      "modern know + person"
+    ],
+    "distinctions": [
+      "The obsolete label concerns this intransitive record. It does not apply to the everyday transitive I know her."
+    ],
+    "usage": "Obsolete intransitive verb; reading guidance.",
+    "originalSense": {
+      "id": "kaikki:5a2c02014ffd3fda10",
+      "definition": "To be acquainted (with another person).",
+      "example": "You, and I haue knowne ſir.",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "intransitive, obsolete",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:32dcf1b6b43764766d",
+    "definition": "To be acquainted or familiar with a person, place or thing.",
+    "example": "I know our new neighbour; we met last year.",
+    "collocations": [
+      "know someone well",
+      "know a place",
+      "get to know someone"
+    ],
+    "distinctions": [
+      "Know a person describes familiarity. Meet describes an encounter; knowing someone does not mean knowing every fact about them."
+    ],
+    "usage": "Transitive; know + person, place or thing.",
+    "originalSense": {
+      "id": "kaikki:32dcf1b6b43764766d",
+      "definition": "To be acquainted or familiar with; to have encountered.",
+      "example": "I know your mother, but I've never met your father.",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "distinctionTask": {
+      "prompt": "I know our new neighbour; we met last year. Know expresses _____.",
+      "options": [
+        "familiarity with the neighbour",
+        "only a plan to meet them for the first time"
+      ],
+      "answer": "familiarity with the neighbour",
+      "explanation": "The sentence states an existing acquaintance."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:f9734960eebcbb54fc",
+    "definition": "To experience a condition, feeling or event.",
+    "example": "The town has known severe flooding in the past.",
+    "collocations": [
+      "know hardship",
+      "know success",
+      "have known better days"
+    ],
+    "distinctions": [
+      "The town has experienced flooding. This literary or formal use differs from residents merely knowing information about a flood."
+    ],
+    "usage": "Transitive; often with an experience or condition.",
+    "originalSense": {
+      "id": "kaikki:f9734960eebcbb54fc",
+      "definition": "To experience.",
+      "example": "Their relationship knew ups and downs.",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "distinctionTask": {
+      "prompt": "The town has known severe flooding. This says the town _____.",
+      "options": [
+        "has experienced severe floods",
+        "only holds information about floods elsewhere"
+      ],
+      "answer": "has experienced severe floods",
+      "explanation": "Know here describes experience."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:79d22c6ce8116b1856",
+    "definition": "To understand a subject or know how to do something through study or experience.",
+    "example": "She knows how to repair a puncture because she has practised.",
+    "collocations": [
+      "know how to",
+      "know a subject",
+      "know how something works"
+    ],
+    "distinctions": [
+      "Know how to concerns practical or explanatory knowledge. Know that a tyre is flat states a fact and does not by itself establish repair skill."
+    ],
+    "usage": "Know how to + verb; know how + clause; know a subject.",
+    "originalSense": {
+      "id": "kaikki:79d22c6ce8116b1856",
+      "definition": "To understand or have a grasp of through experience or study.",
+      "example": "Let me do it. I know how it works.",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "distinctionTask": {
+      "prompt": "She knows how to repair a puncture. This concerns _____.",
+      "options": [
+        "knowledge of how to carry out the repair",
+        "only awareness that a puncture exists"
+      ],
+      "answer": "knowledge of how to carry out the repair",
+      "explanation": "Know how to describes procedural knowledge."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:45582cfb36e48b20e0",
+    "definition": "To distinguish one thing from another or recognise its nature.",
+    "example": "She knows right from wrong.",
+    "collocations": [
+      "know one from another",
+      "know right from wrong",
+      "know the difference"
+    ],
+    "distinctions": [
+      "Know A from B concerns discrimination between things. Recognising that a familiar person has returned is a separate recognition use."
+    ],
+    "usage": "Transitive; especially know A from B.",
+    "originalSense": {
+      "id": "kaikki:45582cfb36e48b20e0",
+      "definition": "To be able to distinguish, to discern, particularly by contrast or comparison; to recognize the nature of.",
+      "example": "to know a person's face or figure",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "distinctionTask": {
+      "prompt": "She knows right from wrong. She can _____.",
+      "options": [
+        "distinguish right from wrong",
+        "recall a person’s name"
+      ],
+      "answer": "distinguish right from wrong",
+      "explanation": "The construction know A from B expresses discrimination."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:94925b1ef8e761dbe7",
+    "definition": "To recognise someone or something encountered before, despite an absence or change.",
+    "example": "Even after twenty years, I knew her at once by her voice.",
+    "collocations": [
+      "know someone at once",
+      "know someone by their voice",
+      "would hardly know the place"
+    ],
+    "distinctions": [
+      "The speaker recognises the same person again. Familiarity enables this recognition; the sentence does not say they first met at that moment."
+    ],
+    "usage": "Transitive; knew is the past tense of know.",
+    "originalSense": {
+      "id": "kaikki:94925b1ef8e761dbe7",
+      "definition": "To recognize as the same (as someone or something previously encountered) after an absence or change.",
+      "example": "At nearer view he thought he knew the dead, / And call'd the wretched man to mind.",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "distinctionTask": {
+      "prompt": "After twenty years, I knew her at once by her voice. I _____.",
+      "options": [
+        "recognised someone I had met before",
+        "met her for the first time"
+      ],
+      "answer": "recognised someone I had met before",
+      "explanation": "The voice prompts renewed recognition."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:87c57f85a8b256f12f",
+    "definition": "To possess knowledge or information, without specifying a direct object.",
+    "example": "Ask the receptionist; she will know.",
+    "collocations": [
+      "those who know",
+      "someone will know",
+      "only they know"
+    ],
+    "distinctions": [
+      "Will know here means will have the relevant information. It does not describe a future first meeting with a person."
+    ],
+    "usage": "Intransitive; context supplies the relevant information.",
+    "originalSense": {
+      "id": "kaikki:87c57f85a8b256f12f",
+      "definition": "To have knowledge; to have information, be informed.",
+      "example": "It is vital that he not know.",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "distinctionTask": {
+      "prompt": "Ask the receptionist; she will know. She is expected to _____.",
+      "options": [
+        "have the relevant information",
+        "introduce herself for the first time"
+      ],
+      "answer": "have the relevant information",
+      "explanation": "No direct object is stated; the question supplies the topic."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:4c4b4a9c12ddf201b4",
+    "definition": "To be able to play, sing or otherwise perform a piece of music.",
+    "example": "The pianist knows the opening song and can play it from memory.",
+    "collocations": [
+      "know a song",
+      "know a piece by heart",
+      "know the tune"
+    ],
+    "distinctions": [
+      "Here knows concerns ability to perform the piece. Know of a song can mean only having heard that it exists."
+    ],
+    "usage": "Transitive; know a song, tune or piece.",
+    "originalSense": {
+      "id": "kaikki:4c4b4a9c12ddf201b4",
+      "definition": "To be able to play or perform (a song or other piece of music).",
+      "example": "Do you know \"Blueberry Hill\"?",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "distinctionTask": {
+      "prompt": "The pianist knows the song and can play it from memory. Know here concerns _____.",
+      "options": [
+        "ability to perform the song",
+        "only awareness of its title"
+      ],
+      "answer": "ability to perform the song",
+      "explanation": "The explicit ability to play identifies the musical meaning."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:c7f5bad264c0e49398",
+    "definition": "Of a database or system, to have indexed information about something.",
+    "example": "The catalogue knows this title because the record is in its database.",
+    "collocations": [
+      "a system knows a record",
+      "known to the database",
+      "an indexed title"
+    ],
+    "distinctions": [
+      "This personifies a system’s stored or indexed information. It does not imply human awareness or that the record’s contents are correct."
+    ],
+    "usage": "Technical, transitive use; the subject can be a system.",
+    "originalSense": {
+      "id": "kaikki:c7f5bad264c0e49398",
+      "definition": "To have indexed and have information about within one's database.",
+      "example": "Mmm... Seems you searched for a name that we don't know, we'll send our trained monkeys to check what's in stock.",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "distinctionTask": {
+      "prompt": "The catalogue knows this title because it has an indexed record. This establishes _____.",
+      "options": [
+        "stored information about the title",
+        "human-like awareness in the catalogue"
+      ],
+      "answer": "stored information about the title",
+      "explanation": "Know is a technical personification of indexed information."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:d6d45292cd42584eda",
+    "definition": "In philosophy, to have knowledge according to the account of knowledge being discussed.",
+    "example": "A philosophical discussion may ask whether a person who holds a justified true belief knows it. Gettier-style objections show why justified true belief is not universally accepted as sufficient for knowledge.",
+    "collocations": [
+      "a theory of knowledge",
+      "justified true belief",
+      "know a proposition"
+    ],
+    "distinctions": [
+      "Justified true belief is one traditional account of knowledge. Gettier-style objections challenge its sufficiency, so it should not be presented as an uncontested definition."
+    ],
+    "usage": "Philosophical sense; the relevant criteria depend on the account under discussion.",
+    "originalSense": {
+      "id": "kaikki:d6d45292cd42584eda",
+      "definition": "To maintain (a belief, a position) subject to a given philosophical definition of knowledge; to hold a justified true belief.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "go to bed with",
+        "sleep with"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:0e83757e29480c2dc5",
+    "definition": "A rare noun meaning knowledge or the state of knowing.",
+    "example": "In the source’s Hamlet quotation, know is a noun for knowledge or awareness of the contents. In ordinary present-day prose, knowledge is the usual independent noun.",
+    "collocations": [
+      "the rare noun know",
+      "knowledge of the contents",
+      "the state of knowing"
+    ],
+    "distinctions": [
+      "This rare independent noun differs from the familiar fixed phrase in the know. Its literary attestation does not make ordinary verb know obsolete."
+    ],
+    "usage": "Rare noun; reading guidance for the preserved literary source.",
+    "originalSense": {
+      "id": "kaikki:0e83757e29480c2dc5",
+      "definition": "Knowledge; the state of knowing.",
+      "example": "That on the view and know of theſe Contents, […] He ſhould the bearers put to […] death, […]",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "rare",
+      "register": "rare, uncountable",
+      "wordFamily": [
+        "in the know"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:fd458e594276fc4644",
+    "definition": "Knowledge of a matter, now used in the fixed phrase in the know.",
+    "example": "Staff in the know told us that the opening date had changed.",
+    "collocations": [
+      "in the know",
+      "keep someone in the know",
+      "those in the know"
+    ],
+    "distinctions": [
+      "In the know means informed about a matter, often information unavailable to others. It does not mean physically located inside a place."
+    ],
+    "usage": "Noun within the fixed phrase in the know.",
+    "originalSense": {
+      "id": "kaikki:fd458e594276fc4644",
+      "definition": "Knowledge; the state of knowing. (Now confined to the fixed phrase in the know.)",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "in the know"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "distinctionTask": {
+      "prompt": "Staff in the know told us the new opening date. They were _____.",
+      "options": [
+        "informed about the matter",
+        "inside the building by definition"
+      ],
+      "answer": "informed about the matter",
+      "explanation": "The fixed phrase describes access to information."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:cfcbf75b8aeedb4707",
+    "definition": "An alternative noun form of knowe, meaning a hill or knoll.",
+    "example": "The preserved quotation names Fox’s Know while discussing a place where birds nest. Here Know belongs to the hill or knoll noun, independently of the verb meaning have knowledge.",
+    "collocations": [
+      "know as a form of knowe",
+      "a hill or knoll",
+      "Fox’s Know in the source"
+    ],
+    "distinctions": [
+      "This is an alternative noun form of knowe, not an accidental spelling error. In the know means informed and is unrelated to a hill."
+    ],
+    "usage": "Alternative form of knowe; a separate noun etymology.",
+    "originalSense": {
+      "id": "kaikki:cfcbf75b8aeedb4707",
+      "definition": "Alternative form of knowe (“hill, knoll”).",
+      "example": "Owing to increasing numbers and consequent want of room for nestage, the old birds drove away the younger ones, who took refuge in their present abode at Fox's Know, where they have been located about six years.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "alt-of, alternative",
+      "register": "alt-of, alternative",
+      "wordFamily": [
+        "in the know"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:ac63d6c65dc800d2dd",
+    "definition": "In Singlish, a sentence-final particle drawing attention to information the listener should keep in mind.",
+    "example": "The source gives Make sure you water the plants, know… . The final know draws the listener’s attention; it is not a request to define the word plants.",
+    "collocations": [
+      "sentence-final know in Singlish",
+      "draw attention to information",
+      "keep something in mind"
+    ],
+    "distinctions": [
+      "This is a regional discourse particle, not the ordinary verb with a missing object. The source says not to combine it with other sentence-final discourse particles."
+    ],
+    "usage": "Singlish particle; regional conversational usage, with source-specific reading guidance.",
+    "originalSense": {
+      "id": "kaikki:ac63d6c65dc800d2dd",
+      "definition": "Used at the end of a sentence to draw attention to information one thinks the listener should keep in mind.",
+      "example": "Make sure you water the plants, know…",
+      "pos": "particle",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Singlish",
+      "register": "Singlish",
+      "wordFamily": [
+        "in the know"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/know#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "exampleKind": "reading-note",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "wiktionary:restored:0a2a17fa41a5aeb8ac",
+    "dictionaryParentSenseId": "kaikki:32dcf1b6b43764766d",
+    "definition": "An archaic, Biblical or euphemistic use meaning to have sexual relations with someone.",
+    "example": "In older Biblical language, know someone can mean have sexual relations with them. Modern explanations often specify know in the biblical sense to make this euphemistic meaning clear.",
+    "collocations": [
+      "know in the biblical sense",
+      "know biblically",
+      "Biblical euphemistic know"
+    ],
+    "distinctions": [
+      "This labelled historical meaning is distinct from ordinary acquaintance. Knowing a neighbour in the everyday sense implies no sexual relationship."
+    ],
+    "usage": "Archaic, Biblical and euphemistic; reading guidance.",
+    "originalSense": {
+      "id": "wiktionary:restored:0a2a17fa41a5aeb8ac",
+      "pos": "verb",
+      "definition": "To have sexual relations with. This meaning normally specified in modern English as e.g. to 'know someone in the biblical sense' or to 'know biblically'.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "wiktionary:restored:add306d1c96ee0bc61",
+    "dictionarySourceAnchorSenseId": "kaikki:47d8d5d83904eedc0d",
+    "definition": "In Singlish, a discourse marker equivalent to you know, used to emphasise something.",
+    "example": "In Singlish conversation, this know works like you know as a discourse marker. It can add emphasis or help manage a turn, rather than assert that the listener knows a particular fact.",
+    "collocations": [
+      "discourse-marker know in Singlish",
+      "you know as a discourse marker",
+      "conversational emphasis"
+    ],
+    "distinctions": [
+      "This regional conversational use adds emphasis or helps manage a turn. Ordinary know that instead introduces information presented as known."
+    ],
+    "usage": "Singlish particle; source-specific reading guidance.",
+    "originalSense": {
+      "id": "wiktionary:restored:add306d1c96ee0bc61",
+      "pos": "particle",
+      "definition": "Synonym of you know (used as a conversational discourse marker, to emphasize something).",
+      "example": "",
+      "source": "English Wiktionary, restored top-level meaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=know&oldid=92796496",
+    "exampleKind": "reading-note",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:f1d68f76d67f2c403b",
+    "definition": "To comprehend the meaning of words, statements, signs or other communication.",
+    "example": "I understand the instructions, so I can explain what they ask us to do.",
+    "collocations": [
+      "understand the instructions",
+      "understand a language",
+      "understand what someone means"
+    ],
+    "distinctions": [
+      "Understanding a message concerns its meaning. Hearing its sounds or reading its words does not by itself establish comprehension or agreement."
+    ],
+    "usage": "Transitive or intransitive; communication is the focus of this source record.",
+    "originalSense": {
+      "id": "kaikki:f1d68f76d67f2c403b",
+      "definition": "To know the meaning of; to parse or have parsed correctly; to comprehend.",
+      "example": "Can you repeat what you just said? I didn't understand.",
+      "pos": "verb",
+      "synonyms": [
+        "apprehend",
+        "comprehend",
+        "grasp",
+        "know",
+        "perceive",
+        "pick up what someone is putting down",
+        "realise",
+        "get",
+        "compass",
+        "conceive",
+        "discern",
+        "grok"
+      ],
+      "antonyms": [
+        "misunderstand"
+      ],
+      "collocations": [],
+      "usage": "usually",
+      "register": "intransitive, transitive, usually",
+      "wordFamily": [
+        "do you understand",
+        "give someone to understand",
+        "I don’t understand",
+        "overstand",
+        "reunderstand",
+        "underdig",
+        "understandability",
+        "understandable",
+        "understander",
+        "understanding",
+        "understand the assignment",
+        "understand trap",
+        "understood",
+        "you understood"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/understand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=understand&oldid=93543892",
+    "distinctionTask": {
+      "prompt": "I understand the instructions. This means I _____.",
+      "options": [
+        "comprehend what they mean",
+        "necessarily agree with every instruction"
+      ],
+      "answer": "comprehend what they mean",
+      "explanation": "Comprehension is separate from agreement."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:0ee548a956de9a741e",
+    "definition": "To be familiar enough with a skill, task or profession to carry it out properly.",
+    "example": "She understands her job and can organise the work without help.",
+    "collocations": [
+      "understand one’s job",
+      "understand the task",
+      "understand the business"
+    ],
+    "distinctions": [
+      "This concerns practical familiarity with a task. Knowing a job title alone does not establish competence to do the work."
+    ],
+    "usage": "Transitive; the object is a skill, task or profession.",
+    "originalSense": {
+      "id": "kaikki:0ee548a956de9a741e",
+      "definition": "To be thoroughly familiar with; to be able to undertake properly.",
+      "example": "The students understood the assignment.",
+      "pos": "verb",
+      "synonyms": [
+        "apprehend",
+        "comprehend",
+        "grasp",
+        "know",
+        "perceive",
+        "pick up what someone is putting down",
+        "realise",
+        "get",
+        "compass",
+        "conceive",
+        "discern",
+        "grok"
+      ],
+      "antonyms": [
+        "misunderstand"
+      ],
+      "collocations": [],
+      "usage": "usually",
+      "register": "transitive, usually",
+      "wordFamily": [
+        "do you understand",
+        "give someone to understand",
+        "I don’t understand",
+        "overstand",
+        "reunderstand",
+        "underdig",
+        "understandability",
+        "understandable",
+        "understander",
+        "understanding",
+        "understand the assignment",
+        "understand trap",
+        "understood",
+        "you understood"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/understand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=understand&oldid=93543892",
+    "distinctionTask": {
+      "prompt": "She understands her job and can organise the work. This concerns _____.",
+      "options": [
+        "practical familiarity with the work",
+        "only recognition of her job title"
+      ],
+      "answer": "practical familiarity with the work",
+      "explanation": "The stated ability identifies familiarity with the task."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:b216a77a1d76b0cccb",
+    "definition": "To comprehend a fact or principle, or come to regard a belief as one.",
+    "example": "The pupils understand that water expands when it freezes.",
+    "collocations": [
+      "understand that",
+      "understand a principle",
+      "come to understand"
+    ],
+    "distinctions": [
+      "The clause states what is comprehended. The source also includes coming to regard a belief as fact; the verb alone cannot independently verify every proposition introduced by that."
+    ],
+    "usage": "Transitive; often understand that + clause.",
+    "originalSense": {
+      "id": "kaikki:b216a77a1d76b0cccb",
+      "definition": "To comprehend a fact or principle; to regard or come to regard a belief as such.",
+      "example": "I understand that company policy says I can't get a refund, but can you make an exception?",
+      "pos": "verb",
+      "synonyms": [
+        "apprehend",
+        "comprehend",
+        "grasp",
+        "know",
+        "perceive",
+        "pick up what someone is putting down",
+        "realise",
+        "get",
+        "compass",
+        "conceive",
+        "discern",
+        "grok"
+      ],
+      "antonyms": [
+        "misunderstand"
+      ],
+      "collocations": [],
+      "usage": "usually",
+      "register": "transitive, usually",
+      "wordFamily": [
+        "do you understand",
+        "give someone to understand",
+        "I don’t understand",
+        "overstand",
+        "reunderstand",
+        "underdig",
+        "understandability",
+        "understandable",
+        "understander",
+        "understanding",
+        "understand the assignment",
+        "understand trap",
+        "understood",
+        "you understood"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/understand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=understand&oldid=93543892",
+    "distinctionTask": {
+      "prompt": "The pupils understand that water expands when it freezes. The clause states _____.",
+      "options": [
+        "the principle they comprehend",
+        "the words omitted from an imperative"
+      ],
+      "answer": "the principle they comprehend",
+      "explanation": "This is conceptual comprehension, not grammatical ellipsis."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:053c6102e67c07ff0f",
+    "definition": "To comprehend a person’s motives or character, or the reasons for an event.",
+    "example": "I understand why she left early: she had to collect her child.",
+    "collocations": [
+      "understand someone’s motives",
+      "understand why",
+      "understand the reasons for"
+    ],
+    "distinctions": [
+      "Understanding why someone acted does not necessarily mean approving of the action. With events, the focus is their causes or reasons."
+    ],
+    "usage": "Transitive; people, motives and reasons for events.",
+    "originalSense": {
+      "id": "kaikki:053c6102e67c07ff0f",
+      "definition": "To know the intent, motives or character of; (of events) to know the causes of or reasons for.",
+      "example": "One day you say you love me, the next you ignore me—I don't understand you!",
+      "pos": "verb",
+      "synonyms": [
+        "apprehend",
+        "comprehend",
+        "grasp",
+        "know",
+        "perceive",
+        "pick up what someone is putting down",
+        "realise",
+        "get",
+        "compass",
+        "conceive",
+        "discern",
+        "grok"
+      ],
+      "antonyms": [
+        "misunderstand"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "do you understand",
+        "give someone to understand",
+        "I don’t understand",
+        "overstand",
+        "reunderstand",
+        "underdig",
+        "understandability",
+        "understandable",
+        "understander",
+        "understanding",
+        "understand the assignment",
+        "understand trap",
+        "understood",
+        "you understood"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/understand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=understand&oldid=93543892",
+    "distinctionTask": {
+      "prompt": "I understand why she left early. This does not necessarily mean I _____.",
+      "options": [
+        "approve of her decision",
+        "comprehend her reason"
+      ],
+      "answer": "approve of her decision",
+      "explanation": "Comprehension of a motive and approval are separate judgements."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:c910eb8252fa0a5668",
+    "definition": "To believe or infer something on the basis of information that may be incomplete.",
+    "example": "I understand that the meeting has moved to Friday, but I have not checked.",
+    "collocations": [
+      "I understand that",
+      "be given to understand",
+      "as I understand it"
+    ],
+    "distinctions": [
+      "I understand that can report an inference or received information. Here the speaker explicitly has not checked; this is not independent confirmation of Friday."
+    ],
+    "usage": "Transitive; often a cautious report of one’s present understanding.",
+    "originalSense": {
+      "id": "kaikki:c910eb8252fa0a5668",
+      "definition": "To believe or infer, to think one grasps sufficiently despite potentially incomplete knowledge.",
+      "example": "I've been given to understand that you have a package for me?",
+      "pos": "verb",
+      "synonyms": [
+        "believe"
+      ],
+      "antonyms": [
+        "misunderstand"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "do you understand",
+        "give someone to understand",
+        "I don’t understand",
+        "overstand",
+        "reunderstand",
+        "underdig",
+        "understandability",
+        "understandable",
+        "understander",
+        "understanding",
+        "understand the assignment",
+        "understand trap",
+        "understood",
+        "you understood"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/understand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=understand&oldid=93543892",
+    "distinctionTask": {
+      "prompt": "I understand the meeting is on Friday, but I have not checked. Friday is _____.",
+      "options": [
+        "the speaker’s unverified understanding",
+        "independently confirmed by this sentence"
+      ],
+      "answer": "the speaker’s unverified understanding",
+      "explanation": "The explicit qualification leaves the information unverified."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:fd647855262f79226f",
+    "definition": "In grammar, to interpret an unexpressed word or element as implicit.",
+    "example": "In the command Sit down, you is understood as the subject.",
+    "collocations": [
+      "an understood subject",
+      "understand an omitted word",
+      "be understood from context"
+    ],
+    "distinctions": [
+      "An understood subject is implicit in the grammatical interpretation. It is not printed in the command, and this technical use does not mean that a listener agrees to obey."
+    ],
+    "usage": "Grammatical sense; often passive, as in the subject is understood.",
+    "originalSense": {
+      "id": "kaikki:fd647855262f79226f",
+      "definition": "To regard as present when not.",
+      "example": "In the imperative mood, the word “you” is usually understood.",
+      "pos": "verb",
+      "synonyms": [
+        "apprehend",
+        "comprehend",
+        "grasp",
+        "know",
+        "perceive",
+        "pick up what someone is putting down",
+        "realise",
+        "get",
+        "compass",
+        "conceive",
+        "discern",
+        "grok"
+      ],
+      "antonyms": [
+        "misunderstand"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "do you understand",
+        "give someone to understand",
+        "I don’t understand",
+        "overstand",
+        "reunderstand",
+        "underdig",
+        "understandability",
+        "understandable",
+        "understander",
+        "understanding",
+        "understand the assignment",
+        "understand trap",
+        "understood",
+        "you understood"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/understand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=understand&oldid=93543892",
+    "distinctionTask": {
+      "prompt": "In Sit down, the subject you is understood. It is _____.",
+      "options": [
+        "implicit although not written",
+        "a visible word in the command"
+      ],
+      "answer": "implicit although not written",
+      "explanation": "The command has no written you, but the subject is interpreted."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:841483d44975b4e341",
+    "definition": "A rare literal use meaning to stand underneath and support, especially in acrobatics.",
+    "example": "The checked source labels literal understand humorous and rare, and obsolete except in circus acrobatics. It describes standing beneath and supporting another performer, rather than comprehending an idea.",
+    "collocations": [
+      "literal understand in acrobatics",
+      "stand underneath",
+      "support another performer"
+    ],
+    "distinctions": [
+      "The circus exception belongs to this rare literal record. It does not make the everyday comprehension verb obsolete."
+    ],
+    "usage": "Humorous and rare; obsolete except in circus acrobatics, according to the checked source.",
+    "originalSense": {
+      "id": "kaikki:841483d44975b4e341",
+      "definition": "To stand underneath, to support.",
+      "example": "LAUNE: Ay, and what I do too: look thee, I'll but lean, and my staff understands me.\nSPEED: It stands under thee, indeed.\nLAUNCE:Why, stand-under and under-stand is all one.",
+      "pos": "verb",
+      "synonyms": [
+        "apprehend",
+        "comprehend",
+        "grasp",
+        "know",
+        "perceive",
+        "pick up what someone is putting down",
+        "realise",
+        "get",
+        "compass",
+        "conceive",
+        "discern",
+        "grok"
+      ],
+      "antonyms": [
+        "misunderstand"
+      ],
+      "collocations": [],
+      "usage": "humorous, rare",
+      "register": "humorous, rare",
+      "wordFamily": [
+        "do you understand",
+        "give someone to understand",
+        "I don’t understand",
+        "overstand",
+        "reunderstand",
+        "underdig",
+        "understandability",
+        "understandable",
+        "understander",
+        "understanding",
+        "understand the assignment",
+        "understand trap",
+        "understood",
+        "you understood"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/understand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=understand&oldid=93543892",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:b0c7f34518d380cef4",
+    "definition": "In Singapore and Malaysia, an interjection acknowledging what another speaker has said.",
+    "example": "The checked source records understand as a backchannel, comparable to uh-huh or I see. In this use a listener acknowledges a turn in conversation; it is not automatically a command to someone else.",
+    "collocations": [
+      "understand as a backchannel",
+      "acknowledge another speaker",
+      "uh-huh or I see"
+    ],
+    "distinctions": [
+      "This regional interjection is distinct from the imperative Understand! and the question Do you understand? Acknowledgement also need not imply agreement."
+    ],
+    "usage": "Singapore and Malaysia; conversational backchannel.",
+    "originalSense": {
+      "id": "kaikki:b0c7f34518d380cef4",
+      "definition": "Uh-huh, I see; a way to acknowledge something said by the other speaker.",
+      "example": "",
+      "pos": "intj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Malaysia, Singapore",
+      "register": "Malaysia, Singapore",
+      "wordFamily": [
+        "do you understand",
+        "give someone to understand",
+        "I don’t understand",
+        "overstand",
+        "reunderstand",
+        "underdig",
+        "understandability",
+        "understandable",
+        "understander",
+        "understanding",
+        "understand the assignment",
+        "understand trap",
+        "understood",
+        "you understood"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/understand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=understand&oldid=93543892",
+    "exampleKind": "reading-note",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "wiktionary:restored:530eeb2e2966218a19",
+    "dictionaryParentSenseId": "kaikki:f1d68f76d67f2c403b",
+    "definition": "To know the meaning of something.",
+    "example": "Do you understand the meaning of this symbol?",
+    "collocations": [
+      "understand the meaning of",
+      "understand a symbol",
+      "understand a term"
+    ],
+    "distinctions": [
+      "Understanding a symbol means interpreting what it signifies. Recognising its shape or colour alone does not show that its meaning is understood."
+    ],
+    "usage": "Transitive; understand the meaning of + noun phrase.",
+    "originalSense": {
+      "id": "wiktionary:restored:530eeb2e2966218a19",
+      "pos": "verb",
+      "definition": "To know the meaning of.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=understand&oldid=93543892",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=understand&oldid=93543892",
+    "distinctionTask": {
+      "prompt": "To understand the meaning of a symbol is to know _____.",
+      "options": [
+        "what the symbol signifies",
+        "only the colour of the page"
+      ],
+      "answer": "what the symbol signifies",
+      "explanation": "Meaning concerns what the symbol signifies."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:54796c73810b99d413",
+    "definition": "To take or keep hold of something, especially with the hand.",
+    "example": "She grasped the handrail firmly as the boat moved.",
+    "collocations": [
+      "grasp a handrail",
+      "grasp someone’s hand",
+      "grasp something firmly"
+    ],
+    "distinctions": [
+      "This is physical holding. Grasp an explanation instead concerns understanding, and grasp at something can describe an attempt without a secure hold."
+    ],
+    "usage": "Verb; grasp + object.",
+    "originalSense": {
+      "id": "kaikki:54796c73810b99d413",
+      "definition": "To grip; to take hold, particularly with the hand.",
+      "example": "How few! yet how they creep / Through my fingers to the deep, / While I weep—while I weep! / O God! can I not grasp / Them with a tighter clasp?",
+      "pos": "verb",
+      "synonyms": [
+        "clasp"
+      ],
+      "antonyms": [
+        "let go",
+        "release"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "a drowning man will grasp at a straw",
+        "a drowning man will grasp at straws",
+        "begrasp",
+        "engrasp",
+        "foregrasp",
+        "graspability",
+        "graspable",
+        "grasp at a straw",
+        "grasp at straws",
+        "grasper",
+        "grasp for straws",
+        "grasp the nettle",
+        "ungrasp",
+        "misgrasp",
+        "regrasp"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/grasp#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=grasp&oldid=92927052",
+    "distinctionTask": {
+      "prompt": "She grasped the handrail firmly. She _____.",
+      "options": [
+        "held it with her hand",
+        "understood an argument about it"
+      ],
+      "answer": "held it with her hand",
+      "explanation": "The handrail and physical action identify the literal meaning."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:dc888058c923dcc917",
+    "definition": "To understand an idea, explanation or situation.",
+    "example": "After seeing the diagram, he grasped how the pump worked.",
+    "collocations": [
+      "grasp an idea",
+      "grasp how something works",
+      "grasp the significance of"
+    ],
+    "distinctions": [
+      "Grasp emphasises getting an intellectual hold of something. Knowing that a pump exists does not establish understanding of how it works."
+    ],
+    "usage": "Verb; grasp an idea or grasp how/that + clause.",
+    "originalSense": {
+      "id": "kaikki:dc888058c923dcc917",
+      "definition": "To understand.",
+      "example": "I have never been able to grasp the concept of infinity.",
+      "pos": "verb",
+      "synonyms": [
+        "comprehend",
+        "fathom"
+      ],
+      "antonyms": [
+        "let go",
+        "release"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "a drowning man will grasp at a straw",
+        "a drowning man will grasp at straws",
+        "begrasp",
+        "engrasp",
+        "foregrasp",
+        "graspability",
+        "graspable",
+        "grasp at a straw",
+        "grasp at straws",
+        "grasper",
+        "grasp for straws",
+        "grasp the nettle",
+        "ungrasp",
+        "misgrasp",
+        "regrasp"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/grasp#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=grasp&oldid=92927052",
+    "distinctionTask": {
+      "prompt": "He grasped how the pump worked. This means he _____.",
+      "options": [
+        "understood its operation",
+        "held the pump in his hand by definition"
+      ],
+      "answer": "understood its operation",
+      "explanation": "The how clause identifies intellectual comprehension."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:15b21071a9355562fc",
+    "definition": "To seize or take advantage of an opportunity.",
+    "example": "She grasped the opportunity to study abroad and applied that evening.",
+    "collocations": [
+      "grasp an opportunity",
+      "grasp a chance",
+      "grasp the opportunity to"
+    ],
+    "distinctions": [
+      "The opportunity is acted on, not physically held. Taking the chance does not by itself guarantee admission or a successful outcome."
+    ],
+    "usage": "Verb; figurative grasp + opportunity or chance.",
+    "originalSense": {
+      "id": "kaikki:15b21071a9355562fc",
+      "definition": "To take advantage of something, to seize, to jump at a chance.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "jump at the chance",
+        "jump on"
+      ],
+      "antonyms": [
+        "let go",
+        "release"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "a drowning man will grasp at a straw",
+        "a drowning man will grasp at straws",
+        "begrasp",
+        "engrasp",
+        "foregrasp",
+        "graspability",
+        "graspable",
+        "grasp at a straw",
+        "grasp at straws",
+        "grasper",
+        "grasp for straws",
+        "grasp the nettle",
+        "ungrasp",
+        "misgrasp",
+        "regrasp"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/grasp#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=grasp&oldid=92927052",
+    "distinctionTask": {
+      "prompt": "She grasped the opportunity and applied. The sentence establishes _____.",
+      "options": [
+        "that she acted on the opportunity",
+        "that she was admitted to the course"
+      ],
+      "answer": "that she acted on the opportunity",
+      "explanation": "Seizing an opportunity and obtaining a successful result are separate."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:505803355ea06468be",
+    "definition": "A firm hold or grip, sometimes used figuratively for control.",
+    "example": "The rope slipped from his grasp.",
+    "collocations": [
+      "a firm grasp",
+      "slip from someone’s grasp",
+      "escape someone’s grasp"
+    ],
+    "distinctions": [
+      "This noun names the hold itself. A grasp of the method instead concerns understanding; grasp can also figuratively describe control."
+    ],
+    "usage": "Noun; literal grip or figurative control.",
+    "originalSense": {
+      "id": "kaikki:505803355ea06468be",
+      "definition": "Grip.",
+      "example": "A vagrant gust of wind snatched the note from my grasp.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "figuratively, sometimes",
+      "register": "figuratively, sometimes",
+      "wordFamily": [
+        "a drowning man will grasp at a straw",
+        "a drowning man will grasp at straws",
+        "begrasp",
+        "engrasp",
+        "foregrasp",
+        "graspability",
+        "graspable",
+        "grasp at a straw",
+        "grasp at straws",
+        "grasper",
+        "grasp for straws",
+        "grasp the nettle",
+        "ungrasp",
+        "misgrasp",
+        "regrasp",
+        "beyond someone's grasp",
+        "graspful",
+        "graspless",
+        "handgrasp",
+        "light grasp",
+        "tripod grasp"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/grasp#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=grasp&oldid=92927052",
+    "distinctionTask": {
+      "prompt": "The rope slipped from his grasp. Grasp names _____.",
+      "options": [
+        "his hold on the rope",
+        "his explanation of a method"
+      ],
+      "answer": "his hold on the rope",
+      "explanation": "The object slipping identifies a physical grip."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:35f0f97dea1f9bdfe4",
+    "definition": "An understanding of a subject or situation.",
+    "example": "She has a good grasp of basic statistics and can explain the results.",
+    "collocations": [
+      "a good grasp of",
+      "a firm grasp of a subject",
+      "a limited grasp of"
+    ],
+    "distinctions": [
+      "A grasp of statistics is knowledge or understanding, not a physical grip. Good modifies grasp; a grasp on can also occur, but of is the construction in this example."
+    ],
+    "usage": "Noun; a grasp of + subject.",
+    "originalSense": {
+      "id": "kaikki:35f0f97dea1f9bdfe4",
+      "definition": "Understanding.",
+      "example": "There is for the mind but one grasp of happiness: from that uppermost pinnacle of wisdom, whence we see that this world is well designed.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "a drowning man will grasp at a straw",
+        "a drowning man will grasp at straws",
+        "begrasp",
+        "engrasp",
+        "foregrasp",
+        "graspability",
+        "graspable",
+        "grasp at a straw",
+        "grasp at straws",
+        "grasper",
+        "grasp for straws",
+        "grasp the nettle",
+        "ungrasp",
+        "misgrasp",
+        "regrasp",
+        "beyond someone's grasp",
+        "graspful",
+        "graspless",
+        "handgrasp",
+        "light grasp",
+        "tripod grasp"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/grasp#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=grasp&oldid=92927052",
+    "distinctionTask": {
+      "prompt": "She has a good grasp of basic statistics. This concerns _____.",
+      "options": [
+        "her understanding of statistics",
+        "the strength of her fingers"
+      ],
+      "answer": "her understanding of statistics",
+      "explanation": "The subject after of identifies intellectual understanding."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:699ac901f9b30e5400",
+    "definition": "The range of what someone can reach, obtain or achieve.",
+    "example": "The top shelf is beyond the child’s grasp.",
+    "collocations": [
+      "within someone’s grasp",
+      "beyond someone’s grasp",
+      "just outside one’s grasp"
+    ],
+    "distinctions": [
+      "Beyond the child’s grasp means beyond reach here. The same range expression can refer figuratively to attainability; it does not always mean failure to understand."
+    ],
+    "usage": "Noun; often within or beyond someone’s grasp.",
+    "originalSense": {
+      "id": "kaikki:699ac901f9b30e5400",
+      "definition": "That which is accessible; that which is within one's reach or ability.",
+      "example": "The goal is within my grasp.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "a drowning man will grasp at a straw",
+        "a drowning man will grasp at straws",
+        "begrasp",
+        "engrasp",
+        "foregrasp",
+        "graspability",
+        "graspable",
+        "grasp at a straw",
+        "grasp at straws",
+        "grasper",
+        "grasp for straws",
+        "grasp the nettle",
+        "ungrasp",
+        "misgrasp",
+        "regrasp",
+        "beyond someone's grasp",
+        "graspful",
+        "graspless",
+        "handgrasp",
+        "light grasp",
+        "tripod grasp"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/grasp#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=grasp&oldid=92927052",
+    "distinctionTask": {
+      "prompt": "The top shelf is beyond the child’s grasp. Here the shelf is _____.",
+      "options": [
+        "out of the child’s reach",
+        "too difficult for the child to understand"
+      ],
+      "answer": "out of the child’s reach",
+      "explanation": "The physical shelf identifies reach rather than comprehension."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:5f304f39f6181a210b",
+    "definition": "GRASP: General Responsibility Assignment Software Patterns or Principles, used in object-oriented design.",
+    "example": "In software design, GRASP names principles for assigning responsibilities to objects. Information Expert and Low Coupling are examples; the uppercase acronym is distinct from the ordinary verb grasp.",
+    "collocations": [
+      "GRASP principles",
+      "responsibility assignment",
+      "object-oriented design"
+    ],
+    "distinctions": [
+      "This is the software acronym from the capitalised GRASP source page. It is independent of the separate anti-spam team acronym."
+    ],
+    "usage": "Capitalised software acronym; source page GRASP.",
+    "originalSense": {
+      "id": "kaikki:5f304f39f6181a210b",
+      "definition": "Acronym of General Responsibility Assignment Software Patterns (or Principles).",
+      "example": "",
+      "pos": "name",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "abbreviation, acronym, alt-of",
+      "register": "abbreviation, acronym, alt-of",
+      "wordFamily": [
+        "a drowning man will grasp at a straw",
+        "a drowning man will grasp at straws",
+        "begrasp",
+        "engrasp",
+        "foregrasp",
+        "graspability",
+        "graspable",
+        "grasp at a straw",
+        "grasp at straws",
+        "grasper",
+        "grasp for straws",
+        "grasp the nettle",
+        "ungrasp",
+        "misgrasp",
+        "regrasp",
+        "beyond someone's grasp",
+        "graspful",
+        "graspless",
+        "handgrasp",
+        "light grasp",
+        "tripod grasp"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/GRASP#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=GRASP&oldid=89098537",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:574a186c933eae7df0",
+    "definition": "GRASP: Gamepedia Rapid Anti-Spam Patrol, the name of an anti-spam team.",
+    "example": "The checked capitalised source records Gamepedia Rapid Anti-Spam Patrol as a team name abbreviated GRASP. The record identifies that name; it does not establish the team’s current status or activity.",
+    "collocations": [
+      "GRASP as a team name",
+      "Gamepedia Rapid Anti-Spam Patrol",
+      "anti-spam patrol"
+    ],
+    "distinctions": [
+      "The team acronym and the software-design acronym share spelling but have different referents. Neither should replace the ordinary comprehension meaning."
+    ],
+    "usage": "Capitalised proper name; source page GRASP.",
+    "originalSense": {
+      "id": "kaikki:574a186c933eae7df0",
+      "definition": "Acronym of Gamepedia Rapid Anti-Spam Patrol.",
+      "example": "",
+      "pos": "name",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "abbreviation, acronym, alt-of",
+      "register": "abbreviation, acronym, alt-of",
+      "wordFamily": [
+        "a drowning man will grasp at a straw",
+        "a drowning man will grasp at straws",
+        "begrasp",
+        "engrasp",
+        "foregrasp",
+        "graspability",
+        "graspable",
+        "grasp at a straw",
+        "grasp at straws",
+        "grasper",
+        "grasp for straws",
+        "grasp the nettle",
+        "ungrasp",
+        "misgrasp",
+        "regrasp",
+        "beyond someone's grasp",
+        "graspful",
+        "graspless",
+        "handgrasp",
+        "light grasp",
+        "tripod grasp"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/GRASP#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=GRASP&oldid=89098537",
+    "exampleKind": "reading-note",
+    "learningPriority": "proper-name",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-be947e9",
+    "senseId": "kaikki:a10d240ce3a6eb6dfe",
+    "definition": "To feel grateful or thankful for something.",
+    "example": "I appreciate your help with the application.",
+    "collocations": [
+      "appreciate someone’s help",
+      "appreciate your time",
+      "would appreciate it if"
+    ],
+    "distinctions": [
+      "Appreciate your help takes the thing appreciated as its direct object. Say thank you for your help or I am grateful to you; appreciate is not normally followed directly by a person meaning thank that person."
+    ],
+    "usage": "Transitive; appreciate + noun phrase or -ing form.",
+    "originalSense": {
+      "id": "kaikki:a10d240ce3a6eb6dfe",
+      "definition": "To be grateful or thankful for.",
+      "example": "I appreciate your efforts.",
+      "pos": "verb",
+      "synonyms": [
+        "esteem",
+        "acknowledge"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "appreciatable",
+        "appreciater",
+        "appreciator",
+        "apprecihate",
+        "disappreciate",
+        "misappreciate",
+        "much appreciated",
+        "reappreciate",
+        "underappreciate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/appreciate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=appreciate&oldid=91655796",
+    "distinctionTask": {
+      "prompt": "I appreciate your help with the application. I am expressing _____.",
+      "options": [
+        "gratitude for the help",
+        "a rise in the application’s price"
+      ],
+      "answer": "gratitude for the help",
+      "explanation": "The object your help identifies gratitude."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-be947e9",
+    "senseId": "kaikki:fd35c794eb41c100c8",
+    "definition": "To recognise and value the worth or qualities of something.",
+    "example": "She appreciates the craftsmanship of the handmade bowl.",
+    "collocations": [
+      "appreciate craftsmanship",
+      "appreciate good music",
+      "appreciate the value of"
+    ],
+    "distinctions": [
+      "Valuing craftsmanship does not require thanking the bowl or buying it. Appreciate a risk instead means recognise or understand it, not approve of it."
+    ],
+    "usage": "Transitive; value or recognise the qualities of an object, activity or person.",
+    "originalSense": {
+      "id": "kaikki:fd35c794eb41c100c8",
+      "definition": "To view as valuable.",
+      "example": "You must learn to appreciate time.",
+      "pos": "verb",
+      "synonyms": [
+        "cherish",
+        "esteem",
+        "value",
+        "appreciate",
+        "bedear",
+        "cherish",
+        "esteem",
+        "hold dear",
+        "prize",
+        "think much of",
+        "treasure",
+        "value"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "appreciatable",
+        "appreciater",
+        "appreciator",
+        "apprecihate",
+        "disappreciate",
+        "misappreciate",
+        "much appreciated",
+        "reappreciate",
+        "underappreciate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/appreciate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=appreciate&oldid=91655796",
+    "distinctionTask": {
+      "prompt": "She appreciates the bowl’s craftsmanship. This means she _____.",
+      "options": [
+        "recognises and values its quality",
+        "necessarily bought the bowl"
+      ],
+      "answer": "recognises and values its quality",
+      "explanation": "Appreciation of quality does not establish a purchase."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-be947e9",
+    "senseId": "kaikki:0b0f2f862e364c8b87",
+    "definition": "To fully recognise, understand or become conscious of something.",
+    "example": "We appreciate the risks involved and will review the safety plan.",
+    "collocations": [
+      "appreciate the risks",
+      "appreciate the significance of",
+      "fully appreciate that"
+    ],
+    "distinctions": [
+      "Recognising a risk does not mean enjoying it, approving of it or being grateful for it. The source’s broad awareness record can also include detecting a feature."
+    ],
+    "usage": "Transitive; often the difficulty, extent, importance or risk of something.",
+    "originalSense": {
+      "id": "kaikki:0b0f2f862e364c8b87",
+      "definition": "To be fully conscious of; understand; be aware of; detect.",
+      "example": "Near-synonyms: realize, grasp, acknowledge",
+      "pos": "verb",
+      "synonyms": [
+        "realize",
+        "grasp",
+        "acknowledge"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "appreciatable",
+        "appreciater",
+        "appreciator",
+        "apprecihate",
+        "disappreciate",
+        "misappreciate",
+        "much appreciated",
+        "reappreciate",
+        "underappreciate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/appreciate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=appreciate&oldid=91655796",
+    "distinctionTask": {
+      "prompt": "We appreciate the risks involved. Here appreciate means _____.",
+      "options": [
+        "recognise and understand",
+        "welcome and feel grateful for"
+      ],
+      "answer": "recognise and understand",
+      "explanation": "Awareness is distinct from gratitude or approval."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-be947e9",
+    "senseId": "kaikki:cdec6f1433260fb465",
+    "definition": "To increase in value, or cause something to increase in value.",
+    "example": "The painting appreciated from £1,000 to £1,200 over five years.",
+    "collocations": [
+      "appreciate in value",
+      "an appreciating asset",
+      "appreciate against a currency"
+    ],
+    "distinctions": [
+      "Here the painting’s value rises; no person is expressing thanks. The source also records a transitive increase-in-value use. A rise over one period does not promise future gains or an inflation-adjusted profit."
+    ],
+    "usage": "Usually intransitive in this example; the source also records transitive use.",
+    "originalSense": {
+      "id": "kaikki:cdec6f1433260fb465",
+      "definition": "To increase in value.",
+      "example": "The value of his portfolio appreciated by 80% over eight years.",
+      "pos": "verb",
+      "synonyms": [
+        "bedear",
+        "endear"
+      ],
+      "antonyms": [
+        "depreciate"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive, transitive",
+      "wordFamily": [
+        "appreciatable",
+        "appreciater",
+        "appreciator",
+        "apprecihate",
+        "disappreciate",
+        "misappreciate",
+        "much appreciated",
+        "reappreciate",
+        "underappreciate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/appreciate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=appreciate&oldid=91655796",
+    "distinctionTask": {
+      "prompt": "The painting appreciated from £1,000 to £1,200. Its value _____.",
+      "options": [
+        "increased over that period",
+        "fell over that period"
+      ],
+      "answer": "increased over that period",
+      "explanation": "Appreciate in value is the opposite direction from depreciate."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]

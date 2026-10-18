@@ -74,6 +74,28 @@ const restored = { id: 'restored', pos: 'noun', definition: 'A river edge.', exa
 const evidence = { term: 'bank', entryId: 'bank', parentSenseId: original.id, parentSourceHash: hash(original), revision: 123, sourcePage: 'bank', sourceGloss: '## A river edge.', sense: restored };
 const restoredInput = { ...input, restoredSources: [evidence], corrections: [...input.corrections, { ...row, senseId: restored.id, originalSense: restored, dictionaryParentSenseId: original.id }], records: [...input.records, { ...review, senseId: restored.id, sourceHash: hash(restored) }] };
 
+test('a restored top-level meaning uses a source identity anchor without inventing a semantic parent', () => {
+  const { parentSenseId: _parent, parentSourceHash: _hash, ...independent } = evidence;
+  const { dictionaryParentSenseId: _binding, ...supplement } = restoredInput.corrections[1];
+  const source = { ...independent, sourceKind: 'top-level', anchorSenseId: original.id, anchorSourceHash: hash(original), sourceGloss: '# A river edge.' };
+  const value = { ...restoredInput, restoredSources: [source], corrections: [row, { ...supplement, dictionarySourceAnchorSenseId: original.id }] };
+  expect(inspectDictionaryReview(value).errors).toEqual([]);
+  expect(inspectDictionaryReview(value).summary).toMatchObject({ preservedSenses: 1, restoredSenses: 1, reviewed: 2 });
+  for (const patch of [
+    { anchorSenseId: 'absent' }, { anchorSourceHash: 'changed' },
+    { sourceKind: 'unknown' }, { sourceKind: undefined }, { sourceGloss: '## A river edge.' },
+    { parentSenseId: original.id }, { parentSourceHash: hash(original) },
+    { sourcePage: 'Bank' }, { revision: 124 },
+  ]) expect(inspectDictionaryReview({ ...value, restoredSources: [{ ...source, ...patch }] }).errors.length).toBeGreaterThan(0);
+  expect(inspectDictionaryReview({ ...value, restoredSources: [] }).errors.join(' ')).toMatch(/missing restored source evidence/i);
+  expect(inspectDictionaryReview({ ...value, corrections: [row, { ...value.corrections[1], dictionaryParentSenseId: original.id }] }).errors.join(' ')).toMatch(/source mismatch/i);
+});
+
+test('the Singlish synonym template preserves the discourse-marker explanation', () => {
+  expect(plainSourceGloss('# {{senseid|en|singlish-2}} {{lb|en|Singlish}} {{syn of|en|you know|id=singlish|tr=used as a conversational discourse marker, to emphasize something}}'))
+    .toBe('Synonym of you know (used as a conversational discourse marker, to emphasize something).');
+});
+
 test.each([
   '# <!--Needs editing--> {{non-gloss|Land beside a river.}}',
   '# {{senseid|en|river-bank}}{{non-gloss|Land beside a river.}}',

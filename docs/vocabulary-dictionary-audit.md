@@ -2,9 +2,9 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 619 restored submeanings** (51,973 total). This ledger verifies **2744 records** across definition, examples or reading explanations, collocations and distinctions; **49,229 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 965 reviewed distinction exercises and 555 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 815 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 622 restored source meanings** (51,976 total). This ledger verifies **2784 records** across definition, examples or reading explanations, collocations and distinctions; **49,192 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 994 reviewed distinction exercises and 582 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 826 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
-Authored learning-priority metadata classifies 284 general, 106 specialist, 101 historical and 15 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
+Authored learning-priority metadata classifies 314 general, 111 specialist, 103 historical and 16 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
 
 | Term | Reviewed records | Raw + restored records | Pending |
 | --- | ---: | ---: | ---: |
@@ -16,6 +16,7 @@ Authored learning-priority metadata classifies 284 general, 106 specialist, 101 
 | affect | 15 | 15 | 0 |
 | aim | 20 | 20 | 0 |
 | analysis | 7 | 7 | 0 |
+| appreciate | 4 | 4 | 0 |
 | approach | 21 | 21 | 0 |
 | argument | 17 | 17 | 0 |
 | assess | 3 | 3 | 0 |
@@ -73,6 +74,7 @@ Authored learning-priority metadata classifies 284 general, 106 specialist, 101 
 | figure | 29 | 29 | 0 |
 | fine | 44 | 44 | 0 |
 | form | 32 | 32 | 0 |
+| grasp | 8 | 8 | 0 |
 | ground | 39 | 39 | 0 |
 | identify | 7 | 7 | 0 |
 | illustrate | 4 | 4 | 0 |
@@ -87,6 +89,7 @@ Authored learning-priority metadata classifies 284 general, 106 specialist, 101 
 | interpret | 5 | 5 | 0 |
 | investigate | 3 | 3 | 0 |
 | issue | 31 | 33 | 2 |
+| know | 19 | 19 | 0 |
 | knowledge | 14 | 14 | 0 |
 | lay | 46 | 46 | 0 |
 | lead | 69 | 69 | 0 |
@@ -149,6 +152,7 @@ Authored learning-priority metadata classifies 284 general, 106 specialist, 101 
 | term | 29 | 29 | 0 |
 | think | 11 | 11 | 0 |
 | training | 6 | 6 | 0 |
+| understand | 9 | 9 | 0 |
 | value | 14 | 14 | 0 |
 | view | 17 | 17 | 0 |
 
@@ -158,6 +162,6 @@ Authored learning-priority metadata classifies 284 general, 106 specialist, 101 
 
 ## Review rules
 
-Each ledger row binds a catalogue entry, dictionary sense and SHA-256 of its original record. The audit rejects stale hashes, missing identities, incomplete reviewed fields, invalid exercises and diagrams that do not match the exact reviewed definition and part of speech. Restored submeanings additionally require a preserved parent fingerprint, a revision-bound Wiktionary URL, the exact source definition line and independent source/evidence alignment. Grouping references require an exact top-level nongloss, explicitly labelled or fully italic source heading, independently bound restored children at the same source revision, and no exercise or diagram. Fully italic directories require at least two restored children; partial italics and nested headings do not qualify. Usage references require a source phrasal-verb template with wording consistent with the original record, a revision-bound URL and no exercise or diagram. Their counts are separate from preserved raw-source signals. Personal edits and frozen sessions are outside this public editorial ledger. Specialised, historical and proper-name senses remain pending until examined; they are not silently excluded.
+Each ledger row binds a catalogue entry, dictionary sense and SHA-256 of its original record. The audit rejects stale hashes, missing identities, incomplete reviewed fields, invalid exercises and diagrams that do not match the exact reviewed definition and part of speech. Restored source meanings additionally require a preserved parent fingerprint for child meanings or an explicit raw-source identity anchor for independent top-level meanings, a revision-bound Wiktionary URL, the exact source definition line and independent source/evidence alignment. Grouping references require an exact top-level nongloss, explicitly labelled or fully italic source heading, independently bound restored children at the same source revision, and no exercise or diagram. Fully italic directories require at least two restored children; partial italics and nested headings do not qualify. Usage references require a source phrasal-verb template with wording consistent with the original record, a revision-bound URL and no exercise or diagram. Their counts are separate from preserved raw-source signals. Personal edits and frozen sessions are outside this public editorial ledger. Specialised, historical and proper-name senses remain pending until examined; they are not silently excluded.
 
 The ignored `local/audits/vocabulary-dictionary.json` contains every source identity, fingerprint, status and signal for subsequent batches. Run with `--check` to validate without rewriting reports. Passing this check verifies accounting and bindings, not completion of the dictionary.

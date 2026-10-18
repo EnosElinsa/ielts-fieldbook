@@ -1,7 +1,7 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default, type VocabularyLearningPriority } from './runtimeData';
 import type { VocabularyEntry, VocabularySense } from './types';
 
-export const VOCABULARY_READINESS_VERSION = 'core-2026-10-18.11';
+export const VOCABULARY_READINESS_VERSION = 'core-2026-10-18.12';
 const identity = (entryId:string, senseId:string) => `${entryId}\u0000${senseId}`;
 const core = new Map<string,Supplement>();
 const additions = new Map<string,Supplement>();
@@ -28,17 +28,20 @@ export function getVocabularyLearningPriority(entryId: string, sense: Vocabulary
  return row.learningPriority;
 }
 
-/** Restored child meanings belong only to their catalogue entry and source parent. */
+/** Restored meanings require a raw parent or entry-identity anchor in this catalogue entry. */
 export function restoredDictionarySenses(entryId: string, sourceIds: Set<string>): VocabularySense[] {
  ensureReadiness();
- return [...additions.values()].filter(row => row.entryId === entryId && row.dictionaryParentSenseId && sourceIds.has(row.dictionaryParentSenseId) && row.originalSense?.id === row.senseId).map(row => row.originalSense!);
+ return [...additions.values()].filter(row => {
+  const anchor = row.dictionaryParentSenseId || row.dictionarySourceAnchorSenseId;
+  return row.entryId === entryId && anchor && !(row.dictionaryParentSenseId && row.dictionarySourceAnchorSenseId) && sourceIds.has(anchor) && row.originalSense?.id === row.senseId;
+ }).map(row => row.originalSense!);
 }
 
 /** A frozen restored meaning must belong to this entry and an exact released public baseline. */
 export function isRegisteredRestoredVocabularySense(entryId: string, sense: VocabularySense): boolean {
  ensureReadiness();
  const row = additions.get(identity(entryId, sense.id));
- if (!row?.dictionaryParentSenseId || row.originalSense?.id !== sense.id || sense.source === 'Personal note') return false;
+ if (!(row?.dictionaryParentSenseId || row?.dictionarySourceAnchorSenseId) || (row.dictionaryParentSenseId && row.dictionarySourceAnchorSenseId) || row.originalSense?.id !== sense.id || sense.source === 'Personal note') return false;
  return [row.originalSense, ...(row.previousSenses || []), { definition: row.definition, pos: row.pos || row.originalSense.pos }]
   .some(baseline => baseline.definition === sense.definition && baseline.pos === sense.pos);
 }

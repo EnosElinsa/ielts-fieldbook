@@ -4438,5 +4438,221 @@
     "definition": "To think seriously about something or consider it carefully.",
     "pos": "verb",
     "kind": "reflect-consider"
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:47d8d5d83904eedc0d",
+    "term": "know",
+    "definition": "To be certain that something is true or factual.",
+    "pos": "verb",
+    "kind": "know-fact"
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:cbd53be849ff92fb30",
+    "term": "know",
+    "definition": "To be aware of a fact or situation.",
+    "pos": "verb",
+    "kind": "know-aware"
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:32dcf1b6b43764766d",
+    "term": "know",
+    "definition": "To be acquainted or familiar with a person, place or thing.",
+    "pos": "verb",
+    "kind": "know-familiar"
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:f9734960eebcbb54fc",
+    "term": "know",
+    "definition": "To experience a condition, feeling or event.",
+    "pos": "verb",
+    "kind": "know-experience"
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:79d22c6ce8116b1856",
+    "term": "know",
+    "definition": "To understand a subject or know how to do something through study or experience.",
+    "pos": "verb",
+    "kind": "know-how"
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:45582cfb36e48b20e0",
+    "term": "know",
+    "definition": "To distinguish one thing from another or recognise its nature.",
+    "pos": "verb",
+    "kind": "know-distinguish"
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:94925b1ef8e761dbe7",
+    "term": "know",
+    "definition": "To recognise someone or something encountered before, despite an absence or change.",
+    "pos": "verb",
+    "kind": "know-recognise"
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:4c4b4a9c12ddf201b4",
+    "term": "know",
+    "definition": "To be able to play, sing or otherwise perform a piece of music.",
+    "pos": "verb",
+    "kind": "know-music"
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:c7f5bad264c0e49398",
+    "term": "know",
+    "definition": "Of a database or system, to have indexed information about something.",
+    "pos": "verb",
+    "kind": "know-database"
+  },
+  {
+    "entryId": "ve-7c74dd18",
+    "senseId": "kaikki:fd458e594276fc4644",
+    "term": "know",
+    "definition": "Knowledge of a matter, now used in the fixed phrase in the know.",
+    "pos": "noun",
+    "kind": "know-informed"
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:f1d68f76d67f2c403b",
+    "term": "understand",
+    "definition": "To comprehend the meaning of words, statements, signs or other communication.",
+    "pos": "verb",
+    "kind": "understand-message"
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:0ee548a956de9a741e",
+    "term": "understand",
+    "definition": "To be familiar enough with a skill, task or profession to carry it out properly.",
+    "pos": "verb",
+    "kind": "understand-task"
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:b216a77a1d76b0cccb",
+    "term": "understand",
+    "definition": "To comprehend a fact or principle, or come to regard a belief as one.",
+    "pos": "verb",
+    "kind": "understand-principle"
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:053c6102e67c07ff0f",
+    "term": "understand",
+    "definition": "To comprehend a person’s motives or character, or the reasons for an event.",
+    "pos": "verb",
+    "kind": "understand-reason"
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:c910eb8252fa0a5668",
+    "term": "understand",
+    "definition": "To believe or infer something on the basis of information that may be incomplete.",
+    "pos": "verb",
+    "kind": "understand-infer"
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "kaikki:fd647855262f79226f",
+    "term": "understand",
+    "definition": "In grammar, to interpret an unexpressed word or element as implicit.",
+    "pos": "verb",
+    "kind": "understand-implicit"
+  },
+  {
+    "entryId": "ve-8901ba1",
+    "senseId": "wiktionary:restored:530eeb2e2966218a19",
+    "term": "understand",
+    "definition": "To know the meaning of something.",
+    "pos": "verb",
+    "kind": "understand-meaning"
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:54796c73810b99d413",
+    "term": "grasp",
+    "definition": "To take or keep hold of something, especially with the hand.",
+    "pos": "verb",
+    "kind": "grasp-hold"
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:dc888058c923dcc917",
+    "term": "grasp",
+    "definition": "To understand an idea, explanation or situation.",
+    "pos": "verb",
+    "kind": "grasp-understand"
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:15b21071a9355562fc",
+    "term": "grasp",
+    "definition": "To seize or take advantage of an opportunity.",
+    "pos": "verb",
+    "kind": "grasp-opportunity"
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:505803355ea06468be",
+    "term": "grasp",
+    "definition": "A firm hold or grip, sometimes used figuratively for control.",
+    "pos": "noun",
+    "kind": "grasp-grip"
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:35f0f97dea1f9bdfe4",
+    "term": "grasp",
+    "definition": "An understanding of a subject or situation.",
+    "pos": "noun",
+    "kind": "grasp-knowledge"
+  },
+  {
+    "entryId": "ve-a4686f2",
+    "senseId": "kaikki:699ac901f9b30e5400",
+    "term": "grasp",
+    "definition": "The range of what someone can reach, obtain or achieve.",
+    "pos": "noun",
+    "kind": "grasp-reach"
+  },
+  {
+    "entryId": "ve-be947e9",
+    "senseId": "kaikki:a10d240ce3a6eb6dfe",
+    "term": "appreciate",
+    "definition": "To feel grateful or thankful for something.",
+    "pos": "verb",
+    "kind": "appreciate-gratitude"
+  },
+  {
+    "entryId": "ve-be947e9",
+    "senseId": "kaikki:fd35c794eb41c100c8",
+    "term": "appreciate",
+    "definition": "To recognise and value the worth or qualities of something.",
+    "pos": "verb",
+    "kind": "appreciate-value"
+  },
+  {
+    "entryId": "ve-be947e9",
+    "senseId": "kaikki:0b0f2f862e364c8b87",
+    "term": "appreciate",
+    "definition": "To fully recognise, understand or become conscious of something.",
+    "pos": "verb",
+    "kind": "appreciate-awareness"
+  },
+  {
+    "entryId": "ve-be947e9",
+    "senseId": "kaikki:cdec6f1433260fb465",
+    "term": "appreciate",
+    "definition": "To increase in value, or cause something to increase in value.",
+    "pos": "verb",
+    "kind": "appreciate-increase"
   }
 ]

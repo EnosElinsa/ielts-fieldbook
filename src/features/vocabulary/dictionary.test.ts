@@ -3,6 +3,7 @@ import { loadDictionaryIndex, loadTermDictionary, resetDictionaryCache } from '.
 import { readFileSync } from 'node:fs';
 import restoredSources from '../../domain/vocabulary/dictionarySenseSources.json';
 import { registerVocabularyTeaching, vocabularyTeaching } from '../../domain/vocabulary/runtimeData';
+import { isRegisteredRestoredVocabularySense } from '../../domain/vocabulary/readiness';
 
 const sense = { id: 's', pos: 'noun', definition: 'Land beside a river.', example: '' };
 beforeEach(resetDictionaryCache);
@@ -82,5 +83,27 @@ test('a teaching pack registered after the raw term was cached exposes its resto
   } finally {
     vocabularyTeaching.readiness.corrections = vocabularyTeaching.readiness.corrections.filter(row => row.entryId !== 'late-entry');
     registerVocabularyTeaching({ ...vocabularyTeaching });
+  }
+});
+
+test('an independent restored meaning is scoped by its raw entry anchor and validates exact released text', async () => {
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { 'root-test': 'aa.json' } : { senses: [sense] } })));
+  const original = { ...sense, id: 'independent-restoration', definition: 'An independent source meaning.' };
+  registerVocabularyTeaching({ ...vocabularyTeaching, readiness: { ...vocabularyTeaching.readiness, corrections: [{ entryId: 'root-entry', senseId: original.id, dictionarySourceAnchorSenseId: sense.id, originalSense: original, definition: 'An independent reviewed meaning.', example: 'A useful example.' }] } });
+  try {
+    const meanings = await loadTermDictionary('root-test', 'root-entry');
+    const selected = meanings.find(row => row.id === original.id)!;
+    expect(selected?.definition).toBe('An independent reviewed meaning.');
+    expect(await loadTermDictionary('root-test', 'other-entry')).toEqual([sense]);
+    expect(isRegisteredRestoredVocabularySense('root-entry', selected)).toBe(true);
+    for (const patch of [{ definition: 'My custom definition.' }, { pos: 'other' }, { source: 'Personal note' }])
+      expect(isRegisteredRestoredVocabularySense('root-entry', { ...selected, ...patch })).toBe(false);
+    expect(isRegisteredRestoredVocabularySense('other-entry', selected)).toBe(false);
+    vocabularyTeaching.readiness.corrections.find(row => row.entryId === 'root-entry')!.dictionarySourceAnchorSenseId = 'absent';
+    registerVocabularyTeaching(vocabularyTeaching);
+    expect(await loadTermDictionary('root-test', 'root-entry')).toEqual([sense]);
+  } finally {
+    vocabularyTeaching.readiness.corrections = vocabularyTeaching.readiness.corrections.filter(row => row.entryId !== 'root-entry');
+    registerVocabularyTeaching(vocabularyTeaching);
   }
 });
