@@ -81,7 +81,7 @@ test('all five obsolete meanings remain reading notes without new sentence-gap e
 test('ordinary defaults and all thirteen diagrams bind the exact reviewed meaning',()=>{
  expect(rows.filter(r=>r.distinctionTask)).toHaveLength(13);expect(rows.filter(r=>r.exampleKind==='reading-note')).toHaveLength(5);
  const batch=diagrams.filter(d=>terms.includes(d.term));expect(batch).toHaveLength(13);
- for(const term of terms)expect(defaults.find(d=>d.entryId===at(term,0)?.entryId)?.sense.id).toBe(raw(term,0).id);
+ for(const term of terms){const row=at(term,0);expect(row).toBeDefined();expect(defaults.find(d=>d.entryId===row!.entryId)?.sense.id).toBe(raw(term,0).id);}
  for(const d of batch){const row=rows.find(r=>r.entryId===d.entryId&&r.senseId===d.senseId);expect(d.definition).toBe(row?.definition);expect(d.pos).toBe('verb');}
 });
 test('reviewed text upgrades original records but preserves a learner replacement sentence',()=>{

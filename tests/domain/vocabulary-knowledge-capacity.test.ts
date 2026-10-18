@@ -68,5 +68,5 @@ test('electrical capacity is capacitance in farads rather than energy, and a cap
 });
 test('the batch has exact defaults, 20 reading notes, 26 exercises and 25 diagrams',()=>{
  expect(rows.filter(r=>r.exampleKind==='reading-note')).toHaveLength(20);expect(rows.filter(r=>r.distinctionTask)).toHaveLength(26);expect(diagrams.filter(d=>terms.includes(d.term))).toHaveLength(25);
- for(const [term,n]of[['knowledge',0],['skill',0],['ability',1],['capacity',0]] as const)expect(defaults.find(d=>d.entryId===at(term,n)?.entryId)?.sense.id).toBe(at(term,n)?.senseId);
+ for(const [term,n]of[['knowledge',0],['skill',0],['ability',1],['capacity',0]] as const){const row=at(term,n);expect(row).toBeDefined();expect(defaults.find(d=>d.entryId===row!.entryId)?.sense.id).toBe(row!.senseId);}
 });

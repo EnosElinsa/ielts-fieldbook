@@ -3598,5 +3598,221 @@
     "definition": "To show, display or present something, or make something evident.",
     "pos": "verb",
     "kind": "demonstrate-quality"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:a13fe7701772b19316",
+    "term": "compare",
+    "definition": "To examine two or more things to identify similarities and differences.",
+    "pos": "verb",
+    "kind": "compare-examine"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:8ee14fe63c1e374b8f",
+    "term": "compare",
+    "definition": "To liken one thing to another by pointing out a similarity.",
+    "pos": "verb",
+    "kind": "compare-liken"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:f4e45de65a1216b1c1",
+    "term": "compare",
+    "definition": "In grammar, to form or state the positive, comparative and superlative forms of an adjective.",
+    "pos": "verb",
+    "kind": "compare-degrees"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:4619c83651adcf3604",
+    "term": "compare",
+    "definition": "To be similar or comparable in quality, value or other respects.",
+    "pos": "verb",
+    "kind": "compare-intransitive"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:d191e1b3a86ad3aedc",
+    "term": "compare",
+    "definition": "Comparison, especially in expressions such as beyond compare.",
+    "pos": "noun",
+    "kind": "compare-noun"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:ec6474fd2ba67c0cac",
+    "term": "compare",
+    "definition": "In computing, an instruction or command that compares values or states.",
+    "pos": "noun",
+    "kind": "compare-instruction"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:f2c4e5ae1729d00160",
+    "term": "contrast",
+    "definition": "A visual difference in lightness, brightness or hue that helps distinguish one colour from another.",
+    "pos": "noun",
+    "kind": "contrast-colours"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:874c2990b49a0e7d26",
+    "term": "contrast",
+    "definition": "A difference between people, things or ideas.",
+    "pos": "noun",
+    "kind": "contrast-difference"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:f77f33a8ee3a4e2d37",
+    "term": "contrast",
+    "definition": "A person or thing that is strikingly different from another.",
+    "pos": "noun",
+    "kind": "contrast-item"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:f52f87628d9facb7c2",
+    "term": "contrast",
+    "definition": "In rhetoric, antithesis: the juxtaposition of contrasting ideas or expressions.",
+    "pos": "noun",
+    "kind": "contrast-rhetoric"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:ac5e59b0bd5e9c8946",
+    "term": "contrast",
+    "definition": "In medicine, a contrast medium used to make structures or differences more visible in medical imaging.",
+    "pos": "noun",
+    "kind": "contrast-medium"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:540071e8af6f7359e2",
+    "term": "contrast",
+    "definition": "To set things side by side or in opposition in order to show their differences.",
+    "pos": "verb",
+    "kind": "contrast-transitive"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:3a30949c7c6bb7402d",
+    "term": "contrast",
+    "definition": "To differ in a way that forms a contrast.",
+    "pos": "verb",
+    "kind": "contrast-intransitive"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "wiktionary:restored:461ef43f7822fb4303",
+    "term": "contrast",
+    "definition": "The degree or strength of a visual difference between colours or areas.",
+    "pos": "noun",
+    "kind": "contrast-degree"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "wiktionary:restored:d0cb69b2619ada94d3",
+    "term": "contrast",
+    "definition": "A display control or setting that adjusts the contrast of the displayed image.",
+    "pos": "noun",
+    "kind": "contrast-control"
+  },
+  {
+    "entryId": "ve-49481228",
+    "senseId": "kaikki:1d150881b4f0d2778c",
+    "term": "distinguish",
+    "definition": "To recognise someone or something as different by identifying its characteristics.",
+    "pos": "verb",
+    "kind": "distinguish-recognise"
+  },
+  {
+    "entryId": "ve-49481228",
+    "senseId": "kaikki:3f8ff4c02ecafe023c",
+    "term": "distinguish",
+    "definition": "To see or perceive someone or something clearly or distinctly.",
+    "pos": "verb",
+    "kind": "distinguish-perceive"
+  },
+  {
+    "entryId": "ve-49481228",
+    "senseId": "kaikki:ce3d699295913306e1",
+    "term": "distinguish",
+    "definition": "To make someone, especially oneself, stand out through achievement or merit.",
+    "pos": "verb",
+    "kind": "distinguish-achievement"
+  },
+  {
+    "entryId": "ve-49481228",
+    "senseId": "kaikki:12a413629a25861750",
+    "term": "distinguish",
+    "definition": "To confer an honour or distinction on someone.",
+    "pos": "verb",
+    "kind": "distinguish-honour"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:9a3a633a911569e665",
+    "term": "differentiate",
+    "definition": "To change things so as to create a difference or distinction.",
+    "pos": "verb",
+    "kind": "differentiate-modify"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:fb69902156f156591f",
+    "term": "differentiate",
+    "definition": "To be or show the characteristic that makes one thing different from another.",
+    "pos": "verb",
+    "kind": "differentiate-feature"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:28e7dafdc6184f8bbf",
+    "term": "differentiate",
+    "definition": "To recognise things as different or distinct.",
+    "pos": "verb",
+    "kind": "differentiate-recognise"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:86cb2badb15b82adac",
+    "term": "differentiate",
+    "definition": "In mathematics, to calculate the derivative of a function.",
+    "pos": "verb",
+    "kind": "differentiate-derivative"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:11e8b194f22167bd85",
+    "term": "differentiate",
+    "definition": "In multivariable mathematics, to calculate the differential of a function.",
+    "pos": "verb",
+    "kind": "differentiate-differential"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:aa2ad3f2c624f665a6",
+    "term": "differentiate",
+    "definition": "To perceive or recognise a difference, without a direct object in the construction.",
+    "pos": "verb",
+    "kind": "differentiate-between"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:7e099899c2cc7aef68",
+    "term": "differentiate",
+    "definition": "In education, to adapt teaching in different ways to meet differing learning needs.",
+    "pos": "verb",
+    "kind": "differentiate-teaching"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:cba47767adc9c9ebe6",
+    "term": "differentiate",
+    "definition": "In biology, to develop or cause development into forms or functions that differ.",
+    "pos": "verb",
+    "kind": "differentiate-biology"
   }
 ]

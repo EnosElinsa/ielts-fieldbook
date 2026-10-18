@@ -42,7 +42,7 @@ test('informal teacher address is a noun and the capitalised names do not settle
 });
 test('training keeps a valid ing-form and an action noun while the skills-learning noun is the default',()=>{
  expect(at('training',0)?.definition).toMatch(/present participle and gerund/);expect(at('training',0)?.distinctionTask?.answer).toMatch(/progressive verb phrase/);expect(at('training',0)).not.toHaveProperty('referenceOnly');
- expect(at('training',1)).not.toHaveProperty('meaningGroup');expect(defaults.find(d=>d.entryId===at('training',2)?.entryId)?.sense.id).toBe(at('training',2)?.senseId);
+ expect(at('training',1)).not.toHaveProperty('meaningGroup');const skills=at('training',2);expect(skills).toBeDefined();expect(defaults.find(d=>d.entryId===skills!.entryId)?.sense.id).toBe(skills!.senseId);
 });
 test('modem training negotiates parameters and voice samples do not guarantee perfect recognition',()=>{
  expect(at('training',4)?.distinctionTask?.answer).toMatch(/communication parameters/);expect(at('training',4)?.distinctions.join(' ')).toMatch(/separate from transferring the actual user data/);
@@ -54,7 +54,7 @@ test('education keeps process and acquired learning separate without converting 
 });
 test('the batch has eight reading notes, 17 exercises and 17 exact diagrams with explicit defaults',()=>{
  expect(rows.filter(r=>r.exampleKind==='reading-note')).toHaveLength(8);expect(rows.filter(r=>r.distinctionTask)).toHaveLength(17);expect(diagrams.filter(d=>terms.includes(d.term))).toHaveLength(17);
- for(const [term,n]of[['learn',0],['teach',0],['training',2],['education',0]] as const)expect(defaults.find(d=>d.entryId===at(term,n)?.entryId)?.sense.id).toBe(at(term,n)?.senseId);
+ for(const [term,n]of[['learn',0],['teach',0],['training',2],['education',0]] as const){const row=at(term,n);expect(row).toBeDefined();expect(defaults.find(d=>d.entryId===row!.entryId)?.sense.id).toBe(row!.senseId);}
 });
 test('AI skill teaching explains the lexical contrast without exposing internal workflow guidance',()=>{
  const row=corrections.find(r=>r.senseId===raw('skill',1).id);expect(row?.distinctions.join(' ')).toMatch(/rather than demonstrated human proficiency/);

@@ -205215,5 +205215,2064 @@
         }
       }
     ]
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:a13fe7701772b19316",
+    "definition": "To examine two or more things to identify similarities and differences.",
+    "example": "We compare the two courses in terms of cost and content.",
+    "collocations": [
+      "compare two things",
+      "compare with",
+      "compare in terms of",
+      "compare and contrast"
+    ],
+    "distinctions": [
+      "A comparison can find similarities, differences or both. With and to have overlapping uses; compare with is common when examining alternatives, while compare to is common when likening one thing to another. These are guides rather than an absolute rule."
+    ],
+    "usage": "Transitive; examination of similarities and differences.",
+    "originalSense": {
+      "id": "kaikki:a13fe7701772b19316",
+      "definition": "To assess the similarities and differences between two or more things [“to compare X with Y”]. Having made the comparison of X with Y, one might have found it similar to Y or different from Y.",
+      "example": "Compare the tiger's coloration with that of the zebra.",
+      "pos": "verb",
+      "synonyms": [
+        "set against",
+        "weigh against",
+        "collate"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "comparable",
+        "compare and contrast",
+        "compare and despair",
+        "compare apples to apples",
+        "compare apples with apples",
+        "comparee",
+        "compare notes",
+        "comparingly",
+        "incompared",
+        "intercompare",
+        "miscompare",
+        "recompare",
+        "uncompared"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/compare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=compare&oldid=92685749",
+    "distinctionTask": {
+      "prompt": "To compare courses in terms of cost and content is to examine _____.",
+      "options": [
+        "similarities and differences between the courses",
+        "only evidence that the courses are identical"
+      ],
+      "answer": "similarities and differences between the courses",
+      "explanation": "Comparing can reveal differences as well as similarities."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:8ee14fe63c1e374b8f",
+    "definition": "To liken one thing to another by pointing out a similarity.",
+    "example": "The writer will compare the city to a maze.",
+    "collocations": [
+      "compare something to",
+      "compare someone to",
+      "a comparison with",
+      "a shared feature"
+    ],
+    "distinctions": [
+      "The city is likened to a maze because of a shared feature, such as a confusing layout. The comparison does not identify the two things as literally the same or claim they share every property."
+    ],
+    "usage": "Transitive; likening one thing to another.",
+    "originalSense": {
+      "id": "kaikki:8ee14fe63c1e374b8f",
+      "definition": "To declare two things to be similar in some respect [“to compare X to Y”].",
+      "example": "Astronomers have compared comets to dirty snowballs.",
+      "pos": "verb",
+      "synonyms": [
+        "liken"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "comparable",
+        "compare and contrast",
+        "compare and despair",
+        "compare apples to apples",
+        "compare apples with apples",
+        "comparee",
+        "compare notes",
+        "comparingly",
+        "incompared",
+        "intercompare",
+        "miscompare",
+        "recompare",
+        "uncompared"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/compare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=compare&oldid=92685749",
+    "distinctionTask": {
+      "prompt": "To compare a city to a maze highlights _____.",
+      "options": [
+        "a similarity in one respect",
+        "literal identity in every property"
+      ],
+      "answer": "a similarity in one respect",
+      "explanation": "The writer likens the layout to a maze rather than equating the two things."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:f4e45de65a1216b1c1",
+    "definition": "In grammar, to form or state the positive, comparative and superlative forms of an adjective.",
+    "example": "In grammar, we compare good as good, better, best.",
+    "collocations": [
+      "compare an adjective",
+      "degrees of comparison",
+      "positive and comparative",
+      "comparative and superlative"
+    ],
+    "distinctions": [
+      "Good, better and best are the three forms in this example. They are irregular, so they do not establish a rule that every adjective takes -er and -est."
+    ],
+    "usage": "Grammar; transitive.",
+    "originalSense": {
+      "id": "kaikki:f4e45de65a1216b1c1",
+      "definition": "To form the three degrees of comparison of (an adjective).",
+      "example": "We compare “good” as “good”, “better”, “best”.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "comparable",
+        "compare and contrast",
+        "compare and despair",
+        "compare apples to apples",
+        "compare apples with apples",
+        "comparee",
+        "compare notes",
+        "comparingly",
+        "incompared",
+        "intercompare",
+        "miscompare",
+        "recompare",
+        "uncompared"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/compare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=compare&oldid=92685749",
+    "distinctionTask": {
+      "prompt": "The three degrees of good are _____.",
+      "options": [
+        "good, better, best",
+        "good, gooder, goodest"
+      ],
+      "answer": "good, better, best",
+      "explanation": "Good has the irregular comparative better and superlative best."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:4619c83651adcf3604",
+    "definition": "To be similar or comparable in quality, value or other respects.",
+    "example": "The two performances do not compare in quality.",
+    "collocations": [
+      "do not compare",
+      "cannot compare",
+      "compare favourably",
+      "compare in quality"
+    ],
+    "distinctions": [
+      "No direct object follows compare here; in quality identifies the respect being considered. The negative says the performances are not comparable in that respect without specifying which is better."
+    ],
+    "usage": "Intransitive; often in negative constructions.",
+    "originalSense": {
+      "id": "kaikki:4619c83651adcf3604",
+      "definition": "To be similar (often used in the negative).",
+      "example": "A sapling and a fully-grown oak tree do not compare.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "comparable",
+        "compare and contrast",
+        "compare and despair",
+        "compare apples to apples",
+        "compare apples with apples",
+        "comparee",
+        "compare notes",
+        "comparingly",
+        "incompared",
+        "intercompare",
+        "miscompare",
+        "recompare",
+        "uncompared"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/compare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=compare&oldid=92685749",
+    "distinctionTask": {
+      "prompt": "The performances do not compare in quality means _____.",
+      "options": [
+        "they are not comparable in that respect",
+        "the sentence necessarily identifies which is better"
+      ],
+      "answer": "they are not comparable in that respect",
+      "explanation": "The negative comparison does not itself identify the better performance."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:5373332166ed1f5eef",
+    "definition": "In an obsolete use, to get or obtain something.",
+    "example": "In this obsolete use, compare means acquire or obtain, rather than examine similarities and differences.",
+    "collocations": [
+      "acquiring",
+      "obtaining",
+      "older verb use",
+      "historical reading"
+    ],
+    "distinctions": [
+      "Read the verb as getting something where the older context supports it. Modern English normally uses acquire, get or obtain for this action."
+    ],
+    "usage": "Obsolete.",
+    "originalSense": {
+      "id": "kaikki:5373332166ed1f5eef",
+      "definition": "To get; to obtain.",
+      "example": "To fill his bags, and richesse to compare.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "comparable",
+        "compare and contrast",
+        "compare and despair",
+        "compare apples to apples",
+        "compare apples with apples",
+        "comparee",
+        "compare notes",
+        "comparingly",
+        "incompared",
+        "intercompare",
+        "miscompare",
+        "recompare",
+        "uncompared"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/compare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=compare&oldid=92685749",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:d191e1b3a86ad3aedc",
+    "definition": "Comparison, especially in expressions such as beyond compare.",
+    "example": "Her generosity is beyond compare.",
+    "collocations": [
+      "beyond compare",
+      "above compare",
+      "without compare",
+      "comparison"
+    ],
+    "distinctions": [
+      "Compare is a noun in beyond compare. The phrase praises a quality as unequalled rather than reporting a measured ranking of every person."
+    ],
+    "usage": "Uncountable noun; especially in fixed expressions.",
+    "originalSense": {
+      "id": "kaikki:d191e1b3a86ad3aedc",
+      "definition": "Comparison.",
+      "example": "His mighty Champion, ſtrong above compare,",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "comparable",
+        "compare and contrast",
+        "compare and despair",
+        "compare apples to apples",
+        "compare apples with apples",
+        "comparee",
+        "compare notes",
+        "comparingly",
+        "incompared",
+        "intercompare",
+        "miscompare",
+        "recompare",
+        "uncompared",
+        "beyond compare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/compare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=compare&oldid=92685749",
+    "distinctionTask": {
+      "prompt": "Beyond compare uses compare as _____.",
+      "options": [
+        "a noun meaning comparison",
+        "a command to obtain something"
+      ],
+      "answer": "a noun meaning comparison",
+      "explanation": "Beyond compare is a fixed expression praising something as unequalled."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:ec6474fd2ba67c0cac",
+    "definition": "In computing, an instruction or command that compares values or states.",
+    "example": "The program uses a compare to test whether two values are equal.",
+    "collocations": [
+      "a compare instruction",
+      "execute a compare",
+      "compare operation",
+      "test two values"
+    ],
+    "distinctions": [
+      "A compare is countable in this technical noun use. The exact result, flags or later branch behaviour depends on the instruction set or programming environment; comparison need not itself change either operand."
+    ],
+    "usage": "Computing; countable noun.",
+    "originalSense": {
+      "id": "kaikki:ec6474fd2ba67c0cac",
+      "definition": "An instruction or command that compares two values or states.",
+      "example": "[…] including addition and subtraction, memory operations, compares, shifts, logic operations, and condition operations.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "comparable",
+        "compare and contrast",
+        "compare and despair",
+        "compare apples to apples",
+        "compare apples with apples",
+        "comparee",
+        "compare notes",
+        "comparingly",
+        "incompared",
+        "intercompare",
+        "miscompare",
+        "recompare",
+        "uncompared",
+        "beyond compare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/compare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=compare&oldid=92685749",
+    "distinctionTask": {
+      "prompt": "A compare in a program is _____.",
+      "options": [
+        "an instruction or command for comparing values or states",
+        "a guarantee that both input values are equal"
+      ],
+      "answer": "an instruction or command for comparing values or states",
+      "explanation": "A compare tests a relation; it does not guarantee one particular outcome."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-dd34a722",
+    "senseId": "kaikki:ec4231fe67e6f7f346",
+    "definition": "In an obsolete noun use, an illustrative comparison or simile.",
+    "example": "In this obsolete noun use, compare means illustration by comparison or simile.",
+    "collocations": [
+      "a simile",
+      "illustration by comparison",
+      "older noun use",
+      "historical reading"
+    ],
+    "distinctions": [
+      "This historical figure-of-speech meaning is separate from the programming instruction and from the modern fixed expression beyond compare."
+    ],
+    "usage": "Obsolete; uncountable noun.",
+    "originalSense": {
+      "id": "kaikki:ec4231fe67e6f7f346",
+      "definition": "Illustration by comparison; simile.",
+      "example": "Rhymes full of protest, of oath, and big compare.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, uncountable",
+      "wordFamily": [
+        "comparable",
+        "compare and contrast",
+        "compare and despair",
+        "compare apples to apples",
+        "compare apples with apples",
+        "comparee",
+        "compare notes",
+        "comparingly",
+        "incompared",
+        "intercompare",
+        "miscompare",
+        "recompare",
+        "uncompared",
+        "beyond compare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/compare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=compare&oldid=92685749",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:f2c4e5ae1729d00160",
+    "definition": "A visual difference in lightness, brightness or hue that helps distinguish one colour from another.",
+    "example": "The dark lettering creates a clear contrast with the pale background.",
+    "collocations": [
+      "colour contrast",
+      "contrast with the background",
+      "a contrast in brightness",
+      "contrasting colours"
+    ],
+    "distinctions": [
+      "This sense concerns a visual difference. Contrast can involve lightness, brightness or hue, so two colours need not be black and white to contrast. The example does not claim a measured accessibility ratio."
+    ],
+    "usage": "Visual difference; noun.",
+    "originalSense": {
+      "id": "kaikki:f2c4e5ae1729d00160",
+      "definition": "A difference in lightness, brightness or hue between two colours that makes them more or less distinguishable.",
+      "example": "The red and the orange don't have much contrast between them — I can hardly tell them apart.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "by contrast",
+        "contrast agent",
+        "contrastless",
+        "contrast medium",
+        "contrastment",
+        "contrast radiography",
+        "contrast ratio",
+        "contrast set",
+        "contrast therapy",
+        "contrasty",
+        "hysterosalpingo-contrast-sonography",
+        "hysterosalpingo contrast sonography",
+        "in contrast",
+        "in contrast to",
+        "metacontrast",
+        "multicontrast",
+        "noncontrast",
+        "paracontrast",
+        "phase contrast microscope",
+        "phase contrast microscopy",
+        "postcontrast",
+        "precontrast",
+        "radiocontrast",
+        "reverse contrast",
+        "thorotrast"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/contrast#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+    "distinctionTask": {
+      "prompt": "The lettering and background have a clear contrast because of _____.",
+      "options": [
+        "their visual difference",
+        "a guaranteed measured accessibility ratio"
+      ],
+      "answer": "their visual difference",
+      "explanation": "The sentence describes visible contrast without a numerical ratio."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:874c2990b49a0e7d26",
+    "definition": "A difference between people, things or ideas.",
+    "example": "There is a clear contrast between the two proposals on cost.",
+    "collocations": [
+      "a contrast between",
+      "a contrast in",
+      "in contrast to",
+      "by contrast"
+    ],
+    "distinctions": [
+      "The contrast identifies a difference in cost without giving the amounts or deciding which proposal is better overall. Compare can examine similarities too; contrast focuses on differences."
+    ],
+    "usage": "Countable noun; a difference.",
+    "originalSense": {
+      "id": "kaikki:874c2990b49a0e7d26",
+      "definition": "A difference between two objects, people or concepts.",
+      "example": "Israel is a country of many contrasts.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "by contrast",
+        "contrast agent",
+        "contrastless",
+        "contrast medium",
+        "contrastment",
+        "contrast radiography",
+        "contrast ratio",
+        "contrast set",
+        "contrast therapy",
+        "contrasty",
+        "hysterosalpingo-contrast-sonography",
+        "hysterosalpingo contrast sonography",
+        "in contrast",
+        "in contrast to",
+        "metacontrast",
+        "multicontrast",
+        "noncontrast",
+        "paracontrast",
+        "phase contrast microscope",
+        "phase contrast microscopy",
+        "postcontrast",
+        "precontrast",
+        "radiocontrast",
+        "reverse contrast",
+        "thorotrast"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/contrast#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+    "distinctionTask": {
+      "prompt": "A contrast between proposals on cost identifies _____.",
+      "options": [
+        "a difference in one stated aspect",
+        "the best proposal on every criterion"
+      ],
+      "answer": "a difference in one stated aspect",
+      "explanation": "A difference in cost does not establish an overall choice."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:f77f33a8ee3a4e2d37",
+    "definition": "A person or thing that is strikingly different from another.",
+    "example": "The quiet garden is a contrast to the busy street.",
+    "collocations": [
+      "a contrast to",
+      "a striking contrast",
+      "a complete contrast",
+      "a contrasting setting"
+    ],
+    "distinctions": [
+      "The garden itself is the contrasting item, rather than just the abstract difference between the two places. A contrast can concern one aspect without making the places opposite in every respect."
+    ],
+    "usage": "Countable noun; the contrasting person or thing.",
+    "originalSense": {
+      "id": "kaikki:f77f33a8ee3a4e2d37",
+      "definition": "Something that is opposite of or strikingly different from something else.",
+      "example": "Why this denunciation of idolatry at this point? And why are Shabbat and the sanctuary mentioned as contrasts to idol worship?",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "by contrast",
+        "contrast agent",
+        "contrastless",
+        "contrast medium",
+        "contrastment",
+        "contrast radiography",
+        "contrast ratio",
+        "contrast set",
+        "contrast therapy",
+        "contrasty",
+        "hysterosalpingo-contrast-sonography",
+        "hysterosalpingo contrast sonography",
+        "in contrast",
+        "in contrast to",
+        "metacontrast",
+        "multicontrast",
+        "noncontrast",
+        "paracontrast",
+        "phase contrast microscope",
+        "phase contrast microscopy",
+        "postcontrast",
+        "precontrast",
+        "radiocontrast",
+        "reverse contrast",
+        "thorotrast"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/contrast#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+    "distinctionTask": {
+      "prompt": "In The garden is a contrast to the street, the garden is _____.",
+      "options": [
+        "the contrasting item",
+        "the display control for the street"
+      ],
+      "answer": "the contrasting item",
+      "explanation": "A person or thing can itself be described as a contrast."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:f52f87628d9facb7c2",
+    "definition": "In rhetoric, antithesis: the juxtaposition of contrasting ideas or expressions.",
+    "example": "The contrast between easy to promise and hard to deliver creates an antithesis.",
+    "collocations": [
+      "rhetorical contrast",
+      "contrast between ideas",
+      "antithesis",
+      "contrasting expressions"
+    ],
+    "distinctions": [
+      "The paired ideas are set against each other for rhetorical effect. This use concerns the expression of opposition rather than a display setting or a medical substance."
+    ],
+    "usage": "Rhetoric; countable or uncountable.",
+    "originalSense": {
+      "id": "kaikki:f52f87628d9facb7c2",
+      "definition": "Antithesis.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "rhetoric",
+      "register": "countable, rhetoric, uncountable",
+      "wordFamily": [
+        "by contrast",
+        "contrast agent",
+        "contrastless",
+        "contrast medium",
+        "contrastment",
+        "contrast radiography",
+        "contrast ratio",
+        "contrast set",
+        "contrast therapy",
+        "contrasty",
+        "hysterosalpingo-contrast-sonography",
+        "hysterosalpingo contrast sonography",
+        "in contrast",
+        "in contrast to",
+        "metacontrast",
+        "multicontrast",
+        "noncontrast",
+        "paracontrast",
+        "phase contrast microscope",
+        "phase contrast microscopy",
+        "postcontrast",
+        "precontrast",
+        "radiocontrast",
+        "reverse contrast",
+        "thorotrast"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/contrast#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+    "distinctionTask": {
+      "prompt": "The pairing easy to promise and hard to deliver uses _____.",
+      "options": [
+        "opposing expressions for rhetorical effect",
+        "a medical medium administered for imaging"
+      ],
+      "answer": "opposing expressions for rhetorical effect",
+      "explanation": "Rhetorical contrast can form an antithesis between ideas or expressions."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:ac5e59b0bd5e9c8946",
+    "definition": "In medicine, a contrast medium used to make structures or differences more visible in medical imaging.",
+    "example": "The scan may require contrast to improve the visibility of some structures.",
+    "collocations": [
+      "contrast medium",
+      "contrast agent",
+      "imaging with contrast",
+      "contrast-enhanced imaging"
+    ],
+    "distinctions": [
+      "The suitable substance and method of administration depend on the imaging method and clinical circumstances. Contrast is not always injected, and using it does not guarantee that a scan establishes a diagnosis."
+    ],
+    "usage": "Medicine; uncountable.",
+    "originalSense": {
+      "id": "kaikki:ac5e59b0bd5e9c8946",
+      "definition": "Contrast medium",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "by contrast",
+        "contrast agent",
+        "contrastless",
+        "contrast medium",
+        "contrastment",
+        "contrast radiography",
+        "contrast ratio",
+        "contrast set",
+        "contrast therapy",
+        "contrasty",
+        "hysterosalpingo-contrast-sonography",
+        "hysterosalpingo contrast sonography",
+        "in contrast",
+        "in contrast to",
+        "metacontrast",
+        "multicontrast",
+        "noncontrast",
+        "paracontrast",
+        "phase contrast microscope",
+        "phase contrast microscopy",
+        "postcontrast",
+        "precontrast",
+        "radiocontrast",
+        "reverse contrast",
+        "thorotrast"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/contrast#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+    "distinctionTask": {
+      "prompt": "Medical contrast refers to _____.",
+      "options": [
+        "a medium used to improve visibility in imaging",
+        "only the contrast adjustment on a television"
+      ],
+      "answer": "a medium used to improve visibility in imaging",
+      "explanation": "The medical substance is distinct from visual contrast settings."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:540071e8af6f7359e2",
+    "definition": "To set things side by side or in opposition in order to show their differences.",
+    "example": "We contrast the two proposals on cost and delivery time.",
+    "collocations": [
+      "contrast two things",
+      "contrast something with",
+      "compare and contrast",
+      "contrast in terms of"
+    ],
+    "distinctions": [
+      "The verb directs attention to differences. Cost and delivery time are the chosen dimensions here; the sentence does not supply the values or decide which proposal should be adopted."
+    ],
+    "usage": "Transitive.",
+    "originalSense": {
+      "id": "kaikki:540071e8af6f7359e2",
+      "definition": "To set in opposition in order to show the difference or differences between; to counterpoint.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "liken"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "by contrast",
+        "contrast agent",
+        "contrastless",
+        "contrast medium",
+        "contrastment",
+        "contrast radiography",
+        "contrast ratio",
+        "contrast set",
+        "contrast therapy",
+        "contrasty",
+        "hysterosalpingo-contrast-sonography",
+        "hysterosalpingo contrast sonography",
+        "in contrast",
+        "in contrast to",
+        "metacontrast",
+        "multicontrast",
+        "noncontrast",
+        "paracontrast",
+        "phase contrast microscope",
+        "phase contrast microscopy",
+        "postcontrast",
+        "precontrast",
+        "radiocontrast",
+        "reverse contrast",
+        "thorotrast",
+        "contrastable",
+        "compare and contrast",
+        "contrasting",
+        "contrastive"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/contrast#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+    "distinctionTask": {
+      "prompt": "Contrast the proposals asks the reader to _____.",
+      "options": [
+        "show their differences",
+        "assert that they are identical"
+      ],
+      "answer": "show their differences",
+      "explanation": "The transitive verb focuses on differences."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "kaikki:3a30949c7c6bb7402d",
+    "definition": "To differ in a way that forms a contrast.",
+    "example": "The quiet garden and the busy street contrast sharply.",
+    "collocations": [
+      "contrast sharply",
+      "contrast with",
+      "contrast in",
+      "foreground and background contrast"
+    ],
+    "distinctions": [
+      "Here contrast has no direct object. A subject can contrast with another thing, or two subjects can contrast with each other. This pattern differs from the transitive instruction contrast the two proposals."
+    ],
+    "usage": "Intransitive; often followed by with.",
+    "originalSense": {
+      "id": "kaikki:3a30949c7c6bb7402d",
+      "definition": "To form a contrast.",
+      "example": "Foreground and background strongly contrast.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "liken"
+      ],
+      "collocations": [],
+      "usage": "often",
+      "register": "intransitive, often",
+      "wordFamily": [
+        "by contrast",
+        "contrast agent",
+        "contrastless",
+        "contrast medium",
+        "contrastment",
+        "contrast radiography",
+        "contrast ratio",
+        "contrast set",
+        "contrast therapy",
+        "contrasty",
+        "hysterosalpingo-contrast-sonography",
+        "hysterosalpingo contrast sonography",
+        "in contrast",
+        "in contrast to",
+        "metacontrast",
+        "multicontrast",
+        "noncontrast",
+        "paracontrast",
+        "phase contrast microscope",
+        "phase contrast microscopy",
+        "postcontrast",
+        "precontrast",
+        "radiocontrast",
+        "reverse contrast",
+        "thorotrast",
+        "contrastable",
+        "compare and contrast",
+        "contrasting",
+        "contrastive"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/contrast#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+    "distinctionTask": {
+      "prompt": "In The garden and street contrast sharply, contrast has _____.",
+      "options": [
+        "no direct object",
+        "the direct object sharply"
+      ],
+      "answer": "no direct object",
+      "explanation": "Sharply modifies the verb; it is not its object."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "wiktionary:restored:461ef43f7822fb4303",
+    "dictionaryParentSenseId": "kaikki:f2c4e5ae1729d00160",
+    "definition": "The degree or strength of a visual difference between colours or areas.",
+    "example": "The image has little contrast, so the two shades are hard to distinguish.",
+    "collocations": [
+      "high contrast",
+      "low contrast",
+      "little contrast",
+      "the degree of contrast"
+    ],
+    "distinctions": [
+      "Here contrast names the strength of the visual difference, rather than a particular pair of colours or a control. The schematic shades illustrate lower and higher lightness contrast without supplying a measured ratio."
+    ],
+    "usage": "Uncountable; degree of visual contrast.",
+    "originalSense": {
+      "id": "wiktionary:restored:461ef43f7822fb4303",
+      "pos": "noun",
+      "definition": "The degree of this difference.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+    "distinctionTask": {
+      "prompt": "In The image has little contrast, contrast concerns _____.",
+      "options": [
+        "how strong the visual difference is",
+        "the physical control used to adjust a display"
+      ],
+      "answer": "how strong the visual difference is",
+      "explanation": "The degree of contrast is distinct from the adjustment control."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-8efc8a07",
+    "senseId": "wiktionary:restored:d0cb69b2619ada94d3",
+    "dictionaryParentSenseId": "kaikki:f2c4e5ae1729d00160",
+    "definition": "A display control or setting that adjusts the contrast of the displayed image.",
+    "example": "Use the contrast control to adjust the display.",
+    "collocations": [
+      "contrast control",
+      "contrast setting",
+      "adjust the contrast",
+      "display controls"
+    ],
+    "distinctions": [
+      "The control changes how the display presents contrast. Its precise effect depends on the display; changing it is not the same as modifying the objects or lighting in the scene that was recorded."
+    ],
+    "usage": "Countable; display control.",
+    "originalSense": {
+      "id": "wiktionary:restored:d0cb69b2619ada94d3",
+      "pos": "noun",
+      "definition": "A control on a television, etc, that adjusts the amount of contrast in the images being displayed.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+    "distinctionTask": {
+      "prompt": "The contrast control is _____.",
+      "options": [
+        "the display setting that adjusts contrast",
+        "a claim that the real scene has changed"
+      ],
+      "answer": "the display setting that adjusts contrast",
+      "explanation": "The control changes the displayed image rather than the recorded scene itself."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-49481228",
+    "senseId": "kaikki:1d150881b4f0d2778c",
+    "definition": "To recognise someone or something as different by identifying its characteristics.",
+    "example": "Can you distinguish the original from the copy?",
+    "collocations": [
+      "distinguish something from",
+      "distinguish between two things",
+      "distinguish a feature",
+      "a distinguishing characteristic"
+    ],
+    "distinctions": [
+      "Distinguish the original from the copy and distinguish between the original and the copy are both useful patterns. Recognising a difference does not require changing the objects or awarding anyone an honour."
+    ],
+    "usage": "Recognition of a difference.",
+    "originalSense": {
+      "id": "kaikki:1d150881b4f0d2778c",
+      "definition": "To recognize someone or something as different from others based on its characteristics.",
+      "example": "It had begun to take a leading place even in the days of the Ptolemies, and in scientific, as distinguished from purely literary work, it had assumed a position of primary importance early in the Christian era.",
+      "pos": "verb",
+      "synonyms": [
+        "differentiate",
+        "discriminate",
+        "decern",
+        "discern",
+        "differentiate",
+        "differentialize",
+        "discriminate",
+        "distinguish",
+        "set apart",
+        "tell",
+        "tell apart"
+      ],
+      "antonyms": [
+        "confuse"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "counterdistinguish",
+        "distinguishability",
+        "distinguishable",
+        "distinguished",
+        "distinguisher",
+        "distinguishing",
+        "distinguishment",
+        "distinguishness",
+        "interdistinguish",
+        "misdistinguish",
+        "redistinguish",
+        "subdistinguish",
+        "undistinguishability",
+        "undistinguishing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/distinguish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=distinguish&oldid=93434788",
+    "distinctionTask": {
+      "prompt": "Distinguish the original from the copy means _____.",
+      "options": [
+        "recognise a difference that identifies them",
+        "necessarily change the copy into a different object"
+      ],
+      "answer": "recognise a difference that identifies them",
+      "explanation": "Recognition of a difference does not require changing either object."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-49481228",
+    "senseId": "kaikki:3f8ff4c02ecafe023c",
+    "definition": "To see or perceive someone or something clearly or distinctly.",
+    "example": "At this distance, I can barely distinguish the outline of the tower.",
+    "collocations": [
+      "distinguish an outline",
+      "distinguish a figure",
+      "barely distinguish",
+      "distinguish in the distance"
+    ],
+    "distinctions": [
+      "The speaker is trying to make out an outline, rather than determine which of two objects is authentic. Barely indicates limited clarity; it does not establish a diagnosis of the speaker’s eyesight."
+    ],
+    "usage": "Clear perception.",
+    "originalSense": {
+      "id": "kaikki:3f8ff4c02ecafe023c",
+      "definition": "To see someone or something clearly or distinctly.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "discern",
+        "make out"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "counterdistinguish",
+        "distinguishability",
+        "distinguishable",
+        "distinguished",
+        "distinguisher",
+        "distinguishing",
+        "distinguishment",
+        "distinguishness",
+        "interdistinguish",
+        "misdistinguish",
+        "redistinguish",
+        "subdistinguish",
+        "undistinguishability",
+        "undistinguishing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/distinguish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=distinguish&oldid=93434788",
+    "distinctionTask": {
+      "prompt": "Barely distinguish the tower’s outline concerns being able to _____.",
+      "options": [
+        "see clearly enough to make out its shape",
+        "award the tower an honour"
+      ],
+      "answer": "see clearly enough to make out its shape",
+      "explanation": "This sense concerns clear perception."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-49481228",
+    "senseId": "kaikki:ce3d699295913306e1",
+    "definition": "To make someone, especially oneself, stand out through achievement or merit.",
+    "example": "She hopes to distinguish herself through careful research.",
+    "collocations": [
+      "distinguish oneself",
+      "distinguish oneself in",
+      "distinguish oneself by",
+      "distinguish oneself through"
+    ],
+    "distinctions": [
+      "Distinguish herself is reflexive: she hopes to become notable through her achievement. Hopes to describes an intention rather than proving that she has already earned recognition or an award."
+    ],
+    "usage": "Reflexive construction in the example.",
+    "originalSense": {
+      "id": "kaikki:ce3d699295913306e1",
+      "definition": "To make noticeably different or better from others through accomplishments.",
+      "example": "The soldier distinguished himself in combat and received a medal.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "reflexive",
+      "register": "reflexive, transitive",
+      "wordFamily": [
+        "counterdistinguish",
+        "distinguishability",
+        "distinguishable",
+        "distinguished",
+        "distinguisher",
+        "distinguishing",
+        "distinguishment",
+        "distinguishness",
+        "interdistinguish",
+        "misdistinguish",
+        "redistinguish",
+        "subdistinguish",
+        "undistinguishability",
+        "undistinguishing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/distinguish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=distinguish&oldid=93434788",
+    "distinctionTask": {
+      "prompt": "She hopes to distinguish herself through research seeks _____.",
+      "options": [
+        "recognition through achievement",
+        "a guarantee that an award was already presented"
+      ],
+      "answer": "recognition through achievement",
+      "explanation": "The reflexive construction concerns standing out by merit, while hopes to is not completed achievement."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-49481228",
+    "senseId": "kaikki:12a413629a25861750",
+    "definition": "To confer an honour or distinction on someone.",
+    "example": "The academy will distinguish her with an honorary award.",
+    "collocations": [
+      "distinguish someone with an award",
+      "be distinguished with an honour",
+      "confer an honour",
+      "receive a distinction"
+    ],
+    "distinctions": [
+      "This formal use concerns an honour conferred by another person or institution. It differs from distinguishing oneself through achievement; the future statement does not establish that the award has already been presented."
+    ],
+    "usage": "Formal; conferring honour.",
+    "originalSense": {
+      "id": "kaikki:12a413629a25861750",
+      "definition": "To confer an honor upon.",
+      "example": "The soldier was distinguished with a medal for his bravery.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "counterdistinguish",
+        "distinguishability",
+        "distinguishable",
+        "distinguished",
+        "distinguisher",
+        "distinguishing",
+        "distinguishment",
+        "distinguishness",
+        "interdistinguish",
+        "misdistinguish",
+        "redistinguish",
+        "subdistinguish",
+        "undistinguishability",
+        "undistinguishing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/distinguish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=distinguish&oldid=93434788",
+    "distinctionTask": {
+      "prompt": "Distinguish her with an award means _____.",
+      "options": [
+        "confer an honour on her",
+        "only recognise her among a crowd"
+      ],
+      "answer": "confer an honour on her",
+      "explanation": "The formal honour sense is separate from recognising an identity."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-49481228",
+    "senseId": "kaikki:54f995c9988cfe8e63",
+    "definition": "In an obsolete use, to make different or cause to differ.",
+    "example": "In this obsolete use, distinguish means cause things to differ, rather than recognise a difference that is already present.",
+    "collocations": [
+      "causing a difference",
+      "making different",
+      "older causative use",
+      "historical reading"
+    ],
+    "distinctions": [
+      "The historical causative meaning concerns producing a difference. It is separate from the ordinary modern recognition and perception uses."
+    ],
+    "usage": "Obsolete; transitive.",
+    "originalSense": {
+      "id": "kaikki:54f995c9988cfe8e63",
+      "definition": "To make to differ.",
+      "example": "For who diſtinguiſheth thee?",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "counterdistinguish",
+        "distinguishability",
+        "distinguishable",
+        "distinguished",
+        "distinguisher",
+        "distinguishing",
+        "distinguishment",
+        "distinguishness",
+        "interdistinguish",
+        "misdistinguish",
+        "redistinguish",
+        "subdistinguish",
+        "undistinguishability",
+        "undistinguishing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/distinguish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=distinguish&oldid=93434788",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:9a3a633a911569e665",
+    "definition": "To change things so as to create a difference or distinction.",
+    "example": "We can differentiate the two versions by adding an extra feature to one.",
+    "collocations": [
+      "differentiate a product",
+      "differentiate two versions",
+      "differentiate by adding",
+      "create a distinction"
+    ],
+    "distinctions": [
+      "Adding the feature creates a difference between the versions. This modifying use differs from simply recognising an existing difference."
+    ],
+    "usage": "Transitive; creating a difference.",
+    "originalSense": {
+      "id": "kaikki:9a3a633a911569e665",
+      "definition": "To modify so as to create a difference or distinction.",
+      "example": "A humble instance of Ablaut may be quoted which took place in the seventeenth century, when the word then was differentiated into the two forms then and than.",
+      "pos": "verb",
+      "synonyms": [
+        "change"
+      ],
+      "antonyms": [
+        "equate",
+        "mix up",
+        "muddle up",
+        "leave alone",
+        "preserve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "codifferentiate",
+        "cytodifferentiate",
+        "dedifferentiate",
+        "differentiable",
+        "differentiation",
+        "differentiator",
+        "differentiatory",
+        "indifferentiate",
+        "misdifferentiate",
+        "neurodifferentiate",
+        "nondifferentiating",
+        "redifferentiate",
+        "retrodifferentiate",
+        "subdifferentiating",
+        "transdifferentiate",
+        "undifferentiating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/differentiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=differentiate&oldid=93594189",
+    "distinctionTask": {
+      "prompt": "Differentiate versions by adding an extra feature means _____.",
+      "options": [
+        "create a difference by modifying one version",
+        "only notice a difference while changing nothing"
+      ],
+      "answer": "create a difference by modifying one version",
+      "explanation": "The added feature produces a distinction."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:fb69902156f156591f",
+    "definition": "To be or show the characteristic that makes one thing different from another.",
+    "example": "The extra handle is what can differentiate this version from the earlier one.",
+    "collocations": [
+      "differentiate one thing from another",
+      "a differentiating feature",
+      "what differentiates",
+      "a distinguishing feature"
+    ],
+    "distinctions": [
+      "Here the handle is the distinguishing feature. The sentence identifies a difference without claiming that the extra feature necessarily makes the product better overall."
+    ],
+    "usage": "Transitive; constituting or showing the difference.",
+    "originalSense": {
+      "id": "kaikki:fb69902156f156591f",
+      "definition": "To show or be the difference or distinction between things.",
+      "example": "What differentiates an alligator from a crocodile?",
+      "pos": "verb",
+      "synonyms": [
+        "differentialize"
+      ],
+      "antonyms": [
+        "equate",
+        "mix up",
+        "muddle up",
+        "leave alone",
+        "preserve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "codifferentiate",
+        "cytodifferentiate",
+        "dedifferentiate",
+        "differentiable",
+        "differentiation",
+        "differentiator",
+        "differentiatory",
+        "indifferentiate",
+        "misdifferentiate",
+        "neurodifferentiate",
+        "nondifferentiating",
+        "redifferentiate",
+        "retrodifferentiate",
+        "subdifferentiating",
+        "transdifferentiate",
+        "undifferentiating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/differentiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=differentiate&oldid=93594189",
+    "distinctionTask": {
+      "prompt": "The extra handle differentiates the versions because it _____.",
+      "options": [
+        "is the distinguishing feature",
+        "proves every aspect of the new version is better"
+      ],
+      "answer": "is the distinguishing feature",
+      "explanation": "A distinguishing feature identifies a difference without establishing an overall ranking."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:28e7dafdc6184f8bbf",
+    "definition": "To recognise things as different or distinct.",
+    "example": "Can you differentiate the original from the copy?",
+    "collocations": [
+      "differentiate one thing from another",
+      "differentiate two types",
+      "differentiate accurately",
+      "recognise a distinction"
+    ],
+    "distinctions": [
+      "This sense concerns identifying an existing distinction, much like distinguish. It does not require modifying the original or the copy."
+    ],
+    "usage": "Transitive; recognising a difference.",
+    "originalSense": {
+      "id": "kaikki:28e7dafdc6184f8bbf",
+      "definition": "To recognize as different or distinct.",
+      "example": "How do you differentiate a fake smile from a genuine one?",
+      "pos": "verb",
+      "synonyms": [
+        "transform",
+        "differentiate",
+        "differentialize (rare) ?",
+        "distinguish",
+        "individualize",
+        "particularize",
+        "severalize"
+      ],
+      "antonyms": [
+        "conflate"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "codifferentiate",
+        "cytodifferentiate",
+        "dedifferentiate",
+        "differentiable",
+        "differentiation",
+        "differentiator",
+        "differentiatory",
+        "indifferentiate",
+        "misdifferentiate",
+        "neurodifferentiate",
+        "nondifferentiating",
+        "redifferentiate",
+        "retrodifferentiate",
+        "subdifferentiating",
+        "transdifferentiate",
+        "undifferentiating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/differentiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=differentiate&oldid=93594189",
+    "distinctionTask": {
+      "prompt": "Differentiate the original from the copy asks the reader to _____.",
+      "options": [
+        "recognise a difference between them",
+        "necessarily add a new feature to one of them"
+      ],
+      "answer": "recognise a difference between them",
+      "explanation": "This recognition use identifies a difference that already exists."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:86cb2badb15b82adac",
+    "definition": "In mathematics, to calculate the derivative of a function.",
+    "example": "Differentiate f(x) = x² to obtain f′(x) = 2x.",
+    "collocations": [
+      "differentiate a function",
+      "differentiate with respect to x",
+      "calculate a derivative",
+      "the power rule"
+    ],
+    "distinctions": [
+      "For real x, the derivative of x² is 2x. It gives the local rate of change, not the original function’s value; at x = 3 the derivative is 6 while f(3) is 9."
+    ],
+    "usage": "Mathematics; transitive.",
+    "originalSense": {
+      "id": "kaikki:86cb2badb15b82adac",
+      "definition": "To calculate the derivative of a function.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "transform",
+        "differentiate",
+        "differentialize (rare) ?",
+        "distinguish",
+        "individualize",
+        "particularize",
+        "severalize"
+      ],
+      "antonyms": [
+        "equate",
+        "mix up",
+        "muddle up",
+        "leave alone",
+        "preserve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "codifferentiate",
+        "cytodifferentiate",
+        "dedifferentiate",
+        "differentiable",
+        "differentiation",
+        "differentiator",
+        "differentiatory",
+        "indifferentiate",
+        "misdifferentiate",
+        "neurodifferentiate",
+        "nondifferentiating",
+        "redifferentiate",
+        "retrodifferentiate",
+        "subdifferentiating",
+        "transdifferentiate",
+        "undifferentiating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/differentiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=differentiate&oldid=93594189",
+    "distinctionTask": {
+      "prompt": "For f(x) = x², differentiating with respect to x gives _____.",
+      "options": [
+        "f′(x) = 2x",
+        "f′(x) = x²"
+      ],
+      "answer": "f′(x) = 2x",
+      "explanation": "The derivative of x² is 2x, rather than the original function."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:11e8b194f22167bd85",
+    "definition": "In multivariable mathematics, to calculate the differential of a function.",
+    "example": "We differentiate z = x² + y² to obtain dz = 2x dx + 2y dy.",
+    "collocations": [
+      "differentiate a multivariable function",
+      "calculate the differential",
+      "total differential",
+      "partial derivatives"
+    ],
+    "distinctions": [
+      "For real x and y, dz = 2x dx + 2y dy is the differential. It is not generally the exact finite change in z: a finite increment also includes the squared increments. The differential gives the linear part of the change."
+    ],
+    "usage": "Mathematics; transitive; differential of a multivariable function.",
+    "originalSense": {
+      "id": "kaikki:11e8b194f22167bd85",
+      "definition": "To calculate the differential of a function of multiple variables.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "transform",
+        "differentiate",
+        "differentialize (rare) ?",
+        "distinguish",
+        "individualize",
+        "particularize",
+        "severalize"
+      ],
+      "antonyms": [
+        "equate",
+        "mix up",
+        "muddle up",
+        "leave alone",
+        "preserve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "codifferentiate",
+        "cytodifferentiate",
+        "dedifferentiate",
+        "differentiable",
+        "differentiation",
+        "differentiator",
+        "differentiatory",
+        "indifferentiate",
+        "misdifferentiate",
+        "neurodifferentiate",
+        "nondifferentiating",
+        "redifferentiate",
+        "retrodifferentiate",
+        "subdifferentiating",
+        "transdifferentiate",
+        "undifferentiating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/differentiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=differentiate&oldid=93594189",
+    "distinctionTask": {
+      "prompt": "For z = x² + y², the differential is _____.",
+      "options": [
+        "dz = 2x dx + 2y dy",
+        "dz = dx² + dy²"
+      ],
+      "answer": "dz = 2x dx + 2y dy",
+      "explanation": "The differential uses the partial derivatives 2x and 2y as coefficients of dx and dy."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:aa2ad3f2c624f665a6",
+    "definition": "To perceive or recognise a difference, without a direct object in the construction.",
+    "example": "Readers need to differentiate between fact and opinion.",
+    "collocations": [
+      "differentiate between",
+      "differentiate between categories",
+      "differentiate carefully",
+      "perceive a difference"
+    ],
+    "distinctions": [
+      "Between introduces the two categories, so this is an intransitive construction. An opinion can draw on facts; identifying a distinction does not mean every opinion is false or unsupported."
+    ],
+    "usage": "Intransitive; commonly followed by between.",
+    "originalSense": {
+      "id": "kaikki:aa2ad3f2c624f665a6",
+      "definition": "To perceive the difference between things; to discriminate.",
+      "example": "he refused to instruct that actual intent to harm or recklessness had to be found before punitive damages could be awarded, or that a verdict for respondent should differentiate between compensatory and punitive damages.",
+      "pos": "verb",
+      "synonyms": [
+        "differentialize"
+      ],
+      "antonyms": [
+        "equate",
+        "mix up",
+        "muddle up",
+        "leave alone",
+        "preserve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "codifferentiate",
+        "cytodifferentiate",
+        "dedifferentiate",
+        "differentiable",
+        "differentiation",
+        "differentiator",
+        "differentiatory",
+        "indifferentiate",
+        "misdifferentiate",
+        "neurodifferentiate",
+        "nondifferentiating",
+        "redifferentiate",
+        "retrodifferentiate",
+        "subdifferentiating",
+        "transdifferentiate",
+        "undifferentiating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/differentiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=differentiate&oldid=93594189",
+    "distinctionTask": {
+      "prompt": "Differentiate between fact and opinion means _____.",
+      "options": [
+        "recognise the distinction between those categories",
+        "declare that every opinion must be false"
+      ],
+      "answer": "recognise the distinction between those categories",
+      "explanation": "An opinion can be supported by facts; distinguishing categories is not a universal truth judgment."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:7e099899c2cc7aef68",
+    "definition": "In education, to adapt teaching in different ways to meet differing learning needs.",
+    "example": "Teachers may differentiate by varying the support and challenge in a lesson.",
+    "collocations": [
+      "differentiate by varying support",
+      "differentiate for learners",
+      "differentiated teaching",
+      "adapt a lesson"
+    ],
+    "distinctions": [
+      "Differentiation can change support, challenge or presentation in response to learning needs. It does not guarantee each learner’s progress or require treating ability as a fixed category."
+    ],
+    "usage": "Education; intransitive construction in the example.",
+    "originalSense": {
+      "id": "kaikki:7e099899c2cc7aef68",
+      "definition": "To teach a lesson in multiple different ways in order to meet the needs of more or less advanced students.",
+      "example": "Like most teaching, differentiating is a mix of art and science. When it works, \"it's like a jazz rhythm,\" said Carol Tomlinson, an education professor at the University of Virginia and an expert on differentiation.",
+      "pos": "verb",
+      "synonyms": [
+        "transform",
+        "differentiate",
+        "differentialize (rare) ?",
+        "distinguish",
+        "individualize",
+        "particularize",
+        "severalize"
+      ],
+      "antonyms": [
+        "equate",
+        "mix up",
+        "muddle up",
+        "leave alone",
+        "preserve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "codifferentiate",
+        "cytodifferentiate",
+        "dedifferentiate",
+        "differentiable",
+        "differentiation",
+        "differentiator",
+        "differentiatory",
+        "indifferentiate",
+        "misdifferentiate",
+        "neurodifferentiate",
+        "nondifferentiating",
+        "redifferentiate",
+        "retrodifferentiate",
+        "subdifferentiating",
+        "transdifferentiate",
+        "undifferentiating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/differentiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=differentiate&oldid=93594189",
+    "distinctionTask": {
+      "prompt": "To differentiate by varying support and challenge is to _____.",
+      "options": [
+        "adapt the teaching to differing learning needs",
+        "guarantee that every learner has already mastered the lesson"
+      ],
+      "answer": "adapt the teaching to differing learning needs",
+      "explanation": "Differentiation adapts instruction; it does not itself demonstrate mastery."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:cba47767adc9c9ebe6",
+    "definition": "In biology, to develop or cause development into forms or functions that differ.",
+    "example": "Under suitable conditions, these precursor cells can differentiate into specialised cell types.",
+    "collocations": [
+      "cells differentiate",
+      "differentiate into",
+      "cell differentiation",
+      "specialised functions"
+    ],
+    "distinctions": [
+      "The biological process concerns development of form or function. Can expresses possibility under suitable conditions; it does not mean a precursor can become every possible cell type or that every cell follows the same pathway."
+    ],
+    "usage": "Biology; transitive or intransitive; intransitive in the example.",
+    "originalSense": {
+      "id": "kaikki:cba47767adc9c9ebe6",
+      "definition": "To (cause to) go through a process of development called differentiation; to make or become different in form or function.",
+      "example": "In Chapter IV we learned that every animal consists of a body, or soma, formed of cells that are differentiated from the germ cells usually at an early stage of development.",
+      "pos": "verb",
+      "synonyms": [
+        "specialize"
+      ],
+      "antonyms": [
+        "equate",
+        "mix up",
+        "muddle up",
+        "leave alone",
+        "preserve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive, transitive",
+      "wordFamily": [
+        "codifferentiate",
+        "cytodifferentiate",
+        "dedifferentiate",
+        "differentiable",
+        "differentiation",
+        "differentiator",
+        "differentiatory",
+        "indifferentiate",
+        "misdifferentiate",
+        "neurodifferentiate",
+        "nondifferentiating",
+        "redifferentiate",
+        "retrodifferentiate",
+        "subdifferentiating",
+        "transdifferentiate",
+        "undifferentiating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/differentiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=differentiate&oldid=93594189",
+    "distinctionTask": {
+      "prompt": "Cells that can differentiate under suitable conditions _____.",
+      "options": [
+        "may develop specialised forms or functions",
+        "must be able to become every possible cell type"
+      ],
+      "answer": "may develop specialised forms or functions",
+      "explanation": "Cell differentiation is development, with possibilities depending on the precursor and conditions."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-40ffa99",
+    "senseId": "kaikki:4575f1a6fe736ebba9",
+    "definition": "In geology, a material or body that has become differentiated or stratified.",
+    "example": "In this geological noun use, a differentiate is something produced or distinguished by differentiation or stratification.",
+    "collocations": [
+      "geological differentiation",
+      "a differentiated material",
+      "stratification",
+      "specialist reading"
+    ],
+    "distinctions": [
+      "The noun concerns a geological product or body, rather than the act of recognising a difference or calculating a derivative. Its precise origin and composition depend on the geological context."
+    ],
+    "usage": "Geology; noun.",
+    "originalSense": {
+      "id": "kaikki:4575f1a6fe736ebba9",
+      "definition": "Something that has been differentiated or stratified.",
+      "example": "There is no discernable tendency, however, for the differentiates to fall into two extremities, as would be expected if they were trending toward distinct eutectics in a residua system.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "codifferentiate",
+        "cytodifferentiate",
+        "dedifferentiate",
+        "differentiable",
+        "differentiation",
+        "differentiator",
+        "differentiatory",
+        "indifferentiate",
+        "misdifferentiate",
+        "neurodifferentiate",
+        "nondifferentiating",
+        "redifferentiate",
+        "retrodifferentiate",
+        "subdifferentiating",
+        "transdifferentiate",
+        "undifferentiating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/differentiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=differentiate&oldid=93594189",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
   }
 ]

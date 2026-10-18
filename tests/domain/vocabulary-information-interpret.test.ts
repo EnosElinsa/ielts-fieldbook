@@ -84,5 +84,5 @@ test('interpreting includes artistic, signed-language and hybrid runtime meaning
 });
 test('the batch adds six reading notes, 24 exercises and 24 exact diagrams with everyday defaults',()=>{
  expect(rows.filter(r=>r.exampleKind==='reading-note')).toHaveLength(6);expect(rows.filter(r=>r.distinctionTask)).toHaveLength(24);expect(diagrams.filter(d=>terms.includes(d.term))).toHaveLength(24);
- for(const [term,n]of[['information',1],['data',2],['analysis',0],['interpret',1]] as const)expect(defaults.find(d=>d.entryId===at(term,n)?.entryId)?.sense.id).toBe(at(term,n)?.senseId);
+ for(const [term,n]of[['information',1],['data',2],['analysis',0],['interpret',1]] as const){const row=at(term,n);expect(row).toBeDefined();expect(defaults.find(d=>d.entryId===row!.entryId)?.sense.id).toBe(row!.senseId);}
 });

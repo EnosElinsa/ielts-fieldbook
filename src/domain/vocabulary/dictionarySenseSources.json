@@ -11550,5 +11550,43 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "contrast",
+    "entryId": "ve-8efc8a07",
+    "parentSenseId": "kaikki:f2c4e5ae1729d00160",
+    "parentSourceHash": "9f2f439790df2c2ff6d2cfe219f9e7f868e952c77220ba9d8f65222b6d283c2d",
+    "sourcePage": "contrast",
+    "revision": 93067620,
+    "sourceGloss": "## {{lb|en|uncountable}} The degree of this difference.",
+    "sense": {
+      "id": "wiktionary:restored:461ef43f7822fb4303",
+      "pos": "noun",
+      "definition": "The degree of this difference.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "contrast",
+    "entryId": "ve-8efc8a07",
+    "parentSenseId": "kaikki:f2c4e5ae1729d00160",
+    "parentSourceHash": "9f2f439790df2c2ff6d2cfe219f9e7f868e952c77220ba9d8f65222b6d283c2d",
+    "sourcePage": "contrast",
+    "revision": 93067620,
+    "sourceGloss": "## {{lb|en|countable}} A control on a [[television]], etc, that adjusts the amount of contrast in the images being displayed.",
+    "sense": {
+      "id": "wiktionary:restored:d0cb69b2619ada94d3",
+      "pos": "noun",
+      "definition": "A control on a television, etc, that adjusts the amount of contrast in the images being displayed.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=contrast&oldid=93067620",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]
