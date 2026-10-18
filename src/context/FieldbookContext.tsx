@@ -150,6 +150,8 @@ function useFieldbookValue() {
   const [bankStatus, setBankStatus] = useState({writing:'unloaded', speaking:'unloaded'});
   const [bankErrors, setBankErrors] = useState({writing:'', speaking:''});
   const moduleReads = useRef(new Map());
+  const vocabularyTeachingReads = useRef(new Map());
+  const vocabularyTeachingIds = useRef(new Set());
   const hydratedCollections = useRef(new Set());
   const bankReads = useRef(new Map());
   const loadEpoch = useRef(0);
@@ -346,28 +348,52 @@ function useFieldbookValue() {
     return next;
   }, []);
 
-  const ensureAccountModule = useCallback((module) => {
-    if (moduleReads.current.has(module)) return moduleReads.current.get(module);
+  const ensureVocabularyTeaching = useCallback((entries, options = {}) => {
+    const ids = [...new Set(options.entryIds || entries.map(entry => entry.id))]
+      .filter(id => !vocabularyTeachingIds.current.has(id)).sort();
+    if (!ids.length) return Promise.resolve();
+    const key = JSON.stringify(ids);
+    if (vocabularyTeachingReads.current.has(key)) return vocabularyTeachingReads.current.get(key);
+    const owner = accountId(), epoch = loadEpoch.current;
+    const request = loadReleasedVocabularyTeaching({entryIds:ids,allowMissingEntryIds:true}).then(teaching => {
+      if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
+      for (const key of ['books','units','memberships']) {
+        const identity = row => key === 'units' ? `${row.bookId}:${row.id}` : row.id;
+        const rows = new Map(normalizeVocabularyIdentities(VOCABULARY_CATALOG[key]).map(row => [identity(row), row]));
+        normalizeVocabularyIdentities(teaching[key]).forEach(row => rows.set(identity(row), key === 'books' ? genericWordbook(row) : row));
+        VOCABULARY_CATALOG[key] = [...rows.values()];
+      }
+      ids.forEach(id => vocabularyTeachingIds.current.add(id));
+      setVocabularyCatalogRevision(revision => revision + 1);
+    }).finally(() => {
+      if (vocabularyTeachingReads.current.get(key) === request) vocabularyTeachingReads.current.delete(key);
+    });
+    vocabularyTeachingReads.current.set(key, request);
+    return request;
+  }, []);
+
+  const ensureAccountModule = useCallback((module, options = {}) => {
     const owner = accountId();
     const epoch = loadEpoch.current;
+    if (moduleReads.current.has(module)) {
+      const loaded = moduleReads.current.get(module);
+      if (module !== 'vocabulary') return loaded;
+      // Account rows are merged once. A later page can widen teaching readiness
+      // without replaying that older snapshot over a learner's current edits.
+      return loaded.then(async () => {
+        if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
+        await ensureVocabularyTeaching(stateRef.current.vocabulary || [], options);
+        if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
+        return stateRef.current;
+      });
+    }
     const before = structuredClone(stateRef.current);
     const finishTiming = timeOperation(module);
     setModuleStatus(status => ({...status, [module]:'loading'}));
     const request = readAccountModule(module).then(async ({data}) => {
-      let teaching;
-      if (module === 'vocabulary' && data.vocabulary?.length) {
-        teaching = await loadReleasedVocabularyTeaching({entryIds: data.vocabulary.map(entry => entry.id), allowMissingEntryIds: true});
-      }
       if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
-      if (teaching) {
-        for (const key of ['books','units','memberships']) {
-          const identity = row => key === 'units' ? `${row.bookId}:${row.id}` : row.id;
-          const rows = new Map(normalizeVocabularyIdentities(VOCABULARY_CATALOG[key]).map(row => [identity(row), row]));
-          normalizeVocabularyIdentities(teaching[key]).forEach(row => rows.set(identity(row), key === 'books' ? genericWordbook(row) : row));
-          VOCABULARY_CATALOG[key] = [...rows.values()];
-        }
-        setVocabularyCatalogRevision(revision => revision + 1);
-      }
+      if (module === 'vocabulary') await ensureVocabularyTeaching(data.vocabulary || [], options);
+      if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
       const next = mergeAccountData(data, before);
       if (module === 'productive') repairAssessments(next);
       if (module === 'vocabulary') {
@@ -385,7 +411,7 @@ function useFieldbookValue() {
     });
     moduleReads.current.set(module, request);
     return request;
-  }, [mergeAccountData, persistNow]);
+  }, [mergeAccountData, persistNow, ensureVocabularyTeaching]);
 
   const ensureCompleteAccount = useCallback(async () => {
     await Promise.all(Object.keys(ACCOUNT_MODULES).map(module => ensureAccountModule(module)));
@@ -985,6 +1011,7 @@ function useFieldbookValue() {
     setDraftStatuses({});
     hydratedCollections.current.clear();
     moduleReads.current.clear(); bankReads.current.clear(); vocabularyCatalogReads.current.clear();
+    vocabularyTeachingReads.current.clear(); vocabularyTeachingIds.current.clear();
     setBooted(false);
     (async () => {
       let draft;

@@ -19,6 +19,7 @@ import { moduleFor, studyLinkActive, workspaceModules } from './workspaceNavigat
 import { useWorkspaceModuleMemory } from './useWorkspaceModuleMemory';
 import { accountId } from '../storage/remote';
 import { AccountDataBoundary } from './AccountDataBoundary';
+import { vocabularyTeachingScope } from './vocabularyTeachingScope';
 import { PageErrorBoundary } from './PageErrorBoundary';
 import { PageTransition } from './PageTransition';
 import { WorkspaceScrollRestoration } from './WorkspaceScrollRestoration';
@@ -35,7 +36,7 @@ const AssessmentImportModal = lazy(()=>import('../features/modals/AssessmentImpo
 const LegalModal = lazy(()=>import('../features/modals/LegalModal').then(m=>({default:m.LegalModal})));
 
 function WorkspaceRoute() {
-  const {pathname, key} = useLocation();
+  const {pathname, search, key} = useLocation();
   let modules = []; let banks = [];
   if (pathname.startsWith('/vocabulary')) modules = ['vocabulary'];
   else if (/^\/(reading|listening)/.test(pathname)) modules = ['receptive'];
@@ -45,7 +46,7 @@ function WorkspaceRoute() {
   else if (pathname.startsWith('/stories')) {modules=['productive'];banks=['speaking'];}
   else if (pathname.startsWith('/review')) modules=['productive','vocabulary'];
   else if (pathname.startsWith('/settings')) modules=['productive','vocabulary','receptive'];
-  return <PageErrorBoundary resetKey={`${accountId()}:${key}`}><AccountDataBoundary modules={modules} banks={banks}><Outlet /></AccountDataBoundary></PageErrorBoundary>;
+  return <PageErrorBoundary resetKey={`${accountId()}:${key}`}><AccountDataBoundary modules={modules} banks={banks} vocabularyEntryIds={vocabularyTeachingScope(pathname,search)}><Outlet /></AccountDataBoundary></PageErrorBoundary>;
 }
 
 function RailHint({ label, enabled, children }) {

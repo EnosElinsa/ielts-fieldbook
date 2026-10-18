@@ -465,6 +465,21 @@ test('pending module results cannot merge into a different account', async () =>
   expect(fieldbook.state.sessions.some(row=>row.id==='account-1-only')).toBe(false);
 });
 
+test('an old account read cannot prepare teaching identities for its replacement account', async () => {
+  mocks.statuses = emptyCollectionStatuses();
+  const saved = structuredClone(VOCABULARY_CATALOG.entries.slice(0, 1));
+  const pending = defer(); mocks.moduleRead.mockImplementationOnce(() => pending.promise);
+  await mount(); let request;
+  await act(async () => { request = fieldbook.ensureAccountModule('vocabulary', {entryIds:[saved[0].id]}).catch(() => false); });
+  mocks.owner = 'account-2';
+  await act(async () => { pending.resolve({data:{vocabulary:saved},statuses:{}}); await request; });
+  expect(mocks.teachingRead).not.toHaveBeenCalled();
+  mocks.moduleRead.mockResolvedValueOnce({data:{vocabulary:saved},statuses:{}});
+  await act(async () => { await fieldbook.ensureAccountModule('vocabulary', {entryIds:[saved[0].id]}); });
+  expect(mocks.teachingRead).toHaveBeenCalledWith({entryIds:[saved[0].id],allowMissingEntryIds:true});
+  expect(fieldbook.state.vocabulary).toHaveLength(1);
+});
+
 test('reading and due listening plans open their own workspaces and save linked completion', async () => {
   mocks.initial.plans = [{ id: 'reading-plan', kind: 'reading-practice', status: 'pending' }, { id: 'listening-plan', kind: 'listening-intensive', status: 'pending', sectionId: 'part', sentenceId: 'sentence' }];
   await mount();
@@ -1104,6 +1119,77 @@ test('preferences and drafts exclude fetched vocabulary until its teaching metad
   await act(async () => { await fieldbook.persistNow(); });
   expect(mocks.saveState.mock.calls.at(-1)[2].collections).toContain('vocabulary');
   expect(mocks.saveState.mock.calls.at(-1)[0].vocabulary[0].id).toBe('remote-word');
+});
+
+test('a cold exact-word route prepares only its teaching while retaining every saved account entry', async () => {
+  mocks.statuses = emptyCollectionStatuses();
+  const saved = JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8')).entries.slice(0, 200);
+  expect(saved).toHaveLength(200);
+  mocks.moduleRead.mockImplementation(async () => {
+    ACCOUNT_MODULES.vocabulary.forEach(key => { mocks.statuses[key] = 'ready'; });
+    return {data:{vocabulary:saved}, statuses:mocks.statuses};
+  });
+  const teaching = defer(); mocks.teachingRead.mockImplementationOnce(() => teaching.promise);
+  await mount('/vocabulary/entry/' + saved[0].id);
+  let loading;
+  await act(async () => {
+    loading = fieldbook.ensureAccountModule('vocabulary', {entryIds:[saved[0].id]});
+    await Promise.resolve();
+  });
+  expect(mocks.teachingRead).toHaveBeenCalledWith({entryIds:[saved[0].id], allowMissingEntryIds:true});
+  expect(fieldbook.state.vocabulary).toHaveLength(0);
+  await act(async () => { teaching.resolve({books:[],units:[],entries:[],memberships:[]}); await loading; });
+  expect(fieldbook.state.vocabulary).toHaveLength(200);
+  expect(fieldbook.state.vocabulary[199]).toEqual(saved[199]);
+});
+
+test('opening all words after a scoped load prepares missing teaching without remerging an old account snapshot over personal edits', async () => {
+  mocks.statuses = emptyCollectionStatuses();
+  const saved = structuredClone(VOCABULARY_CATALOG.entries.slice(0, 3));
+  mocks.moduleRead.mockImplementation(async () => {
+    ACCOUNT_MODULES.vocabulary.forEach(key => { mocks.statuses[key] = 'ready'; });
+    return {data:{vocabulary:structuredClone(saved)},statuses:mocks.statuses};
+  });
+  await mount('/vocabulary/entry/' + saved[0].id);
+  await act(async () => { await fieldbook.ensureAccountModule('vocabulary', {entryIds:[saved[0].id]}); });
+  mocks.teachingRead.mockClear();
+  const teaching = defer(); mocks.teachingRead.mockImplementationOnce(() => teaching.promise);
+  let full;
+  await act(async () => {
+    full = fieldbook.ensureAccountModule('vocabulary');
+    await Promise.resolve();
+  });
+  expect(mocks.teachingRead).toHaveBeenCalledWith({entryIds:saved.slice(1).map(e=>e.id).sort(),allowMissingEntryIds:true});
+  await act(async () => { await fieldbook.persist(draft => {
+    draft.vocabulary[1].senses[0].definition = 'My own meaning edited while the list prepares.';
+  }); });
+  await act(async () => { teaching.resolve({books:[],units:[],entries:[],memberships:[]}); await full; });
+  expect(mocks.moduleRead).toHaveBeenCalledTimes(1);
+  expect(fieldbook.state.vocabulary[1].senses[0].definition).toBe('My own meaning edited while the list prepares.');
+  mocks.teachingRead.mockClear();
+  await act(async () => { await fieldbook.ensureAccountModule('vocabulary', {entryIds:[saved[2].id]}); });
+  expect(mocks.teachingRead).not.toHaveBeenCalled();
+});
+
+test('a failed additional teaching scope retries without discarding already merged vocabulary or loading all words', async () => {
+  mocks.statuses = emptyCollectionStatuses();
+  const saved = structuredClone(VOCABULARY_CATALOG.entries.slice(0, 2));
+  mocks.moduleRead.mockImplementation(async () => {
+    ACCOUNT_MODULES.vocabulary.forEach(key => { mocks.statuses[key] = 'ready'; });
+    return {data:{vocabulary:saved},statuses:mocks.statuses};
+  });
+  await mount();
+  await act(async () => { await fieldbook.ensureAccountModule('vocabulary', {entryIds:[saved[0].id]}); });
+  const before = structuredClone(fieldbook.state.vocabulary);
+  mocks.teachingRead.mockClear().mockRejectedValueOnce(new Error('Second scope unavailable'));
+  await act(async () => {
+    await expect(fieldbook.ensureAccountModule('vocabulary', {entryIds:[saved[1].id]})).rejects.toThrow('Second scope unavailable');
+  });
+  expect(fieldbook.state.vocabulary).toEqual(before);
+  await act(async () => { await fieldbook.ensureAccountModule('vocabulary', {entryIds:[saved[1].id]}); });
+  expect(mocks.teachingRead).toHaveBeenCalledTimes(2);
+  for(const [options] of mocks.teachingRead.mock.calls) expect(options.entryIds).toEqual([saved[1].id]);
+  expect(mocks.moduleRead).toHaveBeenCalledTimes(1);
 });
 
 test('plan edits commit after durable save and exclude unloaded collections',async()=>{
