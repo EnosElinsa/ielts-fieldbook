@@ -23,6 +23,7 @@ import { registerVocabularyTeaching, vocabularyTeaching } from '../../domain/voc
 import { resetAccountIdentity, setAccountIdentity } from '../../storage/accountIdentity';
 import {addVocabularyItem,getVocabularyReviewQueue} from '../../domain/vocabulary';
 import {buildVocabularySessionCommit,createVocabularySession,updateVocabularySessionAnswer} from '../../domain/vocabulary/session';
+import { freezeVocabularyPronunciation } from '../../domain/vocabulary/sensePronunciation';
 const mocks = vi.hoisted(() => ({
   fb: null as any,
   player: { play: vi.fn(), stop: vi.fn() },
@@ -731,6 +732,21 @@ function showResults(results: any) {
     </MemoryRouter>,
   );
 }
+
+test('result playback uses the frozen reading and original accent after the current word has changed',async()=>{
+  const correction=JSON.parse(readFileSync('src/domain/vocabulary/readinessCorrections.json','utf8')).find((row:any)=>row.senseId==='kaikki:5386f9871d2cf75669');
+  const raw=structuredClone(release.entries.find((e:any)=>e.term==='record'));
+  const sense={...correction.originalSense,definition:correction.definition,example:correction.example};
+  const entry=addVocabularyItem(mocks.fb.state,{...raw,senses:[sense]}).item!;
+  const cards=getVocabularyReviewQueue(mocks.fb.state,{entryId:entry.id,senseId:sense.id,mode:'dictation',dueOnly:false});
+  const session=updateVocabularySessionAnswer(createVocabularySession(cards,'dictation',{accent:'uk'}),cards[0].id,'recod');
+  const record=buildVocabularySessionCommit(mocks.fb.state,session,cards).sessionRecord,before=structuredClone(record);
+  entry.senses[0].definition='A personal replacement.';entry.senses[0].source='Personal note';
+  showResults(record);
+  await userEvent.setup().click(screen.getByRole('button',{name:'Play UK pronunciation of record'}));
+  expect(mocks.player.play).toHaveBeenLastCalledWith(expect.objectContaining({term:'record'}),expect.objectContaining({accent:'uk',sense:expect.objectContaining({id:sense.id,definition:sense.definition}),pronunciation:freezeVocabularyPronunciation(raw,sense)}));
+  expect(record).toEqual(before);expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
 
 function activeSpellingError(){
   const store=mocks.fb.state;

@@ -6,9 +6,56 @@ const state = vi.hoisted(() => ({ load: vi.fn(), play: vi.fn(), stop: vi.fn() })
 vi.mock('../../domain/vocabulary/media', () => ({ getVocabularyMedia: state.load }));
 vi.mock('./playback', () => ({ createVocabularyPlayback: () => ({ play: state.play, stop: state.stop }) }));
 const entry = { id: 'example', term: 'vegetable' } as VocabularyEntry;
+const noun={id:'kaikki:5386f9871d2cf75669',definition:'Information preserved in a medium for later reference.',pos:'noun',example:'Keep a record.'};
+const verb={id:'kaikki:a81bc2a2a960622df9',definition:'To preserve information by writing it down or storing it in another medium.',pos:'verb',example:'Please record the temperature every hour.'};
+const record={...entry,id:'ve-7e9f7328',term:'record',senses:[noun,verb],pronunciation:{ipa:'wrong entry IPA'}};
 beforeEach(() => { state.load.mockReset(); state.play.mockReset(); state.stop.mockReset(); });
 afterEach(() => { cleanup(); vi.useRealTimers(); });
 describe('pronunciation controls', () => {
+ test('legacy history discloses its missing saved match even before playback succeeds',async()=>{
+  state.load.mockResolvedValue({recordings:[]});state.play.mockResolvedValue({ok:false,source:'none',reason:'target-voice-unavailable',accent:'us'});
+  render(<Pronunciation compact entry={record} sense={noun} accent="us" options={{pronunciation:'legacy'}}/>);
+  expect(screen.getByText('Meaning match was not saved for this session.')).toBeDefined();
+  fireEvent.click(screen.getByRole('button',{name:'Play US pronunciation of record'}));
+  await waitFor(()=>expect(state.play).toHaveBeenCalledWith(record,expect.objectContaining({pronunciation:'legacy'})));
+  expect(screen.queryByText(/matches this meaning/)).toBeNull();
+ });
+ test('an explicitly unresolved meaning does not fall back to the entry primary',async()=>{
+  state.load.mockResolvedValue({recordings:[]});state.play.mockResolvedValue({ok:false,source:'none',reason:'sense-recording-unavailable',accent:'us'});
+  render(<Pronunciation entry={record} sense={null} accent="us"/>);
+  fireEvent.click(screen.getByRole('button',{name:'Play US pronunciation of record'}));
+  await waitFor(()=>expect(state.play).toHaveBeenCalledWith(record,expect.objectContaining({sense:undefined})));
+  expect(screen.queryByText('wrong entry IPA')).toBeNull();
+ });
+ test('same-entry meaning changes stop audio, clear stale status and pass the selected sense',async()=>{
+  state.load.mockResolvedValue({recordings:[]});state.play.mockResolvedValue({ok:true,source:'recording',accent:'us',senseMatch:'matched'});
+  const view=render(<Pronunciation entry={record} sense={noun} accent="us"/>);
+  fireEvent.click(screen.getByRole('button',{name:'Play US pronunciation of record'}));
+  await waitFor(()=>expect(state.play).toHaveBeenCalledWith(record,expect.objectContaining({sense:noun})));
+  expect(screen.queryByText('wrong entry IPA')).toBeNull();
+  view.rerender(<Pronunciation entry={record} sense={verb} accent="us"/>);
+  expect(state.stop).toHaveBeenCalledOnce();expect(screen.queryByText(/Recorded pronunciation/)).toBeNull();
+  fireEvent.click(screen.getByRole('button',{name:'Play US pronunciation of record'}));
+  await waitFor(()=>expect(state.play).toHaveBeenLastCalledWith(record,expect.objectContaining({sense:verb})));
+ });
+ test('compact missing-match recovery offers the same meaning in another accent and explicit unverified speech',async()=>{
+  state.load.mockResolvedValue({recordings:[{url:'https://example.org/wrong-verb.ogg',accent:'us',status:'verified',author:'Wrong reading'}]});
+  state.play.mockResolvedValueOnce({ok:false,source:'none',reason:'sense-recording-unavailable',accent:'uk'}).mockResolvedValue({ok:true,source:'speech',accent:'uk',senseMatch:'unverified',voice:'Device UK'});
+  render(<Pronunciation compact entry={record} sense={noun}/>);
+  fireEvent.click(screen.getByRole('button',{name:'Play UK pronunciation of record'}));
+  expect(await screen.findByText(/No verified UK recording for this meaning/)).toBeDefined();
+  expect(screen.getByRole('button',{name:'US — Dvortygirl'})).toBeDefined();
+  expect(screen.queryByText(/Wrong reading/)).toBeNull();
+  fireEvent.click(screen.getByRole('button',{name:'Use UK device voice (reading unverified)'}));
+  await waitFor(()=>expect(state.play).toHaveBeenLastCalledWith(record,expect.objectContaining({sense:noun,deviceOnly:true})));
+  await waitFor(()=>expect(screen.getByRole('status').textContent).toContain('reading unverified'));
+ });
+ test('failure in the nonpreferred accent still offers the preferred matching recording',async()=>{
+  state.load.mockResolvedValue({recordings:[]});state.play.mockResolvedValue({ok:false,source:'none',reason:'sense-recording-unavailable',accent:'uk'});
+  render(<Pronunciation entry={record} sense={noun} accent="us"/>);
+  fireEvent.click(screen.getByRole('button',{name:'Play UK pronunciation of record'}));
+  expect(await screen.findByRole('button',{name:'US — Dvortygirl'})).toBeDefined();
+ });
  test('delayed metadata retry ignores an older response and exposes a recoverable failure', async () => {
   vi.useFakeTimers();
   let finishOld!: (value: any) => void;

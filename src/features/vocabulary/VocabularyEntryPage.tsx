@@ -541,6 +541,7 @@ export function VocabularyEntryPage() {
           </div>
           <Pronunciation
             entry={entry}
+            sense={primary || null}
             accent={accent}
             onMedia={setRecordings}
           />

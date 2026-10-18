@@ -64,6 +64,7 @@ export type ReviewQueueFilter = {
 };
 export type ReviewCard = {
   id: string; entryId: string; senseId: string; entry: VocabularyEntry; mode: VocabularyMode;
+  pronunciation?: import('./sensePronunciation').FrozenVocabularyPronunciation;
   task?: import('./content').VocabularyLearningTask; contentVersion?: string;
   context?: import('./context').VocabularyLearningContext;
   dimension: VocabularyDimension; dueAt: string; sources: VocabularySource[];

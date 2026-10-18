@@ -6,12 +6,15 @@ import type { ReviewCard, VocabularyResult } from "../../domain/vocabulary";
 import { conceal, modeLabel, resultName, senseFor } from "./practicePresentation";
 import type { VocabularyPracticeController } from "./useVocabularyPracticeController";
 import { VocabularySourceLinks } from './VocabularySourceLinks';
+import { getVocabularyPronunciation } from '../../domain/vocabulary/sensePronunciation';
 
 export function VocabularyPracticeSession({ controller, session }: {
   controller: VocabularyPracticeController;
   session: VocabularyPracticeSession;
 }) {
-  const { preferences, mode, cards, saving, audioStatus, audioBusy, looping, answered, flagged, count, locked, currentIndex, pageStart, visibleCards, playCard, updateAnswer, finalizeAnswer, focusCard, advance, toggleFlag, reportProduction, submit, registerAnswerField, pauseSession, replayCard, toggleCurrentAudio, toggleAudioLoop, handleWorkbenchKeyDown } = controller;
+  const { preferences, mode, cards, saving, audioStatus, audioBusy, audioNeedsChoice, looping, answered, flagged, count, locked, currentIndex, pageStart, visibleCards, playCard, updateAnswer, finalizeAnswer, focusCard, advance, toggleFlag, reportProduction, submit, registerAnswerField, pauseSession, replayCard, toggleCurrentAudio, toggleAudioLoop, handleWorkbenchKeyDown } = controller;
+  const audioCard = cards[currentIndex];
+  const matchingRecordings = audioCard ? getVocabularyPronunciation(audioCard.entry,senseFor(audioCard),audioCard.pronunciation ?? 'legacy').recordings : [];
   function prompt(card: ReviewCard, compact = false) {
     const sense = senseFor(card);
     const currentMode = session?.mode || mode;
@@ -228,6 +231,10 @@ export function VocabularyPracticeSession({ controller, session }: {
       >
         {audioStatus}
       </div>
+      {audioNeedsChoice ? <div className="vocabulary-audio-recovery practice-audio-choices" role="group" aria-label="Pronunciation recovery">
+        {matchingRecordings.map(recording=><button key={recording.url} className="btn line" type="button" disabled={locked || audioBusy} onClick={()=>void playCard(currentIndex,{accent:recording.accent as 'uk' | 'us'})}>Play matching {recording.accent.toUpperCase()} recording</button>)}
+        <button className="btn line" type="button" disabled={locked || audioBusy} onClick={()=>void playCard(currentIndex,{deviceOnly:true})}>Use {preferences.accent.toUpperCase()} device voice (reading unverified)</button>
+      </div> : null}
       <nav className="practice-number-nav" aria-label="Session words">
         {visibleCards.map(({card, index}) => (
           <button

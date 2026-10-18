@@ -29,6 +29,9 @@ const voice = (lang: string, name = lang) => ({ lang, name, voiceURI: name, defa
 const recordings = ['uk', 'us'].map(accent => ({ accent, url: `https://example.com/${accent}.mp3`, status: 'verified', availability: 'metadata-only', title: accent, author: 'Tester', sourceUrl: '', license: 'CC0', licenseUrl: '', changes: '', reason: 'test' } as import('../../domain/vocabulary/media').VocabularyRecording));
 const controllerFor = () => createVocabularyPlayback(async entry => ({ version: 'test', recordings: entry.pronunciation ? recordings : [] }));
 const entry = { id: 'term', term: 'significant', example: 'A significant change.', pronunciation: { uk: 'https://example.com/uk.mp3', us: 'https://example.com/us.mp3' } } as VocabularyEntry;
+const recordNoun = { id:'kaikki:5386f9871d2cf75669', definition:'Information preserved in a medium for later reference.', pos:'noun', example:'Keep a record.' };
+const recordVerb = { id:'kaikki:a81bc2a2a960622df9', definition:'To preserve information by writing it down or storing it in another medium.', pos:'verb', example:'Please record the temperature every hour.' };
+const recordEntry = { ...entry, id:'ve-7e9f7328', term:'record', senses:[recordNoun,recordVerb] };
 
 beforeEach(() => {
   vi.useFakeTimers();
@@ -41,6 +44,43 @@ beforeEach(() => {
 afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 describe('vocabulary playback', () => {
+  test('selected noun recording wins over an entry-level verified verb recording', async () => {
+    const player=createVocabularyPlayback(async()=>({version:'test',recordings:[{...recordings[1],url:'https://example.org/record-verb.ogg'}]}));
+    const result=player.play(recordEntry,{accent:'us',sense:recordNoun} as any);
+    await vi.advanceTimersByTimeAsync(0);
+    expect(FakeAudio.instances[0].src).toBe('https://upload.wikimedia.org/wikipedia/commons/f/f3/En-us-record-noun.ogg');
+    FakeAudio.instances[0].onended!();
+    await expect(result).resolves.toMatchObject({ok:true,source:'recording',accent:'us',senseMatch:'matched'});
+    expect(utterances).toHaveLength(0);
+  });
+  test('an unmatched homograph accent never automatically synthesizes an ambiguous word',async()=>{
+    const result=controllerFor().play(recordEntry,{accent:'uk',sense:recordNoun} as any);
+    await vi.advanceTimersByTimeAsync(0);
+    expect(FakeAudio.instances).toHaveLength(0);
+    expect(utterances).toHaveLength(0);
+    await expect(result).resolves.toMatchObject({ok:false,reason:'sense-recording-unavailable',accent:'uk'});
+  });
+  test('a matching recording failure never silently switches the reading to device speech',async()=>{
+    const result=controllerFor().play(recordEntry,{accent:'us',sense:recordNoun});
+    await vi.advanceTimersByTimeAsync(0);FakeAudio.instances[0].onerror!();
+    await expect(result).resolves.toMatchObject({ok:false,reason:'sense-recording-failed',accent:'us'});
+    expect(utterances).toHaveLength(0);
+  });
+  test('an explicit wrong-meaning recording is refused even when its accent matches',async()=>{
+    const result=controllerFor().play(recordEntry,{accent:'us',sense:recordNoun,recording:recordings[1]});
+    await vi.advanceTimersByTimeAsync(0);expect(FakeAudio.instances).toHaveLength(0);expect(utterances).toHaveLength(0);
+    await expect(result).resolves.toMatchObject({ok:false,reason:'sense-recording-unavailable'});
+  });
+  test.each([{deviceOnly:true},{example:true,text:'Please record the temperature.'}])('explicit speech for a homograph is labelled unverified: %j',async options=>{
+    const result=controllerFor().play(recordEntry,{accent:'us',sense:recordVerb,...options});
+    await vi.advanceTimersByTimeAsync(0);expect(FakeAudio.instances).toHaveLength(0);expect(utterances).toHaveLength(1);
+    utterances[0].onend!();await expect(result).resolves.toMatchObject({ok:true,source:'speech',senseMatch:'unverified'});
+  });
+  test('legacy playback retains entry-level selection without claiming an exact meaning match',async()=>{
+    const result=controllerFor().play(recordEntry,{accent:'us',sense:recordNoun,pronunciation:'legacy'});
+    await vi.advanceTimersByTimeAsync(0);expect(FakeAudio.instances[0].src).toBe(recordings[1].url);FakeAudio.instances[0].onended!();
+    await expect(result).resolves.toMatchObject({ok:true,source:'recording',senseMatch:'legacy'});
+  });
   test('plays the selected recording with saved speed, volume and automatic repetitions', async () => {
     const controller = controllerFor();
     const result = controller.play(entry, { accent: 'us', rate: 0.8, volume: 0.4, repeatCount: 2, repeatGapMs: 800 });

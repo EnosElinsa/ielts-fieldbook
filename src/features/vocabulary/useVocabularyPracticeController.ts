@@ -74,6 +74,7 @@ export function useVocabularyPracticeController() {
   const modeNotice = modeRecovery?.owner === accountId() && modeRecovery?.bookId === bookId && modeRecovery?.unitId === unitId ? modeRecovery.message : '';
   const [audioStatus, setAudioStatus] = useState("");
   const [audioBusy, setAudioBusy] = useState(false);
+  const [audioNeedsChoice, setAudioNeedsChoice] = useState(false);
   const [looping, setLooping] = useState(false);
   const [storageError, setStorageError] = useState(false);
   const [catalogStatus, setCatalogStatus] = useState<{ bookId: string; status: 'loading' | 'ready' | 'error' }>({ bookId: '', status: 'loading' });
@@ -156,6 +157,7 @@ export function useVocabularyPracticeController() {
     }
     playback.current?.stop();
     setAudioBusy(false);
+    setAudioNeedsChoice(false);
     setLooping(false);
   }, []);
   useEffect(() => {
@@ -421,7 +423,7 @@ export function useVocabularyPracticeController() {
 
   async function playCard(
     index: number,
-    options: { automatic?: boolean; example?: boolean } = {},
+    options: { automatic?: boolean; example?: boolean; accent?: 'uk' | 'us'; deviceOnly?: boolean } = {},
   ) {
     const card = cardsRef.current[index];
     if (!card || !owned()) return false;
@@ -434,9 +436,13 @@ export function useVocabularyPracticeController() {
     const generation = ++audioGeneration.current;
     playback.current?.stop();
     setAudioBusy(true);
+    setAudioNeedsChoice(false);
     setAudioStatus("Playing audio");
     const outcome = await playback.current!.play(card.entry, {
-      accent: p.accent,
+      accent: options.accent || p.accent,
+      sense: senseFor(card),
+      pronunciation: card.pronunciation ?? 'legacy',
+      deviceOnly: options.deviceOnly,
       rate: p.speechRate,
       volume: p.volume,
       repeatCount: p.repeatCount,
@@ -448,6 +454,7 @@ export function useVocabularyPracticeController() {
     if (!owned() || generation !== audioGeneration.current) return false;
     setAudioBusy(false);
     if (!outcome.ok) {
+      setAudioNeedsChoice(outcome.reason === 'sense-recording-unavailable' || outcome.reason === 'sense-recording-failed' || Boolean(options.deviceOnly && card.pronunciation && card.pronunciation !== 'legacy'));
       setAudioStatus(
         outcome.reason === "cancelled"
           ? "Audio paused"
@@ -490,6 +497,7 @@ export function useVocabularyPracticeController() {
     stopAudio();
     const generation = ++loopGeneration.current;
     setLooping(true);
+    let completed = true;
     for (let cursor = index; cursor < cardsRef.current.length; cursor += 1) {
       if (
         !owned() ||
@@ -499,13 +507,13 @@ export function useVocabularyPracticeController() {
         return;
       replaceSession({ ...sessionRef.current, index: cursor });
       const ok = await playCardRef.current(cursor);
-      if (!ok || generation !== loopGeneration.current) break;
+      if (!ok || generation !== loopGeneration.current) { completed = false; break; }
       if (
         preferencesRef.current.audioExamples &&
         senseFor(cardsRef.current[cursor])?.example
       ) {
         const exampleOk = await playCardRef.current(cursor, { example: true });
-        if (!exampleOk || generation !== loopGeneration.current) break;
+        if (!exampleOk || generation !== loopGeneration.current) { completed = false; break; }
       }
       if (cursor < cardsRef.current.length - 1)
         await new Promise<void>((resolve) => {
@@ -521,7 +529,7 @@ export function useVocabularyPracticeController() {
     }
     if (owned() && generation === loopGeneration.current) {
       setLooping(false);
-      setAudioStatus("Audio loop complete");
+      if (completed) setAudioStatus("Audio loop complete");
     }
   }
 
@@ -576,7 +584,7 @@ export function useVocabularyPracticeController() {
     );
     if (planSelection && boundVocabularyPlan) next.planId = boundVocabularyPlan.id;
     const frozen = next.cardIds.map((identity) =>
-      candidates.find((card) => card.id === identity.id)!,
+      (next.cardSnapshots || candidates).find((card) => card.id === identity.id)!,
     );
     startedAt.current = Date.now();
     cardsRef.current = frozen;
@@ -1021,7 +1029,7 @@ export function useVocabularyPracticeController() {
     sourceType, setSource, skill, setSkill, dimension, setDimension,
     dueOnly, setDue, wrongOnly, setWrong, session, cards, resume, results,
     settingsOpen, setSettingsOpen, exitOpen, setExitOpen, incompleteOpen, setIncompleteOpen,
-    saving, recovering, retryPreparing, error, audioStatus, audioBusy, looping, storageError, catalogStatus,
+    saving, recovering, retryPreparing, error, audioStatus, audioBusy, audioNeedsChoice, looping, storageError, catalogStatus,
     resultFilter, setResultFilter, resultReturnTo, queue, unitQueue, groupModes, modeNotice, books, units, selectedUnit,
     selectedBook, chapter, catalogReady, leafUnits, studyReady, answered, flagged,
     count, locked, currentIndex, pageStart, visibleCards, resultRows, nextGroup, nextBatch, batchRequest, learningBatch, plannedReview, recent, boundAssessmentMode,

@@ -153,6 +153,9 @@ export function VocabularyPracticeResults({ controller, results }: {
             {resultRows.map((row, index) => {
               const current = currentRow(row); const currentDefinition = current.resolved?.sense?.definition;
               const changed = Boolean(currentDefinition && currentDefinition !== row.definition);
+              const frozen = results.cardSnapshots?.find(card => card.id === row.cardId);
+              const frozenAudio = frozen?.pronunciation !== undefined && frozen.pronunciation !== 'legacy';
+              const audioEntry = frozenAudio ? frozen!.entry : {...current.raw,term:row.term};
               const expected = closestAcceptedAnswer(row.response,row.expectedAnswer,results.cardSnapshots?.find(card => card.id === row.cardId)?.task?.acceptedAnswers);
               const diff = !['production','audio'].includes(results.mode) && row.result === 'failure' && Boolean(row.response.trim()) && !isRegionalSpellingDifference(expected,row.response) && row.response.normalize('NFKC').toLocaleLowerCase() !== expected.normalize('NFKC').toLocaleLowerCase();
               return (
@@ -165,7 +168,7 @@ export function VocabularyPracticeResults({ controller, results }: {
                   </Link>
                   <small>{results.mode === 'dictation' ? currentDefinition || row.definition : row.definition}</small>
                   {changed ? <small className="practice-current-reference">{results.mode === 'dictation' ? 'Current learning reference updated; saved grading is unchanged.' : `Current meaning: ${currentDefinition}`}</small> : null}
-                  {current.raw ? <Pronunciation compact entry={{...current.raw,term:row.term}} accent={controller.preferences.accent}/> : null}
+                  {current.raw ? <Pronunciation compact entry={audioEntry} sense={audioEntry.senses.find(sense=>sense.id===row.senseId) || null} options={{pronunciation:frozen?.pronunciation ?? 'legacy'}} accent={frozenAudio ? results.preferences.accent : controller.preferences.accent}/> : null}
                   {row.prompt && results.mode !== 'dictation' ? <small className="practice-result-context">{row.prompt}</small> : null}
                 </th>
                 <td className="practice-response-column" data-label="Your response">

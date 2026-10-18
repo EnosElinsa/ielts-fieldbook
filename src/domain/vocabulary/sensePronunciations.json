@@ -1,0 +1,1898 @@
+{
+  "version": "sense-pronunciation-2026-10-19.1",
+  "protectedTerms": [
+    "record",
+    "present",
+    "lead",
+    "object",
+    "subject",
+    "minute",
+    "wind",
+    "bow"
+  ],
+  "recordings": [
+    {
+      "id": "commons:16239c0cfbb63c23a09c4424d0e130308e27fa0b",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/En-us-record-noun.ogg",
+      "title": "En-us-record-noun.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-record-noun.ogg&oldid=1229158038",
+      "author": "Dvortygirl",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Template:PD-self",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229158038,
+      "fileTimestamp": "2005-08-06T06:52:35Z",
+      "fileSha1": "16239c0cfbb63c23a09c4424d0e130308e27fa0b",
+      "playbackSha1": "16239c0cfbb63c23a09c4424d0e130308e27fa0b"
+    },
+    {
+      "id": "commons:c9b95e2d944c94e89c46380c499e2a4523b39432",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/En-us-record-verb.ogg",
+      "title": "En-us-record-verb.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-record-verb.ogg&oldid=1157854568",
+      "author": "Dvortygirl",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Template:PD-self",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1157854568,
+      "fileTimestamp": "2005-08-06T06:52:53Z",
+      "fileSha1": "c9b95e2d944c94e89c46380c499e2a4523b39432",
+      "playbackSha1": "c9b95e2d944c94e89c46380c499e2a4523b39432"
+    },
+    {
+      "id": "commons:12a28d8d050b71aa1fb89225c26b2e547873083a",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/05/En-us-present-adjective.ogg",
+      "title": "En-us-present-adjective.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-present-adjective.ogg&oldid=1229153874",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229153874,
+      "fileTimestamp": "2006-08-31T04:38:23Z",
+      "fileSha1": "12a28d8d050b71aa1fb89225c26b2e547873083a",
+      "playbackSha1": "12a28d8d050b71aa1fb89225c26b2e547873083a"
+    },
+    {
+      "id": "commons:370ec1e5200a1039faf6c76872d539e1d6b61358",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/9d/LL-Q1860_%28eng%29-Vealhurl-present.wav",
+      "title": "LL-Q1860 (eng)-Vealhurl-present.wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-present.wav&oldid=1127979008",
+      "author": "Speaker: Vealhurl Recorder: Vealhurl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1127979008,
+      "fileTimestamp": "2025-11-06T09:44:42Z",
+      "fileSha1": "370ec1e5200a1039faf6c76872d539e1d6b61358",
+      "playbackSha1": "370ec1e5200a1039faf6c76872d539e1d6b61358"
+    },
+    {
+      "id": "commons:d05e18a5e31489ea58759769ddb4d3277e7bff95",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/62/En-us-present-verb1.ogg",
+      "title": "En-us-present-verb1.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-present-verb1.ogg&oldid=1229153878",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229153878,
+      "fileTimestamp": "2006-08-31T04:41:30Z",
+      "fileSha1": "d05e18a5e31489ea58759769ddb4d3277e7bff95",
+      "playbackSha1": "d05e18a5e31489ea58759769ddb4d3277e7bff95"
+    },
+    {
+      "id": "commons:6e3219a5297be780ea00183ab80ac178eee4ff4a",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/14/LL-Q1860_%28eng%29-Vealhurl-present2.wav",
+      "title": "LL-Q1860 (eng)-Vealhurl-present2.wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-present2.wav&oldid=1127979009",
+      "author": "Speaker: Vealhurl Recorder: Vealhurl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1127979009,
+      "fileTimestamp": "2025-11-06T09:44:41Z",
+      "fileSha1": "6e3219a5297be780ea00183ab80ac178eee4ff4a",
+      "playbackSha1": "6e3219a5297be780ea00183ab80ac178eee4ff4a"
+    },
+    {
+      "id": "commons:3017ca3d341b8928fe1a3e9e50d587399aaba123",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/En-us-lead-metal.oga",
+      "title": "En-us-lead-metal.oga",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-lead-metal.oga&oldid=1229142014",
+      "author": "Dvortygirl (credited in the Commons file description)",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229142014,
+      "fileTimestamp": "2006-06-19T00:55:34Z",
+      "fileSha1": "3017ca3d341b8928fe1a3e9e50d587399aaba123",
+      "playbackSha1": "3017ca3d341b8928fe1a3e9e50d587399aaba123"
+    },
+    {
+      "id": "commons:b5e460bbebc0111b47fea298e54ea0c8a4bf5212",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/6c/LL-Q1860_%28eng%29-Tesco250-lead.wav",
+      "title": "LL-Q1860 (eng)-Tesco250-lead.wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Tesco250-lead.wav&oldid=1248064085",
+      "author": "Speaker: Tesco250 Recorder: Tesco250",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1248064085,
+      "fileTimestamp": "2026-07-15T15:20:21Z",
+      "fileSha1": "b5e460bbebc0111b47fea298e54ea0c8a4bf5212",
+      "playbackSha1": "b5e460bbebc0111b47fea298e54ea0c8a4bf5212"
+    },
+    {
+      "id": "commons:f0aabedbba38613fcc5d19b1842cfae194398cab",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7e/En-us-lead-guide.oga/En-us-lead-guide.oga.mp3",
+      "title": "En-us-lead-guide.oga",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-lead-guide.oga&oldid=927115899",
+      "author": "Dvortygirl (credited in the Commons file description)",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Commons-provided MP3 transcode of the identified original recording; no editorial audio edits.",
+      "fileRevision": 927115899,
+      "fileTimestamp": "2006-06-19T00:55:19Z",
+      "fileSha1": "f0aabedbba38613fcc5d19b1842cfae194398cab",
+      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/En-us-lead-guide.oga",
+      "playbackSha1": "f5323f2dc0ea088972c449071ca9713495394991"
+    },
+    {
+      "id": "commons:7d9348f2a6044c714062af05fca403b6a1391b0a",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/03/En-us-object-noun.ogg",
+      "title": "En-us-object-noun.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-object-noun.ogg&oldid=1229147999",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229147999,
+      "fileTimestamp": "2006-09-30T05:47:58Z",
+      "fileSha1": "7d9348f2a6044c714062af05fca403b6a1391b0a",
+      "playbackSha1": "7d9348f2a6044c714062af05fca403b6a1391b0a"
+    },
+    {
+      "id": "commons:5ab18da367da74ee48e9e955a033f4d9365a5fe3",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/66/En-us-object-verb.ogg",
+      "title": "En-us-object-verb.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "network-unverified",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-object-verb.ogg&oldid=1229148007",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229148007,
+      "fileTimestamp": "2006-09-30T05:48:09Z",
+      "fileSha1": "5ab18da367da74ee48e9e955a033f4d9365a5fe3"
+    },
+    {
+      "id": "commons:34d257a0ad731ee6339f78700778704af63d4f38",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/71/En-us-subject-noun.ogg",
+      "title": "En-us-subject-noun.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-subject-noun.ogg&oldid=1074092722",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1074092722,
+      "fileTimestamp": "2006-09-30T04:18:30Z",
+      "fileSha1": "34d257a0ad731ee6339f78700778704af63d4f38",
+      "playbackSha1": "34d257a0ad731ee6339f78700778704af63d4f38"
+    },
+    {
+      "id": "commons:a282ed6525b23268081bd31bc0d94958e7fce9f0",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/9/96/En-us-subject-verb.ogg/En-us-subject-verb.ogg.mp3",
+      "title": "En-us-subject-verb.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-subject-verb.ogg&oldid=941747536",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Commons-provided MP3 transcode of the identified original recording; no editorial audio edits.",
+      "fileRevision": 941747536,
+      "fileTimestamp": "2006-09-30T04:18:58Z",
+      "fileSha1": "a282ed6525b23268081bd31bc0d94958e7fce9f0",
+      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/9/96/En-us-subject-verb.ogg",
+      "playbackSha1": "ace92060bc7ce73a66b8ba031623d67fc7f70bbd"
+    },
+    {
+      "id": "commons:e1cf0d76ef8f53f6e7fe2112ff5a0fc4d9eb0fa5",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c5/En-us-minute-noun.ogg",
+      "title": "En-us-minute-noun.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-minute-noun.ogg&oldid=1155983583",
+      "author": "Dvortygirl",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Template:PD-self",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1155983583,
+      "fileTimestamp": "2005-10-20T05:12:25Z",
+      "fileSha1": "e1cf0d76ef8f53f6e7fe2112ff5a0fc4d9eb0fa5",
+      "playbackSha1": "e1cf0d76ef8f53f6e7fe2112ff5a0fc4d9eb0fa5"
+    },
+    {
+      "id": "commons:d02e5807187abb070f68acca1ab770e2df442983",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/0e/En-us-minute-adjective.ogg",
+      "title": "En-us-minute-adjective.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Pronunciation group and accent explicitly identified in the revision-bound Wiktionary audio markup; author and license checked against the Commons file revision.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-minute-adjective.ogg&oldid=974722523",
+      "author": "Dvortygirl",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Template:PD-self",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 974722523,
+      "fileTimestamp": "2005-10-20T05:12:54Z",
+      "fileSha1": "d02e5807187abb070f68acca1ab770e2df442983",
+      "playbackSha1": "d02e5807187abb070f68acca1ab770e2df442983"
+    }
+  ],
+  "groups": [
+    {
+      "id": "record-first",
+      "term": "record",
+      "scope": "Etymology 1: nouns and adjective",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=record&oldid=93533916",
+      "ipa": {
+        "uk": "/ˈɹɛk.ɔːd/",
+        "us": "/ˈɹɛk.ɚd/ · /ˈɹɛk.ɔɹd/"
+      },
+      "audioMarkup": [
+        "** {{audio|en|en-us-record-noun.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:16239c0cfbb63c23a09c4424d0e130308e27fa0b"
+      }
+    },
+    {
+      "id": "record-second",
+      "term": "record",
+      "scope": "Etymology 2: verbs",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=record&oldid=93533916",
+      "ipa": {
+        "uk": "/ɹɪˈkɔːd/ · /ɹəˈkɔːd/",
+        "us": "/ɹɪˈkɔɹd/"
+      },
+      "audioMarkup": [
+        "* {{audio|en|en-us-record-verb.ogg|a=US|pos=verb}}"
+      ],
+      "recordings": {
+        "us": "commons:c9b95e2d944c94e89c46380c499e2a4523b39432"
+      }
+    },
+    {
+      "id": "present-first",
+      "term": "present",
+      "scope": "Pronunciation: adjective and noun",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=present&oldid=93012855",
+      "ipa": {
+        "uk": "/ˈpɹɛz.ənt/",
+        "us": "/ˈpɹɛz.ənt/"
+      },
+      "audioMarkup": [
+        "** {{audio|en|en-us-present-adjective.ogg|a=US}}",
+        "** {{audio|en|LL-Q1860 (eng)-Vealhurl-present.wav|a=Southern England}}"
+      ],
+      "recordings": {
+        "us": "commons:12a28d8d050b71aa1fb89225c26b2e547873083a",
+        "uk": "commons:370ec1e5200a1039faf6c76872d539e1d6b61358"
+      }
+    },
+    {
+      "id": "present-second",
+      "term": "present",
+      "scope": "Pronunciation: verb, excluding past of presend",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=present&oldid=93012855",
+      "ipa": {
+        "uk": "/pɹɪˈzɛnt/",
+        "us": "/pɹɪˈzɛnt/"
+      },
+      "audioMarkup": [
+        "** {{audio|en|en-us-present-verb1.ogg|a=US}}",
+        "** {{audio|en|LL-Q1860 (eng)-Vealhurl-present2.wav|a=Southern England}}"
+      ],
+      "recordings": {
+        "us": "commons:d05e18a5e31489ea58759769ddb4d3277e7bff95",
+        "uk": "commons:6e3219a5297be780ea00183ab80ac178eee4ff4a"
+      }
+    },
+    {
+      "id": "lead-metal",
+      "term": "lead",
+      "scope": "Etymology 1: metal-related nouns and verbs",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=lead&oldid=93517137",
+      "ipa": {
+        "uk": "/lɛd/",
+        "us": "/lɛd/"
+      },
+      "audioMarkup": [
+        "** {{audio|en|En-us-lead-metal.oga|a=US}}",
+        "** {{audio|en|LL-Q1860 (eng)-Tesco250-lead.wav|a=UK}}"
+      ],
+      "recordings": {
+        "us": "commons:3017ca3d341b8928fe1a3e9e50d587399aaba123",
+        "uk": "commons:b5e460bbebc0111b47fea298e54ea0c8a4bf5212"
+      }
+    },
+    {
+      "id": "lead-guide",
+      "term": "lead",
+      "scope": "Etymology 2: guiding and advance nouns, verbs and adjectives; not spelling references",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=lead&oldid=93517137",
+      "ipa": {
+        "uk": "/ˈliːd/",
+        "us": "/ˈliːd/"
+      },
+      "audioMarkup": [
+        "** {{audio|en|En-us-lead-guide.oga|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:f0aabedbba38613fcc5d19b1842cfae194398cab"
+      }
+    },
+    {
+      "id": "object-first",
+      "term": "object",
+      "scope": "Pronunciation: noun",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=object&oldid=93417662",
+      "ipa": {
+        "uk": "/ˈɒb.d͡ʒɛkt/",
+        "us": "/ˈɑb.d͡ʒɛkt/"
+      },
+      "audioMarkup": [
+        "** {{audio|en|en-us-object-noun.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:7d9348f2a6044c714062af05fca403b6a1391b0a"
+      }
+    },
+    {
+      "id": "object-second",
+      "term": "object",
+      "scope": "Pronunciation: verb",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=object&oldid=93417662",
+      "ipa": {
+        "uk": "/əbˈd͡ʒɛkt/",
+        "us": "/əbˈd͡ʒɛkt/"
+      },
+      "audioMarkup": [
+        "** {{audio|en|en-us-object-verb.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:5ab18da367da74ee48e9e955a033f4d9365a5fe3"
+      }
+    },
+    {
+      "id": "subject-first",
+      "term": "subject",
+      "scope": "Etymologies 1 and 2: adjective and noun",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090",
+      "ipa": {
+        "uk": "/ˈsʌb.d͡ʒɛkt/ · /ˈsʌb.d͡ʒɪkt/",
+        "us": "/ˈsʌb.d͡ʒɛkt/"
+      },
+      "audioMarkup": [
+        "* {{audio|en|en-us-subject-noun.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:34d257a0ad731ee6339f78700778704af63d4f38"
+      }
+    },
+    {
+      "id": "subject-second",
+      "term": "subject",
+      "scope": "Etymology 3: verb",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090",
+      "ipa": {
+        "uk": "/səbˈd͡ʒɛkt/ · /sʌbˈd͡ʒɛkt/",
+        "us": "/səbˈd͡ʒɛkt/ · /sʌbˈd͡ʒɛkt/"
+      },
+      "audioMarkup": [
+        "* {{audio|en|en-us-subject-verb.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:a282ed6525b23268081bd31bc0d94958e7fce9f0"
+      }
+    },
+    {
+      "id": "minute-time",
+      "term": "minute",
+      "scope": "Etymology 1: nouns and verbs; phrase recording a minute excluded",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=minute&oldid=93600887",
+      "ipa": {
+        "uk": "/ˈmɪnɪt/",
+        "us": "/ˈmɪnɪt/"
+      },
+      "audioMarkup": [
+        "* {{audio|en|en-us-minute-noun.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:e1cf0d76ef8f53f6e7fe2112ff5a0fc4d9eb0fa5"
+      }
+    },
+    {
+      "id": "minute-small",
+      "term": "minute",
+      "scope": "Etymology 2: adjective",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=minute&oldid=93600887",
+      "ipa": {
+        "uk": "[maɪ̯ˈnjuːt] · [mɪˈnjuːt]",
+        "us": "[maɪ̯ˈn(j)u̟(ː)t] · [məˈn(j)u̟(ː)t]"
+      },
+      "audioMarkup": [
+        "* {{audio|en|en-us-minute-adjective.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:d02e5807187abb070f68acca1ab770e2df442983"
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "id": "sp1-de0c7a5f3960e757298d",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:5386f9871d2cf75669",
+      "definition": "Information preserved in a medium for later reference.",
+      "pos": "noun",
+      "groupId": "record-first"
+    },
+    {
+      "id": "sp1-2f570fdcf502591578bf",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:0d5287ab9357a90163",
+      "definition": "A document or other medium that preserves information for future reference.",
+      "pos": "noun",
+      "groupId": "record-first"
+    },
+    {
+      "id": "sp1-074671431026ce170971",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:a18d8c79232568f972",
+      "definition": "A disc, usually made of vinyl, that stores sound for playback on a record player.",
+      "pos": "noun",
+      "groupId": "record-first"
+    },
+    {
+      "id": "sp1-4171c5d9c28bac4be587",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:00057ea728a5735e78",
+      "definition": "A collection of related data about one person or item.",
+      "pos": "noun",
+      "groupId": "record-first"
+    },
+    {
+      "id": "sp1-380423c67c2a40b4c87a",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:87a050bba2c422eb5e",
+      "definition": "A data structure that groups named fields into one value or instance.",
+      "pos": "noun",
+      "groupId": "record-first"
+    },
+    {
+      "id": "sp1-edc16ef7fe2ae894924d",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:572d74d69f63af261a",
+      "definition": "The best, highest, lowest or otherwise most extreme officially or reliably recorded value in a specified category.",
+      "pos": "noun",
+      "groupId": "record-first"
+    },
+    {
+      "id": "sp1-933de9236d50949c3727",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:092dbc8aa51dde18b2",
+      "definition": "Greater or more extreme than any previously recorded comparable amount or achievement.",
+      "pos": "adj",
+      "groupId": "record-first"
+    },
+    {
+      "id": "sp1-f7a1801c42a73f7a5940",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:a81bc2a2a960622df9",
+      "definition": "To preserve information by writing it down or storing it in another medium.",
+      "pos": "verb",
+      "groupId": "record-second"
+    },
+    {
+      "id": "sp1-a30c4e6bf9c9f700a34c",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:b7c249d857701c4ead",
+      "definition": "To capture sound or moving images for later playback.",
+      "pos": "verb",
+      "groupId": "record-second"
+    },
+    {
+      "id": "sp1-650493898dcd2b47229d",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:2d40a84cb228ab6afd",
+      "definition": "To enter a document or transaction in an official public register, giving it the legal effect provided by the applicable system.",
+      "pos": "verb",
+      "groupId": "record-second"
+    },
+    {
+      "id": "sp1-47e22e080549f5b4d83f",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:3eace4d5e66a9593f2",
+      "definition": "To make a lasting record in a medium, without stating the recorded information as a direct object.",
+      "pos": "verb",
+      "groupId": "record-second"
+    },
+    {
+      "id": "sp1-2cde6fa36f0ac9059421",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:13a4fd3108c21f359d",
+      "definition": "To make an audio, video or multimedia recording.",
+      "pos": "verb",
+      "groupId": "record-second"
+    },
+    {
+      "id": "sp1-d9c170a5b8eaf2503043",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:380498e5206e6bd47a",
+      "definition": "To sing, rehearse or repeat a tune or musical notes.",
+      "pos": "verb",
+      "groupId": "record-second"
+    },
+    {
+      "id": "sp1-bd5492378f6815f46b98",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "kaikki:c6a46fa893c409f193",
+      "definition": "To reflect on or ponder something.",
+      "pos": "verb",
+      "groupId": "record-second"
+    },
+    {
+      "id": "sp1-a342d3c0c9add7e89ccc",
+      "entryId": "ve-7e9f7328",
+      "term": "record",
+      "senseId": "wiktionary:restored:d572150768ef8b1704",
+      "definition": "A music album or, more broadly, a released single, EP or other music release.",
+      "pos": "noun",
+      "groupId": "record-first"
+    },
+    {
+      "id": "sp1-dfd76e7d81e4da1442e2",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:639d878dc02160a47c",
+      "definition": "Existing or happening now; current.",
+      "pos": "adj",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-2fcc0fb8f824691d2ee9",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:7c563e09a937c88971",
+      "definition": "Here or at the place being discussed.",
+      "pos": "adj",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-7cdd03f6d4a8e1167faa",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:9675d890071f3124f9",
+      "definition": "Fast-acting or producing an immediate effect.",
+      "pos": "adj",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-eacd27e5943502d78c1a",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:0a3a11c04b83f13910",
+      "definition": "Immediate or without delay.",
+      "pos": "adj",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-af76cb3b7b330bf8dbef",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:b0d3a774a54db1d70b",
+      "definition": "Ready or quick to respond, especially in an emergency.",
+      "pos": "adj",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-a7fd3eea32ad1703353b",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:a3197ee7f1da31838b",
+      "definition": "Favourably attentive or willing to respond.",
+      "pos": "adj",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-2e69d5ea597a5f1e9a67",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:6537f72c4016608629",
+      "definition": "Being referred to in the current text or situation, in a use similar to this.",
+      "pos": "adj",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-5ccc99e47917a9fa3cc0",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:469c085ffa9f7b99f0",
+      "definition": "Attentive and mentally engaged with the current situation.",
+      "pos": "adj",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-6359902cd768e8f02429",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:aa929eaeac5da405e7",
+      "definition": "Indicating neither support nor opposition in a voting procedure that permits that response.",
+      "pos": "adj",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-c03ec5f88a4ff19075a8",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:b2ea5acbd36008e941",
+      "definition": "The current moment or period of time.",
+      "pos": "noun",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-ab7185a68977b2bc5d29",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:fd15a1bbdf35a0ff65",
+      "definition": "The present tense in grammar.",
+      "pos": "noun",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-994117842a51f3d8f90b",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:c695c3de1bdafde5d2",
+      "definition": "A gift given to someone, often on a special occasion.",
+      "pos": "noun",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-ae9ce63855477347e145",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:ceb422bc8fcfb44137",
+      "definition": "The position of a soldier when presenting arms.",
+      "pos": "noun",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-c3cbb714f2997ddaeb40",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:c2fe7f1e744f6e014b",
+      "definition": "Faeces, referred to humorously or euphemistically as a gift.",
+      "pos": "noun",
+      "groupId": "present-first"
+    },
+    {
+      "id": "sp1-235ad6189ccc27fa2463",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:40e41329b227d2f52a",
+      "definition": "To introduce someone formally to another person.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-44fb58a4563b3dec3b78",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:c1ce50ad3d79ad8d55",
+      "definition": "To appear or come across outwardly in a particular way.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-afa732ed8cf2efa912cf",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:4706a713b6a140f4a8",
+      "definition": "To nominate a member of the clergy for appointment to a benefice.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-13c99f116f51506ea487",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:28ac8ca91bf5b0258e",
+      "definition": "To submit a complaint, problem or other matter to a court or authority for consideration.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-0e8618ba91eb9cb50203",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:bc8d3a3406d8ddbafe",
+      "definition": "To bring a person before an authority on a charge or accusation.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-625775f3f3b713823c41",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:18fa369b2c326ae2b3",
+      "definition": "To appear or come forward in person, especially formally.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-29c3b60f7bc8b8da4e61",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:dcfc716e3c0c2d09d0",
+      "definition": "To show or display something so that it can be seen.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-2a977694dcfafe86e8e5",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:9419ac622a67392449",
+      "definition": "To put information or an idea forward for understanding or consideration.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-32a026bd183209305322",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:4f6b0c09a82b1c2821",
+      "definition": "To stage or put on a performance or production.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-540c50c32f74c9415642",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:ec8077367aca2ae6d3",
+      "definition": "To point or hold a firearm in a position ready for use.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-6f0327f1893b721f5790",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:1e0430db7b5b33eed1",
+      "definition": "To occur to the mind or become available for consideration.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-6705da52d4ab08f130eb",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:70fc16924139ad995b",
+      "definition": "To come to medical attention, often with particular symptoms.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-cc4d5f65f3a821759d88",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:e41a647f0d147ce815",
+      "definition": "To be positioned so that a particular fetal part is directed towards the birth canal for delivery.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-655162e69395605a1793",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:297b56eaef773c6c1b",
+      "definition": "To express or represent oneself outwardly as having a particular gender.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-8099fec732f05191876c",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:ee70ef53a4639ced7a",
+      "definition": "To act as the host or presenter of a broadcast programme.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-67c45142333e8eff564f",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:f0c659e4e0e902808e",
+      "definition": "To give someone a gift, award or other presentation.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-f007797c9d59673d91d2",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:6dd70f0e3d911fbb7d",
+      "definition": "To offer or convey something abstract, such as thanks or compliments.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-d68e8ee63e0100e9a8a0",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:24000acb04f7d763af",
+      "definition": "To hand over a bill or similar document for payment.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-ac655d86d116f6143836",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:035152702c5bc7f5ca",
+      "definition": "In some animals, to adopt a sexually receptive posture displaying the genital region.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-c5766a9357e1bbd8b6f2",
+      "entryId": "ve-6ae618ee",
+      "term": "present",
+      "senseId": "kaikki:485a5a263655df34c0",
+      "definition": "In omegaverse fiction, to have a fictional secondary designation such as alpha or omega become apparent.",
+      "pos": "verb",
+      "groupId": "present-second"
+    },
+    {
+      "id": "sp1-5ba1361e2fc431ee18a0",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:6c4af84b649b2187ca",
+      "definition": "The heavy metallic element with symbol Pb and atomic number 82.",
+      "pos": "noun",
+      "groupId": "lead-metal"
+    },
+    {
+      "id": "sp1-c2a0a09511ab91573077",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:76d93db3cd25d470f8",
+      "definition": "A weighted plummet on a line, traditionally used to measure water depth.",
+      "pos": "noun",
+      "groupId": "lead-metal"
+    },
+    {
+      "id": "sp1-257d20b5c50800fe584b",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:84c9e3fe9ea287558c",
+      "definition": "A thin strip of type metal inserted between lines of metal type.",
+      "pos": "noun",
+      "groupId": "lead-metal"
+    },
+    {
+      "id": "sp1-8b12230df1c142e7075c",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:5be1bd049971788bb4",
+      "definition": "Vertical spacing between lines of text, also called leading.",
+      "pos": "noun",
+      "groupId": "lead-metal"
+    },
+    {
+      "id": "sp1-85d82304ed5000d90e27",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:682b2601f9d42c98a8",
+      "definition": "Lead sheets or plates used as roof covering.",
+      "pos": "noun",
+      "groupId": "lead-metal"
+    },
+    {
+      "id": "sp1-806bf22ab8bdca4bb8b9",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:9babc2585459f02a71",
+      "definition": "A roof covered with lead sheets or terne plates.",
+      "pos": "noun",
+      "groupId": "lead-metal"
+    },
+    {
+      "id": "sp1-ff16466e9acc23e76b1b",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:a0fa64127cc51fad0a",
+      "definition": "The thin writing core of a pencil, usually made from graphite.",
+      "pos": "noun",
+      "groupId": "lead-metal"
+    },
+    {
+      "id": "sp1-89f8b0ce6ad89080a01b",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:5bf6f13352a026c514",
+      "definition": "Bullets or ammunition, in slang.",
+      "pos": "noun",
+      "groupId": "lead-metal"
+    },
+    {
+      "id": "sp1-5d46f6b7402619538eff",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:fed22cb2ad091fd465",
+      "definition": "Lead-lined protective clothing used in X-ray work.",
+      "pos": "noun",
+      "groupId": "lead-metal"
+    },
+    {
+      "id": "sp1-b11e7cecef8aeea46e7c",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:7f8be4cf71977d7495",
+      "definition": "To cover, fill or otherwise treat something with lead.",
+      "pos": "verb",
+      "groupId": "lead-metal"
+    },
+    {
+      "id": "sp1-6cb614643b0b7331e4b4",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:5c5155babfffec48aa",
+      "definition": "To insert metal spacing strips between lines of type.",
+      "pos": "verb",
+      "groupId": "lead-metal"
+    },
+    {
+      "id": "sp1-aa00c8703fd144324882",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:9ec23c0bdff17b7840",
+      "definition": "To guide or take charge without a stated direct object.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-59e79f896b3f7d3606cd",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:014d46787d09ef7aa9",
+      "definition": "To extend in a direction or provide a route to a place.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-7bb01b707e8907738943",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:67d5f1157124a43734",
+      "definition": "To cause or contribute to a result, usually with to.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-be47b4b027cc727b69fe",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:e028d1c27815f68bb3",
+      "definition": "To live or experience a particular kind of life.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-72a2279eaeac9ec5465e",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:b2ff03e790f5095a3a",
+      "definition": "Guidance, direction or an example for others to follow.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-c65ad8180546cb0e99b0",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:164479ea57dc2a8e1f",
+      "definition": "The position of being ahead, or the amount by which someone is ahead.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-8e903ad7b6cf8d6acdec",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:0a17db681076d3dc1f",
+      "definition": "An insulated electrical wire or connecting cable.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-b5b3e5fdbdf499f0b941",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:c36c48cccae4beee56",
+      "definition": "A runner’s position away from a base before the pitch.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-f0841ae766d7d95866c9",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:cc4d61b6cb7f2550e2",
+      "definition": "The act or right of playing first, or the card, suit or piece played first.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-a90658486421fc191f30",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:b28b7652ede1782add",
+      "definition": "The main role in a play or film.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-99ebacef797bf8e2bd46",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:f9ac97764f479541db",
+      "definition": "The performer who plays the main role.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-eba37e11d3a4fb034c69",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:271797fe50757f271c",
+      "definition": "The person responsible for a project, team or shift.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-59b4fb4430a694dc70fa",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:c48f4568b96926d601",
+      "definition": "A channel of open water within sea ice or an ice field.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-ac9e403f7ac41835e686",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:e17eeb41221c86d462",
+      "definition": "An ore-bearing vein or lode.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-53924cf6e0957247ac09",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:e0ab8bc87929afaee1",
+      "definition": "The route or course followed by a rope from end to end.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-ee569737bc8e584b3e86",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:44c27a7ab1d713a46d",
+      "definition": "A strap or rope used to guide or restrain an animal.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-c8bd5a4ce98af7a17881",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:71c171af811dda4237",
+      "definition": "The valve-port opening at the end of a steam-engine piston stroke.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-5e034f01be4949063e39",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:8db42ea842de482d2b",
+      "definition": "The distance material is hauled, for example from a cutting to an embankment.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-461a9dd38c9ac71c7f20",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:916e974e73f1764ce5",
+      "definition": "The action of one clockwork tooth in driving another tooth or a pallet.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-9bed93bb8fad123d4442",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:2672aa9b014bd2a628",
+      "definition": "An initial possibility or hypothesis that has not yet been investigated.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-d5a3d0e2284732ee11b9",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:674327f15f76077aa8",
+      "definition": "Information that suggests a direction for a criminal investigation.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-9ba20a9f0af09317b9bd",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:69f2916eb0ec6dacdf",
+      "definition": "A potential customer or an opportunity for a sale.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-afeb625ed359bdab192f",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:a60138cdb09466c567",
+      "definition": "Information suggesting a subject or direction for further reporting.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-f4c9bd0106f61cb5ae1d",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:53cb549c560f7183d7",
+      "definition": "The curling player who delivers the team’s first two stones in an end.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-1d3bda4fbfcb00fb3a09",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:124f7ea56c510407fe",
+      "definition": "The opening paragraph or paragraphs of a news article.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-df0e9034a7252028e145",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:47837eb88634b2ffa5",
+      "definition": "A prominent news story placed first or on the front page.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-c7a474bde653cbefc744",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:8317afcc53bd10f609",
+      "definition": "The axial distance a screw advances in one full revolution.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-ab5b675c26524214f1b5",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:f96f99387a1fc7f934",
+      "definition": "The singer or voice part carrying the melody in a barbershop quartet.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-5cb15663246413e0031c",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:4341fef3610e21191b",
+      "definition": "The presentation of a musical theme by one voice before other voices repeat it.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-625ae752f2c6291ca60b",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:d01cb59c3eab59777e",
+      "definition": "A mark or short passage that cues another musical part’s entrance.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-5052efbcbfbfa3105696",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:ce9d445cb8960d56cd",
+      "definition": "A principal synthesizer sound or melodic synthesizer part.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-3294a79530fd350fe303",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:3a0ae85d8a3ffb9ff7",
+      "definition": "The amount by which the angle between successive engine cranks exceeds a right angle.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-371f814e24d4f86dfad0",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:cbac273bc6ac389409",
+      "definition": "The angular displacement of a direct-current dynamo’s brush line from its specified symmetric reference diameter.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-12c11672be7236917540",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:67efad54c93dad4969",
+      "definition": "The phase advance of current relative to the driving voltage in an AC circuit.",
+      "pos": "noun",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-e505c4c2f17d0723f5db",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:582896292db2ecc254",
+      "definition": "At the front or in the first position.",
+      "pos": "adj",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-391d749cda84d53a3956",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "kaikki:e4cf1dd52dabcb0286",
+      "definition": "Main, principal or chiefly responsible.",
+      "pos": "adj",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-ac58541bc370e349c127",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:776af6517c85fb6d30",
+      "definition": "To guide someone by the hand or another physical connection.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-3d33e8b7673b49b19e60",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:07336d59cf1c0fc771",
+      "definition": "To show someone the way or guide them to a place.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-2bd707b8ecf1ba20627b",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:5ffa3d5c438d1d40b3",
+      "definition": "To guide someone through advice or instruction.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-65171493bffdeffb8e63",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:42a73f9aab5b30c150",
+      "definition": "To direct or be in charge of a group or organisation.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-b9c06af9903a8143b4b3",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:a67f146d0fc024832b",
+      "definition": "To influence or induce someone to act in a particular way.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-39d47d36a5e2f6095fab",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:36de4e01188139cb2a",
+      "definition": "To influence someone towards a belief or conclusion.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-f8a2fdd508b7ea3bc0eb",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:0bc88483b26df6f114",
+      "definition": "To be or go ahead of others, or be foremost among them.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-c865426f86598b651c12",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:6508b89d31c06f6734",
+      "definition": "To go first or move in front of others.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-945140fc76000d2922e0",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:c934f25f6a38079c13",
+      "definition": "To be more advanced than competitors in a field.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-4f52d092cd968830f95e",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:29621e19fbe5d9e024",
+      "definition": "To begin a card-game trick or round by playing a card or suit.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-31d63d1365354c459f0b",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:aedf1962c4e89f3425",
+      "definition": "To be ahead of other competitors in a race.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-4eeea7364408f062eb25",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:18878d17ad564ef6b0",
+      "definition": "To have the highest score during a game.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-286f3f23f634ab0beab9",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:942c55a4c748d4af54",
+      "definition": "To step away from a baseball base towards the next base before the pitch.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-16cbc3d2535ff86fcba8",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:46b34b9f32a63caaf8",
+      "definition": "To aim ahead of a moving target rather than at its current position.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-9b84fc5fa00dacab7272",
+      "entryId": "ve-7c6f4e69",
+      "term": "lead",
+      "senseId": "wiktionary:restored:0c9296492fbe76bba3",
+      "definition": "To climb as the lead climber, placing or clipping protection while advancing.",
+      "pos": "verb",
+      "groupId": "lead-guide"
+    },
+    {
+      "id": "sp1-1e3f1a388a62a2142566",
+      "entryId": "ve-649a8d90",
+      "term": "object",
+      "senseId": "kaikki:6de32a49723c010e1e",
+      "definition": "A physical thing that is not alive.",
+      "pos": "noun",
+      "groupId": "object-first"
+    },
+    {
+      "id": "sp1-9f862a6563c5bc7f3838",
+      "entryId": "ve-649a8d90",
+      "term": "object",
+      "senseId": "kaikki:ebf8dd64f829633517",
+      "definition": "The aim or purpose of an activity.",
+      "pos": "noun",
+      "groupId": "object-first"
+    },
+    {
+      "id": "sp1-e01fd6b802fc6734fd04",
+      "entryId": "ve-649a8d90",
+      "term": "object",
+      "senseId": "kaikki:f94c1140080e11fb54",
+      "definition": "A noun phrase functioning as a complement of a verb or preposition.",
+      "pos": "noun",
+      "groupId": "object-first"
+    },
+    {
+      "id": "sp1-1e92685c30a9c71f19ef",
+      "entryId": "ve-649a8d90",
+      "term": "object",
+      "senseId": "kaikki:d1cf6a385280a8fbfc",
+      "definition": "A person or thing towards which a feeling is directed.",
+      "pos": "noun",
+      "groupId": "object-first"
+    },
+    {
+      "id": "sp1-7a204d90788aab3e57ea",
+      "entryId": "ve-649a8d90",
+      "term": "object",
+      "senseId": "kaikki:4a8bc367a542dace81",
+      "definition": "An instance of a class or structure in object-oriented programming.",
+      "pos": "noun",
+      "groupId": "object-first"
+    },
+    {
+      "id": "sp1-ab5f2a1f6726c30605af",
+      "entryId": "ve-649a8d90",
+      "term": "object",
+      "senseId": "kaikki:bbf74cf797c6ab6a20",
+      "definition": "One of the entities of a category, with morphisms having objects as their sources and targets.",
+      "pos": "noun",
+      "groupId": "object-first"
+    },
+    {
+      "id": "sp1-5d8cb8f5b562f71893e4",
+      "entryId": "ve-649a8d90",
+      "term": "object",
+      "senseId": "kaikki:a0e69a49931b08846d",
+      "definition": "An appearance, sight or outward aspect.",
+      "pos": "noun",
+      "groupId": "object-first"
+    },
+    {
+      "id": "sp1-cc3a5793773e604cf400",
+      "entryId": "ve-649a8d90",
+      "term": "object",
+      "senseId": "kaikki:32ef4998a39ea98f2c",
+      "definition": "To express disagreement or opposition, or raise an objection.",
+      "pos": "verb",
+      "groupId": "object-second"
+    },
+    {
+      "id": "sp1-94cca8bfaba09be9684f",
+      "entryId": "ve-649a8d90",
+      "term": "object",
+      "senseId": "kaikki:1add2949d767357f64",
+      "definition": "To put forward a charge, accusation or reason against someone or something.",
+      "pos": "verb",
+      "groupId": "object-second"
+    },
+    {
+      "id": "sp1-1513698e5d31527380e2",
+      "entryId": "ve-649a8d90",
+      "term": "object",
+      "senseId": "kaikki:90cbe2e2c68572b450",
+      "definition": "To place or bring someone or something into opposition.",
+      "pos": "verb",
+      "groupId": "object-second"
+    },
+    {
+      "id": "sp1-2636d6ee71a880c6d2ed",
+      "entryId": "ve-649a8d90",
+      "term": "object",
+      "senseId": "wiktionary:restored:5a0cb2c7ecaa03453e",
+      "definition": "A matter that must be considered or that may be a concern or obstacle.",
+      "pos": "noun",
+      "groupId": "object-first"
+    },
+    {
+      "id": "sp1-ff3f6c080d75a9f49e80",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:c20012ddfaf39b23b7",
+      "definition": "Likely to experience or be affected by something.",
+      "pos": "adj",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-b37b20b57eafaf2ecd54",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:aba05dffc1740caa0c",
+      "definition": "Dependent on a condition being met or permission being given.",
+      "pos": "adj",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-ffe7d52aa2da0e327f6c",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:528bd27ebc936305df",
+      "definition": "Lying below or beneath something.",
+      "pos": "adj",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-31bd267dd956184d298c",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:d8419bac965a523c04",
+      "definition": "Under the authority or control of a ruler, state or other power.",
+      "pos": "adj",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-3f27b2123adb62f8dc7a",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:c7ec78a619beba0a6d",
+      "definition": "The grammatical element about which a clause makes a statement, often agreeing with its verb.",
+      "pos": "noun",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-6bc4f27b593da8d17899",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:d12884d933f42427d3",
+      "definition": "A person or entity regarded as an agent that acts.",
+      "pos": "noun",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-d79d0a13fc8083fe09dc",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:3fd58b544656a78b44",
+      "definition": "The main topic of a discussion, text, artwork or investigation.",
+      "pos": "noun",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-6949dde21ea040290e9f",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:1252c89628cbaf900c",
+      "definition": "An area of knowledge studied or taught.",
+      "pos": "noun",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-cc5f92d3cc614700fd6e",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:fe729d89d9f0d01ce6",
+      "definition": "A person owing allegiance to a monarch or living under a monarchy.",
+      "pos": "noun",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-8a5a7e8c764a1d7b8415",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:fb4ec5fabd8d73e72b",
+      "definition": "A person governed or controlled by a ruler or authority.",
+      "pos": "noun",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-19539788b367e7c7d0fa",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:44d0ecc9211271dd2f",
+      "definition": "A principal musical theme, especially the theme developed in a fugue.",
+      "pos": "noun",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-4e45c9e20f4a067ef4fb",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:561cacac09f1bda031",
+      "definition": "A person, animal or object being studied, examined or treated.",
+      "pos": "noun",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-9c6dcd449596d722064a",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:46a3633cac5d3c75f1",
+      "definition": "A being considered as having consciousness or subjective experience.",
+      "pos": "noun",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-db4d692a06ab85acd20c",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:5dc2bf490246f394c7",
+      "definition": "That about which a statement or proposition is made.",
+      "pos": "noun",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-d1c2dd8c83af72f15607",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:bc2b34cfc8ab1ff1d3",
+      "definition": "A variable isolated on one side of an equation and expressed in terms of other quantities.",
+      "pos": "noun",
+      "groupId": "subject-first"
+    },
+    {
+      "id": "sp1-b24dff4ce66c7036cf18",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:2c642b68badbf91db9",
+      "definition": "To cause someone or something to undergo an experience or process.",
+      "pos": "verb",
+      "groupId": "subject-second"
+    },
+    {
+      "id": "sp1-29e79299c8cdf68ecbd5",
+      "entryId": "ve-70d0ce19",
+      "term": "subject",
+      "senseId": "kaikki:8e58dbacf3a0a810d0",
+      "definition": "To bring people or territory under another power’s control.",
+      "pos": "verb",
+      "groupId": "subject-second"
+    },
+    {
+      "id": "sp1-7b38bf3e4ba439102966",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:743cc6ac48226bdb77",
+      "definition": "A unit of time equal to sixty seconds, or one-sixtieth of an hour.",
+      "pos": "noun",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-f23d090b006f4c68b3ff",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:768d3d70e00a7dfcbd",
+      "definition": "A short, unspecified period of time.",
+      "pos": "noun",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-9be28fdf9b259f6e406b",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:497c6fb3c2e3807256",
+      "definition": "An angular unit equal to one-sixtieth of a degree, also called an arcminute.",
+      "pos": "noun",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-4622f3dfd15a1a829f8f",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:bec8cc50238012aec7",
+      "definition": "A formal written record of a meeting or its proceedings.",
+      "pos": "noun",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-104ba5ab5530a9048f7f",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:deb0549240615c4c81",
+      "definition": "A unit of telephone or network calling allowance, based on time used.",
+      "pos": "noun",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-3265155eccac9a963000",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:db15d4fb2a0521ded8",
+      "definition": "A particular point or moment in time.",
+      "pos": "noun",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-a7ba92de5042ed6df055",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:c8de8933664934723e",
+      "definition": "A nautical or geographic mile in an older distance usage.",
+      "pos": "noun",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-1224a78b7f3f13fcf2c0",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:0f0509d40111c676a7",
+      "definition": "An old coin described by the source as a half-farthing.",
+      "pos": "noun",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-2bbc2aaa74edd67ad5dc",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:69a7b14310415d8440",
+      "definition": "A very small part or amount; a jot or whit.",
+      "pos": "noun",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-e8ecdcc8d3ee910ebaff",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:ce57dcc30ec4a18a44",
+      "definition": "A fixed subdivision of a module used in architectural proportion.",
+      "pos": "noun",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-26fa79f862a9fe9486e6",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:2a3e33c054ad74fd45",
+      "definition": "A while or a long, unspecified period of time.",
+      "pos": "noun",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-d7956c0c833de902d33d",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:7279de6ecfef609204",
+      "definition": "The distance travelled in one minute under the stated travel conditions.",
+      "pos": "noun",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-71c8763f593e1f314b53",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:d45c6a59c287883588",
+      "definition": "To record an event or decision in meeting minutes or a memo.",
+      "pos": "verb",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-c964d2bcbaa26069f368",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:55cfd6e7979d4d567d",
+      "definition": "To make a short written note or summary of something.",
+      "pos": "verb",
+      "groupId": "minute-time"
+    },
+    {
+      "id": "sp1-fd2c9903c308e73bf775",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:e9990863a191afdc6c",
+      "definition": "Extremely small in size or amount.",
+      "pos": "adj",
+      "groupId": "minute-small"
+    },
+    {
+      "id": "sp1-f54db6897d6df36a3e89",
+      "entryId": "ve-56b9c26b",
+      "term": "minute",
+      "senseId": "kaikki:132c687b5a44593011",
+      "definition": "Extremely careful and detailed.",
+      "pos": "adj",
+      "groupId": "minute-small"
+    }
+  ]
+}

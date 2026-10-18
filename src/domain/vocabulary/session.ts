@@ -12,6 +12,7 @@ import { isVocabularyLearningContext } from './context';
 import type { VocabularyLearningContext } from './context';
 import { matchesVocabularySource } from './sources';
 import { isRegisteredRestoredVocabularySense } from './readiness';
+import { freezeVocabularyPronunciation, isFrozenVocabularyPronunciation } from './sensePronunciation';
 export type { VocabularySessionSelection } from './selection';
 
 export type VocabularySessionAnswer = {
@@ -67,6 +68,13 @@ export function createVocabularySession(cards: ReviewCard[], mode: VocabularyPra
   if (normalized.order === 'random') selected.sort((a, b) => hashText(`${id}:${a.id}`).localeCompare(hashText(`${id}:${b.id}`)) || a.id.localeCompare(b.id));
   if (selection?.kind !== 'unit' && selection?.kind !== 'specialist' && selection?.kind !== 'retry' && selection?.kind !== 'learning-batch') selected = selected.slice(0, normalized.sessionSize);
   if (selected.length > 10000) throw new Error('Vocabulary session size is invalid.');
+  selected = selected.map(card => {
+    if (card.entry?.id !== card.entryId || !Array.isArray(card.entry.senses)) return card;
+    const sense = card.entry.senses.find(sense => sense.id === card.senseId);
+    if (card.pronunciation !== undefined && !isFrozenVocabularyPronunciation(card.pronunciation, card.entry, sense)) throw new Error('Invalid frozen pronunciation.');
+    const pronunciation = card.pronunciation ?? freezeVocabularyPronunciation(card.entry, sense);
+    return pronunciation !== undefined ? { ...card, pronunciation } : card;
+  });
   const startedAt = nowIso();
   return {
     id, mode, preferences: normalized, filter: { ...filter },
@@ -122,6 +130,9 @@ export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S
   if (session.status !== 'active' && session.status !== 'paused') throw new Error('Only active or paused vocabulary sessions can be submitted.');
   if (!session.cardIds.length || session.cardIds.length > 10000) throw new Error('Vocabulary session size is invalid.');
   const byId = new Map((session.cardSnapshots || cards).map(card => [card.id, card]));
+  for (const card of byId.values()) {
+    if (card.pronunciation !== undefined && !isFrozenVocabularyPronunciation(card.pronunciation,card.entry,card.entry.senses.find(sense=>sense.id===card.senseId))) throw new Error('Invalid frozen pronunciation.');
+  }
   const entriesById = new Map(targetState.vocabulary.map(entry => [entry.id, entry]));
   const catalogById = new Map((VOCABULARY_CATALOG.entries as unknown as typeof targetState.vocabulary).map(entry => [entry.id, entry]));
   const selection = session.selection?.kind === 'unit' || session.selection?.kind === 'learning-batch' ? session.selection : undefined;

@@ -176,6 +176,7 @@ export function VocabularyGroupWordsPage() {
                     <Pronunciation
                       compact
                       entry={row.entry}
+                      sense={row.resolved.sense || null}
                       accent={preferences.accent}
                     />
                   </div>

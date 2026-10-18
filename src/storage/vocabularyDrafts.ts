@@ -6,6 +6,8 @@ import { isVocabularySessionSelection } from '../domain/vocabulary/selection';
 import { isVocabularyLearningContext } from '../domain/vocabulary/context';
 import { normalizeVocabularyIdentities } from '../domain/vocabulary/identities';
 import { migrateVocabularyRecovery } from './vocabularyRecovery';
+import { isFrozenVocabularyPronunciation } from '../domain/vocabulary/sensePronunciation';
+import type { VocabularyEntry, VocabularySense } from '../domain/vocabulary/types';
 
 const key = (owner: string) => `fieldbook-vocabulary-draft-v1:${owner}`;
 const modes: VocabularyPracticeMode[] = ['dictation', 'definition', 'cloze', 'synonym', 'distinction', 'production', 'audio'];
@@ -39,6 +41,7 @@ function snapshot(value: unknown): VocabularyPracticeSession | null {
       const entry = raw && object(raw.entry);
       if (!raw || raw.mode !== (input.mode === 'audio' ? 'dictation' : input.mode) || !['meaning','listening','spelling','usage'].includes(String(raw.dimension)) || !time(raw.dueAt) || !Array.isArray(raw.sources) || raw.id !== ref.id || raw.entryId !== ref.entryId || raw.senseId !== ref.senseId || !entry || entry.id !== ref.entryId || typeof entry.term !== 'string' || entry.term.length > 500 || !Array.isArray(entry.senses) || !Array.isArray(entry.sources) || !Array.isArray(entry.tags)) return null;
       if (!entry.senses.some(value => { const sense = object(value); return sense?.id === ref.senseId && typeof sense.definition === 'string' && typeof sense.example === 'string'; })) return null;
+      if (raw.pronunciation !== undefined && !isFrozenVocabularyPronunciation(raw.pronunciation, entry as unknown as VocabularyEntry, (entry.senses as VocabularySense[]).find(sense => sense.id === ref.senseId))) return null;
       if (raw.context !== undefined && (!isVocabularyLearningContext(raw.context, ref) || (input.selection && (input.selection as Record<string, unknown>).bookId && (raw.context.bookId !== (input.selection as Record<string, unknown>).bookId || raw.context.unitId !== (input.selection as Record<string, unknown>).unitId)))) return null;
       const contextFilter = object(input.filter);
       if (raw.context !== undefined && contextFilter && ((contextFilter.bookId !== undefined && raw.context.bookId !== contextFilter.bookId) || (contextFilter.unitId !== undefined && raw.context.unitId !== contextFilter.unitId))) return null;

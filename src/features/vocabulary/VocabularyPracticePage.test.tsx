@@ -12,6 +12,7 @@ import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { createVocabularySession, evaluateVocabularySessionAnswer } from '../../domain/vocabulary/session';
 import { readVocabularyDraft } from '../../storage/vocabularyDrafts';
+import { freezeVocabularyPronunciation } from '../../domain/vocabulary/sensePronunciation';
 import { WorkspaceScrollRestoration } from '../../components/WorkspaceScrollRestoration';
 
 const { fb, player, owner } = vi.hoisted(() => ({
@@ -74,6 +75,38 @@ beforeEach(() => {
   };
 });
 const originalCatalog = { books: [...VOCABULARY_CATALOG.books], units: [...VOCABULARY_CATALOG.units], entries: [...VOCABULARY_CATALOG.entries], memberships: [...VOCABULARY_CATALOG.memberships] };
+test('dictation uses the frozen selected reading and exposes deliberate audio recovery without grading it',async()=>{
+  const raw=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8')).entries.find((e:any)=>e.term==='record');
+  const row=JSON.parse(readFileSync('src/domain/vocabulary/readinessCorrections.json','utf8')).find((r:any)=>r.senseId==='kaikki:5386f9871d2cf75669');
+  const sense={...row.originalSense,definition:row.definition,example:row.example};
+  const entry={...raw,senses:[sense]};fb.current.state.vocabulary=[entry];fb.current.state.settings.vocabulary={autoPlay:false,accent:'uk'};
+  player.play.mockResolvedValueOnce({ok:false,source:'none',reason:'sense-recording-unavailable',accent:'uk'}).mockResolvedValue({ok:true,source:'recording',accent:'us',senseMatch:'matched'});
+  mount(`?entryId=${entry.id}&senseId=${sense.id}&dueOnly=false&mode=dictation`);
+  fireEvent.click(await screen.findByRole('button',{name:'Start session'}));
+  fireEvent.click(screen.getByRole('button',{name:'Replay current word'}));
+  await waitFor(()=>expect(player.play).toHaveBeenCalledWith(expect.objectContaining({id:entry.id}),expect.objectContaining({sense:expect.objectContaining({id:sense.id}),pronunciation:freezeVocabularyPronunciation(entry,sense)})));
+  fireEvent.click(await screen.findByRole('button',{name:'Play matching US recording'}));
+  await waitFor(()=>expect(player.play).toHaveBeenLastCalledWith(expect.objectContaining({id:entry.id}),expect.objectContaining({accent:'us',pronunciation:freezeVocabularyPronunciation(entry,sense)})));
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+  expect(fb.current.state.vocabularyReviews).toEqual([]);
+  const draft=readVocabularyDraft(owner.current)!;expect(draft.answers).toEqual({});
+  expect(draft.cardSnapshots![0].pronunciation).toEqual(freezeVocabularyPronunciation(entry,sense));
+});
+test('audio-loop failure retains the missing-reading explanation and never records a listened activity',async()=>{
+  const raw=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8')).entries.find((e:any)=>e.term==='record');
+  const row=JSON.parse(readFileSync('src/domain/vocabulary/readinessCorrections.json','utf8')).find((r:any)=>r.senseId==='kaikki:5386f9871d2cf75669');
+  const sense={...row.originalSense,definition:row.definition,example:row.example};
+  fb.current.state.vocabulary=[{...raw,senses:[sense]}];fb.current.state.settings.vocabulary={autoPlay:false,accent:'uk'};
+  player.play.mockResolvedValue({ok:false,source:'none',reason:'sense-recording-unavailable',accent:'uk'});
+  mount(`?entryId=${raw.id}&senseId=${sense.id}&dueOnly=false&mode=audio`);
+  fireEvent.click(await screen.findByRole('button',{name:'Start session'}));
+  fireEvent.click(screen.getByRole('button',{name:'Play loop'}));
+  await waitFor(()=>expect(screen.getByRole('group',{name:'Pronunciation recovery'})).toBeInTheDocument());
+  expect(screen.getByText(/No verified UK recording for this meaning/)).toBeInTheDocument();
+  expect(screen.queryByText('Audio loop complete')).not.toBeInTheDocument();
+  expect(readVocabularyDraft(owner.current)?.answers).toEqual({});
+  expect(fb.current.state.vocabularyActivities).toEqual([]);
+});
 test('the home due-review link launches only saved meanings with an actual due schedule and freezes that restriction',async()=>{
   const state=fb.current.state;
   state.vocabularyStates=[{id:'scheduled',entryId:'entry-0',senseId:'sense-0',cards:{definition:{due:'2020-01-01'}},wrong:{active:false,modes:{}},dimensions:{}}];

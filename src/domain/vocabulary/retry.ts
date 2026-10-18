@@ -3,6 +3,7 @@ import { isVocabularyLearningContext } from './context';
 import { getVocabularyReviewQueue, normalizeAnswer } from './index';
 import type { ReviewCard, VocabularyEntry, VocabularyStore } from './types';
 import { evaluateVocabularySessionAnswer, type VocabularySessionRecord, type VocabularySessionResult } from './session';
+import { isFrozenVocabularyPronunciation } from './sensePronunciation';
 
 /** Preserve frozen questions; only legacy dictation may follow a changed group sense. */
 export function resolveVocabularyRetry(state: Partial<VocabularyStore>, record: VocabularySessionRecord, activeCards: ReviewCard[] = []): {cards: ReviewCard[]; unavailable: VocabularySessionResult[]} {
@@ -18,8 +19,9 @@ export function resolveVocabularyRetry(state: Partial<VocabularyStore>, record: 
     if (!raw || raw.tags.includes('archived') || normalizeAnswer(raw.term) !== normalizeAnswer(row.term)) { unavailable.push(row); continue; }
     if (frozen) {
       const sense = frozen.entry?.senses.find(sense => sense.id === row.senseId);
+      if (record.cardSnapshots && frozen.pronunciation !== undefined && !isFrozenVocabularyPronunciation(frozen.pronunciation, frozen.entry, sense)) { unavailable.push(row); continue; }
       const permittedSense = raw.senses.some(sense => sense.id === row.senseId) || sense?.id.startsWith('kaikki:') || sense?.id.startsWith('editorial:') && sense.source === 'Fieldbook editorial' && isVocabularyLearningContext(frozen.context, frozen);
-      if (frozen.entryId === row.entryId && frozen.entry?.id === row.entryId && frozen.senseId === row.senseId && frozen.mode === mode && sense && permittedSense && normalizeAnswer(frozen.entry.term) === normalizeAnswer(raw.term) && (frozen.context === undefined || isVocabularyLearningContext(frozen.context, frozen))) cards.push(structuredClone(frozen));
+      if (frozen.entryId === row.entryId && frozen.entry?.id === row.entryId && frozen.senseId === row.senseId && frozen.mode === mode && sense && permittedSense && normalizeAnswer(frozen.entry.term) === normalizeAnswer(raw.term) && (frozen.context === undefined || isVocabularyLearningContext(frozen.context, frozen))) cards.push({...structuredClone(frozen),pronunciation:record.cardSnapshots ? frozen.pronunciation ?? 'legacy' : 'legacy'});
       else unavailable.push(row);
       continue;
     }
@@ -40,7 +42,7 @@ export function resolveVocabularyRetry(state: Partial<VocabularyStore>, record: 
     if (candidate) {
       const current = evaluateVocabularySessionAnswer(candidate, '');
       const sameQuestion = current.senseId === row.senseId && current.expectedAnswer === row.expectedAnswer && current.prompt === row.prompt && current.definition === row.definition && current.example === row.example;
-      if (mode === 'dictation' || sameQuestion) { cards.push(structuredClone(candidate)); continue; }
+      if (mode === 'dictation' || sameQuestion) { cards.push({...structuredClone(candidate),pronunciation:'legacy'}); continue; }
     }
     unavailable.push(row);
   }

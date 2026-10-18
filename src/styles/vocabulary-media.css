@@ -6,3 +6,7 @@
 .vocabulary-pronunciation:not(.is-compact) .vocabulary-pronunciation-actions .btn { min-height:44px; min-width:0; padding:10px 12px; justify-content:center; white-space:normal; }
 .vocabulary-ipa { font-size:16px; color:var(--muted); max-width:100%; overflow-wrap:anywhere; }
 .vocabulary-audio-recovery { display:flex; flex-wrap:wrap; gap:8px; width:100%; }
+.vocabulary-audio-recovery .btn { max-width:100%; white-space:normal; overflow-wrap:anywhere; text-align:left; }
+.vocabulary-pronunciation [role=status] { max-width:100%; overflow-wrap:anywhere; }
+.practice-audio-choices { padding:0 0 12px; }
+.vocabulary-pronunciation-note { width:100%; font-size:12px; color:var(--muted); }

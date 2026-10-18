@@ -573,7 +573,7 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
                   <p>
                     {resolveVocabularyLearningContext(entry).sense?.definition || 'Definition not available yet'}
                   </p>
-                  <Pronunciation compact entry={entry} accent={normalizeVocabularyPreferences(fb.state.settings?.vocabulary).accent} />
+                  <Pronunciation compact entry={entry} sense={resolveVocabularyLearningContext(entry).sense || null} accent={normalizeVocabularyPreferences(fb.state.settings?.vocabulary).accent} />
                 </div>
                 <div className="vocabulary-row-meta">
                   <span
@@ -872,7 +872,7 @@ export function VocabularyWrongPage() {
                     {entry.senses?.find((sense) => sense.id === state.senseId)
                       ?.definition || entry.meaning}
                   </p>
-                  <Pronunciation compact entry={entry} accent={normalizeVocabularyPreferences(fb.state.settings?.vocabulary).accent} />
+                  <Pronunciation compact entry={entry} sense={entry.senses?.find(sense=>sense.id===state.senseId) || null} accent={normalizeVocabularyPreferences(fb.state.settings?.vocabulary).accent} />
                   <span className="vocabulary-muted">
                     Last failure {dateLabel(state.wrong?.lastFailureAt)} |{" "}
                     {state.wrong?.successesSinceFailure || 0} correct reviews since the last mistake

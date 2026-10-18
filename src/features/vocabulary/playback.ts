@@ -1,4 +1,5 @@
-import type { VocabularyEntry } from '../../domain/vocabulary/types';
+import type { VocabularyEntry, VocabularySense } from '../../domain/vocabulary/types';
+import { getVocabularyPronunciation, type FrozenVocabularyPronunciation } from '../../domain/vocabulary/sensePronunciation';
 import { getVocabularyMedia, type VocabularyAccent, type VocabularyRecording } from '../../domain/vocabulary/media';
 import { preferredDeviceVoice, subscribeDeviceVoices } from './deviceVoices';
 let activeOwner: { stop(): void } | undefined;
@@ -8,8 +9,9 @@ export type VocabularyPlaybackOptions = {
   example?: boolean | string; text?: string;
   /** Only an explicit other-recording action should pass this override. */
   recording?: VocabularyRecording; deviceOnly?: boolean;
+  sense?: VocabularySense; pronunciation?: FrozenVocabularyPronunciation;
 };
-export type VocabularyPlaybackResult = { ok: boolean; source: 'recording' | 'speech' | 'none'; reason?: string; accent?: VocabularyAccent | 'other' | 'unknown'; voice?: string; fallbackReason?: string; recording?: VocabularyRecording };
+export type VocabularyPlaybackResult = { ok: boolean; source: 'recording' | 'speech' | 'none'; reason?: string; accent?: VocabularyAccent | 'other' | 'unknown'; voice?: string; fallbackReason?: string; recording?: VocabularyRecording; senseMatch?: 'matched' | 'unverified' | 'legacy' };
 export function createVocabularyPlayback(loadMedia = getVocabularyMedia): { play(entry: VocabularyEntry, options?: VocabularyPlaybackOptions): Promise<VocabularyPlaybackResult>; stop(): void } {
   let generation = 0;
   let cancelStep: (() => void) | null = null;
@@ -129,6 +131,7 @@ export function createVocabularyPlayback(loadMedia = getVocabularyMedia): { play
     const example = typeof options.example === 'string' ? options.example : options.example ? entry.example : undefined;
     const text = (options.text || example || entry.term || '').trim();
     const recordingEligible = !options.text && !example && !options.deviceOnly;
+    const pronunciation = getVocabularyPronunciation(entry, options.sense, options.pronunciation);
 
     return new Promise(resolve => {
       let settled = false;
@@ -143,18 +146,23 @@ export function createVocabularyPlayback(loadMedia = getVocabularyMedia): { play
       cancelPlay = cancel;
       const run = async () => {
         if (!text) { finish({ ok: false, source: 'none', reason: 'unavailable' }); return; }
-        const media = recordingEligible ? await loadMedia(entry) : { recordings: [] };
+        const media = recordingEligible && !pronunciation.required ? await loadMedia(entry) : { recordings: [] };
         if (token !== generation) { finish(cancelled()); return; }
-        const selected = options.recording || media.recordings.find(item => item.accent === accent && item.status === 'verified' && item.availability !== 'failed');
+        const candidates = pronunciation.required ? pronunciation.recordings : media.recordings;
+        const selected = !recordingEligible ? undefined : options.recording
+          ? pronunciation.required ? candidates.find(item => item.url === options.recording!.url) : options.recording
+          : candidates.find(item => item.accent === accent && item.status === 'verified' && item.availability !== 'failed');
+        if (recordingEligible && pronunciation.required && !selected) { finish({ ok: false, source: 'none', reason: 'sense-recording-unavailable', accent }); return; }
         const url = selected?.url;
         let last: VocabularyPlaybackResult = { ok: false, source: 'none', reason: 'unavailable' };
         for (let index = 0; index < count; index += 1) {
           if (token !== generation) { finish(cancelled()); return; }
           last = url ? await recording(url, rate, volume, token) : { ok: false, source: 'none', reason: 'unavailable' };
-          if (last.ok) last = { ...last, accent: selected?.accent, recording: selected };
+          if (last.ok) last = { ...last, accent: selected?.accent, recording: selected, ...(pronunciation.required ? { senseMatch: 'matched' as const } : pronunciation.legacy ? { senseMatch: 'legacy' as const } : {}) };
           else if (!['cancelled', 'blocked'].includes(last.reason || '')) {
+            if (recordingEligible && pronunciation.required) { finish({ ...last, reason: 'sense-recording-failed', accent: selected?.accent }); return; }
             const fallbackReason = url ? `recording-${last.reason}` : recordingEligible ? 'target-recording-unavailable' : undefined;
-            last = { ...await speech(text, accent, rate, volume, token), ...(fallbackReason ? { fallbackReason } : {}) };
+            last = { ...await speech(text, accent, rate, volume, token), ...(fallbackReason ? { fallbackReason } : {}), ...(pronunciation.required ? { senseMatch: 'unverified' as const } : pronunciation.legacy ? { senseMatch: 'legacy' as const } : {}) };
           }
           if (!last.ok) { finish(last); return; }
           if (index + 1 < count && !await gap(repeatGapMs, token)) { finish(cancelled()); return; }
