@@ -1,0 +1,141 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-f98a23ff",
+      "senseId": "kaikki:fdc38c486c6efb4945"
+    },
+    {
+      "entryId": "ve-f98a23ff",
+      "senseId": "kaikki:7136b3c29fd280c918"
+    },
+    {
+      "entryId": "ve-f98a23ff",
+      "senseId": "kaikki:fdc430c5a6f7413d77"
+    },
+    {
+      "entryId": "ve-f98a23ff",
+      "senseId": "kaikki:e4d8b85cf600fb92b5"
+    },
+    {
+      "entryId": "ve-f98a23ff",
+      "senseId": "kaikki:4e3df7bcb0650948e3"
+    },
+    {
+      "entryId": "ve-2a9804be",
+      "senseId": "kaikki:1f4fdd861895f93333"
+    },
+    {
+      "entryId": "ve-623d1bbf",
+      "senseId": "kaikki:35f36a4db65f1d06b1"
+    },
+    {
+      "entryId": "ve-623d1bbf",
+      "senseId": "kaikki:ba95c00c349d87f419"
+    },
+    {
+      "entryId": "ve-623d1bbf",
+      "senseId": "kaikki:45028ae34dc9b0ce99"
+    },
+    {
+      "entryId": "ve-623d1bbf",
+      "senseId": "kaikki:7ba015345d3eee40fb"
+    },
+    {
+      "entryId": "ve-623d1bbf",
+      "senseId": "kaikki:cbab6efd7d1df4a5bf"
+    },
+    {
+      "entryId": "ve-623d1bbf",
+      "senseId": "kaikki:1fd69de5e46fdbd15f"
+    },
+    {
+      "entryId": "ve-623d1bbf",
+      "senseId": "kaikki:aa283f7ec27795ff63"
+    },
+    {
+      "entryId": "ve-623d1bbf",
+      "senseId": "kaikki:a8592a5abb6d8f09a9"
+    },
+    {
+      "entryId": "ve-623d1bbf",
+      "senseId": "kaikki:cb10adff4df990ec7b"
+    },
+    {
+      "entryId": "ve-623d1bbf",
+      "senseId": "kaikki:72c55e050becd882f6"
+    },
+    {
+      "entryId": "ve-623d1bbf",
+      "senseId": "kaikki:6b9ce8e4c6b9511bae"
+    },
+    {
+      "entryId": "ve-623d1bbf",
+      "senseId": "kaikki:cca86346961175a327"
+    },
+    {
+      "entryId": "ve-42d649e2",
+      "senseId": "kaikki:33faed12e38d9be3cc"
+    },
+    {
+      "entryId": "ve-42d649e2",
+      "senseId": "kaikki:98ce71509acc01a2bf"
+    },
+    {
+      "entryId": "ve-42d649e2",
+      "senseId": "kaikki:56d9d95051c80401d1"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-2a9804be",
+      "senseId": "kaikki:425d2e30321da9fd0a",
+      "originalSense": {
+        "id": "kaikki:425d2e30321da9fd0a",
+        "definition": "To become aware of, through the physical senses, to see; to understand.",
+        "example": "Go from the presence of a foolish man, when thou perceivest not in him the lips of knowledge.",
+        "pos": "verb",
+        "synonyms": [
+          "ken",
+          "discern",
+          "make out",
+          "perceive",
+          "percept",
+          "sensate",
+          "sense"
+        ],
+        "antonyms": [
+          "produce sensation"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [
+          "misperceive",
+          "nonperceiving",
+          "overperceive",
+          "perceivable",
+          "perceivance",
+          "perceiver",
+          "perceivingly",
+          "perceivingness",
+          "preperceive",
+          "reperceive",
+          "underperceive",
+          "unperceiving"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/perceive#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "example": "People may perceive the same colour differently under artificial light."
+    }
+  ],
+  "removeDefaults": [
+    "ve-f98a23ff",
+    "ve-2a9804be",
+    "ve-623d1bbf",
+    "ve-42d649e2"
+  ],
+  "restoreDefaults": []
+}

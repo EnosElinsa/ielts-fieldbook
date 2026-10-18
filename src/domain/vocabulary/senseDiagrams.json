@@ -3942,5 +3942,125 @@
     "definition": "To designate information as secret or restricted, especially under a government classification system.",
     "pos": "verb",
     "kind": "classify-secret"
+  },
+  {
+    "entryId": "ve-f98a23ff",
+    "senseId": "kaikki:fdc38c486c6efb4945",
+    "term": "observe",
+    "definition": "To notice or watch something, especially carefully and with attention to detail.",
+    "pos": "verb",
+    "kind": "observe-watch"
+  },
+  {
+    "entryId": "ve-f98a23ff",
+    "senseId": "kaikki:7136b3c29fd280c918",
+    "term": "observe",
+    "definition": "To follow or comply with a rule, custom or practice.",
+    "pos": "verb",
+    "kind": "observe-comply"
+  },
+  {
+    "entryId": "ve-f98a23ff",
+    "senseId": "kaikki:fdc430c5a6f7413d77",
+    "term": "observe",
+    "definition": "To mark or keep a holiday or similar occasion, or follow a time or calendar convention.",
+    "pos": "verb",
+    "kind": "observe-occasion"
+  },
+  {
+    "entryId": "ve-f98a23ff",
+    "senseId": "kaikki:e4d8b85cf600fb92b5",
+    "term": "observe",
+    "definition": "To make a comment or remark about something.",
+    "pos": "verb",
+    "kind": "observe-remark"
+  },
+  {
+    "entryId": "ve-2a9804be",
+    "senseId": "kaikki:425d2e30321da9fd0a",
+    "term": "perceive",
+    "definition": "To become aware of something through the senses, or to grasp or understand it.",
+    "pos": "verb",
+    "kind": "perceive-awareness"
+  },
+  {
+    "entryId": "ve-2a9804be",
+    "senseId": "kaikki:1f4fdd861895f93333",
+    "term": "perceive",
+    "definition": "To interpret or regard someone or something in a particular way.",
+    "pos": "verb",
+    "kind": "perceive-interpret"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:35f36a4db65f1d06b1",
+    "term": "notice",
+    "definition": "The act or state of noticing or becoming aware of something.",
+    "pos": "noun",
+    "kind": "notice-awareness"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:ba95c00c349d87f419",
+    "term": "notice",
+    "definition": "A written or printed announcement.",
+    "pos": "noun",
+    "kind": "notice-announcement"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:45028ae34dc9b0ce99",
+    "term": "notice",
+    "definition": "A formal notification or warning.",
+    "pos": "noun",
+    "kind": "notice-formal"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:7ba015345d3eee40fb",
+    "term": "notice",
+    "definition": "Advance notification that employment will end, given by an employee or employer.",
+    "pos": "noun",
+    "kind": "notice-employment"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:cbab6efd7d1df4a5bf",
+    "term": "notice",
+    "definition": "A published critical review, for example of a play.",
+    "pos": "noun",
+    "kind": "notice-review"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:1fd69de5e46fdbd15f",
+    "term": "notice",
+    "definition": "Notification given before an event or change.",
+    "pos": "noun",
+    "kind": "notice-prior"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:cb10adff4df990ec7b",
+    "term": "notice",
+    "definition": "To become aware of someone or something; to observe it.",
+    "pos": "verb",
+    "kind": "notice-verb"
+  },
+  {
+    "entryId": "ve-42d649e2",
+    "senseId": "kaikki:33faed12e38d9be3cc",
+    "term": "detect",
+    "definition": "To discover or become aware of something, especially through a search, examination or test.",
+    "pos": "verb",
+    "kind": "detect-find"
+  },
+  {
+    "entryId": "ve-42d649e2",
+    "senseId": "kaikki:98ce71509acc01a2bf",
+    "term": "detect",
+    "definition": "To work on or solve cases as a detective.",
+    "pos": "verb",
+    "kind": "detect-work"
   }
 ]

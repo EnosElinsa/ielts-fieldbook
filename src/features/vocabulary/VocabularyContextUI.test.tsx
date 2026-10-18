@@ -216,6 +216,44 @@ test('next practice updates a new-skill suggestion when a different mode becomes
   } finally {vi.useRealTimers();}
 });
 
+function progressMeaning(days:number,first='2026-10-10T10:00:00Z') {
+  const sense={id:'progress-sense',pos:'noun',definition:'A classroom term.',example:'We practise progressword in class.',source:'Personal note'};
+  const entry={id:'progress-entry',term:'progressword',category:'word',meaning:sense.definition,example:sense.example,senses:[sense],tags:[],sources:[],createdAt:first,updatedAt:first};
+  mocks.fb.state.vocabulary=[entry];
+  mocks.fb.state.vocabularyEvidence=[];
+  for(let day=0;day<days;day++)for(const dimension of ['meaning','listening','spelling','usage'])mocks.fb.state.vocabularyEvidence.push({
+    id:dimension+day,entryId:entry.id,senseId:sense.id,dimension,mode:dimension==='meaning'?'definition':dimension==='usage'?'cloze':'dictation',result:'success',verification:'objective',
+    occurredAt:new Date(Date.parse(first)+day*86400000).toISOString(),sourceType:'personal',sourceId:'progress-lesson',
+  });
+  return '/vocabulary/entry/'+entry.id+'?senseId='+sense.id;
+}
+test('same-day progress updates from a spacing wait to a real next practice while the page remains open',async()=>{
+  vi.useFakeTimers();
+  try {
+    vi.setSystemTime(new Date('2026-10-17T09:59:00Z'));
+    const path=progressMeaning(1,'2026-10-16T10:00:00Z');
+    await act(async()=>{mount(path);});
+    const panel=screen.getByRole('region',{name:'Next practice'});
+    expect(panel).toHaveTextContent('Your next spaced practice is available from');
+    expect(within(panel).queryByRole('link')).not.toBeInTheDocument();
+    await act(async()=>{vi.advanceTimersByTime(60050);});
+    expect(panel).toHaveTextContent('another spaced success towards Familiar');
+    expect(within(panel).getByRole('link',{name:'Practise Meaning recall'})).toBeInTheDocument();
+    expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+  } finally {vi.useRealTimers();}
+});
+test('familiar progress offers use in context for the same meaning with assessed-feedback guidance',async()=>{
+  const path=progressMeaning(3);
+  const before=structuredClone(mocks.fb.state);
+  mount(path);
+  const panel=await screen.findByRole('region',{name:'Next practice'});
+  expect(panel).toHaveTextContent('Mastered needs two assessed production successes');
+  expect(panel).toHaveTextContent('needs assessed feedback before it can count towards mastery');
+  const route=new URL(within(panel).getByRole('link',{name:'Practise Use in context'}).getAttribute('href')!,'https://test.test');
+  expect(route.searchParams.get('senseId')).toBe('progress-sense');expect(route.searchParams.get('mode')).toBe('production');
+  expect(mocks.fb.state).toEqual(before);expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
 const linkedMeaning = { id: 'dictionary:linked-meaning', pos: 'noun', definition: 'Evidence in favour of a proposal.', example: 'There is support for this proposal.', source: 'English Wiktionary' };
 function linkedDictionary(delay?: Promise<void>) {
   vi.stubGlobal('fetch', vi.fn(async (url: string) => {

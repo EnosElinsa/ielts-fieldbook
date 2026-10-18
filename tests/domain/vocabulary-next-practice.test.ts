@@ -44,7 +44,8 @@ test('an eligible wrong-mode review takes priority and never switches to an unre
 test('a future recovery card is not promoted to an immediate recovery exercise',()=>{
  const {store,learning,recommend}=fixture();for(const d of ['meaning','listening','spelling','usage'] as const)evidence(store,d);
  learning.cards.distinction={due:new Date(future)} as never;learning.wrong.active=true;learning.wrong.modes.distinction={active:true,successesSinceFailure:0};
- expect(recommend()).toMatchObject({status:'waiting',mode:'distinction',dueAt:future});
+ expect(recommend()).toMatchObject({status:'ready',mode:'definition',reason:'spaced',nextChangeAt:future});
+ expect(recommend()?.alternatives).not.toContain('distinction');
 });
 test('a new skill remains available while a different reviewed mode waits for its due date',()=>{
  const {store,learning,recommend}=fixture();evidence(store,'meaning');learning.cards.definition={due:new Date(future)} as never;
@@ -85,7 +86,64 @@ test('an invalid wordbook scope cannot bypass the queue’s source restrictions'
  const {store,entry}=fixture();
  expect(getVocabularyNextPractice(store,entry,{senseId:'one',bookId:'not-a-book',unitId:'not-a-unit',now})).toBeUndefined();
 });
-test('verified skills with no saved schedule do not generate a false due review or declare mastery complete',()=>{
+test('verified skills with no saved schedule continue towards Familiar without a false overdue claim',()=>{
  const {store,recommend}=fixture();for(const d of ['meaning','listening','spelling','usage'] as const)evidence(store,d);
+ expect(recommend()).toMatchObject({status:'ready',mode:'definition',reason:'spaced',target:'familiar',dimensions:['meaning']});
+ expect(recommend()).not.toHaveProperty('dueAt');
+});
+
+function successes(store:VocabularyStore,days:number,at='2026-10-10T09:00:00.000Z'){
+ for(let day=0;day<days;day++)for(const dimension of ['meaning','listening','spelling','usage'] as const)
+  evidence(store,dimension,new Date(Date.parse(at)+day*86400000).toISOString());
+}
+function production(store:VocabularyStore,at=past,verification:VocabularyEvidence['verification']='assessed'){
+ evidence(store,'usage',at,verification);const event=store.vocabularyEvidence.at(-1)!;event.id='production:'+at;event.mode='production';
+}
+test('same-day successes wait for the next eligible spaced retrieval without creating a saved due card',()=>{
+ const {store,recommend}=fixture();for(const d of ['meaning','listening','spelling','usage'] as const)evidence(store,d,now);
+ const before=structuredClone(store);
+ expect(recommend()).toMatchObject({status:'waiting',mode:'definition',dueAt:future,nextChangeAt:future,reason:'spaced',target:'familiar'});
+ expect(store).toEqual(before);
+});
+test('the exact 24-hour boundary permits another spaced success',()=>{
+ const {store,entry}=fixture();for(const d of ['meaning','listening','spelling','usage'] as const)evidence(store,d,now);
+ expect(getVocabularyNextPractice(store,entry,{senseId:'one',now:'2026-10-18T09:59:59.999Z'})?.status).toBe('waiting');
+ expect(getVocabularyNextPractice(store,entry,{senseId:'one',now:future})).toMatchObject({status:'ready',mode:'definition',reason:'spaced'});
+});
+test('a recent repetition does not postpone the window measured from the last counted success',()=>{
+ const {store,recommend}=fixture();for(const d of ['meaning','listening','spelling','usage'] as const){evidence(store,d,past);evidence(store,d,'2026-10-16T18:00:00Z');}
+ expect(recommend()).toMatchObject({status:'ready',reason:'spaced',mode:'definition'});
+});
+test('remaining skills are ordered by their verified spaced progress',()=>{
+ const {store,recommend}=fixture();successes(store,1);evidence(store,'meaning','2026-10-11T09:00:00Z');
+ expect(recommend()).toMatchObject({mode:'dictation',reason:'spaced',dimensions:['listening','spelling'],target:'familiar'});
+});
+test('a future saved mode keeps its due date while an eligible alternative continues spaced learning',()=>{
+ const {store,learning,recommend}=fixture();successes(store,1);learning.cards.definition={due:new Date(future)} as never;
+ expect(recommend()).toMatchObject({mode:'distinction',reason:'spaced',dimensions:['meaning','usage'],nextChangeAt:future});
+ expect(recommend()?.alternatives).not.toContain('definition');expect(learning.cards.definition?.due).toEqual(new Date(future));
+});
+test('Familiar meanings receive assessed production guidance before further recall practice',()=>{
+ const {store,recommend}=fixture();successes(store,3);
+ expect(recommend()).toMatchObject({mode:'production',reason:'production',target:'mastered',dimensions:['usage']});
+});
+test.each(['pending','self-reported','objective'] as const)('%s production does not complete the assessed-production requirement',verification=>{
+ const {store,recommend}=fixture();successes(store,5);production(store,'2026-10-15T09:00:00Z',verification);production(store,past,verification);
+ expect(recommend()).toMatchObject({mode:'production',reason:'production'});
+});
+test('two assessed productions on the same day still need another spaced production',()=>{
+ const {store,recommend}=fixture();successes(store,5);production(store,now);production(store,'2026-10-17T10:00:01Z');
+ expect(recommend()).toMatchObject({status:'waiting',mode:'production',reason:'production',dueAt:future,target:'mastered'});
+});
+test('future production scheduling is respected even after five successes in every skill',()=>{
+ const {store,learning,recommend}=fixture();successes(store,5);learning.cards.production={due:new Date(future)} as never;
+ expect(recommend()).toMatchObject({status:'waiting',mode:'production',dueAt:future});
+});
+test('five spaced skill successes and two assessed production successes finish the unscheduled recommendation',()=>{
+ const {store,recommend}=fixture();successes(store,5);production(store,'2026-10-14T09:00:00Z');production(store,past);
  expect(recommend()).toBeUndefined();
+});
+test('future-dated evidence cannot hide a skill that needs its first verified retrieval now',()=>{
+ const {store,recommend}=fixture();evidence(store,'meaning',future);
+ expect(recommend()).toMatchObject({mode:'definition',reason:'missing'});
 });

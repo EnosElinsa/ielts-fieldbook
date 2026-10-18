@@ -1,11 +1,12 @@
 import type {VocabularyDimension,VocabularyEntry,VocabularyMode,VocabularyStore} from './types';
 import {getVocabularyReviewQueue,VOCABULARY_MODE_DIMENSIONS} from './index';
-import {getVocabularyMastery} from './mastery';
+import {getVocabularySpacedProgress} from './mastery';
 import {VOCABULARY_CATALOG} from './catalog';
 
 export type VocabularyNextPractice = {
-  status: 'ready' | 'waiting'; mode: VocabularyMode; reason: 'missing' | 'due' | 'recovery';
+  status: 'ready' | 'waiting'; mode: VocabularyMode; reason: 'missing' | 'due' | 'recovery' | 'spaced' | 'production';
   dimensions: VocabularyDimension[]; dueAt?: string; nextChangeAt?: string; alternatives: VocabularyMode[];
+  target?: 'familiar' | 'mastered';
 };
 
 export function getVocabularyNextPractice(
@@ -30,9 +31,31 @@ export function getVocabularyNextPractice(
   const available = cards.filter(card=>schedule(card.mode) === undefined || schedule(card.mode)! <= now);
   const upcoming = cards.filter(card=>(schedule(card.mode) ?? -Infinity)>now)
     .sort((a,b)=>schedule(a.mode)!-schedule(b.mode)!)[0];
-  const nextChangeAt = upcoming ? new Date(schedule(upcoming.mode)!).toISOString() : undefined;
-  const response = (mode: VocabularyMode, reason: VocabularyNextPractice['reason'], dimensions = VOCABULARY_MODE_DIMENSIONS[mode]): VocabularyNextPractice => ({
-    status:'ready',mode,reason,dimensions:[...dimensions],
+  const dimensions: VocabularyDimension[] = ['meaning','listening','spelling','usage'];
+  const primarySenseId = store.vocabulary?.find(row=>row.id===entry.id)?.senses[0]?.id;
+  const events = (store.vocabularyEvidence || []).filter(event=>event.entryId===entry.id
+    && (event.senseId===request.senseId || (!event.senseId && request.senseId===primarySenseId))
+    && Date.parse(event.occurredAt)<=now);
+  const progress = Object.fromEntries(dimensions.map(dimension=>[dimension,getVocabularySpacedProgress(events.filter(event=>event.dimension===dimension))])) as Record<VocabularyDimension,ReturnType<typeof getVocabularySpacedProgress>>;
+  const production = getVocabularySpacedProgress(events.filter(event=>event.mode==='production'&&event.dimension==='usage'));
+  const familiar = dimensions.every(dimension=>progress[dimension].count>=3);
+  const target = familiar ? 'mastered' : 'familiar', required = familiar ? 5 : 3;
+  const needsProduction = familiar && production.count<2;
+  const nextSuccess = (dimension: VocabularyDimension) => progress[dimension].nextSuccessAt ? Date.parse(progress[dimension].nextSuccessAt!) : -Infinity;
+  const productionAt = production.nextSuccessAt ? Date.parse(production.nextSuccessAt) : -Infinity;
+  // Saved dates constrain each mode; a different eligible mode may still advance a skill.
+  const pending = cards.flatMap(card=>{
+    const times = VOCABULARY_MODE_DIMENSIONS[card.mode].filter(dimension=>progress[dimension].count<required).map(nextSuccess);
+    if (card.mode==='production' && needsProduction) times.push(productionAt);
+    if (!times.length) return [];
+    const at=Math.max(schedule(card.mode) ?? -Infinity,Math.min(...times));
+    return at>now ? [{mode:card.mode,at}] : [];
+  }).sort((a,b)=>a.at-b.at);
+  const changeAt = Math.min(upcoming ? schedule(upcoming.mode)! : Infinity,pending[0]?.at ?? Infinity);
+  const nextChangeAt = Number.isFinite(changeAt) ? new Date(changeAt).toISOString() : undefined;
+  const response = (mode: VocabularyMode, reason: VocabularyNextPractice['reason'], skills = VOCABULARY_MODE_DIMENSIONS[mode]): VocabularyNextPractice => ({
+    status:'ready',mode,reason,dimensions:[...skills],
+    ...(reason==='spaced' || reason==='production' ? {target} : {}),
     ...(schedule(mode) !== undefined ? {dueAt:new Date(schedule(mode)!).toISOString()} : {}),
     ...(nextChangeAt ? {nextChangeAt} : {}),
     alternatives:available.filter(card=>card.mode!==mode).map(card=>card.mode),
@@ -43,12 +66,21 @@ export function getVocabularyNextPractice(
   const due = available.filter(card=>schedule(card.mode)! <= now)
     .sort((a,b)=>schedule(a.mode)!-schedule(b.mode)!)[0];
   if (due) return response(due.mode,'due');
-  const mastery = getVocabularyMastery(store,entry.id,request.senseId);
-  const dimensions: VocabularyDimension[] = ['meaning','listening','spelling','usage'];
   for (const dimension of dimensions) {
-    if (mastery.dimensions[dimension].spacedSuccesses) continue;
+    if (progress[dimension].count) continue;
     const card = available.find(card=>VOCABULARY_MODE_DIMENSIONS[card.mode].includes(dimension));
-    if (card) return response(card.mode,'missing',VOCABULARY_MODE_DIMENSIONS[card.mode].filter(key=>!mastery.dimensions[key].spacedSuccesses));
+    if (card) return response(card.mode,'missing',VOCABULARY_MODE_DIMENSIONS[card.mode].filter(key=>!progress[key].count));
   }
-  if (upcoming) return {status:'waiting',mode:upcoming.mode,reason:'due',dueAt:nextChangeAt,nextChangeAt,dimensions:[...VOCABULARY_MODE_DIMENSIONS[upcoming.mode]],alternatives:[]};
+  if (needsProduction && productionAt<=now && available.some(card=>card.mode==='production')) return response('production','production',['usage']);
+  for (const dimension of [...dimensions].sort((a,b)=>progress[a].count-progress[b].count)) {
+    if (progress[dimension].count>=required || nextSuccess(dimension)>now) continue;
+    const card=available.find(card=>VOCABULARY_MODE_DIMENSIONS[card.mode].includes(dimension));
+    if (card) return response(card.mode,'spaced',VOCABULARY_MODE_DIMENSIONS[card.mode].filter(key=>progress[key].count<required&&nextSuccess(key)<=now));
+  }
+  const scheduledAt = upcoming ? schedule(upcoming.mode)! : Infinity;
+  if (pending[0] && pending[0].at<scheduledAt) {
+    const {mode,at}=pending[0],time=new Date(at).toISOString();
+    return {status:'waiting',mode,reason:mode==='production'&&needsProduction&&productionAt<=at?'production':'spaced',target,dueAt:time,nextChangeAt,dimensions:[...VOCABULARY_MODE_DIMENSIONS[mode]],alternatives:[]};
+  }
+  if (upcoming) return {status:'waiting',mode:upcoming.mode,reason:'due',dueAt:new Date(scheduledAt).toISOString(),nextChangeAt,dimensions:[...VOCABULARY_MODE_DIMENSIONS[upcoming.mode]],alternatives:[]};
 }

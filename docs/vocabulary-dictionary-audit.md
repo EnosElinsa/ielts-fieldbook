@@ -2,9 +2,9 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 610 restored submeanings** (51,964 total). This ledger verifies **2651 records** across definition, examples or reading explanations, collocations and distinctions; **49,313 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 899 reviewed distinction exercises and 493 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 788 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 610 restored submeanings** (51,964 total). This ledger verifies **2673 records** across definition, examples or reading explanations, collocations and distinctions; **49,291 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 914 reviewed distinction exercises and 508 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 795 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
-Authored learning-priority metadata classifies 222 general, 101 specialist, 87 historical and 13 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
+Authored learning-priority metadata classifies 236 general, 101 specialist, 92 historical and 13 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
 
 | Term | Reviewed records | Raw + restored records | Pending |
 | --- | ---: | ---: | ---: |
@@ -50,6 +50,7 @@ Authored learning-priority metadata classifies 222 general, 101 specialist, 87 h
 | date | 21 | 21 | 0 |
 | demonstrate | 4 | 4 | 0 |
 | describe | 5 | 5 | 0 |
+| detect | 3 | 3 | 0 |
 | differentiate | 9 | 9 | 0 |
 | distinguish | 5 | 5 | 0 |
 | draw | 166 | 166 | 0 |
@@ -94,11 +95,14 @@ Authored learning-priority metadata classifies 222 general, 101 specialist, 87 h
 | mean | 34 | 35 | 1 |
 | minute | 16 | 16 | 0 |
 | note | 35 | 35 | 0 |
+| notice | 12 | 12 | 0 |
 | object | 11 | 11 | 0 |
+| observe | 5 | 5 | 0 |
 | opinion | 7 | 7 | 0 |
 | order | 33 | 33 | 0 |
 | outcome | 4 | 4 | 0 |
 | patient | 7 | 7 | 0 |
+| perceive | 2 | 2 | 0 |
 | persuade | 3 | 3 | 0 |
 | point | 91 | 91 | 0 |
 | post | 51 | 51 | 0 |

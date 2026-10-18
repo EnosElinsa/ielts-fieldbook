@@ -21730,5 +21730,349 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-f98a23ff",
+    "originalSense": {
+      "id": "kaikki:fdc38c486c6efb4945",
+      "definition": "To notice or view, especially carefully or with attention to detail.",
+      "example": "From this vantage point we can observe the behavior of the animals in their natural habitat.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "observance",
+        "observant",
+        "observation",
+        "observational",
+        "observatory",
+        "observer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/observe#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:fdc38c486c6efb4945",
+      "definition": "To notice or watch something, especially carefully and with attention to detail.",
+      "example": "From the hide, we could observe the birds without approaching their nests.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "observe behaviour",
+        "observe a change",
+        "observe closely"
+      ],
+      "usage": "Transitive: observe someone, something or an event.",
+      "register": "transitive",
+      "wordFamily": [
+        "observance",
+        "observant",
+        "observation",
+        "observational",
+        "observatory",
+        "observer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/observe#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Observation concerns what is noticed or watched. It does not by itself establish why an event happened, and watching need not involve intervening."
+      ],
+      "distinctionTask": {
+        "prompt": "Researchers observe birds from a hide without handling them. They are _____.",
+        "options": [
+          "watching the birds carefully",
+          "necessarily changing the birds' behaviour deliberately"
+        ],
+        "answer": "watching the birds carefully",
+        "explanation": "The sentence describes observation, without asserting an intervention or a proven causal explanation."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-2a9804be",
+    "originalSense": {
+      "id": "kaikki:425d2e30321da9fd0a",
+      "definition": "To become aware of, through the physical senses, to see; to understand.",
+      "example": "Go from the presence of a foolish man, when thou perceivest not in him the lips of knowledge.",
+      "pos": "verb",
+      "synonyms": [
+        "ken",
+        "discern",
+        "make out",
+        "perceive",
+        "percept",
+        "sensate",
+        "sense"
+      ],
+      "antonyms": [
+        "produce sensation"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "misperceive",
+        "nonperceiving",
+        "overperceive",
+        "perceivable",
+        "perceivance",
+        "perceiver",
+        "perceivingly",
+        "perceivingness",
+        "preperceive",
+        "reperceive",
+        "underperceive",
+        "unperceiving"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/perceive#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:425d2e30321da9fd0a",
+      "definition": "To become aware of something through the senses, or to grasp or understand it.",
+      "example": "In the quiet corridor, I could perceive a faint ticking sound.",
+      "pos": "verb",
+      "synonyms": [
+        "ken",
+        "discern",
+        "make out",
+        "perceive",
+        "percept",
+        "sensate",
+        "sense"
+      ],
+      "antonyms": [
+        "produce sensation"
+      ],
+      "collocations": [
+        "perceive a sound",
+        "perceive a change",
+        "perceive the significance"
+      ],
+      "usage": "Transitive: perceive something; often formal compared with see, hear or notice.",
+      "register": "transitive",
+      "wordFamily": [
+        "misperceive",
+        "nonperceiving",
+        "overperceive",
+        "perceivable",
+        "perceivance",
+        "perceiver",
+        "perceivingly",
+        "perceivingness",
+        "preperceive",
+        "reperceive",
+        "underperceive",
+        "unperceiving"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/perceive#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Perceive can concern sensory awareness or understanding. Perceiving a sound does not by itself identify its source or establish that the interpretation is correct."
+      ],
+      "distinctionTask": {
+        "prompt": "You perceive a faint ticking sound but cannot locate it. You _____.",
+        "options": [
+          "become aware of the sound",
+          "necessarily establish what is making it"
+        ],
+        "answer": "become aware of the sound",
+        "explanation": "Sensory awareness does not automatically identify the cause or location."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "originalSense": {
+      "id": "kaikki:cb10adff4df990ec7b",
+      "definition": "To become aware of; to observe.",
+      "example": "Did you notice the flowers in her yard?",
+      "pos": "verb",
+      "synonyms": [
+        "recognize"
+      ],
+      "antonyms": [
+        "ignore",
+        "neglect"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "noticeability",
+        "noticer",
+        "unnotice",
+        "unnoticed",
+        "unnoticing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:cb10adff4df990ec7b",
+      "definition": "To become aware of someone or something; to observe it.",
+      "example": "Did you notice the change in the opening paragraph?",
+      "pos": "verb",
+      "synonyms": [
+        "recognize"
+      ],
+      "antonyms": [
+        "ignore",
+        "neglect"
+      ],
+      "collocations": [
+        "notice a change",
+        "notice someone doing something",
+        "notice that"
+      ],
+      "usage": "Transitive: notice something; notice that followed by a clause; notice someone doing something.",
+      "register": "transitive",
+      "wordFamily": [
+        "noticeability",
+        "noticer",
+        "unnotice",
+        "unnoticed",
+        "unnoticing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Notice commonly marks becoming aware of a feature or event. Observe can additionally suggest attentive watching; detect can suggest a search or test. These verbs overlap, and none alone guarantees a correct causal explanation."
+      ],
+      "distinctionTask": {
+        "prompt": "You notice that a paragraph has changed, but do not know who edited it. You _____.",
+        "options": [
+          "become aware of the change",
+          "necessarily identify the editor"
+        ],
+        "answer": "become aware of the change",
+        "explanation": "Noticing the change does not establish who caused it."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-42d649e2",
+    "originalSense": {
+      "id": "kaikki:33faed12e38d9be3cc",
+      "definition": "To discover or notice, especially by careful search, examination, or probing.",
+      "example": "The forensic examiners detected tiny traces of the poison on the suspect's gloves.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "autodetect",
+        "codetect",
+        "detectability",
+        "detectable",
+        "detecter",
+        "detectible",
+        "detection",
+        "detective",
+        "detectograph",
+        "detector",
+        "immunodetect",
+        "metal-detect",
+        "misdetect",
+        "nondetect",
+        "overdetect",
+        "redetect",
+        "underdetect",
+        "undetectability"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/detect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:33faed12e38d9be3cc",
+      "definition": "To discover or become aware of something, especially through a search, examination or test.",
+      "example": "In this test, the sensor can detect a 0.2°C rise in temperature.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "detect a change",
+        "detect a signal",
+        "detect traces of something"
+      ],
+      "usage": "Transitive: detect something, often a signal, change, trace or problem.",
+      "register": "transitive",
+      "wordFamily": [
+        "autodetect",
+        "codetect",
+        "detectability",
+        "detectable",
+        "detecter",
+        "detectible",
+        "detection",
+        "detective",
+        "detectograph",
+        "detector",
+        "immunodetect",
+        "metal-detect",
+        "misdetect",
+        "nondetect",
+        "overdetect",
+        "redetect",
+        "underdetect",
+        "undetectability"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/detect#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Detection concerns finding evidence or noticing a feature. It does not by itself establish its cause, guilt, a diagnosis, or perfect reliability. The temperature change is specific to this example, not every sensor."
+      ],
+      "distinctionTask": {
+        "prompt": "A sensor detects a temperature rise but the source of the heat is unknown. The finding establishes _____.",
+        "options": [
+          "that the rise was detected in that test",
+          "a complete explanation of its cause"
+        ],
+        "answer": "that the rise was detected in that test",
+        "explanation": "Detection and causal explanation are separate steps."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

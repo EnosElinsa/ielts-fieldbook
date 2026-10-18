@@ -21,7 +21,8 @@ function eligible(event: VocabularyEvidence) {
       : event.verification === 'objective' || event.verification === 'source-record' || event.verification === 'assessed');
 }
 
-function spacedCount(events: VocabularyEvidence[]) {
+/** The last counted success, rather than a same-day repetition, starts the next spacing window. */
+export function getVocabularySpacedProgress(events: VocabularyEvidence[]) {
   const seen = new Set<string>();
   const times = events.filter(event => {
     if (!eligible(event)) return false;
@@ -33,8 +34,10 @@ function spacedCount(events: VocabularyEvidence[]) {
   }).map(event => Date.parse(event.occurredAt)).sort((a, b) => a - b);
   let count = 0; let last = -Infinity;
   for (const time of times) if (time - last >= dayMs) { count += 1; last = time; }
-  return count;
+  return {count, ...(count ? {nextSuccessAt: new Date(last + dayMs).toISOString()} : {})};
 }
+
+const spacedCount = (events: VocabularyEvidence[]) => getVocabularySpacedProgress(events).count;
 
 function senseMastery(store: Partial<VocabularyStore>, entryId: string, senseId: string, primarySenseId?: string): VocabularyMastery {
   const state = store.vocabularyStates?.find(item => item.entryId === entryId && item.senseId === senseId);

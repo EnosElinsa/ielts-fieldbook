@@ -44807,6 +44807,17 @@
   {
     "entryId": "ve-2a9804be",
     "senseId": "kaikki:425d2e30321da9fd0a",
+    "definition": "To become aware of something through the senses, or to grasp or understand it.",
+    "example": "In the quiet corridor, I could perceive a faint ticking sound.",
+    "collocations": [
+      "perceive a sound",
+      "perceive a change",
+      "perceive the significance"
+    ],
+    "distinctions": [
+      "Perceive can concern sensory awareness or understanding. Perceiving a sound does not by itself identify its source or establish that the interpretation is correct."
+    ],
+    "usage": "Transitive: perceive something; often formal compared with see, hear or notice.",
     "originalSense": {
       "id": "kaikki:425d2e30321da9fd0a",
       "definition": "To become aware of, through the physical senses, to see; to understand.",
@@ -44846,7 +44857,62 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/perceive#English",
       "license": "CC-BY-SA-4.0"
     },
-    "example": "People may perceive the same colour differently under artificial light."
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=perceive&oldid=92695336",
+    "distinctionTask": {
+      "prompt": "You perceive a faint ticking sound but cannot locate it. You _____.",
+      "options": [
+        "become aware of the sound",
+        "necessarily establish what is making it"
+      ],
+      "answer": "become aware of the sound",
+      "explanation": "Sensory awareness does not automatically identify the cause or location."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general",
+    "previousSenses": [
+      {
+        "id": "kaikki:425d2e30321da9fd0a",
+        "definition": "To become aware of, through the physical senses, to see; to understand.",
+        "example": "People may perceive the same colour differently under artificial light.",
+        "pos": "verb",
+        "synonyms": [
+          "ken",
+          "discern",
+          "make out",
+          "perceive",
+          "percept",
+          "sensate",
+          "sense"
+        ],
+        "antonyms": [
+          "produce sensation"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [
+          "misperceive",
+          "nonperceiving",
+          "overperceive",
+          "perceivable",
+          "perceivance",
+          "perceiver",
+          "perceivingly",
+          "perceivingness",
+          "preperceive",
+          "reperceive",
+          "underperceive",
+          "unperceiving"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/perceive#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ]
   },
   {
     "entryId": "ve-45b2d4c0",
@@ -208661,5 +208727,1098 @@
     "antonyms": [],
     "wordFamily": [],
     "register": ""
+  },
+  {
+    "entryId": "ve-f98a23ff",
+    "senseId": "kaikki:fdc38c486c6efb4945",
+    "definition": "To notice or watch something, especially carefully and with attention to detail.",
+    "example": "From the hide, we could observe the birds without approaching their nests.",
+    "collocations": [
+      "observe behaviour",
+      "observe a change",
+      "observe closely"
+    ],
+    "distinctions": [
+      "Observation concerns what is noticed or watched. It does not by itself establish why an event happened, and watching need not involve intervening."
+    ],
+    "usage": "Transitive: observe someone, something or an event.",
+    "originalSense": {
+      "id": "kaikki:fdc38c486c6efb4945",
+      "definition": "To notice or view, especially carefully or with attention to detail.",
+      "example": "From this vantage point we can observe the behavior of the animals in their natural habitat.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "observance",
+        "observant",
+        "observation",
+        "observational",
+        "observatory",
+        "observer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/observe#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=observe&oldid=93572986",
+    "distinctionTask": {
+      "prompt": "Researchers observe birds from a hide without handling them. They are _____.",
+      "options": [
+        "watching the birds carefully",
+        "necessarily changing the birds' behaviour deliberately"
+      ],
+      "answer": "watching the birds carefully",
+      "explanation": "The sentence describes observation, without asserting an intervention or a proven causal explanation."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-f98a23ff",
+    "senseId": "kaikki:7136b3c29fd280c918",
+    "definition": "To follow or comply with a rule, custom or practice.",
+    "example": "Drivers must observe the posted speed limit on this road.",
+    "collocations": [
+      "observe a rule",
+      "observe a custom",
+      "observe the speed limit"
+    ],
+    "distinctions": [
+      "Observe a rule means comply with it, rather than merely see that it is displayed. Which rule applies depends on the stated context."
+    ],
+    "usage": "Transitive; observe a rule, requirement, custom or practice.",
+    "originalSense": {
+      "id": "kaikki:7136b3c29fd280c918",
+      "definition": "To follow or obey the custom, practice, or rules (especially of a religion).",
+      "example": "Please observe all posted speed limits.",
+      "pos": "verb",
+      "synonyms": [
+        "celebrate"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "observance",
+        "observant",
+        "observation",
+        "observational",
+        "observatory",
+        "observer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/observe#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=observe&oldid=93572986",
+    "distinctionTask": {
+      "prompt": "A driver observes the posted speed limit. Observe here means _____.",
+      "options": [
+        "comply with the limit",
+        "only notice the sign while ignoring the limit"
+      ],
+      "answer": "comply with the limit",
+      "explanation": "This use concerns following the rule, not simply perceiving its sign."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-f98a23ff",
+    "senseId": "kaikki:fdc430c5a6f7413d77",
+    "definition": "To mark or keep a holiday or similar occasion, or follow a time or calendar convention.",
+    "example": "The family will observe the festival with an evening meal.",
+    "collocations": [
+      "observe a holiday",
+      "observe a festival",
+      "observe daylight saving time"
+    ],
+    "distinctions": [
+      "Observing a holiday concerns keeping or marking the occasion; observing daylight saving time concerns following that time convention. The two constructions do not assert the same activity, and neither implies a universal practice."
+    ],
+    "usage": "Transitive; the object shows whether an occasion or a time convention is meant.",
+    "originalSense": {
+      "id": "kaikki:fdc430c5a6f7413d77",
+      "definition": "To take note of and celebrate (a holiday or similar occurrence), to keep; to follow (a type of time or calendar reckoning).",
+      "example": "Ye shall observe the feast of unleavened bread.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "observance",
+        "observant",
+        "observation",
+        "observational",
+        "observatory",
+        "observer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/observe#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=observe&oldid=93572986",
+    "distinctionTask": {
+      "prompt": "A family observes a festival with a special meal. They _____.",
+      "options": [
+        "mark or celebrate the occasion",
+        "merely measure the meal's duration"
+      ],
+      "answer": "mark or celebrate the occasion",
+      "explanation": "The object festival and the special meal establish the occasion-keeping meaning."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-f98a23ff",
+    "senseId": "kaikki:e4d8b85cf600fb92b5",
+    "definition": "To make a comment or remark about something.",
+    "example": "As Mina observed, the plan gives no deadline for completion.",
+    "collocations": [
+      "observe that",
+      "as someone observed",
+      "observe about a proposal"
+    ],
+    "distinctions": [
+      "A person can observe that something is so by saying it. The remark may arise from careful thought, but the verb alone does not prove its accuracy or establish an experiment."
+    ],
+    "usage": "Often observe that followed by a clause, or as someone observed.",
+    "originalSense": {
+      "id": "kaikki:e4d8b85cf600fb92b5",
+      "definition": "To comment on something; to make an observation.",
+      "example": "The senator observed that the bill would be detrimental to his constituents.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "observance",
+        "observant",
+        "observation",
+        "observational",
+        "observatory",
+        "observer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/observe#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=observe&oldid=93572986",
+    "distinctionTask": {
+      "prompt": "“The plan gives no deadline,” Mina observed. Observed introduces _____.",
+      "options": [
+        "a remark she made",
+        "a requirement that she watched an experiment"
+      ],
+      "answer": "a remark she made",
+      "explanation": "Here observed is a reporting verb for the remark."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-f98a23ff",
+    "senseId": "kaikki:4e3df7bcb0650948e3",
+    "definition": "An archaic noun meaning an observation, remark, comment or judgment.",
+    "example": "In older prose, an observe may mean a remark or judgment. Read it as a noun in that construction, rather than as an instruction to watch.",
+    "collocations": [
+      "an observe: a remark",
+      "a comment",
+      "a judgment"
+    ],
+    "distinctions": [
+      "This archaic noun is separate from the modern verb observe. Observation or remark is clearer in ordinary modern writing."
+    ],
+    "usage": "Archaic noun; reading guidance rather than a model for ordinary modern use.",
+    "originalSense": {
+      "id": "kaikki:4e3df7bcb0650948e3",
+      "definition": "An observation (remark, comment or judgement).",
+      "example": "“It sticks in my mind that he would take it very ill,” says Alan. “But the little man cried to me to run, and indeed I thought it was a good observe, and ran. The last that I saw they were all in a knot upon the beach, like folk that were not agreeing very well together.”",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic",
+      "wordFamily": [
+        "observance",
+        "observant",
+        "observation",
+        "observational",
+        "observatory",
+        "observer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/observe#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=observe&oldid=93572986",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-2a9804be",
+    "senseId": "kaikki:1f4fdd861895f93333",
+    "definition": "To interpret or regard someone or something in a particular way.",
+    "example": "Students may perceive the same feedback as helpful or discouraging.",
+    "collocations": [
+      "perceive something as",
+      "be perceived as helpful",
+      "perceive someone to be"
+    ],
+    "distinctions": [
+      "A perception in this sense is an interpretation or judgment. Different people can interpret the same message differently; the verb does not make every interpretation accurate."
+    ],
+    "usage": "Perceive A as B; A is perceived as B.",
+    "originalSense": {
+      "id": "kaikki:1f4fdd861895f93333",
+      "definition": "To interpret something in a particular way.",
+      "example": "John was perceived to be a coward by his comrades",
+      "pos": "verb",
+      "synonyms": [
+        "ken",
+        "discern",
+        "make out",
+        "perceive",
+        "percept",
+        "sensate",
+        "sense"
+      ],
+      "antonyms": [
+        "produce sensation"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "misperceive",
+        "nonperceiving",
+        "overperceive",
+        "perceivable",
+        "perceivance",
+        "perceiver",
+        "perceivingly",
+        "perceivingness",
+        "preperceive",
+        "reperceive",
+        "underperceive",
+        "unperceiving"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/perceive#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=perceive&oldid=92695336",
+    "distinctionTask": {
+      "prompt": "Two students perceive the same feedback differently. This concerns _____.",
+      "options": [
+        "their interpretations of it",
+        "a guarantee that both interpretations are correct"
+      ],
+      "answer": "their interpretations of it",
+      "explanation": "Perceive as describes how the feedback is regarded, without certifying either judgment."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:35f36a4db65f1d06b1",
+    "definition": "The act or state of noticing or becoming aware of something.",
+    "example": "The spelling error escaped my notice during the first reading.",
+    "collocations": [
+      "escape someone's notice",
+      "come to someone's notice",
+      "take notice of"
+    ],
+    "distinctions": [
+      "In escape my notice, notice is an uncountable noun for awareness or attention. It is separate from a printed notice, even though a written announcement may attract attention."
+    ],
+    "usage": "Uncountable noun; often in expressions such as escape notice, take notice and come to someone's notice.",
+    "originalSense": {
+      "id": "kaikki:35f36a4db65f1d06b1",
+      "definition": "The act of observing; perception.",
+      "example": "He took no notice of the changes, and went on as though nothing had happened.",
+      "pos": "noun",
+      "synonyms": [
+        "regard"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notice&oldid=93538506",
+    "distinctionTask": {
+      "prompt": "An error escapes your notice. You _____.",
+      "options": [
+        "fail to become aware of it",
+        "publish an announcement about it"
+      ],
+      "answer": "fail to become aware of it",
+      "explanation": "The uncountable noun concerns awareness; escape notice means remain unnoticed."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:ba95c00c349d87f419",
+    "definition": "A written or printed announcement.",
+    "example": "A notice on the library door said it would close early on Tuesday.",
+    "collocations": [
+      "a notice on a door",
+      "put up a notice",
+      "a public notice"
+    ],
+    "distinctions": [
+      "A notice in this sense is an announcement in written or printed form. Its content can also perform a formal notifying function; these uses can overlap."
+    ],
+    "usage": "Countable noun: a notice, several notices.",
+    "originalSense": {
+      "id": "kaikki:ba95c00c349d87f419",
+      "definition": "A written or printed announcement.",
+      "example": "A series of notices signpost patients to the X-ray department.",
+      "pos": "noun",
+      "synonyms": [
+        "regard"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notice&oldid=93538506",
+    "distinctionTask": {
+      "prompt": "A notice is pinned to a library door announcing an early closure. The notice is _____.",
+      "options": [
+        "a written announcement",
+        "the reader's act of becoming aware"
+      ],
+      "answer": "a written announcement",
+      "explanation": "The noun names the announcement itself."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:45028ae34dc9b0ce99",
+    "definition": "A formal notification or warning.",
+    "example": "The council sent a formal notice stating that the permit would expire on 30 June.",
+    "collocations": [
+      "give formal notice",
+      "serve notice",
+      "notice of expiry"
+    ],
+    "distinctions": [
+      "This use concerns formal notification. A notice may also be written or printed, so form and notifying function can overlap. The sentence alone does not establish legally effective service in every jurisdiction."
+    ],
+    "usage": "Countable noun; give or serve a notice, or notice of a specified event.",
+    "originalSense": {
+      "id": "kaikki:45028ae34dc9b0ce99",
+      "definition": "A formal notification or warning.",
+      "example": "The sidewalk adjacent to the damaged bridge stonework shall be closed until further notice.",
+      "pos": "noun",
+      "synonyms": [
+        "regard"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notice&oldid=93538506",
+    "distinctionTask": {
+      "prompt": "The council sends a notice of a permit's expiry. This notice functions as _____.",
+      "options": [
+        "a formal notification",
+        "proof that the permit has already expired"
+      ],
+      "answer": "a formal notification",
+      "explanation": "Notification can concern a future expiry; it does not itself establish that the date has passed."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:7ba015345d3eee40fb",
+    "definition": "Advance notification that employment will end, given by an employee or employer.",
+    "example": "Under her contract, Leah gave four weeks' notice before leaving the job.",
+    "collocations": [
+      "give notice",
+      "a notice period",
+      "four weeks' notice"
+    ],
+    "distinctions": [
+      "The four-week period belongs to this example's contract, not to every employment relationship. Giving notice is separate from completing the departure."
+    ],
+    "usage": "Employment; usually uncountable, including give notice and work a notice period. Applicable rules depend on the contract and jurisdiction.",
+    "originalSense": {
+      "id": "kaikki:7ba015345d3eee40fb",
+      "definition": "Advance notification of termination of employment, given by an employer to an employee or vice versa.",
+      "example": "I gave her her mandatory two weeks' notice and sacked her.",
+      "pos": "noun",
+      "synonyms": [
+        "regard"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notice&oldid=93538506",
+    "distinctionTask": {
+      "prompt": "Leah's contract requires four weeks' notice. She gives notice today. The sentence establishes _____.",
+      "options": [
+        "advance notification under that contract",
+        "a universal four-week rule for every employee"
+      ],
+      "answer": "advance notification under that contract",
+      "explanation": "The period is expressly tied to her contract, and giving notice does not mean the departure is already complete."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:cbab6efd7d1df4a5bf",
+    "definition": "A published critical review, for example of a play.",
+    "example": "The play received a favourable notice in the local newspaper.",
+    "collocations": [
+      "a favourable notice",
+      "receive good notices",
+      "a newspaper notice of a play"
+    ],
+    "distinctions": [
+      "A critical notice evaluates the work. It is separate from a simple announcement that a performance will take place, and a review need not be favourable."
+    ],
+    "usage": "Countable noun; often notices in discussion of theatre or other reviewed work.",
+    "originalSense": {
+      "id": "kaikki:cbab6efd7d1df4a5bf",
+      "definition": "A published critical review of a play or the like.",
+      "example": "The first-night audience, yes. The first-night reviewers, not exactly. The notices have so far been mixed, only The Financial Times having delivered itself of an unequivocal rave.",
+      "pos": "noun",
+      "synonyms": [
+        "regard"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notice&oldid=93538506",
+    "distinctionTask": {
+      "prompt": "A play receives a favourable notice praising the acting. Notice here is _____.",
+      "options": [
+        "a published critical review",
+        "only an announcement of the performance date"
+      ],
+      "answer": "a published critical review",
+      "explanation": "The praise evaluates the performance, establishing the review sense."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:1fd69de5e46fdbd15f",
+    "definition": "Notification given before an event or change.",
+    "example": "Please give us advance notice if you need to cancel the booking.",
+    "collocations": [
+      "advance notice",
+      "at short notice",
+      "without prior notice"
+    ],
+    "distinctions": [
+      "Prior notice concerns the timing of notification. Employment termination notice is one specific use, but this broader meaning also applies to bookings, visits and other changes."
+    ],
+    "usage": "Usually uncountable; advance notice, prior notice, at short notice, without notice.",
+    "originalSense": {
+      "id": "kaikki:1fd69de5e46fdbd15f",
+      "definition": "Prior notification.",
+      "example": "I don't mind if you want to change the venue; just give me some notice first, OK?",
+      "pos": "noun",
+      "synonyms": [
+        "regard"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notice&oldid=93538506",
+    "distinctionTask": {
+      "prompt": "You ask for advance notice of a cancellation so that you can rearrange the booking. You want notification _____.",
+      "options": [
+        "before the change takes effect",
+        "only after every consequence is complete"
+      ],
+      "answer": "before the change takes effect",
+      "explanation": "Advance notice gives information beforehand."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:aa283f7ec27795ff63",
+    "definition": "A dated use meaning attention, respectful treatment or civility.",
+    "example": "In older writing, notice can refer to respectful attention or civil treatment shown to a person. The context distinguishes this from an announcement or advance warning.",
+    "collocations": [
+      "notice: respectful attention",
+      "civil treatment",
+      "attention shown to someone"
+    ],
+    "distinctions": [
+      "This dated attention sense does not concern a formal notification. Its countability varies with the construction."
+    ],
+    "usage": "Dated; reading guidance for older prose.",
+    "originalSense": {
+      "id": "kaikki:aa283f7ec27795ff63",
+      "definition": "Attention; respectful treatment; civility.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "heed"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "dated",
+      "register": "countable, dated, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notice&oldid=93538506",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:a8592a5abb6d8f09a9",
+    "definition": "An archaic verb meaning to mention or remark upon something.",
+    "example": "In an archaic use, to notice a subject may mean to mention it or make a remark about it. This is separate from simply becoming aware of it.",
+    "collocations": [
+      "notice: mention",
+      "remark upon a subject",
+      "refer to something in a comment"
+    ],
+    "distinctions": [
+      "The remark meaning is separate from the ordinary become-aware verb. Mention or remark upon is clearer for ordinary modern use in this sense."
+    ],
+    "usage": "Archaic transitive verb; interpret it from context.",
+    "originalSense": {
+      "id": "kaikki:a8592a5abb6d8f09a9",
+      "definition": "To remark upon; to mention.",
+      "example": "Numberless are the arguments […] that men have used morally and physically, to degrade the sex. I must notice a few.",
+      "pos": "verb",
+      "synonyms": [
+        "recognize"
+      ],
+      "antonyms": [
+        "ignore",
+        "neglect"
+      ],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, transitive",
+      "wordFamily": [
+        "noticeability",
+        "noticer",
+        "unnotice",
+        "unnoticed",
+        "unnoticing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notice&oldid=93538506",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:cb10adff4df990ec7b",
+    "definition": "To become aware of someone or something; to observe it.",
+    "example": "Did you notice the change in the opening paragraph?",
+    "collocations": [
+      "notice a change",
+      "notice someone doing something",
+      "notice that"
+    ],
+    "distinctions": [
+      "Notice commonly marks becoming aware of a feature or event. Observe can additionally suggest attentive watching; detect can suggest a search or test. These verbs overlap, and none alone guarantees a correct causal explanation."
+    ],
+    "usage": "Transitive: notice something; notice that followed by a clause; notice someone doing something.",
+    "originalSense": {
+      "id": "kaikki:cb10adff4df990ec7b",
+      "definition": "To become aware of; to observe.",
+      "example": "Did you notice the flowers in her yard?",
+      "pos": "verb",
+      "synonyms": [
+        "recognize"
+      ],
+      "antonyms": [
+        "ignore",
+        "neglect"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "noticeability",
+        "noticer",
+        "unnotice",
+        "unnoticed",
+        "unnoticing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notice&oldid=93538506",
+    "distinctionTask": {
+      "prompt": "You notice that a paragraph has changed, but do not know who edited it. You _____.",
+      "options": [
+        "become aware of the change",
+        "necessarily identify the editor"
+      ],
+      "answer": "become aware of the change",
+      "explanation": "Noticing the change does not establish who caused it."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:72c55e050becd882f6",
+    "definition": "An obsolete verb meaning to give someone abundant attention or treat them favourably.",
+    "example": "In older prose, notice can describe favouring or paying marked attention to someone. The context must distinguish this social treatment from merely seeing the person.",
+    "collocations": [
+      "notice: favour someone",
+      "pay marked attention",
+      "treat favourably"
+    ],
+    "distinctions": [
+      "This obsolete favourable-treatment meaning is separate from the ordinary verb notice a person in a room."
+    ],
+    "usage": "Obsolete transitive verb; reading guidance for historical writing.",
+    "originalSense": {
+      "id": "kaikki:72c55e050becd882f6",
+      "definition": "To lavish attention upon; to treat (someone) favourably.",
+      "example": "She would notice her; she would improve her; she would detach her from her bad acquaintance, and introduce her into good society; she would form her opinions and her manners.",
+      "pos": "verb",
+      "synonyms": [
+        "recognize"
+      ],
+      "antonyms": [
+        "ignore",
+        "neglect"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "noticeability",
+        "noticer",
+        "unnotice",
+        "unnoticed",
+        "unnoticing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notice&oldid=93538506",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:6b9ce8e4c6b9511bae",
+    "definition": "To be noticeable or to show.",
+    "example": "In this intransitive meaning, notice concerns a feature showing or being noticeable, without an object naming what is perceived.",
+    "collocations": [
+      "notice: be noticeable",
+      "show",
+      "a feature being apparent"
+    ],
+    "distinctions": [
+      "This construction differs from transitive notice a mark, in which someone becomes aware of the mark. Be noticeable or show is clearer for an ordinary description."
+    ],
+    "usage": "Intransitive; interpret according to the surrounding grammar.",
+    "originalSense": {
+      "id": "kaikki:6b9ce8e4c6b9511bae",
+      "definition": "To be noticeable; to show.",
+      "example": "The blackness didn't notice so much when she was born; but it's unmistakeable now.",
+      "pos": "verb",
+      "synonyms": [
+        "recognize"
+      ],
+      "antonyms": [
+        "ignore",
+        "neglect"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "noticeability",
+        "noticer",
+        "unnotice",
+        "unnoticed",
+        "unnoticing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notice&oldid=93538506",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-623d1bbf",
+    "senseId": "kaikki:cca86346961175a327",
+    "definition": "An antisemitic online use that insinuates Jewish influence or responsibility.",
+    "example": "In some antisemitic online rhetoric, notice is used as coded language insinuating Jewish influence or blame. Such an insinuation is a prejudicial claim, not evidence of who caused an event.",
+    "collocations": [
+      "coded notice rhetoric",
+      "antisemitic insinuation",
+      "attributing blame"
+    ],
+    "distinctions": [
+      "This derogatory online use is separate from the neutral everyday verb become aware. Recognizing the insinuation helps readers distinguish a prejudicial claim from supported evidence."
+    ],
+    "usage": "Derogatory antisemitic online usage; critical reading guidance.",
+    "originalSense": {
+      "id": "kaikki:cca86346961175a327",
+      "definition": "To perceive Jewish influence or responsibility.",
+      "example": "Coordinate term: pattern noticer",
+      "pos": "verb",
+      "synonyms": [
+        "recognize"
+      ],
+      "antonyms": [
+        "ignore",
+        "neglect"
+      ],
+      "collocations": [],
+      "usage": "Internet, slur",
+      "register": "Internet, intransitive, slur",
+      "wordFamily": [
+        "noticeability",
+        "noticer",
+        "unnotice",
+        "unnoticed",
+        "unnoticing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notice#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notice&oldid=93538506",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d649e2",
+    "senseId": "kaikki:33faed12e38d9be3cc",
+    "definition": "To discover or become aware of something, especially through a search, examination or test.",
+    "example": "In this test, the sensor can detect a 0.2°C rise in temperature.",
+    "collocations": [
+      "detect a change",
+      "detect a signal",
+      "detect traces of something"
+    ],
+    "distinctions": [
+      "Detection concerns finding evidence or noticing a feature. It does not by itself establish its cause, guilt, a diagnosis, or perfect reliability. The temperature change is specific to this example, not every sensor."
+    ],
+    "usage": "Transitive: detect something, often a signal, change, trace or problem.",
+    "originalSense": {
+      "id": "kaikki:33faed12e38d9be3cc",
+      "definition": "To discover or notice, especially by careful search, examination, or probing.",
+      "example": "The forensic examiners detected tiny traces of the poison on the suspect's gloves.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "autodetect",
+        "codetect",
+        "detectability",
+        "detectable",
+        "detecter",
+        "detectible",
+        "detection",
+        "detective",
+        "detectograph",
+        "detector",
+        "immunodetect",
+        "metal-detect",
+        "misdetect",
+        "nondetect",
+        "overdetect",
+        "redetect",
+        "underdetect",
+        "undetectability"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/detect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=detect&oldid=92474977",
+    "distinctionTask": {
+      "prompt": "A sensor detects a temperature rise but the source of the heat is unknown. The finding establishes _____.",
+      "options": [
+        "that the rise was detected in that test",
+        "a complete explanation of its cause"
+      ],
+      "answer": "that the rise was detected in that test",
+      "explanation": "Detection and causal explanation are separate steps."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-42d649e2",
+    "senseId": "kaikki:98ce71509acc01a2bf",
+    "definition": "To work on or solve cases as a detective.",
+    "example": "In the story, he is paid to detect rather than patrol the streets.",
+    "collocations": [
+      "detect for a living",
+      "a detective detects",
+      "detecting work"
+    ],
+    "distinctions": [
+      "In this informal intransitive use, detect describes detective work. Being paid to investigate does not guarantee that every case is solved."
+    ],
+    "usage": "Informal and intransitive; no direct object is required when the detective-work activity is meant.",
+    "originalSense": {
+      "id": "kaikki:98ce71509acc01a2bf",
+      "definition": "To work or solve cases as a detective.",
+      "example": "Parker would in all likelihood have done so; he was paid to detect and to do nothing else, and neither his natural gifts nor his education (at Barrow-in-Furness Grammar School) prompted him to stray into side-tracks at the beck of an ill-regulated imagination.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "informal",
+      "register": "informal, intransitive",
+      "wordFamily": [
+        "autodetect",
+        "codetect",
+        "detectability",
+        "detectable",
+        "detecter",
+        "detectible",
+        "detection",
+        "detective",
+        "detectograph",
+        "detector",
+        "immunodetect",
+        "metal-detect",
+        "misdetect",
+        "nondetect",
+        "overdetect",
+        "redetect",
+        "underdetect",
+        "undetectability"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/detect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=detect&oldid=92474977",
+    "distinctionTask": {
+      "prompt": "A fictional investigator says he is paid to detect. This informal use describes _____.",
+      "options": [
+        "working as a detective",
+        "a guarantee that every case will be solved"
+      ],
+      "answer": "working as a detective",
+      "explanation": "The verb names the work; a successful result in every case is not asserted."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d649e2",
+    "senseId": "kaikki:56d9d95051c80401d1",
+    "definition": "An obsolete adjective meaning detected or discovered.",
+    "example": "In older writing, detect may appear as an adjective meaning detected. The grammatical position distinguishes it from the ordinary verb detect.",
+    "collocations": [
+      "detect: detected",
+      "discovered",
+      "an older adjective"
+    ],
+    "distinctions": [
+      "This obsolete adjective does not introduce a different modern detection process. Detected is clearer in ordinary modern writing."
+    ],
+    "usage": "Obsolete adjective; reading guidance rather than a model for ordinary modern use.",
+    "originalSense": {
+      "id": "kaikki:56d9d95051c80401d1",
+      "definition": "Detected.",
+      "example": "",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "not-comparable, obsolete",
+      "register": "not-comparable, obsolete",
+      "wordFamily": [
+        "autodetect",
+        "codetect",
+        "detectability",
+        "detectable",
+        "detecter",
+        "detectible",
+        "detection",
+        "detective",
+        "detectograph",
+        "detector",
+        "immunodetect",
+        "metal-detect",
+        "misdetect",
+        "nondetect",
+        "overdetect",
+        "redetect",
+        "underdetect",
+        "undetectability"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/detect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=detect&oldid=92474977",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
   }
 ]
