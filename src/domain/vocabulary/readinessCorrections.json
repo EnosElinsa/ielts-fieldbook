@@ -209820,5 +209820,1495 @@
     "wordFamily": [],
     "register": "",
     "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:6206fc7e29841eeb1b",
+    "definition": "An obsolete intransitive use meaning to seek for something or after someone.",
+    "example": "In older prose, explore can mean seek for something or after someone. This obsolete construction is separate from modern explore a place or explore an idea.",
+    "collocations": [
+      "explore: seek for",
+      "seek after someone",
+      "an older search construction"
+    ],
+    "distinctions": [
+      "The source labels this intransitive search meaning obsolete. Seek or look for is clearer in ordinary modern use with this intended meaning."
+    ],
+    "usage": "Obsolete and intransitive; reading guidance for older prose.",
+    "originalSense": {
+      "id": "kaikki:6206fc7e29841eeb1b",
+      "definition": "To seek for something or after someone.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "intransitive, obsolete",
+      "wordFamily": [
+        "explorable",
+        "explorement",
+        "explorer",
+        "exploringly",
+        "explorista",
+        "explornography",
+        "reexplore",
+        "sexplore"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explore#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=explore&oldid=92749235",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:e196cbb74448f88c03",
+    "definition": "To examine or investigate something systematically.",
+    "example": "The committee will explore three alternatives before choosing a plan.",
+    "collocations": [
+      "explore alternatives",
+      "explore an idea",
+      "explore the possibility of"
+    ],
+    "distinctions": [
+      "Explore alternatives means examine them. Exploring a possibility does not commit the committee to it or establish that a plan has already been chosen."
+    ],
+    "usage": "Transitive: explore an idea, option, possibility or topic.",
+    "originalSense": {
+      "id": "kaikki:e196cbb74448f88c03",
+      "definition": "To examine or investigate something systematically.",
+      "example": "The committee has been exploring alternative solutions to the problem at hand.",
+      "pos": "verb",
+      "synonyms": [
+        "delve into",
+        "research"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "explorable",
+        "explorement",
+        "explorer",
+        "exploringly",
+        "explorista",
+        "explornography",
+        "reexplore",
+        "sexplore"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explore#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=explore&oldid=92749235",
+    "distinctionTask": {
+      "prompt": "A committee explores three alternatives before deciding. It is _____.",
+      "options": [
+        "examining the alternatives",
+        "already committed to every alternative"
+      ],
+      "answer": "examining the alternatives",
+      "explanation": "Exploring an option is examination, without an assertion that it has been selected."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:8b2253888266521d28",
+    "definition": "To travel around a place in search of discovery.",
+    "example": "They plan to explore the islands by kayak.",
+    "collocations": [
+      "explore an island",
+      "explore the coast",
+      "explore a new area"
+    ],
+    "distinctions": [
+      "Exploration can make a place new to the travellers without making them the first people ever to visit it. Plan to explore describes an intention."
+    ],
+    "usage": "Transitive: explore a place or area.",
+    "originalSense": {
+      "id": "kaikki:8b2253888266521d28",
+      "definition": "To travel somewhere in search of discovery.",
+      "example": "It was around that time that the expedition began exploring the Arctic Circle.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "explorable",
+        "explorement",
+        "explorer",
+        "exploringly",
+        "explorista",
+        "explornography",
+        "reexplore",
+        "sexplore"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explore#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=explore&oldid=92749235",
+    "distinctionTask": {
+      "prompt": "Travellers plan to explore islands already inhabited for centuries. The plan concerns _____.",
+      "options": [
+        "travelling around to discover more about the islands",
+        "being the first humans ever to visit them"
+      ],
+      "answer": "travelling around to discover more about the islands",
+      "explanation": "Discovery in exploration can be personal; the sentence does not erase the inhabitants or earlier visitors."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:5f2cdcf93089f96d75",
+    "definition": "In medicine, to perform a diagnostic examination.",
+    "example": "In a clinical account, explore can describe a diagnostic examination. The surrounding account identifies what is examined and how.",
+    "collocations": [
+      "diagnostic exploration",
+      "clinical examination",
+      "explore in a medical account"
+    ],
+    "distinctions": [
+      "This specialist intransitive use concerns examination for diagnosis. An examination does not itself guarantee a conclusive finding."
+    ],
+    "usage": "Medical and intransitive; reading guidance for a specialist account.",
+    "originalSense": {
+      "id": "kaikki:5f2cdcf93089f96d75",
+      "definition": "To examine diagnostically.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "explorable",
+        "explorement",
+        "explorer",
+        "exploringly",
+        "explorista",
+        "explornography",
+        "reexplore",
+        "sexplore"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explore#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=explore&oldid=92749235",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:f7f83aca882479ff1a",
+    "definition": "To seek or gain first-hand experience of something.",
+    "example": "In her first year at university, Jo wanted to explore life away from home.",
+    "collocations": [
+      "explore life away from home",
+      "explore new experiences",
+      "explore a way of living"
+    ],
+    "distinctions": [
+      "Explore here concerns first-hand experience. Wanting to try a way of life does not establish that the planned experiences occurred."
+    ],
+    "usage": "Transitive: explore an experience or aspect of life.",
+    "originalSense": {
+      "id": "kaikki:f7f83aca882479ff1a",
+      "definition": "To (seek) experience first hand.",
+      "example": "It is normal for a boy of this age to be exploring his sexuality.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "explorable",
+        "explorement",
+        "explorer",
+        "exploringly",
+        "explorista",
+        "explornography",
+        "reexplore",
+        "sexplore"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explore#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=explore&oldid=92749235",
+    "distinctionTask": {
+      "prompt": "Jo wants to explore life away from home through her own experience. She wants _____.",
+      "options": [
+        "first-hand experience of that way of life",
+        "only a second-hand definition of it"
+      ],
+      "answer": "first-hand experience of that way of life",
+      "explanation": "The intended exploration is experiential, rather than limited to a description from others."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:2ce61427d7c0c1f8da",
+    "definition": "To be engaged in exploring, with no direct object stated.",
+    "example": "After lunch, we had two hours to explore.",
+    "collocations": [
+      "time to explore",
+      "go exploring",
+      "be busy exploring"
+    ],
+    "distinctions": [
+      "The surroundings supply what is being explored. This intransitive construction can illustrate the broader activity without restricting explore to aimless wandering."
+    ],
+    "usage": "Intransitive; the object or topic is understood from context.",
+    "originalSense": {
+      "id": "kaikki:2ce61427d7c0c1f8da",
+      "definition": "To be engaged exploring in any of the above senses.",
+      "example": "He was too busy exploring to notice his son needed his guidance.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "explorable",
+        "explorement",
+        "explorer",
+        "exploringly",
+        "explorista",
+        "explornography",
+        "reexplore",
+        "sexplore"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explore#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=explore&oldid=92749235",
+    "distinctionTask": {
+      "prompt": "We had two hours to explore. In this construction, explore _____.",
+      "options": [
+        "has no stated direct object",
+        "must be an obsolete search construction"
+      ],
+      "answer": "has no stated direct object",
+      "explanation": "The activity can be expressed intransitively in modern English; the context supplies its scope."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:a4ac77a5b510bdd9e1",
+    "definition": "To wander without a particular aim or destination.",
+    "example": "With no route or destination in mind, we went out to explore.",
+    "collocations": [
+      "go out to explore",
+      "explore at leisure",
+      "wander and explore"
+    ],
+    "distinctions": [
+      "The absence of a fixed route or aim belongs to this meaning and example. Other exploration can be planned or systematic."
+    ],
+    "usage": "Intransitive; no direct object follows explore in the example.",
+    "originalSense": {
+      "id": "kaikki:a4ac77a5b510bdd9e1",
+      "definition": "To wander without any particular aim or purpose.",
+      "example": "The boys explored all around till cold and hunger drove them back to the campfire one by one.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "explorable",
+        "explorement",
+        "explorer",
+        "exploringly",
+        "explorista",
+        "explornography",
+        "reexplore",
+        "sexplore"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explore#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=explore&oldid=92749235",
+    "distinctionTask": {
+      "prompt": "With no route or destination in mind, we go out to explore. The activity is presented as _____.",
+      "options": [
+        "wandering without a fixed destination",
+        "following a precisely assigned route"
+      ],
+      "answer": "wandering without a fixed destination",
+      "explanation": "The explicit context establishes unplanned wandering, without claiming all exploration is aimless."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:c12f887a601b98f15b",
+    "definition": "To seek sexual variety or different sexual experiences.",
+    "example": "In this use, explore concerns seeking sexual variety. Context distinguishes it from investigating an idea, travelling around a place or gaining another kind of first-hand experience.",
+    "collocations": [
+      "explore sexual variety",
+      "seek different sexual experiences",
+      "a context-specific use"
+    ],
+    "distinctions": [
+      "This is one meaning in the source, rather than a claim about every use of explore or about a person's identity."
+    ],
+    "usage": "The source records this as a transitive use; reading guidance for interpreting the intended context.",
+    "originalSense": {
+      "id": "kaikki:c12f887a601b98f15b",
+      "definition": "To seek sexual variety, to sow one's wild oats.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "explorable",
+        "explorement",
+        "explorer",
+        "exploringly",
+        "explorista",
+        "explornography",
+        "reexplore",
+        "sexplore"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explore#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=explore&oldid=92749235",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:014a51763e37f3b723",
+    "definition": "A colloquial noun meaning an exploration or a tour to see what a place is like.",
+    "example": "We had a quick explore around the village before lunch.",
+    "collocations": [
+      "have an explore",
+      "a quick explore",
+      "an explore around a place"
+    ],
+    "distinctions": [
+      "Here explore is a countable noun after a quick. Exploration or a look around is more usual in formal writing."
+    ],
+    "usage": "Colloquial countable noun; a quick explore.",
+    "originalSense": {
+      "id": "kaikki:014a51763e37f3b723",
+      "definition": "An exploration; a tour of a place to see what it is like.",
+      "example": "Daylight was fading quickly, but I was still keen to have a little explore of the town and beach.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "colloquial",
+      "register": "colloquial",
+      "wordFamily": [
+        "explorable",
+        "explorement",
+        "explorer",
+        "exploringly",
+        "explorista",
+        "explornography",
+        "reexplore",
+        "sexplore"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explore#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=explore&oldid=92749235",
+    "distinctionTask": {
+      "prompt": "We had a quick explore around the village. Explore here is _____.",
+      "options": [
+        "a colloquial noun for a look around",
+        "an instruction addressed directly to someone"
+      ],
+      "answer": "a colloquial noun for a look around",
+      "explanation": "The article a and adjective quick make this a noun construction."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-5633bab3",
+    "senseId": "kaikki:8d7bda7d7ac6511f68",
+    "definition": "To examine something carefully, especially to find problems or assess its condition.",
+    "example": "Before the journey, inspect the tyres for cuts and uneven wear.",
+    "collocations": [
+      "inspect something for damage",
+      "inspect the tyres",
+      "inspect carefully"
+    ],
+    "distinctions": [
+      "Inspect describes a careful examination. It need not find a defect, and an inspection does not guarantee that every hidden problem has been found."
+    ],
+    "usage": "Transitive: inspect something; inspect it for a specified problem.",
+    "originalSense": {
+      "id": "kaikki:8d7bda7d7ac6511f68",
+      "definition": "To examine critically or carefully; especially, to search out problems or determine condition; to scrutinize.",
+      "example": "Inspect the system for leaks.",
+      "pos": "verb",
+      "synonyms": [
+        "examine"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "inspectability",
+        "inspectable",
+        "inspectee",
+        "inspecter",
+        "inspectingly",
+        "inspection",
+        "inspector",
+        "inspectoscope",
+        "inspect the plumbing",
+        "misinspect",
+        "preinspect",
+        "reinspect",
+        "superinspect",
+        "uninspected"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/inspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=inspect&oldid=92362661",
+    "distinctionTask": {
+      "prompt": "You inspect tyres for cuts before a journey. You _____.",
+      "options": [
+        "examine them carefully for possible problems",
+        "necessarily find a defect in every tyre"
+      ],
+      "answer": "examine them carefully for possible problems",
+      "explanation": "An inspection is a careful check; the result is not guaranteed by the verb."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-5633bab3",
+    "senseId": "kaikki:6985eb2946bebd3607",
+    "definition": "To examine an object more deeply to understand features or conditions beyond its initial appearance.",
+    "example": "After spotting a damp patch, the plumber will inspect the pipes behind the panel.",
+    "collocations": [
+      "inspect the interior",
+      "inspect a hidden part",
+      "inspect beyond the surface"
+    ],
+    "distinctions": [
+      "This meaning emphasises looking beyond an initial appearance. It overlaps careful examination and need not involve cutting an object open or destroying it."
+    ],
+    "usage": "Transitive; the context specifies the deeper features or conditions examined.",
+    "originalSense": {
+      "id": "kaikki:6985eb2946bebd3607",
+      "definition": "To observe the status or nature of an object beyond what is found obvious upon its initial presentation; to 'view within' the object.",
+      "example": "After speaking with the building owner, hearing that the building's steam pipes were over eighty years old, and noticing areas where the pipes had been patched with duct tape, we decided to thoroughly inspect the system for leaks.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "inspectability",
+        "inspectable",
+        "inspectee",
+        "inspecter",
+        "inspectingly",
+        "inspection",
+        "inspector",
+        "inspectoscope",
+        "inspect the plumbing",
+        "misinspect",
+        "preinspect",
+        "reinspect",
+        "superinspect",
+        "uninspected"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/inspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=inspect&oldid=92362661",
+    "distinctionTask": {
+      "prompt": "After seeing a damp patch, a plumber inspects the pipes behind a panel. The focus is _____.",
+      "options": [
+        "examining conditions beyond the first visible sign",
+        "only naming the panel's visible colour"
+      ],
+      "answer": "examining conditions beyond the first visible sign",
+      "explanation": "The examination goes beyond the initially visible patch, without asserting a cause before it is found."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-5633bab3",
+    "senseId": "kaikki:14549f779d992784f4",
+    "definition": "To examine something officially.",
+    "example": "An authorised officer will inspect the kitchen next week.",
+    "collocations": [
+      "inspect premises",
+      "inspect officially",
+      "an officer inspects"
+    ],
+    "distinctions": [
+      "Official inspection identifies the capacity in which the examination is performed. The planned inspection does not establish a pass, approval or certificate."
+    ],
+    "usage": "Transitive; an authorised person or body performs the official examination.",
+    "originalSense": {
+      "id": "kaikki:14549f779d992784f4",
+      "definition": "To examine officially.",
+      "example": "The general inspected the troops and their barracks.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "inspectability",
+        "inspectable",
+        "inspectee",
+        "inspecter",
+        "inspectingly",
+        "inspection",
+        "inspector",
+        "inspectoscope",
+        "inspect the plumbing",
+        "misinspect",
+        "preinspect",
+        "reinspect",
+        "superinspect",
+        "uninspected"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/inspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=inspect&oldid=92362661",
+    "distinctionTask": {
+      "prompt": "An authorised officer will inspect a kitchen next week. The sentence establishes _____.",
+      "options": [
+        "a planned official examination",
+        "a certificate already awarded to the kitchen"
+      ],
+      "answer": "a planned official examination",
+      "explanation": "Official examination is distinct from its possible result, and this one is still planned."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-c49e1f48",
+    "senseId": "kaikki:86529808e724e9e54f",
+    "definition": "To inquire into or study something in order to establish facts or obtain information.",
+    "example": "The team will investigate why the river level fell.",
+    "collocations": [
+      "investigate a cause",
+      "investigate a problem",
+      "investigate why"
+    ],
+    "distinctions": [
+      "Investigation is an inquiry directed at facts or information. Starting an investigation does not establish a correct causal explanation or guarantee a conclusive answer."
+    ],
+    "usage": "Transitive: investigate something; investigate why or how followed by a clause.",
+    "originalSense": {
+      "id": "kaikki:86529808e724e9e54f",
+      "definition": "To inquire into or study in order to ascertain facts or information.",
+      "example": "to investigate the causes of natural phenomena",
+      "pos": "verb",
+      "synonyms": [
+        "underseek"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "coinvestigate",
+        "investigatable",
+        "investigatingly",
+        "noninvestigated",
+        "reinvestigate",
+        "transvestigate",
+        "underinvestigated",
+        "uninvestigated",
+        "uninvestigating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/investigate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=investigate&oldid=91636193",
+    "distinctionTask": {
+      "prompt": "A team will investigate why a river level fell. This describes _____.",
+      "options": [
+        "an inquiry into the cause",
+        "a cause already proven by the announcement"
+      ],
+      "answer": "an inquiry into the cause",
+      "explanation": "The verb describes an inquiry rather than certifying its eventual conclusion."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-c49e1f48",
+    "senseId": "kaikki:022bffc1a96b8200ee",
+    "definition": "To look into something in order to uncover hidden or secret information.",
+    "example": "The journalist will investigate allegations of secret payments.",
+    "collocations": [
+      "investigate allegations",
+      "investigate concealed activity",
+      "investigate a suspected arrangement"
+    ],
+    "distinctions": [
+      "An allegation supplies a reason for inquiry, rather than proof that the alleged event occurred. This meaning emphasises looking for concealed information and overlaps the broader inquiry meaning."
+    ],
+    "usage": "Transitive: investigate an allegation, suspected activity or hidden matter.",
+    "originalSense": {
+      "id": "kaikki:022bffc1a96b8200ee",
+      "definition": "To examine, look into, or scrutinize in order to discover something hidden or secret.",
+      "example": "to investigate an unsolved murder",
+      "pos": "verb",
+      "synonyms": [
+        "underseek"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "coinvestigate",
+        "investigatable",
+        "investigatingly",
+        "noninvestigated",
+        "reinvestigate",
+        "transvestigate",
+        "underinvestigated",
+        "uninvestigated",
+        "uninvestigating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/investigate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=investigate&oldid=91636193",
+    "distinctionTask": {
+      "prompt": "A journalist investigates allegations of secret payments. The sentence establishes _____.",
+      "options": [
+        "an inquiry into possible concealed activity",
+        "proof that the alleged payments occurred"
+      ],
+      "answer": "an inquiry into possible concealed activity",
+      "explanation": "Investigation of an allegation does not authenticate the allegation."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-c49e1f48",
+    "senseId": "kaikki:110e4bffadc8a50432",
+    "definition": "To conduct an inquiry or examination, without a stated direct object.",
+    "example": "The cause is unclear, so the team will investigate.",
+    "collocations": [
+      "continue to investigate",
+      "a team investigates",
+      "investigate further"
+    ],
+    "distinctions": [
+      "The context supplies the matter being examined. The intransitive construction does not by itself identify a successful result."
+    ],
+    "usage": "Intransitive; no direct object follows investigate in the example.",
+    "originalSense": {
+      "id": "kaikki:110e4bffadc8a50432",
+      "definition": "To conduct an inquiry or examination.",
+      "example": "\"Why don't you investigate?\" he demanded. And investigate I did.",
+      "pos": "verb",
+      "synonyms": [
+        "underseek"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "coinvestigate",
+        "investigatable",
+        "investigatingly",
+        "noninvestigated",
+        "reinvestigate",
+        "transvestigate",
+        "underinvestigated",
+        "uninvestigated",
+        "uninvestigating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/investigate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=investigate&oldid=91636193",
+    "distinctionTask": {
+      "prompt": "The cause is unclear, so the team will investigate. Investigate here _____.",
+      "options": [
+        "has no stated direct object",
+        "must mean that the cause is already established"
+      ],
+      "answer": "has no stated direct object",
+      "explanation": "The modern intransitive construction names the inquiry, with its topic supplied by context."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "senseId": "kaikki:d2438ef854c8a998da",
+    "definition": "To find something or learn it for the first time.",
+    "example": "Only yesterday did I discover that the library opens on Sundays.",
+    "collocations": [
+      "discover that",
+      "discover a route",
+      "discover something for the first time"
+    ],
+    "distinctions": [
+      "A discovery can be new to the person without being new to everyone. The library example concerns learning an existing fact, rather than changing its opening hours."
+    ],
+    "usage": "Transitive: discover something or discover that followed by a clause.",
+    "originalSense": {
+      "id": "kaikki:d2438ef854c8a998da",
+      "definition": "To find or learn something for the first time.",
+      "example": "Turning the corner, I discovered a lovely little shop. I discovered that they sold widgets.",
+      "pos": "verb",
+      "synonyms": [
+        "come across",
+        "find"
+      ],
+      "antonyms": [
+        "conceal",
+        "cover",
+        "cover up",
+        "hide",
+        "miss",
+        "overlook"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "detect",
+        "find",
+        "invent",
+        "stumble upon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discover&oldid=91529560",
+    "distinctionTask": {
+      "prompt": "Yesterday I discovered that the library opens on Sundays. What was new in the sentence? _____",
+      "options": [
+        "my knowledge of the opening hours",
+        "necessarily the library's Sunday opening policy"
+      ],
+      "answer": "my knowledge of the opening hours",
+      "explanation": "The discovery can be personal knowledge of an already existing fact."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "senseId": "kaikki:6ae77ea5f505b713a3",
+    "definition": "An obsolete use meaning to remove a cover from something.",
+    "example": "In older writing, discover can mean remove a covering from a head, building or other object. Uncover is clearer for this physical meaning in modern use.",
+    "collocations": [
+      "discover: remove a covering",
+      "uncover a head",
+      "an older physical use"
+    ],
+    "distinctions": [
+      "This obsolete uncovering meaning is separate from the ordinary find-or-learn meaning."
+    ],
+    "usage": "Obsolete and transitive; reading guidance for older prose.",
+    "originalSense": {
+      "id": "kaikki:6ae77ea5f505b713a3",
+      "definition": "To remove the cover from; to uncover (a head, building etc.).",
+      "example": "He set down his bags beside him, on the beautiful red floor, and he took off his hat, for he had reached his destination, discovering his scant red hair, and laid it on the table beside him.",
+      "pos": "verb",
+      "synonyms": [
+        "catch",
+        "check",
+        "come upon",
+        "detect",
+        "determine",
+        "discover",
+        "disinter",
+        "fish up",
+        "identify",
+        "learn",
+        "locate",
+        "map",
+        "navigate",
+        "pick up",
+        "pinpoint",
+        "place",
+        "position",
+        "recognize",
+        "search",
+        "spot",
+        "trace",
+        "track",
+        "unearth",
+        "explore"
+      ],
+      "antonyms": [
+        "conceal",
+        "cover",
+        "cover up",
+        "hide",
+        "miss",
+        "overlook"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "detect",
+        "find",
+        "invent",
+        "stumble upon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discover&oldid=91529560",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "senseId": "kaikki:20d7ce86e7b7953b50",
+    "definition": "A now-rare use meaning to expose or uncover something.",
+    "example": "In a now-rare use, discover can mean expose or uncover. The context identifies what is revealed or laid open.",
+    "collocations": [
+      "discover: expose",
+      "uncover something",
+      "a rare revealing use"
+    ],
+    "distinctions": [
+      "The preserved import labels this meaning archaic, while the checked source revision calls it now rare. Those labels are not identical, and this reading guide does not turn every modern discover construction into a historical use."
+    ],
+    "usage": "Now rare in the checked source; transitive. The earlier imported archaic label remains in the source record.",
+    "originalSense": {
+      "id": "kaikki:20d7ce86e7b7953b50",
+      "definition": "To expose, uncover.",
+      "example": "The gust of wind discovered a bone in the sand.",
+      "pos": "verb",
+      "synonyms": [
+        "expose",
+        "reveal",
+        "uncover"
+      ],
+      "antonyms": [
+        "conceal",
+        "cover",
+        "cover up",
+        "hide",
+        "miss",
+        "overlook"
+      ],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, transitive",
+      "wordFamily": [
+        "detect",
+        "find",
+        "invent",
+        "stumble upon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discover&oldid=91529560",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "senseId": "kaikki:d6f24eceac2cac4988",
+    "definition": "In chess, to create an attack by moving a piece out of another piece's line of attack.",
+    "example": "By moving a blocking piece aside, a player can discover an attack by the rook behind it.",
+    "collocations": [
+      "discover an attack",
+      "a discovered attack",
+      "move a blocking piece"
+    ],
+    "distinctions": [
+      "The moved piece opens another piece's line of attack. This describes the mechanism, rather than a complete board position or a claim that every such move is legal; legality depends on the full position."
+    ],
+    "usage": "Chess and transitive; discover an attack or check by clearing another piece's line.",
+    "originalSense": {
+      "id": "kaikki:d6f24eceac2cac4988",
+      "definition": "To create by moving a piece out of another piece's line of attack.",
+      "example": "This move discovers an attack on a vital pawn.",
+      "pos": "verb",
+      "synonyms": [
+        "catch",
+        "check",
+        "come upon",
+        "detect",
+        "determine",
+        "discover",
+        "disinter",
+        "fish up",
+        "identify",
+        "learn",
+        "locate",
+        "map",
+        "navigate",
+        "pick up",
+        "pinpoint",
+        "place",
+        "position",
+        "recognize",
+        "search",
+        "spot",
+        "trace",
+        "track",
+        "unearth",
+        "explore"
+      ],
+      "antonyms": [
+        "conceal",
+        "cover",
+        "cover up",
+        "hide",
+        "miss",
+        "overlook"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "detect",
+        "find",
+        "invent",
+        "stumble upon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discover&oldid=91529560",
+    "distinctionTask": {
+      "prompt": "A piece moves aside, opening the rook's line against a target. Discover an attack here means _____.",
+      "options": [
+        "create the attack by clearing the line",
+        "merely notice a line that was already unobstructed"
+      ],
+      "answer": "create the attack by clearing the line",
+      "explanation": "The move changes the line of attack. The example does not supply a full legal position."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "senseId": "kaikki:3ba57407005541e494",
+    "definition": "In legal use, to question a person as part of discovery in a lawsuit.",
+    "example": "In a legal account, to discover a person can mean question them during the discovery process. The applicable procedure and jurisdiction determine the available steps.",
+    "collocations": [
+      "discover a person in litigation",
+      "discovery questioning",
+      "question a witness"
+    ],
+    "distinctions": [
+      "This specialist verb concerns questioning in discovery. It is separate from merely finding a witness, and it does not establish guilt, liability or a procedure available in every jurisdiction."
+    ],
+    "usage": "Legal and transitive; reading guidance for this source-recorded construction.",
+    "originalSense": {
+      "id": "kaikki:3ba57407005541e494",
+      "definition": "To question (a person) as part of discovery in a lawsuit.",
+      "example": "Indeed, the plaintiffs suggest that they may not need to call Ms. Samji at all if they are allowed to discover the defendant on the new documents before any new trial takes place.",
+      "pos": "verb",
+      "synonyms": [
+        "catch",
+        "check",
+        "come upon",
+        "detect",
+        "determine",
+        "discover",
+        "disinter",
+        "fish up",
+        "identify",
+        "learn",
+        "locate",
+        "map",
+        "navigate",
+        "pick up",
+        "pinpoint",
+        "place",
+        "position",
+        "recognize",
+        "search",
+        "spot",
+        "trace",
+        "track",
+        "unearth",
+        "explore"
+      ],
+      "antonyms": [
+        "conceal",
+        "cover",
+        "cover up",
+        "hide",
+        "miss",
+        "overlook"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "detect",
+        "find",
+        "invent",
+        "stumble upon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discover&oldid=91529560",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "senseId": "kaikki:76da952169b42e5741",
+    "definition": "An archaic use meaning to reveal information or make it known.",
+    "example": "In older prose, discover can mean reveal or divulge information to someone. Context distinguishes making information known from learning it oneself.",
+    "collocations": [
+      "discover: divulge",
+      "reveal information",
+      "make something known"
+    ],
+    "distinctions": [
+      "The direction of information matters: this archaic meaning concerns revealing, while ordinary discover that concerns learning."
+    ],
+    "usage": "Archaic and transitive; reading guidance for older prose.",
+    "originalSense": {
+      "id": "kaikki:76da952169b42e5741",
+      "definition": "To reveal (information); to divulge, make known.",
+      "example": "I discovered my plans to the rest of the team.",
+      "pos": "verb",
+      "synonyms": [
+        "catch",
+        "check",
+        "come upon",
+        "detect",
+        "determine",
+        "discover",
+        "disinter",
+        "fish up",
+        "identify",
+        "learn",
+        "locate",
+        "map",
+        "navigate",
+        "pick up",
+        "pinpoint",
+        "place",
+        "position",
+        "recognize",
+        "search",
+        "spot",
+        "trace",
+        "track",
+        "unearth",
+        "explore"
+      ],
+      "antonyms": [
+        "conceal",
+        "cover",
+        "cover up",
+        "hide",
+        "miss",
+        "overlook"
+      ],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, transitive",
+      "wordFamily": [
+        "detect",
+        "find",
+        "invent",
+        "stumble upon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discover&oldid=91529560",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "senseId": "kaikki:3eec1e4dd939550147",
+    "definition": "An obsolete use meaning to reconnoitre or explore an area.",
+    "example": "In older accounts of travel or reconnaissance, discover can mean explore an area. It need not mean that nobody has previously visited the area.",
+    "collocations": [
+      "discover: reconnoitre",
+      "explore an area",
+      "an older travel use"
+    ],
+    "distinctions": [
+      "This obsolete exploratory use is distinct from ordinary modern find-or-learn discovery."
+    ],
+    "usage": "Obsolete and transitive; interpret according to the historical context.",
+    "originalSense": {
+      "id": "kaikki:3eec1e4dd939550147",
+      "definition": "To reconnoitre, explore (an area).",
+      "example": "they seyde the same, and were aggreed that Sir Clegis, Sir Claryon, and Sir Clement the noble, that they sholde dyscover the woodys, bothe the dalys and the downys.",
+      "pos": "verb",
+      "synonyms": [
+        "catch",
+        "check",
+        "come upon",
+        "detect",
+        "determine",
+        "discover",
+        "disinter",
+        "fish up",
+        "identify",
+        "learn",
+        "locate",
+        "map",
+        "navigate",
+        "pick up",
+        "pinpoint",
+        "place",
+        "position",
+        "recognize",
+        "search",
+        "spot",
+        "trace",
+        "track",
+        "unearth",
+        "explore"
+      ],
+      "antonyms": [
+        "conceal",
+        "cover",
+        "cover up",
+        "hide",
+        "miss",
+        "overlook"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "detect",
+        "find",
+        "invent",
+        "stumble upon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discover&oldid=91529560",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "senseId": "kaikki:b506efeaf5d62b1def",
+    "definition": "An obsolete use meaning to show or manifest something without intending to.",
+    "example": "In older prose, discover can mean unintentionally show or manifest a quality or state. The context supplies what becomes apparent.",
+    "collocations": [
+      "discover: manifest unintentionally",
+      "show a state",
+      "an older exhibiting use"
+    ],
+    "distinctions": [
+      "Without design concerns the absence of intention in this meaning, rather than the absence of a visual design."
+    ],
+    "usage": "Obsolete and transitive; reading guidance for older prose.",
+    "originalSense": {
+      "id": "kaikki:b506efeaf5d62b1def",
+      "definition": "To manifest without design; to show; to exhibit.",
+      "example": "The scandal of a lie is in a manner lost and annihilated when diffused among several thousands; as a drop of the blackest tincture wears away and vanishes when mixed and confused in a considerable body of water; the blot is still in it, but is not able to discover itself.",
+      "pos": "verb",
+      "synonyms": [
+        "catch",
+        "check",
+        "come upon",
+        "detect",
+        "determine",
+        "discover",
+        "disinter",
+        "fish up",
+        "identify",
+        "learn",
+        "locate",
+        "map",
+        "navigate",
+        "pick up",
+        "pinpoint",
+        "place",
+        "position",
+        "recognize",
+        "search",
+        "spot",
+        "trace",
+        "track",
+        "unearth",
+        "explore"
+      ],
+      "antonyms": [
+        "conceal",
+        "cover",
+        "cover up",
+        "hide",
+        "miss",
+        "overlook"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "detect",
+        "find",
+        "invent",
+        "stumble upon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discover&oldid=91529560",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "senseId": "kaikki:d1e0719388b7f5f0ea",
+    "definition": "Discover Card, a brand of credit card.",
+    "example": "Capitalised Discover can name the Discover Card brand. The name is separate from the verb meaning find or learn.",
+    "collocations": [
+      "Discover Card",
+      "the Discover brand",
+      "a capitalised brand name"
+    ],
+    "distinctions": [
+      "This is a proper name for a particular brand, rather than a general term for every credit card."
+    ],
+    "usage": "Proper name; the source marks the brand use US.",
+    "originalSense": {
+      "id": "kaikki:d1e0719388b7f5f0ea",
+      "definition": "Discover Card, a brand of credit card.",
+      "example": "",
+      "pos": "name",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "US",
+      "register": "US",
+      "wordFamily": [
+        "detect",
+        "find",
+        "invent",
+        "stumble upon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/Discover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Discover&oldid=75287580",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "proper-name"
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "senseId": "kaikki:aeec000fe739c5a3a5",
+    "definition": "Discover, a general-audience science magazine launched in 1980.",
+    "example": "Capitalised Discover can name the science magazine launched in 1980. Its publishing context distinguishes it from the credit-card brand.",
+    "collocations": [
+      "Discover magazine",
+      "the science magazine Discover",
+      "a publication title"
+    ],
+    "distinctions": [
+      "This publication title is a separate proper name from the credit-card brand and the ordinary verb."
+    ],
+    "usage": "Proper name; a magazine title, separate from the ordinary verb.",
+    "originalSense": {
+      "id": "kaikki:aeec000fe739c5a3a5",
+      "definition": "Discover magazine, a general audience science magazine launched in 1980.",
+      "example": "",
+      "pos": "name",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "detect",
+        "find",
+        "invent",
+        "stumble upon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/Discover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Discover&oldid=75287580",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "proper-name"
   }
 ]

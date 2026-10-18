@@ -22074,5 +22074,341 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-1089369c",
+    "originalSense": {
+      "id": "kaikki:e196cbb74448f88c03",
+      "definition": "To examine or investigate something systematically.",
+      "example": "The committee has been exploring alternative solutions to the problem at hand.",
+      "pos": "verb",
+      "synonyms": [
+        "delve into",
+        "research"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "explorable",
+        "explorement",
+        "explorer",
+        "exploringly",
+        "explorista",
+        "explornography",
+        "reexplore",
+        "sexplore"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explore#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:e196cbb74448f88c03",
+      "definition": "To examine or investigate something systematically.",
+      "example": "The committee will explore three alternatives before choosing a plan.",
+      "pos": "verb",
+      "synonyms": [
+        "delve into",
+        "research"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "explore alternatives",
+        "explore an idea",
+        "explore the possibility of"
+      ],
+      "usage": "Transitive: explore an idea, option, possibility or topic.",
+      "register": "transitive",
+      "wordFamily": [
+        "explorable",
+        "explorement",
+        "explorer",
+        "exploringly",
+        "explorista",
+        "explornography",
+        "reexplore",
+        "sexplore"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/explore#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Explore alternatives means examine them. Exploring a possibility does not commit the committee to it or establish that a plan has already been chosen."
+      ],
+      "distinctionTask": {
+        "prompt": "A committee explores three alternatives before deciding. It is _____.",
+        "options": [
+          "examining the alternatives",
+          "already committed to every alternative"
+        ],
+        "answer": "examining the alternatives",
+        "explanation": "Exploring an option is examination, without an assertion that it has been selected."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-5633bab3",
+    "originalSense": {
+      "id": "kaikki:8d7bda7d7ac6511f68",
+      "definition": "To examine critically or carefully; especially, to search out problems or determine condition; to scrutinize.",
+      "example": "Inspect the system for leaks.",
+      "pos": "verb",
+      "synonyms": [
+        "examine"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "inspectability",
+        "inspectable",
+        "inspectee",
+        "inspecter",
+        "inspectingly",
+        "inspection",
+        "inspector",
+        "inspectoscope",
+        "inspect the plumbing",
+        "misinspect",
+        "preinspect",
+        "reinspect",
+        "superinspect",
+        "uninspected"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/inspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:8d7bda7d7ac6511f68",
+      "definition": "To examine something carefully, especially to find problems or assess its condition.",
+      "example": "Before the journey, inspect the tyres for cuts and uneven wear.",
+      "pos": "verb",
+      "synonyms": [
+        "examine"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "inspect something for damage",
+        "inspect the tyres",
+        "inspect carefully"
+      ],
+      "usage": "Transitive: inspect something; inspect it for a specified problem.",
+      "register": "",
+      "wordFamily": [
+        "inspectability",
+        "inspectable",
+        "inspectee",
+        "inspecter",
+        "inspectingly",
+        "inspection",
+        "inspector",
+        "inspectoscope",
+        "inspect the plumbing",
+        "misinspect",
+        "preinspect",
+        "reinspect",
+        "superinspect",
+        "uninspected"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/inspect#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Inspect describes a careful examination. It need not find a defect, and an inspection does not guarantee that every hidden problem has been found."
+      ],
+      "distinctionTask": {
+        "prompt": "You inspect tyres for cuts before a journey. You _____.",
+        "options": [
+          "examine them carefully for possible problems",
+          "necessarily find a defect in every tyre"
+        ],
+        "answer": "examine them carefully for possible problems",
+        "explanation": "An inspection is a careful check; the result is not guaranteed by the verb."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-c49e1f48",
+    "originalSense": {
+      "id": "kaikki:86529808e724e9e54f",
+      "definition": "To inquire into or study in order to ascertain facts or information.",
+      "example": "to investigate the causes of natural phenomena",
+      "pos": "verb",
+      "synonyms": [
+        "underseek"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "coinvestigate",
+        "investigatable",
+        "investigatingly",
+        "noninvestigated",
+        "reinvestigate",
+        "transvestigate",
+        "underinvestigated",
+        "uninvestigated",
+        "uninvestigating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/investigate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:86529808e724e9e54f",
+      "definition": "To inquire into or study something in order to establish facts or obtain information.",
+      "example": "The team will investigate why the river level fell.",
+      "pos": "verb",
+      "synonyms": [
+        "underseek"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "investigate a cause",
+        "investigate a problem",
+        "investigate why"
+      ],
+      "usage": "Transitive: investigate something; investigate why or how followed by a clause.",
+      "register": "transitive",
+      "wordFamily": [
+        "coinvestigate",
+        "investigatable",
+        "investigatingly",
+        "noninvestigated",
+        "reinvestigate",
+        "transvestigate",
+        "underinvestigated",
+        "uninvestigated",
+        "uninvestigating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/investigate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Investigation is an inquiry directed at facts or information. Starting an investigation does not establish a correct causal explanation or guarantee a conclusive answer."
+      ],
+      "distinctionTask": {
+        "prompt": "A team will investigate why a river level fell. This describes _____.",
+        "options": [
+          "an inquiry into the cause",
+          "a cause already proven by the announcement"
+        ],
+        "answer": "an inquiry into the cause",
+        "explanation": "The verb describes an inquiry rather than certifying its eventual conclusion."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "originalSense": {
+      "id": "kaikki:d2438ef854c8a998da",
+      "definition": "To find or learn something for the first time.",
+      "example": "Turning the corner, I discovered a lovely little shop. I discovered that they sold widgets.",
+      "pos": "verb",
+      "synonyms": [
+        "come across",
+        "find"
+      ],
+      "antonyms": [
+        "conceal",
+        "cover",
+        "cover up",
+        "hide",
+        "miss",
+        "overlook"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "detect",
+        "find",
+        "invent",
+        "stumble upon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:d2438ef854c8a998da",
+      "definition": "To find something or learn it for the first time.",
+      "example": "Only yesterday did I discover that the library opens on Sundays.",
+      "pos": "verb",
+      "synonyms": [
+        "come across",
+        "find"
+      ],
+      "antonyms": [
+        "conceal",
+        "cover",
+        "cover up",
+        "hide",
+        "miss",
+        "overlook"
+      ],
+      "collocations": [
+        "discover that",
+        "discover a route",
+        "discover something for the first time"
+      ],
+      "usage": "Transitive: discover something or discover that followed by a clause.",
+      "register": "transitive",
+      "wordFamily": [
+        "detect",
+        "find",
+        "invent",
+        "stumble upon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discover#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A discovery can be new to the person without being new to everyone. The library example concerns learning an existing fact, rather than changing its opening hours."
+      ],
+      "distinctionTask": {
+        "prompt": "Yesterday I discovered that the library opens on Sundays. What was new in the sentence? _____",
+        "options": [
+          "my knowledge of the opening hours",
+          "necessarily the library's Sunday opening policy"
+        ],
+        "answer": "my knowledge of the opening hours",
+        "explanation": "The discovery can be personal knowledge of an already existing fact."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

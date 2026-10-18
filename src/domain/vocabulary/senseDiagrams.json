@@ -4062,5 +4062,117 @@
     "definition": "To work on or solve cases as a detective.",
     "pos": "verb",
     "kind": "detect-work"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:e196cbb74448f88c03",
+    "term": "explore",
+    "definition": "To examine or investigate something systematically.",
+    "pos": "verb",
+    "kind": "explore-options"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:8b2253888266521d28",
+    "term": "explore",
+    "definition": "To travel around a place in search of discovery.",
+    "pos": "verb",
+    "kind": "explore-travel"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:f7f83aca882479ff1a",
+    "term": "explore",
+    "definition": "To seek or gain first-hand experience of something.",
+    "pos": "verb",
+    "kind": "explore-experience"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:2ce61427d7c0c1f8da",
+    "term": "explore",
+    "definition": "To be engaged in exploring, with no direct object stated.",
+    "pos": "verb",
+    "kind": "explore-intransitive"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:a4ac77a5b510bdd9e1",
+    "term": "explore",
+    "definition": "To wander without a particular aim or destination.",
+    "pos": "verb",
+    "kind": "explore-wander"
+  },
+  {
+    "entryId": "ve-1089369c",
+    "senseId": "kaikki:014a51763e37f3b723",
+    "term": "explore",
+    "definition": "A colloquial noun meaning an exploration or a tour to see what a place is like.",
+    "pos": "noun",
+    "kind": "explore-noun"
+  },
+  {
+    "entryId": "ve-5633bab3",
+    "senseId": "kaikki:8d7bda7d7ac6511f68",
+    "term": "inspect",
+    "definition": "To examine something carefully, especially to find problems or assess its condition.",
+    "pos": "verb",
+    "kind": "inspect-condition"
+  },
+  {
+    "entryId": "ve-5633bab3",
+    "senseId": "kaikki:6985eb2946bebd3607",
+    "term": "inspect",
+    "definition": "To examine an object more deeply to understand features or conditions beyond its initial appearance.",
+    "pos": "verb",
+    "kind": "inspect-within"
+  },
+  {
+    "entryId": "ve-5633bab3",
+    "senseId": "kaikki:14549f779d992784f4",
+    "term": "inspect",
+    "definition": "To examine something officially.",
+    "pos": "verb",
+    "kind": "inspect-official"
+  },
+  {
+    "entryId": "ve-c49e1f48",
+    "senseId": "kaikki:86529808e724e9e54f",
+    "term": "investigate",
+    "definition": "To inquire into or study something in order to establish facts or obtain information.",
+    "pos": "verb",
+    "kind": "investigate-facts"
+  },
+  {
+    "entryId": "ve-c49e1f48",
+    "senseId": "kaikki:022bffc1a96b8200ee",
+    "term": "investigate",
+    "definition": "To look into something in order to uncover hidden or secret information.",
+    "pos": "verb",
+    "kind": "investigate-hidden"
+  },
+  {
+    "entryId": "ve-c49e1f48",
+    "senseId": "kaikki:110e4bffadc8a50432",
+    "term": "investigate",
+    "definition": "To conduct an inquiry or examination, without a stated direct object.",
+    "pos": "verb",
+    "kind": "investigate-intransitive"
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "senseId": "kaikki:d2438ef854c8a998da",
+    "term": "discover",
+    "definition": "To find something or learn it for the first time.",
+    "pos": "verb",
+    "kind": "discover-learn"
+  },
+  {
+    "entryId": "ve-99c078f6",
+    "senseId": "kaikki:d6f24eceac2cac4988",
+    "term": "discover",
+    "definition": "In chess, to create an attack by moving a piece out of another piece's line of attack.",
+    "pos": "verb",
+    "kind": "discover-attack"
   }
 ]
