@@ -4654,5 +4654,157 @@
     "definition": "To increase in value, or cause something to increase in value.",
     "pos": "verb",
     "kind": "appreciate-increase"
+  },
+  {
+    "entryId": "ve-4651d89a",
+    "senseId": "kaikki:921e531ee15fbf8bb4",
+    "term": "expect",
+    "definition": "To predict or believe that something will happen.",
+    "pos": "verb",
+    "kind": "expect-prediction"
+  },
+  {
+    "entryId": "ve-4651d89a",
+    "senseId": "kaikki:a358dbae4b60463cd1",
+    "term": "expect",
+    "definition": "To consider something obligatory or required.",
+    "pos": "verb",
+    "kind": "expect-requirement"
+  },
+  {
+    "entryId": "ve-4651d89a",
+    "senseId": "kaikki:72de1bf5f9ab63b722",
+    "term": "expect",
+    "definition": "To regard something as reasonably due or deserved.",
+    "pos": "verb",
+    "kind": "expect-due"
+  },
+  {
+    "entryId": "ve-4651d89a",
+    "senseId": "kaikki:bfc7fbcd36e842b7f7",
+    "term": "expect",
+    "definition": "In the continuous aspect, to be pregnant or to have a baby due as a couple.",
+    "pos": "verb",
+    "kind": "expect-baby"
+  },
+  {
+    "entryId": "ve-d378299d",
+    "senseId": "kaikki:1ac14a46621e647401",
+    "term": "anticipate",
+    "definition": "To act before someone, especially to prevent or forestall their action.",
+    "pos": "verb",
+    "kind": "anticipate-preempt"
+  },
+  {
+    "entryId": "ve-d378299d",
+    "senseId": "kaikki:c4f4029d9e9a501518",
+    "term": "anticipate",
+    "definition": "To take up or introduce something prematurely or ahead of its proper place.",
+    "pos": "verb",
+    "kind": "anticipate-premature"
+  },
+  {
+    "entryId": "ve-d378299d",
+    "senseId": "kaikki:115208dd6c8c781e1a",
+    "term": "anticipate",
+    "definition": "To foresee or expect something before it happens.",
+    "pos": "verb",
+    "kind": "anticipate-forecast"
+  },
+  {
+    "entryId": "ve-d378299d",
+    "senseId": "kaikki:ad4472d48281ca8425",
+    "term": "anticipate",
+    "definition": "To wait eagerly for something.",
+    "pos": "verb",
+    "kind": "anticipate-eager"
+  },
+  {
+    "entryId": "ve-724c71da",
+    "senseId": "kaikki:f091dbe4ef74cad06a",
+    "term": "suppose",
+    "definition": "To believe or conclude something without absolute supporting evidence.",
+    "pos": "verb",
+    "kind": "suppose-belief"
+  },
+  {
+    "entryId": "ve-724c71da",
+    "senseId": "kaikki:aa5d22975af3978ea4",
+    "term": "suppose",
+    "definition": "To put forward a theory or hypothesis for consideration.",
+    "pos": "verb",
+    "kind": "suppose-hypothesis"
+  },
+  {
+    "entryId": "ve-724c71da",
+    "senseId": "kaikki:c15d2c98bd855753f5",
+    "term": "suppose",
+    "definition": "To imagine, believe or accept something as true.",
+    "pos": "verb",
+    "kind": "suppose-imagine"
+  },
+  {
+    "entryId": "ve-724c71da",
+    "senseId": "kaikki:622d5adcf41fa68c30",
+    "term": "suppose",
+    "definition": "To require something to exist or be true; to presuppose it.",
+    "pos": "verb",
+    "kind": "suppose-presuppose"
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:3ce18c1e829047c64e",
+    "term": "wish",
+    "definition": "A desire, hope or longing for something or for something to happen.",
+    "pos": "noun",
+    "kind": "wish-desire"
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:75cface0125e5b212d",
+    "term": "wish",
+    "definition": "An expression of a desire, often associated with ideas of magic or supernatural power.",
+    "pos": "noun",
+    "kind": "wish-expression"
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:6ea92b528990354081",
+    "term": "wish",
+    "definition": "The thing or outcome that someone desires or longs for.",
+    "pos": "noun",
+    "kind": "wish-object"
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:9d1992880f1cfb967e",
+    "term": "wish",
+    "definition": "To desire or want something.",
+    "pos": "verb",
+    "kind": "wish-want"
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:f3687d5bece32b6bda",
+    "term": "wish",
+    "definition": "To hope for or desire a particular outcome, even one that is unlikely or impossible.",
+    "pos": "verb",
+    "kind": "wish-for"
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:c475b2162208b2650a",
+    "term": "wish",
+    "definition": "To direct a thought, greeting or gesture towards someone or something.",
+    "pos": "verb",
+    "kind": "wish-recipient"
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:8cded4fef526d7a62a",
+    "term": "wish",
+    "definition": "To request or desire to do an activity.",
+    "pos": "verb",
+    "kind": "wish-to"
   }
 ]

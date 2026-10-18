@@ -54,7 +54,7 @@ test('a sentence-gap task and accepted form remain frozen when the saved learnin
 });
 
 test('each authored form has one scoped reviewed sentence and an inflected target', () => {
- expect(forms).toHaveLength(4);
+ expect(forms).toHaveLength(5);
  expect(new Set(forms.map(row=>row.entryId+'|'+row.senseId)).size).toBe(forms.length);
  for(const row of forms){
   const correction = corrections.find(c=>c.entryId===row.entryId&&c.senseId===row.senseId)!;

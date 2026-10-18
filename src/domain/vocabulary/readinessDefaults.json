@@ -23128,5 +23128,273 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-4651d89a",
+    "originalSense": {
+      "id": "kaikki:921e531ee15fbf8bb4",
+      "definition": "To predict or believe that something will happen",
+      "example": "when you least expect it",
+      "pos": "verb",
+      "synonyms": [
+        "anticipate",
+        "hope",
+        "look for",
+        "bargain for"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ambitransitive",
+      "register": "ambitransitive",
+      "wordFamily": [
+        "expectative",
+        "expected",
+        "expectee",
+        "expecter",
+        "expecting",
+        "expection",
+        "expective",
+        "expect the unexpected",
+        "half-expect",
+        "halfexpect",
+        "overexpect",
+        "sexpect",
+        "unexpected"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/expect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:921e531ee15fbf8bb4",
+      "definition": "To predict or believe that something will happen.",
+      "example": "I expect rain tomorrow, although I hope it stays dry.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "expect rain",
+        "expect something to happen",
+        "expect that"
+      ],
+      "usage": "With a noun, a that-clause or a to-infinitive; the source also records use without an expressed object.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/expect#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Expect reports a prediction here; hope expresses a desired outcome. A prediction can concern something unwanted and does not guarantee that it will happen."
+      ],
+      "distinctionTask": {
+        "prompt": "I expect rain tomorrow, although I hope it stays dry. The speaker _____.",
+        "options": [
+          "predicts rain but would prefer dry weather",
+          "knows with certainty that rain will fall"
+        ],
+        "answer": "predicts rain but would prefer dry weather",
+        "explanation": "Expect expresses a belief about the future; hope identifies the preferred outcome."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-d378299d",
+    "originalSense": {
+      "id": "kaikki:115208dd6c8c781e1a",
+      "definition": "To know of (something) before it happens; to expect.",
+      "example": "to anticipate the pleasures of a visit",
+      "pos": "verb",
+      "synonyms": [
+        "expect",
+        "foretaste",
+        "foresee"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "anticipable",
+        "anticipatable",
+        "anticipately",
+        "anticipatingly",
+        "anticipative",
+        "anticipator",
+        "unanticipating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anticipate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:115208dd6c8c781e1a",
+      "definition": "To foresee or expect something before it happens.",
+      "example": "We anticipate delays because repairs are planned on the line.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "anticipate delays",
+        "anticipate a problem",
+        "anticipate doing something"
+      ],
+      "usage": "Transitive; followed by a noun, an -ing form or a clause.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anticipate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Anticipate and expect overlap in this predictive sense. Anticipating delays need not mean looking forward to them, and planned repairs do not guarantee a particular delay."
+      ],
+      "distinctionTask": {
+        "prompt": "We anticipate delays because repairs are planned. Here anticipate means _____.",
+        "options": [
+          "foresee or expect",
+          "necessarily welcome with pleasure"
+        ],
+        "answer": "foresee or expect",
+        "explanation": "A forecast can concern an unwanted event; eager pleasure is not required."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-724c71da",
+    "originalSense": {
+      "id": "kaikki:f091dbe4ef74cad06a",
+      "definition": "To take for granted; to conclude, with less than absolute supporting data; to believe.",
+      "example": "I suppose we all agree that this is the best solution.",
+      "pos": "verb",
+      "synonyms": [
+        "assume"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive, transitive",
+      "wordFamily": [
+        "I don't suppose",
+        "missuppose",
+        "supposable",
+        "supposal",
+        "supposedly",
+        "supposed to",
+        "supposure"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suppose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:f091dbe4ef74cad06a",
+      "definition": "To believe or conclude something without absolute supporting evidence.",
+      "example": "I suppose the office is closed, but I have not checked.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "suppose that",
+        "I suppose so",
+        "I don’t suppose"
+      ],
+      "usage": "Can take a clause or be used with an understood proposition, as in I suppose so.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suppose#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "I suppose marks a belief that may be uncertain. Assume and presume can overlap with it; there is no universal fixed evidence threshold separating these words."
+      ],
+      "distinctionTask": {
+        "prompt": "I suppose the office is closed, but I have not checked. The speaker _____.",
+        "options": [
+          "expresses an unconfirmed belief",
+          "reports an independently verified closure"
+        ],
+        "answer": "expresses an unconfirmed belief",
+        "explanation": "The explicit lack of checking rules out a claim of verification."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "originalSense": {
+      "id": "kaikki:3ce18c1e829047c64e",
+      "definition": "A desire, hope, or longing for something or for something to happen.",
+      "example": "It is my wish that the bequest (should) be given to an almshouse.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "precatory",
+        "velleity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:3ce18c1e829047c64e",
+      "definition": "A desire, hope or longing for something or for something to happen.",
+      "example": "She has a strong wish to study abroad.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a wish to do something",
+        "a wish for something",
+        "fulfil someone’s wish"
+      ],
+      "usage": "Countable noun; wish to + infinitive or wish for + noun can identify the desire.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wish#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The noun describes a desire. Having that desire does not establish a plan, admission or completed study; wish and hope overlap rather than following an absolute possible/impossible rule."
+      ],
+      "distinctionTask": {
+        "prompt": "She has a strong wish to study abroad. This states _____.",
+        "options": [
+          "a desire to study abroad",
+          "proof that she has been admitted abroad"
+        ],
+        "answer": "a desire to study abroad",
+        "explanation": "A wish alone does not establish admission or completion."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

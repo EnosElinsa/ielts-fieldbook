@@ -216391,5 +216391,1538 @@
     "antonyms": [],
     "wordFamily": [],
     "register": ""
+  },
+  {
+    "entryId": "ve-4651d89a",
+    "senseId": "kaikki:921e531ee15fbf8bb4",
+    "definition": "To predict or believe that something will happen.",
+    "example": "I expect rain tomorrow, although I hope it stays dry.",
+    "collocations": [
+      "expect rain",
+      "expect something to happen",
+      "expect that"
+    ],
+    "distinctions": [
+      "Expect reports a prediction here; hope expresses a desired outcome. A prediction can concern something unwanted and does not guarantee that it will happen."
+    ],
+    "usage": "With a noun, a that-clause or a to-infinitive; the source also records use without an expressed object.",
+    "originalSense": {
+      "id": "kaikki:921e531ee15fbf8bb4",
+      "definition": "To predict or believe that something will happen",
+      "example": "when you least expect it",
+      "pos": "verb",
+      "synonyms": [
+        "anticipate",
+        "hope",
+        "look for",
+        "bargain for"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ambitransitive",
+      "register": "ambitransitive",
+      "wordFamily": [
+        "expectative",
+        "expected",
+        "expectee",
+        "expecter",
+        "expecting",
+        "expection",
+        "expective",
+        "expect the unexpected",
+        "half-expect",
+        "halfexpect",
+        "overexpect",
+        "sexpect",
+        "unexpected"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/expect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=expect&oldid=92205092",
+    "distinctionTask": {
+      "prompt": "I expect rain tomorrow, although I hope it stays dry. The speaker _____.",
+      "options": [
+        "predicts rain but would prefer dry weather",
+        "knows with certainty that rain will fall"
+      ],
+      "answer": "predicts rain but would prefer dry weather",
+      "explanation": "Expect expresses a belief about the future; hope identifies the preferred outcome."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4651d89a",
+    "senseId": "kaikki:a358dbae4b60463cd1",
+    "definition": "To consider something obligatory or required.",
+    "example": "The course rules are clear: we expect every student to submit work on time.",
+    "collocations": [
+      "expect someone to do something",
+      "expect punctuality",
+      "expect compliance"
+    ],
+    "distinctions": [
+      "The rules make this a requirement. Expect can also express a prediction, so the surrounding context determines the sense; requiring punctuality does not prove that everyone is punctual."
+    ],
+    "usage": "Often expect + person + to-infinitive; a requirement can also appear in a that-clause.",
+    "originalSense": {
+      "id": "kaikki:a358dbae4b60463cd1",
+      "definition": "To consider obligatory or required.",
+      "example": "England expects that every man will do his duty.",
+      "pos": "verb",
+      "synonyms": [
+        "call for",
+        "demand"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "expectative",
+        "expected",
+        "expectee",
+        "expecter",
+        "expecting",
+        "expection",
+        "expective",
+        "expect the unexpected",
+        "half-expect",
+        "halfexpect",
+        "overexpect",
+        "sexpect",
+        "unexpected"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/expect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=expect&oldid=92205092",
+    "distinctionTask": {
+      "prompt": "The course rules say we expect every student to submit work on time. This states _____.",
+      "options": [
+        "a requirement for students",
+        "proof that all work has already been submitted"
+      ],
+      "answer": "a requirement for students",
+      "explanation": "Rules establish what is required, not whether it has been done."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4651d89a",
+    "senseId": "kaikki:72de1bf5f9ab63b722",
+    "definition": "To regard something as reasonably due or deserved.",
+    "example": "As paying customers, we expect a reasonable standard of service.",
+    "collocations": [
+      "expect good service",
+      "expect too much of someone",
+      "expect something from someone"
+    ],
+    "distinctions": [
+      "The customers regard decent service as reasonably due. This overlaps with prediction in some contexts but does not establish a legal entitlement or guarantee that the service will meet the standard."
+    ],
+    "usage": "Expect something of or from someone can concern the standard reasonably asked of them.",
+    "originalSense": {
+      "id": "kaikki:72de1bf5f9ab63b722",
+      "definition": "To consider reasonably due.",
+      "example": "My parents expected too much of me when I was in college.",
+      "pos": "verb",
+      "synonyms": [
+        "hope",
+        "want",
+        "wish"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "expectative",
+        "expected",
+        "expectee",
+        "expecter",
+        "expecting",
+        "expection",
+        "expective",
+        "expect the unexpected",
+        "half-expect",
+        "halfexpect",
+        "overexpect",
+        "sexpect",
+        "unexpected"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/expect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=expect&oldid=92205092",
+    "distinctionTask": {
+      "prompt": "As paying customers, we expect a reasonable standard of service. The customers _____.",
+      "options": [
+        "regard decent service as reasonably due",
+        "confirm that the service has already been excellent"
+      ],
+      "answer": "regard decent service as reasonably due",
+      "explanation": "The statement expresses an expected standard, not an observed service result."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4651d89a",
+    "senseId": "kaikki:bfc7fbcd36e842b7f7",
+    "definition": "In the continuous aspect, to be pregnant or to have a baby due as a couple.",
+    "example": "We are expecting a baby in June.",
+    "collocations": [
+      "be expecting a baby",
+      "be expecting a child",
+      "be expecting in June"
+    ],
+    "distinctions": [
+      "We are expecting can be said by a couple. It does not mean that every person included in we is pregnant, and a due month is not a guaranteed birth date."
+    ],
+    "usage": "Use the continuous construction be expecting in this meaning.",
+    "originalSense": {
+      "id": "kaikki:bfc7fbcd36e842b7f7",
+      "definition": "To be pregnant, to consider a baby due.",
+      "example": "We are expecting our third in June.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "expectative",
+        "expected",
+        "expectee",
+        "expecter",
+        "expecting",
+        "expection",
+        "expective",
+        "expect the unexpected",
+        "half-expect",
+        "halfexpect",
+        "overexpect",
+        "sexpect",
+        "unexpected"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/expect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=expect&oldid=92205092",
+    "distinctionTask": {
+      "prompt": "A couple say, “We are expecting a baby in June.” This means _____.",
+      "options": [
+        "they have a baby due in June",
+        "both partners must be pregnant"
+      ],
+      "answer": "they have a baby due in June",
+      "explanation": "A couple can use we are expecting; the plural subject does not assign pregnancy to each partner."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4651d89a",
+    "senseId": "kaikki:c0740f055cda502ca7",
+    "definition": "Obsolete: to wait for or await someone or something.",
+    "example": "Reading note: in Shakespeare’s “there expect their coming”, expect means wait for their arrival. The quoted construction takes their coming as its object.",
+    "collocations": [
+      "expect their coming (source quotation)",
+      "expect + object (obsolete wait sense)"
+    ],
+    "distinctions": [
+      "This source-labelled obsolete wait-for sense is separate from modern expect meaning predict. The quotation is explained for reading rather than presented as a new everyday sentence."
+    ],
+    "usage": "Obsolete, transitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:c0740f055cda502ca7",
+      "definition": "To wait for; to await.",
+      "example": "Let's in, and there expect their coming.",
+      "pos": "verb",
+      "synonyms": [
+        "await",
+        "abide",
+        "attend",
+        "await",
+        "bide",
+        "expect",
+        "hold up",
+        "keep",
+        "remain",
+        "stay",
+        "tarry",
+        "tend",
+        "wait",
+        "wait on",
+        "wait for"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "expectative",
+        "expected",
+        "expectee",
+        "expecter",
+        "expecting",
+        "expection",
+        "expective",
+        "expect the unexpected",
+        "half-expect",
+        "halfexpect",
+        "overexpect",
+        "sexpect",
+        "unexpected"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/expect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=expect&oldid=92205092",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4651d89a",
+    "senseId": "kaikki:94caae86d4a4890370",
+    "definition": "Obsolete: to wait or stay.",
+    "example": "Reading note: the source’s “I will expect until my change in death” uses expect for waiting, with an until-clause and no direct object.",
+    "collocations": [
+      "expect until (source construction)",
+      "expect without an object (obsolete wait sense)"
+    ],
+    "distinctions": [
+      "This obsolete intransitive wait sense differs from the obsolete transitive await construction and from a modern prediction. The source line is interpreted rather than offered as an everyday model."
+    ],
+    "usage": "Obsolete, intransitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:94caae86d4a4890370",
+      "definition": "To wait; to stay.",
+      "example": "I will 'expect until my change in death, / And answer at Thy call",
+      "pos": "verb",
+      "synonyms": [
+        "wait"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "intransitive, obsolete",
+      "wordFamily": [
+        "expectative",
+        "expected",
+        "expectee",
+        "expecter",
+        "expecting",
+        "expection",
+        "expective",
+        "expect the unexpected",
+        "half-expect",
+        "halfexpect",
+        "overexpect",
+        "sexpect",
+        "unexpected"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/expect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=expect&oldid=92205092",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-d378299d",
+    "senseId": "kaikki:1ac14a46621e647401",
+    "definition": "To act before someone, especially to prevent or forestall their action.",
+    "example": "To anticipate the critic, the speaker answers the objection before it is raised.",
+    "collocations": [
+      "anticipate an opponent",
+      "anticipate a critic",
+      "anticipate someone by acting first"
+    ],
+    "distinctions": [
+      "Here the speaker acts before the critic raises an objection. Merely expecting criticism does not by itself mean taking preventive action, and an early answer need not stop every later criticism."
+    ],
+    "usage": "Transitive; this meaning concerns acting before someone.",
+    "originalSense": {
+      "id": "kaikki:1ac14a46621e647401",
+      "definition": "To act before (someone), especially to prevent an action.",
+      "example": "c. 1824 (written, published in 1891) Robert Hall, Fragment on Popery\nWhen two parties, each formidable for their numbers, and the weight of their influence and property, are animated by an equal degree of zeal, it is natural to anticipate the final success of that which possesses the most inherent strength.",
+      "pos": "verb",
+      "synonyms": [
+        "preclude",
+        "provide",
+        "preempt",
+        "discount"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "anticipable",
+        "anticipatable",
+        "anticipately",
+        "anticipatingly",
+        "anticipative",
+        "anticipator",
+        "unanticipating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anticipate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=anticipate&oldid=93529314",
+    "distinctionTask": {
+      "prompt": "To anticipate the critic, the speaker answers an objection before it is raised. The speaker _____.",
+      "options": [
+        "acts before the critic raises it",
+        "waits until after the critic has raised it"
+      ],
+      "answer": "acts before the critic raises it",
+      "explanation": "The before-clause explicitly places the answer ahead of the objection."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-d378299d",
+    "senseId": "kaikki:c4f4029d9e9a501518",
+    "definition": "To take up or introduce something prematurely or ahead of its proper place.",
+    "example": "Let me anticipate the next chapter by discussing its conclusion now.",
+    "collocations": [
+      "anticipate the next chapter",
+      "anticipate a later argument",
+      "anticipate the conclusion"
+    ],
+    "distinctions": [
+      "This introduces material earlier than its planned place. It is distinct from merely predicting what the chapter will say; the checked source does not label this meaning obsolete."
+    ],
+    "usage": "Transitive; a topic, argument or later part of an account is introduced ahead of its place.",
+    "originalSense": {
+      "id": "kaikki:c4f4029d9e9a501518",
+      "definition": "To take up or introduce (something) prematurely.",
+      "example": "The advocate plans to anticipate a part of her argument.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "anticipable",
+        "anticipatable",
+        "anticipately",
+        "anticipatingly",
+        "anticipative",
+        "anticipator",
+        "unanticipating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anticipate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=anticipate&oldid=93529314",
+    "distinctionTask": {
+      "prompt": "Let me anticipate the next chapter by discussing its conclusion now. This proposes _____.",
+      "options": [
+        "introducing later material ahead of its place",
+        "postponing all discussion of the conclusion"
+      ],
+      "answer": "introducing later material ahead of its place",
+      "explanation": "Now and next chapter establish that the material is being brought forward."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-d378299d",
+    "senseId": "kaikki:115208dd6c8c781e1a",
+    "definition": "To foresee or expect something before it happens.",
+    "example": "We anticipate delays because repairs are planned on the line.",
+    "collocations": [
+      "anticipate delays",
+      "anticipate a problem",
+      "anticipate doing something"
+    ],
+    "distinctions": [
+      "Anticipate and expect overlap in this predictive sense. Anticipating delays need not mean looking forward to them, and planned repairs do not guarantee a particular delay."
+    ],
+    "usage": "Transitive; followed by a noun, an -ing form or a clause.",
+    "originalSense": {
+      "id": "kaikki:115208dd6c8c781e1a",
+      "definition": "To know of (something) before it happens; to expect.",
+      "example": "to anticipate the pleasures of a visit",
+      "pos": "verb",
+      "synonyms": [
+        "expect",
+        "foretaste",
+        "foresee"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "anticipable",
+        "anticipatable",
+        "anticipately",
+        "anticipatingly",
+        "anticipative",
+        "anticipator",
+        "unanticipating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anticipate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=anticipate&oldid=93529314",
+    "distinctionTask": {
+      "prompt": "We anticipate delays because repairs are planned. Here anticipate means _____.",
+      "options": [
+        "foresee or expect",
+        "necessarily welcome with pleasure"
+      ],
+      "answer": "foresee or expect",
+      "explanation": "A forecast can concern an unwanted event; eager pleasure is not required."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-d378299d",
+    "senseId": "kaikki:ad4472d48281ca8425",
+    "definition": "To wait eagerly for something.",
+    "example": "The children eagerly anticipate their visit to the aquarium.",
+    "collocations": [
+      "eagerly anticipate a visit",
+      "anticipate a holiday",
+      "anticipate someone’s arrival"
+    ],
+    "distinctions": [
+      "Eagerly and the visit context identify looking forward to an event. Anticipate elsewhere can simply mean expect, including expecting something unpleasant."
+    ],
+    "usage": "Transitive; an event or arrival is eagerly awaited.",
+    "originalSense": {
+      "id": "kaikki:ad4472d48281ca8425",
+      "definition": "To eagerly wait for (something)",
+      "example": "Little Johnny started to anticipate the arrival of Santa Claus a week before Christmas.",
+      "pos": "verb",
+      "synonyms": [
+        "look forward to"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "anticipable",
+        "anticipatable",
+        "anticipately",
+        "anticipatingly",
+        "anticipative",
+        "anticipator",
+        "unanticipating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anticipate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=anticipate&oldid=93529314",
+    "distinctionTask": {
+      "prompt": "The children eagerly anticipate their aquarium visit. They _____.",
+      "options": [
+        "look forward to the visit",
+        "have necessarily completed the visit already"
+      ],
+      "answer": "look forward to the visit",
+      "explanation": "Eager anticipation concerns a visit still ahead, not a completed experience."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-724c71da",
+    "senseId": "kaikki:f091dbe4ef74cad06a",
+    "definition": "To believe or conclude something without absolute supporting evidence.",
+    "example": "I suppose the office is closed, but I have not checked.",
+    "collocations": [
+      "suppose that",
+      "I suppose so",
+      "I don’t suppose"
+    ],
+    "distinctions": [
+      "I suppose marks a belief that may be uncertain. Assume and presume can overlap with it; there is no universal fixed evidence threshold separating these words."
+    ],
+    "usage": "Can take a clause or be used with an understood proposition, as in I suppose so.",
+    "originalSense": {
+      "id": "kaikki:f091dbe4ef74cad06a",
+      "definition": "To take for granted; to conclude, with less than absolute supporting data; to believe.",
+      "example": "I suppose we all agree that this is the best solution.",
+      "pos": "verb",
+      "synonyms": [
+        "assume"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive, transitive",
+      "wordFamily": [
+        "I don't suppose",
+        "missuppose",
+        "supposable",
+        "supposal",
+        "supposedly",
+        "supposed to",
+        "supposure"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suppose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suppose&oldid=91958127",
+    "distinctionTask": {
+      "prompt": "I suppose the office is closed, but I have not checked. The speaker _____.",
+      "options": [
+        "expresses an unconfirmed belief",
+        "reports an independently verified closure"
+      ],
+      "answer": "expresses an unconfirmed belief",
+      "explanation": "The explicit lack of checking rules out a claim of verification."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-724c71da",
+    "senseId": "kaikki:aa5d22975af3978ea4",
+    "definition": "To put forward a theory or hypothesis for consideration.",
+    "example": "Suppose x = 4; then 2x = 8.",
+    "collocations": [
+      "suppose that",
+      "suppose x equals",
+      "suppose for the argument"
+    ],
+    "distinctions": [
+      "The value x = 4 is a premise for this calculation. The implication does not establish that x has that value in an actual measurement."
+    ],
+    "usage": "Often imperative suppose introduces a hypothetical premise.",
+    "originalSense": {
+      "id": "kaikki:aa5d22975af3978ea4",
+      "definition": "To theorize or hypothesize.",
+      "example": "Suppose that A implies B and B implies C. Then A implies C.",
+      "pos": "verb",
+      "synonyms": [
+        "assume"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "I don't suppose",
+        "missuppose",
+        "supposable",
+        "supposal",
+        "supposedly",
+        "supposed to",
+        "supposure"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suppose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suppose&oldid=91958127",
+    "distinctionTask": {
+      "prompt": "Suppose x = 4; then 2x = 8. The calculation _____.",
+      "options": [
+        "uses x = 4 as a premise",
+        "proves that every possible x equals 4"
+      ],
+      "answer": "uses x = 4 as a premise",
+      "explanation": "The result is conditional on the stated value, not a proof of that value in every case."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-724c71da",
+    "senseId": "kaikki:c15d2c98bd855753f5",
+    "definition": "To imagine, believe or accept something as true.",
+    "example": "Do not suppose that every expensive course is a good one.",
+    "collocations": [
+      "suppose something to be true",
+      "suppose that",
+      "do not suppose"
+    ],
+    "distinctions": [
+      "This warns against accepting price as a guarantee of quality. The source meaning overlaps with uncertain belief; the warning neither proves that all expensive courses are good nor that all are bad."
+    ],
+    "usage": "Transitive; can introduce the proposition someone imagines or accepts.",
+    "originalSense": {
+      "id": "kaikki:c15d2c98bd855753f5",
+      "definition": "To imagine; to believe; to receive as true.",
+      "example": "How easy is a bush supposed a bear!",
+      "pos": "verb",
+      "synonyms": [
+        "arread",
+        "assume",
+        "fancy",
+        "conject",
+        "conjecture",
+        "daresay",
+        "dope",
+        "foreguess",
+        "go out on a limb",
+        "guess",
+        "guesstimate",
+        "hunch",
+        "hypothesize",
+        "hypotheticate",
+        "imagine",
+        "infer",
+        "overhope",
+        "posit",
+        "postulate",
+        "presume",
+        "reckon",
+        "speculate",
+        "suppose",
+        "surmise",
+        "suspect",
+        "take a stab at",
+        "take for granted",
+        "take something as read",
+        "theorize",
+        "ween"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "I don't suppose",
+        "missuppose",
+        "supposable",
+        "supposal",
+        "supposedly",
+        "supposed to",
+        "supposure"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suppose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suppose&oldid=91958127",
+    "distinctionTask": {
+      "prompt": "Do not suppose that every expensive course is good. This warns against _____.",
+      "options": [
+        "accepting price alone as a guarantee of quality",
+        "believing that any expensive course can ever be good"
+      ],
+      "answer": "accepting price alone as a guarantee of quality",
+      "explanation": "Rejecting the blanket assumption does not establish the opposite blanket claim."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-724c71da",
+    "senseId": "kaikki:e26e96fa0915e3d47e",
+    "definition": "Obsolete: to reckon, account or esteem someone or something as a particular thing.",
+    "example": "Reading note: in the source’s “Being supposed his worthless Concubine”, supposed means regarded or accounted as. The social description belongs to the quotation.",
+    "collocations": [
+      "supposed + description (source construction)",
+      "suppose + description (obsolete estimation sense)"
+    ],
+    "distinctions": [
+      "This source-labelled obsolete estimation use is separate from modern be supposed to expressing an expectation or obligation. The quotation’s description is not an editorial judgment about a person."
+    ],
+    "usage": "Obsolete, transitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:e26e96fa0915e3d47e",
+      "definition": "To reckon to be, to account or esteem as.",
+      "example": "[He] keeps you from the honors of a Queene,\nBeing ſuppoſde his worthleſſe Concubine.",
+      "pos": "verb",
+      "synonyms": [
+        "arread",
+        "assume",
+        "fancy",
+        "conject",
+        "conjecture",
+        "daresay",
+        "dope",
+        "foreguess",
+        "go out on a limb",
+        "guess",
+        "guesstimate",
+        "hunch",
+        "hypothesize",
+        "hypotheticate",
+        "imagine",
+        "infer",
+        "overhope",
+        "posit",
+        "postulate",
+        "presume",
+        "reckon",
+        "speculate",
+        "suppose",
+        "surmise",
+        "suspect",
+        "take a stab at",
+        "take for granted",
+        "take something as read",
+        "theorize",
+        "ween"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "I don't suppose",
+        "missuppose",
+        "supposable",
+        "supposal",
+        "supposedly",
+        "supposed to",
+        "supposure"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suppose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suppose&oldid=91958127",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-724c71da",
+    "senseId": "kaikki:622d5adcf41fa68c30",
+    "definition": "To require something to exist or be true; to presuppose it.",
+    "example": "Such arguments suppose that everyone has internet access.",
+    "collocations": [
+      "suppose the existence of",
+      "an argument supposes",
+      "suppose that as a premise"
+    ],
+    "distinctions": [
+      "The argument relies on access as a premise. This does not prove that everyone actually has access, nor does it mean the argument orders someone to obtain it."
+    ],
+    "usage": "Transitive; often formal, with an argument or proposition as subject.",
+    "originalSense": {
+      "id": "kaikki:622d5adcf41fa68c30",
+      "definition": "To require to exist or to be true; to imply by the laws of thought or of nature.",
+      "example": "Purpose supposes foresight.",
+      "pos": "verb",
+      "synonyms": [
+        "arread",
+        "assume",
+        "fancy",
+        "conject",
+        "conjecture",
+        "daresay",
+        "dope",
+        "foreguess",
+        "go out on a limb",
+        "guess",
+        "guesstimate",
+        "hunch",
+        "hypothesize",
+        "hypotheticate",
+        "imagine",
+        "infer",
+        "overhope",
+        "posit",
+        "postulate",
+        "presume",
+        "reckon",
+        "speculate",
+        "suppose",
+        "surmise",
+        "suspect",
+        "take a stab at",
+        "take for granted",
+        "take something as read",
+        "theorize",
+        "ween"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "I don't suppose",
+        "missuppose",
+        "supposable",
+        "supposal",
+        "supposedly",
+        "supposed to",
+        "supposure"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suppose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suppose&oldid=91958127",
+    "distinctionTask": {
+      "prompt": "Such arguments suppose that everyone has internet access. Internet access is _____.",
+      "options": [
+        "a premise on which the arguments rely",
+        "proved universal by the word suppose"
+      ],
+      "answer": "a premise on which the arguments rely",
+      "explanation": "Presupposing a condition does not independently establish its truth."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-724c71da",
+    "senseId": "kaikki:9abb143b5305900afc",
+    "definition": "Obsolete: to put something in another’s place by fraud; to substitute fraudulently.",
+    "example": "Reading note: the checked source uses supposeth in an account of a changeling belief, meaning substitutes another child in place of the first. This explains the story’s wording, not evidence that such a substitution occurred.",
+    "collocations": [
+      "suppose another in its place (source construction)",
+      "suppose + replacement (obsolete substitution)"
+    ],
+    "distinctions": [
+      "This obsolete fraudulent-substitution sense is different from forming a belief. The supernatural account is a reported belief and must not be treated as a confirmed event."
+    ],
+    "usage": "Obsolete, transitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:9abb143b5305900afc",
+      "definition": "To put by fraud in the place of another; to substitute fraudulently.",
+      "example": "A Water-monster, called the Nickard, does enter by night the chamber, where a woman is brought to bed, and stealeth when they are all sleeping, the new-born child and supposeth another in its place, which child growing up is like a monster and commonly dumb.",
+      "pos": "verb",
+      "synonyms": [
+        "arread",
+        "assume",
+        "fancy",
+        "conject",
+        "conjecture",
+        "daresay",
+        "dope",
+        "foreguess",
+        "go out on a limb",
+        "guess",
+        "guesstimate",
+        "hunch",
+        "hypothesize",
+        "hypotheticate",
+        "imagine",
+        "infer",
+        "overhope",
+        "posit",
+        "postulate",
+        "presume",
+        "reckon",
+        "speculate",
+        "suppose",
+        "surmise",
+        "suspect",
+        "take a stab at",
+        "take for granted",
+        "take something as read",
+        "theorize",
+        "ween"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "I don't suppose",
+        "missuppose",
+        "supposable",
+        "supposal",
+        "supposedly",
+        "supposed to",
+        "supposure"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suppose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suppose&oldid=91958127",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:3ce18c1e829047c64e",
+    "definition": "A desire, hope or longing for something or for something to happen.",
+    "example": "She has a strong wish to study abroad.",
+    "collocations": [
+      "a wish to do something",
+      "a wish for something",
+      "fulfil someone’s wish"
+    ],
+    "distinctions": [
+      "The noun describes a desire. Having that desire does not establish a plan, admission or completed study; wish and hope overlap rather than following an absolute possible/impossible rule."
+    ],
+    "usage": "Countable noun; wish to + infinitive or wish for + noun can identify the desire.",
+    "originalSense": {
+      "id": "kaikki:3ce18c1e829047c64e",
+      "definition": "A desire, hope, or longing for something or for something to happen.",
+      "example": "It is my wish that the bequest (should) be given to an almshouse.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "precatory",
+        "velleity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+    "distinctionTask": {
+      "prompt": "She has a strong wish to study abroad. This states _____.",
+      "options": [
+        "a desire to study abroad",
+        "proof that she has been admitted abroad"
+      ],
+      "answer": "a desire to study abroad",
+      "explanation": "A wish alone does not establish admission or completion."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:75cface0125e5b212d",
+    "definition": "An expression of a desire, often associated with ideas of magic or supernatural power.",
+    "example": "Make a wish before you blow out the birthday candles.",
+    "collocations": [
+      "make a wish",
+      "a birthday wish",
+      "a wish upon a star"
+    ],
+    "distinctions": [
+      "Make a wish refers to expressing or forming the wish in this custom. The custom does not establish that magic works or that the desired result will happen."
+    ],
+    "usage": "Countable noun; commonly in make a wish.",
+    "originalSense": {
+      "id": "kaikki:75cface0125e5b212d",
+      "definition": "An expression of such a desire, often connected with ideas of magic and supernatural power.",
+      "example": "make a wish",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "precatory",
+        "velleity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+    "distinctionTask": {
+      "prompt": "Make a wish before blowing out the birthday candles. This asks for _____.",
+      "options": [
+        "an expression of a desire",
+        "proof that the desire will come true"
+      ],
+      "answer": "an expression of a desire",
+      "explanation": "A customary wish expresses a desire without guaranteeing its fulfilment."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:6ea92b528990354081",
+    "definition": "The thing or outcome that someone desires or longs for.",
+    "example": "Her dearest wish is a home near the sea.",
+    "collocations": [
+      "one’s dearest wish",
+      "grant someone’s wish",
+      "a wish comes true"
+    ],
+    "distinctions": [
+      "Here a home near the sea identifies the desired thing. Naming the wish does not establish ownership or a completed move; the noun can focus on the desire itself or its object in overlapping contexts."
+    ],
+    "usage": "Countable noun; a following complement can identify the desired thing or outcome.",
+    "originalSense": {
+      "id": "kaikki:6ea92b528990354081",
+      "definition": "The thing desired or longed for.",
+      "example": "My dearest wish is to see them happily married.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "precatory",
+        "velleity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+    "distinctionTask": {
+      "prompt": "Her dearest wish is a home near the sea. What is the desired thing? _____",
+      "options": [
+        "a home near the sea",
+        "an already completed purchase"
+      ],
+      "answer": "a home near the sea",
+      "explanation": "The sentence identifies what she wants, not a purchase already made."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:1d911a7d2b7dbdb4b9",
+    "definition": "In Sussex usage, a water meadow.",
+    "example": "Reading note: the checked source labels wish meaning water meadow as Sussex usage. This is a regional landscape noun, independent of the desire noun and its verbs.",
+    "collocations": [
+      "wish (Sussex landscape noun)",
+      "a wish (water-meadow sense)"
+    ],
+    "distinctions": [
+      "The preserved import omits the Sussex label; the checked revision supplies it. Regional does not by itself mean obsolete, and this note does not claim the word is ordinary general English for a meadow."
+    ],
+    "usage": "Sussex regional noun in the checked source.",
+    "originalSense": {
+      "id": "kaikki:1d911a7d2b7dbdb4b9",
+      "definition": "A water meadow.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "precatory",
+        "velleity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:9d1992880f1cfb967e",
+    "definition": "To desire or want something.",
+    "example": "We can change the date if you wish it.",
+    "collocations": [
+      "if you wish it",
+      "as you wish",
+      "wish something to be known"
+    ],
+    "distinctions": [
+      "Here it refers to changing the date; the object can also be understood in if you wish. Wish for + noun and wish to + infinitive have separate source records but share the idea of desire."
+    ],
+    "usage": "Transitive; an object may be understood from context.",
+    "originalSense": {
+      "id": "kaikki:9d1992880f1cfb967e",
+      "definition": "To desire; to want.",
+      "example": "I'll come tomorrow, if you wish (it).",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "precatory",
+        "velleity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+    "distinctionTask": {
+      "prompt": "We can change the date if you wish it. Here it refers to _____.",
+      "options": [
+        "changing the date",
+        "proof that the date has already changed"
+      ],
+      "answer": "changing the date",
+      "explanation": "Wish expresses the person’s preference; it does not report that a change has occurred."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:5af33f073fb7c14ee2",
+    "definition": "Now rare: to hope, with an object clause containing may or a present subjunctive.",
+    "example": "Reading note: in Jane Austen’s “I wish it may be so”, wish means hope. The preserved import says archaic; the checked source revision labels this construction now rare.",
+    "collocations": [
+      "wish it may be so (source quotation)",
+      "wish + present-subjunctive clause (rare construction)"
+    ],
+    "distinctions": [
+      "The source records a rare hope construction. Rare and archaic are different labels, and this quotation does not make every use of wish with a clause archaic."
+    ],
+    "usage": "Now rare in the checked revision; imported label: archaic.",
+    "originalSense": {
+      "id": "kaikki:5af33f073fb7c14ee2",
+      "definition": "To hope (+ object clause with may or in present subjunctive).",
+      "example": "I wish he mean me well, that he takes so much pains!",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, transitive",
+      "wordFamily": [
+        "precatory",
+        "velleity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:f3687d5bece32b6bda",
+    "definition": "To hope for or desire a particular outcome, even one that is unlikely or impossible.",
+    "example": "We wish for a peaceful end to the dispute.",
+    "collocations": [
+      "wish for peace",
+      "wish for a chance",
+      "wish for something better"
+    ],
+    "distinctions": [
+      "Wish for takes a noun phrase. The desired outcome may be possible, unlikely or impossible; the construction does not by itself predict success. Modern hope for can overlap with it."
+    ],
+    "usage": "Usually wish for + noun phrase in this meaning; wishes can also be expressed with clauses.",
+    "originalSense": {
+      "id": "kaikki:f3687d5bece32b6bda",
+      "definition": "To hope (for a particular outcome), even if that outcome is unlikely to occur or cannot occur.",
+      "example": "This is as good an argument as an antiquary could wish for.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "precatory",
+        "velleity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+    "distinctionTask": {
+      "prompt": "We wish for a peaceful end to the dispute. This expresses _____.",
+      "options": [
+        "a desired outcome",
+        "a guaranteed prediction of peace"
+      ],
+      "answer": "a desired outcome",
+      "explanation": "A wish for an outcome does not guarantee it."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:c475b2162208b2650a",
+    "definition": "To direct a thought, greeting or gesture towards someone or something.",
+    "example": "We wish you every success in your new job.",
+    "collocations": [
+      "wish someone luck",
+      "wish someone well",
+      "wish someone success"
+    ],
+    "distinctions": [
+      "Wish someone success expresses goodwill. It neither promises to supply the success nor reports an achieved result; the source also records ill wishes."
+    ],
+    "usage": "Ditransitive: wish + recipient + wished thing; also wish something on someone.",
+    "originalSense": {
+      "id": "kaikki:c475b2162208b2650a",
+      "definition": "To bestow (a thought or gesture) towards (someone or something).",
+      "example": "We wish you a merry Christmas.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ditransitive",
+      "register": "ditransitive",
+      "wordFamily": [
+        "precatory",
+        "velleity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+    "distinctionTask": {
+      "prompt": "We wish you every success in your new job. This is _____.",
+      "options": [
+        "an expression of goodwill",
+        "confirmation of success already achieved"
+      ],
+      "answer": "an expression of goodwill",
+      "explanation": "The greeting directs a good wish towards the recipient without certifying the outcome."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:8cded4fef526d7a62a",
+    "definition": "To request or desire to do an activity.",
+    "example": "I wish to speak to the manager, please.",
+    "collocations": [
+      "wish to speak",
+      "wish to apply",
+      "wish to leave"
+    ],
+    "distinctions": [
+      "Wish to is followed by the base verb and can make a formal request. It does not mean the conversation has occurred; want to is often a less formal alternative."
+    ],
+    "usage": "Intransitive followed by to + infinitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:8cded4fef526d7a62a",
+      "definition": "To request or desire to do an activity.",
+      "example": "Anyone who wishes to may leave now.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "precatory",
+        "velleity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+    "distinctionTask": {
+      "prompt": "I wish to speak to the manager, please. The speaker _____.",
+      "options": [
+        "requests or desires a conversation",
+        "reports a completed conversation"
+      ],
+      "answer": "requests or desires a conversation",
+      "explanation": "The infinitive names the requested activity, not a completed event."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:5ad6367006c0a92e87",
+    "definition": "To recommend someone or seek confidence or favour on their behalf.",
+    "example": "Reading note: in the source’s “I was wished to your worship by a gentleman”, wished means recommended. The speaker says a gentleman recommended them to the person addressed.",
+    "collocations": [
+      "be wished to someone (source construction)",
+      "wish someone to a patron (recommendation sense)"
+    ],
+    "distinctions": [
+      "This is a recommendation sense, separate from wish someone luck. The checked source gives older quotations without explicitly labelling the meaning obsolete; their dates alone do not supply that label."
+    ],
+    "usage": "Transitive in the checked source; retained with source-specific reading guidance.",
+    "originalSense": {
+      "id": "kaikki:5ad6367006c0a92e87",
+      "definition": "To recommend; to seek confidence or favour on behalf of.",
+      "example": "I was wished to your worship by a gentleman.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "precatory",
+        "velleity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c7774c0",
+    "senseId": "kaikki:119f1a455dc736ff00",
+    "definition": "Wish: a surname.",
+    "example": "Reading note: the capitalised dictionary entry Wish records a surname. The name is separate from the lowercase noun and verb and does not mean that its bearer is expressing a wish.",
+    "collocations": [
+      "Wish (capitalised surname)",
+      "the surname Wish"
+    ],
+    "distinctions": [
+      "A family name is separate from the lowercase desire noun and verb. This entry does not establish the biography or identity of any particular person."
+    ],
+    "usage": "Proper name from the separate capitalised source page Wish.",
+    "originalSense": {
+      "id": "kaikki:119f1a455dc736ff00",
+      "definition": "A surname.",
+      "example": "There was Evans, and that marvel among actors, Wish, who is also a modest man. We had all come down to the Mermaid Club that Saturday morning, except Clayton, who had slept there overnight […]",
+      "pos": "name",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "precatory",
+        "velleity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/Wish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Wish&oldid=72744247",
+    "exampleKind": "reading-note",
+    "learningPriority": "proper-name",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]

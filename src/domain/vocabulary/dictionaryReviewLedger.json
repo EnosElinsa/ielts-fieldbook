@@ -36660,6 +36660,376 @@
       ],
       "referenceUrl": "https://en.wiktionary.org/w/index.php?title=appreciate&oldid=91655796",
       "diagramReviewed": true
+    },
+    {
+      "term": "expect",
+      "entryId": "ve-4651d89a",
+      "senseId": "kaikki:921e531ee15fbf8bb4",
+      "sourceHash": "52f619e13ead6ad6ee5cba211eaf7503a3fc4d3ef770604d00ebe3a313f9e59b",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=expect&oldid=92205092",
+      "diagramReviewed": true
+    },
+    {
+      "term": "expect",
+      "entryId": "ve-4651d89a",
+      "senseId": "kaikki:a358dbae4b60463cd1",
+      "sourceHash": "6e17c041024a0ff695098157bce97b644ff9934d24f0c3290f506ea588ab6ee0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=expect&oldid=92205092",
+      "diagramReviewed": true
+    },
+    {
+      "term": "expect",
+      "entryId": "ve-4651d89a",
+      "senseId": "kaikki:72de1bf5f9ab63b722",
+      "sourceHash": "a8e848ed52a06d4dcce030821667186e2965cb2e0545cccc79d45eedcf9237ab",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=expect&oldid=92205092",
+      "diagramReviewed": true
+    },
+    {
+      "term": "expect",
+      "entryId": "ve-4651d89a",
+      "senseId": "kaikki:bfc7fbcd36e842b7f7",
+      "sourceHash": "5a91c98b44f72cda2f9911ce77b9ca1814d61c77db6b8942a528a72bafdef9d9",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=expect&oldid=92205092",
+      "diagramReviewed": true
+    },
+    {
+      "term": "expect",
+      "entryId": "ve-4651d89a",
+      "senseId": "kaikki:c0740f055cda502ca7",
+      "sourceHash": "dda4bf9634f1b131191b2ca652b196da3a7f1e226fad3a19821ab86076aa2746",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=expect&oldid=92205092"
+    },
+    {
+      "term": "expect",
+      "entryId": "ve-4651d89a",
+      "senseId": "kaikki:94caae86d4a4890370",
+      "sourceHash": "1b1da3becabeb1679274af335dc0c84b8ea61c4cfe3bbe830a7523759c8554a7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=expect&oldid=92205092"
+    },
+    {
+      "term": "anticipate",
+      "entryId": "ve-d378299d",
+      "senseId": "kaikki:1ac14a46621e647401",
+      "sourceHash": "32eebd6ce32a92e3a82da8b6951702b6d2c95b246b667e558144b6c8dc6b4e33",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=anticipate&oldid=93529314",
+      "diagramReviewed": true
+    },
+    {
+      "term": "anticipate",
+      "entryId": "ve-d378299d",
+      "senseId": "kaikki:c4f4029d9e9a501518",
+      "sourceHash": "c468c76c366a6d39aa32207b57028568c4729db2b3e9fc0e1532e6809f4fb983",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=anticipate&oldid=93529314",
+      "diagramReviewed": true
+    },
+    {
+      "term": "anticipate",
+      "entryId": "ve-d378299d",
+      "senseId": "kaikki:115208dd6c8c781e1a",
+      "sourceHash": "ce139913af0e972cbb255529921fefde672cc75dd54f908bec7f7fc1fa76b05a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=anticipate&oldid=93529314",
+      "diagramReviewed": true
+    },
+    {
+      "term": "anticipate",
+      "entryId": "ve-d378299d",
+      "senseId": "kaikki:ad4472d48281ca8425",
+      "sourceHash": "e2f89b4f1af5272c8ef8f8f91e958272c7470f9420c9dd2729fc39f884d40281",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=anticipate&oldid=93529314",
+      "diagramReviewed": true
+    },
+    {
+      "term": "suppose",
+      "entryId": "ve-724c71da",
+      "senseId": "kaikki:f091dbe4ef74cad06a",
+      "sourceHash": "c9c706f92ab5bd6acbbb1ce12f98486416083e1cef2dd9eda91ba0a79d245185",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suppose&oldid=91958127",
+      "diagramReviewed": true
+    },
+    {
+      "term": "suppose",
+      "entryId": "ve-724c71da",
+      "senseId": "kaikki:aa5d22975af3978ea4",
+      "sourceHash": "294c0947196212c879311a4d64289df5fe74d2df66b00211fdf3be74f4ce04f3",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suppose&oldid=91958127",
+      "diagramReviewed": true
+    },
+    {
+      "term": "suppose",
+      "entryId": "ve-724c71da",
+      "senseId": "kaikki:c15d2c98bd855753f5",
+      "sourceHash": "8d2e0d1ff0a3acfcfde0688434de16d21fa42ffcfb5cbe0f84e2db541ce90cad",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suppose&oldid=91958127",
+      "diagramReviewed": true
+    },
+    {
+      "term": "suppose",
+      "entryId": "ve-724c71da",
+      "senseId": "kaikki:e26e96fa0915e3d47e",
+      "sourceHash": "4daec6f09a3d58802b694668713788c015f29161ddd50cb7806c0846cc65d4ac",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suppose&oldid=91958127"
+    },
+    {
+      "term": "suppose",
+      "entryId": "ve-724c71da",
+      "senseId": "kaikki:622d5adcf41fa68c30",
+      "sourceHash": "f9276831a0a673a2aafbe54ea18b3ca52fad3c45dda8df93d65150f11c86bfb0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suppose&oldid=91958127",
+      "diagramReviewed": true
+    },
+    {
+      "term": "suppose",
+      "entryId": "ve-724c71da",
+      "senseId": "kaikki:9abb143b5305900afc",
+      "sourceHash": "301a1cdced6f375950bbeea948425ab9912aabad20cbf98ca5dbe33b1bafcec1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suppose&oldid=91958127"
+    },
+    {
+      "term": "wish",
+      "entryId": "ve-7c7774c0",
+      "senseId": "kaikki:3ce18c1e829047c64e",
+      "sourceHash": "4a2a039417135b8a9d94850c4dccf64457e9d88d05a12521a9d7a1e31f2d6e7f",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+      "diagramReviewed": true
+    },
+    {
+      "term": "wish",
+      "entryId": "ve-7c7774c0",
+      "senseId": "kaikki:75cface0125e5b212d",
+      "sourceHash": "a58324378a2792275de7ece084eb783d2b44fe444e8eb20aed722f6a4724e47a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+      "diagramReviewed": true
+    },
+    {
+      "term": "wish",
+      "entryId": "ve-7c7774c0",
+      "senseId": "kaikki:6ea92b528990354081",
+      "sourceHash": "22ecddc440919f04371e6b2cfa4143cb31cca1bdcecd6539e62b0ac3141ebd30",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+      "diagramReviewed": true
+    },
+    {
+      "term": "wish",
+      "entryId": "ve-7c7774c0",
+      "senseId": "kaikki:1d911a7d2b7dbdb4b9",
+      "sourceHash": "a310f9727df9856f7505d1e9fbdafa6fcf1ecee1e53177c6c22468f35d94cf9c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970"
+    },
+    {
+      "term": "wish",
+      "entryId": "ve-7c7774c0",
+      "senseId": "kaikki:9d1992880f1cfb967e",
+      "sourceHash": "3104591515a6fda304d4d1739a59d9d3e42283cb76cec39ed571afea0c3c7dcd",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+      "diagramReviewed": true
+    },
+    {
+      "term": "wish",
+      "entryId": "ve-7c7774c0",
+      "senseId": "kaikki:5af33f073fb7c14ee2",
+      "sourceHash": "fbc842423fc1880275d52bc8df499bc67e4ce16d014fdda0bdb55e01e29bc181",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970"
+    },
+    {
+      "term": "wish",
+      "entryId": "ve-7c7774c0",
+      "senseId": "kaikki:f3687d5bece32b6bda",
+      "sourceHash": "ee9b2eeb00b2a43ff1a63b52996e840f6ebca865c16e66ff2cd6456f71043aa2",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+      "diagramReviewed": true
+    },
+    {
+      "term": "wish",
+      "entryId": "ve-7c7774c0",
+      "senseId": "kaikki:c475b2162208b2650a",
+      "sourceHash": "ccdb07a959007a334796530e84049588910dfdea31d2d4ed283dca8b359d1ec7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+      "diagramReviewed": true
+    },
+    {
+      "term": "wish",
+      "entryId": "ve-7c7774c0",
+      "senseId": "kaikki:8cded4fef526d7a62a",
+      "sourceHash": "703a974eeeaa4b531fdc145107fd96ac1c56a65376f6cc5b7061651966a55e81",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970",
+      "diagramReviewed": true
+    },
+    {
+      "term": "wish",
+      "entryId": "ve-7c7774c0",
+      "senseId": "kaikki:5ad6367006c0a92e87",
+      "sourceHash": "a4944f5f2b60a8cca6bb82b44e621fd1512bb1a51fd813dfd442bda8f474e368",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wish&oldid=93650970"
+    },
+    {
+      "term": "wish",
+      "entryId": "ve-7c7774c0",
+      "senseId": "kaikki:119f1a455dc736ff00",
+      "sourceHash": "2181f814806d0eaea4fe6ef295d76e5c6787cbc7e5bda392a073268970f9fa8d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Wish&oldid=72744247"
     }
   ]
 }
