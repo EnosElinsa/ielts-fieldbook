@@ -1,0 +1,192 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-4f6c4c47",
+      "senseId": "kaikki:a52d6c1cdd5f518b80"
+    },
+    {
+      "entryId": "ve-4f6c4c47",
+      "senseId": "kaikki:e61248c83d031ed082"
+    },
+    {
+      "entryId": "ve-4f6c4c47",
+      "senseId": "kaikki:00d32abfea593e7046"
+    },
+    {
+      "entryId": "ve-4f6c4c47",
+      "senseId": "kaikki:0af29b14cff7db2db8"
+    },
+    {
+      "entryId": "ve-4f6c4c47",
+      "senseId": "kaikki:3446c7f8be8325d24f"
+    },
+    {
+      "entryId": "ve-4f6c4c47",
+      "senseId": "kaikki:211aeba0ec549a4361"
+    },
+    {
+      "entryId": "ve-9d20393d",
+      "senseId": "kaikki:9d9d52f03f0602bf9f"
+    },
+    {
+      "entryId": "ve-9d20393d",
+      "senseId": "kaikki:62d4e9d4b3b180b801"
+    },
+    {
+      "entryId": "ve-9d20393d",
+      "senseId": "kaikki:a5153dc02bffbc9b11"
+    },
+    {
+      "entryId": "ve-9d20393d",
+      "senseId": "kaikki:1aec2e5666678e17ac"
+    },
+    {
+      "entryId": "ve-9d20393d",
+      "senseId": "kaikki:e060162d14b3d4cad2"
+    },
+    {
+      "entryId": "ve-9d20393d",
+      "senseId": "kaikki:d2033f09c269fddf21"
+    },
+    {
+      "entryId": "ve-9d20393d",
+      "senseId": "kaikki:507edac881ddde1c25"
+    },
+    {
+      "entryId": "ve-9d20393d",
+      "senseId": "kaikki:3b8e5fc06d0847fa34"
+    },
+    {
+      "entryId": "ve-9d20393d",
+      "senseId": "kaikki:57a87df39dee162ccc"
+    },
+    {
+      "entryId": "ve-5f92a936",
+      "senseId": "kaikki:148ff5ce1ad868c47b"
+    },
+    {
+      "entryId": "ve-5f92a936",
+      "senseId": "kaikki:50622438a0a645521e"
+    },
+    {
+      "entryId": "ve-5f92a936",
+      "senseId": "kaikki:516ccd45ec2f024ff1"
+    },
+    {
+      "entryId": "ve-1a3eb77c",
+      "senseId": "kaikki:7a55aaf63ba4f89107"
+    },
+    {
+      "entryId": "ve-1a3eb77c",
+      "senseId": "kaikki:f91e0af847adbd25cc"
+    },
+    {
+      "entryId": "ve-1a3eb77c",
+      "senseId": "kaikki:eb358beead21cebf34"
+    },
+    {
+      "entryId": "ve-1a3eb77c",
+      "senseId": "kaikki:8d18d095c374c5e28e"
+    },
+    {
+      "entryId": "ve-1a3eb77c",
+      "senseId": "kaikki:1f0a5e8cf37cc86b25"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-5f92a936",
+      "senseId": "kaikki:279430a971161c138a",
+      "originalSense": {
+        "id": "kaikki:279430a971161c138a",
+        "definition": "To give public notice of, especially for the first time; to make known.",
+        "example": "Her [Queen Elizabeth’s] arrival was announced through the country by a peal of cannon from the ramparts.",
+        "pos": "verb",
+        "synonyms": [
+          "proclaim",
+          "publish",
+          "make known",
+          "herald",
+          "declare",
+          "promulgate",
+          "sound",
+          "intimate"
+        ],
+        "antonyms": [
+          "withhold"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [
+          "announceable",
+          "announcement",
+          "announcer",
+          "back announce",
+          "back-announce",
+          "foreannounce",
+          "knock-and-announce",
+          "preannounce",
+          "pre-announce",
+          "reannounce",
+          "unannounced"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/announce#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "example": "The university will announce the scholarship results next week."
+    },
+    {
+      "entryId": "ve-4f6c4c47",
+      "senseId": "kaikki:67747aacc2e96f675b",
+      "originalSense": {
+        "id": "kaikki:67747aacc2e96f675b",
+        "definition": "To declare with assurance or plainly and strongly; to state positively.",
+        "example": "Numerous experimental tests and other observations have been offered in favor of animal mind reading, and although many scientists are skeptical, others assert that humans are not the only species capable of representing what others do and don’t perceive and know.",
+        "pos": "verb",
+        "synonyms": [
+          "affirm",
+          "asseverate",
+          "aver",
+          "avow"
+        ],
+        "antonyms": [
+          "remit",
+          "deny",
+          "deassert"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "assertability",
+          "assertable",
+          "asserter",
+          "assertive",
+          "assertment",
+          "assert oneself",
+          "assertor",
+          "counterassert",
+          "misassert",
+          "overassert",
+          "reassert",
+          "unassert"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/assert#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "example": "The authors assert that the policy will reduce traffic congestion."
+    }
+  ],
+  "removeDefaults": [
+    "ve-4f6c4c47",
+    "ve-9d20393d",
+    "ve-5f92a936",
+    "ve-1a3eb77c"
+  ],
+  "restoreDefaults": []
+}

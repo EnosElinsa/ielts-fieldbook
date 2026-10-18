@@ -48718,6 +48718,17 @@
   {
     "entryId": "ve-5f92a936",
     "senseId": "kaikki:279430a971161c138a",
+    "definition": "To make information publicly known, often by giving notice of something new.",
+    "example": "The museum will announce its new opening hours on Friday.",
+    "collocations": [
+      "announce a change",
+      "announce new opening hours",
+      "announce that"
+    ],
+    "distinctions": [
+      "The sentence plans to make the new hours known. It does not say that the hours have already taken effect."
+    ],
+    "usage": "Public-notice sense, often introducing news or a new arrangement. A first announcement is common rather than required in every use.",
     "originalSense": {
       "id": "kaikki:279430a971161c138a",
       "definition": "To give public notice of, especially for the first time; to make known.",
@@ -48757,7 +48768,62 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/announce#English",
       "license": "CC-BY-SA-4.0"
     },
-    "example": "The university will announce the scholarship results next week."
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=announce&oldid=92376953",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The museum will announce new opening hours on Friday. It plans to _____.",
+      "options": [
+        "make the new hours publicly known",
+        "prove that the new hours are already in effect"
+      ],
+      "answer": "make the new hours publicly known",
+      "explanation": "An announcement makes information known; its timing does not itself establish when the arrangement takes effect."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "previousSenses": [
+      {
+        "id": "kaikki:279430a971161c138a",
+        "definition": "To give public notice of, especially for the first time; to make known.",
+        "example": "The university will announce the scholarship results next week.",
+        "pos": "verb",
+        "synonyms": [
+          "proclaim",
+          "publish",
+          "make known",
+          "herald",
+          "declare",
+          "promulgate",
+          "sound",
+          "intimate"
+        ],
+        "antonyms": [
+          "withhold"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [
+          "announceable",
+          "announcement",
+          "announcer",
+          "back announce",
+          "back-announce",
+          "foreannounce",
+          "knock-and-announce",
+          "preannounce",
+          "pre-announce",
+          "reannounce",
+          "unannounced"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/announce#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ]
   },
   {
     "entryId": "ve-b8734d1",
@@ -48937,6 +49003,17 @@
   {
     "entryId": "ve-4f6c4c47",
     "senseId": "kaikki:67747aacc2e96f675b",
+    "definition": "To state a claim firmly or confidently.",
+    "example": "We assert that the plan is affordable, but we have not provided the cost figures.",
+    "collocations": [
+      "assert that",
+      "assert a claim",
+      "assert firmly"
+    ],
+    "distinctions": [
+      "A firm assertion expresses a position. The confidence of the statement does not independently establish that the plan is affordable."
+    ],
+    "usage": "Ordinary statement sense. Assert that introduces the claim.",
     "originalSense": {
       "id": "kaikki:67747aacc2e96f675b",
       "definition": "To declare with assurance or plainly and strongly; to state positively.",
@@ -48975,7 +49052,61 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/assert#English",
       "license": "CC-BY-SA-4.0"
     },
-    "example": "The authors assert that the policy will reduce traffic congestion."
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assert&oldid=91124272",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "We assert that the plan is affordable, but provide no cost figures. The assertion _____.",
+      "options": [
+        "states a claim without independently proving it",
+        "proves affordability through the confidence of the wording"
+      ],
+      "answer": "states a claim without independently proving it",
+      "explanation": "Assert describes stating the claim firmly; supporting cost evidence has not been supplied."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "previousSenses": [
+      {
+        "id": "kaikki:67747aacc2e96f675b",
+        "definition": "To declare with assurance or plainly and strongly; to state positively.",
+        "example": "The authors assert that the policy will reduce traffic congestion.",
+        "pos": "verb",
+        "synonyms": [
+          "affirm",
+          "asseverate",
+          "aver",
+          "avow"
+        ],
+        "antonyms": [
+          "remit",
+          "deny",
+          "deassert"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "assertability",
+          "assertable",
+          "asserter",
+          "assertive",
+          "assertment",
+          "assert oneself",
+          "assertor",
+          "counterassert",
+          "misassert",
+          "overassert",
+          "reassert",
+          "unassert"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/assert#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    ]
   },
   {
     "entryId": "ve-b871f0e",
@@ -231507,6 +231638,1657 @@
     "referenceUrl": "https://en.wiktionary.org/w/index.php?title=negotiate&oldid=93508392",
     "exampleKind": "reading-note",
     "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:a52d6c1cdd5f518b80",
+    "definition": "To exercise authority, influence or a similar power so that it becomes effective or apparent.",
+    "example": "The chair will assert her authority by setting the speaking order.",
+    "collocations": [
+      "assert authority",
+      "assert influence",
+      "assert control"
+    ],
+    "distinctions": [
+      "Here assert means exercise authority through an action. It is separate from merely saying that the authority exists."
+    ],
+    "usage": "The object is the authority or influence being exercised.",
+    "originalSense": {
+      "id": "kaikki:a52d6c1cdd5f518b80",
+      "definition": "To use or exercise and thereby prove the existence of.",
+      "example": "to assert one's authority",
+      "pos": "verb",
+      "synonyms": [
+        "exert"
+      ],
+      "antonyms": [
+        "remit",
+        "deny",
+        "deassert"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "assertability",
+        "assertable",
+        "asserter",
+        "assertive",
+        "assertment",
+        "assert oneself",
+        "assertor",
+        "counterassert",
+        "misassert",
+        "overassert",
+        "reassert",
+        "unassert"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assert#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assert&oldid=91124272",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The chair will assert her authority by setting the speaking order. Here she will _____.",
+      "options": [
+        "exercise authority through an action",
+        "merely report that authority exists without using it"
+      ],
+      "answer": "exercise authority through an action",
+      "explanation": "Setting the speaking order illustrates using authority, rather than only declaring its existence."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:e61248c83d031ed082",
+    "definition": "To put forward, uphold or defend a right, claim or cause.",
+    "example": "Residents plan to assert their right to use the shared path.",
+    "collocations": [
+      "assert a right",
+      "assert a claim to something",
+      "assert ownership"
+    ],
+    "distinctions": [
+      "To assert a right is to put it forward or defend it. The statement does not independently settle whether the claimed right is legally valid."
+    ],
+    "usage": "Rights-and-claims sense. A claim can be asserted while its validity remains disputed.",
+    "originalSense": {
+      "id": "kaikki:e61248c83d031ed082",
+      "definition": "To maintain or defend, as a cause or a claim, by words or measures; to vindicate a claim or title to.",
+      "example": "to assert our rights and liberties",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "remit",
+        "deny",
+        "deassert"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "assertability",
+        "assertable",
+        "asserter",
+        "assertive",
+        "assertment",
+        "assert oneself",
+        "assertor",
+        "counterassert",
+        "misassert",
+        "overassert",
+        "reassert",
+        "unassert"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assert#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assert&oldid=91124272",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Residents plan to assert their right to use a shared path. This means _____.",
+      "options": [
+        "put forward or defend the claimed right",
+        "automatically obtain a final ruling that the right is valid"
+      ],
+      "answer": "put forward or defend the claimed right",
+      "explanation": "Asserting a claimed right does not itself decide its legal validity."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:00d32abfea593e7046",
+    "definition": "To make oneself heard or taken seriously by expressing one’s needs, views or rights.",
+    "example": "At the meeting, I need to assert myself and ask for time to speak.",
+    "collocations": [
+      "assert oneself",
+      "learn to assert yourself",
+      "assert oneself at work"
+    ],
+    "distinctions": [
+      "The reflexive object myself belongs to the construction assert oneself. Expressing a view firmly does not require aggression or guarantee that others agree."
+    ],
+    "usage": "Reflexive use, with myself, yourself, herself and other matching reflexive forms.",
+    "originalSense": {
+      "id": "kaikki:00d32abfea593e7046",
+      "definition": "To insist on the legitimacy of one's rights, opinion, etc; not to allow oneself to be dismissed; to ensure that one is taken into consideration; to make oneself respected; to be assertive. See assert oneself.",
+      "example": "Since going to therapy, I've found it much easier to assert myself.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "remit",
+        "deny",
+        "deassert"
+      ],
+      "collocations": [],
+      "usage": "reflexive",
+      "register": "reflexive",
+      "wordFamily": [
+        "assertability",
+        "assertable",
+        "asserter",
+        "assertive",
+        "assertment",
+        "assert oneself",
+        "assertor",
+        "counterassert",
+        "misassert",
+        "overassert",
+        "reassert",
+        "unassert"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assert#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assert&oldid=91124272",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "I need to assert myself at the meeting. The construction means _____.",
+      "options": [
+        "express my needs or views so that I am taken seriously",
+        "necessarily threaten others until they agree"
+      ],
+      "answer": "express my needs or views so that I am taken seriously",
+      "explanation": "Assert oneself is reflexive and does not require aggression or agreement from others."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:0af29b14cff7db2db8",
+    "definition": "To specify in a program that a condition is expected to hold at a particular point, with the applicable check or failure behaviour.",
+    "example": "In normal Python execution, the test can assert that count is non-negative.",
+    "collocations": [
+      "assert a condition",
+      "assert that",
+      "raise AssertionError"
+    ],
+    "distinctions": [
+      "An enabled Python assertion checks the condition; it does not make a false condition true. Python can omit assertion checks when optimisation is requested."
+    ],
+    "usage": "Programming sense. In Python, an enabled false assertion raises AssertionError. Behaviour and ways to disable assertions depend on the language and execution settings.",
+    "originalSense": {
+      "id": "kaikki:0af29b14cff7db2db8",
+      "definition": "To declare that a condition or expression must be true at a certain point in the source code (in some cases causing the program to fail if it is not, as a safeguard).",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "remit",
+        "deny",
+        "deassert"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "assertability",
+        "assertable",
+        "asserter",
+        "assertive",
+        "assertment",
+        "assert oneself",
+        "assertor",
+        "counterassert",
+        "misassert",
+        "overassert",
+        "reassert",
+        "unassert"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assert#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assert&oldid=91124272",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In normal Python execution with assertions enabled, asserting that count is non-negative when count is -1 _____.",
+      "options": [
+        "raises AssertionError",
+        "changes count to a non-negative value"
+      ],
+      "answer": "raises AssertionError",
+      "explanation": "The enabled assertion checks the condition and raises an error when it is false; it does not repair the value."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:3446c7f8be8325d24f",
+    "definition": "To make an electrical or digital signal active according to its defined polarity.",
+    "example": "In this active-low circuit, the controller will assert reset by driving the reset line low.",
+    "collocations": [
+      "assert a signal",
+      "assert reset",
+      "active-low reset"
+    ],
+    "distinctions": [
+      "For the active-low signal in this example, low is the active state. Assert does not universally mean drive a signal high."
+    ],
+    "usage": "Electronics sense. The active level depends on the signal’s design; no particular voltage is specified here.",
+    "originalSense": {
+      "id": "kaikki:3446c7f8be8325d24f",
+      "definition": "To set a signal on a line using a voltage or electric current.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "remit",
+        "deny",
+        "deassert"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "assertability",
+        "assertable",
+        "asserter",
+        "assertive",
+        "assertment",
+        "assert oneself",
+        "assertor",
+        "counterassert",
+        "misassert",
+        "overassert",
+        "reassert",
+        "unassert"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assert#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assert&oldid=91124272",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In the active-low circuit described, to assert reset is to _____.",
+      "options": [
+        "drive the reset signal low",
+        "always drive it high because asserted means high"
+      ],
+      "answer": "drive the reset signal low",
+      "explanation": "Active-low defines low as the active state. A different signal design can use a different polarity."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:211aeba0ec549a4361",
+    "definition": "A programming assertion or assert instruction.",
+    "example": "The test contains an assert that checks whether the item count is positive.",
+    "collocations": [
+      "a failed assert",
+      "an assert in the code",
+      "a debugging assert"
+    ],
+    "distinctions": [
+      "Here an assert is a countable programming noun. It names an assertion check, rather than the act of confidently announcing a claim."
+    ],
+    "usage": "Programming noun, corresponding to assertion. The presence of a check does not say whether it ran or passed.",
+    "originalSense": {
+      "id": "kaikki:211aeba0ec549a4361",
+      "definition": "Synonym of assertion.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "assertion"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "assertability",
+        "assertable",
+        "asserter",
+        "assertive",
+        "assertment",
+        "assert oneself",
+        "assertor",
+        "counterassert",
+        "misassert",
+        "overassert",
+        "reassert",
+        "unassert"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assert#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assert&oldid=91124272",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "An assert in the test code is _____.",
+      "options": [
+        "a programming assertion check",
+        "an official public announcement of election results"
+      ],
+      "answer": "a programming assertion check",
+      "explanation": "The countable noun names a programming assertion, not a public declaration."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:9d9d52f03f0602bf9f",
+    "definition": "To make something clear, explain it or interpret it.",
+    "example": "In this obsolete use, declare means to explain or interpret something. It is separate from the ordinary modern sense of making a formal announcement.",
+    "collocations": [
+      "explain a meaning",
+      "make something clear",
+      "interpret something"
+    ],
+    "distinctions": [
+      "The historical explanation meaning should not make the separate modern announcement verb appear obsolete."
+    ],
+    "usage": "Obsolete transitive use, retained for reading older texts.",
+    "originalSense": {
+      "id": "kaikki:9d9d52f03f0602bf9f",
+      "definition": "To make clear, explain, interpret.",
+      "example": "Then answered Peter and sayd to him: declare unto us thys parable.",
+      "pos": "verb",
+      "synonyms": [
+        "assert",
+        "asseverate",
+        "attest",
+        "aver",
+        "avouch",
+        "avow",
+        "certify",
+        "claim",
+        "confirm",
+        "construct",
+        "declare",
+        "define",
+        "depone",
+        "dictate",
+        "disclose",
+        "inform",
+        "initialize",
+        "judge",
+        "make known",
+        "proclaim",
+        "state",
+        "swear"
+      ],
+      "antonyms": [
+        "deinitialize",
+        "dissolve"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "aforedeclared",
+        "declarable",
+        "declarant",
+        "declaration",
+        "declarative",
+        "declaratory",
+        "declare against",
+        "declarement",
+        "declarer",
+        "declare war",
+        "foredeclare",
+        "forward-declare",
+        "I declare",
+        "I do declare",
+        "misdeclare",
+        "nondeclaring",
+        "predeclare",
+        "redeclare",
+        "self-declare",
+        "undeclare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/declare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=declare&oldid=91783829",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:62d4e9d4b3b180b801",
+    "definition": "To state or announce something formally, officially, explicitly or emphatically.",
+    "example": "The council will declare the results at noon.",
+    "collocations": [
+      "declare the results",
+      "declare that",
+      "declare something officially"
+    ],
+    "distinctions": [
+      "The sentence plans an official announcement. It does not tell us which side won. Some other declarations can themselves perform an official act, such as declaring war."
+    ],
+    "usage": "Modern transitive or intransitive announcement sense.",
+    "originalSense": {
+      "id": "kaikki:62d4e9d4b3b180b801",
+      "definition": "To assert or announce formally, officially, explicitly, or emphatically.",
+      "example": "He declared him innocent.",
+      "pos": "verb",
+      "synonyms": [
+        "disclose",
+        "make known",
+        "announce",
+        "forerun",
+        "blare",
+        "declare",
+        "disclose",
+        "herald",
+        "impart",
+        "make known",
+        "publish",
+        "proclaim",
+        "promulgate",
+        "promulge"
+      ],
+      "antonyms": [
+        "deinitialize",
+        "dissolve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive, transitive",
+      "wordFamily": [
+        "aforedeclared",
+        "declarable",
+        "declarant",
+        "declaration",
+        "declarative",
+        "declaratory",
+        "declare against",
+        "declarement",
+        "declarer",
+        "declare war",
+        "foredeclare",
+        "forward-declare",
+        "I declare",
+        "I do declare",
+        "misdeclare",
+        "nondeclaring",
+        "predeclare",
+        "redeclare",
+        "self-declare",
+        "undeclare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/declare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=declare&oldid=91783829",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The council will declare the results at noon. It plans to _____.",
+      "options": [
+        "make an official announcement of the results",
+        "count votes without announcing the results"
+      ],
+      "answer": "make an official announcement of the results",
+      "explanation": "Declare here means formally or officially announce. The sentence supplies no winning side."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:a5153dc02bffbc9b11",
+    "definition": "To report goods, income or other relevant information to customs or taxation officials.",
+    "example": "On arrival, you must declare these goods to customs.",
+    "collocations": [
+      "declare goods",
+      "declare income",
+      "declare something to customs"
+    ],
+    "distinctions": [
+      "Declaring goods reports them to the officials. It does not by itself establish that any duty has been paid or that no duty is owed."
+    ],
+    "usage": "Customs and tax-reporting use. What must be reported depends on the applicable rules.",
+    "originalSense": {
+      "id": "kaikki:a5153dc02bffbc9b11",
+      "definition": "To inform government customs or taxation officials of goods one is importing or of income, expenses, or other circumstances affecting one's taxes.",
+      "example": "The prosecution has introduced evidence, including canceled checks, to show that the judge failed to declare part of his income.",
+      "pos": "verb",
+      "synonyms": [
+        "disclose",
+        "make known",
+        "divulge"
+      ],
+      "antonyms": [
+        "deinitialize",
+        "dissolve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "aforedeclared",
+        "declarable",
+        "declarant",
+        "declaration",
+        "declarative",
+        "declaratory",
+        "declare against",
+        "declarement",
+        "declarer",
+        "declare war",
+        "foredeclare",
+        "forward-declare",
+        "I declare",
+        "I do declare",
+        "misdeclare",
+        "nondeclaring",
+        "predeclare",
+        "redeclare",
+        "self-declare",
+        "undeclare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/declare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=declare&oldid=91783829",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "You must declare these goods to customs. This requires you to _____.",
+      "options": [
+        "report the goods to the responsible officials",
+        "prove that no duty can be owed on the goods"
+      ],
+      "answer": "report the goods to the responsible officials",
+      "explanation": "A declaration reports relevant information; payment and liability are separate questions."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:1aec2e5666678e17ac",
+    "definition": "To show one’s cards or a scoring combination in order to claim points in a card game.",
+    "example": "In this game, a player must declare the combination by showing its cards to score.",
+    "collocations": [
+      "declare a combination",
+      "show one’s cards",
+      "declare to score"
+    ],
+    "distinctions": [
+      "The example explicitly links declaring with showing the scoring cards. It does not give a universal scoring rule for every card game."
+    ],
+    "usage": "Card-game sense. How and when cards are shown, and how points are awarded, depend on the game.",
+    "originalSense": {
+      "id": "kaikki:1aec2e5666678e17ac",
+      "definition": "To show one's cards in order to score.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "assert",
+        "asseverate",
+        "attest",
+        "aver",
+        "avouch",
+        "avow",
+        "certify",
+        "claim",
+        "confirm",
+        "construct",
+        "declare",
+        "define",
+        "depone",
+        "dictate",
+        "disclose",
+        "inform",
+        "initialize",
+        "judge",
+        "make known",
+        "proclaim",
+        "state",
+        "swear"
+      ],
+      "antonyms": [
+        "deinitialize",
+        "dissolve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aforedeclared",
+        "declarable",
+        "declarant",
+        "declaration",
+        "declarative",
+        "declaratory",
+        "declare against",
+        "declarement",
+        "declarer",
+        "declare war",
+        "foredeclare",
+        "forward-declare",
+        "I declare",
+        "I do declare",
+        "misdeclare",
+        "nondeclaring",
+        "predeclare",
+        "redeclare",
+        "self-declare",
+        "undeclare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/declare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=declare&oldid=91783829",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "The rules say to declare a combination by showing its cards to score. Here declare means _____.",
+      "options": [
+        "show the scoring cards as required by this game",
+        "report imported goods to customs officials"
+      ],
+      "answer": "show the scoring cards as required by this game",
+      "explanation": "The explicitly stated card-game context selects the showing-cards sense; rules differ between games."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:e060162d14b3d4cad2",
+    "definition": "For a constituency or its representatives to officially announce an election result.",
+    "example": "The constituency is expected to declare after midnight.",
+    "collocations": [
+      "a constituency declares",
+      "declare an election result",
+      "expected to declare"
+    ],
+    "distinctions": [
+      "Here declare has no direct object: the constituency is expected to announce its result. The sentence predicts an announcement time without naming a winner."
+    ],
+    "usage": "Intransitive election-reporting use, with constituency as the grammatical subject.",
+    "originalSense": {
+      "id": "kaikki:e060162d14b3d4cad2",
+      "definition": "For a constituency in an election to officially announce the result",
+      "example": "Houghton and Sunderland South was the first constituency to declare in the 2015 general election.",
+      "pos": "verb",
+      "synonyms": [
+        "assert",
+        "asseverate",
+        "attest",
+        "aver",
+        "avouch",
+        "avow",
+        "certify",
+        "claim",
+        "confirm",
+        "construct",
+        "declare",
+        "define",
+        "depone",
+        "dictate",
+        "disclose",
+        "inform",
+        "initialize",
+        "judge",
+        "make known",
+        "proclaim",
+        "state",
+        "swear"
+      ],
+      "antonyms": [
+        "deinitialize",
+        "dissolve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "aforedeclared",
+        "declarable",
+        "declarant",
+        "declaration",
+        "declarative",
+        "declaratory",
+        "declare against",
+        "declarement",
+        "declarer",
+        "declare war",
+        "foredeclare",
+        "forward-declare",
+        "I declare",
+        "I do declare",
+        "misdeclare",
+        "nondeclaring",
+        "predeclare",
+        "redeclare",
+        "self-declare",
+        "undeclare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/declare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=declare&oldid=91783829",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "The constituency is expected to declare after midnight. It is expected to _____.",
+      "options": [
+        "announce its election result",
+        "hold a new vote after midnight"
+      ],
+      "answer": "announce its election result",
+      "explanation": "In this intransitive election use, a constituency declares when its result is officially announced."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:d2033f09c269fddf21",
+    "definition": "In cricket, for the batting captain to announce that the current innings is closed.",
+    "example": "The captain can declare the first innings closed once the ball is dead.",
+    "collocations": [
+      "declare an innings closed",
+      "declare the first innings",
+      "a declared innings"
+    ],
+    "distinctions": [
+      "Declaring closes the current innings; it does not automatically concede the match. Forfeiting an innings before it starts is a separate action."
+    ],
+    "usage": "Cricket. Under MCC Law 15 in the 2026 edition, declaration excludes the match’s final innings and is made while the ball is dead. The captain notifies the opposing captain and umpires; once notified, the decision cannot be changed. Competition conditions may add requirements.",
+    "originalSense": {
+      "id": "kaikki:d2033f09c269fddf21",
+      "definition": "The decision of the captain to let the bowling side bat in test cricket to save time without being all out.",
+      "example": "He declared at 689-7.",
+      "pos": "verb",
+      "synonyms": [
+        "assert",
+        "asseverate",
+        "attest",
+        "aver",
+        "avouch",
+        "avow",
+        "certify",
+        "claim",
+        "confirm",
+        "construct",
+        "declare",
+        "define",
+        "depone",
+        "dictate",
+        "disclose",
+        "inform",
+        "initialize",
+        "judge",
+        "make known",
+        "proclaim",
+        "state",
+        "swear"
+      ],
+      "antonyms": [
+        "deinitialize",
+        "dissolve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aforedeclared",
+        "declarable",
+        "declarant",
+        "declaration",
+        "declarative",
+        "declaratory",
+        "declare against",
+        "declarement",
+        "declarer",
+        "declare war",
+        "foredeclare",
+        "forward-declare",
+        "I declare",
+        "I do declare",
+        "misdeclare",
+        "nondeclaring",
+        "predeclare",
+        "redeclare",
+        "self-declare",
+        "undeclare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/declare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=declare&oldid=91783829",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "A batting captain can declare the first innings closed while the ball is dead. The declaration would _____.",
+      "options": [
+        "close that innings by the captain’s decision",
+        "automatically concede the whole match"
+      ],
+      "answer": "close that innings by the captain’s decision",
+      "explanation": "A declaration completes the current innings. It is distinct from conceding the match or forfeiting an innings before it begins."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:507edac881ddde1c25",
+    "definition": "To explicitly introduce the existence of a program entity, such as a variable or function, without necessarily defining its content.",
+    "example": "In C, int score(void); can declare a function without providing its body.",
+    "collocations": [
+      "declare a variable",
+      "declare a function",
+      "a function declaration"
+    ],
+    "distinctions": [
+      "The C function prototype declares score without giving its body. Declaration, definition and initialisation are related but are not universally the same operation."
+    ],
+    "usage": "Programming sense. The example is scoped to a C function prototype; declarations in other contexts can also be definitions.",
+    "originalSense": {
+      "id": "kaikki:507edac881ddde1c25",
+      "definition": "To explicitly establish the existence of (a variable, function, etc.) without necessarily describing its content.",
+      "example": "The counter \"i\" was declared as an integer.",
+      "pos": "verb",
+      "synonyms": [
+        "assert",
+        "asseverate",
+        "attest",
+        "aver",
+        "avouch",
+        "avow",
+        "certify",
+        "claim",
+        "confirm",
+        "construct",
+        "declare",
+        "define",
+        "depone",
+        "dictate",
+        "disclose",
+        "inform",
+        "initialize",
+        "judge",
+        "make known",
+        "proclaim",
+        "state",
+        "swear"
+      ],
+      "antonyms": [
+        "deinitialize",
+        "dissolve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "aforedeclared",
+        "declarable",
+        "declarant",
+        "declaration",
+        "declarative",
+        "declaratory",
+        "declare against",
+        "declarement",
+        "declarer",
+        "declare war",
+        "foredeclare",
+        "forward-declare",
+        "I declare",
+        "I do declare",
+        "misdeclare",
+        "nondeclaring",
+        "predeclare",
+        "redeclare",
+        "self-declare",
+        "undeclare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/declare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=declare&oldid=91783829",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In C, int score(void); can declare a function. This line _____.",
+      "options": [
+        "introduces the function without supplying its body",
+        "provides the complete executable body of the function"
+      ],
+      "answer": "introduces the function without supplying its body",
+      "explanation": "The prototype declares the function; no function body appears in this line. Other declarations can also be definitions."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:3b8e5fc06d0847fa34",
+    "definition": "In grand-strategy gaming slang, to declare war on another player or state.",
+    "example": "In the strategy game, I plan to declare on the neighbouring empire.",
+    "collocations": [
+      "declare on a rival",
+      "declare war in a game",
+      "a neighbouring empire"
+    ],
+    "distinctions": [
+      "Declare on is the game-specific construction here. The sentence expresses a plan to use the game’s declaration-of-war action, rather than a real-world military event."
+    ],
+    "usage": "Grand-strategy gaming slang, commonly used with on before the target.",
+    "originalSense": {
+      "id": "kaikki:3b8e5fc06d0847fa34",
+      "definition": "To declare war.",
+      "example": "France declared on me, I'm finished!",
+      "pos": "verb",
+      "synonyms": [
+        "assert",
+        "asseverate",
+        "attest",
+        "aver",
+        "avouch",
+        "avow",
+        "certify",
+        "claim",
+        "confirm",
+        "construct",
+        "declare",
+        "define",
+        "depone",
+        "dictate",
+        "disclose",
+        "inform",
+        "initialize",
+        "judge",
+        "make known",
+        "proclaim",
+        "state",
+        "swear"
+      ],
+      "antonyms": [
+        "deinitialize",
+        "dissolve"
+      ],
+      "collocations": [],
+      "usage": "slang",
+      "register": "slang",
+      "wordFamily": [
+        "aforedeclared",
+        "declarable",
+        "declarant",
+        "declaration",
+        "declarative",
+        "declaratory",
+        "declare against",
+        "declarement",
+        "declarer",
+        "declare war",
+        "foredeclare",
+        "forward-declare",
+        "I declare",
+        "I do declare",
+        "misdeclare",
+        "nondeclaring",
+        "predeclare",
+        "redeclare",
+        "self-declare",
+        "undeclare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/declare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=declare&oldid=91783829",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In a strategy game, I plan to declare on the neighbouring empire. I intend to _____.",
+      "options": [
+        "declare war within the game",
+        "announce an official real-world election result"
+      ],
+      "answer": "declare war within the game",
+      "explanation": "Declare on is gaming slang for declaring war on the target; the sentence reports a plan."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:57a87df39dee162ccc",
+    "definition": "In some Christian spiritual teaching, to speak an affirmation in faith for a hoped-for outcome.",
+    "example": "In some evangelical Christian teaching, to declare is to speak an affirmation in faith for a hoped-for spiritual outcome. The contrast here is with a prayer framed as a request.",
+    "collocations": [
+      "declare in faith",
+      "speak an affirmation",
+      "a hoped-for spiritual outcome"
+    ],
+    "distinctions": [
+      "The wording expresses a belief and hope; it does not independently verify the outcome. The contrast with a request does not define every form of Christian prayer."
+    ],
+    "usage": "Specialised religious use, particularly associated with some evangelical teaching. Retained as reading guidance with that context.",
+    "originalSense": {
+      "id": "kaikki:57a87df39dee162ccc",
+      "definition": "To state that a thing shall happen or affirm a condition in the hopes of seeing it happen spiritually, in contrast to prayer which takes the form of a request.",
+      "example": "He prayed to God \"please heal my sister\", while she declared \"I am healed in Jesus' name\".",
+      "pos": "verb",
+      "synonyms": [
+        "assert",
+        "asseverate",
+        "attest",
+        "aver",
+        "avouch",
+        "avow",
+        "certify",
+        "claim",
+        "confirm",
+        "construct",
+        "declare",
+        "define",
+        "depone",
+        "dictate",
+        "disclose",
+        "inform",
+        "initialize",
+        "judge",
+        "make known",
+        "proclaim",
+        "state",
+        "swear"
+      ],
+      "antonyms": [
+        "deinitialize",
+        "dissolve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aforedeclared",
+        "declarable",
+        "declarant",
+        "declaration",
+        "declarative",
+        "declaratory",
+        "declare against",
+        "declarement",
+        "declarer",
+        "declare war",
+        "foredeclare",
+        "forward-declare",
+        "I declare",
+        "I do declare",
+        "misdeclare",
+        "nondeclaring",
+        "predeclare",
+        "redeclare",
+        "self-declare",
+        "undeclare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/declare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=declare&oldid=91783829",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5f92a936",
+    "senseId": "kaikki:148ff5ce1ad868c47b",
+    "definition": "To pronounce or formally declare something by a judicial sentence.",
+    "example": "The judge will announce the sentence in court tomorrow.",
+    "collocations": [
+      "announce a sentence",
+      "pronounce a judgment",
+      "a judicial pronouncement"
+    ],
+    "distinctions": [
+      "Announcing the court’s sentence is a judicial pronouncement. It does not state that the penalty has already been carried out."
+    ],
+    "usage": "Judicial use, not labelled obsolete in the checked source. It can overlap with making a court decision known.",
+    "originalSense": {
+      "id": "kaikki:148ff5ce1ad868c47b",
+      "definition": "To pronounce; to declare by judicial sentence.",
+      "example": "Publish laws, announce / Or life or death.",
+      "pos": "verb",
+      "synonyms": [
+        "adjudicate",
+        "judge"
+      ],
+      "antonyms": [
+        "withhold"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "announceable",
+        "announcement",
+        "announcer",
+        "back announce",
+        "back-announce",
+        "foreannounce",
+        "knock-and-announce",
+        "preannounce",
+        "pre-announce",
+        "reannounce",
+        "unannounced"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/announce#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=announce&oldid=92376953",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "The judge will announce the sentence tomorrow. This reports _____.",
+      "options": [
+        "a planned judicial pronouncement",
+        "a penalty that has already been carried out"
+      ],
+      "answer": "a planned judicial pronouncement",
+      "explanation": "Pronouncing the sentence and carrying out its penalty are separate events."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5f92a936",
+    "senseId": "kaikki:50622438a0a645521e",
+    "definition": "To act as an announcer or commentator for an event, especially a sporting event.",
+    "example": "Maya will announce tonight’s match, describing the play on local radio.",
+    "collocations": [
+      "announce a match",
+      "announce a game",
+      "radio commentary"
+    ],
+    "distinctions": [
+      "Describing the play makes the event-announcer meaning explicit. The example concerns commentary, not only advance notice that a match exists."
+    ],
+    "usage": "Chiefly US event-announcing use. The event is the direct object; announcers’ duties depend on the role.",
+    "originalSense": {
+      "id": "kaikki:50622438a0a645521e",
+      "definition": "To act as announcer for (an event, usually sports).",
+      "example": "Our coach has retired, but occasionally he still announces the games.",
+      "pos": "verb",
+      "synonyms": [
+        "announce",
+        "forerun",
+        "blare",
+        "declare",
+        "disclose",
+        "herald",
+        "impart",
+        "make known",
+        "publish",
+        "proclaim",
+        "promulgate",
+        "promulge"
+      ],
+      "antonyms": [
+        "withhold"
+      ],
+      "collocations": [],
+      "usage": "US",
+      "register": "US, transitive",
+      "wordFamily": [
+        "announceable",
+        "announcement",
+        "announcer",
+        "back announce",
+        "back-announce",
+        "foreannounce",
+        "knock-and-announce",
+        "preannounce",
+        "pre-announce",
+        "reannounce",
+        "unannounced"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/announce#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=announce&oldid=92376953",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "Maya will announce the match, describing the play on radio. She will _____.",
+      "options": [
+        "provide commentary on the event",
+        "only issue an advance notice that the event exists"
+      ],
+      "answer": "provide commentary on the event",
+      "explanation": "The describing-the-play context identifies the event-announcer use."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5f92a936",
+    "senseId": "kaikki:516ccd45ec2f024ff1",
+    "definition": "To work or act as an announcer.",
+    "example": "Before becoming a coach, Maya used to announce on local radio.",
+    "collocations": [
+      "announce on radio",
+      "announce for a station",
+      "work as an announcer"
+    ],
+    "distinctions": [
+      "This intransitive use describes Maya’s former work. No event appears as a direct object of announce in the example."
+    ],
+    "usage": "Chiefly US in the checked source. Intransitive job or activity use.",
+    "originalSense": {
+      "id": "kaikki:516ccd45ec2f024ff1",
+      "definition": "To act or work as an announcer.",
+      "example": "Our coach has retired, but occasionally he still announces.",
+      "pos": "verb",
+      "synonyms": [
+        "announce",
+        "forerun",
+        "blare",
+        "declare",
+        "disclose",
+        "herald",
+        "impart",
+        "make known",
+        "publish",
+        "proclaim",
+        "promulgate",
+        "promulge"
+      ],
+      "antonyms": [
+        "withhold"
+      ],
+      "collocations": [],
+      "usage": "US",
+      "register": "US, intransitive",
+      "wordFamily": [
+        "announceable",
+        "announcement",
+        "announcer",
+        "back announce",
+        "back-announce",
+        "foreannounce",
+        "knock-and-announce",
+        "preannounce",
+        "pre-announce",
+        "reannounce",
+        "unannounced"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/announce#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=announce&oldid=92376953",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "Maya used to announce on local radio. Here announce _____.",
+      "options": [
+        "describes work as an announcer without a direct-object event",
+        "must take the name of an event as its direct object"
+      ],
+      "answer": "describes work as an announcer without a direct-object event",
+      "explanation": "The source also records an intransitive job/activity meaning; this sentence does not name an object."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-1a3eb77c",
+    "senseId": "kaikki:7a55aaf63ba4f89107",
+    "definition": "To keep a state, condition or level continuing as required.",
+    "example": "We use this system to maintain a steady temperature in the greenhouse.",
+    "collocations": [
+      "maintain a temperature",
+      "maintain a standard",
+      "maintain contact"
+    ],
+    "distinctions": [
+      "Maintaining a condition means keeping it at the required state or level. The infinitive here describes the purpose of the system, rather than a measured temperature record."
+    ],
+    "usage": "Continuing-state sense. A steady temperature differs from a temperature that keeps rising.",
+    "originalSense": {
+      "id": "kaikki:7a55aaf63ba4f89107",
+      "definition": "To keep up; to preserve; to uphold (a state, condition etc.).",
+      "example": "maintain contact",
+      "pos": "verb",
+      "synonyms": [
+        "subsist"
+      ],
+      "antonyms": [
+        "abandon"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "maingain",
+        "maingaining",
+        "maintainability",
+        "maintainable",
+        "maintain appearances",
+        "maintainment",
+        "mismaintain",
+        "undermaintain"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/maintain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=maintain&oldid=92947190",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "We use a system to maintain a steady greenhouse temperature. Its purpose is to _____.",
+      "options": [
+        "keep the temperature at a steady level",
+        "make the temperature rise continuously"
+      ],
+      "answer": "keep the temperature at a steady level",
+      "explanation": "Maintain a state means keep it continuing as required. The purpose clause is not a measured record of success."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-1a3eb77c",
+    "senseId": "kaikki:f91e0af847adbd25cc",
+    "definition": "To continue to state or affirm that a claim is true.",
+    "example": "The witness continues to maintain that she saw the van.",
+    "collocations": [
+      "maintain that",
+      "maintain one’s position",
+      "maintain one’s innocence"
+    ],
+    "distinctions": [
+      "The witness continues to make the claim. Her maintaining it does not independently verify what she saw."
+    ],
+    "usage": "Statement sense, often followed by a that-clause.",
+    "originalSense": {
+      "id": "kaikki:f91e0af847adbd25cc",
+      "definition": "To declare or affirm (a clause) to be true; to assert.",
+      "example": "Pullman traditionalists will no doubt maintain that the full-service-at-every-seat principle is popular with their clientele; [...].",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "abandon"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "maingain",
+        "maingaining",
+        "maintainability",
+        "maintainable",
+        "maintain appearances",
+        "maintainment",
+        "mismaintain",
+        "undermaintain"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/maintain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=maintain&oldid=92947190",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The witness continues to maintain that she saw the van. The sentence _____.",
+      "options": [
+        "reports a continuing claim",
+        "independently proves that she saw the van"
+      ],
+      "answer": "reports a continuing claim",
+      "explanation": "Maintaining a claim means continuing to assert it; it is not separate verification."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-1a3eb77c",
+    "senseId": "kaikki:eb358beead21cebf34",
+    "definition": "To keep something in good condition and working order.",
+    "example": "We need a trained technician to maintain the equipment.",
+    "collocations": [
+      "maintain equipment",
+      "maintain a vehicle",
+      "regular maintenance"
+    ],
+    "distinctions": [
+      "Maintenance keeps equipment in working order and can include repairs. It is not limited to acting only after a breakdown."
+    ],
+    "usage": "Equipment-care sense. The example states a need and does not report that servicing has already been completed.",
+    "originalSense": {
+      "id": "kaikki:eb358beead21cebf34",
+      "definition": "To keep in good condition and working order.",
+      "example": "The admirable smoothness of the riding also reflected the greatest credit on those who, despite the difficulties caused by the shortage of men and materials, have succeeded in maintaining the track in such first-class order.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "abandon"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "maingain",
+        "maingaining",
+        "maintainability",
+        "maintainable",
+        "maintain appearances",
+        "maintainment",
+        "mismaintain",
+        "undermaintain"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/maintain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=maintain&oldid=92947190",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "A technician is needed to maintain the equipment. The aim is to _____.",
+      "options": [
+        "keep it in good condition and working order",
+        "work on it only after it has already broken down"
+      ],
+      "answer": "keep it in good condition and working order",
+      "explanation": "Maintenance can include repairs but also routine care before a breakdown. The sentence reports a need."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-1a3eb77c",
+    "senseId": "kaikki:8d18d095c374c5e28e",
+    "definition": "To support or assist someone in an action.",
+    "example": "In this obsolete use, to maintain someone is to support or assist the person in an action. It is separate from maintaining equipment or repeating a claim.",
+    "collocations": [
+      "support someone",
+      "assist someone in an action",
+      "back someone up"
+    ],
+    "distinctions": [
+      "The historical object is the person being supported, not a condition being kept steady."
+    ],
+    "usage": "Obsolete transitive use, retained for reading older texts.",
+    "originalSense": {
+      "id": "kaikki:8d18d095c374c5e28e",
+      "definition": "To support (someone), to back up or assist (someone) in an action.",
+      "example": "And thenne he asked leue & wente oute of his heremytage for to mayntene his neuewe ageynst the myghty Erle and so hit happed that this man that lyeth here dede dyd so moche by his wysedome and hardynes that the Erle was take and thre of his lordes by force of this dede man.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "abandon"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "maingain",
+        "maingaining",
+        "maintainability",
+        "maintainable",
+        "maintain appearances",
+        "maintainment",
+        "mismaintain",
+        "undermaintain"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/maintain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=maintain&oldid=92947190",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-1a3eb77c",
+    "senseId": "kaikki:1f0a5e8cf37cc86b25",
+    "definition": "To stay composed, confident or self-assured under pressure.",
+    "example": "In the source-listed AAVE slang use, maintain means to stay composed or self-assured under pressure. It does not require a direct object naming equipment or a claim.",
+    "collocations": [
+      "stay composed",
+      "keep one’s head",
+      "remain self-assured"
+    ],
+    "distinctions": [
+      "This intransitive register-specific use is independent of maintaining a machine or affirming that a statement is true."
+    ],
+    "usage": "AAVE slang in the checked source, with an intransitive construction. It is not labelled obsolete.",
+    "originalSense": {
+      "id": "kaikki:1f0a5e8cf37cc86b25",
+      "definition": "To keep composed; to keep one's head up; to stay confident, strong, self-assured; to avoid being a victim; to keep oneself from falling apart.",
+      "example": "No matter what, you gotta maintain.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "abandon"
+      ],
+      "collocations": [],
+      "usage": "slang",
+      "register": "intransitive, slang",
+      "wordFamily": [
+        "maingain",
+        "maingaining",
+        "maintainability",
+        "maintainable",
+        "maintain appearances",
+        "maintainment",
+        "mismaintain",
+        "undermaintain"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/maintain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=maintain&oldid=92947190",
+    "exampleKind": "reading-note",
     "synonyms": [],
     "antonyms": [],
     "wordFamily": [],

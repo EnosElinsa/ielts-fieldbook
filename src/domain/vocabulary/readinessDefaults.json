@@ -25115,5 +25115,326 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "originalSense": {
+      "id": "kaikki:67747aacc2e96f675b",
+      "definition": "To declare with assurance or plainly and strongly; to state positively.",
+      "example": "Numerous experimental tests and other observations have been offered in favor of animal mind reading, and although many scientists are skeptical, others assert that humans are not the only species capable of representing what others do and don’t perceive and know.",
+      "pos": "verb",
+      "synonyms": [
+        "affirm",
+        "asseverate",
+        "aver",
+        "avow"
+      ],
+      "antonyms": [
+        "remit",
+        "deny",
+        "deassert"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "assertability",
+        "assertable",
+        "asserter",
+        "assertive",
+        "assertment",
+        "assert oneself",
+        "assertor",
+        "counterassert",
+        "misassert",
+        "overassert",
+        "reassert",
+        "unassert"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assert#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:67747aacc2e96f675b",
+      "definition": "To state a claim firmly or confidently.",
+      "example": "We assert that the plan is affordable, but we have not provided the cost figures.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "assert that",
+        "assert a claim",
+        "assert firmly"
+      ],
+      "usage": "Ordinary statement sense. Assert that introduces the claim.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assert#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A firm assertion expresses a position. The confidence of the statement does not independently establish that the plan is affordable."
+      ],
+      "distinctionTask": {
+        "prompt": "We assert that the plan is affordable, but provide no cost figures. The assertion _____.",
+        "options": [
+          "states a claim without independently proving it",
+          "proves affordability through the confidence of the wording"
+        ],
+        "answer": "states a claim without independently proving it",
+        "explanation": "Assert describes stating the claim firmly; supporting cost evidence has not been supplied."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "originalSense": {
+      "id": "kaikki:62d4e9d4b3b180b801",
+      "definition": "To assert or announce formally, officially, explicitly, or emphatically.",
+      "example": "He declared him innocent.",
+      "pos": "verb",
+      "synonyms": [
+        "disclose",
+        "make known",
+        "announce",
+        "forerun",
+        "blare",
+        "declare",
+        "disclose",
+        "herald",
+        "impart",
+        "make known",
+        "publish",
+        "proclaim",
+        "promulgate",
+        "promulge"
+      ],
+      "antonyms": [
+        "deinitialize",
+        "dissolve"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive, transitive",
+      "wordFamily": [
+        "aforedeclared",
+        "declarable",
+        "declarant",
+        "declaration",
+        "declarative",
+        "declaratory",
+        "declare against",
+        "declarement",
+        "declarer",
+        "declare war",
+        "foredeclare",
+        "forward-declare",
+        "I declare",
+        "I do declare",
+        "misdeclare",
+        "nondeclaring",
+        "predeclare",
+        "redeclare",
+        "self-declare",
+        "undeclare"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/declare#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:62d4e9d4b3b180b801",
+      "definition": "To state or announce something formally, officially, explicitly or emphatically.",
+      "example": "The council will declare the results at noon.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "declare the results",
+        "declare that",
+        "declare something officially"
+      ],
+      "usage": "Modern transitive or intransitive announcement sense.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/declare#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The sentence plans an official announcement. It does not tell us which side won. Some other declarations can themselves perform an official act, such as declaring war."
+      ],
+      "distinctionTask": {
+        "prompt": "The council will declare the results at noon. It plans to _____.",
+        "options": [
+          "make an official announcement of the results",
+          "count votes without announcing the results"
+        ],
+        "answer": "make an official announcement of the results",
+        "explanation": "Declare here means formally or officially announce. The sentence supplies no winning side."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-5f92a936",
+    "originalSense": {
+      "id": "kaikki:279430a971161c138a",
+      "definition": "To give public notice of, especially for the first time; to make known.",
+      "example": "Her [Queen Elizabeth’s] arrival was announced through the country by a peal of cannon from the ramparts.",
+      "pos": "verb",
+      "synonyms": [
+        "proclaim",
+        "publish",
+        "make known",
+        "herald",
+        "declare",
+        "promulgate",
+        "sound",
+        "intimate"
+      ],
+      "antonyms": [
+        "withhold"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "announceable",
+        "announcement",
+        "announcer",
+        "back announce",
+        "back-announce",
+        "foreannounce",
+        "knock-and-announce",
+        "preannounce",
+        "pre-announce",
+        "reannounce",
+        "unannounced"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/announce#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:279430a971161c138a",
+      "definition": "To make information publicly known, often by giving notice of something new.",
+      "example": "The museum will announce its new opening hours on Friday.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "announce a change",
+        "announce new opening hours",
+        "announce that"
+      ],
+      "usage": "Public-notice sense, often introducing news or a new arrangement. A first announcement is common rather than required in every use.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/announce#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The sentence plans to make the new hours known. It does not say that the hours have already taken effect."
+      ],
+      "distinctionTask": {
+        "prompt": "The museum will announce new opening hours on Friday. It plans to _____.",
+        "options": [
+          "make the new hours publicly known",
+          "prove that the new hours are already in effect"
+        ],
+        "answer": "make the new hours publicly known",
+        "explanation": "An announcement makes information known; its timing does not itself establish when the arrangement takes effect."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-1a3eb77c",
+    "originalSense": {
+      "id": "kaikki:7a55aaf63ba4f89107",
+      "definition": "To keep up; to preserve; to uphold (a state, condition etc.).",
+      "example": "maintain contact",
+      "pos": "verb",
+      "synonyms": [
+        "subsist"
+      ],
+      "antonyms": [
+        "abandon"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "maingain",
+        "maingaining",
+        "maintainability",
+        "maintainable",
+        "maintain appearances",
+        "maintainment",
+        "mismaintain",
+        "undermaintain"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/maintain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:7a55aaf63ba4f89107",
+      "definition": "To keep a state, condition or level continuing as required.",
+      "example": "We use this system to maintain a steady temperature in the greenhouse.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "maintain a temperature",
+        "maintain a standard",
+        "maintain contact"
+      ],
+      "usage": "Continuing-state sense. A steady temperature differs from a temperature that keeps rising.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/maintain#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Maintaining a condition means keeping it at the required state or level. The infinitive here describes the purpose of the system, rather than a measured temperature record."
+      ],
+      "distinctionTask": {
+        "prompt": "We use a system to maintain a steady greenhouse temperature. Its purpose is to _____.",
+        "options": [
+          "keep the temperature at a steady level",
+          "make the temperature rise continuously"
+        ],
+        "answer": "keep the temperature at a steady level",
+        "explanation": "Maintain a state means keep it continuing as required. The purpose clause is not a measured record of success."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

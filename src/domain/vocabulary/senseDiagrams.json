@@ -5950,5 +5950,173 @@
     "definition": "To succeed in getting past or coping with a hazard or obstacle.",
     "pos": "verb",
     "kind": "negotiate-obstacle"
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:67747aacc2e96f675b",
+    "term": "assert",
+    "definition": "To state a claim firmly or confidently.",
+    "pos": "verb",
+    "kind": "assert-claim"
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:a52d6c1cdd5f518b80",
+    "term": "assert",
+    "definition": "To exercise authority, influence or a similar power so that it becomes effective or apparent.",
+    "pos": "verb",
+    "kind": "assert-authority"
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:e61248c83d031ed082",
+    "term": "assert",
+    "definition": "To put forward, uphold or defend a right, claim or cause.",
+    "pos": "verb",
+    "kind": "assert-right"
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:00d32abfea593e7046",
+    "term": "assert",
+    "definition": "To make oneself heard or taken seriously by expressing one’s needs, views or rights.",
+    "pos": "verb",
+    "kind": "assert-self"
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:0af29b14cff7db2db8",
+    "term": "assert",
+    "definition": "To specify in a program that a condition is expected to hold at a particular point, with the applicable check or failure behaviour.",
+    "pos": "verb",
+    "kind": "assert-program"
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:3446c7f8be8325d24f",
+    "term": "assert",
+    "definition": "To make an electrical or digital signal active according to its defined polarity.",
+    "pos": "verb",
+    "kind": "assert-signal"
+  },
+  {
+    "entryId": "ve-4f6c4c47",
+    "senseId": "kaikki:211aeba0ec549a4361",
+    "term": "assert",
+    "definition": "A programming assertion or assert instruction.",
+    "pos": "noun",
+    "kind": "assert-check"
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:62d4e9d4b3b180b801",
+    "term": "declare",
+    "definition": "To state or announce something formally, officially, explicitly or emphatically.",
+    "pos": "verb",
+    "kind": "declare-formal"
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:a5153dc02bffbc9b11",
+    "term": "declare",
+    "definition": "To report goods, income or other relevant information to customs or taxation officials.",
+    "pos": "verb",
+    "kind": "declare-customs"
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:1aec2e5666678e17ac",
+    "term": "declare",
+    "definition": "To show one’s cards or a scoring combination in order to claim points in a card game.",
+    "pos": "verb",
+    "kind": "declare-cards"
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:e060162d14b3d4cad2",
+    "term": "declare",
+    "definition": "For a constituency or its representatives to officially announce an election result.",
+    "pos": "verb",
+    "kind": "declare-election"
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:d2033f09c269fddf21",
+    "term": "declare",
+    "definition": "In cricket, for the batting captain to announce that the current innings is closed.",
+    "pos": "verb",
+    "kind": "declare-cricket"
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:507edac881ddde1c25",
+    "term": "declare",
+    "definition": "To explicitly introduce the existence of a program entity, such as a variable or function, without necessarily defining its content.",
+    "pos": "verb",
+    "kind": "declare-program"
+  },
+  {
+    "entryId": "ve-9d20393d",
+    "senseId": "kaikki:3b8e5fc06d0847fa34",
+    "term": "declare",
+    "definition": "In grand-strategy gaming slang, to declare war on another player or state.",
+    "pos": "verb",
+    "kind": "declare-game"
+  },
+  {
+    "entryId": "ve-5f92a936",
+    "senseId": "kaikki:279430a971161c138a",
+    "term": "announce",
+    "definition": "To make information publicly known, often by giving notice of something new.",
+    "pos": "verb",
+    "kind": "announce-news"
+  },
+  {
+    "entryId": "ve-5f92a936",
+    "senseId": "kaikki:148ff5ce1ad868c47b",
+    "term": "announce",
+    "definition": "To pronounce or formally declare something by a judicial sentence.",
+    "pos": "verb",
+    "kind": "announce-judicial"
+  },
+  {
+    "entryId": "ve-5f92a936",
+    "senseId": "kaikki:50622438a0a645521e",
+    "term": "announce",
+    "definition": "To act as an announcer or commentator for an event, especially a sporting event.",
+    "pos": "verb",
+    "kind": "announce-event"
+  },
+  {
+    "entryId": "ve-5f92a936",
+    "senseId": "kaikki:516ccd45ec2f024ff1",
+    "term": "announce",
+    "definition": "To work or act as an announcer.",
+    "pos": "verb",
+    "kind": "announce-job"
+  },
+  {
+    "entryId": "ve-1a3eb77c",
+    "senseId": "kaikki:7a55aaf63ba4f89107",
+    "term": "maintain",
+    "definition": "To keep a state, condition or level continuing as required.",
+    "pos": "verb",
+    "kind": "maintain-state"
+  },
+  {
+    "entryId": "ve-1a3eb77c",
+    "senseId": "kaikki:f91e0af847adbd25cc",
+    "term": "maintain",
+    "definition": "To continue to state or affirm that a claim is true.",
+    "pos": "verb",
+    "kind": "maintain-claim"
+  },
+  {
+    "entryId": "ve-1a3eb77c",
+    "senseId": "kaikki:eb358beead21cebf34",
+    "term": "maintain",
+    "definition": "To keep something in good condition and working order.",
+    "pos": "verb",
+    "kind": "maintain-equipment"
   }
 ]
