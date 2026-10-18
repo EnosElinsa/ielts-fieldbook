@@ -229755,5 +229755,1761 @@
     "antonyms": [],
     "wordFamily": [],
     "register": ""
+  },
+  {
+    "entryId": "ve-a791422d",
+    "senseId": "kaikki:6e0a81f5039bcf083b",
+    "definition": "To talk about or examine a topic with other people.",
+    "example": "We will discuss the travel plans at tomorrow’s meeting.",
+    "collocations": [
+      "discuss a topic",
+      "discuss plans",
+      "discuss something with someone"
+    ],
+    "distinctions": [
+      "Discuss the plans takes the topic as its direct object. Talk about the plans uses a different construction. Discuss and debate can overlap when people examine opposing views."
+    ],
+    "usage": "Ordinary transitive verb. A discussion need not involve disagreement or produce a final decision.",
+    "originalSense": {
+      "id": "kaikki:6e0a81f5039bcf083b",
+      "definition": "To converse or debate concerning a particular topic.",
+      "example": "Let's sit down and discuss whether we should have a baby.",
+      "pos": "verb",
+      "synonyms": [
+        "bespeak",
+        "betalk",
+        "debate",
+        "talk about",
+        "treat"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "discussable",
+        "discuss about",
+        "discussant",
+        "discusser",
+        "discussible",
+        "discussion",
+        "discussive",
+        "discuss to death",
+        "discuss Uganda",
+        "overdiscuss",
+        "prediscuss",
+        "rediscuss",
+        "underdiscuss"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discuss#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discuss&oldid=91152791",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "We will discuss the travel plans. Here, discuss _____.",
+      "options": [
+        "takes the topic directly as its object",
+        "requires about before its direct object"
+      ],
+      "answer": "takes the topic directly as its object",
+      "explanation": "The ordinary transitive construction is discuss the plans; talk about the plans is a different construction."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a791422d",
+    "senseId": "kaikki:716ec4bdaf17478267",
+    "definition": "To communicate, tell or disclose information.",
+    "example": "In this obsolete use, discuss means to tell or disclose information to someone. It does not simply mean to exchange views about a topic.",
+    "collocations": [
+      "disclose information",
+      "tell someone",
+      "communicate a message"
+    ],
+    "distinctions": [
+      "The source’s old construction concerns telling information; it is separate from the ordinary modern topic-discussion verb."
+    ],
+    "usage": "Obsolete in the checked source. Retained as a reading explanation.",
+    "originalSense": {
+      "id": "kaikki:716ec4bdaf17478267",
+      "definition": "To communicate, tell, or disclose (information, a message, etc.).",
+      "example": "Nym: I will discuss the humour of this love to Page.",
+      "pos": "verb",
+      "synonyms": [
+        "apprise",
+        "impart",
+        "acquaint",
+        "advise",
+        "apprise",
+        "discuss",
+        "enlighten",
+        "impart",
+        "inform",
+        "keep informed",
+        "let know",
+        "notify",
+        "tell"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "discussable",
+        "discuss about",
+        "discussant",
+        "discusser",
+        "discussible",
+        "discussion",
+        "discussive",
+        "discuss to death",
+        "discuss Uganda",
+        "overdiscuss",
+        "prediscuss",
+        "rediscuss",
+        "underdiscuss"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discuss#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discuss&oldid=91152791",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a791422d",
+    "senseId": "kaikki:ac531e651720c15bb1",
+    "definition": "To break something into pieces or shatter it.",
+    "example": "The source records an obsolete physical sense of discuss meaning to break something into pieces. It does not describe a modern conversation.",
+    "collocations": [
+      "break into pieces",
+      "shatter something",
+      "physical breakage"
+    ],
+    "distinctions": [
+      "This historical meaning concerns breaking an object, not analysing an issue in conversation."
+    ],
+    "usage": "Obsolete transitive use found in older texts.",
+    "originalSense": {
+      "id": "kaikki:ac531e651720c15bb1",
+      "definition": "To break to pieces; to shatter.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "busticate",
+        "fragment",
+        "splinter",
+        "toshiver"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "discussable",
+        "discuss about",
+        "discussant",
+        "discusser",
+        "discussible",
+        "discussion",
+        "discussive",
+        "discuss to death",
+        "discuss Uganda",
+        "overdiscuss",
+        "prediscuss",
+        "rediscuss",
+        "underdiscuss"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discuss#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discuss&oldid=91152791",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a791422d",
+    "senseId": "kaikki:4bee8bc1bc1d6a8590",
+    "definition": "To consume food or drink.",
+    "example": "In the source’s obsolete eating-and-drinking use, people who discussed their meal consumed it. The verb does not mean that they merely talked about the meal.",
+    "collocations": [
+      "consume a meal",
+      "eat or drink",
+      "the meal itself"
+    ],
+    "distinctions": [
+      "The historical consumption meaning differs from discussing what to eat."
+    ],
+    "usage": "Labelled obsolete and colloquial in the checked source. Reading explanation rather than a current example.",
+    "originalSense": {
+      "id": "kaikki:4bee8bc1bc1d6a8590",
+      "definition": "To deal with, in eating or drinking; consume.",
+      "example": "When the preparations were finished, he invited me with—“Now, sir, bring forward your chair.” And we all, including the rustic youth, drew round the table: an austere silence prevailing while we discussed our meal.",
+      "pos": "verb",
+      "synonyms": [
+        "get outside",
+        "put away",
+        "consume",
+        "discuss",
+        "get outside",
+        "ingest",
+        "partake",
+        "put away",
+        "touch"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "colloquial, obsolete",
+      "register": "colloquial, obsolete, transitive",
+      "wordFamily": [
+        "discussable",
+        "discuss about",
+        "discussant",
+        "discusser",
+        "discussible",
+        "discussion",
+        "discussive",
+        "discuss to death",
+        "discuss Uganda",
+        "overdiscuss",
+        "prediscuss",
+        "rediscuss",
+        "underdiscuss"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discuss#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discuss&oldid=91152791",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a791422d",
+    "senseId": "kaikki:6363e399af85aa8a56",
+    "definition": "To examine thoroughly or exhaust a legal remedy, especially against a principal debtor before proceeding against a surety.",
+    "example": "This specialised legal use concerns thoroughly examining or pursuing a remedy. The source illustrates exhausting a remedy against the principal debtor before proceeding against a surety; it does not state a rule for every jurisdiction or contract.",
+    "collocations": [
+      "exhaust a remedy",
+      "principal debtor",
+      "proceed against a surety"
+    ],
+    "distinctions": [
+      "This legal meaning concerns pursuit of a remedy, not an ordinary meeting about debt. The source’s example of sequence is not a universal legal requirement."
+    ],
+    "usage": "Specialised legal use concerning pursuit of a remedy. This meaning is not labelled obsolete in the checked source.",
+    "originalSense": {
+      "id": "kaikki:6363e399af85aa8a56",
+      "definition": "To examine or search thoroughly; to exhaust a remedy against, as against a principal debtor before proceeding against the surety.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "bechat",
+        "confer",
+        "bespeak",
+        "betalk",
+        "chat",
+        "discuss",
+        "moot",
+        "talk about",
+        "talk over",
+        "treat"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "discussable",
+        "discuss about",
+        "discussant",
+        "discusser",
+        "discussible",
+        "discussion",
+        "discussive",
+        "discuss to death",
+        "discuss Uganda",
+        "overdiscuss",
+        "prediscuss",
+        "rediscuss",
+        "underdiscuss"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discuss#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discuss&oldid=91152791",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a791422d",
+    "senseId": "kaikki:39a633b3c219dc528d",
+    "definition": "To drive away, disperse or shake something off.",
+    "example": "This obsolete dispersing sense appears in older uses concerning swellings and in a quotation about casting off shame.",
+    "collocations": [
+      "drive away",
+      "disperse something",
+      "shake something off"
+    ],
+    "distinctions": [
+      "Dispersing or casting off something is separate from talking about it."
+    ],
+    "usage": "Obsolete dispersing use found in older texts.",
+    "originalSense": {
+      "id": "kaikki:39a633b3c219dc528d",
+      "definition": "To drive away, disperse, shake off; said especially of tumors.",
+      "example": "For she was giuen all to fleshly lust, / And poured forth in sensuall delight, / That all regard of shame she had discust, / And meet respect of honour put to flight […]",
+      "pos": "verb",
+      "synonyms": [
+        "bechat",
+        "confer",
+        "bespeak",
+        "betalk",
+        "chat",
+        "discuss",
+        "moot",
+        "talk about",
+        "talk over",
+        "treat"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "discussable",
+        "discuss about",
+        "discussant",
+        "discusser",
+        "discussible",
+        "discussion",
+        "discussive",
+        "discuss to death",
+        "discuss Uganda",
+        "overdiscuss",
+        "prediscuss",
+        "rediscuss",
+        "underdiscuss"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discuss#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discuss&oldid=91152791",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:6a709aa8f25558ecfd",
+    "definition": "An argument or disagreement between people or groups.",
+    "example": "A dispute arose between the neighbours over the shared fence.",
+    "collocations": [
+      "a dispute over something",
+      "a dispute between parties",
+      "resolve a dispute"
+    ],
+    "distinctions": [
+      "A dispute identifies a disagreement. Saying that it arose does not report that it was resolved."
+    ],
+    "usage": "Countable disagreement noun. The participants need not be in a lawsuit.",
+    "originalSense": {
+      "id": "kaikki:6a709aa8f25558ecfd",
+      "definition": "An argument or disagreement; a failure to agree.",
+      "example": "But is not this dispute over the question whether we have free will or not very like a dispute that we might engage in over the color of a tree — whether it be green or blue?",
+      "pos": "noun",
+      "synonyms": [
+        "debate",
+        "quarrel"
+      ],
+      "antonyms": [
+        "accord",
+        "agreement",
+        "assent",
+        "concord",
+        "concordance",
+        "harmony",
+        "resolution",
+        "solution",
+        "union"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "beyond dispute",
+        "counterdispute",
+        "disputeless",
+        "dispute resolution",
+        "domestic dispute",
+        "interdispute",
+        "predispute",
+        "trade dispute"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dispute#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=dispute&oldid=93521186",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "A dispute arose over the shared fence. This reports _____.",
+      "options": [
+        "a disagreement that has begun",
+        "a disagreement already resolved"
+      ],
+      "answer": "a disagreement that has begun",
+      "explanation": "Arose describes the disagreement beginning; no resolution is stated."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:84ac0bed21ad30107b",
+    "definition": "Verbal controversy or disagreement considered as an activity or condition.",
+    "example": "There was much dispute about how to interpret the results.",
+    "collocations": [
+      "much dispute",
+      "a matter of dispute",
+      "dispute about an interpretation"
+    ],
+    "distinctions": [
+      "Much dispute treats controversy as an uncountable activity or condition. A dispute can instead count one particular disagreement."
+    ],
+    "usage": "Uncountable noun in the checked source; an old quotation alone does not make the meaning obsolete.",
+    "originalSense": {
+      "id": "kaikki:84ac0bed21ad30107b",
+      "definition": "Verbal controversy or disagreement; altercation; debate.",
+      "example": "Addicted more / To contemplation and profound dispute.",
+      "pos": "noun",
+      "synonyms": [
+        "argument",
+        "argy-bargy",
+        "altercation",
+        "contention",
+        "barney",
+        "bawl out",
+        "blue",
+        "bobbery",
+        "brawl",
+        "clash",
+        "conflict",
+        "controversy",
+        "debate",
+        "difference",
+        "ding-dong",
+        "disagreement",
+        "discordance",
+        "disharmony",
+        "disputation",
+        "dispute",
+        "dissonance",
+        "disunion",
+        "dustup",
+        "face-off",
+        "falling out",
+        "feud",
+        "fight",
+        "flite",
+        "hassle",
+        "issue",
+        "palaver",
+        "quarrel",
+        "quibble",
+        "row",
+        "spat",
+        "squabble",
+        "tangle",
+        "threap",
+        "tiff",
+        "wrangle"
+      ],
+      "antonyms": [
+        "accord",
+        "agreement",
+        "assent",
+        "concord",
+        "concordance",
+        "harmony",
+        "resolution",
+        "solution",
+        "union"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "beyond dispute",
+        "counterdispute",
+        "disputeless",
+        "dispute resolution",
+        "domestic dispute",
+        "interdispute",
+        "predispute",
+        "trade dispute"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dispute#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=dispute&oldid=93521186",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "There was much dispute about the interpretation. Dispute is used _____.",
+      "options": [
+        "as uncountable controversy",
+        "to count several separate agreements"
+      ],
+      "answer": "as uncountable controversy",
+      "explanation": "Much dispute treats controversy as uncountable and does not name agreements."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:97ce0e95ba1e7966ba",
+    "definition": "To argue against a view or claim maintained by someone else.",
+    "example": "The researchers continued to dispute with one another over the interpretation.",
+    "collocations": [
+      "dispute with someone",
+      "dispute over an issue",
+      "dispute about a claim"
+    ],
+    "distinctions": [
+      "This intransitive use describes people arguing with one another; it does not take a challenged claim as its direct object in the example."
+    ],
+    "usage": "Intransitive arguing sense. An argument does not by itself establish which interpretation is correct.",
+    "originalSense": {
+      "id": "kaikki:97ce0e95ba1e7966ba",
+      "definition": "To contend in argument; to argue against something maintained, upheld, or claimed, by another.",
+      "example": "\"Now, though thy thoughts are green and tender, as becometh one so young, yet are they those of a thinking brain, and in truth thou dost bring back to my mind certain of those old philosophers with whom in days bygone I have disputed at Athens, and at Becca in Arabia, for thou hast the same crabbed air and dusty look, as though thou hadst passed thy days in reading ill-writ Greek, and been stained dark with the grime of manuscripts.\"",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "beyond dispute",
+        "counterdispute",
+        "disputeless",
+        "dispute resolution",
+        "domestic dispute",
+        "interdispute",
+        "predispute",
+        "trade dispute",
+        "disputability",
+        "disputably",
+        "indisputably",
+        "industrial dispute",
+        "nondisputing",
+        "redispute",
+        "undisputing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dispute#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=dispute&oldid=93521186",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The researchers continued to dispute with one another. The example _____.",
+      "options": [
+        "describes arguing without a direct-object claim",
+        "proves that one researcher is correct"
+      ],
+      "answer": "describes arguing without a direct-object claim",
+      "explanation": "This is the intransitive arguing construction; it supplies no independent verdict."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:7360b01701fd3393a5",
+    "definition": "To examine a question by arguing for and against it.",
+    "example": "At the seminar, they will dispute the question, weighing arguments for and against it.",
+    "collocations": [
+      "dispute a question",
+      "argue for and against",
+      "examine opposing arguments"
+    ],
+    "distinctions": [
+      "The intended activity examines arguments on both sides. The example does not assert that everyone denied the same proposition."
+    ],
+    "usage": "Retained transitive debating sense. Discuss and debate may also fit some such contexts; they are not universally wrong substitutes.",
+    "originalSense": {
+      "id": "kaikki:7360b01701fd3393a5",
+      "definition": "To make a subject of disputation; to argue pro and con; to discuss.",
+      "example": "Some residents disputed the proposal, saying it was based more on emotion than fact.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "beyond dispute",
+        "counterdispute",
+        "disputeless",
+        "dispute resolution",
+        "domestic dispute",
+        "interdispute",
+        "predispute",
+        "trade dispute",
+        "disputability",
+        "disputably",
+        "indisputably",
+        "industrial dispute",
+        "nondisputing",
+        "redispute",
+        "undisputing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dispute#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=dispute&oldid=93521186",
+    "distinctionTask": {
+      "prompt": "They will dispute the question, weighing arguments for and against it. The intended activity is _____.",
+      "options": [
+        "examining opposing arguments",
+        "denying the same claim without considering it"
+      ],
+      "answer": "examining opposing arguments",
+      "explanation": "The explicit for-and-against context identifies the debating meaning."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:cff3c60a89ce1a010b",
+    "definition": "To challenge the truth, validity or correctness of something.",
+    "example": "The tenant will dispute the charge because she says the repair was never made.",
+    "collocations": [
+      "dispute a charge",
+      "dispute a claim",
+      "dispute the accuracy of something"
+    ],
+    "distinctions": [
+      "To dispute the charge is to challenge it. The tenant’s objection does not independently prove that the charge is invalid."
+    ],
+    "usage": "Transitive challenge sense. The example reports the tenant’s reason, without treating her claim as verified.",
+    "originalSense": {
+      "id": "kaikki:cff3c60a89ce1a010b",
+      "definition": "To oppose by argument or assertion; to controvert; to express dissent or opposition to; to call into question; to deny the truth or validity of.",
+      "example": "to dispute assertions or arguments",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "beyond dispute",
+        "counterdispute",
+        "disputeless",
+        "dispute resolution",
+        "domestic dispute",
+        "interdispute",
+        "predispute",
+        "trade dispute",
+        "disputability",
+        "disputably",
+        "indisputably",
+        "industrial dispute",
+        "nondisputing",
+        "redispute",
+        "undisputing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dispute#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=dispute&oldid=93521186",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The tenant will dispute the charge. This means _____.",
+      "options": [
+        "she will challenge its validity",
+        "its invalidity has already been proved"
+      ],
+      "answer": "she will challenge its validity",
+      "explanation": "A challenge is a position or action, not proof of its merits."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:1f6d8905da67ceb493",
+    "definition": "To compete or contend for possession or control of something.",
+    "example": "The two countries dispute control of the island.",
+    "collocations": [
+      "dispute control",
+      "dispute possession",
+      "dispute a territory"
+    ],
+    "distinctions": [
+      "Both countries contest control. The sentence neither identifies the rightful owner nor reports a settled outcome."
+    ],
+    "usage": "Transitive contest sense. The competing claims do not establish a settled outcome.",
+    "originalSense": {
+      "id": "kaikki:1f6d8905da67ceb493",
+      "definition": "To strive or contend about; to contest.",
+      "example": "to dispute the possession of the ground with the Spaniards",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "beyond dispute",
+        "counterdispute",
+        "disputeless",
+        "dispute resolution",
+        "domestic dispute",
+        "interdispute",
+        "predispute",
+        "trade dispute",
+        "disputability",
+        "disputably",
+        "indisputably",
+        "industrial dispute",
+        "nondisputing",
+        "redispute",
+        "undisputing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dispute#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=dispute&oldid=93521186",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Two countries dispute control of an island. The sentence _____.",
+      "options": [
+        "reports competing claims to control",
+        "declares a final and undisputed owner"
+      ],
+      "answer": "reports competing claims to control",
+      "explanation": "To contest control does not settle ownership."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:cee5a31ada7c911c02",
+    "definition": "To struggle against or resist something.",
+    "example": "In the source’s obsolete use, an instruction to dispute grief means to struggle against or resist it. It does not ask someone to deny that grief exists.",
+    "collocations": [
+      "resist grief",
+      "struggle against",
+      "oppose something"
+    ],
+    "distinctions": [
+      "This historical resistance meaning differs from challenging a statement’s truth."
+    ],
+    "usage": "Obsolete in the checked source; retained as a reading explanation.",
+    "originalSense": {
+      "id": "kaikki:cee5a31ada7c911c02",
+      "definition": "To struggle against; to resist.",
+      "example": "Dispute it [grief] like a man.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "beyond dispute",
+        "counterdispute",
+        "disputeless",
+        "dispute resolution",
+        "domestic dispute",
+        "interdispute",
+        "predispute",
+        "trade dispute",
+        "disputability",
+        "disputably",
+        "indisputably",
+        "industrial dispute",
+        "nondisputing",
+        "redispute",
+        "undisputing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dispute#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=dispute&oldid=93521186",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "wiktionary:restored:0bef76fce802ffa30a",
+    "dictionaryParentSenseId": "kaikki:6a709aa8f25558ecfd",
+    "definition": "A disagreement between parties in a contract, lawsuit, treaty or other legal matter.",
+    "example": "The parties referred their contract dispute to mediation.",
+    "collocations": [
+      "a contract dispute",
+      "parties to a dispute",
+      "refer a dispute to mediation"
+    ],
+    "distinctions": [
+      "A contract dispute is the legal disagreement. Referring it to mediation does not establish that the parties reached a settlement."
+    ],
+    "usage": "Legal noun referring to a disagreement in a legal matter. Mediation is one possible response.",
+    "originalSense": {
+      "id": "wiktionary:restored:0bef76fce802ffa30a",
+      "pos": "noun",
+      "definition": "A disagreement between parties in a contract, lawsuit, treaty, or other legal matter.",
+      "example": "",
+      "register": "legal",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=dispute&oldid=93521186",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=dispute&oldid=93521186",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "A contract dispute has been referred to mediation. The sentence _____.",
+      "options": [
+        "reports a legal disagreement and a referral",
+        "guarantees that a settlement has been reached"
+      ],
+      "answer": "reports a legal disagreement and a referral",
+      "explanation": "A referral is not an already completed settlement."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:d5b2219078c372e2a3",
+    "definition": "To take part in an argument or exchange of opposing views, especially in public.",
+    "example": "The two candidates will debate transport policy on Friday.",
+    "collocations": [
+      "debate a policy",
+      "debate an opponent",
+      "debate with someone"
+    ],
+    "distinctions": [
+      "Debate can take a topic or an opponent. The planned debate does not report a winner or a shared conclusion."
+    ],
+    "usage": "Verb used transitively or intransitively. Discuss and debate can overlap; public opposing viewpoints are explicit in this example.",
+    "originalSense": {
+      "id": "kaikki:d5b2219078c372e2a3",
+      "definition": "To participate in a debate; to dispute, argue, especially in a public arena.",
+      "example": "\"Debate me, coward!\" snarled the completely normal intellectual.",
+      "pos": "verb",
+      "synonyms": [
+        "contend",
+        "canvass"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ambitransitive, reciprocal",
+      "register": "ambitransitive, reciprocal",
+      "wordFamily": [
+        "debatability",
+        "debatable",
+        "debater",
+        "debatingly",
+        "mass debate",
+        "outdebate",
+        "redebate",
+        "undebating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/debate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=debate&oldid=93546205",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The candidates will debate transport policy on Friday. This reports _____.",
+      "options": [
+        "a planned exchange of opposing views",
+        "a final decision already accepted by both"
+      ],
+      "answer": "a planned exchange of opposing views",
+      "explanation": "The debate is planned; no shared conclusion or outcome is reported."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:41ea27ae5c968b5c5c",
+    "definition": "To fight or engage in combat.",
+    "example": "The source records an obsolete intransitive combat sense of debate. It concerns fighting, rather than a modern public exchange of arguments.",
+    "collocations": [
+      "fight with someone",
+      "engage in combat",
+      "physical conflict"
+    ],
+    "distinctions": [
+      "This historical combat meaning should not label ordinary modern debating obsolete."
+    ],
+    "usage": "Obsolete reciprocal, intransitive use in the checked source.",
+    "originalSense": {
+      "id": "kaikki:41ea27ae5c968b5c5c",
+      "definition": "To fight.",
+      "example": "Well knew they both his person, sith of late / With him in bloudie armes they rashly did debate.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete, reciprocal",
+      "register": "intransitive, obsolete, reciprocal",
+      "wordFamily": [
+        "debatability",
+        "debatable",
+        "debater",
+        "debatingly",
+        "mass debate",
+        "outdebate",
+        "redebate",
+        "undebating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/debate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=debate&oldid=93546205",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:e26987b216b1ba88c6",
+    "definition": "To fight or strive for something.",
+    "example": "In the source’s obsolete transitive use, a cause that was debated could be fought for. This does not simply mean that people discussed the cause.",
+    "collocations": [
+      "fight for a cause",
+      "strive for something",
+      "the cause fought for"
+    ],
+    "distinctions": [
+      "The object identifies what was fought for, unlike the separate intransitive fighting sense."
+    ],
+    "usage": "Obsolete transitive use in the checked source; retained for reading.",
+    "originalSense": {
+      "id": "kaikki:e26987b216b1ba88c6",
+      "definition": "To engage in combat for; to strive for.",
+      "example": "Volunteers […] thronged to serve under his banner, and the cause of religion was debated with the same ardour in Spain as on the plains of Palestine.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "debatability",
+        "debatable",
+        "debater",
+        "debatingly",
+        "mass debate",
+        "outdebate",
+        "redebate",
+        "undebating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/debate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=debate&oldid=93546205",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:133b34c4d95ed86335",
+    "definition": "To think over a choice privately while trying to decide.",
+    "example": "I sometimes debate whether to take the train or drive.",
+    "collocations": [
+      "debate whether to do something",
+      "debate a decision",
+      "debate what to do"
+    ],
+    "distinctions": [
+      "Here debate describes private consideration of a choice. It does not require an opponent, a public event or a decision already reached."
+    ],
+    "usage": "Transitive consideration sense. Whether introduces the unresolved choice.",
+    "originalSense": {
+      "id": "kaikki:133b34c4d95ed86335",
+      "definition": "To consider (to oneself), to think over, to attempt to decide",
+      "example": "He was debating where he'd spend his holiday.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "debatability",
+        "debatable",
+        "debater",
+        "debatingly",
+        "mass debate",
+        "outdebate",
+        "redebate",
+        "undebating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/debate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=debate&oldid=93546205",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "I sometimes debate whether to take the train or drive. Here, debate means _____.",
+      "options": [
+        "privately consider an unresolved choice",
+        "necessarily argue with a public opponent"
+      ],
+      "answer": "privately consider an unresolved choice",
+      "explanation": "The whether clause identifies a private decision under consideration."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:009a19d7ed35ba6db1",
+    "definition": "An exchange of opposing arguments, usually in an ordered or formal setting.",
+    "example": "The committee held a debate on the proposal before voting.",
+    "collocations": [
+      "hold a debate",
+      "a debate on a proposal",
+      "a formal debate"
+    ],
+    "distinctions": [
+      "The example reports discussion before a vote. It does not tell us how the committee voted, and not every formal debate must end in a vote."
+    ],
+    "usage": "Noun used countably or uncountably. A decision is possible rather than part of every occurrence.",
+    "originalSense": {
+      "id": "kaikki:009a19d7ed35ba6db1",
+      "definition": "An argument, or discussion, usually in an ordered or formal setting, often with more than two people, generally ending with a vote or other decision.",
+      "example": "After a four-hour debate, the committee voted to table the motion.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "debatability",
+        "debatable",
+        "debater",
+        "debatingly",
+        "mass debate",
+        "outdebate",
+        "redebate",
+        "undebating",
+        "antidebate",
+        "balloon debate",
+        "debate bro",
+        "debateful",
+        "Debategate",
+        "debatelord",
+        "debatey",
+        "make-debate",
+        "metadebate",
+        "nondebate",
+        "postdebate",
+        "predebate",
+        "pseudodebate",
+        "self-debate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/debate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=debate&oldid=93546205",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "A committee held a debate before voting. The sentence _____.",
+      "options": [
+        "reports discussion but not the voting result",
+        "proves that the proposal was approved"
+      ],
+      "answer": "reports discussion but not the voting result",
+      "explanation": "The vote’s result is unstated. Debate also does not universally require a vote."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:6098f3197529f9b2da",
+    "definition": "An informal, spirited but generally civil discussion of opposing views.",
+    "example": "Our lunch break turned into a friendly debate about the best way to travel.",
+    "collocations": [
+      "a friendly debate",
+      "a lively debate",
+      "a debate about something"
+    ],
+    "distinctions": [
+      "This is an informal exchange of views. It need not involve appointed speakers, a chair or a vote."
+    ],
+    "usage": "Countable or uncountable discussion noun. Generally civil does not mean that people agree.",
+    "originalSense": {
+      "id": "kaikki:6098f3197529f9b2da",
+      "definition": "An informal and spirited but generally civil discussion of opposing views.",
+      "example": "The debate over the age of the universe is thousands of years old.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "debatability",
+        "debatable",
+        "debater",
+        "debatingly",
+        "mass debate",
+        "outdebate",
+        "redebate",
+        "undebating",
+        "antidebate",
+        "balloon debate",
+        "debate bro",
+        "debateful",
+        "Debategate",
+        "debatelord",
+        "debatey",
+        "make-debate",
+        "metadebate",
+        "nondebate",
+        "postdebate",
+        "predebate",
+        "pseudodebate",
+        "self-debate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/debate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=debate&oldid=93546205",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "A friendly debate arose during lunch. It _____.",
+      "options": [
+        "can be an informal exchange of opposing views",
+        "must have a chair and a formal ballot"
+      ],
+      "answer": "can be an informal exchange of opposing views",
+      "explanation": "The informal noun sense does not require formal debate procedures."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:39f85b1eb60149f144",
+    "definition": "Discussion involving opposing views, considered as an activity.",
+    "example": "There is ongoing debate about the best way to teach reading.",
+    "collocations": [
+      "ongoing debate",
+      "open to debate",
+      "considerable debate"
+    ],
+    "distinctions": [
+      "Ongoing debate describes continuing discussion; it does not establish that a final answer or shared view has been reached."
+    ],
+    "usage": "Uncountable noun in the checked source. It need not name one organised debate event.",
+    "originalSense": {
+      "id": "kaikki:39f85b1eb60149f144",
+      "definition": "Discussion of opposing views.",
+      "example": "There has been considerable debate concerning exactly how to format these articles.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "debatability",
+        "debatable",
+        "debater",
+        "debatingly",
+        "mass debate",
+        "outdebate",
+        "redebate",
+        "undebating",
+        "antidebate",
+        "balloon debate",
+        "debate bro",
+        "debateful",
+        "Debategate",
+        "debatelord",
+        "debatey",
+        "make-debate",
+        "metadebate",
+        "nondebate",
+        "postdebate",
+        "predebate",
+        "pseudodebate",
+        "self-debate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/debate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=debate&oldid=93546205",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "There is ongoing debate about teaching reading. This means _____.",
+      "options": [
+        "discussion of differing views continues",
+        "everyone has already reached the same conclusion"
+      ],
+      "answer": "discussion of differing views continues",
+      "explanation": "Ongoing discussion is not an already settled consensus."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:636b2864f4c866b28c",
+    "definition": "A literary composition presented as a discussion or disputation between opposing voices.",
+    "example": "A literary debate presents opposing voices in a composition. The form is found in medieval vernacular and Latin literature.",
+    "collocations": [
+      "a literary debate",
+      "opposing voices",
+      "medieval composition"
+    ],
+    "distinctions": [
+      "The composition itself is called a debate; it is separate from a live public contest or a person’s private decision."
+    ],
+    "usage": "Specialised literary noun in the checked source. The genre meaning is not labelled obsolete.",
+    "originalSense": {
+      "id": "kaikki:636b2864f4c866b28c",
+      "definition": "A type of literary composition, taking the form of a discussion or disputation, commonly found in the vernacular medieval poetry of many European countries, as well as in medieval Latin.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "debatability",
+        "debatable",
+        "debater",
+        "debatingly",
+        "mass debate",
+        "outdebate",
+        "redebate",
+        "undebating",
+        "antidebate",
+        "balloon debate",
+        "debate bro",
+        "debateful",
+        "Debategate",
+        "debatelord",
+        "debatey",
+        "make-debate",
+        "metadebate",
+        "nondebate",
+        "postdebate",
+        "predebate",
+        "pseudodebate",
+        "self-debate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/debate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=debate&oldid=93546205",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:67199899c44aabc684",
+    "definition": "Strife or discord.",
+    "example": "The source records an obsolete noun sense of debate meaning strife or discord. This historical use is separate from a modern ordered discussion.",
+    "collocations": [
+      "strife",
+      "discord",
+      "conflict"
+    ],
+    "distinctions": [
+      "A historical reference to discord need not describe a formal speaking event."
+    ],
+    "usage": "Obsolete noun in the checked source; retained as a reading explanation.",
+    "originalSense": {
+      "id": "kaikki:67199899c44aabc684",
+      "definition": "Strife, discord.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "countable, obsolete, uncountable",
+      "wordFamily": [
+        "debatability",
+        "debatable",
+        "debater",
+        "debatingly",
+        "mass debate",
+        "outdebate",
+        "redebate",
+        "undebating",
+        "antidebate",
+        "balloon debate",
+        "debate bro",
+        "debateful",
+        "Debategate",
+        "debatelord",
+        "debatey",
+        "make-debate",
+        "metadebate",
+        "nondebate",
+        "postdebate",
+        "predebate",
+        "pseudodebate",
+        "self-debate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/debate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=debate&oldid=93546205",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-c2cdf62b",
+    "senseId": "kaikki:5a2e8d4b326b05164e",
+    "definition": "To discuss terms with others in order to try to reach an agreement.",
+    "example": "The union continues to negotiate with the company, but no agreement has been reached.",
+    "collocations": [
+      "negotiate with someone",
+      "negotiate over terms",
+      "negotiate about working conditions"
+    ],
+    "distinctions": [
+      "Continuing to negotiate reports talks aimed at agreement. It does not assert that the talks have succeeded."
+    ],
+    "usage": "Intransitive talks sense. The purpose of reaching agreement differs from an agreement already arranged.",
+    "originalSense": {
+      "id": "kaikki:5a2e8d4b326b05164e",
+      "definition": "To confer with others in order to come to terms or reach an agreement.",
+      "example": "1963, Martin Luther King, Jr., to the eight fellow clergymen who opposed the civil rights action, \"Letter from Birmingham Jail,\" Why We Can't Wait\n\"You are quite right in calling for negotiation. Indeed, this is the very purpose of direct action. Nonviolent direct action seeks to create such a crisis and foster such a tension that a community which has constantly refused to negotiate is forced to confront the issue.\"",
+      "pos": "verb",
+      "synonyms": [
+        "treat"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "misnegotiate",
+        "negotiability",
+        "negotiable",
+        "negotiating table",
+        "negotiation",
+        "negotiator",
+        "negotiatory",
+        "nonnegotiating",
+        "prenegotiated",
+        "renegotiate",
+        "unnegotiated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/negotiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=negotiate&oldid=93508392",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The union continues to negotiate, but no agreement has been reached. This means _____.",
+      "options": [
+        "talks aimed at agreement are ongoing",
+        "the parties have already settled every term"
+      ],
+      "answer": "talks aimed at agreement are ongoing",
+      "explanation": "Negotiation can continue without an agreement; the sentence explicitly states that none has been reached."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-c2cdf62b",
+    "senseId": "kaikki:533183b797d068d1e2",
+    "definition": "To arrange or settle something by mutual agreement.",
+    "example": "The teams managed to negotiate a new contract after three meetings.",
+    "collocations": [
+      "negotiate a contract",
+      "negotiate an agreement",
+      "negotiate a settlement"
+    ],
+    "distinctions": [
+      "The managed to construction reports that the teams arranged the contract by agreement."
+    ],
+    "usage": "Transitive arranging sense. The agreed object is distinct from the separate intransitive process of talks.",
+    "originalSense": {
+      "id": "kaikki:533183b797d068d1e2",
+      "definition": "To arrange or settle something by mutual agreement.",
+      "example": "We negotiated the contract to everyone's satisfaction.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "misnegotiate",
+        "negotiability",
+        "negotiable",
+        "negotiating table",
+        "negotiation",
+        "negotiator",
+        "negotiatory",
+        "nonnegotiating",
+        "prenegotiated",
+        "renegotiate",
+        "unnegotiated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/negotiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=negotiate&oldid=93508392",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The teams managed to negotiate a new contract. This reports _____.",
+      "options": [
+        "arranging the contract by agreement",
+        "talks that necessarily ended without agreement"
+      ],
+      "answer": "arranging the contract by agreement",
+      "explanation": "Managed to reports successful arranging in this context."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-c2cdf62b",
+    "senseId": "kaikki:498baa1f3b6d3e5cf9",
+    "definition": "To succeed in getting past or coping with a hazard or obstacle.",
+    "example": "With care, the drivers managed to negotiate the narrow bend.",
+    "collocations": [
+      "negotiate a bend",
+      "negotiate an obstacle",
+      "negotiate a difficult route"
+    ],
+    "distinctions": [
+      "The drivers got past the bend. They did not remove the bend or bargain with it."
+    ],
+    "usage": "Transitive navigation sense. Managed to reports successfully getting past the obstacle.",
+    "originalSense": {
+      "id": "kaikki:498baa1f3b6d3e5cf9",
+      "definition": "To succeed in coping with, getting over or navigate a hazard or obstacle.",
+      "example": "We negotiated the mountain track with difficulty.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "misnegotiate",
+        "negotiability",
+        "negotiable",
+        "negotiating table",
+        "negotiation",
+        "negotiator",
+        "negotiatory",
+        "nonnegotiating",
+        "prenegotiated",
+        "renegotiate",
+        "unnegotiated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/negotiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=negotiate&oldid=93508392",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Drivers managed to negotiate a narrow bend. They _____.",
+      "options": [
+        "successfully got past the bend",
+        "removed the bend from the road"
+      ],
+      "answer": "successfully got past the bend",
+      "explanation": "The navigation sense concerns getting through an obstacle, not removing or bargaining with it."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-c2cdf62b",
+    "senseId": "kaikki:0b2026c676538c0ee3",
+    "definition": "To transfer a negotiable instrument so that its recipient becomes its holder, subject to the applicable legal requirements.",
+    "example": "In the checked US UCC Article3 context, negotiation makes the recipient the instrument’s holder. An instrument payable to an identified person generally requires the holder’s indorsement and delivery, while bearer instruments may be negotiated by delivery alone. Not every transfer is a negotiation, and rights have legal limits.",
+    "collocations": [
+      "negotiate an instrument",
+      "indorsement and delivery",
+      "become the holder"
+    ],
+    "distinctions": [
+      "This financial/legal meaning is separate from bargaining over a price. Holder status, transfer and enforcement rights are related but not interchangeable; the note does not promise that every recipient acquires all original rights."
+    ],
+    "usage": "Specialised instrument sense. The editorial clarification is scoped to UCC3-201 and3-203, not a universal rule for every jurisdiction or instrument.",
+    "originalSense": {
+      "id": "kaikki:0b2026c676538c0ee3",
+      "definition": "To transfer to another person with all the rights of the original holder; to pass, as a bill.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "misnegotiate",
+        "negotiability",
+        "negotiable",
+        "negotiating table",
+        "negotiation",
+        "negotiator",
+        "negotiatory",
+        "nonnegotiating",
+        "prenegotiated",
+        "renegotiate",
+        "unnegotiated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/negotiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=negotiate&oldid=93508392",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-c2cdf62b",
+    "senseId": "kaikki:08284e9bd53cb17f56",
+    "definition": "To transact business or carry on trade.",
+    "example": "The source records an obsolete trade sense of negotiate. It concerns carrying on business, rather than merely discussing terms before an agreement.",
+    "collocations": [
+      "transact business",
+      "carry on trade",
+      "commercial activity"
+    ],
+    "distinctions": [
+      "The historical trade meaning is independent of the modern talks and agreement senses."
+    ],
+    "usage": "Obsolete in the checked source; retained for reading.",
+    "originalSense": {
+      "id": "kaikki:08284e9bd53cb17f56",
+      "definition": "To transact business; to carry on trade.",
+      "example": "Jews, Turks, Armenians,[…]negotiating in this famous Emporium.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "misnegotiate",
+        "negotiability",
+        "negotiable",
+        "negotiating table",
+        "negotiation",
+        "negotiator",
+        "negotiatory",
+        "nonnegotiating",
+        "prenegotiated",
+        "renegotiate",
+        "unnegotiated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/negotiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=negotiate&oldid=93508392",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-c2cdf62b",
+    "senseId": "kaikki:76b228c1bcf5603c58",
+    "definition": "To intrigue or scheme.",
+    "example": "The source records an obsolete scheming sense of negotiate. It describes intrigue rather than ordinary transparent discussions of terms.",
+    "collocations": [
+      "intrigue",
+      "scheme",
+      "secret manoeuvring"
+    ],
+    "distinctions": [
+      "This historical meaning should not imply that ordinary modern negotiation is dishonest."
+    ],
+    "usage": "Obsolete in the checked source; retained as a reading explanation.",
+    "originalSense": {
+      "id": "kaikki:76b228c1bcf5603c58",
+      "definition": "To intrigue; to scheme.",
+      "example": "Certaine it is, shee was a busie negotiating woman.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "misnegotiate",
+        "negotiability",
+        "negotiable",
+        "negotiating table",
+        "negotiation",
+        "negotiator",
+        "negotiatory",
+        "nonnegotiating",
+        "prenegotiated",
+        "renegotiate",
+        "unnegotiated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/negotiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=negotiate&oldid=93508392",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]

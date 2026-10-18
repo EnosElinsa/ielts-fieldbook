@@ -11856,5 +11856,25 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "dispute",
+    "entryId": "ve-a78bbd6f",
+    "parentSenseId": "kaikki:6a709aa8f25558ecfd",
+    "parentSourceHash": "2d63d66b798a610648c95f1ecac6d54ed389c0a3e50bc0c8f4a36ad169e6f685",
+    "sourcePage": "dispute",
+    "revision": 93521186,
+    "sourceGloss": "## {{lb|en|law}} A disagreement between [[party|parties]] in a [[contract]], [[lawsuit]], [[treaty]], or other [[legal]] matter.",
+    "sense": {
+      "id": "wiktionary:restored:0bef76fce802ffa30a",
+      "pos": "noun",
+      "definition": "A disagreement between parties in a contract, lawsuit, treaty, or other legal matter.",
+      "example": "",
+      "register": "legal",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=dispute&oldid=93521186",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

@@ -5822,5 +5822,133 @@
     "definition": "To demand persistently that something happen or be done.",
     "pos": "verb",
     "kind": "insist-demand"
+  },
+  {
+    "entryId": "ve-a791422d",
+    "senseId": "kaikki:6e0a81f5039bcf083b",
+    "term": "discuss",
+    "definition": "To talk about or examine a topic with other people.",
+    "pos": "verb",
+    "kind": "discuss-topic"
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:6a709aa8f25558ecfd",
+    "term": "dispute",
+    "definition": "An argument or disagreement between people or groups.",
+    "pos": "noun",
+    "kind": "dispute-disagreement"
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:84ac0bed21ad30107b",
+    "term": "dispute",
+    "definition": "Verbal controversy or disagreement considered as an activity or condition.",
+    "pos": "noun",
+    "kind": "dispute-controversy"
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:97ce0e95ba1e7966ba",
+    "term": "dispute",
+    "definition": "To argue against a view or claim maintained by someone else.",
+    "pos": "verb",
+    "kind": "dispute-argue"
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:7360b01701fd3393a5",
+    "term": "dispute",
+    "definition": "To examine a question by arguing for and against it.",
+    "pos": "verb",
+    "kind": "dispute-debate"
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:cff3c60a89ce1a010b",
+    "term": "dispute",
+    "definition": "To challenge the truth, validity or correctness of something.",
+    "pos": "verb",
+    "kind": "dispute-challenge"
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "kaikki:1f6d8905da67ceb493",
+    "term": "dispute",
+    "definition": "To compete or contend for possession or control of something.",
+    "pos": "verb",
+    "kind": "dispute-control"
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "senseId": "wiktionary:restored:0bef76fce802ffa30a",
+    "term": "dispute",
+    "definition": "A disagreement between parties in a contract, lawsuit, treaty or other legal matter.",
+    "pos": "noun",
+    "kind": "dispute-legal"
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:d5b2219078c372e2a3",
+    "term": "debate",
+    "definition": "To take part in an argument or exchange of opposing views, especially in public.",
+    "pos": "verb",
+    "kind": "debate-public"
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:133b34c4d95ed86335",
+    "term": "debate",
+    "definition": "To think over a choice privately while trying to decide.",
+    "pos": "verb",
+    "kind": "debate-consider"
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:009a19d7ed35ba6db1",
+    "term": "debate",
+    "definition": "An exchange of opposing arguments, usually in an ordered or formal setting.",
+    "pos": "noun",
+    "kind": "debate-formal"
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:6098f3197529f9b2da",
+    "term": "debate",
+    "definition": "An informal, spirited but generally civil discussion of opposing views.",
+    "pos": "noun",
+    "kind": "debate-informal"
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "senseId": "kaikki:39f85b1eb60149f144",
+    "term": "debate",
+    "definition": "Discussion involving opposing views, considered as an activity.",
+    "pos": "noun",
+    "kind": "debate-discussion"
+  },
+  {
+    "entryId": "ve-c2cdf62b",
+    "senseId": "kaikki:5a2e8d4b326b05164e",
+    "term": "negotiate",
+    "definition": "To discuss terms with others in order to try to reach an agreement.",
+    "pos": "verb",
+    "kind": "negotiate-talks"
+  },
+  {
+    "entryId": "ve-c2cdf62b",
+    "senseId": "kaikki:533183b797d068d1e2",
+    "term": "negotiate",
+    "definition": "To arrange or settle something by mutual agreement.",
+    "pos": "verb",
+    "kind": "negotiate-agreement"
+  },
+  {
+    "entryId": "ve-c2cdf62b",
+    "senseId": "kaikki:498baa1f3b6d3e5cf9",
+    "term": "negotiate",
+    "definition": "To succeed in getting past or coping with a hazard or obstacle.",
+    "pos": "verb",
+    "kind": "negotiate-obstacle"
   }
 ]

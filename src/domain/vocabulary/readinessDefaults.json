@@ -24823,5 +24823,297 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-a791422d",
+    "originalSense": {
+      "id": "kaikki:6e0a81f5039bcf083b",
+      "definition": "To converse or debate concerning a particular topic.",
+      "example": "Let's sit down and discuss whether we should have a baby.",
+      "pos": "verb",
+      "synonyms": [
+        "bespeak",
+        "betalk",
+        "debate",
+        "talk about",
+        "treat"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "discussable",
+        "discuss about",
+        "discussant",
+        "discusser",
+        "discussible",
+        "discussion",
+        "discussive",
+        "discuss to death",
+        "discuss Uganda",
+        "overdiscuss",
+        "prediscuss",
+        "rediscuss",
+        "underdiscuss"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discuss#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:6e0a81f5039bcf083b",
+      "definition": "To talk about or examine a topic with other people.",
+      "example": "We will discuss the travel plans at tomorrow’s meeting.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "discuss a topic",
+        "discuss plans",
+        "discuss something with someone"
+      ],
+      "usage": "Ordinary transitive verb. A discussion need not involve disagreement or produce a final decision.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discuss#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Discuss the plans takes the topic as its direct object. Talk about the plans uses a different construction. Discuss and debate can overlap when people examine opposing views."
+      ],
+      "distinctionTask": {
+        "prompt": "We will discuss the travel plans. Here, discuss _____.",
+        "options": [
+          "takes the topic directly as its object",
+          "requires about before its direct object"
+        ],
+        "answer": "takes the topic directly as its object",
+        "explanation": "The ordinary transitive construction is discuss the plans; talk about the plans is a different construction."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-a78bbd6f",
+    "originalSense": {
+      "id": "kaikki:6a709aa8f25558ecfd",
+      "definition": "An argument or disagreement; a failure to agree.",
+      "example": "But is not this dispute over the question whether we have free will or not very like a dispute that we might engage in over the color of a tree — whether it be green or blue?",
+      "pos": "noun",
+      "synonyms": [
+        "debate",
+        "quarrel"
+      ],
+      "antonyms": [
+        "accord",
+        "agreement",
+        "assent",
+        "concord",
+        "concordance",
+        "harmony",
+        "resolution",
+        "solution",
+        "union"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "beyond dispute",
+        "counterdispute",
+        "disputeless",
+        "dispute resolution",
+        "domestic dispute",
+        "interdispute",
+        "predispute",
+        "trade dispute"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dispute#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:6a709aa8f25558ecfd",
+      "definition": "An argument or disagreement between people or groups.",
+      "example": "A dispute arose between the neighbours over the shared fence.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a dispute over something",
+        "a dispute between parties",
+        "resolve a dispute"
+      ],
+      "usage": "Countable disagreement noun. The participants need not be in a lawsuit.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dispute#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A dispute identifies a disagreement. Saying that it arose does not report that it was resolved."
+      ],
+      "distinctionTask": {
+        "prompt": "A dispute arose over the shared fence. This reports _____.",
+        "options": [
+          "a disagreement that has begun",
+          "a disagreement already resolved"
+        ],
+        "answer": "a disagreement that has begun",
+        "explanation": "Arose describes the disagreement beginning; no resolution is stated."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-42d2ded6",
+    "originalSense": {
+      "id": "kaikki:d5b2219078c372e2a3",
+      "definition": "To participate in a debate; to dispute, argue, especially in a public arena.",
+      "example": "\"Debate me, coward!\" snarled the completely normal intellectual.",
+      "pos": "verb",
+      "synonyms": [
+        "contend",
+        "canvass"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ambitransitive, reciprocal",
+      "register": "ambitransitive, reciprocal",
+      "wordFamily": [
+        "debatability",
+        "debatable",
+        "debater",
+        "debatingly",
+        "mass debate",
+        "outdebate",
+        "redebate",
+        "undebating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/debate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:d5b2219078c372e2a3",
+      "definition": "To take part in an argument or exchange of opposing views, especially in public.",
+      "example": "The two candidates will debate transport policy on Friday.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "debate a policy",
+        "debate an opponent",
+        "debate with someone"
+      ],
+      "usage": "Verb used transitively or intransitively. Discuss and debate can overlap; public opposing viewpoints are explicit in this example.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/debate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Debate can take a topic or an opponent. The planned debate does not report a winner or a shared conclusion."
+      ],
+      "distinctionTask": {
+        "prompt": "The candidates will debate transport policy on Friday. This reports _____.",
+        "options": [
+          "a planned exchange of opposing views",
+          "a final decision already accepted by both"
+        ],
+        "answer": "a planned exchange of opposing views",
+        "explanation": "The debate is planned; no shared conclusion or outcome is reported."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-c2cdf62b",
+    "originalSense": {
+      "id": "kaikki:5a2e8d4b326b05164e",
+      "definition": "To confer with others in order to come to terms or reach an agreement.",
+      "example": "1963, Martin Luther King, Jr., to the eight fellow clergymen who opposed the civil rights action, \"Letter from Birmingham Jail,\" Why We Can't Wait\n\"You are quite right in calling for negotiation. Indeed, this is the very purpose of direct action. Nonviolent direct action seeks to create such a crisis and foster such a tension that a community which has constantly refused to negotiate is forced to confront the issue.\"",
+      "pos": "verb",
+      "synonyms": [
+        "treat"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "misnegotiate",
+        "negotiability",
+        "negotiable",
+        "negotiating table",
+        "negotiation",
+        "negotiator",
+        "negotiatory",
+        "nonnegotiating",
+        "prenegotiated",
+        "renegotiate",
+        "unnegotiated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/negotiate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:5a2e8d4b326b05164e",
+      "definition": "To discuss terms with others in order to try to reach an agreement.",
+      "example": "The union continues to negotiate with the company, but no agreement has been reached.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "negotiate with someone",
+        "negotiate over terms",
+        "negotiate about working conditions"
+      ],
+      "usage": "Intransitive talks sense. The purpose of reaching agreement differs from an agreement already arranged.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/negotiate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Continuing to negotiate reports talks aimed at agreement. It does not assert that the talks have succeeded."
+      ],
+      "distinctionTask": {
+        "prompt": "The union continues to negotiate, but no agreement has been reached. This means _____.",
+        "options": [
+          "talks aimed at agreement are ongoing",
+          "the parties have already settled every term"
+        ],
+        "answer": "talks aimed at agreement are ongoing",
+        "explanation": "Negotiation can continue without an agreement; the sentence explicitly states that none has been reached."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

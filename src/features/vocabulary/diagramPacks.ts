@@ -2,6 +2,22 @@ import type { VocabularyDiagramPack } from './diagramTypes';
 
 export type VocabularyDiagramPackId = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "i" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w";
 const kinds: Readonly<Record<string, VocabularyDiagramPackId>> = {
+  "discuss-topic": "d",
+  "dispute-disagreement": "d",
+  "dispute-controversy": "d",
+  "dispute-argue": "d",
+  "dispute-debate": "d",
+  "dispute-challenge": "d",
+  "dispute-control": "d",
+  "dispute-legal": "d",
+  "debate-public": "d",
+  "debate-consider": "d",
+  "debate-formal": "d",
+  "debate-informal": "d",
+  "debate-discussion": "d",
+  "negotiate-talks": "n",
+  "negotiate-agreement": "n",
+  "negotiate-obstacle": "n",
   "request-thing": "r",
   "request-action": "r",
   "request-act": "r",
