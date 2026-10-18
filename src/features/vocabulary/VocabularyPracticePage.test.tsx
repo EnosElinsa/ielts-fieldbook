@@ -74,6 +74,18 @@ beforeEach(() => {
   };
 });
 const originalCatalog = { books: [...VOCABULARY_CATALOG.books], units: [...VOCABULARY_CATALOG.units], entries: [...VOCABULARY_CATALOG.entries], memberships: [...VOCABULARY_CATALOG.memberships] };
+test('the home due-review link launches only saved meanings with an actual due schedule and freezes that restriction',async()=>{
+  const state=fb.current.state;
+  state.vocabularyStates=[{id:'scheduled',entryId:'entry-0',senseId:'sense-0',cards:{definition:{due:'2020-01-01'}},wrong:{active:false,modes:{}},dimensions:{}}];
+  mount('?mode=definition&dueOnly=true&scheduledOnly=true');
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toHaveAttribute('aria-busy','false'));
+  expect(screen.getByText(/1 word ·/)).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:'Start session'}));
+  expect(screen.getAllByRole('textbox')).toHaveLength(1);
+  expect(readVocabularyDraft(owner.current)?.filter).toMatchObject({dueOnly:true,scheduledOnly:true});
+  expect(readVocabularyDraft(owner.current)?.cardIds).toEqual([expect.objectContaining({entryId:'entry-0',senseId:'sense-0'})]);
+});
+
 test('single-word practice keeps its meaning and feedback without bulk settings or resetting saved preferences', async () => {
   fb.current.state.settings.vocabulary = { sessionSize: 50, order: 'random', feedback: 'end', layout: 'list', autoPlay: false };
   const user = userEvent.setup();

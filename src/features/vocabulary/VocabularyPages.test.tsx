@@ -167,6 +167,7 @@ test("overview provides separate wordbook study and vocabulary review entry rout
 
 test('vocabulary home recommends the enrolled group instead of word management', async () => {
   fixture();
+  fb.current.state.vocabulary = [];
   render(<MemoryRouter initialEntries={['/vocabulary']}><VocabularyPage /></MemoryRouter>);
   expect(await screen.findByRole('link', { name: /Start learning/ })).toHaveAttribute('href', '/vocabulary/wordbooks/book/groups/first/learn');
   expect(screen.queryByRole('button', { name: 'Add vocabulary' })).not.toBeInTheDocument();

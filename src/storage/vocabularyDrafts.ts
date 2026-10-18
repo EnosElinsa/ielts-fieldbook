@@ -75,6 +75,7 @@ function snapshot(value: unknown): VocabularyPracticeSession | null {
   if (['meaning', 'listening', 'spelling', 'usage'].includes(String(filterInput.dimension))) filter.dimension = filterInput.dimension as ReviewQueueFilter['dimension'];
   if (modes.includes(filterInput.mode as VocabularyPracticeMode) && filterInput.mode !== 'audio') filter.mode = filterInput.mode as ReviewQueueFilter['mode'];
   if (typeof filterInput.dueOnly === 'boolean') filter.dueOnly = filterInput.dueOnly;
+  if (typeof filterInput.scheduledOnly === 'boolean') filter.scheduledOnly = filterInput.scheduledOnly;
   if (time(filterInput.now)) filter.now = filterInput.now;
   if (filterInput.now instanceof Date && Number.isFinite(filterInput.now.getTime())) filter.now = filterInput.now.toISOString();
   if (typeof filterInput.wrongOnly === 'boolean') Object.assign(filter, { wrongOnly: filterInput.wrongOnly });

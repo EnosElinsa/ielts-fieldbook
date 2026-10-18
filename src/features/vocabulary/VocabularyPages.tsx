@@ -31,6 +31,9 @@ import { accountId } from '../../storage/remote';
 import { readVocabularyDraft } from '../../storage/vocabularyDrafts';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
 import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
+import { getVocabularyHomePractice } from '../../domain/vocabulary/homePractice';
+import { loadReleasedVocabularyTeaching } from '../../storage/vocabularyCatalog';
+import { VocabularyNextPractice } from './VocabularyNextPractice';
 import { Pronunciation } from './Pronunciation';
 import { vocabularyGroupProgress, getDueVocabularyReviewQueue, getVocabularyPracticeResults } from "../../domain/vocabulary/progress";
 import { progressRangeStart } from '../progress/practiceActivity';
@@ -39,7 +42,7 @@ import "../../styles/vocabulary-workbench.css";
 import '../../styles/vocabulary-home.css';
 import { isRegionalSpellingDifference } from '../../domain/vocabulary/spelling';
 import { getVocabularyMastery } from '../../domain/vocabulary/mastery';
-import { groupPath, rememberVocabularyPosition, useVocabularyPosition } from './vocabularyNavigation';
+import { groupPath, practiceUrl, rememberVocabularyPosition, useVocabularyPosition } from './vocabularyNavigation';
 
 const STATUS = [
   "new",
@@ -256,24 +259,44 @@ export function VocabularyPage({ wordsOnly = false } = {}) {
 function VocabularyHomePage() {
   const fb = useFieldbook();
   const owner = accountId();
-  const [catalogStatus, setCatalogStatus] = useState('ready');
+  const savedEntryIds = JSON.stringify((fb.state.vocabulary || []).filter(entry=>!entry.tags.includes('archived')).map(entry=>entry.id).sort());
+  const catalogKey = JSON.stringify([owner,savedEntryIds]);
+  const [catalogLoad, setCatalogLoad] = useState({key:catalogKey,status:fb.loadVocabularyCatalog?'loading':'ready'});
+  const catalogStatus = fb.loadVocabularyCatalog ? catalogLoad.key===catalogKey ? catalogLoad.status : 'loading' : 'ready';
   const [retry, setRetry] = useState(0);
+  const [practiceClock, setPracticeClock] = useState(0);
   useEffect(() => {
     if (!fb.loadVocabularyCatalog) return;
-    let active = true; setCatalogStatus('loading');
-    Promise.resolve(fb.loadVocabularyCatalog(undefined, { force: retry > 0 })).then(result => {
-      if (active && accountId() === owner) setCatalogStatus(result === false ? 'error' : 'ready');
-    }, () => { if (active && accountId() === owner) setCatalogStatus('error'); });
+    let active = true; setCatalogLoad({key:catalogKey,status:'loading'});
+    const entryIds = JSON.parse(savedEntryIds);
+    Promise.all([
+      fb.loadVocabularyCatalog(undefined, { force: retry > 0 }),
+      entryIds.length ? loadReleasedVocabularyTeaching({entryIds,allowMissingEntryIds:true,force:retry>0}) : Promise.resolve(),
+    ]).then(([result]) => {
+      if (active && accountId() === owner) setCatalogLoad({key:catalogKey,status:result===false?'error':'ready'});
+    }, () => { if (active && accountId() === owner) setCatalogLoad({key:catalogKey,status:'error'}); });
     return () => { active = false; };
-  }, [fb.loadVocabularyCatalog, owner, retry]);
+  }, [fb.loadVocabularyCatalog, catalogKey, retry]);
+  const guidance = useMemo(()=>catalogStatus==='ready' ? getVocabularyHomePractice(fb.state) : {dueCards:[]},
+    [fb.state,catalogStatus,fb.vocabularyCatalogRevision,owner,practiceClock]);
+  useEffect(()=>{
+    if (!guidance.nextChangeAt) return;
+    const refresh = ()=>setPracticeClock(value=>value+1);
+    const onVisible = ()=>{if(document.visibilityState==='visible') refresh();};
+    const timer = window.setTimeout(refresh,Math.max(1,Math.min(Date.parse(guidance.nextChangeAt)-Date.now()+25,3600000)));
+    window.addEventListener('focus',refresh);document.addEventListener('visibilitychange',onVisible);
+    return ()=>{window.clearTimeout(timer);window.removeEventListener('focus',refresh);document.removeEventListener('visibilitychange',onVisible);};
+  },[guidance.nextChangeAt,practiceClock,owner]);
   const saved = readVocabularyDraft(owner);
   const preferences = normalizeVocabularyPreferences(fb.state.settings?.vocabulary);
   const mode = preferences.mode === 'audio' ? 'definition' : preferences.mode;
-  const dueCards = getDueVocabularyReviewQueue(fb.state);
+  const dueCards = guidance.dueCards;
   const reviewMode = dueCards.some(card => card.mode === mode) ? mode : dueCards[0]?.mode || mode;
   const due = dueCards.filter(card => card.mode === reviewMode);
   const enrollment = [...(fb.state.wordbookEnrollments || [])].sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || ''))).map(row => ({ book: VOCABULARY_CATALOG.books.find(book => book.id === row.bookId), study: bookStudy(fb.state, row.bookId) })).find(row => row.book && row.study.next);
   const nextGroup = enrollment?.study.next;
+  const suggestion = !saved && (!due.length || guidance.practice?.recommendation.reason==='recovery') ? guidance.practice : undefined;
+  const showSuggestion = suggestion && (suggestion.recommendation.status==='ready' || !nextGroup);
   const learning = nextGroup && fb.state.wordbookProgress.find(row => row.bookId === nextGroup.bookId && row.unitId === nextGroup.id)?.learning;
   const resumeParams = new URLSearchParams({ resume: 'true', mode: saved?.mode || mode });
   if (saved?.planId) resumeParams.set('planId', saved.planId);
@@ -286,18 +309,26 @@ function VocabularyHomePage() {
     if (saved.planId) params.set('planId', saved.planId);
     resumeTo = `/vocabulary/study?${params}`;
   }
-  const href = saved ? resumeTo : due.length ? `/vocabulary/review?${new URLSearchParams({ mode: reviewMode, dueOnly: 'true' })}` : nextGroup ? studyLink(nextGroup) : '/vocabulary/wordbooks';
+  const href = saved ? resumeTo : due.length ? `/vocabulary/review?${new URLSearchParams({ mode: reviewMode, dueOnly: 'true', scheduledOnly:'true' })}` : nextGroup ? studyLink(nextGroup) : '/vocabulary/wordbooks';
   const action = saved ? 'Continue session' : due.length ? 'Review due words' : nextGroup ? learning?.viewedEntryIds?.length ? 'Continue learning' : 'Start learning' : 'Study wordbooks';
   const title = saved ? 'Continue your session' : due.length ? 'Words due for review' : enrollment ? enrollment.book.title : 'Choose a wordbook';
   return <VocabularyLayout ready={catalogStatus !== 'loading'}>
     <div className="page-tools"><h2>Vocabulary</h2><Link className="btn line" to="/settings/vocabulary">Practice settings</Link></div>
     <section className="vocabulary-home-next" aria-label="Next vocabulary task">
-      <span className="vocabulary-eyebrow">{saved ? `${saved.cardIds.length} words · Session saved` : due.length ? `${due.length} ${reviewMode} cards due` : nextGroup ? `${preferences.learningBatchSize} words per batch` : 'Wordbook study'}</span>
-      <h3>{title}</h3>
-      {nextGroup && !saved && !due.length ? <p>{unitPath(enrollment.book, nextGroup, enrollment.study.hierarchy)}</p> : null}
-      {catalogStatus === 'loading' && !saved && !due.length ? <PanelLoadingState message="Loading your wordbooks..." /> : catalogStatus === 'error' && !saved && !due.length ? <StateMessage kind="error" message="Wordbooks could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16}/></Link>}
+      <span className="vocabulary-eyebrow">{saved ? `${saved.cardIds.length} words · Session saved` : showSuggestion ? 'Your saved meaning' : due.length ? `${due.length} ${reviewMode} cards due` : nextGroup ? `${preferences.learningBatchSize} words per batch` : 'Wordbook study'}</span>
+      {showSuggestion ? <>
+        <h3><Link to={`/vocabulary/entry/${encodeURIComponent(suggestion.entry.id)}?${new URLSearchParams({senseId:suggestion.sense.id,returnTo:'/vocabulary'})}`}>{suggestion.entry.term}</Link></h3>
+        <p className="vocabulary-home-meaning">{suggestion.sense.definition}</p>
+        <VocabularyNextPractice primaryAction recommendation={suggestion.recommendation} to={mode=>practiceUrl(suggestion.entry.id,suggestion.sense.id,{},'/vocabulary',mode)}/>
+        {suggestion.recommendation.status==='waiting' ? <Link className="btn line" to={nextGroup?studyLink(nextGroup):'/vocabulary/wordbooks'}>{nextGroup?'Continue learning':'Study wordbooks'}<ArrowRight size={16} aria-hidden="true"/></Link> : null}
+      </> : <>
+        <h3>{catalogStatus==='ready'||saved?title:'Your next vocabulary task'}</h3>
+        {nextGroup && !saved && !due.length && catalogStatus==='ready' ? <p>{unitPath(enrollment.book, nextGroup, enrollment.study.hierarchy)}</p> : null}
+        {catalogStatus === 'loading' && !saved ? <PanelLoadingState message="Preparing your vocabulary recommendations..." /> : catalogStatus === 'error' && !saved ? <StateMessage kind="error" message="Vocabulary recommendations could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16}/></Link>}
+        {!saved && !due.length && nextGroup && suggestion?.recommendation.status==='waiting' ? <p className="vocabulary-muted vocabulary-home-waiting">Next saved-meaning practice: <time dateTime={suggestion.recommendation.dueAt}>{new Date(suggestion.recommendation.dueAt).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</time>.</p> : null}
+      </>}
     </section>
-    <VocabularyStats values={[["Due cards", dueCards.length], ["Words to retry", getActiveWrongWords(fb.state).length], ["Saved words", (fb.state.vocabulary || []).filter(entry => !entry.tags.includes('archived')).length]]}/>
+    <VocabularyStats values={[["Due cards", catalogStatus==='ready'?dueCards.length:'…'], ["Words to retry", getActiveWrongWords(fb.state).length], ["Saved words", (fb.state.vocabulary || []).filter(entry => !entry.tags.includes('archived')).length]]}/>
     <nav className="vocabulary-home-links" aria-label="More vocabulary tasks">
       <Link to="/vocabulary/wordbooks"><BookOpen size={18} aria-hidden="true"/><span>Wordbooks</span><ArrowRight size={16} aria-hidden="true"/></Link>
       <Link to="/vocabulary/review"><RotateCcw size={18} aria-hidden="true"/><span>Review vocabulary</span><ArrowRight size={16} aria-hidden="true"/></Link>

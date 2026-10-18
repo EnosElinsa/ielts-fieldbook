@@ -3,15 +3,16 @@ import type {VocabularyMode} from '../../domain/vocabulary/types';
 import type {VocabularyNextPractice as Recommendation} from '../../domain/vocabulary/nextPractice';
 import {VocabularyLink as Link} from './VocabularyRouteLink';
 import {dateLabel,modeLabel} from './practicePresentation';
+import './vocabulary-next-practice.css';
 
-export function VocabularyNextPractice({recommendation,to,onPractice,busy=false}: {
+export function VocabularyNextPractice({recommendation,to,onPractice,busy=false,primaryAction=false}: {
   recommendation: Recommendation; to: (mode: VocabularyMode)=>string;
-  onPractice?: (mode: VocabularyMode)=>void; busy?: boolean;
+  onPractice?: (mode: VocabularyMode)=>void; busy?: boolean; primaryAction?: boolean;
 }) {
   const {status,mode,reason,dimensions,dueAt,alternatives,target}=recommendation;
   const action=(target:VocabularyMode,alternative=false)=>onPractice
-    ? <button type="button" className="btn line" disabled={busy} onClick={()=>onPractice(target)}>{busy?'Saving…':alternative?modeLabel(target):`Practise ${modeLabel(target)}`}<ArrowRight size={14} aria-hidden="true" /></button>
-    : <Link className="btn line" to={to(target)}>{alternative?modeLabel(target):`Practise ${modeLabel(target)}`}<ArrowRight size={14} aria-hidden="true" /></Link>;
+    ? <button type="button" className={`btn ${primaryAction&&!alternative?'primary':'line'}`} disabled={busy} onClick={()=>onPractice(target)}>{busy?'Saving…':alternative?modeLabel(target):`Practise ${modeLabel(target)}`}<ArrowRight size={14} aria-hidden="true" /></button>
+    : <Link className={`btn ${primaryAction&&!alternative?'primary':'line'}`} to={to(target)}>{alternative?modeLabel(target):`Practise ${modeLabel(target)}`}<ArrowRight size={14} aria-hidden="true" /></Link>;
   return <section className="vocabulary-next-practice" aria-label="Next practice">
     <h4>Next practice</h4>
     <strong>{modeLabel(mode)}</strong>

@@ -230,6 +230,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
               ? `${launchCount} ${launchCount === 1 ? 'word' : 'words'} · ${preferences.layout === "list" ? "List" : "Focus"} · ${preferences.feedback === "end" ? "Results after submission" : "Feedback during practice"}`
               : unsupportedMode ? 'No exercise is available for this meaning in this mode.' : "No words match these filters."}
           </p>
+          {!study && controller.filter.scheduledOnly ? <p className="vocabulary-muted">Only saved meanings with an existing review schedule are included.</p> : null}
           {fallbackMode ? <button type="button" className="btn line" onClick={() => changeMode(fallbackMode)}>Try {modeLabel(fallbackMode)}</button> : null}
           {study && catalogReady && !controller.batchRequest && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? <p role="status">{specialist ? <>{controller.unitQueue.eligibleWords} of {controller.unitQueue.totalWords} words have a {modeLabel(mode).toLowerCase()} exercise. This optional practice covers these words only. Choose Dictation to study the complete group.</> : <>Some words are unavailable for this mode. Reload the wordbook or choose Dictation to study the complete group.</>}</p> : null}
           <button

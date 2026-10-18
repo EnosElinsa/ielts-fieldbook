@@ -1,0 +1,7 @@
+.vocabulary-next-practice{margin:18px 0;padding:0 0 18px;border-bottom:1px solid var(--rule);overflow-wrap:anywhere;}
+.vocabulary-next-practice h4{margin:0 0 8px;}
+.vocabulary-next-practice p{margin:8px 0 12px;font-size:13px;line-height:1.65;}
+.vocabulary-next-practice .btn{min-height:44px;max-width:100%;white-space:normal;}
+.vocabulary-next-practice summary{min-height:44px;padding:12px 0;cursor:pointer;font-size:13px;}
+.vocabulary-next-practice-alternatives{display:flex;flex-wrap:wrap;gap:8px;}
+.vocabulary-next-practice summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}

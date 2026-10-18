@@ -263,12 +263,17 @@ export function getVocabularyReviewQueue(state: Partial<VocabularyStore>, filter
     const senses = selectedOnly ? (resolved.sense ? [resolved.sense] : []) : entry.senses;
     senses.forEach(sense => {
     if (filter.senseId && sense.id !== filter.senseId) return;
+    if (filter.scheduledOnly && (!raw.senses.some(saved=>saved.id===sense.id) || !sense.definition.trim())) return;
     const sources = entry.sources.filter(s => matchesVocabularySource(s, filter, sense.id));
     if ((filter.bookId || filter.unitId || filter.skill || filter.sourceType || filter.sourceId) && !sources.length) return;
     const learning = learningBySense.get(`${entry.id}:${sense.id}`);
     const modes = filter.mode ? [filter.mode] : VOCABULARY_MODES;
     modes.forEach(mode => {
       if (!supportsMode(entry, sense, mode) || (filter.dimension && !modeDimensions[mode].includes(filter.dimension))) return;
+      if (filter.scheduledOnly) {
+        const due = learning?.cards[mode]?.due || learning?.legacyProgress?.nextReviewAt;
+        if (!due || !Number.isFinite(due instanceof Date ? due.getTime() : Date.parse(String(due)))) return;
+      }
       const dueAt = validTime(learning?.cards[mode]?.due || learning?.legacyProgress?.nextReviewAt || entry.createdAt);
       if (filter.dueOnly !== false && new Date(dueAt).getTime() > at) return;
       const cardContext = sense.id === resolved.sense?.id ? resolved.context : resolveVocabularyLearningContext(raw, { ...filter, senseId: sense.id }).context;

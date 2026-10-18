@@ -22,6 +22,7 @@ import { useVocabularyReturn, vocabularyForwardState } from './VocabularyRouteLi
 import { practiceKeyboard } from "./practiceKeyboard";
 import { presentVocabularySession } from '../../domain/vocabulary/sessionPresentation';
 import { MODES, senseFor } from "./practicePresentation";
+import { loadReleasedVocabularyTeaching } from '../../storage/vocabularyCatalog';
 import { type PracticeNavigationRequest } from '../../lib/practiceNavigation';
 
 type Session = VocabularyPracticeSession;
@@ -125,6 +126,9 @@ export function useVocabularyPracticeController() {
     if (boundAssessmentMode) setMode(boundAssessmentMode);
     else if (params.get('mode') && MODES.some(item => item.value === params.get('mode'))) setMode(params.get('mode') as VocabularyPracticeMode);
   }, [location.pathname, params.toString(), session === null, boundAssessmentMode]);
+  const catalogAccount = accountId();
+  const scheduledEntryIds = !study && params.get('scheduledOnly')==='true' && dueOnly
+    ? JSON.stringify(((fb.state.vocabulary as VocabularyEntry[]) || []).filter(entry=>!entry.tags.includes('archived')).map(entry=>entry.id).sort()) : '';
   useEffect(() => {
     let active = true;
     const target = bookId === 'all' ? '' : bookId;
@@ -132,11 +136,14 @@ export function useVocabularyPracticeController() {
     const targetUnit = unitId === 'all' ? undefined : unitId;
     const targetEntry = params.get('entryId');
     const options = targetUnit || targetEntry || catalogRetry ? { ...(targetUnit ? { unitId: targetUnit } : {}), ...(targetEntry ? { entryIds: [targetEntry] } : {}), ...(catalogRetry ? { force: true } : {}) } : undefined;
-    Promise.resolve(options ? fb.loadVocabularyCatalog?.(target || undefined, options) : fb.loadVocabularyCatalog?.(target || undefined)).then(() => {
-      if (active) setCatalogStatus({ bookId: target, status: 'ready' });
+    Promise.all([
+      options ? fb.loadVocabularyCatalog?.(target || undefined, options) : fb.loadVocabularyCatalog?.(target || undefined),
+      scheduledEntryIds && typeof fb.loadVocabularyCatalog==='function' ? loadReleasedVocabularyTeaching({entryIds:JSON.parse(scheduledEntryIds),allowMissingEntryIds:true,force:catalogRetry>0}) : Promise.resolve(),
+    ]).then(([result]) => {
+      if (active && catalogAccount===accountId()) setCatalogStatus({ bookId: target, status: result===false?'error':'ready' });
     }).catch(() => { if (active) setCatalogStatus({ bookId: target, status: 'error' }); });
     return () => { active = false; };
-  }, [bookId, unitId, params.get('entryId'), catalogRetry, fb.loadVocabularyCatalog]);
+  }, [bookId, unitId, params.get('entryId'), catalogRetry, fb.loadVocabularyCatalog, scheduledEntryIds, catalogAccount]);
 
   const owned = () => mounted.current && owner.current === accountId();
   const stopAudio = useCallback(() => {
@@ -230,6 +237,7 @@ export function useVocabularyPracticeController() {
         ...(dimension !== "all" && mode !== "audio" ? { dimension } : {}),
         mode: mode === "audio" ? "dictation" : mode,
         dueOnly,
+        ...(dueOnly && params.get('scheduledOnly')==='true' ? {scheduledOnly:true} : {}),
       }) as ReviewQueueFilter,
     [
       params.toString(),
