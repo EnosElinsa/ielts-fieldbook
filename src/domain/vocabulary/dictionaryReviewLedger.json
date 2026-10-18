@@ -39138,6 +39138,365 @@
         "distinctions"
       ],
       "referenceUrl": "https://en.wiktionary.org/w/index.php?title=question&oldid=93546361"
+    },
+    {
+      "term": "request",
+      "entryId": "ve-514bb074",
+      "senseId": "kaikki:989acf0050eba13b1d",
+      "sourceHash": "a86fab877b28b01bb69fb583b932464ac67e33b769839fd86f2daa99ac7a43f7",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524",
+      "diagramReviewed": true
+    },
+    {
+      "term": "request",
+      "entryId": "ve-514bb074",
+      "senseId": "kaikki:65a69159b94234a387",
+      "sourceHash": "424423a18a11073d29eb3337905458082b62cdb31b9f71d6d9192354de3943e9",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524",
+      "diagramReviewed": true
+    },
+    {
+      "term": "request",
+      "entryId": "ve-514bb074",
+      "senseId": "kaikki:77ecd3ccf86c8738d5",
+      "sourceHash": "c9ea69a9448ac931bc246b437af7a4d2a5bdb87660e99c9077a3dabc33f6a36a",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524",
+      "diagramReviewed": true
+    },
+    {
+      "term": "request",
+      "entryId": "ve-514bb074",
+      "senseId": "kaikki:fe54b3153652dfdad4",
+      "sourceHash": "1e324e92e93b462f634be34695f4d1e22a1e8efa884955bc1fa65d120ac8b45c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524",
+      "diagramReviewed": true
+    },
+    {
+      "term": "request",
+      "entryId": "ve-514bb074",
+      "senseId": "kaikki:b8888fd21791253c50",
+      "sourceHash": "c05c895722fd623e18ee1f800ff713c664d7263c1c229cc074fa62ad054089c5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524"
+    },
+    {
+      "term": "request",
+      "entryId": "ve-514bb074",
+      "senseId": "kaikki:bb8edf8212b2def262",
+      "sourceHash": "86f314d9adc660d2ec210372fce304e82d1f98edb5aadcfd74dc53b2099a5c37",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524",
+      "diagramReviewed": true
+    },
+    {
+      "term": "request",
+      "entryId": "ve-514bb074",
+      "senseId": "kaikki:935123ec41258f2967",
+      "sourceHash": "7a9a2ba78ad71a6dd9a6403f4338c353db2ad520902607c254038775f8459ad1",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524"
+    },
+    {
+      "term": "demand",
+      "entryId": "ve-42d57922",
+      "senseId": "kaikki:5518ddd6d9f2bbccc6",
+      "sourceHash": "bb2abbeff90c87972de07734dd26a769b6010a3791219b36f73e70336af2286d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+      "diagramReviewed": true
+    },
+    {
+      "term": "demand",
+      "entryId": "ve-42d57922",
+      "senseId": "kaikki:ebe66ead1a3d1ffc4f",
+      "sourceHash": "47e52e1ecf2e9d9570de764e672dd81c215770657317433b8aa652fee608a8bf",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+      "diagramReviewed": true
+    },
+    {
+      "term": "demand",
+      "entryId": "ve-42d57922",
+      "senseId": "kaikki:8613b4db054ab34e2b",
+      "sourceHash": "23a2206713c38f8ac06148a20874330ab20273b46ed47fb2df7addb327024834",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+      "diagramReviewed": true
+    },
+    {
+      "term": "demand",
+      "entryId": "ve-42d57922",
+      "senseId": "kaikki:ada75a632fd304ddcd",
+      "sourceHash": "9d30736fc95902e7a18af7b02ecc43d55885d7d397e150bb015bc3a64880c4ef",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+      "diagramReviewed": true
+    },
+    {
+      "term": "demand",
+      "entryId": "ve-42d57922",
+      "senseId": "kaikki:c7ef6619c717856055",
+      "sourceHash": "2dca4ba780ad372873de4c5f1c70451b58c5b1a38f750792dc7727a89c69b0e5",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+      "diagramReviewed": true
+    },
+    {
+      "term": "demand",
+      "entryId": "ve-42d57922",
+      "senseId": "kaikki:cc9d82b8eb2a974369",
+      "sourceHash": "a2e7cf625ec3261b64a24e4f63b67190c4f6f9087c49385d7727339709d4f8c0",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+      "diagramReviewed": true
+    },
+    {
+      "term": "demand",
+      "entryId": "ve-42d57922",
+      "senseId": "kaikki:781466710249810c67",
+      "sourceHash": "d0753afddf002baf75df3b9c0e7edeb6183a1ad918c0a1f7200600e7fa01d911",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+      "diagramReviewed": true
+    },
+    {
+      "term": "demand",
+      "entryId": "ve-42d57922",
+      "senseId": "kaikki:74f0cd441f27a45f4a",
+      "sourceHash": "e95f5e8a3bd7496aeb43cbd7b143e75183f5ca56e900d5e0629743771fcf13ed",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+      "diagramReviewed": true
+    },
+    {
+      "term": "demand",
+      "entryId": "ve-42d57922",
+      "senseId": "kaikki:a3ec29bd46fb237094",
+      "sourceHash": "ab22631124b2de3f95cd132426f972be275a6ef06afccbd02618d05587d491c8",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+      "diagramReviewed": true
+    },
+    {
+      "term": "demand",
+      "entryId": "ve-42d57922",
+      "senseId": "kaikki:c8940a61973b5e3b85",
+      "sourceHash": "ff06e653ef724fbf6e0bf114209282952bd4681360afa9ddd633c25af7bf2aae",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+      "diagramReviewed": true
+    },
+    {
+      "term": "demand",
+      "entryId": "ve-42d57922",
+      "senseId": "kaikki:1029e59362c5e8fd29",
+      "sourceHash": "15c660887a952e42f3b31b23f90549dfa7fbdc9d2f8f9b3f036899d44f09f7c6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+      "diagramReviewed": true
+    },
+    {
+      "term": "demand",
+      "entryId": "ve-42d57922",
+      "senseId": "kaikki:38604e015a16b357a2",
+      "sourceHash": "180384b9aa6376dae244632dc30519e60d7b1cef1a6f1e4bb18aaa0588144e74",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411"
+    },
+    {
+      "term": "require",
+      "entryId": "ve-514be348",
+      "senseId": "kaikki:adf2e26204bea60e7e",
+      "sourceHash": "6d67e716dfcb4e421f059b0fc494c5a734d1a70ac693818b74b419fec05e40d6",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=require&oldid=91127894",
+      "diagramReviewed": true
+    },
+    {
+      "term": "require",
+      "entryId": "ve-514be348",
+      "senseId": "kaikki:edd37941df19e9ce7c",
+      "sourceHash": "3039cad6d6c81ba09304d9d9cd8cac4815fa934c8eda9c17824aec347d3743fa",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=require&oldid=91127894",
+      "diagramReviewed": true
+    },
+    {
+      "term": "require",
+      "entryId": "ve-514be348",
+      "senseId": "kaikki:2f8e149771e667ee3c",
+      "sourceHash": "04f115cf30e608bbddfabc657bf2e9c806fdd8d4813e9ca33b7aa92571dfd954",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=require&oldid=91127894",
+      "diagramReviewed": true
+    },
+    {
+      "term": "require",
+      "entryId": "ve-514be348",
+      "senseId": "kaikki:589eec4d72aa5bc180",
+      "sourceHash": "1974c773e45c3afd072f2bb4e14c95a50d0870a09620ca3c20a085dcd5cb6864",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=require&oldid=91127894"
+    },
+    {
+      "term": "insist",
+      "entryId": "ve-5fb465ff",
+      "senseId": "kaikki:86bb59f67bcf3ecccc",
+      "sourceHash": "3508668f26708866adf791c0e182070b8cbc4316bc0b83146a25ab601a253348",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insist&oldid=92699719",
+      "diagramReviewed": true
+    },
+    {
+      "term": "insist",
+      "entryId": "ve-5fb465ff",
+      "senseId": "kaikki:6eeba922d4291e1208",
+      "sourceHash": "0f0b2f769f31d7793db939d5d4b0735732046f0774187878a8939aeaef9fc11d",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insist&oldid=92699719",
+      "diagramReviewed": true
+    },
+    {
+      "term": "insist",
+      "entryId": "ve-5fb465ff",
+      "senseId": "kaikki:8e713ac9fe32dd5480",
+      "sourceHash": "736a15a5a1b9bbee21fb7283d3c97e9bef0aba6b764e5d06d72b50069fd1352c",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ],
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insist&oldid=92699719"
     }
   ]
 }

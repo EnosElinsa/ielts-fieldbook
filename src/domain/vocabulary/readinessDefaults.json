@@ -24543,5 +24543,285 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-514bb074",
+    "originalSense": {
+      "id": "kaikki:989acf0050eba13b1d",
+      "definition": "To ask for (something).",
+      "example": "The corporal requested reinforcements.",
+      "pos": "verb",
+      "synonyms": [
+        "desire"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "nonrequested",
+        "requestable",
+        "requestee",
+        "requester",
+        "requestingly",
+        "requestive",
+        "requestor",
+        "unrequested"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/request#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:989acf0050eba13b1d",
+      "definition": "To ask for something.",
+      "example": "Please request a printed copy if you need one.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "request a copy",
+        "request permission",
+        "request that + clause"
+      ],
+      "usage": "Often formal. Asking for something does not establish that it will be supplied.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/request#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Request a copy uses the thing requested as a direct object. Request for a copy is a noun phrase, not the same verb construction."
+      ],
+      "distinctionTask": {
+        "prompt": "With request as a verb, the ordinary construction is _____.",
+        "options": [
+          "request a printed copy",
+          "request for a printed copy"
+        ],
+        "answer": "request a printed copy",
+        "explanation": "The thing requested is the direct object of the verb. A request for a copy is a noun construction."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-42d57922",
+    "originalSense": {
+      "id": "kaikki:5518ddd6d9f2bbccc6",
+      "definition": "The desire to purchase goods and services.",
+      "example": "Prices usually go up when demand exceeds supply.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:5518ddd6d9f2bbccc6",
+      "definition": "The desire to buy goods or services.",
+      "example": "Demand for train travel may rise during the holiday season.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "demand for travel",
+        "rising demand",
+        "meet demand"
+      ],
+      "usage": "General commercial noun. The separately listed economics sense makes willingness and ability to buy at a price explicit.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Demand here concerns wanting to buy travel. May rise expresses a possibility, not a measured increase or a universal prediction about prices."
+      ],
+      "distinctionTask": {
+        "prompt": "Demand for train travel may rise during the holidays. This reports _____.",
+        "options": [
+          "a possible increase in desire to buy travel",
+          "an already measured rise in every ticket price"
+        ],
+        "answer": "a possible increase in desire to buy travel",
+        "explanation": "May rise is a possibility about buying interest, not an observed price result."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-514be348",
+    "originalSense": {
+      "id": "kaikki:edd37941df19e9ce7c",
+      "definition": "Naturally to demand (something) as indispensable; to need, to call for as necessary.",
+      "example": "Chronic pain is occasionally a sign of a very serious problem, like brain tumors, and can require surgery.",
+      "pos": "verb",
+      "synonyms": [
+        "ask",
+        "call for",
+        "exact"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "desperate times require desperate measures",
+        "extraordinary claims require extraordinary evidence",
+        "prerequire",
+        "requirability",
+        "requirable",
+        "require improvement",
+        "unrequire"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/require#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:edd37941df19e9ce7c",
+      "definition": "To need something as necessary or indispensable.",
+      "example": "These plants require plenty of light to grow.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "require light",
+        "require attention",
+        "require maintenance"
+      ],
+      "usage": "Necessity sense. Require and need overlap here; requiring something does not mean it has already been supplied.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/require#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The plants need light; they do not issue a spoken order. The example does not claim that light alone guarantees healthy growth."
+      ],
+      "distinctionTask": {
+        "prompt": "Plants require plenty of light. They _____.",
+        "options": [
+          "need light",
+          "verbally order someone to provide it"
+        ],
+        "answer": "need light",
+        "explanation": "The subject is a plant; require expresses a necessity rather than a spoken demand."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-5fb465ff",
+    "originalSense": {
+      "id": "kaikki:86bb59f67bcf3ecccc",
+      "definition": "To hold up a claim emphatically.",
+      "example": "The defendant insisted on his innocence.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "overinsist"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/insist#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:86bb59f67bcf3ecccc",
+      "definition": "To assert or maintain a claim emphatically.",
+      "example": "I insist that the report is accurate.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "insist that + statement",
+        "insist on one’s innocence",
+        "insist upon a claim"
+      ],
+      "usage": "Assertion sense. In this example the indicative is accurate reports the speaker’s claim; compare a demand that someone act. Context matters, and not every that clause has the same form.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/insist#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The speaker emphatically asserts that the report is accurate. Insistence does not independently verify its accuracy."
+      ],
+      "distinctionTask": {
+        "prompt": "I insist that the report is accurate expresses _____.",
+        "options": [
+          "an emphatic assertion",
+          "independent proof of accuracy"
+        ],
+        "answer": "an emphatic assertion",
+        "explanation": "The speaker maintains a claim; insist does not verify it."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

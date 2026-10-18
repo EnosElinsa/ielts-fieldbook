@@ -228022,5 +228022,1738 @@
     "antonyms": [],
     "wordFamily": [],
     "register": ""
+  },
+  {
+    "entryId": "ve-514bb074",
+    "senseId": "kaikki:989acf0050eba13b1d",
+    "definition": "To ask for something.",
+    "example": "Please request a printed copy if you need one.",
+    "collocations": [
+      "request a copy",
+      "request permission",
+      "request that + clause"
+    ],
+    "distinctions": [
+      "Request a copy uses the thing requested as a direct object. Request for a copy is a noun phrase, not the same verb construction."
+    ],
+    "usage": "Often formal. Asking for something does not establish that it will be supplied.",
+    "originalSense": {
+      "id": "kaikki:989acf0050eba13b1d",
+      "definition": "To ask for (something).",
+      "example": "The corporal requested reinforcements.",
+      "pos": "verb",
+      "synonyms": [
+        "desire"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "nonrequested",
+        "requestable",
+        "requestee",
+        "requester",
+        "requestingly",
+        "requestive",
+        "requestor",
+        "unrequested"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/request#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524",
+    "distinctionTask": {
+      "prompt": "With request as a verb, the ordinary construction is _____.",
+      "options": [
+        "request a printed copy",
+        "request for a printed copy"
+      ],
+      "answer": "request a printed copy",
+      "explanation": "The thing requested is the direct object of the verb. A request for a copy is a noun construction."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-514bb074",
+    "senseId": "kaikki:65a69159b94234a387",
+    "definition": "To ask someone to do something.",
+    "example": "We request visitors to keep the entrance clear.",
+    "collocations": [
+      "request someone to do something",
+      "request that someone do something",
+      "request visitors to wait"
+    ],
+    "distinctions": [
+      "Request visitors to keep the entrance clear is a formal construction. It states what visitors are asked to do, without reporting their compliance."
+    ],
+    "usage": "Transitive person-object sense. A that clause is also possible; the choice does not create a universal difference in politeness.",
+    "originalSense": {
+      "id": "kaikki:65a69159b94234a387",
+      "definition": "To ask (somebody) to do something.",
+      "example": "She called me into her office and requested me to sit down.",
+      "pos": "verb",
+      "synonyms": [
+        "ask",
+        "bespeak",
+        "call for"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "nonrequested",
+        "requestable",
+        "requestee",
+        "requester",
+        "requestingly",
+        "requestive",
+        "requestor",
+        "unrequested"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/request#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524",
+    "distinctionTask": {
+      "prompt": "We request visitors to keep the entrance clear. The sentence _____.",
+      "options": [
+        "asks visitors to take an action",
+        "reports that every visitor complied"
+      ],
+      "answer": "asks visitors to take an action",
+      "explanation": "A request describes what is asked, not an already completed action."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-514bb074",
+    "senseId": "kaikki:77ecd3ccf86c8738d5",
+    "definition": "The act of asking for something or for an action.",
+    "example": "At the request of the residents, the council arranged a public meeting.",
+    "collocations": [
+      "at someone’s request",
+      "at the request of someone",
+      "on request"
+    ],
+    "distinctions": [
+      "At the request of the residents identifies who asked. On request means when asked; these are real constructions, not a rule that at always requires a possessive directly after it."
+    ],
+    "usage": "Noun for the act of asking. The source’s abbreviated preposition note should not be read as a ban on at the request of.",
+    "originalSense": {
+      "id": "kaikki:77ecd3ccf86c8738d5",
+      "definition": "Act of requesting (with the adposition at in the presence of possessives, and on in their absence).",
+      "example": "I will marry her, sir, at your request.",
+      "pos": "noun",
+      "synonyms": [
+        "asking",
+        "beseech",
+        "prayer",
+        "wish"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "nonrequested",
+        "requestable",
+        "requestee",
+        "requester",
+        "requestingly",
+        "requestive",
+        "requestor",
+        "unrequested",
+        "discovery request",
+        "merge request",
+        "multirequest",
+        "pull request",
+        "request for admission",
+        "request for comments",
+        "request for production",
+        "request for quotation",
+        "requestman",
+        "subrequest"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/request#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524",
+    "distinctionTask": {
+      "prompt": "At the request of the residents identifies _____.",
+      "options": [
+        "the people who asked for the meeting",
+        "a rule banning of after the request"
+      ],
+      "answer": "the people who asked for the meeting",
+      "explanation": "At the request of someone is an established construction and identifies the requester."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-514bb074",
+    "senseId": "kaikki:fe54b3153652dfdad4",
+    "definition": "A formal message asking for something.",
+    "example": "Her written request for leave is still awaiting a decision.",
+    "collocations": [
+      "a written request",
+      "submit a request",
+      "a request for leave"
+    ],
+    "distinctions": [
+      "The request is the message asking for leave. Awaiting a decision means that approval has not been reported."
+    ],
+    "usage": "Countable message noun. A request may be granted or refused; its submission alone settles neither.",
+    "originalSense": {
+      "id": "kaikki:fe54b3153652dfdad4",
+      "definition": "A formal message requesting something.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "petition",
+        "postulation"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "nonrequested",
+        "requestable",
+        "requestee",
+        "requester",
+        "requestingly",
+        "requestive",
+        "requestor",
+        "unrequested",
+        "discovery request",
+        "merge request",
+        "multirequest",
+        "pull request",
+        "request for admission",
+        "request for comments",
+        "request for production",
+        "request for quotation",
+        "requestman",
+        "subrequest"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/request#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524",
+    "distinctionTask": {
+      "prompt": "A written request for leave is awaiting a decision. It is _____.",
+      "options": [
+        "a formal message asking for leave",
+        "permission that has already been granted"
+      ],
+      "answer": "a formal message asking for leave",
+      "explanation": "The message is pending; approval is not reported."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-514bb074",
+    "senseId": "kaikki:b8888fd21791253c50",
+    "definition": "The condition of being sought after.",
+    "example": "In the source’s older quotation, knowledge and fame are in great request: they are much sought after. This noun does not name a particular written application.",
+    "collocations": [
+      "in great request",
+      "much sought after",
+      "knowledge and fame"
+    ],
+    "distinctions": [
+      "In request describes being sought after. The old quotation does not itself label every occurrence of this sense obsolete."
+    ],
+    "usage": "Retained source sense with an older quotation and no obsolete label in the checked revision. This is a reading explanation rather than a new everyday example.",
+    "originalSense": {
+      "id": "kaikki:b8888fd21791253c50",
+      "definition": "Condition of being sought after.",
+      "example": "I do not doubt, but many Great and more Noble Uſes would have been made of ſuch Conqueſts or Diſcoveries, if they had fallen to the ſhare of the Greeks and Romans in thoſe Ages, when Knowledge and Fame were in as great Requeſt, as endleſs Gains and Wealth are among us now; [...]",
+      "pos": "noun",
+      "synonyms": [
+        "demand"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "nonrequested",
+        "requestable",
+        "requestee",
+        "requester",
+        "requestingly",
+        "requestive",
+        "requestor",
+        "unrequested",
+        "discovery request",
+        "merge request",
+        "multirequest",
+        "pull request",
+        "request for admission",
+        "request for comments",
+        "request for production",
+        "request for quotation",
+        "requestman",
+        "subrequest"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/request#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-514bb074",
+    "senseId": "kaikki:bb8edf8212b2def262",
+    "definition": "A message sent over a network to a server.",
+    "example": "The server returned a 404 response to the request for a missing page.",
+    "collocations": [
+      "an HTTP request",
+      "send a request",
+      "a server response"
+    ],
+    "distinctions": [
+      "The request is the message sent to the server. A 404 response reports that the requested resource was not found; sending a request does not guarantee success."
+    ],
+    "usage": "Computing noun. Request and response identify opposite directions of the exchange; a failed result is still a response.",
+    "originalSense": {
+      "id": "kaikki:bb8edf8212b2def262",
+      "definition": "A message sent over a network to a server.",
+      "example": "The server returned a 404 error to the HTTP request.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "nonrequested",
+        "requestable",
+        "requestee",
+        "requester",
+        "requestingly",
+        "requestive",
+        "requestor",
+        "unrequested",
+        "discovery request",
+        "merge request",
+        "multirequest",
+        "pull request",
+        "request for admission",
+        "request for comments",
+        "request for production",
+        "request for quotation",
+        "requestman",
+        "subrequest"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/request#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524",
+    "distinctionTask": {
+      "prompt": "A server returned 404 to a request for a missing page. The request is _____.",
+      "options": [
+        "the message sent to the server",
+        "proof that the page was successfully delivered"
+      ],
+      "answer": "the message sent to the server",
+      "explanation": "The request travels to the server; the response here reports a missing resource."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-514bb074",
+    "senseId": "kaikki:935123ec41258f2967",
+    "definition": "Something that is asked for or requested.",
+    "example": "In the source’s obsolete noun sense, giving people their request means giving them the thing they asked for. Request names that thing, rather than only the act or message of asking.",
+    "collocations": [
+      "give someone their request",
+      "the thing requested",
+      "grant what was asked for"
+    ],
+    "distinctions": [
+      "This source-labelled obsolete meaning concerns the requested thing. It should not make the modern act-of-asking or message senses appear obsolete."
+    ],
+    "usage": "Obsolete noun in the checked source. Retained for reading, with no invented modern usage example.",
+    "originalSense": {
+      "id": "kaikki:935123ec41258f2967",
+      "definition": "That which is asked for or requested.",
+      "example": "He gave them their request.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "nonrequested",
+        "requestable",
+        "requestee",
+        "requester",
+        "requestingly",
+        "requestive",
+        "requestor",
+        "unrequested",
+        "discovery request",
+        "merge request",
+        "multirequest",
+        "pull request",
+        "request for admission",
+        "request for comments",
+        "request for production",
+        "request for quotation",
+        "requestman",
+        "subrequest"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/request#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=request&oldid=93045524",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:5518ddd6d9f2bbccc6",
+    "definition": "The desire to buy goods or services.",
+    "example": "Demand for train travel may rise during the holiday season.",
+    "collocations": [
+      "demand for travel",
+      "rising demand",
+      "meet demand"
+    ],
+    "distinctions": [
+      "Demand here concerns wanting to buy travel. May rise expresses a possibility, not a measured increase or a universal prediction about prices."
+    ],
+    "usage": "General commercial noun. The separately listed economics sense makes willingness and ability to buy at a price explicit.",
+    "originalSense": {
+      "id": "kaikki:5518ddd6d9f2bbccc6",
+      "definition": "The desire to purchase goods and services.",
+      "example": "Prices usually go up when demand exceeds supply.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+    "distinctionTask": {
+      "prompt": "Demand for train travel may rise during the holidays. This reports _____.",
+      "options": [
+        "a possible increase in desire to buy travel",
+        "an already measured rise in every ticket price"
+      ],
+      "answer": "a possible increase in desire to buy travel",
+      "explanation": "May rise is a possibility about buying interest, not an observed price result."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:ebe66ead1a3d1ffc4f",
+    "definition": "Willingness and ability to buy a good or service at given prices, or the quantity buyers are willing and able to buy at a particular price.",
+    "example": "At £5 per ticket, weekly demand is 200 tickets in this market.",
+    "collocations": [
+      "market demand",
+      "quantity demanded",
+      "a demand curve"
+    ],
+    "distinctions": [
+      "The example fixes both price and period. Quantity demanded at one price differs from the full demand relationship; a price change alone is not a shift of the whole demand curve."
+    ],
+    "usage": "Economics noun. Desire alone is insufficient: buyers must also be able to buy. The number is an illustrative market condition, not a recorded sale.",
+    "originalSense": {
+      "id": "kaikki:ebe66ead1a3d1ffc4f",
+      "definition": "The market force that causes buyers to be both willing and able to buy a good or service, as measured by the amount of that good or service that is currently salable at any given price point; the amount itself.",
+      "example": "Supply and demand ebb and flow in a complex interplay.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "supply"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+    "distinctionTask": {
+      "prompt": "At £5, weekly demand is 200 tickets. This quantity concerns buyers _____.",
+      "options": [
+        "willing and able to buy at that price",
+        "who merely wish for tickets but cannot buy any"
+      ],
+      "answer": "willing and able to buy at that price",
+      "explanation": "Economic demand includes willingness and ability. The stated quantity belongs to the given price and period."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:8613b4db054ab34e2b",
+    "definition": "A forceful claim for something.",
+    "example": "Their demand for equal access remains under discussion.",
+    "collocations": [
+      "a demand for equality",
+      "make a demand",
+      "meet a demand"
+    ],
+    "distinctions": [
+      "Demand names a forcefully expressed claim. Under discussion does not report that equal access has already been achieved."
+    ],
+    "usage": "Countable claim noun. Forcefulness does not independently settle whether a claimed entitlement is legally established.",
+    "originalSense": {
+      "id": "kaikki:8613b4db054ab34e2b",
+      "definition": "A forceful claim for something.",
+      "example": "Modern society is responding to women's demands for equality.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+    "distinctionTask": {
+      "prompt": "Their demand for equal access remains under discussion. The sentence reports _____.",
+      "options": [
+        "a claim still being considered",
+        "equal access already achieved"
+      ],
+      "answer": "a claim still being considered",
+      "explanation": "A demand and discussion do not establish the requested result."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:ada75a632fd304ddcd",
+    "definition": "A requirement or need that calls for resources or effort.",
+    "example": "The demand on her time leaves little room for hobbies.",
+    "collocations": [
+      "a demand on someone’s time",
+      "meet a demand",
+      "a heavy demand"
+    ],
+    "distinctions": [
+      "On introduces the resource being called upon: her time. This is a requirement consuming time, rather than a customer’s desire to buy a product."
+    ],
+    "usage": "Requirement noun. The plural demands is also common, but this example supplies the singular form for its particular need.",
+    "originalSense": {
+      "id": "kaikki:ada75a632fd304ddcd",
+      "definition": "A requirement.",
+      "example": "His job makes many demands on his time.",
+      "pos": "noun",
+      "synonyms": [
+        "call",
+        "imposition"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+    "distinctionTask": {
+      "prompt": "A demand on her time is _____.",
+      "options": [
+        "a requirement using her time",
+        "necessarily a desire to buy a product"
+      ],
+      "answer": "a requirement using her time",
+      "explanation": "On her time identifies the resource required."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:c7ef6619c717856055",
+    "definition": "An urgent request.",
+    "example": "His urgent demand for help interrupted the meeting.",
+    "collocations": [
+      "an urgent demand",
+      "a demand for help",
+      "respond to a demand"
+    ],
+    "distinctions": [
+      "Urgent demand for help names an immediate request. It does not by itself report a binding official order or successful assistance."
+    ],
+    "usage": "Urgent-request noun. This sense can overlap with forceful asking; context supplies the urgency rather than an absolute rule about the speaker’s authority.",
+    "originalSense": {
+      "id": "kaikki:c7ef6619c717856055",
+      "definition": "An urgent request.",
+      "example": "She couldn't ignore the newborn baby's demands for attention.",
+      "pos": "noun",
+      "synonyms": [
+        "call"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+    "distinctionTask": {
+      "prompt": "An urgent demand for help is _____.",
+      "options": [
+        "an immediate request for assistance",
+        "proof that assistance has already arrived"
+      ],
+      "answer": "an immediate request for assistance",
+      "explanation": "Urgency concerns the request; it does not establish its fulfilment."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:cc9d82b8eb2a974369",
+    "definition": "An order requiring something to be done.",
+    "example": "The official demand to leave the building was delivered to the occupants.",
+    "collocations": [
+      "an official demand",
+      "a demand to leave",
+      "comply with a demand"
+    ],
+    "distinctions": [
+      "The demand is an order to leave. Delivered reports receipt of the order, not that the occupants have left."
+    ],
+    "usage": "Order noun. Whether the order is lawful or enforceable depends on context and is not established by the word alone.",
+    "originalSense": {
+      "id": "kaikki:cc9d82b8eb2a974369",
+      "definition": "An order.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+    "distinctionTask": {
+      "prompt": "An official demand to leave was delivered. The sentence reports _____.",
+      "options": [
+        "delivery of an order",
+        "completed departure of all occupants"
+      ],
+      "answer": "delivery of an order",
+      "explanation": "Issuing or delivering an order does not report compliance."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:781466710249810c67",
+    "definition": "The rate of electrical energy use or delivery; peak demand is the maximum power load measured under the stated conditions.",
+    "example": "The workshop’s peak demand was 20 kW during the monitored period.",
+    "collocations": [
+      "electricity demand",
+      "peak demand",
+      "a demand charge"
+    ],
+    "distinctions": [
+      "kW measures power, a rate; kWh measures energy. A 20 kW peak does not establish that the workshop used 20 kWh or held that load for a full hour."
+    ],
+    "usage": "Electricity-supply noun. The preserved source conflates power with power integrated over time; the latter is energy. Metering and billing intervals depend on the measurement or tariff, not a universal duration. The example does not assume a particular interval.",
+    "originalSense": {
+      "id": "kaikki:781466710249810c67",
+      "definition": "More precisely peak demand or peak load, a measure of the maximum power load of a utility's customer over a short period of time; the power load integrated over a specified time interval.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+    "distinctionTask": {
+      "prompt": "A workshop’s peak demand was 20 kW. This is _____.",
+      "options": [
+        "a power measurement",
+        "an energy total of 20 kWh"
+      ],
+      "answer": "a power measurement",
+      "explanation": "kW is power. Energy depends on power over time and is measured in kWh, so the peak alone does not give the energy total."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:74f0cd441f27a45f4a",
+    "definition": "To ask for something forcefully.",
+    "example": "I demand to see the manager.",
+    "collocations": [
+      "demand to do something",
+      "demand an explanation",
+      "demand that someone act"
+    ],
+    "distinctions": [
+      "Demand to see uses an infinitive with the requester as the person who wants to see. It does not report that a meeting has been granted."
+    ],
+    "usage": "Forceful-request verb. Request can also express asking in some contexts; the words are not always mutually exclusive choices.",
+    "originalSense": {
+      "id": "kaikki:74f0cd441f27a45f4a",
+      "definition": "To request forcefully.",
+      "example": "I demand to see the manager.",
+      "pos": "verb",
+      "synonyms": [
+        "call for",
+        "insist",
+        "stipulate"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+    "distinctionTask": {
+      "prompt": "I demand to see the manager expresses _____.",
+      "options": [
+        "a forceful request for a meeting",
+        "confirmation that the manager has agreed"
+      ],
+      "answer": "a forceful request for a meeting",
+      "explanation": "The request does not establish that the meeting has been granted."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:a3ec29bd46fb237094",
+    "definition": "To claim something as a right.",
+    "example": "The owners demand payment under the contract.",
+    "collocations": [
+      "demand payment",
+      "demand repayment",
+      "demand something as a right"
+    ],
+    "distinctions": [
+      "They claim payment as an entitlement under the contract. The sentence does not independently establish that the claim is valid or that payment was made."
+    ],
+    "usage": "Right-claiming verb. A claimed right and a court’s determination of that right are different matters.",
+    "originalSense": {
+      "id": "kaikki:a3ec29bd46fb237094",
+      "definition": "To claim a right to something.",
+      "example": "The bank is demanding the mortgage payment.",
+      "pos": "verb",
+      "synonyms": [
+        "call for",
+        "insist",
+        "stipulate"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+    "distinctionTask": {
+      "prompt": "The owners demand payment under a contract. This tells us _____.",
+      "options": [
+        "they claim a right to payment",
+        "a court has already upheld their claim"
+      ],
+      "answer": "they claim a right to payment",
+      "explanation": "Claiming a right is separate from a judgment and from receiving payment."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:c8940a61973b5e3b85",
+    "definition": "To ask forcefully for information.",
+    "example": "We demand to know why the service was cancelled.",
+    "collocations": [
+      "demand to know why",
+      "demand an explanation",
+      "demand an answer"
+    ],
+    "distinctions": [
+      "To know why introduces the information being sought. Asking forcefully does not itself supply the explanation."
+    ],
+    "usage": "Information-seeking verb. This overlaps with forceful requesting but specifically concerns an answer or explanation.",
+    "originalSense": {
+      "id": "kaikki:c8940a61973b5e3b85",
+      "definition": "To ask forcefully for information.",
+      "example": "I demand an immediate explanation.",
+      "pos": "verb",
+      "synonyms": [
+        "frain"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+    "distinctionTask": {
+      "prompt": "We demand to know why a service was cancelled. We are _____.",
+      "options": [
+        "forcefully asking for an explanation",
+        "already giving the explanation"
+      ],
+      "answer": "forcefully asking for an explanation",
+      "explanation": "To know why identifies the information sought."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:1029e59362c5e8fd29",
+    "definition": "To require something from someone as necessary.",
+    "example": "Tasks like this demand patience from the team.",
+    "collocations": [
+      "demand patience",
+      "demand concentration",
+      "demand something from someone"
+    ],
+    "distinctions": [
+      "The task requires patience. A task need not speak, make a legal claim or place a customer order to demand something."
+    ],
+    "usage": "Necessity verb. Demand and require overlap in this use; no uniquely correct choice between them is invented.",
+    "originalSense": {
+      "id": "kaikki:1029e59362c5e8fd29",
+      "definition": "To require of someone.",
+      "example": "This job demands a lot of patience.",
+      "pos": "verb",
+      "synonyms": [
+        "call for",
+        "insist",
+        "stipulate"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+    "distinctionTask": {
+      "prompt": "Tasks like this demand patience means that they _____.",
+      "options": [
+        "require patience",
+        "speak an order aloud"
+      ],
+      "answer": "require patience",
+      "explanation": "The necessity sense does not require an intentional speaking subject."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:38604e015a16b357a2",
+    "definition": "To summon someone to court.",
+    "example": "In this legal verb sense, demand means to issue a summons to court. The summons calls a person to appear; it is not itself a judgment establishing liability.",
+    "collocations": [
+      "a court summons",
+      "summon to court",
+      "require an appearance"
+    ],
+    "distinctions": [
+      "This source meaning is about a summons, separate from demanding payment or deciding the outcome of a case."
+    ],
+    "usage": "Legal verb retained from the checked source, which supplies no usage quotation or historical label for this record. Reading guidance avoids inventing a modern procedural example.",
+    "originalSense": {
+      "id": "kaikki:38604e015a16b357a2",
+      "definition": "To issue a summons to court.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "call for",
+        "insist",
+        "stipulate"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "composite demand",
+        "counterdemand",
+        "cross elasticity of demand",
+        "cross-price elasticity of demand",
+        "deficient-demand unemployment",
+        "demand account",
+        "demand characteristic",
+        "demand curve",
+        "demand-deficient unemployment",
+        "demand deposit",
+        "demand destruction",
+        "demand draft",
+        "demand-driven",
+        "demand letter",
+        "demand note",
+        "demand paging",
+        "demand partner",
+        "demand planning",
+        "demand-pull inflation",
+        "demand side",
+        "demand valve",
+        "income elasticity of demand",
+        "in demand",
+        "law of demand",
+        "nondemand",
+        "on-demand",
+        "on demand",
+        "overdemand"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/demand#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=demand&oldid=92761411",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-514be348",
+    "senseId": "kaikki:adf2e26204bea60e7e",
+    "definition": "To demand or call for something authoritatively.",
+    "example": "The inspectors require immediate access to the site.",
+    "collocations": [
+      "require access",
+      "require an explanation",
+      "require compliance"
+    ],
+    "distinctions": [
+      "The inspectors authoritatively ask for access. Their requirement does not by itself report that access was provided."
+    ],
+    "usage": "Modern demand sense. The source’s first-attestation date identifies historical evidence, not an obsolete label.",
+    "originalSense": {
+      "id": "kaikki:adf2e26204bea60e7e",
+      "definition": "To demand, to insist upon (having); to call for authoritatively.",
+      "example": "\"I am Miss Newbury,\" I announced, \"and I require to be shown to my room immediately, if you please.\"",
+      "pos": "verb",
+      "synonyms": [
+        "ask",
+        "call for",
+        "exact"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "desperate times require desperate measures",
+        "extraordinary claims require extraordinary evidence",
+        "prerequire",
+        "requirability",
+        "requirable",
+        "require improvement",
+        "unrequire"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/require#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=require&oldid=91127894",
+    "distinctionTask": {
+      "prompt": "Inspectors require immediate access. This states _____.",
+      "options": [
+        "an authoritative demand for access",
+        "that access has already been provided"
+      ],
+      "answer": "an authoritative demand for access",
+      "explanation": "A requirement is distinct from its fulfilment."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-514be348",
+    "senseId": "kaikki:edd37941df19e9ce7c",
+    "definition": "To need something as necessary or indispensable.",
+    "example": "These plants require plenty of light to grow.",
+    "collocations": [
+      "require light",
+      "require attention",
+      "require maintenance"
+    ],
+    "distinctions": [
+      "The plants need light; they do not issue a spoken order. The example does not claim that light alone guarantees healthy growth."
+    ],
+    "usage": "Necessity sense. Require and need overlap here; requiring something does not mean it has already been supplied.",
+    "originalSense": {
+      "id": "kaikki:edd37941df19e9ce7c",
+      "definition": "Naturally to demand (something) as indispensable; to need, to call for as necessary.",
+      "example": "Chronic pain is occasionally a sign of a very serious problem, like brain tumors, and can require surgery.",
+      "pos": "verb",
+      "synonyms": [
+        "ask",
+        "call for",
+        "exact"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "desperate times require desperate measures",
+        "extraordinary claims require extraordinary evidence",
+        "prerequire",
+        "requirability",
+        "requirable",
+        "require improvement",
+        "unrequire"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/require#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=require&oldid=91127894",
+    "distinctionTask": {
+      "prompt": "Plants require plenty of light. They _____.",
+      "options": [
+        "need light",
+        "verbally order someone to provide it"
+      ],
+      "answer": "need light",
+      "explanation": "The subject is a plant; require expresses a necessity rather than a spoken demand."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-514be348",
+    "senseId": "kaikki:2f8e149771e667ee3c",
+    "definition": "To demand that someone perform an action.",
+    "example": "The rules require visitors to show identification.",
+    "collocations": [
+      "require someone to do something",
+      "require that someone act",
+      "be required to do something"
+    ],
+    "distinctions": [
+      "Visitors are the people who must act in require visitors to show identification. The rule states an obligation, not completed compliance."
+    ],
+    "usage": "Person-object construction with to + infinitive. This differs from demand to see, where the requester is the person who wants to see.",
+    "originalSense": {
+      "id": "kaikki:2f8e149771e667ee3c",
+      "definition": "To demand (of someone) to do something.",
+      "example": "It is required (of me) that I give evidence in court.",
+      "pos": "verb",
+      "synonyms": [
+        "provide"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "desperate times require desperate measures",
+        "extraordinary claims require extraordinary evidence",
+        "prerequire",
+        "requirability",
+        "requirable",
+        "require improvement",
+        "unrequire"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/require#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=require&oldid=91127894",
+    "distinctionTask": {
+      "prompt": "The rules require visitors to show identification. The people who must act are _____.",
+      "options": [
+        "the visitors",
+        "the rules themselves"
+      ],
+      "answer": "the visitors",
+      "explanation": "Visitors is the person object and the subject understood for to show. The rules state the obligation; the visitors perform the action."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-514be348",
+    "senseId": "kaikki:589eec4d72aa5bc180",
+    "definition": "To ask someone for something; to request or beseech.",
+    "example": "In the source’s obsolete use, require can mean request or beseech. A historical appeal using this sense need not be an authoritative order in the modern demand sense.",
+    "collocations": [
+      "require someone, in an old appeal",
+      "request or beseech",
+      "a historical plea"
+    ],
+    "distinctions": [
+      "The obsolete label belongs to this asking or beseeching meaning. It does not make modern require light or require visitors to act obsolete."
+    ],
+    "usage": "Obsolete in the checked source. The old quotations preserve historical spelling and contexts; this explanation is a reading note rather than a fabricated current example.",
+    "originalSense": {
+      "id": "kaikki:589eec4d72aa5bc180",
+      "definition": "To ask (someone) for something; to request; to beseech.",
+      "example": "I requyre yow lete vs be sworne to gyders that neuer none of vs shalle after this day haue adoo with other, and there with alle syre Tristram and sire Lamorak sware that neuer none of hem shold fyghte ageynst other nor for wele, nor for woo.",
+      "pos": "verb",
+      "synonyms": [
+        "ask",
+        "call for",
+        "exact"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "desperate times require desperate measures",
+        "extraordinary claims require extraordinary evidence",
+        "prerequire",
+        "requirability",
+        "requirable",
+        "require improvement",
+        "unrequire"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/require#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=require&oldid=91127894",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5fb465ff",
+    "senseId": "kaikki:86bb59f67bcf3ecccc",
+    "definition": "To assert or maintain a claim emphatically.",
+    "example": "I insist that the report is accurate.",
+    "collocations": [
+      "insist that + statement",
+      "insist on one’s innocence",
+      "insist upon a claim"
+    ],
+    "distinctions": [
+      "The speaker emphatically asserts that the report is accurate. Insistence does not independently verify its accuracy."
+    ],
+    "usage": "Assertion sense. In this example the indicative is accurate reports the speaker’s claim; compare a demand that someone act. Context matters, and not every that clause has the same form.",
+    "originalSense": {
+      "id": "kaikki:86bb59f67bcf3ecccc",
+      "definition": "To hold up a claim emphatically.",
+      "example": "The defendant insisted on his innocence.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "overinsist"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/insist#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insist&oldid=92699719",
+    "distinctionTask": {
+      "prompt": "I insist that the report is accurate expresses _____.",
+      "options": [
+        "an emphatic assertion",
+        "independent proof of accuracy"
+      ],
+      "answer": "an emphatic assertion",
+      "explanation": "The speaker maintains a claim; insist does not verify it."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5fb465ff",
+    "senseId": "kaikki:6eeba922d4291e1208",
+    "definition": "To demand persistently that something happen or be done.",
+    "example": "They insist that every visitor sign the register before entering.",
+    "collocations": [
+      "insist that someone do something",
+      "insist on doing something",
+      "insist upon a condition"
+    ],
+    "distinctions": [
+      "They demand that visitors sign. The base-form sign marks a mandative clause here; the sentence does not report that all visitors have signed."
+    ],
+    "usage": "Persistent-demand sense. Insist that every visitor should sign is also possible. Insist on + noun or -ing has a different structure; insist someone to sign is not the ordinary pattern.",
+    "originalSense": {
+      "id": "kaikki:6eeba922d4291e1208",
+      "definition": "To demand continually that something happen or be done; to reiterate a demand despite requests to abandon it.",
+      "example": "The Prime Minister insisted on his Chancellor's resignation.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "sometimes",
+      "register": "sometimes",
+      "wordFamily": [
+        "overinsist"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/insist#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insist&oldid=92699719",
+    "distinctionTask": {
+      "prompt": "They insist that every visitor sign the register. This _____.",
+      "options": [
+        "demands an action",
+        "reports that every visitor already signed"
+      ],
+      "answer": "demands an action",
+      "explanation": "Sign is a base-form verb in this mandative clause. The demand does not establish completion."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5fb465ff",
+    "senseId": "kaikki:8e713ac9fe32dd5480",
+    "definition": "To stand on, rest upon or lean upon something.",
+    "example": "In the source’s obsolete geometrical use, angles that insist on a diameter stand or rest upon it. The verb describes a geometrical relation, rather than an angle persistently asking for something.",
+    "collocations": [
+      "insist on a diameter",
+      "stand on",
+      "rest upon"
+    ],
+    "distinctions": [
+      "The source labels this standing or resting meaning obsolete and chiefly geometrical. The modern assertion and persistent-demand meanings remain separate."
+    ],
+    "usage": "Obsolete, chiefly geometry, in the checked source. The historical quotation is retained as source evidence; this reading explanation does not invent a modern demand diagram.",
+    "originalSense": {
+      "id": "kaikki:8e713ac9fe32dd5480",
+      "definition": "To stand (on); to rest (upon); to lean (upon).",
+      "example": "Angles likewise which insist on the Diameter, are all Right Angles.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "overinsist"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/insist#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insist&oldid=92699719",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]

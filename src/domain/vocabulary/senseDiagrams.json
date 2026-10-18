@@ -5654,5 +5654,173 @@
     "definition": "To ask questions, inquire or investigate.",
     "pos": "verb",
     "kind": "question-inquire"
+  },
+  {
+    "entryId": "ve-514bb074",
+    "senseId": "kaikki:989acf0050eba13b1d",
+    "term": "request",
+    "definition": "To ask for something.",
+    "pos": "verb",
+    "kind": "request-thing"
+  },
+  {
+    "entryId": "ve-514bb074",
+    "senseId": "kaikki:65a69159b94234a387",
+    "term": "request",
+    "definition": "To ask someone to do something.",
+    "pos": "verb",
+    "kind": "request-action"
+  },
+  {
+    "entryId": "ve-514bb074",
+    "senseId": "kaikki:77ecd3ccf86c8738d5",
+    "term": "request",
+    "definition": "The act of asking for something or for an action.",
+    "pos": "noun",
+    "kind": "request-act"
+  },
+  {
+    "entryId": "ve-514bb074",
+    "senseId": "kaikki:fe54b3153652dfdad4",
+    "term": "request",
+    "definition": "A formal message asking for something.",
+    "pos": "noun",
+    "kind": "request-message"
+  },
+  {
+    "entryId": "ve-514bb074",
+    "senseId": "kaikki:bb8edf8212b2def262",
+    "term": "request",
+    "definition": "A message sent over a network to a server.",
+    "pos": "noun",
+    "kind": "request-network"
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:5518ddd6d9f2bbccc6",
+    "term": "demand",
+    "definition": "The desire to buy goods or services.",
+    "pos": "noun",
+    "kind": "demand-purchase"
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:ebe66ead1a3d1ffc4f",
+    "term": "demand",
+    "definition": "Willingness and ability to buy a good or service at given prices, or the quantity buyers are willing and able to buy at a particular price.",
+    "pos": "noun",
+    "kind": "demand-economics"
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:8613b4db054ab34e2b",
+    "term": "demand",
+    "definition": "A forceful claim for something.",
+    "pos": "noun",
+    "kind": "demand-claim"
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:ada75a632fd304ddcd",
+    "term": "demand",
+    "definition": "A requirement or need that calls for resources or effort.",
+    "pos": "noun",
+    "kind": "demand-resource"
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:c7ef6619c717856055",
+    "term": "demand",
+    "definition": "An urgent request.",
+    "pos": "noun",
+    "kind": "demand-urgent"
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:cc9d82b8eb2a974369",
+    "term": "demand",
+    "definition": "An order requiring something to be done.",
+    "pos": "noun",
+    "kind": "demand-order"
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:781466710249810c67",
+    "term": "demand",
+    "definition": "The rate of electrical energy use or delivery; peak demand is the maximum power load measured under the stated conditions.",
+    "pos": "noun",
+    "kind": "demand-electricity"
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:74f0cd441f27a45f4a",
+    "term": "demand",
+    "definition": "To ask for something forcefully.",
+    "pos": "verb",
+    "kind": "demand-forceful"
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:a3ec29bd46fb237094",
+    "term": "demand",
+    "definition": "To claim something as a right.",
+    "pos": "verb",
+    "kind": "demand-right"
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:c8940a61973b5e3b85",
+    "term": "demand",
+    "definition": "To ask forcefully for information.",
+    "pos": "verb",
+    "kind": "demand-information"
+  },
+  {
+    "entryId": "ve-42d57922",
+    "senseId": "kaikki:1029e59362c5e8fd29",
+    "term": "demand",
+    "definition": "To require something from someone as necessary.",
+    "pos": "verb",
+    "kind": "demand-necessity"
+  },
+  {
+    "entryId": "ve-514be348",
+    "senseId": "kaikki:adf2e26204bea60e7e",
+    "term": "require",
+    "definition": "To demand or call for something authoritatively.",
+    "pos": "verb",
+    "kind": "require-authority"
+  },
+  {
+    "entryId": "ve-514be348",
+    "senseId": "kaikki:edd37941df19e9ce7c",
+    "term": "require",
+    "definition": "To need something as necessary or indispensable.",
+    "pos": "verb",
+    "kind": "require-need"
+  },
+  {
+    "entryId": "ve-514be348",
+    "senseId": "kaikki:2f8e149771e667ee3c",
+    "term": "require",
+    "definition": "To demand that someone perform an action.",
+    "pos": "verb",
+    "kind": "require-action"
+  },
+  {
+    "entryId": "ve-5fb465ff",
+    "senseId": "kaikki:86bb59f67bcf3ecccc",
+    "term": "insist",
+    "definition": "To assert or maintain a claim emphatically.",
+    "pos": "verb",
+    "kind": "insist-assertion"
+  },
+  {
+    "entryId": "ve-5fb465ff",
+    "senseId": "kaikki:6eeba922d4291e1208",
+    "term": "insist",
+    "definition": "To demand persistently that something happen or be done.",
+    "pos": "verb",
+    "kind": "insist-demand"
   }
 ]
