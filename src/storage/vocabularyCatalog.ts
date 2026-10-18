@@ -22,10 +22,11 @@ export class VocabularyScopeUnavailableError extends Error {
   }
 }
 
+const resourceConcurrency = 4;
 let activeFetches = 0;
 const waiting: (() => void)[] = [];
 function pump() {
-  while (activeFetches < 4 && waiting.length) waiting.shift()!();
+  while (activeFetches < resourceConcurrency && waiting.length) waiting.shift()!();
 }
 function limited<T>(job: () => Promise<T>): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -55,6 +56,30 @@ function resource<T>(url: string, force = false): Promise<T> {
     if (requests.get(url) === cached) requests.delete(url);
   });
   return cached.promise as Promise<T>;
+}
+
+/** Admit a bounded batch before starting resource deadlines; keep results in source order. */
+async function resourceBatch<T>(urls: Set<string>, force = false): Promise<{ url: string; pack: T }[]> {
+  const queue = [...urls], packs = new Array<{ url: string; pack: T }>(queue.length);
+  // A concurrent load may refresh a URL before this batch reaches it. Reuse that
+  // newer request, while still refreshing successes that predate this batch.
+  const refresh = new Map([...requests].filter(([url, cached]) => force && urls.has(url) && !cached.pending));
+  let next = 0, failed = false;
+  await Promise.all(Array.from({ length: Math.min(resourceConcurrency, queue.length) }, async () => {
+    while (!failed) {
+      const index = next++;
+      if (index >= queue.length) return;
+      const url = queue[index];
+      try {
+        const pack = await resource<T>(url, refresh.has(url) && requests.get(url) === refresh.get(url));
+        packs[index] = { url, pack };
+      } catch (error) {
+        failed = true;
+        throw error;
+      }
+    }
+  }));
+  return packs;
 }
 
 async function readManifest(force = false) {
@@ -116,7 +141,7 @@ export async function loadReleasedVocabularyTeaching(options: ReleasedVocabulary
   }
   const memberships = new Map<string, Membership>();
   const requestedIds = new Set(options.entryIds || []);
-  const packs = await Promise.all([...urls].map(async url => ({url, pack: await resource<TeachingPack>(url, options.force)})));
+  const packs = await resourceBatch<TeachingPack>(urls, options.force);
   for (const {url, pack} of packs) {
     if (!Array.isArray(pack.memberships)) throw new Error('Invalid vocabulary teaching memberships.');
     registerTeaching(url, pack.teaching);
@@ -144,7 +169,7 @@ export async function loadReleasedVocabulary(options: ReleasedVocabularyOptions 
     if (!url) throw new VocabularyScopeUnavailableError('entry');
     urls.add(url);
   }
-  const packs = await Promise.all([...urls].map(async url => ({ url, pack: await resource<Pack>(url, options.force) })));
+  const packs = await resourceBatch<Pack>(urls, options.force);
   const entries = new Map<string, VocabularyEntry>();
   const memberships = new Map<string, Membership>();
   for (const { url, pack } of packs) {

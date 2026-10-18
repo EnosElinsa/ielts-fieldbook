@@ -5,6 +5,40 @@ import { loadReleasedVocabulary } from '../../src/storage/vocabularyCatalog';
 
 afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers(); });
 const generated = buildVocabularyResources(process.cwd());
+
+test.each(['teaching', 'entries'] as const)('a large %s load can finish healthy batches whose combined duration exceeds one request deadline', async kind => {
+  vi.resetModules();
+  const { loadReleasedVocabulary: loadEntries, loadReleasedVocabularyTeaching: loadTeaching } = await import('../../src/storage/vocabularyCatalog');
+  const byShard = new Map<string, string>();
+  for (const [id, shard] of Object.entries(generated.manifest.entryShards)) if (!byShard.has(shard)) byShard.set(shard, id);
+  const entryIds = [...byShard.values()].slice(0, 20);
+  expect(entryIds).toHaveLength(20);
+  let active = 0, maximum = 0, completed = 0;
+  vi.useFakeTimers();
+  vi.stubGlobal('fetch', async (url: string) => {
+    const body = url.endsWith('manifest.test.json') ? JSON.stringify(generated.manifest) : generated.resources.get(url);
+    if (!url.endsWith('manifest.test.json')) {
+      active++; maximum = Math.max(maximum, active);
+      await new Promise(resolve => setTimeout(resolve, 3_000));
+      active--; completed++;
+    }
+    return { ok: Boolean(body), status: body ? 200 : 404, json: async () => JSON.parse(body!) };
+  });
+  let result: any, failure: unknown;
+  const loading = (kind === 'teaching' ? loadTeaching({ entryIds }) : loadEntries({ entryIds }))
+    .then(value => { result = value; }, error => { failure = error; });
+  await vi.runAllTimersAsync();
+  await loading;
+  expect(failure).toBeUndefined();
+  expect(maximum).toBe(4);
+  expect(completed).toBe(20);
+  expect(result.entries.map((entry: any) => entry.id).sort()).toEqual(kind === 'entries' ? entryIds.slice().sort() : []);
+  const expectedMemberships = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8')).memberships.filter((row: any) => entryIds.includes(row.entryId));
+  const membershipIds = new Set(result.memberships.map((row: any) => row.id));
+  if (kind === 'teaching') expect(membershipIds).toEqual(new Set(expectedMemberships.map((row: any) => row.id)));
+  else expect(result.memberships).toEqual([]); // Entry-body shards do not carry group memberships.
+});
+
 function resourceFetch(delay = 0) {
   let active = 0, maximum = 0;
   const urls: string[] = [];
