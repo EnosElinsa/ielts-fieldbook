@@ -11876,5 +11876,185 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "communicate",
+    "entryId": "ve-6cf3ee8",
+    "parentSenseId": "kaikki:79d2d502af45b7e9d1",
+    "parentSourceHash": "9c4693e3c9ea4932352903a7a389ba051cfe12027fd9d8995a5f807df8a79093",
+    "sourcePage": "communicate",
+    "revision": 92685713,
+    "sourceGloss": "## {{lb|en|transitive}} To [[impart]] or [[transmit]] ([[information]] or [[knowledge]]) {{m|en|to}} someone; to make known, to [[tell]]. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:82a4dbed32d76dddc1",
+      "pos": "verb",
+      "definition": "To impart or transmit (information or knowledge) to someone; to make known, to tell.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "communicate",
+    "entryId": "ve-6cf3ee8",
+    "parentSenseId": "kaikki:79d2d502af45b7e9d1",
+    "parentSourceHash": "9c4693e3c9ea4932352903a7a389ba051cfe12027fd9d8995a5f807df8a79093",
+    "sourcePage": "communicate",
+    "revision": 92685713,
+    "sourceGloss": "## {{lb|en|transitive}} To [[impart]] or [[transmit]] (an intangible quantity, substance); to give a share of. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:0117c4af61ede925d3",
+      "pos": "verb",
+      "definition": "To impart or transmit (an intangible quantity, substance); to give a share of.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "communicate",
+    "entryId": "ve-6cf3ee8",
+    "parentSenseId": "kaikki:79d2d502af45b7e9d1",
+    "parentSourceHash": "9c4693e3c9ea4932352903a7a389ba051cfe12027fd9d8995a5f807df8a79093",
+    "sourcePage": "communicate",
+    "revision": 92685713,
+    "sourceGloss": "## {{lb|en|transitive}} To pass on (a [[disease]]) to another person, animal etc. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:db3c879c4cea355ef5",
+      "pos": "verb",
+      "definition": "To pass on (a disease) to another person, animal etc.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "communicate",
+    "entryId": "ve-6cf3ee8",
+    "parentSenseId": "kaikki:e43a281c2460de3125",
+    "parentSourceHash": "31e36665a46ebfb5fb76022249b896f3b00ec7b9af89cebf5669d6b51ee28802",
+    "sourcePage": "communicate",
+    "revision": 92685713,
+    "sourceGloss": "## {{lb|en|transitive|obsolete}} To [[share]] (in); to have in common, to partake of. {{defdate|16th|19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:b3ceae2ed83ee98235",
+      "pos": "verb",
+      "definition": "To share (in); to have in common, to partake of.",
+      "example": "",
+      "register": "transitive, obsolete",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "communicate",
+    "entryId": "ve-6cf3ee8",
+    "parentSenseId": "kaikki:e43a281c2460de3125",
+    "parentSourceHash": "31e36665a46ebfb5fb76022249b896f3b00ec7b9af89cebf5669d6b51ee28802",
+    "sourcePage": "communicate",
+    "revision": 92685713,
+    "sourceGloss": "## {{lb|en|intransitive|Christianity}} To receive the [[bread]] and [[wine]] at a celebration of the [[Eucharist]]; to take part in [[Holy Communion]]. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:d30e3f7c3a9a84a8d3",
+      "pos": "verb",
+      "definition": "To receive the bread and wine at a celebration of the Eucharist; to take part in Holy Communion.",
+      "example": "",
+      "register": "intransitive, Christianity",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "communicate",
+    "entryId": "ve-6cf3ee8",
+    "parentSenseId": "kaikki:e43a281c2460de3125",
+    "parentSourceHash": "31e36665a46ebfb5fb76022249b896f3b00ec7b9af89cebf5669d6b51ee28802",
+    "sourcePage": "communicate",
+    "revision": 92685713,
+    "sourceGloss": "## {{lb|en|transitive|Christianity}} To administer the [[Holy Communion]] to (someone). {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:70eae78fe3a7d68770",
+      "pos": "verb",
+      "definition": "To administer the Holy Communion to (someone).",
+      "example": "",
+      "register": "transitive, Christianity",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "communicate",
+    "entryId": "ve-6cf3ee8",
+    "parentSenseId": "kaikki:e43a281c2460de3125",
+    "parentSourceHash": "31e36665a46ebfb5fb76022249b896f3b00ec7b9af89cebf5669d6b51ee28802",
+    "sourcePage": "communicate",
+    "revision": 92685713,
+    "sourceGloss": "## {{lb|en|intransitive}} To [[express]] or [[convey]] ideas, either through [[verbal]] or [[nonverbal]] means; to have [[intercourse]], to exchange information. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:f79dd3c5a10ccb63fa",
+      "pos": "verb",
+      "definition": "To express or convey ideas, either through verbal or nonverbal means; to have intercourse, to exchange information.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "communicate",
+    "entryId": "ve-6cf3ee8",
+    "parentSenseId": "kaikki:e43a281c2460de3125",
+    "parentSourceHash": "31e36665a46ebfb5fb76022249b896f3b00ec7b9af89cebf5669d6b51ee28802",
+    "sourcePage": "communicate",
+    "revision": 92685713,
+    "sourceGloss": "## {{lb|en|intransitive}} To be [[connected]] by means of an opening or channel {{+obj|en|:with<another room, vessel etc.>}}. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:fbe68ab868563e9c58",
+      "pos": "verb",
+      "definition": "To be connected by means of an opening or channel .",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "express",
+    "entryId": "ve-109309ff",
+    "parentSenseId": "kaikki:f9cc19257f7f5f0981",
+    "parentSourceHash": "c7bc84826a4323fbeb2abd39a42fa178cbe454989b268816cab97381988d67a4",
+    "sourcePage": "express",
+    "revision": 93476692,
+    "sourceGloss": "## {{lbl|en|Philippines|chiefly|Metro Manila}} a [[public utility vehicle]], typically a [[jeepney]], that traverses through an [[expressway]]",
+    "sense": {
+      "id": "wiktionary:restored:34316fbc777695a1c0",
+      "pos": "noun",
+      "definition": "a public utility vehicle, typically a jeepney, that traverses through an expressway",
+      "example": "",
+      "register": "Philippines, chiefly, Metro Manila",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

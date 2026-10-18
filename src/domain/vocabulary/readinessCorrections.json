@@ -20541,8 +20541,17 @@
   {
     "entryId": "ve-109309ff",
     "senseId": "kaikki:cfaadb52f70626fec3",
-    "term": "express",
-    "example": "The express train runs directly to the city without stopping at every station.",
+    "definition": "Of transport or a service, designed to operate quickly or directly, often by omitting local stops.",
+    "example": "The express train passes our local station without stopping.",
+    "collocations": [
+      "an express train",
+      "an express service",
+      "an express bus"
+    ],
+    "distinctions": [
+      "Express trains can stop at selected stations. Express does not mean that a train never stops or that its arrival time is guaranteed."
+    ],
+    "usage": "Transport adjective in this example; express modifies train.",
     "originalSense": {
       "id": "kaikki:cfaadb52f70626fec3",
       "definition": "Moving or operating quickly, as a train not making local stops.",
@@ -20564,8 +20573,52 @@
         "express road",
         "express train",
         "FedEx"
-      ]
-    }
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "An express train passes a local station without stopping. This means _____.",
+      "options": [
+        "it omits this local stop but may stop at selected stations",
+        "it cannot stop at any station anywhere on its route"
+      ],
+      "answer": "it omits this local stop but may stop at selected stations",
+      "explanation": "An express service can omit local stops while still serving selected stations."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "previousSenses": [
+      {
+        "id": "kaikki:cfaadb52f70626fec3",
+        "definition": "Moving or operating quickly, as a train not making local stops.",
+        "example": "The express train runs directly to the city without stopping at every station.",
+        "pos": "adj",
+        "synonyms": [
+          "fast",
+          "crack"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "not-comparable",
+        "register": "not-comparable",
+        "wordFamily": [
+          "express elevator",
+          "express kidnapping",
+          "express lane",
+          "express officer",
+          "express road",
+          "express train",
+          "FedEx"
+        ]
+      }
+    ]
   },
   {
     "entryId": "ve-7c6adc3b",
@@ -233289,6 +233342,2866 @@
     },
     "referenceUrl": "https://en.wiktionary.org/w/index.php?title=maintain&oldid=92947190",
     "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "kaikki:79d2d502af45b7e9d1",
+    "definition": "To impart or pass something to another.",
+    "example": "In this broad sense, communicate means impart: the more specific meanings distinguish information, a quality or substance, and disease.",
+    "collocations": [
+      "communicate information",
+      "communicate a quality",
+      "communicate a disease"
+    ],
+    "distinctions": [
+      "The object determines what is passed on. Imparting information is not the same process as transmitting an infection."
+    ],
+    "usage": "Broad source meaning. Choose a specific child when the context identifies what is communicated.",
+    "originalSense": {
+      "id": "kaikki:79d2d502af45b7e9d1",
+      "definition": "To impart.",
+      "example": "It is vital that I communicate this information to you.",
+      "pos": "verb",
+      "synonyms": [
+        "articulate",
+        "common",
+        "communicate",
+        "convey",
+        "share",
+        "express",
+        "make known",
+        "outspeak",
+        "portray",
+        "put",
+        "utter"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "communicatable",
+        "communicatee",
+        "communicatingly",
+        "communicator",
+        "incommunicated",
+        "incommunicating",
+        "intercommunicate",
+        "miscommunicate",
+        "noncommunicating",
+        "overcommunicate",
+        "recommunicate",
+        "telecommunicate",
+        "uncommunicated",
+        "uncommunicating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/communicate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+    "exampleKind": "reading-note",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "kaikki:e43a281c2460de3125",
+    "definition": "To share or participate in something.",
+    "example": "This broad source meaning brings together sharing, participation in Communion, exchanging ideas and physical connection; its specific children explain the intended use.",
+    "collocations": [
+      "communicate with someone",
+      "communicate through a doorway",
+      "communicate at Communion"
+    ],
+    "distinctions": [
+      "The checked source labels only the share-or-partake child obsolete. Modern exchange and physical connection do not acquire that label from the parent."
+    ],
+    "usage": "The import attached obsolete to this broad parent; the checked revision attaches it to only the share-or-partake child.",
+    "originalSense": {
+      "id": "kaikki:e43a281c2460de3125",
+      "definition": "To share",
+      "example": "We shall now consider those functions of intelligence which man communicates with the higher beasts.",
+      "pos": "verb",
+      "synonyms": [
+        "articulate",
+        "common",
+        "communicate",
+        "convey",
+        "share",
+        "express",
+        "make known",
+        "outspeak",
+        "portray",
+        "put",
+        "utter"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "communicatable",
+        "communicatee",
+        "communicatingly",
+        "communicator",
+        "incommunicated",
+        "incommunicating",
+        "intercommunicate",
+        "miscommunicate",
+        "noncommunicating",
+        "overcommunicate",
+        "recommunicate",
+        "telecommunicate",
+        "uncommunicated",
+        "uncommunicating"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/communicate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "kaikki:ef9630d686fd69cc41",
+    "definition": "Communicated, made common or joined.",
+    "example": "The obsolete adjective communicate describes something as shared or joined, rather than naming the present-day action of exchanging information.",
+    "collocations": [
+      "property is communicate",
+      "communicate with the other nature"
+    ],
+    "distinctions": [
+      "This is an adjective in historical writing. Modern communication normally uses the verb communicate or an adjective such as shared or joined."
+    ],
+    "usage": "Obsolete adjective; preserve the historical grammatical reading.",
+    "originalSense": {
+      "id": "kaikki:ef9630d686fd69cc41",
+      "definition": "Communicated, (made) commune, joined.",
+      "example": "The property of the manhood is communicate with the other nature.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "communicatable",
+        "communicatee",
+        "communicatingly",
+        "communicator",
+        "incommunicated",
+        "incommunicating",
+        "intercommunicate",
+        "miscommunicate",
+        "noncommunicating",
+        "overcommunicate",
+        "recommunicate",
+        "telecommunicate",
+        "uncommunicated",
+        "uncommunicating",
+        "excommunicate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/communicate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:82a4dbed32d76dddc1",
+    "dictionaryParentSenseId": "kaikki:79d2d502af45b7e9d1",
+    "definition": "To give information or knowledge to someone; to make it known.",
+    "example": "Please communicate the revised timetable to all students.",
+    "collocations": [
+      "communicate information to someone",
+      "communicate a decision",
+      "communicate clearly"
+    ],
+    "distinctions": [
+      "Here a timetable is made known to recipients. The instruction does not say that all students have already received or understood it."
+    ],
+    "usage": "Transitive information sense: communicate something to someone.",
+    "originalSense": {
+      "id": "wiktionary:restored:82a4dbed32d76dddc1",
+      "pos": "verb",
+      "definition": "To impart or transmit (information or knowledge) to someone; to make known, to tell.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Please communicate the revised timetable to all students. This instruction asks someone to _____.",
+      "options": [
+        "make the timetable known to the students",
+        "confirm that every student has already understood it"
+      ],
+      "answer": "make the timetable known to the students",
+      "explanation": "Communicate asks for the transmission of information; the instruction does not report completed understanding."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:0117c4af61ede925d3",
+    "dictionaryParentSenseId": "kaikki:79d2d502af45b7e9d1",
+    "definition": "To convey or impart a quality, feeling or other intangible thing.",
+    "example": "A calm voice can communicate confidence to the audience.",
+    "collocations": [
+      "communicate confidence",
+      "communicate enthusiasm",
+      "communicate a sense of urgency"
+    ],
+    "distinctions": [
+      "A voice can convey confidence without giving an explicit factual message. The impression does not establish that the speaker is well prepared."
+    ],
+    "usage": "A quality or feeling is the object in this example; can describes a possibility.",
+    "originalSense": {
+      "id": "wiktionary:restored:0117c4af61ede925d3",
+      "pos": "verb",
+      "definition": "To impart or transmit (an intangible quantity, substance); to give a share of.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "A calm voice can communicate confidence. What is conveyed is _____.",
+      "options": [
+        "an impression or quality of confidence",
+        "proof that the speaker has prepared thoroughly"
+      ],
+      "answer": "an impression or quality of confidence",
+      "explanation": "Communicate here concerns a conveyed quality; an impression is not independent evidence of preparation."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:db3c879c4cea355ef5",
+    "dictionaryParentSenseId": "kaikki:79d2d502af45b7e9d1",
+    "definition": "To transmit a disease or infection to another person or animal.",
+    "example": "An infected person may communicate the disease to others through close contact.",
+    "collocations": [
+      "communicate a disease",
+      "communicate an infection",
+      "communicate disease to others"
+    ],
+    "distinctions": [
+      "This is transmission of infection, not telling someone about an illness. The example describes a possibility; not every disease spreads through close contact."
+    ],
+    "usage": "Formal medical transmission sense. The route and likelihood depend on the particular disease.",
+    "originalSense": {
+      "id": "wiktionary:restored:db3c879c4cea355ef5",
+      "pos": "verb",
+      "definition": "To pass on (a disease) to another person, animal etc.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "An infected person may communicate a disease through close contact. Here communicate means _____.",
+      "options": [
+        "transmit the infection",
+        "tell the listeners the disease’s name"
+      ],
+      "answer": "transmit the infection",
+      "explanation": "The object disease and the medical context identify infection transmission, with no universal claim about transmission routes."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:b3ceae2ed83ee98235",
+    "dictionaryParentSenseId": "kaikki:e43a281c2460de3125",
+    "definition": "To share in something, have it in common or partake of it.",
+    "example": "In the obsolete sharing sense, communicate can describe having a quality or experience in common with another being.",
+    "collocations": [
+      "communicate a quality with another",
+      "communicate in something"
+    ],
+    "distinctions": [
+      "The historical shared-property use is distinct from telling another person some information. Modern readers should not infer that a conversation took place."
+    ],
+    "usage": "Obsolete transitive share-or-partake child, separately preserved from its broader parent.",
+    "originalSense": {
+      "id": "wiktionary:restored:b3ceae2ed83ee98235",
+      "pos": "verb",
+      "definition": "To share (in); to have in common, to partake of.",
+      "example": "",
+      "register": "transitive, obsolete",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:d30e3f7c3a9a84a8d3",
+    "dictionaryParentSenseId": "kaikki:e43a281c2460de3125",
+    "definition": "To receive the bread and wine at a celebration of the Eucharist.",
+    "example": "In Christian usage, a person who communicates receives Communion and participates in the Eucharist.",
+    "collocations": [
+      "communicate at the Eucharist",
+      "communicate at Communion"
+    ],
+    "distinctions": [
+      "The subject receives Communion. This differs from the transitive use in which a minister administers it to someone."
+    ],
+    "usage": "Intransitive Christian religious sense; the term describes participation in the rite.",
+    "originalSense": {
+      "id": "wiktionary:restored:d30e3f7c3a9a84a8d3",
+      "pos": "verb",
+      "definition": "To receive the bread and wine at a celebration of the Eucharist; to take part in Holy Communion.",
+      "example": "",
+      "register": "intransitive, Christianity",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:70eae78fe3a7d68770",
+    "dictionaryParentSenseId": "kaikki:e43a281c2460de3125",
+    "definition": "To administer Holy Communion to someone.",
+    "example": "In this Christian use, to communicate a person means to administer Communion to that person.",
+    "collocations": [
+      "communicate a person",
+      "communicate the congregation"
+    ],
+    "distinctions": [
+      "The subject administers the rite and the object is its recipient. The separate intransitive meaning describes receiving Communion."
+    ],
+    "usage": "Transitive Christian religious sense, with the recipient as object.",
+    "originalSense": {
+      "id": "wiktionary:restored:70eae78fe3a7d68770",
+      "pos": "verb",
+      "definition": "To administer the Holy Communion to (someone).",
+      "example": "",
+      "register": "transitive, Christianity",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:f79dd3c5a10ccb63fa",
+    "dictionaryParentSenseId": "kaikki:e43a281c2460de3125",
+    "definition": "To convey or exchange ideas through words, signs or other verbal or nonverbal means.",
+    "example": "The hikers communicate by hand signals because they cannot hear each other.",
+    "collocations": [
+      "communicate with someone",
+      "communicate by gestures",
+      "communicate nonverbally"
+    ],
+    "distinctions": [
+      "The hikers exchange information without speech. Communication can be nonverbal and does not require a shared audible conversation."
+    ],
+    "usage": "Intransitive exchange sense; with introduces a partner and by introduces a method.",
+    "originalSense": {
+      "id": "wiktionary:restored:f79dd3c5a10ccb63fa",
+      "pos": "verb",
+      "definition": "To express or convey ideas, either through verbal or nonverbal means; to have intercourse, to exchange information.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The hikers communicate by hand signals because they cannot hear each other. They _____.",
+      "options": [
+        "exchange information nonverbally",
+        "must speak loudly enough for both to hear"
+      ],
+      "answer": "exchange information nonverbally",
+      "explanation": "Hand signals provide a nonverbal method of communication."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:fbe68ab868563e9c58",
+    "dictionaryParentSenseId": "kaikki:e43a281c2460de3125",
+    "definition": "Of rooms, vessels or similar spaces, to be connected through an opening or channel.",
+    "example": "The two rooms communicate through an internal doorway.",
+    "collocations": [
+      "rooms communicate with each other",
+      "communicate through a doorway",
+      "communicating vessels"
+    ],
+    "distinctions": [
+      "A doorway connects physical spaces. The rooms are not speakers, and this example does not claim that every pair of adjacent rooms has a connecting door."
+    ],
+    "usage": "Physical connection sense, used with rooms or vessels; with can name the other connected space.",
+    "originalSense": {
+      "id": "wiktionary:restored:fbe68ab868563e9c58",
+      "pos": "verb",
+      "definition": "To be connected by means of an opening or channel .",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "Two rooms communicate through an internal doorway. This describes _____.",
+      "options": [
+        "a physical connection between the rooms",
+        "a conversation carried out by the rooms"
+      ],
+      "answer": "a physical connection between the rooms",
+      "explanation": "Rooms communicate when an opening or passage connects them."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:dcfce7c3420eaa8387",
+    "definition": "Clearly and directly stated, rather than merely implied.",
+    "example": "We have express permission to enter: the owner said yes aloud.",
+    "collocations": [
+      "express permission",
+      "express consent",
+      "express instructions"
+    ],
+    "distinctions": [
+      "Express permission is explicit and not necessarily written. The spoken yes in this example makes permission direct rather than implied."
+    ],
+    "usage": "Adjective meaning explicit; distinguish it from fast-service express.",
+    "originalSense": {
+      "id": "kaikki:dcfce7c3420eaa8387",
+      "definition": "Specific or precise; directly and distinctly stated; not merely implied.",
+      "example": "I gave him express instructions not to begin until I arrived, but he ignored me.",
+      "pos": "adj",
+      "synonyms": [
+        "explicit",
+        "plain",
+        "clear",
+        "direct",
+        "explicit",
+        "express",
+        "monosemic",
+        "monosemous",
+        "patent",
+        "plain",
+        "specific",
+        "unambiguous",
+        "unequivocal",
+        "univocal"
+      ],
+      "antonyms": [
+        "implied"
+      ],
+      "collocations": [],
+      "usage": "comparable",
+      "register": "comparable",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The owner said yes aloud, giving express permission. The permission is _____.",
+      "options": [
+        "explicit, even though it was spoken",
+        "necessarily written because express means written"
+      ],
+      "answer": "explicit, even though it was spoken",
+      "explanation": "Express means directly stated; spoken permission can be explicit."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:c473b771b888feefec",
+    "definition": "Faithfully depicted or exactly resembling what is represented.",
+    "example": "In the likeness sense, express describes an image as an exact or faithful representation of its subject.",
+    "collocations": [
+      "an express image",
+      "an express likeness"
+    ],
+    "distinctions": [
+      "The focus is resemblance or faithful depiction, not speed of production or explicit permission."
+    ],
+    "usage": "The checked source does not label this adjective obsolete; the reading explanation does not add that label.",
+    "originalSense": {
+      "id": "kaikki:c473b771b888feefec",
+      "definition": "Truly depicted; exactly resembling.",
+      "example": "In my eyes it bore a livelier image of the spirit, it seemed more express and single, than the imperfect and divided countenance.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:72c75318626d914d14",
+    "definition": "Of a retail outlet or service, offering a more limited range than the corresponding full service.",
+    "example": "Express after a retail name can identify a smaller or more limited service format intended for convenient service.",
+    "collocations": [
+      "an Express outlet",
+      "an Express retail format"
+    ],
+    "distinctions": [
+      "A limited service format does not guarantee faster service in every visit. This retail use is distinct from an express train."
+    ],
+    "usage": "Retail adjective used postpositively, after the name; the exact range depends on the outlet.",
+    "originalSense": {
+      "id": "kaikki:72c75318626d914d14",
+      "definition": "Providing a more limited but presumably faster service than a full or complete dealer of the same kind or type.",
+      "example": "Tesco Express",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "postpositional",
+      "register": "postpositional",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:f9cc19257f7f5f0981",
+    "definition": "A train or other transport service that travels quickly or directly, often omitting local stops.",
+    "example": "We took the express into the city instead of the train that stops at every station.",
+    "collocations": [
+      "take the express",
+      "the morning express",
+      "an express to the city"
+    ],
+    "distinctions": [
+      "Here the express names a transport service. It may still stop at selected stations; it is not a statement about an express delivery office."
+    ],
+    "usage": "Countable transport noun; railway context in this example.",
+    "originalSense": {
+      "id": "kaikki:f9cc19257f7f5f0981",
+      "definition": "A mode of transportation, often a train, that travels quickly or directly, either on a regular schedule or as a special or excursion. Express trains often pass through stations along the way without stopping at them.",
+      "example": "I took the express into town.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "local",
+        "stopper"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "We took the express instead of the train that stops everywhere. The express is _____.",
+      "options": [
+        "a transport service",
+        "a courier’s office"
+      ],
+      "answer": "a transport service",
+      "explanation": "The railway context makes express a transport noun."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:0b527e24853dac9fae",
+    "definition": "A service for sending mail or money rapidly to a destination.",
+    "example": "We sent the documents by express because the deadline was close.",
+    "collocations": [
+      "send by express",
+      "an express service",
+      "express delivery"
+    ],
+    "distinctions": [
+      "Choosing express identifies the delivery service and does not establish delivery or on-time arrival."
+    ],
+    "usage": "Delivery-service noun, commonly in by express; no particular carrier or guaranteed schedule is specified.",
+    "originalSense": {
+      "id": "kaikki:0b527e24853dac9fae",
+      "definition": "A service that allows mail or money to be sent rapidly from one destination to another.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "We sent documents by express. The sentence establishes that _____.",
+      "options": [
+        "we chose a rapid delivery service",
+        "the documents have definitely arrived on time"
+      ],
+      "answer": "we chose a rapid delivery service",
+      "explanation": "The selected service is stated, but successful delivery is not."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:e78da949593f28fe22",
+    "definition": "An express rifle: a rifle designed to propel bullets at high velocity.",
+    "example": "In the firearm noun sense, an express is an express rifle; the name refers to its high-velocity design.",
+    "collocations": [
+      "an express rifle",
+      "his express",
+      "a hunting express"
+    ],
+    "distinctions": [
+      "This names a type of rifle, rather than a train, delivery service or messenger. No particular calibre or firing mechanism follows from the word alone."
+    ],
+    "usage": "Specialist firearm noun. The linked express-rifle definition supplies the high-velocity meaning.",
+    "originalSense": {
+      "id": "kaikki:e78da949593f28fe22",
+      "definition": "An express rifle.",
+      "example": "\"Give me my express,\" I said, laying down the Winchester, and he handed it to me cocked.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:e362dfd1b4cd7db87c",
+    "definition": "A clear image, representation, expression or declaration.",
+    "example": "The obsolete noun express can name a representation or plain expression of something.",
+    "collocations": [
+      "an express of something",
+      "a clear express"
+    ],
+    "distinctions": [
+      "This historical noun describes a representation or declaration, rather than the modern verb meaning to convey a thought."
+    ],
+    "usage": "Obsolete noun from the first English etymology, retained independently of the other obsolete nouns.",
+    "originalSense": {
+      "id": "kaikki:e362dfd1b4cd7db87c",
+      "definition": "A clear image or representation; an expression; a plain declaration.",
+      "example": "And this [holy communion] being the great myſtery of Chriſtianity, and the onely remanent expreſſe of Chriſts ſacrifice on earth, it is moſt conſonant to the Analogy of the myſtery, that this commemorative ſacrifice be preſented by perſons as ſeparate, and diſtinct in our miniſtery, […]",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:b37c45213bb9cd9c47",
+    "definition": "A messenger or courier sent on a special errand.",
+    "example": "In the messenger sense, an express is the person sent to carry a message on a special errand.",
+    "collocations": [
+      "send an express",
+      "an express with a letter"
+    ],
+    "distinctions": [
+      "The person carrying the message is distinct from the message, the delivery office and the transport service."
+    ],
+    "usage": "The checked source does not label this messenger noun obsolete; an old quotation alone does not supply that label.",
+    "originalSense": {
+      "id": "kaikki:b37c45213bb9cd9c47",
+      "definition": "A messenger sent on a special errand; a courier.",
+      "example": "I learned, to my inexpressible terror, that at two o'clock, the day before, an express had been sent to Geraldine by Mr Bergasse, with a letter, which he had received from the Hotel de Romagnecourt.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:9b6b06a9037eb1210b",
+    "definition": "An office handling an express delivery service.",
+    "example": "In the office sense, the express is the place where a person asks about items sent through an express service.",
+    "collocations": [
+      "ask at the express",
+      "an express office"
+    ],
+    "distinctions": [
+      "The word names an office in this use, rather than the courier or the parcel itself."
+    ],
+    "usage": "The checked source links express office without labelling this noun obsolete.",
+    "originalSense": {
+      "id": "kaikki:9b6b06a9037eb1210b",
+      "definition": "An express office.",
+      "example": "She charged him […] to ask at the express if anything came up from town.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:b7bf4f427f1f332336",
+    "definition": "An item or message sent by an express messenger or service.",
+    "example": "In this noun sense, an express is what is sent, such as a message, rather than the messenger who carries it.",
+    "collocations": [
+      "send an express",
+      "receive an express"
+    ],
+    "distinctions": [
+      "The transported item or message is distinct from the courier, office and delivery service."
+    ],
+    "usage": "The checked source does not label this sent-item noun obsolete.",
+    "originalSense": {
+      "id": "kaikki:b7bf4f427f1f332336",
+      "definition": "That which is sent by an express messenger or message.",
+      "example": "popular captations, which some men use in their Speeches, and Expresses",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:e420bd06bce96e1aba",
+    "definition": "Quickly or directly, as by a service that omits local stops.",
+    "example": "This train runs express between Central and Riverside.",
+    "collocations": [
+      "run express",
+      "travel express",
+      "go express"
+    ],
+    "distinctions": [
+      "Express modifies runs here, so it is an adverb. The sentence identifies the service between the named stations without promising an exact journey time."
+    ],
+    "usage": "Transport adverb; distinguish an express train, where express is an adjective.",
+    "originalSense": {
+      "id": "kaikki:e420bd06bce96e1aba",
+      "definition": "Moving or operating quickly, as a train not making local stops.",
+      "example": "The train runs express to 96 St.",
+      "pos": "adv",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In This train runs express, express modifies _____.",
+      "options": [
+        "the verb runs",
+        "a noun naming a messenger"
+      ],
+      "answer": "the verb runs",
+      "explanation": "This is the adverbial transport use."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:961f46e917baaeef40",
+    "definition": "To convey or make known a thought, feeling or idea through words or other actions.",
+    "example": "I find it easier to express my ideas in writing.",
+    "collocations": [
+      "express an idea",
+      "express a feeling",
+      "express oneself"
+    ],
+    "distinctions": [
+      "Express concerns conveying an idea or feeling; it does not require a fast service, permission or a particular biological process."
+    ],
+    "usage": "Ordinary transitive communication verb; ideas or feelings can be direct objects.",
+    "originalSense": {
+      "id": "kaikki:961f46e917baaeef40",
+      "definition": "To convey or communicate; to make known or explicit.",
+      "example": "Words cannot express the love I feel for him.",
+      "pos": "verb",
+      "synonyms": [
+        "outspeak",
+        "utter",
+        "articulate",
+        "common",
+        "communicate",
+        "convey",
+        "share",
+        "express",
+        "make known",
+        "outspeak",
+        "portray",
+        "put",
+        "utter"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express",
+        "agroexpress",
+        "coexpress",
+        "co-express",
+        "expressable",
+        "expressage",
+        "expressed",
+        "expressed emotion",
+        "expressedly",
+        "expressless",
+        "expressman",
+        "expressness",
+        "expressome",
+        "express oneself",
+        "expressor",
+        "expressway",
+        "hyperexpress",
+        "immunoexpress",
+        "misexpress",
+        "overexpress",
+        "re-express",
+        "reexpress",
+        "superexpress"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "I find it easier to express my ideas in writing. Express means _____.",
+      "options": [
+        "convey the ideas",
+        "make the writing travel on a fast train"
+      ],
+      "answer": "convey the ideas",
+      "explanation": "The object ideas identifies the communication verb."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:66037a5c71e85a8d75",
+    "definition": "To press or squeeze something out, especially milk from a breast.",
+    "example": "She uses a pump to express breast milk into a clean container.",
+    "collocations": [
+      "express breast milk",
+      "express milk by hand",
+      "express into a container"
+    ],
+    "distinctions": [
+      "Here express means remove milk by pressure or a pump. It is separate from conveying emotions and from expressing a gene."
+    ],
+    "usage": "Physical extraction sense, especially milk; the sentence describes the action, not medical advice.",
+    "originalSense": {
+      "id": "kaikki:66037a5c71e85a8d75",
+      "definition": "To press, squeeze out (especially said of milk).",
+      "example": "The people of his island of Rokovoko, it seems, at their wedding feasts express the fragrant water of young cocoanuts into a large stained calabash like a punchbowl […]",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express",
+        "agroexpress",
+        "coexpress",
+        "co-express",
+        "expressable",
+        "expressage",
+        "expressed",
+        "expressed emotion",
+        "expressedly",
+        "expressless",
+        "expressman",
+        "expressness",
+        "expressome",
+        "express oneself",
+        "expressor",
+        "expressway",
+        "hyperexpress",
+        "immunoexpress",
+        "misexpress",
+        "overexpress",
+        "re-express",
+        "reexpress",
+        "superexpress"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "She uses a pump to express breast milk. This is _____.",
+      "options": [
+        "physical removal of milk",
+        "transcription of a gene into RNA"
+      ],
+      "answer": "physical removal of milk",
+      "explanation": "The milk-and-pump context identifies extraction rather than gene expression."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:5dde1ea7b56ac071ba",
+    "definition": "In a protein-production context, to produce a protein by translation of messenger RNA.",
+    "example": "The researchers use the cells to express a protein from the introduced messenger RNA.",
+    "collocations": [
+      "express a protein",
+      "express a recombinant protein",
+      "protein expression"
+    ],
+    "distinctions": [
+      "In this example, translation uses the introduced mRNA to produce protein. It is not the copying of DNA into RNA."
+    ],
+    "usage": "Biochemistry: this narrow imported meaning focuses on protein production. Broader gene expression can also produce functional non-coding RNA.",
+    "originalSense": {
+      "id": "kaikki:5dde1ea7b56ac071ba",
+      "definition": "To translate messenger RNA into protein.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express",
+        "agroexpress",
+        "coexpress",
+        "co-express",
+        "expressable",
+        "expressage",
+        "expressed",
+        "expressed emotion",
+        "expressedly",
+        "expressless",
+        "expressman",
+        "expressness",
+        "expressome",
+        "express oneself",
+        "expressor",
+        "expressway",
+        "hyperexpress",
+        "immunoexpress",
+        "misexpress",
+        "overexpress",
+        "re-express",
+        "reexpress",
+        "superexpress"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "Cells express a protein from introduced mRNA. The step making the protein is _____.",
+      "options": [
+        "translation of the mRNA",
+        "transcription of the mRNA into DNA"
+      ],
+      "answer": "translation of the mRNA",
+      "explanation": "Translation uses mRNA information to assemble a protein; transcription copies DNA information into RNA."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:a18db12a3589b598af",
+    "definition": "In a transcription-focused context, to copy information from a protein-coding gene’s DNA into messenger RNA.",
+    "example": "The cells can express this protein-coding gene as messenger RNA even when translation is blocked.",
+    "collocations": [
+      "express a gene",
+      "express a gene as RNA",
+      "gene expression"
+    ],
+    "distinctions": [
+      "This example concerns transcription, not translation of DNA into RNA. Producing mRNA does not show that the protein has been made."
+    ],
+    "usage": "Biochemistry: the preserved source meaning is narrow. Broader gene expression includes functional non-coding RNA as well as pathways that produce proteins; not every expressed gene encodes a protein.",
+    "originalSense": {
+      "id": "kaikki:a18db12a3589b598af",
+      "definition": "To transcribe deoxyribonucleic acid into messenger RNA.",
+      "example": "When a cell “expresses” a gene, it translates the DNA first into a signature messenger RNA (mRNA) sequence and subsequently into a chain of amino acids that forms a protein.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express",
+        "agroexpress",
+        "coexpress",
+        "co-express",
+        "expressable",
+        "expressage",
+        "expressed",
+        "expressed emotion",
+        "expressedly",
+        "expressless",
+        "expressman",
+        "expressness",
+        "expressome",
+        "express oneself",
+        "expressor",
+        "expressway",
+        "hyperexpress",
+        "immunoexpress",
+        "misexpress",
+        "overexpress",
+        "re-express",
+        "reexpress",
+        "superexpress"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "A protein-coding gene is expressed as mRNA while translation is blocked. This describes _____.",
+      "options": [
+        "transcription into mRNA without protein production at that step",
+        "proof that a protein has already been translated"
+      ],
+      "answer": "transcription into mRNA without protein production at that step",
+      "explanation": "The example explicitly allows mRNA production while translation is blocked."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:65cbf68f713b7b87b3",
+    "definition": "The action of conveying an idea through words or actions; communication or expression.",
+    "example": "The obsolete action noun express names the act of making an idea known through words or actions.",
+    "collocations": [
+      "the theory of their expresses",
+      "expresses in historical writing"
+    ],
+    "distinctions": [
+      "This noun names the act of expression, distinct from the modern verb express and from a specific historical instruction."
+    ],
+    "usage": "Obsolete noun from the second English etymology. Expression is the ordinary modern noun.",
+    "originalSense": {
+      "id": "kaikki:65cbf68f713b7b87b3",
+      "definition": "The action of conveying some idea using words or actions; communication, expression.",
+      "example": "Whereby they discoursed in silence, and were intuitively understood from the theory of their expresses.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express",
+        "agroexpress",
+        "coexpress",
+        "co-express",
+        "expressable",
+        "expressage",
+        "expressed",
+        "expressed emotion",
+        "expressedly",
+        "expressless",
+        "expressman",
+        "expressness",
+        "expressome",
+        "express oneself",
+        "expressor",
+        "expressway",
+        "hyperexpress",
+        "immunoexpress",
+        "misexpress",
+        "overexpress",
+        "re-express",
+        "reexpress",
+        "superexpress"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:cf91ff2b8bdb0da153",
+    "definition": "A particular statement or instruction.",
+    "example": "The obsolete noun express can refer to a specific statement or instruction given by someone.",
+    "collocations": [
+      "with express to take notice",
+      "express as an obsolete instruction noun"
+    ],
+    "distinctions": [
+      "In this historical noun use, express names the statement itself; in modern express instructions, express is an adjective meaning explicit."
+    ],
+    "usage": "Obsolete noun, distinct from the historical action-of-expression noun.",
+    "originalSense": {
+      "id": "kaikki:cf91ff2b8bdb0da153",
+      "definition": "A specific statement or instruction.",
+      "example": "This Gentleman [...] caused a man to go down no less than a hundred fathom, with express to take notice whether it were hard or soft in the place where it groweth.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express",
+        "agroexpress",
+        "coexpress",
+        "co-express",
+        "expressable",
+        "expressage",
+        "expressed",
+        "expressed emotion",
+        "expressedly",
+        "expressless",
+        "expressman",
+        "expressness",
+        "expressome",
+        "express oneself",
+        "expressor",
+        "expressway",
+        "hyperexpress",
+        "immunoexpress",
+        "misexpress",
+        "overexpress",
+        "re-express",
+        "reexpress",
+        "superexpress"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "wiktionary:restored:34316fbc777695a1c0",
+    "dictionaryParentSenseId": "kaikki:f9cc19257f7f5f0981",
+    "definition": "In the Philippines, chiefly Metro Manila, a public utility vehicle, typically a jeepney, that travels along an expressway.",
+    "example": "In this regional transport use, an express is a public utility vehicle, typically a jeepney, whose route uses an expressway.",
+    "collocations": [
+      "an express jeepney",
+      "take an express",
+      "an express route"
+    ],
+    "distinctions": [
+      "The regional meaning concerns the route and service; not every jeepney is an express, and the label does not define all express transport worldwide."
+    ],
+    "usage": "Philippines, chiefly Metro Manila. Regional child of the transport noun, rather than a universal vehicle category.",
+    "originalSense": {
+      "id": "wiktionary:restored:34316fbc777695a1c0",
+      "pos": "noun",
+      "definition": "a public utility vehicle, typically a jeepney, that traverses through an expressway",
+      "example": "",
+      "register": "Philippines, chiefly, Metro Manila",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=express&oldid=93476692",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4841c15f",
+    "senseId": "kaikki:2f6bce7db73127e5fd",
+    "definition": "A reference to something or someone, usually brief.",
+    "example": "The article includes a brief mention of the new library.",
+    "collocations": [
+      "a brief mention of",
+      "make mention of",
+      "deserve a mention"
+    ],
+    "distinctions": [
+      "A mention is a reference, often brief. It does not by itself amount to a detailed account or an endorsement."
+    ],
+    "usage": "Countable reference noun; of introduces what is referred to.",
+    "originalSense": {
+      "id": "kaikki:2f6bce7db73127e5fd",
+      "definition": "A speaking or noticing of anything, usually in a brief or cursory manner.",
+      "example": "I will make mention of thy righteousness.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "honorable mention",
+        "honorary mention",
+        "make mention",
+        "make mention of",
+        "mentionable",
+        "mentioning",
+        "mentionless",
+        "nonmention",
+        "use-mention distinction",
+        "remention"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mention#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=mention&oldid=93581919",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "An article includes a brief mention of a library. This is _____.",
+      "options": [
+        "a short reference to the library",
+        "necessarily a detailed evaluation of the library"
+      ],
+      "answer": "a short reference to the library",
+      "explanation": "Mention identifies a reference without promising detail or evaluation."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4841c15f",
+    "senseId": "kaikki:c2f55990dd9ad60cdd",
+    "definition": "On social media, the feed or list of posts and replies that refer to a person or account.",
+    "example": "I checked my mentions for posts that named or tagged my account.",
+    "collocations": [
+      "check your mentions",
+      "in someone’s mentions",
+      "social media mentions"
+    ],
+    "distinctions": [
+      "The plural mentions names the relevant social-media feed or list. It does not require that every listed post praises the person or directly replies to them."
+    ],
+    "usage": "Internet noun, plural-only in this source meaning; use mentions in the sentence gap.",
+    "originalSense": {
+      "id": "kaikki:c2f55990dd9ad60cdd",
+      "definition": "A social media feed, a list of replies or posts mentioning a person.",
+      "example": "\"I would like Twitter to put some kind of filters in place,\" suggests Prakash. \"At present I can't see troll tweets if I block the user, but others who go into my 'mentions' can do so, and read the graphic abuse, which is disturbing.\"",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Internet, plural, plural-only",
+      "register": "Internet, countable, plural, plural-only, uncountable",
+      "wordFamily": [
+        "honorable mention",
+        "honorary mention",
+        "make mention",
+        "make mention of",
+        "mentionable",
+        "mentioning",
+        "mentionless",
+        "nonmention",
+        "use-mention distinction",
+        "remention"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mention#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=mention&oldid=93581919",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "I checked my mentions on a social-media site. I checked _____.",
+      "options": [
+        "posts or replies referring to my account",
+        "only posts that endorsed everything I said"
+      ],
+      "answer": "posts or replies referring to my account",
+      "explanation": "Mentions identify references or tags; their tone can vary."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4841c15f",
+    "senseId": "kaikki:2fedf3f05b87d2e3f4",
+    "definition": "To speak of, name or refer to someone or something.",
+    "example": "Please mention the revised deadline when you email the class.",
+    "collocations": [
+      "mention a deadline",
+      "mention something to someone",
+      "mention that"
+    ],
+    "distinctions": [
+      "Mention takes the thing referred to as a direct object. Use mention the deadline, rather than mention about the deadline."
+    ],
+    "usage": "Transitive reference verb; to someone can identify the recipient.",
+    "originalSense": {
+      "id": "kaikki:2fedf3f05b87d2e3f4",
+      "definition": "To make mention of; to speak of; to refer to; to name; to specify",
+      "example": "He happened to mention your name to me.",
+      "pos": "verb",
+      "synonyms": [
+        "bring up",
+        "mention",
+        "move",
+        "reference",
+        "toss up",
+        "touch",
+        "touch on"
+      ],
+      "antonyms": [
+        "bespeech",
+        "enlarge oneself",
+        "orate",
+        "speechify"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "honorable mention",
+        "honorary mention",
+        "make mention",
+        "make mention of",
+        "mentionable",
+        "mentioning",
+        "mentionless",
+        "nonmention",
+        "use-mention distinction",
+        "remention",
+        "@mention",
+        "come to mention it",
+        "don't mention it",
+        "intermention",
+        "mentionee",
+        "mentioner",
+        "more than one cares to mention",
+        "not to mention",
+        "now that you mention it",
+        "now you mention it",
+        "unmention"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mention#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=mention&oldid=93581919",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The ordinary transitive construction is _____.",
+      "options": [
+        "Please mention the deadline.",
+        "Please mention about the deadline."
+      ],
+      "answer": "Please mention the deadline.",
+      "explanation": "Mention normally takes its object directly; about is unnecessary in this construction."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4841c15f",
+    "senseId": "kaikki:41624d85b84300b06e",
+    "definition": "To refer to a word or expression itself rather than to what it normally denotes.",
+    "example": "When I mention the word 'apple', I am referring to the expression itself, not to a piece of fruit.",
+    "collocations": [
+      "mention a word",
+      "use versus mention",
+      "mention an expression"
+    ],
+    "distinctions": [
+      "This metalinguistic use concerns the expression apple. Ordinary use of the word can instead refer to fruit."
+    ],
+    "usage": "Philosophy and linguistics; quotation and the phrase the word make the expression itself the subject of discussion.",
+    "originalSense": {
+      "id": "kaikki:41624d85b84300b06e",
+      "definition": "To utter a word or expression in order to refer to the expression itself, as opposed to its usual referent.",
+      "example": "I can illustrate this by mentioning the word lead. Now you have no way of knowing for sure which meaning I have in mind until I give it some context by using it in a sentence.",
+      "pos": "verb",
+      "synonyms": [
+        "bring up",
+        "mention",
+        "move",
+        "reference",
+        "toss up",
+        "touch",
+        "touch on"
+      ],
+      "antonyms": [
+        "bespeech",
+        "enlarge oneself",
+        "orate",
+        "speechify"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "honorable mention",
+        "honorary mention",
+        "make mention",
+        "make mention of",
+        "mentionable",
+        "mentioning",
+        "mentionless",
+        "nonmention",
+        "use-mention distinction",
+        "remention",
+        "@mention",
+        "come to mention it",
+        "don't mention it",
+        "intermention",
+        "mentionee",
+        "mentioner",
+        "more than one cares to mention",
+        "not to mention",
+        "now that you mention it",
+        "now you mention it",
+        "unmention"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mention#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=mention&oldid=93581919",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In I mention the word apple, the metalinguistic reference is to _____.",
+      "options": [
+        "the expression itself",
+        "a piece of fruit on the table"
+      ],
+      "answer": "the expression itself",
+      "explanation": "Mention can target an expression rather than its ordinary referent."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:33ee4c6283da743fd0",
+    "definition": "To give details or an account of an event or situation.",
+    "example": "The observers will report what they saw at the meeting.",
+    "collocations": [
+      "report an event",
+      "report what happened",
+      "report on findings"
+    ],
+    "distinctions": [
+      "An account states what the observers say they saw. The verb does not independently verify every detail of that account."
+    ],
+    "usage": "Transitive or intransitive account-giving verb.",
+    "originalSense": {
+      "id": "kaikki:33ee4c6283da743fd0",
+      "definition": "To relate details of (an event or incident); to recount, describe (something).",
+      "example": "Many of these classic methods are still used, with some modern improvements. For example, with the aid of special microphones and automated sound detection software, ornithologists recently reported[…]that pine siskins (Spinus pinus) undergo an irregular, nomadic type of nocturnal migration.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive, transitive",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Observers will report what they saw. What is promised is _____.",
+      "options": [
+        "an account of their observations",
+        "independent proof that every detail is correct"
+      ],
+      "answer": "an account of their observations",
+      "explanation": "Report describes giving an account; verification is a separate question."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:ab6b2155b594351012",
+    "definition": "To pass on or repeat information or a message heard from someone else.",
+    "example": "I will report the caller’s message without checking whether its claim is true.",
+    "collocations": [
+      "report a message",
+      "report what someone said",
+      "report a rumour"
+    ],
+    "distinctions": [
+      "Relaying information does not establish that its claim is true. The speaker can accurately repeat a false claim."
+    ],
+    "usage": "Transitive relaying sense; attribution and truth of the underlying claim are separate.",
+    "originalSense": {
+      "id": "kaikki:ab6b2155b594351012",
+      "definition": "To repeat (something one has heard), to retell; to pass on, convey (a message, information etc.).",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "I will report a caller’s message without checking its claim. This is _____.",
+      "options": [
+        "relaying information that may remain unverified",
+        "proving the caller’s claim by repeating it"
+      ],
+      "answer": "relaying information that may remain unverified",
+      "explanation": "A message can be passed on without establishing its truth."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:7eb5bdb900ca775b75",
+    "definition": "To take oneself to someone or something for guidance or support; to appeal.",
+    "example": "In the obsolete reflexive sense, to report oneself to someone is to turn to that person for guidance or support.",
+    "collocations": [
+      "report oneself to someone",
+      "report oneself for guidance"
+    ],
+    "distinctions": [
+      "The historical appeal differs from appearing for duty or informing the police about an incident."
+    ],
+    "usage": "Obsolete reflexive use; the reflexive object belongs to the historical construction.",
+    "originalSense": {
+      "id": "kaikki:7eb5bdb900ca775b75",
+      "definition": "To take oneself (to someone or something) for guidance or support; to appeal.",
+      "example": "thenne they ansuerd by and by that they coude not excuse the quene /[…]/ Allas sayd the quene I made this dyner for a good entente / and neuer for none euyl soo almyghty god me help in my ryght as I was neuer purposed to doo suche euylle dedes / and that I reporte me vnto god",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete, reflexive",
+      "register": "obsolete, reflexive",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:be9c2e41d68c215431",
+    "definition": "To notify a person or relevant authority about an incident, suspicion or other matter.",
+    "example": "Please report the missing bicycle to the police.",
+    "collocations": [
+      "report a theft",
+      "report a problem to someone",
+      "report an incident"
+    ],
+    "distinctions": [
+      "This reports an incident to an authority. Notification does not establish who took the bicycle or guarantee its recovery."
+    ],
+    "usage": "Formal notification sense: report something to someone.",
+    "originalSense": {
+      "id": "kaikki:be9c2e41d68c215431",
+      "definition": "To notify someone of (particular intelligence, suspicions, illegality, misconduct etc.); to make notification to relevant authorities; to submit a formal report of.",
+      "example": "For insurance reasons, I had to report the theft to the local police station.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "formal",
+      "register": "formal, transitive",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Please report the missing bicycle to the police. The object reported is _____.",
+      "options": [
+        "the incident or problem",
+        "a proven guilty person"
+      ],
+      "answer": "the incident or problem",
+      "explanation": "The missing bicycle is the matter being notified; no offender has been established."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:787882863bc64f6565",
+    "definition": "To make a formal statement or complaint about a person.",
+    "example": "The witness plans to report the driver for dangerous driving.",
+    "collocations": [
+      "report someone for misconduct",
+      "report a driver",
+      "report someone to an authority"
+    ],
+    "distinctions": [
+      "A complaint about someone does not establish guilt or guarantee a penalty. The driver is the object of report in this example."
+    ],
+    "usage": "Transitive person-as-object construction, often report someone for something.",
+    "originalSense": {
+      "id": "kaikki:787882863bc64f6565",
+      "definition": "To make a formal statement, especially of complaint, about (someone).",
+      "example": "If you do that again I'll report you to the boss.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "A witness plans to report a driver for dangerous driving. This means _____.",
+      "options": [
+        "make a formal complaint about the driver",
+        "establish the driver’s guilt merely by complaining"
+      ],
+      "answer": "make a formal complaint about the driver",
+      "explanation": "Reporting a person is not a finding of guilt."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:3189d623f2cd32da35",
+    "definition": "To arrive or present oneself at an appointed place or time.",
+    "example": "All new staff must report to reception at nine.",
+    "collocations": [
+      "report to reception",
+      "report for duty",
+      "report at nine"
+    ],
+    "distinctions": [
+      "Here report means present oneself. The instruction does not require staff to write an account or say that they have already arrived."
+    ],
+    "usage": "Intransitive attendance sense; to introduces the place or person to attend.",
+    "originalSense": {
+      "id": "kaikki:3189d623f2cd32da35",
+      "definition": "To show up or appear at an appointed time; to present oneself.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "New staff must report to reception at nine. They must _____.",
+      "options": [
+        "present themselves there at that time",
+        "write a newspaper article about reception"
+      ],
+      "answer": "present themselves there at that time",
+      "explanation": "This is the attendance sense of report."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:651b297af8a439674b",
+    "definition": "To cover events as a journalist or produce news accounts.",
+    "example": "The journalist will report on the council meeting for the local newspaper.",
+    "collocations": [
+      "report on an event",
+      "report for a newspaper",
+      "report the news"
+    ],
+    "distinctions": [
+      "Report on names the news topic; report for names the publication. The plan does not say that a finished article has already been published."
+    ],
+    "usage": "Journalism sense, transitive or intransitive; on introduces the covered topic here.",
+    "originalSense": {
+      "id": "kaikki:651b297af8a439674b",
+      "definition": "To write news reports (for); to cover as a journalist or reporter.",
+      "example": "Andrew Marr reports now on more in-fighting at Westminster.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ambitransitive",
+      "register": "ambitransitive",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "A journalist will report on the council meeting for a newspaper. Report on identifies _____.",
+      "options": [
+        "the event being covered",
+        "the journalist’s organisational superior"
+      ],
+      "answer": "the event being covered",
+      "explanation": "In this journalism context, on introduces the topic."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:42962dc337aac0871e",
+    "definition": "To be accountable or subordinate to someone within an organisation.",
+    "example": "Both directors report to the chief executive.",
+    "collocations": [
+      "report to a manager",
+      "report directly to",
+      "a reporting line"
+    ],
+    "distinctions": [
+      "Report to describes an organisational relationship here. It does not mean the directors are being reported for wrongdoing or are physically arriving at an office."
+    ],
+    "usage": "Intransitive hierarchy sense with to before the superior.",
+    "originalSense": {
+      "id": "kaikki:42962dc337aac0871e",
+      "definition": "To be accountable to or subordinate to (someone) in a hierarchy; to receive orders from (someone); to give official updates to (someone who is above oneself in a hierarchy).",
+      "example": "The financial director reports to the CEO.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Both directors report to the chief executive. They _____.",
+      "options": [
+        "are accountable to that superior",
+        "are necessarily making complaints about that person"
+      ],
+      "answer": "are accountable to that superior",
+      "explanation": "The hierarchy construction identifies a reporting relationship."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:9ffb5e9cfe78de5f82",
+    "definition": "Of a committee or similar body, to present a matter or findings after considering something officially referred to it.",
+    "example": "In committee procedure, to report a bill or findings is to return or present them after the committee’s consideration.",
+    "collocations": [
+      "report a bill",
+      "report findings to the house",
+      "report from committee"
+    ],
+    "distinctions": [
+      "Reporting a bill does not enact it. This procedure differs from a journalist reporting on a bill."
+    ],
+    "usage": "The checked source labels this politics sense dated; that label does not establish that all modern parliamentary uses of report are obsolete.",
+    "originalSense": {
+      "id": "kaikki:9ffb5e9cfe78de5f82",
+      "definition": "To return or present as the result of an examination or consideration of any matter officially referred.",
+      "example": "The committee reported the bill with amendments, or reported a new bill, or reported the results of an inquiry.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "dated",
+      "register": "dated",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:d20583da8992dcd0b9",
+    "definition": "To record a speech or proceedings in writing, as by taking minutes.",
+    "example": "In the recording sense, to report a speech or proceedings is to write down what speakers say or what the body does.",
+    "collocations": [
+      "report a speech",
+      "report proceedings",
+      "report debates"
+    ],
+    "distinctions": [
+      "The focus is the written record of proceedings, not necessarily a newspaper’s journalistic account."
+    ],
+    "usage": "The checked source does not label this minute-taking sense obsolete.",
+    "originalSense": {
+      "id": "kaikki:d20583da8992dcd0b9",
+      "definition": "To take minutes of (a speech, the doings of a public body, etc.); to write down from the lips of a speaker.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:94c5d5423bc6d928ae",
+    "definition": "To refer.",
+    "example": "The obsolete referring sense of report requires its historical context to show what is referred to.",
+    "collocations": [
+      "report to something",
+      "a historical use of report"
+    ],
+    "distinctions": [
+      "This short historical definition is separate from modern reporting of incidents, news or organisational accountability."
+    ],
+    "usage": "Obsolete referring verb; a specific modern referent is not supplied by the source gloss.",
+    "originalSense": {
+      "id": "kaikki:94c5d5423bc6d928ae",
+      "definition": "To refer.",
+      "example": "Baldwine his ſonne, the fourth of that name [Baldwin IV of Jerusalem], ſucceeded his father [Amalric of Jerusalem]: ſo like unto him, that we report the reader to the character of King Almerick, and will ſpare the repeating his description.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:5e8227f4beafe70cd8",
+    "definition": "To return or repeat a sound; to echo.",
+    "example": "In the obsolete, rare echo sense, report can describe a sound being returned or repeated.",
+    "collocations": [
+      "report a sound",
+      "a sound reports"
+    ],
+    "distinctions": [
+      "The verb concerns an echo, rather than the noun report for a gunshot’s sharp sound."
+    ],
+    "usage": "Obsolete and rare; transitive or intransitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:5e8227f4beafe70cd8",
+      "definition": "To return or repeat, as sound; to echo.",
+      "example": "a church with windows only from above[…] that reporteth the voice twelve or thirteen times",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ambitransitive, obsolete, rare",
+      "register": "ambitransitive, obsolete, rare",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:cb2067c773bd2760f2",
+    "definition": "Of a ship, to return to a port.",
+    "example": "In the nautical sense, the source’s re-port describes a ship returning to port.",
+    "collocations": [
+      "a ship re-ports",
+      "re-port to a harbour"
+    ],
+    "distinctions": [
+      "The ship returns physically; this is not the crew reporting for duty or submitting a written account."
+    ],
+    "usage": "Nautical use. The source illustrates the spelling re-port, clarifying the return-to-port reading.",
+    "originalSense": {
+      "id": "kaikki:cb2067c773bd2760f2",
+      "definition": "Of a ship, to return to a port.",
+      "example": "Our ship leaves port on Monday and will re-port on Friday.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:37a30f296661fae594",
+    "definition": "A written or spoken account giving information about events or a subject.",
+    "example": "The report by the research team summarises the survey findings.",
+    "collocations": [
+      "a report on a topic",
+      "a report by a team",
+      "prepare a report"
+    ],
+    "distinctions": [
+      "By identifies the creator, while on can identify the subject. An account can be written or spoken and does not by itself guarantee the truth of its contents."
+    ],
+    "usage": "Countable account noun; not limited to a written document.",
+    "originalSense": {
+      "id": "kaikki:37a30f296661fae594",
+      "definition": "A piece of information describing, or an account of certain events given or presented to someone, with the most common adpositions being by (referring to creator of the report) and on (referring to the subject).",
+      "example": "A report by the telecommunications ministry on the phone network revealed a severe capacity problem.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In a report by the team on a survey, by introduces _____.",
+      "options": [
+        "the creator of the account",
+        "the subject instead of the creator"
+      ],
+      "answer": "the creator of the account",
+      "explanation": "By names who created the account; on names what it concerns."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:bd8a399d8bed596e50",
+    "definition": "A person’s or thing’s reputation; what is generally said about them.",
+    "example": "In expressions such as of good report or ill report, report concerns reputation.",
+    "collocations": [
+      "of good report",
+      "ill report",
+      "good report"
+    ],
+    "distinctions": [
+      "This concerns reputation, rather than a particular research document or a subordinate employee."
+    ],
+    "usage": "The checked source does not label this reputation noun obsolete.",
+    "originalSense": {
+      "id": "kaikki:bd8a399d8bed596e50",
+      "definition": "Reputation.",
+      "example": "I love thee in such sort / As, thou being mine, mine is thy good report.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:036c2a1e14d33a2481",
+    "definition": "The sudden, sharp, loud sound of a gunshot or explosion.",
+    "example": "A sharp report from the explosion startled the listeners.",
+    "collocations": [
+      "a sharp report",
+      "a loud report",
+      "the report of an explosion"
+    ],
+    "distinctions": [
+      "Here report names a sound. It is not a written account of the explosion or a measurement of its loudness."
+    ],
+    "usage": "Sound noun, especially with a gunshot or explosion; no numerical acoustic measurement is implied.",
+    "originalSense": {
+      "id": "kaikki:036c2a1e14d33a2481",
+      "definition": "The sharp, loud sound of a gunshot or explosion.",
+      "example": "While their masters, the mates, seemed afraid of the sound of the hinges of their own jaws, the harpooneers chewed their food with such a relish that there was a report to it.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "A sharp report from an explosion startled listeners. Report names _____.",
+      "options": [
+        "a sudden loud sound",
+        "a written document about the event"
+      ],
+      "answer": "a sudden loud sound",
+      "explanation": "The sensory context identifies the sound noun."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:19d7c26de947ec7fbd",
+    "definition": "An employee subordinate to a particular manager in an organisation.",
+    "example": "Each direct report meets with the manager once a month.",
+    "collocations": [
+      "a direct report",
+      "a manager’s reports",
+      "manage direct reports"
+    ],
+    "distinctions": [
+      "A report is an employee in this business use. Direct report specifies an immediate reporting relationship, rather than a written document."
+    ],
+    "usage": "Business countable noun; a direct report is immediately subordinate to the named manager.",
+    "originalSense": {
+      "id": "kaikki:19d7c26de947ec7fbd",
+      "definition": "An employee whose position in a corporate hierarchy is below that of a particular manager.",
+      "example": "The revelation that boss of one year Laurent Freixe was conducting an undisclosed affair with a direct report has rocked a 159-year-old conglomerate that pioneered infant formula and milk chocolate before growing to become the world's largest food and beverage company.",
+      "pos": "noun",
+      "synonyms": [
+        "subordinate"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=report&oldid=93548417",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "A manager meets with each direct report. A direct report is _____.",
+      "options": [
+        "an immediately subordinate employee",
+        "a document delivered without an envelope"
+      ],
+      "answer": "an immediately subordinate employee",
+      "explanation": "This business noun names a person in the reporting hierarchy."
+    },
     "synonyms": [],
     "antonyms": [],
     "wordFamily": [],

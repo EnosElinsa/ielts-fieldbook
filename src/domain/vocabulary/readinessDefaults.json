@@ -25436,5 +25436,323 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "originalSense": {
+      "id": "wiktionary:restored:82a4dbed32d76dddc1",
+      "pos": "verb",
+      "definition": "To impart or transmit (information or knowledge) to someone; to make known, to tell.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "sense": {
+      "id": "wiktionary:restored:82a4dbed32d76dddc1",
+      "pos": "verb",
+      "definition": "To give information or knowledge to someone; to make it known.",
+      "example": "Please communicate the revised timetable to all students.",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=communicate&oldid=92685713",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "usage": "Transitive information sense: communicate something to someone.",
+      "collocations": [
+        "communicate information to someone",
+        "communicate a decision",
+        "communicate clearly"
+      ],
+      "distinctions": [
+        "Here a timetable is made known to recipients. The instruction does not say that all students have already received or understood it."
+      ],
+      "distinctionTask": {
+        "prompt": "Please communicate the revised timetable to all students. This instruction asks someone to _____.",
+        "options": [
+          "make the timetable known to the students",
+          "confirm that every student has already understood it"
+        ],
+        "answer": "make the timetable known to the students",
+        "explanation": "Communicate asks for the transmission of information; the instruction does not report completed understanding."
+      },
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-109309ff",
+    "originalSense": {
+      "id": "kaikki:961f46e917baaeef40",
+      "definition": "To convey or communicate; to make known or explicit.",
+      "example": "Words cannot express the love I feel for him.",
+      "pos": "verb",
+      "synonyms": [
+        "outspeak",
+        "utter",
+        "articulate",
+        "common",
+        "communicate",
+        "convey",
+        "share",
+        "express",
+        "make known",
+        "outspeak",
+        "portray",
+        "put",
+        "utter"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "express elevator",
+        "express kidnapping",
+        "express lane",
+        "express officer",
+        "express road",
+        "express train",
+        "FedEx",
+        "ankle express",
+        "agroexpress",
+        "coexpress",
+        "co-express",
+        "expressable",
+        "expressage",
+        "expressed",
+        "expressed emotion",
+        "expressedly",
+        "expressless",
+        "expressman",
+        "expressness",
+        "expressome",
+        "express oneself",
+        "expressor",
+        "expressway",
+        "hyperexpress",
+        "immunoexpress",
+        "misexpress",
+        "overexpress",
+        "re-express",
+        "reexpress",
+        "superexpress"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:961f46e917baaeef40",
+      "definition": "To convey or make known a thought, feeling or idea through words or other actions.",
+      "example": "I find it easier to express my ideas in writing.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "express an idea",
+        "express a feeling",
+        "express oneself"
+      ],
+      "usage": "Ordinary transitive communication verb; ideas or feelings can be direct objects.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/express#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Express concerns conveying an idea or feeling; it does not require a fast service, permission or a particular biological process."
+      ],
+      "distinctionTask": {
+        "prompt": "I find it easier to express my ideas in writing. Express means _____.",
+        "options": [
+          "convey the ideas",
+          "make the writing travel on a fast train"
+        ],
+        "answer": "convey the ideas",
+        "explanation": "The object ideas identifies the communication verb."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-4841c15f",
+    "originalSense": {
+      "id": "kaikki:2fedf3f05b87d2e3f4",
+      "definition": "To make mention of; to speak of; to refer to; to name; to specify",
+      "example": "He happened to mention your name to me.",
+      "pos": "verb",
+      "synonyms": [
+        "bring up",
+        "mention",
+        "move",
+        "reference",
+        "toss up",
+        "touch",
+        "touch on"
+      ],
+      "antonyms": [
+        "bespeech",
+        "enlarge oneself",
+        "orate",
+        "speechify"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "honorable mention",
+        "honorary mention",
+        "make mention",
+        "make mention of",
+        "mentionable",
+        "mentioning",
+        "mentionless",
+        "nonmention",
+        "use-mention distinction",
+        "remention",
+        "@mention",
+        "come to mention it",
+        "don't mention it",
+        "intermention",
+        "mentionee",
+        "mentioner",
+        "more than one cares to mention",
+        "not to mention",
+        "now that you mention it",
+        "now you mention it",
+        "unmention"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mention#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:2fedf3f05b87d2e3f4",
+      "definition": "To speak of, name or refer to someone or something.",
+      "example": "Please mention the revised deadline when you email the class.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "mention a deadline",
+        "mention something to someone",
+        "mention that"
+      ],
+      "usage": "Transitive reference verb; to someone can identify the recipient.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mention#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Mention takes the thing referred to as a direct object. Use mention the deadline, rather than mention about the deadline."
+      ],
+      "distinctionTask": {
+        "prompt": "The ordinary transitive construction is _____.",
+        "options": [
+          "Please mention the deadline.",
+          "Please mention about the deadline."
+        ],
+        "answer": "Please mention the deadline.",
+        "explanation": "Mention normally takes its object directly; about is unnecessary in this construction."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "originalSense": {
+      "id": "kaikki:37a30f296661fae594",
+      "definition": "A piece of information describing, or an account of certain events given or presented to someone, with the most common adpositions being by (referring to creator of the report) and on (referring to the subject).",
+      "example": "A report by the telecommunications ministry on the phone network revealed a severe capacity problem.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aforereported",
+        "coreport",
+        "mass report",
+        "misreport",
+        "outreport",
+        "overreport",
+        "reportability",
+        "reportable",
+        "reportative",
+        "report back",
+        "reportee",
+        "reporter",
+        "report for duty",
+        "reportorial",
+        "report out",
+        "rereport",
+        "underreport",
+        "unreported"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:37a30f296661fae594",
+      "definition": "A written or spoken account giving information about events or a subject.",
+      "example": "The report by the research team summarises the survey findings.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a report on a topic",
+        "a report by a team",
+        "prepare a report"
+      ],
+      "usage": "Countable account noun; not limited to a written document.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/report#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "By identifies the creator, while on can identify the subject. An account can be written or spoken and does not by itself guarantee the truth of its contents."
+      ],
+      "distinctionTask": {
+        "prompt": "In a report by the team on a survey, by introduces _____.",
+        "options": [
+          "the creator of the account",
+          "the subject instead of the creator"
+        ],
+        "answer": "the creator of the account",
+        "explanation": "By names who created the account; on names what it concerns."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

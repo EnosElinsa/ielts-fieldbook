@@ -6118,5 +6118,229 @@
     "definition": "To keep something in good condition and working order.",
     "pos": "verb",
     "kind": "maintain-equipment"
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:82a4dbed32d76dddc1",
+    "term": "communicate",
+    "definition": "To give information or knowledge to someone; to make it known.",
+    "pos": "verb",
+    "kind": "communicate-information"
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:0117c4af61ede925d3",
+    "term": "communicate",
+    "definition": "To convey or impart a quality, feeling or other intangible thing.",
+    "pos": "verb",
+    "kind": "communicate-quality"
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:db3c879c4cea355ef5",
+    "term": "communicate",
+    "definition": "To transmit a disease or infection to another person or animal.",
+    "pos": "verb",
+    "kind": "communicate-infection"
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:f79dd3c5a10ccb63fa",
+    "term": "communicate",
+    "definition": "To convey or exchange ideas through words, signs or other verbal or nonverbal means.",
+    "pos": "verb",
+    "kind": "communicate-signals"
+  },
+  {
+    "entryId": "ve-6cf3ee8",
+    "senseId": "wiktionary:restored:fbe68ab868563e9c58",
+    "term": "communicate",
+    "definition": "Of rooms, vessels or similar spaces, to be connected through an opening or channel.",
+    "pos": "verb",
+    "kind": "communicate-rooms"
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:cfaadb52f70626fec3",
+    "term": "express",
+    "definition": "Of transport or a service, designed to operate quickly or directly, often by omitting local stops.",
+    "pos": "adj",
+    "kind": "express-fast"
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:dcfce7c3420eaa8387",
+    "term": "express",
+    "definition": "Clearly and directly stated, rather than merely implied.",
+    "pos": "adj",
+    "kind": "express-explicit"
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:f9cc19257f7f5f0981",
+    "term": "express",
+    "definition": "A train or other transport service that travels quickly or directly, often omitting local stops.",
+    "pos": "noun",
+    "kind": "express-transport"
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:0b527e24853dac9fae",
+    "term": "express",
+    "definition": "A service for sending mail or money rapidly to a destination.",
+    "pos": "noun",
+    "kind": "express-delivery"
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:e420bd06bce96e1aba",
+    "term": "express",
+    "definition": "Quickly or directly, as by a service that omits local stops.",
+    "pos": "adv",
+    "kind": "express-adverb"
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:961f46e917baaeef40",
+    "term": "express",
+    "definition": "To convey or make known a thought, feeling or idea through words or other actions.",
+    "pos": "verb",
+    "kind": "express-ideas"
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:66037a5c71e85a8d75",
+    "term": "express",
+    "definition": "To press or squeeze something out, especially milk from a breast.",
+    "pos": "verb",
+    "kind": "express-milk"
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:5dde1ea7b56ac071ba",
+    "term": "express",
+    "definition": "In a protein-production context, to produce a protein by translation of messenger RNA.",
+    "pos": "verb",
+    "kind": "express-protein"
+  },
+  {
+    "entryId": "ve-109309ff",
+    "senseId": "kaikki:a18db12a3589b598af",
+    "term": "express",
+    "definition": "In a transcription-focused context, to copy information from a protein-coding gene’s DNA into messenger RNA.",
+    "pos": "verb",
+    "kind": "express-rna"
+  },
+  {
+    "entryId": "ve-4841c15f",
+    "senseId": "kaikki:2f6bce7db73127e5fd",
+    "term": "mention",
+    "definition": "A reference to something or someone, usually brief.",
+    "pos": "noun",
+    "kind": "mention-reference"
+  },
+  {
+    "entryId": "ve-4841c15f",
+    "senseId": "kaikki:c2f55990dd9ad60cdd",
+    "term": "mention",
+    "definition": "On social media, the feed or list of posts and replies that refer to a person or account.",
+    "pos": "noun",
+    "kind": "mention-social"
+  },
+  {
+    "entryId": "ve-4841c15f",
+    "senseId": "kaikki:2fedf3f05b87d2e3f4",
+    "term": "mention",
+    "definition": "To speak of, name or refer to someone or something.",
+    "pos": "verb",
+    "kind": "mention-verb"
+  },
+  {
+    "entryId": "ve-4841c15f",
+    "senseId": "kaikki:41624d85b84300b06e",
+    "term": "mention",
+    "definition": "To refer to a word or expression itself rather than to what it normally denotes.",
+    "pos": "verb",
+    "kind": "mention-expression"
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:33ee4c6283da743fd0",
+    "term": "report",
+    "definition": "To give details or an account of an event or situation.",
+    "pos": "verb",
+    "kind": "report-account"
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:ab6b2155b594351012",
+    "term": "report",
+    "definition": "To pass on or repeat information or a message heard from someone else.",
+    "pos": "verb",
+    "kind": "report-relay"
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:be9c2e41d68c215431",
+    "term": "report",
+    "definition": "To notify a person or relevant authority about an incident, suspicion or other matter.",
+    "pos": "verb",
+    "kind": "report-incident"
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:787882863bc64f6565",
+    "term": "report",
+    "definition": "To make a formal statement or complaint about a person.",
+    "pos": "verb",
+    "kind": "report-person"
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:3189d623f2cd32da35",
+    "term": "report",
+    "definition": "To arrive or present oneself at an appointed place or time.",
+    "pos": "verb",
+    "kind": "report-attend"
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:651b297af8a439674b",
+    "term": "report",
+    "definition": "To cover events as a journalist or produce news accounts.",
+    "pos": "verb",
+    "kind": "report-journalism"
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:42962dc337aac0871e",
+    "term": "report",
+    "definition": "To be accountable or subordinate to someone within an organisation.",
+    "pos": "verb",
+    "kind": "report-hierarchy"
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:37a30f296661fae594",
+    "term": "report",
+    "definition": "A written or spoken account giving information about events or a subject.",
+    "pos": "noun",
+    "kind": "report-document"
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:036c2a1e14d33a2481",
+    "term": "report",
+    "definition": "The sudden, sharp, loud sound of a gunshot or explosion.",
+    "pos": "noun",
+    "kind": "report-sound"
+  },
+  {
+    "entryId": "ve-7e96148b",
+    "senseId": "kaikki:19d7c26de947ec7fbd",
+    "term": "report",
+    "definition": "An employee subordinate to a particular manager in an organisation.",
+    "pos": "noun",
+    "kind": "report-employee"
   }
 ]

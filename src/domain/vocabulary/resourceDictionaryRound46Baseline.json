@@ -1,0 +1,242 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-6cf3ee8",
+      "senseId": "kaikki:79d2d502af45b7e9d1"
+    },
+    {
+      "entryId": "ve-6cf3ee8",
+      "senseId": "kaikki:e43a281c2460de3125"
+    },
+    {
+      "entryId": "ve-6cf3ee8",
+      "senseId": "kaikki:ef9630d686fd69cc41"
+    },
+    {
+      "entryId": "ve-6cf3ee8",
+      "senseId": "wiktionary:restored:82a4dbed32d76dddc1"
+    },
+    {
+      "entryId": "ve-6cf3ee8",
+      "senseId": "wiktionary:restored:0117c4af61ede925d3"
+    },
+    {
+      "entryId": "ve-6cf3ee8",
+      "senseId": "wiktionary:restored:db3c879c4cea355ef5"
+    },
+    {
+      "entryId": "ve-6cf3ee8",
+      "senseId": "wiktionary:restored:b3ceae2ed83ee98235"
+    },
+    {
+      "entryId": "ve-6cf3ee8",
+      "senseId": "wiktionary:restored:d30e3f7c3a9a84a8d3"
+    },
+    {
+      "entryId": "ve-6cf3ee8",
+      "senseId": "wiktionary:restored:70eae78fe3a7d68770"
+    },
+    {
+      "entryId": "ve-6cf3ee8",
+      "senseId": "wiktionary:restored:f79dd3c5a10ccb63fa"
+    },
+    {
+      "entryId": "ve-6cf3ee8",
+      "senseId": "wiktionary:restored:fbe68ab868563e9c58"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:dcfce7c3420eaa8387"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:c473b771b888feefec"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:72c75318626d914d14"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:f9cc19257f7f5f0981"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:0b527e24853dac9fae"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:e78da949593f28fe22"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:e362dfd1b4cd7db87c"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:b37c45213bb9cd9c47"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:9b6b06a9037eb1210b"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:b7bf4f427f1f332336"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:e420bd06bce96e1aba"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:961f46e917baaeef40"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:66037a5c71e85a8d75"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:5dde1ea7b56ac071ba"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:a18db12a3589b598af"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:65cbf68f713b7b87b3"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:cf91ff2b8bdb0da153"
+    },
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "wiktionary:restored:34316fbc777695a1c0"
+    },
+    {
+      "entryId": "ve-4841c15f",
+      "senseId": "kaikki:2f6bce7db73127e5fd"
+    },
+    {
+      "entryId": "ve-4841c15f",
+      "senseId": "kaikki:c2f55990dd9ad60cdd"
+    },
+    {
+      "entryId": "ve-4841c15f",
+      "senseId": "kaikki:2fedf3f05b87d2e3f4"
+    },
+    {
+      "entryId": "ve-4841c15f",
+      "senseId": "kaikki:41624d85b84300b06e"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:33ee4c6283da743fd0"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:ab6b2155b594351012"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:7eb5bdb900ca775b75"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:be9c2e41d68c215431"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:787882863bc64f6565"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:3189d623f2cd32da35"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:651b297af8a439674b"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:42962dc337aac0871e"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:9ffb5e9cfe78de5f82"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:d20583da8992dcd0b9"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:94c5d5423bc6d928ae"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:5e8227f4beafe70cd8"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:cb2067c773bd2760f2"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:37a30f296661fae594"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:bd8a399d8bed596e50"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:036c2a1e14d33a2481"
+    },
+    {
+      "entryId": "ve-7e96148b",
+      "senseId": "kaikki:19d7c26de947ec7fbd"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-109309ff",
+      "senseId": "kaikki:cfaadb52f70626fec3",
+      "term": "express",
+      "example": "The express train runs directly to the city without stopping at every station.",
+      "originalSense": {
+        "id": "kaikki:cfaadb52f70626fec3",
+        "definition": "Moving or operating quickly, as a train not making local stops.",
+        "example": "",
+        "pos": "adj",
+        "synonyms": [
+          "fast",
+          "crack"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "not-comparable",
+        "register": "not-comparable",
+        "wordFamily": [
+          "express elevator",
+          "express kidnapping",
+          "express lane",
+          "express officer",
+          "express road",
+          "express train",
+          "FedEx"
+        ]
+      }
+    }
+  ],
+  "removeDefaults": [
+    "ve-6cf3ee8",
+    "ve-109309ff",
+    "ve-4841c15f",
+    "ve-7e96148b"
+  ],
+  "restoreDefaults": []
+}

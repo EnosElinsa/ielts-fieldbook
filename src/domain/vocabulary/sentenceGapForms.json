@@ -43,5 +43,14 @@
     "pos": "verb",
     "example": "We are expecting a baby in June.",
     "form": "expecting"
+  },
+  {
+    "entryId": "ve-4841c15f",
+    "senseId": "kaikki:c2f55990dd9ad60cdd",
+    "term": "mention",
+    "definition": "On social media, the feed or list of posts and replies that refer to a person or account.",
+    "pos": "noun",
+    "example": "I checked my mentions for posts that named or tagged my account.",
+    "form": "mentions"
   }
 ]
