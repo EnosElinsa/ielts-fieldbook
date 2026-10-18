@@ -1,0 +1,191 @@
+[
+  {
+    "entryId": "vocab:affect",
+    "senseId": "kaikki:2114daefbbfa5151d9",
+    "term": "affect",
+    "definition": "To influence someone or something.",
+    "pos": "verb",
+    "example": "Noise can affect concentration.",
+    "task": {
+      "prompt": "Noise may _____ concentration, meaning that it can influence it.",
+      "acceptedAnswers": [
+        "affect"
+      ],
+      "options": [
+        "affect",
+        "effect"
+      ],
+      "explanation": "Affect is the verb meaning influence. Effect as a verb means bring about."
+    },
+    "kind": "meaning-choice",
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=affect&oldid=93604559"
+  },
+  {
+    "entryId": "vocab:effect",
+    "senseId": "kaikki:7df9fe0ca5374e80eb",
+    "term": "effect",
+    "definition": "A result or consequence of a cause.",
+    "pos": "noun",
+    "example": "The new timetable had an immediate effect on attendance.",
+    "task": {
+      "prompt": "The revised timetable had a positive _____ on attendance.",
+      "acceptedAnswers": [
+        "effect"
+      ],
+      "options": [
+        "effect",
+        "affect"
+      ],
+      "explanation": "Have an effect on uses effect as a result noun. Affect is normally the direct-object verb for influence."
+    },
+    "kind": "meaning-choice",
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=effect&oldid=93554700"
+  },
+  {
+    "entryId": "vocab:effect",
+    "senseId": "wiktionary:restored:58b5ddc2149e0cd3d7",
+    "term": "effect",
+    "definition": "The state of being in force or legally operative.",
+    "pos": "noun",
+    "example": "The new regulations take effect on 1 July.",
+    "task": {
+      "prompt": "The new rules take _____ on 1 July, when they become operative.",
+      "acceptedAnswers": [
+        "effect"
+      ],
+      "options": [
+        "effect",
+        "affect"
+      ],
+      "explanation": "Take effect means become operative. An effect of the rules is a consequence they produce."
+    },
+    "kind": "collocation-choice",
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=effect&oldid=93554700"
+  },
+  {
+    "entryId": "vocab:adapt",
+    "senseId": "kaikki:ef5997c3855c279b2a",
+    "term": "adapt",
+    "definition": "To make something suitable for a purpose, person or set of conditions.",
+    "pos": "verb",
+    "example": "We adapted the lesson to the learners’ needs.",
+    "task": {
+      "prompt": "We must _____ the lesson to the learners’ needs, changing it to suit them.",
+      "acceptedAnswers": [
+        "adapt"
+      ],
+      "options": [
+        "adapt",
+        "adopt"
+      ],
+      "explanation": "Adapt means modify or make suitable; adopt means take up or accept."
+    },
+    "kind": "meaning-choice",
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=adapt&oldid=93474653"
+  },
+  {
+    "entryId": "vocab:adapt",
+    "senseId": "kaikki:c31ade81ff9fbe8d7b",
+    "term": "adapt",
+    "definition": "To produce something by altering or reworking an existing source.",
+    "pos": "verb",
+    "example": "The film was adapted from a short story.",
+    "task": {
+      "prompt": "In “a film adapted from a novel”, from identifies the _____.",
+      "acceptedAnswers": [
+        "source material"
+      ],
+      "options": [
+        "source material",
+        "new audience"
+      ],
+      "explanation": "Adapted from gives the source; adapted for can introduce the new audience, purpose or medium."
+    },
+    "kind": "collocation-choice",
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=adapt&oldid=93474653"
+  },
+  {
+    "entryId": "vocab:adapt",
+    "senseId": "kaikki:345af12a704f4fb2a2",
+    "term": "adapt",
+    "definition": "To adjust oneself to new conditions or circumstances.",
+    "pos": "verb",
+    "example": "It took her a few weeks to adapt to the new schedule.",
+    "task": {
+      "prompt": "Adjusting to a new timetable means learning to _____ to it.",
+      "acceptedAnswers": [
+        "adapt"
+      ],
+      "options": [
+        "adapt",
+        "adopt"
+      ],
+      "explanation": "Adapt to means adjust to conditions; adopt takes an object and can mean begin using a timetable."
+    },
+    "kind": "meaning-choice",
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=adapt&oldid=93474653"
+  },
+  {
+    "entryId": "vocab:adopt",
+    "senseId": "kaikki:fb00f6f8bd508b5623",
+    "term": "adopt",
+    "definition": "To choose, accept or formally approve something for use.",
+    "pos": "verb",
+    "example": "The committee voted to adopt the revised policy.",
+    "task": {
+      "prompt": "The committee voted to _____ the policy, accepting it for use.",
+      "acceptedAnswers": [
+        "adopt"
+      ],
+      "options": [
+        "adopt",
+        "adapt"
+      ],
+      "explanation": "Adopt means accept or begin using. Adapt would mean change the policy to suit conditions."
+    },
+    "kind": "meaning-choice",
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=adopt&oldid=93550532"
+  },
+  {
+    "entryId": "ve-4f6c8c46",
+    "senseId": "kaikki:03f69c4a1cff400bce",
+    "term": "assure",
+    "definition": "To tell someone confidently that something is true or reliable.",
+    "pos": "verb",
+    "example": "I assure you that the application has been received.",
+    "task": {
+      "prompt": "In “I assure you that the form arrived”, you identifies _____.",
+      "acceptedAnswers": [
+        "the person receiving the confident statement"
+      ],
+      "options": [
+        "the person receiving the confident statement",
+        "a risk covered by an insurance policy"
+      ],
+      "explanation": "Assure you that introduces a statement addressed to you. It does not itself provide independent evidence."
+    },
+    "kind": "collocation-choice",
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assure&oldid=92127956"
+  },
+  {
+    "entryId": "ve-5fb41413",
+    "senseId": "kaikki:77192ff4a41efe8dde",
+    "term": "insure",
+    "definition": "To take out insurance or deal in insurance contracts, without stating a direct object.",
+    "pos": "verb",
+    "example": "We insure with a specialist provider.",
+    "task": {
+      "prompt": "In “we insure with a specialist provider”, with introduces _____.",
+      "acceptedAnswers": [
+        "the insurance provider"
+      ],
+      "options": [
+        "the insurance provider",
+        "the property named as a direct object"
+      ],
+      "explanation": "The construction names the provider after with and leaves the insured property unstated."
+    },
+    "kind": "collocation-choice",
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=insure&oldid=93621960"
+  }
+]

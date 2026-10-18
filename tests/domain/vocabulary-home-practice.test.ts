@@ -1,6 +1,7 @@
 import {expect,test,vi} from 'vitest';
 import {addVocabularyItem,getVocabularyReviewQueue} from '../../src/domain/vocabulary';
 import {getVocabularyHomePractice} from '../../src/domain/vocabulary/homePractice';
+import {buildVocabularySessionCommit,createVocabularySession,updateVocabularySessionAnswer} from '../../src/domain/vocabulary/session';
 import {VOCABULARY_CATALOG} from '../../src/domain/vocabulary/catalog';
 import corrections from '../../src/domain/vocabulary/readinessCorrections.json';
 import type {VocabularyDimension,VocabularyEvidence,VocabularyMode,VocabularySense,VocabularyStore} from '../../src/domain/vocabulary/types';
@@ -46,6 +47,17 @@ test('eligible recovery outranks other due and missing skill candidates',()=>{
  const {store,add,recommend}=fixture();add('recovery');
  const learning=store.vocabularyStates.find(row=>row.entryId==='recovery')!;learning.wrong.active=true;learning.wrong.modes.dictation={active:true,successesSinceFailure:0};
  expect(recommend().practice).toMatchObject({entry:{id:'recovery'},recommendation:{mode:'dictation',reason:'recovery'}});
+});
+
+test('home carries frozen confirmed errors into the saved-meaning recommendation ahead of other due work',()=>{
+ const {store,add,recommend}=fixture();const entry=add('confirmed-error');
+ const card=getVocabularyReviewQueue(store,{entryId:entry.id,senseId:'saved-meaning',mode:'dictation',dueOnly:false,now})[0];
+ let session=updateVocabularySessionAnswer(createVocabularySession([card],'dictation',{}),card.id,'wrongspelling');session.submittedAt=past;
+ Object.assign(store,buildVocabularySessionCommit(store,session,[card]).state);
+ store.vocabularyStates.find(row=>row.entryId==='home-entry')!.cards.definition={due:new Date(past)} as never;
+ const before=structuredClone(store);
+ expect(recommend().practice).toMatchObject({entry:{id:'confirmed-error'},sense:{id:'saved-meaning'},recommendation:{reason:'error',mode:'dictation',error:{kind:'spelling'}}});
+ expect(store).toEqual(before);
 });
 
 test('unsupported and future recovery modes do not become immediate recovery recommendations',()=>{

@@ -21,6 +21,8 @@ import { resolveVocabularyLearningContext } from "../../domain/vocabulary/contex
 import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
 import { registerVocabularyTeaching, vocabularyTeaching } from '../../domain/vocabulary/runtimeData';
 import { resetAccountIdentity, setAccountIdentity } from '../../storage/accountIdentity';
+import {addVocabularyItem,getVocabularyReviewQueue} from '../../domain/vocabulary';
+import {buildVocabularySessionCommit,createVocabularySession,updateVocabularySessionAnswer} from '../../domain/vocabulary/session';
 const mocks = vi.hoisted(() => ({
   fb: null as any,
   player: { play: vi.fn(), stop: vi.fn() },
@@ -729,6 +731,52 @@ function showResults(results: any) {
     </MemoryRouter>,
   );
 }
+
+function activeSpellingError(){
+  const store=mocks.fb.state;
+  const entry=addVocabularyItem(store,{id:'spelling-entry',term:'practise',senses:[{id:'spelling-sense',pos:'verb',definition:'To repeat an activity to improve.',example:'We practise every week.',source:'Personal note'}]}).item!;
+  const card=getVocabularyReviewQueue(store,{entryId:entry.id,senseId:'spelling-sense',mode:'dictation',dueOnly:false})[0];
+  let session=createVocabularySession([card],'dictation',{},{});
+  session=updateVocabularySessionAnswer(session,card.id,'practse');session.submittedAt='2026-10-01T09:00:00Z';
+  Object.assign(store,buildVocabularySessionCommit(store,session,[card]).state);
+  return {entry:store.vocabulary.find((row:any)=>row.id===entry.id),record:store.vocabularySessions[0],learning:store.vocabularyStates[0]};
+}
+
+test('details explain a confirmed written mismatch and keep the remedial action on its exact meaning',async()=>{
+  activeSpellingError();const before=JSON.stringify(mocks.fb.state);
+  mount('/vocabulary/entry/spelling-entry?senseId=spelling-sense');
+  const panel=await screen.findByRole('region',{name:'Next practice'});
+  expect(panel).toHaveTextContent('Your written answer did not match the accepted spelling');
+  expect(panel).toHaveTextContent('practse');expect(panel).toHaveTextContent('practise');
+  expect(panel).toHaveTextContent('3 correct retries');
+  const route=new URL(within(panel).getByRole('link',{name:'Practise Dictation'}).getAttribute('href')!,'https://test.test');
+  expect(route.searchParams.get('entryId')).toBe('spelling-entry');expect(route.searchParams.get('senseId')).toBe('spelling-sense');
+  expect(JSON.stringify(mocks.fb.state)).toBe(before);expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test('a result offers one supported follow-up for its current error and returns to the frozen session',()=>{
+  const {record,learning}=activeSpellingError();learning.cards.dictation.due='2099-01-01T00:00:00Z';
+  const before=JSON.stringify(mocks.fb.state);showResults(record);
+  const panel=screen.getByRole('region',{name:'Suggested follow-up'});
+  expect(panel).toHaveTextContent('practise · To repeat an activity to improve.');
+  expect(panel).toHaveTextContent('Supporting practice does not clear the original Dictation mistake');
+  const route=new URL(within(panel).getByRole('link',{name:'Practise Meaning recall'}).getAttribute('href')!,'https://test.test');
+  expect(route.searchParams.get('entryId')).toBe('spelling-entry');expect(route.searchParams.get('senseId')).toBe('spelling-sense');
+  expect(route.searchParams.get('returnTo')).toBe('/vocabulary/history/old-session?resultFilter=incorrect');
+  expect(screen.getByRole('heading',{name:'0 of 1 correct'})).toBeInTheDocument();
+  expect(screen.getByRole('button',{name:'Retry mistakes'})).toBeInTheDocument();
+  expect(JSON.stringify(mocks.fb.state)).toBe(before);expect(mocks.fb.persistNow).not.toHaveBeenCalled();
+});
+
+test.each(['recovered','newer failure','missing snapshot','different meaning'] as const)('results do not revive a %s as current follow-up',change=>{
+  const {record,learning,entry}=activeSpellingError();
+  if(change==='recovered')learning.wrong.modes.dictation.active=false;
+  if(change==='newer failure')learning.wrong.modes.dictation.lastFailureAt='2026-10-02T09:00:00Z';
+  if(change==='missing snapshot')delete record.cardSnapshots;
+  if(change==='different meaning')entry.senses[0].definition='A different personal meaning.';
+  showResults(record);
+  expect(screen.queryByRole('region',{name:'Suggested follow-up'})).not.toBeInTheDocument();
+});
 test("historical dictation shows current group reference but frozen score and grading stay immutable", async () => {
   const results = resultsFixture();
   const before = JSON.stringify(results);

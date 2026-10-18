@@ -3,7 +3,8 @@ import {MemoryRouter} from 'react-router-dom';
 import {afterEach,beforeEach,expect,test,vi} from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import {VocabularyPage} from './VocabularyPages';
-import {addVocabularyItem} from '../../domain/vocabulary';
+import {addVocabularyItem,getVocabularyReviewQueue} from '../../domain/vocabulary';
+import {buildVocabularySessionCommit,createVocabularySession,updateVocabularySessionAnswer} from '../../domain/vocabulary/session';
 import type {VocabularyDimension,VocabularyMode,VocabularyStore} from '../../domain/vocabulary/types';
 import {VOCABULARY_CATALOG} from '../../domain/vocabulary/catalog';
 import {loadReleasedVocabularyTeaching} from '../../storage/vocabularyCatalog';
@@ -50,6 +51,18 @@ test('eligible recovery takes priority over a batch due in another saved mode',(
  mocks.fb.state.settings={vocabulary:{mode:'definition'}};show();
  expect(within(panel()).getByText(/Review an active mistake/)).toBeInTheDocument();
  expect(within(panel()).getByRole('link',{name:/Practise Dictation/})).toHaveAttribute('href',expect.stringContaining('mode=dictation'));
+});
+
+test('home shows confirmed-error guidance even when a different exercise has a due batch',()=>{
+ const {entry}=saved(),store=mocks.fb.state;
+ const card=getVocabularyReviewQueue(store,{entryId:entry.id,senseId:'saved-direction',mode:'dictation',dueOnly:false})[0];
+ let session=updateVocabularySessionAnswer(createVocabularySession([card],'dictation',{}),card.id,'compas');session.submittedAt='2026-10-01T09:00:00Z';
+ Object.assign(store,buildVocabularySessionCommit(store,session,[card]).state);
+ due(store.vocabularyStates[0],'definition',-10000);mocks.fb.state.settings={vocabulary:{mode:'definition'}};
+ const before=structuredClone(store);show();
+ expect(within(panel()).getByText(/Your written answer did not match/)).toBeInTheDocument();
+ expect(within(panel()).getByRole('link',{name:'Practise Dictation'})).toHaveAttribute('href',expect.stringContaining('senseId=saved-direction'));
+ expect(store).toEqual(before);expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
 
 test('the existing due batch keeps the preferred supported mode',()=>{

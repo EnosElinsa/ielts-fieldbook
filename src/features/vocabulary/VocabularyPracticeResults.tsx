@@ -12,7 +12,9 @@ import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
 import type { VocabularyEntry, VocabularyState } from '../../domain/vocabulary/types';
 import { Pronunciation } from './Pronunciation';
-import { entryUrl } from './vocabularyNavigation';
+import { entryUrl, practiceUrl } from './vocabularyNavigation';
+import {getVocabularyNextPractice} from '../../domain/vocabulary/nextPractice';
+import {VocabularyNextPractice} from './VocabularyNextPractice';
 import { closestAcceptedAnswer } from './answerDiff';
 import { VocabularyAnswerDiff } from './VocabularyAnswerDiff';
 import { VocabularySourceLinks } from './VocabularySourceLinks';
@@ -57,11 +59,23 @@ export function VocabularyPracticeResults({ controller, results }: {
     const context = valid ? {bookId,unitId} : {};
     const resolved = raw ? resolveVocabularyLearningContext(raw, {...context, ...(results.mode !== 'dictation' ? {senseId: row.senseId} : {})}) : null;
     const senseId = results.mode === 'dictation' ? resolved?.sense?.id || row.senseId : row.senseId;
-    return {raw,resolved,detail:entryUrl(row.entryId,{...context,senseId},resultReturnTo)};
+    return {raw,resolved,context,detail:entryUrl(row.entryId,{...context,senseId},resultReturnTo)};
   };
   const hasMistakes = results.mode !== "audio" && results.results.some(row => row.result === "failure" || row.result === "partial");
   const recoveryMode = results.mode === 'audio' ? undefined : results.mode;
   const learningStates = controller.state.vocabularyStates as VocabularyState[];
+  const followUp=(()=>{
+    for(const row of resultRows){
+      if(row.result!=='failure')continue;
+      const learning=learningStates?.find(learning=>learning.entryId===row.entryId&&learning.senseId===row.senseId);
+      if(results.mode==='audio' || !learning?.wrong?.modes?.[results.mode]?.active)continue;
+      const current=currentRow(row);
+      const recommendation=getVocabularyNextPractice(controller.state,current.raw,{...current.context,senseId:row.senseId});
+      if(recommendation?.status==='ready' && recommendation.reason==='error'
+        && recommendation.error?.sessionId===results.id && recommendation.error.cardId===row.cardId)
+        return {row,current,recommendation};
+    }
+  })();
   const recoveringWords = new Set(results.results.filter(row => row.result === 'success' && recoveryMode && learningStates?.some(learning =>
     learning.entryId === row.entryId && learning.senseId === row.senseId && learning.wrong?.modes?.[recoveryMode]?.active,
   )).map(row => `${row.entryId}:${row.senseId}`)).size;
@@ -113,6 +127,9 @@ export function VocabularyPracticeResults({ controller, results }: {
         <p>Recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last. A single correct retry is a useful first step.</p>
         <Link className="btn text" to={`/vocabulary/review?wrongOnly=true&dueOnly=false&mode=${encodeURIComponent(results.mode)}`}>Open mistake review<ArrowRight size={14}/></Link>
       </aside> : null}
+      {followUp ? <VocabularyNextPractice title="Suggested follow-up" recommendation={followUp.recommendation}
+        meaning={{term:followUp.row.term,definition:followUp.row.definition}}
+        to={mode=>practiceUrl(followUp.row.entryId,followUp.row.senseId,followUp.current.context,resultReturnTo,mode)}/> : null}
       <div className="practice-result-controls">
         <FilterMenu label="Result filter" value={resultFilter} onChange={setResultFilter} options={[
           { value: 'all', label: 'All results' }, { value: 'incorrect', label: 'Incorrect' },

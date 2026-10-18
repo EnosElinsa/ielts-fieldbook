@@ -2,11 +2,14 @@ import type {VocabularyDimension,VocabularyEntry,VocabularyMode,VocabularyStore}
 import {getVocabularyReviewQueue,VOCABULARY_MODE_DIMENSIONS} from './index';
 import {getVocabularySpacedProgress} from './mastery';
 import {VOCABULARY_CATALOG} from './catalog';
+import {getActiveVocabularyConfirmedErrors,VOCABULARY_ERROR_PRACTICE} from './confirmedErrors';
+import type {VocabularyConfirmedError} from './confirmedErrors';
 
 export type VocabularyNextPractice = {
-  status: 'ready' | 'waiting'; mode: VocabularyMode; reason: 'missing' | 'due' | 'recovery' | 'spaced' | 'production';
+  status: 'ready' | 'waiting'; mode: VocabularyMode; reason: 'missing' | 'due' | 'recovery' | 'spaced' | 'production' | 'error';
   dimensions: VocabularyDimension[]; dueAt?: string; nextChangeAt?: string; alternatives: VocabularyMode[];
   target?: 'familiar' | 'mastered';
+  error?: VocabularyConfirmedError;
 };
 
 export function getVocabularyNextPractice(
@@ -60,6 +63,10 @@ export function getVocabularyNextPractice(
     ...(nextChangeAt ? {nextChangeAt} : {}),
     alternatives:available.filter(card=>card.mode!==mode).map(card=>card.mode),
   });
+  for (const error of getActiveVocabularyConfirmedErrors(store,cards,now)) {
+    const mode=VOCABULARY_ERROR_PRACTICE[error.kind].find(mode=>available.some(card=>card.mode===mode));
+    if (mode) return {...response(mode,'error'),error};
+  }
   const recover = available.filter(card=>learning?.wrong?.modes?.[card.mode]?.active)
     .sort((a,b)=>(schedule(a.mode) ?? now)-(schedule(b.mode) ?? now))[0];
   if (recover) return response(recover.mode,'recovery');

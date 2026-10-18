@@ -295,7 +295,7 @@ function VocabularyHomePage() {
   const due = dueCards.filter(card => card.mode === reviewMode);
   const enrollment = [...(fb.state.wordbookEnrollments || [])].sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || ''))).map(row => ({ book: VOCABULARY_CATALOG.books.find(book => book.id === row.bookId), study: bookStudy(fb.state, row.bookId) })).find(row => row.book && row.study.next);
   const nextGroup = enrollment?.study.next;
-  const suggestion = !saved && (!due.length || guidance.practice?.recommendation.reason==='recovery') ? guidance.practice : undefined;
+  const suggestion = !saved && (!due.length || ['recovery','error'].includes(guidance.practice?.recommendation.reason || '')) ? guidance.practice : undefined;
   const showSuggestion = suggestion && (suggestion.recommendation.status==='ready' || !nextGroup);
   const learning = nextGroup && fb.state.wordbookProgress.find(row => row.bookId === nextGroup.bookId && row.unitId === nextGroup.id)?.learning;
   const resumeParams = new URLSearchParams({ resume: 'true', mode: saved?.mode || mode });

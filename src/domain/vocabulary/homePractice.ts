@@ -2,6 +2,7 @@ import type {ReviewCard,VocabularyEntry,VocabularyEvidence,VocabularySense,Vocab
 import {getVocabularyNextPractice,type VocabularyNextPractice} from './nextPractice';
 import {getDueVocabularyReviewQueue} from './progress';
 import {resolveVocabularyLearningContext} from './context';
+import type {VocabularySessionRecord} from './session';
 
 export type SavedMeaningPractice = {entry: VocabularyEntry; sense: VocabularySense; recommendation: VocabularyNextPractice};
 export type VocabularyHomePractice = {practice?: SavedMeaningPractice; dueCards: ReviewCard[]; nextChangeAt?: string};
@@ -14,6 +15,7 @@ export function getVocabularyHomePractice(store: Partial<VocabularyStore>, at: s
   const scopes = new Map(entries.map(entry=>[entry.id,{
     entry, senses:new Set(entry.senses.map(sense=>sense.id)),
     states:new Map<string,VocabularyState>(), events:new Map<string,VocabularyEvidence[]>(),
+    sessions:new Map<string,VocabularySessionRecord[]>(),
   }]));
   for (const row of store.vocabularyStates || []) {
     const scope = scopes.get(row.entryId);
@@ -25,13 +27,23 @@ export function getVocabularyHomePractice(store: Partial<VocabularyStore>, at: s
     const events = scope.events.get(senseId) || [];
     events.push(event); scope.events.set(senseId,events);
   }
+  for (const session of store.vocabularySessions || []) {
+    const seen=new Set<string>();
+    for (const row of session.results) {
+      const scope=scopes.get(row.entryId),key=`${row.entryId}:${row.senseId}`;
+      if (!scope?.senses.has(row.senseId) || seen.has(key)) continue;
+      seen.add(key);
+      const sessions=scope.sessions.get(row.senseId) || [];
+      sessions.push(session);scope.sessions.set(row.senseId,sessions);
+    }
+  }
   const ready: SavedMeaningPractice[] = [], waiting: SavedMeaningPractice[] = [];
   let nextChange = Infinity;
-  for (const {entry,states,events} of scopes.values()) {
+  for (const {entry,states,events,sessions} of scopes.values()) {
     for (const senseId of new Set(entry.senses.map(sense=>sense.id))) {
       const state = states.get(senseId);
       // Keep the saved primary in vocabulary for legacy evidence without a sense ID.
-      const snapshot = {vocabulary:[entry],vocabularyStates:state?[state]:[],vocabularyEvidence:events.get(senseId)||[]};
+      const snapshot = {vocabulary:[entry],vocabularyStates:state?[state]:[],vocabularyEvidence:events.get(senseId)||[],vocabularySessions:sessions.get(senseId)||[]};
       const recommendation = getVocabularyNextPractice(snapshot,entry,{senseId,now:new Date(now)});
       if (!recommendation) continue;
       const resolved = resolveVocabularyLearningContext(entry,{senseId});
@@ -41,7 +53,7 @@ export function getVocabularyHomePractice(store: Partial<VocabularyStore>, at: s
       if (recommendation.nextChangeAt) nextChange = Math.min(nextChange,Date.parse(recommendation.nextChangeAt));
     }
   }
-  const priority = {recovery:0,due:1,missing:2,production:3,spaced:4};
+  const priority = {error:0,recovery:1,due:2,missing:3,production:4,spaced:5};
   ready.sort((a,b)=>priority[a.recommendation.reason]-priority[b.recommendation.reason]
     || (Date.parse(a.recommendation.dueAt || '') || now)-(Date.parse(b.recommendation.dueAt || '') || now));
   waiting.sort((a,b)=>Date.parse(a.recommendation.dueAt!)-Date.parse(b.recommendation.dueAt!));
