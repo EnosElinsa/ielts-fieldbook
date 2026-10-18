@@ -23396,5 +23396,287 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-9cbe66d",
+    "originalSense": {
+      "id": "kaikki:d2c1de4e2f4e4a040a",
+      "definition": "To consider questionable or unlikely; to hesitate to believe; to lack confidence in; to question.",
+      "example": "He doubted that was really what you meant.",
+      "pos": "verb",
+      "synonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ambitransitive",
+      "register": "ambitransitive",
+      "wordFamily": [
+        "doubtable",
+        "doubter",
+        "doubting",
+        "doubtingly",
+        "doubting Thomas",
+        "doubting Thomasina",
+        "I doubt it",
+        "undoubted",
+        "undoubtedly",
+        "undoubting",
+        "undoubtingly"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/doubt#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:d2c1de4e2f4e4a040a",
+      "definition": "To consider something questionable or unlikely; to hesitate to believe or lack confidence in it.",
+      "example": "I doubt that the train will arrive on time, but I have not checked the service updates.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "doubt that",
+        "doubt whether",
+        "doubt someone’s word"
+      ],
+      "usage": "With a noun or a clause; the source also records use without an expressed object.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/doubt#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Doubt expresses uncertainty or reluctance to believe here. It does not prove the train will be late. Suspect that something is true can instead express an unproved belief that it is true; both verbs also have other meanings."
+      ],
+      "distinctionTask": {
+        "prompt": "I doubt the train will arrive on time, but I have not checked. This expresses _____.",
+        "options": [
+          "uncertainty about timely arrival",
+          "proof that the train is late"
+        ],
+        "answer": "uncertainty about timely arrival",
+        "explanation": "Doubt questions the proposition without independently disproving it."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-add96b1",
+    "originalSense": {
+      "id": "kaikki:73a4429e38cae7cdf2",
+      "definition": "Confidence in or reliance on some person or quality.",
+      "example": "He needs to regain her trust if he is ever going to win her back.",
+      "pos": "noun",
+      "synonyms": [
+        "belief",
+        "confidence",
+        "faith",
+        "expectation",
+        "hope"
+      ],
+      "antonyms": [
+        "distrust",
+        "mistrust",
+        "untrust",
+        "wantrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:73a4429e38cae7cdf2",
+      "definition": "Confidence in or reliance on a person or quality.",
+      "example": "Their friendship is built on mutual trust.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "trust in someone",
+        "build trust",
+        "lose someone’s trust"
+      ],
+      "usage": "Usually uncountable in this confidence sense.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The noun names confidence between people. Trusting someone does not prove that person is reliable on every occasion; the separate reliability sense concerns the quality being relied on."
+      ],
+      "distinctionTask": {
+        "prompt": "Their friendship is built on mutual trust. Trust here is _____.",
+        "options": [
+          "confidence in one another",
+          "an arrangement for managing property"
+        ],
+        "answer": "confidence in one another",
+        "explanation": "The friendship context identifies interpersonal confidence."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "originalSense": {
+      "id": "kaikki:78ec9b13ae210c471f",
+      "definition": "To imagine or suppose (something) to be true, or to exist, without proof.",
+      "example": "to suspect the presence of disease",
+      "pos": "verb",
+      "synonyms": [
+        "imagine",
+        "suppose",
+        "think",
+        "sniff"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "missuspect",
+        "suspectable",
+        "suspected",
+        "suspectful",
+        "suspecting",
+        "suspective",
+        "suspector"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:78ec9b13ae210c471f",
+      "definition": "To imagine or suppose that something is true or exists, without proof.",
+      "example": "I suspect that the meeting has been cancelled, but I have no confirmation.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "suspect that",
+        "suspect the presence of",
+        "suspect a problem"
+      ],
+      "usage": "Verb: /səˈspɛkt/, stress on the second syllable; the noun and adjective normally stress the first syllable. Transitive, with a noun or clause.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suspect#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Suspect that expresses an unproved belief here. Doubt that can instead question whether a proposition is true, but both words have additional overlapping meanings; neither is a universal proof rule."
+      ],
+      "distinctionTask": {
+        "prompt": "I suspect the meeting has been cancelled, but have no confirmation. The speaker _____.",
+        "options": [
+          "believes it may be cancelled without proof",
+          "reports an independently confirmed cancellation"
+        ],
+        "answer": "believes it may be cancelled without proof",
+        "explanation": "The explicit lack of confirmation preserves uncertainty."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-71232261",
+    "originalSense": {
+      "id": "kaikki:69577275c81ff60080",
+      "definition": "To explicitly mention (something) as a possibility for consideration, often to recommend it.",
+      "example": "This meeting venue was suggested to us by our boss.",
+      "pos": "verb",
+      "synonyms": [
+        "venture",
+        "hazard",
+        "propose",
+        "float",
+        "bring up",
+        "moot"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "autosuggest",
+        "missuggest",
+        "resuggest",
+        "suggestable",
+        "suggester",
+        "suggestful",
+        "suggestible",
+        "suggestion",
+        "suggest itself",
+        "suggestive",
+        "suggestment"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suggest#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:69577275c81ff60080",
+      "definition": "To explicitly mention something as a possibility for consideration, often as a recommendation.",
+      "example": "I suggest taking an earlier train.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "suggest doing something",
+        "suggest that we leave",
+        "suggest something to someone"
+      ],
+      "usage": "Transitive propose sense; can take an -ing form, a noun phrase or a clause.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suggest#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Suggest taking and suggest that we take are ordinary recommendation patterns; that we should take is also used. A proposal does not by itself establish that anyone has accepted or acted on it."
+      ],
+      "distinctionTask": {
+        "prompt": "I suggest taking an earlier train. This is _____.",
+        "options": [
+          "a proposal for consideration",
+          "confirmation that the earlier train was taken"
+        ],
+        "answer": "a proposal for consideration",
+        "explanation": "The recommendation does not report a completed journey."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

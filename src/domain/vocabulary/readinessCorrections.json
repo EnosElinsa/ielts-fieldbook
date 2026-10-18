@@ -217924,5 +217924,2738 @@
     "antonyms": [],
     "wordFamily": [],
     "register": ""
+  },
+  {
+    "entryId": "ve-9cbe66d",
+    "senseId": "kaikki:d2c1de4e2f4e4a040a",
+    "definition": "To consider something questionable or unlikely; to hesitate to believe or lack confidence in it.",
+    "example": "I doubt that the train will arrive on time, but I have not checked the service updates.",
+    "collocations": [
+      "doubt that",
+      "doubt whether",
+      "doubt someone’s word"
+    ],
+    "distinctions": [
+      "Doubt expresses uncertainty or reluctance to believe here. It does not prove the train will be late. Suspect that something is true can instead express an unproved belief that it is true; both verbs also have other meanings."
+    ],
+    "usage": "With a noun or a clause; the source also records use without an expressed object.",
+    "originalSense": {
+      "id": "kaikki:d2c1de4e2f4e4a040a",
+      "definition": "To consider questionable or unlikely; to hesitate to believe; to lack confidence in; to question.",
+      "example": "He doubted that was really what you meant.",
+      "pos": "verb",
+      "synonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ambitransitive",
+      "register": "ambitransitive",
+      "wordFamily": [
+        "doubtable",
+        "doubter",
+        "doubting",
+        "doubtingly",
+        "doubting Thomas",
+        "doubting Thomasina",
+        "I doubt it",
+        "undoubted",
+        "undoubtedly",
+        "undoubting",
+        "undoubtingly"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/doubt#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=doubt&oldid=93643837",
+    "distinctionTask": {
+      "prompt": "I doubt the train will arrive on time, but I have not checked. This expresses _____.",
+      "options": [
+        "uncertainty about timely arrival",
+        "proof that the train is late"
+      ],
+      "answer": "uncertainty about timely arrival",
+      "explanation": "Doubt questions the proposition without independently disproving it."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9cbe66d",
+    "senseId": "kaikki:5d7953eaff4cf1e0cd",
+    "definition": "To harbour suspicion about something or someone; to suspect.",
+    "example": "Reading note: in the source passage, “I doubt you will not be found true men” expresses suspicion that the people will prove untrustworthy. The checked source labels this suspect meaning archaic outside Scotland.",
+    "collocations": [
+      "doubt + clause (suspect sense)",
+      "doubt (Scottish or older suspect use)"
+    ],
+    "distinctions": [
+      "This use can lean towards suspecting a proposition is true, rather than the common use that questions it. Archaic outside Scotland is a regionally qualified label, not a claim that the meaning is archaic everywhere."
+    ],
+    "usage": "Archaic outside Scotland in the checked source; that qualification was missing from the imported usage field.",
+    "originalSense": {
+      "id": "kaikki:5d7953eaff4cf1e0cd",
+      "definition": "To harbour suspicion about; suspect.",
+      "example": "I walk by the Rule of my Maſter, you walk by the rude working of your fancies. You are counted thieves already, by the Lord of the way; therefore, I doubt you will not be found true men at the end of the way.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "doubtable",
+        "doubter",
+        "doubting",
+        "doubtingly",
+        "doubting Thomas",
+        "doubting Thomasina",
+        "I doubt it",
+        "undoubted",
+        "undoubtedly",
+        "undoubting",
+        "undoubtingly"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/doubt#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=doubt&oldid=93643837",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9cbe66d",
+    "senseId": "kaikki:77b02118a252a879c8",
+    "definition": "Archaic: to anticipate something with dread or fear; to apprehend it.",
+    "example": "Reading note: the source’s troops “doubted the enimies sally”: they feared an enemy attack. The original spelling belongs to the quotation.",
+    "collocations": [
+      "doubt an attack (older apprehension sense)",
+      "doubt + feared event"
+    ],
+    "distinctions": [
+      "Here doubt concerns apprehension of an event. It does not mean that the troops considered the event impossible or had proved it would happen."
+    ],
+    "usage": "Archaic, transitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:77b02118a252a879c8",
+      "definition": "To anticipate with dread or fear; to apprehend.",
+      "example": "The rest of his horsemen the Duke sent to his campe, bicause they heard a great noise there, and doubted the enimies sally, and indeede they had issued foorth thrise, but were alwaies repulsed, especially through the valiantns of the English men that the Duke left there behind him [...]",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, transitive",
+      "wordFamily": [
+        "doubtable",
+        "doubter",
+        "doubting",
+        "doubtingly",
+        "doubting Thomas",
+        "doubting Thomasina",
+        "I doubt it",
+        "undoubted",
+        "undoubtedly",
+        "undoubting",
+        "undoubtingly"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/doubt#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=doubt&oldid=93643837",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9cbe66d",
+    "senseId": "kaikki:99e35e3fbabafff33d",
+    "definition": "Obsolete: to fill someone with fear; to frighten them.",
+    "example": "Reading note: the source’s “more doubts me” means frightens me more. In that construction, the person affected by fear is the object of doubts.",
+    "collocations": [
+      "doubt someone (obsolete frighten sense)",
+      "doubts me (source wording)"
+    ],
+    "distinctions": [
+      "This causative frighten use differs from feeling fear or being uncertain. It is retained as reading guidance rather than an everyday sentence model."
+    ],
+    "usage": "Obsolete, transitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:99e35e3fbabafff33d",
+      "definition": "To fill with fear; to affright.",
+      "example": "I'll tell ye all my fears, one ſingle valour, / the vertues of the valiant Caratach / more doubts me then all Britain: [...]",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "doubtable",
+        "doubter",
+        "doubting",
+        "doubtingly",
+        "doubting Thomas",
+        "doubting Thomasina",
+        "I doubt it",
+        "undoubted",
+        "undoubtedly",
+        "undoubting",
+        "undoubtingly"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/doubt#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=doubt&oldid=93643837",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9cbe66d",
+    "senseId": "kaikki:5fff59fc7ba1f971c0",
+    "definition": "Obsolete: to dread or fear.",
+    "example": "Reading note: this meaning uses doubt for feeling dread or fear. It is separate from the obsolete construction in which someone or something doubts a person, meaning frightens that person.",
+    "collocations": [
+      "doubt (obsolete fear sense)",
+      "doubt a feared thing (older use)"
+    ],
+    "distinctions": [
+      "The person fearing and the person being frightened occupy different roles in the two older records. Neither should replace ordinary question or hesitate to believe in modern learning."
+    ],
+    "usage": "Obsolete; transitive or intransitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:5fff59fc7ba1f971c0",
+      "definition": "To dread, to fear.",
+      "example": "Edmond aþelstones broþer · after him was king · / Godmon & doutede · god þoru alle þing ·",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ambitransitive, obsolete",
+      "register": "ambitransitive, obsolete",
+      "wordFamily": [
+        "doubtable",
+        "doubter",
+        "doubting",
+        "doubtingly",
+        "doubting Thomas",
+        "doubting Thomasina",
+        "I doubt it",
+        "undoubted",
+        "undoubtedly",
+        "undoubting",
+        "undoubtingly"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/doubt#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=doubt&oldid=93643837",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9cbe66d",
+    "senseId": "kaikki:ea2f3b456a9db9cf1b",
+    "definition": "Disbelief or uncertainty about something, or a particular instance of it.",
+    "example": "There is still doubt about the accuracy of the figures.",
+    "collocations": [
+      "doubt about",
+      "in doubt",
+      "a reasonable doubt"
+    ],
+    "distinctions": [
+      "The noun names uncertainty; it does not establish that the figures are false. It can be uncountable, as here, or countable for a particular doubt. The separate regional question meanings have their own records."
+    ],
+    "usage": "Uncountable and countable noun; doubt about, over or as to something.",
+    "originalSense": {
+      "id": "kaikki:ea2f3b456a9db9cf1b",
+      "definition": "Disbelief or uncertainty (about something); (countable) a particular instance of such disbelief or uncertainty.",
+      "example": "There was some doubt as to who the child's real father was.",
+      "pos": "noun",
+      "synonyms": [
+        "incertitude"
+      ],
+      "antonyms": [
+        "belief",
+        "confidence",
+        "faith"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "doubtable",
+        "doubter",
+        "doubting",
+        "doubtingly",
+        "doubting Thomas",
+        "doubting Thomasina",
+        "I doubt it",
+        "undoubted",
+        "undoubtedly",
+        "undoubting",
+        "undoubtingly",
+        "bedoubt",
+        "benefit of doubt",
+        "benefit of the doubt",
+        "beyond a reasonable doubt",
+        "beyond a reason of a doubt",
+        "beyond a shadow of a doubt",
+        "beyond a shadow of doubt",
+        "beyond doubt",
+        "beyond reasonable doubt",
+        "beyond reason of a doubt",
+        "beyond the shadow of a doubt",
+        "call into doubt",
+        "Cartesian doubt",
+        "doubtance",
+        "doubtee",
+        "doubtful",
+        "doubthouse",
+        "doubtless",
+        "doubtmonger"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/doubt#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=doubt&oldid=93643837",
+    "distinctionTask": {
+      "prompt": "There is still doubt about the figures’ accuracy. This means _____.",
+      "options": [
+        "their accuracy remains uncertain",
+        "they have been proved false"
+      ],
+      "answer": "their accuracy remains uncertain",
+      "explanation": "Uncertainty about accuracy is not proof of inaccuracy."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9cbe66d",
+    "senseId": "kaikki:cf13bcc4dae52cdd52",
+    "definition": "A point of uncertainty or a question, especially a yes/no or multiple-choice question.",
+    "example": "Reading note: the source illustrates a student saying “I have a doubt about today’s lecture”. In this Indian English use, doubt can introduce a question or a point needing clarification.",
+    "collocations": [
+      "have a doubt (Indian English question use)",
+      "a doubt about a lesson (source construction)"
+    ],
+    "distinctions": [
+      "The checked source labels this meaning obsolete outside India. Preserve that regional scope: it does not make the Indian English use obsolete. In ordinary international classroom wording, I have a question is a useful alternative."
+    ],
+    "usage": "Countable; labelled obsolete outside India in the checked source.",
+    "originalSense": {
+      "id": "kaikki:cf13bcc4dae52cdd52",
+      "definition": "A point of uncertainty, especially a yes/no or a multiple-choice question",
+      "example": "Ma'am, I have a doubt about today's lecture",
+      "pos": "noun",
+      "synonyms": [
+        "disbelief"
+      ],
+      "antonyms": [
+        "belief",
+        "tenet"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "doubtable",
+        "doubter",
+        "doubting",
+        "doubtingly",
+        "doubting Thomas",
+        "doubting Thomasina",
+        "I doubt it",
+        "undoubted",
+        "undoubtedly",
+        "undoubting",
+        "undoubtingly",
+        "bedoubt",
+        "benefit of doubt",
+        "benefit of the doubt",
+        "beyond a reasonable doubt",
+        "beyond a reason of a doubt",
+        "beyond a shadow of a doubt",
+        "beyond a shadow of doubt",
+        "beyond doubt",
+        "beyond reasonable doubt",
+        "beyond reason of a doubt",
+        "beyond the shadow of a doubt",
+        "call into doubt",
+        "Cartesian doubt",
+        "doubtance",
+        "doubtee",
+        "doubtful",
+        "doubthouse",
+        "doubtless",
+        "doubtmonger"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/doubt#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=doubt&oldid=93643837",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-9cbe66d",
+    "senseId": "kaikki:14d94f40b5b1734964",
+    "definition": "In some non-native varieties of English, a question that someone has.",
+    "example": "Reading note: the source separately records doubt meaning a question and labels it NNSE, referring to non-native-speaker English. This explains that usage rather than treating every question as uncertainty about truth.",
+    "collocations": [
+      "doubt (question sense in some English varieties)",
+      "have a question (international alternative)"
+    ],
+    "distinctions": [
+      "This variety label is distinct from the separate obsolete-outside-India record. It is not a historical label or evidence that the speaker’s question is invalid."
+    ],
+    "usage": "Countable question sense; NNSE in the checked source.",
+    "originalSense": {
+      "id": "kaikki:14d94f40b5b1734964",
+      "definition": "a question (that one has)",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "doubtable",
+        "doubter",
+        "doubting",
+        "doubtingly",
+        "doubting Thomas",
+        "doubting Thomasina",
+        "I doubt it",
+        "undoubted",
+        "undoubtedly",
+        "undoubting",
+        "undoubtingly",
+        "bedoubt",
+        "benefit of doubt",
+        "benefit of the doubt",
+        "beyond a reasonable doubt",
+        "beyond a reason of a doubt",
+        "beyond a shadow of a doubt",
+        "beyond a shadow of doubt",
+        "beyond doubt",
+        "beyond reasonable doubt",
+        "beyond reason of a doubt",
+        "beyond the shadow of a doubt",
+        "call into doubt",
+        "Cartesian doubt",
+        "doubtance",
+        "doubtee",
+        "doubtful",
+        "doubthouse",
+        "doubtless",
+        "doubtmonger"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/doubt#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=doubt&oldid=93643837",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:73a4429e38cae7cdf2",
+    "definition": "Confidence in or reliance on a person or quality.",
+    "example": "Their friendship is built on mutual trust.",
+    "collocations": [
+      "trust in someone",
+      "build trust",
+      "lose someone’s trust"
+    ],
+    "distinctions": [
+      "The noun names confidence between people. Trusting someone does not prove that person is reliable on every occasion; the separate reliability sense concerns the quality being relied on."
+    ],
+    "usage": "Usually uncountable in this confidence sense.",
+    "originalSense": {
+      "id": "kaikki:73a4429e38cae7cdf2",
+      "definition": "Confidence in or reliance on some person or quality.",
+      "example": "He needs to regain her trust if he is ever going to win her back.",
+      "pos": "noun",
+      "synonyms": [
+        "belief",
+        "confidence",
+        "faith",
+        "expectation",
+        "hope"
+      ],
+      "antonyms": [
+        "distrust",
+        "mistrust",
+        "untrust",
+        "wantrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "Their friendship is built on mutual trust. Trust here is _____.",
+      "options": [
+        "confidence in one another",
+        "an arrangement for managing property"
+      ],
+      "answer": "confidence in one another",
+      "explanation": "The friendship context identifies interpersonal confidence."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:87f3ee5236efda2e45",
+    "definition": "Dependence on something in the future; hope.",
+    "example": "Reading note: the source’s “Such trust have we through Christ” uses trust for confident hope or future reliance. This explains the speaker’s religious expression rather than establishing its theological claims.",
+    "collocations": [
+      "such trust (source wording)",
+      "trust (hope or future-reliance sense)"
+    ],
+    "distinctions": [
+      "This source meaning focuses on hope, separate from the person or thing in which hope is placed. The checked source does not label the meaning obsolete merely because its illustration is an older quotation."
+    ],
+    "usage": "Noun; retained with source-specific reading guidance.",
+    "originalSense": {
+      "id": "kaikki:87f3ee5236efda2e45",
+      "definition": "Dependence upon something in the future; hope.",
+      "example": "Such trust have we through Christ.",
+      "pos": "noun",
+      "synonyms": [
+        "belief",
+        "confidence",
+        "faith",
+        "expectation",
+        "hope"
+      ],
+      "antonyms": [
+        "distrust",
+        "mistrust",
+        "untrust",
+        "wantrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:4c2c3fed97859e9efc",
+    "definition": "Confidence in future payment for goods or services supplied; credit.",
+    "example": "The shop lets regular customers buy groceries on trust and pay on Friday.",
+    "collocations": [
+      "buy on trust",
+      "supply goods on trust",
+      "take something on trust"
+    ],
+    "distinctions": [
+      "On trust here means payment is deferred. It does not mean the groceries are free or that Friday’s payment has already occurred. Take a statement on trust can instead concern believing it without checking."
+    ],
+    "usage": "Commercial credit sense; on trust means on the expectation of later payment in this context.",
+    "originalSense": {
+      "id": "kaikki:4c2c3fed97859e9efc",
+      "definition": "Confidence in the future payment for goods or services supplied; credit.",
+      "example": "I was out of cash, but the landlady let me have it on trust.",
+      "pos": "noun",
+      "synonyms": [
+        "belief",
+        "confidence",
+        "faith",
+        "expectation",
+        "hope"
+      ],
+      "antonyms": [
+        "distrust",
+        "mistrust",
+        "untrust",
+        "wantrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "Customers buy groceries on trust and pay on Friday. The groceries are _____.",
+      "options": [
+        "supplied before payment is made",
+        "necessarily supplied free of charge"
+      ],
+      "answer": "supplied before payment is made",
+      "explanation": "The stated later payment identifies credit rather than a gift."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:231307ab1d1cbae5f0",
+    "definition": "Something committed or entrusted to someone’s care; a charge.",
+    "example": "Reading note: this noun meaning names the thing entrusted to a person, rather than the person’s feeling of confidence. The checked source supplies a definition without a sentence illustration for this record.",
+    "collocations": [
+      "a trust (an entrusted charge)",
+      "trust (thing committed to someone’s care)"
+    ],
+    "distinctions": [
+      "An entrusted thing is distinct from the duty of caring for it and from the separate legal arrangement called a trust. No invented historical quotation is supplied here."
+    ],
+    "usage": "Noun; source-specific reading explanation.",
+    "originalSense": {
+      "id": "kaikki:231307ab1d1cbae5f0",
+      "definition": "That which is committed or entrusted; something received in confidence; a charge.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "belief",
+        "confidence",
+        "faith",
+        "expectation",
+        "hope"
+      ],
+      "antonyms": [
+        "distrust",
+        "mistrust",
+        "untrust",
+        "wantrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:5ce8b37c7d06d4abaf",
+    "definition": "The person or thing on which confidence is placed; a ground of reliance or hope.",
+    "example": "Reading note: in the source’s “thou art my trust”, the speaker identifies the one relied on. Trust names the object of reliance here, not simply the speaker’s feeling.",
+    "collocations": [
+      "my trust (source wording)",
+      "trust (ground of reliance)"
+    ],
+    "distinctions": [
+      "The quotation expresses the speaker’s religious reliance. It does not independently establish a religious proposition, and its date alone does not make this unlabelled source meaning obsolete."
+    ],
+    "usage": "Noun; source-specific reading explanation.",
+    "originalSense": {
+      "id": "kaikki:5ce8b37c7d06d4abaf",
+      "definition": "That upon which confidence is reposed; ground of reliance; hope.",
+      "example": "O Lord God, thou art my trust from my youth.",
+      "pos": "noun",
+      "synonyms": [
+        "belief",
+        "confidence",
+        "faith",
+        "expectation",
+        "hope"
+      ],
+      "antonyms": [
+        "distrust",
+        "mistrust",
+        "untrust",
+        "wantrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:3fe1f01d6724f2ef75",
+    "definition": "Rare: trustworthiness or reliability.",
+    "example": "Reading note: this rare noun meaning concerns the quality of being trustworthy. The source gives no sentence illustration for this record.",
+    "collocations": [
+      "trust (rare reliability sense)",
+      "trustworthiness (explanatory equivalent)"
+    ],
+    "distinctions": [
+      "Trustworthiness is a quality someone may have; another person’s trust is confidence placed in them. The checked source labels this meaning rare, not obsolete."
+    ],
+    "usage": "Rare noun in the checked source.",
+    "originalSense": {
+      "id": "kaikki:3fe1f01d6724f2ef75",
+      "definition": "Trustworthiness, reliability.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "belief",
+        "confidence",
+        "faith",
+        "expectation",
+        "hope"
+      ],
+      "antonyms": [
+        "distrust",
+        "mistrust",
+        "untrust",
+        "wantrust"
+      ],
+      "collocations": [],
+      "usage": "rare",
+      "register": "countable, rare, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:aeae3299ac36c1c1e4",
+    "definition": "The responsibility or office of someone to whom something is entrusted.",
+    "example": "The archivist holds a position of trust and must protect the records.",
+    "collocations": [
+      "a position of trust",
+      "a duty of trust",
+      "be put in trust"
+    ],
+    "distinctions": [
+      "The noun concerns an entrusted responsibility. It is separate from the records entrusted and from a purchase made on credit."
+    ],
+    "usage": "Responsibility or office sense; often in position of trust.",
+    "originalSense": {
+      "id": "kaikki:aeae3299ac36c1c1e4",
+      "definition": "The condition or obligation of one to whom anything is confided; responsible charge or office.",
+      "example": "I do profess to be no less than I seem; to serve him truly that\nwill put me in trust",
+      "pos": "noun",
+      "synonyms": [
+        "belief",
+        "confidence",
+        "faith",
+        "expectation",
+        "hope"
+      ],
+      "antonyms": [
+        "distrust",
+        "mistrust",
+        "untrust",
+        "wantrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "The archivist holds a position of trust. This concerns _____.",
+      "options": [
+        "an entrusted responsibility",
+        "a bill for groceries bought on credit"
+      ],
+      "answer": "an entrusted responsibility",
+      "explanation": "The office context identifies responsibility rather than commercial credit."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:b846222b4d66541a3f",
+    "definition": "In law, confidence vested in a legal owner to manage property for another’s benefit.",
+    "example": "As trustee, Mira holds legal title to the house in trust for a child.",
+    "collocations": [
+      "hold property in trust",
+      "in trust for someone",
+      "a trustee’s responsibility"
+    ],
+    "distinctions": [
+      "This example identifies a legal owner managing property for someone else’s benefit. The next source meaning names the trust arrangement itself. Legal title and the benefit of the property have different roles in the example."
+    ],
+    "usage": "Legal noun; this record concerns the relationship of entrusted property management.",
+    "originalSense": {
+      "id": "kaikki:b846222b4d66541a3f",
+      "definition": "The confidence vested in a person who has legal ownership of a property to manage for the benefit of another.",
+      "example": "I put the house into my sister's trust.",
+      "pos": "noun",
+      "synonyms": [
+        "belief",
+        "confidence",
+        "faith",
+        "expectation",
+        "hope"
+      ],
+      "antonyms": [
+        "distrust",
+        "mistrust",
+        "untrust",
+        "wantrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "Mira holds legal title to a house in trust for a child. In this example, _____.",
+      "options": [
+        "Mira holds title and the child benefits",
+        "the child’s benefit means Mira has no stated role"
+      ],
+      "answer": "Mira holds title and the child benefits",
+      "explanation": "The sentence separately identifies the trustee’s title and the beneficiary’s benefit."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:bcb1ba6a33a2ac3df9",
+    "definition": "A legal arrangement under which a trustee holds or manages property for a stated beneficiary.",
+    "example": "They create a trust under which a trustee manages £5,000 for Lena’s benefit.",
+    "collocations": [
+      "create a trust",
+      "set up a trust",
+      "the beneficiary of a trust"
+    ],
+    "distinctions": [
+      "A trust here is an arrangement involving property, a trustee and a beneficiary. The sentence does not say that the trustee may use the money as a personal gift."
+    ],
+    "usage": "Countable legal noun; the separate source record above concerns the confidence vested in the legal owner.",
+    "originalSense": {
+      "id": "kaikki:bcb1ba6a33a2ac3df9",
+      "definition": "An arrangement whereby property or money is given to be held by a third party (a trustee), on the basis that it will be managed for the benefit of, or eventually transferred to, a stated beneficiary; for example, money to be given to a child when he or she reaches adulthood.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "belief",
+        "confidence",
+        "faith",
+        "expectation",
+        "hope"
+      ],
+      "antonyms": [
+        "distrust",
+        "mistrust",
+        "untrust",
+        "wantrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "They create a trust with £5,000 managed for Lena’s benefit. The trust is _____.",
+      "options": [
+        "a property-management arrangement",
+        "a personal gift to the trustee"
+      ],
+      "answer": "a property-management arrangement",
+      "explanation": "The trustee manages the money for the named beneficiary."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:affdd05f4d13b795e9",
+    "definition": "A group of businesses or traders organised for mutual benefit and managed by a central body of trustees.",
+    "example": "The firms form a trust, with central trustees managing their sugar production and distribution.",
+    "collocations": [
+      "a business trust",
+      "a manufacturing trust",
+      "trustees of a trust"
+    ],
+    "distinctions": [
+      "This noun names a business grouping, not a feeling of confidence. The definition alone does not establish that every business trust is illegal or that it is identical to every monopoly or cartel."
+    ],
+    "usage": "Business-organisation sense; the example explicitly includes central trustees.",
+    "originalSense": {
+      "id": "kaikki:affdd05f4d13b795e9",
+      "definition": "A group of businessmen or traders organised for mutual benefit to produce and distribute specific commodities or services, and managed by a central body of trustees.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "belief",
+        "confidence",
+        "faith",
+        "expectation",
+        "hope"
+      ],
+      "antonyms": [
+        "distrust",
+        "mistrust",
+        "untrust",
+        "wantrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "The firms form a trust managed by central trustees. Trust here names _____.",
+      "options": [
+        "a business organisation",
+        "only a feeling of personal confidence"
+      ],
+      "answer": "a business organisation",
+      "explanation": "Firms, production and central management identify the organisation sense."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:1feb3cff9cd2c56765",
+    "definition": "In computing, affirmation of a user’s access rights in a system.",
+    "example": "In this system, trust affirms that the user may read the shared file.",
+    "collocations": [
+      "system trust (access-rights sense)",
+      "affirm access rights",
+      "trust in a computer system"
+    ],
+    "distinctions": [
+      "This computing noun concerns the stated permission to read a file. It does not grant unstated administrator rights or prove that every file or program is safe."
+    ],
+    "usage": "Computing noun; the example illustrates the source’s access-rights meaning.",
+    "originalSense": {
+      "id": "kaikki:1feb3cff9cd2c56765",
+      "definition": "Affirmation of the access rights of a user of a computer system.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "belief",
+        "confidence",
+        "faith",
+        "expectation",
+        "hope"
+      ],
+      "antonyms": [
+        "distrust",
+        "mistrust",
+        "untrust",
+        "wantrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "In this system, trust affirms the user’s right to read a file. It affirms _____.",
+      "options": [
+        "the stated read permission",
+        "unrestricted administrator permissions"
+      ],
+      "answer": "the stated read permission",
+      "explanation": "Only the specified access right is established by the example."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:cc2413ed8623a70658",
+    "definition": "To place confidence in, rely on or confide in someone or something.",
+    "example": "I trust you to keep this information private.",
+    "collocations": [
+      "trust someone",
+      "trust someone to do something",
+      "trust someone’s judgment"
+    ],
+    "distinctions": [
+      "Trust you expresses confidence in the person. It does not itself prove that confidentiality will be kept. The with construction below specifically identifies something entrusted to a person."
+    ],
+    "usage": "Transitive: trust + person or thing; trust someone to + infinitive is common.",
+    "originalSense": {
+      "id": "kaikki:cc2413ed8623a70658",
+      "definition": "To place confidence in, to rely on, to confide in.",
+      "example": "We cannot trust anyone who deceives us.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "I trust you to keep the information private. The speaker _____.",
+      "options": [
+        "places confidence in the listener",
+        "proves that disclosure can never occur"
+      ],
+      "answer": "places confidence in the listener",
+      "explanation": "Confidence is not independent proof of future behaviour."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:d2418cda56b5264b58",
+    "definition": "To have faith in someone or something and rely on them for continuing support.",
+    "example": "We trust in our neighbours for help during emergencies.",
+    "collocations": [
+      "trust in someone",
+      "trust in a community",
+      "trust in continued support"
+    ],
+    "distinctions": [
+      "Trust in uses the preposition in before the object of reliance. Trust someone is also an established construction; the preposition is specific to this source record, not a universal requirement for the verb."
+    ],
+    "usage": "Intransitive followed by in in this meaning.",
+    "originalSense": {
+      "id": "kaikki:d2418cda56b5264b58",
+      "definition": "To have faith in; to rely on for continuing support or aid.",
+      "example": "In God We Trust",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "We trust in our neighbours for help. Our neighbours are _____.",
+      "options": [
+        "the people relied on for support",
+        "confirmed to have already resolved every emergency"
+      ],
+      "answer": "the people relied on for support",
+      "explanation": "The sentence identifies reliance, not a completed result in every emergency."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:5837fa6668426f0398",
+    "definition": "To give credence to or believe something.",
+    "example": "I trust her account of what happened.",
+    "collocations": [
+      "trust an account",
+      "trust a report",
+      "trust someone’s word"
+    ],
+    "distinctions": [
+      "Here trust means believe the account. It does not independently verify every detail or transfer ownership of the account to a trustee."
+    ],
+    "usage": "Transitive; the object can be an account, statement or report.",
+    "originalSense": {
+      "id": "kaikki:5837fa6668426f0398",
+      "definition": "To give credence to; to believe; to credit.",
+      "example": "Trust me, you looke well.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "I trust her account of what happened. Here trust means _____.",
+      "options": [
+        "believe the account",
+        "independently prove every detail"
+      ],
+      "answer": "believe the account",
+      "explanation": "Believing a report does not itself authenticate it."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:3cbad8bdbbc2cfcecf",
+    "definition": "To hope confidently or believe that something is or will be the case.",
+    "example": "I trust that the revised timetable will work for everyone.",
+    "collocations": [
+      "trust that",
+      "I trust you are well",
+      "trust to do something (hope sense)"
+    ],
+    "distinctions": [
+      "The clause expresses confident hope or belief. Trust to + infinitive here differs from trust to luck, where to is followed by a noun identifying what is relied on."
+    ],
+    "usage": "Often formal; takes a clause, phrase or to-infinitive in this source meaning.",
+    "originalSense": {
+      "id": "kaikki:3cbad8bdbbc2cfcecf",
+      "definition": "To hope confidently; to believe (usually with a phrase or infinitive clause as the object)",
+      "example": "I trust you have cleaned your room?",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "I trust that the revised timetable will work for everyone. This expresses _____.",
+      "options": [
+        "confident hope about the timetable",
+        "a report that everyone has already used it successfully"
+      ],
+      "answer": "confident hope about the timetable",
+      "explanation": "The future clause does not report completed successful use."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:14fab92033544e9f6f",
+    "definition": "To show confidence in a person by entrusting them with something.",
+    "example": "We trust Lina with the keys to the archive.",
+    "collocations": [
+      "trust someone with something",
+      "trust a colleague with keys",
+      "trust someone with responsibility"
+    ],
+    "distinctions": [
+      "Trust Lina with the keys puts the person after trust and the thing after with. Trust the keys to Lina’s care instead puts the thing first."
+    ],
+    "usage": "Transitive: trust + person + with + thing.",
+    "originalSense": {
+      "id": "kaikki:14fab92033544e9f6f",
+      "definition": "to show confidence in a person by entrusting them with something.",
+      "example": "Whom, with your power and fortune, sir, you trust, Now to suspect is vain.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "We trust Lina with the archive keys. Who is entrusted with the keys? _____",
+      "options": [
+        "Lina",
+        "the keys themselves"
+      ],
+      "answer": "Lina",
+      "explanation": "The person follows trust; with introduces the entrusted thing."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:b9ccae7f685b690850",
+    "definition": "To commit something to someone’s care; to entrust it.",
+    "example": "We trust the archive keys to Lina’s care.",
+    "collocations": [
+      "trust something to someone’s care",
+      "trust a task to someone",
+      "trust something to someone"
+    ],
+    "distinctions": [
+      "This construction puts the entrusted thing after trust and its recipient after to. The person-with-thing construction has a separate source record."
+    ],
+    "usage": "Transitive: trust + thing + to + recipient; often formal.",
+    "originalSense": {
+      "id": "kaikki:b9ccae7f685b690850",
+      "definition": "To commit, as to one's care; to entrust.",
+      "example": "Merchants were not willing to trust precious cargoes to any custody but that of a man-of-war.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "We trust the archive keys to Lina’s care. What is entrusted? _____",
+      "options": [
+        "the archive keys",
+        "Lina herself"
+      ],
+      "answer": "the archive keys",
+      "explanation": "The direct object identifies the thing placed in someone’s care."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:ca5e5dd43bc349c7e1",
+    "definition": "To sell to someone on credit, in confidence of future payment.",
+    "example": "Reading note: the source’s merchants “trust their customers annually with goods” means supply the customers on credit. The customers are the direct object of this transitive use.",
+    "collocations": [
+      "trust customers with goods (source construction)",
+      "trust someone (commercial-credit verb)"
+    ],
+    "distinctions": [
+      "This commercial-credit verb differs from the ordinary confidence verb. The checked source does not label it archaic; an older illustration alone does not justify adding that label."
+    ],
+    "usage": "Transitive in the checked source; source-specific reading guidance.",
+    "originalSense": {
+      "id": "kaikki:ca5e5dd43bc349c7e1",
+      "definition": "To give credit to; to sell to upon credit, or in confidence of future payment.",
+      "example": "Merchants and manufacturers trust their customers annually with goods.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:7d4331ae8b6d862e47",
+    "definition": "To rely on something, with to introducing what is relied on.",
+    "example": "We cannot trust to luck; we need a backup plan.",
+    "collocations": [
+      "trust to luck",
+      "trust to memory",
+      "trust to chance"
+    ],
+    "distinctions": [
+      "In trust to luck, to is a preposition followed by a noun. It differs from the infinitive construction trust to arrive, which can express confident hope of arriving."
+    ],
+    "usage": "Intransitive followed by to + noun phrase.",
+    "originalSense": {
+      "id": "kaikki:7d4331ae8b6d862e47",
+      "definition": "To rely on (something), as though having trust (on it).",
+      "example": "to trust to luck",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "collocations": [],
+      "usage": "with-to",
+      "register": "intransitive, with-to",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "We cannot trust to luck; we need a backup plan. Here luck is _____.",
+      "options": [
+        "what the speaker declines to rely on",
+        "a person entrusted with the plan"
+      ],
+      "answer": "what the speaker declines to rely on",
+      "explanation": "The noun after to identifies a possible basis of reliance."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:7973f3dd66c5ed4b92",
+    "definition": "Archaic: to risk or venture confidently.",
+    "example": "Reading note: the source’s “to trust thee from my side” uses trust for venturing to let someone go away from the speaker’s side. It is an older risk or venture sense.",
+    "collocations": [
+      "trust someone from one’s side (source construction)",
+      "trust (archaic venture sense)"
+    ],
+    "distinctions": [
+      "This source-labelled archaic use is separate from simply believing a report. The quotation is explained for reading, without inventing a modern risk-taking example."
+    ],
+    "usage": "Archaic, transitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:7973f3dd66c5ed4b92",
+      "definition": "To risk; to venture confidently.",
+      "example": "[Beguiled] by thee to trust thee from my side.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, transitive",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:b0e8fd3fbe991049b2",
+    "definition": "To have trust or be disposed to confidence, without an expressed object.",
+    "example": "After being deceived, she finds it difficult to trust again.",
+    "collocations": [
+      "learn to trust",
+      "find it hard to trust",
+      "trust again"
+    ],
+    "distinctions": [
+      "The object is not expressed here. This illustrates having or recovering confidence without asserting that a particular person has already proved reliable."
+    ],
+    "usage": "Intransitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:b0e8fd3fbe991049b2",
+      "definition": "To have trust; to be credulous; to be won to confidence; to confide.",
+      "example": "More ſhould I queſtion thee, and more I muſt, / Though more to know, could not be more to truſt: […]",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "She finds it difficult to trust again. The verb has _____.",
+      "options": [
+        "no expressed direct object",
+        "an expressed direct object naming a specific person"
+      ],
+      "answer": "no expressed direct object",
+      "explanation": "The sentence uses trust on its own, with the object left unexpressed."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:e2d44c93b1a60c3a92",
+    "definition": "Archaic: to sell or deliver goods in reliance on a promise of later payment.",
+    "example": "Reading note: this source record uses trust intransitively for giving commercial credit. The source supplies a definition without a sentence illustration.",
+    "collocations": [
+      "trust (archaic intransitive credit sense)",
+      "give credit (explanatory equivalent)"
+    ],
+    "distinctions": [
+      "This intransitive credit use is explicitly archaic. The separate transitive credit verb is not given that label, so the labels must not be transferred between the records."
+    ],
+    "usage": "Archaic, intransitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:e2d44c93b1a60c3a92",
+      "definition": "To sell or deliver anything in reliance upon a promise of payment; to give credit.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "distrust",
+        "mistrust"
+      ],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, intransitive",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:609f690bbe57404b42",
+    "definition": "Slang: trust me, often used sarcastically or self-mockingly.",
+    "example": "You’ll enjoy this film, trust.",
+    "collocations": [
+      "trust (slang interjection)",
+      "trust me (expanded form)",
+      "a final trust in casual speech"
+    ],
+    "distinctions": [
+      "The final trust functions as an interjection meaning trust me. The source marks it originally AAVE and slang; it can be sincere, sarcastic or self-mocking according to context. It is not the legal or financial noun."
+    ],
+    "usage": "Interjection; originally African American Vernacular English, now recorded as slang.",
+    "originalSense": {
+      "id": "kaikki:609f690bbe57404b42",
+      "definition": "Ellipsis of trust me, often used sarcastically or self-mockingly.",
+      "example": "You'll get your money back bro, trust.",
+      "pos": "intj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "abbreviation, alt-of, ellipsis, slang",
+      "register": "abbreviation, alt-of, ellipsis, slang",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "You’ll enjoy this film, trust. The final trust functions as _____.",
+      "options": [
+        "a slang shortening of trust me",
+        "the name of a property arrangement"
+      ],
+      "answer": "a slang shortening of trust me",
+      "explanation": "Its position and conversational use identify the interjection, not a legal noun."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:2249527ed2aa1f55b8",
+    "definition": "Obsolete adjective: secure or safe.",
+    "example": "Reading note: the source records an older adjective trust meaning secure or safe. It gives no sentence illustration for this record.",
+    "collocations": [
+      "trust (obsolete safe adjective)",
+      "secure or safe (explanatory meaning)"
+    ],
+    "distinctions": [
+      "This adjective describes a state of safety. It is distinct from the modern verb trust and from the legal adjective relating to a trust."
+    ],
+    "usage": "Obsolete adjective in the checked source.",
+    "originalSense": {
+      "id": "kaikki:2249527ed2aa1f55b8",
+      "definition": "Secure, safe.",
+      "example": "",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:2da494efb9f9b7e2c9",
+    "definition": "Obsolete adjective: faithful or dependable.",
+    "example": "Reading note: the source records an older adjective trust meaning faithful or dependable. It gives no sentence illustration for this record.",
+    "collocations": [
+      "trust (obsolete dependable adjective)",
+      "faithful or dependable (explanatory meaning)"
+    ],
+    "distinctions": [
+      "This older adjective describes reliability, rather than naming another person’s confidence. It is also separate from the obsolete safe adjective."
+    ],
+    "usage": "Obsolete adjective in the checked source.",
+    "originalSense": {
+      "id": "kaikki:2da494efb9f9b7e2c9",
+      "definition": "Faithful, dependable.",
+      "example": "",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:90f295dad1b2ab0f9b",
+    "definition": "In law, relating to a trust.",
+    "example": "The accountant reviews the trust accounts each year.",
+    "collocations": [
+      "trust accounts",
+      "trust property",
+      "trust funds"
+    ],
+    "distinctions": [
+      "Trust accounts here means accounts relating to a trust arrangement. It does not describe the accounts as trustworthy or guarantee that they are correct."
+    ],
+    "usage": "Attributive legal adjective in the checked source; the same form can have other grammatical analyses in other contexts.",
+    "originalSense": {
+      "id": "kaikki:90f295dad1b2ab0f9b",
+      "definition": "of or relating to a trust.",
+      "example": "",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "betrust",
+        "foretrust",
+        "mistrust",
+        "never trust me",
+        "overtrust",
+        "trustability",
+        "trustable",
+        "trustee",
+        "truster",
+        "trust everybody, but cut the cards",
+        "trusting",
+        "trust me bro",
+        "trustor",
+        "trust someone across the street",
+        "trust someone as far as one can spit",
+        "trust someone as far as one could fling a bull by the tail",
+        "trust someone as far as one could spit",
+        "trust someone as far as one could throw them",
+        "trust someone to",
+        "trust the process"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trust#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trust&oldid=93563592",
+    "distinctionTask": {
+      "prompt": "The accountant reviews the trust accounts. Trust here means _____.",
+      "options": [
+        "relating to a trust arrangement",
+        "guaranteed to be correct"
+      ],
+      "answer": "relating to a trust arrangement",
+      "explanation": "The attributive legal meaning identifies the arrangement the accounts concern."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:78ec9b13ae210c471f",
+    "definition": "To imagine or suppose that something is true or exists, without proof.",
+    "example": "I suspect that the meeting has been cancelled, but I have no confirmation.",
+    "collocations": [
+      "suspect that",
+      "suspect the presence of",
+      "suspect a problem"
+    ],
+    "distinctions": [
+      "Suspect that expresses an unproved belief here. Doubt that can instead question whether a proposition is true, but both words have additional overlapping meanings; neither is a universal proof rule."
+    ],
+    "usage": "Verb: /səˈspɛkt/, stress on the second syllable; the noun and adjective normally stress the first syllable. Transitive, with a noun or clause.",
+    "originalSense": {
+      "id": "kaikki:78ec9b13ae210c471f",
+      "definition": "To imagine or suppose (something) to be true, or to exist, without proof.",
+      "example": "to suspect the presence of disease",
+      "pos": "verb",
+      "synonyms": [
+        "imagine",
+        "suppose",
+        "think",
+        "sniff"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "missuspect",
+        "suspectable",
+        "suspected",
+        "suspectful",
+        "suspecting",
+        "suspective",
+        "suspector"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suspect&oldid=93536805",
+    "distinctionTask": {
+      "prompt": "I suspect the meeting has been cancelled, but have no confirmation. The speaker _____.",
+      "options": [
+        "believes it may be cancelled without proof",
+        "reports an independently confirmed cancellation"
+      ],
+      "answer": "believes it may be cancelled without proof",
+      "explanation": "The explicit lack of confirmation preserves uncertainty."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:9cc0ababe2ec4725b1",
+    "definition": "To distrust or have doubts about someone or something.",
+    "example": "I suspect his motives; he may be trying to sell us something.",
+    "collocations": [
+      "suspect someone’s motives",
+      "suspect the truth of a story",
+      "suspect someone’s reliability"
+    ],
+    "distinctions": [
+      "Here the speaker questions the motives rather than simply asserting that motives exist. Suspicion does not establish dishonesty, and suspect can also mean suppose something is true."
+    ],
+    "usage": "Verb: /səˈspɛkt/, stress on the second syllable; the noun and adjective normally stress the first syllable. Transitive distrust sense.",
+    "originalSense": {
+      "id": "kaikki:9cc0ababe2ec4725b1",
+      "definition": "To distrust or have doubts about (something or someone).",
+      "example": "to suspect the truth of a story",
+      "pos": "verb",
+      "synonyms": [
+        "distrust",
+        "doubt"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "missuspect",
+        "suspectable",
+        "suspected",
+        "suspectful",
+        "suspecting",
+        "suspective",
+        "suspector"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suspect&oldid=93536805",
+    "distinctionTask": {
+      "prompt": "I suspect his motives; he may be trying to sell us something. Here suspect expresses _____.",
+      "options": [
+        "distrust of his motives",
+        "proof that he is dishonest"
+      ],
+      "answer": "distrust of his motives",
+      "explanation": "The wording questions the motives without independently proving dishonesty."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:6eb1c17f0274b266ef",
+    "definition": "To believe someone may be guilty of something.",
+    "example": "The investigators suspect Lee of stealing the laptop.",
+    "collocations": [
+      "suspect someone of something",
+      "suspect someone of doing something",
+      "suspect a person"
+    ],
+    "distinctions": [
+      "Suspect someone of introduces the alleged act. An investigator’s suspicion does not prove that the person committed it or that a conviction has occurred."
+    ],
+    "usage": "Verb: /səˈspɛkt/, stress on the second syllable; the noun and adjective normally stress the first syllable. Transitive: suspect + person + of + noun or -ing form.",
+    "originalSense": {
+      "id": "kaikki:6eb1c17f0274b266ef",
+      "definition": "To believe (someone) to be guilty.",
+      "example": "I suspect him of being the thief.",
+      "pos": "verb",
+      "synonyms": [
+        "accuse",
+        "point the finger at"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "missuspect",
+        "suspectable",
+        "suspected",
+        "suspectful",
+        "suspecting",
+        "suspective",
+        "suspector"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suspect&oldid=93536805",
+    "distinctionTask": {
+      "prompt": "Investigators suspect Lee of stealing the laptop. This establishes _____.",
+      "options": [
+        "that Lee is under suspicion",
+        "that Lee has been proved guilty"
+      ],
+      "answer": "that Lee is under suspicion",
+      "explanation": "The statement reports suspicion, not proof or conviction."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:46a17605826716dea4",
+    "definition": "To have suspicion, without an expressed object.",
+    "example": "At first I believed the story, but then I began to suspect.",
+    "collocations": [
+      "begin to suspect",
+      "have reason to suspect",
+      "suspect without an expressed object"
+    ],
+    "distinctions": [
+      "The sentence leaves the object of suspicion unexpressed. This intransitive construction is distinct from suspect someone of an act, which names a person and the allegation."
+    ],
+    "usage": "Verb: /səˈspɛkt/, stress on the second syllable; the noun and adjective normally stress the first syllable. Intransitive in this source meaning.",
+    "originalSense": {
+      "id": "kaikki:46a17605826716dea4",
+      "definition": "To have suspicion.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "missuspect",
+        "suspectable",
+        "suspected",
+        "suspectful",
+        "suspecting",
+        "suspective",
+        "suspector"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suspect&oldid=93536805",
+    "distinctionTask": {
+      "prompt": "Then I began to suspect. In this clause, suspect has _____.",
+      "options": [
+        "no expressed direct object",
+        "a named person as its direct object"
+      ],
+      "answer": "no expressed direct object",
+      "explanation": "The clause uses suspect on its own, leaving what is suspected to context."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:4b6b064146c81a92bf",
+    "definition": "Obsolete: to look up to or respect someone.",
+    "example": "Reading note: the source records suspect meaning respect or look up to. It gives no sentence illustration for this obsolete record.",
+    "collocations": [
+      "suspect (obsolete respect sense)",
+      "look up to (explanatory meaning)"
+    ],
+    "distinctions": [
+      "This older meaning concerns respect, not suspicion of guilt. Look up to is an idiom for esteem here, not an instruction to look physically upwards."
+    ],
+    "usage": "Obsolete, transitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:4b6b064146c81a92bf",
+      "definition": "To look up to; to respect.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "missuspect",
+        "suspectable",
+        "suspected",
+        "suspectful",
+        "suspecting",
+        "suspective",
+        "suspector"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suspect&oldid=93536805",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:605c73219d63d1d48f",
+    "definition": "A person suspected of something, especially of committing a crime.",
+    "example": "The police interviewed a suspect but had not proved the allegation.",
+    "collocations": [
+      "a suspect in a case",
+      "interview a suspect",
+      "identify a suspect"
+    ],
+    "distinctions": [
+      "A suspect is someone under suspicion. The noun alone does not establish guilt, a charge or a conviction. The example expressly leaves the allegation unproved."
+    ],
+    "usage": "Noun: /ˈsʌspɛkt/, stress on the first syllable; the verb normally stresses the second syllable.",
+    "originalSense": {
+      "id": "kaikki:605c73219d63d1d48f",
+      "definition": "A person who is suspected of something, in particular of committing a crime.",
+      "example": "1942, Casablanca, written by Julius J. Epstein, Philip G. Epstein and Howard Koch\nRound up the usual suspects.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "missuspect",
+        "suspectable",
+        "suspected",
+        "suspectful",
+        "suspecting",
+        "suspective",
+        "suspector"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suspect&oldid=93536805",
+    "distinctionTask": {
+      "prompt": "The police interviewed a suspect without proving the allegation. The suspect is _____.",
+      "options": [
+        "a person under suspicion",
+        "necessarily a convicted offender"
+      ],
+      "answer": "a person under suspicion",
+      "explanation": "Suspicion and conviction are separate; the sentence explicitly leaves the allegation unproved."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:77f22f7e6cf360815b",
+    "definition": "Viewed with suspicion; considered questionable or doubtful.",
+    "example": "The survey result is suspect because half the responses are missing.",
+    "collocations": [
+      "a suspect result",
+      "suspect evidence",
+      "look suspect"
+    ],
+    "distinctions": [
+      "The adjective describes the result as questionable. It does not prove that the result is false. The standard adjective is about being viewed with suspicion, not itself experiencing suspicion."
+    ],
+    "usage": "Adjective: /ˈsʌspɛkt/, stress on the first syllable.",
+    "originalSense": {
+      "id": "kaikki:77f22f7e6cf360815b",
+      "definition": "Viewed with suspicion; suspected.",
+      "example": "What I can do or offer is suspect.",
+      "pos": "adj",
+      "synonyms": [
+        "dodgy",
+        "doubtful",
+        "dubious",
+        "fishy",
+        "suspicious",
+        "sus"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "missuspect",
+        "suspectable",
+        "suspected",
+        "suspectful",
+        "suspecting",
+        "suspective",
+        "suspector",
+        "nonsuspect",
+        "suspectly",
+        "suspectness",
+        "unsuspect"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suspect&oldid=93536805",
+    "distinctionTask": {
+      "prompt": "The survey result is suspect because responses are missing. The result is _____.",
+      "options": [
+        "viewed as questionable",
+        "itself feeling suspicious of someone"
+      ],
+      "answer": "viewed as questionable",
+      "explanation": "The adjective describes how the result is regarded."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:399065de18d966f2a6",
+    "definition": "Nonstandard: viewing something with suspicion; suspecting.",
+    "example": "Reading note: the source’s “I’m suspect of other advice” uses suspect to mean feeling suspicious of the advice. The source labels this active adjective use nonstandard.",
+    "collocations": [
+      "be suspect of (source’s nonstandard active use)",
+      "be suspicious of (usual edited-English alternative)"
+    ],
+    "distinctions": [
+      "When you mean that you feel suspicion, suspicious of is the usual choice in edited English. Standard suspect can describe a person who is viewed with suspicion, so I am suspect is not wrong in every possible meaning."
+    ],
+    "usage": "Nonstandard active adjective in the checked source; distinct from the standard passive adjective.",
+    "originalSense": {
+      "id": "kaikki:399065de18d966f2a6",
+      "definition": "Viewing with suspicion; suspecting.",
+      "example": "Now I’m suspect of other advice that I read in your pages.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "nonstandard",
+      "register": "nonstandard",
+      "wordFamily": [
+        "missuspect",
+        "suspectable",
+        "suspected",
+        "suspectful",
+        "suspecting",
+        "suspective",
+        "suspector",
+        "nonsuspect",
+        "suspectly",
+        "suspectness",
+        "unsuspect"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suspect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suspect&oldid=93536805",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-71232261",
+    "senseId": "kaikki:899850756ae1806982",
+    "definition": "To imply something without stating it explicitly.",
+    "example": "His words suggest that the decision was unfair, although he never says so directly.",
+    "collocations": [
+      "suggest that",
+      "suggest an explanation indirectly",
+      "suggest by implication"
+    ],
+    "distinctions": [
+      "The words convey an indirect criticism. Interpreting that implication does not prove the decision was unfair or that the speaker explicitly used those words."
+    ],
+    "usage": "Transitive imply sense; often with a that-clause.",
+    "originalSense": {
+      "id": "kaikki:899850756ae1806982",
+      "definition": "To imply but stop short of explicitly stating (something).",
+      "example": "Are you suggesting that I killed my wife?",
+      "pos": "verb",
+      "synonyms": [
+        "point",
+        "allude",
+        "hint",
+        "imply",
+        "insinuate"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "autosuggest",
+        "missuggest",
+        "resuggest",
+        "suggestable",
+        "suggester",
+        "suggestful",
+        "suggestible",
+        "suggestion",
+        "suggest itself",
+        "suggestive",
+        "suggestment"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suggest#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suggest&oldid=93065790",
+    "distinctionTask": {
+      "prompt": "His words suggest unfairness without saying it directly. They _____.",
+      "options": [
+        "convey an implication",
+        "explicitly prove the decision was unfair"
+      ],
+      "answer": "convey an implication",
+      "explanation": "An implied criticism is distinct from both an explicit statement and proof of its truth."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-71232261",
+    "senseId": "kaikki:b081ed7e4fc485d159",
+    "definition": "To cause someone to suppose something or bring an idea to mind.",
+    "example": "These dark clouds suggest that rain may be coming.",
+    "collocations": [
+      "evidence may suggest",
+      "suggest a possibility",
+      "suggest an association"
+    ],
+    "distinctions": [
+      "The clouds bring the possibility of rain to mind. A sign or association can suggest something without proving it; the source also covers ideas evoked by resemblance or association."
+    ],
+    "usage": "Transitive; a sign, observation or association can bring an idea to mind.",
+    "originalSense": {
+      "id": "kaikki:b081ed7e4fc485d159",
+      "definition": "To cause one to suppose (something); to bring to one's mind the idea (of something).",
+      "example": "The name \"hamburger\" suggests that hamburgers originated from Hamburg.",
+      "pos": "verb",
+      "synonyms": [
+        "evoke"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "autosuggest",
+        "missuggest",
+        "resuggest",
+        "suggestable",
+        "suggester",
+        "suggestful",
+        "suggestible",
+        "suggestion",
+        "suggest itself",
+        "suggestive",
+        "suggestment"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suggest#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suggest&oldid=93065790",
+    "distinctionTask": {
+      "prompt": "Dark clouds suggest that rain may be coming. They _____.",
+      "options": [
+        "bring a possibility to mind",
+        "prove that rain must fall"
+      ],
+      "answer": "bring a possibility to mind",
+      "explanation": "The may-clause explicitly presents a possibility rather than certainty."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-71232261",
+    "senseId": "kaikki:69577275c81ff60080",
+    "definition": "To explicitly mention something as a possibility for consideration, often as a recommendation.",
+    "example": "I suggest taking an earlier train.",
+    "collocations": [
+      "suggest doing something",
+      "suggest that we leave",
+      "suggest something to someone"
+    ],
+    "distinctions": [
+      "Suggest taking and suggest that we take are ordinary recommendation patterns; that we should take is also used. A proposal does not by itself establish that anyone has accepted or acted on it."
+    ],
+    "usage": "Transitive propose sense; can take an -ing form, a noun phrase or a clause.",
+    "originalSense": {
+      "id": "kaikki:69577275c81ff60080",
+      "definition": "To explicitly mention (something) as a possibility for consideration, often to recommend it.",
+      "example": "This meeting venue was suggested to us by our boss.",
+      "pos": "verb",
+      "synonyms": [
+        "venture",
+        "hazard",
+        "propose",
+        "float",
+        "bring up",
+        "moot"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "autosuggest",
+        "missuggest",
+        "resuggest",
+        "suggestable",
+        "suggester",
+        "suggestful",
+        "suggestible",
+        "suggestion",
+        "suggest itself",
+        "suggestive",
+        "suggestment"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suggest#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suggest&oldid=93065790",
+    "distinctionTask": {
+      "prompt": "I suggest taking an earlier train. This is _____.",
+      "options": [
+        "a proposal for consideration",
+        "confirmation that the earlier train was taken"
+      ],
+      "answer": "a proposal for consideration",
+      "explanation": "The recommendation does not report a completed journey."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-71232261",
+    "senseId": "kaikki:7721c5242c56c7bce4",
+    "definition": "Obsolete: to seduce, tempt or prompt someone towards evil.",
+    "example": "Reading note: the source’s “tender youth is soon suggested” uses suggested for being tempted or led astray. It does not mean that a young person has merely been proposed for consideration.",
+    "collocations": [
+      "be suggested (obsolete tempted sense)",
+      "suggest (older temptation sense)"
+    ],
+    "distinctions": [
+      "The source labels this sense obsolete. The line is explained for reading, not offered as a modern recommendation construction."
+    ],
+    "usage": "Obsolete, transitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:7721c5242c56c7bce4",
+      "definition": "To seduce; to prompt to evil; to tempt.",
+      "example": "Knowing that tender youth is soon suggested.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "autosuggest",
+        "missuggest",
+        "resuggest",
+        "suggestable",
+        "suggester",
+        "suggestful",
+        "suggestible",
+        "suggestion",
+        "suggest itself",
+        "suggestive",
+        "suggestment"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/suggest#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=suggest&oldid=93065790",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]

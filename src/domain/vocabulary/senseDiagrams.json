@@ -4806,5 +4806,229 @@
     "definition": "To request or desire to do an activity.",
     "pos": "verb",
     "kind": "wish-to"
+  },
+  {
+    "entryId": "ve-9cbe66d",
+    "senseId": "kaikki:d2c1de4e2f4e4a040a",
+    "term": "doubt",
+    "definition": "To consider something questionable or unlikely; to hesitate to believe or lack confidence in it.",
+    "pos": "verb",
+    "kind": "doubt-question"
+  },
+  {
+    "entryId": "ve-9cbe66d",
+    "senseId": "kaikki:ea2f3b456a9db9cf1b",
+    "term": "doubt",
+    "definition": "Disbelief or uncertainty about something, or a particular instance of it.",
+    "pos": "noun",
+    "kind": "doubt-uncertainty"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:73a4429e38cae7cdf2",
+    "term": "trust",
+    "definition": "Confidence in or reliance on a person or quality.",
+    "pos": "noun",
+    "kind": "trust-confidence"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:4c2c3fed97859e9efc",
+    "term": "trust",
+    "definition": "Confidence in future payment for goods or services supplied; credit.",
+    "pos": "noun",
+    "kind": "trust-credit"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:aeae3299ac36c1c1e4",
+    "term": "trust",
+    "definition": "The responsibility or office of someone to whom something is entrusted.",
+    "pos": "noun",
+    "kind": "trust-responsibility"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:b846222b4d66541a3f",
+    "term": "trust",
+    "definition": "In law, confidence vested in a legal owner to manage property for another’s benefit.",
+    "pos": "noun",
+    "kind": "trust-legal-relation"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:bcb1ba6a33a2ac3df9",
+    "term": "trust",
+    "definition": "A legal arrangement under which a trustee holds or manages property for a stated beneficiary.",
+    "pos": "noun",
+    "kind": "trust-arrangement"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:affdd05f4d13b795e9",
+    "term": "trust",
+    "definition": "A group of businesses or traders organised for mutual benefit and managed by a central body of trustees.",
+    "pos": "noun",
+    "kind": "trust-business"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:1feb3cff9cd2c56765",
+    "term": "trust",
+    "definition": "In computing, affirmation of a user’s access rights in a system.",
+    "pos": "noun",
+    "kind": "trust-access"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:cc2413ed8623a70658",
+    "term": "trust",
+    "definition": "To place confidence in, rely on or confide in someone or something.",
+    "pos": "verb",
+    "kind": "trust-rely"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:d2418cda56b5264b58",
+    "term": "trust",
+    "definition": "To have faith in someone or something and rely on them for continuing support.",
+    "pos": "verb",
+    "kind": "trust-in"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:5837fa6668426f0398",
+    "term": "trust",
+    "definition": "To give credence to or believe something.",
+    "pos": "verb",
+    "kind": "trust-believe"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:3cbad8bdbbc2cfcecf",
+    "term": "trust",
+    "definition": "To hope confidently or believe that something is or will be the case.",
+    "pos": "verb",
+    "kind": "trust-hope"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:14fab92033544e9f6f",
+    "term": "trust",
+    "definition": "To show confidence in a person by entrusting them with something.",
+    "pos": "verb",
+    "kind": "trust-person-with"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:b9ccae7f685b690850",
+    "term": "trust",
+    "definition": "To commit something to someone’s care; to entrust it.",
+    "pos": "verb",
+    "kind": "trust-thing-to"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:7d4331ae8b6d862e47",
+    "term": "trust",
+    "definition": "To rely on something, with to introducing what is relied on.",
+    "pos": "verb",
+    "kind": "trust-to"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:b0e8fd3fbe991049b2",
+    "term": "trust",
+    "definition": "To have trust or be disposed to confidence, without an expressed object.",
+    "pos": "verb",
+    "kind": "trust-without-object"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:609f690bbe57404b42",
+    "term": "trust",
+    "definition": "Slang: trust me, often used sarcastically or self-mockingly.",
+    "pos": "intj",
+    "kind": "trust-interjection"
+  },
+  {
+    "entryId": "ve-add96b1",
+    "senseId": "kaikki:90f295dad1b2ab0f9b",
+    "term": "trust",
+    "definition": "In law, relating to a trust.",
+    "pos": "adj",
+    "kind": "trust-related"
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:78ec9b13ae210c471f",
+    "term": "suspect",
+    "definition": "To imagine or suppose that something is true or exists, without proof.",
+    "pos": "verb",
+    "kind": "suspect-suppose"
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:9cc0ababe2ec4725b1",
+    "term": "suspect",
+    "definition": "To distrust or have doubts about someone or something.",
+    "pos": "verb",
+    "kind": "suspect-distrust"
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:6eb1c17f0274b266ef",
+    "term": "suspect",
+    "definition": "To believe someone may be guilty of something.",
+    "pos": "verb",
+    "kind": "suspect-guilt"
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:46a17605826716dea4",
+    "term": "suspect",
+    "definition": "To have suspicion, without an expressed object.",
+    "pos": "verb",
+    "kind": "suspect-intransitive"
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:605c73219d63d1d48f",
+    "term": "suspect",
+    "definition": "A person suspected of something, especially of committing a crime.",
+    "pos": "noun",
+    "kind": "suspect-person"
+  },
+  {
+    "entryId": "ve-71f2f412",
+    "senseId": "kaikki:77f22f7e6cf360815b",
+    "term": "suspect",
+    "definition": "Viewed with suspicion; considered questionable or doubtful.",
+    "pos": "adj",
+    "kind": "suspect-questionable"
+  },
+  {
+    "entryId": "ve-71232261",
+    "senseId": "kaikki:899850756ae1806982",
+    "term": "suggest",
+    "definition": "To imply something without stating it explicitly.",
+    "pos": "verb",
+    "kind": "suggest-imply"
+  },
+  {
+    "entryId": "ve-71232261",
+    "senseId": "kaikki:b081ed7e4fc485d159",
+    "term": "suggest",
+    "definition": "To cause someone to suppose something or bring an idea to mind.",
+    "pos": "verb",
+    "kind": "suggest-idea"
+  },
+  {
+    "entryId": "ve-71232261",
+    "senseId": "kaikki:69577275c81ff60080",
+    "term": "suggest",
+    "definition": "To explicitly mention something as a possibility for consideration, often as a recommendation.",
+    "pos": "verb",
+    "kind": "suggest-propose"
   }
 ]
