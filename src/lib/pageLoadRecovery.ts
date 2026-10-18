@@ -6,6 +6,24 @@ export function isPageDownloadError(error: unknown): boolean {
   return /Failed to fetch dynamically imported module|Importing a module script failed|Loading (?:CSS )?chunk .+ failed|error loading dynamically imported module|Failed to load module script|Unable to preload CSS for/i.test(message);
 }
 
+const localDownloads = new Map<string, number>();
+
+/** A view with its own retry handles this optional module's download failure. */
+export async function loadOptionalPageModule<T>(moduleName: string, load: () => Promise<T>): Promise<T> {
+  localDownloads.set(moduleName, (localDownloads.get(moduleName) || 0) + 1);
+  try { return await load(); }
+  finally {
+    const remaining = (localDownloads.get(moduleName) || 1) - 1;
+    if (remaining) localDownloads.set(moduleName, remaining);
+    else localDownloads.delete(moduleName);
+  }
+}
+
+function isLocallyHandledDownload(error: unknown): boolean {
+  const message = error && typeof error === 'object' && 'message' in error ? String(error.message).replaceAll('\\', '/') : '';
+  return [...localDownloads.keys()].some(name => message.includes(`/${name}-`) || message.includes(`/${name}.`));
+}
+
 /** Recover an interrupted first load, before the learner can have started work. */
 export function installPageLoadRecovery(reload = () => window.location.reload()) {
   const initialUrl = window.location.href;
@@ -20,6 +38,7 @@ export function installPageLoadRecovery(reload = () => window.location.reload())
     window.removeEventListener('vite:preloadError', recover);
   };
   const recover = (event: Event) => {
+    if (isLocallyHandledDownload((event as Event & { payload?: unknown }).payload)) return;
     if (!active || navigator.onLine === false || window.location.href !== initialUrl ||
         performance.now() - started > 30_000 ||
         !isPageDownloadError((event as Event & { payload?: unknown }).payload)) return;

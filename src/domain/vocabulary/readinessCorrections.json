@@ -207274,5 +207274,1392 @@
     "wordFamily": [],
     "register": "",
     "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:b3cd9afd7a15a8b26f",
+    "definition": "To establish who someone is or what something is.",
+    "example": "The witness could identify the driver from a clear photograph.",
+    "collocations": [
+      "identify a person",
+      "identify the cause",
+      "identify something as something"
+    ],
+    "distinctions": [
+      "Identify establishes identity; recognize often matches a current perception to a previous encounter. A confident identification can still be mistaken."
+    ],
+    "usage": "Transitive: identify someone or something; identify something as a particular thing.",
+    "originalSense": {
+      "id": "kaikki:b3cd9afd7a15a8b26f",
+      "definition": "To establish the identity of someone or something.",
+      "example": "It was hard to identify the shoplifter because the CCTV records didn't have a clear image.",
+      "pos": "verb",
+      "synonyms": [
+        "ID",
+        "clock",
+        "identify",
+        "ken",
+        "to make someone",
+        "notice",
+        "recognize",
+        "twig"
+      ],
+      "antonyms": [
+        "misken"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "deidentify",
+        "disidentify",
+        "hyperidentify",
+        "identifiability",
+        "identifiable",
+        "identifiee",
+        "identifier",
+        "identifyee",
+        "misidentify",
+        "nonidentified",
+        "nonidentifying",
+        "overidentify",
+        "photoidentify",
+        "preidentified",
+        "reidentify",
+        "self-identify",
+        "underidentified",
+        "unidentified",
+        "unidentifying"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/identify#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=identify&oldid=93552226",
+    "distinctionTask": {
+      "prompt": "A witness examines photographs to establish who drove the car. Identify here means _____.",
+      "options": [
+        "establish who the driver is",
+        "publish the driver's name"
+      ],
+      "answer": "establish who the driver is",
+      "explanation": "The task establishes identity. It does not say that the identity is publicly disclosed."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:eca33ef316f9080381",
+    "definition": "To disclose who someone is.",
+    "example": "The report will not identify the witness by name.",
+    "collocations": [
+      "identify a witness",
+      "identify someone by name",
+      "publicly identify"
+    ],
+    "distinctions": [
+      "Disclosing an identity is separate from discovering it. A writer may know a person's name and choose not to reveal it."
+    ],
+    "usage": "Transitive; often by name, publicly, or in a negative statement about protecting identity.",
+    "originalSense": {
+      "id": "kaikki:eca33ef316f9080381",
+      "definition": "To disclose the identity of someone.",
+      "example": "The Associated Press will not identify the suspect of the crime because he is a juvenile.",
+      "pos": "verb",
+      "synonyms": [
+        "ID",
+        "clock",
+        "identify",
+        "ken",
+        "to make someone",
+        "notice",
+        "recognize",
+        "twig"
+      ],
+      "antonyms": [
+        "misken"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "deidentify",
+        "disidentify",
+        "hyperidentify",
+        "identifiability",
+        "identifiable",
+        "identifiee",
+        "identifier",
+        "identifyee",
+        "misidentify",
+        "nonidentified",
+        "nonidentifying",
+        "overidentify",
+        "photoidentify",
+        "preidentified",
+        "reidentify",
+        "self-identify",
+        "underidentified",
+        "unidentified",
+        "unidentifying"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/identify#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=identify&oldid=93552226",
+    "distinctionTask": {
+      "prompt": "The editor knows the witness's name but will not identify her in the report. Identify here concerns _____.",
+      "options": [
+        "disclosing her identity",
+        "finding out her identity for the first time"
+      ],
+      "answer": "disclosing her identity",
+      "explanation": "The editor already knows the name. The issue is whether to reveal it."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:8f6e4d37510014bbd4",
+    "definition": "To determine the taxonomic group to which an organism belongs.",
+    "example": "The botanist used a field key to identify the plant as a common daisy.",
+    "collocations": [
+      "identify a species",
+      "identify a specimen",
+      "identify a plant as"
+    ],
+    "distinctions": [
+      "Identifying a specimen assigns it to a taxon; it does not necessarily describe a previously unknown species. The available evidence limits the identification."
+    ],
+    "usage": "Biology; identify a specimen as a member of a named taxon.",
+    "originalSense": {
+      "id": "kaikki:8f6e4d37510014bbd4",
+      "definition": "To establish the taxonomic classification of an organism.",
+      "example": "A recent biological inventory uncovered 41 species and 2 subspecies of insects new to science and many species not before identified in the State of Washington.",
+      "pos": "verb",
+      "synonyms": [
+        "ID",
+        "clock",
+        "identify",
+        "ken",
+        "to make someone",
+        "notice",
+        "recognize",
+        "twig"
+      ],
+      "antonyms": [
+        "misken"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "deidentify",
+        "disidentify",
+        "hyperidentify",
+        "identifiability",
+        "identifiable",
+        "identifiee",
+        "identifier",
+        "identifyee",
+        "misidentify",
+        "nonidentified",
+        "nonidentifying",
+        "overidentify",
+        "photoidentify",
+        "preidentified",
+        "reidentify",
+        "self-identify",
+        "underidentified",
+        "unidentified",
+        "unidentifying"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/identify#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=identify&oldid=93552226",
+    "distinctionTask": {
+      "prompt": "Using a field key, a botanist identifies a specimen as a common daisy. This means _____.",
+      "options": [
+        "placing the specimen in an existing taxonomic group",
+        "necessarily discovering a new species"
+      ],
+      "answer": "placing the specimen in an existing taxonomic group",
+      "explanation": "The stated identification uses an existing name. Discovery of a new species requires separate evidence and description."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:f6f538bbc79ad2e99d",
+    "definition": "To equate things or treat them as one; to unite them.",
+    "example": "In the quotient construction, we identify each pair of opposite boundary points.",
+    "collocations": [
+      "identify one thing with another",
+      "identify two points",
+      "identify opposite edges"
+    ],
+    "distinctions": [
+      "In this mathematical use, identify means treat specified objects as the same in a construction. The original points need not occupy the same position. Elsewhere it can mean equate or unite things."
+    ],
+    "usage": "Usually identify A with B or identify specified objects; the construction or argument determines what is equated.",
+    "originalSense": {
+      "id": "kaikki:f6f538bbc79ad2e99d",
+      "definition": "To equate or make the same; to unite or combine into one.",
+      "example": "Every precaution is taken to identify the interests of the people, and their rulers.",
+      "pos": "verb",
+      "synonyms": [
+        "ID",
+        "clock",
+        "identify",
+        "ken",
+        "to make someone",
+        "notice",
+        "recognize",
+        "twig"
+      ],
+      "antonyms": [
+        "misken"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "deidentify",
+        "disidentify",
+        "hyperidentify",
+        "identifiability",
+        "identifiable",
+        "identifiee",
+        "identifier",
+        "identifyee",
+        "misidentify",
+        "nonidentified",
+        "nonidentifying",
+        "overidentify",
+        "photoidentify",
+        "preidentified",
+        "reidentify",
+        "self-identify",
+        "underidentified",
+        "unidentified",
+        "unidentifying"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/identify#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=identify&oldid=93552226",
+    "distinctionTask": {
+      "prompt": "A quotient construction identifies two originally distinct points. It _____.",
+      "options": [
+        "treats the two points as one in the resulting construction",
+        "merely gives both original points a name"
+      ],
+      "answer": "treats the two points as one in the resulting construction",
+      "explanation": "The construction equates the specified points. This is different from naming or locating them."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:4f5cd81db0c806c739",
+    "definition": "To feel strongly connected to someone or something, often seeing oneself in them.",
+    "example": "Maya could identify herself with the novel's homesick narrator.",
+    "collocations": [
+      "identify oneself with a character",
+      "identify oneself with an experience",
+      "strongly identify oneself with"
+    ],
+    "distinctions": [
+      "Feeling an affinity does not mean being the same person or sharing every experience. The reflexive form identifies the person whose affinity is described."
+    ],
+    "usage": "Reflexive: identify oneself with someone or something. The non-reflexive identify with is also common.",
+    "originalSense": {
+      "id": "kaikki:4f5cd81db0c806c739",
+      "definition": "To have a strong affinity with; to feel oneself to be modelled on or connected to.",
+      "example": "Der Traum erhält eine neue Deutung, wenn sie im Traum nicht sich, sondern die Freundin meint, wenn sie sich an die Stelle der Freundin gesetzt oder, wie wir sagen können, sich mit ihr identifiziert hat.",
+      "pos": "verb",
+      "synonyms": [
+        "ID",
+        "clock",
+        "identify",
+        "ken",
+        "to make someone",
+        "notice",
+        "recognize",
+        "twig"
+      ],
+      "antonyms": [
+        "misken"
+      ],
+      "collocations": [],
+      "usage": "reflexive",
+      "register": "reflexive",
+      "wordFamily": [
+        "deidentify",
+        "disidentify",
+        "hyperidentify",
+        "identifiability",
+        "identifiable",
+        "identifiee",
+        "identifier",
+        "identifyee",
+        "misidentify",
+        "nonidentified",
+        "nonidentifying",
+        "overidentify",
+        "photoidentify",
+        "preidentified",
+        "reidentify",
+        "self-identify",
+        "underidentified",
+        "unidentified",
+        "unidentifying"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/identify#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=identify&oldid=93552226",
+    "distinctionTask": {
+      "prompt": "A reader identifies herself with a fictional narrator because both miss home. She _____.",
+      "options": [
+        "feels an affinity with the narrator",
+        "claims that she literally is the narrator"
+      ],
+      "answer": "feels an affinity with the narrator",
+      "explanation": "Identify oneself with expresses a felt connection in this sentence."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:eec154da8f1be3077b",
+    "definition": "To feel associated with a group or believe that one shares its outlook or experiences.",
+    "example": "Although he lived abroad, Leo continued to identify with his local community.",
+    "collocations": [
+      "identify with a group",
+      "identify with a community",
+      "identify with others"
+    ],
+    "distinctions": [
+      "Identify with can express a sense of association without asserting formal membership, identical views, or agreement with every action of the group."
+    ],
+    "usage": "Intransitive with with: identify with someone or a group.",
+    "originalSense": {
+      "id": "kaikki:eec154da8f1be3077b",
+      "definition": "To associate oneself with some group; to feel, or believe one feels, the same way.",
+      "example": "Now, the vast majority of us identify with the second group, the one that believes in trusting the wisdom of the people rather than taking power away from them and concentrating it in the other hands.",
+      "pos": "verb",
+      "synonyms": [
+        "ID",
+        "clock",
+        "identify",
+        "ken",
+        "to make someone",
+        "notice",
+        "recognize",
+        "twig"
+      ],
+      "antonyms": [
+        "misken"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "deidentify",
+        "disidentify",
+        "hyperidentify",
+        "identifiability",
+        "identifiable",
+        "identifiee",
+        "identifier",
+        "identifyee",
+        "misidentify",
+        "nonidentified",
+        "nonidentifying",
+        "overidentify",
+        "photoidentify",
+        "preidentified",
+        "reidentify",
+        "self-identify",
+        "underidentified",
+        "unidentified",
+        "unidentifying"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/identify#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=identify&oldid=93552226",
+    "distinctionTask": {
+      "prompt": "Leo identifies with a community even though he is not a registered member. This describes _____.",
+      "options": [
+        "his felt association with the community",
+        "proof of formal membership"
+      ],
+      "answer": "his felt association with the community",
+      "explanation": "A sense of connection need not establish a formal membership status."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:12eeacaf24d5df5bbf",
+    "definition": "To describe oneself using a particular identity or as a member of a group.",
+    "example": "On the voluntary survey, Priya chose to identify herself as bilingual.",
+    "collocations": [
+      "identify oneself as",
+      "identify as bilingual",
+      "self-identify as"
+    ],
+    "distinctions": [
+      "Identify as introduces a self-description; identify with expresses connection or affinity. A self-description alone is not an independent assessment of every skill associated with the term."
+    ],
+    "usage": "Identify oneself as or identify as, followed by an identity term.",
+    "originalSense": {
+      "id": "kaikki:12eeacaf24d5df5bbf",
+      "definition": "To claim an identity; to describe oneself as a member of a group; to assert the use of a particular term to describe oneself.",
+      "example": "\"The main message is that it's the interface between individuals and society that causes students who identify as gay, lesbian, or bisexual the most distress,\" said study first author Yue Zhao.",
+      "pos": "verb",
+      "synonyms": [
+        "ID",
+        "clock",
+        "identify",
+        "ken",
+        "to make someone",
+        "notice",
+        "recognize",
+        "twig"
+      ],
+      "antonyms": [
+        "misken"
+      ],
+      "collocations": [],
+      "usage": "reflexive",
+      "register": "reflexive",
+      "wordFamily": [
+        "deidentify",
+        "disidentify",
+        "hyperidentify",
+        "identifiability",
+        "identifiable",
+        "identifiee",
+        "identifier",
+        "identifyee",
+        "misidentify",
+        "nonidentified",
+        "nonidentifying",
+        "overidentify",
+        "photoidentify",
+        "preidentified",
+        "reidentify",
+        "self-identify",
+        "underidentified",
+        "unidentified",
+        "unidentifying"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/identify#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=identify&oldid=93552226",
+    "distinctionTask": {
+      "prompt": "Priya identifies herself as bilingual in a survey. The phrase reports _____.",
+      "options": [
+        "the identity term she uses for herself",
+        "the result of a separately administered language test"
+      ],
+      "answer": "the identity term she uses for herself",
+      "explanation": "The sentence gives her self-description, without asserting an independent test result."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-2e2c4028",
+    "senseId": "kaikki:c30353bcc747439038",
+    "definition": "A standard British spelling of recognize; for example, to know someone or something from a previous encounter.",
+    "example": "I recognise that voice from yesterday's interview.",
+    "collocations": [
+      "recognise a voice",
+      "recognise someone immediately",
+      "recognise a problem"
+    ],
+    "distinctions": [
+      "Recognise is an established British spelling, not a misspelling. Recognize is standard in American English and also used in Oxford-style British spelling. The voice example illustrates one meaning; the spelling relation applies more broadly."
+    ],
+    "usage": "Both spellings are correct in their established conventions. Use the convention required by your course or publication consistently.",
+    "originalSense": {
+      "id": "kaikki:c30353bcc747439038",
+      "definition": "Non-Oxford British English standard spelling of recognize.",
+      "example": "“[…] That woman is stark mad, Lord Stranleigh. Her own father recognised it when he bereft her of all power in the great business he founded. […]”",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "UK, alt-of, nonstandard",
+      "register": "UK, alt-of, nonstandard",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recognise&oldid=92012112",
+    "distinctionTask": {
+      "prompt": "In British spelling, “I recognise that voice” uses _____.",
+      "options": [
+        "an established spelling of recognize",
+        "a spelling error that must always be corrected"
+      ],
+      "answer": "an established spelling of recognize",
+      "explanation": "Recognise is standard British spelling. Recognize also occurs in British usage, particularly Oxford-style spelling."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:ddf13037f37e9dda68",
+    "definition": "To know someone or something because it matches a memory of an earlier encounter.",
+    "example": "I recognize that voice from yesterday's interview.",
+    "collocations": [
+      "recognize a face",
+      "recognize a voice",
+      "recognize someone from"
+    ],
+    "distinctions": [
+      "Recognize in this sense connects a present perception with memory. Identify can instead establish identity using new evidence, without a previous encounter. Recognition can be mistaken."
+    ],
+    "usage": "Transitive: recognize someone or something; recognize someone from an earlier encounter.",
+    "originalSense": {
+      "id": "kaikki:ddf13037f37e9dda68",
+      "definition": "To match (something or someone which one currently perceives) to a memory of some previous encounter with the same person or thing.",
+      "example": "I recognized his face immediately, although his voice was different.",
+      "pos": "verb",
+      "synonyms": [
+        "place"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "British, English, Oxford, US",
+      "register": "British, English, Oxford, US, transitive",
+      "wordFamily": [
+        "allorecognize",
+        "derecognize",
+        "immunorecognize",
+        "misrecognize",
+        "recognin",
+        "recognizability",
+        "recognizable",
+        "recognizably",
+        "recognizance",
+        "recognizant",
+        "recognization",
+        "recognizee",
+        "recognizer",
+        "recognizingly",
+        "recognizor",
+        "underrecognize",
+        "unrecognizable",
+        "unrecognize"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognize#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recognize&oldid=93560383",
+    "distinctionTask": {
+      "prompt": "You hear a voice and remember hearing the same person yesterday. Recognize describes _____.",
+      "options": [
+        "matching the present voice to an earlier encounter",
+        "necessarily learning the person's legal name"
+      ],
+      "answer": "matching the present voice to an earlier encounter",
+      "explanation": "Recognizing a familiar voice does not require knowing its owner's name."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:7d08441a0207ef5d93",
+    "definition": "To acknowledge the existence or legality of something, or treat it as valid or worthy of consideration.",
+    "example": "The university will recognize this qualification for entry to the course.",
+    "collocations": [
+      "recognize a qualification",
+      "recognize a right",
+      "officially recognize"
+    ],
+    "distinctions": [
+      "Recognition of a qualification or right concerns its accepted status in a specified setting. It does not guarantee acceptance everywhere or endorse every related action."
+    ],
+    "usage": "Transitive; state who recognizes what and for which purpose when the scope matters.",
+    "originalSense": {
+      "id": "kaikki:7d08441a0207ef5d93",
+      "definition": "To acknowledge the existence or legality of; to treat as valid or worthy of consideration.",
+      "example": "The US and a number of EU countries are expected to recognize Kosovo on Monday.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "British, English, Oxford, US",
+      "register": "British, English, Oxford, US, transitive",
+      "wordFamily": [
+        "allorecognize",
+        "derecognize",
+        "immunorecognize",
+        "misrecognize",
+        "recognin",
+        "recognizability",
+        "recognizable",
+        "recognizably",
+        "recognizance",
+        "recognizant",
+        "recognization",
+        "recognizee",
+        "recognizer",
+        "recognizingly",
+        "recognizor",
+        "underrecognize",
+        "unrecognizable",
+        "unrecognize"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognize#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recognize&oldid=93560383",
+    "distinctionTask": {
+      "prompt": "A university recognizes a qualification for admission to one course. This establishes _____.",
+      "options": [
+        "its acceptance for that stated purpose",
+        "automatic acceptance by every institution"
+      ],
+      "answer": "its acceptance for that stated purpose",
+      "explanation": "The institution and purpose limit the stated recognition."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:8f9e3681a3707891c7",
+    "definition": "To acknowledge or regard someone or something as having a particular nature, status or quality.",
+    "example": "The committee recognizes the building as an important local landmark.",
+    "collocations": [
+      "recognize something as",
+      "recognize someone as a leader",
+      "recognize that"
+    ],
+    "distinctions": [
+      "Recognize as attributes a stated status or quality; recognize that can acknowledge a proposition. The sentence reports a judgment or acknowledgment, not an automatic proof that it is correct."
+    ],
+    "usage": "Recognize A as B; recognize that followed by a clause.",
+    "originalSense": {
+      "id": "kaikki:8f9e3681a3707891c7",
+      "definition": "To acknowledge or consider (as being a certain thing or having a certain quality or property).",
+      "example": "Slavery is widely recognized as immoral.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "British, English, Oxford, US",
+      "register": "British, English, Oxford, US, transitive",
+      "wordFamily": [
+        "allorecognize",
+        "derecognize",
+        "immunorecognize",
+        "misrecognize",
+        "recognin",
+        "recognizability",
+        "recognizable",
+        "recognizably",
+        "recognizance",
+        "recognizant",
+        "recognization",
+        "recognizee",
+        "recognizer",
+        "recognizingly",
+        "recognizor",
+        "underrecognize",
+        "unrecognizable",
+        "unrecognize"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognize#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recognize&oldid=93560383",
+    "distinctionTask": {
+      "prompt": "“We recognize that the timetable is unrealistic” uses recognize to _____.",
+      "options": [
+        "acknowledge the stated judgment",
+        "award the timetable a prize"
+      ],
+      "answer": "acknowledge the stated judgment",
+      "explanation": "The that-clause gives the proposition being acknowledged."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:be31ef9949e3f80c67",
+    "definition": "To realize or discover the nature or significance of something.",
+    "example": "The engineer was first to recognize the fault in the design.",
+    "collocations": [
+      "recognize a fault",
+      "recognize the significance",
+      "recognize an opportunity"
+    ],
+    "distinctions": [
+      "Recognize here concerns understanding what something is or why it matters. It does not imply repairing the fault, taking the opportunity, or confirming a medical diagnosis."
+    ],
+    "usage": "Transitive; often a problem, pattern, opportunity or significance.",
+    "originalSense": {
+      "id": "kaikki:be31ef9949e3f80c67",
+      "definition": "To realize or discover the nature of something; apprehend quality in.",
+      "example": "In plants, the ability to recognize self from nonself plays an important role in fertilization, because self-fertilization will result in less diverse offspring than fertilization with pollen from another individual.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "British, English, Oxford, US",
+      "register": "British, English, Oxford, US, transitive",
+      "wordFamily": [
+        "allorecognize",
+        "derecognize",
+        "immunorecognize",
+        "misrecognize",
+        "recognin",
+        "recognizability",
+        "recognizable",
+        "recognizably",
+        "recognizance",
+        "recognizant",
+        "recognization",
+        "recognizee",
+        "recognizer",
+        "recognizingly",
+        "recognizor",
+        "underrecognize",
+        "unrecognizable",
+        "unrecognize"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognize#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recognize&oldid=93560383",
+    "distinctionTask": {
+      "prompt": "The engineer recognizes a design fault but has not repaired it. She has _____.",
+      "options": [
+        "realized the nature of the problem",
+        "necessarily corrected the design"
+      ],
+      "answer": "realized the nature of the problem",
+      "explanation": "Recognizing the fault concerns understanding it. Repair is a separate action."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:ef69b69dacbc520dd4",
+    "definition": "To show formal appreciation of a person or achievement, for example with an award or commendation.",
+    "example": "The council will recognize the volunteers' work with a public commendation.",
+    "collocations": [
+      "recognize an achievement",
+      "recognize someone's contribution",
+      "recognize someone with an award"
+    ],
+    "distinctions": [
+      "Formal recognition shows appreciation. It is separate from recognizing a familiar person, and a plan to recognize an achievement does not say the ceremony has already happened."
+    ],
+    "usage": "Recognize someone or their work; recognize someone with an award; recognize someone for a contribution.",
+    "originalSense": {
+      "id": "kaikki:ef69b69dacbc520dd4",
+      "definition": "To show formal appreciation of, as with an award, commendation etc.",
+      "example": "His services were recognized in a testimonial.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "British, English, Oxford, US",
+      "register": "British, English, Oxford, US, transitive",
+      "wordFamily": [
+        "allorecognize",
+        "derecognize",
+        "immunorecognize",
+        "misrecognize",
+        "recognin",
+        "recognizability",
+        "recognizable",
+        "recognizably",
+        "recognizance",
+        "recognizant",
+        "recognization",
+        "recognizee",
+        "recognizer",
+        "recognizingly",
+        "recognizor",
+        "underrecognize",
+        "unrecognizable",
+        "unrecognize"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognize#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recognize&oldid=93560383",
+    "distinctionTask": {
+      "prompt": "A council plans to recognize volunteers with a commendation next month. This means _____.",
+      "options": [
+        "it plans to show formal appreciation",
+        "the award has already been presented"
+      ],
+      "answer": "it plans to show formal appreciation",
+      "explanation": "The formal appreciation is planned for a future occasion."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:d8c85d9f465dc8823d",
+    "definition": "An obsolete use meaning to review or examine again.",
+    "example": "In older writing, recognize can describe examining something again. Modern readers should use the context to separate this from remembering or formally acknowledging it.",
+    "collocations": [
+      "recognize: examine again",
+      "review again",
+      "re-examine"
+    ],
+    "distinctions": [
+      "This obsolete meaning concerns another examination, not necessarily a remembered encounter or an award."
+    ],
+    "usage": "Obsolete; reading guidance rather than a model for ordinary modern use.",
+    "originalSense": {
+      "id": "kaikki:d8c85d9f465dc8823d",
+      "definition": "To review; to examine again.",
+      "example": "We do moste humbly submytte it [this treatise] to[…]your maiestie, to be recognised, ouersene, and corrected.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "British, English, Oxford, US, obsolete",
+      "register": "British, English, Oxford, US, obsolete",
+      "wordFamily": [
+        "allorecognize",
+        "derecognize",
+        "immunorecognize",
+        "misrecognize",
+        "recognin",
+        "recognizability",
+        "recognizable",
+        "recognizably",
+        "recognizance",
+        "recognizant",
+        "recognization",
+        "recognizee",
+        "recognizer",
+        "recognizingly",
+        "recognizor",
+        "underrecognize",
+        "unrecognizable",
+        "unrecognize"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognize#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recognize&oldid=93560383",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:ff6bb778c1739d994c",
+    "definition": "An obsolete use meaning to reconnoitre or survey an area for information.",
+    "example": "In an older account of an expedition, recognize may mean reconnoitre: inspect an area to gather information about it.",
+    "collocations": [
+      "recognize: reconnoitre",
+      "survey an area",
+      "gather information"
+    ],
+    "distinctions": [
+      "This historical scouting use is separate from recognizing a familiar place. Modern reconnoitre or reconnoiter is clearer."
+    ],
+    "usage": "Obsolete; interpret from the historical context.",
+    "originalSense": {
+      "id": "kaikki:ff6bb778c1739d994c",
+      "definition": "To reconnoiter.",
+      "example": "before the siege was layd to the Towne, of minde to recognize, he fell unawares amongst an Ambushcade",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "British, English, Oxford, US, obsolete",
+      "register": "British, English, Oxford, US, obsolete",
+      "wordFamily": [
+        "allorecognize",
+        "derecognize",
+        "immunorecognize",
+        "misrecognize",
+        "recognin",
+        "recognizability",
+        "recognizable",
+        "recognizably",
+        "recognizance",
+        "recognizant",
+        "recognization",
+        "recognizee",
+        "recognizer",
+        "recognizingly",
+        "recognizor",
+        "underrecognize",
+        "unrecognizable",
+        "unrecognize"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognize#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recognize&oldid=93560383",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:7e131cd758b1b1ce3d",
+    "definition": "To be able to bind to particular antigens through a specific molecular interaction.",
+    "example": "In the assay, the antibody can recognize a particular antigen.",
+    "collocations": [
+      "recognize an antigen",
+      "antibody recognition",
+      "specifically recognize"
+    ],
+    "distinctions": [
+      "In immunology, recognize can concern molecular binding. Binding depends on the molecules and conditions and does not by itself establish a complete immune response, perfect specificity, or a clinical diagnosis."
+    ],
+    "usage": "Immunology; commonly an antibody or receptor recognizes an antigen or a particular part of it.",
+    "originalSense": {
+      "id": "kaikki:7e131cd758b1b1ce3d",
+      "definition": "To have the property to bind to specific antigens.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "British, English, Oxford, US",
+      "register": "British, English, Oxford, US",
+      "wordFamily": [
+        "allorecognize",
+        "derecognize",
+        "immunorecognize",
+        "misrecognize",
+        "recognin",
+        "recognizability",
+        "recognizable",
+        "recognizably",
+        "recognizance",
+        "recognizant",
+        "recognization",
+        "recognizee",
+        "recognizer",
+        "recognizingly",
+        "recognizor",
+        "underrecognize",
+        "unrecognizable",
+        "unrecognize"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognize#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recognize&oldid=93560383",
+    "distinctionTask": {
+      "prompt": "An assay shows that an antibody recognizes a particular antigen. This finding concerns _____.",
+      "options": [
+        "a specific molecular binding interaction",
+        "a complete clinical diagnosis on its own"
+      ],
+      "answer": "a specific molecular binding interaction",
+      "explanation": "Binding evidence has a limited scope. Diagnosis and downstream immune effects require further context and evidence."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:8bfaeac2b692b340e8",
+    "definition": "To cognize again: to apprehend or become aware of something anew.",
+    "example": "The wording “cognize again” concerns another act of apprehension or awareness. It does not by itself assert matching a present perception to a memory.",
+    "collocations": [
+      "cognize again",
+      "apprehend anew",
+      "renewed awareness"
+    ],
+    "distinctions": [
+      "Keep this literal re-cognition meaning separate from the familiar-person or familiar-object sense. The hyphenated re-cognize can make the repeated act clearer."
+    ],
+    "usage": "Read this literal repeated-action wording according to context rather than treating it as the usual everyday meaning.",
+    "originalSense": {
+      "id": "kaikki:8bfaeac2b692b340e8",
+      "definition": "to cognize again",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "British, English, North-American, Oxford, UK, US",
+      "register": "British, English, North-American, Oxford, UK, US",
+      "wordFamily": [
+        "allorecognize",
+        "derecognize",
+        "immunorecognize",
+        "misrecognize",
+        "recognin",
+        "recognizability",
+        "recognizable",
+        "recognizably",
+        "recognizance",
+        "recognizant",
+        "recognization",
+        "recognizee",
+        "recognizer",
+        "recognizingly",
+        "recognizor",
+        "underrecognize",
+        "unrecognizable",
+        "unrecognize"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognize#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recognize&oldid=93560383",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5200cb3d",
+    "senseId": "kaikki:e4569309c3ed4a53b6",
+    "definition": "To place things into groups according to stated features or criteria.",
+    "example": "For this survey, we classify journeys of less than two kilometres as short trips.",
+    "collocations": [
+      "classify something as",
+      "classify by size",
+      "classify into groups"
+    ],
+    "distinctions": [
+      "A classification depends on its criterion. The survey's two-kilometre boundary is a stated working rule, not a universal definition of a short trip. Identifying an item and assigning it to a group are related but distinct tasks."
+    ],
+    "usage": "Classify A as B; classify items by a feature or into groups.",
+    "originalSense": {
+      "id": "kaikki:e4569309c3ed4a53b6",
+      "definition": "to identify by or divide into classes; to categorize",
+      "example": "Should we classify \"make up\" as an idiom or as a phrasal verb?",
+      "pos": "verb",
+      "synonyms": [
+        "brand",
+        "cast",
+        "ticket",
+        "class",
+        "categorize",
+        "classify",
+        "compartmentalise",
+        "distribute",
+        "divide",
+        "estimate",
+        "evaluate",
+        "gauge",
+        "judge",
+        "label",
+        "measure",
+        "overclassify",
+        "peg",
+        "pigeonhole",
+        "sort",
+        "subdivide",
+        "winnow"
+      ],
+      "antonyms": [
+        "declassify"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "autoclassify",
+        "classifiable",
+        "disclassify",
+        "interclassify",
+        "misclassify",
+        "overclassify",
+        "preclassify",
+        "reclassify",
+        "subclassify",
+        "transclassify",
+        "unclassify",
+        "underclassify"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/classify#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=classify&oldid=91124741",
+    "distinctionTask": {
+      "prompt": "A survey classifies journeys under 2 km as short. Under that rule, a 1.5 km journey is _____.",
+      "options": [
+        "a short trip",
+        "a trip that fails the stated short-trip criterion"
+      ],
+      "answer": "a short trip",
+      "explanation": "1.5 is less than 2. The answer follows this survey's explicit rule."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-5200cb3d",
+    "senseId": "kaikki:f78f063291bb99a96f",
+    "definition": "To designate information as secret or restricted, especially under a government classification system.",
+    "example": "The agency decided to classify the report as secret.",
+    "collocations": [
+      "classify information",
+      "classify a document as secret",
+      "classified material"
+    ],
+    "distinctions": [
+      "Classifying a report assigns a secrecy status. It does not itself encrypt the file, grant anyone access, or establish that its claims are true."
+    ],
+    "usage": "Commonly information or documents; classify something as secret or under a named security level.",
+    "originalSense": {
+      "id": "kaikki:f78f063291bb99a96f",
+      "definition": "to declare something a secret, especially a government secret",
+      "example": "They decided to classify that information.",
+      "pos": "verb",
+      "synonyms": [
+        "brand",
+        "cast",
+        "ticket",
+        "class",
+        "categorize",
+        "classify",
+        "compartmentalise",
+        "distribute",
+        "divide",
+        "estimate",
+        "evaluate",
+        "gauge",
+        "judge",
+        "label",
+        "measure",
+        "overclassify",
+        "peg",
+        "pigeonhole",
+        "sort",
+        "subdivide",
+        "winnow"
+      ],
+      "antonyms": [
+        "declassify"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "autoclassify",
+        "classifiable",
+        "disclassify",
+        "interclassify",
+        "misclassify",
+        "overclassify",
+        "preclassify",
+        "reclassify",
+        "subclassify",
+        "transclassify",
+        "unclassify",
+        "underclassify"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/classify#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=classify&oldid=91124741",
+    "distinctionTask": {
+      "prompt": "An agency classifies a report as secret. That action assigns _____.",
+      "options": [
+        "a security classification",
+        "proof that every claim in the report is true"
+      ],
+      "answer": "a security classification",
+      "explanation": "A secrecy status concerns handling and disclosure, not the truth of the content."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-5200cb3d",
+    "senseId": "kaikki:7bc2978830ce6ebaf8",
+    "definition": "To make something classy or stylish.",
+    "example": "In the make-classy meaning, classify concerns giving something a more stylish character. This is separate from sorting items or assigning a secrecy level.",
+    "collocations": [
+      "classify: make classy",
+      "make more stylish",
+      "give a classy appearance"
+    ],
+    "distinctions": [
+      "This use concerns style or elegance, rather than class membership. Make more stylish is clearer for an ordinary description."
+    ],
+    "usage": "Interpret this uncommon wording from context; it does not mean categorize.",
+    "originalSense": {
+      "id": "kaikki:7bc2978830ce6ebaf8",
+      "definition": "To make classy",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "brand",
+        "cast",
+        "ticket",
+        "class",
+        "categorize",
+        "classify",
+        "compartmentalise",
+        "distribute",
+        "divide",
+        "estimate",
+        "evaluate",
+        "gauge",
+        "judge",
+        "label",
+        "measure",
+        "overclassify",
+        "peg",
+        "pigeonhole",
+        "sort",
+        "subdivide",
+        "winnow"
+      ],
+      "antonyms": [
+        "declassify"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "autoclassify",
+        "classifiable",
+        "disclassify",
+        "interclassify",
+        "misclassify",
+        "overclassify",
+        "preclassify",
+        "reclassify",
+        "subclassify",
+        "transclassify",
+        "unclassify",
+        "underclassify"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/classify#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=classify&oldid=91124741",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]

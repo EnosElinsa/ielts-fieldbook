@@ -3814,5 +3814,133 @@
     "definition": "In biology, to develop or cause development into forms or functions that differ.",
     "pos": "verb",
     "kind": "differentiate-biology"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:b3cd9afd7a15a8b26f",
+    "term": "identify",
+    "definition": "To establish who someone is or what something is.",
+    "pos": "verb",
+    "kind": "identify-identity"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:eca33ef316f9080381",
+    "term": "identify",
+    "definition": "To disclose who someone is.",
+    "pos": "verb",
+    "kind": "identify-disclose"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:8f6e4d37510014bbd4",
+    "term": "identify",
+    "definition": "To determine the taxonomic group to which an organism belongs.",
+    "pos": "verb",
+    "kind": "identify-taxon"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:f6f538bbc79ad2e99d",
+    "term": "identify",
+    "definition": "To equate things or treat them as one; to unite them.",
+    "pos": "verb",
+    "kind": "identify-equate"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:4f5cd81db0c806c739",
+    "term": "identify",
+    "definition": "To feel strongly connected to someone or something, often seeing oneself in them.",
+    "pos": "verb",
+    "kind": "identify-affinity"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:eec154da8f1be3077b",
+    "term": "identify",
+    "definition": "To feel associated with a group or believe that one shares its outlook or experiences.",
+    "pos": "verb",
+    "kind": "identify-group"
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "senseId": "kaikki:12eeacaf24d5df5bbf",
+    "term": "identify",
+    "definition": "To describe oneself using a particular identity or as a member of a group.",
+    "pos": "verb",
+    "kind": "identify-as"
+  },
+  {
+    "entryId": "ve-2e2c4028",
+    "senseId": "kaikki:c30353bcc747439038",
+    "term": "recognise",
+    "definition": "A standard British spelling of recognize; for example, to know someone or something from a previous encounter.",
+    "pos": "verb",
+    "kind": "recognise-spelling"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:ddf13037f37e9dda68",
+    "term": "recognize",
+    "definition": "To know someone or something because it matches a memory of an earlier encounter.",
+    "pos": "verb",
+    "kind": "recognize-memory"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:7d08441a0207ef5d93",
+    "term": "recognize",
+    "definition": "To acknowledge the existence or legality of something, or treat it as valid or worthy of consideration.",
+    "pos": "verb",
+    "kind": "recognize-validity"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:8f9e3681a3707891c7",
+    "term": "recognize",
+    "definition": "To acknowledge or regard someone or something as having a particular nature, status or quality.",
+    "pos": "verb",
+    "kind": "recognize-as"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:be31ef9949e3f80c67",
+    "term": "recognize",
+    "definition": "To realize or discover the nature or significance of something.",
+    "pos": "verb",
+    "kind": "recognize-nature"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:ef69b69dacbc520dd4",
+    "term": "recognize",
+    "definition": "To show formal appreciation of a person or achievement, for example with an award or commendation.",
+    "pos": "verb",
+    "kind": "recognize-award"
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "senseId": "kaikki:7e131cd758b1b1ce3d",
+    "term": "recognize",
+    "definition": "To be able to bind to particular antigens through a specific molecular interaction.",
+    "pos": "verb",
+    "kind": "recognize-antigen"
+  },
+  {
+    "entryId": "ve-5200cb3d",
+    "senseId": "kaikki:e4569309c3ed4a53b6",
+    "term": "classify",
+    "definition": "To place things into groups according to stated features or criteria.",
+    "pos": "verb",
+    "kind": "classify-groups"
+  },
+  {
+    "entryId": "ve-5200cb3d",
+    "senseId": "kaikki:f78f063291bb99a96f",
+    "term": "classify",
+    "definition": "To designate information as secret or restricted, especially under a government classification system.",
+    "pos": "verb",
+    "kind": "classify-secret"
   }
 ]

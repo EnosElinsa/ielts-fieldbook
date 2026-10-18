@@ -21328,5 +21328,407 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-f52fbac1",
+    "originalSense": {
+      "id": "kaikki:b3cd9afd7a15a8b26f",
+      "definition": "To establish the identity of someone or something.",
+      "example": "It was hard to identify the shoplifter because the CCTV records didn't have a clear image.",
+      "pos": "verb",
+      "synonyms": [
+        "ID",
+        "clock",
+        "identify",
+        "ken",
+        "to make someone",
+        "notice",
+        "recognize",
+        "twig"
+      ],
+      "antonyms": [
+        "misken"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "deidentify",
+        "disidentify",
+        "hyperidentify",
+        "identifiability",
+        "identifiable",
+        "identifiee",
+        "identifier",
+        "identifyee",
+        "misidentify",
+        "nonidentified",
+        "nonidentifying",
+        "overidentify",
+        "photoidentify",
+        "preidentified",
+        "reidentify",
+        "self-identify",
+        "underidentified",
+        "unidentified",
+        "unidentifying"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/identify#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:b3cd9afd7a15a8b26f",
+      "definition": "To establish who someone is or what something is.",
+      "example": "The witness could identify the driver from a clear photograph.",
+      "pos": "verb",
+      "synonyms": [
+        "ID",
+        "clock",
+        "identify",
+        "ken",
+        "to make someone",
+        "notice",
+        "recognize",
+        "twig"
+      ],
+      "antonyms": [
+        "misken"
+      ],
+      "collocations": [
+        "identify a person",
+        "identify the cause",
+        "identify something as something"
+      ],
+      "usage": "Transitive: identify someone or something; identify something as a particular thing.",
+      "register": "transitive",
+      "wordFamily": [
+        "deidentify",
+        "disidentify",
+        "hyperidentify",
+        "identifiability",
+        "identifiable",
+        "identifiee",
+        "identifier",
+        "identifyee",
+        "misidentify",
+        "nonidentified",
+        "nonidentifying",
+        "overidentify",
+        "photoidentify",
+        "preidentified",
+        "reidentify",
+        "self-identify",
+        "underidentified",
+        "unidentified",
+        "unidentifying"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/identify#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Identify establishes identity; recognize often matches a current perception to a previous encounter. A confident identification can still be mistaken."
+      ],
+      "distinctionTask": {
+        "prompt": "A witness examines photographs to establish who drove the car. Identify here means _____.",
+        "options": [
+          "establish who the driver is",
+          "publish the driver's name"
+        ],
+        "answer": "establish who the driver is",
+        "explanation": "The task establishes identity. It does not say that the identity is publicly disclosed."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-2e2c4028",
+    "originalSense": {
+      "id": "kaikki:c30353bcc747439038",
+      "definition": "Non-Oxford British English standard spelling of recognize.",
+      "example": "“[…] That woman is stark mad, Lord Stranleigh. Her own father recognised it when he bereft her of all power in the great business he founded. […]”",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "UK, alt-of, nonstandard",
+      "register": "UK, alt-of, nonstandard",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:c30353bcc747439038",
+      "definition": "A standard British spelling of recognize; for example, to know someone or something from a previous encounter.",
+      "example": "I recognise that voice from yesterday's interview.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "recognise a voice",
+        "recognise someone immediately",
+        "recognise a problem"
+      ],
+      "usage": "Both spellings are correct in their established conventions. Use the convention required by your course or publication consistently.",
+      "register": "UK, alt-of, nonstandard",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognise#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Recognise is an established British spelling, not a misspelling. Recognize is standard in American English and also used in Oxford-style British spelling. The voice example illustrates one meaning; the spelling relation applies more broadly."
+      ],
+      "distinctionTask": {
+        "prompt": "In British spelling, “I recognise that voice” uses _____.",
+        "options": [
+          "an established spelling of recognize",
+          "a spelling error that must always be corrected"
+        ],
+        "answer": "an established spelling of recognize",
+        "explanation": "Recognise is standard British spelling. Recognize also occurs in British usage, particularly Oxford-style spelling."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-2e2c3f41",
+    "originalSense": {
+      "id": "kaikki:ddf13037f37e9dda68",
+      "definition": "To match (something or someone which one currently perceives) to a memory of some previous encounter with the same person or thing.",
+      "example": "I recognized his face immediately, although his voice was different.",
+      "pos": "verb",
+      "synonyms": [
+        "place"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "British, English, Oxford, US",
+      "register": "British, English, Oxford, US, transitive",
+      "wordFamily": [
+        "allorecognize",
+        "derecognize",
+        "immunorecognize",
+        "misrecognize",
+        "recognin",
+        "recognizability",
+        "recognizable",
+        "recognizably",
+        "recognizance",
+        "recognizant",
+        "recognization",
+        "recognizee",
+        "recognizer",
+        "recognizingly",
+        "recognizor",
+        "underrecognize",
+        "unrecognizable",
+        "unrecognize"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognize#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:ddf13037f37e9dda68",
+      "definition": "To know someone or something because it matches a memory of an earlier encounter.",
+      "example": "I recognize that voice from yesterday's interview.",
+      "pos": "verb",
+      "synonyms": [
+        "place"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "recognize a face",
+        "recognize a voice",
+        "recognize someone from"
+      ],
+      "usage": "Transitive: recognize someone or something; recognize someone from an earlier encounter.",
+      "register": "British, English, Oxford, US, transitive",
+      "wordFamily": [
+        "allorecognize",
+        "derecognize",
+        "immunorecognize",
+        "misrecognize",
+        "recognin",
+        "recognizability",
+        "recognizable",
+        "recognizably",
+        "recognizance",
+        "recognizant",
+        "recognization",
+        "recognizee",
+        "recognizer",
+        "recognizingly",
+        "recognizor",
+        "underrecognize",
+        "unrecognizable",
+        "unrecognize"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recognize#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Recognize in this sense connects a present perception with memory. Identify can instead establish identity using new evidence, without a previous encounter. Recognition can be mistaken."
+      ],
+      "distinctionTask": {
+        "prompt": "You hear a voice and remember hearing the same person yesterday. Recognize describes _____.",
+        "options": [
+          "matching the present voice to an earlier encounter",
+          "necessarily learning the person's legal name"
+        ],
+        "answer": "matching the present voice to an earlier encounter",
+        "explanation": "Recognizing a familiar voice does not require knowing its owner's name."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-5200cb3d",
+    "originalSense": {
+      "id": "kaikki:e4569309c3ed4a53b6",
+      "definition": "to identify by or divide into classes; to categorize",
+      "example": "Should we classify \"make up\" as an idiom or as a phrasal verb?",
+      "pos": "verb",
+      "synonyms": [
+        "brand",
+        "cast",
+        "ticket",
+        "class",
+        "categorize",
+        "classify",
+        "compartmentalise",
+        "distribute",
+        "divide",
+        "estimate",
+        "evaluate",
+        "gauge",
+        "judge",
+        "label",
+        "measure",
+        "overclassify",
+        "peg",
+        "pigeonhole",
+        "sort",
+        "subdivide",
+        "winnow"
+      ],
+      "antonyms": [
+        "declassify"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "autoclassify",
+        "classifiable",
+        "disclassify",
+        "interclassify",
+        "misclassify",
+        "overclassify",
+        "preclassify",
+        "reclassify",
+        "subclassify",
+        "transclassify",
+        "unclassify",
+        "underclassify"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/classify#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:e4569309c3ed4a53b6",
+      "definition": "To place things into groups according to stated features or criteria.",
+      "example": "For this survey, we classify journeys of less than two kilometres as short trips.",
+      "pos": "verb",
+      "synonyms": [
+        "brand",
+        "cast",
+        "ticket",
+        "class",
+        "categorize",
+        "classify",
+        "compartmentalise",
+        "distribute",
+        "divide",
+        "estimate",
+        "evaluate",
+        "gauge",
+        "judge",
+        "label",
+        "measure",
+        "overclassify",
+        "peg",
+        "pigeonhole",
+        "sort",
+        "subdivide",
+        "winnow"
+      ],
+      "antonyms": [
+        "declassify"
+      ],
+      "collocations": [
+        "classify something as",
+        "classify by size",
+        "classify into groups"
+      ],
+      "usage": "Classify A as B; classify items by a feature or into groups.",
+      "register": "",
+      "wordFamily": [
+        "autoclassify",
+        "classifiable",
+        "disclassify",
+        "interclassify",
+        "misclassify",
+        "overclassify",
+        "preclassify",
+        "reclassify",
+        "subclassify",
+        "transclassify",
+        "unclassify",
+        "underclassify"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/classify#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A classification depends on its criterion. The survey's two-kilometre boundary is a stated working rule, not a universal definition of a short trip. Identifying an item and assigning it to a group are related but distinct tasks."
+      ],
+      "distinctionTask": {
+        "prompt": "A survey classifies journeys under 2 km as short. Under that rule, a 1.5 km journey is _____.",
+        "options": [
+          "a short trip",
+          "a trip that fails the stated short-trip criterion"
+        ],
+        "answer": "a short trip",
+        "explanation": "1.5 is less than 2. The answer follows this survey's explicit rule."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

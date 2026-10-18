@@ -6,11 +6,11 @@ import type { ResolvedVocabularyLearningContext } from '../../domain/vocabulary/
 import { VocabularyLearningVisual } from './VocabularyLearningVisual';
 afterEach(cleanup);
 
-for (const row of diagrams) test(`${row.term}/${row.senseId} draws only its exact meaning`, () => {
+for (const row of diagrams) test(`${row.term}/${row.senseId} draws only its exact meaning`, async () => {
   const sense = { id: row.senseId, definition: row.definition, pos: row.pos, example: '' };
   const resolved = { entry: { id: row.entryId, term: row.term, senses: [sense] }, sense, contentReviewed: false } as ResolvedVocabularyLearningContext;
   const view = render(<VocabularyLearningVisual resolved={resolved} />);
-  expect(screen.getByRole('img')).toHaveAccessibleName(new RegExp(`^${row.term}:`));
+  expect(await screen.findByRole('img')).toHaveAccessibleName(new RegExp(`^${row.term}:`));
   const diagramName = screen.getByRole('img').getAttribute('aria-label')!;
   expect(screen.getByText(/Illustrative diagram/)).toBeInTheDocument();
   for (const patch of [{ id: 'other-sense' }, { definition: 'My different classroom meaning.' }, { pos: 'other' }, { source: 'Personal note' }]) {

@@ -3,7 +3,7 @@ import type { ResolvedVocabularyLearningContext } from '../../domain/vocabulary/
 import { getVocabularyIllustration, getVocabularyVisualConcept, getVocabularySenseDiagram, type VocabularyVisualConcept } from '../../domain/vocabulary/media';
 import '../../styles/vocabulary-visual.css';
 import { VocabularyConceptScene, vocabularyConceptDescription } from './VocabularyConceptScene';
-import { VocabularyMeaningDiagram } from './VocabularyMeaningDiagram';
+import { AsyncMeaningDiagram } from './AsyncMeaningDiagram';
 
 /** Edits and navigation reset a failed photo by keying the actual selected meaning. */
 export function VocabularyLearningVisual({ resolved, creditHref }: { resolved: ResolvedVocabularyLearningContext; creditHref?: string }) {
@@ -21,7 +21,7 @@ function LearningVisual({ resolved, creditHref }: { resolved: ResolvedVocabulary
     <figcaption>{image.caption}</figcaption>
     {creditHref ? <a className="vocabulary-visual-credits" href={creditHref}>Image credits</a> : <details className="vocabulary-visual-credits"><summary>Image credits</summary><p>{image.author} · {image.license}</p><p>{image.changes}</p><div><a href={image.sourceUrl} target="_blank" rel="noreferrer">Source</a><a href={image.licenseUrl} target="_blank" rel="noreferrer">License</a></div></details>}
   </figure>;
-  if (diagram) return <VocabularyMeaningDiagram diagram={diagram} />;
+  if (diagram) return <AsyncMeaningDiagram diagram={diagram} />;
   if (!concept && !image) return null;
   return <figure className="vocabulary-learning-visual is-illustration">
     {concept ? description ? <VocabularyConceptScene concept={concept} term={resolved.entry.term} /> : <FoodScene concept={concept} term={resolved.entry.term} /> : null}

@@ -1,0 +1,92 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-f52fbac1",
+      "senseId": "kaikki:b3cd9afd7a15a8b26f"
+    },
+    {
+      "entryId": "ve-f52fbac1",
+      "senseId": "kaikki:eca33ef316f9080381"
+    },
+    {
+      "entryId": "ve-f52fbac1",
+      "senseId": "kaikki:8f6e4d37510014bbd4"
+    },
+    {
+      "entryId": "ve-f52fbac1",
+      "senseId": "kaikki:f6f538bbc79ad2e99d"
+    },
+    {
+      "entryId": "ve-f52fbac1",
+      "senseId": "kaikki:4f5cd81db0c806c739"
+    },
+    {
+      "entryId": "ve-f52fbac1",
+      "senseId": "kaikki:eec154da8f1be3077b"
+    },
+    {
+      "entryId": "ve-f52fbac1",
+      "senseId": "kaikki:12eeacaf24d5df5bbf"
+    },
+    {
+      "entryId": "ve-2e2c4028",
+      "senseId": "kaikki:c30353bcc747439038"
+    },
+    {
+      "entryId": "ve-2e2c3f41",
+      "senseId": "kaikki:ddf13037f37e9dda68"
+    },
+    {
+      "entryId": "ve-2e2c3f41",
+      "senseId": "kaikki:7d08441a0207ef5d93"
+    },
+    {
+      "entryId": "ve-2e2c3f41",
+      "senseId": "kaikki:8f9e3681a3707891c7"
+    },
+    {
+      "entryId": "ve-2e2c3f41",
+      "senseId": "kaikki:be31ef9949e3f80c67"
+    },
+    {
+      "entryId": "ve-2e2c3f41",
+      "senseId": "kaikki:ef69b69dacbc520dd4"
+    },
+    {
+      "entryId": "ve-2e2c3f41",
+      "senseId": "kaikki:d8c85d9f465dc8823d"
+    },
+    {
+      "entryId": "ve-2e2c3f41",
+      "senseId": "kaikki:ff6bb778c1739d994c"
+    },
+    {
+      "entryId": "ve-2e2c3f41",
+      "senseId": "kaikki:7e131cd758b1b1ce3d"
+    },
+    {
+      "entryId": "ve-2e2c3f41",
+      "senseId": "kaikki:8bfaeac2b692b340e8"
+    },
+    {
+      "entryId": "ve-5200cb3d",
+      "senseId": "kaikki:e4569309c3ed4a53b6"
+    },
+    {
+      "entryId": "ve-5200cb3d",
+      "senseId": "kaikki:f78f063291bb99a96f"
+    },
+    {
+      "entryId": "ve-5200cb3d",
+      "senseId": "kaikki:7bc2978830ce6ebaf8"
+    }
+  ],
+  "restoreCorrections": [],
+  "removeDefaults": [
+    "ve-f52fbac1",
+    "ve-2e2c4028",
+    "ve-2e2c3f41",
+    "ve-5200cb3d"
+  ],
+  "restoreDefaults": []
+}

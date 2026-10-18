@@ -12,7 +12,7 @@ import { SelectField } from '../../components/SelectField';
 import { vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
 import { getVocabularyLearningPriority, isVocabularyMeaningGroup, isVocabularySpellingReference, isVocabularyUsageReference } from '../../domain/vocabulary/readiness';
 import { getVocabularySenseDiagram, type VocabularySenseDiagram } from '../../domain/vocabulary/media';
-import { VocabularyMeaningDiagram } from './VocabularyMeaningDiagram';
+import { AsyncMeaningDiagram } from './AsyncMeaningDiagram';
 import { practiceUrl } from "./vocabularyNavigation";
 import { loadTermDictionary, resetDictionaryCache } from './dictionary';
 export { resetDictionaryCache } from './dictionary';
@@ -27,7 +27,7 @@ function DiagramPreview({ diagram, number }: { diagram: VocabularySenseDiagram; 
   const [open, setOpen] = useState(false);
   return <details className="vocabulary-dictionary-diagram" aria-label={`Diagram for meaning ${number}`} onToggle={event => setOpen(event.currentTarget.open)}>
     <summary>View diagram</summary>
-    {open ? <VocabularyMeaningDiagram diagram={diagram} /> : null}
+    {open ? <AsyncMeaningDiagram diagram={diagram} /> : null}
   </details>;
 }
 export function DictionarySenses({
