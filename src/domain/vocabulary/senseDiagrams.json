@@ -5278,5 +5278,149 @@
     "definition": "In aviation, a rejected takeoff.",
     "pos": "noun",
     "kind": "reject-takeoff"
+  },
+  {
+    "entryId": "ve-31d2c0ca",
+    "senseId": "kaikki:6b19c3623aab701efc",
+    "term": "approve",
+    "definition": "To give official approval to something or accept it as satisfactory.",
+    "pos": "verb",
+    "kind": "approve-official"
+  },
+  {
+    "entryId": "ve-31d2c0ca",
+    "senseId": "kaikki:db2ef24725b9234e27",
+    "term": "approve",
+    "definition": "To regard something as good or satisfactory.",
+    "pos": "verb",
+    "kind": "approve-opinion"
+  },
+  {
+    "entryId": "ve-31d2c0ca",
+    "senseId": "kaikki:e36019a684053f1811",
+    "term": "approve",
+    "definition": "To regard someone or something favourably or consider them acceptable, followed by of.",
+    "pos": "verb",
+    "kind": "approve-of"
+  },
+  {
+    "entryId": "ve-dd7fedf7",
+    "senseId": "kaikki:9fce59c31045cca7cb",
+    "term": "confirm",
+    "definition": "To strengthen something or make someone more firm or resolute.",
+    "pos": "verb",
+    "kind": "confirm-strengthen"
+  },
+  {
+    "entryId": "ve-dd7fedf7",
+    "senseId": "kaikki:30727b402d39ff9b44",
+    "term": "confirm",
+    "definition": "To administer the Christian sacrament of confirmation to someone.",
+    "pos": "verb",
+    "kind": "confirm-rite"
+  },
+  {
+    "entryId": "ve-dd7fedf7",
+    "senseId": "kaikki:f80af005cda562e663",
+    "term": "confirm",
+    "definition": "To establish or give assurance that an earlier statement or arrangement is accurate.",
+    "pos": "verb",
+    "kind": "confirm-accuracy"
+  },
+  {
+    "entryId": "ve-dd7fedf7",
+    "senseId": "kaikki:8149799b32cb20cee4",
+    "term": "confirm",
+    "definition": "To give formal approval to a proposal or nomination.",
+    "pos": "verb",
+    "kind": "confirm-approval"
+  },
+  {
+    "entryId": "ve-dd7fedf7",
+    "senseId": "kaikki:68ffbe8bc2ffe1867d",
+    "term": "confirm",
+    "definition": "For sure or definitely, in Singlish or Manglish.",
+    "pos": "adv",
+    "kind": "confirm-certainty"
+  },
+  {
+    "entryId": "ve-2a4e1dfa",
+    "senseId": "kaikki:a748d99d3b8aa40565",
+    "term": "establish",
+    "definition": "To make someone or something stable, firm or securely settled.",
+    "pos": "verb",
+    "kind": "establish-rooted"
+  },
+  {
+    "entryId": "ve-2a4e1dfa",
+    "senseId": "kaikki:93afc87575f6dd2b97",
+    "term": "establish",
+    "definition": "To create or found an organisation, institution or business.",
+    "pos": "verb",
+    "kind": "establish-found"
+  },
+  {
+    "entryId": "ve-2a4e1dfa",
+    "senseId": "kaikki:83e5f58f46c7903e0b",
+    "term": "establish",
+    "definition": "To formally appoint officers or adopt laws, rules or guidelines.",
+    "pos": "verb",
+    "kind": "establish-adopt"
+  },
+  {
+    "entryId": "ve-2a4e1dfa",
+    "senseId": "kaikki:5f0b88f1d8d8fde58e",
+    "term": "establish",
+    "definition": "To demonstrate something and cause it to be accepted as true.",
+    "pos": "verb",
+    "kind": "establish-proof"
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:f8359114a1cd966f87",
+    "term": "prove",
+    "definition": "To demonstrate that something is true or viable, or provide proof supporting it.",
+    "pos": "verb",
+    "kind": "prove-premises"
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:4acfd0ce8c649a1892",
+    "term": "prove",
+    "definition": "To turn out or become apparent, often followed by to be.",
+    "pos": "verb",
+    "kind": "prove-outcome"
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:f7b3959d5582ba4c0b",
+    "term": "prove",
+    "definition": "To turn out to have a particular quality or be a particular kind of thing.",
+    "pos": "verb",
+    "kind": "prove-linking"
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:13e299b6edd936c10f",
+    "term": "prove",
+    "definition": "To test someone or something or put them to a trial.",
+    "pos": "verb",
+    "kind": "prove-testing"
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:ba3d78762167f5954a",
+    "term": "prove",
+    "definition": "To establish or verify the genuineness or validity of something.",
+    "pos": "verb",
+    "kind": "prove-will"
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:e8de0692d54df886e9",
+    "term": "prove",
+    "definition": "The process of allowing dough to rise in baking.",
+    "pos": "noun",
+    "kind": "prove-dough"
   }
 ]

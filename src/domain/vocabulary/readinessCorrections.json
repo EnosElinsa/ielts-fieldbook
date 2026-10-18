@@ -17577,11 +17577,17 @@
   {
     "entryId": "ve-dd7fedf7",
     "senseId": "kaikki:f80af005cda562e663",
-    "term": "confirm",
-    "example": "Please confirm your arrival time by email.",
-    "definition": "To establish or state that something is correct or certain.",
-    "pos": "verb",
-    "usage": "Selected the common verification sense rather than strengthening a belief.",
+    "definition": "To establish or give assurance that an earlier statement or arrangement is accurate.",
+    "example": "The hotel’s written reply lets us confirm that the booking is for 12 June.",
+    "collocations": [
+      "confirm a booking",
+      "confirm a date",
+      "confirm that something is correct"
+    ],
+    "distinctions": [
+      "Confirm checks an existing statement or arrangement; it does not mean create a new booking here."
+    ],
+    "usage": "Confirm + object or confirm that + clause. The context supplies the statement or arrangement being checked.",
     "originalSense": {
       "id": "kaikki:f80af005cda562e663",
       "definition": "To assure the accuracy of previous statements.",
@@ -17615,8 +17621,64 @@
         "preconfirm",
         "reconfirm",
         "unconfirm"
-      ]
-    }
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/confirm#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=confirm&oldid=93546052",
+    "distinctionTask": {
+      "prompt": "The written reply lets us confirm the booking date. We are _____.",
+      "options": [
+        "checking an existing arrangement",
+        "creating a new booking by the word alone"
+      ],
+      "answer": "checking an existing arrangement",
+      "explanation": "The reply supplies assurance about an existing booking date."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "previousSenses": [
+      {
+        "id": "kaikki:f80af005cda562e663",
+        "definition": "To establish or state that something is correct or certain.",
+        "example": "Please confirm your arrival time by email.",
+        "pos": "verb",
+        "synonyms": [
+          "corroborate",
+          "roborate"
+        ],
+        "antonyms": [
+          "infirm",
+          "disconfirm",
+          "deny",
+          "dispute",
+          "contradict",
+          "question"
+        ],
+        "collocations": [],
+        "usage": "Selected the common verification sense rather than strengthening a belief.",
+        "register": "",
+        "wordFamily": [
+          "autoconfirm",
+          "confirmable",
+          "confirmance",
+          "confirmative",
+          "confirmee",
+          "confirmingly",
+          "confirmshaming",
+          "deconfirm",
+          "misconfirm",
+          "preconfirm",
+          "reconfirm",
+          "unconfirm"
+        ]
+      }
+    ]
   },
   {
     "entryId": "ve-5a95c883",
@@ -223052,6 +223114,1677 @@
       "explanation": "The sentence explicitly identifies the discontinued takeoff."
     },
     "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-31d2c0ca",
+    "senseId": "kaikki:6b19c3623aab701efc",
+    "definition": "To give official approval to something or accept it as satisfactory.",
+    "example": "The panel will approve the revised budget if it meets the funding rules.",
+    "collocations": [
+      "approve a budget",
+      "approve a proposal",
+      "approve an application"
+    ],
+    "distinctions": [
+      "Formal approval does not mean that every member personally likes the proposal. The if-clause leaves approval conditional."
+    ],
+    "usage": "Transitive: approve + object. This sense concerns an authorised decision.",
+    "originalSense": {
+      "id": "kaikki:6b19c3623aab701efc",
+      "definition": "To officially sanction; to ratify; to confirm; to set as satisfactory.",
+      "example": "Although we may disagree with it, we must nevertheless approve the sentence handed down by the court-martial.",
+      "pos": "verb",
+      "synonyms": [
+        "agree with",
+        "approbate",
+        "approve",
+        "back",
+        "support",
+        "think much of"
+      ],
+      "antonyms": [
+        "contradict",
+        "disapprove",
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "approbation",
+        "approvable",
+        "approvably",
+        "approval",
+        "approved school",
+        "approvee",
+        "approvement",
+        "approver",
+        "disapprove",
+        "foreapprove",
+        "I approve this message",
+        "preapprove",
+        "reapprove",
+        "unapprove"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/approve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=approve&oldid=89514192",
+    "distinctionTask": {
+      "prompt": "Here, to approve the budget means to give it _____.",
+      "options": [
+        "formal acceptance",
+        "proof that every member personally likes it"
+      ],
+      "answer": "formal acceptance",
+      "explanation": "An official approval and each member’s private opinion are different matters."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-31d2c0ca",
+    "senseId": "kaikki:db2ef24725b9234e27",
+    "definition": "To regard something as good or satisfactory.",
+    "example": "Many residents approve the plan because it protects the park.",
+    "collocations": [
+      "approve a plan",
+      "approve a measure",
+      "approve a decision"
+    ],
+    "distinctions": [
+      "The sentence reports a favourable opinion; it does not say that the residents have enacted the plan."
+    ],
+    "usage": "Transitive expression of a favourable opinion. Approve of + object is a separate recorded construction.",
+    "originalSense": {
+      "id": "kaikki:db2ef24725b9234e27",
+      "definition": "To regard as good; to commend; to be pleased with; to think well of.",
+      "example": "We approve the measure of the administration, for it is an excellent decision.",
+      "pos": "verb",
+      "synonyms": [
+        "agree with",
+        "approbate",
+        "approve",
+        "back",
+        "support",
+        "think much of"
+      ],
+      "antonyms": [
+        "contradict",
+        "disapprove",
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "approbation",
+        "approvable",
+        "approvably",
+        "approval",
+        "approved school",
+        "approvee",
+        "approvement",
+        "approver",
+        "disapprove",
+        "foreapprove",
+        "I approve this message",
+        "preapprove",
+        "reapprove",
+        "unapprove"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/approve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=approve&oldid=89514192",
+    "distinctionTask": {
+      "prompt": "The residents approve the plan because it protects the park. The sentence reports _____.",
+      "options": [
+        "a favourable opinion",
+        "completed legal enactment of the plan"
+      ],
+      "answer": "a favourable opinion",
+      "explanation": "This use expresses what the residents think of the plan, without stating that they have enacted it."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-31d2c0ca",
+    "senseId": "kaikki:f2ef31865b5cfac1ad",
+    "definition": "To demonstrate or prove something through action or practical experience.",
+    "example": "In the older phrase “approve his valour”, approve means demonstrate courage in action, rather than grant permission for it.",
+    "collocations": [
+      "approve his valour",
+      "approve worth",
+      "approve it true"
+    ],
+    "distinctions": [
+      "The archaic verb concerns showing or proving. It is distinct from the ordinary modern verb for giving approval."
+    ],
+    "usage": "Archaic transitive sense. The source also illustrates time showing a lesson to be true.",
+    "originalSense": {
+      "id": "kaikki:f2ef31865b5cfac1ad",
+      "definition": "To make proof of; to demonstrate; to prove or show practically.",
+      "example": "He had long burned with impatience to approve his valour.",
+      "pos": "verb",
+      "synonyms": [
+        "agree with",
+        "approbate",
+        "approve",
+        "back",
+        "support",
+        "think much of"
+      ],
+      "antonyms": [
+        "contradict",
+        "disapprove",
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, transitive",
+      "wordFamily": [
+        "approbation",
+        "approvable",
+        "approvably",
+        "approval",
+        "approved school",
+        "approvee",
+        "approvement",
+        "approver",
+        "disapprove",
+        "foreapprove",
+        "I approve this message",
+        "preapprove",
+        "reapprove",
+        "unapprove"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/approve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=approve&oldid=89514192",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-31d2c0ca",
+    "senseId": "kaikki:e36019a684053f1811",
+    "definition": "To regard someone or something favourably or consider them acceptable, followed by of.",
+    "example": "Her parents approve of her choice to study abroad.",
+    "collocations": [
+      "approve of a choice",
+      "approve of someone",
+      "approve of doing something"
+    ],
+    "distinctions": [
+      "Favouring the choice does not necessarily amount to granting formal permission to travel."
+    ],
+    "usage": "Intransitive approve followed by of + noun phrase or -ing form. Do not drop of in this construction.",
+    "originalSense": {
+      "id": "kaikki:e36019a684053f1811",
+      "definition": "To consider worthy (to); to be pleased (with); to accept.",
+      "example": "Her mother never approves of any of her boyfriends. She thinks nobody is good enough for her little girl.",
+      "pos": "verb",
+      "synonyms": [
+        "cheer"
+      ],
+      "antonyms": [
+        "contradict",
+        "disapprove",
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "approbation",
+        "approvable",
+        "approvably",
+        "approval",
+        "approved school",
+        "approvee",
+        "approvement",
+        "approver",
+        "disapprove",
+        "foreapprove",
+        "I approve this message",
+        "preapprove",
+        "reapprove",
+        "unapprove"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/approve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=approve&oldid=89514192",
+    "distinctionTask": {
+      "prompt": "Her parents approve of her choice. They _____.",
+      "options": [
+        "regard the choice favourably",
+        "necessarily grant formal permission to travel"
+      ],
+      "answer": "regard the choice favourably",
+      "explanation": "Approve of expresses a favourable view; that alone does not establish an official permission."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-31d2c0ca",
+    "senseId": "kaikki:b46ab6a9cbbef89dc4",
+    "definition": "To show someone or something to be worthy, usually with a reflexive pronoun.",
+    "example": "In the older phrase “approve himself to God”, approve means show himself worthy or acceptable; it is not an official permission request.",
+    "collocations": [
+      "approve oneself",
+      "approve oneself to someone",
+      "approve oneself worthy"
+    ],
+    "distinctions": [
+      "The reflexive construction presents someone as showing worth. It does not describe a modern approval form."
+    ],
+    "usage": "Archaic transitive sense, usually with a reflexive pronoun. The religious wording belongs to the quoted context.",
+    "originalSense": {
+      "id": "kaikki:b46ab6a9cbbef89dc4",
+      "definition": "To show to be worthy; to demonstrate the merits of.",
+      "example": "The first care and concern must be to approve himself to God.",
+      "pos": "verb",
+      "synonyms": [
+        "agree with",
+        "approbate",
+        "approve",
+        "back",
+        "support",
+        "think much of"
+      ],
+      "antonyms": [
+        "contradict",
+        "disapprove",
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "archaic, usually",
+      "register": "archaic, transitive, usually",
+      "wordFamily": [
+        "approbation",
+        "approvable",
+        "approvably",
+        "approval",
+        "approved school",
+        "approvee",
+        "approvement",
+        "approver",
+        "disapprove",
+        "foreapprove",
+        "I approve this message",
+        "preapprove",
+        "reapprove",
+        "unapprove"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/approve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=approve&oldid=89514192",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-31d2c0ca",
+    "senseId": "kaikki:e424570100c1aaf3fd",
+    "definition": "To turn something to one's own profit, especially waste or common land appropriated by the lord of a manor in English law.",
+    "example": "In English land-law writing, approve can concern converting waste or common land to the lord of the manor’s profit. The term alone does not establish whether a particular enclosure was lawful.",
+    "collocations": [
+      "approve waste land",
+      "approve common land",
+      "approve the waste"
+    ],
+    "distinctions": [
+      "This technical profit-and-land sense is distinct from expressing agreement with a plan. Its legal consequences depend on the relevant facts and law."
+    ],
+    "usage": "English manorial land-law term from a separate etymology. The source labels the domain rather than declaring the meaning obsolete.",
+    "originalSense": {
+      "id": "kaikki:e424570100c1aaf3fd",
+      "definition": "To make profit of; to convert to one's own profit — said especially of waste or common land appropriated by the lord of the manor.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "agree with",
+        "approbate",
+        "approve",
+        "back",
+        "support",
+        "think much of"
+      ],
+      "antonyms": [
+        "contradict",
+        "disapprove",
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "English",
+      "register": "English, transitive",
+      "wordFamily": [
+        "approbation",
+        "approvable",
+        "approvably",
+        "approval",
+        "approved school",
+        "approvee",
+        "approvement",
+        "approver",
+        "disapprove",
+        "foreapprove",
+        "I approve this message",
+        "preapprove",
+        "reapprove",
+        "unapprove",
+        "praise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/approve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=approve&oldid=89514192",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-dd7fedf7",
+    "senseId": "kaikki:9fce59c31045cca7cb",
+    "definition": "To strengthen something or make someone more firm or resolute.",
+    "example": "Her encouragement helped confirm his resolve to finish the course.",
+    "collocations": [
+      "confirm a resolve",
+      "confirm someone in a belief",
+      "confirm a determination"
+    ],
+    "distinctions": [
+      "The encouragement strengthens his determination; the sentence does not report that he has finished the course."
+    ],
+    "usage": "A strengthening sense, distinct from checking whether a statement is accurate.",
+    "originalSense": {
+      "id": "kaikki:9fce59c31045cca7cb",
+      "definition": "To strengthen; to make firm or resolute.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "strengthen"
+      ],
+      "antonyms": [
+        "infirm",
+        "disconfirm",
+        "deny",
+        "dispute",
+        "contradict",
+        "question"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "autoconfirm",
+        "confirmable",
+        "confirmance",
+        "confirmative",
+        "confirmee",
+        "confirmingly",
+        "confirmshaming",
+        "deconfirm",
+        "misconfirm",
+        "preconfirm",
+        "reconfirm",
+        "unconfirm"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/confirm#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=confirm&oldid=93546052",
+    "distinctionTask": {
+      "prompt": "Encouragement helped confirm his resolve. It _____.",
+      "options": [
+        "strengthened his determination",
+        "established that the course was already complete"
+      ],
+      "answer": "strengthened his determination",
+      "explanation": "Resolve is determination; strengthening it does not report completed study."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-dd7fedf7",
+    "senseId": "kaikki:30727b402d39ff9b44",
+    "definition": "To administer the Christian sacrament of confirmation to someone.",
+    "example": "The bishop will confirm the candidates at Sunday’s service.",
+    "collocations": [
+      "confirm a candidate",
+      "be confirmed",
+      "confirmation service"
+    ],
+    "distinctions": [
+      "This is a religious rite, rather than a factual check of what the candidates have said. Will places the event in the future."
+    ],
+    "usage": "Christian sacramental sense. The responsible minister and practice vary by church.",
+    "originalSense": {
+      "id": "kaikki:30727b402d39ff9b44",
+      "definition": "To administer the sacrament of confirmation on (someone).",
+      "example": "She pulled through with the boy till he was confirmed; but then she told him that she could not feed him any longer; he would have to go out and earn his own bread.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "infirm",
+        "disconfirm",
+        "deny",
+        "dispute",
+        "contradict",
+        "question"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "autoconfirm",
+        "confirmable",
+        "confirmance",
+        "confirmative",
+        "confirmee",
+        "confirmingly",
+        "confirmshaming",
+        "deconfirm",
+        "misconfirm",
+        "preconfirm",
+        "reconfirm",
+        "unconfirm"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/confirm#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=confirm&oldid=93546052",
+    "distinctionTask": {
+      "prompt": "At the service, to confirm the candidates means to _____.",
+      "options": [
+        "administer a religious rite",
+        "check every factual claim they have made"
+      ],
+      "answer": "administer a religious rite",
+      "explanation": "The context selects the Christian sacramental sense."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-dd7fedf7",
+    "senseId": "kaikki:8149799b32cb20cee4",
+    "definition": "To give formal approval to a proposal or nomination.",
+    "example": "The board must confirm the nomination before the appointment becomes final.",
+    "collocations": [
+      "confirm a nomination",
+      "confirm an appointment",
+      "confirm a proposal"
+    ],
+    "distinctions": [
+      "Confirmation is required before final appointment in this example. The sentence does not say it has already happened."
+    ],
+    "usage": "Transitive formal-approval sense. A nomination and its confirmation are distinct stages.",
+    "originalSense": {
+      "id": "kaikki:8149799b32cb20cee4",
+      "definition": "To approve a proposal or nomination.",
+      "example": "The Senate must confirm federal court appointments.",
+      "pos": "verb",
+      "synonyms": [
+        "roborate"
+      ],
+      "antonyms": [
+        "infirm",
+        "disconfirm",
+        "deny",
+        "dispute",
+        "contradict",
+        "question"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "autoconfirm",
+        "confirmable",
+        "confirmance",
+        "confirmative",
+        "confirmee",
+        "confirmingly",
+        "confirmshaming",
+        "deconfirm",
+        "misconfirm",
+        "preconfirm",
+        "reconfirm",
+        "unconfirm"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/confirm#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=confirm&oldid=93546052",
+    "distinctionTask": {
+      "prompt": "The board must confirm the nomination before appointment. The required approval is _____.",
+      "options": [
+        "required, with completion not reported",
+        "reported as already complete"
+      ],
+      "answer": "required, with completion not reported",
+      "explanation": "Must identifies a requirement; the sentence does not report that confirmation has occurred."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-dd7fedf7",
+    "senseId": "kaikki:68ffbe8bc2ffe1867d",
+    "definition": "For sure or definitely, in Singlish or Manglish.",
+    "example": "This is confirm not my handwriting.",
+    "collocations": [
+      "confirm not",
+      "confirm plus chop",
+      "confirm + statement"
+    ],
+    "distinctions": [
+      "Confirm adds certainty to the speaker’s denial in this regional use; it does not make the denial independently verified."
+    ],
+    "usage": "Singlish and Manglish adverb. This use is not the ordinary verb meaning check or formally approve.",
+    "originalSense": {
+      "id": "kaikki:68ffbe8bc2ffe1867d",
+      "definition": "For sure, definitely.",
+      "example": "This is confirm not my handwriting.",
+      "pos": "adv",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Manglish, Singlish, not-comparable",
+      "register": "Manglish, Singlish, not-comparable",
+      "wordFamily": [
+        "autoconfirm",
+        "confirmable",
+        "confirmance",
+        "confirmative",
+        "confirmee",
+        "confirmingly",
+        "confirmshaming",
+        "deconfirm",
+        "misconfirm",
+        "preconfirm",
+        "reconfirm",
+        "unconfirm"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/confirm#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=confirm&oldid=93546052",
+    "distinctionTask": {
+      "prompt": "In the Singlish or Manglish sentence “This is confirm not my handwriting”, confirm means _____.",
+      "options": [
+        "definitely",
+        "a request to verify the handwriting"
+      ],
+      "answer": "definitely",
+      "explanation": "The regional adverb strengthens the denial; it does not ask the listener to confirm it."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-2a4e1dfa",
+    "senseId": "kaikki:a748d99d3b8aa40565",
+    "definition": "To make someone or something stable, firm or securely settled.",
+    "example": "Careful watering can help establish young plants in their new soil.",
+    "collocations": [
+      "establish young plants",
+      "establish a firm position",
+      "be firmly established"
+    ],
+    "distinctions": [
+      "In this gardening example, establish concerns helping the plants settle and become securely rooted; it does not report guaranteed survival."
+    ],
+    "usage": "Transitive settling or strengthening sense, distinct from founding an organisation.",
+    "originalSense": {
+      "id": "kaikki:a748d99d3b8aa40565",
+      "definition": "To make stable or firm; to confirm.",
+      "example": "Once it [a snowdrop variety] became established, some bulbs were lifted and passed on to be chipped (i.e. cut into small pieces and grown on).",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "disestablish",
+        "establishable",
+        "established church",
+        "establisher",
+        "establishing shot",
+        "establishment",
+        "long-established",
+        "preestablish",
+        "reestablish",
+        "re-establish",
+        "unestablish"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/establish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=establish&oldid=91738518",
+    "distinctionTask": {
+      "prompt": "Careful watering can help establish young plants. In this example, establish concerns _____.",
+      "options": [
+        "helping them settle securely",
+        "declaring their survival guaranteed"
+      ],
+      "answer": "helping them settle securely",
+      "explanation": "The gardening sense concerns successful settling; can help does not guarantee the outcome."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-2a4e1dfa",
+    "senseId": "kaikki:93afc87575f6dd2b97",
+    "definition": "To create or found an organisation, institution or business.",
+    "example": "They plan to establish a community library next year.",
+    "collocations": [
+      "establish a library",
+      "establish a business",
+      "establish an organisation"
+    ],
+    "distinctions": [
+      "A plan to found a library does not report that the library is already open."
+    ],
+    "usage": "Transitive founding sense. Establish is followed directly by the thing to be created.",
+    "originalSense": {
+      "id": "kaikki:93afc87575f6dd2b97",
+      "definition": "To form; to found; to institute; to set up in business.",
+      "example": "But with thee will I establish my covenant; and thou shalt come into the ark, thou, and thy sons, and thy wife, and thy sons' wives with thee.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "disestablish",
+        "establishable",
+        "established church",
+        "establisher",
+        "establishing shot",
+        "establishment",
+        "long-established",
+        "preestablish",
+        "reestablish",
+        "re-establish",
+        "unestablish"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/establish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=establish&oldid=91738518",
+    "distinctionTask": {
+      "prompt": "They plan to establish a library next year. The sentence says that the library _____.",
+      "options": [
+        "is planned to be founded",
+        "is already open to readers"
+      ],
+      "answer": "is planned to be founded",
+      "explanation": "Plan to plus a future date describes an intention, not completed opening."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-2a4e1dfa",
+    "senseId": "kaikki:83e5f58f46c7903e0b",
+    "definition": "To formally appoint officers or adopt laws, rules or guidelines.",
+    "example": "The university will establish new safety rules for its laboratories.",
+    "collocations": [
+      "establish rules",
+      "establish guidelines",
+      "establish someone in office"
+    ],
+    "distinctions": [
+      "Here establish concerns adopting rules, rather than constructing a building or demonstrating that every rule is effective."
+    ],
+    "usage": "The object determines the construction: establish rules concerns adoption; establish someone in office can concern appointment.",
+    "originalSense": {
+      "id": "kaikki:83e5f58f46c7903e0b",
+      "definition": "To appoint or adopt, as officers, laws, regulations, guidelines, etc.; to enact; to ordain.",
+      "example": "By some paradoxical evolution rancour and intolerance have been established in the vanguard of primitive Christianity. Mrs. Spoker, in common with many of the stricter disciples of righteousness, was as inclement in demeanour as she was cadaverous in aspect.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "disestablish",
+        "establishable",
+        "established church",
+        "establisher",
+        "establishing shot",
+        "establishment",
+        "long-established",
+        "preestablish",
+        "reestablish",
+        "re-establish",
+        "unestablish"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/establish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=establish&oldid=91738518",
+    "distinctionTask": {
+      "prompt": "The university will establish safety rules. Establish here means _____.",
+      "options": [
+        "adopt or enact the rules",
+        "prove that every rule is already effective"
+      ],
+      "answer": "adopt or enact the rules",
+      "explanation": "Formal adoption and demonstrated effectiveness are different matters."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-2a4e1dfa",
+    "senseId": "kaikki:5f0b88f1d8d8fde58e",
+    "definition": "To demonstrate something and cause it to be accepted as true.",
+    "example": "For real x with 2x = 10, we can establish that x = 5 by dividing both sides by 2.",
+    "collocations": [
+      "establish a fact",
+      "establish that",
+      "establish the truth of a claim"
+    ],
+    "distinctions": [
+      "Establish and prove can overlap in this argument. The conclusion follows from the given equation and a valid operation, rather than confidence alone."
+    ],
+    "usage": "Transitive evidential sense; establish that introduces the conclusion. The example explicitly states its mathematical premise.",
+    "originalSense": {
+      "id": "kaikki:5f0b88f1d8d8fde58e",
+      "definition": "To prove and cause to be accepted as true; to demonstrate.",
+      "example": "to establish a fact",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "disestablish",
+        "establishable",
+        "established church",
+        "establisher",
+        "establishing shot",
+        "establishment",
+        "long-established",
+        "preestablish",
+        "reestablish",
+        "re-establish",
+        "unestablish"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/establish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=establish&oldid=91738518",
+    "distinctionTask": {
+      "prompt": "Given real x and 2x = 10, the step establishing x = 5 is _____.",
+      "options": [
+        "dividing both sides by 2",
+        "dividing only the right-hand side by 2"
+      ],
+      "answer": "dividing both sides by 2",
+      "explanation": "Applying the same division to both sides preserves equality: 2x/2 = 10/2."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:f8359114a1cd966f87",
+    "definition": "To demonstrate that something is true or viable, or provide proof supporting it.",
+    "example": "Let k be an integer and n = 2k. These premises prove that n is even.",
+    "collocations": [
+      "prove a claim",
+      "prove that",
+      "prove something viable"
+    ],
+    "distinctions": [
+      "The integer condition on k matters. An expression n = 2k with no restriction on k would not by itself establish that n is an even integer."
+    ],
+    "usage": "Transitive evidential sense. The ordinary past is proved; proved and proven are both accepted past participles, with usage varying by construction and variety.",
+    "originalSense": {
+      "id": "kaikki:f8359114a1cd966f87",
+      "definition": "To demonstrate that something is true or viable; to give proof for; to bear out; to testify.",
+      "example": "[VV]e are able with playne demonſtration to proue, and vvith reaſon to perſvvade that in tymes paſt our fayth vvas alike, that then vve preached thinges correſpondent vnto the forme of faith already published of vs, ſo that none in this behalfe can repyne or gaynesay vs.",
+      "pos": "verb",
+      "synonyms": [
+        "substantiate"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "counterprove",
+        "disprovability",
+        "disprovable",
+        "disprovably",
+        "disprove",
+        "disproved",
+        "disproven",
+        "exception that proves the rule",
+        "fend and prove",
+        "misprove",
+        "overprove",
+        "provability",
+        "provable",
+        "provably",
+        "prove oneself",
+        "prove out",
+        "prover",
+        "proving ground",
+        "reprove",
+        "unprovability",
+        "unprovable",
+        "unprovably",
+        "unprove",
+        "unproved",
+        "unproven",
+        "unproving",
+        "until proven otherwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=prove&oldid=93557915",
+    "distinctionTask": {
+      "prompt": "The representation n = 2k proves that n is even when _____.",
+      "options": [
+        "k is an integer",
+        "k may be any real number without restriction"
+      ],
+      "answer": "k is an integer",
+      "explanation": "Even integers have the form 2k for integer k. For unrestricted real k, n need not be an even integer."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:4acfd0ce8c649a1892",
+    "definition": "To turn out or become apparent, often followed by to be.",
+    "example": "The repair may prove to be only temporary.",
+    "collocations": [
+      "prove to be temporary",
+      "prove to be the cause",
+      "prove to be useful"
+    ],
+    "distinctions": [
+      "May leaves the eventual outcome open. This sentence does not report an already demonstrated permanent result."
+    ],
+    "usage": "Prove to be + complement describes an outcome becoming apparent, rather than a person proving a proposition.",
+    "originalSense": {
+      "id": "kaikki:4acfd0ce8c649a1892",
+      "definition": "To turn out; to manifest.",
+      "example": "It proved to be a cold day.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "counterprove",
+        "disprovability",
+        "disprovable",
+        "disprovably",
+        "disprove",
+        "disproved",
+        "disproven",
+        "exception that proves the rule",
+        "fend and prove",
+        "misprove",
+        "overprove",
+        "provability",
+        "provable",
+        "provably",
+        "prove oneself",
+        "prove out",
+        "prover",
+        "proving ground",
+        "reprove",
+        "unprovability",
+        "unprovable",
+        "unprovably",
+        "unprove",
+        "unproved",
+        "unproven",
+        "unproving",
+        "until proven otherwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=prove&oldid=93557915",
+    "distinctionTask": {
+      "prompt": "The repair may prove to be temporary. A temporary result is _____.",
+      "options": [
+        "a possibility that may become apparent",
+        "a result reported as already certain"
+      ],
+      "answer": "a possibility that may become apparent",
+      "explanation": "May prove to be describes a possible eventual outcome."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:f7b3959d5582ba4c0b",
+    "definition": "To turn out to have a particular quality or be a particular kind of thing.",
+    "example": "Some estimates may prove inaccurate.",
+    "collocations": [
+      "prove inaccurate",
+      "prove useful",
+      "prove a success"
+    ],
+    "distinctions": [
+      "Inaccurate describes the possible outcome for the estimates. It is not a direct object that someone has proved."
+    ],
+    "usage": "Linking verb followed directly by an adjective or noun complement. The to be construction is recorded separately.",
+    "originalSense": {
+      "id": "kaikki:f7b3959d5582ba4c0b",
+      "definition": "To turn out to be.",
+      "example": "Have an exit strategy should your calculations prove incorrect.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "copulative",
+      "register": "copulative",
+      "wordFamily": [
+        "counterprove",
+        "disprovability",
+        "disprovable",
+        "disprovably",
+        "disprove",
+        "disproved",
+        "disproven",
+        "exception that proves the rule",
+        "fend and prove",
+        "misprove",
+        "overprove",
+        "provability",
+        "provable",
+        "provably",
+        "prove oneself",
+        "prove out",
+        "prover",
+        "proving ground",
+        "reprove",
+        "unprovability",
+        "unprovable",
+        "unprovably",
+        "unprove",
+        "unproved",
+        "unproven",
+        "unproving",
+        "until proven otherwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=prove&oldid=93557915",
+    "distinctionTask": {
+      "prompt": "In “Some estimates may prove inaccurate”, inaccurate is _____.",
+      "options": [
+        "a complement describing the estimates",
+        "a direct object being tested as a document"
+      ],
+      "answer": "a complement describing the estimates",
+      "explanation": "Prove is a linking verb here; inaccurate describes what the estimates may turn out to be."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:13e299b6edd936c10f",
+    "definition": "To test someone or something or put them to a trial.",
+    "example": "Engineers must prove the prototype under realistic conditions.",
+    "collocations": [
+      "prove a prototype",
+      "prove equipment",
+      "put something to the test"
+    ],
+    "distinctions": [
+      "A trial tests performance; requiring a test does not assume that the prototype will pass it."
+    ],
+    "usage": "Transitive testing sense. This example concerns a trial under stated conditions, not an already established successful result.",
+    "originalSense": {
+      "id": "kaikki:13e299b6edd936c10f",
+      "definition": "To put to the test, to make trial of.",
+      "example": "They took the experimental car to the proving-grounds.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "counterprove",
+        "disprovability",
+        "disprovable",
+        "disprovably",
+        "disprove",
+        "disproved",
+        "disproven",
+        "exception that proves the rule",
+        "fend and prove",
+        "misprove",
+        "overprove",
+        "provability",
+        "provable",
+        "provably",
+        "prove oneself",
+        "prove out",
+        "prover",
+        "proving ground",
+        "reprove",
+        "unprovability",
+        "unprovable",
+        "unprovably",
+        "unprove",
+        "unproved",
+        "unproven",
+        "unproving",
+        "until proven otherwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=prove&oldid=93557915",
+    "distinctionTask": {
+      "prompt": "Engineers must prove the prototype under realistic conditions. They must _____.",
+      "options": [
+        "put it to a test",
+        "assume without a trial that it will succeed"
+      ],
+      "answer": "put it to a test",
+      "explanation": "This sense of prove means test, and the requirement does not establish a successful outcome."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:ba3d78762167f5954a",
+    "definition": "To establish or verify the genuineness or validity of something.",
+    "example": "The executor will prove the will in court.",
+    "collocations": [
+      "prove a will",
+      "prove validity",
+      "prove a document genuine"
+    ],
+    "distinctions": [
+      "Here the task is establishing the will’s legal validity. It does not report that all estate distributions have been completed."
+    ],
+    "usage": "Transitive verification sense, illustrated by a legal will. The required legal process depends on the jurisdiction.",
+    "originalSense": {
+      "id": "kaikki:ba3d78762167f5954a",
+      "definition": "To ascertain or establish the genuineness or validity of; to verify.",
+      "example": "to prove a will",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "counterprove",
+        "disprovability",
+        "disprovable",
+        "disprovably",
+        "disprove",
+        "disproved",
+        "disproven",
+        "exception that proves the rule",
+        "fend and prove",
+        "misprove",
+        "overprove",
+        "provability",
+        "provable",
+        "provably",
+        "prove oneself",
+        "prove out",
+        "prover",
+        "proving ground",
+        "reprove",
+        "unprovability",
+        "unprovable",
+        "unprovably",
+        "unprove",
+        "unproved",
+        "unproven",
+        "unproving",
+        "until proven otherwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=prove&oldid=93557915",
+    "distinctionTask": {
+      "prompt": "To prove the will in this legal context is to _____.",
+      "options": [
+        "establish its legal validity",
+        "complete every estate distribution"
+      ],
+      "answer": "establish its legal validity",
+      "explanation": "Verifying the will’s validity is distinct from completing all later administration."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:78c3d59fd6e8f2d84a",
+    "definition": "To experience something.",
+    "example": "In the older line “great woes did prove”, prove means experience suffering, rather than demonstrate that the suffering existed.",
+    "collocations": [
+      "prove woes",
+      "great woes did prove"
+    ],
+    "distinctions": [
+      "The object names what is experienced. The archaic meaning is distinct from giving evidence for a claim."
+    ],
+    "usage": "Archaic transitive experience sense. The quoted word order belongs to the literary passage.",
+    "originalSense": {
+      "id": "kaikki:78c3d59fd6e8f2d84a",
+      "definition": "To experience.",
+      "example": "Where she, captived long, great woes did prove.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, transitive",
+      "wordFamily": [
+        "counterprove",
+        "disprovability",
+        "disprovable",
+        "disprovably",
+        "disprove",
+        "disproved",
+        "disproven",
+        "exception that proves the rule",
+        "fend and prove",
+        "misprove",
+        "overprove",
+        "provability",
+        "provable",
+        "provably",
+        "prove oneself",
+        "prove out",
+        "prover",
+        "proving ground",
+        "reprove",
+        "unprovability",
+        "unprovable",
+        "unprovably",
+        "unprove",
+        "unproved",
+        "unproven",
+        "unproving",
+        "until proven otherwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=prove&oldid=93557915",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:efb30e44deae9799d2",
+    "definition": "To take a trial printed impression or proof of something.",
+    "example": "In the dated printing phrase “prove a page”, prove means take a trial impression of the page, rather than establish that its claims are true.",
+    "collocations": [
+      "prove a page",
+      "take a trial impression",
+      "take a proof"
+    ],
+    "distinctions": [
+      "A printed proof is a trial impression for checking the page. Taking it does not certify the truth of everything printed."
+    ],
+    "usage": "Dated printing sense. Dated does not by itself mean obsolete.",
+    "originalSense": {
+      "id": "kaikki:efb30e44deae9799d2",
+      "definition": "To take a trial impression of; to take a proof of.",
+      "example": "to prove a page",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "dated",
+      "register": "dated, transitive",
+      "wordFamily": [
+        "counterprove",
+        "disprovability",
+        "disprovable",
+        "disprovably",
+        "disprove",
+        "disproved",
+        "disproven",
+        "exception that proves the rule",
+        "fend and prove",
+        "misprove",
+        "overprove",
+        "provability",
+        "provable",
+        "provably",
+        "prove oneself",
+        "prove out",
+        "prover",
+        "proving ground",
+        "reprove",
+        "unprovability",
+        "unprovable",
+        "unprovably",
+        "unprove",
+        "unproved",
+        "unproven",
+        "unproving",
+        "until proven otherwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=prove&oldid=93557915",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:c9a8e2d07d14332c74",
+    "definition": "An alternative form of proof in dough-rising, yeast-activity testing and specialist firearm-testing uses.",
+    "example": "As a variant of proof, prove can refer to allowing dough to rise, testing whether yeast is active, or specialist pressure testing of a firearm; the intended sense depends on context.",
+    "collocations": [
+      "prove dough",
+      "prove yeast",
+      "prove a firearm"
+    ],
+    "distinctions": [
+      "Dough rising, a yeast-activity check and a firearm test are different contexts. This one variant record includes all three uses."
+    ],
+    "usage": "Alternative form with these three recorded uses. Read the surrounding noun phrase before deciding the meaning.",
+    "originalSense": {
+      "id": "kaikki:c9a8e2d07d14332c74",
+      "definition": "Alternative form of proof (“allow (dough) to rise; test the activeness of (yeast); pressure-test (a firearm)”).",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "alt-of, alternative",
+      "register": "alt-of, alternative",
+      "wordFamily": [
+        "counterprove",
+        "disprovability",
+        "disprovable",
+        "disprovably",
+        "disprove",
+        "disproved",
+        "disproven",
+        "exception that proves the rule",
+        "fend and prove",
+        "misprove",
+        "overprove",
+        "provability",
+        "provable",
+        "provably",
+        "prove oneself",
+        "prove out",
+        "prover",
+        "proving ground",
+        "reprove",
+        "unprovability",
+        "unprovable",
+        "unprovably",
+        "unprove",
+        "unproved",
+        "unproven",
+        "unproving",
+        "until proven otherwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=prove&oldid=93557915",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:f692bd46214a40bc00",
+    "definition": "In homeopathy, to test a substance with the aim of identifying effects attributed to ingesting it.",
+    "example": "In homeopathic terminology, to prove a substance is to investigate effects attributed to taking it; the term names the practice and does not establish clinical effectiveness.",
+    "collocations": [
+      "prove a substance",
+      "a homeopathic proving",
+      "effects reported in a proving"
+    ],
+    "distinctions": [
+      "An attributed effect is not independently established merely because the process is called a proving."
+    ],
+    "usage": "Homeopathy term describing the aims of that practice; it is not a statement that the method or a treatment is clinically effective.",
+    "originalSense": {
+      "id": "kaikki:f692bd46214a40bc00",
+      "definition": "To determine by experiment which effects a substance causes when ingested.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "counterprove",
+        "disprovability",
+        "disprovable",
+        "disprovably",
+        "disprove",
+        "disproved",
+        "disproven",
+        "exception that proves the rule",
+        "fend and prove",
+        "misprove",
+        "overprove",
+        "provability",
+        "provable",
+        "provably",
+        "prove oneself",
+        "prove out",
+        "prover",
+        "proving ground",
+        "reprove",
+        "unprovability",
+        "unprovable",
+        "unprovably",
+        "unprove",
+        "unproved",
+        "unproven",
+        "unproving",
+        "until proven otherwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=prove&oldid=93557915",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:e8de0692d54df886e9",
+    "definition": "The process of allowing dough to rise in baking.",
+    "example": "The yeast dough needs a second prove before baking.",
+    "collocations": [
+      "a second prove",
+      "a final prove",
+      "the prove of the dough"
+    ],
+    "distinctions": [
+      "The noun names a dough-rising stage, rather than the later baking stage. Rising alone does not sterilise the dough."
+    ],
+    "usage": "Baking noun. The example concerns yeast dough and a stage it still needs before baking.",
+    "originalSense": {
+      "id": "kaikki:e8de0692d54df886e9",
+      "definition": "The process of dough proofing.",
+      "example": "You may also need to think about what the prove is doing to the loaf of bread — it is warming the dough and making it moist, allowing it to rise […]",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "counterprove",
+        "disprovability",
+        "disprovable",
+        "disprovably",
+        "disprove",
+        "disproved",
+        "disproven",
+        "exception that proves the rule",
+        "fend and prove",
+        "misprove",
+        "overprove",
+        "provability",
+        "provable",
+        "provably",
+        "prove oneself",
+        "prove out",
+        "prover",
+        "proving ground",
+        "reprove",
+        "unprovability",
+        "unprovable",
+        "unprovably",
+        "unprove",
+        "unproved",
+        "unproven",
+        "unproving",
+        "until proven otherwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=prove&oldid=93557915",
+    "distinctionTask": {
+      "prompt": "A second prove before baking names _____.",
+      "options": [
+        "another dough-rising stage",
+        "a guarantee that the dough has been sterilised"
+      ],
+      "answer": "another dough-rising stage",
+      "explanation": "Prove is the baking noun for a rising stage, not a sterilisation result."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "senseId": "kaikki:681184e519c4f0c3e3",
+    "definition": "A source-listed simple-past form of proove, a historical spelling of prove.",
+    "example": "The separate historical form prove is listed as a past tense of proove and pronounced /pɹəʊv/ in the source; it is distinct from the ordinary modern base verb /pɹuːv/.",
+    "collocations": [
+      "prove as a past form",
+      "the past of proove",
+      "historical proove → prove"
+    ],
+    "distinctions": [
+      "The linked proove record includes an obsolete spelling and a separate misspelling record. Neither makes the ordinary modern word prove a spelling error."
+    ],
+    "usage": "Historical inflection with source RP /pɹəʊv/. Standard present-day prove has past proved and past participles proved or proven. This record keeps its separate historical identity.",
+    "originalSense": {
+      "id": "kaikki:681184e519c4f0c3e3",
+      "definition": "simple past of proove",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "form-of, past",
+      "register": "form-of, past",
+      "wordFamily": [
+        "counterprove",
+        "disprovability",
+        "disprovable",
+        "disprovably",
+        "disprove",
+        "disproved",
+        "disproven",
+        "exception that proves the rule",
+        "fend and prove",
+        "misprove",
+        "overprove",
+        "provability",
+        "provable",
+        "provably",
+        "prove oneself",
+        "prove out",
+        "prover",
+        "proving ground",
+        "reprove",
+        "unprovability",
+        "unprovable",
+        "unprovably",
+        "unprove",
+        "unproved",
+        "unproven",
+        "unproving",
+        "until proven otherwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=prove&oldid=93557915",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
     "synonyms": [],
     "antonyms": [],
     "wordFamily": [],

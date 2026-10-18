@@ -1729,27 +1729,6 @@
   },
   {
     "entryId": "ve-dd7fedf7",
-    "sense": {
-      "id": "kaikki:f80af005cda562e663",
-      "definition": "To establish or state that something is correct or certain.",
-      "example": "Please confirm your arrival time by email.",
-      "pos": "verb",
-      "synonyms": [],
-      "antonyms": [],
-      "collocations": [],
-      "usage": "",
-      "register": "",
-      "wordFamily": [],
-      "source": "English Wiktionary via Kaikki.org",
-      "attribution": "English Wiktionary contributors",
-      "sourceUrl": "https://en.wiktionary.org/wiki/confirm#English",
-      "license": "CC-BY-SA-4.0",
-      "editorial": {
-        "source": "Fieldbook core content review",
-        "license": "CC-BY-4.0",
-        "attribution": "Fieldbook editorial contributors"
-      }
-    },
     "originalSense": {
       "id": "kaikki:f80af005cda562e663",
       "definition": "To assure the accuracy of previous statements.",
@@ -1789,43 +1768,42 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/confirm#English",
       "license": "CC-BY-SA-4.0"
     },
-    "previousDefault": {
-      "id": "kaikki:9fce59c31045cca7cb",
-      "definition": "To strengthen; to make firm or resolute.",
-      "example": "",
+    "sense": {
+      "id": "kaikki:f80af005cda562e663",
+      "definition": "To establish or give assurance that an earlier statement or arrangement is accurate.",
+      "example": "The hotel’s written reply lets us confirm that the booking is for 12 June.",
       "pos": "verb",
-      "synonyms": [
-        "strengthen"
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "confirm a booking",
+        "confirm a date",
+        "confirm that something is correct"
       ],
-      "antonyms": [
-        "infirm",
-        "disconfirm",
-        "deny",
-        "dispute",
-        "contradict",
-        "question"
-      ],
-      "collocations": [],
-      "usage": "",
+      "usage": "Confirm + object or confirm that + clause. The context supplies the statement or arrangement being checked.",
       "register": "",
-      "wordFamily": [
-        "autoconfirm",
-        "confirmable",
-        "confirmance",
-        "confirmative",
-        "confirmee",
-        "confirmingly",
-        "confirmshaming",
-        "deconfirm",
-        "misconfirm",
-        "preconfirm",
-        "reconfirm",
-        "unconfirm"
-      ],
+      "wordFamily": [],
       "source": "English Wiktionary via Kaikki.org",
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/confirm#English",
-      "license": "CC-BY-SA-4.0"
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Confirm checks an existing statement or arrangement; it does not mean create a new booking here."
+      ],
+      "distinctionTask": {
+        "prompt": "The written reply lets us confirm the booking date. We are _____.",
+        "options": [
+          "checking an existing arrangement",
+          "creating a new booking by the word alone"
+        ],
+        "answer": "checking an existing arrangement",
+        "explanation": "The reply supplies assurance about an existing booking date."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
     }
   },
   {
@@ -23986,6 +23964,242 @@
         ],
         "answer": "refuse to accept that proposal",
         "explanation": "The refusal has a stated reason without a universal judgment of value."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-31d2c0ca",
+    "originalSense": {
+      "id": "kaikki:6b19c3623aab701efc",
+      "definition": "To officially sanction; to ratify; to confirm; to set as satisfactory.",
+      "example": "Although we may disagree with it, we must nevertheless approve the sentence handed down by the court-martial.",
+      "pos": "verb",
+      "synonyms": [
+        "agree with",
+        "approbate",
+        "approve",
+        "back",
+        "support",
+        "think much of"
+      ],
+      "antonyms": [
+        "contradict",
+        "disapprove",
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "approbation",
+        "approvable",
+        "approvably",
+        "approval",
+        "approved school",
+        "approvee",
+        "approvement",
+        "approver",
+        "disapprove",
+        "foreapprove",
+        "I approve this message",
+        "preapprove",
+        "reapprove",
+        "unapprove"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/approve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:6b19c3623aab701efc",
+      "definition": "To give official approval to something or accept it as satisfactory.",
+      "example": "The panel will approve the revised budget if it meets the funding rules.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "approve a budget",
+        "approve a proposal",
+        "approve an application"
+      ],
+      "usage": "Transitive: approve + object. This sense concerns an authorised decision.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/approve#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Formal approval does not mean that every member personally likes the proposal. The if-clause leaves approval conditional."
+      ],
+      "distinctionTask": {
+        "prompt": "Here, to approve the budget means to give it _____.",
+        "options": [
+          "formal acceptance",
+          "proof that every member personally likes it"
+        ],
+        "answer": "formal acceptance",
+        "explanation": "An official approval and each member’s private opinion are different matters."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-2a4e1dfa",
+    "originalSense": {
+      "id": "kaikki:93afc87575f6dd2b97",
+      "definition": "To form; to found; to institute; to set up in business.",
+      "example": "But with thee will I establish my covenant; and thou shalt come into the ark, thou, and thy sons, and thy wife, and thy sons' wives with thee.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "disestablish",
+        "establishable",
+        "established church",
+        "establisher",
+        "establishing shot",
+        "establishment",
+        "long-established",
+        "preestablish",
+        "reestablish",
+        "re-establish",
+        "unestablish"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/establish#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:93afc87575f6dd2b97",
+      "definition": "To create or found an organisation, institution or business.",
+      "example": "They plan to establish a community library next year.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "establish a library",
+        "establish a business",
+        "establish an organisation"
+      ],
+      "usage": "Transitive founding sense. Establish is followed directly by the thing to be created.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/establish#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A plan to found a library does not report that the library is already open."
+      ],
+      "distinctionTask": {
+        "prompt": "They plan to establish a library next year. The sentence says that the library _____.",
+        "options": [
+          "is planned to be founded",
+          "is already open to readers"
+        ],
+        "answer": "is planned to be founded",
+        "explanation": "Plan to plus a future date describes an intention, not completed opening."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-b25c1db",
+    "originalSense": {
+      "id": "kaikki:f8359114a1cd966f87",
+      "definition": "To demonstrate that something is true or viable; to give proof for; to bear out; to testify.",
+      "example": "[VV]e are able with playne demonſtration to proue, and vvith reaſon to perſvvade that in tymes paſt our fayth vvas alike, that then vve preached thinges correſpondent vnto the forme of faith already published of vs, ſo that none in this behalfe can repyne or gaynesay vs.",
+      "pos": "verb",
+      "synonyms": [
+        "substantiate"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "counterprove",
+        "disprovability",
+        "disprovable",
+        "disprovably",
+        "disprove",
+        "disproved",
+        "disproven",
+        "exception that proves the rule",
+        "fend and prove",
+        "misprove",
+        "overprove",
+        "provability",
+        "provable",
+        "provably",
+        "prove oneself",
+        "prove out",
+        "prover",
+        "proving ground",
+        "reprove",
+        "unprovability",
+        "unprovable",
+        "unprovably",
+        "unprove",
+        "unproved",
+        "unproven",
+        "unproving",
+        "until proven otherwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:f8359114a1cd966f87",
+      "definition": "To demonstrate that something is true or viable, or provide proof supporting it.",
+      "example": "Let k be an integer and n = 2k. These premises prove that n is even.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "prove a claim",
+        "prove that",
+        "prove something viable"
+      ],
+      "usage": "Transitive evidential sense. The ordinary past is proved; proved and proven are both accepted past participles, with usage varying by construction and variety.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prove#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The integer condition on k matters. An expression n = 2k with no restriction on k would not by itself establish that n is an even integer."
+      ],
+      "distinctionTask": {
+        "prompt": "The representation n = 2k proves that n is even when _____.",
+        "options": [
+          "k is an integer",
+          "k may be any real number without restriction"
+        ],
+        "answer": "k is an integer",
+        "explanation": "Even integers have the form 2k for integer k. For unrestricted real k, n need not be an even integer."
       },
       "editorial": {
         "source": "Fieldbook core content review",

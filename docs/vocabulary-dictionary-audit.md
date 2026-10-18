@@ -2,9 +2,9 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 624 restored source meanings** (51,978 total). This ledger verifies **2895 records** across definition, examples or reading explanations, collocations and distinctions; **49,083 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1072 reviewed distinction exercises and 660 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 859 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 624 restored source meanings** (51,978 total). This ledger verifies **2921 records** across definition, examples or reading explanations, collocations and distinctions; **49,057 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1090 reviewed distinction exercises and 678 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 867 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
-Authored learning-priority metadata classifies 376 general, 126 specialist, 121 historical and 17 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
+Authored learning-priority metadata classifies 390 general, 133 specialist, 125 historical and 17 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
 
 | Term | Reviewed records | Raw + restored records | Pending |
 | --- | ---: | ---: | ---: |
@@ -21,6 +21,7 @@ Authored learning-priority metadata classifies 376 general, 126 specialist, 121 
 | anticipate | 4 | 4 | 0 |
 | appreciate | 4 | 4 | 0 |
 | approach | 21 | 21 | 0 |
+| approve | 6 | 6 | 0 |
 | argument | 17 | 17 | 0 |
 | assess | 3 | 3 | 0 |
 | assume | 5 | 5 | 0 |
@@ -43,6 +44,7 @@ Authored learning-priority metadata classifies 376 general, 126 specialist, 121 
 | compare | 8 | 8 | 0 |
 | condition | 17 | 17 | 0 |
 | conduct | 14 | 14 | 0 |
+| confirm | 5 | 5 | 0 |
 | consequence | 6 | 6 | 0 |
 | content | 17 | 18 | 1 |
 | contract | 18 | 18 | 0 |
@@ -67,6 +69,7 @@ Authored learning-priority metadata classifies 376 general, 126 specialist, 121 
 | effect | 14 | 14 | 0 |
 | effective | 8 | 8 | 0 |
 | efficient | 5 | 5 | 0 |
+| establish | 4 | 4 | 0 |
 | evaluate | 3 | 3 | 0 |
 | evidence | 5 | 5 | 0 |
 | expect | 6 | 6 | 0 |
@@ -128,6 +131,7 @@ Authored learning-priority metadata classifies 376 general, 126 specialist, 121 
 | produce | 11 | 11 | 0 |
 | project | 16 | 18 | 2 |
 | proof | 20 | 20 | 0 |
+| prove | 11 | 11 | 0 |
 | purpose | 8 | 8 | 0 |
 | raise | 32 | 32 | 0 |
 | range | 38 | 38 | 0 |

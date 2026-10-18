@@ -1,0 +1,258 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-31d2c0ca",
+      "senseId": "kaikki:6b19c3623aab701efc"
+    },
+    {
+      "entryId": "ve-31d2c0ca",
+      "senseId": "kaikki:db2ef24725b9234e27"
+    },
+    {
+      "entryId": "ve-31d2c0ca",
+      "senseId": "kaikki:f2ef31865b5cfac1ad"
+    },
+    {
+      "entryId": "ve-31d2c0ca",
+      "senseId": "kaikki:e36019a684053f1811"
+    },
+    {
+      "entryId": "ve-31d2c0ca",
+      "senseId": "kaikki:b46ab6a9cbbef89dc4"
+    },
+    {
+      "entryId": "ve-31d2c0ca",
+      "senseId": "kaikki:e424570100c1aaf3fd"
+    },
+    {
+      "entryId": "ve-dd7fedf7",
+      "senseId": "kaikki:9fce59c31045cca7cb"
+    },
+    {
+      "entryId": "ve-dd7fedf7",
+      "senseId": "kaikki:30727b402d39ff9b44"
+    },
+    {
+      "entryId": "ve-dd7fedf7",
+      "senseId": "kaikki:8149799b32cb20cee4"
+    },
+    {
+      "entryId": "ve-dd7fedf7",
+      "senseId": "kaikki:68ffbe8bc2ffe1867d"
+    },
+    {
+      "entryId": "ve-2a4e1dfa",
+      "senseId": "kaikki:a748d99d3b8aa40565"
+    },
+    {
+      "entryId": "ve-2a4e1dfa",
+      "senseId": "kaikki:93afc87575f6dd2b97"
+    },
+    {
+      "entryId": "ve-2a4e1dfa",
+      "senseId": "kaikki:83e5f58f46c7903e0b"
+    },
+    {
+      "entryId": "ve-2a4e1dfa",
+      "senseId": "kaikki:5f0b88f1d8d8fde58e"
+    },
+    {
+      "entryId": "ve-b25c1db",
+      "senseId": "kaikki:f8359114a1cd966f87"
+    },
+    {
+      "entryId": "ve-b25c1db",
+      "senseId": "kaikki:4acfd0ce8c649a1892"
+    },
+    {
+      "entryId": "ve-b25c1db",
+      "senseId": "kaikki:f7b3959d5582ba4c0b"
+    },
+    {
+      "entryId": "ve-b25c1db",
+      "senseId": "kaikki:13e299b6edd936c10f"
+    },
+    {
+      "entryId": "ve-b25c1db",
+      "senseId": "kaikki:ba3d78762167f5954a"
+    },
+    {
+      "entryId": "ve-b25c1db",
+      "senseId": "kaikki:78c3d59fd6e8f2d84a"
+    },
+    {
+      "entryId": "ve-b25c1db",
+      "senseId": "kaikki:efb30e44deae9799d2"
+    },
+    {
+      "entryId": "ve-b25c1db",
+      "senseId": "kaikki:c9a8e2d07d14332c74"
+    },
+    {
+      "entryId": "ve-b25c1db",
+      "senseId": "kaikki:f692bd46214a40bc00"
+    },
+    {
+      "entryId": "ve-b25c1db",
+      "senseId": "kaikki:e8de0692d54df886e9"
+    },
+    {
+      "entryId": "ve-b25c1db",
+      "senseId": "kaikki:681184e519c4f0c3e3"
+    }
+  ],
+  "restoreCorrections": [
+    {
+      "entryId": "ve-dd7fedf7",
+      "senseId": "kaikki:f80af005cda562e663",
+      "term": "confirm",
+      "example": "Please confirm your arrival time by email.",
+      "definition": "To establish or state that something is correct or certain.",
+      "pos": "verb",
+      "usage": "Selected the common verification sense rather than strengthening a belief.",
+      "originalSense": {
+        "id": "kaikki:f80af005cda562e663",
+        "definition": "To assure the accuracy of previous statements.",
+        "example": "Despite all the evidence confirming the existence of the Protheans, little is known about their culture and society. From time to time, dig sites will yield new clues, but after 50,000 years of decay, little of value is unearthed.",
+        "pos": "verb",
+        "synonyms": [
+          "corroborate",
+          "roborate"
+        ],
+        "antonyms": [
+          "infirm",
+          "disconfirm",
+          "deny",
+          "dispute",
+          "contradict",
+          "question"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "autoconfirm",
+          "confirmable",
+          "confirmance",
+          "confirmative",
+          "confirmee",
+          "confirmingly",
+          "confirmshaming",
+          "deconfirm",
+          "misconfirm",
+          "preconfirm",
+          "reconfirm",
+          "unconfirm"
+        ]
+      }
+    }
+  ],
+  "removeDefaults": [
+    "ve-31d2c0ca",
+    "ve-2a4e1dfa",
+    "ve-b25c1db"
+  ],
+  "restoreDefaults": [
+    {
+      "entryId": "ve-dd7fedf7",
+      "sense": {
+        "id": "kaikki:f80af005cda562e663",
+        "definition": "To establish or state that something is correct or certain.",
+        "example": "Please confirm your arrival time by email.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/confirm#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook core content review",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      },
+      "originalSense": {
+        "id": "kaikki:f80af005cda562e663",
+        "definition": "To assure the accuracy of previous statements.",
+        "example": "Despite all the evidence confirming the existence of the Protheans, little is known about their culture and society. From time to time, dig sites will yield new clues, but after 50,000 years of decay, little of value is unearthed.",
+        "pos": "verb",
+        "synonyms": [
+          "corroborate",
+          "roborate"
+        ],
+        "antonyms": [
+          "infirm",
+          "disconfirm",
+          "deny",
+          "dispute",
+          "contradict",
+          "question"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "autoconfirm",
+          "confirmable",
+          "confirmance",
+          "confirmative",
+          "confirmee",
+          "confirmingly",
+          "confirmshaming",
+          "deconfirm",
+          "misconfirm",
+          "preconfirm",
+          "reconfirm",
+          "unconfirm"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/confirm#English",
+        "license": "CC-BY-SA-4.0"
+      },
+      "previousDefault": {
+        "id": "kaikki:9fce59c31045cca7cb",
+        "definition": "To strengthen; to make firm or resolute.",
+        "example": "",
+        "pos": "verb",
+        "synonyms": [
+          "strengthen"
+        ],
+        "antonyms": [
+          "infirm",
+          "disconfirm",
+          "deny",
+          "dispute",
+          "contradict",
+          "question"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "",
+        "wordFamily": [
+          "autoconfirm",
+          "confirmable",
+          "confirmance",
+          "confirmative",
+          "confirmee",
+          "confirmingly",
+          "confirmshaming",
+          "deconfirm",
+          "misconfirm",
+          "preconfirm",
+          "reconfirm",
+          "unconfirm"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/confirm#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    }
+  ]
+}
