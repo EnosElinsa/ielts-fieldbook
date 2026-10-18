@@ -29,12 +29,19 @@ test('planned learning retains its required fixed batch mode and whole-group ass
   const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'definition');
   mocks.fb.state.plans=[{id:'planned',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',...batch.selection,cards:batch.selection.cards}}];
   mount(`/vocabulary/wordbooks/book/groups/group/learn?planId=planned&batch=0&batchSize=10&batchCards=${encodeURIComponent(JSON.stringify(batch.selection.cards))}`);
-  const link=await screen.findByRole('link',{name:/Test this batch/});
+  const link=await screen.findByRole('link',{name:'Start meaning recall · 10 words'});
   const url=new URL(link.getAttribute('href')!,'http://local.test');
   expect(url.searchParams.get('mode')).toBe('definition');
   expect(url.searchParams.get('planId')).toBe('planned');
-  expect(screen.queryByText('Other assessments')).not.toBeInTheDocument();
-  for (const groupLink of screen.getAllByRole('link').filter(node=>node.getAttribute('href')?.includes('/vocabulary/study?') && node!==link)) expect(new URL(groupLink.getAttribute('href')!,'http://local.test').searchParams.has('planId')).toBe(false);
+  expect(screen.getByRole('combobox',{name:'Test type'})).toBeDisabled();
+  fireEvent.click(screen.getByRole('button',{name:'Whole group · 12 words'}));
+  const groupLink=screen.getByRole('link',{name:'Start meaning recall · 12 words'});
+  expect(new URL(groupLink.getAttribute('href')!,'http://local.test').searchParams.has('planId')).toBe(false);
+  expect(screen.getByRole('combobox',{name:'Test type'})).toBeEnabled();
+  fireEvent.change(screen.getByRole('combobox',{name:'Test type'}),{target:{value:'dictation'}});
+  fireEvent.click(screen.getByRole('button',{name:'This batch · 10 words'}));
+  expect(screen.getByRole('combobox',{name:'Test type'})).toBeDisabled();
+  expect(screen.getByRole('link',{name:'Start meaning recall · 10 words'})).toHaveAttribute('href',expect.stringContaining('planId=planned'));
 });
 const path = '/vocabulary/wordbooks/book/groups/group/learn';
 function entry(index: number) {
@@ -53,6 +60,87 @@ beforeEach(() => {
 afterEach(async()=>{vi.useRealTimers();cleanup();await act(async()=>{await Promise.resolve();});Object.assign(VOCABULARY_CATALOG,structuredClone(original));vi.restoreAllMocks();});
 function Location(){const location=useLocation();return <output aria-label="Route">{location.pathname+location.search}</output>;}
 function mount(url=path){return render(<MemoryRouter initialEntries={[url]}><Routes><Route path="/vocabulary/wordbooks/:bookId/groups/:unitId/learn" element={<VocabularyGroupLearnPage/>}/></Routes><Location/></MemoryRouter>);}
+
+test('assessment scope and type produce one explicit start link without changing learning progress', async () => {
+  const before = structuredClone(mocks.fb.state);
+  mount(`${path}?word=word-12&batchSize=1`);
+  await screen.findByRole('heading', { name: 'Word 12' });
+  const scope = screen.getByRole('group', { name: 'Assessment scope' });
+  expect(within(scope).getByRole('button', { name: 'This batch · 1 word' })).toHaveAttribute('aria-pressed', 'true');
+  const start = screen.getByRole('link', { name: 'Start dictation · 1 word' });
+  expect(JSON.parse(new URL(start.getAttribute('href')!, 'https://test.local').searchParams.get('batchCards')!)).toEqual([{ entryId: 'word-12', senseId: 'sense-12' }]);
+  fireEvent.change(screen.getByRole('combobox', { name: 'Test type' }), { target: { value: 'definition' } });
+  expect(new URL(screen.getByRole('link', { name: 'Start meaning recall · 1 word' }).getAttribute('href')!, 'https://test.local').searchParams.get('mode')).toBe('definition');
+  fireEvent.click(within(scope).getByRole('button', { name: 'Whole group · 12 words' }));
+  const groupUrl = new URL(screen.getByRole('link', { name: 'Start meaning recall · 12 words' }).getAttribute('href')!, 'https://test.local');
+  expect(groupUrl.searchParams.has('batchCards')).toBe(false);
+  expect(groupUrl.searchParams.get('dueOnly')).toBe('false');
+  expect(screen.getAllByRole('link').filter(link => link.getAttribute('href')?.startsWith('/vocabulary/study?'))).toHaveLength(1);
+  expect(mocks.fb.state).toEqual(before);
+  expect(mocks.fb.saveVocabularyLearning).not.toHaveBeenCalled();
+});
+
+test('whole-group specialist tests disclose partial coverage and cannot silently shrink the current batch', async () => {
+  VOCABULARY_CATALOG.entries[1].term = 'example';
+  Object.assign(VOCABULARY_CATALOG.entries[1].senses[0], { source: 'Personal note', example: 'Example 2 is a useful sentence.' });
+  mount();
+  await screen.findByRole('heading', { name: 'Word 1' });
+  expect(within(screen.getByRole('combobox', { name: 'Test type' })).queryByRole('option', { name: /Sentence gaps/ })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Whole group · 12 words' }));
+  expect(screen.getByRole('option', { name: 'Sentence gaps · 1/12' })).toBeInTheDocument();
+  fireEvent.change(screen.getByRole('combobox', { name: 'Test type' }), { target: { value: 'cloze' } });
+  expect(screen.getByRole('link', { name: 'Start sentence gaps · 1 word' })).toHaveAttribute('href', expect.stringContaining('mode=cloze'));
+  expect(screen.getByText(/1 of 12 words.*sentence-gap/)).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'This batch · 10 words' }));
+  expect(screen.getByRole('link', { name: 'Start dictation · 10 words' })).toHaveAttribute('href', expect.stringContaining('batchCards='));
+});
+
+test('card motion keeps rapid navigation immediate and cancels obsolete animations', async () => {
+  const cancel = vi.fn();
+  const animate = vi.fn(() => ({ cancel, finished: Promise.resolve() }));
+  const previousAnimate = Object.getOwnPropertyDescriptor(Element.prototype, 'animate');
+  Object.defineProperty(Element.prototype, 'animate', { configurable: true, value: animate });
+  let reduce = false;
+  const listeners = new Set<() => void>();
+  vi.stubGlobal('matchMedia', () => ({ get matches() { return reduce; }, addEventListener: (_: string, listener: () => void) => listeners.add(listener), removeEventListener: (_: string, listener: () => void) => listeners.delete(listener) }));
+  try {
+    const view = mount();
+    await screen.findByRole('heading', { name: 'Word 1' });
+    const play = screen.getByRole('button', { name: 'Play Word 1' });
+    fireEvent.click(screen.getByRole('button', { name: 'Next word' }));
+    expect(screen.getByRole('heading', { name: 'Word 2' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Play Word 2' })).toBe(play);
+    expect(animate).toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: 'Next word' }));
+    expect(screen.getByRole('heading', { name: 'Word 3' })).toBeInTheDocument();
+    expect(cancel).toHaveBeenCalled();
+    reduce = true;
+    act(() => { listeners.forEach(listener => listener()); });
+    animate.mockClear();
+    fireEvent.click(screen.getByRole('button', { name: 'Previous word' }));
+    expect(screen.getByRole('heading', { name: 'Word 2' })).toBeInTheDocument();
+    expect(animate).not.toHaveBeenCalled();
+    view.unmount();
+    expect(listeners.size).toBe(0);
+  } finally {
+    if (previousAnimate) Object.defineProperty(Element.prototype, 'animate', previousAnimate);
+    else delete (Element.prototype as Partial<Element>).animate;
+    vi.unstubAllGlobals();
+  }
+});
+
+test('a fully viewed final batch presents completion instead of dead end navigation', async () => {
+  mocks.fb.state.wordbookProgress = [{ bookId: 'book', unitId: 'group', learning: { viewedEntryIds: ['word-12'], currentEntryId: 'word-12', updatedAt: '2026-01-01' } }];
+  mount(`${path}?batchSize=1`);
+  await screen.findByRole('heading', { name: 'Word 12' });
+  expect(screen.getByText('Batch viewed')).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Viewed' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Next word' })).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Start dictation · 1 word' })).toBeInTheDocument();
+  expect(screen.getByRole('progressbar', { name: 'Words viewed in this batch' })).toHaveAttribute('value', '1');
+  expect(screen.getByText('1 word viewed. Ready to test your recall?')).toBeInTheDocument();
+  expect(screen.getByText('Assessment: Not started')).toBeInTheDocument();
+});
 
 test('an exact dictionary diagram uses the learning card illustration layout', async () => {
   const released = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
@@ -122,7 +210,7 @@ test('primary assessment freezes the current ten words and preserves its plan', 
   mocks.fb.state.plans=[{id:'plan-one',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'dictation',...batch.selection,cards:batch.selection.cards}}];
   mount(`${path}?planId=plan-one`);
   await screen.findByRole('heading', { name: 'Word 1' });
-  const link = await screen.findByRole('link', { name: /Test this batch/ });
+  const link = await screen.findByRole('link', { name: 'Start dictation · 10 words' });
   const params = new URL(link.getAttribute('href')!, 'https://test.local').searchParams;
   expect(params.get('planId')).toBe('plan-one');
   expect(params.get('batch')).toBe('0');
@@ -136,7 +224,7 @@ test('last word stays in its batch so learning does not skip its assessment', as
   await screen.findByRole('heading', { name: 'Word 10' });
   await user.click(screen.getByRole('button', { name: 'Mark viewed' }));
   expect(screen.getByRole('heading', { name: 'Word 10' })).toBeInTheDocument();
-  const params = new URL(screen.getByRole('link', { name: /Test this batch/ }).getAttribute('href')!, 'https://test.local').searchParams;
+  const params = new URL(screen.getByRole('link', { name: 'Start dictation · 10 words' }).getAttribute('href')!, 'https://test.local').searchParams;
   expect(params.get('batch')).toBe('0');
 });
 
@@ -191,7 +279,8 @@ test('learns a source-ordered batch, keeps theme truthful and separates browsing
   expect(screen.getByText('Viewed 0 / 12')).toBeInTheDocument();
   expect(screen.getByText('Assessment: Not started')).toBeInTheDocument();
   expect(screen.queryByText('Meronym: stock animal')).not.toBeInTheDocument();
-  expect(screen.getByRole('link',{name:'Dictation · 12 words'})).toHaveAttribute('href',expect.stringContaining('mode=dictation'));
+  fireEvent.click(screen.getByRole('button',{name:'Whole group · 12 words'}));
+  expect(screen.getByRole('link',{name:'Start dictation · 12 words'})).toHaveAttribute('href',expect.stringContaining('mode=dictation'));
   expect(JSON.stringify(mocks.fb.state)).toBe(before);
   expect(mocks.fb.saveVocabularyLearning).not.toHaveBeenCalled();
   await userEvent.setup().click(screen.getByRole('button',{name:'Mark viewed & next'}));
@@ -305,8 +394,9 @@ test('manual familiarity alone is not an assessment and specialist modes show av
   mount();await screen.findByRole('heading',{name:'Word 1'});
   expect(screen.getByText('Assessment: Not started')).toBeInTheDocument();
   expect(screen.getByText('System mastered 0 / 12')).toBeInTheDocument();
-  expect(screen.getByRole('link',{name:'Dictation · 12 words'})).toBeInTheDocument();
-  expect(screen.queryByRole('link',{name:'Sentence gaps · 12 words'})).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:'Whole group · 12 words'}));
+  expect(screen.getByRole('link',{name:'Start dictation · 12 words'})).toBeInTheDocument();
+  expect(screen.queryByRole('option',{name:'Sentence gaps'})).not.toBeInTheDocument();
 });
 
 test('missing theme metadata retains source chapter and group names',async()=>{
@@ -397,6 +487,8 @@ test('multiple meanings preserve explicit selection in the details return link a
   const meaningButtons=screen.getAllByRole('button',{name:/Meaning \d/});
   expect(meaningButtons.length).toBeGreaterThan(1);
   await userEvent.setup().click(meaningButtons.find(button=>button.textContent?.includes('noun'))!);
+  const assessment = new URL(screen.getByRole('link', { name: /^Start / }).getAttribute('href')!, 'http://local.test');
+  expect(JSON.parse(assessment.searchParams.get('batchCards')!).find((ref: any) => ref.entryId === book.id).senseId).toBe('kaikki:7d09dc41b99ae33c32');
   expect(screen.getByRole('link',{name:'Word details'}).getAttribute('href')).toContain('senseId=kaikki%3A7d09dc41b99ae33c32');
   const details=new URL(screen.getByRole('link',{name:'Word details'}).getAttribute('href')!,'http://local.test');
   expect(new URL(details.searchParams.get('returnTo')!,'http://local.test').searchParams.get('sense')).toBe('kaikki:7d09dc41b99ae33c32');
