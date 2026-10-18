@@ -23678,5 +23678,320 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-a21117c",
+    "originalSense": {
+      "id": "kaikki:51f33cf2a5204320b3",
+      "definition": "To permit, to give permission to.",
+      "example": "I will allow my son to be absent.",
+      "pos": "verb",
+      "synonyms": [
+        "permit",
+        "let",
+        "grant licence to",
+        "consent",
+        "grant"
+      ],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "catenative",
+      "register": "catenative, transitive",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:51f33cf2a5204320b3",
+      "definition": "To permit someone to do something; to give permission.",
+      "example": "The library will allow visitors to use the reading room.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "allow someone to do something",
+        "allow visitors access",
+        "be allowed to"
+      ],
+      "usage": "Transitive permission verb; allow + person + to-infinitive.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Allow visitors to use gives permission. In the active person construction, use allow someone to do; allow doing is also possible when naming an activity without that person object."
+      ],
+      "distinctionTask": {
+        "prompt": "The library will allow visitors to use the room. Visitors are _____.",
+        "options": [
+          "given permission to use it",
+          "required to use it"
+        ],
+        "answer": "given permission to use it",
+        "explanation": "Permission does not itself make the action compulsory."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "originalSense": {
+      "id": "kaikki:398ea99dfb8f16be81",
+      "definition": "To allow (something) to happen, to give permission for.",
+      "example": "Mr. Cooke at once began a tirade against the residents of Asquith for permitting a sandy and generally disgraceful condition of the roads. So roundly did he vituperate the inn management in particular, and with such a loud flow of words, that I trembled lest he should be heard on the veranda.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "permitable",
+        "permit nature to take her course",
+        "permittable",
+        "permittance",
+        "permitter",
+        "repermit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:398ea99dfb8f16be81",
+      "definition": "To allow something to happen or give permission for it.",
+      "example": "The rules permit parking in marked bays.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "permit an activity",
+        "permit parking",
+        "be permitted"
+      ],
+      "usage": "Ordinary permission verb: /pəˈmɪt/ (UK), /pɚˈmɪt/ (US), stress on the second syllable. Transitive, with an activity or event as object.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The object here names an activity. Permission to park is distinct from an order to park or a guarantee that a space is available."
+      ],
+      "distinctionTask": {
+        "prompt": "The rules permit parking in marked bays. Parking there is _____.",
+        "options": [
+          "allowed by those rules",
+          "compulsory under those rules"
+        ],
+        "answer": "allowed by those rules",
+        "explanation": "Permission does not itself impose an obligation."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "originalSense": {
+      "id": "kaikki:5e5caa7fb2a9ae10cc",
+      "definition": "To concede as true; to acknowledge or assent to, as an allegation which it is impossible to deny (+ to).",
+      "example": "the argument or fact is admitted",
+      "pos": "verb",
+      "synonyms": [
+        "own up",
+        "confess",
+        "allow",
+        "acknowledge",
+        "own",
+        "grant"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive, transitive",
+      "wordFamily": [
+        "admit defeat",
+        "admittable",
+        "admittance",
+        "admittedly",
+        "admittee",
+        "admitter",
+        "admitting",
+        "admittingly",
+        "coadmit",
+        "nonadmitted",
+        "preadmit",
+        "re-admit",
+        "readmit",
+        "unadmittable",
+        "unadmitted",
+        "unadmittedly",
+        "unadmitting"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/admit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:5e5caa7fb2a9ae10cc",
+      "definition": "To acknowledge or concede something as true.",
+      "example": "I admit making a mistake in the calculation.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "admit doing something",
+        "admit to doing something",
+        "admit that"
+      ],
+      "usage": "Transitive or intransitive; takes a noun, an -ing form, to + -ing or a clause according to the construction.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/admit#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Admit making and admit to making are both established patterns. The speaker acknowledges the mistake; this statement is not an independent check of the calculation. Not every admission concerns a crime."
+      ],
+      "distinctionTask": {
+        "prompt": "I admit making a mistake in the calculation. The speaker _____.",
+        "options": [
+          "acknowledges a mistake",
+          "necessarily grants someone entry to a building"
+        ],
+        "answer": "acknowledges a mistake",
+        "explanation": "The -ing object identifies what the speaker acknowledges."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "originalSense": {
+      "id": "kaikki:5ab0b63ad82e3c9210",
+      "definition": "To refuse to accept; to forswear.",
+      "example": "She even rejected my improved offer.",
+      "pos": "verb",
+      "synonyms": [
+        "abjure",
+        "abnegate",
+        "decline",
+        "deny",
+        "disown",
+        "refuse",
+        "repudiate",
+        "say no",
+        "turn down",
+        "dismiss",
+        "discount"
+      ],
+      "antonyms": [
+        "accept",
+        "take up"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "bandreject",
+        "overreject",
+        "rejectability",
+        "rejectable",
+        "rejectate",
+        "rejected landing",
+        "rejected takeoff",
+        "rejectee",
+        "rejecter",
+        "rejector",
+        "rejectful",
+        "rejection",
+        "rejectionism",
+        "rejectionist",
+        "rejective",
+        "rejectment",
+        "rereject",
+        "unreject"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reject#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:5ab0b63ad82e3c9210",
+      "definition": "To refuse to accept something.",
+      "example": "We reject the proposal because it exceeds the budget.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "reject a proposal",
+        "reject an offer",
+        "reject a claim"
+      ],
+      "usage": "Verb: /rɪˈdʒɛkt/, stress on the second syllable (with source-recorded accent variants). Transitive refusal sense.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reject#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The team refuses this proposal on the stated budget ground. Rejection does not establish that the proposal has no value in any other situation."
+      ],
+      "distinctionTask": {
+        "prompt": "We reject the proposal because it exceeds the budget. We _____.",
+        "options": [
+          "refuse to accept that proposal",
+          "necessarily prove it worthless in every situation"
+        ],
+        "answer": "refuse to accept that proposal",
+        "explanation": "The refusal has a stated reason without a universal judgment of value."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

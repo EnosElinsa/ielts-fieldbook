@@ -10,7 +10,7 @@ function fixture(){
  const store={} as VocabularyStore;
  const add=(id='home-entry',senseId='saved-meaning')=>{
   const term=id==='home-entry'?'homeword':`word-${id}`;
-  return addVocabularyItem(store,{id,term,senses:[{id:senseId,pos:'noun',definition:'A term used in class.',example:`We use ${term} in class.`,source:'Personal note'}]}).item!;
+  return addVocabularyItem(store,{id,term,senses:[{id:senseId,pos:'noun',definition:'A term used in class.',example:`We use ${term} in class.`,source:'Personal note'}]},{now:()=>past}).item!;
  };
  const entry=add(),learning=store.vocabularyStates[0];
  return {store,entry,learning,add,recommend:()=>getVocabularyHomePractice(store,now)};

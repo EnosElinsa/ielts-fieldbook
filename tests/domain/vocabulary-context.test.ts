@@ -134,7 +134,9 @@ test('explicit sense route overrides group binding and missing explicit identity
 test('group mode coverage cannot silently choose another sense or attach unrelated synonym task', () => {
   expect(buildUnitPracticeQueue(fresh(), 'ielts-vocabulary', 'ielts-vocabulary-chapter-12-group-01', 'synonym').cards.some(card => card.entry.term === 'order')).toBe(false);
   const sequence = getVocabularyReviewQueue(fresh([entry('order')]), { mode: 'synonym', dueOnly: false });
-  expect(sequence[0].task?.acceptedAnswers).toContain('sequence');
+  // The later full dictionary review teaches a new exact context; its empty
+  // synonym list must not reactivate the older common-context substitution.
+  expect(sequence).toEqual([]);
   const food = buildUnitPracticeQueue(fresh(), 'ielts-vocabulary', 'ielts-vocabulary-chapter-12-group-01', 'definition').cards.find(card => card.entry.term === 'order')!;
   expect(food.task).toBeUndefined(); expect(food.entry.senses[0].definition).toContain('request');
   const noun = entry('fundamental');

@@ -5030,5 +5030,253 @@
     "definition": "To explicitly mention something as a possibility for consideration, often as a recommendation.",
     "pos": "verb",
     "kind": "suggest-propose"
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:97cad366375c3a47b7",
+    "term": "allow",
+    "definition": "To give someone a suitable share or amount of something.",
+    "pos": "verb",
+    "kind": "allow-allocation"
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:85f2014b4e33bcb955",
+    "term": "allow",
+    "definition": "To present or leave something as possible or reasonable.",
+    "pos": "verb",
+    "kind": "allow-possible"
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:51f33cf2a5204320b3",
+    "term": "allow",
+    "definition": "To permit someone to do something; to give permission.",
+    "pos": "verb",
+    "kind": "allow-permission"
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:92d0f51073e1463f59",
+    "term": "allow",
+    "definition": "To refrain from barring or obstructing something.",
+    "pos": "verb",
+    "kind": "allow-not-obstruct"
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:4634a3c71368d660b0",
+    "term": "allow",
+    "definition": "To acknowledge something as true or reasonable; to concede it in a discussion.",
+    "pos": "verb",
+    "kind": "allow-concede"
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:1df80d7fbfef79d604",
+    "term": "allow",
+    "definition": "To grant an amount as a deduction or addition, especially an allowance or reduction.",
+    "pos": "verb",
+    "kind": "allow-deduction"
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:458f66405161ca2ffa",
+    "term": "allow",
+    "definition": "To take something into account when making plans.",
+    "pos": "verb",
+    "kind": "allow-planning"
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:8dd37cdf45fb1c6801",
+    "term": "allow",
+    "definition": "To make something physically possible.",
+    "pos": "verb",
+    "kind": "allow-enable"
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:e2a7137272fa2c1444",
+    "term": "allow",
+    "definition": "In law, to decide a request in favour of the party who raised it.",
+    "pos": "verb",
+    "kind": "allow-appeal"
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:398ea99dfb8f16be81",
+    "term": "permit",
+    "definition": "To allow something to happen or give permission for it.",
+    "pos": "verb",
+    "kind": "permit-activity"
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:4db3737430b5bc3c15",
+    "term": "permit",
+    "definition": "To allow someone to do something; to give them permission.",
+    "pos": "verb",
+    "kind": "permit-person"
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:e731e8c3ef8f58a33b",
+    "term": "permit",
+    "definition": "To make something possible, without an expressed object.",
+    "pos": "verb",
+    "kind": "permit-circumstances"
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:6bbc3c48d48f060eb1",
+    "term": "permit",
+    "definition": "To allow or admit of something.",
+    "pos": "verb",
+    "kind": "permit-of"
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:3d1a8d829445655585",
+    "term": "permit",
+    "definition": "To grant formal authorisation for something.",
+    "pos": "verb",
+    "kind": "permit-grant"
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:2763739fdf70143873",
+    "term": "permit",
+    "definition": "To attempt to obtain, or succeed in obtaining, formal authorisation for something.",
+    "pos": "verb",
+    "kind": "permit-seek"
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:9526dd71537cd2600c",
+    "term": "permit",
+    "definition": "An authorising document or other token that makes a specified activity allowed or legal.",
+    "pos": "noun",
+    "kind": "permit-document"
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:1bfb246afe7b961fc7",
+    "term": "permit",
+    "definition": "A pompano fish of the species Trachinotus falcatus.",
+    "pos": "noun",
+    "kind": "permit-fish"
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "wiktionary:restored:1a85a2c88b267fd757",
+    "term": "permit",
+    "definition": "To grant or give someone permission for something.",
+    "pos": "verb",
+    "kind": "permit-double-object"
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "wiktionary:restored:b2e67ed525552ed499",
+    "term": "permit",
+    "definition": "A restricted licence for someone learning to drive who has not yet met the requirements for a full driver’s licence.",
+    "pos": "noun",
+    "kind": "permit-learner"
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "senseId": "kaikki:00d14ec4fefcca88f7",
+    "term": "admit",
+    "definition": "To allow entry into a place, the mind or consideration.",
+    "pos": "verb",
+    "kind": "admit-entry"
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "senseId": "kaikki:43aa919ba93d27f551",
+    "term": "admit",
+    "definition": "To allow someone into a profession or privilege, recognising the required qualification.",
+    "pos": "verb",
+    "kind": "admit-profession"
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "senseId": "kaikki:5e5caa7fb2a9ae10cc",
+    "term": "admit",
+    "definition": "To acknowledge or concede something as true.",
+    "pos": "verb",
+    "kind": "admit-acknowledge"
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "senseId": "kaikki:5b769dcd4fb46d0242",
+    "term": "admit",
+    "definition": "To be capable of or permit something, with or without of.",
+    "pos": "verb",
+    "kind": "admit-capacity"
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "senseId": "kaikki:bac3baa2d1d2858c43",
+    "term": "admit",
+    "definition": "To give scope or opportunity for something; to allow it, with of.",
+    "pos": "verb",
+    "kind": "admit-of"
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "senseId": "kaikki:266fbdc14152542319",
+    "term": "admit",
+    "definition": "To allow someone to enter a hospital or similar facility for treatment.",
+    "pos": "verb",
+    "kind": "admit-hospital"
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:5ab0b63ad82e3c9210",
+    "term": "reject",
+    "definition": "To refuse to accept something.",
+    "pos": "verb",
+    "kind": "reject-refuse"
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:df93cc355e3feb3066",
+    "term": "reject",
+    "definition": "In basketball, to block a shot.",
+    "pos": "verb",
+    "kind": "reject-basketball"
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:553fba3fff10e658ec",
+    "term": "reject",
+    "definition": "To refuse a romantic approach or invitation.",
+    "pos": "verb",
+    "kind": "reject-romantic"
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:582ebd29d97f2b0438",
+    "term": "reject",
+    "definition": "Something that has been rejected.",
+    "pos": "noun",
+    "kind": "reject-object"
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:39cf7c37731092c51c",
+    "term": "reject",
+    "definition": "A defective product rejected during production or quality checking.",
+    "pos": "noun",
+    "kind": "reject-product"
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:b0367da8042d40b086",
+    "term": "reject",
+    "definition": "In aviation, a rejected takeoff.",
+    "pos": "noun",
+    "kind": "reject-takeoff"
   }
 ]

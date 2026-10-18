@@ -2,10 +2,10 @@ import { vocabularyTeaching } from './runtimeData';
 import { VOCABULARY_CATALOG } from './catalog';
 import { vocabularyCurriculumBaselines } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
-import { applyVocabularyReadiness, isVocabularyReadingNote, isVocabularyPracticeReference, supplementVocabularySense, vocabularyReadinessBaselines, VOCABULARY_READINESS_VERSION } from './readiness';
+import { applyVocabularyReadiness, hasVocabularyReadinessContext, isVocabularyReadingNote, isVocabularyPracticeReference, supplementVocabularySense, vocabularyReadinessBaselines, VOCABULARY_READINESS_VERSION } from './readiness';
 import { vocabularySensePresentation } from './dictionaryPresentation';
 import sentenceGapForms from './sentenceGapForms.json';
-export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-18.1/${VOCABULARY_READINESS_VERSION}`;
+export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-18.2/${VOCABULARY_READINESS_VERSION}`;
 const learningSenses = vocabularyTeaching.learning;
 const taskSenseBindings = vocabularyTeaching.tasks;
 const contextSenses = vocabularyTeaching.context;
@@ -228,7 +228,12 @@ export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mod
  const manifestSenses = [...contextSenses.bindings, ...contextSenses.defaults].filter(item => item.entryId === entry.id && item.sense.id === sense.id).flatMap(item => [item.sense, item.originalSense]) as unknown as (VocabularySense | null)[];
  const reviewedOriginal = originalSenses.length ? reviewedEntry(catalogEntry || {...entry,senses:originalSenses}).senses.find(item => item.id === sense.id) : undefined;
  const customContent = hasVocabularySenseEdits(sense, [originalSense, reviewedOriginal, ...manifestSenses, ...vocabularyCurriculumBaselines(entry.id,sense.id)]);
- const item = eligible && !customContent ? reviewed[entry.term.toLowerCase()] : undefined;
+ const currentTeaching = hasVocabularyReadinessContext(entry.id, sense);
+ const commonTask = reviewed[entry.term.toLowerCase()];
+ // A stable ID preserves identity, not an old task's teaching context. Current
+ // reviewed teaching takes precedence unless it explicitly retains that context.
+ const item = eligible && !customContent && (!currentTeaching ||
+  (commonTask?.definition === sense.definition && commonTask.example === sense.example)) ? commonTask : undefined;
  // Reordering a group-specific sense must never retarget a term's reviewed task.
  const canonical = (learningSenses as Record<string, VocabularySense>)[entry.term.toLowerCase()];
  const catalogPrimary = originalSenses[0]?.id;
@@ -238,7 +243,7 @@ export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mod
   if (!item || !primary || !item.answers.length) return;
   return {prompt:`Replace “${item.forms?.[0] || entry.term}” with a synonym in this context: ${item.example}`,acceptedAnswers:item.answers,explanation:item.explanation};
  }
- if (mode === 'distinction' && eligible && !customContent && primary && confusion[entry.term.toLowerCase()]) return confusion[entry.term.toLowerCase()];
+ if (mode === 'distinction' && eligible && !customContent && !currentTeaching && primary && confusion[entry.term.toLowerCase()]) return confusion[entry.term.toLowerCase()];
  if (mode === 'distinction' && sense.distinctionTask) return {prompt:sense.distinctionTask.prompt,acceptedAnswers:[sense.distinctionTask.answer],options:sense.distinctionTask.options,explanation:sense.distinctionTask.explanation};
  if (mode === 'cloze') {
   if (isVocabularyReadingNote(entry.id, sense)) return;

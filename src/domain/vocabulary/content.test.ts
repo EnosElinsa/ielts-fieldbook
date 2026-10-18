@@ -1,14 +1,71 @@
 // @vitest-environment jsdom
 import fs from 'node:fs';
-import { describe, expect, test } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { concealWord, learningTask, reviewedEntry } from './content';
 import { createVocabularySession, evaluateVocabularySessionAnswer, buildVocabularySessionCommit } from './session';
 import { readVocabularyDraft, writeVocabularyDraft } from '../../storage/vocabularyDrafts';
 import { getVocabularyReviewQueue } from './index';
+import { resolveVocabularyLearningContext } from './context';
+import { VOCABULARY_CATALOG } from './catalog';
 import type { VocabularyEntry, VocabularyStore } from './types';
 const entry = (term:string):VocabularyEntry => ({id:`vocab:${term}`,term,meaning:'note',example:'note',category:'word',tags:[],sources:[],senses:[{id:'stable',definition:'note',example:`A ${term} appears.`,pos:'verb',source:'Fieldbook editorial'}],createdAt:'2026-01-01',updatedAt:'2026-01-01'});
 const store = (e:VocabularyEntry) => ({vocabulary:[e],vocabularyStates:[],vocabularyEvidence:[],vocabularyReviews:[],vocabularyActivities:[],wordbookProgress:[],wordbookEnrollments:[],vocabularyImportBatches:[]} as VocabularyStore);
 describe('reviewed learning content',()=>{
+ describe('dictionary task precedence',()=>{
+ const catalog=JSON.parse(fs.readFileSync('public/vocabulary-catalog.json','utf8'));
+ const original=structuredClone(VOCABULARY_CATALOG);
+ const releasedEntry = (term: string): VocabularyEntry => {
+  const e=structuredClone(catalog.entries.find((row: VocabularyEntry) => row.term === term));
+  const index=JSON.parse(fs.readFileSync('public/dictionary/index.json','utf8'));
+  if(index[term]) e.senses=JSON.parse(fs.readFileSync(`public/dictionary/${index[term]}`,'utf8')).senses;
+  return e;
+ };
+ beforeEach(()=>Object.assign(VOCABULARY_CATALOG,structuredClone(catalog)));
+ afterEach(()=>Object.assign(VOCABULARY_CATALOG,structuredClone(original)));
+ test('a fully reviewed meaning uses its current example in a new cloze task',()=>{
+  const e=reviewedEntry(releasedEntry('permit')); const sense=e.senses[0];
+  expect(sense.example).toBe('The rules permit parking in marked bays.');
+  const task=learningTask(e,sense,'cloze')!;
+  expect(task.prompt).toBe('The rules _____ parking in marked bays.');
+  expect(task.acceptedAnswers).toEqual(['permit']);
+ });
+ test('omitting optional metadata from a saved public snapshot does not restore an obsolete task',()=>{
+  const e=reviewedEntry(releasedEntry('permit')); const current=e.senses[0];
+  const saved={id:current.id,definition:current.definition,example:current.example,pos:current.pos,source:current.source};
+  expect(learningTask({...e,senses:[saved]},saved,'cloze')?.prompt).toBe('The rules _____ parking in marked bays.');
+  expect(learningTask({...e,senses:[saved]},saved,'synonym')).toBeUndefined();
+ });
+ test('a dictionary review cannot inherit a term-level definition or synonym task from an older context',()=>{
+  const e=reviewedEntry(releasedEntry('permit')); const sense=e.senses[0];
+  expect(learningTask(e,sense,'definition')).toBeUndefined();
+  expect(learningTask(e,sense,'synonym')).toBeUndefined();
+  expect(learningTask(e,sense,'distinction')?.prompt).toBe(sense.distinctionTask!.prompt);
+ });
+ test('an unchanged common context retains its authored substitution and irregular-form tasks',()=>{
+  const result=resolveVocabularyLearningContext(releasedEntry('begin'));
+  expect(learningTask(result.entry,result.sense!,'cloze')?.acceptedAnswers).toEqual(['began']);
+  expect(learningTask(result.entry,result.sense!,'synonym')?.acceptedAnswers).toEqual(['started']);
+ });
+ test('personal examples and other permit meanings cannot receive the common-context task',()=>{
+  const e=reviewedEntry(releasedEntry('permit')); const sense=e.senses[0];
+  const personal={...sense,example:'My permit reminder is here.',source:'Personal note'};
+  expect(learningTask({...e,senses:[personal]},personal,'cloze')?.prompt).toBe('My _____ reminder is here.');
+  expect(learningTask({...e,senses:[personal]},personal,'synonym')).toBeUndefined();
+  const document=e.senses.find(row=>row.pos==='noun')!;
+  expect(learningTask({...e,senses:[document,...e.senses.filter(row=>row.id!==document.id)]},document,'synonym')).toBeUndefined();
+ });
+ test('a started permit session retains its old task and score after the public review',()=>{
+  const raw=releasedEntry('permit'); const e=reviewedEntry(raw); const state=store(e);
+  const cards=getVocabularyReviewQueue(state,{mode:'cloze',dueOnly:false});
+  cards[0].task=learningTask(raw,raw.senses[0],'cloze');
+  expect(cards[0].task?.prompt).toBe('The rules _____ visitors to take photographs.');
+  const session=createVocabularySession(cards,'cloze',{});
+  session.answers[cards[0].id]={response:'permit',answeredAt:'2026-10-18',durationMs:1};
+  cards[0].task={...learningTask(e,e.senses[0],'cloze')!,acceptedAnswers:['parking']};
+  expect(session.cardSnapshots![0].task?.prompt).toBe('The rules _____ visitors to take photographs.');
+  expect(buildVocabularySessionCommit(state,session,cards).results[0].result).toBe('success');
+ });
+ });
  test('cloze uses boundaries and explicit irregular form',()=>{
   expect(concealWord('A disorder and order.', 'order')).toBe('A disorder and _____.');
   const e=entry('begin');const task=learningTask(e,e.senses[0],'cloze')!;

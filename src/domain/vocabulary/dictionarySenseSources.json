@@ -11817,5 +11817,44 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "permit",
+    "entryId": "ve-70e0b1f2",
+    "sourceKind": "top-level",
+    "anchorSenseId": "kaikki:398ea99dfb8f16be81",
+    "anchorSourceHash": "c3ed02299de924c0640f8a94fb7374b20ce0e368b33a5e10e597672e7465a684",
+    "sourcePage": "permit",
+    "revision": 93562391,
+    "sourceGloss": "# {{lb|en|ditransitive}} To [[grant]], or give [[permission]] for, (something) to (someone).",
+    "sense": {
+      "id": "wiktionary:restored:1a85a2c88b267fd757",
+      "pos": "verb",
+      "definition": "To grant, or give permission for, (something) to (someone).",
+      "example": "",
+      "source": "English Wiktionary, restored top-level meaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "permit",
+    "entryId": "ve-70e0b1f2",
+    "parentSenseId": "kaikki:9526dd71537cd2600c",
+    "parentSourceHash": "d5a828669d06e407d9d9b307128c665d458c00eccd9cf4d02a95aa2e97e46052",
+    "sourcePage": "permit",
+    "revision": 93562391,
+    "sourceGloss": "## A {{l|en|learner's permit}}.",
+    "sense": {
+      "id": "wiktionary:restored:b2e67ed525552ed499",
+      "pos": "noun",
+      "definition": "A learner's permit.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

@@ -220657,5 +220657,2404 @@
     "antonyms": [],
     "wordFamily": [],
     "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:97cad366375c3a47b7",
+    "definition": "To give someone a suitable share or amount of something.",
+    "example": "The organisers allow each speaker ten minutes.",
+    "collocations": [
+      "allow someone something",
+      "allow each person time",
+      "allow a share"
+    ],
+    "distinctions": [
+      "This use allocates an amount: each speaker receives ten minutes. The allocation differs from giving someone permission to speak at all."
+    ],
+    "usage": "Ditransitive: allow + recipient + amount.",
+    "originalSense": {
+      "id": "kaikki:97cad366375c3a47b7",
+      "definition": "To let one have as a suitable share of something.",
+      "example": "to allow a servant his liberty; to allow a free passage; to allow one day for rest",
+      "pos": "verb",
+      "synonyms": [
+        "grant",
+        "admit",
+        "afford",
+        "yield",
+        "give",
+        "permit",
+        "allot",
+        "bestow",
+        "concede"
+      ],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "ditransitive",
+      "register": "ditransitive",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "distinctionTask": {
+      "prompt": "The organisers allow each speaker ten minutes. What is allocated? _____",
+      "options": [
+        "ten minutes per speaker",
+        "ten speakers per minute"
+      ],
+      "answer": "ten minutes per speaker",
+      "explanation": "The person follows allow and the amount follows the person."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:85f2014b4e33bcb955",
+    "definition": "To present or leave something as possible or reasonable.",
+    "example": "These words allow of two interpretations.",
+    "collocations": [
+      "allow of an interpretation",
+      "allow of a possibility",
+      "allow of only one explanation"
+    ],
+    "distinctions": [
+      "Allow of here means leave an interpretation possible. Two possible interpretations are not thereby both proved correct. This formal construction differs from allowing someone to act."
+    ],
+    "usage": "Intransitive, commonly with of in this source meaning; formal.",
+    "originalSense": {
+      "id": "kaikki:85f2014b4e33bcb955",
+      "definition": "To present something as possible or reasonable.",
+      "example": "The event allows of only one interpretation.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "distinctionTask": {
+      "prompt": "These words allow of two interpretations. This means _____.",
+      "options": [
+        "two interpretations are possible",
+        "both interpretations have been proved correct"
+      ],
+      "answer": "two interpretations are possible",
+      "explanation": "The construction concerns possibility, not independent proof."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:51f33cf2a5204320b3",
+    "definition": "To permit someone to do something; to give permission.",
+    "example": "The library will allow visitors to use the reading room.",
+    "collocations": [
+      "allow someone to do something",
+      "allow visitors access",
+      "be allowed to"
+    ],
+    "distinctions": [
+      "Allow visitors to use gives permission. In the active person construction, use allow someone to do; allow doing is also possible when naming an activity without that person object."
+    ],
+    "usage": "Transitive permission verb; allow + person + to-infinitive.",
+    "originalSense": {
+      "id": "kaikki:51f33cf2a5204320b3",
+      "definition": "To permit, to give permission to.",
+      "example": "I will allow my son to be absent.",
+      "pos": "verb",
+      "synonyms": [
+        "permit",
+        "let",
+        "grant licence to",
+        "consent",
+        "grant"
+      ],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "catenative",
+      "register": "catenative, transitive",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "distinctionTask": {
+      "prompt": "The library will allow visitors to use the room. Visitors are _____.",
+      "options": [
+        "given permission to use it",
+        "required to use it"
+      ],
+      "answer": "given permission to use it",
+      "explanation": "Permission does not itself make the action compulsory."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:92d0f51073e1463f59",
+    "definition": "To refrain from barring or obstructing something.",
+    "example": "I do not approve of the meeting, but I will allow it to continue.",
+    "collocations": [
+      "allow something to continue",
+      "allow a meeting",
+      "allow something for the time being"
+    ],
+    "distinctions": [
+      "In this context the speaker will not stop the meeting, despite disapproving of it. Not obstructing an action does not necessarily express approval of it."
+    ],
+    "usage": "This source meaning emphasises not preventing an action.",
+    "originalSense": {
+      "id": "kaikki:92d0f51073e1463f59",
+      "definition": "To not bar or obstruct.",
+      "example": "Although I don't consent to their holding such meetings, I will allow them for the time being.",
+      "pos": "verb",
+      "synonyms": [
+        "tolerate",
+        "suffer",
+        "permit",
+        "admit",
+        "concede"
+      ],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "distinctionTask": {
+      "prompt": "I disapprove of the meeting but will allow it to continue. The speaker will _____.",
+      "options": [
+        "refrain from stopping it",
+        "necessarily praise it"
+      ],
+      "answer": "refrain from stopping it",
+      "explanation": "The explicit disapproval rules out treating tolerance as praise."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:4634a3c71368d660b0",
+    "definition": "To acknowledge something as true or reasonable; to concede it in a discussion.",
+    "example": "I allow that your method is faster, though I prefer mine.",
+    "collocations": [
+      "allow that",
+      "allow a point",
+      "allow something to be true"
+    ],
+    "distinctions": [
+      "Allow that introduces a concession here. The speaker accepts one point while retaining a different preference; the sentence does not give the method permission to act."
+    ],
+    "usage": "Formal acknowledgement or concession; often with a that-clause.",
+    "originalSense": {
+      "id": "kaikki:4634a3c71368d660b0",
+      "definition": "To acknowledge, accept the truth of; to concede; to accede to an opinion; to say something one agrees on in the context of a larger disagreement or reluctance.",
+      "example": "to allow a right; to allow a claim; to allow an appeal",
+      "pos": "verb",
+      "synonyms": [
+        "concede",
+        "accede",
+        "acquiesce"
+      ],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "distinctionTask": {
+      "prompt": "I allow that your method is faster, though I prefer mine. I _____.",
+      "options": [
+        "concede the point about speed",
+        "withdraw every other preference"
+      ],
+      "answer": "concede the point about speed",
+      "explanation": "The concession is limited to the stated point."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:1df80d7fbfef79d604",
+    "definition": "To grant an amount as a deduction or addition, especially an allowance or reduction.",
+    "example": "We can allow £500 on your old car when you buy a new one.",
+    "collocations": [
+      "allow a sum on something",
+      "allow an amount for something",
+      "allow a deduction"
+    ],
+    "distinctions": [
+      "The £500 is an allowance on the old car in this stated offer. It is not an annual payment or an assertion that the purchase has already happened."
+    ],
+    "usage": "Commercial or financial allowance; the amount and terms depend on the stated transaction.",
+    "originalSense": {
+      "id": "kaikki:1df80d7fbfef79d604",
+      "definition": "To grant (something) as a deduction or an addition; especially to abate or deduct.",
+      "example": "to allow a sum for leakage",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "distinctionTask": {
+      "prompt": "We can allow £500 on your old car towards a new one. The £500 is _____.",
+      "options": [
+        "an allowance in the stated transaction",
+        "a guaranteed annual income"
+      ],
+      "answer": "an allowance in the stated transaction",
+      "explanation": "The car-purchase context identifies a transaction-specific allowance."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:458f66405161ca2ffa",
+    "definition": "To take something into account when making plans.",
+    "example": "Allow for extra travel time during rush hour.",
+    "collocations": [
+      "allow for delays",
+      "allow for contingencies",
+      "allow extra time"
+    ],
+    "distinctions": [
+      "Allow for means plan with a factor in mind. Making time for a possible delay does not cause the delay or prove that it will occur."
+    ],
+    "usage": "Often allow for + factor; allow extra time is also common.",
+    "originalSense": {
+      "id": "kaikki:458f66405161ca2ffa",
+      "definition": "To make an allowance, to take into account when making plans.",
+      "example": "When calculating a budget for a construction project, always allow for contingencies.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "distinctionTask": {
+      "prompt": "Allow for extra travel time during rush hour. This advises you to _____.",
+      "options": [
+        "include that possibility in your plan",
+        "cause a traffic delay"
+      ],
+      "answer": "include that possibility in your plan",
+      "explanation": "Planning for a possibility does not bring it about."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:8dd37cdf45fb1c6801",
+    "definition": "To make something physically possible.",
+    "example": "The wide doors allow wheelchairs to pass through.",
+    "collocations": [
+      "allow access",
+      "allow something to pass",
+      "allow movement"
+    ],
+    "distinctions": [
+      "The width makes passage physically possible. A doorway cannot itself issue official permission; the separate permission sense concerns authorisation."
+    ],
+    "usage": "Transitive enablement sense; an object or physical feature can be the subject.",
+    "originalSense": {
+      "id": "kaikki:8dd37cdf45fb1c6801",
+      "definition": "To render physically possible.",
+      "example": "The inlet allowed a facility to bring the money in a boat secretly and at night to the very foot of the hill.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "distinctionTask": {
+      "prompt": "The wide doors allow wheelchairs to pass through. Their width _____.",
+      "options": [
+        "makes passage physically possible",
+        "issues an official permit"
+      ],
+      "answer": "makes passage physically possible",
+      "explanation": "The physical feature enables access."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:bc0387c7755136cb2b",
+    "definition": "Obsolete: to praise or approve of something.",
+    "example": "Reading note: in the source phrase “allow his life”, allow means approve of the person’s life or conduct. This is an older approval sense.",
+    "collocations": [
+      "allow his life (source wording)",
+      "allow (obsolete approval sense)"
+    ],
+    "distinctions": [
+      "This source-labelled obsolete meaning expresses approval, unlike the modern example in which someone allows a meeting despite disapproving of it."
+    ],
+    "usage": "Obsolete, transitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:bc0387c7755136cb2b",
+      "definition": "To praise; to approve of; hence, to sanction.",
+      "example": "Truly ye bear witness that ye allow the deeds of your fathers",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:f9a4ea003552955f1f",
+    "definition": "Obsolete: to authorise, invest with power or entrust.",
+    "example": "Reading note: the source’s “Allow’d with absolute power” describes being invested with power. The apostrophe belongs to the quoted spelling.",
+    "collocations": [
+      "allow’d with power (source construction)",
+      "allow (obsolete invest or entrust sense)"
+    ],
+    "distinctions": [
+      "The older construction concerns conferring authority, not calculating a time allowance. It is preserved for interpreting the quotation."
+    ],
+    "usage": "Obsolete in the checked source.",
+    "originalSense": {
+      "id": "kaikki:f9a4ea003552955f1f",
+      "definition": "To sanction; to invest; to entrust.",
+      "example": "Therefore so please thee to return with us,\nAnd of our Athens—thine and ours—to take\nThe captainship, thou shalt be met with thanks,\nAllow'd with absolute power, and thy good name\nLive with authority. So soon we shall drive back\nOf Alcibiades the approaches wild,\nWho, like a boar too savage, doth root up\nHis country's peace.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:c892192ebcc7f6fc03",
+    "definition": "Obsolete: to like or be pleased with something.",
+    "example": "Reading note: the source asks “How allow you the model of these clothes?” Here allow concerns liking or approving of their appearance.",
+    "collocations": [
+      "how allow you (source construction)",
+      "allow (obsolete like sense)"
+    ],
+    "distinctions": [
+      "This older question asks for a reaction to the clothes. It does not ask whether the listener gives someone permission to wear them."
+    ],
+    "usage": "Obsolete, transitive in the checked source.",
+    "originalSense": {
+      "id": "kaikki:c892192ebcc7f6fc03",
+      "definition": "To like; to be suited or pleased with.",
+      "example": "How allow you the model of these clothes?",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:e2a7137272fa2c1444",
+    "definition": "In law, to decide a request in favour of the party who raised it.",
+    "example": "The judges allow the appeal, deciding in the appellant’s favour.",
+    "collocations": [
+      "allow an appeal",
+      "allow an objection",
+      "allow a legal request"
+    ],
+    "distinctions": [
+      "Allow an appeal here means decide it in the appellant’s favour. Grant leave to appeal instead means permit an appeal to be heard. The example states a decision in this case rather than a universal procedural rule."
+    ],
+    "usage": "Legal, transitive; distinguish the decision on a request from permission to bring it.",
+    "originalSense": {
+      "id": "kaikki:e2a7137272fa2c1444",
+      "definition": "To decide (a request) in favour of the party who raised it; to grant victory to a party regarding (a request).",
+      "example": "to allow an objection",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "distinctionTask": {
+      "prompt": "The judges allow the appeal, deciding in the appellant’s favour. They _____.",
+      "options": [
+        "decide the appeal favourably to the appellant",
+        "merely give permission for it to be heard"
+      ],
+      "answer": "decide the appeal favourably to the appellant",
+      "explanation": "The source explicitly distinguishes allowing an appeal from granting leave to appeal."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a21117c",
+    "senseId": "kaikki:55c7307b5955101854",
+    "definition": "In Multicultural Toronto English and Multicultural London English, to let something slide or refrain from bothering with it.",
+    "example": "Reading note: this variety-specific use of allow means leave something alone or let it slide. MTE and MLE stand for Multicultural Toronto English and Multicultural London English.",
+    "collocations": [
+      "allow something (let-slide sense)",
+      "let it slide (explanatory equivalent)"
+    ],
+    "distinctions": [
+      "The labels identify English varieties, not an obsolete meaning. This use concerns leaving something alone; it does not necessarily express official permission or approval."
+    ],
+    "usage": "Transitive; MTE and MLE in the checked source.",
+    "originalSense": {
+      "id": "kaikki:55c7307b5955101854",
+      "definition": "To forgo bothering with, to let slide.",
+      "example": "Easy on violence, now I doubt it\nI could’ve banged this face but allowed it",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "ban",
+        "forbid",
+        "prohibit"
+      ],
+      "collocations": [],
+      "usage": "Multicultural-London-English",
+      "register": "Multicultural-London-English, transitive",
+      "wordFamily": [
+        "allowability",
+        "allowable",
+        "allowance",
+        "allowee",
+        "allower",
+        "allow for",
+        "allowingly",
+        "allow it",
+        "allowment",
+        "allow nature to take her",
+        "its course",
+        "disallowance",
+        "reallow",
+        "unallowing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=allow&oldid=92941440",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:398ea99dfb8f16be81",
+    "definition": "To allow something to happen or give permission for it.",
+    "example": "The rules permit parking in marked bays.",
+    "collocations": [
+      "permit an activity",
+      "permit parking",
+      "be permitted"
+    ],
+    "distinctions": [
+      "The object here names an activity. Permission to park is distinct from an order to park or a guarantee that a space is available."
+    ],
+    "usage": "Ordinary permission verb: /pəˈmɪt/ (UK), /pɚˈmɪt/ (US), stress on the second syllable. Transitive, with an activity or event as object.",
+    "originalSense": {
+      "id": "kaikki:398ea99dfb8f16be81",
+      "definition": "To allow (something) to happen, to give permission for.",
+      "example": "Mr. Cooke at once began a tirade against the residents of Asquith for permitting a sandy and generally disgraceful condition of the roads. So roundly did he vituperate the inn management in particular, and with such a loud flow of words, that I trembled lest he should be heard on the veranda.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "permitable",
+        "permit nature to take her course",
+        "permittable",
+        "permittance",
+        "permitter",
+        "repermit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+    "distinctionTask": {
+      "prompt": "The rules permit parking in marked bays. Parking there is _____.",
+      "options": [
+        "allowed by those rules",
+        "compulsory under those rules"
+      ],
+      "answer": "allowed by those rules",
+      "explanation": "Permission does not itself impose an obligation."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:4db3737430b5bc3c15",
+    "definition": "To allow someone to do something; to give them permission.",
+    "example": "The library will permit visitors to use the reading room.",
+    "collocations": [
+      "permit someone to do something",
+      "permit a visitor to enter",
+      "be permitted to"
+    ],
+    "distinctions": [
+      "The active construction permit visitors to use is standard. Permit doing can instead name an activity without a person object; neither pattern universally replaces the other."
+    ],
+    "usage": "Ordinary permission verb: /pəˈmɪt/ (UK), /pɚˈmɪt/ (US), stress on the second syllable. Transitive: permit + person + to-infinitive.",
+    "originalSense": {
+      "id": "kaikki:4db3737430b5bc3c15",
+      "definition": "To allow (someone) to do something; to give permission to.",
+      "example": "He was ultimately cleared, but during that period, Mr. Ackman said, his lawyers would not permit him to defend himself publicly.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "permitable",
+        "permit nature to take her course",
+        "permittable",
+        "permittance",
+        "permitter",
+        "repermit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+    "distinctionTask": {
+      "prompt": "The library will permit visitors to use the room. The construction is _____.",
+      "options": [
+        "permit + person + to-infinitive",
+        "permit + person + bare infinitive"
+      ],
+      "answer": "permit + person + to-infinitive",
+      "explanation": "Visitors is the person object and to use supplies the permitted action."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:e731e8c3ef8f58a33b",
+    "definition": "To make something possible, without an expressed object.",
+    "example": "We can meet outside if conditions permit.",
+    "collocations": [
+      "if conditions permit",
+      "if time permits",
+      "weather permitting"
+    ],
+    "distinctions": [
+      "Conditions permit means conditions make the plan possible. The clause has no expressed direct object and does not describe the weather issuing an official document."
+    ],
+    "usage": "Ordinary permission verb: /pəˈmɪt/ (UK), /pɚˈmɪt/ (US), stress on the second syllable. Intransitive possibility sense.",
+    "originalSense": {
+      "id": "kaikki:e731e8c3ef8f58a33b",
+      "definition": "To allow for, to make something possible.",
+      "example": "What was left to say? Quite a lot, if only parliamentary time permitted.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "permitable",
+        "permit nature to take her course",
+        "permittable",
+        "permittance",
+        "permitter",
+        "repermit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+    "distinctionTask": {
+      "prompt": "We can meet outside if conditions permit. The plan depends on _____.",
+      "options": [
+        "conditions making it possible",
+        "conditions issuing a legal document"
+      ],
+      "answer": "conditions making it possible",
+      "explanation": "Here permit is used without a direct object for circumstances that make an action possible."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:6bbc3c48d48f060eb1",
+    "definition": "To allow or admit of something.",
+    "example": "These rules do not permit of exceptions.",
+    "collocations": [
+      "permit of exceptions",
+      "permit of doubt",
+      "not permit of something"
+    ],
+    "distinctions": [
+      "Permit of is a formal construction with of followed by a noun phrase. The example rules out exceptions; it does not describe an application for a permit."
+    ],
+    "usage": "Ordinary permission verb: /pəˈmɪt/ (UK), /pɚˈmɪt/ (US), stress on the second syllable. Intransitive with of; formal.",
+    "originalSense": {
+      "id": "kaikki:6bbc3c48d48f060eb1",
+      "definition": "To allow, to admit (of).",
+      "example": "\"You English are always so frivolous,\" said the Princess. \"In Russia we have too many troubles to permit of our being light-hearted.\"",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "permitable",
+        "permit nature to take her course",
+        "permittable",
+        "permittance",
+        "permitter",
+        "repermit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+    "distinctionTask": {
+      "prompt": "These rules do not permit of exceptions. In the sentence, exceptions are _____.",
+      "options": [
+        "ruled out by the rules",
+        "required by the rules"
+      ],
+      "answer": "ruled out by the rules",
+      "explanation": "The negative do not permit of rules out the stated possibility."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:3d1a8d829445655585",
+    "definition": "To grant formal authorisation for something.",
+    "example": "The city can permit the new development once it meets the stated requirements.",
+    "collocations": [
+      "permit a development",
+      "permit a project",
+      "permit construction"
+    ],
+    "distinctions": [
+      "The city is the authority able to grant formal approval in this example. Can and once make the approval conditional; the sentence does not report approval already granted."
+    ],
+    "usage": "This formal authorisation verb is pronounced like the noun: /ˈpɜːmɪt/ (UK), /ˈpɝmɪt/ (US), stress on the first syllable in the checked source. Transitive; authority granting approval.",
+    "originalSense": {
+      "id": "kaikki:3d1a8d829445655585",
+      "definition": "To grant formal authorization for (something).",
+      "example": "The Building Department permitted that project last week.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "permitable",
+        "permit nature to take her course",
+        "permittable",
+        "permittance",
+        "permitter",
+        "repermit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+    "distinctionTask": {
+      "prompt": "The city can permit the development once requirements are met. The city’s role is _____.",
+      "options": [
+        "the authority able to grant approval",
+        "the applicant seeking approval from itself"
+      ],
+      "answer": "the authority able to grant approval",
+      "explanation": "The stated subject is the approving authority; the sentence remains conditional."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:2763739fdf70143873",
+    "definition": "To attempt to obtain, or succeed in obtaining, formal authorisation for something.",
+    "example": "The developers aim to permit the project, but the application is still pending.",
+    "collocations": [
+      "permit a project (seek-authorisation sense)",
+      "work on permitting a development",
+      "obtain project authorisation"
+    ],
+    "distinctions": [
+      "Here the developers seek authorisation rather than act as the approving authority. This source meaning includes attempts as well as successes; the pending application does not establish approval."
+    ],
+    "usage": "This formal authorisation verb is pronounced like the noun: /ˈpɜːmɪt/ (UK), /ˈpɝmɪt/ (US), stress on the first syllable in the checked source. Transitive; applicant seeking or obtaining authorisation.",
+    "originalSense": {
+      "id": "kaikki:2763739fdf70143873",
+      "definition": "To attempt to obtain or succeed in obtaining formal authorization for (something).",
+      "example": "We've been busy permitting the State Street development.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "permitable",
+        "permit nature to take her course",
+        "permittable",
+        "permittance",
+        "permitter",
+        "repermit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+    "distinctionTask": {
+      "prompt": "Developers aim to permit a project; the application is still pending. Approval is _____.",
+      "options": [
+        "being sought, not stated as obtained",
+        "already established by the word aim"
+      ],
+      "answer": "being sought, not stated as obtained",
+      "explanation": "Aim and pending do not report a successful authorisation."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:4ac974fea8eeef2ca4",
+    "definition": "Now archaic and rare: to hand something over or resign it to someone.",
+    "example": "Reading note: in the source’s “to the gods permit the event of things”, permit means leave or resign the outcome to the gods. This explains the speaker’s expression.",
+    "collocations": [
+      "permit the event of things (source wording)",
+      "permit something to someone (older hand-over sense)"
+    ],
+    "distinctions": [
+      "The checked source labels this hand-over sense now archaic and rare. It is separate from a modern authority granting a permit and does not establish the quotation’s religious claims."
+    ],
+    "usage": "Now archaic and rare in the checked source.",
+    "originalSense": {
+      "id": "kaikki:4ac974fea8eeef2ca4",
+      "definition": "To hand over, resign (something to someone).",
+      "example": "Let us not aggravate our sorrows, / But to the gods permit the event of things.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "archaic, rare",
+      "register": "archaic, rare",
+      "wordFamily": [
+        "permitable",
+        "permit nature to take her course",
+        "permittable",
+        "permittance",
+        "permitter",
+        "repermit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:9526dd71537cd2600c",
+    "definition": "An authorising document or other token that makes a specified activity allowed or legal.",
+    "example": "This permit authorises camping at Site A on Friday.",
+    "collocations": [
+      "a camping permit",
+      "a building permit",
+      "apply for a permit"
+    ],
+    "distinctions": [
+      "The noun names an authorising document or token. The example specifies one activity, site and day; it does not grant unrestricted permission elsewhere."
+    ],
+    "usage": "Noun: /ˈpɜːmɪt/ (UK), /ˈpɝmɪt/ (US), stress on the first syllable.",
+    "originalSense": {
+      "id": "kaikki:9526dd71537cd2600c",
+      "definition": "An artifact or document rendering something allowed or legal.",
+      "example": "A construction permit can be obtained from the town offices.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "permitable",
+        "permit nature to take her course",
+        "permittable",
+        "permittance",
+        "permitter",
+        "repermit",
+        "beginner's permit",
+        "building permit",
+        "construction permit",
+        "destruction permit",
+        "driver's permit",
+        "driving permit",
+        "handicapped permit",
+        "learner permit",
+        "learner's permit",
+        "learning permit",
+        "parking permit",
+        "permitholder",
+        "permitholding",
+        "permitless",
+        "permit nature to take its course",
+        "permittee",
+        "pollution permit system",
+        "pull a permit",
+        "residence permit",
+        "work permit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+    "distinctionTask": {
+      "prompt": "This permit authorises camping at Site A on Friday. It authorises _____.",
+      "options": [
+        "the stated camping activity, site and day",
+        "every activity at every site indefinitely"
+      ],
+      "answer": "the stated camping activity, site and day",
+      "explanation": "The sentence explicitly limits the authorisation."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:65a99ed87d3dd62e81",
+    "definition": "Obsolete noun: formal permission.",
+    "example": "Reading note: this older noun permit means formal permission itself. The checked source labels it obsolete and supplies no sentence illustration for this record.",
+    "collocations": [
+      "permit (obsolete abstract permission noun)",
+      "formal permission (explanatory meaning)"
+    ],
+    "distinctions": [
+      "This abstract permission meaning is separate from the ordinary modern noun for an authorising document. The obsolete label does not apply to a current camping or building permit."
+    ],
+    "usage": "Obsolete noun in the checked source.",
+    "originalSense": {
+      "id": "kaikki:65a99ed87d3dd62e81",
+      "definition": "Formal permission.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "allowance",
+        "authorization",
+        "sanction",
+        "allowance",
+        "authority",
+        "authorization",
+        "clearance",
+        "consent",
+        "leave",
+        "license",
+        "mandate",
+        "permission",
+        "permit",
+        "warrant"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "permitable",
+        "permit nature to take her course",
+        "permittable",
+        "permittance",
+        "permitter",
+        "repermit",
+        "beginner's permit",
+        "building permit",
+        "construction permit",
+        "destruction permit",
+        "driver's permit",
+        "driving permit",
+        "handicapped permit",
+        "learner permit",
+        "learner's permit",
+        "learning permit",
+        "parking permit",
+        "permitholder",
+        "permitholding",
+        "permitless",
+        "permit nature to take its course",
+        "permittee",
+        "pollution permit system",
+        "pull a permit",
+        "residence permit",
+        "work permit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "kaikki:1bfb246afe7b961fc7",
+    "definition": "A pompano fish of the species Trachinotus falcatus.",
+    "example": "The anglers identify the fish as a permit, Trachinotus falcatus.",
+    "collocations": [
+      "a permit fish",
+      "the species Trachinotus falcatus",
+      "identify a permit"
+    ],
+    "distinctions": [
+      "This permit is a fish, not an authorising document. The scientific species name identifies the intended fish without treating every pompano as the same species."
+    ],
+    "usage": "Countable fish noun, with the noun’s first-syllable stress.",
+    "originalSense": {
+      "id": "kaikki:1bfb246afe7b961fc7",
+      "definition": "A pompano of the species Trachinotus falcatus.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "permitable",
+        "permit nature to take her course",
+        "permittable",
+        "permittance",
+        "permitter",
+        "repermit",
+        "beginner's permit",
+        "building permit",
+        "construction permit",
+        "destruction permit",
+        "driver's permit",
+        "driving permit",
+        "handicapped permit",
+        "learner permit",
+        "learner's permit",
+        "learning permit",
+        "parking permit",
+        "permitholder",
+        "permitholding",
+        "permitless",
+        "permit nature to take its course",
+        "permittee",
+        "pollution permit system",
+        "pull a permit",
+        "residence permit",
+        "work permit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/permit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+    "distinctionTask": {
+      "prompt": "The fish is identified as a permit, Trachinotus falcatus. Permit here names _____.",
+      "options": [
+        "a fish species",
+        "an authorising document"
+      ],
+      "answer": "a fish species",
+      "explanation": "The explicit fish and scientific-name context identifies the zoological noun."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "wiktionary:restored:1a85a2c88b267fd757",
+    "dictionarySourceAnchorSenseId": "kaikki:398ea99dfb8f16be81",
+    "definition": "To grant or give someone permission for something.",
+    "example": "Under these rules, the tutor may permit each student one late submission.",
+    "collocations": [
+      "permit someone something",
+      "permit a student one exception",
+      "permit someone a liberty"
+    ],
+    "distinctions": [
+      "This double-object construction places the recipient before the permitted thing. May describes an available permission; it does not say a late submission has already occurred."
+    ],
+    "usage": "Ordinary permission verb: /pəˈmɪt/ (UK), /pɚˈmɪt/ (US), stress on the second syllable. Ditransitive: permit + recipient + permitted thing.",
+    "originalSense": {
+      "id": "wiktionary:restored:1a85a2c88b267fd757",
+      "pos": "verb",
+      "definition": "To grant, or give permission for, (something) to (someone).",
+      "example": "",
+      "source": "English Wiktionary, restored top-level meaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+    "distinctionTask": {
+      "prompt": "The tutor may permit each student one late submission. The recipient is _____.",
+      "options": [
+        "each student",
+        "the submission itself"
+      ],
+      "answer": "each student",
+      "explanation": "The person immediately after permit receives the permission."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-70e0b1f2",
+    "senseId": "wiktionary:restored:b2e67ed525552ed499",
+    "dictionaryParentSenseId": "kaikki:9526dd71537cd2600c",
+    "definition": "A restricted licence for someone learning to drive who has not yet met the requirements for a full driver’s licence.",
+    "example": "A learner’s permit allows someone to practise driving under the applicable restrictions.",
+    "collocations": [
+      "a learner’s permit",
+      "obtain a learner’s permit",
+      "driving-permit restrictions"
+    ],
+    "distinctions": [
+      "A learner’s permit is not a full driver’s licence. The exact age, supervision and other conditions depend on the applicable rules; there is no universal set stated here."
+    ],
+    "usage": "Automotive noun; a restricted learning-stage licence.",
+    "originalSense": {
+      "id": "wiktionary:restored:b2e67ed525552ed499",
+      "pos": "noun",
+      "definition": "A learner's permit.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+    "distinctionTask": {
+      "prompt": "A learner’s permit is a restricted licence for learning to drive. It is _____.",
+      "options": [
+        "different from a full driver’s licence",
+        "automatically unrestricted permission to drive"
+      ],
+      "answer": "different from a full driver’s licence",
+      "explanation": "The restricted learning stage is explicit in the definition."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "senseId": "kaikki:00d14ec4fefcca88f7",
+    "definition": "To allow entry into a place, the mind or consideration.",
+    "example": "The guards admit ticket holders to the gallery.",
+    "collocations": [
+      "admit someone to a place",
+      "admit evidence",
+      "admit a thought"
+    ],
+    "distinctions": [
+      "This example concerns entry into a gallery. The same broad source meaning also covers allowing a thought into the mind or evidence into consideration; admitting evidence does not by itself prove it true."
+    ],
+    "usage": "Transitive; admit + person or thing, often followed by to or into.",
+    "originalSense": {
+      "id": "kaikki:00d14ec4fefcca88f7",
+      "definition": "To allow to enter; to grant entrance (to), whether into a place, into the mind, or into consideration.",
+      "example": "to admit a serious thought into the mind",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "admit defeat",
+        "admittable",
+        "admittance",
+        "admittedly",
+        "admittee",
+        "admitter",
+        "admitting",
+        "admittingly",
+        "coadmit",
+        "nonadmitted",
+        "preadmit",
+        "re-admit",
+        "readmit",
+        "unadmittable",
+        "unadmitted",
+        "unadmittedly",
+        "unadmitting"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/admit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=admit&oldid=92062327",
+    "distinctionTask": {
+      "prompt": "The guards admit ticket holders to the gallery. They allow _____.",
+      "options": [
+        "entry to the gallery",
+        "an admission of guilt"
+      ],
+      "answer": "entry to the gallery",
+      "explanation": "The place and ticket-holder context identifies entrance."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "senseId": "kaikki:43aa919ba93d27f551",
+    "definition": "To allow someone into a profession or privilege, recognising the required qualification.",
+    "example": "The professional body can admit qualified applicants to the profession.",
+    "collocations": [
+      "admit someone to a profession",
+      "admit someone to practice",
+      "admit someone to membership"
+    ],
+    "distinctions": [
+      "The example concerns professional admission and the right to participate. It does not merely describe entering the organisation’s building or guarantee later professional success."
+    ],
+    "usage": "Transitive; formal admission to a profession, membership or privilege.",
+    "originalSense": {
+      "id": "kaikki:43aa919ba93d27f551",
+      "definition": "To allow (someone) to enter a profession or to enjoy a privilege; to recognize as qualified for a franchise.",
+      "example": "to admit an attorney to practice law",
+      "pos": "verb",
+      "synonyms": [
+        "inlet",
+        "let in"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "admit defeat",
+        "admittable",
+        "admittance",
+        "admittedly",
+        "admittee",
+        "admitter",
+        "admitting",
+        "admittingly",
+        "coadmit",
+        "nonadmitted",
+        "preadmit",
+        "re-admit",
+        "readmit",
+        "unadmittable",
+        "unadmitted",
+        "unadmittedly",
+        "unadmitting"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/admit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=admit&oldid=92062327",
+    "distinctionTask": {
+      "prompt": "The professional body can admit applicants to the profession. This concerns _____.",
+      "options": [
+        "recognition allowing professional participation",
+        "only physical entry into an office"
+      ],
+      "answer": "recognition allowing professional participation",
+      "explanation": "The stated destination is a profession, not a room."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "senseId": "kaikki:5e5caa7fb2a9ae10cc",
+    "definition": "To acknowledge or concede something as true.",
+    "example": "I admit making a mistake in the calculation.",
+    "collocations": [
+      "admit doing something",
+      "admit to doing something",
+      "admit that"
+    ],
+    "distinctions": [
+      "Admit making and admit to making are both established patterns. The speaker acknowledges the mistake; this statement is not an independent check of the calculation. Not every admission concerns a crime."
+    ],
+    "usage": "Transitive or intransitive; takes a noun, an -ing form, to + -ing or a clause according to the construction.",
+    "originalSense": {
+      "id": "kaikki:5e5caa7fb2a9ae10cc",
+      "definition": "To concede as true; to acknowledge or assent to, as an allegation which it is impossible to deny (+ to).",
+      "example": "the argument or fact is admitted",
+      "pos": "verb",
+      "synonyms": [
+        "own up",
+        "confess",
+        "allow",
+        "acknowledge",
+        "own",
+        "grant"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive, transitive",
+      "wordFamily": [
+        "admit defeat",
+        "admittable",
+        "admittance",
+        "admittedly",
+        "admittee",
+        "admitter",
+        "admitting",
+        "admittingly",
+        "coadmit",
+        "nonadmitted",
+        "preadmit",
+        "re-admit",
+        "readmit",
+        "unadmittable",
+        "unadmitted",
+        "unadmittedly",
+        "unadmitting"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/admit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=admit&oldid=92062327",
+    "distinctionTask": {
+      "prompt": "I admit making a mistake in the calculation. The speaker _____.",
+      "options": [
+        "acknowledges a mistake",
+        "necessarily grants someone entry to a building"
+      ],
+      "answer": "acknowledges a mistake",
+      "explanation": "The -ing object identifies what the speaker acknowledges."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "senseId": "kaikki:5b769dcd4fb46d0242",
+    "definition": "To be capable of or permit something, with or without of.",
+    "example": "The data admit two different interpretations.",
+    "collocations": [
+      "admit an interpretation",
+      "admit of an interpretation",
+      "admit a possibility"
+    ],
+    "distinctions": [
+      "The data leave two interpretations possible. This does not establish that both are correct. The source records this capacity construction with or without of."
+    ],
+    "usage": "Capacity or possibility sense; an inanimate subject can admit something.",
+    "originalSense": {
+      "id": "kaikki:5b769dcd4fb46d0242",
+      "definition": "To be capable of; to permit. In this sense, \"of\" may be used after the verb, or may be omitted.",
+      "example": "The words do not admit such a construction.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "admit defeat",
+        "admittable",
+        "admittance",
+        "admittedly",
+        "admittee",
+        "admitter",
+        "admitting",
+        "admittingly",
+        "coadmit",
+        "nonadmitted",
+        "preadmit",
+        "re-admit",
+        "readmit",
+        "unadmittable",
+        "unadmitted",
+        "unadmittedly",
+        "unadmitting"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/admit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=admit&oldid=92062327",
+    "distinctionTask": {
+      "prompt": "The data admit two interpretations. They _____.",
+      "options": [
+        "leave two interpretations possible",
+        "prove both interpretations correct"
+      ],
+      "answer": "leave two interpretations possible",
+      "explanation": "Possibility is distinct from independent confirmation."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "senseId": "kaikki:bac3baa2d1d2858c43",
+    "definition": "To give scope or opportunity for something; to allow it, with of.",
+    "example": "The circumstances do not admit of a delay.",
+    "collocations": [
+      "admit of a delay",
+      "admit of an interpretation",
+      "not admit of something"
+    ],
+    "distinctions": [
+      "Admit of here concerns what the circumstances allow. The negative rules out a delay; it does not describe confessing that a delay occurred."
+    ],
+    "usage": "Intransitive with of in this separate source record; formal.",
+    "originalSense": {
+      "id": "kaikki:bac3baa2d1d2858c43",
+      "definition": "To give warrant or allowance, to grant opportunity or permission.",
+      "example": "Circumstances do not admit of this.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "with-of",
+      "register": "intransitive, with-of",
+      "wordFamily": [
+        "admit defeat",
+        "admittable",
+        "admittance",
+        "admittedly",
+        "admittee",
+        "admitter",
+        "admitting",
+        "admittingly",
+        "coadmit",
+        "nonadmitted",
+        "preadmit",
+        "re-admit",
+        "readmit",
+        "unadmittable",
+        "unadmitted",
+        "unadmittedly",
+        "unadmitting"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/admit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=admit&oldid=92062327",
+    "distinctionTask": {
+      "prompt": "The circumstances do not admit of a delay. A delay is _____.",
+      "options": [
+        "not allowed by the stated circumstances",
+        "being confessed as a completed event"
+      ],
+      "answer": "not allowed by the stated circumstances",
+      "explanation": "The negative possibility construction does not report an earlier confession."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a1cec70",
+    "senseId": "kaikki:266fbdc14152542319",
+    "definition": "To allow someone to enter a hospital or similar facility for treatment.",
+    "example": "The hospital will admit her for observation this afternoon.",
+    "collocations": [
+      "admit someone to hospital",
+      "admit a patient",
+      "be admitted for observation"
+    ],
+    "distinctions": [
+      "The sentence schedules hospital admission. It does not report that treatment has finished or that the patient has recovered. This specific medical use has a separate source identity from general entry."
+    ],
+    "usage": "Transitive hospital-admission sense.",
+    "originalSense": {
+      "id": "kaikki:266fbdc14152542319",
+      "definition": "To allow to enter a hospital or similar facility for treatment.",
+      "example": "\"This shocking report proves once again that we urgently need a radical shake-up of hospital care,\" said Jeremy Hughes, chief executive of the Alzheimer's Society. \"Given that people with dementia occupy a quarter of hospital beds and that many leave in worse health than when they were admitted, it is unacceptable that training in dementia care is not the norm.\"",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "admit defeat",
+        "admittable",
+        "admittance",
+        "admittedly",
+        "admittee",
+        "admitter",
+        "admitting",
+        "admittingly",
+        "coadmit",
+        "nonadmitted",
+        "preadmit",
+        "re-admit",
+        "readmit",
+        "unadmittable",
+        "unadmitted",
+        "unadmittedly",
+        "unadmitting"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/admit#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=admit&oldid=92062327",
+    "distinctionTask": {
+      "prompt": "The hospital will admit her for observation this afternoon. It plans _____.",
+      "options": [
+        "her admission for observation",
+        "to certify that she has already recovered"
+      ],
+      "answer": "her admission for observation",
+      "explanation": "Future admission is separate from a completed treatment outcome."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:5ab0b63ad82e3c9210",
+    "definition": "To refuse to accept something.",
+    "example": "We reject the proposal because it exceeds the budget.",
+    "collocations": [
+      "reject a proposal",
+      "reject an offer",
+      "reject a claim"
+    ],
+    "distinctions": [
+      "The team refuses this proposal on the stated budget ground. Rejection does not establish that the proposal has no value in any other situation."
+    ],
+    "usage": "Verb: /rɪˈdʒɛkt/, stress on the second syllable (with source-recorded accent variants). Transitive refusal sense.",
+    "originalSense": {
+      "id": "kaikki:5ab0b63ad82e3c9210",
+      "definition": "To refuse to accept; to forswear.",
+      "example": "She even rejected my improved offer.",
+      "pos": "verb",
+      "synonyms": [
+        "abjure",
+        "abnegate",
+        "decline",
+        "deny",
+        "disown",
+        "refuse",
+        "repudiate",
+        "say no",
+        "turn down",
+        "dismiss",
+        "discount"
+      ],
+      "antonyms": [
+        "accept",
+        "take up"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "bandreject",
+        "overreject",
+        "rejectability",
+        "rejectable",
+        "rejectate",
+        "rejected landing",
+        "rejected takeoff",
+        "rejectee",
+        "rejecter",
+        "rejector",
+        "rejectful",
+        "rejection",
+        "rejectionism",
+        "rejectionist",
+        "rejective",
+        "rejectment",
+        "rereject",
+        "unreject"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reject#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reject&oldid=91918120",
+    "distinctionTask": {
+      "prompt": "We reject the proposal because it exceeds the budget. We _____.",
+      "options": [
+        "refuse to accept that proposal",
+        "necessarily prove it worthless in every situation"
+      ],
+      "answer": "refuse to accept that proposal",
+      "explanation": "The refusal has a stated reason without a universal judgment of value."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:df93cc355e3feb3066",
+    "definition": "In basketball, to block a shot.",
+    "example": "The defender may reject the shot by blocking the ball.",
+    "collocations": [
+      "reject a shot",
+      "block a shot",
+      "a defender rejects a shot"
+    ],
+    "distinctions": [
+      "The basketball use concerns stopping the shot. The source says the ball may especially be sent off court, but does not require that outcome for every block."
+    ],
+    "usage": "Verb: /rɪˈdʒɛkt/, stress on the second syllable (with source-recorded accent variants). Basketball sense.",
+    "originalSense": {
+      "id": "kaikki:df93cc355e3feb3066",
+      "definition": "To block a shot, especially if it sends the ball off the court.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "abjure",
+        "abnegate",
+        "decline",
+        "deny",
+        "disown",
+        "refuse",
+        "repudiate",
+        "say no",
+        "turn down",
+        "dismiss",
+        "discount"
+      ],
+      "antonyms": [
+        "accept",
+        "take up"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "bandreject",
+        "overreject",
+        "rejectability",
+        "rejectable",
+        "rejectate",
+        "rejected landing",
+        "rejected takeoff",
+        "rejectee",
+        "rejecter",
+        "rejector",
+        "rejectful",
+        "rejection",
+        "rejectionism",
+        "rejectionist",
+        "rejective",
+        "rejectment",
+        "rereject",
+        "unreject"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reject#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reject&oldid=91918120",
+    "distinctionTask": {
+      "prompt": "The defender may reject the shot by blocking the ball. Reject means _____.",
+      "options": [
+        "block the shot",
+        "refuse to select a player for the team"
+      ],
+      "answer": "block the shot",
+      "explanation": "The shot and ball context identifies the sporting action."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:553fba3fff10e658ec",
+    "definition": "To refuse a romantic approach or invitation.",
+    "example": "She is free to reject his invitation to a date.",
+    "collocations": [
+      "reject a romantic advance",
+      "reject an invitation to a date",
+      "be rejected"
+    ],
+    "distinctions": [
+      "The sentence concerns her choice to decline a romantic invitation. It does not state that she has already made that choice; a refusal does not imply an obligation to reconsider."
+    ],
+    "usage": "Verb: /rɪˈdʒɛkt/, stress on the second syllable (with source-recorded accent variants). Transitive romantic-refusal sense.",
+    "originalSense": {
+      "id": "kaikki:553fba3fff10e658ec",
+      "definition": "To refuse a romantic advance.",
+      "example": "I've been rejected three times this week.",
+      "pos": "verb",
+      "synonyms": [
+        "abjure",
+        "abnegate",
+        "decline",
+        "deny",
+        "disown",
+        "refuse",
+        "repudiate",
+        "say no",
+        "turn down",
+        "dismiss",
+        "discount"
+      ],
+      "antonyms": [
+        "accept",
+        "take up"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "bandreject",
+        "overreject",
+        "rejectability",
+        "rejectable",
+        "rejectate",
+        "rejected landing",
+        "rejected takeoff",
+        "rejectee",
+        "rejecter",
+        "rejector",
+        "rejectful",
+        "rejection",
+        "rejectionism",
+        "rejectionist",
+        "rejective",
+        "rejectment",
+        "rereject",
+        "unreject"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reject#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reject&oldid=91918120",
+    "distinctionTask": {
+      "prompt": "She is free to reject his invitation to a date. Reject here means _____.",
+      "options": [
+        "decline the romantic invitation",
+        "necessarily accept it later"
+      ],
+      "answer": "decline the romantic invitation",
+      "explanation": "The verb names refusal; the sentence preserves her choice."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:582ebd29d97f2b0438",
+    "definition": "Something that has been rejected.",
+    "example": "The team calls the unselected design a reject, although no defect was found.",
+    "collocations": [
+      "a reject",
+      "classify something as a reject",
+      "a rejected design"
+    ],
+    "distinctions": [
+      "The generic noun names something not accepted. It need not be defective: the separate production-line meaning explicitly concerns a defective product."
+    ],
+    "usage": "Noun: /ˈriːdʒɛkt/, stress on the first syllable in the checked UK/US source pronunciations. General countable noun.",
+    "originalSense": {
+      "id": "kaikki:582ebd29d97f2b0438",
+      "definition": "Something that is rejected.",
+      "example": "Almost all line segments will be trivial accepts or trivial rejects, so the above covers the vast majority of cases.",
+      "pos": "noun",
+      "synonyms": [
+        "castaway"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "bandreject",
+        "overreject",
+        "rejectability",
+        "rejectable",
+        "rejectate",
+        "rejected landing",
+        "rejected takeoff",
+        "rejectee",
+        "rejecter",
+        "rejector",
+        "rejectful",
+        "rejection",
+        "rejectionism",
+        "rejectionist",
+        "rejective",
+        "rejectment",
+        "rereject",
+        "unreject",
+        "initial reject"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reject#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reject&oldid=91918120",
+    "distinctionTask": {
+      "prompt": "The unselected design is a reject, although no defect was found. It is _____.",
+      "options": [
+        "something not accepted",
+        "necessarily a defective product"
+      ],
+      "answer": "something not accepted",
+      "explanation": "The example expressly separates rejection from a finding of a defect."
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:70a76741c822362e10",
+    "definition": "Derogatory slang: an unpopular person.",
+    "example": "Reading note: reject can be used as an insulting slang label for an unpopular person. Recognising the label in a text does not make it a neutral description of that person.",
+    "collocations": [
+      "reject (derogatory person label)",
+      "an insulting label in reported speech"
+    ],
+    "distinctions": [
+      "The source explicitly marks this person label derogatory and slang. It is separate from the neutral grammatical fact that an object or proposal has been rejected; it is not labelled historical."
+    ],
+    "usage": "Noun: /ˈriːdʒɛkt/, stress on the first syllable in the checked UK/US source pronunciations. Derogatory slang person label.",
+    "originalSense": {
+      "id": "kaikki:70a76741c822362e10",
+      "definition": "An unpopular person.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "outcast",
+        "castaway",
+        "alien"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "derogatory, slang",
+      "register": "derogatory, slang",
+      "wordFamily": [
+        "bandreject",
+        "overreject",
+        "rejectability",
+        "rejectable",
+        "rejectate",
+        "rejected landing",
+        "rejected takeoff",
+        "rejectee",
+        "rejecter",
+        "rejector",
+        "rejectful",
+        "rejection",
+        "rejectionism",
+        "rejectionist",
+        "rejective",
+        "rejectment",
+        "rereject",
+        "unreject",
+        "initial reject"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reject#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reject&oldid=91918120",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:39cf7c37731092c51c",
+    "definition": "A defective product rejected during production or quality checking.",
+    "example": "A quality inspector labels the cracked plate a reject.",
+    "collocations": [
+      "a factory reject",
+      "a production-line reject",
+      "reject goods"
+    ],
+    "distinctions": [
+      "Here the plate is both defective and rejected. The cracked plate illustrates this product meaning; the generic noun for any rejected thing does not require a defect."
+    ],
+    "usage": "Noun: /ˈriːdʒɛkt/, stress on the first syllable in the checked UK/US source pronunciations. Colloquial production or quality-control noun.",
+    "originalSense": {
+      "id": "kaikki:39cf7c37731092c51c",
+      "definition": "A rejected defective product in a production line.",
+      "example": "In all of India, China, Africa, and much of the southern American continent, those who had the leisure and wallet for fashion […] would have killed for the street merchandise of Manhattan, as also for […] the reject china and designer-label bargains to be found in downtown discount emporia.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "colloquial",
+      "register": "colloquial",
+      "wordFamily": [
+        "bandreject",
+        "overreject",
+        "rejectability",
+        "rejectable",
+        "rejectate",
+        "rejected landing",
+        "rejected takeoff",
+        "rejectee",
+        "rejecter",
+        "rejector",
+        "rejectful",
+        "rejection",
+        "rejectionism",
+        "rejectionist",
+        "rejective",
+        "rejectment",
+        "rereject",
+        "unreject",
+        "initial reject"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reject#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reject&oldid=91918120",
+    "distinctionTask": {
+      "prompt": "An inspector labels the cracked plate a reject. This example identifies _____.",
+      "options": [
+        "a defective product rejected in quality checking",
+        "a person disliked by colleagues"
+      ],
+      "answer": "a defective product rejected in quality checking",
+      "explanation": "The product and stated crack identify the defective-product meaning."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7e9ff9ea",
+    "senseId": "kaikki:b0367da8042d40b086",
+    "definition": "In aviation, a rejected takeoff.",
+    "example": "The crew report a reject: the takeoff was discontinued.",
+    "collocations": [
+      "a reject (aviation noun)",
+      "report a reject",
+      "a rejected takeoff"
+    ],
+    "distinctions": [
+      "The aviation noun names a discontinued takeoff. It does not mean a completed flight or the rejection of a passenger. The example reports the event without specifying its cause."
+    ],
+    "usage": "Noun: /ˈriːdʒɛkt/, stress on the first syllable in the checked UK/US source pronunciations. Aviation jargon.",
+    "originalSense": {
+      "id": "kaikki:b0367da8042d40b086",
+      "definition": "A rejected takeoff.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "RTO"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "bandreject",
+        "overreject",
+        "rejectability",
+        "rejectable",
+        "rejectate",
+        "rejected landing",
+        "rejected takeoff",
+        "rejectee",
+        "rejecter",
+        "rejector",
+        "rejectful",
+        "rejection",
+        "rejectionism",
+        "rejectionist",
+        "rejective",
+        "rejectment",
+        "rereject",
+        "unreject",
+        "initial reject"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reject#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reject&oldid=91918120",
+    "distinctionTask": {
+      "prompt": "The crew report a reject: the takeoff was discontinued. A reject is _____.",
+      "options": [
+        "a rejected takeoff",
+        "a successfully completed flight"
+      ],
+      "answer": "a rejected takeoff",
+      "explanation": "The sentence explicitly identifies the discontinued takeoff."
+    },
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]

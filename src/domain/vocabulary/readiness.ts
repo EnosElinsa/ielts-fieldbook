@@ -1,7 +1,7 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default, type VocabularyLearningPriority } from './runtimeData';
 import type { VocabularyEntry, VocabularySense } from './types';
 
-export const VOCABULARY_READINESS_VERSION = 'core-2026-10-18.14';
+export const VOCABULARY_READINESS_VERSION = 'core-2026-10-18.15';
 const identity = (entryId:string, senseId:string) => `${entryId}\u0000${senseId}`;
 const core = new Map<string,Supplement>();
 const additions = new Map<string,Supplement>();
@@ -57,6 +57,14 @@ export function vocabularyReadinessBaselines(entryId:string,senseId:string):Voca
 export function hasVocabularyReadinessDefault(entryId: string): boolean {
  ensureReadiness();
  return preferred.has(entryId);
+}
+
+/** Exact public teaching can supersede common tasks even in a snapshot without optional notes. */
+export function hasVocabularyReadinessContext(entryId: string, sense: VocabularySense): boolean {
+ ensureReadiness();
+ const row = additions.get(identity(entryId, sense.id)) || core.get(identity(entryId, sense.id));
+ return Boolean(row && sense.source !== 'Personal note' && row.definition === sense.definition &&
+  (row.pos || row.originalSense?.pos) === sense.pos && row.example === sense.example);
 }
 
 /** Review of these notes is independent of whether a wordbook's source meaning is confirmed. */
