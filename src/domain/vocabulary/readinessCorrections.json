@@ -211310,5 +211310,2850 @@
     "wordFamily": [],
     "register": "",
     "learningPriority": "proper-name"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:1dc3cbd6b63611779d",
+    "definition": "To ponder something or go over it in your mind.",
+    "example": "Nia thought carefully about which route to take.",
+    "collocations": [
+      "think about a question",
+      "think carefully",
+      "think what to do next"
+    ],
+    "distinctions": [
+      "Thinking concerns mental consideration. The sentence does not establish a decision or a successful solution."
+    ],
+    "usage": "Think what to do next, or think about a question.",
+    "originalSense": {
+      "id": "kaikki:1dc3cbd6b63611779d",
+      "definition": "To ponder, to go over in one's mind.",
+      "example": "Idly, the detective thought what his next move should be.",
+      "pos": "verb",
+      "synonyms": [
+        "ponder"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=think&oldid=92696358",
+    "distinctionTask": {
+      "prompt": "Nia thinks carefully about which route to take. This establishes _____.",
+      "options": [
+        "consideration of the choice",
+        "that a route has already been chosen"
+      ],
+      "answer": "consideration of the choice",
+      "explanation": "Considering the alternatives does not itself assert a completed decision."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:c8c6cee4e5924a4e1e",
+    "definition": "To say a statement to yourself mentally.",
+    "example": "\"I must remember the key,\" I thought, without speaking.",
+    "collocations": [
+      "think to yourself",
+      "think silently",
+      "a thought in direct quotation"
+    ],
+    "distinctions": [
+      "The quoted words are internal speech. Thought does not by itself mean that the words were spoken aloud."
+    ],
+    "usage": "A quotation can supply the content of think.",
+    "originalSense": {
+      "id": "kaikki:c8c6cee4e5924a4e1e",
+      "definition": "To have (some statement) in one's mind; to say to oneself mentally.",
+      "example": "\"I should phone my mother,\" I thought.",
+      "pos": "verb",
+      "synonyms": [
+        "think"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=think&oldid=92696358",
+    "distinctionTask": {
+      "prompt": "\"I must remember the key,\" I thought, without speaking. The words are _____.",
+      "options": [
+        "said mentally to myself",
+        "announced aloud to the room"
+      ],
+      "answer": "said mentally to myself",
+      "explanation": "The explicit context identifies internal speech."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:de7068ae14f90f11a2",
+    "definition": "To engage in mental consideration, especially while trying to solve a problem.",
+    "example": "We thought about the problem for an hour but found no solution.",
+    "collocations": [
+      "think about a problem",
+      "stop and think",
+      "time to think"
+    ],
+    "distinctions": [
+      "Thinking can be an attempt without a solution. About the problem is a prepositional phrase, not a direct object of think."
+    ],
+    "usage": "Intransitive; the topic may follow about.",
+    "originalSense": {
+      "id": "kaikki:de7068ae14f90f11a2",
+      "definition": "To communicate to oneself in one's mind, to try to find a solution to a problem.",
+      "example": "I thought for three hours about the problem and still couldn’t find the solution.",
+      "pos": "verb",
+      "synonyms": [
+        "think"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=think&oldid=92696358",
+    "distinctionTask": {
+      "prompt": "We thought for an hour but found no solution. Thinking here _____.",
+      "options": [
+        "does not imply that the problem was solved",
+        "guarantees a successful solution"
+      ],
+      "answer": "does not imply that the problem was solved",
+      "explanation": "The sentence explicitly separates mental effort from a successful outcome."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:8184c239a7ad6abb10",
+    "definition": "To conceive of or form a mental idea of someone or something.",
+    "example": "When asked to picture a calm place, I think of a quiet beach.",
+    "collocations": [
+      "think of a place",
+      "think of someone",
+      "think of an image"
+    ],
+    "distinctions": [
+      "Here think of introduces a mental conception. It does not mean the speaker is physically seeing the beach."
+    ],
+    "usage": "Think of is usual; think on is rare in this meaning.",
+    "originalSense": {
+      "id": "kaikki:8184c239a7ad6abb10",
+      "definition": "To conceive of something or someone",
+      "example": "I tend to think of her as rather ugly.",
+      "pos": "verb",
+      "synonyms": [
+        "think"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=think&oldid=92696358",
+    "distinctionTask": {
+      "prompt": "Asked to picture a calm place, I think of a quiet beach. This refers to _____.",
+      "options": [
+        "a mental conception of the beach",
+        "a claim that I am looking at the beach now"
+      ],
+      "answer": "a mental conception of the beach",
+      "explanation": "The stated context concerns imagining, not current visual perception."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:ae3187eb4391b929fc",
+    "definition": "To hold an opinion or judge something to be a certain way.",
+    "example": "I think this route is safer than the road beside the river.",
+    "collocations": [
+      "think that something is true",
+      "think something useful",
+      "be thought to be"
+    ],
+    "distinctions": [
+      "Think presents a judgement. A speaker may have reasons, but the verb does not independently prove that the judgement is correct."
+    ],
+    "usage": "Think that introduces an opinion; think something useful is another transitive construction.",
+    "originalSense": {
+      "id": "kaikki:ae3187eb4391b929fc",
+      "definition": "To be of the opinion (that); to consider, judge, regard, or look upon (something) as.",
+      "example": "I don't think it worth complaining about the leak in the roof, is it?",
+      "pos": "verb",
+      "synonyms": [
+        "have opinion",
+        "deem"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=think&oldid=92696358",
+    "distinctionTask": {
+      "prompt": "I think this route is safer. The speaker presents _____.",
+      "options": [
+        "an opinion about the route",
+        "independent proof of the route’s safety"
+      ],
+      "answer": "an opinion about the route",
+      "explanation": "Think identifies the speaker’s judgement without validating it."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:0c0f760c69968b69a4",
+    "definition": "To believe or guess something while admitting uncertainty.",
+    "example": "I think the last bus leaves at ten, but I am not sure.",
+    "collocations": [
+      "I think so",
+      "think it might",
+      "think but be unsure"
+    ],
+    "distinctions": [
+      "The explicit uncertainty makes think tentative here. Other uses of think need not express the same degree of uncertainty."
+    ],
+    "usage": "Transitive; often followed by a clause.",
+    "originalSense": {
+      "id": "kaikki:0c0f760c69968b69a4",
+      "definition": "To guess; to reckon; to believe while admittedly being uncertain.",
+      "example": "We should/would have thought she could've washed her hands before, at least.",
+      "pos": "verb",
+      "synonyms": [
+        "guess See Thesaurus:suppose"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=think&oldid=92696358",
+    "distinctionTask": {
+      "prompt": "I think the bus leaves at ten, but I am not sure. The time is _____.",
+      "options": [
+        "a tentative belief",
+        "confirmed beyond doubt"
+      ],
+      "answer": "a tentative belief",
+      "explanation": "The qualification explicitly leaves the departure time uncertain."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:f150e72c0a6713d6ac",
+    "definition": "To plan or consider doing something.",
+    "example": "We are thinking of moving nearer the station.",
+    "collocations": [
+      "think of doing something",
+      "think about moving",
+      "think to do something"
+    ],
+    "distinctions": [
+      "Thinking of moving describes consideration of a possible action. It does not establish a final decision or a completed move."
+    ],
+    "usage": "Think of or about plus an -ing form is a common way to consider a plan; think to also occurs in the source.",
+    "originalSense": {
+      "id": "kaikki:f150e72c0a6713d6ac",
+      "definition": "To plan; to be considering; to be of a mind (to do something).",
+      "example": "The cupbearer shrugged up his shoulders in displeasure. \"I thought to have lodged him in the solere chamber,\" said he[…]",
+      "pos": "verb",
+      "synonyms": [
+        "think"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=think&oldid=92696358",
+    "distinctionTask": {
+      "prompt": "We are thinking of moving nearer the station. We _____.",
+      "options": [
+        "are considering a possible move",
+        "have necessarily completed the move"
+      ],
+      "answer": "are considering a possible move",
+      "explanation": "The construction describes a plan under consideration."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:9bfd63af9e9666c87d",
+    "definition": "To presume or venture to do something.",
+    "example": "In the older phrase think not to say, think means presume or venture: the audience is told not to presume to make a claim.",
+    "collocations": [
+      "think not to say",
+      "presume to do something",
+      "venture to say"
+    ],
+    "distinctions": [
+      "This use concerns venturing to say something. It differs from ordinary mental consideration of whether a claim is true."
+    ],
+    "usage": "Reading guidance for the presume or venture meaning.",
+    "originalSense": {
+      "id": "kaikki:9bfd63af9e9666c87d",
+      "definition": "To presume; to venture.",
+      "example": "Think not to say within yourselves, We have Abraham to our father.",
+      "pos": "verb",
+      "synonyms": [
+        "think"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=think&oldid=92696358",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:4d43e48afe50511ced",
+    "definition": "Informal ellipsis of think so, used to express agreement or that something is obvious.",
+    "example": "Seeing the soaked floor, Lee said, \"It is wet.\" \"You think?\" Jo replied sarcastically.",
+    "collocations": [
+      "you think?",
+      "informal agreement",
+      "an obvious conclusion"
+    ],
+    "distinctions": [
+      "The explicitly sarcastic reply treats the wetness as obvious. Without that context, the same question can genuinely ask about an opinion."
+    ],
+    "usage": "Informal reply; a shortened think so construction.",
+    "originalSense": {
+      "id": "kaikki:4d43e48afe50511ced",
+      "definition": "Ellipsis of think so.",
+      "example": "These plants are dead.\nUh, you think?",
+      "pos": "verb",
+      "synonyms": [
+        "think"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "abbreviation, alt-of, ellipsis, informal",
+      "register": "abbreviation, alt-of, ellipsis, informal",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=think&oldid=92696358",
+    "distinctionTask": {
+      "prompt": "Jo sarcastically replies You think? while looking at an obviously soaked floor. Jo treats the wetness as _____.",
+      "options": [
+        "already obvious",
+        "a newly discovered uncertain hypothesis"
+      ],
+      "answer": "already obvious",
+      "explanation": "The stated sarcastic context supplies the obviousness; punctuation alone would not establish it."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:53f5b0ee443b286c48",
+    "definition": "An act or period of thinking or considering something.",
+    "example": "Let me have a think before I answer.",
+    "collocations": [
+      "have a think",
+      "a good think",
+      "have another think"
+    ],
+    "distinctions": [
+      "Think is a noun in have a think. This chiefly British expression uses the article a to name an act of consideration."
+    ],
+    "usage": "Noun, chiefly British; have a think is a countable construction.",
+    "originalSense": {
+      "id": "kaikki:53f5b0ee443b286c48",
+      "definition": "An act of thinking; consideration (of something).",
+      "example": "I'll have a think about that and let you know.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "UK, usually",
+      "register": "UK, uncountable, usually",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=think&oldid=92696358",
+    "distinctionTask": {
+      "prompt": "Let me have a think before I answer. Think here is _____.",
+      "options": [
+        "a noun for an act of consideration",
+        "a past-tense verb"
+      ],
+      "answer": "a noun for an act of consideration",
+      "explanation": "The article a marks the noun construction."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:6d419fe5e952f3a5cf",
+    "definition": "An older verb meaning to seem or appear.",
+    "example": "This older seem meaning survives in methinks. In an older him thought construction, the meaning is it seemed to him, rather than he deliberately considered it.",
+    "collocations": [
+      "methinks",
+      "him thought in older prose",
+      "it seemed to him"
+    ],
+    "distinctions": [
+      "This seem meaning comes from a different etymology from the ordinary mental activity verb."
+    ],
+    "usage": "Obsolete except in methinks; historical reading guidance.",
+    "originalSense": {
+      "id": "kaikki:6d419fe5e952f3a5cf",
+      "definition": "To seem, to appear.",
+      "example": "And whanne syr launcelot sawe he myghte not ryde vp in to the montayne\n he there alyghte vnder an Appel tree\n[…]\n And then he leid hym doune to slepe\n And thenne hym thoughte there came an old man afore hym\n the whiche sayd A launcelot of euylle feythe and poure byleue\n wherfor is thy wille tourned soo lyghtely toward thy dedely synne",
+      "pos": "verb",
+      "synonyms": [
+        "think"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=think&oldid=92696358",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:85fa1b51cfb58d74a2",
+    "definition": "A steady look or gaze.",
+    "example": "She met his steady regard without speaking.",
+    "collocations": [
+      "a steady regard",
+      "meet someone’s regard",
+      "a calm regard"
+    ],
+    "distinctions": [
+      "This noun means a gaze. It does not itself express esteem, although a gaze may communicate an attitude in context."
+    ],
+    "usage": "Countable noun; a steady look or gaze.",
+    "originalSense": {
+      "id": "kaikki:85fa1b51cfb58d74a2",
+      "definition": "A steady look, a gaze.",
+      "example": "He bathed in the memory of her blondness, of her warm blue regard, and the sentiment permeated his sensibility with tenderness made the more rich because its object was someone long since dead.",
+      "pos": "noun",
+      "synonyms": [
+        "consideration",
+        "onlook",
+        "respect"
+      ],
+      "antonyms": [
+        "neglect"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=regard&oldid=93519443",
+    "distinctionTask": {
+      "prompt": "She met his steady regard without speaking. Regard refers to _____.",
+      "options": [
+        "his steady gaze",
+        "a written reference"
+      ],
+      "answer": "his steady gaze",
+      "explanation": "The look is the intended noun meaning in this sentence."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:aa73110a8257c7c289",
+    "definition": "Concern for someone or something, esteem, or a relation or reference to it.",
+    "example": "Out of regard for her privacy, we omitted her name.",
+    "collocations": [
+      "out of regard for",
+      "regard for others",
+      "with regard to"
+    ],
+    "distinctions": [
+      "Out of regard for her privacy expresses consideration for it. With regard to a topic instead means concerning that topic."
+    ],
+    "usage": "Noun; regard for and with regard to express different relations.",
+    "originalSense": {
+      "id": "kaikki:aa73110a8257c7c289",
+      "definition": "One's concern for another; esteem; relation, reference.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "consideration",
+        "onlook",
+        "respect"
+      ],
+      "antonyms": [
+        "neglect"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=regard&oldid=93519443",
+    "distinctionTask": {
+      "prompt": "Out of regard for her privacy, we omitted her name. The omission expresses _____.",
+      "options": [
+        "consideration for her privacy",
+        "an observation that her name cannot be read"
+      ],
+      "answer": "consideration for her privacy",
+      "explanation": "Regard for here concerns consideration, not physical eyesight."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:0e7ed9cc57f7f63d97",
+    "definition": "A particular aspect, detail or respect.",
+    "example": "The two plans are alike in cost but differ in this regard: travel time.",
+    "collocations": [
+      "in this regard",
+      "in every regard",
+      "with regard to"
+    ],
+    "distinctions": [
+      "This regard identifies an aspect of comparison. It does not refer to a steady look or to the esteem in which a person is held."
+    ],
+    "usage": "Noun; usually preceded by in or with.",
+    "originalSense": {
+      "id": "kaikki:0e7ed9cc57f7f63d97",
+      "definition": "A particular aspect or detail; respect, sense.",
+      "example": "This attempt will be made with every regard to the difficulty of the undertaking […]",
+      "pos": "noun",
+      "synonyms": [
+        "consideration",
+        "onlook",
+        "respect"
+      ],
+      "antonyms": [
+        "neglect"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=regard&oldid=93519443",
+    "distinctionTask": {
+      "prompt": "The plans differ in this regard: travel time. Regard identifies _____.",
+      "options": [
+        "the aspect being compared",
+        "the person being watched"
+      ],
+      "answer": "the aspect being compared",
+      "explanation": "Travel time names the relevant respect or detail."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:3fc7e4c47c39dfe7d0",
+    "definition": "The esteem or estimation in which someone or something is held.",
+    "example": "Her colleagues hold her in high regard.",
+    "collocations": [
+      "hold someone in high regard",
+      "be held in great regard",
+      "earn someone’s regard"
+    ],
+    "distinctions": [
+      "High regard concerns esteem. It does not mean colleagues are physically looking at the person or that every judgement about her is correct."
+    ],
+    "usage": "Uncountable noun; hold someone in high regard.",
+    "originalSense": {
+      "id": "kaikki:3fc7e4c47c39dfe7d0",
+      "definition": "The worth or estimation in which something or someone is held.",
+      "example": "Dolph. For the Dolphin,\nI stand here for him: what to him from England?\nExe. Scorne and defiance, sleight regard, contempt,\nAnd any thing that may not mis-become\nThe mightie Sender, doth he prize you at.",
+      "pos": "noun",
+      "synonyms": [
+        "esteem",
+        "repute"
+      ],
+      "antonyms": [
+        "neglect"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=regard&oldid=93519443",
+    "distinctionTask": {
+      "prompt": "Her colleagues hold her in high regard. They _____.",
+      "options": [
+        "esteem her",
+        "keep her continuously in sight"
+      ],
+      "answer": "esteem her",
+      "explanation": "The construction expresses estimation rather than visual observation."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:9a26cb151fa2cda039",
+    "definition": "To look at or observe someone or something.",
+    "example": "He regarded the damaged frame carefully.",
+    "collocations": [
+      "regard someone warily",
+      "regard an object carefully",
+      "regard someone silently"
+    ],
+    "distinctions": [
+      "Here regard directs a look at an object. Regard something as useful instead expresses a judgement about it."
+    ],
+    "usage": "Transitive; regard an object or person.",
+    "originalSense": {
+      "id": "kaikki:9a26cb151fa2cda039",
+      "definition": "To look at; to observe.",
+      "example": "She regarded us warily.",
+      "pos": "verb",
+      "synonyms": [
+        "behold",
+        "clock",
+        "look",
+        "geek",
+        "kool",
+        "regard",
+        "squizz",
+        "take a butcher's",
+        "take a dekko",
+        "take a gander",
+        "vada",
+        "viddy",
+        "view"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard",
+        "regardable",
+        "regarder",
+        "regardless",
+        "self-regard",
+        "self-regarding"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=regard&oldid=93519443",
+    "distinctionTask": {
+      "prompt": "He regarded the damaged frame carefully. In this context he _____.",
+      "options": [
+        "looked at the frame",
+        "formally certified its safety"
+      ],
+      "answer": "looked at the frame",
+      "explanation": "A careful look alone does not certify a condition."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:b69567ca7467260e2f",
+    "definition": "To consider or look upon someone or something in a stated way.",
+    "example": "The council regards the park as a public asset.",
+    "collocations": [
+      "regard something as",
+      "be regarded as",
+      "regard something with concern"
+    ],
+    "distinctions": [
+      "Regard as expresses a judgement or interpretation. It does not mean simply looking at the park, and the judgement is not independent proof."
+    ],
+    "usage": "Transitive; regard something as something.",
+    "originalSense": {
+      "id": "kaikki:b69567ca7467260e2f",
+      "definition": "To consider, look upon (something) in a given way etc.",
+      "example": "I always regarded tabloid journalism as a social evil.",
+      "pos": "verb",
+      "synonyms": [
+        "esteem",
+        "hold",
+        "account",
+        "appraise",
+        "count",
+        "esteem",
+        "see",
+        "censure",
+        "consider",
+        "deem",
+        "hold",
+        "dub",
+        "find",
+        "interpret",
+        "judge",
+        "look upon",
+        "regard as",
+        "respect",
+        "think of",
+        "view as"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard",
+        "regardable",
+        "regarder",
+        "regardless",
+        "self-regard",
+        "self-regarding"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=regard&oldid=93519443",
+    "distinctionTask": {
+      "prompt": "The council regards the park as a public asset. This states _____.",
+      "options": [
+        "how the council considers the park",
+        "where the council is physically looking"
+      ],
+      "answer": "how the council considers the park",
+      "explanation": "Regard as introduces the stated assessment."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:964954217beb7c4901",
+    "definition": "An archaic use meaning to take notice of or pay attention to.",
+    "example": "In an older passage, regard him not can mean do not pay attention to him. It is separate from the modern regard him as construction.",
+    "collocations": [
+      "regard him not in older prose",
+      "take notice of",
+      "pay attention to"
+    ],
+    "distinctions": [
+      "This attention meaning is archaic. Modern regard him as introduces a judgement instead."
+    ],
+    "usage": "Archaic and transitive; reading guidance.",
+    "originalSense": {
+      "id": "kaikki:964954217beb7c4901",
+      "definition": "To take notice of, pay attention to.",
+      "example": "If much you note him / You ſhall offend him, and extend his Paſſion, / Feed, and regard him not.",
+      "pos": "verb",
+      "synonyms": [
+        "clock",
+        "give heed",
+        "attend",
+        "clock",
+        "consider",
+        "give heed",
+        "heed",
+        "let in on",
+        "mark",
+        "mind",
+        "notice",
+        "pass",
+        "pay attention",
+        "pay heed",
+        "pick up what someone is putting down",
+        "privy",
+        "regard",
+        "take heed",
+        "take note",
+        "take notice"
+      ],
+      "antonyms": [
+        "ignore",
+        "neglect",
+        "brush off",
+        "discount",
+        "disregard",
+        "dissemble",
+        "despise",
+        "ignore",
+        "misheed",
+        "misregard",
+        "neglect",
+        "pass",
+        "pass by",
+        "pay no heed",
+        "put aside",
+        "set at nought",
+        "shrug off",
+        "slough",
+        "take no notice of",
+        "tune out",
+        "unheed",
+        "unmind"
+      ],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, transitive",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard",
+        "regardable",
+        "regarder",
+        "regardless",
+        "self-regard",
+        "self-regarding"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=regard&oldid=93519443",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:af54bbc95f84d0fb74",
+    "definition": "To face towards something.",
+    "example": "In descriptions of buildings or places, regard can identify the direction they face, such as towards a river. It need not describe a person looking deliberately.",
+    "collocations": [
+      "a place regards a river",
+      "face towards",
+      "a place’s orientation"
+    ],
+    "distinctions": [
+      "Directional regard identifies orientation. Facing a direction does not establish an unobstructed view."
+    ],
+    "usage": "Directional meaning; reading guidance for descriptions of places.",
+    "originalSense": {
+      "id": "kaikki:af54bbc95f84d0fb74",
+      "definition": "To face toward.",
+      "example": "Seated on a peninſula which regardeth the maine land ; ſtrong by nature, and fortified by Art : adorned heretofore with magnificent buildings ; and numbered amongſt the paradiſes of the earth, for temperate aire, and delightfull ſituation.",
+      "pos": "verb",
+      "synonyms": [
+        "face",
+        "respect"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard",
+        "regardable",
+        "regarder",
+        "regardless",
+        "self-regard",
+        "self-regarding"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=regard&oldid=93519443",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:2cec4e091155d68d69",
+    "definition": "To have to do with or concern something.",
+    "example": "As it regards the administration of justice means as it concerns that topic. It differs from regarding something as valuable.",
+    "collocations": [
+      "as it regards a topic",
+      "concern a question",
+      "have to do with"
+    ],
+    "distinctions": [
+      "This construction concerns relevance. Concerns or relates to often makes the intended meaning clearer in current prose."
+    ],
+    "usage": "Transitive concern meaning; reading guidance.",
+    "originalSense": {
+      "id": "kaikki:2cec4e091155d68d69",
+      "definition": "To have to do with, to concern.",
+      "example": "That argument does not regard the question.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard",
+        "regardable",
+        "regarder",
+        "regardless",
+        "self-regard",
+        "self-regarding"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=regard&oldid=93519443",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:bbe0c07c38ce7533bc",
+    "definition": "An obsolete use meaning to value, esteem or respect someone or something.",
+    "example": "In an older passage, regarding gain can mean valuing it or setting store by it. This is not simply looking at a gain.",
+    "collocations": [
+      "set store by",
+      "hold in esteem",
+      "regarding gain in older prose"
+    ],
+    "distinctions": [
+      "This value or respect verb meaning is obsolete. The ordinary modern noun high regard remains separate."
+    ],
+    "usage": "Obsolete and transitive; historical reading guidance.",
+    "originalSense": {
+      "id": "kaikki:bbe0c07c38ce7533bc",
+      "definition": "To set store by (something), to hold (someone) in esteem; to consider to have value, to respect.",
+      "example": "Ther was a Iudge in a certayne cite which feared not god nether regarded man.",
+      "pos": "verb",
+      "synonyms": [
+        "honor",
+        "look up to",
+        "esteem",
+        "honor",
+        "idolize",
+        "lay store by",
+        "look up to",
+        "prize",
+        "hallow",
+        "put store by",
+        "put store in",
+        "rate",
+        "regard",
+        "respect",
+        "revere",
+        "set store by",
+        "value",
+        "venerate",
+        "worthy"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard",
+        "regardable",
+        "regarder",
+        "regardless",
+        "self-regard",
+        "self-regarding"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=regard&oldid=93519443",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:d1a368c6054f9f7fd3",
+    "definition": "An Internet filter-avoidance spelling of the derogatory noun retard.",
+    "example": "Some online writers deliberately use regard to evade a filter while invoking the derogatory insult. Context distinguishes this usage from the ordinary words for esteem or consideration.",
+    "collocations": [
+      "filter-avoidance spelling",
+      "Internet slang",
+      "a deliberate substitution"
+    ],
+    "distinctions": [
+      "This deliberate online substitution retains the derogatory force of the insult. It is unsuitable as a neutral label for a person."
+    ],
+    "usage": "Internet slang; reading guidance for recognising deliberate filter avoidance.",
+    "originalSense": {
+      "id": "kaikki:d1a368c6054f9f7fd3",
+      "definition": "Filter-avoidance spelling of retard.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Internet, euphemistic",
+      "register": "Internet, euphemistic",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard",
+        "regardable",
+        "regarder",
+        "regardless",
+        "self-regard",
+        "self-regarding"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=regard&oldid=93519443",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:03b6631dccd4b72872",
+    "definition": "Visual perception: seeing something or having it within sight.",
+    "example": "The screen blocked our view of the doorway.",
+    "collocations": [
+      "block the view",
+      "a clear view",
+      "come into view"
+    ],
+    "distinctions": [
+      "This physical meaning concerns sight. More specific uses distinguish seeing, visible range, scenery and counted online viewings."
+    ],
+    "usage": "Physical noun; view of something, a clear view or come into view.",
+    "originalSense": {
+      "id": "kaikki:03b6631dccd4b72872",
+      "definition": "Visual perception.",
+      "example": "He changed seats to get a complete view of the stage.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "model",
+        "controller"
+      ],
+      "collocations": [],
+      "usage": "physical",
+      "register": "physical",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/view#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "A screen blocks our view of the doorway. It obstructs _____.",
+      "options": [
+        "visual perception of the doorway",
+        "our opinion about the doorway"
+      ],
+      "answer": "visual perception of the doorway",
+      "explanation": "This physical context selects sight rather than a judgement."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:635934beb8173ed9f6",
+    "definition": "A drawn or painted picture or sketch of something.",
+    "example": "The artist painted a view of the old harbour.",
+    "collocations": [
+      "paint a view",
+      "a view of a harbour",
+      "a painted view"
+    ],
+    "distinctions": [
+      "Here a view is a representation created by an artist. The scenery itself is a separate view meaning."
+    ],
+    "usage": "Noun; a view can mean a picture.",
+    "originalSense": {
+      "id": "kaikki:635934beb8173ed9f6",
+      "definition": "A picture, drawn or painted; a sketch.",
+      "example": "a fine view of Lake George",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "model",
+        "controller"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/view#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "The artist painted a view of the harbour. The view here is _____.",
+      "options": [
+        "the painted representation",
+        "the harbour’s physical range of vision"
+      ],
+      "answer": "the painted representation",
+      "explanation": "The context explicitly identifies a picture."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:19766f5a1817ed0c02",
+    "definition": "An opinion, judgement, mental conception, idea or belief.",
+    "example": "Her view was that the timetable needed changing.",
+    "collocations": [
+      "hold a view",
+      "a view about something",
+      "form a view"
+    ],
+    "distinctions": [
+      "This mental meaning concerns thought rather than physical sight. More specific uses distinguish a mental image, an opinion, a perspective and an intention."
+    ],
+    "usage": "Noun; hold a view about something or form a view.",
+    "originalSense": {
+      "id": "kaikki:19766f5a1817ed0c02",
+      "definition": "An opinion, judgement, imagination, idea or belief.",
+      "example": "I need more information to get a better view of the situation.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "model",
+        "controller"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/view#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "Her view was that the timetable needed changing. View expresses _____.",
+      "options": [
+        "a judgement about the timetable",
+        "a picture drawn on the timetable"
+      ],
+      "answer": "a judgement about the timetable",
+      "explanation": "The clause supplies the content of her judgement."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:aa7120008e645f7977",
+    "definition": "In a relational database, a virtual or logical table defined by a query’s result.",
+    "example": "The analyst created a view that shows only active accounts.",
+    "collocations": [
+      "create a view",
+      "query a view",
+      "a database view"
+    ],
+    "distinctions": [
+      "An ordinary database view represents the result of its defining query. This does not assert an independent stored copy; a materialized view is a distinct implementation concept."
+    ],
+    "usage": "Computing, databases; a specialist noun.",
+    "originalSense": {
+      "id": "kaikki:aa7120008e645f7977",
+      "definition": "A virtual or logical table composed of the result set of a query in relational databases.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "model",
+        "controller"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/view#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "An ordinary database view shows the result of a query over account records. It is _____.",
+      "options": [
+        "a logical table defined by that query",
+        "necessarily a separately stored copy of every account"
+      ],
+      "answer": "a logical table defined by that query",
+      "explanation": "The source defines a virtual or logical query result; materialization is a separate concept."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:2c375c914d326065bf",
+    "definition": "The visible, interactive part of a computer program presented to its user.",
+    "example": "The search view contains a text box and a results list.",
+    "collocations": [
+      "a search view",
+      "switch views",
+      "a program’s view"
+    ],
+    "distinctions": [
+      "This view concerns the program’s interface. It need not be a database view or the underlying stored data."
+    ],
+    "usage": "Computing, programming; a specialist noun.",
+    "originalSense": {
+      "id": "kaikki:2c375c914d326065bf",
+      "definition": "The part of a computer program which is visible to the user and can be interacted with.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "model",
+        "controller"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/view#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "A search view contains a text box and a results list. View here refers to _____.",
+      "options": [
+        "the visible interface",
+        "an opinion about searching"
+      ],
+      "answer": "the visible interface",
+      "explanation": "The controls and results identify a program interface."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "specialist"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:84e94749ff67be78a7",
+    "definition": "A wake.",
+    "example": "The linked dictionary also gives view the noun meaning a wake, without an example. The surrounding passage is needed to identify the intended wake.",
+    "collocations": [
+      "view meaning a wake",
+      "a context-dependent noun",
+      "use the surrounding passage"
+    ],
+    "distinctions": [
+      "This brief gloss needs context. It should not be replaced automatically with the usual sight or opinion meanings."
+    ],
+    "usage": "Reading guidance; the linked definition does not supply an example.",
+    "originalSense": {
+      "id": "kaikki:84e94749ff67be78a7",
+      "definition": "A wake.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "model",
+        "controller"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/view#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:0f8d5cfce26d208886",
+    "definition": "To look at or watch something.",
+    "example": "We viewed the flat on Saturday before deciding whether to rent it.",
+    "collocations": [
+      "view a property",
+      "view a film",
+      "view something online"
+    ],
+    "distinctions": [
+      "Viewing the flat means looking at it. It does not establish that a rental decision or agreement followed."
+    ],
+    "usage": "Transitive; view an object, place or recording.",
+    "originalSense": {
+      "id": "kaikki:0f8d5cfce26d208886",
+      "definition": "To look at.",
+      "example": "The video was viewed by millions of people.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "see",
+        "look",
+        "voyeur"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/view#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "We viewed the flat before deciding whether to rent it. The sentence establishes _____.",
+      "options": [
+        "that we looked at the flat",
+        "that we signed a rental agreement"
+      ],
+      "answer": "that we looked at the flat",
+      "explanation": "Looking at a property is separate from agreeing to rent it."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:d3292f6bdf8d385ded",
+    "definition": "To regard or interpret someone or something in a stated way.",
+    "example": "They view the delay as a chance to revise the plan.",
+    "collocations": [
+      "view something as",
+      "be viewed as",
+      "view something with concern"
+    ],
+    "distinctions": [
+      "View as introduces an interpretation. It need not describe physical seeing, and another person can interpret the same delay differently."
+    ],
+    "usage": "Transitive; view something as something.",
+    "originalSense": {
+      "id": "kaikki:d3292f6bdf8d385ded",
+      "definition": "To regard in a stated way.",
+      "example": "I view it as a serious breach of trust.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "see",
+        "look",
+        "voyeur"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/view#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "They view the delay as a chance to revise the plan. This tells us _____.",
+      "options": [
+        "how they interpret the delay",
+        "what colour the delay is"
+      ],
+      "answer": "how they interpret the delay",
+      "explanation": "View as supplies an assessment rather than a visual property."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:a77c93730af61fc1e2",
+    "dictionaryParentSenseId": "kaikki:03b6631dccd4b72872",
+    "definition": "The act of seeing or looking at something.",
+    "example": "Move a little so I can get a clear view of the demonstration.",
+    "collocations": [
+      "get a clear view",
+      "get a closer view",
+      "a complete view of"
+    ],
+    "distinctions": [
+      "Here view concerns seeing the demonstration. It is not a drawn picture of it or an opinion about its quality."
+    ],
+    "usage": "Physical noun; seeing or looking at something.",
+    "originalSense": {
+      "id": "wiktionary:restored:a77c93730af61fc1e2",
+      "pos": "noun",
+      "definition": "The act of seeing or looking at something.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "I move to get a clear view of the demonstration. I want _____.",
+      "options": [
+        "to see it clearly",
+        "to state a theory about it"
+      ],
+      "answer": "to see it clearly",
+      "explanation": "The physical movement supports seeing rather than an opinion."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:24e8f0fde76be2f603",
+    "dictionaryParentSenseId": "kaikki:03b6631dccd4b72872",
+    "definition": "The range or field within which something can be seen.",
+    "example": "The cyclist disappeared from view behind the wall.",
+    "collocations": [
+      "out of view",
+      "in full view",
+      "disappear from view"
+    ],
+    "distinctions": [
+      "From view identifies the observer’s range of sight. Disappearing from sight does not establish that the cyclist stopped existing or reached a destination."
+    ],
+    "usage": "Physical noun; the range of vision.",
+    "originalSense": {
+      "id": "wiktionary:restored:24e8f0fde76be2f603",
+      "pos": "noun",
+      "definition": "The range of vision.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "The cyclist disappeared from view behind a wall. The cyclist is _____.",
+      "options": [
+        "outside the observer’s visible range",
+        "necessarily no longer moving"
+      ],
+      "answer": "outside the observer’s visible range",
+      "explanation": "The obstruction concerns sight, not the cyclist’s motion."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:e879402d9e6ec46e72",
+    "dictionaryParentSenseId": "kaikki:03b6631dccd4b72872",
+    "definition": "Something that can be looked at, especially scenery.",
+    "example": "The room has a view of the river.",
+    "collocations": [
+      "a river view",
+      "the view from a window",
+      "enjoy the view"
+    ],
+    "distinctions": [
+      "This view is the visible scene. A painted view of the same river is a separate representation meaning."
+    ],
+    "usage": "Physical noun; scenery or another scene to look at.",
+    "originalSense": {
+      "id": "wiktionary:restored:e879402d9e6ec46e72",
+      "pos": "noun",
+      "definition": "Something to look at, such as scenery.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "The room has a view of the river through its window. View refers to _____.",
+      "options": [
+        "the visible river scene",
+        "a required painting on the wall"
+      ],
+      "answer": "the visible river scene",
+      "explanation": "The window context identifies scenery."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:fede3e86beffceb875",
+    "dictionaryParentSenseId": "kaikki:03b6631dccd4b72872",
+    "definition": "An individual user viewing of a web page, video or similar online content.",
+    "example": "The report counted three video views from two viewers, including one repeat.",
+    "collocations": [
+      "video views",
+      "page views",
+      "a view count"
+    ],
+    "distinctions": [
+      "Views count viewing events under the report’s counting rules. A repeat can make the view count larger than the number of distinct viewers; the definition does not set every platform’s threshold."
+    ],
+    "usage": "Internet noun; a counted viewing event.",
+    "originalSense": {
+      "id": "wiktionary:restored:fede3e86beffceb875",
+      "pos": "noun",
+      "definition": "An individual viewing of a web page or a video etc. by a user.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "A report counts three views, one of them a repeat by the same viewer. Three views establish _____.",
+      "options": [
+        "three counted viewing events",
+        "three necessarily distinct viewers"
+      ],
+      "answer": "three counted viewing events",
+      "explanation": "The repeat prevents equating event count with unique viewer count."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:cae6523629cc68796b",
+    "dictionaryParentSenseId": "kaikki:03b6631dccd4b72872",
+    "definition": "An obsolete noun meaning appearance, show or aspect.",
+    "example": "In older prose, view can describe an appearance, show or aspect. This particular meaning is obsolete.",
+    "collocations": [
+      "appearance in older prose",
+      "an aspect or show",
+      "an older view meaning"
+    ],
+    "distinctions": [
+      "The appearance meaning is obsolete. The ordinary scenery and opinion meanings remain current."
+    ],
+    "usage": "Obsolete; historical reading guidance.",
+    "originalSense": {
+      "id": "wiktionary:restored:cae6523629cc68796b",
+      "pos": "noun",
+      "definition": "Appearance; show; aspect.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "historical"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:4b709f8a74bb9b50e9",
+    "dictionaryParentSenseId": "kaikki:19766f5a1817ed0c02",
+    "definition": "A mental image or conception of something.",
+    "example": "The briefing gave us a clearer view of how the parts fit together.",
+    "collocations": [
+      "a clearer view of",
+      "a mental view",
+      "form a view of the situation"
+    ],
+    "distinctions": [
+      "This view concerns a mental conception. A clearer conception need not be a literal picture or guarantee complete accuracy."
+    ],
+    "usage": "Mental noun; a mental image or conception.",
+    "originalSense": {
+      "id": "wiktionary:restored:4b709f8a74bb9b50e9",
+      "pos": "noun",
+      "definition": "A mental image.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "A briefing gives us a clearer view of how the parts fit together. It improves _____.",
+      "options": [
+        "our mental conception of the arrangement",
+        "necessarily our physical eyesight"
+      ],
+      "answer": "our mental conception of the arrangement",
+      "explanation": "The context concerns understanding the arrangement."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:f46f44e7f07a403a00",
+    "dictionaryParentSenseId": "kaikki:19766f5a1817ed0c02",
+    "definition": "A way of understanding something, an opinion or a theory.",
+    "example": "My view is that the library should stay open later.",
+    "collocations": [
+      "hold a view",
+      "express a view",
+      "views on a topic"
+    ],
+    "distinctions": [
+      "This is an opinion about desired opening hours. It does not report the library’s current closing time."
+    ],
+    "usage": "Mental noun; an opinion may be expressed with a that-clause.",
+    "originalSense": {
+      "id": "wiktionary:restored:f46f44e7f07a403a00",
+      "pos": "noun",
+      "definition": "A way of understanding something, an opinion, a theory.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "My view is that the library should stay open later. This states _____.",
+      "options": [
+        "a judgement about what the hours should be",
+        "the confirmed current closing time"
+      ],
+      "answer": "a judgement about what the hours should be",
+      "explanation": "Should identifies the proposed situation, not a factual timetable."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:02488e83ec8de5e165",
+    "dictionaryParentSenseId": "kaikki:19766f5a1817ed0c02",
+    "definition": "A point of view or perspective from which something is considered.",
+    "example": "In the residents’ view, the plan would improve access.",
+    "collocations": [
+      "in someone’s view",
+      "a resident’s view",
+      "a broad view"
+    ],
+    "distinctions": [
+      "The phrase attributes a perspective to the residents. The projected improvement has not necessarily happened."
+    ],
+    "usage": "Mental noun; in someone’s view attributes a perspective.",
+    "originalSense": {
+      "id": "wiktionary:restored:02488e83ec8de5e165",
+      "pos": "noun",
+      "definition": "A point of view.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "In the residents’ view, the plan would improve access. The improvement is presented as _____.",
+      "options": [
+        "their assessment of a proposed plan",
+        "an already completed change"
+      ],
+      "answer": "their assessment of a proposed plan",
+      "explanation": "The attributed view and would describe an assessment of the proposal."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:a3b59fee9be9b0cbf5",
+    "dictionaryParentSenseId": "kaikki:19766f5a1817ed0c02",
+    "definition": "An intention, aim or prospect.",
+    "example": "They are saving with a view to buying a home.",
+    "collocations": [
+      "with a view to doing something",
+      "with a view to buying",
+      "an intended outcome"
+    ],
+    "distinctions": [
+      "With a view to introduces the aim of the saving. It does not establish that a purchase has occurred; to is followed by the -ing form here."
+    ],
+    "usage": "Intention noun; with a view to plus an -ing form.",
+    "originalSense": {
+      "id": "wiktionary:restored:a3b59fee9be9b0cbf5",
+      "pos": "noun",
+      "definition": "An intention or prospect.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+    "distinctionTask": {
+      "prompt": "They save with a view to buying a home. Buying is _____.",
+      "options": [
+        "their intended aim",
+        "a purchase already proved complete"
+      ],
+      "answer": "their intended aim",
+      "explanation": "The construction introduces an intention."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-52576cca",
+    "senseId": "kaikki:4a2b49c11fe6c3d3c3",
+    "definition": "To send light or other waves back from a surface.",
+    "example": "A flat mirror reflects incoming light back into the room.",
+    "collocations": [
+      "reflect light",
+      "a reflecting surface",
+      "reflect a beam"
+    ],
+    "distinctions": [
+      "In the illustrated ideal flat-mirror case, the incident and reflected rays make equal angles to the normal. Reflection is separate from light passing through or being absorbed."
+    ],
+    "usage": "Transitive: a surface reflects light; the diagram illustrates specular reflection.",
+    "originalSense": {
+      "id": "kaikki:4a2b49c11fe6c3d3c3",
+      "definition": "To bend back (light, etc.) from a surface.",
+      "example": "A mirror reflects the light that shines on it.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "misreflect",
+        "nonreflective",
+        "reflectability",
+        "reflectable",
+        "reflectance",
+        "reflectarray",
+        "reflectible",
+        "reflectin",
+        "reflecting microscope",
+        "reflective",
+        "reflectogram",
+        "reflectograph",
+        "reflectography",
+        "reflectometer",
+        "reflectometry",
+        "reflect on",
+        "reflectoporn",
+        "reflector",
+        "reflectorize",
+        "reflectron",
+        "reflect upon",
+        "reflexion",
+        "retroreflect",
+        "self-reflect",
+        "unreflective"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reflect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reflect&oldid=91789249",
+    "distinctionTask": {
+      "prompt": "A flat mirror reflects a beam. The illustrated reflection sends the light _____.",
+      "options": [
+        "back from the surface",
+        "only through the mirror without returning"
+      ],
+      "answer": "back from the surface",
+      "explanation": "Reflection concerns the returning ray; transmission is a different process."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-52576cca",
+    "senseId": "kaikki:57577880b87060b881",
+    "definition": "Of light or similar radiation, to be sent back from a surface.",
+    "example": "The light reflected from the mirror onto the wall.",
+    "collocations": [
+      "light reflects from",
+      "reflect off a surface",
+      "a reflected beam"
+    ],
+    "distinctions": [
+      "Light is the subject in this intransitive construction. In the mirror reflects light, the surface is the subject and light is its direct object."
+    ],
+    "usage": "Intransitive: light reflects from or off a surface.",
+    "originalSense": {
+      "id": "kaikki:57577880b87060b881",
+      "definition": "To be bent back (light, etc.) from a surface.",
+      "example": "The moonlight reflected from the surface of water.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "misreflect",
+        "nonreflective",
+        "reflectability",
+        "reflectable",
+        "reflectance",
+        "reflectarray",
+        "reflectible",
+        "reflectin",
+        "reflecting microscope",
+        "reflective",
+        "reflectogram",
+        "reflectograph",
+        "reflectography",
+        "reflectometer",
+        "reflectometry",
+        "reflect on",
+        "reflectoporn",
+        "reflector",
+        "reflectorize",
+        "reflectron",
+        "reflect upon",
+        "reflexion",
+        "retroreflect",
+        "self-reflect",
+        "unreflective"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reflect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reflect&oldid=91789249",
+    "distinctionTask": {
+      "prompt": "The light reflected from the mirror. The grammatical subject is _____.",
+      "options": [
+        "the light",
+        "the mirror"
+      ],
+      "answer": "the light",
+      "explanation": "The intransitive construction makes the returning light the subject."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-52576cca",
+    "senseId": "kaikki:7cb0bbba11888b30ba",
+    "definition": "To show the image of someone or something, as a mirror does.",
+    "example": "The still water reflected the tree beside the pond.",
+    "collocations": [
+      "reflect an image",
+      "water reflects a tree",
+      "a reflected scene"
+    ],
+    "distinctions": [
+      "The water shows an image of the tree. The image is separate from a second physical tree, and disturbed water can produce a different appearance."
+    ],
+    "usage": "Transitive: a surface reflects an object or its image.",
+    "originalSense": {
+      "id": "kaikki:7cb0bbba11888b30ba",
+      "definition": "To mirror, or show the image of something.",
+      "example": "The shop window reflected his image as he walked past.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "misreflect",
+        "nonreflective",
+        "reflectability",
+        "reflectable",
+        "reflectance",
+        "reflectarray",
+        "reflectible",
+        "reflectin",
+        "reflecting microscope",
+        "reflective",
+        "reflectogram",
+        "reflectograph",
+        "reflectography",
+        "reflectometer",
+        "reflectometry",
+        "reflect on",
+        "reflectoporn",
+        "reflector",
+        "reflectorize",
+        "reflectron",
+        "reflect upon",
+        "reflexion",
+        "retroreflect",
+        "self-reflect",
+        "unreflective"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reflect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reflect&oldid=91789249",
+    "distinctionTask": {
+      "prompt": "Still water reflects a tree. The reflection is _____.",
+      "options": [
+        "an image of the tree",
+        "a second living tree beneath the water"
+      ],
+      "answer": "an image of the tree",
+      "explanation": "An optical image does not duplicate the physical object."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-52576cca",
+    "senseId": "kaikki:39e141d9806caf6a61",
+    "definition": "To appear as a mirrored image in or from a surface.",
+    "example": "The tree reflected in the still water.",
+    "collocations": [
+      "an image reflects in",
+      "reflect in still water",
+      "be mirrored"
+    ],
+    "distinctions": [
+      "The tree is the subject of this intransitive image construction. It is the image that appears in the water; the physical tree need not be in it."
+    ],
+    "usage": "Intransitive; the subject appears as a mirrored image.",
+    "originalSense": {
+      "id": "kaikki:39e141d9806caf6a61",
+      "definition": "To be mirrored.",
+      "example": "His image reflected from the shop window as he walked past.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "misreflect",
+        "nonreflective",
+        "reflectability",
+        "reflectable",
+        "reflectance",
+        "reflectarray",
+        "reflectible",
+        "reflectin",
+        "reflecting microscope",
+        "reflective",
+        "reflectogram",
+        "reflectograph",
+        "reflectography",
+        "reflectometer",
+        "reflectometry",
+        "reflect on",
+        "reflectoporn",
+        "reflector",
+        "reflectorize",
+        "reflectron",
+        "reflect upon",
+        "reflexion",
+        "retroreflect",
+        "self-reflect",
+        "unreflective"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reflect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reflect&oldid=91789249",
+    "distinctionTask": {
+      "prompt": "The tree reflected in the water. This does not require _____.",
+      "options": [
+        "the physical tree to be under the water",
+        "a mirrored image of the tree"
+      ],
+      "answer": "the physical tree to be under the water",
+      "explanation": "The sentence concerns the tree’s image."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-52576cca",
+    "senseId": "kaikki:0ca1c638de3ad4a33a",
+    "definition": "To agree with or closely follow something.",
+    "example": "The revised timetable reflects the new train times.",
+    "collocations": [
+      "reflect current practice",
+      "reflect a change",
+      "reflect common usage"
+    ],
+    "distinctions": [
+      "The timetable is arranged to correspond to the train times. It is not a literal mirror, and reflecting a pattern need not explain what caused it."
+    ],
+    "usage": "Transitive; correspondence or close following.",
+    "originalSense": {
+      "id": "kaikki:0ca1c638de3ad4a33a",
+      "definition": "To agree with; to closely follow.",
+      "example": "Entries in English dictionaries aim to reflect common usage.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "misreflect",
+        "nonreflective",
+        "reflectability",
+        "reflectable",
+        "reflectance",
+        "reflectarray",
+        "reflectible",
+        "reflectin",
+        "reflecting microscope",
+        "reflective",
+        "reflectogram",
+        "reflectograph",
+        "reflectography",
+        "reflectometer",
+        "reflectometry",
+        "reflect on",
+        "reflectoporn",
+        "reflector",
+        "reflectorize",
+        "reflectron",
+        "reflect upon",
+        "reflexion",
+        "retroreflect",
+        "self-reflect",
+        "unreflective"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reflect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reflect&oldid=91789249",
+    "distinctionTask": {
+      "prompt": "A revised timetable reflects new train times. It _____.",
+      "options": [
+        "corresponds to those times",
+        "necessarily caused the trains to change"
+      ],
+      "answer": "corresponds to those times",
+      "explanation": "Reflect here means match or closely follow, not cause."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-52576cca",
+    "senseId": "kaikki:d9ca35c9326299dcd4",
+    "definition": "To give evidence of someone’s or something’s character or qualities.",
+    "example": "Her careful preparation reflects her professionalism.",
+    "collocations": [
+      "reflect someone’s values",
+      "reflect a quality",
+      "reflect well on"
+    ],
+    "distinctions": [
+      "Preparation can be evidence of professionalism. The sentence is an assessment; it does not make any one action conclusive proof of a person’s whole character."
+    ],
+    "usage": "Transitive; reflect a quality. Reflect well on also evaluates how an action presents someone.",
+    "originalSense": {
+      "id": "kaikki:d9ca35c9326299dcd4",
+      "definition": "To give evidence of someone's or something's character etc.",
+      "example": "The team's victory reflects the Captain's abilities.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "misreflect",
+        "nonreflective",
+        "reflectability",
+        "reflectable",
+        "reflectance",
+        "reflectarray",
+        "reflectible",
+        "reflectin",
+        "reflecting microscope",
+        "reflective",
+        "reflectogram",
+        "reflectograph",
+        "reflectography",
+        "reflectometer",
+        "reflectometry",
+        "reflect on",
+        "reflectoporn",
+        "reflector",
+        "reflectorize",
+        "reflectron",
+        "reflect upon",
+        "reflexion",
+        "retroreflect",
+        "self-reflect",
+        "unreflective"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reflect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reflect&oldid=91789249",
+    "distinctionTask": {
+      "prompt": "Careful preparation reflects her professionalism. The preparation is presented as _____.",
+      "options": [
+        "evidence of that quality",
+        "a literal mirror image"
+      ],
+      "answer": "evidence of that quality",
+      "explanation": "The context uses reflect figuratively for evidence of a quality."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
+  },
+  {
+    "entryId": "ve-52576cca",
+    "senseId": "kaikki:6ac7143d56d3b775d0",
+    "definition": "To think seriously about something or consider it carefully.",
+    "example": "After the meeting, we reflected on what we could improve.",
+    "collocations": [
+      "reflect on an experience",
+      "reflect upon a decision",
+      "pause to reflect"
+    ],
+    "distinctions": [
+      "Reflect on describes deliberate consideration. It does not establish that a decision was reached or an improvement completed."
+    ],
+    "usage": "Intransitive; reflect on or upon a topic.",
+    "originalSense": {
+      "id": "kaikki:6ac7143d56d3b775d0",
+      "definition": "To think seriously; to ponder or consider.",
+      "example": "People do that sort of thing every day, without ever stopping to reflect on the consequences.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "misreflect",
+        "nonreflective",
+        "reflectability",
+        "reflectable",
+        "reflectance",
+        "reflectarray",
+        "reflectible",
+        "reflectin",
+        "reflecting microscope",
+        "reflective",
+        "reflectogram",
+        "reflectograph",
+        "reflectography",
+        "reflectometer",
+        "reflectometry",
+        "reflect on",
+        "reflectoporn",
+        "reflector",
+        "reflectorize",
+        "reflectron",
+        "reflect upon",
+        "reflexion",
+        "retroreflect",
+        "self-reflect",
+        "unreflective"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reflect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=reflect&oldid=91789249",
+    "distinctionTask": {
+      "prompt": "We reflected on what we could improve. We _____.",
+      "options": [
+        "considered the question seriously",
+        "necessarily completed the improvements"
+      ],
+      "answer": "considered the question seriously",
+      "explanation": "Consideration is separate from completed action."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "learningPriority": "general"
   }
 ]

@@ -22410,5 +22410,431 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "originalSense": {
+      "id": "kaikki:ae3187eb4391b929fc",
+      "definition": "To be of the opinion (that); to consider, judge, regard, or look upon (something) as.",
+      "example": "I don't think it worth complaining about the leak in the roof, is it?",
+      "pos": "verb",
+      "synonyms": [
+        "have opinion",
+        "deem"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:ae3187eb4391b929fc",
+      "definition": "To hold an opinion or judge something to be a certain way.",
+      "example": "I think this route is safer than the road beside the river.",
+      "pos": "verb",
+      "synonyms": [
+        "have opinion",
+        "deem"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "think that something is true",
+        "think something useful",
+        "be thought to be"
+      ],
+      "usage": "Think that introduces an opinion; think something useful is another transitive construction.",
+      "register": "transitive",
+      "wordFamily": [
+        "afterthink",
+        "bethink",
+        "close one's eyes and think of England",
+        "come to think of it",
+        "don't even think about it",
+        "do you think you can walk",
+        "forethink",
+        "give someone something to think about",
+        "great minds think alike",
+        "group-think",
+        "have another think",
+        "hear oneself think",
+        "I don't think",
+        "I don't think so",
+        "ill-thought-out",
+        "interthink",
+        "I think",
+        "I think not",
+        "I think so",
+        "I think therefore I am",
+        "I thought you'd never ask",
+        "lie back and think of England",
+        "makes you think",
+        "misthink",
+        "outthink",
+        "overthink",
+        "quick-thinking",
+        "rethink",
+        "shut one's eyes and think of England",
+        "straight-thinking"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/think#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Think presents a judgement. A speaker may have reasons, but the verb does not independently prove that the judgement is correct."
+      ],
+      "distinctionTask": {
+        "prompt": "I think this route is safer. The speaker presents _____.",
+        "options": [
+          "an opinion about the route",
+          "independent proof of the route’s safety"
+        ],
+        "answer": "an opinion about the route",
+        "explanation": "Think identifies the speaker’s judgement without validating it."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "originalSense": {
+      "id": "kaikki:b69567ca7467260e2f",
+      "definition": "To consider, look upon (something) in a given way etc.",
+      "example": "I always regarded tabloid journalism as a social evil.",
+      "pos": "verb",
+      "synonyms": [
+        "esteem",
+        "hold",
+        "account",
+        "appraise",
+        "count",
+        "esteem",
+        "see",
+        "censure",
+        "consider",
+        "deem",
+        "hold",
+        "dub",
+        "find",
+        "interpret",
+        "judge",
+        "look upon",
+        "regard as",
+        "respect",
+        "think of",
+        "view as"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard",
+        "regardable",
+        "regarder",
+        "regardless",
+        "self-regard",
+        "self-regarding"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:b69567ca7467260e2f",
+      "definition": "To consider or look upon someone or something in a stated way.",
+      "example": "The council regards the park as a public asset.",
+      "pos": "verb",
+      "synonyms": [
+        "esteem",
+        "hold",
+        "account",
+        "appraise",
+        "count",
+        "esteem",
+        "see",
+        "censure",
+        "consider",
+        "deem",
+        "hold",
+        "dub",
+        "find",
+        "interpret",
+        "judge",
+        "look upon",
+        "regard as",
+        "respect",
+        "think of",
+        "view as"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "regard something as",
+        "be regarded as",
+        "regard something with concern"
+      ],
+      "usage": "Transitive; regard something as something.",
+      "register": "transitive",
+      "wordFamily": [
+        "court of regard",
+        "disregard",
+        "in regard",
+        "in regard of",
+        "in regard to",
+        "irregardful",
+        "regardful",
+        "regard ring",
+        "with regard to",
+        "misregard",
+        "regardable",
+        "regarder",
+        "regardless",
+        "self-regard",
+        "self-regarding"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regard#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Regard as expresses a judgement or interpretation. It does not mean simply looking at the park, and the judgement is not independent proof."
+      ],
+      "distinctionTask": {
+        "prompt": "The council regards the park as a public asset. This states _____.",
+        "options": [
+          "how the council considers the park",
+          "where the council is physically looking"
+        ],
+        "answer": "how the council considers the park",
+        "explanation": "Regard as introduces the stated assessment."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "originalSense": {
+      "id": "kaikki:0f8d5cfce26d208886",
+      "definition": "To look at.",
+      "example": "The video was viewed by millions of people.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "see",
+        "look",
+        "voyeur"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/view#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:0f8d5cfce26d208886",
+      "definition": "To look at or watch something.",
+      "example": "We viewed the flat on Saturday before deciding whether to rent it.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "view a property",
+        "view a film",
+        "view something online"
+      ],
+      "usage": "Transitive; view an object, place or recording.",
+      "register": "transitive",
+      "wordFamily": [
+        "see",
+        "look",
+        "voyeur"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/view#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Viewing the flat means looking at it. It does not establish that a rental decision or agreement followed."
+      ],
+      "distinctionTask": {
+        "prompt": "We viewed the flat before deciding whether to rent it. The sentence establishes _____.",
+        "options": [
+          "that we looked at the flat",
+          "that we signed a rental agreement"
+        ],
+        "answer": "that we looked at the flat",
+        "explanation": "Looking at a property is separate from agreeing to rent it."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-52576cca",
+    "originalSense": {
+      "id": "kaikki:6ac7143d56d3b775d0",
+      "definition": "To think seriously; to ponder or consider.",
+      "example": "People do that sort of thing every day, without ever stopping to reflect on the consequences.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "misreflect",
+        "nonreflective",
+        "reflectability",
+        "reflectable",
+        "reflectance",
+        "reflectarray",
+        "reflectible",
+        "reflectin",
+        "reflecting microscope",
+        "reflective",
+        "reflectogram",
+        "reflectograph",
+        "reflectography",
+        "reflectometer",
+        "reflectometry",
+        "reflect on",
+        "reflectoporn",
+        "reflector",
+        "reflectorize",
+        "reflectron",
+        "reflect upon",
+        "reflexion",
+        "retroreflect",
+        "self-reflect",
+        "unreflective"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reflect#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:6ac7143d56d3b775d0",
+      "definition": "To think seriously about something or consider it carefully.",
+      "example": "After the meeting, we reflected on what we could improve.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "reflect on an experience",
+        "reflect upon a decision",
+        "pause to reflect"
+      ],
+      "usage": "Intransitive; reflect on or upon a topic.",
+      "register": "intransitive",
+      "wordFamily": [
+        "misreflect",
+        "nonreflective",
+        "reflectability",
+        "reflectable",
+        "reflectance",
+        "reflectarray",
+        "reflectible",
+        "reflectin",
+        "reflecting microscope",
+        "reflective",
+        "reflectogram",
+        "reflectograph",
+        "reflectography",
+        "reflectometer",
+        "reflectometry",
+        "reflect on",
+        "reflectoporn",
+        "reflector",
+        "reflectorize",
+        "reflectron",
+        "reflect upon",
+        "reflexion",
+        "retroreflect",
+        "self-reflect",
+        "unreflective"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/reflect#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Reflect on describes deliberate consideration. It does not establish that a decision was reached or an improvement completed."
+      ],
+      "distinctionTask": {
+        "prompt": "We reflected on what we could improve. We _____.",
+        "options": [
+          "considered the question seriously",
+          "necessarily completed the improvements"
+        ],
+        "answer": "considered the question seriously",
+        "explanation": "Consideration is separate from completed action."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

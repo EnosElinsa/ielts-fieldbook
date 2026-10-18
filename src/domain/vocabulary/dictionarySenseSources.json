@@ -11588,5 +11588,176 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "view",
+    "entryId": "ve-7c76fba8",
+    "parentSenseId": "kaikki:03b6631dccd4b72872",
+    "parentSourceHash": "2cec326afb3e9150b95829a90a389b8a198e9253ec74593ee47c33eb999219ba",
+    "sourcePage": "view",
+    "revision": 93568549,
+    "sourceGloss": "## The act of [[see]]ing or [[look]]ing at something.",
+    "sense": {
+      "id": "wiktionary:restored:a77c93730af61fc1e2",
+      "pos": "noun",
+      "definition": "The act of seeing or looking at something.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "view",
+    "entryId": "ve-7c76fba8",
+    "parentSenseId": "kaikki:03b6631dccd4b72872",
+    "parentSourceHash": "2cec326afb3e9150b95829a90a389b8a198e9253ec74593ee47c33eb999219ba",
+    "sourcePage": "view",
+    "revision": 93568549,
+    "sourceGloss": "## The [[range]] of [[vision]].",
+    "sense": {
+      "id": "wiktionary:restored:24e8f0fde76be2f603",
+      "pos": "noun",
+      "definition": "The range of vision.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "view",
+    "entryId": "ve-7c76fba8",
+    "parentSenseId": "kaikki:03b6631dccd4b72872",
+    "parentSourceHash": "2cec326afb3e9150b95829a90a389b8a198e9253ec74593ee47c33eb999219ba",
+    "sourcePage": "view",
+    "revision": 93568549,
+    "sourceGloss": "## Something to look at, such as [[scenery]].",
+    "sense": {
+      "id": "wiktionary:restored:e879402d9e6ec46e72",
+      "pos": "noun",
+      "definition": "Something to look at, such as scenery.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "view",
+    "entryId": "ve-7c76fba8",
+    "parentSenseId": "kaikki:03b6631dccd4b72872",
+    "parentSourceHash": "2cec326afb3e9150b95829a90a389b8a198e9253ec74593ee47c33eb999219ba",
+    "sourcePage": "view",
+    "revision": 93568549,
+    "sourceGloss": "## {{lb|en|Internet}} An individual viewing of a web page or a video etc. by a user.",
+    "sense": {
+      "id": "wiktionary:restored:fede3e86beffceb875",
+      "pos": "noun",
+      "definition": "An individual viewing of a web page or a video etc. by a user.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "view",
+    "entryId": "ve-7c76fba8",
+    "parentSenseId": "kaikki:03b6631dccd4b72872",
+    "parentSourceHash": "2cec326afb3e9150b95829a90a389b8a198e9253ec74593ee47c33eb999219ba",
+    "sourcePage": "view",
+    "revision": 93568549,
+    "sourceGloss": "## {{lb|en|obsolete}} Appearance; show; aspect.",
+    "sense": {
+      "id": "wiktionary:restored:cae6523629cc68796b",
+      "pos": "noun",
+      "definition": "Appearance; show; aspect.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "view",
+    "entryId": "ve-7c76fba8",
+    "parentSenseId": "kaikki:19766f5a1817ed0c02",
+    "parentSourceHash": "4cb251878181496978c0dd1766bdc072781045cb0c4813d156367aaa821992c8",
+    "sourcePage": "view",
+    "revision": 93568549,
+    "sourceGloss": "## A [[mental]] [[image]].",
+    "sense": {
+      "id": "wiktionary:restored:4b709f8a74bb9b50e9",
+      "pos": "noun",
+      "definition": "A mental image.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "view",
+    "entryId": "ve-7c76fba8",
+    "parentSenseId": "kaikki:19766f5a1817ed0c02",
+    "parentSourceHash": "4cb251878181496978c0dd1766bdc072781045cb0c4813d156367aaa821992c8",
+    "sourcePage": "view",
+    "revision": 93568549,
+    "sourceGloss": "## {{senseid|en|opinion}} A way of [[understand]]ing something, an [[opinion]], a [[theory]].",
+    "sense": {
+      "id": "wiktionary:restored:f46f44e7f07a403a00",
+      "pos": "noun",
+      "definition": "A way of understanding something, an opinion, a theory.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "view",
+    "entryId": "ve-7c76fba8",
+    "parentSenseId": "kaikki:19766f5a1817ed0c02",
+    "parentSourceHash": "4cb251878181496978c0dd1766bdc072781045cb0c4813d156367aaa821992c8",
+    "sourcePage": "view",
+    "revision": 93568549,
+    "sourceGloss": "## A [[point of view]].",
+    "sense": {
+      "id": "wiktionary:restored:02488e83ec8de5e165",
+      "pos": "noun",
+      "definition": "A point of view.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "view",
+    "entryId": "ve-7c76fba8",
+    "parentSenseId": "kaikki:19766f5a1817ed0c02",
+    "parentSourceHash": "4cb251878181496978c0dd1766bdc072781045cb0c4813d156367aaa821992c8",
+    "sourcePage": "view",
+    "revision": 93568549,
+    "sourceGloss": "## An [[intention]] or [[prospect]].",
+    "sense": {
+      "id": "wiktionary:restored:a3b59fee9be9b0cbf5",
+      "pos": "noun",
+      "definition": "An intention or prospect.",
+      "example": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=view&oldid=93568549",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

@@ -4174,5 +4174,269 @@
     "definition": "In chess, to create an attack by moving a piece out of another piece's line of attack.",
     "pos": "verb",
     "kind": "discover-attack"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:1dc3cbd6b63611779d",
+    "term": "think",
+    "definition": "To ponder something or go over it in your mind.",
+    "pos": "verb",
+    "kind": "think-ponder"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:c8c6cee4e5924a4e1e",
+    "term": "think",
+    "definition": "To say a statement to yourself mentally.",
+    "pos": "verb",
+    "kind": "think-internal"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:de7068ae14f90f11a2",
+    "term": "think",
+    "definition": "To engage in mental consideration, especially while trying to solve a problem.",
+    "pos": "verb",
+    "kind": "think-problem"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:8184c239a7ad6abb10",
+    "term": "think",
+    "definition": "To conceive of or form a mental idea of someone or something.",
+    "pos": "verb",
+    "kind": "think-conceive"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:ae3187eb4391b929fc",
+    "term": "think",
+    "definition": "To hold an opinion or judge something to be a certain way.",
+    "pos": "verb",
+    "kind": "think-opinion"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:0c0f760c69968b69a4",
+    "term": "think",
+    "definition": "To believe or guess something while admitting uncertainty.",
+    "pos": "verb",
+    "kind": "think-uncertain"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:f150e72c0a6713d6ac",
+    "term": "think",
+    "definition": "To plan or consider doing something.",
+    "pos": "verb",
+    "kind": "think-plan"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:4d43e48afe50511ced",
+    "term": "think",
+    "definition": "Informal ellipsis of think so, used to express agreement or that something is obvious.",
+    "pos": "verb",
+    "kind": "think-ellipsis"
+  },
+  {
+    "entryId": "ve-aeb5415",
+    "senseId": "kaikki:53f5b0ee443b286c48",
+    "term": "think",
+    "definition": "An act or period of thinking or considering something.",
+    "pos": "noun",
+    "kind": "think-noun"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:85fa1b51cfb58d74a2",
+    "term": "regard",
+    "definition": "A steady look or gaze.",
+    "pos": "noun",
+    "kind": "regard-gaze"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:aa73110a8257c7c289",
+    "term": "regard",
+    "definition": "Concern for someone or something, esteem, or a relation or reference to it.",
+    "pos": "noun",
+    "kind": "regard-concern"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:0e7ed9cc57f7f63d97",
+    "term": "regard",
+    "definition": "A particular aspect, detail or respect.",
+    "pos": "noun",
+    "kind": "regard-aspect"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:3fc7e4c47c39dfe7d0",
+    "term": "regard",
+    "definition": "The esteem or estimation in which someone or something is held.",
+    "pos": "noun",
+    "kind": "regard-esteem"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:9a26cb151fa2cda039",
+    "term": "regard",
+    "definition": "To look at or observe someone or something.",
+    "pos": "verb",
+    "kind": "regard-look"
+  },
+  {
+    "entryId": "ve-7ea15922",
+    "senseId": "kaikki:b69567ca7467260e2f",
+    "term": "regard",
+    "definition": "To consider or look upon someone or something in a stated way.",
+    "pos": "verb",
+    "kind": "regard-judge"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:635934beb8173ed9f6",
+    "term": "view",
+    "definition": "A drawn or painted picture or sketch of something.",
+    "pos": "noun",
+    "kind": "view-picture"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:aa7120008e645f7977",
+    "term": "view",
+    "definition": "In a relational database, a virtual or logical table defined by a query’s result.",
+    "pos": "noun",
+    "kind": "view-database"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:2c375c914d326065bf",
+    "term": "view",
+    "definition": "The visible, interactive part of a computer program presented to its user.",
+    "pos": "noun",
+    "kind": "view-interface"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:0f8d5cfce26d208886",
+    "term": "view",
+    "definition": "To look at or watch something.",
+    "pos": "verb",
+    "kind": "view-look"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "kaikki:d3292f6bdf8d385ded",
+    "term": "view",
+    "definition": "To regard or interpret someone or something in a stated way.",
+    "pos": "verb",
+    "kind": "view-interpret"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:a77c93730af61fc1e2",
+    "term": "view",
+    "definition": "The act of seeing or looking at something.",
+    "pos": "noun",
+    "kind": "view-seeing"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:24e8f0fde76be2f603",
+    "term": "view",
+    "definition": "The range or field within which something can be seen.",
+    "pos": "noun",
+    "kind": "view-range"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:e879402d9e6ec46e72",
+    "term": "view",
+    "definition": "Something that can be looked at, especially scenery.",
+    "pos": "noun",
+    "kind": "view-scenery"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:fede3e86beffceb875",
+    "term": "view",
+    "definition": "An individual user viewing of a web page, video or similar online content.",
+    "pos": "noun",
+    "kind": "view-count"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:4b709f8a74bb9b50e9",
+    "term": "view",
+    "definition": "A mental image or conception of something.",
+    "pos": "noun",
+    "kind": "view-mental"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:f46f44e7f07a403a00",
+    "term": "view",
+    "definition": "A way of understanding something, an opinion or a theory.",
+    "pos": "noun",
+    "kind": "view-opinion"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:02488e83ec8de5e165",
+    "term": "view",
+    "definition": "A point of view or perspective from which something is considered.",
+    "pos": "noun",
+    "kind": "view-perspective"
+  },
+  {
+    "entryId": "ve-7c76fba8",
+    "senseId": "wiktionary:restored:a3b59fee9be9b0cbf5",
+    "term": "view",
+    "definition": "An intention, aim or prospect.",
+    "pos": "noun",
+    "kind": "view-intention"
+  },
+  {
+    "entryId": "ve-52576cca",
+    "senseId": "kaikki:4a2b49c11fe6c3d3c3",
+    "term": "reflect",
+    "definition": "To send light or other waves back from a surface.",
+    "pos": "verb",
+    "kind": "reflect-light"
+  },
+  {
+    "entryId": "ve-52576cca",
+    "senseId": "kaikki:7cb0bbba11888b30ba",
+    "term": "reflect",
+    "definition": "To show the image of someone or something, as a mirror does.",
+    "pos": "verb",
+    "kind": "reflect-image"
+  },
+  {
+    "entryId": "ve-52576cca",
+    "senseId": "kaikki:0ca1c638de3ad4a33a",
+    "term": "reflect",
+    "definition": "To agree with or closely follow something.",
+    "pos": "verb",
+    "kind": "reflect-correspond"
+  },
+  {
+    "entryId": "ve-52576cca",
+    "senseId": "kaikki:d9ca35c9326299dcd4",
+    "term": "reflect",
+    "definition": "To give evidence of someone’s or something’s character or qualities.",
+    "pos": "verb",
+    "kind": "reflect-quality"
+  },
+  {
+    "entryId": "ve-52576cca",
+    "senseId": "kaikki:6ac7143d56d3b775d0",
+    "term": "reflect",
+    "definition": "To think seriously about something or consider it carefully.",
+    "pos": "verb",
+    "kind": "reflect-consider"
   }
 ]
