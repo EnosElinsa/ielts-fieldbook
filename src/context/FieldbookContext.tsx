@@ -60,7 +60,7 @@ import { vocabularySourceKey } from '../domain/vocabulary/sources';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
 import { ensurePlans, ensureUnifiedPlans, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan, applyBacklogPreview } from '../lib/planTemplates';
-import { bindSpeakingPlan, isProtectedPlan } from '../domain/plans';
+import { bindSpeakingPlan } from '../domain/plans';
 import { speakingPrompts, speakingResponseDraft, updateSpeakingResponse } from '../domain/speaking';
 import { useConfirmationDialog } from '../components/useConfirmationDialog';
 import { loadExamCatalog, loadExamSections } from '../storage/examCatalog';
@@ -507,7 +507,7 @@ function useFieldbookValue() {
     });
     committedVocabularyFields.current.filter(change => change.owner === owner).forEach(change => applyVocabularyFields(target, change));
     committedStudySettings.current.filter(change => change.owner === owner).forEach(change => {
-      let staleSettings = false;
+      let staleSettings = change.beforeVocabulary !== undefined && JSON.stringify(target.settings.vocabulary) === change.beforeVocabulary;
       Object.entries(change.after).forEach(([key, value]) => {
         if (JSON.stringify(target.settings[key]) === change.before[key]) { staleSettings = true; target.settings[key] = structuredClone(value); }
       });
@@ -644,6 +644,7 @@ function useFieldbookValue() {
       const index = target.plans.findIndex(plan => plan.id === before.id && JSON.stringify(plan) === JSON.stringify(before));
       if (index < 0) return;
       stalePlans = true;
+      if (target.activePlanId === before.id && change.beforeActivePlanId === before.id) target.activePlanId = change.afterActivePlanId;
       const replacement = change.addedPlans.find(plan => plan.id === before.id);
       if (replacement) target.plans[index] = structuredClone(replacement);
       else target.plans.splice(index, 1);
@@ -755,23 +756,28 @@ function useFieldbookValue() {
         owner,
         before: Object.fromEntries(Object.keys(studyChanges).map(key => [key, JSON.stringify(current.settings[key])])),
         after: studyChanges,
+        beforeVocabulary: Object.prototype.hasOwnProperty.call(changes, 'vocabulary') ? beforeVocabulary : undefined,
         removedPlanIds: [],
         removedPlans: [],
         addedPlans: [],
+        beforeActivePlanId: current.activePlanId,
+        afterActivePlanId: current.activePlanId,
       };
       const previousPlanningKey = planningSettingsKey(current.settings);
       Object.assign(current.settings, studyChanges);
       if (Object.prototype.hasOwnProperty.call(changes, 'vocabulary')) current.settings.vocabulary = normalizeVocabularyPreferences({ ...current.settings.vocabulary, ...changes.vocabulary });
       if (planningSettingsKey(current.settings) !== previousPlanningKey) {
-        change.removedPlans = structuredClone(current.plans.filter(plan => !isProtectedPlan(plan) && plan.dateKey >= dateKey(new Date())));
-        change.removedPlanIds = change.removedPlans.map(plan => plan.id);
-        current.plans = current.plans.filter(plan => !change.removedPlanIds.includes(plan.id));
-        const retainedPlanIds = new Set(current.plans.map(plan => plan.id));
-        if (change.removedPlanIds.includes(current.activePlanId)) current.activePlanId = null;
+        const previousPlans = structuredClone(current.plans);
         ensureUnifiedPlans(current);
         try { await bindCurrentPlanTargets(current); }
         catch (error) { if(alive.current && owner===accountId() && epoch===loadEpoch.current && generation===saveGeneration.current){setSaveFailed(false);setSaveStatus('failed');studySettingsErrorRef.current=`${error instanceof Error ? error.message : 'Could not load the planned exercises.'} Your changes are still here. Retry saving.`;setStudySettingsError(studySettingsErrorRef.current);}return false; }
-        change.addedPlans = current.plans.filter(plan => !retainedPlanIds.has(plan.id));
+        // Replay only the canonical planner/binder changes, preserving concurrent plan edits.
+        const previousById = new Map(previousPlans.map(plan => [plan.id, JSON.stringify(plan)]));
+        const currentById = new Map(current.plans.map(plan => [plan.id, JSON.stringify(plan)]));
+        change.removedPlans = previousPlans.filter(plan => currentById.get(plan.id) !== JSON.stringify(plan));
+        change.removedPlanIds = change.removedPlans.map(plan => plan.id);
+        change.addedPlans = current.plans.filter(plan => previousById.get(plan.id) !== JSON.stringify(plan));
+        change.afterActivePlanId = current.activePlanId;
       }
       let saved = false;
       const collections = ['profile', 'plans'];

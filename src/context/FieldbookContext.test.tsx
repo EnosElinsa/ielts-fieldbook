@@ -6,7 +6,7 @@ import { emptyState, normalizeDraft } from '../domain';
 import { addVocabularyItem, getVocabularyReviewQueue, recordVocabularyReview } from '../domain/vocabulary';
 import { readFileSync } from 'node:fs';
 import { readDraftRecovery } from '../storage/recovery';
-import { previewBacklogChange } from '../lib/planTemplates';
+import { ensureUnifiedPlans, previewBacklogChange } from '../lib/planTemplates';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { TodayPage } from '../features/today/TodayPage';
 import { PlanningPage } from '../features/planning/PlanningPage';
@@ -1412,4 +1412,52 @@ test.each(['catalog','save'])('a delayed %s task start preserves an intervening 
   fireEvent.click(screen.getByRole('button',{name:'Browser forward'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/today?view=source'));
   fireEvent.click(screen.getByRole('button',{name:'Browser forward'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/planning?view=intervening'));expect(window.history.state).toEqual(intervening);
  }finally{view.unmount();scroll.mockRestore();window.history.replaceState({},'','/');}
+});
+
+
+test.each(['due-review','learning-batch'])('settings save uses canonical regeneration and preserves frozen %s targets through queued replay',async mode=>{
+  mocks.initial.settings.days=[1,2,3,4,5,6,7];mocks.initial.settings.skills=['writing'];
+  await mount();
+  const frozen={id:'settings-frozen',dateKey:'2099-01-01',origin:'automatic',status:'pending',kind:'vocabulary',skill:'vocabulary',estimatedMinutes:1,target:{type:'vocabulary',binding:'frozen',mode,assessmentMode:'definition',cards:[{entryId:'word',senseId:'sense'}]},draft:{answer:'Keep the frozen answer'}};
+  const carry={id:'settings-carry',dateKey:'2000-01-01',origin:'automatic',status:'pending',kind:'1',skill:'writing',estimatedMinutes:10,target:{type:'question',skill:'writing',questionId:'q1',mode:'overview'}};
+  const started={...carry,id:'settings-started',dateKey:'2099-01-01',status:'in_progress',startedAt:'2026-10-01T00:00:00Z',draft:{text:'Keep started work'}};
+  const staleReview={...frozen,id:'settings-stale',dateKey:'2000-01-01',target:{...frozen.target,mode:'due-review'}};
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans.push(frozen,carry,staleReview,started);draft.activePlanId=staleReview.id;});});
+  const before=structuredClone(fieldbook.state),expected=structuredClone(before);expected.settings.dailyMinutes=60;ensureUnifiedPlans(expected);
+  mocks.saveState.mockResolvedValueOnce(false);
+  await act(async()=>{expect(await fieldbook.saveStudySettings({dailyMinutes:60})).toBe(false);});
+  expect(fieldbook.state).toEqual(before);
+  mocks.saveState.mockClear();const pending=defer();mocks.saveState.mockReturnValueOnce(pending.promise);
+  let saving,autosave;await act(async()=>{saving=fieldbook.saveStudySettings({dailyMinutes:60});});
+  await waitFor(()=>expect(mocks.saveState).toHaveBeenCalledTimes(1));
+  await act(async()=>{autosave=fieldbook.persist(draft=>{draft.drafts.q1.text='Typed while settings saved';});});
+  await act(async()=>{pending.resolve(true);expect(await saving).toBe(true);await autosave;});
+  const saved=mocks.saveState.mock.calls.at(-1)[0];
+  expect(saved.plans.find(plan=>plan.id===frozen.id)).toEqual(frozen);
+  expect(fieldbook.state.plans.find(plan=>plan.id===frozen.id)).toEqual(frozen);
+  expect(saved.plans.find(plan=>plan.id===started.id)).toEqual(started);
+  expect(fieldbook.state.plans.find(plan=>plan.id===started.id)).toEqual(started);
+  expect(fieldbook.state.plans.find(plan=>plan.id===carry.id)).toMatchObject({originalDateKey:carry.dateKey,target:carry.target});
+  // Target binding adds resource details after generation; rotation and schedule must remain identical.
+  const schedule=plans=>plans.map(({id,dateKey,kind,skill,rotationIndex,estimatedMinutes})=>({id,dateKey,kind,skill,rotationIndex,estimatedMinutes})).sort((a,b)=>a.id.localeCompare(b.id));
+  expect(schedule(saved.plans)).toEqual(schedule(expected.plans));
+  expect(schedule(fieldbook.state.plans)).toEqual(schedule(expected.plans));
+  expect(fieldbook.state.drafts.q1.text).toBe('Typed while settings saved');
+  expect(saved.activePlanId).toBeNull();expect(fieldbook.state.activePlanId).toBeNull();
+  expect(fieldbook.state.plans.find(plan=>plan.id===staleReview.id)).toMatchObject({status:'skipped',skipReason:'merged-review',target:staleReview.target});
+});
+
+
+test('a vocabulary-only settings rebuild commits newly generated tasks when every existing task is protected',async()=>{
+  mocks.initial.settings.days=[1,2,3,4,5,6,7];mocks.initial.settings.skills=['writing'];
+  await mount();
+  const frozen={id:'only-frozen',dateKey:'2099-01-01',origin:'automatic',status:'pending',kind:'vocabulary',skill:'vocabulary',estimatedMinutes:1,target:{type:'vocabulary',binding:'frozen',mode:'due-review',assessmentMode:'dictation',cards:[{entryId:'word',senseId:'sense'}]}};
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[frozen];});});
+  mocks.saveState.mockClear();
+  await act(async()=>{expect(await fieldbook.saveStudySettings({vocabulary:{mode:'definition'}})).toBe(true);});
+  const saved=mocks.saveState.mock.calls.at(-1)[0];
+  expect(saved.plans.length).toBeGreaterThan(1);
+  expect(fieldbook.state.plans).toEqual(saved.plans);
+  expect(fieldbook.state.plans.find(plan=>plan.id===frozen.id)).toEqual(frozen);
+  expect(fieldbook.state.settings.vocabulary.mode).toBe('definition');
 });

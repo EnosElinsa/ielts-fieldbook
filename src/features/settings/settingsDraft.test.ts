@@ -21,3 +21,21 @@ test('settings preview matches regeneration without changing the current schedul
   expect(actual.plans.find(plan=>plan.id===manual.id)).toEqual(manual);
   expect(actual.plans.find(plan=>plan.id===started.id)).toEqual(started);
 });
+
+
+test('settings preview includes missed-day recovery while preserving frozen work and live state',()=>{
+  const now=new Date('2026-10-14T12:00:00'),state=emptyState();
+  state.settings.days=[1,2,3,4,5,6,7];state.settings.skills=['writing'];
+  const task=(id,patch={})=>({id,title:id,dateKey:'2026-10-14',origin:'automatic',status:'pending',skill:'writing',kind:'1',estimatedMinutes:10,target:{type:'question',skill:'writing',questionId:'q1',mode:'overview'},...patch});
+  state.plans=[task('carry',{dateKey:'2026-10-01'}),task('waiting',{dateKey:'2026-10-01',estimatedMinutes:999}),task('manual',{origin:'manual'}),task('started',{status:'in_progress',startedAt:now.toISOString()}),task('frozen',{skill:'vocabulary',kind:'vocabulary',estimatedMinutes:1,target:{type:'vocabulary',binding:'frozen',mode:'due-review',assessmentMode:'definition',cards:[{entryId:'word',senseId:'sense'}]}}),task('stale-review',{dateKey:'2026-10-01',skill:'vocabulary',kind:'vocabulary',estimatedMinutes:1,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',cards:[]}})];
+  state.activePlanId='stale-review';state.drafts.q1={text:'Keep this draft'};
+  const before=structuredClone(state),changes={dailyMinutes:60};
+  const preview=settingsPlanPreview(state.settings,changes,state.plans,'2026-10-14',state);
+  const actual=structuredClone(state);Object.assign(actual.settings,changes);
+  expect(preview.generated).toEqual(ensureUnifiedPlans(actual,undefined,now));
+  expect(state).toEqual(before);
+  expect(preview.generated.find(plan=>plan.id==='carry')).toMatchObject({dateKey:'2026-10-14',originalDateKey:'2026-10-01',target:before.plans[0].target});
+  for(const id of ['manual','started','frozen'])expect(preview.generated.find(plan=>plan.id===id)).toEqual(before.plans.find(plan=>plan.id===id));
+  expect(preview.affected.map(plan=>plan.id).sort()).toEqual(['carry','stale-review']);
+  expect(settingsPlanPreview(state.settings,changes,state.plans,'2026-10-14',state)).toEqual(preview);
+});

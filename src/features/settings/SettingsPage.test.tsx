@@ -67,12 +67,13 @@ test('weekly overrides and vocabulary allocation can be saved as actionable sett
  expect(context.current.saveStudySettings.mock.calls[0][0].planning).toMatchObject({blockMinutes:25,week:{1:{minutes:90}}});
 });
 
-test('one draft survives categories and previews only future automatic pending tasks', async () => {
+test('one draft survives categories and previews changed automatic and missed-day tasks', async () => {
   setup(); const user = userEvent.setup();
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Minutes a day' }), { target: { value: '45' } });
-  expect(screen.getByRole('region', { name: 'Affected study tasks' })).toHaveTextContent('1 pending task will be rebuilt');
-  await user.click(screen.getByText('1 pending task will be rebuilt'));
+  expect(screen.getByRole('region', { name: 'Affected study tasks' })).toHaveTextContent('2 existing tasks will change');
+  await user.click(screen.getByText('2 existing tasks will change'));
   expect(screen.getByText('Automatic task')).toBeInTheDocument();
+  expect(screen.getByText('Past task')).toBeInTheDocument();
   expect(screen.queryByText('Manual task')).not.toBeInTheDocument();
   await user.click(screen.getByRole('link', { name: 'Vocabulary' }));
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Learning batch size' }), { target: { value: '5' } });
