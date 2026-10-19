@@ -18,7 +18,7 @@ type WorkItem = {
   originalSense: VocabularySense | null; displaySense: VocabularySense;
   reviewStatus: 'reviewed' | 'pending' | 'context-review-required';
   priority: string | null; readingNote: boolean; referenceOnly: boolean;
-  scopes: Scope[]; modes: string[] | null; signals: Signal[]; tier: number;
+  scopes: Scope[]; modes: string[] | null; rawSignals: Signal[]; resolvedSignals: Signal[]; signals: Signal[]; tier: number;
 };
 export type QualityReport = ReturnType<typeof buildQualityReport>;
 const compare = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
@@ -34,7 +34,7 @@ const normalized = (value: string) => value.trim().replace(/\s+/g, ' ').toLowerC
 const populated = (values: string[] | undefined) => Boolean(values?.some(value => value.trim()));
 
 /** Signals prioritise work. They never approve, merge or rewrite lexical records. */
-export function buildQualityReport(input: { sources: QualitySource[]; lessons: QualityLesson[] }) {
+export function buildQualityReport(input: { sources: QualitySource[]; lessons: QualityLesson[]; exampleReviews?: unknown[] }) {
   const sources = new Map<string, QualitySource>();
   const variants = new Map<string, WorkItem>();
   const duplicates = new Map<string, string[]>();
@@ -67,7 +67,7 @@ export function buildQualityReport(input: { sources: QualitySource[]; lessons: Q
       reviewStatus: matchesSource ? source.reviewStatus : 'context-review-required',
       priority: matchesSource ? source.priority || null : null,
       readingNote: Boolean(metadata.readingNote), referenceOnly: Boolean(metadata.referenceOnly),
-      scopes: [], modes: null, signals: [], tier: 2,
+      scopes: [], modes: null, rawSignals: [], resolvedSignals: [], signals: [], tier: 2,
     };
     variants.set(key, item); return item;
   }
@@ -95,14 +95,40 @@ export function buildQualityReport(input: { sources: QualitySource[]; lessons: Q
       if (item.modes) for (const mode of ['cloze', 'distinction'] as const) if (!item.modes.includes(mode)) flags.add(`no-${mode}-task`);
     }
     if (duplicateIds.has(identity(item.entryId, item.senseId)) && sources.get(identity(item.entryId, item.senseId))?.displaySense.definition === sense.definition) flags.add('duplicate-gloss');
-    item.signals = qualitySignals.filter(flag => flags.has(flag));
+    item.rawSignals = qualitySignals.filter(flag => flags.has(flag));
+    item.signals = [...item.rawSignals];
+    item.scopes.sort((a, b) => compare(JSON.stringify(stable(a)), JSON.stringify(stable(b))));
+  }
+  // These are explicit editorial decisions about one punctuation heuristic,
+  // bound to both the source and the complete displayed-content variant.
+  const reviews = input.exampleReviews ?? [], reviewedExamples = new Set<string>();
+  if (!Array.isArray(reviews)) throw new Error('Example reviews must be an array.');
+  const workById = new Map([...variants.values()].map(item => [item.workItemId, item]));
+  const reviewFields = new Set(['workItemId', 'entryId', 'senseId', 'sourceHash', 'displayHash', 'issue', 'decision', 'referenceUrl', 'rationale']);
+  for (const value of reviews) {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Invalid example review.');
+    const row = value as Record<string, unknown>;
+    if (Object.keys(row).some(key => !reviewFields.has(key)) || [...reviewFields].some(key => key !== 'sourceHash' && (typeof row[key] !== 'string' || !String(row[key]).trim())) ||
+      row.sourceHash !== null && typeof row.sourceHash !== 'string' || row.issue !== 'example-fragment-signal' || row.decision !== 'retain-valid-example') throw new Error('Invalid example review fields.');
+    try { if (new URL(String(row.referenceUrl)).protocol !== 'https:') throw new Error(); }
+    catch { throw new Error('Invalid example review reference URL.'); }
+    const item = workById.get(String(row.workItemId));
+    if (!item || item.entryId !== row.entryId || item.senseId !== row.senseId || item.displayHash !== row.displayHash) throw new Error('Unknown or stale example review: ' + row.workItemId);
+    if (item.sourceHash !== row.sourceHash) throw new Error('Example review source fingerprint changed: ' + row.workItemId);
+    if (reviewedExamples.has(item.workItemId)) throw new Error('Duplicate example review: ' + item.workItemId);
+    if (!item.rawSignals.includes('example-fragment-signal')) throw new Error('Example review has no matching signal: ' + item.workItemId);
+    reviewedExamples.add(item.workItemId);
+    item.resolvedSignals = ['example-fragment-signal'];
+    item.signals = item.rawSignals.filter(flag => flag !== 'example-fragment-signal');
+  }
+  for (const item of variants.values()) {
     const needsReview = item.signals.some(flag => !enrichmentSignals.has(flag));
     item.tier = item.scopes.length && item.signals.length ? needsReview ? 0 : 1 : ['specialist', 'historical', 'proper-name'].includes(item.priority || '') ? 3 : 2;
-    item.scopes.sort((a, b) => compare(JSON.stringify(stable(a)), JSON.stringify(stable(b))));
   }
   const work = [...variants.values()].sort((a, b) => a.tier - b.tier || b.scopes.length - a.scopes.length || compare(a.term, b.term) || compare(a.senseId, b.senseId) || compare(a.displayHash, b.displayHash));
   const learning = work.filter(row => row.scopes.length);
-  const byIssue = Object.fromEntries(qualitySignals.map(flag => [flag, { dictionary: flag.startsWith('no-') ? null : work.filter(row => row.originalSense && row.signals.includes(flag) && row.reviewStatus !== 'context-review-required').length, learning: learning.filter(row => row.signals.includes(flag)).length }]));
+  const issueCounts = (field: 'signals' | 'rawSignals') => Object.fromEntries(qualitySignals.map(flag => [flag, { dictionary: flag.startsWith('no-') ? null : work.filter(row => row.originalSense && row[field].includes(flag) && row.reviewStatus !== 'context-review-required').length, learning: learning.filter(row => row[field].includes(flag)).length }]));
+  const byIssue = issueCounts('signals');
   return {
     schemaVersion: 1,
     scope: 'Public source and runtime-selected teaching variants; automatic signals are not semantic approval or mastery.',
@@ -120,9 +146,10 @@ export function buildQualityReport(input: { sources: QualitySource[]; lessons: Q
       learningWithReviewSignals: learning.filter(row => row.signals.some(flag => !enrichmentSignals.has(flag))).length,
       learningWithoutReviewSignals: learning.filter(row => !row.signals.some(flag => !enrichmentSignals.has(flag))).length,
       learningWithEnrichmentSignals: learning.filter(row => row.signals.some(flag => enrichmentSignals.has(flag))).length,
+      retainedExampleReviews: reviewedExamples.size,
       duplicateGlossGroups: duplicateGroups.length,
     },
-    byIssue, signalKinds: Object.fromEntries(qualitySignals.map(flag => [flag, enrichmentSignals.has(flag) ? 'enrichment' : 'content-review'])), work,
+    byIssue, rawByIssue: issueCounts('rawSignals'), signalKinds: Object.fromEntries(qualitySignals.map(flag => [flag, enrichmentSignals.has(flag) ? 'enrichment' : 'content-review'])), work,
   };
 }
 

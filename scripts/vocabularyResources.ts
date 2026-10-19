@@ -10,9 +10,26 @@ type Membership = { id: string; bookId: string; unitId: string; entryId: string;
 type Catalog = { entries: VocabularyEntry[]; books: { id: string }[]; units: Unit[]; memberships: Membership[] };
 type ResourceBuildCache = {
   baselines: WeakMap<VocabularyEntry, VocabularyTeachingData['senseBaselines'][string]>;
-  emissions: Map<string, { value: unknown; url: string; text: string }>;
+  emissions: Map<string, { value: unknown; url: string; bytes: Buffer }>;
   serialized: WeakMap<object, string>;
 };
+// Keep the retained corpus as UTF-8 bytes. Decoding every historical file into
+// long-lived JS strings exhausts the heap as content releases accumulate.
+class VocabularyResourceFiles {
+  private files = new Map<string, Buffer>();
+  get size() { return this.files.size; }
+  has(url: string) { return this.files.has(url); }
+  get(url: string) { return this.files.get(url)?.toString('utf8'); }
+  getBytes(url: string) { return this.files.get(url); }
+  setBytes(url: string, bytes: Buffer) { this.files.set(url, bytes); }
+  keys() { return this.files.keys(); }
+  byteEntries() { return this.files.entries(); }
+  *entries(): IterableIterator<[string, string]> {
+    for (const [url, bytes] of this.files) yield [url, bytes.toString('utf8')];
+  }
+  *values() { for (const bytes of this.files.values()) yield bytes.toString('utf8'); }
+  [Symbol.iterator]() { return this.entries(); }
+}
 const REVALIDATE = 'public, max-age=0, must-revalidate';
 const IMMUTABLE = 'public, max-age=31536000, immutable';
 export function vocabularyResourceHeaders(manifestUrl: string, teachingIndexUrl: string): string {
@@ -38,15 +55,17 @@ export function buildVocabularyResources(root: string) {
   const retainedDictionaryCatalogs = [];
   let beforeDictionaryExpansion = teaching;
   for (const filename of data('resourceDictionaryRevisions') as string[]) {
-    const baseline = data(filename) as { removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections']; removeDefaults?: string[]; restoreDefaults?: VocabularyTeachingData['readiness']['defaults'] };
+    const baseline = data(filename) as { removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections']; removeDefaults?: string[]; restoreDefaults?: VocabularyTeachingData['readiness']['defaults']; removeTopics?: {bookId:string;unitId:string;entryId:string;senseId:string}[] };
     const removed = new Set(baseline.removeCorrections.map(row => JSON.stringify([row.entryId,row.senseId])));
     const restored = new Map(baseline.restoreCorrections.map(row => [JSON.stringify([row.entryId,row.senseId]),row]));
     const removedDefaults = new Set(baseline.removeDefaults || []);
     const restoredDefaults = new Map((baseline.restoreDefaults || []).map(row => [row.entryId,row]));
+    const topicIdentity = (row: VocabularyTeachingData['curriculum']['topics'][number]) => JSON.stringify([row.bookId,row.unitId,row.entryId,row.sense.id]);
+    const removedTopics = new Set((baseline.removeTopics || []).map(row => JSON.stringify([row.bookId,row.unitId,row.entryId,row.senseId])));
     beforeDictionaryExpansion = { ...beforeDictionaryExpansion, readiness: { ...beforeDictionaryExpansion.readiness,
       corrections: beforeDictionaryExpansion.readiness.corrections.filter(row => !removed.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restored.get(JSON.stringify([row.entryId,row.senseId])) || row),
       defaults: beforeDictionaryExpansion.readiness.defaults.filter(row => !removedDefaults.has(row.entryId)).map(row => restoredDefaults.get(row.entryId) || row),
-    } };
+    }, ...(removedTopics.size ? { curriculum: { ...beforeDictionaryExpansion.curriculum, topics: beforeDictionaryExpansion.curriculum.topics.filter(row => !removedTopics.has(topicIdentity(row))) } } : {}) };
     retainedDictionaryCatalogs.push(catalog(source, beforeDictionaryExpansion));
   }
   const learningBaseline = data('resourceLearningBaseline') as {
@@ -66,7 +85,7 @@ export function buildVocabularyResources(root: string) {
       corrections: beforeDictionaryExpansion.readiness.corrections.filter(row => !removedLearningCorrections.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restoredLearningCorrections.get(JSON.stringify([row.entryId,row.senseId])) || row),
       defaults: beforeDictionaryExpansion.readiness.defaults.filter(row => !removedLearningDefaults.has(row.entryId)).map(row => restoredLearningDefaults.get(row.entryId) || row),
     },
-    curriculum: { ...teaching.curriculum, modern: teaching.curriculum.modern.filter(row => !removedLearningModern.has(row.entryId)).map(row => restoredLearningModern.get(row.entryId) || row) },
+    curriculum: { ...beforeDictionaryExpansion.curriculum, modern: beforeDictionaryExpansion.curriculum.modern.filter(row => !removedLearningModern.has(row.entryId)).map(row => restoredLearningModern.get(row.entryId) || row) },
   };
   const mapping = data('identityMapping') as { books: {id: string; oldId: string}[]; units: {id: string; oldId: string}[]; memberships: {id: string; oldId: string}[] };
   const legacyIds = new Map([...mapping.books, ...mapping.units, ...mapping.memberships].map(row => [row.id, row.oldId]));
@@ -88,10 +107,10 @@ export function buildVocabularyResources(root: string) {
     return value;
   };
   const retained = [...retainedDictionaryCatalogs,catalog(source,beforeLearningExpansion),catalog(source,previousTeaching),catalog(legacyValue(source),legacyValue(previousTeaching))];
-  for (const previous of retained) for (const [url, content] of previous.resources) {
-    const existing = generated.resources.get(url);
-    if (existing !== undefined && existing !== content) throw new Error(`Vocabulary resource hash collision: ${url}`);
-    if (existing === undefined) generated.resources.set(url, content);
+  for (const previous of retained) for (const [url, bytes] of previous.resources.byteEntries()) {
+    const existing = generated.resources.getBytes(url);
+    if (existing !== undefined && !existing.equals(bytes)) throw new Error(`Vocabulary resource hash collision: ${url}`);
+    if (existing === undefined) generated.resources.setBytes(url, bytes);
   }
   return generated;
 }
@@ -140,18 +159,18 @@ function resourceRowIndex<T>(items: T[], identity: (row: T) => string) {
 
 function buildResourceCatalog(source: Catalog, teaching: VocabularyTeachingData, cache: ResourceBuildCache) {
   const baselineFields = new Set(['id', 'definition', 'example', 'pos', 'collocations', 'usage', 'synonyms', 'antonyms', 'distinctions', 'distinctionTask', 'wordFamily', 'register', 'source']);
-  const resources = new Map<string, string>();
+  const resources = new VocabularyResourceFiles();
   const emit = (name: string, value: unknown) => {
     const previous = cache.emissions.get(name);
     if (previous && sameResourceValue(previous.value, value)) {
-      resources.set(previous.url, previous.text);
+      resources.setBytes(previous.url, previous.bytes);
       return previous.url;
     }
-    const text = resourceJSON(value, cache.serialized)!;
-    const hash = createHash('sha256').update(text).digest('hex').slice(0, 16);
+    const bytes = Buffer.from(resourceJSON(value, cache.serialized)!, 'utf8');
+    const hash = createHash('sha256').update(bytes).digest('hex').slice(0, 16);
     const url = `/vocabulary-resources/${name}.${hash}.json`;
-    resources.set(url, text);
-    cache.emissions.set(name, { value, url, text });
+    resources.setBytes(url, bytes);
+    cache.emissions.set(name, { value, url, bytes });
     return url;
   };
   const byEntry = <T extends { entryId: string }>(items: T[]) => resourceRowIndex(items, row => row.entryId);
@@ -235,15 +254,15 @@ export function vocabularyResourcesPlugin(root: string): Plugin {
       server.middlewares.use((req, res, next) => {
         const pathname = (req.url || '').split('?')[0];
         const generated = ensure();
-        const text = generated.resources.get(pathname);
-        if (text === undefined) return next();
+        const bytes = generated.resources.getBytes(pathname);
+        if (bytes === undefined) return next();
         res.setHeader('Cache-Control', pathname === generated.manifestUrl || pathname === generated.teachingIndexUrl ? REVALIDATE : IMMUTABLE);
-        res.setHeader('Content-Type', 'application/json; charset=utf-8'); res.end(text);
+        res.setHeader('Content-Type', 'application/json; charset=utf-8'); res.end(bytes);
       });
     },
     generateBundle() {
       const generated = ensure();
-      for (const [url, source] of generated.resources) this.emitFile({ type: 'asset', fileName: url.slice(1), source });
+      for (const [url, source] of generated.resources.byteEntries()) this.emitFile({ type: 'asset', fileName: url.slice(1), source });
       const headersPath = path.join(root, 'public/_headers');
       const existing = fs.existsSync(headersPath) ? fs.readFileSync(headersPath, 'utf8').trimEnd() + '\n\n' : '';
       this.emitFile({ type: 'asset', fileName: '_headers', source: existing + vocabularyResourceHeaders(generated.manifestUrl, generated.teachingIndexUrl) });

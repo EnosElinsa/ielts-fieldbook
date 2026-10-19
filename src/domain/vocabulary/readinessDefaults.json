@@ -29418,5 +29418,1639 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/subtle#English",
       "license": "CC-BY-SA-4.0"
     }
+  },
+  {
+    "entryId": "ve-3f1eca80",
+    "sense": {
+      "id": "kaikki:137a64db95e9ed273b",
+      "definition": "Relating to a university, another institution of higher learning, or a scholarly organisation.",
+      "example": "The university offers academic support to new students.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "academic research",
+        "an academic institution"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/academic#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Academic relates to study or scholarship here; vocational concerns preparation for a particular occupation, and the categories can overlap."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:2960680f362cbcf869",
+      "definition": "Belonging to the school or philosophy of Plato.",
+      "example": "the academic sect or philosophy",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "academented",
+        "academic advantage",
+        "academic art",
+        "academic bulimia",
+        "academic costume",
+        "academic degree",
+        "academic disadvantage",
+        "academic discipline",
+        "academic freedom",
+        "academic institution",
+        "academicise",
+        "academicism",
+        "Academicism",
+        "academicist",
+        "academicize",
+        "academicness",
+        "academic quarter",
+        "academic question",
+        "academic weapon",
+        "academic year",
+        "acafan",
+        "acafandom",
+        "antiacademic",
+        "Blackademic",
+        "blackademic",
+        "interacademic",
+        "pracademic",
+        "protoacademic",
+        "pseudoacademic",
+        "quackademic"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/academic#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-6ed1b8b5",
+    "sense": {
+      "id": "kaikki:a8a0626f4eb4806a70",
+      "definition": "An amount of money, resources, or another share allotted for a purpose.",
+      "example": "Employees receive a travel allowance for work-related journeys.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a travel allowance",
+        "a monthly allowance"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allowance#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "An allowance is an amount allocated for a purpose; a salary is payment for employment and may be separate from an allowance."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:abeb8ec5048328009c",
+      "definition": "Permission; granting, conceding, or admitting.",
+      "example": "you sent a large commission to Gregory de Cassado, to conclude, without the King's will or the state's allowance",
+      "pos": "noun",
+      "synonyms": [
+        "authorization",
+        "permission",
+        "sanction",
+        "tolerance",
+        "allowance",
+        "authority",
+        "authorization",
+        "clearance",
+        "consent",
+        "leave",
+        "license",
+        "mandate",
+        "permission",
+        "permit",
+        "warrant"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "attendance allowance",
+        "cost-of-living disallowance",
+        "depreciation allowance",
+        "disallowance",
+        "emission allowance",
+        "family allowance",
+        "field allowance",
+        "Jobseeker's Allowance",
+        "misallowance",
+        "monkey's allowance",
+        "personal allowance",
+        "seam allowance",
+        "separation allowance",
+        "travel allowance"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/allowance#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-a8e97fa",
+    "sense": {
+      "id": "kaikki:fca54bf76ae8ba4ba8",
+      "definition": "To press or squeeze something so that its shape or structure is damaged or changed.",
+      "example": "Do not crush the cardboard box under the heavy bags.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "crush a can",
+        "crush something under a weight"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/crush#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Crush involves pressure that changes or damages shape; squeeze can occur without crushing the object."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:3113c37c2412e34c04",
+      "definition": "A violent collision or compression; a crash; destruction; ruin.",
+      "example": "The more highly the injured part is endowed with sensory nerves the more marked is the shock; a crush of the hand, for example, is attended with a more intense degree of shock than a correspondingly severe crush of the foot",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "cattle crush",
+        "crush barrier",
+        "crush cage",
+        "crush depth",
+        "crushee",
+        "crush hat",
+        "crushlike",
+        "crush load",
+        "crush party",
+        "crush pen",
+        "crushproof",
+        "crush room",
+        "crush syndrome",
+        "crush-worthy",
+        "crushworthy",
+        "crush zone",
+        "fruit crush",
+        "girl-crush",
+        "girl crush",
+        "livestock crush",
+        "man crush",
+        "noncrush"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/crush#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-9e36c95d",
+    "sense": {
+      "id": "kaikki:102b10723b1f66ff68",
+      "definition": "To lose or give up hope.",
+      "example": "After several failed attempts, they began to despair of finding a solution.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "despair of success",
+        "begin to despair"
+      ],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/despair#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Despair is intransitive here; in despair of finding a solution, of introduces what is no longer expected."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:5eb462112fc0954ed4",
+      "definition": "To give up as beyond hope or expectation; to despair of.",
+      "example": "I would not despair the greatest design that could be attempted.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "compare and despair",
+        "despairer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/despair#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-fd7d3323",
+    "sense": {
+      "id": "kaikki:52844f3f1879aee702",
+      "definition": "To become worse in quality, condition, or value.",
+      "example": "The road deteriorated after years without maintenance.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "conditions deteriorate",
+        "deteriorate rapidly"
+      ],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/deteriorate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The affected thing is the subject in this intransitive use; to worsen something is a transitive construction."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:317a77ad748aac8fd7",
+      "definition": "To make worse; to make inferior in quality or value; to impair.",
+      "example": "to deteriorate the mind",
+      "pos": "verb",
+      "synonyms": [
+        "worsen",
+        "to go off",
+        "nerf",
+        "degenerate",
+        "weaken",
+        "rust"
+      ],
+      "antonyms": [
+        "ameliorate",
+        "better",
+        "improve",
+        "revamp"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "biodeteriorate",
+        "deteriorator",
+        "undeteriorated"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/deteriorate#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-431cc4cd",
+    "sense": {
+      "id": "kaikki:73bedae43ac09ae714",
+      "definition": "To break down food in the digestive system so that its nutrients can be absorbed.",
+      "example": "The body needs time to digest a large meal.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "digest food",
+        "digest a meal"
+      ],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/digest#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Digesting breaks food down; absorbing nutrients is a related subsequent process rather than the same action."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:9bd3c6371bd0fceb87",
+      "definition": "To distribute or arrange methodically; to work over and classify; to reduce to portions for ready use or application.",
+      "example": "to digest laws",
+      "pos": "verb",
+      "synonyms": [
+        "arrange",
+        "sort",
+        "sort out"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "autodigest",
+        "codigest",
+        "digestability",
+        "digestant",
+        "digestate",
+        "digestedly",
+        "digestedness",
+        "digester",
+        "digestogram",
+        "digestome",
+        "digestor",
+        "indigested",
+        "maldigest",
+        "maldigested",
+        "misdigest",
+        "nondigested",
+        "predigest",
+        "redigest",
+        "rest-and-digest",
+        "semidigested",
+        "underdigested",
+        "undigested",
+        "undigesting"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/digest#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-a6b319ff",
+    "sense": {
+      "id": "kaikki:4ad7f13a73e394d898",
+      "definition": "Relating to computers or computer-based technology.",
+      "example": "The library gives students access to digital resources.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "digital technology",
+        "digital resources"
+      ],
+      "usage": "",
+      "register": "not-comparable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/digital#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Digital concerns computer technology here; its separate numerical sense concerns discrete values, and an anatomical sense concerns fingers or toes."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:c6b641040c7da81d26",
+      "definition": "Having to do with digits (fingers or toes); especially, performed with a finger.",
+      "example": "digital palpation",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [
+        "nondigital",
+        "undigital",
+        "analog",
+        "analogue",
+        "continuous"
+      ],
+      "collocations": [],
+      "usage": "not-comparable",
+      "register": "not-comparable",
+      "wordFamily": [
+        "analog-to-digital converter",
+        "asymmetric digital subscriber line",
+        "bidigital",
+        "biodigital",
+        "born digital",
+        "digerati",
+        "digilante",
+        "digipeater",
+        "digiscope",
+        "digital addiction",
+        "digital age",
+        "digital amnesia",
+        "digital-asset treasury company",
+        "digital audio",
+        "digital audio workstation",
+        "digital autism",
+        "digital backlot",
+        "digital blackface",
+        "digital brownshirt",
+        "digital camera",
+        "digital cash",
+        "digital certificate",
+        "digital clock",
+        "digital commons",
+        "digital computer",
+        "digital converter box",
+        "digital courage",
+        "digital currency",
+        "digital dark age",
+        "digital decay"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/digital#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-98f3953a",
+    "sense": {
+      "id": "kaikki:2555ccdd7c2f9120dc",
+      "definition": "The act of getting rid of something.",
+      "example": "The council provides guidance on the safe disposal of batteries.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "waste disposal",
+        "the safe disposal of batteries"
+      ],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/disposal#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Disposal means getting rid of something; recycling is one possible route and is not implied by every disposal process."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:defbf537a5a7761e20",
+      "definition": "A disposition; an arrangement, categorization, or classification of things.",
+      "example": "at your disposal",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "at someone's disposal",
+        "at the disposal of",
+        "bomb disposal unit",
+        "garbage disposal",
+        "garbage disposal unit",
+        "nondisposal",
+        "predisposal",
+        "waste disposal",
+        "waste disposal unit"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/disposal#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7d2ac4f9",
+    "sense": {
+      "id": "kaikki:5a8c7b3b14d946dfc4",
+      "definition": "A mathematical statement that two expressions are equal, normally written with an equals sign.",
+      "example": "The equation x + 3 = 7 has the solution x = 4.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "solve an equation",
+        "a linear equation"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/equation#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "An equation asserts equality; an expression such as x + 3 does not by itself assert that it equals another expression."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:e639d65364931578bd",
+      "definition": "The act or process of equating two or more things, or the state of those things being equal (that is, identical).",
+      "example": "We need to bring the balance of power into equation",
+      "pos": "noun",
+      "synonyms": [
+        "equating",
+        "equivalence"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "absolute personal equation",
+        "accounting equation",
+        "affected equation",
+        "Airy equation",
+        "algebraic equation",
+        "Arrhenius equation",
+        "balance sheet equation",
+        "Bellman equation",
+        "Bernoulli's equation",
+        "Boltzmann equation",
+        "Cartesian equation",
+        "Cassie equation",
+        "Cauchy-Riemann equation",
+        "Chazy equation",
+        "chemical equation",
+        "cubic equation",
+        "d'Alembert's equation",
+        "delay differential equation",
+        "difference equation",
+        "differential equation",
+        "Diophantine equation",
+        "Dirac equation",
+        "Drake equation",
+        "Duffing equation",
+        "Ehrenfest equation",
+        "eigenequation",
+        "Einstein field equation",
+        "enter into the equation",
+        "enter the equation",
+        "equation clock"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/equation#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-45f2c186",
+    "sense": {
+      "id": "kaikki:2681d646524aefd526",
+      "definition": "To change or develop over time.",
+      "example": "The design evolved as the team tested new materials.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "evolve over time",
+        "evolve into something"
+      ],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/evolve#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Evolve concerns change or development here; it does not necessarily mean improvement or biological evolution."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:07cae19077cf24333d",
+      "definition": "To move (something) in regular procession through a system.",
+      "example": "The animal soul sooner expands and evolves it self to its full orb and extent than the humane Soul",
+      "pos": "verb",
+      "synonyms": [
+        "develop",
+        "progress"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "coevolve",
+        "co-evolve",
+        "evolvability",
+        "evolvingly",
+        "microevolve",
+        "nonevolving",
+        "photoevolve",
+        "reevolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/evolve#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-52975ada",
+    "sense": {
+      "id": "kaikki:4b34d681af93593b00",
+      "definition": "A person's identification as a man, a woman, or another gender, together with associated social roles or traits.",
+      "example": "The survey lets participants describe their gender in their own words.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "gender identity",
+        "gender roles"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gender#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Gender identity, social roles, biological sex, and grammatical gender name different concepts; the intended meaning depends on context."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:367ca1165b9c2fb799",
+      "definition": "Class; kind.",
+      "example": "[…]plant nettles or sow lettuce, set hyssop and weed up thyme, supply it with one gender of herbs or distract it with many[…]",
+      "pos": "noun",
+      "synonyms": [
+        "genre"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "countable, obsolete, uncountable",
+      "wordFamily": [
+        "agender",
+        "all-gender",
+        "ambigender",
+        "anti-gender",
+        "antigender",
+        "antigenderism",
+        "antigenderist",
+        "autigender",
+        "bigender",
+        "biogender",
+        "catgender",
+        "cisgender",
+        "cis-gender",
+        "cogender",
+        "common gender",
+        "crossgender",
+        "demigender",
+        "doggender",
+        "fourth gender",
+        "genderable",
+        "gender-affected",
+        "gender affirmation surgery",
+        "gender-affirming",
+        "gender-affirming surgery",
+        "genderal",
+        "gender asterisk",
+        "gender baiting",
+        "gender-baiting",
+        "gender-balanced",
+        "genderbend"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gender#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-b876ca9",
+    "sense": {
+      "id": "kaikki:1a37eb9f1348037bfd",
+      "definition": "One or more relatives, considered together.",
+      "example": "She stayed with kin while looking for a new home.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "close kin",
+        "next of kin"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/kin#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Kin refers collectively to relatives; next of kin has specific administrative or legal uses that depend on the context."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:58f8f9432b13865858",
+      "definition": "Race; family; breed; kind.",
+      "example": "the starfish and its kin the sea urchin",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "akin",
+        "alkin",
+        "erfkin",
+        "fictive kin",
+        "kind",
+        "kindom",
+        "kindred",
+        "kinfolk",
+        "king",
+        "kinhood",
+        "Kinism",
+        "Kinist",
+        "kinless",
+        "kinly",
+        "kinomics",
+        "kin selection",
+        "kinsfolk",
+        "kinship",
+        "kinslayer",
+        "kinsman",
+        "kinsperson",
+        "kin state",
+        "kinstate",
+        "kinswoman",
+        "kinterm",
+        "kintype",
+        "kissing kin",
+        "kith and kin",
+        "mankind",
+        "next of kin"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/kin#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-a52b659",
+    "sense": {
+      "id": "kaikki:bc02c272b4ca47fef7",
+      "definition": "A large passenger ship, especially one operating on a regular route.",
+      "example": "The ocean liner carried passengers between the two ports.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "an ocean liner",
+        "a passenger liner"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/liner#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A liner normally provides a transport service on a route; a cruise ship is primarily associated with a leisure voyage, though the roles can overlap."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:7791cd2c0f32f5a0c9",
+      "definition": "Someone who fits a lining to something.",
+      "example": "a liner of shoes",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "bedliner",
+        "bin liner",
+        "bottom liner",
+        "diaper liner",
+        "eyeliner",
+        "hard-liner",
+        "headliner",
+        "linerboard",
+        "liner card",
+        "liner lock",
+        "liner notes",
+        "lip liner",
+        "lipliner",
+        "nappy liner",
+        "one-liner",
+        "panty liner",
+        "poncho liner",
+        "pond liner",
+        "section liner",
+        "soft-liner",
+        "trainer liner",
+        "underliner",
+        "unlinered",
+        "zip-liner",
+        "zip liner",
+        "interliner",
+        "linerless"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/liner#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-54aa6a77",
+    "sense": {
+      "id": "kaikki:0aa01b0f22e4a01b58",
+      "definition": "Waste or rubbish left or thrown where it does not belong, especially on the ground.",
+      "example": "Volunteers collected litter from the beach.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "pick up litter",
+        "leave litter"
+      ],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/litter#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Litter concerns discarded material here; a litter of puppies and animal bedding are separate meanings."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:db20d2e2e2fcce6796",
+      "definition": "Straw, grass, and similar loose material used as bedding for people or animals.",
+      "example": "Quen he had made me hale and fere",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "antilitter",
+        "belitter",
+        "cat litter",
+        "clitty litter",
+        "freaklitter",
+        "hammock litter",
+        "horse litter",
+        "horse-litter",
+        "horselitter",
+        "interlitter",
+        "killer litter",
+        "kitty litter",
+        "leaf litter",
+        "leaflitter",
+        "litterbag",
+        "litterbasket",
+        "litter bin",
+        "litter box",
+        "litter bug",
+        "litterbug",
+        "litterfall",
+        "litter frog",
+        "litterless",
+        "litter lout",
+        "littermate",
+        "litter moth",
+        "litter picking",
+        "litter tray",
+        "littery",
+        "make litter of"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/litter#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7c6f2424",
+    "sense": {
+      "id": "kaikki:d5e7104ed1e2f19a90",
+      "definition": "A frame or machine on which threads are interwoven to make fabric.",
+      "example": "The weaver made the cloth on a wooden loom.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a weaving loom",
+        "weave on a loom"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/loom#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A loom makes fabric by interweaving threads; spinning equipment makes yarn from fibres."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:6ae5ad4253b8d9b80f",
+      "definition": "A utensil; tool; a weapon; (usually in compound) an article in general.",
+      "example": "heirloom, workloom",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "autoloom",
+        "backstrap loom",
+        "blessing loom",
+        "broadloom",
+        "drawloom",
+        "handloom",
+        "heirloom",
+        "hog-loom",
+        "hog loom",
+        "Jacquard loom",
+        "loom band",
+        "loomless",
+        "loom weight",
+        "loomworks",
+        "needle loom",
+        "power loom",
+        "satinet loom",
+        "warkloom",
+        "wiring loom",
+        "workloom"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/loom#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-52c205ff",
+    "sense": {
+      "id": "kaikki:9481df1f925403a337",
+      "definition": "Happening at consistent or repeated intervals.",
+      "example": "The nurse checked the patient's temperature at regular intervals.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "regular intervals",
+        "regular meetings"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regular#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Regular concerns a repeated pattern; frequent concerns how often something happens, so an annual event can be regular without being frequent."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:434aabde00aea00cf7",
+      "definition": "Bound by religious rule; belonging to a monastic or religious order (often as opposed to secular).",
+      "example": "regular clergy, in distinction from the secular clergy",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [
+        "irregular",
+        "non-regular",
+        "nonregular"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "antiregular",
+        "biregular",
+        "equiregular",
+        "extraregular",
+        "hyperregular",
+        "on a regular basis",
+        "on the regular",
+        "overregular",
+        "preregular",
+        "proregular",
+        "regioregular",
+        "regular army",
+        "regular as clockwork",
+        "regular black hole",
+        "regular closed",
+        "regular coffee",
+        "regular continued fraction",
+        "regular dividend",
+        "regular-duty",
+        "regular element",
+        "regular expression",
+        "regular folk",
+        "regular folks",
+        "regular function",
+        "regular graph",
+        "regular grid",
+        "regular guy",
+        "regular hexahedron",
+        "regular insulin",
+        "regularisation"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regular#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-811d6150",
+    "sense": {
+      "id": "kaikki:355dd578f6a74ad0f8",
+      "definition": "An organised plan or programme of action.",
+      "example": "The council introduced a scheme to improve home insulation.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a training scheme",
+        "a scheme to improve housing"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/scheme#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Scheme can be a neutral word for a programme, especially in British English; a secret or dishonest plot is a separate meaning."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:301832085707d3b099",
+      "definition": "An artful deviation from the ordinary arrangement of words.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete, rhetoric",
+      "register": "obsolete, rhetoric",
+      "wordFamily": [
+        "grand scheme of things",
+        "schematization",
+        "scheme arch",
+        "scheme of studies",
+        "scheme of things",
+        "schemer",
+        "schemester",
+        "scheme theory",
+        "schemie"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/scheme#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-b345b9fc",
+    "sense": {
+      "id": "kaikki:ee512d2bd8d27daa00",
+      "definition": "A protective panel fitted over a window to block light or provide protection.",
+      "example": "They closed the wooden shutters before the storm.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "window shutters",
+        "close the shutters"
+      ],
+      "usage": "",
+      "register": "plural-normally",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/shutter#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Window shutters cover a window; a camera shutter controls the exposure of a camera sensor or film in another sense."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:04956d0026a29fa98e",
+      "definition": "One who shuts or closes something.",
+      "example": "the openers and shutters of the sluices we believe are basic to the history of mind",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "ferroelectric shutter",
+        "leaf shutter",
+        "roller shutter",
+        "shutterbug",
+        "shutter chance",
+        "shutter dam",
+        "shutterer",
+        "shutterless",
+        "shutterlike",
+        "shutter-priority",
+        "shutter priority",
+        "shutter shades",
+        "shutterspeed",
+        "shutter speed",
+        "shutterwise",
+        "storm shutter",
+        "time shutter",
+        "unshutter"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/shutter#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7fa3c57b",
+    "sense": {
+      "id": "kaikki:f12250a38353e785d0",
+      "definition": "An individual length of a fine, thread-like substance.",
+      "example": "A strand of hair lay across the page.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a strand of hair",
+        "a strand of thread"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/strand#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A strand is one thread-like length here; strand as a shore and strand as a verb meaning leave helpless have separate meanings."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:889fc5c86fc7ba1160",
+      "definition": "The shore or beach of the sea or ocean.",
+      "example": "Grand Strand",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "astrand",
+        "Rosslare Strand",
+        "seastrand",
+        "strandline",
+        "strand tangantangan"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/strand#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-2ba51331",
+    "sense": {
+      "id": "kaikki:9fee3fa8aca88cf948",
+      "definition": "The food, water, money, or other basic resources needed to stay alive.",
+      "example": "The small income provided only the bare means of subsistence.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a means of subsistence",
+        "basic subsistence"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/subsistence#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Subsistence concerns meeting basic needs; it does not imply a comfortable standard of living."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:97ec693bc835a62c22",
+      "definition": "Real being; existence.",
+      "example": "the human nature loseth its proper subsistence , and is assumed into the subsistence of the divine nature",
+      "pos": "noun",
+      "synonyms": [
+        "hypostasis"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "consubsistence",
+        "nonsubsistence",
+        "subsistence crop",
+        "subsistence economy",
+        "subsistence farming",
+        "subsistence level",
+        "subsistential"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/subsistence#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-76293b58",
+    "sense": {
+      "id": "kaikki:98b41a0bb516c996cb",
+      "definition": "A circular decoration made from flowers, leaves, or similar material.",
+      "example": "They placed a wreath of flowers at the memorial.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a wreath of flowers",
+        "lay a wreath"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wreath#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A wreath is normally arranged in a ring; a bouquet is a bunch of flowers and need not be circular."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ca2a448013df91260a",
+      "definition": "Something twisted, intertwined, or curled.",
+      "example": "a wreath of smoke    a wreath of clouds",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "Advent wreath",
+        "bridal wreath",
+        "Hippocratic wreath",
+        "laurel wreath",
+        "oak wreath",
+        "olive wreath",
+        "snow wreath",
+        "wreath product",
+        "wreathwork",
+        "Yule wreath"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/wreath#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-9e3cc11b",
+    "sense": {
+      "id": "wiktionary:restored:da8e6eca2ebe610ef5",
+      "pos": "verb",
+      "definition": "To move from a higher place or position to a lower one.",
+      "example": "The aircraft began to descend towards the runway.",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "descend slowly",
+        "descend towards the ground"
+      ],
+      "usage": "This is the intransitive use: the moving thing is the subject.",
+      "distinctions": [
+        "Descend describes downward movement; ascend describes upward movement."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:8e9b16dc32f129d2f5",
+      "definition": "Senses relating to moving from a higher to a lower position.",
+      "example": "they descended the river in boats",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "descendable",
+        "descendible",
+        "descendance",
+        "descendancy",
+        "descended",
+        "descendence",
+        "descendency",
+        "descender",
+        "descending",
+        "descend into the arena",
+        "descend on",
+        "descend upon",
+        "maldescended",
+        "redescend",
+        "undescended"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/descend#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7c736f58",
+    "sense": {
+      "id": "wiktionary:restored:47ece59e0a2d989653",
+      "pos": "verb",
+      "definition": "To change the direction in which one is travelling.",
+      "example": "Turn left at the next junction.",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "turn left",
+        "turn towards a building"
+      ],
+      "usage": "The direction or destination can follow the verb.",
+      "distinctions": [
+        "Turning left changes direction; continuing straight keeps the existing direction."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:90f62e772e345d9c27",
+      "definition": "To make a non-linear physical movement.",
+      "example": "the Earth turns",
+      "pos": "verb",
+      "synonyms": [
+        "rotate",
+        "spin",
+        "twirl"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "person",
+      "register": "intransitive, person",
+      "wordFamily": [
+        "beturn",
+        "deturn",
+        "even a worm will turn",
+        "mill-turn",
+        "not know where to turn",
+        "not know which way to turn",
+        "please turn left",
+        "please turn right",
+        "stomach-turning",
+        "the worm turns",
+        "tilt-and-turn",
+        "tilt-turn",
+        "toss and turn",
+        "turnability",
+        "turnable",
+        "turn a blind eye",
+        "turn about",
+        "turn a corner",
+        "turn a deaf ear",
+        "turnagain",
+        "turn again",
+        "turn against",
+        "turn a hair",
+        "turn a new leaf",
+        "turn an honest penny",
+        "turn a number of shades of red",
+        "turn a page",
+        "turn a phrase",
+        "turn around",
+        "turnaround"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/turn#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-42d23fa7",
+    "sense": {
+      "id": "wiktionary:restored:d4a2a6af01e75d58bc",
+      "pos": "noun",
+      "definition": "A period of ten years.",
+      "example": "The project took more than a decade to complete.",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=decade&oldid=93531304",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "over the next decade",
+        "a decade ago"
+      ],
+      "usage": "A named decade can refer to years such as 2030 to 2039, while a duration of ten years can begin in any year.",
+      "distinctions": [
+        "Decade means ten years here; century means one hundred years."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:1d6b66f727bb7d0293",
+      "definition": "A group, set, or series of ten , particularly",
+      "example": "a decade of soldiers",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "cosmological decade",
+        "decade box",
+        "decade counter",
+        "decadeful",
+        "decadelong",
+        "decade-long",
+        "decade long",
+        "decadely",
+        "decadeslong",
+        "decades-long",
+        "decadewise",
+        "decadist",
+        "dollar decade",
+        "light decade",
+        "lost decade",
+        "multidecade",
+        "quintade",
+        "semidecade"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/decade#English",
+      "license": "CC-BY-SA-4.0"
+    }
   }
 ]

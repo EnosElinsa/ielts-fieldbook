@@ -32,7 +32,7 @@ for (const row of common) {
   if(!rows.some(item=>item.sense.id===row.sense.id)) rows.push(row);
   commonRows.set(row.entryId,rows);
 }
-for (const row of [...topics.values(),...sources.values(),...repairRows.values(),...modernRows.values(),...common]) {
+for (const row of [...topicData,...sources.values(),...repairRows.values(),...modernRows.values(),...common]) {
   const id=JSON.stringify([row.entryId,row.sense.id]);
   baselines.set(id,[...(baselines.get(id)||[]),row.sense,...(row.originalSense?.id===row.sense.id?[row.originalSense]:[])]);
 }

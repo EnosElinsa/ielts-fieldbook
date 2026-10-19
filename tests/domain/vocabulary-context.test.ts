@@ -27,7 +27,9 @@ test('core binds distinct geography and fruit senses without changing notes or I
   expect(food.sense?.definition).toContain('seeds');
   expect(food.entry.senses[0]).toEqual(food.sense);
   expect(food.context).toMatchObject({ entryId: raw.id, senseId: food.sense!.id, status: 'reviewed', version: VOCABULARY_CONTEXT_VERSION });
-  expect(food.entry.senses).toContainEqual(raw.senses[0]);
+  expect(food.entry.senses.find(sense => sense.id === raw.senses[0].id)).toMatchObject({
+    id: raw.senses[0].id, definition: 'The essential central part of something, surrounded by other parts.',
+  });
   expect(raw).toEqual(before);
   food.sense!.definition = 'Caller modification';
   expect(resolve('core', 'ielts-vocabulary-chapter-12-group-02').sense?.definition).toContain('fruit');

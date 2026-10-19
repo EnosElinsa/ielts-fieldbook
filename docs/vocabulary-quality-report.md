@@ -2,7 +2,7 @@
 
 Generated with `npm run vocabulary:quality` from checked-in public data and the actual learning-context and exercise resolvers. No account data or external services are read.
 
-Source snapshot: `49941667ae91f03fed8efe5e4fccc3776cfbc8b2c3fc99fcfcdeef59f5aaa710`.
+Source snapshot: `3835105a2503da4df92215f7a676ad1a95932567c5d1af18388ad42f491b8334`.
 
 ## Coverage
 
@@ -10,44 +10,47 @@ Source snapshot: `49941667ae91f03fed8efe5e4fccc3776cfbc8b2c3fc99fcfcdeef59f5aaa7
 | --- | ---: |
 | Catalogue words | 7021 |
 | Source dictionary terms | 5853 |
-| Source and restored dictionary senses | 52022 |
-| Existing editorial reviews | 3633 |
-| Dictionary senses still pending | 48389 |
+| Source and restored dictionary senses | 52059 |
+| Existing editorial reviews | 4204 |
+| Dictionary senses still pending | 47855 |
 | Words with a resolved learning meaning | 7021 |
-| Distinct learning-content variants | 9091 |
+| Distinct learning-content variants | 9089 |
 | Default/group learning contexts, including multiple-meaning lessons | 16296 |
-| Learning variants with a displayed example or reading note | 9091 |
-| Learning variants with collocations or reading cues | 2683 |
-| Learning variants with distinction notes | 537 |
+| Learning variants with a displayed example or reading note | 9089 |
+| Learning variants with collocations or reading cues | 3194 |
+| Learning variants with distinction notes | 1051 |
 | Learning variants supporting sentence gaps | 7698 |
-| Learning variants supporting distinction questions | 288 |
-| Learning variants with content-review signals | 514 |
-| Learning variants without content-review signals | 8577 |
-| Learning variants with enrichment opportunities | 8814 |
+| Learning variants supporting distinction questions | 304 |
+| Learning variants with content-review signals | 1 |
+| Learning variants without content-review signals | 9088 |
+| Learning variants with enrichment opportunities | 8794 |
+| Exact-content decisions retaining valid examples | 312 |
 | Source groups sharing a normalised definition and POS within one word | 11 |
 
 Learning variants preserve exact content and provenance. A word can have a default, topic-specific content and additional multiple-meaning lessons. Shared text is counted once per exact variant, with every default/group scope retained. Dictionary counts exclude separate teaching variants. Context-review-required does not reverse or add an editorial dictionary review.
 
 ## Issue queue
 
-| Automatic signal | Work category | Learning variants | Dictionary variants |
-| --- | --- | ---: | ---: |
-| missing-definition | content-review | 0 | 0 |
-| missing-pos | content-review | 0 | 0 |
-| missing-example | content-review | 0 | 17784 |
-| source-markup | content-review | 0 | 1 |
-| relation-example | content-review | 0 | 322 |
-| reference-example | content-review | 0 | 23 |
-| truncated-example | content-review | 0 | 2330 |
-| archaic-example | content-review | 0 | 1516 |
-| example-fragment-signal | content-review | 513 | 4623 |
-| missing-collocations | enrichment | 6408 | 48389 |
-| missing-distinctions | enrichment | 8554 | 48389 |
-| duplicate-gloss | content-review | 1 | 22 |
-| no-cloze-task | enrichment | 1387 | Not scanned |
-| no-distinction-task | enrichment | 8797 | Not scanned |
+| Automatic signal | Work category | Pending learning variants | Raw learning signals | Pending dictionary variants |
+| --- | --- | ---: | ---: | ---: |
+| missing-definition | content-review | 0 | 0 | 0 |
+| missing-pos | content-review | 0 | 0 | 0 |
+| missing-example | content-review | 0 | 0 | 17780 |
+| source-markup | content-review | 0 | 0 | 1 |
+| relation-example | content-review | 0 | 0 | 320 |
+| reference-example | content-review | 0 | 0 | 23 |
+| truncated-example | content-review | 0 | 0 | 2330 |
+| archaic-example | content-review | 0 | 0 | 1515 |
+| example-fragment-signal | content-review | 0 | 310 | 4107 |
+| missing-collocations | enrichment | 5895 | 5895 | 47855 |
+| missing-distinctions | enrichment | 8038 | 8038 | 47855 |
+| duplicate-gloss | content-review | 1 | 1 | 22 |
+| no-cloze-task | enrichment | 1381 | 1381 | Not scanned |
+| no-distinction-task | enrichment | 8775 | 8775 | Not scanned |
 
 These signals are candidates for review, not proven linguistic defects. A phrase can be a valid example; an old quotation can be appropriate reading material; two glosses can belong to distinct source identities. Typed reading notes and reference records do not require sentence gaps. Exercise availability is scanned for learning variants only, not every reference meaning. The availability of a question is not proof of its semantic quality. No missing-diagram signal is generated.
+
+Explicit retain-example decisions suppress only the sentence-fragment heuristic for an exact source and displayed-content fingerprint. Raw signals remain visible above and in each work item. Changed source data or teaching text makes an old decision fail validation; same-ID topic variants do not inherit it. These decisions neither approve other fields nor add dictionary editorial reviews.
 
 Content-review signals precede enrichment opportunities in the visible work queue. Missing collocations, distinctions or a particular exercise are enrichment opportunities, not a claim that every meaning needs every field. Having no content-review signal is not semantic approval. The original per-signal counts and complete pending dictionary ledger are retained. Group reuse is a tie-breaker, not a word-frequency claim; it cannot put enrichment ahead of a content-review signal. Remaining dictionary work follows visible work, with explicitly authored specialist/historical/proper-name records last. Unclassified dictionary meanings remain in the complete queue.
 
@@ -55,25 +58,25 @@ Content-review signals precede enrichment opportunities in the visible work queu
 
 | Word | Sense | Signals | Default/group contexts |
 | --- | --- | --- | ---: |
-| age | kaikki:1e26b79f328f4d76e4 | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 3 |
-| gardener | kaikki:995e2098b0eb7142e6 | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 3 |
-| maximum | kaikki:725a1867b758583865 | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 3 |
-| medication | kaikki:5094bb744df0a411c9 | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 3 |
-| Russia | kaikki:fac2a8f37738b25817 | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 2 |
-| agent | kaikki:8e153db8ce2a9141db | example-fragment-signal, missing-collocations, missing-distinctions, no-cloze-task, no-distinction-task | 2 |
-| donkey | kaikki:0563adb1617892685c | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 2 |
 | latest | kaikki:a41576109b11c20e4b | missing-collocations, missing-distinctions, duplicate-gloss, no-distinction-task | 2 |
-| skirt | kaikki:bb44219109567471c2 | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 2 |
-| time | kaikki:e89928c4c3b14947ac | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 2 |
-| unkind | kaikki:38675469dceb1dab0c | example-fragment-signal, missing-collocations, missing-distinctions, no-cloze-task, no-distinction-task | 2 |
-| virtually | kaikki:45c15fffd57f0c1f2e | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 2 |
-| Arabic | kaikki:879e4ec3a960e1f734 | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 1 |
-| Bustle | kaikki:ff6b68b71369f1e2fa | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 1 |
-| Central Park | kaikki:65eef89a7e3fd6e525 | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 1 |
-| Glasgow | kaikki:7c6369dce4b57c9685 | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 1 |
-| Historic | kaikki:3083755c61b8027f59 | example-fragment-signal, missing-collocations, missing-distinctions | 1 |
-| Italian | kaikki:31dcf68e0840b890c6 | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 1 |
-| Olympic | kaikki:dba8f11d0e6b34134d | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 1 |
-| Plausible | kaikki:a9f2df21918d7a5fcf | example-fragment-signal, missing-collocations, missing-distinctions, no-distinction-task | 1 |
+| accommodation | general | missing-distinctions, no-distinction-task | 6 |
+| allergy | kaikki:5bab1eaa2c07fe9e96 | missing-collocations, missing-distinctions, no-distinction-task | 6 |
+| castle | kaikki:9b1faf9c08383fd9b6 | missing-collocations, missing-distinctions, no-distinction-task | 6 |
+| exhibition | kaikki:6b92dc693fb1b189fa | missing-collocations, missing-distinctions, no-distinction-task | 6 |
+| laptop | kaikki:168124cf624619cd5f | missing-collocations, missing-distinctions, no-distinction-task | 6 |
+| practical | kaikki:56ce9fe1b5cbf58f7d | missing-collocations, missing-distinctions, no-distinction-task | 6 |
+| visa | kaikki:149963eda68ac77d9a | missing-collocations, missing-distinctions, no-distinction-task | 6 |
+| ancient | kaikki:3a4eff8c3f3e3233f9 | missing-distinctions, no-distinction-task | 5 |
+| blanket | kaikki:53413b231d64bb2e87 | missing-collocations, missing-distinctions, no-distinction-task | 5 |
+| business | kaikki:1ae0c45ba6013ba8ec | missing-collocations, missing-distinctions, no-distinction-task | 5 |
+| coffee | kaikki:89f2915edc21b0c662 | missing-collocations, missing-distinctions, no-distinction-task | 5 |
+| customer | kaikki:75baca29b1545f7a35 | missing-collocations, missing-distinctions, no-distinction-task | 5 |
+| depression | kaikki:9ef42cf9e4e4ef2611 | missing-collocations, missing-distinctions, no-distinction-task | 5 |
+| drought | general | missing-distinctions, no-distinction-task | 5 |
+| drum | kaikki:49fa3250de7cd11e4f | missing-collocations, missing-distinctions, no-cloze-task, no-distinction-task | 5 |
+| exchange | kaikki:a0380dbcf881c102a9 | missing-collocations, missing-distinctions, no-distinction-task | 5 |
+| exploit | kaikki:4a2aeed70f747bd282 | no-cloze-task, no-distinction-task | 5 |
+| faculty | kaikki:1a7888a33c08b8e60c | missing-collocations, missing-distinctions, no-distinction-task | 5 |
+| ferry | kaikki:bdb67cb1cf9fe4b097 | missing-collocations, missing-distinctions, no-distinction-task | 5 |
 
 The complete fingerprinted queue is generated at `local/audits/vocabulary-quality.json`. It is an offline work artifact, not a published dictionary or an approval ledger. Export bounded packages by problem type using the workflow in [vocabulary-bulk-workflow.md](vocabulary-bulk-workflow.md).

@@ -15,7 +15,7 @@ test('learning priority is delivered in scoped teaching while the preceding comp
   expect(baseline.restoreCorrections).toHaveLength(33);
   expect(baseline.restoreCorrections.every((row: any) => row.learningPriority === undefined)).toBe(true);
   // The latest previous manifest is reconstructed by reversing the priority-only batch.
-  const previous = [...release.resources].filter(([url]) => url.startsWith('/vocabulary-resources/manifest.')).map(([, text]) => JSON.parse(text)).find(value =>
+  const previous = [...release.resources.keys()].filter(url => url.startsWith('/vocabulary-resources/manifest.')).map(url => JSON.parse(release.resources.get(url)!)).find(value =>
     value.entryTeachingResources && value.entryShards && Object.values(value.entryTeachingResources).some(url => {
       const rows = JSON.parse(release.resources.get(url as string)!).teaching.readiness.corrections;
       return rows.some((row: any) => row.senseId === 'kaikki:b1a831f5de690f1a08' && row.definition === baseline.restoreCorrections[0].definition && row.learningPriority === undefined);

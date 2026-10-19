@@ -64,7 +64,7 @@ for (const member of catalog.memberships) {
   if (!entry) throw new Error('Missing membership entry: ' + member.entryId);
   addLesson(entry, { kind: 'group', bookId: member.bookId, unitId: member.unitId });
 }
-const report = buildQualityReport({ sources, lessons });
+const report = buildQualityReport({ sources, lessons, exampleReviews: data('exampleReviewDecisions') });
 if (report.summary.dictionarySenses !== audit.summary.senses || report.summary.reviewed !== audit.summary.reviewed) throw new Error('Full dictionary coverage differs from the editorial audit.');
 const snapshotFiles = ['public/vocabulary-catalog.json', 'public/dictionary/index.json', 'scripts/vocabulary-quality.ts', 'scripts/audit-vocabulary-quality.ts', 'scripts/audit-vocabulary-dictionary.mjs', ...fs.readdirSync(domain).filter(name => name.endsWith('.json') || ['content.ts', 'context.ts', 'curriculum.ts', 'readiness.ts', 'dictionaryPresentation.ts'].includes(name)).sort().map(name => domain + name), ...Object.values(index).map(file => 'public/dictionary/' + file)];
 const digest = createHash('sha256');
@@ -73,7 +73,7 @@ const fullReport = { ...report, sourceSnapshot: digest.digest('hex'), privateDat
 
 function markdown(result: QualityReport) {
   const s = result.summary;
-  const issues = Object.entries(result.byIssue).map(([issue, count]) => `| ${issue} | ${result.signalKinds[issue]} | ${count.learning} | ${count.dictionary ?? 'Not scanned'} |`).join('\n');
+  const issues = Object.entries(result.byIssue).map(([issue, count]) => `| ${issue} | ${result.signalKinds[issue]} | ${count.learning} | ${result.rawByIssue[issue].learning} | ${count.dictionary ?? 'Not scanned'} |`).join('\n');
   const visible = result.work.filter(row => row.scopes.length && row.signals.length).slice(0, 20);
   return `# Vocabulary quality and bulk work queue
 
@@ -101,17 +101,20 @@ Source snapshot: \`${fullReport.sourceSnapshot}\`.
 | Learning variants with content-review signals | ${s.learningWithReviewSignals} |
 | Learning variants without content-review signals | ${s.learningWithoutReviewSignals} |
 | Learning variants with enrichment opportunities | ${s.learningWithEnrichmentSignals} |
+| Exact-content decisions retaining valid examples | ${s.retainedExampleReviews} |
 | Source groups sharing a normalised definition and POS within one word | ${s.duplicateGlossGroups} |
 
 Learning variants preserve exact content and provenance. A word can have a default, topic-specific content and additional multiple-meaning lessons. Shared text is counted once per exact variant, with every default/group scope retained. Dictionary counts exclude separate teaching variants. Context-review-required does not reverse or add an editorial dictionary review.
 
 ## Issue queue
 
-| Automatic signal | Work category | Learning variants | Dictionary variants |
-| --- | --- | ---: | ---: |
+| Automatic signal | Work category | Pending learning variants | Raw learning signals | Pending dictionary variants |
+| --- | --- | ---: | ---: | ---: |
 ${issues}
 
 These signals are candidates for review, not proven linguistic defects. A phrase can be a valid example; an old quotation can be appropriate reading material; two glosses can belong to distinct source identities. Typed reading notes and reference records do not require sentence gaps. Exercise availability is scanned for learning variants only, not every reference meaning. The availability of a question is not proof of its semantic quality. No missing-diagram signal is generated.
+
+Explicit retain-example decisions suppress only the sentence-fragment heuristic for an exact source and displayed-content fingerprint. Raw signals remain visible above and in each work item. Changed source data or teaching text makes an old decision fail validation; same-ID topic variants do not inherit it. These decisions neither approve other fields nor add dictionary editorial reviews.
 
 Content-review signals precede enrichment opportunities in the visible work queue. Missing collocations, distinctions or a particular exercise are enrichment opportunities, not a claim that every meaning needs every field. Having no content-review signal is not semantic approval. The original per-signal counts and complete pending dictionary ledger are retained. Group reuse is a tie-breaker, not a word-frequency claim; it cannot put enrichment ahead of a content-review signal. Remaining dictionary work follows visible work, with explicitly authored specialist/historical/proper-name records last. Unclassified dictionary meanings remain in the complete queue.
 

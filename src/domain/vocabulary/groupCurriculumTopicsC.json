@@ -30330,5 +30330,51 @@
       }
     },
     "reason": "Retains the selected meaning identity and supplies substantive teaching content in place of a cross-reference, archaic quotation, incomplete example, or overly technical sentence. Transparent editorial syllabus choice; original group meaning remains unconfirmed."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-06-group-02",
+    "entryId": "ve-7c736f58",
+    "term": "turn",
+    "sense": {
+      "id": "wiktionary:restored:df8f15edeba6e515f8",
+      "pos": "verb",
+      "definition": "To rotate about an axis through oneself or itself.",
+      "example": "The wheel turns as the cart moves.",
+      "register": "intransitive, of a body, person, etc",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "a wheel turns",
+        "turn clockwise"
+      ],
+      "usage": "This is the intransitive use: the rotating object is the subject.",
+      "distinctions": [
+        "A turn can involve part of a rotation; it need not always be a complete revolution."
+      ],
+      "learningPriority": "general",
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "wiktionary:restored:df8f15edeba6e515f8",
+      "pos": "verb",
+      "definition": "To move about an axis through itself.",
+      "example": "",
+      "register": "intransitive, of a body, person, etc",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    },
+    "reason": "Reviewed the physical rotation child for the technology theme; the original source directory is retained separately."
   }
 ]

@@ -12736,5 +12736,745 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "## {{lb|en|transitive}} To [[pass#Verb|pass]] from a [[high#Adjective|higher]] to a [[low#Adjective|lower]] [[part#Noun|part]] of (something, such as a [[flight#Noun|flight]] of [[stair]]s or a [[slope#Noun|slope]]); to [[go down]] along or upon.",
+    "sense": {
+      "id": "wiktionary:restored:0b4b78829803228863",
+      "pos": "verb",
+      "definition": "To pass from a higher to a lower part of (something, such as a flight of stairs or a slope); to go down along or upon.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "## {{lb|en|transitive}} Of a flight of stairs, a [[road#Noun|road]], etc.: to [[lead#Verb|lead]] [[down#Preposition|down]] (a [[hill#Noun|hill]], a slope, etc.).",
+    "sense": {
+      "id": "wiktionary:restored:db1301b722eede35d0",
+      "pos": "verb",
+      "definition": "Of a flight of stairs, a road, etc.: to lead down (a hill, a slope, etc.).",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "## {{lb|en|transitive|archaic}} To [[move#Verb|move]] (someone or something) from a higher to a lower [[place#Noun|place]] or [[position#Noun|position]]; to [[bring#Verb|bring]] or [[send#Verb|send]] (someone or something) down.",
+    "sense": {
+      "id": "wiktionary:restored:abfcc47671adaf1f2a",
+      "pos": "verb",
+      "definition": "To move (someone or something) from a higher to a lower place or position; to bring or send (someone or something) down.",
+      "example": "",
+      "register": "transitive, archaic",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "## {{lb|en|intransitive}} To [[physically]] move or pass from a higher to a lower place or position; to [[come#Verb|come]] or [[go#Verb|go]] down in any [[way#Noun|way]], such as by [[climb#Verb|climbing]], [[fall#Verb|falling]], [[flow#Verb|flowing]], [[walk#Verb|walking]], etc.; to move [[downwards]]; to fall, to [[sink#Verb|sink]].",
+    "sense": {
+      "id": "wiktionary:restored:da8e6eca2ebe610ef5",
+      "pos": "verb",
+      "definition": "To physically move or pass from a higher to a lower place or position; to come or go down in any way, such as by climbing, falling, flowing, walking, etc.; to move downwards; to fall, to sink.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### {{lb|en|astrology}} Of a [[zodiac sign]]: to move away from the [[zenith]] towards the [[horizon]]; to [[sink#Verb|sink]]; also, of a [[planet]]: to move to a place where it has less [[astrological]] [[significance]].",
+    "sense": {
+      "id": "wiktionary:restored:181218c008fd8de5c3",
+      "pos": "verb",
+      "definition": "Of a zodiac sign: to move away from the zenith towards the horizon; to sink; also, of a planet: to move to a place where it has less astrological significance.",
+      "example": "",
+      "register": "astrology",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### {{lb|en|astronomy}} Of a [[celestial body]]: to move away from the zenith towards the horizon; to sink; also, to move towards the [[south#Noun|south]].",
+    "sense": {
+      "id": "wiktionary:restored:b3083a02106dbc2e07",
+      "pos": "verb",
+      "definition": "Of a celestial body: to move away from the zenith towards the horizon; to sink; also, to move towards the south.",
+      "example": "",
+      "register": "astronomy",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### {{lb|en|biology|physiology}} Of a [[body part]]: to move downwards, especially during [[development]] of the [[embryo]]; specifically, of the [[testis|testes]] of a [[mammal]]: to move downwards from the [[abdominal cavity]] into the [[scrotum]].",
+    "sense": {
+      "id": "wiktionary:restored:6d219ba847a97314e5",
+      "pos": "verb",
+      "definition": "Of a body part: to move downwards, especially during development of the embryo; specifically, of the testes of a mammal: to move downwards from the abdominal cavity into the scrotum.",
+      "example": "",
+      "register": "biology, physiology",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### {{lb|en|chemistry|obsolete}} Of a [[liquid#Adjective|liquid]] [[substance#Noun|substance]]: to [[distil]] out from another substance and [[gather#Verb|gather]] at the [[bottom#Noun|bottom]] of a [[container]]; also, to distil a substance to obtain another liquid substance in this [[manner#Noun|manner]].",
+    "sense": {
+      "id": "wiktionary:restored:b2deb8e08e54f406bb",
+      "pos": "verb",
+      "definition": "Of a liquid substance: to distil out from another substance and gather at the bottom of a container; also, to distil a substance to obtain another liquid substance in this manner.",
+      "example": "",
+      "register": "chemistry, obsolete",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "## {{lb|en|intransitive}} To [[slope#Verb|slope]] or [[stretch#Verb|stretch]] downwards.",
+    "sense": {
+      "id": "wiktionary:restored:6273db9575123de0c0",
+      "pos": "verb",
+      "definition": "To slope or stretch downwards.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "## {{lb|en|intransitive|chiefly|historical}} To [[alight#Verb|alight]] from a [[carriage]], a [[horse#Noun|horse]], etc.; also, to [[disembark]] from a [[vessel#Noun|vessel]]; to [[land#Verb|land]].",
+    "sense": {
+      "id": "wiktionary:restored:da2e52add9aaa11d26",
+      "pos": "verb",
+      "definition": "To alight from a carriage, a horse, etc.; also, to disembark from a vessel; to land.",
+      "example": "",
+      "register": "intransitive, chiefly, historical",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### To come or go down, or [[reduce]], in [[intensity]] or some other [[quality#Noun|quality]].",
+    "sense": {
+      "id": "wiktionary:restored:fa7c439d106210f7e2",
+      "pos": "verb",
+      "definition": "To come or go down, or reduce, in intensity or some other quality.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### Of a [[physical#Adjective|physical]] [[thing]] (such as a [[cloud#Noun|cloud]] or [[storm#Noun|storm]]) or a (generally [[negative#Adjective|negative]]) [[immaterial#Adjective|immaterial]] thing (such as [[darkness]], [[gloom#Noun|gloom]], or [[silence#Noun|silence]]): to [[settle#Verb|settle]] upon and [[start#Verb|start]] to [[affect#Verb|affect]] a [[person#Noun|person]] or place.",
+    "sense": {
+      "id": "wiktionary:restored:ab013325834fbb7e1d",
+      "pos": "verb",
+      "definition": "Of a physical thing (such as a cloud or storm) or a (generally negative) immaterial thing (such as darkness, gloom, or silence): to settle upon and start to affect a person or place.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### In [[speech#Noun|speech]] or [[writing#Noun|writing]]: to [[proceed]] from one [[matter#Noun|matter]] to another; especially, to pass from more [[general#Adjective|general]] or [[important]] to [[specific#Adjective|specific]] or less important matters to be [[consider]]ed.",
+    "sense": {
+      "id": "wiktionary:restored:b69a390f3186932435",
+      "pos": "verb",
+      "definition": "In speech or writing: to proceed from one matter to another; especially, to pass from more general or important to specific or less important matters to be considered.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### ''Chiefly followed by'' '''[[into]]''' ''or'' '''[[to#Preposition|to]]''': of a [[situation]]: to [[become]] [[worse#Adjective|worse]]; to [[decline#Verb|decline]], to [[deteriorate]].",
+    "sense": {
+      "id": "wiktionary:restored:7b203f3977cd753942",
+      "pos": "verb",
+      "definition": "Chiefly followed by into or to: of a situation: to become worse; to decline, to deteriorate.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### ''Chiefly followed by'' '''[[on#Preposition|on]]''' ''or'' '''[[upon]]''': to [[make#Verb|make]] an [[attack#Noun|attack]] or [[incursion]], from or as if from a [[vantage#Noun|vantage]] [[ground#Noun|ground]]; to come [[suddenly]] and with [[violence#Noun|violence]].",
+    "sense": {
+      "id": "wiktionary:restored:abbf30e95732e7e175",
+      "pos": "verb",
+      "definition": "Chiefly followed by on or upon: to make an attack or incursion, from or as if from a vantage ground; to come suddenly and with violence.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### ''Chiefly followed by'' '''on''' ''or'' '''upon''': to [[arrive]] [[suddenly]] or [[unexpectedly]], especially in a manner that [[cause#Verb|causes]] [[disruption]] or [[inconvenience#Noun|inconvenience]].",
+    "sense": {
+      "id": "wiktionary:restored:2e4c89e88d33d86563",
+      "pos": "verb",
+      "definition": "Chiefly followed by on or upon: to arrive suddenly or unexpectedly, especially in a manner that causes disruption or inconvenience.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### To [[come down]] to a [[humble#Adjective|humbler]] or less [[fortunate]], or a worse or less [[virtuous]], [[rank#Noun|rank]] or [[state#Noun|state]]; to [[abase]] or [[lower#Verb|lower]] oneself; to [[condescend]] or [[stoop#Verb|stoop]] to something.",
+    "sense": {
+      "id": "wiktionary:restored:fb49d712f09e39c007",
+      "pos": "verb",
+      "definition": "To come down to a humbler or less fortunate, or a worse or less virtuous, rank or state; to abase or lower oneself; to condescend or stoop to something.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### {{lb|en|chiefly|poetic|or|religion}} ''Chiefly in the form'' '''descend into''' ''(or'' '''[[within#Preposition|within]]''''')'' '''oneself''': to [[mentally]] [[enter#Noun|enter]] a state of ([[deep#Adjective|deep]]) [[meditation]] or [[thought#Noun|thought]]; to [[retire#Verb|retire]].",
+    "sense": {
+      "id": "wiktionary:restored:61fe86439270d9d8e7",
+      "pos": "verb",
+      "definition": "Chiefly in the form descend into (or within) oneself: to mentally enter a state of (deep) meditation or thought; to retire.",
+      "example": "",
+      "register": "chiefly, poetic, or, religion",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### {{lb|en|mathematics}} Of a [[sequence#Noun|sequence]] or [[series]]: to proceed from higher to lower [[value#Noun|values]].",
+    "sense": {
+      "id": "wiktionary:restored:48ccd117b63e9e223d",
+      "pos": "verb",
+      "definition": "Of a sequence or series: to proceed from higher to lower values.",
+      "example": "",
+      "register": "mathematics",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "descend",
+    "entryId": "ve-9e3cc11b",
+    "parentSenseId": "kaikki:8e9b16dc32f129d2f5",
+    "parentSourceHash": "12c16a106d6da0090c918c5b1df42b097e7d00a64201ec9fcd88e76ba0ac3f08",
+    "sourcePage": "descend",
+    "revision": 92784615,
+    "sourceGloss": "### {{lb|en|music}} To pass from a higher to a lower [[note#Noun|note]] or [[tone#Noun|tone]]; to fall in [[pitch#Noun|pitch]].",
+    "sense": {
+      "id": "wiktionary:restored:e6ea7e9413d025f75c",
+      "pos": "verb",
+      "definition": "To pass from a higher to a lower note or tone; to fall in pitch.",
+      "example": "",
+      "register": "music",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=descend&oldid=92784615",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "turn",
+    "entryId": "ve-7c736f58",
+    "parentSenseId": "kaikki:90f62e772e345d9c27",
+    "parentSourceHash": "b1b114b4eb47f8ad4117104ea22f64f422abae9e009d4b576965e03476905a2a",
+    "sourcePage": "turn",
+    "revision": 93729649,
+    "sourceGloss": "## {{lb|en|intransitive|of a body, person, etc}} To [[move]] [[about]] an [[axis]] [[through]] [[itself]].",
+    "sense": {
+      "id": "wiktionary:restored:df8f15edeba6e515f8",
+      "pos": "verb",
+      "definition": "To move about an axis through itself.",
+      "example": "",
+      "register": "intransitive, of a body, person, etc",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "turn",
+    "entryId": "ve-7c736f58",
+    "parentSenseId": "kaikki:90f62e772e345d9c27",
+    "parentSourceHash": "b1b114b4eb47f8ad4117104ea22f64f422abae9e009d4b576965e03476905a2a",
+    "sourcePage": "turn",
+    "revision": 93729649,
+    "sourceGloss": "## {{lb|en|transitive}} To [[change]] the [[direction]] or [[orientation]] of, especially by [[rotation]].",
+    "sense": {
+      "id": "wiktionary:restored:af2e8e47df4af8a860",
+      "pos": "verb",
+      "definition": "To change the direction or orientation of, especially by rotation.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "turn",
+    "entryId": "ve-7c736f58",
+    "parentSenseId": "kaikki:90f62e772e345d9c27",
+    "parentSourceHash": "b1b114b4eb47f8ad4117104ea22f64f422abae9e009d4b576965e03476905a2a",
+    "sourcePage": "turn",
+    "revision": 93729649,
+    "sourceGloss": "## {{lb|en|intransitive}} To change one's direction of [[travel]].",
+    "sense": {
+      "id": "wiktionary:restored:47ece59e0a2d989653",
+      "pos": "verb",
+      "definition": "To change one's direction of travel.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "turn",
+    "entryId": "ve-7c736f58",
+    "parentSenseId": "kaikki:90f62e772e345d9c27",
+    "parentSourceHash": "b1b114b4eb47f8ad4117104ea22f64f422abae9e009d4b576965e03476905a2a",
+    "sourcePage": "turn",
+    "revision": 93729649,
+    "sourceGloss": "## {{lb|en|transitive}} To shape (something) symmetrically by rotating it against a [[stationary]] cutting [[tool]], as on a [[lathe]].",
+    "sense": {
+      "id": "wiktionary:restored:0a66aba9aab54c4b9b",
+      "pos": "verb",
+      "definition": "To shape (something) symmetrically by rotating it against a stationary cutting tool, as on a lathe.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "turn",
+    "entryId": "ve-7c736f58",
+    "parentSenseId": "kaikki:90f62e772e345d9c27",
+    "parentSourceHash": "b1b114b4eb47f8ad4117104ea22f64f422abae9e009d4b576965e03476905a2a",
+    "sourcePage": "turn",
+    "revision": 93729649,
+    "sourceGloss": "## {{lb|en|by extension}} To give form to; to shape or mould; to adapt.",
+    "sense": {
+      "id": "wiktionary:restored:4e3faaee3c443fa6a6",
+      "pos": "verb",
+      "definition": "To give form to; to shape or mould; to adapt.",
+      "example": "",
+      "register": "by extension",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "turn",
+    "entryId": "ve-7c736f58",
+    "parentSenseId": "kaikki:90f62e772e345d9c27",
+    "parentSourceHash": "b1b114b4eb47f8ad4117104ea22f64f422abae9e009d4b576965e03476905a2a",
+    "sourcePage": "turn",
+    "revision": 93729649,
+    "sourceGloss": "## {{lb|en|transitive}} To direct or impel (something) into or out of a place.",
+    "sense": {
+      "id": "wiktionary:restored:f37f01c4ab507a3012",
+      "pos": "verb",
+      "definition": "To direct or impel (something) into or out of a place.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "turn",
+    "entryId": "ve-7c736f58",
+    "parentSenseId": "kaikki:90f62e772e345d9c27",
+    "parentSourceHash": "b1b114b4eb47f8ad4117104ea22f64f422abae9e009d4b576965e03476905a2a",
+    "sourcePage": "turn",
+    "revision": 93729649,
+    "sourceGloss": "## {{lb|en|transitive}} To position (something) by folding it, or using its folds.",
+    "sense": {
+      "id": "wiktionary:restored:1bdb495082a6e8eb21",
+      "pos": "verb",
+      "definition": "To position (something) by folding it, or using its folds.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "turn",
+    "entryId": "ve-7c736f58",
+    "parentSenseId": "kaikki:90f62e772e345d9c27",
+    "parentSourceHash": "b1b114b4eb47f8ad4117104ea22f64f422abae9e009d4b576965e03476905a2a",
+    "sourcePage": "turn",
+    "revision": 93729649,
+    "sourceGloss": "## {{lb|en|transitive|figuratively}} To navigate through a book or other printed material.",
+    "sense": {
+      "id": "wiktionary:restored:c92dc6a68d62698866",
+      "pos": "verb",
+      "definition": "To navigate through a book or other printed material.",
+      "example": "",
+      "register": "transitive, figuratively",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "turn",
+    "entryId": "ve-7c736f58",
+    "parentSenseId": "kaikki:90f62e772e345d9c27",
+    "parentSourceHash": "b1b114b4eb47f8ad4117104ea22f64f422abae9e009d4b576965e03476905a2a",
+    "sourcePage": "turn",
+    "revision": 93729649,
+    "sourceGloss": "## {{lb|en|transitive}} To [[twist]] or [[sprain]].",
+    "sense": {
+      "id": "wiktionary:restored:fdc97b2ac8d62f9dad",
+      "pos": "verb",
+      "definition": "To twist or sprain.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "turn",
+    "entryId": "ve-7c736f58",
+    "parentSenseId": "kaikki:90f62e772e345d9c27",
+    "parentSourceHash": "b1b114b4eb47f8ad4117104ea22f64f422abae9e009d4b576965e03476905a2a",
+    "sourcePage": "turn",
+    "revision": 93729649,
+    "sourceGloss": "## {{lb|en|transitive|cricket}} Of a bowler, to make (the [[ball]]) move [[sideways]] off the [[pitch]] when it [[bounce]]s.",
+    "sense": {
+      "id": "wiktionary:restored:59b9031ee76603ee80",
+      "pos": "verb",
+      "definition": "Of a bowler, to make (the ball) move sideways off the pitch when it bounces.",
+      "example": "",
+      "register": "transitive, cricket",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "turn",
+    "entryId": "ve-7c736f58",
+    "parentSenseId": "kaikki:90f62e772e345d9c27",
+    "parentSourceHash": "b1b114b4eb47f8ad4117104ea22f64f422abae9e009d4b576965e03476905a2a",
+    "sourcePage": "turn",
+    "revision": 93729649,
+    "sourceGloss": "## {{lb|en|intransitive|cricket}} Of a ball, to move sideways off the pitch when it bounces.",
+    "sense": {
+      "id": "wiktionary:restored:2cc5cb062ff7dbc6eb",
+      "pos": "verb",
+      "definition": "Of a ball, to move sideways off the pitch when it bounces.",
+      "example": "",
+      "register": "intransitive, cricket",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=turn&oldid=93729649",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "decade",
+    "entryId": "ve-42d23fa7",
+    "parentSenseId": "kaikki:1d6b66f727bb7d0293",
+    "parentSourceHash": "0ce0a19558c4b16d6776adce28f338b21fcd28a075075e3e1e48baef828edfa9",
+    "sourcePage": "decade",
+    "revision": 93531304,
+    "sourceGloss": "## A [[period]] of [[ten]] [[year]]s {{defdate|from 17th c.}}, particularly [[such]] a [[period]] [[begin]]ning with a [[year]] [[end]]ing in [[0]] and [[end]]ing with a [[year]] [[end]]ing in [[9]]. {{defdate|from 19th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:d4a2a6af01e75d58bc",
+      "pos": "noun",
+      "definition": "A period of ten years , particularly such a period beginning with a year ending in 0 and ending with a year ending in 9.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=decade&oldid=93531304",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "decade",
+    "entryId": "ve-42d23fa7",
+    "parentSenseId": "kaikki:1d6b66f727bb7d0293",
+    "parentSourceHash": "0ce0a19558c4b16d6776adce28f338b21fcd28a075075e3e1e48baef828edfa9",
+    "sourcePage": "decade",
+    "revision": 93531304,
+    "sourceGloss": "## {{lb|en|history}} A [[period]] of [[ten]] [[day]]s, [[particularly]] [[those]] in the [[ancient]] [[Egyptian]], [[Coptic]], and [[French Revolution]]ary [[calendar]]s. {{defdate|from 18th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:324db597fd44b926ac",
+      "pos": "noun",
+      "definition": "A period of ten days, particularly those in the ancient Egyptian, Coptic, and French Revolutionary calendars.",
+      "example": "",
+      "register": "history",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=decade&oldid=93531304",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "decade",
+    "entryId": "ve-42d23fa7",
+    "parentSenseId": "kaikki:1d6b66f727bb7d0293",
+    "parentSourceHash": "0ce0a19558c4b16d6776adce28f338b21fcd28a075075e3e1e48baef828edfa9",
+    "sourcePage": "decade",
+    "revision": 93531304,
+    "sourceGloss": "## {{lb|en|literary|archaic}} A [[work]] in [[ten]] [[part]]s or [[book]]s, particularly [[such]] [[division]]s of [[Livy]]'s ''[[:w:Ab Urbe Condita Libri|History of Rome]]''. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:39df78eb47139d092a",
+      "pos": "noun",
+      "definition": "A work in ten parts or books, particularly such divisions of Livy's History of Rome.",
+      "example": "",
+      "register": "literary, archaic",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=decade&oldid=93531304",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "decade",
+    "entryId": "ve-42d23fa7",
+    "parentSenseId": "kaikki:1d6b66f727bb7d0293",
+    "parentSourceHash": "0ce0a19558c4b16d6776adce28f338b21fcd28a075075e3e1e48baef828edfa9",
+    "sourcePage": "decade",
+    "revision": 93531304,
+    "sourceGloss": "## {{lb|en|Roman Catholicism}} A [[series]] of [[prayer]]s counted on a [[rosary]], typically consisting of an [[Our Father]], followed by [[ten]] [[Hail Mary]]s, and concluding with a {{w|Glory Be}} and sometimes the {{w|Fatima Prayer}}.",
+    "sense": {
+      "id": "wiktionary:restored:8e817df4a936474901",
+      "pos": "noun",
+      "definition": "A series of prayers counted on a rosary, typically consisting of an Our Father, followed by ten Hail Marys, and concluding with a Glory Be and sometimes the Fatima Prayer.",
+      "example": "",
+      "register": "Roman Catholicism",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=decade&oldid=93531304",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "decade",
+    "entryId": "ve-42d23fa7",
+    "parentSenseId": "kaikki:1d6b66f727bb7d0293",
+    "parentSourceHash": "0ce0a19558c4b16d6776adce28f338b21fcd28a075075e3e1e48baef828edfa9",
+    "sourcePage": "decade",
+    "revision": 93531304,
+    "sourceGloss": "## [[any|Any]] of the [[set]]s of [[ten]] [[sequential]] [[braille]] [[character]]s with [[predictable]] [[pattern]]s.",
+    "sense": {
+      "id": "wiktionary:restored:8eea2b4c4119c5ad4b",
+      "pos": "noun",
+      "definition": "Any of the sets of ten sequential braille characters with predictable patterns.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=decade&oldid=93531304",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "decade",
+    "entryId": "ve-42d23fa7",
+    "parentSenseId": "kaikki:1d6b66f727bb7d0293",
+    "parentSourceHash": "0ce0a19558c4b16d6776adce28f338b21fcd28a075075e3e1e48baef828edfa9",
+    "sourcePage": "decade",
+    "revision": 93531304,
+    "sourceGloss": "## {{lb|en|electronics}} A [[set]] of [[ten]] [[electronic]] [[device]]s [[use]]d to [[represent]] [[digit]]s.",
+    "sense": {
+      "id": "wiktionary:restored:1bdcedc66b2904b93f",
+      "pos": "noun",
+      "definition": "A set of ten electronic devices used to represent digits.",
+      "example": "",
+      "register": "electronics",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=decade&oldid=93531304",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]
