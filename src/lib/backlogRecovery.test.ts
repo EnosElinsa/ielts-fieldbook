@@ -82,3 +82,30 @@ test('a final short learning batch consumes its actual prompt count in spare voc
  VOCABULARY_CATALOG.units.push(unit);
  try{ensureUnifiedPlans(s,undefined,now);expect(s.plans.find(p=>p.skill==='vocabulary')).toMatchObject({estimatedMinutes:3,quantity:3,target:{batchSize:10,batchIndex:0,unitId:'short-unit'}});}finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);}
 });
+
+test.each(['learning-batch','due-review'])('frozen %s identities reserve overlapping learning material after batch-size changes',mode=>{
+ const s=setup();s.settings.days=[1,2,3,4,5,6,7];s.settings.vocabulary.mode='definition';s.settings.vocabulary.learningBatchSize=5;s.wordbookEnrollments=[{bookId:'reserved-book'}];
+ const entries=Array.from({length:15},(_,index)=>addVocabularyItem(s,{id:`reserve-${index}`,term:`term${index}`,meaning:'A meaning'}).item);
+ const unit={id:'reserved-unit',bookId:'reserved-book',kind:'group',entryIds:entries.map(row=>row.id),order:1};
+ const members=entries.map((entry,index)=>({entryId:entry.id,bookId:unit.bookId,unitId:unit.id,order:index}));
+ VOCABULARY_CATALOG.units.push(unit);VOCABULARY_CATALOG.memberships.push(...members);
+ const frozen=task('frozen-ten',10,{dateKey:'2026-10-19',skill:'vocabulary',kind:'vocabulary',draft:{answers:'keep'},target:{type:'vocabulary',binding:'frozen',mode,assessmentMode:'definition',bookId:unit.bookId,unitId:unit.id,batchIndex:0,batchSize:10,cards:entries.slice(0,10).map(entry=>({entryId:entry.id,senseId:entry.senses[0].id}))}});s.plans=[frozen];const before=structuredClone(frozen);
+ try {
+  ensureUnifiedPlans(s,undefined,now);const generated=s.plans.filter(row=>row.id!==frozen.id&&row.target?.mode==='learning-batch');
+  expect(generated.length).toBeGreaterThan(0);expect(generated.every(row=>row.target.batchIndex>=2)).toBe(true);expect(frozen).toEqual(before);
+  const stable=structuredClone(s.plans);ensureUnifiedPlans(s,undefined,now);expect(s.plans).toEqual(stable);
+  frozen.target.assessmentMode='dictation';ensureUnifiedPlans(s,undefined,now);expect(s.plans.some(row=>row.id!==frozen.id&&row.target?.mode==='learning-batch'&&row.target.batchIndex===0)).toBe(true);
+  frozen.target.assessmentMode='definition';frozen.target.cards=frozen.target.cards.map(ref=>({...ref,senseId:'another-sense'}));ensureUnifiedPlans(s,undefined,now);expect(s.plans.some(row=>row.id!==frozen.id&&row.target?.mode==='learning-batch'&&row.target.batchIndex===0)).toBe(true);
+ }finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);for(const member of members)VOCABULARY_CATALOG.memberships.splice(VOCABULARY_CATALOG.memberships.indexOf(member),1);}
+});
+
+test('frozen reservations compare resolved learning batches when archived words shift their boundaries',()=>{
+ const s=setup();s.settings.days=[1,2,3,4,5,6,7];s.settings.vocabulary.mode='definition';s.settings.vocabulary.learningBatchSize=5;s.wordbookEnrollments=[{bookId:'shift-book'}];
+ const entries=Array.from({length:15},(_,index)=>addVocabularyItem(s,{id:`shift-${index}`,term:`shiftword${index}`,meaning:'A meaning'}).item);
+ entries.slice(0,5).forEach(entry=>entry.tags.push('archived'));
+ const unit={id:'shift-unit',bookId:'shift-book',kind:'group',entryIds:entries.map(row=>row.id),order:1},members=entries.map((entry,order)=>({entryId:entry.id,bookId:unit.bookId,unitId:unit.id,order}));
+ VOCABULARY_CATALOG.units.push(unit);VOCABULARY_CATALOG.memberships.push(...members);
+ s.plans=[task('frozen-shift',1,{dateKey:'2026-10-19',skill:'vocabulary',kind:'vocabulary',target:{type:'vocabulary',binding:'frozen',mode:'due-review',assessmentMode:'definition',cards:[{entryId:entries[10].id,senseId:entries[10].senses[0].id}]}})];
+ try {ensureUnifiedPlans(s,undefined,now);const batches=s.plans.filter(row=>row.target?.mode==='learning-batch');expect(batches.length).toBeGreaterThan(0);expect(batches.some(row=>row.target.batchIndex===1)).toBe(false);}
+ finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);for(const member of members)VOCABULARY_CATALOG.memberships.splice(VOCABULARY_CATALOG.memberships.indexOf(member),1);}
+});

@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter, useLocation } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { emptyState, normalizeDraft } from '../domain';
 import { addVocabularyItem, getVocabularyReviewQueue, recordVocabularyReview } from '../domain/vocabulary';
@@ -8,6 +8,10 @@ import { readFileSync } from 'node:fs';
 import { readDraftRecovery } from '../storage/recovery';
 import { previewBacklogChange } from '../lib/planTemplates';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
+import { TodayPage } from '../features/today/TodayPage';
+import { PlanningPage } from '../features/planning/PlanningPage';
+import { VocabularyPracticePage } from '../features/vocabulary/VocabularyPracticePage';
+import '@testing-library/jest-dom/vitest';
 import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 import { speakingPrompts } from '../domain/speaking';
 import { ACCOUNT_MODULES, emptyCollectionStatuses } from '../storage/accountModules';
@@ -1311,11 +1315,11 @@ test('frozen legacy reviews load requested resources and remain retryable after 
   expect(mocks.releasedRead).toHaveBeenCalledWith(expect.objectContaining({entryIds:[entry.id],force:true}));
 });
 
-test('dynamic reviews reserve exact pairs by mode without changing existing frozen targets',async()=>{
+test.each(['due-review','learning-batch'])('dynamic reviews reserve exact pairs by mode without changing existing frozen %s targets',async reservedMode=>{
   const first=addVocabularyItem(mocks.initial,{id:'first',term:'first',meaning:'The first meaning.'}).item;
   const second=addVocabularyItem(mocks.initial,{id:'second',term:'second',meaning:'The second meaning.'}).item;
   for(const learning of mocks.initial.vocabularyStates)learning.manualStatus='unfamiliar';
-  const frozen={id:'reserved',kind:'vocabulary',skill:'vocabulary',status:'pending',target:{type:'vocabulary',mode:'due-review',assessmentMode:'dictation',cards:[{entryId:first.id,senseId:first.senses[0].id}]}};
+  const frozen={id:'reserved',kind:'vocabulary',skill:'vocabulary',status:'pending',target:{type:'vocabulary',mode:reservedMode,assessmentMode:'dictation',cards:[{entryId:first.id,senseId:first.senses[0].id}]}};
   const dynamic={id:'dynamic',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:10,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',batchSize:1,assessmentMode:'dictation',cards:[]}};
   mocks.initial.plans=[frozen,dynamic];await mount('/planning');
   await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[structuredClone(frozen),structuredClone(dynamic)];});});
@@ -1355,4 +1359,29 @@ test('bulk backlog saves are atomic, preserve drafts on failure and reject stale
  await act(async()=>{expect(await fieldbook.saveBacklogPreview(preview)).toBe(true);});
  expect(fieldbook.state.plans.map(plan=>plan.status)).toEqual(['skipped','skipped']);expect(mocks.saveState).toHaveBeenCalledTimes(2);
  await act(async()=>{await expect(fieldbook.saveBacklogPreview(preview)).rejects.toThrow(/schedule changed/i);});expect(mocks.saveState).toHaveBeenCalledTimes(2);
+});
+
+function ReturnHistoryControls(){const location=useLocation(),navigate=useNavigate();return <><output aria-label="Owned history location">{location.pathname+location.search+location.hash}</output><button onClick={()=>navigate(-1)}>Browser back</button><button onClick={()=>navigate(1)}>Browser forward</button></>;}
+test.each(['/today?view=overdue','/planning?view=overdue#planning-backlog'])('actual task completion returns through owned history to the focused task from %s',async source=>{
+ const scroll=vi.spyOn(window,'scrollTo').mockImplementation(()=>{});sessionStorage.clear();window.history.replaceState({idx:0},'','/sentinel');window.history.pushState({idx:1},'',source);
+ mocks.initial.settings.days=[];mocks.initial.settings.vocabulary.autoPlay=false;
+ const entry=addVocabularyItem(mocks.initial,{id:'return-word',term:'persistent',meaning:'Continuing over time.'}).item;
+ mocks.initial.plans=[{id:'return-old',dateKey:'2020-01-01',kind:'vocabulary',skill:'vocabulary',status:'in_progress',startedAt:'2020-01-01T00:00:00Z',title:'Historical review',estimatedMinutes:120,target:{type:'vocabulary',mode:'due-review',binding:'frozen',assessmentMode:'dictation',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}}];
+ const view=render(<BrowserRouter><FieldbookProvider><Probe/><Routes><Route path="/sentinel" element={<p>Before source</p>}/><Route path="/today" element={<TodayPage/>}/><Route path="/planning" element={<PlanningPage/>}/><Route path="/vocabulary/review" element={<VocabularyPracticePage/>}/><Route path="/vocabulary/history/:sessionId" element={<VocabularyPracticePage/>}/></Routes><ReturnHistoryControls/></FieldbookProvider></BrowserRouter>);
+ try {
+  await waitFor(()=>expect(fieldbook.booted).toBe(true));
+  if(source.startsWith('/planning'))fireEvent.click(await screen.findByText(/Waiting list/));
+  fireEvent.click(await screen.findByRole('button',{name:'Resume'}));
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());fireEvent.click(screen.getByRole('button',{name:'Start session'}));
+  fireEvent.change(await screen.findByRole('textbox',{name:'Answer 1'}),{target:{value:'persistent'}});fireEvent.click(screen.getByRole('button',{name:'Submit session'}));
+  await waitFor(()=>expect(fieldbook.state.plans.find(plan=>plan.id==='return-old').status).toBe('completed'));
+  const destination=source.split('#')[0]+'#task-return-old';
+  const back=await screen.findByRole('link',{name:source.startsWith('/today')?'Back to Today':'Back to Planning'});
+  expect(back).toHaveAttribute('href',destination);fireEvent.click(back);
+  await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent(destination));
+  await waitFor(()=>expect(view.container.querySelector('#task-return-old')).toHaveFocus());
+  expect(view.container.querySelector('#task-return-old')).toHaveTextContent('Completed');
+  fireEvent.click(screen.getByRole('button',{name:'Browser back'}));expect(await screen.findByText('Before source')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:'Browser forward'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent(destination));
+ }finally{view.unmount();scroll.mockRestore();window.history.replaceState({},'','/');}
 });

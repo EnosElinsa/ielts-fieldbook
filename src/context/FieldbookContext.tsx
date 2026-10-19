@@ -1303,9 +1303,16 @@ function useFieldbookValue() {
 
   const startPlan = useCallback(async(planId:string, options={})=>{
     const owner=accountId();const epoch=loadEpoch.current;
-    const sourceHash = accountLocation.hash || (['/planning','/today','/'].includes(accountLocation.pathname) ? `#task-${planId}` : '');
+    const taskSource = ['/planning','/today','/'].includes(accountLocation.pathname);
+    const sourceHash = taskSource ? `#task-${planId}` : accountLocation.hash;
     const sourceUrl = safeVocabularyReturn(accountLocation.pathname + accountLocation.search + sourceHash, '/vocabulary');
     const returnState = vocabularyForwardState({...accountLocation, hash:sourceHash});
+    const openVocabularyTask = path => {
+      // Back pops this owned source entry. Replace its hash before pushing practice,
+      // so successful completion can still render the exact historical task.
+      if(taskSource && sourceHash!==accountLocation.hash)navigate(sourceUrl,{replace:true,state:accountLocation.state});
+      navigate(path,{state:returnState});
+    };
     rememberVocabularyPosition(sourceUrl, `task-${planId}`);
     rememberVocabularyPosition(accountLocation.pathname + accountLocation.search + accountLocation.hash, `task-${planId}`);
     let noLongerDue = false;
@@ -1314,7 +1321,7 @@ function useFieldbookValue() {
     if(!plan)throw new Error('Task is unavailable. Reload your plan.');
     if(plan.status==='skipped')throw new Error('Restore this task before starting it.');
     if(plan.status==='completed'){
-      if(plan.kind==='vocabulary'&&plan.linkedSessionId)navigate(`/vocabulary/history/${encodeURIComponent(plan.linkedSessionId)}?${new URLSearchParams({returnTo:sourceUrl})}`,{state:returnState});
+      if(plan.kind==='vocabulary'&&plan.linkedSessionId)openVocabularyTask(`/vocabulary/history/${encodeURIComponent(plan.linkedSessionId)}?${new URLSearchParams({returnTo:sourceUrl})}`);
       else legacyStartPlan(planId);
       return true;
     }
@@ -1424,7 +1431,7 @@ function useFieldbookValue() {
       const current=draft.plans.find(row=>row.id===planId);
       if(!current||JSON.stringify(current)!==initial)throw new Error('This task changed while loading. Retry to open the current task.');
       if(dynamicReviewCapacity!==undefined){
-        const reserved=new Set(draft.plans.filter(row=>row.id!==planId && ['pending','in_progress'].includes(row.status) && row.target?.type==='vocabulary' && row.target.mode==='due-review' && row.target.binding!=='dynamic' && row.target.assessmentMode===target.assessmentMode).flatMap(row=>(row.target.cards||[]).map(ref=>JSON.stringify([ref.entryId,ref.senseId]))));
+        const reserved=new Set(draft.plans.filter(row=>row.id!==planId && ['pending','in_progress'].includes(row.status) && row.target?.type==='vocabulary' && row.target.binding!=='dynamic' && row.target.assessmentMode===target.assessmentMode).flatMap(row=>(row.target.cards||[]).map(ref=>JSON.stringify([ref.entryId,ref.senseId]))));
         const cards=getVocabularyPlanningCandidates(draft,new Date(),target.assessmentMode).filter(({card})=>card.mode===target.assessmentMode && !reserved.has(JSON.stringify([card.entryId,card.senseId]))).slice(0,dynamicReviewCapacity).map(({card})=>({entryId:card.entryId,senseId:card.senseId}));
         target={...target,binding:'frozen',cards};
         noLongerDue=cards.length===0;
@@ -1442,8 +1449,8 @@ function useFieldbookValue() {
       const params=new URLSearchParams({planId,returnTo:sourceUrl,mode:target.assessmentMode,dueOnly:'false',batchSize:String(target.cards.length),batchCards:JSON.stringify(target.cards)});
       if(target.mode==='learning-batch'){
         params.set('batch',String(target.batchIndex));params.set('batchSize',String(target.batchSize));
-        navigate(`/vocabulary/wordbooks/${encodeURIComponent(target.bookId)}/groups/${encodeURIComponent(target.unitId)}/learn?${params}`, {state:returnState});
-      } else navigate(`/vocabulary/review?${params}`, {state:returnState});
+        openVocabularyTask(`/vocabulary/wordbooks/${encodeURIComponent(target.bookId)}/groups/${encodeURIComponent(target.unitId)}/learn?${params}`);
+      } else openVocabularyTask(`/vocabulary/review?${params}`);
     } else if(skill==='reading'||skill==='listening'){
       const path=receptivePlanPath({...plan,target},skill);const params=new URLSearchParams({planId});if(target.questionIds)params.set('questions',JSON.stringify(target.questionIds));navigate(`${path}${path.includes('?')?'&':'?'}${params}`);
     } else if(plan.kind==='review')navigate('/review');

@@ -29,7 +29,9 @@ vi.mock("./VocabularyPages", () => ({
   VocabularyNavigation: () => <nav aria-label="Vocabulary views" />,
 }));
 
+const originalScrollTo=window.scrollTo;
 beforeEach(() => {
+  window.scrollTo=vi.fn();
   localStorage.clear();
   sessionStorage.clear();
   owner.current = "account-one";
@@ -346,7 +348,7 @@ test('planned batch ignores query mode mutation and submits exact frozen cards i
   expect(submitted).toMatchObject({mode:'definition',planId:'planned-mode',selection:{cards:refs}});
   expect(completeVocabularyPlan(fb.current.state,submitted)).toMatchObject({id:'planned-mode',status:'completed'});
 });
-afterEach(() => { cleanup(); Object.assign(VOCABULARY_CATALOG, originalCatalog); });
+afterEach(() => { cleanup(); window.scrollTo=originalScrollTo; Object.assign(VOCABULARY_CATALOG, originalCatalog); });
 function groupFixture(count: number) {
   const vocabulary = Array.from({ length: count }, (_, index) => ({
     ...fb.current.state.vocabulary[0], id: `group-entry-${index}`, term: `word${index}`,

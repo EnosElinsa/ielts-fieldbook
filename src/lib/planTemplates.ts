@@ -4,6 +4,7 @@ import { sessionSkill, speakingKinds } from './format';
 import { receptivePlanTemplates, ensureReceptivePlans } from './receptivePlans';
 import { isProtectedPlan, practiceFromWeakness } from '../domain/plans';
 import { getVocabularyReviewQueue } from '../domain/vocabulary';
+import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
 import { getVocabularyPlanningCandidates } from '../domain/vocabulary/planning';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { getLearnedVocabularyIds, vocabularyGroupProgress } from '../domain/vocabulary/progress';
@@ -535,7 +536,7 @@ function carryBacklog(state,keys,now,selectedIds,previousDates=new Map()) {
   }
 }
 
-export function nextLearningTarget(state, reserved = new Set()) {
+export function nextLearningTarget(state, reserved = new Set(), frozenCards = []) {
   const batchSize=state.settings.vocabulary?.learningBatchSize || 10;
   const assessmentMode=['audio','production'].includes(state.settings.vocabulary?.mode)?'definition':state.settings.vocabulary?.mode || 'dictation';
   for(const enrollment of state.wordbookEnrollments || []) {
@@ -552,6 +553,14 @@ export function nextLearningTarget(state, reserved = new Set()) {
       for(let index=0;index<Math.ceil(ids.length/batchSize);index++) {
         if(ids.slice(index*batchSize,(index+1)*batchSize).every(id=>answered.has(id)))continue;
         const key=JSON.stringify([group.bookId,group.id,index,batchSize]);if(reserved.has(key))continue;
+        if(frozenCards.some(ref=>ids.includes(ref.entryId))) {
+          // Resolve the same contextual senses and mode fallback as the binder. If resources
+          // are not loaded yet, defer the overlapping batch rather than inventing identities.
+          try {
+            const batch=buildLearningBatch(state,group.bookId,group.id,index,batchSize,assessmentMode);
+            if(!batch.cards.length||batch.cards.some(card=>frozenCards.some(ref=>ref.entryId===card.entryId&&ref.senseId===card.senseId&&ref.mode===batch.mode)))continue;
+          } catch {continue;}
+        }
         reserved.add(key);
         return {type:'vocabulary',mode:'learning-batch',assessmentMode,bookId:group.bookId,unitId:group.id,batchIndex:index,batchSize,cards:[]};
       }
@@ -578,7 +587,8 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
   carryBacklog(state,keys,now,recoveryIds,previousDates);
   const skills=selectedStudySkills(state.settings);
   const reserved=new Set(state.plans.filter(plan=>plan.target?.mode==='learning-batch'&&plan.status!=='skipped').map(plan=>JSON.stringify([plan.target.bookId,plan.target.unitId||null,plan.target.batchIndex,plan.target.batchSize])));
-  const identities=new Set(state.plans.filter(plan=>['pending','in_progress'].includes(plan.status)&&frozenVocabularyPlan(plan)).flatMap(plan=>(plan.target.cards||[]).map(card=>cardIdentity(card,plan.target.assessmentMode))));
+  const frozenCards=state.plans.filter(plan=>['pending','in_progress'].includes(plan.status)&&frozenVocabularyPlan(plan)).flatMap(plan=>(plan.target.cards||[]).map(card=>({...card,mode:plan.target.assessmentMode})));
+  const identities=new Set(frozenCards.map(card=>cardIdentity(card)));
   let candidates=getVocabularyPlanningCandidates(state,now,state.settings.vocabulary?.mode).filter(({card})=>!identities.has(cardIdentity(card)));
   const historical=previous.filter(plan=>(plan.originalDateKey||plan.dateKey)<today&&Number.isInteger(plan.rotationIndex)).sort((a,b)=>String(a.originalDateKey||a.dateKey).localeCompare(String(b.originalDateKey||b.dateKey))||a.rotationIndex-b.rotationIndex).pop();
   let sequence=historical ? historical.rotationIndex+1 : 0;
@@ -610,7 +620,7 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
     // Existing learning batches are indivisible; new batches must fit their actual prompt count.
     const batchSize=state.settings.vocabulary?.learningBatchSize||10;
     while(remaining>0&&!candidates.length) {
-      const target=nextLearningTarget(state,new Set(reserved));if(!target)break;
+      const target=nextLearningTarget(state,new Set(reserved),frozenCards);if(!target)break;
       const group=VOCABULARY_CATALOG.units.find(unit=>unit.id===target.unitId&&unit.bookId===target.bookId);
       const groupSize=group?(group.entryIds||VOCABULARY_CATALOG.memberships.filter(row=>row.bookId===group.bookId&&row.unitId===group.id).map(row=>row.entryId)).length:null;
       const count=groupSize===null?batchSize:Math.min(batchSize,Math.max(0,groupSize-target.batchIndex*batchSize));
