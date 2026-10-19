@@ -12629,34 +12629,10 @@
   },
   {
     "entryId": "ve-356a1d6f",
-    "sense": {
-      "id": "kaikki:8d82739194a584c438",
-      "definition": "The tools, machines or other items needed for a particular activity.",
-      "example": "The laboratory needs new safety equipment.",
-      "pos": "noun",
-      "synonyms": [],
-      "antonyms": [],
-      "collocations": [
-        "safety equipment",
-        "laboratory equipment"
-      ],
-      "usage": "usually",
-      "register": "uncountable, usually",
-      "wordFamily": [],
-      "source": "English Wiktionary via Kaikki.org",
-      "attribution": "English Wiktionary contributors",
-      "sourceUrl": "https://en.wiktionary.org/wiki/equipment#English",
-      "license": "CC-BY-SA-4.0",
-      "editorial": {
-        "source": "Fieldbook meaning and example review",
-        "license": "CC-BY-4.0",
-        "attribution": "Fieldbook editorial contributors"
-      }
-    },
     "originalSense": {
-      "id": "kaikki:b9dd738207c7d6daa1",
-      "definition": "The act of equipping, or the state of being equipped, as for a voyage or expedition.",
-      "example": "The equipment of the fleet was therefore hastened by de Witt ; in hopes that , by striking at first a successful blow , he might inspire courage into the dismayed States",
+      "id": "kaikki:8d82739194a584c438",
+      "definition": "Any items used in equipping something or someone, for example things needed for an expedition or voyage.",
+      "example": "We need more gardening equipment if we want to properly landscape our yard, not just a rake and some gloves.",
       "pos": "noun",
       "synonyms": [
         "gear",
@@ -12685,6 +12661,43 @@
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/equipment#English",
       "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:8d82739194a584c438",
+      "definition": "The tools, machines or other items needed for a particular activity.",
+      "example": "The laboratory needs new safety equipment.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "safety equipment",
+        "laboratory equipment",
+        "a piece of equipment"
+      ],
+      "usage": "Equipment is normally uncountable in everyday study and work English: some equipment or a piece of equipment.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/equipment#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Count individual items as pieces of equipment. Older or specialist countable uses do not make equipments the usual wording for ordinary tools."
+      ],
+      "distinctionTask": {
+        "prompt": "Choose the usual wording in a modern lab report: The lab bought _____.",
+        "options": [
+          "two pieces of equipment",
+          "two equipments"
+        ],
+        "answer": "two pieces of equipment",
+        "explanation": "Equipment is normally uncountable in this use. Count individual items with pieces of equipment."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
     }
   },
   {
@@ -26654,6 +26667,909 @@
         ],
         "answer": "receive the certificate through the required achievement",
         "explanation": "This meaning connects the award with work or achievement. Acquiring a skill concerns the ability itself; earning a certificate concerns the award under the course’s rules."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-4500532f",
+    "originalSense": {
+      "id": "kaikki:a541cd5a83d8ebff08",
+      "definition": "A time limit in the form of a date on or before which something must be completed.",
+      "example": "I must make this deadline or my boss will kill me!",
+      "pos": "noun",
+      "synonyms": [
+        "closing date"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "deadliest deadline",
+        "deadline fighter",
+        "deadliner",
+        "postdeadline",
+        "subdeadline"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/deadline#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:a541cd5a83d8ebff08",
+      "definition": "The latest time or date by which something must be completed.",
+      "example": "The deadline for the essay is Friday at noon.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "meet a deadline",
+        "miss a deadline",
+        "the deadline for submission"
+      ],
+      "usage": "Use by to say that work must arrive no later than the deadline: submit it by Friday at noon.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/deadline#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A deadline is the final permitted time, not necessarily the day work begins or results are announced."
+      ],
+      "distinctionTask": {
+        "prompt": "The essay must arrive by Friday at noon. This deadline is _____.",
+        "options": [
+          "the latest permitted submission time",
+          "the date results will be announced"
+        ],
+        "answer": "the latest permitted submission time",
+        "explanation": "The deadline tells you when submission must be completed, not when marking will finish."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-91b0103b",
+    "originalSense": {
+      "id": "kaikki:7c95583dfa4ff01514",
+      "definition": "Necessary.",
+      "example": "There’s canker at the root, your seed\nDenies the blessing of the sun,\nThe light essential to your need.\nYour hopes are murdered and undone.",
+      "pos": "adj",
+      "synonyms": [
+        "indispensable",
+        "basic",
+        "essential",
+        "indispensable",
+        "necessar",
+        "necessary",
+        "necessitous",
+        "needed",
+        "prerequisite",
+        "required",
+        "requisite"
+      ],
+      "antonyms": [
+        "accidental",
+        "accessorial",
+        "incidental",
+        "unnecessary",
+        "unneeded"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "bioessential",
+        "coessential",
+        "essential amino acid",
+        "essential clause",
+        "essential fatty acid",
+        "essential infimum",
+        "essentialism",
+        "essentialist",
+        "essentiality",
+        "essentialization",
+        "essentialize",
+        "essentially",
+        "essential mesh",
+        "essentialness",
+        "essential nutrient",
+        "essential oil",
+        "essential prime implicant",
+        "essential property",
+        "essential salt",
+        "essential supremum",
+        "essential thrombocythemia",
+        "essential tremor",
+        "essential worker",
+        "non-essential amino acid",
+        "non-essential prime implicant",
+        "quasiessential",
+        "quintessential",
+        "semiessential",
+        "subessential",
+        "superessential"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/essential#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:7c95583dfa4ff01514",
+      "definition": "Necessary for something to happen, work or exist.",
+      "example": "Clean water is essential for good health.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "essential for health",
+        "essential to success",
+        "an essential requirement"
+      ],
+      "usage": "Use essential for something or essential to something. Both can express necessity.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/essential#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "In this meaning, essential means needed; useful describes a benefit without necessarily making something indispensable."
+      ],
+      "distinctionTask": {
+        "prompt": "Clean water is essential for health. Here essential means _____.",
+        "options": [
+          "necessary",
+          "optional but convenient"
+        ],
+        "answer": "necessary",
+        "explanation": "This use states a need, rather than merely saying that clean water is convenient."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-88cab28c",
+    "originalSense": {
+      "id": "kaikki:a228205c0dbe3f4e63",
+      "definition": "Critical assessment of a process or activity or of their results.",
+      "example": "After you hand in your essays, I will give both grades and feedback.",
+      "pos": "noun",
+      "synonyms": [
+        "estimation",
+        "assessment",
+        "critique",
+        "evaluation"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "usually",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "360 degree feedback",
+        "antifeedback",
+        "autofeedback",
+        "biofeedback",
+        "degenerative feedback",
+        "enterprise feedback management",
+        "feedback control",
+        "feedbacker",
+        "feedback loop",
+        "feedback transfer function",
+        "feedbacky",
+        "ice-albedo feedback",
+        "neurofeedback",
+        "postfeedback",
+        "regenerative feedback",
+        "video feedback"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/feedback#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:a228205c0dbe3f4e63",
+      "definition": "Comments or information that assess work, an activity or its results.",
+      "example": "The tutor gave me detailed feedback on my essay.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "give feedback",
+        "constructive feedback",
+        "feedback on an essay"
+      ],
+      "usage": "For comments on work, feedback is normally uncountable: some feedback or a piece of feedback.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/feedback#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Feedback can include praise and suggestions as well as criticism. This meaning is separate from the howling sound produced by an audio loop."
+      ],
+      "distinctionTask": {
+        "prompt": "In ordinary study English: The tutor gave me _____ on my essay.",
+        "options": [
+          "some useful feedback",
+          "a useful feedback"
+        ],
+        "answer": "some useful feedback",
+        "explanation": "Feedback is normally uncountable when it means comments on work; use some feedback or a piece of feedback."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-f936f796",
+    "originalSense": {
+      "id": "kaikki:972845ca1807c9a747",
+      "definition": "A task given to students, such as homework or coursework.",
+      "example": "Mrs Smith gave out our assignments, and said we had to finish them by Monday.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "address assignment",
+        "antiassignment",
+        "assignment operator",
+        "assignment problem",
+        "frequency assignment",
+        "misassignment",
+        "Munkres assignment algorithm",
+        "nonassignment",
+        "Procrustean assignment",
+        "reassignment",
+        "time-assignment speech interpolation",
+        "unassignment",
+        "understand the assignment"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assignment#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:972845ca1807c9a747",
+      "definition": "A task given to students as homework or coursework.",
+      "example": "The history assignment is due on Friday.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "complete an assignment",
+        "submit an assignment",
+        "a written assignment"
+      ],
+      "usage": "Assignment is countable in this use: an assignment or two assignments. Homework is normally uncountable.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assignment#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A student assignment is the work to complete; it is not the act of allocating that work."
+      ],
+      "distinctionTask": {
+        "prompt": "In ordinary study English: I have two _____ to submit.",
+        "options": [
+          "assignments",
+          "homeworks"
+        ],
+        "answer": "assignments",
+        "explanation": "Count individual pieces of student work as assignments. Homework is normally uncountable."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7f92a4db",
+    "originalSense": {
+      "id": "kaikki:58e6bd082054859eeb",
+      "definition": "An examination of the opinions and/or information of a group of people.",
+      "example": "The local council conducted a survey of its residents to help it decide whether to go ahead with the roadside waste collection service.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aerial survey",
+        "Domesday survey",
+        "geodetic survey",
+        "geosurvey",
+        "intersurvey",
+        "language survey",
+        "microsurvey",
+        "minisurvey",
+        "nonsurvey",
+        "Ordnance Survey",
+        "phone survey",
+        "photosurvey",
+        "postsurvey",
+        "presurvey",
+        "serosurvey",
+        "surveylike",
+        "survey meter",
+        "survey mile",
+        "survey monument",
+        "telesurvey",
+        "time-use survey",
+        "trigonometric survey",
+        "US survey acre",
+        "U.S. survey foot",
+        "US survey foot",
+        "missurvey",
+        "resurvey"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/survey#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:58e6bd082054859eeb",
+      "definition": "A study that collects information or opinions from a group of people.",
+      "example": "The survey found that most students cycle to campus.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "conduct a survey",
+        "a survey of students",
+        "survey results"
+      ],
+      "usage": "Use a survey of a group or a survey about a topic. Results describe the people or data studied; they do not automatically establish a cause.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/survey#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The study and the questionnaire used to carry it out are related meanings. Conducting a survey refers to the investigation as a whole."
+      ],
+      "distinctionTask": {
+        "prompt": "A survey of 300 students examined their travel habits. Here survey means _____.",
+        "options": [
+          "a study collecting information from respondents",
+          "a measurement of land boundaries"
+        ],
+        "answer": "a study collecting information from respondents",
+        "explanation": "The students provide information about their habits; no land boundaries are being measured."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-2d2687e1",
+    "originalSense": {
+      "id": "kaikki:51fde7909a602da5fe",
+      "definition": "A piece of nonfiction writing such as a story, report, opinion piece, or entry in a newspaper, magazine, journal, encyclopedia, etc.",
+      "example": "Although there are dozens of different types of gems, among the best known and most important are […]. (Common gem materials not addressed in this article include amber, amethyst, chalcedony, garnet, lazurite, malachite, opals, peridot, rhodonite, spinel, tourmaline, turquoise and zircon.)",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "adverticle",
+        "articleless",
+        "article of death",
+        "article of extraordinary value",
+        "article of faith",
+        "article of virtu",
+        "articleship",
+        "articles of association",
+        "articles of incorporation",
+        "articles of organization",
+        "articles of war",
+        "charticle",
+        "counterarticle",
+        "definite article",
+        "enumerated articles",
+        "finished article",
+        "first article",
+        "good article",
+        "indefinite article",
+        "interarticle",
+        "in the article of death",
+        "listicle",
+        "lost articles",
+        "middle article",
+        "partitive article",
+        "pirate articles",
+        "prepositional article",
+        "proper article",
+        "pseudoarticle",
+        "quinquarticular"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/article#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:51fde7909a602da5fe",
+      "definition": "A piece of nonfiction writing in a newspaper, magazine, journal or similar publication.",
+      "example": "The article explains how the new recycling system works.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "read an article",
+        "a newspaper article",
+        "an article about recycling"
+      ],
+      "usage": "Use an article about or on a topic, or an article in a newspaper or journal.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/article#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This is a piece of writing. It is separate from the grammar meaning of a, an or the."
+      ],
+      "distinctionTask": {
+        "prompt": "This magazine article discusses public transport. It is _____.",
+        "options": [
+          "a piece of nonfiction writing",
+          "a grammatical word such as a or the"
+        ],
+        "answer": "a piece of nonfiction writing",
+        "explanation": "A magazine article is a piece of writing; article has a different meaning in grammar."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-ded67ad4",
+    "originalSense": {
+      "id": "kaikki:af522fc5fc9b051a89",
+      "definition": "A committee that leads or governs (e.g. city council, student council).",
+      "example": "He turned back to the scene before him and the enormous new block of council dwellings. The design was some way after Corbusier but the block was built up on plinths and resembled an Atlantic liner swimming diagonally across the site.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "afforced council",
+        "anticouncil",
+        "borough council",
+        "canine council",
+        "church council",
+        "city council",
+        "council area",
+        "Council Bluffs",
+        "council communism",
+        "council estate",
+        "Council Grove",
+        "council house",
+        "council-housed",
+        "council housing",
+        "council housing estate",
+        "councilism",
+        "councilist",
+        "councillor",
+        "councilor",
+        "councilman",
+        "councilmate",
+        "councilmember",
+        "council of war",
+        "councilperson",
+        "council pop",
+        "council tax",
+        "councilwoman",
+        "county council",
+        "district council",
+        "domestic policy council"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/council#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:af522fc5fc9b051a89",
+      "definition": "A group of people that leads, represents or governs an organisation or community.",
+      "example": "The student council meets once a month.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "the student council",
+        "a city council",
+        "a council meeting"
+      ],
+      "usage": "Council names a group or body. Do not confuse its spelling with counsel.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/council#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Counsel can mean advice or a legal adviser; council is the governing or representative group in this example."
+      ],
+      "distinctionTask": {
+        "prompt": "An elected body representing students is the student _____.",
+        "options": [
+          "council",
+          "counsel"
+        ],
+        "answer": "council",
+        "explanation": "The representative body is a student council. Counsel has separate advice and legal-adviser meanings."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-28d1c2f0",
+    "originalSense": {
+      "id": "kaikki:8c74df2a3f4aadff30",
+      "definition": "The surroundings of, and influences on, a particular item of interest.",
+      "example": "What was seen from the top down, as a large environment with many difficult trade-offs, is instead seen from the bottom up--as 10 million microenvironments, each to be regulated in its own right. It is this inversion of perspective that distinguishes microgovernment from other kinds of regulation, and that accounts for its often-bizarre behavior.",
+      "pos": "noun",
+      "synonyms": [
+        "domain",
+        "ecosystem",
+        "surrounding",
+        "umbworld"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "agroenvironment",
+        "antienvironment",
+        "bioenvironment",
+        "cryoenvironment",
+        "cyberenvironment",
+        "ecoenvironment",
+        "environmetrics",
+        "geoenvironment",
+        "hydroenvironment",
+        "macroenvironment",
+        "microenvironment",
+        "multienvironment",
+        "nanoenvironment",
+        "paleoenvironment",
+        "photoenvironment",
+        "socioenvironment",
+        "subenvironment",
+        "environmentability",
+        "environmental",
+        "environmentology"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/environment#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:8c74df2a3f4aadff30",
+      "definition": "The surroundings and conditions that affect a person or thing.",
+      "example": "The library provides a quiet environment for study.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a learning environment",
+        "a working environment",
+        "a quiet environment"
+      ],
+      "usage": "Use an environment for an activity, such as an environment for study.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/environment#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This broad meaning concerns surrounding conditions. The environment can separately mean the natural world."
+      ],
+      "distinctionTask": {
+        "prompt": "A quiet study environment refers to _____.",
+        "options": [
+          "the surroundings and conditions for studying",
+          "only forests and wildlife"
+        ],
+        "answer": "the surroundings and conditions for studying",
+        "explanation": "This sentence concerns the conditions for study, which can include an indoor library."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-5a6fc4e0",
+    "originalSense": {
+      "id": "kaikki:4b5d55fbe9da7fe5b2",
+      "definition": "The amount of money or resources earmarked for a particular institution, activity or timeframe.",
+      "example": "limited budget",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "antibudget",
+        "balanced budget",
+        "black budget",
+        "budgetary",
+        "budget constraint",
+        "budget crisis",
+        "budget cut",
+        "budget deficit",
+        "budgeteer",
+        "budgeter",
+        "budget hawk",
+        "budgetize",
+        "budgetless",
+        "budget-priced",
+        "budgetwise",
+        "carbon budget",
+        "champagne taste on a beer budget",
+        "deficit budget",
+        "fuss-budget",
+        "high-budget",
+        "low-budget",
+        "megabudget",
+        "microbudget",
+        "midbudget",
+        "minibudget",
+        "misbudget",
+        "nonbudget",
+        "pattern budget",
+        "prebudget",
+        "sales budget"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/budget#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:4b5d55fbe9da7fe5b2",
+      "definition": "The money or other resources available for a particular purpose or period.",
+      "example": "Our budget for the trip is £300.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a budget for travel",
+        "stay within budget",
+        "a limited budget"
+      ],
+      "usage": "Use a budget of an amount and a budget for a purpose. Staying within budget means not spending more than allowed.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/budget#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This meaning names the available amount. A budget can separately mean the plan listing expected income and spending."
+      ],
+      "distinctionTask": {
+        "prompt": "The team has a budget of £300 for travel. Budget refers to _____.",
+        "options": [
+          "the amount available for planned spending",
+          "the amount already spent"
+        ],
+        "answer": "the amount available for planned spending",
+        "explanation": "The budget is an available allowance; the sentence does not say that the money has already been spent."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7c70dbe0",
+    "originalSense": {
+      "id": "kaikki:8ebccf79b5c10f20cd",
+      "definition": "The result of copying; an identical or nearly identical duplicate of an original.",
+      "example": "Please bring me at least 200 copies of this report. The photocopier is down the hall on the right.",
+      "pos": "noun",
+      "synonyms": [
+        "duplicate",
+        "facsimile",
+        "fake",
+        "forgery",
+        "image",
+        "likeness",
+        "phony",
+        "reduplication",
+        "replica",
+        "replication",
+        "reproduction",
+        "sham",
+        "simulacrum"
+      ],
+      "antonyms": [
+        "original"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "alibi copy",
+        "armchair copy",
+        "blind carbon copy",
+        "blot one's copy book",
+        "carbonless copy paper",
+        "cop",
+        "copier",
+        "copious",
+        "copy area",
+        "copy art",
+        "copy attack",
+        "copyback",
+        "copybook",
+        "copy boy",
+        "copycat",
+        "copy cat",
+        "copy constructor",
+        "copydesk",
+        "copy desk",
+        "copydom",
+        "copy editor",
+        "copy elision",
+        "copyfraud",
+        "copygirl",
+        "copygraph",
+        "copy holder",
+        "copyholder",
+        "copyism",
+        "copyist",
+        "copy key"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/copy#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:8ebccf79b5c10f20cd",
+      "definition": "A duplicate of an original document, image or other object.",
+      "example": "Please keep a copy of the completed form.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a copy of a document",
+        "make a copy",
+        "keep a copy"
+      ],
+      "usage": "Copy is countable in this meaning: one copy or two copies.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/copy#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A copy is the duplicate. The original is the document or object from which it was made."
+      ],
+      "distinctionTask": {
+        "prompt": "The original form stays in the office; I keep a copy. My copy is _____.",
+        "options": [
+          "a duplicate of the form",
+          "the only original document"
+        ],
+        "answer": "a duplicate of the form",
+        "explanation": "A copy duplicates the original form; it is not that original."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-99c09618",
+    "originalSense": {
+      "id": "kaikki:d9dfbbdde5eccbbc0b",
+      "definition": "To sell at a reduced price.",
+      "example": "Sales were slow even after the shop discounted the product.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:d9dfbbdde5eccbbc0b",
+      "definition": "To sell something at a reduced price.",
+      "example": "The shop will discount winter coats at the end of the season.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "discount winter coats",
+        "discount a product",
+        "heavily discount stock"
+      ],
+      "usage": "This verb takes the item being sold as its object.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Discounting a product concerns its price. Discounting a warning instead means treating it as unimportant."
+      ],
+      "distinctionTask": {
+        "prompt": "The shop will discount a £50 coat to £40. It will _____.",
+        "options": [
+          "sell it at a lower price",
+          "increase its price"
+        ],
+        "answer": "sell it at a lower price",
+        "explanation": "The selling price falls from £50 to £40, so discount means sell at a reduced price."
       },
       "editorial": {
         "source": "Fieldbook core content review",

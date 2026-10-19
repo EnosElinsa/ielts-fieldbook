@@ -141,6 +141,17 @@ test('resources use deterministic content-addressed URLs', () => {
   }
 }, 15000); // Reconstruct all retained release catalogs twice, including on slower CI hosts.
 
+test('shared serialized sections preserve native JSON bytes in manifests and source/teaching packs', () => {
+  const manifest = release.manifest;
+  const unit = manifest.units.find(unit => unit.resource)!;
+  const urls = [release.manifestUrl, release.teachingIndexUrl, unit.resource!, unit.teachingResource!,
+    ...Object.values(manifest.entryResources), ...Object.values(manifest.entryTeachingResources)];
+  for (const url of urls) {
+    const text = release.resources.get(url)!;
+    expect(JSON.stringify(JSON.parse(text)), url).toBe(text);
+  }
+});
+
 test('previously released discovery and teaching URLs remain available with legacy identities', () => {
   const generated = release;
   const manifestUrl='/vocabulary-resources/manifest.594ea6a804861668.json';

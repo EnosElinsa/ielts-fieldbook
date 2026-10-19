@@ -54,7 +54,8 @@ export function resolveVocabularyLearningContext(entry: VocabularyEntry, request
   const selectedSense = (userOverride ? existing : selectedBinding?.sense) || (request.senseId ? fallback.senses.find(item => item.id === request.senseId) || explicitSupplement?.sense : fallback.senses[0]);
   // Group teaching retains its context; a common default can receive a later same-sense review.
   const contextSource = selectedBinding || explicitSupplement;
-  const scopedContext = Boolean(contextSource && 'bookId' in contextSource && contextSource.bookId);
+  const scopedContext = Boolean(request.bookId && request.unitId && contextSource && 'bookId' in contextSource
+    && contextSource.bookId === request.bookId && contextSource.unitId === request.unitId);
   const contextBaselines = contextSource ? [contextSource.sense, contextSource.originalSense].filter((s): s is VocabularySense => Boolean(s)) : [];
   let sense = selectedSense ? structuredClone(scopedContext ? selectedSense : supplementVocabularySense(entry.id,selectedSense,[...publicSenses.filter(s=>s.id===selectedSense.id),...contextBaselines],hasVocabularySenseEdits)) : undefined;
   const plan=vocabularyCurriculum(entry,request,sense || fallback.senses[0]);

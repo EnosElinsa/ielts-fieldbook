@@ -1,0 +1,164 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-4500532f",
+      "senseId": "kaikki:a541cd5a83d8ebff08"
+    },
+    {
+      "entryId": "ve-91b0103b",
+      "senseId": "kaikki:7c95583dfa4ff01514"
+    },
+    {
+      "entryId": "ve-88cab28c",
+      "senseId": "kaikki:a228205c0dbe3f4e63"
+    },
+    {
+      "entryId": "ve-f936f796",
+      "senseId": "kaikki:d001f9fbce92236138"
+    },
+    {
+      "entryId": "ve-f936f796",
+      "senseId": "kaikki:972845ca1807c9a747"
+    },
+    {
+      "entryId": "ve-7f92a4db",
+      "senseId": "kaikki:828041b20d3ff09acf"
+    },
+    {
+      "entryId": "ve-7f92a4db",
+      "senseId": "kaikki:58e6bd082054859eeb"
+    },
+    {
+      "entryId": "ve-7f92a4db",
+      "senseId": "kaikki:ae4427a1ea68c95495"
+    },
+    {
+      "entryId": "ve-7f92a4db",
+      "senseId": "kaikki:84c4e501a6bc8681da"
+    },
+    {
+      "entryId": "ve-2d2687e1",
+      "senseId": "kaikki:51fde7909a602da5fe"
+    },
+    {
+      "entryId": "ve-2d2687e1",
+      "senseId": "kaikki:5327746118ce8e10cf"
+    },
+    {
+      "entryId": "ve-ded67ad4",
+      "senseId": "kaikki:af522fc5fc9b051a89"
+    },
+    {
+      "entryId": "ve-28d1c2f0",
+      "senseId": "kaikki:8c74df2a3f4aadff30"
+    },
+    {
+      "entryId": "ve-28d1c2f0",
+      "senseId": "kaikki:e561324756c4d5522b"
+    },
+    {
+      "entryId": "ve-5a6fc4e0",
+      "senseId": "kaikki:4b5d55fbe9da7fe5b2"
+    },
+    {
+      "entryId": "ve-5a6fc4e0",
+      "senseId": "kaikki:a9b7f0c71fcf15cefb"
+    },
+    {
+      "entryId": "ve-356a1d6f",
+      "senseId": "kaikki:8d82739194a584c438"
+    },
+    {
+      "entryId": "ve-7c70dbe0",
+      "senseId": "kaikki:8ebccf79b5c10f20cd"
+    },
+    {
+      "entryId": "ve-99c09618",
+      "senseId": "kaikki:d9dfbbdde5eccbbc0b"
+    },
+    {
+      "entryId": "ve-99c09618",
+      "senseId": "kaikki:d741a2ffee17dc9a2d"
+    },
+    {
+      "entryId": "ve-99c09618",
+      "senseId": "kaikki:0f0c4d9616b9da6402"
+    }
+  ],
+  "restoreCorrections": [],
+  "removeDefaults": [
+    "ve-4500532f",
+    "ve-91b0103b",
+    "ve-88cab28c",
+    "ve-f936f796",
+    "ve-7f92a4db",
+    "ve-2d2687e1",
+    "ve-ded67ad4",
+    "ve-28d1c2f0",
+    "ve-5a6fc4e0",
+    "ve-7c70dbe0",
+    "ve-99c09618"
+  ],
+  "restoreDefaults": [
+    {
+      "entryId": "ve-356a1d6f",
+      "sense": {
+        "id": "kaikki:8d82739194a584c438",
+        "definition": "The tools, machines or other items needed for a particular activity.",
+        "example": "The laboratory needs new safety equipment.",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [
+          "safety equipment",
+          "laboratory equipment"
+        ],
+        "usage": "usually",
+        "register": "uncountable, usually",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/equipment#English",
+        "license": "CC-BY-SA-4.0",
+        "editorial": {
+          "source": "Fieldbook meaning and example review",
+          "license": "CC-BY-4.0",
+          "attribution": "Fieldbook editorial contributors"
+        }
+      },
+      "originalSense": {
+        "id": "kaikki:b9dd738207c7d6daa1",
+        "definition": "The act of equipping, or the state of being equipped, as for a voyage or expedition.",
+        "example": "The equipment of the fleet was therefore hastened by de Witt ; in hopes that , by striking at first a successful blow , he might inspire courage into the dismayed States",
+        "pos": "noun",
+        "synonyms": [
+          "gear",
+          "kit",
+          "rigging",
+          "tackle",
+          "appurtenances"
+        ],
+        "antonyms": [],
+        "collocations": [],
+        "usage": "usually",
+        "register": "uncountable, usually",
+        "wordFamily": [
+          "accessory equipment",
+          "capital equipment",
+          "data terminal equipment",
+          "durable medical equipment",
+          "equipmentman",
+          "heavy equipment",
+          "personal protective equipment",
+          "play equipment",
+          "reequipment",
+          "squipper"
+        ],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/equipment#English",
+        "license": "CC-BY-SA-4.0"
+      }
+    }
+  ]
+}

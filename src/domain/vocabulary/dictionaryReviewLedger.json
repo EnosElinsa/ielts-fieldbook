@@ -42470,6 +42470,279 @@
         "distinctions"
       ],
       "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Earn&oldid=87739679"
+    },
+    {
+      "term": "deadline",
+      "entryId": "ve-4500532f",
+      "senseId": "kaikki:a541cd5a83d8ebff08",
+      "sourceHash": "196abc9b8d0c48c60faa72daffd1c401937b6ff8dad88268f40c291568c84c3f",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=deadline&oldid=92132574",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "essential",
+      "entryId": "ve-91b0103b",
+      "senseId": "kaikki:7c95583dfa4ff01514",
+      "sourceHash": "5b56f6bd36e8deb747ef8c0a7f53d848be84a370d4d3ec44a6c6f4421df6833f",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=essential&oldid=93513959",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "feedback",
+      "entryId": "ve-88cab28c",
+      "senseId": "kaikki:a228205c0dbe3f4e63",
+      "sourceHash": "59f4efb61df267f84920a08183c868cfb5e34f4464ef11ad3871f50fc875e10e",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=feedback&oldid=93570057",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "assignment",
+      "entryId": "ve-f936f796",
+      "senseId": "kaikki:d001f9fbce92236138",
+      "sourceHash": "5ea0511c3e8d762d6edccd62935a449b243d1745147fbee8953b5ffb5d599bf8",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assignment&oldid=91970510",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "assignment",
+      "entryId": "ve-f936f796",
+      "senseId": "kaikki:972845ca1807c9a747",
+      "sourceHash": "cedcb07363debea3797cb4e5b117a3b6acfe0bfc3ec1a3c0bb55680f97a92fba",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assignment&oldid=91970510",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "survey",
+      "entryId": "ve-7f92a4db",
+      "senseId": "kaikki:828041b20d3ff09acf",
+      "sourceHash": "e54aeed2ee39d31c510267edf70080b3703905478e2500b425824809f9e5dac4",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "survey",
+      "entryId": "ve-7f92a4db",
+      "senseId": "kaikki:58e6bd082054859eeb",
+      "sourceHash": "cbf0c051d8f1f4d04653782108afc4512954fcdec7b04095dbbddc483588b26a",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "survey",
+      "entryId": "ve-7f92a4db",
+      "senseId": "kaikki:ae4427a1ea68c95495",
+      "sourceHash": "0996b4ea2893d11791cf2ca00b79692ef7d8a48fd02d0977dd2cf9fedffdd947",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "survey",
+      "entryId": "ve-7f92a4db",
+      "senseId": "kaikki:84c4e501a6bc8681da",
+      "sourceHash": "b3d35429c5a82002c9dcc6240640547f18d55c79f4455d38008b899e62024648",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "article",
+      "entryId": "ve-2d2687e1",
+      "senseId": "kaikki:51fde7909a602da5fe",
+      "sourceHash": "bdd89da6b6a66e341c1f0a1329e7d85f28c742fd899a381a1e145929ba0c2890",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=article&oldid=93045264",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "article",
+      "entryId": "ve-2d2687e1",
+      "senseId": "kaikki:5327746118ce8e10cf",
+      "sourceHash": "7c17d1a4bd8e00a372a4bdded11a6db26e308626b0bedb3e964ebf75e4c49063",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=article&oldid=93045264",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "council",
+      "entryId": "ve-ded67ad4",
+      "senseId": "kaikki:af522fc5fc9b051a89",
+      "sourceHash": "e3f0bb4989057d6ebe47b1df318f8a5f31e050e003e1b3c1b826e327afe04120",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=council&oldid=93569176",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "environment",
+      "entryId": "ve-28d1c2f0",
+      "senseId": "kaikki:8c74df2a3f4aadff30",
+      "sourceHash": "472399cb039e7ef2cf8c56ba98d818575da2c2523bc5caabbcc2e6b7c08f6867",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=environment&oldid=93548034",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "environment",
+      "entryId": "ve-28d1c2f0",
+      "senseId": "kaikki:e561324756c4d5522b",
+      "sourceHash": "e955703293122767351d39aad5c8e260a6c2d7e26120f20f41855dd2c134a3c5",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=environment&oldid=93548034",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "budget",
+      "entryId": "ve-5a6fc4e0",
+      "senseId": "kaikki:4b5d55fbe9da7fe5b2",
+      "sourceHash": "c6a99287d71306381058d16414c6c928c3c9e3babe475a903f58dddb43dff397",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=budget&oldid=92810394",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "budget",
+      "entryId": "ve-5a6fc4e0",
+      "senseId": "kaikki:a9b7f0c71fcf15cefb",
+      "sourceHash": "009fa240c21688891e3f47cd8fab9441cb277c6a7ec675779d144f0f904211dc",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=budget&oldid=92810394",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "equipment",
+      "entryId": "ve-356a1d6f",
+      "senseId": "kaikki:8d82739194a584c438",
+      "sourceHash": "87deb17a46ee1c536833ea78eee62904068ad86550332d981f380c1fd51c72b3",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=equipment&oldid=93589550",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "copy",
+      "entryId": "ve-7c70dbe0",
+      "senseId": "kaikki:8ebccf79b5c10f20cd",
+      "sourceHash": "6e1fcd229ac44495508facb8c97f295a1ae63d8251b19b22b32e28d057c56ea4",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=copy&oldid=93140524",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "discount",
+      "entryId": "ve-99c09618",
+      "senseId": "kaikki:d9dfbbdde5eccbbc0b",
+      "sourceHash": "683d8ce044681190509045ca437bf95d5cf47915c831b2acd87c538222980340",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "discount",
+      "entryId": "ve-99c09618",
+      "senseId": "kaikki:d741a2ffee17dc9a2d",
+      "sourceHash": "4b9ea8f817e05c528a6abc0629155973e7d4ceeb999c5f135316d81c93e8015d",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "discount",
+      "entryId": "ve-99c09618",
+      "senseId": "kaikki:0f0c4d9616b9da6402",
+      "sourceHash": "917ec20fd383cee674353997590a52086e365e0f958ead8548439ab149258a68",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
     }
   ]
 }

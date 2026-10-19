@@ -11,6 +11,7 @@ type Catalog = { entries: VocabularyEntry[]; books: { id: string }[]; units: Uni
 type ResourceBuildCache = {
   baselines: WeakMap<VocabularyEntry, VocabularyTeachingData['senseBaselines'][string]>;
   emissions: Map<string, { value: unknown; url: string; text: string }>;
+  serialized: WeakMap<object, string>;
 };
 const REVALIDATE = 'public, max-age=0, must-revalidate';
 const IMMUTABLE = 'public, max-age=31536000, immutable';
@@ -30,7 +31,7 @@ export function buildVocabularyResources(root: string) {
     readiness: { core: [...data('readinessContent0'), ...data('readinessContent1'), ...data('readinessContent2')], corrections: data('readinessCorrections'), defaults: data('readinessDefaults') },
     learning: data('learningSenseOverlay'), tasks: data('taskSenseBindings'), context: data('contextSenseOverlay'),
   };
-  const cache: ResourceBuildCache = { baselines: new WeakMap(), emissions: new Map() };
+  const cache: ResourceBuildCache = { baselines: new WeakMap(), emissions: new Map(), serialized: new WeakMap() };
   const catalog = (entries: Catalog, content: VocabularyTeachingData) => buildResourceCatalog(entries, content, cache);
   const generated = catalog(source, teaching);
   // Reverse each published correction batch in order to preserve its exact URLs and bytes.
@@ -106,6 +107,23 @@ function sameResourceValue(left: unknown, right: unknown): boolean {
     && sameResourceValue((left as Record<string, unknown>)[key], (right as Record<string, unknown>)[key]));
 }
 
+// Inputs are parsed JSON records and plain objects/arrays assembled by this
+// builder. They are immutable throughout one build. Retain their serialized
+// fragments across historical projections without sharing cache across builds.
+function resourceJSON(value: unknown, cache: WeakMap<object, string>): string | undefined {
+  if (value === null || typeof value !== 'object') return JSON.stringify(value);
+  const cached = cache.get(value);
+  if (cached !== undefined) return cached;
+  const text = Array.isArray(value)
+    ? `[${value.map(item => resourceJSON(item, cache) ?? 'null').join(',')}]`
+    : `{${Object.entries(value).flatMap(([key, item]) => {
+      const serialized = resourceJSON(item, cache);
+      return serialized === undefined ? [] : [`${JSON.stringify(key)}:${serialized}`];
+    }).join(',')}}`;
+  cache.set(value, text);
+  return text;
+}
+
 /** Select by identity without rescanning unrelated rows; retain source order. */
 function resourceRowIndex<T>(items: T[], identity: (row: T) => string) {
   const indexed = new Map<string, { row: T; at: number }[]>();
@@ -129,7 +147,7 @@ function buildResourceCatalog(source: Catalog, teaching: VocabularyTeachingData,
       resources.set(previous.url, previous.text);
       return previous.url;
     }
-    const text = JSON.stringify(value);
+    const text = resourceJSON(value, cache.serialized)!;
     const hash = createHash('sha256').update(text).digest('hex').slice(0, 16);
     const url = `/vocabulary-resources/${name}.${hash}.json`;
     resources.set(url, text);
