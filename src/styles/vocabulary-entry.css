@@ -6,6 +6,23 @@
   border-radius: 12px;
   background: var(--paper);
 }
+.vocabulary-learning-progress > h3 { margin: 0 0 20px; }
+.vocabulary-progress-overview { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 28px; align-items: start; }
+.vocabulary-progress-overview > .vocabulary-next-practice { margin: 0; padding: 20px; border: 1px solid var(--rule); border-radius: 10px; background: var(--sheet); }
+.vocabulary-progress-overview > .vocabulary-mastery-sense { min-width: 0; }
+.vocabulary-progress-overview .vocabulary-mastery-sense > h4 { margin: 0 0 12px; font-size: 13px; color: var(--muted); }
+.vocabulary-progress-overview .vocabulary-mastery-status { margin: 0 0 16px; }
+.vocabulary-progress-overview .vocabulary-mastery-status > strong { font-size: 22px; }
+.vocabulary-progress-overview .vocabulary-dimensions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 16px 0; }
+.vocabulary-progress-overview .vocabulary-dimensions > div { min-width: 0; padding: 12px; border: 1px solid var(--rule); border-radius: 8px; overflow-wrap: anywhere; }
+.vocabulary-mastery-adjustment summary { cursor: pointer; color: var(--muted); font-size: 12px; padding: 8px 0; }
+.vocabulary-saved-meanings ul { list-style: none; margin: 12px 0; padding: 0; display: grid; gap: 8px; }
+.vocabulary-saved-meanings a { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px; border: 1px solid var(--rule); border-radius: 8px; text-decoration: none; color: var(--ink); font-size: 14px; line-height: 1.6; }
+.vocabulary-saved-meanings a:hover { background: var(--sheet); border-color: var(--blue); }
+.vocabulary-saved-meanings a small { display: block; color: var(--muted); font-size: 11px; }
+.vocabulary-saved-meanings a > span { min-width: 0; overflow-wrap: anywhere; }
+.vocabulary-saved-meanings a > svg { flex-shrink: 0; }
+@media (max-width: 1000px) { .vocabulary-progress-overview { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
 .vocabulary-mastery-sense + .vocabulary-mastery-sense {
   margin-top: 20px;
   padding-top: 20px;

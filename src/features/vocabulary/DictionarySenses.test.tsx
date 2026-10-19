@@ -32,6 +32,17 @@ const sourceSense = {
 };
 const dictionaryFetch = (senses = [sourceSense]) => vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { mitigate: 'aa.json' } : { senses } }));
 
+test('one additional dictionary meaning is readable without redundant search and word-class filters', async () => {
+  const { entry } = fixture();
+  vi.stubGlobal('fetch', dictionaryFetch());
+  render(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
+  await screen.findByText(sourceSense.definition);
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  expect(screen.getByRole('button', { name:'Practise this sense' })).toBeVisible();
+  expect(screen.queryByRole('searchbox')).not.toBeInTheDocument();
+  expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
+});
+
 function priorityFixture(term: string) {
   const { save } = fixture();
   const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
@@ -173,7 +184,7 @@ test('a source phrase list is accessible under All meanings as a usage reference
 
 test('late teaching updates displayed meanings while retaining filters and the cached source', async () => {
   const { entry } = fixture();
-  const fetch = dictionaryFetch();
+  const fetch = dictionaryFetch([sourceSense, { ...sourceSense, id:'late-other', definition:'A separate consideration.', pos:'noun' }]);
   vi.stubGlobal('fetch', fetch);
   const corrections = vocabularyTeaching.readiness.corrections;
   const view = render(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
@@ -330,7 +341,7 @@ test('switching dictionary coverage preserves search and makes unreviewed matche
 test('changing the word resets dictionary search and part of speech', async () => {
   const { entry } = fixture();
   const other = { ...sourceSense, id: 'other', pos: 'noun', definition: 'Another word’s meaning.' };
-  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { mitigate: 'aa.json', other: 'bb.json' } : { senses: [url.includes('aa.json') ? sourceSense : other] } })));
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? { mitigate: 'aa.json', other: 'bb.json' } : { senses: [url.includes('aa.json') ? sourceSense : other, { ...sourceSense, id:'second-reset', definition:'A separate meaning.' }] } })));
   const view = render(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
   await screen.findByText(sourceSense.definition);
   fireEvent.click(screen.getByText(/Other dictionary meanings/));

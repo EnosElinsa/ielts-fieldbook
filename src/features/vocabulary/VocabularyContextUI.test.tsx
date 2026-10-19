@@ -126,6 +126,29 @@ function mount(path: string) {
 const book = "ielts-vocabulary";
 const core = () => release.entries.find((entry: any) => entry.term === "core");
 
+test('word details show progress only for the selected meaning and a compact route to other saved meanings', async () => {
+  const raw = structuredClone(release.entries.find((entry: any) => entry.term === 'catastrophic'));
+  mocks.fb.state.vocabulary = [raw];
+  mount(`/vocabulary/entry/${raw.id}`);
+  const progress = await screen.findByRole('region', { name: 'Learning progress' });
+  expect(progress.querySelectorAll('.vocabulary-mastery-sense')).toHaveLength(1);
+  const saved = await screen.findByText(/Other saved meanings/);
+  await userEvent.click(saved);
+  const section = within(saved.closest('details')!);
+  const other = raw.senses[0];
+  expect(section.getByRole('link', { name: new RegExp(other.definition.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) })).toHaveAttribute('href', expect.stringContaining(encodeURIComponent(other.id)));
+  expect(section.queryByRole('heading', { name: /^adj$/i })).not.toBeInTheDocument();
+  expect(within(progress).getByText('Adjust familiarity').closest('details')).not.toHaveAttribute('open');
+});
+
+test('plain dictionary provenance does not add a generic Meaning source panel', async () => {
+  const raw = structuredClone(release.entries.find((entry: any) => entry.term === 'catastrophic'));
+  mocks.fb.state.vocabulary = [raw];
+  mount(`/vocabulary/entry/${raw.id}`);
+  await screen.findByRole('heading', { name: raw.term });
+  expect(screen.queryByText('A dictionary meaning of this word.')).not.toBeInTheDocument();
+});
+
 test('personal notes on a saved additional dictionary meaning remain visible when the small catalogue omits that meaning',async()=>{
  const source=release.entries.find((entry:any)=>entry.term==='skill');
  const row=vocabularyTeaching.readiness.corrections.find(item=>item.entryId===source.id&&item.definition?.startsWith('In AI,'))!;

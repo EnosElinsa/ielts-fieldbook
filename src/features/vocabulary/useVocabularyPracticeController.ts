@@ -107,6 +107,20 @@ export function useVocabularyPracticeController() {
   const playedIndex = useRef(-1);
   const startedAt = useRef(Date.now());
   const mounted = useRef(true);
+  const draftTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingDraft = useRef<Session | null>(null);
+  const cancelDraft = useCallback(() => {
+    if (draftTimer.current !== null) clearTimeout(draftTimer.current);
+    draftTimer.current = null;
+    pendingDraft.current = null;
+  }, []);
+  const flushDraft = useCallback(() => {
+    const draft = pendingDraft.current;
+    cancelDraft();
+    if (!draft || owner.current !== accountId()) return;
+    const written = writeVocabularyDraft(owner.current, draft);
+    if (mounted.current) setStorageError(!written);
+  }, [cancelDraft]);
   const answerFields = useRef<
     (HTMLInputElement | HTMLTextAreaElement | null)[]
   >([]);
@@ -168,12 +182,16 @@ export function useVocabularyPracticeController() {
     mounted.current = true;
     const hidden = () => {
       if (document.hidden) {
+        flushDraft();
         stopAudio();
         setAudioStatus("Audio paused");
       }
     };
     document.addEventListener("visibilitychange", hidden);
+    window.addEventListener('pagehide', flushDraft);
+    window.addEventListener('beforeunload', flushDraft);
     return () => {
+      flushDraft();
       mounted.current = false;
       retryGeneration.current += 1;
       audioGeneration.current += 1;
@@ -185,11 +203,14 @@ export function useVocabularyPracticeController() {
       }
       playback.current?.stop();
       document.removeEventListener("visibilitychange", hidden);
+      window.removeEventListener('pagehide', flushDraft);
+      window.removeEventListener('beforeunload', flushDraft);
     };
-  }, [stopAudio]);
+  }, [stopAudio, flushDraft]);
   useEffect(() => {
     const currentOwner = accountId();
     if (currentOwner === owner.current) return;
+    cancelDraft();
     stopAudio();
     clearVocabularyDraft(owner.current);
     owner.current = currentOwner;
@@ -221,15 +242,21 @@ export function useVocabularyPracticeController() {
       );
   }, [fb.state.settings?.vocabulary, session === null]);
 
-  const replaceSession = useCallback((next: Session | null) => {
+  const replaceSession = useCallback((next: Session | null, deferDraft = false) => {
     if (owner.current !== accountId()) return;
     sessionRef.current = next;
     setSession(next);
+    cancelDraft();
     if (next) {
-      const written = writeVocabularyDraft(owner.current, next);
-      setStorageError(!written);
+      if (deferDraft) {
+        pendingDraft.current = next;
+        draftTimer.current = setTimeout(flushDraft, 250);
+      } else {
+        const written = writeVocabularyDraft(owner.current, next);
+        setStorageError(!written);
+      }
     }
-  }, []);
+  }, [cancelDraft, flushDraft]);
 
   const filter = useMemo(
     () =>
@@ -381,9 +408,9 @@ export function useVocabularyPracticeController() {
     const ids = VOCABULARY_CATALOG.memberships.filter(item => item.bookId === unit.bookId && item.unitId === unit.id).map(item => item.entryId);
     return vocabularyGroupProgress(fb.state, { ...unit, studyEntryIds: ids }) !== 'Studied';
   }) : null;
-  const recent = ((fb.state.vocabularySessions || []) as SessionLog[])
+  const recent = useMemo(() => ((fb.state.vocabularySessions || []) as SessionLog[])
     .slice(-5)
-    .reverse().map(presentVocabularySession);
+    .reverse().map(presentVocabularySession), [fb.state.vocabularySessions]);
 
   useEffect(() => {
     if (sessionRef.current || savingRef.current) return;
@@ -716,9 +743,11 @@ export function useVocabularyPracticeController() {
         response,
         { durationMs: Date.now() - startedAt.current },
       ),
+      true,
     );
   }
   function finalizeAnswer(index: number) {
+    flushDraft();
     const current = sessionRef.current;
     if (
       locked ||
@@ -846,6 +875,7 @@ export function useVocabularyPracticeController() {
         return;
       }
       clearVocabularyDraft(owner.current);
+      cancelDraft();
       setResume(null);
       submittedFromRoute.current = location.key;
       setResults(prepared.sessionRecord);
@@ -912,6 +942,7 @@ export function useVocabularyPracticeController() {
     stopAudio();
     const target = departure.current; departure.current = null;
     setExitOpen(false);
+    cancelDraft();
     if (keep && sessionRef.current) {
       const paused = { ...sessionRef.current, status: "paused" as const };
       writeVocabularyDraft(owner.current, paused);
@@ -956,6 +987,7 @@ export function useVocabularyPracticeController() {
     navigate(`${setup}${next.toString() ? `?${next}` : ''}`, { state: vocabularyForwardState(location) });
   }
   function discardResume() {
+    cancelDraft();
     clearVocabularyDraft(owner.current);
     setResume(null);
     setError("");

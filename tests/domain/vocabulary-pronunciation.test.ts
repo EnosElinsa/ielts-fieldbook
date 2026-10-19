@@ -37,7 +37,7 @@ test.each([
 });
 
 test('every exact binding retains current public identity and revision-bound provenance',()=>{
-  expect(registry.groups).toHaveLength(14);expect(registry.recordings).toHaveLength(16);
+  expect(registry.groups).toHaveLength(19);expect(registry.recordings).toHaveLength(20);
   expect(new Set(registry.bindings.map(r=>r.id)).size).toBe(registry.bindings.length);
   expect(new Set(registry.groups.map(r=>r.id)).size).toBe(registry.groups.length);
   expect(new Set(registry.recordings.map(r=>r.id)).size).toBe(registry.recordings.length);

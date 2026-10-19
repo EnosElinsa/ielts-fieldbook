@@ -585,14 +585,14 @@ export function VocabularyEntryPage() {
                   {renderSense(primary, true)}
                   {visualPresentation === 'supplementary' && resolved ? <VocabularyLearningVisual resolved={resolved} /> : null}
                   <div className="vocabulary-meaning-meta">
-                    <details className="vocabulary-context-notice">
+                    {personalMeaning || resolved?.curriculumCurrent || resolved?.reviewed ? <details className="vocabulary-context-notice">
                       <summary>Meaning source</summary>
                       <p>{personalMeaning ? 'Your saved meaning and notes.' : resolved?.curriculumCurrent ? resolved.curriculum?.explanation : resolved?.reviewed ? 'Selected from the listening passage. The example is written for practice.' : 'A dictionary meaning of this word.'}</p>
                       {personalMeaning && groupMeaning?.id === primary.id && !resolved?.curriculumCurrent ? <div className="vocabulary-group-comparison">
                         <h4>Group meaning</h4>
                         <VocabularySenseContent entryId={entry?.id} sense={groupMeaning} />
                       </div> : null}
-                    </details>
+                    </details> : null}
                     {groupMeaning && groupMeaning.id !== primary.id ? <Link className="vocabulary-group-meaning-link" to={`${location.pathname}?${groupMeaningParams}`}>
                       View group meaning <ArrowRight size={14} aria-hidden="true" />
                     </Link> : null}
@@ -616,28 +616,16 @@ export function VocabularyEntryPage() {
             ) : null}
           </div>
           {others.length ? (
-            <details className="vocabulary-secondary">
-              <summary>Other learning meanings · {others.length}</summary>
-              {[...new Set(others.map((sense) => sense.pos || "Meaning"))].map(
-                (pos) => (
-                  <section className="vocabulary-dictionary-pos" key={pos}>
-                    <h3>{pos}</h3>
-                    {others
-                      .filter((sense) => (sense.pos || "Meaning") === pos)
-                      .map((sense, index) => (
-                        <div
-                          className="vocabulary-numbered-meaning"
-                          key={sense.id}
-                        >
-                          <span className="vocabulary-muted">
-                            Meaning {index + 1}
-                          </span>
-                          {renderSense(sense)}
-                        </div>
-                      ))}
-                  </section>
-                ),
-              )}
+            <details className="vocabulary-secondary vocabulary-saved-meanings">
+              <summary>{saved ? 'Other saved meanings' : 'Other learning meanings'} · {others.length}</summary>
+              <ul>{others.map(sense => {
+                const next = new URLSearchParams(params);
+                next.set('senseId', sense.id);
+                return <li key={sense.id}><Link to={`${location.pathname}?${next}`}>
+                  <span><small>{({adj:'Adjective',adv:'Adverb',name:'Proper name'} as Record<string,string>)[sense.pos || ''] || label(sense.pos || 'Meaning')}</small>{vocabularySensePresentation(sense).definition}</span>
+                  <ArrowRight size={16} aria-hidden="true" />
+                </Link></li>;
+              })}</ul>
             </details>
           ) : null}
           <DictionarySenses
@@ -650,22 +638,17 @@ export function VocabularyEntryPage() {
             aria-label="Learning progress"
           >
             <h3>Learning progress</h3>
-            <p className="vocabulary-muted">
-              Progress comes from verified practice spaced over time, across
-              meaning, listening, spelling and use in context.
-            </p>
+            <div className="vocabulary-progress-overview">
             {nextPractice && primary ? <VocabularyNextPractice recommendation={nextPractice}
               to={mode=>practiceUrl(entry.id,primary.id,context,origin,mode)}
               onPractice={dictionaryPreview ? mode=>void practiseDictionaryMeaning(mode) : undefined}
               busy={saving || savingPractice} /> : null}
-            {[...(primary ? [primary] : []), ...others].map((sense, index) => {
+            {(primary ? [primary] : []).map((sense) => {
               const mastery = getVocabularyMastery(state, entry.id, sense.id);
               return (
                 <section className="vocabulary-mastery-sense" key={sense.id}>
                   <h4>
-                      {index === 0
-                        ? "Progress for this meaning"
-                      : `${sense.pos || "Meaning"} · ${sense.definition}`}
+                      Progress for this meaning
                   </h4>
                   <div className="vocabulary-mastery-status">
                     <strong>{label(mastery.effective)}</strong>
@@ -677,17 +660,15 @@ export function VocabularyEntryPage() {
                     ) : null}
                   </div>
                   {saved ? (
-                    <div className="vocabulary-mastery-actions">
+                    <details className="vocabulary-mastery-adjustment">
+                      <summary>Adjust familiarity</summary>
+                      <div className="vocabulary-mastery-actions">
                       <fieldset
                         disabled={saving || savingPractice}
                         aria-label="Mastery adjustment"
                       >
                         <FilterMenu
-                          label={
-                            index === 0
-                              ? "Familiarity for this meaning"
-                              : `Familiarity for ${sense.pos} meaning`
-                          }
+                          label="Familiarity for this meaning"
                           value={
                             mastery.manual ? mastery.effective : "automatic"
                           }
@@ -714,7 +695,8 @@ export function VocabularyEntryPage() {
                           Use automatic
                         </button>
                       ) : null}
-                    </div>
+                      </div>
+                    </details>
                   ) : (
                     <p className="vocabulary-muted">
                       Practise this meaning to start your learning record.
@@ -743,9 +725,6 @@ export function VocabularyEntryPage() {
                       </div>
                     ))}
                   </div>
-                  <p className="vocabulary-muted">
-                    Usage is tracked separately. Assessed use: {mastery.productionSuccesses} successful spaced reviews. Optional usage practice does not gate foundation mastery.
-                  </p>
                   {mastery.missing.length ? (
                     <details className="vocabulary-mastery-requirements">
                       <summary>Mastery requirements</summary>
@@ -758,11 +737,13 @@ export function VocabularyEntryPage() {
                         Familiar: 3 spaced successes in meaning, listening and spelling. Mastered: 5 in each. Counted successes in
                         each skill must be at least 24 hours apart.
                       </p>
+                      <p>Usage is tracked separately. Assessed use: {mastery.productionSuccesses} successful spaced reviews. Optional usage practice does not gate foundation mastery.</p>
                     </details>
                   ) : null}
                 </section>
               );
             })}
+            </div>
             {saving ? <p role="status">Saving mastery preference…</p> : null}
           </section>
           <details className="vocabulary-secondary vocabulary-timeline">

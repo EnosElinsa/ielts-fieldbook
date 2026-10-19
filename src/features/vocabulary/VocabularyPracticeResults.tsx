@@ -26,6 +26,14 @@ export function VocabularyPracticeResults({ controller, results }: {
   results: VocabularySessionRecord;
 }) {
   const { resultFilter, setResultFilter, resultRows, nextGroup, nextBatch, resetResults, resultReturnTo, retryMistakes, retryPreparing } = controller;
+  const wordCounts = new Map<string, number>();
+  const meaningNumbers = new Map<string, number>();
+  if (results.mode === 'dictation') for (const row of results.results) {
+    const count = (wordCounts.get(row.entryId) || 0) + 1;
+    wordCounts.set(row.entryId, count);
+    meaningNumbers.set(row.cardId, count);
+  }
+  const repeatedWords = [...wordCounts.values()].some(count => count > 1);
   const table = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const origin = useVocabularyReturn('/vocabulary/history');
@@ -59,8 +67,9 @@ export function VocabularyPracticeResults({ controller, results }: {
     const unitId = row.context?.unitId || (results.selection && 'unitId' in results.selection ? results.selection.unitId : results.filter.unitId);
     const valid = Boolean(raw && bookId && unitId && (VOCABULARY_CATALOG.memberships.some(member => member.entryId === row.entryId && member.bookId === bookId && member.unitId === unitId) || raw.sources.some(source => source.bookId === bookId && source.unitId === unitId)));
     const context = valid ? {bookId,unitId} : {};
-    const resolved = raw ? resolveVocabularyLearningContext(raw, {...context, ...(results.mode !== 'dictation' || results.selection?.kind === 'planned-review' ? {senseId: row.senseId} : {})}) : null;
-    const senseId = results.mode === 'dictation' && results.selection?.kind !== 'planned-review' ? resolved?.sense?.id || row.senseId : row.senseId;
+    const keepSense = results.mode !== 'dictation' || results.selection?.kind === 'planned-review' || (wordCounts.get(row.entryId) || 0) > 1;
+    const resolved = raw ? resolveVocabularyLearningContext(raw, {...context, ...(keepSense ? {senseId: row.senseId} : {})}) : null;
+    const senseId = keepSense ? row.senseId : resolved?.sense?.id || row.senseId;
     return {raw,resolved,context,detail:entryUrl(row.entryId,{...context,senseId},resultReturnTo)};
   };
   const hasMistakes = results.mode !== "audio" && results.results.some(row => row.result === "failure" || row.result === "partial");
@@ -138,6 +147,7 @@ export function VocabularyPracticeResults({ controller, results }: {
           { value: 'unanswered', label: 'Unanswered' }, { value: 'pending', label: 'Awaiting feedback' }, { value: 'flagged', label: 'Flagged' },
         ]} />
         <span>{resultRows.length} of {results.results.length} results</span>
+        {repeatedWords ? <p>This saved session includes separate meanings of the same word.</p> : null}
         {results.selection?.kind === 'unit' ? <p>Group practice saved. Mastery is tracked separately across reviews.</p> : null}
       </div>
       <div className="practice-result-table-wrap" ref={table} tabIndex={0} role="region" aria-label="Session word results">
@@ -168,6 +178,7 @@ export function VocabularyPracticeResults({ controller, results }: {
                   >
                     {row.term}
                   </Link>
+                  {(wordCounts.get(row.entryId) || 0) > 1 ? <small className="practice-result-meaning">Meaning {meaningNumbers.get(row.cardId)} of {wordCounts.get(row.entryId)}</small> : null}
                   <small>{results.mode === 'dictation' ? currentDefinition || row.definition : row.definition}</small>
                   {changed ? <small className="practice-current-reference">{results.mode === 'dictation' ? 'Current learning reference updated; saved grading is unchanged.' : `Current meaning: ${currentDefinition}`}</small> : null}
                   {current.raw ? <Pronunciation compact entry={audioEntry} sense={audioEntry.senses.find(sense=>sense.id===row.senseId) || null} options={{pronunciation:frozen?.pronunciation ?? 'legacy'}} accent={frozenAudio ? results.preferences.accent : controller.preferences.accent}/> : null}

@@ -77,6 +77,53 @@ beforeEach(() => {
   };
 });
 const originalCatalog = { books: [...VOCABULARY_CATALOG.books], units: [...VOCABULARY_CATALOG.units], entries: [...VOCABULARY_CATALOG.entries], memberships: [...VOCABULARY_CATALOG.memberships] };
+
+test('typing updates immediately without writing the full draft per letter, then pagehide flushes the latest answer', async () => {
+  fb.current.state.settings.vocabulary = { autoPlay: false };
+  mount('?mode=dictation&dueOnly=false');
+  fireEvent.click(await screen.findByRole('button', { name: 'Start session' }));
+  const input = screen.getByRole('textbox', { name: 'Answer 1' });
+  const writes = vi.spyOn(Storage.prototype, 'setItem');
+  for (const value of ['c', 'ca', 'cat', 'cata', 'catastrophic']) {
+    fireEvent.change(input, { target: { value } });
+    expect(input).toHaveValue(value);
+  }
+  expect(writes.mock.calls.filter(([key]) => key.startsWith('fieldbook-vocabulary-draft'))).toHaveLength(0);
+  fireEvent(window, new Event('pagehide'));
+  const draft = readVocabularyDraft(owner.current)!;
+  expect(draft.answers[draft.cardIds[0].id].response).toBe('catastrophic');
+  writes.mockRestore();
+});
+
+test('discarding a just-typed session cancels its pending save so the draft cannot reappear', async () => {
+  fb.current.state.settings.vocabulary = { autoPlay: false };
+  mount('?mode=dictation&dueOnly=false');
+  fireEvent.click(await screen.findByRole('button', { name: 'Start session' }));
+  fireEvent.change(screen.getByRole('textbox', { name: 'Answer 1' }), { target: { value: 'latest' } });
+  fireEvent.click(screen.getByRole('button', { name: 'Pause session' }));
+  fireEvent.click(await screen.findByRole('button', { name: 'Discard session' }));
+  fireEvent(window, new Event('pagehide'));
+  await new Promise(resolve => setTimeout(resolve, 350));
+  expect(readVocabularyDraft(owner.current)).toBeNull();
+});
+
+test('historical dictation labels separate meanings of a repeated word without dropping either saved result', async () => {
+  const entry = fb.current.state.vocabulary[0];
+  const results = ['First meaning.', 'Another meaning.'].map((definition, index) => ({cardId:`saved-${index}`, entryId:entry.id, senseId:`saved-sense-${index}`, term:entry.term, response:entry.term, expectedAnswer:entry.term, result:'success', definition, example:''}));
+  fb.current.state.vocabularySessions = [{id:'repeated-meanings', mode:'dictation', status:'submitted', preferences:{}, filter:{}, results, entryIds:[entry.id], summary:{total:2,correct:2,incorrect:0,pending:0}, startedAt:'2025-01-01', submittedAt:'2025-01-01'}];
+  const before = structuredClone(fb.current.state.vocabularySessions);
+  mount('?sessionId=repeated-meanings');
+  expect(await screen.findByText('This saved session includes separate meanings of the same word.')).toBeInTheDocument();
+  expect(screen.getByText('Meaning 1 of 2')).toBeInTheDocument();
+  expect(screen.getByText('Meaning 2 of 2')).toBeInTheDocument();
+  expect(screen.getByText('First meaning.')).toBeInTheDocument();
+  expect(screen.getByText('Another meaning.')).toBeInTheDocument();
+  screen.getAllByRole('link', { name: 'Details' }).forEach((link, index) => {
+    expect(new URL(link.getAttribute('href')!, 'https://test.test').searchParams.get('senseId')).toBe(`saved-sense-${index}`);
+  });
+  expect(screen.getByRole('heading', { name:'2 of 2 correct' })).toBeInTheDocument();
+  expect(fb.current.state.vocabularySessions).toEqual(before);
+});
 test('dictation uses the frozen selected reading and exposes deliberate audio recovery without grading it',async()=>{
   const raw=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8')).entries.find((e:any)=>e.term==='record');
   const row=JSON.parse(readFileSync('src/domain/vocabulary/readinessCorrections.json','utf8')).find((r:any)=>r.senseId==='kaikki:5386f9871d2cf75669');

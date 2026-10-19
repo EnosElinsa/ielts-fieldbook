@@ -24,7 +24,7 @@ export function VocabularyNextPractice({recommendation,to,onPractice,busy=false,
   return <section className="vocabulary-next-practice" aria-label={title}>
     <h4>{title}</h4>
     {meaning ? <p><b>{meaning.term}</b> · {meaning.definition}</p> : null}
-    <strong>{modeLabel(mode)}</strong>
+    <p className="vocabulary-next-practice-mode">{modeLabel(mode)}</p>
     {status==='waiting' ? <p>{reason==='due'?'Your next review is scheduled for ':'Your next spaced practice is available from '}<time dateTime={dueAt}>{dateLabel(dueAt!)}</time>.</p> : <>
       <p>{reason==='error' ? errorMessage : reason==='missing'
         ? dimensions.length===1 && dimensions[0]==='usage' ? 'No verified use in context for this meaning yet.' : `No verified ${dimensions.join(' or ')} retrieval for this meaning yet.`

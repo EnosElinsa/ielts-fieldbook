@@ -1,5 +1,5 @@
 {
-  "version": "sense-pronunciation-2026-10-19.1",
+  "version": "sense-pronunciation-2026-10-19.2",
   "protectedTerms": [
     "record",
     "present",
@@ -9,7 +9,9 @@
     "minute",
     "wind",
     "bow",
-    "resolve"
+    "resolve",
+    "discount",
+    "survey"
   ],
   "recordings": [
     {
@@ -316,6 +318,82 @@
       "fileTimestamp": "2007-03-13T09:27:59Z",
       "fileSha1": "20b8d20f1e97a5b1be81fde442bea5ab45b1078e",
       "playbackSha1": "20b8d20f1e97a5b1be81fde442bea5ab45b1078e"
+    },
+    {
+      "id": "commons:643f598a8e7bc9b26d5aeb69c7caf29135576b94",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/11/En-us-discount.ogg",
+      "title": "En-us-discount.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Reading group and accent explicitly identified in revision-bound Wiktionary markup; Commons provenance and original audio SHA-1 verified.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-discount.ogg&oldid=1229127959",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229127959,
+      "fileTimestamp": "2007-03-13T09:15:11Z",
+      "fileSha1": "643f598a8e7bc9b26d5aeb69c7caf29135576b94",
+      "playbackSha1": "643f598a8e7bc9b26d5aeb69c7caf29135576b94"
+    },
+    {
+      "id": "commons:bf257cb261ce6a7d67297ee9f3ee56f45839787b",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/e2/LL-Q1860_%28eng%29-Vealhurl-discount_%28verb%29.wav",
+      "title": "LL-Q1860 (eng)-Vealhurl-discount (verb).wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Reading group and accent explicitly identified in revision-bound Wiktionary markup; Commons provenance and original audio SHA-1 verified.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-discount%20(verb).wav&oldid=748198059",
+      "author": "Speaker: Vealhurl Recorder: Vealhurl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 748198059,
+      "fileTimestamp": "2020-04-07T13:37:11Z",
+      "fileSha1": "bf257cb261ce6a7d67297ee9f3ee56f45839787b",
+      "playbackSha1": "bf257cb261ce6a7d67297ee9f3ee56f45839787b"
+    },
+    {
+      "id": "commons:ef83de486f3bb199edca66365fd4fbb71d0d65fc",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/53/LL-Q1860_%28eng%29-Vealhurl-survey_%28noun%29.wav",
+      "title": "LL-Q1860 (eng)-Vealhurl-survey (noun).wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Reading group and accent explicitly identified in revision-bound Wiktionary markup; Commons provenance and original audio SHA-1 verified.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-survey%20(noun).wav&oldid=748919114",
+      "author": "Speaker: Vealhurl Recorder: Vealhurl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 748919114,
+      "fileTimestamp": "2020-03-29T17:40:23Z",
+      "fileSha1": "ef83de486f3bb199edca66365fd4fbb71d0d65fc",
+      "playbackSha1": "ef83de486f3bb199edca66365fd4fbb71d0d65fc"
+    },
+    {
+      "id": "commons:e0cef6219b39bd86a05dd259ada0dad733601a7f",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/76/LL-Q1860_%28eng%29-Vealhurl-survey_%28verb%29.wav",
+      "title": "LL-Q1860 (eng)-Vealhurl-survey (verb).wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Reading group and accent explicitly identified in revision-bound Wiktionary markup; Commons provenance and original audio SHA-1 verified.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-survey%20(verb).wav&oldid=1179434833",
+      "author": "Speaker: Vealhurl Recorder: Vealhurl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1179434833,
+      "fileTimestamp": "2020-03-29T17:40:21Z",
+      "fileSha1": "e0cef6219b39bd86a05dd259ada0dad733601a7f",
+      "playbackSha1": "e0cef6219b39bd86a05dd259ada0dad733601a7f"
     }
   ],
   "groups": [
@@ -544,6 +622,82 @@
       },
       "audioMarkup": [],
       "recordings": {}
+    },
+    {
+      "id": "discount-nominal",
+      "term": "discount",
+      "scope": "Pronunciation: noun and adjective; first stress",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+      "ipa": {
+        "uk": "/ˈdɪskaʊnt/",
+        "us": "/ˈdɪskaʊnt/"
+      },
+      "audioMarkup": [
+        "*** {{audio|en|En-us-discount.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:643f598a8e7bc9b26d5aeb69c7caf29135576b94"
+      }
+    },
+    {
+      "id": "discount-other-verbs",
+      "term": "discount",
+      "scope": "Pronunciation: verb in other senses; first stress; no scoped recording",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+      "ipa": {
+        "uk": "/ˈdɪskaʊnt/",
+        "us": "/ˈdɪskaʊnt/"
+      },
+      "audioMarkup": [],
+      "recordings": {}
+    },
+    {
+      "id": "discount-disregard",
+      "term": "discount",
+      "scope": "Pronunciation: verb disregard; second stress",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+      "ipa": {
+        "uk": "/dɪˈskaʊnt/",
+        "us": "/dɪˈskaʊnt/"
+      },
+      "audioMarkup": [
+        "*** {{audio|en|LL-Q1860 (eng)-Vealhurl-discount (verb).wav|a=Southern England}}"
+      ],
+      "recordings": {
+        "uk": "commons:bf257cb261ce6a7d67297ee9f3ee56f45839787b"
+      }
+    },
+    {
+      "id": "survey-noun",
+      "term": "survey",
+      "scope": "Pronunciation: noun; source retains initial- and final-stress variants",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+      "ipa": {
+        "uk": "/ˈsɜːveɪ/ · /sɜːˈveɪ/",
+        "us": "/ˈsɝˌveɪ/ · /sɚˈveɪ/"
+      },
+      "audioMarkup": [
+        "** {{audio|en|LL-Q1860 (eng)-Vealhurl-survey (noun).wav|a=Southern England}}"
+      ],
+      "recordings": {
+        "uk": "commons:ef83de486f3bb199edca66365fd4fbb71d0d65fc"
+      }
+    },
+    {
+      "id": "survey-verb",
+      "term": "survey",
+      "scope": "Pronunciation: verb; source retains initial- and final-stress variants",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+      "ipa": {
+        "uk": "/səˈveɪ/ · /sɜːˈveɪ/ · /ˈsɜːveɪ/",
+        "us": "/sɚˈveɪ/ · /ˈsɝˌveɪ/"
+      },
+      "audioMarkup": [
+        "** {{audio|en|LL-Q1860 (eng)-Vealhurl-survey (verb).wav|a=Southern England}}"
+      ],
+      "recordings": {
+        "uk": "commons:e0cef6219b39bd86a05dd259ada0dad733601a7f"
+      }
     }
   ],
   "bindings": [
@@ -2130,6 +2284,222 @@
       "definition": "An alternative spelling of re-solve: to solve again.",
       "pos": "verb",
       "groupId": "resolve-again"
+    },
+    {
+      "id": "sense-reading:ae2e5e1cc84becdbab92ec3f",
+      "entryId": "ve-99c09618",
+      "term": "discount",
+      "senseId": "kaikki:d9dfbbdde5eccbbc0b",
+      "definition": "To sell something at a reduced price.",
+      "pos": "verb",
+      "groupId": "discount-other-verbs"
+    },
+    {
+      "id": "sense-reading:39ff0842a5f02b0bba909c0b",
+      "entryId": "ve-99c09618",
+      "term": "discount",
+      "senseId": "kaikki:59492e9275e49050df",
+      "definition": "To deduct an amount from an account, debt or charge.",
+      "pos": "verb",
+      "groupId": "discount-other-verbs"
+    },
+    {
+      "id": "sense-reading:288594fd62605c62d89b64b8",
+      "entryId": "ve-99c09618",
+      "term": "discount",
+      "senseId": "kaikki:0f0c4d9616b9da6402",
+      "definition": "To disregard something or treat it as unimportant.",
+      "pos": "verb",
+      "groupId": "discount-disregard"
+    },
+    {
+      "id": "sense-reading:8b57cf9579ff9273bc98dffa",
+      "entryId": "ve-99c09618",
+      "term": "discount",
+      "senseId": "kaikki:18911451aeb79fa967",
+      "definition": "To advance money on a bill or note after deducting interest before it is due.",
+      "pos": "verb",
+      "groupId": "discount-other-verbs"
+    },
+    {
+      "id": "sense-reading:bf7db4e161df6046cdebad87",
+      "entryId": "ve-99c09618",
+      "term": "discount",
+      "senseId": "kaikki:9d0dc667bd4e5ed7f0",
+      "definition": "To anticipate an event and take its expected effect into account in advance.",
+      "pos": "verb",
+      "groupId": "discount-other-verbs"
+    },
+    {
+      "id": "sense-reading:36dfb66a860152967c288a68",
+      "entryId": "ve-99c09618",
+      "term": "discount",
+      "senseId": "kaikki:d741a2ffee17dc9a2d",
+      "definition": "A reduction in the usual price.",
+      "pos": "noun",
+      "groupId": "discount-nominal"
+    },
+    {
+      "id": "sense-reading:30233c0c96d7026b0c8d427d",
+      "entryId": "ve-99c09618",
+      "term": "discount",
+      "senseId": "kaikki:df21902a8714644bd9",
+      "definition": "Interest deducted in advance from the amount of a bill or note before it is due.",
+      "pos": "noun",
+      "groupId": "discount-nominal"
+    },
+    {
+      "id": "sense-reading:7c7fa5f3d64ffb4740b5bd3f",
+      "entryId": "ve-99c09618",
+      "term": "discount",
+      "senseId": "kaikki:d4c97cc8438045ab9d",
+      "definition": "The interest rate charged when a bill or note is discounted.",
+      "pos": "noun",
+      "groupId": "discount-nominal"
+    },
+    {
+      "id": "sense-reading:814cb7c4206f53ea3e7b43fd",
+      "entryId": "ve-99c09618",
+      "term": "discount",
+      "senseId": "kaikki:519f99a3c0730f2f55",
+      "definition": "A lack, disadvantage or shortcoming.",
+      "pos": "noun",
+      "groupId": "discount-nominal"
+    },
+    {
+      "id": "sense-reading:b445930b4f92cde7f8763244",
+      "entryId": "ve-99c09618",
+      "term": "discount",
+      "senseId": "kaikki:7f720ce5bde62ced49",
+      "definition": "Specializing in selling goods at reduced prices.",
+      "pos": "adj",
+      "groupId": "discount-nominal"
+    },
+    {
+      "id": "sense-reading:a55880ec995d9fd93d80b902",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:828041b20d3ff09acf",
+      "definition": "A general overview of a subject or area.",
+      "pos": "noun",
+      "groupId": "survey-noun"
+    },
+    {
+      "id": "sense-reading:6ebd935076543912fa676958",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:aea7385df9b88da426",
+      "definition": "An examination to establish the condition, quantity or quality of something.",
+      "pos": "noun",
+      "groupId": "survey-noun"
+    },
+    {
+      "id": "sense-reading:76415388942175bc1e5fb510",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:6429f56f5de947c29b",
+      "definition": "The operation of measuring the contours, dimensions or position of an area of land.",
+      "pos": "noun",
+      "groupId": "survey-noun"
+    },
+    {
+      "id": "sense-reading:3ad8ef7d8985b6558d3eee4c",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:295aee5c78c7abe688",
+      "definition": "A measured plan and description of an area of land.",
+      "pos": "noun",
+      "groupId": "survey-noun"
+    },
+    {
+      "id": "sense-reading:d43d0a4af125816fc168b039",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:58e6bd082054859eeb",
+      "definition": "A study that collects information or opinions from a group of people.",
+      "pos": "noun",
+      "groupId": "survey-noun"
+    },
+    {
+      "id": "sense-reading:e178296c572754e60371b04f",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:ae4427a1ea68c95495",
+      "definition": "A questionnaire or similar tool used to collect information or opinions.",
+      "pos": "noun",
+      "groupId": "survey-noun"
+    },
+    {
+      "id": "sense-reading:fedb8baddba0437ff944e9b6",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:dd4dc6c2d2bb1db148",
+      "definition": "An auction at which a farm is let on a lease lasting for specified lives.",
+      "pos": "noun",
+      "groupId": "survey-noun"
+    },
+    {
+      "id": "sense-reading:4057ca27ead8df5fdaf1712a",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:23f8fed557877ac46d",
+      "definition": "In US customs terminology, a district for collecting customs under a particular officer.",
+      "pos": "noun",
+      "groupId": "survey-noun"
+    },
+    {
+      "id": "sense-reading:49c82c51cc3c9f8042d9d049",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:0ba546c7eeb26db8e5",
+      "definition": "To look carefully over an area, especially from a high place.",
+      "pos": "verb",
+      "groupId": "survey-verb"
+    },
+    {
+      "id": "sense-reading:ed5852ca67cfe5825473c2f7",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:3eb8fd92a39e109a79",
+      "definition": "To examine something closely or critically.",
+      "pos": "verb",
+      "groupId": "survey-verb"
+    },
+    {
+      "id": "sense-reading:22a377dfbd5ae3c13f3fa173",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:9967622a5317aa76d6",
+      "definition": "To inspect something in order to establish its condition, situation or value.",
+      "pos": "verb",
+      "groupId": "survey-verb"
+    },
+    {
+      "id": "sense-reading:55eed680e12fe1c2f671c668",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:38f0b848fa3a35ade1",
+      "definition": "To measure and map the form, extent or position of land using linear and angular measurements.",
+      "pos": "verb",
+      "groupId": "survey-verb"
+    },
+    {
+      "id": "sense-reading:6c5639719b1370901e51dfd1",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:10ca01a3d7b23d1ab4",
+      "definition": "To examine a manor's boundaries and rights, its tenants' tenure, and its rents and value.",
+      "pos": "verb",
+      "groupId": "survey-verb"
+    },
+    {
+      "id": "sense-reading:02306bb9ee252a9bb137a472",
+      "entryId": "ve-7f92a4db",
+      "term": "survey",
+      "senseId": "kaikki:84c4e501a6bc8681da",
+      "definition": "To collect information about people by asking them questions.",
+      "pos": "verb",
+      "groupId": "survey-verb"
     }
   ]
 }

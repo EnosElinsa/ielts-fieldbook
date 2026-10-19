@@ -217,18 +217,18 @@ export function DictionarySenses({
         <button type="button" className="btn line" aria-pressed={showAll} onClick={() => setShowAll(true)}>All meanings ({senses.length})</button>
       </div> : null}
       {!loading && !error && senses.length ? <>
-        <div className="vocabulary-dictionary-controls">
+        {senses.length > 1 ? <div className="vocabulary-dictionary-controls">
           <label htmlFor={searchId}>Find a meaning
             <input id={searchId} className="search" type="search" aria-label="Search dictionary meanings" placeholder="Definition, example or phrase" value={query} onChange={event => setQuery(event.target.value)} />
           </label>
           <label>Part of speech
             <SelectField aria-label="Dictionary part of speech" value={posFilter} onValueChange={setPosFilter} options={[{ value: '', label: 'All parts of speech' }, ...parts.map(pos => ({ value: pos, label: label(pos) }))]} />
           </label>
-        </div>
-        <div className="vocabulary-dictionary-results">
+        </div> : null}
+        {senses.length > 1 ? <div className="vocabulary-dictionary-results">
           <p className="vocabulary-muted" role="status" aria-live="polite" aria-atomic="true">{visible.length} of {scope.length} meanings</p>
           {query || posFilter ? <button type="button" className="btn line" onClick={clearFilters}>Clear filters</button> : null}
-        </div>
+        </div> : null}
         {!visible.length ? <p className="vocabulary-muted">{!showAll && hasEverydayMeanings && !everyday.length && !query && !posFilter ? 'The everyday learning meanings are already shown above. Choose All meanings to browse further uses.' : <>No meanings match your filters. <span>Try different words{!showAll && hasLearningFilter ? ' or choose All meanings' : ''}.</span></>}</p> : null}
       </> : null}
       {loading ? (

@@ -245139,5 +245139,1124 @@
     "antonyms": [],
     "wordFamily": [],
     "register": ""
+  },
+  {
+    "entryId": "ve-99c09618",
+    "senseId": "kaikki:59492e9275e49050df",
+    "definition": "To deduct an amount from an account, debt or charge.",
+    "example": "In the source's rare construction discount five per cent for prompt payment, discount means deduct that percentage from the amount due.",
+    "collocations": [
+      "discount an amount",
+      "discount five per cent for prompt payment"
+    ],
+    "usage": "Rare in this deduct construction. Deduct an amount from a bill is clearer in ordinary present-day writing.",
+    "distinctions": [
+      "Here the object is the amount deducted; in discount a product, the object is the item sold more cheaply."
+    ],
+    "exampleKind": "reading-note",
+    "originalSense": {
+      "id": "kaikki:59492e9275e49050df",
+      "definition": "To deduct from an account, debt, charge, etc.",
+      "example": "Merchants sometimes discount five or six per cent for prompt payment of bills.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "rare",
+      "register": "rare, transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-99c09618",
+    "senseId": "kaikki:18911451aeb79fa967",
+    "definition": "To advance money on a bill or note after deducting interest before it is due.",
+    "example": "The bank agreed to discount a £1,000 bill, advancing £970 before it fell due.",
+    "collocations": [
+      "discount a bill",
+      "discount a note",
+      "discount bills of exchange"
+    ],
+    "usage": "Finance. The holder receives money before maturity, with interest deducted in advance.",
+    "distinctions": [
+      "The £30 difference in this example is a monetary deduction. It is not an annual interest rate."
+    ],
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "A bank will discount a £1,000 bill by advancing £970 before maturity. The £30 difference is _____.",
+      "options": [
+        "interest deducted in advance",
+        "an annual rate of 30 per cent"
+      ],
+      "answer": "interest deducted in advance",
+      "explanation": "The difference is £1,000 minus £970. No annual rate can be inferred without a time period and calculation convention."
+    },
+    "originalSense": {
+      "id": "kaikki:18911451aeb79fa967",
+      "definition": "To lend money upon, deducting the discount or allowance for interest.",
+      "example": "The banks discount notes and bills of exchange.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "finance"
+  },
+  {
+    "entryId": "ve-99c09618",
+    "senseId": "kaikki:9d0dc667bd4e5ed7f0",
+    "definition": "To anticipate an event and take its expected effect into account in advance.",
+    "example": "Investors already discount a fall in profits when valuing these shares.",
+    "collocations": [
+      "discount a fall in profits",
+      "discount expected changes",
+      "the market discounts an event"
+    ],
+    "usage": "Often used of markets or expectations. An anticipated effect can be reflected in a price before the event occurs.",
+    "distinctions": [
+      "Discount can mean take into account in advance here. In discount a warning, it instead means disregard. Context matters."
+    ],
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "Share prices already discount a fall in profits. Investors have _____.",
+      "options": [
+        "taken the expected fall into account",
+        "treated the expected fall as irrelevant"
+      ],
+      "answer": "taken the expected fall into account",
+      "explanation": "In this market use, the anticipated change is already reflected in valuation."
+    },
+    "originalSense": {
+      "id": "kaikki:9d0dc667bd4e5ed7f0",
+      "definition": "To take into consideration beforehand; to anticipate and form conclusions concerning (an event).",
+      "example": "The market has dropped, discounting changes in interest rates.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-99c09618",
+    "senseId": "kaikki:b9bb4401ce227f16a2",
+    "definition": "In transactional analysis, to disregard the content of another person's communication in one's response.",
+    "example": "In ITAA's account of a discount transaction, a response disregards the content of the communication it answers.",
+    "collocations": [
+      "discount transaction",
+      "discount another person's communication"
+    ],
+    "usage": "Transactional-analysis terminology. ITAA describes this communication pattern; this reading note does not offer a diagnosis or a complete account of every use of discounting.",
+    "distinctions": [
+      "The professional description concerns disregarded communication. It does not define the term simply as one person's feelings being more important than reality."
+    ],
+    "learningPriority": "specialist",
+    "exampleKind": "reading-note",
+    "originalSense": {
+      "id": "kaikki:b9bb4401ce227f16a2",
+      "definition": "To believe, or act as though one believes, that one's own feelings are more important than the reality of a situation.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "transactional analysis"
+  },
+  {
+    "entryId": "ve-99c09618",
+    "senseId": "kaikki:df21902a8714644bd9",
+    "definition": "Interest deducted in advance from the amount of a bill or note before it is due.",
+    "example": "For a bill with a face amount of £1,000, the bank advances £970 and retains a discount of £30.",
+    "collocations": [
+      "a discount of £30",
+      "deduct the discount",
+      "the discount on a bill"
+    ],
+    "usage": "Finance. This meaning names the amount deducted in advance.",
+    "distinctions": [
+      "A discount amount is measured in money; a discount rate is a rate used to calculate a deduction."
+    ],
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "A £1,000 bill produces a £970 advance. The discount amount is _____.",
+      "options": [
+        "£30",
+        "30 per cent per year"
+      ],
+      "answer": "£30",
+      "explanation": "The amount is £1,000 minus £970 = £30. An annual rate requires the term and rate convention."
+    },
+    "originalSense": {
+      "id": "kaikki:df21902a8714644bd9",
+      "definition": "A deduction made for interest, in advancing money upon, or purchasing, a bill or note not due; payment in advance of interest upon money.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "surcharge"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "finance"
+  },
+  {
+    "entryId": "ve-99c09618",
+    "senseId": "kaikki:d4c97cc8438045ab9d",
+    "definition": "The interest rate charged when a bill or note is discounted.",
+    "example": "The bank quoted a discount rate of 6 per cent per year for the bill.",
+    "collocations": [
+      "a discount rate",
+      "an annual discount rate",
+      "quote a discount rate"
+    ],
+    "usage": "Finance. State the rate and its time basis. Calculating a monetary deduction also requires the amount, term and convention.",
+    "distinctions": [
+      "This meaning is a rate, not the sum of money deducted. A bare percentage does not supply a time period."
+    ],
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In a quoted discount rate of 6 per cent per year, discount refers to _____.",
+      "options": [
+        "an interest rate",
+        "a fixed deduction of £6"
+      ],
+      "answer": "an interest rate",
+      "explanation": "The quotation states a percentage with an annual time basis, not a monetary amount."
+    },
+    "originalSense": {
+      "id": "kaikki:d4c97cc8438045ab9d",
+      "definition": "The rate of interest charged in discounting.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "surcharge"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "finance"
+  },
+  {
+    "entryId": "ve-99c09618",
+    "senseId": "kaikki:519f99a3c0730f2f55",
+    "definition": "A lack, disadvantage or shortcoming.",
+    "example": "In the preserved Dickens passage, being at such a discount in looks and composure means being at a disadvantage in those respects.",
+    "collocations": [
+      "at a discount in respect of something"
+    ],
+    "usage": "Figurative reading use in the cited literary passage. The retained quotation is about appearance and composure.",
+    "distinctions": [
+      "This passage describes a disadvantage; it does not say that the speaker is being sold at a lower price."
+    ],
+    "exampleKind": "reading-note",
+    "originalSense": {
+      "id": "kaikki:519f99a3c0730f2f55",
+      "definition": "A lack or shortcoming.",
+      "example": "On our approaching the house where the Misses Spenlow lived, I was at such a discount in respect of my personal looks and presence of mind, that Traddles proposed a gentle stimulant in the form of a glass of ale.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "surcharge"
+      ],
+      "collocations": [],
+      "usage": "figuratively",
+      "register": "figuratively",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-99c09618",
+    "senseId": "kaikki:d569f337e25f26b3d5",
+    "definition": "In transactional analysis, a response that disregards the content of another person's communication.",
+    "example": "ITAA uses discount transaction for a response that disregards the content of the communication it answers.",
+    "collocations": [
+      "a discount transaction",
+      "a response that discounts communication"
+    ],
+    "usage": "Transactional-analysis terminology. This communication-specific description is supported by ITAA's core concepts; it is not a diagnosis.",
+    "distinctions": [
+      "This specialist noun concerns a response in communication, not a retail saving or an interest deduction."
+    ],
+    "learningPriority": "specialist",
+    "exampleKind": "reading-note",
+    "originalSense": {
+      "id": "kaikki:d569f337e25f26b3d5",
+      "definition": "The act of one who believes, or act as though they believe, that their own feelings are more important than the reality of a situation.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "surcharge"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "transactional analysis"
+  },
+  {
+    "entryId": "ve-99c09618",
+    "senseId": "kaikki:7f720ce5bde62ced49",
+    "definition": "Specializing in selling goods at reduced prices.",
+    "example": "We bought the stationery from a discount store.",
+    "collocations": [
+      "a discount store",
+      "a discount retailer",
+      "a discount supermarket"
+    ],
+    "usage": "Used before a noun to describe a retailer or store selling goods at reduced prices.",
+    "distinctions": [
+      "Discount describes the retailer here. It does not mean that every item is cheaper than every competitor's item."
+    ],
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "A discount store is a store that specializes in _____.",
+      "options": [
+        "selling goods at reduced prices",
+        "providing loans against unpaid bills"
+      ],
+      "answer": "selling goods at reduced prices",
+      "explanation": "The adjective describes the store's retail business, not bill discounting."
+    },
+    "originalSense": {
+      "id": "kaikki:7f720ce5bde62ced49",
+      "definition": "Specializing in selling goods at reduced prices.",
+      "example": "If you're looking for cheap clothes, there's a discount clothier around the corner.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "not-comparable",
+      "register": "not-comparable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/discount#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7f92a4db",
+    "senseId": "kaikki:aea7385df9b88da426",
+    "definition": "An examination to establish the condition, quantity or quality of something.",
+    "example": "The building survey identified cracks in the roof supports.",
+    "collocations": [
+      "a building survey",
+      "carry out a survey",
+      "a survey of road conditions"
+    ],
+    "usage": "This examination can concern buildings, roads, supplies or other physical items.",
+    "distinctions": [
+      "A building survey examines the property; it need not ask a group of people for opinions."
+    ],
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "A building survey finds cracks in the roof. Here survey means _____.",
+      "options": [
+        "an examination of the building's condition",
+        "a questionnaire about residents' opinions"
+      ],
+      "answer": "an examination of the building's condition",
+      "explanation": "The survey examines the property's physical condition."
+    },
+    "originalSense": {
+      "id": "kaikki:aea7385df9b88da426",
+      "definition": "A particular view; an examination, especially an official examination, of a particular group of items, in order to ascertain the condition, quantity, or quality.",
+      "example": "A survey of the stores of a ship; a survey of roads and bridges; a survey of buildings.",
+      "pos": "noun",
+      "synonyms": [
+        "review"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aerial survey",
+        "Domesday survey",
+        "geodetic survey",
+        "geosurvey",
+        "intersurvey",
+        "language survey",
+        "microsurvey",
+        "minisurvey",
+        "nonsurvey",
+        "Ordnance Survey",
+        "phone survey",
+        "photosurvey",
+        "postsurvey",
+        "presurvey",
+        "serosurvey",
+        "surveylike",
+        "survey meter",
+        "survey mile",
+        "survey monument",
+        "telesurvey",
+        "time-use survey",
+        "trigonometric survey",
+        "US survey acre",
+        "U.S. survey foot",
+        "US survey foot",
+        "missurvey",
+        "resurvey"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/survey#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7f92a4db",
+    "senseId": "kaikki:6429f56f5de947c29b",
+    "definition": "The operation of measuring the contours, dimensions or position of an area of land.",
+    "example": "The survey took two days of measurements before the team drew the boundary plan.",
+    "collocations": [
+      "a land survey",
+      "carry out a survey",
+      "a topographic survey"
+    ],
+    "usage": "Land measurement. This meaning names the work of measuring the area.",
+    "distinctions": [
+      "The measuring operation differs from the measured plan produced from it. Both can be called a survey."
+    ],
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "The survey took two days of measurements before the plan was drawn. Survey names _____.",
+      "options": [
+        "the measuring operation",
+        "the completed plan on paper"
+      ],
+      "answer": "the measuring operation",
+      "explanation": "The sentence describes measurement work that precedes drawing the plan."
+    },
+    "originalSense": {
+      "id": "kaikki:6429f56f5de947c29b",
+      "definition": "The operation of finding the contour, dimensions, position, or other particulars of any part of the Earth's surface.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aerial survey",
+        "Domesday survey",
+        "geodetic survey",
+        "geosurvey",
+        "intersurvey",
+        "language survey",
+        "microsurvey",
+        "minisurvey",
+        "nonsurvey",
+        "Ordnance Survey",
+        "phone survey",
+        "photosurvey",
+        "postsurvey",
+        "presurvey",
+        "serosurvey",
+        "surveylike",
+        "survey meter",
+        "survey mile",
+        "survey monument",
+        "telesurvey",
+        "time-use survey",
+        "trigonometric survey",
+        "US survey acre",
+        "U.S. survey foot",
+        "US survey foot",
+        "missurvey",
+        "resurvey"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/survey#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7f92a4db",
+    "senseId": "kaikki:295aee5c78c7abe688",
+    "definition": "A measured plan and description of an area of land.",
+    "example": "The survey attached to the deed shows the plot's measured boundaries.",
+    "collocations": [
+      "a survey attached to a deed",
+      "a boundary survey",
+      "a survey of the plot"
+    ],
+    "usage": "Land measurement. This use names the resulting plan or document.",
+    "distinctions": [
+      "A survey can be the measuring work or its resulting plan. Attached to the deed identifies the document here."
+    ],
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "The survey attached to the deed shows measured boundaries. Here survey is _____.",
+      "options": [
+        "the measured plan and description",
+        "the time spent measuring outdoors"
+      ],
+      "answer": "the measured plan and description",
+      "explanation": "A document attached to a deed is the resulting plan, not the measuring operation."
+    },
+    "originalSense": {
+      "id": "kaikki:295aee5c78c7abe688",
+      "definition": "A measured plan and description of any portion of country.",
+      "example": "The owners of the adjoining plots had conflicting surveys.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aerial survey",
+        "Domesday survey",
+        "geodetic survey",
+        "geosurvey",
+        "intersurvey",
+        "language survey",
+        "microsurvey",
+        "minisurvey",
+        "nonsurvey",
+        "Ordnance Survey",
+        "phone survey",
+        "photosurvey",
+        "postsurvey",
+        "presurvey",
+        "serosurvey",
+        "surveylike",
+        "survey meter",
+        "survey mile",
+        "survey monument",
+        "telesurvey",
+        "time-use survey",
+        "trigonometric survey",
+        "US survey acre",
+        "U.S. survey foot",
+        "US survey foot",
+        "missurvey",
+        "resurvey"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/survey#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7f92a4db",
+    "senseId": "kaikki:dd4dc6c2d2bb1db148",
+    "definition": "An auction at which a farm is let on a lease lasting for specified lives.",
+    "example": "In this historical farm-letting use, a survey is an auction for a lease for lives, not a sale of the farm outright.",
+    "collocations": [
+      "a survey for a farm lease",
+      "a lease for lives"
+    ],
+    "usage": "Historical. A lease for lives is tied to specified people's lifetimes; the term is not a modern questionnaire.",
+    "distinctions": [
+      "The auction grants a lease of the farm. It does not necessarily transfer ownership of the farm."
+    ],
+    "learningPriority": "historical",
+    "exampleKind": "reading-note",
+    "originalSense": {
+      "id": "kaikki:dd4dc6c2d2bb1db148",
+      "definition": "An auction at which a farm is let for a lease for lives.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "historical",
+      "register": "historical",
+      "wordFamily": [
+        "aerial survey",
+        "Domesday survey",
+        "geodetic survey",
+        "geosurvey",
+        "intersurvey",
+        "language survey",
+        "microsurvey",
+        "minisurvey",
+        "nonsurvey",
+        "Ordnance Survey",
+        "phone survey",
+        "photosurvey",
+        "postsurvey",
+        "presurvey",
+        "serosurvey",
+        "surveylike",
+        "survey meter",
+        "survey mile",
+        "survey monument",
+        "telesurvey",
+        "time-use survey",
+        "trigonometric survey",
+        "US survey acre",
+        "U.S. survey foot",
+        "US survey foot",
+        "missurvey",
+        "resurvey"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/survey#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7f92a4db",
+    "senseId": "kaikki:23f8fed557877ac46d",
+    "definition": "In US customs terminology, a district for collecting customs under a particular officer.",
+    "example": "In the source's US customs use, survey names the collection district under an officer, not a set of questionnaire responses.",
+    "collocations": [
+      "a customs survey",
+      "a customs-collection district"
+    ],
+    "usage": "US customs terminology. This source meaning identifies a district; it does not establish the name or status of any current agency unit.",
+    "distinctions": [
+      "Customs here concerns duties on imported or exported goods. The meaning is geographic or administrative, not public-opinion research."
+    ],
+    "learningPriority": "specialist",
+    "exampleKind": "reading-note",
+    "originalSense": {
+      "id": "kaikki:23f8fed557877ac46d",
+      "definition": "A district for the collection of customs under a particular officer.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "US",
+      "register": "US",
+      "wordFamily": [
+        "aerial survey",
+        "Domesday survey",
+        "geodetic survey",
+        "geosurvey",
+        "intersurvey",
+        "language survey",
+        "microsurvey",
+        "minisurvey",
+        "nonsurvey",
+        "Ordnance Survey",
+        "phone survey",
+        "photosurvey",
+        "postsurvey",
+        "presurvey",
+        "serosurvey",
+        "surveylike",
+        "survey meter",
+        "survey mile",
+        "survey monument",
+        "telesurvey",
+        "time-use survey",
+        "trigonometric survey",
+        "US survey acre",
+        "U.S. survey foot",
+        "US survey foot",
+        "missurvey",
+        "resurvey"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/survey#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7f92a4db",
+    "senseId": "kaikki:0ba546c7eeb26db8e5",
+    "definition": "To look carefully over an area, especially from a high place.",
+    "example": "From the ridge, we paused to survey the valley below.",
+    "collocations": [
+      "survey the scene",
+      "survey the surrounding area",
+      "survey the valley"
+    ],
+    "usage": "The object is the area or scene being viewed.",
+    "distinctions": [
+      "Looking over a valley does not by itself mean measuring its boundaries or asking its residents questions."
+    ],
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "From the ridge, we survey the valley below. Here survey means _____.",
+      "options": [
+        "look carefully over the area",
+        "measure every boundary with instruments"
+      ],
+      "answer": "look carefully over the area",
+      "explanation": "The viewpoint describes attentive looking, without claiming a measurement operation."
+    },
+    "originalSense": {
+      "id": "kaikki:0ba546c7eeb26db8e5",
+      "definition": "To inspect, or take a view of; to view with attention, as from a high place; to overlook",
+      "example": "He stood on a hill, and surveyed the surrounding country.",
+      "pos": "verb",
+      "synonyms": [
+        "overlook",
+        "look over",
+        "luster",
+        "lustrate"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aerial survey",
+        "Domesday survey",
+        "geodetic survey",
+        "geosurvey",
+        "intersurvey",
+        "language survey",
+        "microsurvey",
+        "minisurvey",
+        "nonsurvey",
+        "Ordnance Survey",
+        "phone survey",
+        "photosurvey",
+        "postsurvey",
+        "presurvey",
+        "serosurvey",
+        "surveylike",
+        "survey meter",
+        "survey mile",
+        "survey monument",
+        "telesurvey",
+        "time-use survey",
+        "trigonometric survey",
+        "US survey acre",
+        "U.S. survey foot",
+        "US survey foot",
+        "missurvey",
+        "resurvey",
+        "king of all one surveys",
+        "nonsurveyed",
+        "surveyability"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/survey#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7f92a4db",
+    "senseId": "kaikki:3eb8fd92a39e109a79",
+    "definition": "To examine something closely or critically.",
+    "example": "Before choosing a method, the team will survey the available evidence.",
+    "collocations": [
+      "survey the evidence",
+      "survey the available options",
+      "survey the literature"
+    ],
+    "usage": "Use a direct object for the material examined: survey the evidence.",
+    "distinctions": [
+      "Examining evidence can include reviewing documents; it does not necessarily involve a questionnaire."
+    ],
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The team will survey the available evidence before choosing a method. It will _____.",
+      "options": [
+        "examine the evidence",
+        "ask the evidence to complete a questionnaire"
+      ],
+      "answer": "examine the evidence",
+      "explanation": "The object is material to examine, not people to question."
+    },
+    "originalSense": {
+      "id": "kaikki:3eb8fd92a39e109a79",
+      "definition": "To view with a scrutinizing eye; to examine.",
+      "example": "[…]with ſuch alter'd Looks,[…] / All pale, and ſpeechleſs, he ſurvey'd me round;",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aerial survey",
+        "Domesday survey",
+        "geodetic survey",
+        "geosurvey",
+        "intersurvey",
+        "language survey",
+        "microsurvey",
+        "minisurvey",
+        "nonsurvey",
+        "Ordnance Survey",
+        "phone survey",
+        "photosurvey",
+        "postsurvey",
+        "presurvey",
+        "serosurvey",
+        "surveylike",
+        "survey meter",
+        "survey mile",
+        "survey monument",
+        "telesurvey",
+        "time-use survey",
+        "trigonometric survey",
+        "US survey acre",
+        "U.S. survey foot",
+        "US survey foot",
+        "missurvey",
+        "resurvey",
+        "king of all one surveys",
+        "nonsurveyed",
+        "surveyability"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/survey#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7f92a4db",
+    "senseId": "kaikki:9967622a5317aa76d6",
+    "definition": "To inspect something in order to establish its condition, situation or value.",
+    "example": "A qualified surveyor will survey the house for structural defects.",
+    "collocations": [
+      "survey a building",
+      "survey a house for defects",
+      "survey property"
+    ],
+    "usage": "Property inspection. The object is the property; for can introduce the defects being sought.",
+    "distinctions": [
+      "Inspecting a house for defects differs from surveying the owners about their opinions."
+    ],
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "A surveyor will survey the house for structural defects, examining _____.",
+      "options": [
+        "the house's condition",
+        "only the owners' opinions"
+      ],
+      "answer": "the house's condition",
+      "explanation": "The stated purpose is to inspect the building for defects."
+    },
+    "originalSense": {
+      "id": "kaikki:9967622a5317aa76d6",
+      "definition": "To examine with reference to condition, situation, value, etc.; to examine and ascertain the state of",
+      "example": "It was his job to survey buildings in order to determine their value and risks.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aerial survey",
+        "Domesday survey",
+        "geodetic survey",
+        "geosurvey",
+        "intersurvey",
+        "language survey",
+        "microsurvey",
+        "minisurvey",
+        "nonsurvey",
+        "Ordnance Survey",
+        "phone survey",
+        "photosurvey",
+        "postsurvey",
+        "presurvey",
+        "serosurvey",
+        "surveylike",
+        "survey meter",
+        "survey mile",
+        "survey monument",
+        "telesurvey",
+        "time-use survey",
+        "trigonometric survey",
+        "US survey acre",
+        "U.S. survey foot",
+        "US survey foot",
+        "missurvey",
+        "resurvey",
+        "king of all one surveys",
+        "nonsurveyed",
+        "surveyability"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/survey#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7f92a4db",
+    "senseId": "kaikki:38f0b848fa3a35ade1",
+    "definition": "To measure and map the form, extent or position of land using linear and angular measurements.",
+    "example": "Engineers will survey the site with measuring instruments before drawing the plan.",
+    "collocations": [
+      "survey land",
+      "survey a site",
+      "survey a coastline"
+    ],
+    "usage": "Surveying. The work uses measurements to establish the shape, extent or position of the area.",
+    "distinctions": [
+      "This is measurement work. Merely looking over the site from a hill does not establish those measured dimensions."
+    ],
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "Engineers survey a site using linear and angular measurements. They _____.",
+      "options": [
+        "measure and map the site",
+        "only glance across the site"
+      ],
+      "answer": "measure and map the site",
+      "explanation": "The instruments and measurements identify the land-surveying use."
+    },
+    "originalSense": {
+      "id": "kaikki:38f0b848fa3a35ade1",
+      "definition": "To determine the form, extent, position, etc., of, as a tract of land, a coast, harbor, or the like, by means of linear and angular measurements, and the application of the principles of geometry and trigonometry",
+      "example": "to survey land or a coast",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aerial survey",
+        "Domesday survey",
+        "geodetic survey",
+        "geosurvey",
+        "intersurvey",
+        "language survey",
+        "microsurvey",
+        "minisurvey",
+        "nonsurvey",
+        "Ordnance Survey",
+        "phone survey",
+        "photosurvey",
+        "postsurvey",
+        "presurvey",
+        "serosurvey",
+        "surveylike",
+        "survey meter",
+        "survey mile",
+        "survey monument",
+        "telesurvey",
+        "time-use survey",
+        "trigonometric survey",
+        "US survey acre",
+        "U.S. survey foot",
+        "US survey foot",
+        "missurvey",
+        "resurvey",
+        "king of all one surveys",
+        "nonsurveyed",
+        "surveyability"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/survey#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7f92a4db",
+    "senseId": "kaikki:10ca01a3d7b23d1ab4",
+    "definition": "To examine a manor's boundaries and rights, its tenants' tenure, and its rents and value.",
+    "example": "In the manorial use, to survey an estate includes examining its boundaries, estate rights, tenancies, rents and value.",
+    "collocations": [
+      "survey a manor",
+      "survey tenants' leases",
+      "manorial rights and rents"
+    ],
+    "usage": "Manorial administration and source reading. Royalties in the imported gloss refers to estate rights, not authors' publishing payments.",
+    "distinctions": [
+      "This is a detailed examination of an estate and its tenures. The cited old passage does not by itself establish that every use of the verb is obsolete."
+    ],
+    "learningPriority": "specialist",
+    "exampleKind": "reading-note",
+    "originalSense": {
+      "id": "kaikki:10ca01a3d7b23d1ab4",
+      "definition": "To examine and ascertain, as the boundaries and royalties of a manor, the tenure of the tenants, and the rent and value of the same.",
+      "example": "all the Tenants Leases and Copies are surveyed",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aerial survey",
+        "Domesday survey",
+        "geodetic survey",
+        "geosurvey",
+        "intersurvey",
+        "language survey",
+        "microsurvey",
+        "minisurvey",
+        "nonsurvey",
+        "Ordnance Survey",
+        "phone survey",
+        "photosurvey",
+        "postsurvey",
+        "presurvey",
+        "serosurvey",
+        "surveylike",
+        "survey meter",
+        "survey mile",
+        "survey monument",
+        "telesurvey",
+        "time-use survey",
+        "trigonometric survey",
+        "US survey acre",
+        "U.S. survey foot",
+        "US survey foot",
+        "missurvey",
+        "resurvey",
+        "king of all one surveys",
+        "nonsurveyed",
+        "surveyability"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/survey#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]
