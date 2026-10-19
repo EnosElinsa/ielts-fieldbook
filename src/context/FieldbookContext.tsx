@@ -110,6 +110,8 @@ const FieldbookContext = createContext<FieldbookContextValue | null>(null);
 function useFieldbookValue() {
   const navigate = useNavigate();
   const accountLocation = useLocation();
+  const latestAccountLocation = useRef(accountLocation);
+  latestAccountLocation.current = accountLocation;
   const accountRoute = accountLocation.pathname;
   const [state, setState] = useState(() => loadState());
   const [toastMessage, setToastMessage] = useState('');
@@ -1307,7 +1309,14 @@ function useFieldbookValue() {
     const sourceHash = taskSource ? `#task-${planId}` : accountLocation.hash;
     const sourceUrl = safeVocabularyReturn(accountLocation.pathname + accountLocation.search + sourceHash, '/vocabulary');
     const returnState = vocabularyForwardState({...accountLocation, hash:sourceHash});
+    const sourceHistoryIndex = window.history.state?.idx;
+    const sourceHistoryKey = window.history.state?.key;
     const openVocabularyTask = path => {
+      // A delayed start may finish after the learner leaves. Keep its saved progress,
+      // but only navigate while the original router and browser entry are still owned.
+      if(latestAccountLocation.current.key!==accountLocation.key
+        || window.history.state?.idx!==sourceHistoryIndex
+        || window.history.state?.key!==sourceHistoryKey)return;
       // Back pops this owned source entry. Replace its hash before pushing practice,
       // so successful completion can still render the exact historical task.
       if(taskSource && sourceHash!==accountLocation.hash)navigate(sourceUrl,{replace:true,state:accountLocation.state});

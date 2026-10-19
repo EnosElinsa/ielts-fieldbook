@@ -1385,3 +1385,31 @@ test.each(['/today?view=overdue','/planning?view=overdue#planning-backlog'])('ac
   fireEvent.click(screen.getByRole('button',{name:'Browser forward'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent(destination));
  }finally{view.unmount();scroll.mockRestore();window.history.replaceState({},'','/');}
 });
+
+function DelayedStartNavigation(){const navigate=useNavigate();return <><ReturnHistoryControls/><button onClick={()=>navigate('/planning?view=intervening',{state:{keep:'intervening'}})}>Open intervening Planning</button></>;}
+test.each(['catalog','save'])('a delayed %s task start preserves an intervening browser entry and its history',async delay=>{
+ const scroll=vi.spyOn(window,'scrollTo').mockImplementation(()=>{});sessionStorage.clear();window.history.replaceState({idx:0},'','/sentinel');window.history.pushState({idx:1},'','/today?view=source');
+ mocks.initial.settings.days=[];
+ const entry=addVocabularyItem(mocks.initial,{id:'delayed-word',term:'persistent',meaning:'Continuing over time.'}).item;
+ const target={type:'vocabulary',mode:'due-review',binding:'frozen',assessmentMode:'dictation',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]};
+ mocks.initial.plans=[{id:'delayed-task',dateKey:'2099-01-01',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:120,target}];
+ const view=render(<BrowserRouter><FieldbookProvider><Probe/><DelayedStartNavigation/></FieldbookProvider></BrowserRouter>);
+ try {
+  await waitFor(()=>expect(fieldbook.booted).toBe(true));await act(async()=>{fieldbook.setWritingDraft('q1','Keep this live draft');});
+  const blocked=defer();mocks.teachingRead.mockClear();mocks.saveState.mockClear();
+  if(delay==='catalog')mocks.teachingRead.mockReturnValueOnce(blocked.promise);else mocks.saveState.mockReturnValueOnce(blocked.promise);
+  let starting;await act(async()=>{starting=fieldbook.startPlan('delayed-task');});
+  await waitFor(()=>expect(delay==='catalog'?mocks.teachingRead:mocks.saveState).toHaveBeenCalled());
+  fireEvent.click(screen.getByRole('button',{name:'Open intervening Planning'}));
+  expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/planning?view=intervening');
+  const intervening=structuredClone(window.history.state);
+  await act(async()=>{blocked.resolve(delay==='catalog'?{books:[],units:[],entries:[],memberships:[]}:true);await starting;});
+  expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/planning?view=intervening');expect(window.history.state).toEqual(intervening);
+  expect(fieldbook.state.plans.find(plan=>plan.id==='delayed-task')).toMatchObject({status:'in_progress',target});
+  expect(fieldbook.state.drafts.q1.text).toBe('Keep this live draft');expect(fieldbook.state.vocabularySessions).toHaveLength(0);
+  fireEvent.click(screen.getByRole('button',{name:'Browser back'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/today?view=source'));expect(window.location.hash).toBe('');
+  fireEvent.click(screen.getByRole('button',{name:'Browser back'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/sentinel'));
+  fireEvent.click(screen.getByRole('button',{name:'Browser forward'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/today?view=source'));
+  fireEvent.click(screen.getByRole('button',{name:'Browser forward'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/planning?view=intervening'));expect(window.history.state).toEqual(intervening);
+ }finally{view.unmount();scroll.mockRestore();window.history.replaceState({},'','/');}
+});
