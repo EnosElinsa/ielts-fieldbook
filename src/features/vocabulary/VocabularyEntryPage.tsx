@@ -29,10 +29,9 @@ import { resolveVocabularyLearningContext } from "../../domain/vocabulary/contex
 import {
   aggregateMediaCredits,
   getVocabularyIllustration,
-  getVocabularyVisualConcept,
-  getVocabularySenseDiagram,
   type VocabularyRecording,
 } from "../../domain/vocabulary/media";
+import { getVocabularyVisualPresentation } from '../../domain/vocabulary/visualPresentation';
 import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
 import { isRegionalSpellingDifference } from "../../domain/vocabulary/spelling";
 import { accountId } from "../../storage/remote";
@@ -218,7 +217,8 @@ export function VocabularyEntryPage() {
     };
   },[nextPractice?.nextChangeAt,practiceClock,routeKey]);
   const image = resolved ? getVocabularyIllustration(resolved) : undefined;
-  const hasVisual = Boolean(image || resolved && (getVocabularyVisualConcept(resolved) || getVocabularySenseDiagram(resolved)));
+  const visualPresentation = resolved ? getVocabularyVisualPresentation(resolved) : 'none';
+  const hasVisual = visualPresentation === 'inline';
   const saved = state.vocabulary?.some((item) => item.id === entry?.id);
   const timeline = entry ? vocabularyLearningTimeline(state, entry.id) : [];
   const locations = [
@@ -583,6 +583,7 @@ export function VocabularyEntryPage() {
               {primary ? (
                 <>
                   {renderSense(primary, true)}
+                  {visualPresentation === 'supplementary' && resolved ? <VocabularyLearningVisual resolved={resolved} /> : null}
                   <div className="vocabulary-meaning-meta">
                     <details className="vocabulary-context-notice">
                       <summary>Meaning source</summary>
