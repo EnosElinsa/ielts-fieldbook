@@ -72,7 +72,10 @@ export function studyTargetSummary(plan: any): string {
     return `${displayName(plan.targetLabel || `Question ${target.questionId || ''}`)} · ${count} ${count === 1 ? 'response' : 'responses'}`;
   }
   if (target.type==='section') return `${plan.targetLabel || target.sectionId || ''} · ${target.questionIds?.length || plan.quantity || 0} questions`;
-  if (target.type==='vocabulary') return `${target.mode==='learning-batch'?`Batch ${(target.batchIndex||0)+1}`:'Due review'} · ${target.cards.length || target.batchSize || plan.quantity || 0} words`;
+  if (target.type==='vocabulary') {
+    const count=target.cards.length || target.batchSize || plan.quantity || 0;
+    return `${target.mode==='learning-batch'?`Batch ${(target.batchIndex||0)+1}`:'Review'} · ${count} ${count===1?'prompt':'prompts'}`;
+  }
   if (target.type==='intensive') return '1 listening sentence';
   if (target.type==='exam-review') return 'Review the selected attempt';
   if (target.type==='error-review') return `${target.errorIds.length} ${target.errorIds.length===1?'mistake':'mistakes'}`;

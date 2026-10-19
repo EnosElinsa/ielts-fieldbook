@@ -59,7 +59,7 @@ import type { VocabularyEntry, VocabularySkill, VocabularySource } from '../doma
 import { vocabularySourceKey } from '../domain/vocabulary/sources';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
-import { ensurePlans, ensureUnifiedPlans, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan } from '../lib/planTemplates';
+import { ensurePlans, ensureUnifiedPlans, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan, applyBacklogPreview } from '../lib/planTemplates';
 import { bindSpeakingPlan, isProtectedPlan } from '../domain/plans';
 import { speakingPrompts, speakingResponseDraft, updateSpeakingResponse } from '../domain/speaking';
 import { useConfirmationDialog } from '../components/useConfirmationDialog';
@@ -1299,6 +1299,8 @@ function useFieldbookValue() {
     if(['replace','add','duplicate','resize'].includes(action.type))await bindCurrentPlanTargets(draft);
   },options),[mutatePlans,loadVocabularyCatalog,ensureQuestionBank]);
 
+  const saveBacklogPreview = useCallback((preview,options?)=>mutatePlans(draft=>applyBacklogPreview(draft,preview),options),[mutatePlans]);
+
   const startPlan = useCallback(async(planId:string, options={})=>{
     const owner=accountId();const epoch=loadEpoch.current;
     const sourceHash = accountLocation.hash || (['/planning','/today','/'].includes(accountLocation.pathname) ? `#task-${planId}` : '');
@@ -1802,6 +1804,7 @@ function useFieldbookValue() {
       setSpeakingDraft,
       startPlan,
       mutatePlans,
+      saveBacklogPreview,
       changePlan,
       ensureUnifiedPlans: refreshUnifiedPlans,
       startSpeakingPractice,
@@ -1924,6 +1927,7 @@ function useFieldbookValue() {
       setWritingDraft,
       startPlan,
       mutatePlans,
+      saveBacklogPreview,
       changePlan,
       refreshUnifiedPlans,
       startSpeakingPractice,

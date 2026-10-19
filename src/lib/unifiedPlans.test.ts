@@ -36,16 +36,17 @@ test('vocabulary uses at most one third and ten minutes, with short budgets rese
   }
 });
 
-test('edited, running and completed tasks survive budget regeneration; past unfinished tasks stay overdue', () => {
+test('edited past work carries over intact while future running and completed tasks survive regeneration', () => {
   const state = setup(); ensureUnifiedPlans(state, undefined, now);
   const manual = state.plans[0]; mutateStudyPlan(state, manual.id, {type:'reschedule', dateKey:'2026-10-12'});
   const running = state.plans[1]; startPlan(state, running.id, now.toISOString());
   const completed = state.plans[2]; completed.status = 'completed';
   const retained = structuredClone([manual,running,completed]);
   state.settings.dailyMinutes = 60; ensureUnifiedPlans(state, undefined, now);
-  expect(retained.map(row=>state.plans.find(plan=>plan.id===row.id))).toEqual(retained);
+  expect(retained.slice(1).map(row=>state.plans.find(plan=>plan.id===row.id))).toEqual(retained.slice(1));
+  expect(manual.target).toEqual(retained[0].target);
   expect(nextUnifiedPlan(state.plans, now)?.id).toBe(running.id);
-  expect(state.plans.find(row=>row.id===manual.id)?.dateKey).toBe('2026-10-12');
+  expect(state.plans.find(row=>row.id===manual.id)?.dateKey).toBe('2026-10-13');
 });
 
 test('skip and restore are protected from generation', () => {
@@ -70,7 +71,7 @@ test('new due evidence replaces the prebuilt next-day task without exceeding its
   expect(planned.kind).toBe('speaking-p1');
   state.sessions.push({id:'writing-source',skill:'writing'});
   state.errors.push({id:'due-writing',sourceSessionId:'writing-source',text:'Correct the comparison.',resolved:false,nextReviewAt:'2026-10-14T09:00:00'});
-  const nextDay=new Date('2026-10-14T12:00:00');
+  const nextDay=new Date('2026-10-14T12:00:00');state.plans.filter(plan=>plan.dateKey==='2026-10-13').forEach(plan=>{plan.status='completed';});
   ensureUnifiedPlans(state,undefined,nextDay);
   const review=state.plans.find(plan=>plan.id===planned.id);
   expect(review).toMatchObject({dateKey:'2026-10-14',skill:'writing',kind:'review',estimatedMinutes:20,rotationIndex:1,target:{type:'error-review',errorIds:['due-writing']}});
@@ -91,7 +92,7 @@ test('due review uses the next untouched slot while manual, started, completed a
   const protectedPlans=structuredClone(state.plans.filter(plan=>plan.dateKey>='2026-10-14'&&plan.dateKey<='2026-10-17'));
   state.sessions.push({id:'source',skill:'writing'});
   state.errors.push({id:'due',sourceSessionId:'source',text:'Use the correction.',resolved:false,nextReviewAt:'2026-10-14T09:00:00'});
-  const nextDay=new Date('2026-10-14T12:00:00');ensureUnifiedPlans(state,undefined,nextDay);
+  const nextDay=new Date('2026-10-14T12:00:00');state.plans.filter(plan=>plan.dateKey==='2026-10-13').forEach(plan=>{plan.status='completed';});ensureUnifiedPlans(state,undefined,nextDay);
   expect(protectedPlans.map(plan=>state.plans.find(row=>row.id===plan.id))).toEqual(protectedPlans);
   expect(state.plans.find(plan=>plan.dateKey==='2026-10-18').target).toEqual({type:'error-review',errorIds:['due']});
   expect(nextUnifiedPlan(state.plans,nextDay)?.id).toBe(started.id);
@@ -102,7 +103,7 @@ test('new weakness evidence refreshes untouched writing targets and unchanged ev
   const first=state.plans.find(plan=>plan.dateKey==='2026-10-14');
   first.questionId='bound-before';first.target.questionId='bound-before';
   state.assessments.push({id:'weak',skill:'writing',date:'2026-10-14T09:00:00',practiceMode:'timed',criteria:[{name:'Task Response',score:'5'},{name:'Coherence and Cohesion',score:'7'}]});
-  const nextDay=new Date('2026-10-14T12:00:00');ensureUnifiedPlans(state,undefined,nextDay);
+  const nextDay=new Date('2026-10-14T12:00:00');state.plans.filter(plan=>plan.dateKey==='2026-10-13').forEach(plan=>{plan.status='completed';});ensureUnifiedPlans(state,undefined,nextDay);
   expect(first).toMatchObject({kind:'2',deskMode:'outline',driver:'criterion:TR',target:{type:'question',skill:'writing',mode:'outline'}});
   first.questionId='bound-after';first.target.questionId='bound-after';
   const retained=structuredClone(state.plans);let saved=0;ensureUnifiedPlans(state,()=>saved++,nextDay);
@@ -156,21 +157,21 @@ test('due review excludes unlearned words and keeps a supported preferred assess
   recordVocabularyReview(state,{entryId:learned.id,senseId:learned.senses[0].id,mode:'dictation',response:'wrong',result:'failure',occurredAt:'2020-01-01T00:00:00Z'});
   ensureUnifiedPlans(state,undefined,now);
   const plan=state.plans.find(row=>row.kind==='vocabulary');expect(plan.target.assessmentMode).toBe('dictation');
-  expect(plan.target.cards.some(card=>card.entryId===newWord.id)).toBe(false);expect(plan.target.cards[0].entryId).toBe(learned.id);
+  expect(plan.target).toMatchObject({binding:'dynamic',cards:[],batchSize:1});expect(plan.estimatedMinutes).toBe(1);
 });
 
 test('newly due vocabulary replaces a prebuilt learning batch within its reserved budget',()=>{
   const state=setup();state.wordbookEnrollments=[{id:'e',bookId:'missing-book',updatedAt:''}];state.settings.vocabulary.mode='definition';
   ensureUnifiedPlans(state,undefined,now);
-  const nextDay=new Date('2026-10-14T12:00:00');
+  const nextDay=new Date('2026-10-14T12:00:00');state.plans.filter(plan=>plan.dateKey==='2026-10-13').forEach(plan=>{plan.status='completed';});
   const batch=state.plans.find(plan=>plan.dateKey==='2026-10-14'&&plan.kind==='vocabulary');
   expect(batch.target.mode).toBe('learning-batch');
   const word=addVocabularyItem(state,{term:'recalledword',meaning:'A learned word.'}).item;
   recordVocabularyReview(state,{entryId:word.id,senseId:word.senses[0].id,mode:'definition',response:'wrong',result:'failure',occurredAt:'2020-01-01T00:00:00Z'});
   ensureUnifiedPlans(state,undefined,nextDay);
-  expect(batch).toMatchObject({estimatedMinutes:10,target:{type:'vocabulary',mode:'due-review',assessmentMode:'definition',cards:[{entryId:word.id,senseId:word.senses[0].id}]}});
+  expect(batch).toMatchObject({estimatedMinutes:1,target:{type:'vocabulary',mode:'due-review',assessmentMode:'definition',binding:'dynamic',cards:[],batchSize:1}});
   expect(state.plans.filter(plan=>plan.dateKey==='2026-10-14').reduce((total,plan)=>total+plan.estimatedMinutes,0)).toBe(30);
-  expect(state.plans.filter(plan=>plan.target?.mode==='due-review')).toHaveLength(1);
+  expect(state.plans.filter(plan=>plan.target?.mode==='due-review')).toHaveLength(2);
   const retained=structuredClone(state.plans);let saved=0;ensureUnifiedPlans(state,()=>saved++,nextDay);
   expect(state.plans).toEqual(retained);expect(saved).toBe(0);
 });
@@ -181,7 +182,7 @@ test('vocabulary due priority preserves a started batch and uses the next automa
   const retained=structuredClone(batch);
   const word=addVocabularyItem(state,{term:'dueword',meaning:'Due for recall.'}).item;
   recordVocabularyReview(state,{entryId:word.id,senseId:word.senses[0].id,mode:'dictation',response:'wrong',result:'failure',occurredAt:'2020-01-01T00:00:00Z'});
-  ensureUnifiedPlans(state,undefined,new Date('2026-10-14T12:00:00'));
+  state.plans.filter(plan=>plan.dateKey==='2026-10-13').forEach(plan=>{plan.status='completed';});ensureUnifiedPlans(state,undefined,new Date('2026-10-14T12:00:00'));
   expect(state.plans.find(plan=>plan.id===batch.id)).toEqual(retained);
   expect(state.plans.find(plan=>plan.dateKey==='2026-10-15'&&plan.kind==='vocabulary').target.mode).toBe('due-review');
 });

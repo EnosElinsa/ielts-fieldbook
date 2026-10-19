@@ -67,3 +67,8 @@ test('replacing a bound speaking mock removes all frozen scope and progress befo
   expect(plan.kind).toBe('speaking-p2');
   expect(plan.target).toMatchObject({ questionId: 'long', part: '2', prompts: [{ part: '2', promptText: 'Describe a friend' }] });
 });
+
+test('review summary names actual prompts with singular and plural counts',()=>{
+ expect(studyTargetSummary({target:{type:'vocabulary',mode:'due-review',binding:'dynamic',cards:[],batchSize:1}})).toBe('Review · 1 prompt');
+ expect(studyTargetSummary({target:{type:'vocabulary',mode:'due-review',binding:'dynamic',cards:[],batchSize:2}})).toBe('Review · 2 prompts');
+});

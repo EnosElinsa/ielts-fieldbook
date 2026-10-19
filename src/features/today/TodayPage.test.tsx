@@ -6,11 +6,12 @@ import '@testing-library/jest-dom/vitest';
 import { MemoryRouter } from 'react-router-dom';
 import { emptyState, dateKey } from '../../domain';
 import { TodayPage } from './TodayPage';
+import { rememberVocabularyPosition } from '../vocabulary/vocabularyNavigation';
 
 const mocks=vi.hoisted(()=>({state:null,start:vi.fn(),generate:vi.fn(),skill:'writing'}));
 vi.mock('../../context/FieldbookContext',()=>({useFieldbook:()=>({state:mocks.state,activeSkill:mocks.skill,ensureUnifiedPlans:mocks.generate,startPlan:mocks.start})}));
 beforeEach(()=>{vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(2026,9,17,12));mocks.state=emptyState();mocks.start.mockReset().mockResolvedValue(true);mocks.generate.mockReset().mockResolvedValue(true);mocks.skill='writing';});
-afterEach(()=>{cleanup();vi.useRealTimers();});
+afterEach(()=>{cleanup();vi.restoreAllMocks();vi.useRealTimers();});
 const plan=(id,skill,status='pending',day=dateKey(new Date()))=>({id,skill,kind:`${skill}-practice`,status,dateKey:day,title:`${skill} task`,description:'Selected practice',estimatedMinutes:20,completion:{description:'Submit the selected section.'}});
 const renderPage=()=>render(<MemoryRouter><TodayPage/></MemoryRouter>);
 
@@ -23,7 +24,7 @@ test('one next task is unified and does not depend on the active skill',async()=
 test('resumes existing progress before overdue or new tasks',async()=>{
   mocks.state.plans=[plan('overdue','reading','pending','2020-01-01'),plan('resume','speaking','in_progress')];renderPage();
   await userEvent.click(screen.getByRole('button',{name:'Resume'}));expect(mocks.start).toHaveBeenCalledWith('resume',{force:false,onError:expect.any(Function)});
-  expect(screen.getByRole('link',{name:'1 overdue task'})).toHaveAttribute('href','/planning');
+  expect(screen.getByRole('link',{name:'1 overdue task'})).toHaveAttribute('href','/planning#planning-backlog');
 });
 test('blocked source content remains retryable',async()=>{
   mocks.state.plans=[plan('reading','reading')];mocks.start.mockRejectedValueOnce(new Error('The selected section is unavailable.'));
@@ -50,6 +51,7 @@ test('an empty day waits for planning and never claims unearned completion',asyn
   renderPage();
   expect(screen.getByRole('status')).toHaveTextContent('Preparing your plan…');
   expect(screen.queryByRole('heading',{name:'Today is complete'})).not.toBeInTheDocument();
+  await waitFor(()=>expect(mocks.generate).toHaveBeenCalled());
   finish(true);
   expect(await screen.findByRole('heading',{name:'No tasks planned yet'})).toBeInTheDocument();
 });
@@ -102,4 +104,16 @@ test('Today completed tasks keep their return anchor after the next task changes
   mocks.state.plans=[plan('review-done','vocabulary','completed'),plan('next','reading')];const view=renderPage();
   await screen.findByRole('button',{name:'Start'});
   expect(view.container.querySelector('#task-review-done')).toHaveAttribute('tabindex','-1');
+});
+
+test('completed overdue return targets retain their exact Today anchor without an overdue grid',async()=>{
+ mocks.state.plans=[plan('old-completed','vocabulary','completed','2020-01-01'),...Array.from({length:40},(_,index)=>plan(`old-${index}`,'reading','pending','2020-01-01'))];
+ vi.spyOn(window,'scrollTo').mockImplementation(()=>{});
+ rememberVocabularyPosition('/today#task-old-completed','task-old-completed');
+ const view=render(<MemoryRouter initialEntries={[{pathname:'/today',hash:'#task-old-completed',state:{vocabularyRestore:true}}]}><TodayPage/></MemoryRouter>);
+ await waitFor(()=>expect(mocks.generate).toHaveBeenCalled());
+ expect(view.container.querySelector('#task-old-completed')).toHaveAttribute('tabindex','-1');
+ await waitFor(()=>expect(view.container.querySelector('#task-old-completed')).toHaveFocus());
+ expect(view.container.querySelectorAll('.study-previous .study-task').length).toBeLessThanOrEqual(4);
+ expect(screen.getByRole('link',{name:/40 overdue tasks/})).toHaveAttribute('href','/planning#planning-backlog');
 });

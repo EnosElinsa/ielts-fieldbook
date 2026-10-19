@@ -6,6 +6,7 @@ import { emptyState, normalizeDraft } from '../domain';
 import { addVocabularyItem, getVocabularyReviewQueue, recordVocabularyReview } from '../domain/vocabulary';
 import { readFileSync } from 'node:fs';
 import { readDraftRecovery } from '../storage/recovery';
+import { previewBacklogChange } from '../lib/planTemplates';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 import { speakingPrompts } from '../domain/speaking';
@@ -1342,4 +1343,16 @@ test('concurrent dynamic review starts reserve different pairs at durable save t
   expect(targets).toHaveLength(2);
   expect(targets.every(target=>target.binding==='frozen' && target.cards.length===1)).toBe(true);
   expect(targets[0].cards).not.toEqual(targets[1].cards);
+});
+
+test('bulk backlog saves are atomic, preserve drafts on failure and reject stale previews',async()=>{
+ await mount('/planning');
+ await act(async()=>{await fieldbook.mutatePlans(draft=>{draft.plans=[{id:'a',dateKey:'2020-01-01',status:'pending',estimatedMinutes:10},{id:'b',dateKey:'2020-01-02',status:'in_progress',startedAt:'2020-01-02',estimatedMinutes:10}];});fieldbook.setWritingDraft('q1','Keep unsaved writing');});
+ const preview=previewBacklogChange(fieldbook.state,{type:'skip',ids:['a','b'],includeStarted:true});
+ mocks.saveState.mockClear();mocks.saveState.mockResolvedValueOnce(false);
+ await act(async()=>{expect(await fieldbook.saveBacklogPreview(preview)).toBe(false);});
+ expect(fieldbook.state.plans.map(plan=>plan.status)).toEqual(['pending','in_progress']);expect(fieldbook.draftSaveStatus('q1')).toBe('unsaved');
+ await act(async()=>{expect(await fieldbook.saveBacklogPreview(preview)).toBe(true);});
+ expect(fieldbook.state.plans.map(plan=>plan.status)).toEqual(['skipped','skipped']);expect(mocks.saveState).toHaveBeenCalledTimes(2);
+ await act(async()=>{await expect(fieldbook.saveBacklogPreview(preview)).rejects.toThrow(/schedule changed/i);});expect(mocks.saveState).toHaveBeenCalledTimes(2);
 });

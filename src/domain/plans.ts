@@ -45,7 +45,8 @@ export type PlanTarget =
 export type StudyPlan = {
   id: string; dateKey: string; skill: StudySkill; kind: string; title: string; description: string;
   estimatedMinutes: number; origin: 'automatic' | 'manual'; status: 'pending' | 'in_progress' | 'completed' | 'skipped';
-  skipReason?: 'no-longer-due';
+  skipReason?: 'no-longer-due' | 'merged-review' | 'bulk-skip' | 'user-skipped';
+  originalDateKey?: string; rescheduledAt?: string; skippedAt?: string;
   target: PlanTarget; completion: { type: 'attempt' | 'review' | 'assessment'; description: string };
   schemaVersion: 2; generationKey: string; startedAt: string | null; completedAt: string | null;
   [key: string]: unknown;
