@@ -28,7 +28,7 @@ Words, phrases and sentence patterns share a single vocabulary model across word
 - English definition recall, contextual cloze, synonym and confusing-word practice.
 - Audio loops and sentence production. Playback does not count as a successful review; unassessed production remains pending.
 - FSRS review scheduling with separate meaning, listening, spelling and usage evidence.
-- Automatic vocabulary mastery from verified, spaced evidence per meaning, with persistent manual overrides and a reset to automatic; labels remain independent of review scheduling.
+- Foundation Familiar/Mastered from three/five verified spaced successes in meaning, listening and spelling per meaning, with persistent manual overrides. Usage stays separate and mastery keeps its review schedule.
 - Permanent answer history and current wrong-word tracking. Recovery requires three successful reviews in the failed mode, including a delay of at least 24 hours.
 - Wordbook chapter progress independent of vocabulary mastery.
 - CSV import previews, repeated-import detection, and atomic saves.
@@ -37,6 +37,7 @@ Words, phrases and sentence patterns share a single vocabulary model across word
 The public catalogue covers six source wordbooks: IELTS Vocabulary (Liu Hongbo), IELTS Reading 538 Key Words, IELTS Listening Corpus (Core Chapters), IELTS Listening 179 Key Words, and Cambridge IELTS 20/21 Listening. Source membership counts, dictionary coverage and unavailable content are shown separately. Personal learning records are never included in the shared catalogue.
 
 See [vocabulary content and provenance](docs/vocabulary-content.md) for source data, licensing and import formats.
+See [learning and review rules](docs/vocabulary-learning-rules.md) for Studied, foundation mastery, planned assessments and missed-day recovery.
 
 ## Writing And Speaking
 
