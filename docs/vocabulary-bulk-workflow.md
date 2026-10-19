@@ -28,6 +28,23 @@ Use `--scope reference` for meanings not currently selected for default/group le
 
 Each exported item has `status: candidate-required`. It is an authoring task, not generated learning content or an approved review. Package size is a processing limit, not a promise that every item can be safely completed at that scale. Semantic uncertainty, unresolved technical terminology and source-specific contexts require focused follow-up. Existing reviewed content is useful input, not automatic permission to replace it.
 
+## Prepare source-backed drafts together
+
+`npm run vocabulary:prepare` joins an exported package to saved MediaWiki query/revisions responses. The source file is either one response or an array of responses from the public Wiktionary API with `prop=revisions`, `rvprop=ids|timestamp|content` and `rvslots=main`. Keep the page's case-sensitive title, revision ID and original wikitext. The preparer is offline; obtaining those public responses is a separate collection step.
+
+```powershell
+npm run vocabulary:quality -- --export --scope learning --issue truncated-example --limit 1000 --output local/vocabulary-work/truncated-examples.json
+npm run vocabulary:prepare -- --work local/vocabulary-work/truncated-examples.json --sources local/vocabulary-work/source-responses.json --output local/vocabulary-work/prepared.json
+```
+
+The command checks the current runtime quality snapshot before reading the package, then rejects stale work identities or source/display hashes. Regenerate the full report with `npm run vocabulary:quality` if its snapshot is stale. The optional `--report` selects a full report path; its snapshot must still match the freshly checked current report. Output must stay inside ignored `local/`.
+
+An exact original gloss/POS and case-sensitive page match produces a revision-linked draft. Only direct `ux`, `uxi` or `usex` English usage examples attached to that definition become suggestions. Nested child/adjacent meanings, quotations, unsupported templates, sentence fragments, archaic wording and truncation markers cannot seed an example automatically. Existing collocations and comparisons are retained; missing fields stay explicit. Duplicate-gloss ambiguity, changed teaching definitions and unsupported source formatting become manual-source-match items with source context. Even exact matching is evidence for review, not linguistic approval.
+
+Edit the nested `draft` objects into complete candidates and export those objects as the array/JSONL described below. Inspect `missingFields`, source context and all example suggestions first. The preparation wrapper is evidence, not a candidate submission. The command never writes the source dictionaries, teaching supplements or editorial ledger. All prepared items still require semantic review and zero are marked ready for publication.
+
+The first real run prepared 199 current truncation signals in one operation: 131 exact source matches, 68 manual matches and four records with direct source-example suggestions. The [subsequent authored review](vocabulary-truncated-learning-review.md) improves 98 exact meanings across words; it does not pretend the other cases were repaired automatically.
+
 ## Validate candidates together
 
 Supply a JSON array or `.jsonl`/`.ndjson` of candidate objects containing:
@@ -51,4 +68,4 @@ Integrate reviewed candidates into the existing attributed teaching/supplement s
 
 Run targeted content checks during authoring, then accumulate an internally consistent content release before the full required test/build/identity/resource and browser checks. Deploy using the existing Cloudflare Git integration. Do not claim a candidate package, a structural check or this tooling release increased editorial coverage. Track both current learning-content coverage and the complete outstanding dictionary ledger.
 
-`npm run vocabulary:quality -- --check` recomputes the full report and fails if the committed compact report is stale. CI runs this alongside the existing dictionary audit. No model API, API key, paid service or new dependency is required by these commands; automated candidate generation is not implemented by this delivery.
+`npm run vocabulary:quality -- --check` recomputes the full report and fails if the committed compact report is stale. CI runs this alongside the existing dictionary audit. No model API, API key, paid service or new dependency is required by these commands. Source-backed draft assembly is implemented; model-generated teaching content and semantic review are not automated.
