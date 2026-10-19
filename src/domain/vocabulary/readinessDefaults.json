@@ -13619,30 +13619,6 @@
   },
   {
     "entryId": "ve-82752328",
-    "sense": {
-      "id": "kaikki:3542aeddc929695a96",
-      "definition": "To find out something by investigation, calculation or analysis.",
-      "example": "The experiment will determine whether the material is safe.",
-      "pos": "verb",
-      "synonyms": [],
-      "antonyms": [],
-      "collocations": [
-        "determine the cause",
-        "determine whether"
-      ],
-      "usage": "",
-      "register": "",
-      "wordFamily": [],
-      "source": "English Wiktionary via Kaikki.org",
-      "attribution": "English Wiktionary contributors",
-      "sourceUrl": "https://en.wiktionary.org/wiki/determine#English",
-      "license": "CC-BY-SA-4.0",
-      "editorial": {
-        "source": "Fieldbook core content review",
-        "license": "CC-BY-4.0",
-        "attribution": "Fieldbook editorial contributors"
-      }
-    },
     "originalSense": {
       "id": "kaikki:3542aeddc929695a96",
       "definition": "To ascertain definitely; to figure out, find out, or conclude by analyzing, calculating, or investigating.",
@@ -13682,6 +13658,42 @@
       "attribution": "English Wiktionary contributors",
       "sourceUrl": "https://en.wiktionary.org/wiki/determine#English",
       "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:3542aeddc929695a96",
+      "definition": "To find out or establish an answer by analysis, calculation or investigation.",
+      "example": "The researchers will determine whether the sample contains lead.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "determine whether",
+        "determine the cause"
+      ],
+      "usage": "Transitive. Determine a value or cause; determine whether, how or why.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/determine#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Determine whether introduces an investigation into a yes-or-no question; it does not announce that lead has already been found."
+      ],
+      "distinctionTask": {
+        "prompt": "The researchers will _____ whether the sample contains lead. What does will determine whether the sample contains lead establish now?",
+        "options": [
+          "An investigation is planned; its answer is still open.",
+          "The sample is already confirmed to contain lead."
+        ],
+        "answer": "An investigation is planned; its answer is still open.",
+        "explanation": "Whether presents a question and will describes the planned investigation, without supplying its result."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
     }
   },
   {
@@ -26040,6 +26052,289 @@
         ],
         "answer": "a judgment reached from information",
         "explanation": "The verb identifies the act of reaching a judgment; its accuracy still depends on the reasoning and information."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-5c3c3db8",
+    "originalSense": {
+      "id": "kaikki:f3fd3357646fa9dbcb",
+      "definition": "To pick; to make the choice of; to select.",
+      "example": "I chose a nice ripe apple from the fruit bowl.",
+      "pos": "verb",
+      "synonyms": [
+        "accept",
+        "adopt",
+        "appoint",
+        "cast",
+        "choose",
+        "crave",
+        "decide",
+        "designate",
+        "desire",
+        "determine",
+        "elect",
+        "embrace",
+        "espouse",
+        "excerpt",
+        "extract",
+        "favor",
+        "opt",
+        "pick",
+        "poll",
+        "predestine",
+        "preponderate",
+        "prefer",
+        "separate",
+        "select",
+        "settle",
+        "single out",
+        "vote",
+        "winnow"
+      ],
+      "antonyms": [
+        "compel",
+        "constrain",
+        "deny",
+        "forbid",
+        "refuse"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "choosability",
+        "choosable",
+        "chooseable",
+        "choose cone",
+        "choose one's battles",
+        "choose one's fighter",
+        "choose out",
+        "chooser",
+        "choose sides",
+        "choose the wrong horse",
+        "choose up",
+        "choose violence",
+        "choose-your-own-adventure",
+        "choose your own adventure",
+        "choosingly",
+        "cut and choose",
+        "divide and choose",
+        "forechoose",
+        "I choose violence",
+        "mischoose",
+        "nothing to choose between",
+        "pick and choose",
+        "prechoose",
+        "rechoose",
+        "right to choose",
+        "unchoose"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/choose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:f3fd3357646fa9dbcb",
+      "definition": "To select a person or thing from available alternatives.",
+      "example": "Please choose one topic from the three options on the form.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "choose a topic",
+        "choose from three options"
+      ],
+      "usage": "Transitive. Choose something from a set; choose between alternatives. The standard past forms are chose and chosen.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/choose#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Choose focuses on selecting among alternatives; it does not mean that every option is selected."
+      ],
+      "distinctionTask": {
+        "prompt": "Please _____ one topic from the three options on the form. What does choose one topic from three options ask you to do?",
+        "options": [
+          "Select one of the available topics.",
+          "Include every available topic."
+        ],
+        "answer": "Select one of the available topics.",
+        "explanation": "One identifies the number to select; from introduces the available set."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-42d261af",
+    "originalSense": {
+      "id": "kaikki:d34eed31e09df8315d",
+      "definition": "To make a judgment, especially after deliberation.",
+      "example": "You must decide between good and evil.",
+      "pos": "verb",
+      "synonyms": [
+        "judge",
+        "make up one's mind"
+      ],
+      "antonyms": [
+        "jump to conclusions",
+        "rush to judgement"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "decidability",
+        "decidable",
+        "decidement",
+        "decide on",
+        "decide upon",
+        "decidophobia",
+        "misdecide",
+        "predecide",
+        "redecide",
+        "undecide"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/decide#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:d34eed31e09df8315d",
+      "definition": "To reach a judgment or make up one’s mind, especially after considering alternatives.",
+      "example": "We need to decide between the morning and afternoon sessions.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "decide between alternatives",
+        "decide on a time"
+      ],
+      "usage": "Intransitive. Decide between A and B; decide on an option; decide to do something.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/decide#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Decide between introduces alternatives; decide on introduces the selected option. A need to decide does not report a completed decision."
+      ],
+      "distinctionTask": {
+        "prompt": "We need to _____ between the morning and afternoon sessions. What remains to be done when we need to decide between two sessions?",
+        "options": [
+          "Make up our minds about which session to attend.",
+          "Attend both sessions as a stated requirement."
+        ],
+        "answer": "Make up our minds about which session to attend.",
+        "explanation": "Between presents alternatives for a decision; the sentence does not require both."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "originalSense": {
+      "id": "kaikki:c8373584f6458763ba",
+      "definition": "To find a solution to (a problem).",
+      "example": "Exeter. Shall I call in Thambaſſadors my Liege? / King. Not yet my Couſin, til we be reſolude / Of ſome ſerious matters touching vs and France.",
+      "pos": "verb",
+      "synonyms": [
+        "decipher",
+        "upsolve",
+        "work out",
+        "absolve",
+        "decipher",
+        "get to the bottom of",
+        "iron out",
+        "meliorate",
+        "puzzle out",
+        "ravel",
+        "reason out",
+        "resolve",
+        "riddle",
+        "sleuth",
+        "solve",
+        "tease out",
+        "think out",
+        "unpuzzle",
+        "unravel",
+        "unriddle",
+        "unsolve",
+        "upsolve",
+        "work out",
+        "Any from Thesaurus:untangle"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:c8373584f6458763ba",
+      "definition": "To find a solution to a problem.",
+      "example": "We need to resolve the booking problem before the guests arrive.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "resolve a problem",
+        "resolve an issue"
+      ],
+      "usage": "Transitive. Resolve + a problem or issue.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Resolve a problem concerns finding a solution, rather than merely describing it. Need to resolve does not establish that the solution has already been found."
+      ],
+      "distinctionTask": {
+        "prompt": "We need to _____ the booking problem before the guests arrive. What is needed before the guests arrive?",
+        "options": [
+          "A solution to the booking problem.",
+          "Only a description of the problem, with no solution sought."
+        ],
+        "answer": "A solution to the booking problem.",
+        "explanation": "Resolve names the search for a solution; the need remains outstanding."
       },
       "editorial": {
         "source": "Fieldbook core content review",

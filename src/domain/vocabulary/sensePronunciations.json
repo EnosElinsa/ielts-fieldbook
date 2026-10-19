@@ -8,7 +8,8 @@
     "subject",
     "minute",
     "wind",
-    "bow"
+    "bow",
+    "resolve"
   ],
   "recordings": [
     {
@@ -296,6 +297,25 @@
       "fileTimestamp": "2005-10-20T05:12:54Z",
       "fileSha1": "d02e5807187abb070f68acca1ab770e2df442983",
       "playbackSha1": "d02e5807187abb070f68acca1ab770e2df442983"
+    },
+    {
+      "id": "commons:20b8d20f1e97a5b1be81fde442bea5ab45b1078e",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/En-us-resolve.ogg",
+      "title": "En-us-resolve.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Etymology 1 and US accent explicitly identified in resolve revision 93532916; Commons file revision supplies attribution and licensing. The separate re-solve etymology is excluded.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-resolve.ogg&oldid=1229159070",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229159070,
+      "fileTimestamp": "2007-03-13T09:27:59Z",
+      "fileSha1": "20b8d20f1e97a5b1be81fde442bea5ab45b1078e",
+      "playbackSha1": "20b8d20f1e97a5b1be81fde442bea5ab45b1078e"
     }
   ],
   "groups": [
@@ -496,6 +516,34 @@
       "recordings": {
         "us": "commons:d02e5807187abb070f68acca1ab770e2df442983"
       }
+    },
+    {
+      "id": "resolve-ordinary",
+      "term": "resolve",
+      "scope": "Etymology 1: verbs and nouns with /z/; excludes re-solve",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+      "ipa": {
+        "uk": "/ɹɪˈzɒlv/ · /ɹiːˈzɒlv/",
+        "us": "/ɹɪˈzɑlv/ · /ɹɪˈzɔlv/"
+      },
+      "audioMarkup": [
+        "* {{audio|en|en-us-resolve.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:20b8d20f1e97a5b1be81fde442bea5ab45b1078e"
+      }
+    },
+    {
+      "id": "resolve-again",
+      "term": "resolve",
+      "scope": "Etymology 2: alternative spelling of re-solve, meaning solve again; IPA checked against re-solve revision 81308222",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+      "ipa": {
+        "uk": "/ɹiːˈsɒlv/",
+        "us": "/ɹiˈsɑlv/"
+      },
+      "audioMarkup": [],
+      "recordings": {}
     }
   ],
   "bindings": [
@@ -1893,6 +1941,195 @@
       "definition": "Extremely careful and detailed.",
       "pos": "adj",
       "groupId": "minute-small"
+    },
+    {
+      "id": "sp1-b2baf20619d12b325c48",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:c8373584f6458763ba",
+      "definition": "To find a solution to a problem.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-da1c15ec3a765a42a9be",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:9f485d1f86324259a1",
+      "definition": "To make something clear or intelligible by explaining or unravelling it.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-06a3cca81872ee287b12",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:7f9599354a408ccbbf",
+      "definition": "To make a firm decision to pursue a goal or carry out an action.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-6ee530b7084d0294ac11",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:ef75a77be459dc69fe",
+      "definition": "To settle someone’s purpose or make the person ready in mind.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-5612e83063ab6e7f1483",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:5353142b2a99d88c1c",
+      "definition": "To settle differences, reach agreement or make peace.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-e578c02c74b262e6fed9",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:9fd8b79bdd857f1631",
+      "definition": "To break down into constituent parts or return to a simpler state.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-f51f40964d23ef70c49f",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:adc83eb49826fbff17",
+      "definition": "To make someone understand or feel certain; to inform, convince or assure.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-94021f6565c903c32b63",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:3aede46e62b5ae8d55",
+      "definition": "In music, to move a chord from dissonance to consonance.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-51a4865fe0ac9314ffd4",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:2f325481cc6ec52749",
+      "definition": "In optics, to make distinct parts visible or distinguishable.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-b31d9175b3c03b921216",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:08600267e08ab01f6d",
+      "definition": "In computing, to look up a hostname’s IP address or the entity referred to by a source-code symbol.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-2f67867cb810bc250f30",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:50d98d470e4ab7db45",
+      "definition": "To melt, dissolve, liquefy or soften a solid.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-cde20b139294f9014ef3",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:6fa28718dcaf63ddee",
+      "definition": "To melt, dissolve or become liquid.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-acea458db9e7936f724d",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:832b4735b4e158a49e",
+      "definition": "To liquefy a gas or vapour.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-33459408f6f045b54c89",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:f8d71c2ba4f9b11ade",
+      "definition": "In dated medicine, to disperse an inflammation or tumour.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-563debeac150143ed1a5",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:001dfd75505e8291bb",
+      "definition": "To relax or lie at ease.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-03850de1b50d670b6d8b",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:780058fe9b7d086519",
+      "definition": "In chemistry, to separate racemic material into its constituent enantiomers.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-092c0be62004112c3acf",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:d98d0211ba976759a2",
+      "definition": "In archaic mathematics, to solve an equation or similar problem.",
+      "pos": "verb",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-b0bd6ee9bfd66e8e0b39",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:b8415f5f3568f7bfbc",
+      "definition": "Determination or willpower.",
+      "pos": "noun",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-a82637c958e6e605684c",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:97e606256759ac6ada",
+      "definition": "A fixed decision or determination to do something.",
+      "pos": "noun",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-c8ab32c8edfee4f5a469",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:494354d6c1ecce9e97",
+      "definition": "An act of resolving something; a resolution.",
+      "pos": "noun",
+      "groupId": "resolve-ordinary"
+    },
+    {
+      "id": "sp1-9370ab143a04e15bd2e5",
+      "entryId": "ve-516c7c91",
+      "term": "resolve",
+      "senseId": "kaikki:c134e1f59d99a0361e",
+      "definition": "An alternative spelling of re-solve: to solve again.",
+      "pos": "verb",
+      "groupId": "resolve-again"
     }
   ]
 }

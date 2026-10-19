@@ -237960,5 +237960,2725 @@
     "antonyms": [],
     "wordFamily": [],
     "register": ""
+  },
+  {
+    "entryId": "ve-5c3c3db8",
+    "senseId": "kaikki:f3fd3357646fa9dbcb",
+    "definition": "To select a person or thing from available alternatives.",
+    "example": "Please choose one topic from the three options on the form.",
+    "collocations": [
+      "choose a topic",
+      "choose from three options"
+    ],
+    "distinctions": [
+      "Choose focuses on selecting among alternatives; it does not mean that every option is selected."
+    ],
+    "usage": "Transitive. Choose something from a set; choose between alternatives. The standard past forms are chose and chosen.",
+    "originalSense": {
+      "id": "kaikki:f3fd3357646fa9dbcb",
+      "definition": "To pick; to make the choice of; to select.",
+      "example": "I chose a nice ripe apple from the fruit bowl.",
+      "pos": "verb",
+      "synonyms": [
+        "accept",
+        "adopt",
+        "appoint",
+        "cast",
+        "choose",
+        "crave",
+        "decide",
+        "designate",
+        "desire",
+        "determine",
+        "elect",
+        "embrace",
+        "espouse",
+        "excerpt",
+        "extract",
+        "favor",
+        "opt",
+        "pick",
+        "poll",
+        "predestine",
+        "preponderate",
+        "prefer",
+        "separate",
+        "select",
+        "settle",
+        "single out",
+        "vote",
+        "winnow"
+      ],
+      "antonyms": [
+        "compel",
+        "constrain",
+        "deny",
+        "forbid",
+        "refuse"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "choosability",
+        "choosable",
+        "chooseable",
+        "choose cone",
+        "choose one's battles",
+        "choose one's fighter",
+        "choose out",
+        "chooser",
+        "choose sides",
+        "choose the wrong horse",
+        "choose up",
+        "choose violence",
+        "choose-your-own-adventure",
+        "choose your own adventure",
+        "choosingly",
+        "cut and choose",
+        "divide and choose",
+        "forechoose",
+        "I choose violence",
+        "mischoose",
+        "nothing to choose between",
+        "pick and choose",
+        "prechoose",
+        "rechoose",
+        "right to choose",
+        "unchoose"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/choose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=choose&oldid=92752261",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Please _____ one topic from the three options on the form. What does choose one topic from three options ask you to do?",
+      "options": [
+        "Select one of the available topics.",
+        "Include every available topic."
+      ],
+      "answer": "Select one of the available topics.",
+      "explanation": "One identifies the number to select; from introduces the available set."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5c3c3db8",
+    "senseId": "kaikki:e871733a4ff945e9ea",
+    "definition": "To elect a person to an office or position.",
+    "example": "Members will choose their next president by secret ballot.",
+    "collocations": [
+      "choose a president",
+      "choose someone by ballot"
+    ],
+    "distinctions": [
+      "This context explicitly uses an election. Choose can also mean select outside elections, so a vote must not be inferred from the word alone."
+    ],
+    "usage": "Transitive. This preserved sense concerns election to a position; the sentence describes a future vote, not its result.",
+    "originalSense": {
+      "id": "kaikki:e871733a4ff945e9ea",
+      "definition": "To elect.",
+      "example": "He was chosen as president in 1990.",
+      "pos": "verb",
+      "synonyms": [
+        "accept",
+        "adopt",
+        "appoint",
+        "cast",
+        "choose",
+        "crave",
+        "decide",
+        "designate",
+        "desire",
+        "determine",
+        "elect",
+        "embrace",
+        "espouse",
+        "excerpt",
+        "extract",
+        "favor",
+        "opt",
+        "pick",
+        "poll",
+        "predestine",
+        "preponderate",
+        "prefer",
+        "separate",
+        "select",
+        "settle",
+        "single out",
+        "vote",
+        "winnow"
+      ],
+      "antonyms": [
+        "compel",
+        "constrain",
+        "deny",
+        "forbid",
+        "refuse"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "choosability",
+        "choosable",
+        "chooseable",
+        "choose cone",
+        "choose one's battles",
+        "choose one's fighter",
+        "choose out",
+        "chooser",
+        "choose sides",
+        "choose the wrong horse",
+        "choose up",
+        "choose violence",
+        "choose-your-own-adventure",
+        "choose your own adventure",
+        "choosingly",
+        "cut and choose",
+        "divide and choose",
+        "forechoose",
+        "I choose violence",
+        "mischoose",
+        "nothing to choose between",
+        "pick and choose",
+        "prechoose",
+        "rechoose",
+        "right to choose",
+        "unchoose"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/choose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=choose&oldid=92752261",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Members will _____ their next president by secret ballot. How will members choose their president in this sentence?",
+      "options": [
+        "By voting in a secret ballot.",
+        "By inheriting the position automatically."
+      ],
+      "answer": "By voting in a secret ballot.",
+      "explanation": "By secret ballot explicitly identifies an election method; the winner remains unknown."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5c3c3db8",
+    "senseId": "kaikki:3ce4c71995e948f5a5",
+    "definition": "To decide to act in a particular way.",
+    "example": "Some students choose to study in the library after class.",
+    "collocations": [
+      "choose to study",
+      "choose not to act"
+    ],
+    "distinctions": [
+      "Choose to do something expresses a decision about action; it does not by itself establish that the action has been completed."
+    ],
+    "usage": "Choose + to-infinitive. Use choose to study, rather than choose studying for this construction.",
+    "originalSense": {
+      "id": "kaikki:3ce4c71995e948f5a5",
+      "definition": "To decide to act in a certain way.",
+      "example": "I chose to walk to work today.",
+      "pos": "verb",
+      "synonyms": [
+        "accept",
+        "adopt",
+        "appoint",
+        "cast",
+        "choose",
+        "crave",
+        "decide",
+        "designate",
+        "desire",
+        "determine",
+        "elect",
+        "embrace",
+        "espouse",
+        "excerpt",
+        "extract",
+        "favor",
+        "opt",
+        "pick",
+        "poll",
+        "predestine",
+        "preponderate",
+        "prefer",
+        "separate",
+        "select",
+        "settle",
+        "single out",
+        "vote",
+        "winnow"
+      ],
+      "antonyms": [
+        "compel",
+        "constrain",
+        "deny",
+        "forbid",
+        "refuse"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "choosability",
+        "choosable",
+        "chooseable",
+        "choose cone",
+        "choose one's battles",
+        "choose one's fighter",
+        "choose out",
+        "chooser",
+        "choose sides",
+        "choose the wrong horse",
+        "choose up",
+        "choose violence",
+        "choose-your-own-adventure",
+        "choose your own adventure",
+        "choosingly",
+        "cut and choose",
+        "divide and choose",
+        "forechoose",
+        "I choose violence",
+        "mischoose",
+        "nothing to choose between",
+        "pick and choose",
+        "prechoose",
+        "rechoose",
+        "right to choose",
+        "unchoose"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/choose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=choose&oldid=92752261",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Some students _____ to study in the library after class. Which construction expresses a decision about an action?",
+      "options": [
+        "Choose to study in the library.",
+        "Choose studying to in the library."
+      ],
+      "answer": "Choose to study in the library.",
+      "explanation": "This use takes a to-infinitive: choose to do something."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5c3c3db8",
+    "senseId": "kaikki:717efa2834933aacbe",
+    "definition": "To prefer, wish for or desire something.",
+    "example": "In the source’s apartment quotation, choose asks whether the guests would prefer a more genteel room.",
+    "collocations": [
+      "choose a more genteel apartment",
+      "choose in the sense of prefer"
+    ],
+    "distinctions": [
+      "The preference reading does not report a completed selection. The checked source gives no obsolete label for this sense."
+    ],
+    "usage": "Reading guidance for the source quotation; its age alone does not establish a historical usage label.",
+    "originalSense": {
+      "id": "kaikki:717efa2834933aacbe",
+      "definition": "To prefer; to wish; to desire.",
+      "example": "The landlady now returned to know if we did not choose a more genteel apartment.",
+      "pos": "verb",
+      "synonyms": [
+        "accept",
+        "adopt",
+        "appoint",
+        "cast",
+        "choose",
+        "crave",
+        "decide",
+        "designate",
+        "desire",
+        "determine",
+        "elect",
+        "embrace",
+        "espouse",
+        "excerpt",
+        "extract",
+        "favor",
+        "opt",
+        "pick",
+        "poll",
+        "predestine",
+        "preponderate",
+        "prefer",
+        "separate",
+        "select",
+        "settle",
+        "single out",
+        "vote",
+        "winnow"
+      ],
+      "antonyms": [
+        "compel",
+        "constrain",
+        "deny",
+        "forbid",
+        "refuse"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "choosability",
+        "choosable",
+        "chooseable",
+        "choose cone",
+        "choose one's battles",
+        "choose one's fighter",
+        "choose out",
+        "chooser",
+        "choose sides",
+        "choose the wrong horse",
+        "choose up",
+        "choose violence",
+        "choose-your-own-adventure",
+        "choose your own adventure",
+        "choosingly",
+        "cut and choose",
+        "divide and choose",
+        "forechoose",
+        "I choose violence",
+        "mischoose",
+        "nothing to choose between",
+        "pick and choose",
+        "prechoose",
+        "rechoose",
+        "right to choose",
+        "unchoose"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/choose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=choose&oldid=92752261",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5c3c3db8",
+    "senseId": "kaikki:34aea4776796221480",
+    "definition": "In mathematics, a word between two numbers denoting their binomial coefficient.",
+    "example": "In combinatorics, five choose two equals ten.",
+    "collocations": [
+      "n choose k",
+      "five choose two"
+    ],
+    "distinctions": [
+      "This counts subsets of two distinct elements from five without replacement; order does not matter, so AB and BA are the same pair."
+    ],
+    "usage": "Mathematics; conjunction in the source. For whole numbers with 0 ≤ k ≤ n, n choose k counts k-element subsets of an n-element set.",
+    "originalSense": {
+      "id": "kaikki:34aea4776796221480",
+      "definition": "The binomial coefficient of the previous and following number.",
+      "example": "The number of distinct subsets of size k from a set of size n is tbinom nk or \"n choose k\".",
+      "pos": "conj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "choosability",
+        "choosable",
+        "chooseable",
+        "choose cone",
+        "choose one's battles",
+        "choose one's fighter",
+        "choose out",
+        "chooser",
+        "choose sides",
+        "choose the wrong horse",
+        "choose up",
+        "choose violence",
+        "choose-your-own-adventure",
+        "choose your own adventure",
+        "choosingly",
+        "cut and choose",
+        "divide and choose",
+        "forechoose",
+        "I choose violence",
+        "mischoose",
+        "nothing to choose between",
+        "pick and choose",
+        "prechoose",
+        "rechoose",
+        "right to choose",
+        "unchoose"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/choose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=choose&oldid=92752261",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In combinatorics, five _____ two equals ten. How many unordered pairs of distinct objects can be chosen from five objects?",
+      "options": [
+        "Ten pairs; reversing a pair adds no new pair.",
+        "Twenty pairs; every reversed pair is counted again."
+      ],
+      "answer": "Ten pairs; reversing a pair adds no new pair.",
+      "explanation": "Five choose two is 5 × 4 ÷ 2 = 10. Each unordered pair is counted once, without repetition."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5c3c3db8",
+    "senseId": "kaikki:c10562f3a0bf3ba006",
+    "definition": "An act of choosing or selecting.",
+    "example": "The obsolete regional noun choose names an act of selection, rather than the person who selects.",
+    "collocations": [
+      "choose as a selection noun",
+      "an act of choosing"
+    ],
+    "distinctions": [
+      "This is a preserved noun, not an imperative verb. Use choice or selection in ordinary current writing."
+    ],
+    "usage": "Obsolete; Northern England and Scotland. Reading explanation; no new historical quotation is supplied.",
+    "originalSense": {
+      "id": "kaikki:c10562f3a0bf3ba006",
+      "definition": "The act of choosing; selection.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Northern-England, Scotland, obsolete",
+      "register": "Northern-England, Scotland, obsolete",
+      "wordFamily": [
+        "choosability",
+        "choosable",
+        "chooseable",
+        "choose cone",
+        "choose one's battles",
+        "choose one's fighter",
+        "choose out",
+        "chooser",
+        "choose sides",
+        "choose the wrong horse",
+        "choose up",
+        "choose violence",
+        "choose-your-own-adventure",
+        "choose your own adventure",
+        "choosingly",
+        "cut and choose",
+        "divide and choose",
+        "forechoose",
+        "I choose violence",
+        "mischoose",
+        "nothing to choose between",
+        "pick and choose",
+        "prechoose",
+        "rechoose",
+        "right to choose",
+        "unchoose"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/choose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=choose&oldid=92752261",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-5c3c3db8",
+    "senseId": "kaikki:e4b8707db9f8f619e8",
+    "definition": "The power, right or privilege of making a choice.",
+    "example": "The obsolete regional noun choose can denote the right to select, rather than a particular selection already made.",
+    "collocations": [
+      "choose as a right",
+      "the power of choosing"
+    ],
+    "distinctions": [
+      "A right or privilege of selection differs from an individual act of choosing. The source’s election gloss does not require a modern public vote."
+    ],
+    "usage": "Obsolete; Northern England and Scotland. Reading guidance for a preserved noun sense.",
+    "originalSense": {
+      "id": "kaikki:e4b8707db9f8f619e8",
+      "definition": "The power, right, or privilege of choosing; election.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Northern-England, Scotland, obsolete",
+      "register": "Northern-England, Scotland, obsolete",
+      "wordFamily": [
+        "choosability",
+        "choosable",
+        "chooseable",
+        "choose cone",
+        "choose one's battles",
+        "choose one's fighter",
+        "choose out",
+        "chooser",
+        "choose sides",
+        "choose the wrong horse",
+        "choose up",
+        "choose violence",
+        "choose-your-own-adventure",
+        "choose your own adventure",
+        "choosingly",
+        "cut and choose",
+        "divide and choose",
+        "forechoose",
+        "I choose violence",
+        "mischoose",
+        "nothing to choose between",
+        "pick and choose",
+        "prechoose",
+        "rechoose",
+        "right to choose",
+        "unchoose"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/choose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=choose&oldid=92752261",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d261af",
+    "senseId": "kaikki:db339068094b515ef6",
+    "definition": "To settle a matter or determine the outcome of a contest, problem or dispute.",
+    "example": "One late goal could decide the match.",
+    "collocations": [
+      "decide a match",
+      "decide the outcome"
+    ],
+    "distinctions": [
+      "A goal that decides a match determines its outcome; the goal itself does not deliberate or form an intention. Could leaves the outcome open."
+    ],
+    "usage": "The source permits transitive and intransitive use. The example is transitive: decide + the match.",
+    "originalSense": {
+      "id": "kaikki:db339068094b515ef6",
+      "definition": "To resolve (a contest, problem, dispute, etc.); to choose, determine, or settle.",
+      "example": "The election will be decided on foreign policies.",
+      "pos": "verb",
+      "synonyms": [
+        "choose",
+        "determine",
+        "pick",
+        "elect",
+        "accept",
+        "adopt",
+        "appoint",
+        "cast",
+        "choose",
+        "crave",
+        "decide",
+        "designate",
+        "desire",
+        "determine",
+        "elect",
+        "embrace",
+        "espouse",
+        "excerpt",
+        "extract",
+        "favor",
+        "opt",
+        "pick",
+        "poll",
+        "predestine",
+        "preponderate",
+        "prefer",
+        "separate",
+        "select",
+        "settle",
+        "single out",
+        "vote",
+        "winnow"
+      ],
+      "antonyms": [
+        "jump to conclusions",
+        "rush to judgement"
+      ],
+      "collocations": [],
+      "usage": "ambitransitive",
+      "register": "ambitransitive",
+      "wordFamily": [
+        "decidability",
+        "decidable",
+        "decidement",
+        "decide on",
+        "decide upon",
+        "decidophobia",
+        "misdecide",
+        "predecide",
+        "redecide",
+        "undecide"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/decide#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=decide&oldid=93070340",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "One late goal could _____ the match. What would a late goal do if it decided the match?",
+      "options": [
+        "Determine which side wins the match.",
+        "Consider the options and form its own intention."
+      ],
+      "answer": "Determine which side wins the match.",
+      "explanation": "An event can decide an outcome without being a thinking decision-maker."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d261af",
+    "senseId": "kaikki:d34eed31e09df8315d",
+    "definition": "To reach a judgment or make up one’s mind, especially after considering alternatives.",
+    "example": "We need to decide between the morning and afternoon sessions.",
+    "collocations": [
+      "decide between alternatives",
+      "decide on a time"
+    ],
+    "distinctions": [
+      "Decide between introduces alternatives; decide on introduces the selected option. A need to decide does not report a completed decision."
+    ],
+    "usage": "Intransitive. Decide between A and B; decide on an option; decide to do something.",
+    "originalSense": {
+      "id": "kaikki:d34eed31e09df8315d",
+      "definition": "To make a judgment, especially after deliberation.",
+      "example": "You must decide between good and evil.",
+      "pos": "verb",
+      "synonyms": [
+        "judge",
+        "make up one's mind"
+      ],
+      "antonyms": [
+        "jump to conclusions",
+        "rush to judgement"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "decidability",
+        "decidable",
+        "decidement",
+        "decide on",
+        "decide upon",
+        "decidophobia",
+        "misdecide",
+        "predecide",
+        "redecide",
+        "undecide"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/decide#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=decide&oldid=93070340",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "We need to _____ between the morning and afternoon sessions. What remains to be done when we need to decide between two sessions?",
+      "options": [
+        "Make up our minds about which session to attend.",
+        "Attend both sessions as a stated requirement."
+      ],
+      "answer": "Make up our minds about which session to attend.",
+      "explanation": "Between presents alternatives for a decision; the sentence does not require both."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d261af",
+    "senseId": "kaikki:ec8aaf28983a5b0f5a",
+    "definition": "To cause someone to reach a decision.",
+    "example": "In the source’s admonition example, the warning decided the speaker against the intended action: it caused a decision not to proceed.",
+    "collocations": [
+      "decide someone against a course",
+      "decide someone to act"
+    ],
+    "distinctions": [
+      "The cause of the decision is the subject, and the person influenced is the object. This differs from simply reporting that the person deliberated."
+    ],
+    "usage": "Transitive causative construction in the checked source. Reading guidance; no obsolete label is inferred.",
+    "originalSense": {
+      "id": "kaikki:ec8aaf28983a5b0f5a",
+      "definition": "To cause someone to come to a decision.",
+      "example": "Your admonition decided me against my intended course of action.",
+      "pos": "verb",
+      "synonyms": [
+        "choose up",
+        "decide",
+        "determine",
+        "resolve",
+        "find",
+        "judge",
+        "posken",
+        "make a decision",
+        "make up one's mind",
+        "take a decision",
+        "work out"
+      ],
+      "antonyms": [
+        "jump to conclusions",
+        "rush to judgement"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "decidability",
+        "decidable",
+        "decidement",
+        "decide on",
+        "decide upon",
+        "decidophobia",
+        "misdecide",
+        "predecide",
+        "redecide",
+        "undecide"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/decide#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=decide&oldid=93070340",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d261af",
+    "senseId": "kaikki:6f57986ea6b0304e55",
+    "definition": "Of a Turing machine, to halt with the correct yes-or-no answer on every input to a decision problem.",
+    "example": "A Turing machine can decide whether a finite binary string contains an even number of ones.",
+    "collocations": [
+      "decide a language",
+      "decide a yes-or-no problem"
+    ],
+    "distinctions": [
+      "A decider must halt correctly on all inputs. A recognizer may fail to halt on some rejected inputs; passing selected test cases does not establish decidability."
+    ],
+    "usage": "Computability theory. The example’s inputs are finite strings over 0 and 1; zero ones is even. This does not claim a general solution to the halting problem.",
+    "originalSense": {
+      "id": "kaikki:6f57986ea6b0304e55",
+      "definition": "Of a Turing machine: to return a correct answer (for some yes-or-no problem) on every possible input.",
+      "example": "No Turing Machine can decide the halting problem.",
+      "pos": "verb",
+      "synonyms": [
+        "choose up",
+        "decide",
+        "determine",
+        "resolve",
+        "find",
+        "judge",
+        "posken",
+        "make a decision",
+        "make up one's mind",
+        "take a decision",
+        "work out"
+      ],
+      "antonyms": [
+        "jump to conclusions",
+        "rush to judgement"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "decidability",
+        "decidable",
+        "decidement",
+        "decide on",
+        "decide upon",
+        "decidophobia",
+        "misdecide",
+        "predecide",
+        "redecide",
+        "undecide"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/decide#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=decide&oldid=93070340",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "A Turing machine can _____ whether a finite binary string contains an even number of ones. What must a machine do to decide the even-parity problem for finite binary strings?",
+      "options": [
+        "Halt with the correct yes-or-no answer on every input.",
+        "Accept even inputs but run forever on every odd input."
+      ],
+      "answer": "Halt with the correct yes-or-no answer on every input.",
+      "explanation": "A decider terminates on both accepted and rejected inputs. A recognizer alone need not do so."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-42d261af",
+    "senseId": "kaikki:83cac9aa37d39efab8",
+    "definition": "To cut off or separate.",
+    "example": "In the source’s sea quotation, decides us from the rest means separates us from other people.",
+    "collocations": [
+      "decide someone from the rest",
+      "decide in the sense of separate"
+    ],
+    "distinctions": [
+      "The sea separates people; it is not making a judgment. This is an obsolete sense, distinct from current decide between alternatives."
+    ],
+    "usage": "Obsolete. Reading explanation of a preserved quotation, rather than a new everyday exercise.",
+    "originalSense": {
+      "id": "kaikki:83cac9aa37d39efab8",
+      "definition": "To cut off; to separate.",
+      "example": "Our seat denies us traffic here; / The sea, too near, decides us from the rest.",
+      "pos": "verb",
+      "synonyms": [
+        "divorce",
+        "sever",
+        "sunder",
+        "becut",
+        "decide",
+        "discerp",
+        "disintegrate",
+        "dispart",
+        "dissever",
+        "divide",
+        "divorce",
+        "divvy up",
+        "part",
+        "partition",
+        "piecemeal",
+        "rescind",
+        "section",
+        "sever",
+        "split",
+        "split up",
+        "sunder"
+      ],
+      "antonyms": [
+        "jump to conclusions",
+        "rush to judgement"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "decidability",
+        "decidable",
+        "decidement",
+        "decide on",
+        "decide upon",
+        "decidophobia",
+        "misdecide",
+        "predecide",
+        "redecide",
+        "undecide"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/decide#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=decide&oldid=93070340",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:7d15c5c55f7fa0352b",
+    "definition": "To set or fix the boundaries or limits of something.",
+    "example": "The agreement will determine the boundaries of the fishing area.",
+    "collocations": [
+      "determine boundaries",
+      "determine the limits"
+    ],
+    "distinctions": [
+      "Setting boundaries establishes limits; it differs from investigating where already established boundaries lie. The future agreement is not yet reported as effective."
+    ],
+    "usage": "Transitive. Determine + boundaries or limits.",
+    "originalSense": {
+      "id": "kaikki:7d15c5c55f7fa0352b",
+      "definition": "To set the boundaries or limits of.",
+      "example": "[God] hath determined the times before appointed.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "codetermine",
+        "determinability",
+        "determinable",
+        "determinably",
+        "determinant",
+        "determination",
+        "determinative",
+        "determiner",
+        "determinicity",
+        "determinise",
+        "determinism",
+        "determinist",
+        "deterministic",
+        "determinize",
+        "foredetermine",
+        "misdetermine",
+        "overdetermine",
+        "predetermine",
+        "redetermine",
+        "self-determine",
+        "underdetermine",
+        "undeterminable",
+        "undetermine"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/determine#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=determine&oldid=93576548",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The agreement will _____ the boundaries of the fishing area. What does the agreement determine in this sentence?",
+      "options": [
+        "The limits of the fishing area.",
+        "The number of fish caught there yesterday."
+      ],
+      "answer": "The limits of the fishing area.",
+      "explanation": "The object is boundaries: the agreement sets the area’s limits."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:3542aeddc929695a96",
+    "definition": "To find out or establish an answer by analysis, calculation or investigation.",
+    "example": "The researchers will determine whether the sample contains lead.",
+    "collocations": [
+      "determine whether",
+      "determine the cause"
+    ],
+    "distinctions": [
+      "Determine whether introduces an investigation into a yes-or-no question; it does not announce that lead has already been found."
+    ],
+    "usage": "Transitive. Determine a value or cause; determine whether, how or why.",
+    "originalSense": {
+      "id": "kaikki:3542aeddc929695a96",
+      "definition": "To ascertain definitely; to figure out, find out, or conclude by analyzing, calculating, or investigating.",
+      "example": "Whether modern, industrial man is less or more warlike than his hunter-gatherer ancestors is impossible to determine. The machine gun is so much more lethal than the bow and arrow that comparisons are meaningless.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "codetermine",
+        "determinability",
+        "determinable",
+        "determinably",
+        "determinant",
+        "determination",
+        "determinative",
+        "determiner",
+        "determinicity",
+        "determinise",
+        "determinism",
+        "determinist",
+        "deterministic",
+        "determinize",
+        "foredetermine",
+        "misdetermine",
+        "overdetermine",
+        "predetermine",
+        "redetermine",
+        "self-determine",
+        "underdetermine",
+        "undeterminable",
+        "undetermine"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/determine#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=determine&oldid=93576548",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The researchers will _____ whether the sample contains lead. What does will determine whether the sample contains lead establish now?",
+      "options": [
+        "An investigation is planned; its answer is still open.",
+        "The sample is already confirmed to contain lead."
+      ],
+      "answer": "An investigation is planned; its answer is still open.",
+      "explanation": "Whether presents a question and will describes the planned investigation, without supplying its result."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:7c90aede4915d86ad6",
+    "definition": "To fix or shape the form, character or outcome of something.",
+    "example": "Under these rules, the two test results determine the final score.",
+    "collocations": [
+      "determine the final score",
+      "determine the form"
+    ],
+    "distinctions": [
+      "The test results shape the score under stated rules; they do not themselves investigate an unknown score. The sentence does not claim these rules apply to every assessment."
+    ],
+    "usage": "Transitive. A factor or rule can determine an outcome without making a conscious decision.",
+    "originalSense": {
+      "id": "kaikki:7c90aede4915d86ad6",
+      "definition": "To fix the form or character of; to shape; to prescribe imperatively; to regulate; to settle.",
+      "example": "The character of the soul is determined by the character of its God.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "codetermine",
+        "determinability",
+        "determinable",
+        "determinably",
+        "determinant",
+        "determination",
+        "determinative",
+        "determiner",
+        "determinicity",
+        "determinise",
+        "determinism",
+        "determinist",
+        "deterministic",
+        "determinize",
+        "foredetermine",
+        "misdetermine",
+        "overdetermine",
+        "predetermine",
+        "redetermine",
+        "self-determine",
+        "underdetermine",
+        "undeterminable",
+        "undetermine"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/determine#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=determine&oldid=93576548",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Under these rules, the two test results _____ the final score. What role do the two test results play under these rules?",
+      "options": [
+        "They set the final score.",
+        "They ask the examiner to investigate the score."
+      ],
+      "answer": "They set the final score.",
+      "explanation": "The results are determining factors, rather than investigators or decision-makers."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:f637998c3ff8095a54",
+    "definition": "To impel or direct someone toward a course of action.",
+    "example": "In the source’s Frazer quotation, determined him to destroy describes anger prompting a fixed course of action within the quoted religious account.",
+    "collocations": [
+      "determine someone to act",
+      "determine a course of action"
+    ],
+    "distinctions": [
+      "This causative construction concerns what prompts an agent toward action in the quoted account. It differs from determining whether a factual claim is true and does not endorse the account’s claims."
+    ],
+    "usage": "Reading guidance from the independently attested Frazer quotation. The separate simple example has an editorial grammar query and is not reused as a new exercise.",
+    "originalSense": {
+      "id": "kaikki:f637998c3ff8095a54",
+      "definition": "To fix the course of; to impel and direct; with a remoter object preceded by to.",
+      "example": "The news of his father's illness determined him to depart immediately.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "codetermine",
+        "determinability",
+        "determinable",
+        "determinably",
+        "determinant",
+        "determination",
+        "determinative",
+        "determiner",
+        "determinicity",
+        "determinise",
+        "determinism",
+        "determinist",
+        "deterministic",
+        "determinize",
+        "foredetermine",
+        "misdetermine",
+        "overdetermine",
+        "predetermine",
+        "redetermine",
+        "self-determine",
+        "underdetermine",
+        "undeterminable",
+        "undetermine"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/determine#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=determine&oldid=93576548",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:d6d5a58bf81cfb4024",
+    "definition": "To settle a question or controversy by an authoritative or judicial decision.",
+    "example": "The tribunal must determine whether the appeal is valid.",
+    "collocations": [
+      "determine an appeal",
+      "determine a dispute"
+    ],
+    "distinctions": [
+      "A tribunal determines an issue by deciding it within its authority. The sentence does not establish which party wins or that an appeal is valid."
+    ],
+    "usage": "Formal or legal context. This editorial definition repairs the imported phrase settle authoritative or judicial sentence without changing the source record.",
+    "originalSense": {
+      "id": "kaikki:d6d5a58bf81cfb4024",
+      "definition": "To bring to a conclusion, as a question or controversy; to settle authoritative or judicial sentence; to decide.",
+      "example": "The court has determined the cause.",
+      "pos": "verb",
+      "synonyms": [
+        "find",
+        "judge",
+        "make a decision",
+        "choose up",
+        "decide",
+        "determine",
+        "resolve",
+        "find",
+        "judge",
+        "posken",
+        "make a decision",
+        "make up one's mind",
+        "take a decision",
+        "work out"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "codetermine",
+        "determinability",
+        "determinable",
+        "determinably",
+        "determinant",
+        "determination",
+        "determinative",
+        "determiner",
+        "determinicity",
+        "determinise",
+        "determinism",
+        "determinist",
+        "deterministic",
+        "determinize",
+        "foredetermine",
+        "misdetermine",
+        "overdetermine",
+        "predetermine",
+        "redetermine",
+        "self-determine",
+        "underdetermine",
+        "undeterminable",
+        "undetermine"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/determine#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=determine&oldid=93576548",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "The tribunal must _____ whether the appeal is valid. What must the tribunal do?",
+      "options": [
+        "Decide authoritatively whether the appeal is valid.",
+        "Assume the appeal is valid before considering it."
+      ],
+      "answer": "Decide authoritatively whether the appeal is valid.",
+      "explanation": "Determine whether names an issue for authoritative decision, not a predetermined result."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:51f154855af8e34ec9",
+    "definition": "To establish a fixed intention or resolve to do something, or bring a matter to a decision.",
+    "example": "I determine to complete the report before Friday.",
+    "collocations": [
+      "determine to act",
+      "determine to complete a task"
+    ],
+    "distinctions": [
+      "Determine to act expresses firm intention and does not establish completion. It differs from determine whether, which introduces a question to investigate."
+    ],
+    "usage": "Formal. Determine + to-infinitive for fixed intention; this source record also includes bringing a matter to a decision.",
+    "originalSense": {
+      "id": "kaikki:51f154855af8e34ec9",
+      "definition": "To resolve (to do something); to establish a fixed intention; to cause (something) to come to a conclusion or decision; to lead.",
+      "example": "I determined to go home at once.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "codetermine",
+        "determinability",
+        "determinable",
+        "determinably",
+        "determinant",
+        "determination",
+        "determinative",
+        "determiner",
+        "determinicity",
+        "determinise",
+        "determinism",
+        "determinist",
+        "deterministic",
+        "determinize",
+        "foredetermine",
+        "misdetermine",
+        "overdetermine",
+        "predetermine",
+        "redetermine",
+        "self-determine",
+        "underdetermine",
+        "undeterminable",
+        "undetermine"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/determine#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=determine&oldid=93576548",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "I _____ to complete the report before Friday. What does I determine to complete the report express?",
+      "options": [
+        "A firm intention to finish it.",
+        "Proof that it has already been completed."
+      ],
+      "answer": "A firm intention to finish it.",
+      "explanation": "The to-infinitive names the intended action; the sentence does not report completion."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:6cc6df9d66c8c03e03",
+    "definition": "In logic, to narrow or define a class by adding a distinguishing characteristic.",
+    "example": "A logic explanation can start with polygon and add three-sided to determine the narrower class triangle.",
+    "collocations": [
+      "determine a genus",
+      "determine by a differentia"
+    ],
+    "distinctions": [
+      "The differentia narrows the genus: triangles are polygons, while not every polygon is a triangle. The classification is not a causal claim."
+    ],
+    "usage": "Logic. Reading explanation of adding a differentia; polygon supplies the genus and three-sided supplies the distinguishing characteristic.",
+    "originalSense": {
+      "id": "kaikki:6cc6df9d66c8c03e03",
+      "definition": "To define or limit by adding a differentia.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "codetermine",
+        "determinability",
+        "determinable",
+        "determinably",
+        "determinant",
+        "determination",
+        "determinative",
+        "determiner",
+        "determinicity",
+        "determinise",
+        "determinism",
+        "determinist",
+        "deterministic",
+        "determinize",
+        "foredetermine",
+        "misdetermine",
+        "overdetermine",
+        "predetermine",
+        "redetermine",
+        "self-determine",
+        "underdetermine",
+        "undeterminable",
+        "undetermine"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/determine#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=determine&oldid=93576548",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:13108cc4ab7769d1e3",
+    "definition": "To bring something to an end, or come to an end.",
+    "example": "A valid break clause can determine a lease before its stated expiry date.",
+    "collocations": [
+      "determine a lease",
+      "a lease determines"
+    ],
+    "distinctions": [
+      "Legal determination ends a lease and is not limited to expiry at its original term. It does not mean calculating the rent or guaranteeing that any proposed break is valid."
+    ],
+    "usage": "Transitive or intransitive; law, otherwise obsolete in the checked source. Legal termination remains current. The example assumes a valid break clause and does not give procedural advice.",
+    "originalSense": {
+      "id": "kaikki:13108cc4ab7769d1e3",
+      "definition": "To bring to an end, finish; to come to an end, stop, end.",
+      "example": "Novv, vvhere is hee, that vvill not ſtay ſo long\nTill his Friend ſickneſſe hath determin'd me?",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive, transitive",
+      "wordFamily": [
+        "codetermine",
+        "determinability",
+        "determinable",
+        "determinably",
+        "determinant",
+        "determination",
+        "determinative",
+        "determiner",
+        "determinicity",
+        "determinise",
+        "determinism",
+        "determinist",
+        "deterministic",
+        "determinize",
+        "foredetermine",
+        "misdetermine",
+        "overdetermine",
+        "predetermine",
+        "redetermine",
+        "self-determine",
+        "underdetermine",
+        "undeterminable",
+        "undetermine"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/determine#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=determine&oldid=93576548",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "A valid break clause can _____ a lease before its stated expiry date. What does determine a lease mean in this legal sentence?",
+      "options": [
+        "Bring the lease to an end.",
+        "Calculate the monthly rent while it continues."
+      ],
+      "answer": "Bring the lease to an end.",
+      "explanation": "The source-qualified legal sense concerns termination, including a valid early break, rather than a numerical finding."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:c8373584f6458763ba",
+    "definition": "To find a solution to a problem.",
+    "example": "We need to resolve the booking problem before the guests arrive.",
+    "collocations": [
+      "resolve a problem",
+      "resolve an issue"
+    ],
+    "distinctions": [
+      "Resolve a problem concerns finding a solution, rather than merely describing it. Need to resolve does not establish that the solution has already been found."
+    ],
+    "usage": "Transitive. Resolve + a problem or issue.",
+    "originalSense": {
+      "id": "kaikki:c8373584f6458763ba",
+      "definition": "To find a solution to (a problem).",
+      "example": "Exeter. Shall I call in Thambaſſadors my Liege? / King. Not yet my Couſin, til we be reſolude / Of ſome ſerious matters touching vs and France.",
+      "pos": "verb",
+      "synonyms": [
+        "decipher",
+        "upsolve",
+        "work out",
+        "absolve",
+        "decipher",
+        "get to the bottom of",
+        "iron out",
+        "meliorate",
+        "puzzle out",
+        "ravel",
+        "reason out",
+        "resolve",
+        "riddle",
+        "sleuth",
+        "solve",
+        "tease out",
+        "think out",
+        "unpuzzle",
+        "unravel",
+        "unriddle",
+        "unsolve",
+        "upsolve",
+        "work out",
+        "Any from Thesaurus:untangle"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "We need to _____ the booking problem before the guests arrive. What is needed before the guests arrive?",
+      "options": [
+        "A solution to the booking problem.",
+        "Only a description of the problem, with no solution sought."
+      ],
+      "answer": "A solution to the booking problem.",
+      "explanation": "Resolve names the search for a solution; the need remains outstanding."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:9f485d1f86324259a1",
+    "definition": "To make something clear or intelligible by explaining or unravelling it.",
+    "example": "The next paragraph should resolve the ambiguity in the instructions.",
+    "collocations": [
+      "resolve an ambiguity",
+      "resolve a riddle"
+    ],
+    "distinctions": [
+      "Resolving an ambiguity clarifies the intended meaning; it need not repair a physical fault or reconcile a disagreement. Should does not establish success."
+    ],
+    "usage": "Transitive. Resolve + an ambiguity, riddle or uncertainty.",
+    "originalSense": {
+      "id": "kaikki:9f485d1f86324259a1",
+      "definition": "To reduce to simple or intelligible notions; to make clear or certain; to unravel; to explain.",
+      "example": "to resolve a riddle",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The next paragraph should _____ the ambiguity in the instructions. What would resolve the ambiguity mean here?",
+      "options": [
+        "Make the instructions’ meaning clear.",
+        "Make the instructions open to more conflicting readings."
+      ],
+      "answer": "Make the instructions’ meaning clear.",
+      "explanation": "This use concerns clarification, rather than adding uncertainty."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:7f9599354a408ccbbf",
+    "definition": "To make a firm decision to pursue a goal or carry out an action.",
+    "example": "I resolve to practise speaking for ten minutes each day.",
+    "collocations": [
+      "resolve to act",
+      "resolve to practise regularly"
+    ],
+    "distinctions": [
+      "Resolve to act expresses firm intention and does not establish completion. A personal resolution does not by itself supply assessed learning evidence."
+    ],
+    "usage": "Intransitive. Resolve + to-infinitive; the subject makes the decision.",
+    "originalSense": {
+      "id": "kaikki:7f9599354a408ccbbf",
+      "definition": "To make a firm decision to do something. To become determined to reach a certain goal or take a certain action.",
+      "example": "I resolve to finish this work before I go home.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "I _____ to practise speaking for ten minutes each day. What does I resolve to practise speaking express?",
+      "options": [
+        "A firm decision about future practice.",
+        "A record of completed and assessed practice."
+      ],
+      "answer": "A firm decision about future practice.",
+      "explanation": "The sentence states an intention; it does not verify that any practice has happened."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:ef75a77be459dc69fe",
+    "definition": "To settle someone’s purpose or make the person ready in mind.",
+    "example": "The source’s passive was resolved by an unexpected event describes an event settling a person’s purpose.",
+    "collocations": [
+      "be resolved by an event",
+      "resolve someone in purpose"
+    ],
+    "distinctions": [
+      "The person’s purpose is settled by an event. This differs from an intransitive resolve to act, and the source does not label this sense obsolete."
+    ],
+    "usage": "Transitive source sense, illustrated in the passive. Reading guidance for an unusual construction.",
+    "originalSense": {
+      "id": "kaikki:ef75a77be459dc69fe",
+      "definition": "To determine or decide in purpose; to make ready in mind; to fix; to settle.",
+      "example": "He was resolved by an unexpected event.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:5353142b2a99d88c1c",
+    "definition": "To settle differences, reach agreement or make peace.",
+    "example": "The neighbours hope to resolve their differences over the shared garden.",
+    "collocations": [
+      "resolve differences",
+      "resolve a disagreement"
+    ],
+    "distinctions": [
+      "Resolving differences concerns agreement or reconciliation. Hoping for it does not establish that either neighbour has agreed or surrendered every concern."
+    ],
+    "usage": "Often resolve differences or a dispute; the checked source also describes coming to agreement or making peace.",
+    "originalSense": {
+      "id": "kaikki:5353142b2a99d88c1c",
+      "definition": "To come to an agreement or make peace; patch up relationship, settle differences, bury the hatchet.",
+      "example": "After two weeks of bickering, they finally resolved their differences.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The neighbours hope to _____ their differences over the shared garden. What do the neighbours hope to do?",
+      "options": [
+        "Settle their differences over the garden.",
+        "Keep every difference unresolved as their goal."
+      ],
+      "answer": "Settle their differences over the garden.",
+      "explanation": "Resolve their differences means seek settlement or agreement, which is not yet reported as achieved."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:9fd8b79bdd857f1631",
+    "definition": "To break down into constituent parts or return to a simpler state.",
+    "example": "The source’s House resolved itself into a Committee describes a procedural change of form, illustrating the broad constituent-or-simpler-state sense.",
+    "collocations": [
+      "resolve into parts",
+      "resolve itself into a committee"
+    ],
+    "distinctions": [
+      "The parliamentary quotation is figurative: it does not describe people chemically decomposing. This broad source record must not be collapsed into the separate enantiomer-separation sense."
+    ],
+    "usage": "Transitive, intransitive or reflexive in the source. Reading guidance for the preserved figurative example.",
+    "originalSense": {
+      "id": "kaikki:9fd8b79bdd857f1631",
+      "definition": "To break down into constituent parts; to decompose; to disintegrate; to return to a simpler constitution or a primeval state.",
+      "example": "The House immediately resolved itself into a Committee on the Bill.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "reflexive",
+      "register": "intransitive, reflexive, transitive",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:adc83eb49826fbff17",
+    "definition": "To make someone understand or feel certain; to inform, convince or assure.",
+    "example": "In the source’s I am resolved quotation, resolved means convinced or assured of the claim being made.",
+    "collocations": [
+      "be resolved of a matter",
+      "resolved in the sense of convinced"
+    ],
+    "distinctions": [
+      "The quotation expresses conviction, rather than independently verifying the claim. It differs from resolve to act; the source supplies no obsolete label here."
+    ],
+    "usage": "Reading guidance for the checked quotations; historical examples alone do not establish a usage label.",
+    "originalSense": {
+      "id": "kaikki:adc83eb49826fbff17",
+      "definition": "To cause to perceive or understand; to acquaint; to inform; to convince; to assure; to make certain.",
+      "example": "In health, good air, pleasure, riches, I am resolved it cannot be equalled by any region.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:3aede46e62b5ae8d55",
+    "definition": "In music, to move a chord from dissonance to consonance.",
+    "example": "In this cadence, resolve the dominant seventh chord to the tonic chord.",
+    "collocations": [
+      "resolve a dissonance",
+      "resolve a dominant seventh"
+    ],
+    "distinctions": [
+      "In the illustrated C-major cadence, G7 moves to C major. This is a harmonic change, not an instruction to make every note quieter or to stop playing."
+    ],
+    "usage": "Music. The example uses a conventional dominant-seventh-to-tonic resolution; it does not claim every musical style treats consonance identically.",
+    "originalSense": {
+      "id": "kaikki:3aede46e62b5ae8d55",
+      "definition": "To cause a chord to go from dissonance to consonance.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In this cadence, _____ the dominant seventh chord to the tonic chord. What does resolve the chord mean in this cadence?",
+      "options": [
+        "Move from the dissonant chord to a consonant tonic chord.",
+        "Reduce the volume without changing the harmony."
+      ],
+      "answer": "Move from the dissonant chord to a consonant tonic chord.",
+      "explanation": "This musical sense concerns the harmonic relationship between chords, rather than loudness."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:2f325481cc6ec52749",
+    "definition": "In optics, to make distinct parts visible or distinguishable.",
+    "example": "This microscope can resolve the two marks as separate dots.",
+    "collocations": [
+      "resolve fine detail",
+      "resolve two close marks"
+    ],
+    "distinctions": [
+      "Resolution concerns distinguishing detail. Increasing magnification alone does not guarantee that two nearby marks become distinguishable."
+    ],
+    "usage": "Optics. Can describes the instrument’s capability in the example; no universal distance or performance claim is made.",
+    "originalSense": {
+      "id": "kaikki:2f325481cc6ec52749",
+      "definition": "To render visible or distinguishable the parts of something.",
+      "example": "The single-imaging optic of the mammalian eye offers some distinct visual advantages. Such lenses can take in photons from a wide range of angles, increasing light sensitivity. They also have high spatial resolution, resolving incoming images in minute detail.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "This microscope can _____ the two marks as separate dots. What can the microscope do with the two marks?",
+      "options": [
+        "Distinguish them as two separate dots.",
+        "Only enlarge an indistinguishable blur."
+      ],
+      "answer": "Distinguish them as two separate dots.",
+      "explanation": "To resolve detail is to distinguish its separate parts, which is different from merely magnifying it."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:08600267e08ab01f6d",
+    "definition": "In computing, to look up a hostname’s IP address or the entity referred to by a source-code symbol.",
+    "example": "The resolver will try to resolve the hostname to an IP address.",
+    "collocations": [
+      "resolve a hostname",
+      "resolve a symbol"
+    ],
+    "distinctions": [
+      "DNS lookup does not establish a successful network connection. Symbol resolution instead identifies the entity referred to by a code symbol; these are distinct applications within this source meaning."
+    ],
+    "usage": "Computing. DNS may yield multiple addresses or fail; the example reports an attempt. Source-code resolution concerns a symbol’s referent, not an IP address for every identifier.",
+    "originalSense": {
+      "id": "kaikki:08600267e08ab01f6d",
+      "definition": "To find the IP address of a hostname, or the entity referred to by a symbol in source code; to look up.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "The resolver will try to _____ the hostname to an IP address. What is the resolver trying to do in the hostname example?",
+      "options": [
+        "Look up an IP address associated with the hostname.",
+        "Guarantee a successful connection to the remote service."
+      ],
+      "answer": "Look up an IP address associated with the hostname.",
+      "explanation": "Name lookup and connecting to a service are separate operations; a lookup may fail or return more than one address."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:50d98d470e4ab7db45",
+    "definition": "To melt, dissolve, liquefy or soften a solid.",
+    "example": "In the source’s icy-mountain quotation, resolved means melted or softened rather than decided.",
+    "collocations": [
+      "resolve a solid",
+      "resolved in the sense of melted"
+    ],
+    "distinctions": [
+      "This rare transitive source sense concerns a solid changing or softening. Rare does not automatically mean obsolete, and melting must not be confused with separating enantiomers."
+    ],
+    "usage": "Rare; transitive. Reading guidance from the preserved quotation.",
+    "originalSense": {
+      "id": "kaikki:50d98d470e4ab7db45",
+      "definition": "To melt; to dissolve; to liquefy or soften (a solid).",
+      "example": "With milke-white Hartes vpon an Iuorie ſled, / Thou ſhalt be drawen amidſt the froſen Pooles, / And ſcale the yſie mountaines lofty tops: / Which with thy beautie will be soone reſolu’d.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "rare",
+      "register": "rare, transitive",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:6fa28718dcaf63ddee",
+    "definition": "To melt, dissolve or become liquid.",
+    "example": "The source’s blood quotation uses resolves for becoming liquid; it records an older description rather than a current physiological explanation.",
+    "collocations": [
+      "a substance resolves",
+      "resolve in the sense of become liquid"
+    ],
+    "distinctions": [
+      "This rare intransitive or reflexive sense concerns becoming liquid. The historical blood claim is not supplied as a modern medical fact."
+    ],
+    "usage": "Rare; intransitive or reflexive. Reading guidance only; the source does not mark the entire sense obsolete.",
+    "originalSense": {
+      "id": "kaikki:6fa28718dcaf63ddee",
+      "definition": "To melt; to dissolve; to become liquid.",
+      "example": "When the blood stagnates in any part, it first coagulates, then resolves, and turns alkaline.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "rare, reflexive",
+      "register": "intransitive, rare, reflexive",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:832b4735b4e158a49e",
+    "definition": "To liquefy a gas or vapour.",
+    "example": "The obsolete transitive sense resolve can describe making a gas or vapour liquid.",
+    "collocations": [
+      "resolve a vapour",
+      "resolve in the sense of liquefy"
+    ],
+    "distinctions": [
+      "The starting material is gaseous, unlike the source’s separate solid-melting sense. Use liquefy or condense in ordinary current scientific writing as appropriate to the process."
+    ],
+    "usage": "Obsolete; transitive. Reading explanation, without an invented historical quotation.",
+    "originalSense": {
+      "id": "kaikki:832b4735b4e158a49e",
+      "definition": "To liquefy (a gas or vapour).",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:f8d71c2ba4f9b11ade",
+    "definition": "In dated medicine, to disperse an inflammation or tumour.",
+    "example": "The dated medical gloss uses discuss to mean disperse an inflammation or tumour, rather than talk about it.",
+    "collocations": [
+      "resolve an inflammation",
+      "resolve in dated medical prose"
+    ],
+    "distinctions": [
+      "Discuss in this older gloss means disperse, not conversation. This lexical explanation does not establish an effective treatment or promise a tumour will disappear."
+    ],
+    "usage": "Medicine; dated. Reading explanation of the historical terminology, not clinical advice.",
+    "originalSense": {
+      "id": "kaikki:f8d71c2ba4f9b11ade",
+      "definition": "To disperse or scatter; to discuss, as an inflammation or a tumour.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "dated",
+      "register": "dated",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:001dfd75505e8291bb",
+    "definition": "To relax or lie at ease.",
+    "example": "In the source’s Jonson quotation, resolve himself into sports and looseness describes relaxing into leisure.",
+    "collocations": [
+      "resolve himself into leisure",
+      "resolve in the sense of relax"
+    ],
+    "distinctions": [
+      "This obsolete reflexive use concerns relaxing, not making a firm decision or solving a problem."
+    ],
+    "usage": "Obsolete. Reading guidance for the preserved quotation.",
+    "originalSense": {
+      "id": "kaikki:001dfd75505e8291bb",
+      "definition": "To relax; to lie at ease.",
+      "example": "resolve himself into all sports and looseness again",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:780058fe9b7d086519",
+    "definition": "In chemistry, to separate racemic material into its constituent enantiomers.",
+    "example": "The chemists aim to resolve the racemic mixture into its enantiomers.",
+    "collocations": [
+      "resolve a racemic mixture",
+      "resolve into enantiomers"
+    ],
+    "distinctions": [
+      "Resolution separates enantiomers; it does not convert one enantiomer into the other or break the molecules into fragments. The stated aim does not guarantee complete separation."
+    ],
+    "usage": "Chemistry. A racemate contains equal amounts of a pair of enantiomers; the diagram is a separation schematic, not a molecular structure or procedural method.",
+    "originalSense": {
+      "id": "kaikki:780058fe9b7d086519",
+      "definition": "To separate racemic compounds into their enantiomers.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "The chemists aim to _____ the racemic mixture into its enantiomers. What is the aim of resolving the racemic mixture?",
+      "options": [
+        "Separate its enantiomers.",
+        "Convert every molecule into a different enantiomer."
+      ],
+      "answer": "Separate its enantiomers.",
+      "explanation": "This sense concerns separation of enantiomers already present, rather than interconversion or fragmentation."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:d98d0211ba976759a2",
+    "definition": "In archaic mathematics, to solve an equation or similar problem.",
+    "example": "The archaic mathematical sense resolve an equation means find its solution.",
+    "collocations": [
+      "resolve an equation",
+      "resolve in the sense of solve"
+    ],
+    "distinctions": [
+      "Use solve an equation in ordinary current mathematical writing. This source sense is labelled archaic; it is separate from the valid alternative spelling meaning solve again."
+    ],
+    "usage": "Mathematics; archaic; transitive. Reading explanation, not a new historical quotation.",
+    "originalSense": {
+      "id": "kaikki:d98d0211ba976759a2",
+      "definition": "To solve (an equation, etc.).",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, transitive",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:b8415f5f3568f7bfbc",
+    "definition": "Determination or willpower.",
+    "example": "It takes resolve to keep practising after a setback.",
+    "collocations": [
+      "show resolve",
+      "strengthen someone’s resolve"
+    ],
+    "distinctions": [
+      "Uncountable resolve names determination, rather than a particular decision or the act of solving a technical problem. It does not guarantee success."
+    ],
+    "usage": "Uncountable noun. Resolve here has no indefinite article.",
+    "originalSense": {
+      "id": "kaikki:b8415f5f3568f7bfbc",
+      "definition": "Determination; will power.",
+      "example": "It took all my resolve to go through with the surgery.",
+      "pos": "noun",
+      "synonyms": [
+        "fortitude",
+        "inner strength",
+        "resoluteness",
+        "sticktoitiveness",
+        "tenacity"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve",
+        "set of one's jaw"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "It takes _____ to keep practising after a setback. What does resolve mean in it takes resolve to keep practising?",
+      "options": [
+        "Determination or willpower.",
+        "One completed technical calculation."
+      ],
+      "answer": "Determination or willpower.",
+      "explanation": "The uncountable noun concerns persistence, rather than a specific solved problem."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:97e606256759ac6ada",
+    "definition": "A fixed decision or determination to do something.",
+    "example": "Her resolve to finish the course remains firm.",
+    "collocations": [
+      "a resolve to act",
+      "form a resolve"
+    ],
+    "distinctions": [
+      "This sense names a particular fixed decision; the course is not reported as finished. It differs from the uncountable sense of willpower in general."
+    ],
+    "usage": "Countable noun in the checked source. A resolve to do something names its intended action.",
+    "originalSense": {
+      "id": "kaikki:97e606256759ac6ada",
+      "definition": "A determination to do something; a fixed decision.",
+      "example": "And the having individually entertained four such resolves, without perceiving that once brought together, they all mutually expire; this, this ineffable folly, Pierre, brands thee in the forehead for an unaccountable infatuate!",
+      "pos": "noun",
+      "synonyms": [
+        "fortitude",
+        "inner strength",
+        "resoluteness",
+        "sticktoitiveness",
+        "tenacity"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve",
+        "set of one's jaw"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Her _____ to finish the course remains firm. What does her resolve to finish the course name?",
+      "options": [
+        "Her fixed decision to complete it.",
+        "Evidence that she has already completed it."
+      ],
+      "answer": "Her fixed decision to complete it.",
+      "explanation": "A resolve is a decision; the intended action need not yet be complete."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:494354d6c1ecce9e97",
+    "definition": "An act of resolving something; a resolution.",
+    "example": "In the source’s CAD quotation, approve the resolve refers to authorising an operation that resolves lightweight components.",
+    "collocations": [
+      "approve the resolve",
+      "an act of resolving"
+    ],
+    "distinctions": [
+      "This noun names an operation in the quotation, not a person’s willpower. The separate conversation quotation uses without resolve for an unresolved outcome."
+    ],
+    "usage": "Countable noun in the source. Reading explanation of a technical quotation; no broad synonym list is inherited.",
+    "originalSense": {
+      "id": "kaikki:494354d6c1ecce9e97",
+      "definition": "An act of resolving something; resolution.",
+      "example": "Still, my mother said she loved me and the conversation soon ended, without resolve; possibly, this is also a dialog which is only beginning, or rather continuing.",
+      "pos": "noun",
+      "synonyms": [
+        "fortitude",
+        "inner strength",
+        "resoluteness",
+        "sticktoitiveness",
+        "tenacity"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve",
+        "set of one's jaw"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:c134e1f59d99a0361e",
+    "definition": "An alternative spelling of re-solve: to solve again.",
+    "example": "The valid spelling resolve can also represent re-solve, meaning solve again; its /s/ reading differs from ordinary resolve with /z/.",
+    "collocations": [
+      "re-solve an equation",
+      "solve again with new values"
+    ],
+    "distinctions": [
+      "This is a valid alternative spelling, not a misspelling and not the ordinary solve-a-problem meaning alone. Re-solve refers to solving again; it must not inherit the ordinary resolve recording."
+    ],
+    "usage": "Separate source etymology. Re-solve has UK /ɹiːˈsɒlv/ and US /ɹiˈsɑlv/ in revision 81308222. No reviewed recording is supplied for this reading.",
+    "originalSense": {
+      "id": "kaikki:c134e1f59d99a0361e",
+      "definition": "Alternative spelling of re-solve.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "alt-of, alternative",
+      "register": "alt-of, alternative",
+      "wordFamily": [
+        "misresolve",
+        "preresolve",
+        "proresolving",
+        "reresolve",
+        "resolvability",
+        "resolvable",
+        "resolvase",
+        "resolvend",
+        "resolver",
+        "self-resolving",
+        "superresolve",
+        "time-resolved",
+        "unresolve",
+        "set of one's jaw"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]

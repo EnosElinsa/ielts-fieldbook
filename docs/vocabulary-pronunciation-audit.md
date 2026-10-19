@@ -1,6 +1,14 @@
 # Selected-meaning pronunciation audit
 
-This delivery binds 155 current public meanings of six reviewed homographs to 12 pronunciation groups and 15 attributed recordings. It does not claim dictionary-wide audio review. Matching uses the exact entry, term, sense ID, definition and POS in [the append-only registry](../src/domain/vocabulary/sensePronunciations.json). A POS substring, title or accent flag cannot establish a meaning match.
+The initial pronunciation delivery binds 155 current public meanings of six reviewed homographs to 12 pronunciation groups and 15 attributed recordings. It does not claim dictionary-wide audio review. Matching uses the exact entry, term, sense ID, definition and POS in [the append-only registry](../src/domain/vocabulary/sensePronunciations.json). A POS substring, title or accent flag cannot establish a meaning match.
+
+## Batch 48 extension
+
+All initial registry objects remain immutable. The choose/decide/determine/resolve content review adds 21 exact resolve bindings in two groups: 20 ordinary meanings have a matched US recording; the valid alternative spelling of re-solve has reviewed IPA and no recording. Totals are 176 bindings, 14 groups and 16 recordings, with matched recordings for 175 meanings.
+
+[Resolve revision 93532916](https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916) places ordinary verbs and nouns under etymology 1, with /z/, and explicitly associates En-us-resolve.ogg with US pronunciation. Etymology 2 is an alternative spelling of re-solve, not a misspelling. [Re-solve revision 81308222](https://en.wiktionary.org/w/index.php?title=re-solve&oldid=81308222) supplies UK /ɹiːˈsɒlv/ and US /ɹiˈsɑlv/. Its binding does not borrow the ordinary /z/ recording. The ordinary UK accent also has no reviewed recording in this delivery.
+
+[Commons revision 1229159070](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-resolve.ogg&oldid=1229159070) credits Dvortygirl under [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/). The original file timestamp is 2007-03-13T09:27:59Z and its retrieved 14,449 bytes match source SHA-1 20b8d20f1e97a5b1be81fde442bea5ab45b1078e. The clip is not edited. Source markup and provenance establish the lexical reading; no listening-review claim is made. Frozen sessions keep their retained binding or legacy behavior through the unchanged reader, playback controller and session code.
 
 ## Lexical evidence
 
@@ -15,7 +23,7 @@ The English section of each fixed Wiktionary revision was read to establish pron
 | subject | [93156090](https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090) | Etymologies 1 and 2 adjectives/nouns have initial stress; etymology 3 verbs have final stress. | 17 |
 | minute | [93600887](https://en.wiktionary.org/w/index.php?title=minute&oldid=93600887) | Etymology 1 time-related nouns and the minutes-writing verbs use /ˈmɪnɪt/; etymology 2 adjectives have final stress and the source's alternative vowels. The UK phrase recording a minute is excluded from single-word dictation. | 16 |
 
-The US counterpart exists for every bound group. UK recordings are bound for both present readings and lead's metal group only. Other UK requests expose a missing match instead of borrowing US or synthesizing an ambiguous headword. Unreviewed wind and bow are guarded but receive no invented binding. Other terms retain the existing entry-level behavior; no broader coverage is implied.
+The US counterpart exists for every initial-release group. UK recordings are bound for both present readings and lead's metal group only. Other UK requests expose a missing match instead of borrowing US or synthesizing an ambiguous headword. Unreviewed wind and bow are guarded but receive no invented binding. Other terms retain the existing entry-level behavior; no broader coverage is implied.
 
 ## Recording provenance
 

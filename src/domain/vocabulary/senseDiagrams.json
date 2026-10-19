@@ -6462,5 +6462,189 @@
     "definition": "In logic, to infer a conclusion from premises or reasons.",
     "pos": "verb",
     "kind": "conclude-logic"
+  },
+  {
+    "entryId": "ve-5c3c3db8",
+    "senseId": "kaikki:f3fd3357646fa9dbcb",
+    "term": "choose",
+    "definition": "To select a person or thing from available alternatives.",
+    "pos": "verb",
+    "kind": "choose-selection"
+  },
+  {
+    "entryId": "ve-5c3c3db8",
+    "senseId": "kaikki:e871733a4ff945e9ea",
+    "term": "choose",
+    "definition": "To elect a person to an office or position.",
+    "pos": "verb",
+    "kind": "choose-election"
+  },
+  {
+    "entryId": "ve-5c3c3db8",
+    "senseId": "kaikki:3ce4c71995e948f5a5",
+    "term": "choose",
+    "definition": "To decide to act in a particular way.",
+    "pos": "verb",
+    "kind": "choose-action"
+  },
+  {
+    "entryId": "ve-5c3c3db8",
+    "senseId": "kaikki:34aea4776796221480",
+    "term": "choose",
+    "definition": "In mathematics, a word between two numbers denoting their binomial coefficient.",
+    "pos": "conj",
+    "kind": "choose-binomial"
+  },
+  {
+    "entryId": "ve-42d261af",
+    "senseId": "kaikki:db339068094b515ef6",
+    "term": "decide",
+    "definition": "To settle a matter or determine the outcome of a contest, problem or dispute.",
+    "pos": "verb",
+    "kind": "decide-outcome"
+  },
+  {
+    "entryId": "ve-42d261af",
+    "senseId": "kaikki:d34eed31e09df8315d",
+    "term": "decide",
+    "definition": "To reach a judgment or make up one’s mind, especially after considering alternatives.",
+    "pos": "verb",
+    "kind": "decide-deliberation"
+  },
+  {
+    "entryId": "ve-42d261af",
+    "senseId": "kaikki:6f57986ea6b0304e55",
+    "term": "decide",
+    "definition": "Of a Turing machine, to halt with the correct yes-or-no answer on every input to a decision problem.",
+    "pos": "verb",
+    "kind": "decide-computability"
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:7d15c5c55f7fa0352b",
+    "term": "determine",
+    "definition": "To set or fix the boundaries or limits of something.",
+    "pos": "verb",
+    "kind": "determine-boundaries"
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:3542aeddc929695a96",
+    "term": "determine",
+    "definition": "To find out or establish an answer by analysis, calculation or investigation.",
+    "pos": "verb",
+    "kind": "determine-investigation"
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:7c90aede4915d86ad6",
+    "term": "determine",
+    "definition": "To fix or shape the form, character or outcome of something.",
+    "pos": "verb",
+    "kind": "determine-score"
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:d6d5a58bf81cfb4024",
+    "term": "determine",
+    "definition": "To settle a question or controversy by an authoritative or judicial decision.",
+    "pos": "verb",
+    "kind": "determine-judgment"
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:51f154855af8e34ec9",
+    "term": "determine",
+    "definition": "To establish a fixed intention or resolve to do something, or bring a matter to a decision.",
+    "pos": "verb",
+    "kind": "determine-intention"
+  },
+  {
+    "entryId": "ve-82752328",
+    "senseId": "kaikki:13108cc4ab7769d1e3",
+    "term": "determine",
+    "definition": "To bring something to an end, or come to an end.",
+    "pos": "verb",
+    "kind": "determine-termination"
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:c8373584f6458763ba",
+    "term": "resolve",
+    "definition": "To find a solution to a problem.",
+    "pos": "verb",
+    "kind": "resolve-problem"
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:9f485d1f86324259a1",
+    "term": "resolve",
+    "definition": "To make something clear or intelligible by explaining or unravelling it.",
+    "pos": "verb",
+    "kind": "resolve-clarity"
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:7f9599354a408ccbbf",
+    "term": "resolve",
+    "definition": "To make a firm decision to pursue a goal or carry out an action.",
+    "pos": "verb",
+    "kind": "resolve-intention"
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:5353142b2a99d88c1c",
+    "term": "resolve",
+    "definition": "To settle differences, reach agreement or make peace.",
+    "pos": "verb",
+    "kind": "resolve-differences"
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:3aede46e62b5ae8d55",
+    "term": "resolve",
+    "definition": "In music, to move a chord from dissonance to consonance.",
+    "pos": "verb",
+    "kind": "resolve-harmony"
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:2f325481cc6ec52749",
+    "term": "resolve",
+    "definition": "In optics, to make distinct parts visible or distinguishable.",
+    "pos": "verb",
+    "kind": "resolve-optics"
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:08600267e08ab01f6d",
+    "term": "resolve",
+    "definition": "In computing, to look up a hostname’s IP address or the entity referred to by a source-code symbol.",
+    "pos": "verb",
+    "kind": "resolve-computing"
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:780058fe9b7d086519",
+    "term": "resolve",
+    "definition": "In chemistry, to separate racemic material into its constituent enantiomers.",
+    "pos": "verb",
+    "kind": "resolve-enantiomers"
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:b8415f5f3568f7bfbc",
+    "term": "resolve",
+    "definition": "Determination or willpower.",
+    "pos": "noun",
+    "kind": "resolve-willpower"
+  },
+  {
+    "entryId": "ve-516c7c91",
+    "senseId": "kaikki:97e606256759ac6ada",
+    "term": "resolve",
+    "definition": "A fixed decision or determination to do something.",
+    "pos": "noun",
+    "kind": "resolve-decision"
   }
 ]
