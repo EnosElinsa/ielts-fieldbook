@@ -63,6 +63,24 @@ test('everyday meanings keep source numbers while All retains specialist and his
   expect(mocks.current.stateRef.current.vocabularyEvidence).toEqual([]);
 });
 
+test('dictionary filters wait for loaded meanings rather than displaying temporary zero counts', async () => {
+  const { entry, dictionary } = priorityFixture('sensitive');
+  const primary = vocabularyTeaching.readiness.defaults.find(row => row.entryId === entry.id)!.sense;
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  let finish!: (value: any) => void;
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => url.endsWith('index.json')
+    ? { ok: true, json: async () => index }
+    : new Promise(resolve => { finish = resolve; })));
+  render(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[primary]} /></MemoryRouter>);
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  await waitFor(() => expect(finish).toBeTypeOf('function'));
+  expect(screen.getByText('Loading dictionary meanings…')).toBeVisible();
+  expect(screen.queryByRole('group', { name: 'Dictionary meaning filter' })).not.toBeInTheDocument();
+  await act(async () => finish({ ok: true, json: async () => dictionary }));
+  expect(await screen.findByRole('button', { name: 'Everyday meanings (5)' })).toBeVisible();
+  expect(screen.getByRole('button', { name: 'All meanings (9)' })).toBeVisible();
+});
+
 test('specialist and historical meanings do not become a learning recommendation when the everyday meaning is already displayed', async () => {
   const { entry, dictionary } = priorityFixture('efficient');
   render(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[dictionary.senses[0]]} /></MemoryRouter>);

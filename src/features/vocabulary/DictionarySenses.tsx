@@ -212,7 +212,7 @@ export function DictionarySenses({
         Dictionary meanings beyond the selected learning meanings. Choose a
         meaning to practise it separately.
       </p>
-      {hasLearningFilter ? <div className="vocabulary-dictionary-filter" role="group" aria-label="Dictionary meaning filter">
+      {!loading && senses.length > 0 && hasLearningFilter ? <div className="vocabulary-dictionary-filter" role="group" aria-label="Dictionary meaning filter">
         <button type="button" className="btn line" aria-pressed={!showAll} onClick={() => setShowAll(false)}>{hasEverydayMeanings ? 'Everyday meanings' : 'With learning notes'} ({recommended.length})</button>
         <button type="button" className="btn line" aria-pressed={showAll} onClick={() => setShowAll(true)}>All meanings ({senses.length})</button>
       </div> : null}
