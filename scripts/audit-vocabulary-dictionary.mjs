@@ -4,6 +4,8 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const identity = (entryId, senseId) => JSON.stringify([entryId, senseId]);
+// Index keys are lowercase; source URLs retain their independent case-sensitive titles.
+const dictionaryTerm = entry => entry?.term?.trim().toLowerCase();
 const hash = value => createHash('sha256').update(JSON.stringify(value) ?? 'null').digest('hex');
 const areas = ['definition', 'example', 'collocations', 'distinctions'];
 export const plainSourceGloss = value => value.replace(/<!--[^]*?-->/g, '').replace(/^#+\s*/, '')
@@ -63,7 +65,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
     if (!anchor || sourceIds.has(sense.id) || restoredKeys.has(key)) errors.push(`Invalid restored parent or duplicate source: ${term}/${sense.id}`);
     if (!anchor || hash(anchor) !== (topLevel ? evidence.anchorSourceHash : parentSourceHash)) errors.push(`Restored parent or anchor hash mismatch: ${term}/${sense.id}`);
     if ((evidence.sourceKind !== undefined && !topLevel) || (topLevel ? parentSenseId !== undefined || parentSourceHash !== undefined : evidence.anchorSenseId !== undefined || evidence.anchorSourceHash !== undefined)) errors.push(`Invalid restored source kind: ${term}/${sense.id}`);
-    if (entryById.get(entryId)?.term !== term || sourcePage !== dictionarySourcePage(anchor, term)) errors.push(`Invalid restored entry identity: ${term}/${entryId}`);
+    if (dictionaryTerm(entryById.get(entryId)) !== term || sourcePage !== dictionarySourcePage(anchor, term)) errors.push(`Invalid restored entry identity: ${term}/${entryId}`);
     let url;
     try { url = new URL(sense.sourceUrl); } catch { /* Invalid evidence is reported below. */ }
     if (!Number.isSafeInteger(revision) || revision <= 0 || url?.origin !== 'https://en.wiktionary.org' || url.pathname !== '/w/index.php' || url.searchParams.get('title') !== sourcePage || url.searchParams.get('oldid') !== String(revision)) errors.push(`Invalid restored source revision: ${term}/${sense.id}`);
@@ -81,7 +83,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
   const learningPriorities = { general: 0, specialist: 0, historical: 0, 'proper-name': 0 };
   for (const row of corrections.filter(row => row.learningPriority !== undefined)) {
     const entry = entryById.get(row.entryId), key = identity(row.entryId, row.senseId);
-    const original = sources.get(JSON.stringify([entry?.term, row.senseId]));
+    const original = sources.get(JSON.stringify([dictionaryTerm(entry), row.senseId]));
     if (!Object.hasOwn(learningPriorities, row.learningPriority) || !entry || !original ||
       !records.some(record => identity(record.entryId, record.senseId) === key) || hash(row.originalSense) !== hash(original) ||
       !row.definition?.trim() || !(row.pos || row.originalSense?.pos)?.trim() || row.referenceOnly || row.meaningGroup || row.usageReference) {
@@ -95,7 +97,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
     if (seen.has(key)) errors.push(`Duplicate review: ${review.term}/${review.senseId}`);
     seen.add(key);
     const entry = entryById.get(review.entryId), original = sources.get(JSON.stringify([review.term, review.senseId]));
-    if (!entry || entry.term !== review.term) errors.push(`Invalid entry identity: ${review.term}/${review.entryId}`);
+    if (!entry || dictionaryTerm(entry) !== review.term) errors.push(`Invalid entry identity: ${review.term}/${review.entryId}`);
     if (!original) errors.push(`Missing source sense: ${review.term}/${review.senseId}`);
     else if (hash(original) !== review.sourceHash) errors.push(`Stale source hash: ${review.term}/${review.senseId}`);
     const row = supplements.get(key);

@@ -7,6 +7,13 @@ const row = { entryId: 'bank', senseId: 'river', originalSense: original, defini
 const review = { term: 'bank', entryId: 'bank', senseId: 'river', sourceHash: createHash('sha256').update(JSON.stringify(original)).digest('hex'), reviewedAreas: ['definition','example','collocations','distinctions'] };
 const input = { entries: [{ id: 'bank', term: 'bank' }], dictionaries: { bank: { senses: [original] } }, corrections: [row], records: [review], diagrams: [] };
 
+test('catalogue display casing resolves to the lowercase dictionary key without changing case-sensitive source pages', () => {
+  const value = { ...input, entries: [{ id: 'bank', term: 'Bank' }], corrections: [{ ...row, learningPriority: 'general' }] };
+  expect(inspectDictionaryReview(value).errors).toEqual([]);
+  expect(inspectDictionaryReview(value).summary.reviewed).toBe(1);
+  expect(inspectDictionaryReview({ ...value, records: [{ ...review, term: 'another' }] }).errors.join(' ')).toMatch(/entry identity|source sense/i);
+});
+
 test.each(['general', 'specialist', 'historical', 'proper-name'])('authored %s learning priority is counted separately from textual review', learningPriority => {
   const result = inspectDictionaryReview({ ...input, corrections: [{ ...row, learningPriority }] });
   expect(result.errors).toEqual([]);

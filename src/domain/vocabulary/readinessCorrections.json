@@ -246258,5 +246258,1968 @@
     "antonyms": [],
     "wordFamily": [],
     "register": ""
+  },
+  {
+    "entryId": "ve-bbe5a1d",
+    "senseId": "kaikki:9cd18fc84854d00400",
+    "definition": "An informal word for a photocopy.",
+    "example": "Please make a Xerox of the signed page.",
+    "collocations": [
+      "make a Xerox",
+      "a Xerox of a document"
+    ],
+    "usage": "Informal copy noun. Photocopy is a more neutral choice in formal writing.",
+    "distinctions": [
+      "This noun names a copy of a document; the same spelling also has a separate copying-verb use."
+    ],
+    "distinctionTask": {
+      "prompt": "Please make a Xerox of the signed page. Here Xerox names _____.",
+      "options": [
+        "a copy of the page",
+        "the act of signing it"
+      ],
+      "answer": "a copy of the page",
+      "explanation": "The object made is a copy, rather than a signature."
+    },
+    "originalSense": {
+      "id": "kaikki:9cd18fc84854d00400",
+      "definition": "A xerograph (copy).",
+      "example": "Near-synonyms: photocopy (broadly synonymous), photostat (broadly synonymous)",
+      "pos": "noun",
+      "synonyms": [
+        "xerox copy",
+        "photocopy",
+        "photostat"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "colloquial, informal",
+      "register": "colloquial, informal",
+      "wordFamily": [
+        "xerocracy",
+        "Xerox art",
+        "xerox copy",
+        "xeroxlore",
+        "xerox machine",
+        "xeroxable",
+        "xeroxer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/xerox#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=xerox&oldid=92513544",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "informal"
+  },
+  {
+    "entryId": "ve-398a4cac",
+    "senseId": "kaikki:04a38ba1985d81ae7a",
+    "definition": "Plural of accountant: people who maintain or examine accounts and records.",
+    "example": "The accountants checked the company's financial records.",
+    "collocations": [
+      "qualified accountants",
+      "a firm of accountants",
+      "accountants and auditors"
+    ],
+    "usage": "Plural noun: the accountants are; one accountant is. The financial-record context identifies the profession here.",
+    "distinctions": [
+      "Accountants names people. Accounts can name the records they keep; the two words are not interchangeable."
+    ],
+    "distinctionTask": {
+      "prompt": "The accountants checked the records. Accountants refers to _____.",
+      "options": [
+        "people working with the accounts",
+        "the records themselves"
+      ],
+      "answer": "people working with the accounts",
+      "explanation": "The plural noun identifies the people performing the check."
+    },
+    "originalSense": {
+      "id": "kaikki:04a38ba1985d81ae7a",
+      "definition": "plural of accountant",
+      "example": "For quotations using this term, see Citations:accountants.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "form-of, plural",
+      "register": "form-of, plural",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/accountants#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=accountants&oldid=90281540",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "form-of, plural"
+  },
+  {
+    "entryId": "ve-5999db6f",
+    "senseId": "kaikki:5be7000e16e53a2985",
+    "definition": "A cylindrical container, often made from wooden staves held together by hoops.",
+    "example": "They stored rainwater in a wooden barrel.",
+    "collocations": [
+      "a wooden barrel",
+      "a barrel of water",
+      "fill a barrel"
+    ],
+    "usage": "Countable container noun. A barrel can also name a quantity; the amount depends on the commodity and convention.",
+    "distinctions": [
+      "The wooden barrel in this sentence is the physical container. The sentence does not define a standard unit of volume."
+    ],
+    "distinctionTask": {
+      "prompt": "They stored rainwater in a wooden barrel. Barrel names _____.",
+      "options": [
+        "the container",
+        "a stated standard volume"
+      ],
+      "answer": "the container",
+      "explanation": "A physical container is described; no volume convention or capacity is supplied."
+    },
+    "originalSense": {
+      "id": "kaikki:5be7000e16e53a2985",
+      "definition": "A round (cylindrical) vessel, such as a cask, of greater length than breadth, and bulging in the middle, made of staves bound with hoops, and having flat ends (heads). The word is sometimes applied to a similar cylindrical container made of metal, usually called a drum.",
+      "example": "Near-synonym: cask",
+      "pos": "noun",
+      "synonyms": [
+        "bbl",
+        "cask"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "African milk barrel",
+        "barrel adjuster",
+        "barrelage",
+        "barrel bag",
+        "barrel-bellied",
+        "barrel bomb",
+        "barrel bulk",
+        "barrel cactus",
+        "barrel chest",
+        "barrel-chested",
+        "barrel child",
+        "barrel drum",
+        "barrelene",
+        "barrelette",
+        "barreleye",
+        "barrel fever",
+        "barrel file",
+        "barrelfish",
+        "barrelful",
+        "barrel-head",
+        "barrel head",
+        "barrel helm",
+        "barrel hitch",
+        "barrel hoop",
+        "barrelhouse",
+        "barrel jellyfish",
+        "barrel jump",
+        "barrel jumping",
+        "barrel key",
+        "barrel knot"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/barrel#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=barrel&oldid=93679194",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "countable"
+  },
+  {
+    "entryId": "ve-7c7033a7",
+    "senseId": "kaikki:bd924e80a0f0b5eea4",
+    "definition": "One of the small balls threaded together on a rosary or similar string of prayer beads.",
+    "example": "She moved one bead along the rosary as she prayed.",
+    "collocations": [
+      "a rosary bead",
+      "a string of prayer beads",
+      "move a bead"
+    ],
+    "usage": "Countable religious-use noun. One bead is a part of the string, rather than the entire rosary.",
+    "distinctions": [
+      "This exact meaning is a prayer bead. A decorative bead on a necklace is a separate broader use."
+    ],
+    "distinctionTask": {
+      "prompt": "She moved one bead along the rosary. Here one bead is _____.",
+      "options": [
+        "one small part of the string",
+        "the entire rosary"
+      ],
+      "answer": "one small part of the string",
+      "explanation": "The singular noun refers to one threaded ball."
+    },
+    "originalSense": {
+      "id": "kaikki:bd924e80a0f0b5eea4",
+      "definition": "Each in a string of small balls making up the rosary or paternoster.",
+      "example": "Holonym: prayer beads",
+      "pos": "noun",
+      "synonyms": [
+        "prayer bead"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "adder bead",
+        "anal beads",
+        "angle bead",
+        "Baily's beads",
+        "bath bead",
+        "beadboard",
+        "bead breaker",
+        "beaded lacewing",
+        "beaded lizard",
+        "beader",
+        "beadery",
+        "bead fern",
+        "beadful",
+        "beadless",
+        "beadlet",
+        "bead lightning",
+        "beadlike",
+        "bead lily",
+        "beadmaker",
+        "beadmaking",
+        "bead maze",
+        "bead proof",
+        "bead-rattler",
+        "beadroll",
+        "bead seat",
+        "beadsman",
+        "bead tracer",
+        "bead tree",
+        "bead-tree",
+        "beadwork"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/bead#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bead&oldid=93679419",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-a7df2b8",
+    "senseId": "kaikki:a7aafeea79673b83de",
+    "definition": "A long-handled brush used for sweeping floors and other surfaces.",
+    "example": "Use a broom to sweep the kitchen floor.",
+    "collocations": [
+      "sweep with a broom",
+      "a broom handle",
+      "a broom and dustpan"
+    ],
+    "usage": "Countable noun for the cleaning tool. Broom also has separate plant-related meanings.",
+    "distinctions": [
+      "A broom sweeps loose material; a mop is normally used for cleaning with liquid."
+    ],
+    "distinctionTask": {
+      "prompt": "To sweep loose dust from a dry floor, use a _____.",
+      "options": [
+        "broom",
+        "bucket alone"
+      ],
+      "answer": "broom",
+      "explanation": "A broom is the sweeping tool; a bucket alone does not sweep."
+    },
+    "originalSense": {
+      "id": "kaikki:a7aafeea79673b83de",
+      "definition": "A domestic utensil with fibers bound together at the end of a long handle, used for sweeping.",
+      "example": "Meronyms: broomstick (handle), bavin (head)",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "a new broom sweeps clean",
+        "Branton",
+        "Brimley",
+        "Bromley",
+        "broomball",
+        "broombush",
+        "broom bush",
+        "broom-bush",
+        "broom-clean",
+        "broom closet",
+        "broom corn",
+        "broomcorn",
+        "broom cupboard",
+        "broomie",
+        "brooming",
+        "broomland",
+        "broomless",
+        "broomlike",
+        "broommaker",
+        "broommaking",
+        "broomrape",
+        "broom-rape",
+        "broom rape",
+        "broom sedge",
+        "broomsedge",
+        "broom spurge",
+        "broomstaff",
+        "broomstick",
+        "broomtail",
+        "broom up"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/broom#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=broom&oldid=93682171",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "countable"
+  },
+  {
+    "entryId": "ve-5ba39286",
+    "senseId": "kaikki:d9764a6c8c73013f25",
+    "definition": "An artillery assembly including a tube and its breech or firing mechanism.",
+    "example": "The museum displayed a cannon alongside other artillery equipment.",
+    "collocations": [
+      "an artillery cannon",
+      "a cannon assembly",
+      "a damaged cannon"
+    ],
+    "usage": "Artillery terminology. This source meaning names an assembly used as a component of a gun, howitzer or mortar.",
+    "distinctions": [
+      "Cannon with two n letters in the middle concerns artillery here. Canon has separate uses for rules, accepted works or musical composition."
+    ],
+    "distinctionTask": {
+      "prompt": "The museum displayed a cannon with other artillery equipment. Cannon refers to _____.",
+      "options": [
+        "an artillery assembly",
+        "an accepted set of literary works"
+      ],
+      "answer": "an artillery assembly",
+      "explanation": "Artillery identifies cannon; an accepted body of works can be called a canon."
+    },
+    "learningPriority": "specialist",
+    "originalSense": {
+      "id": "kaikki:d9764a6c8c73013f25",
+      "definition": "A complete assembly, consisting of an artillery tube and a breech mechanism, firing mechanism or base cap, which is a component of a gun, howitzer or mortar, which may include muzzle appendages.",
+      "example": "Holonyms: gun, field gun; howitzer; mortar",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "autocannon",
+        "calcium cannon",
+        "cannonade",
+        "cannon ball",
+        "cannonball",
+        "cannon-ball",
+        "cannon bit",
+        "cannon bone",
+        "cannon box",
+        "cannon cocker",
+        "cannon cracker",
+        "cannoneer",
+        "cannoner",
+        "cannon fodder",
+        "cannon-fodder",
+        "cannon game",
+        "cannonlike",
+        "cannon lock",
+        "cannon metal",
+        "cannon pinion",
+        "cannonproof",
+        "cannon roll",
+        "cannonry",
+        "cannon shot",
+        "chicken cannon",
+        "custard cannon",
+        "demi-cannon",
+        "glass cannon",
+        "hand cannon",
+        "loose cannon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cannon#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=cannon&oldid=93683185",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "artillery"
+  },
+  {
+    "entryId": "ve-5bfdcfe8",
+    "senseId": "kaikki:5704742f517616f009",
+    "definition": "A grammatical unit containing a subject and a verb, which may be a whole sentence or part of one.",
+    "example": "The clause \"the train arrived\" contains a subject and a verb.",
+    "collocations": [
+      "an independent clause",
+      "a subordinate clause",
+      "the main clause"
+    ],
+    "usage": "This is the grammatical meaning. In the example, the train is the subject and arrived is the verb.",
+    "distinctions": [
+      "A clause may form an entire sentence or be part of a longer sentence; clause and sentence are not always interchangeable."
+    ],
+    "distinctionTask": {
+      "prompt": "In \"We waited because the train was late\", \"because the train was late\" is _____.",
+      "options": [
+        "a clause within a longer sentence",
+        "the entire sentence"
+      ],
+      "answer": "a clause within a longer sentence",
+      "explanation": "The because-clause is one part of the complete sentence."
+    },
+    "originalSense": {
+      "id": "kaikki:5704742f517616f009",
+      "definition": "A group of words that contains a subject and a verb; it may be part of a sentence or may constitute the whole sentence, depending on the syntax in each instance.",
+      "example": "Near-synonyms: sentential, sentence",
+      "pos": "noun",
+      "synonyms": [
+        "sentential",
+        "sentence"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "close"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/clause#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=clause&oldid=93143193",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-93ce31bf",
+    "senseId": "kaikki:4c33fa7b0056b145dc",
+    "definition": "Preparations applied to the body to change or enhance its appearance.",
+    "example": "The shop sells cosmetics such as lipstick and mascara.",
+    "collocations": [
+      "apply cosmetics",
+      "buy cosmetics",
+      "a cosmetics company"
+    ],
+    "usage": "Plural noun in this meaning: these cosmetics are. Cosmetic can also be an adjective, as in cosmetic products.",
+    "distinctions": [
+      "Cosmetics names the products. Cosmetic as an adjective describes something and does not by itself name the plural products."
+    ],
+    "distinctionTask": {
+      "prompt": "The shop sells cosmetics such as lipstick. Cosmetics names _____.",
+      "options": [
+        "beauty preparations",
+        "all clothing sold in the shop"
+      ],
+      "answer": "beauty preparations",
+      "explanation": "The listed products identify the appearance-related preparations."
+    },
+    "originalSense": {
+      "id": "kaikki:4c33fa7b0056b145dc",
+      "definition": "Preparations applied externally to change or enhance the beauty of skin, hair, nails, lips, and eyes.",
+      "example": "Near-synonyms: makeup, make-up; beauty products",
+      "pos": "noun",
+      "synonyms": [
+        "makeup",
+        "make-up",
+        "beauty product"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "plural, plural-only",
+      "register": "plural, plural-only",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cosmetics#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=cosmetics&oldid=92693123",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "plural, plural-only"
+  },
+  {
+    "entryId": "ve-396d1656",
+    "senseId": "kaikki:8bffbc8dabb1f7b217",
+    "definition": "Plural of criterion: standards or requirements used to judge or compare things.",
+    "example": "The selection criteria include relevant experience and clear communication.",
+    "collocations": [
+      "selection criteria",
+      "assessment criteria",
+      "meet the criteria"
+    ],
+    "usage": "For the ordinary plural meaning, write the criteria are; use criterion for one standard. Other source usages remain separately available.",
+    "distinctions": [
+      "The imported plural meaning concerns several standards. It is distinct from the separately recorded singular use of criteria."
+    ],
+    "distinctionTask": {
+      "prompt": "In ordinary edited English, several selection _____.",
+      "options": [
+        "criteria are listed",
+        "criterion are listed"
+      ],
+      "answer": "criteria are listed",
+      "explanation": "Criteria is the ordinary plural; criterion is singular."
+    },
+    "originalSense": {
+      "id": "kaikki:8bffbc8dabb1f7b217",
+      "definition": "plural of criterion",
+      "example": "For quotations using this term, see Citations:criteria.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "form-of, plural",
+      "register": "form-of, plural",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/criteria#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=criteria&oldid=92202814",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "form-of, plural"
+  },
+  {
+    "entryId": "ve-826db9ff",
+    "senseId": "kaikki:e22773a2db594f0860",
+    "definition": "A non-soap cleaning agent, especially one containing a synthetic surfactant.",
+    "example": "Add detergent to the washing machine before starting the wash.",
+    "collocations": [
+      "laundry detergent",
+      "liquid detergent",
+      "a detergent solution"
+    ],
+    "usage": "The word can name the cleaning substance without an article, as in add detergent, or a type or product, as in a mild detergent.",
+    "distinctions": [
+      "This source meaning excludes soap. Cleaner is broader and need not identify the substance as a detergent."
+    ],
+    "distinctionTask": {
+      "prompt": "A non-soap washing agent is called a _____.",
+      "options": [
+        "detergent",
+        "washing machine"
+      ],
+      "answer": "detergent",
+      "explanation": "Detergent names the cleaning agent; the machine is the equipment."
+    },
+    "originalSense": {
+      "id": "kaikki:e22773a2db594f0860",
+      "definition": "Any non-soap cleaning agent, especially a synthetic surfactant.",
+      "example": "Near-synonym: cleaner (sometimes coordinate)",
+      "pos": "noun",
+      "synonyms": [
+        "cleaner"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/detergent#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=detergent&oldid=93520951",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "countable, uncountable"
+  },
+  {
+    "entryId": "ve-eedac98c",
+    "senseId": "kaikki:38034f47eeb6bd1126",
+    "definition": "A comfortable room in a home used for everyday relaxation and leisure.",
+    "example": "The children watched a film in the family room.",
+    "collocations": [
+      "the family room",
+      "a spacious family room",
+      "relax in the family room"
+    ],
+    "usage": "This exact meaning concerns a room in a dwelling, rather than a hotel room offered for a family.",
+    "distinctions": [
+      "Family room and living room can overlap in ordinary home descriptions. Their names do not guarantee different layouts or functions."
+    ],
+    "distinctionTask": {
+      "prompt": "In a house, a family room is used for _____.",
+      "options": [
+        "everyday leisure and relaxation",
+        "only hotel accommodation"
+      ],
+      "answer": "everyday leisure and relaxation",
+      "explanation": "The home context identifies a leisure room in a dwelling."
+    },
+    "originalSense": {
+      "id": "kaikki:38034f47eeb6bd1126",
+      "definition": "A comfortable room in a dwelling, for frequent leisure use.",
+      "example": "Near-synonyms: den, rec room, playroom, game room",
+      "pos": "noun",
+      "synonyms": [
+        "den",
+        "rec room",
+        "playroom",
+        "game room"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/family_room#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=family%20room&oldid=91955213",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6ec7de",
+    "senseId": "kaikki:8996965d9b4b173e16",
+    "definition": "A sticky substance used to join materials together.",
+    "example": "Apply glue to the cardboard and press the pieces together.",
+    "collocations": [
+      "apply glue",
+      "a tube of glue",
+      "wood glue"
+    ],
+    "usage": "Usually a substance noun here. A glue can identify a particular type of adhesive.",
+    "distinctions": [
+      "Glue is the adhesive material; to glue is a separate verb meaning join with an adhesive."
+    ],
+    "distinctionTask": {
+      "prompt": "Apply glue to join the cardboard pieces. Glue names _____.",
+      "options": [
+        "the adhesive substance",
+        "the pieces being joined"
+      ],
+      "answer": "the adhesive substance",
+      "explanation": "The noun is the substance applied to the cardboard."
+    },
+    "originalSense": {
+      "id": "kaikki:8996965d9b4b173e16",
+      "definition": "A hard gelatin made by boiling bones and hides, used in solution as an adhesive; or any sticky adhesive substance.",
+      "example": "Near-synonyms: adhesive, cement",
+      "pos": "noun",
+      "synonyms": [
+        "adhesive",
+        "cement"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "bee glue",
+        "beglue",
+        "crazy glue",
+        "desert glue",
+        "englue",
+        "fish glue",
+        "flesh glue",
+        "glueball",
+        "glueboard",
+        "glue board",
+        "glue boiler",
+        "glue cell",
+        "glue code",
+        "glue dot",
+        "glue ear",
+        "glue factory",
+        "glue friend",
+        "glue gun",
+        "gluehead",
+        "glueless",
+        "gluelike",
+        "gluelump",
+        "gluemaker",
+        "gluemaking",
+        "glueman",
+        "glue-on",
+        "glue plant",
+        "gluepot",
+        "glue-pot",
+        "glue record"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/glue#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=glue&oldid=93697316",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "countable, uncountable"
+  },
+  {
+    "entryId": "ve-19dae8ab",
+    "senseId": "kaikki:4ea3829e13ea6e5fc3",
+    "definition": "As a secondary or unintended result, rather than as the main purpose.",
+    "example": "The survey incidentally revealed a drainage problem while measuring the site.",
+    "collocations": [
+      "incidentally reveal",
+      "incidentally discover",
+      "incidentally benefit"
+    ],
+    "usage": "Manner/result adverb in this meaning. The drainage finding is a side result of the survey, rather than its stated measuring purpose.",
+    "distinctions": [
+      "Sentence-opening Incidentally can introduce an aside in conversation. That discourse use is separately recorded."
+    ],
+    "distinctionTask": {
+      "prompt": "The survey incidentally revealed a problem while measuring the site. The finding was _____.",
+      "options": [
+        "a side result",
+        "the only stated purpose"
+      ],
+      "answer": "a side result",
+      "explanation": "Incidentally marks the discovery as secondary to the measuring work."
+    },
+    "originalSense": {
+      "id": "kaikki:4ea3829e13ea6e5fc3",
+      "definition": "In an incidental manner.",
+      "example": "Near-synonyms: coincidentally, happenstantially, circumstantially, by chance, accidentally, semirandomly, randomly",
+      "pos": "adv",
+      "synonyms": [
+        "coincidentally",
+        "happenstantially",
+        "circumstantially",
+        "by chance",
+        "accidentally",
+        "semirandomly",
+        "randomly"
+      ],
+      "antonyms": [
+        "inevitably",
+        "certainly",
+        "systemically",
+        "systematically",
+        "essentially"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/incidentally#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=incidentally&oldid=90579170",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-2c7f0d33",
+    "senseId": "kaikki:5428d53289bbf8cbba",
+    "definition": "Animals kept on a farm, such as cattle, sheep or pigs.",
+    "example": "The farm keeps livestock including cattle and sheep.",
+    "collocations": [
+      "raise livestock",
+      "livestock farming",
+      "feed livestock"
+    ],
+    "usage": "Collective farm-animal noun. Use an animal or a head of livestock when an individual count must be explicit.",
+    "distinctions": [
+      "Livestock identifies farm animals here; crops are plants rather than livestock."
+    ],
+    "distinctionTask": {
+      "prompt": "The farm raises livestock such as _____.",
+      "options": [
+        "cattle and sheep",
+        "wheat and barley"
+      ],
+      "answer": "cattle and sheep",
+      "explanation": "Cattle and sheep are farm animals; wheat and barley are crops."
+    },
+    "originalSense": {
+      "id": "kaikki:5428d53289bbf8cbba",
+      "definition": "Farm animals; animals domesticated for cultivation.",
+      "example": "Meronym: stock animal",
+      "pos": "noun",
+      "synonyms": [
+        "stock[Appendix:Glossary"
+      ],
+      "antonyms": [
+        "deadstock"
+      ],
+      "collocations": [],
+      "usage": "usually",
+      "register": "uncountable, usually",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/livestock#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=livestock&oldid=93705322",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "uncountable, usually"
+  },
+  {
+    "entryId": "ve-23a21f89",
+    "senseId": "kaikki:a7d6779c67859068a0",
+    "definition": "A room in a home used for socialising and leisure.",
+    "example": "We sat in the living room and talked after dinner.",
+    "collocations": [
+      "the living room",
+      "living room furniture",
+      "a spacious living room"
+    ],
+    "usage": "Countable room noun. Living is part of the compound name here, rather than a claim that the room itself is alive.",
+    "distinctions": [
+      "Living room and family room can overlap in home descriptions; a strict difference is not implied by either name."
+    ],
+    "distinctionTask": {
+      "prompt": "We sat and talked in the living room. Living room names _____.",
+      "options": [
+        "a room for social and leisure activities",
+        "a room that is itself alive"
+      ],
+      "answer": "a room for social and leisure activities",
+      "explanation": "The compound refers to a room used by people for everyday activities."
+    },
+    "originalSense": {
+      "id": "kaikki:a7d6779c67859068a0",
+      "definition": "A room in a private house used for general social and leisure activities.",
+      "example": "Near-synonyms: lounge (esp. UK), loungeroom, lounge room (esp. Australia), sitting room, parlour, parlor, foreroom, front room, drawing room, zitkamer",
+      "pos": "noun",
+      "synonyms": [
+        "lounge",
+        "loungeroom",
+        "lounge room",
+        "sitting room",
+        "parlour",
+        "parlor",
+        "foreroom",
+        "front room",
+        "drawing room",
+        "zitkamer"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/living_room#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=living%20room&oldid=93140024",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "countable"
+  },
+  {
+    "entryId": "ve-985280f7",
+    "senseId": "kaikki:4bccd78cdc62b5e19c",
+    "definition": "A written character or symbol that represents a word or phrase.",
+    "example": "A logogram represents a word or phrase rather than a single speech sound.",
+    "collocations": [
+      "a written logogram",
+      "use a logogram",
+      "logographic writing"
+    ],
+    "usage": "Writing-system terminology. The source includes characters as well as symbols; a logogram need not be a picture of its meaning.",
+    "distinctions": [
+      "A logogram represents a word or phrase. An individual alphabetic letter commonly represents a sound or part of a sound pattern."
+    ],
+    "distinctionTask": {
+      "prompt": "A logogram represents _____.",
+      "options": [
+        "a word or phrase",
+        "only one speech sound by definition"
+      ],
+      "answer": "a word or phrase",
+      "explanation": "The lexical unit represented distinguishes the logogram in this definition."
+    },
+    "learningPriority": "specialist",
+    "originalSense": {
+      "id": "kaikki:4bccd78cdc62b5e19c",
+      "definition": "A character or symbol (usually nonalphanumeric) that represents a word or phrase.",
+      "example": "Near-synonyms: (polysemic, sometimes synonymous) lexigram; lexigraph",
+      "pos": "noun",
+      "synonyms": [
+        "logograph",
+        "lexigram",
+        "lexigraph"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "logogrammic"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/logogram#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=logogram&oldid=90395201",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b9c7f2e9",
+    "senseId": "kaikki:6164538de9b7616c1f",
+    "definition": "A party or gathering at which people wear masks and costumes.",
+    "example": "Guests wore elaborate masks to the masquerade.",
+    "collocations": [
+      "attend a masquerade",
+      "a masquerade ball",
+      "a masked masquerade"
+    ],
+    "usage": "Countable party noun in this meaning. The word also has a separate figurative use for a deceptive appearance.",
+    "distinctions": [
+      "A masquerade party involves masks and costumes; the sentence does not accuse the guests of deception."
+    ],
+    "distinctionTask": {
+      "prompt": "Guests wore masks to the masquerade. Masquerade names _____.",
+      "options": [
+        "the costume gathering",
+        "a proven act of fraud"
+      ],
+      "answer": "the costume gathering",
+      "explanation": "The party context identifies the literal gathering."
+    },
+    "originalSense": {
+      "id": "kaikki:6164538de9b7616c1f",
+      "definition": "An assembly or party of people wearing (usually elaborate or fanciful) masks and costumes, and amusing themselves with dancing, conversation, or other diversions.",
+      "example": "Near-synonym: costume party",
+      "pos": "noun",
+      "synonyms": [
+        "masque",
+        "costume party"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "also, attributive",
+      "register": "also, attributive",
+      "wordFamily": [
+        "masquerader",
+        "masqueradish"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/masquerade#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=masquerade&oldid=93437012",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "also, attributive"
+  },
+  {
+    "entryId": "ve-8ab58423",
+    "senseId": "kaikki:3cae8e16a0f6bcb5e3",
+    "definition": "A person sent to carry out a mission.",
+    "example": "In this broad source meaning, a missionary is someone sent on a mission; the definition does not specify the mission's purpose.",
+    "collocations": [
+      "a missionary sent on a mission",
+      "send a missionary"
+    ],
+    "usage": "Reading guidance for the broad source meaning. The dictionary separately records a person who spreads a religion.",
+    "distinctions": [
+      "The broad mission sense and the religion-specific sense remain separate; a mission's purpose must come from context."
+    ],
+    "exampleKind": "reading-note",
+    "originalSense": {
+      "id": "kaikki:3cae8e16a0f6bcb5e3",
+      "definition": "One who is sent on a mission.",
+      "example": "Near-synonym: emissary",
+      "pos": "noun",
+      "synonyms": [
+        "emissary"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "antimissionary",
+        "missionaries and cannibals problem",
+        "missionarily",
+        "missionary bishop",
+        "missionarying",
+        "missionaryism",
+        "missionaryize",
+        "missionarylike",
+        "missionary-linguist",
+        "missionary linguist",
+        "missionary position",
+        "missionary rector",
+        "missionaryship",
+        "missionary zeal",
+        "nonmissionary",
+        "premissionary",
+        "unmissionary"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/missionary#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=missionary&oldid=92984304",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "countable, uncountable"
+  },
+  {
+    "entryId": "ve-a6809ce",
+    "senseId": "kaikki:f5c66df6e8ab70db71",
+    "definition": "A machine or device that produces motion or converts another form of energy into mechanical energy.",
+    "example": "An electric motor drives the pump.",
+    "collocations": [
+      "an electric motor",
+      "a motor drives a pump",
+      "a motor shaft"
+    ],
+    "usage": "Countable device noun. Electric in this example identifies the kind of motor; it is not a requirement for every dictionary use.",
+    "distinctions": [
+      "An electric motor converts electrical input into mechanical motion; a generator performs the reverse energy-conversion role."
+    ],
+    "distinctionTask": {
+      "prompt": "An electric motor driving a pump provides _____.",
+      "options": [
+        "mechanical motion",
+        "a printed copy"
+      ],
+      "answer": "mechanical motion",
+      "explanation": "The motor supplies motion to drive the pump."
+    },
+    "originalSense": {
+      "id": "kaikki:f5c66df6e8ab70db71",
+      "definition": "A machine or device that converts other energy forms into mechanical energy, or imparts motion.",
+      "example": "Near-synonyms: drive, engine (sometimes synonymous)",
+      "pos": "noun",
+      "synonyms": [
+        "drive",
+        "engine"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "aeromotor",
+        "affectomotor",
+        "agrimotor",
+        "air motor",
+        "arteriomotor",
+        "audiomotor",
+        "barring motor",
+        "bimotor",
+        "Brownian motor",
+        "coastal motor boat",
+        "corticomotor",
+        "crate motor",
+        "depressomotor",
+        "diesel motor",
+        "dorsomotor",
+        "driving motor",
+        "electric motor",
+        "electromotor",
+        "extramotor",
+        "fine motor skill",
+        "gearmotor",
+        "get someone's motor running",
+        "graphomotor",
+        "gross motor skill",
+        "hydromotor",
+        "hypermotor",
+        "hysteresis motor",
+        "ideomotor",
+        "idiomotor",
+        "induction motor"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/motor#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=motor&oldid=93634712",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6c41c79e",
+    "senseId": "kaikki:be7e267b34fc509f7e",
+    "definition": "A document itemising the contents of each package in a shipment.",
+    "example": "The packing list records the contents and weight of each carton.",
+    "collocations": [
+      "prepare a packing list",
+      "a detailed packing list",
+      "check the packing list"
+    ],
+    "usage": "Logistics and transport. The International Trade Administration describes a package-by-package list including weights, measurements and goods.",
+    "distinctions": [
+      "This is a shipment-contents document. It is distinct from a personal checklist of items to take on holiday."
+    ],
+    "distinctionTask": {
+      "prompt": "For an export shipment, the packing list itemises _____.",
+      "options": [
+        "the contents of each package",
+        "only a traveller's sightseeing plans"
+      ],
+      "answer": "the contents of each package",
+      "explanation": "The logistics document identifies what each package contains."
+    },
+    "referenceUrl": "https://www.trade.gov/packing-list",
+    "originalSense": {
+      "id": "kaikki:be7e267b34fc509f7e",
+      "definition": "(logistics, transport)",
+      "example": "Near-synonym: shipping list",
+      "pos": "noun",
+      "synonyms": [
+        "shipping list"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "empty-gloss, no-gloss",
+      "register": "empty-gloss, no-gloss",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/packing_list#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "logistics"
+  },
+  {
+    "entryId": "ve-b8772fa",
+    "senseId": "kaikki:62e1772a61c6368e1d",
+    "definition": "Pan, the Greek god associated with nature, often depicted as part goat and part man playing pipes.",
+    "example": "The capitalised name Pan refers here to the Greek god of nature, rather than a cooking utensil.",
+    "collocations": [
+      "the god Pan",
+      "a depiction of Pan"
+    ],
+    "usage": "Proper-name reading guidance. This source identity comes from the page Pan; the ordinary lowercase cooking noun is kept separately.",
+    "distinctions": [
+      "Capitalised Pan in this meaning names a deity. Lowercase pan can name a cooking vessel."
+    ],
+    "exampleKind": "reading-note",
+    "learningPriority": "proper-name",
+    "originalSense": {
+      "id": "kaikki:62e1772a61c6368e1d",
+      "definition": "Greek god of nature, often visualized as half goat and half man playing pipes.",
+      "example": "Near-synonyms: Faunus, Pales (Roman counterparts, not identical)",
+      "pos": "name",
+      "synonyms": [
+        "Faunus",
+        "Pales"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Greek",
+      "register": "Greek",
+      "wordFamily": [
+        "pan-",
+        "Pandean",
+        "pandemonium",
+        "panic",
+        "Panic",
+        "panine",
+        "Pan-like",
+        "panolepsy",
+        "panophobia",
+        "panpipe",
+        "pan-pipes",
+        "panpipes"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/Pan#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Pan&oldid=93543208",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "proper name"
+  },
+  {
+    "entryId": "ve-e0abdaba",
+    "senseId": "kaikki:a2564a53230c10b8fe",
+    "definition": "A restatement of a text or idea in different words.",
+    "example": "Her paraphrase kept the main idea but changed the wording.",
+    "collocations": [
+      "a paraphrase of a passage",
+      "write a paraphrase",
+      "an accurate paraphrase"
+    ],
+    "usage": "Countable restatement noun. The verb paraphrase is a separate use of the same spelling.",
+    "distinctions": [
+      "A paraphrase changes the wording while aiming to retain the meaning; a direct quotation retains the quoted wording."
+    ],
+    "distinctionTask": {
+      "prompt": "A paraphrase of a sentence uses _____.",
+      "options": [
+        "different wording to retain its meaning",
+        "the exact wording as a direct quotation"
+      ],
+      "answer": "different wording to retain its meaning",
+      "explanation": "Changing wording while retaining meaning identifies a paraphrase."
+    },
+    "originalSense": {
+      "id": "kaikki:a2564a53230c10b8fe",
+      "definition": "A restatement of a text in different words, often to clarify meaning or from memory rather than verbatim.",
+      "example": "Near-synonym: paraphrasis",
+      "pos": "noun",
+      "synonyms": [
+        "paraphrasis"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "paraphrastic",
+        "paraphrastical",
+        "paraphrastically"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/paraphrase#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=paraphrase&oldid=92695859",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "countable, uncountable"
+  },
+  {
+    "entryId": "ve-1a98d5db",
+    "senseId": "kaikki:459f0eaecab409294e",
+    "definition": "To produce a paper copy of a computer document; print out.",
+    "example": "Please print off two copies of the timetable.",
+    "collocations": [
+      "print off a document",
+      "print off two copies",
+      "print the timetable off"
+    ],
+    "usage": "Separable phrasal verb: print off the document or print the document off. With a pronoun, use print it off.",
+    "distinctions": [
+      "Print off concerns producing a paper copy here. It does not mean deleting the computer document."
+    ],
+    "distinctionTask": {
+      "prompt": "Please print off the timetable. You should _____.",
+      "options": [
+        "produce a paper copy",
+        "delete the file"
+      ],
+      "answer": "produce a paper copy",
+      "explanation": "The phrasal verb concerns printing the document."
+    },
+    "originalSense": {
+      "id": "kaikki:459f0eaecab409294e",
+      "definition": "Synonym of print out.",
+      "example": "Near-synonym: run off",
+      "pos": "verb",
+      "synonyms": [
+        "run off",
+        "print out"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/print_off#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=print%20off&oldid=90923352",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-1074fc34",
+    "senseId": "kaikki:2f30d9092a95848a95",
+    "definition": "Public communication intended to influence an audience and advance an agenda.",
+    "example": "The campaign used propaganda to promote its political agenda.",
+    "collocations": [
+      "political propaganda",
+      "spread propaganda",
+      "a propaganda campaign"
+    ],
+    "usage": "Usually a mass noun in this communication meaning. The source labels neutral usage dated; the word often carries a critical implication.",
+    "distinctions": [
+      "Calling material propaganda describes its persuasive purpose or framing. It does not by itself establish that every statement in it is false."
+    ],
+    "distinctionTask": {
+      "prompt": "The campaign used propaganda to advance an agenda. Its stated purpose was to _____.",
+      "options": [
+        "influence the audience",
+        "provide no viewpoint at all"
+      ],
+      "answer": "influence the audience",
+      "explanation": "The definition concerns communication serving an agenda."
+    },
+    "originalSense": {
+      "id": "kaikki:2f30d9092a95848a95",
+      "definition": "Agitation, publicity, public communication aimed at influencing an audience and furthering an agenda.",
+      "example": "Near-synonym: public diplomacy (sometimes asserted to be synonymous)",
+      "pos": "noun",
+      "synonyms": [
+        "public diplomacy"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "usually",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "agitprop",
+        "antipropaganda",
+        "black propaganda",
+        "copaganda",
+        "counterpropaganda",
+        "cyberpropaganda",
+        "homopropaganda",
+        "infoganda",
+        "micropropaganda",
+        "nonpropaganda",
+        "photoganda",
+        "propagand",
+        "propaganda by the deed",
+        "propaganda laundering",
+        "propaganda of the deed",
+        "propaganda-palooza",
+        "propaganded",
+        "propagandee",
+        "propagandic",
+        "propaganding",
+        "propagandism",
+        "propagandist",
+        "propagandistic",
+        "propagandize",
+        "propagandous",
+        "slopaganda",
+        "white propaganda"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/propaganda#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=propaganda&oldid=93646500",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "uncountable, usually"
+  },
+  {
+    "entryId": "ve-8e223188",
+    "senseId": "kaikki:3494a3377d9fd266dc",
+    "definition": "Based on quantities or numbers, especially in measurement or data.",
+    "example": "The study uses quantitative data such as journey times and passenger counts.",
+    "collocations": [
+      "quantitative data",
+      "quantitative analysis",
+      "quantitative research"
+    ],
+    "usage": "Adjective. The numeric examples show what is measured or counted; they do not establish the data's accuracy.",
+    "distinctions": [
+      "Quantitative concerns quantities. Qualitative concerns qualities or characteristics; neither label alone guarantees better evidence."
+    ],
+    "distinctionTask": {
+      "prompt": "Journey times and passenger counts are examples of _____ data.",
+      "options": [
+        "quantitative",
+        "entirely non-numerical"
+      ],
+      "answer": "quantitative",
+      "explanation": "The examples are numerical measurements and counts."
+    },
+    "originalSense": {
+      "id": "kaikki:3494a3377d9fd266dc",
+      "definition": "Of a measurements and data types: based on some quantity or number rather than on some quality.",
+      "example": "Near-synonyms: nonqualitative, unqualitative",
+      "pos": "adj",
+      "synonyms": [
+        "nonqualitative",
+        "unqualitative"
+      ],
+      "antonyms": [
+        "nonquantitative",
+        "unquantitative"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "histoquantitative",
+        "morphoquantitative",
+        "non-quantitative",
+        "nonquantitative",
+        "pseudoquantitative",
+        "pseudo-quantitative",
+        "quantitative analysis",
+        "quantitative analyst",
+        "quantitative easing",
+        "quantitative genetics",
+        "quantitative linguistics",
+        "quantitatively",
+        "quantitative metathesis",
+        "quantitativeness",
+        "quantitative research",
+        "quantitativist",
+        "quantophrenia",
+        "semiquantitative",
+        "unquantitative"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/quantitative#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=quantitative&oldid=90906987",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-2d8c66b2",
+    "senseId": "kaikki:a11b6eb43e68fe2be1",
+    "definition": "A cutting tool with two blades joined at a pivot, usually used as a plural noun.",
+    "example": "These scissors are sharp enough to cut the fabric.",
+    "collocations": [
+      "a pair of scissors",
+      "sharp scissors",
+      "cut with scissors"
+    ],
+    "usage": "For the usual tool meaning, write these scissors are, or this pair of scissors is.",
+    "distinctions": [
+      "Scissors names the tool; a pair of scissors is one complete tool, rather than two separate tools."
+    ],
+    "distinctionTask": {
+      "prompt": "In ordinary edited English, this pair of scissors _____ sharp.",
+      "options": [
+        "is",
+        "are"
+      ],
+      "answer": "is",
+      "explanation": "Pair is the singular head of this noun phrase, so this pair is sharp."
+    },
+    "originalSense": {
+      "id": "kaikki:a11b6eb43e68fe2be1",
+      "definition": "A tool used for cutting thin material, consisting of two crossing blades attached at a pivot point in such a way that the blades slide across each other when the handles are closed.",
+      "example": "Near-synonym: shears",
+      "pos": "noun",
+      "synonyms": [
+        "shears",
+        "pair of scissors",
+        "shears"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "plural, plural-only, usually",
+      "register": "countable, plural, plural-only, usually",
+      "wordFamily": [
+        "agrarian scissors",
+        "crash scissors",
+        "dummy scissors",
+        "elbow scissors",
+        "genetic scissors",
+        "grafting scissors",
+        "marble scissors",
+        "Mayo scissors",
+        "Metzenbaum scissors",
+        "nail scissors",
+        "paper scissors stone",
+        "pizza scissors",
+        "price scissors",
+        "probe-scissors",
+        "rock-paper-scissors",
+        "rock paper scissors",
+        "run with scissors",
+        "safety scissors",
+        "scissor",
+        "scissors-and-paste",
+        "scissorsbill",
+        "scissors bite",
+        "scissors congruence",
+        "scissors-congruent",
+        "scissors crisis",
+        "scissors crossing",
+        "scissors crossover",
+        "scissors-glasses",
+        "scissors kick",
+        "scissors paper stone"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/scissors#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=scissors&oldid=93478742",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "countable, plural, plural-only, usually"
+  },
+  {
+    "entryId": "ve-82c2c3e",
+    "senseId": "kaikki:e7607679179d9571c2",
+    "definition": "A continuous range between possible extremes.",
+    "example": "The survey captured a broad spectrum of opinions.",
+    "collocations": [
+      "a broad spectrum",
+      "a spectrum of opinions",
+      "across the spectrum"
+    ],
+    "usage": "Figurative range noun in this example. The source also contains separate technical meanings concerning light and other phenomena.",
+    "distinctions": [
+      "A spectrum of opinions describes a range of views. It is not an assertion that every opinion has the same frequency or support."
+    ],
+    "distinctionTask": {
+      "prompt": "A broad spectrum of opinions means _____.",
+      "options": [
+        "a wide range of views",
+        "one identical view held by everyone"
+      ],
+      "answer": "a wide range of views",
+      "explanation": "Spectrum describes variation across the views."
+    },
+    "originalSense": {
+      "id": "kaikki:e7607679179d9571c2",
+      "definition": "A range; a continuous, infinite, one-dimensional set, possibly bounded by extremes.",
+      "example": "Near-synonyms: sliding scale, continuum",
+      "pos": "noun",
+      "synonyms": [
+        "sliding scale",
+        "continuum"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "absorption spectrum",
+        "autism spectrum",
+        "autism spectrum disorder",
+        "autistic spectrum",
+        "autistic spectrum disorder",
+        "autospectrum",
+        "band spectrum",
+        "bispectrum",
+        "Bloch spectrum",
+        "broad-spectrum",
+        "broad-spectrum antibiotic",
+        "cepstrum",
+        "Eilenberg-MacLane spectrum",
+        "emission spectrum",
+        "fetal alcohol spectrum disorder",
+        "first-order spectrum",
+        "full-spectrum superiority",
+        "full spectrum superiority",
+        "hydrogen spectrum",
+        "light spectrum",
+        "line spectrum",
+        "mass spectrum",
+        "multispectrum",
+        "narrow-spectrum",
+        "nuclear spectrum",
+        "on the spectrum",
+        "optical spectrum",
+        "political spectrum",
+        "polyspectrum",
+        "pseudospectrum"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/spectrum#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=spectrum&oldid=93517779",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-b9fefca",
+    "senseId": "kaikki:cc8b2a3683aa33da18",
+    "definition": "No longer fresh.",
+    "example": "The bread became stale after several days.",
+    "collocations": [
+      "stale bread",
+      "stale food",
+      "go stale"
+    ],
+    "usage": "Adjective describing lost freshness here. Other meanings concern overused ideas or information.",
+    "distinctions": [
+      "Stale bread has lost freshness; the word alone does not establish whether it is safe or unsafe to eat."
+    ],
+    "distinctionTask": {
+      "prompt": "The bread is stale. This tells us that it _____.",
+      "options": [
+        "has lost freshness",
+        "is definitely poisonous"
+      ],
+      "answer": "has lost freshness",
+      "explanation": "Stale describes freshness; it does not by itself establish toxicity."
+    },
+    "originalSense": {
+      "id": "kaikki:cc8b2a3683aa33da18",
+      "definition": "No longer fresh, in reference to food, urine, straw, wounds, etc.",
+      "example": "Near-synonyms: gone bad, spoiled; see also Thesaurus:rotten",
+      "pos": "adj",
+      "synonyms": [
+        "fusty",
+        "gone bad",
+        "spoiled",
+        "bad",
+        "gone bad",
+        "gone off",
+        "maggoted",
+        "rotten",
+        "spoiled"
+      ],
+      "antonyms": [
+        "fresh"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "nonstale",
+        "overstale",
+        "stale-dated",
+        "stale drunk",
+        "stale-grown",
+        "stalely",
+        "stale-mouthed",
+        "staleness",
+        "stale read",
+        "stale-smelling",
+        "stale-worn",
+        "stool pigeon",
+        "unstale"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/stale#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=stale&oldid=93724598",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8bf3c7f4",
+    "senseId": "kaikki:8deeede12e86aab151",
+    "definition": "A word or phrase with the same or a similar meaning to another in a particular use.",
+    "example": "In \"a large house\", big is a synonym for large.",
+    "collocations": [
+      "a synonym for a word",
+      "a close synonym",
+      "use a synonym"
+    ],
+    "usage": "Countable noun. Check the particular meaning, grammar and register before substituting one expression for another.",
+    "distinctions": [
+      "Synonyms can overlap in a context without being interchangeable in every expression. Antonyms express opposing meanings."
+    ],
+    "distinctionTask": {
+      "prompt": "In \"a large house\", big is a synonym for large because the two describe _____.",
+      "options": [
+        "similar size in this context",
+        "opposite sizes"
+      ],
+      "answer": "similar size in this context",
+      "explanation": "The adjective meanings overlap in the stated house context."
+    },
+    "originalSense": {
+      "id": "kaikki:8deeede12e86aab151",
+      "definition": "A term (word or phrase) which is synonymous with others.",
+      "example": "Near-synonyms: near-synonym, parasynonym, plesionym",
+      "pos": "noun",
+      "synonyms": [
+        "poecilonym",
+        "near-synonym",
+        "parasynonym",
+        "plesionym"
+      ],
+      "antonyms": [
+        "antonym",
+        "opposite"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "desynonymization",
+        "geosynonym",
+        "heterotypic synonym",
+        "homotypic synonym",
+        "junior synonym",
+        "near-synonym",
+        "nomenclatural synonym",
+        "objective synonym",
+        "parasynonym",
+        "quasi-synonym",
+        "slangonym",
+        "subjective synonym",
+        "synanagram",
+        "synonymal",
+        "synonymic",
+        "synonymical",
+        "synonymification",
+        "synonymise",
+        "synonymist",
+        "synonymity",
+        "synonymize",
+        "synonymless",
+        "synonymomania",
+        "synonymous",
+        "synonym ring",
+        "synonymy",
+        "taxonomic synonym",
+        "textonym"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/synonym#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=synonym&oldid=93726508",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6bde3178",
+    "senseId": "kaikki:46db63b19c0f7bf63f",
+    "definition": "Material made from interlaced or matted fibres, whether woven or nonwoven.",
+    "example": "The exhibit includes a textile made from woven plant fibres.",
+    "collocations": [
+      "a woven textile",
+      "textile production",
+      "the textile industry"
+    ],
+    "usage": "Often used in the plural for materials or the industry. The source includes nonwoven materials as well as woven cloth.",
+    "distinctions": [
+      "Textile is not restricted to woven fabric; matted-fibre materials are included in this source meaning."
+    ],
+    "distinctionTask": {
+      "prompt": "This meaning of textile includes _____.",
+      "options": [
+        "woven and nonwoven fibre materials",
+        "only woven materials"
+      ],
+      "answer": "woven and nonwoven fibre materials",
+      "explanation": "The source definition explicitly includes interlaced and matted fibres."
+    },
+    "originalSense": {
+      "id": "kaikki:46db63b19c0f7bf63f",
+      "definition": "Any material made of interlacing or matted fibres, including carpeting and geotextiles, woven or nonwoven.",
+      "example": "Near-synonym: cloth (not always differentiated)",
+      "pos": "noun",
+      "synonyms": [
+        "fabric",
+        "material",
+        "fabric",
+        "cloth",
+        "textile",
+        "cloth"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "plural-normally",
+      "register": "plural-normally",
+      "wordFamily": [
+        "e-textile",
+        "mycotextile",
+        "nanotextile",
+        "nontextile",
+        "textile art",
+        "textile banana",
+        "textile cone",
+        "textilelike",
+        "textilism",
+        "textilist",
+        "textiloma"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/textile#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=textile&oldid=93132370",
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "plural-normally"
+  },
+  {
+    "entryId": "ve-b8772fa",
+    "senseId": "kaikki:06cf3f78c1c816bb8e",
+    "definition": "A wide, shallow container used especially for cooking.",
+    "example": "Heat the vegetables in a pan.",
+    "collocations": [
+      "a frying pan",
+      "a shallow pan",
+      "heat food in a pan"
+    ],
+    "usage": "Countable cooking-vessel noun. This everyday lowercase meaning is the default; the deity and other source meanings remain accessible.",
+    "distinctions": [
+      "Pan here is the vessel. Pan with a capital P can be the Greek god's name in a separate source meaning."
+    ],
+    "distinctionTask": {
+      "prompt": "Heat the vegetables in a pan. Pan names _____.",
+      "options": [
+        "the cooking vessel",
+        "the Greek deity"
+      ],
+      "answer": "the cooking vessel",
+      "explanation": "The food-heating context identifies the cooking noun."
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=pan&oldid=93713118",
+    "originalSense": {
+      "id": "kaikki:06cf3f78c1c816bb8e",
+      "definition": "A wide, flat receptacle used around the house, especially for cooking.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "frying pan",
+        "skillet",
+        "cookie sheet",
+        "tin"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "pan-",
+        "Pandean",
+        "pandemonium",
+        "panic",
+        "Panic",
+        "panine",
+        "Pan-like",
+        "panolepsy",
+        "panophobia",
+        "panpipe",
+        "pan-pipes",
+        "panpipes",
+        "ash pan",
+        "ashpan",
+        "bakepan",
+        "baking pan",
+        "bedpan",
+        "best thing since sliced pan",
+        "brainpan",
+        "bratt pan",
+        "bread pan",
+        "cakepan",
+        "calandria pan",
+        "cat in the pan",
+        "chef's pan",
+        "chip pan",
+        "claypan",
+        "deadpan",
+        "dishpan",
+        "down the pan"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/pan#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "learningPriority": "general",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]

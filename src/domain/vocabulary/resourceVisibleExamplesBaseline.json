@@ -1,0 +1,133 @@
+{
+  "removeCorrections": [
+    {
+      "entryId": "ve-bbe5a1d",
+      "senseId": "kaikki:9cd18fc84854d00400"
+    },
+    {
+      "entryId": "ve-398a4cac",
+      "senseId": "kaikki:04a38ba1985d81ae7a"
+    },
+    {
+      "entryId": "ve-5999db6f",
+      "senseId": "kaikki:5be7000e16e53a2985"
+    },
+    {
+      "entryId": "ve-7c7033a7",
+      "senseId": "kaikki:bd924e80a0f0b5eea4"
+    },
+    {
+      "entryId": "ve-a7df2b8",
+      "senseId": "kaikki:a7aafeea79673b83de"
+    },
+    {
+      "entryId": "ve-5ba39286",
+      "senseId": "kaikki:d9764a6c8c73013f25"
+    },
+    {
+      "entryId": "ve-5bfdcfe8",
+      "senseId": "kaikki:5704742f517616f009"
+    },
+    {
+      "entryId": "ve-93ce31bf",
+      "senseId": "kaikki:4c33fa7b0056b145dc"
+    },
+    {
+      "entryId": "ve-396d1656",
+      "senseId": "kaikki:8bffbc8dabb1f7b217"
+    },
+    {
+      "entryId": "ve-826db9ff",
+      "senseId": "kaikki:e22773a2db594f0860"
+    },
+    {
+      "entryId": "ve-eedac98c",
+      "senseId": "kaikki:38034f47eeb6bd1126"
+    },
+    {
+      "entryId": "ve-7c6ec7de",
+      "senseId": "kaikki:8996965d9b4b173e16"
+    },
+    {
+      "entryId": "ve-19dae8ab",
+      "senseId": "kaikki:4ea3829e13ea6e5fc3"
+    },
+    {
+      "entryId": "ve-2c7f0d33",
+      "senseId": "kaikki:5428d53289bbf8cbba"
+    },
+    {
+      "entryId": "ve-23a21f89",
+      "senseId": "kaikki:a7d6779c67859068a0"
+    },
+    {
+      "entryId": "ve-985280f7",
+      "senseId": "kaikki:4bccd78cdc62b5e19c"
+    },
+    {
+      "entryId": "ve-b9c7f2e9",
+      "senseId": "kaikki:6164538de9b7616c1f"
+    },
+    {
+      "entryId": "ve-8ab58423",
+      "senseId": "kaikki:3cae8e16a0f6bcb5e3"
+    },
+    {
+      "entryId": "ve-a6809ce",
+      "senseId": "kaikki:f5c66df6e8ab70db71"
+    },
+    {
+      "entryId": "ve-6c41c79e",
+      "senseId": "kaikki:be7e267b34fc509f7e"
+    },
+    {
+      "entryId": "ve-b8772fa",
+      "senseId": "kaikki:62e1772a61c6368e1d"
+    },
+    {
+      "entryId": "ve-e0abdaba",
+      "senseId": "kaikki:a2564a53230c10b8fe"
+    },
+    {
+      "entryId": "ve-1a98d5db",
+      "senseId": "kaikki:459f0eaecab409294e"
+    },
+    {
+      "entryId": "ve-1074fc34",
+      "senseId": "kaikki:2f30d9092a95848a95"
+    },
+    {
+      "entryId": "ve-8e223188",
+      "senseId": "kaikki:3494a3377d9fd266dc"
+    },
+    {
+      "entryId": "ve-2d8c66b2",
+      "senseId": "kaikki:a11b6eb43e68fe2be1"
+    },
+    {
+      "entryId": "ve-82c2c3e",
+      "senseId": "kaikki:e7607679179d9571c2"
+    },
+    {
+      "entryId": "ve-b9fefca",
+      "senseId": "kaikki:cc8b2a3683aa33da18"
+    },
+    {
+      "entryId": "ve-8bf3c7f4",
+      "senseId": "kaikki:8deeede12e86aab151"
+    },
+    {
+      "entryId": "ve-6bde3178",
+      "senseId": "kaikki:46db63b19c0f7bf63f"
+    },
+    {
+      "entryId": "ve-b8772fa",
+      "senseId": "kaikki:06cf3f78c1c816bb8e"
+    }
+  ],
+  "restoreCorrections": [],
+  "removeDefaults": [
+    "ve-b8772fa"
+  ],
+  "restoreDefaults": []
+}

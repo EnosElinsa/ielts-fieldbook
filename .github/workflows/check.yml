@@ -33,5 +33,6 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: node scripts/audit-vocabulary-dictionary.mjs --check
+      - run: npm run vocabulary:quality -- --check
       - run: npm run test:identities
       - run: node scripts/check-bundle-budget.mjs

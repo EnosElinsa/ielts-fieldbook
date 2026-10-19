@@ -2,14 +2,15 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 634 restored source meanings** (51,988 total). This ledger verifies **3231 records** across definition, examples or reading explanations, collocations and distinctions; **48,757 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1287 reviewed distinction exercises and 854 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 6 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 980 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 634 restored source meanings** (51,988 total). This ledger verifies **3281 records** across definition, examples or reading explanations, collocations and distinctions; **48,707 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1328 reviewed distinction exercises and 854 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 6 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 989 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
-Authored learning-priority metadata classifies 540 general, 196 specialist, 181 historical and 20 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
+Authored learning-priority metadata classifies 572 general, 210 specialist, 182 historical and 21 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
 
 | Term | Reviewed records | Raw + restored records | Pending |
 | --- | ---: | ---: | ---: |
 | ability | 7 | 7 | 0 |
 | account | 13 | 13 | 0 |
+| accountants | 1 | 1 | 0 |
 | acquire | 5 | 5 | 0 |
 | adapt | 5 | 5 | 0 |
 | address | 30 | 31 | 1 |
@@ -35,11 +36,15 @@ Authored learning-priority metadata classifies 540 general, 196 specialist, 181 
 | assure | 4 | 4 | 0 |
 | available | 5 | 5 | 0 |
 | bank | 45 | 45 | 0 |
+| barrel | 1 | 19 | 18 |
+| bead | 1 | 10 | 9 |
 | bear | 61 | 61 | 0 |
 | benefit | 7 | 7 | 0 |
 | break | 107 | 107 | 0 |
+| broom | 1 | 13 | 12 |
 | budget | 2 | 10 | 8 |
 | calculate | 6 | 6 | 0 |
+| cannon | 1 | 20 | 19 |
 | capacity | 12 | 12 | 0 |
 | capital | 19 | 19 | 0 |
 | cause | 10 | 10 | 0 |
@@ -49,6 +54,7 @@ Authored learning-priority metadata classifies 540 general, 196 specialist, 181 
 | choose | 7 | 7 | 0 |
 | claim | 15 | 15 | 0 |
 | classify | 3 | 3 | 0 |
+| clause | 1 | 7 | 6 |
 | clear | 49 | 49 | 0 |
 | communicate | 11 | 11 | 0 |
 | compare | 8 | 8 | 0 |
@@ -62,8 +68,10 @@ Authored learning-priority metadata classifies 540 general, 196 specialist, 181 
 | contrast | 9 | 9 | 0 |
 | convince | 6 | 6 | 0 |
 | copy | 1 | 16 | 15 |
+| cosmetics | 1 | 3 | 2 |
 | council | 1 | 7 | 6 |
 | course | 31 | 31 | 0 |
+| criteria | 1 | 3 | 2 |
 | current | 10 | 10 | 0 |
 | data | 5 | 5 | 0 |
 | date | 21 | 21 | 0 |
@@ -75,9 +83,10 @@ Authored learning-priority metadata classifies 540 general, 196 specialist, 181 
 | demonstrate | 4 | 4 | 0 |
 | describe | 5 | 5 | 0 |
 | detect | 3 | 3 | 0 |
+| detergent | 1 | 2 | 1 |
 | determine | 8 | 8 | 0 |
 | differentiate | 9 | 9 | 0 |
-| discount | 3 | 12 | 9 |
+| discount | 12 | 12 | 0 |
 | discover | 10 | 10 | 0 |
 | discuss | 6 | 6 | 0 |
 | dispute | 8 | 8 | 0 |
@@ -105,18 +114,21 @@ Authored learning-priority metadata classifies 540 general, 196 specialist, 181 
 | explore | 9 | 9 | 0 |
 | express | 19 | 19 | 0 |
 | fair | 35 | 35 | 0 |
+| family room | 1 | 1 | 0 |
 | feedback | 1 | 6 | 5 |
 | field | 33 | 33 | 0 |
 | figure | 29 | 29 | 0 |
 | fine | 44 | 44 | 0 |
 | form | 32 | 32 | 0 |
 | gain | 22 | 22 | 0 |
+| glue | 1 | 6 | 5 |
 | grasp | 8 | 8 | 0 |
 | ground | 39 | 39 | 0 |
 | identify | 7 | 7 | 0 |
 | illustrate | 4 | 4 | 0 |
 | impact | 8 | 8 | 0 |
 | imply | 5 | 5 | 0 |
+| incidentally | 1 | 1 | 0 |
 | infer | 4 | 4 | 0 |
 | influence | 9 | 9 | 0 |
 | information | 13 | 13 | 0 |
@@ -135,12 +147,18 @@ Authored learning-priority metadata classifies 540 general, 196 specialist, 181 
 | left | 17 | 17 | 0 |
 | lie | 23 | 23 | 0 |
 | light | 72 | 72 | 0 |
+| livestock | 1 | 1 | 0 |
+| living room | 1 | 2 | 1 |
+| logogram | 1 | 2 | 1 |
 | maintain | 5 | 5 | 0 |
+| masquerade | 1 | 11 | 10 |
 | match | 21 | 21 | 0 |
 | matter | 12 | 12 | 0 |
 | mean | 34 | 35 | 1 |
 | mention | 4 | 4 | 0 |
 | minute | 16 | 16 | 0 |
+| missionary | 1 | 6 | 5 |
+| motor | 1 | 13 | 12 |
 | negotiate | 6 | 6 | 0 |
 | note | 35 | 35 | 0 |
 | notice | 12 | 12 | 0 |
@@ -150,6 +168,9 @@ Authored learning-priority metadata classifies 540 general, 196 specialist, 181 
 | opinion | 7 | 7 | 0 |
 | order | 33 | 33 | 0 |
 | outcome | 4 | 4 | 0 |
+| packing list | 1 | 1 | 0 |
+| pan | 2 | 49 | 47 |
+| paraphrase | 1 | 3 | 2 |
 | patient | 7 | 7 | 0 |
 | perceive | 2 | 2 | 0 |
 | permit | 12 | 12 | 0 |
@@ -162,12 +183,15 @@ Authored learning-priority metadata classifies 540 general, 196 specialist, 181 
 | presume | 5 | 5 | 0 |
 | principal | 18 | 18 | 0 |
 | principle | 11 | 11 | 0 |
+| print off | 1 | 1 | 0 |
 | produce | 11 | 11 | 0 |
 | project | 16 | 18 | 2 |
 | proof | 20 | 20 | 0 |
+| propaganda | 1 | 3 | 2 |
 | propose | 6 | 6 | 0 |
 | prove | 11 | 11 | 0 |
 | purpose | 8 | 8 | 0 |
+| quantitative | 1 | 3 | 2 |
 | question | 10 | 10 | 0 |
 | raise | 32 | 32 | 0 |
 | range | 38 | 38 | 0 |
@@ -192,22 +216,27 @@ Authored learning-priority metadata classifies 540 general, 196 specialist, 181 
 | right | 41 | 41 | 0 |
 | rise | 38 | 38 | 0 |
 | scale | 34 | 34 | 0 |
+| scissors | 1 | 12 | 11 |
 | sensible | 10 | 10 | 0 |
 | sensitive | 10 | 10 | 0 |
 | skill | 13 | 13 | 0 |
 | sound | 31 | 31 | 0 |
+| spectrum | 1 | 10 | 9 |
 | spring | 71 | 71 | 0 |
+| stale | 1 | 39 | 38 |
 | state | 11 | 11 | 0 |
 | study | 18 | 18 | 0 |
 | subject | 17 | 17 | 0 |
 | suggest | 4 | 4 | 0 |
 | support | 23 | 23 | 0 |
 | suppose | 6 | 6 | 0 |
-| survey | 4 | 14 | 10 |
+| survey | 14 | 14 | 0 |
 | suspect | 8 | 8 | 0 |
+| synonym | 1 | 4 | 3 |
 | table | 43 | 43 | 0 |
 | teach | 8 | 8 | 0 |
 | term | 29 | 29 | 0 |
+| textile | 1 | 3 | 2 |
 | think | 11 | 11 | 0 |
 | training | 6 | 6 | 0 |
 | trust | 26 | 26 | 0 |
@@ -215,6 +244,7 @@ Authored learning-priority metadata classifies 540 general, 196 specialist, 181 
 | value | 14 | 14 | 0 |
 | view | 17 | 17 | 0 |
 | wish | 11 | 11 | 0 |
+| xerox | 1 | 5 | 4 |
 
 ## Raw-source signals
 

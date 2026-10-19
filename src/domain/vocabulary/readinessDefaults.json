@@ -27577,5 +27577,77 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-b8772fa",
+    "sense": {
+      "id": "kaikki:06cf3f78c1c816bb8e",
+      "definition": "A wide, shallow container used especially for cooking.",
+      "example": "Heat the vegetables in a pan.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a frying pan",
+        "a shallow pan",
+        "heat food in a pan"
+      ],
+      "usage": "Countable cooking-vessel noun. This everyday lowercase meaning is the default; the deity and other source meanings remain accessible.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/pan#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Pan here is the vessel. Pan with a capital P can be the Greek god's name in a separate source meaning."
+      ],
+      "distinctionTask": {
+        "prompt": "Heat the vegetables in a pan. Pan names _____.",
+        "options": [
+          "the cooking vessel",
+          "the Greek deity"
+        ],
+        "answer": "the cooking vessel",
+        "explanation": "The food-heating context identifies the cooking noun."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:62e1772a61c6368e1d",
+      "definition": "Greek god of nature, often visualized as half goat and half man playing pipes.",
+      "example": "Near-synonyms: Faunus, Pales (Roman counterparts, not identical)",
+      "pos": "name",
+      "synonyms": [
+        "Faunus",
+        "Pales"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Greek",
+      "register": "Greek",
+      "wordFamily": [
+        "pan-",
+        "Pandean",
+        "pandemonium",
+        "panic",
+        "Panic",
+        "panine",
+        "Pan-like",
+        "panolepsy",
+        "panophobia",
+        "panpipe",
+        "pan-pipes",
+        "panpipes"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/Pan#English",
+      "license": "CC-BY-SA-4.0"
+    }
   }
 ]

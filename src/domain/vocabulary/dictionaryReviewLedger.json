@@ -42990,6 +42990,409 @@
         "collocations",
         "distinctions"
       ]
+    },
+    {
+      "term": "xerox",
+      "entryId": "ve-bbe5a1d",
+      "senseId": "kaikki:9cd18fc84854d00400",
+      "sourceHash": "d1003cbaf7f7aae8de2b459e9ae3ee44f915bff22354ada00500a71a7f730ba7",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=xerox&oldid=92513544",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "accountants",
+      "entryId": "ve-398a4cac",
+      "senseId": "kaikki:04a38ba1985d81ae7a",
+      "sourceHash": "2843e36491b879c9c4a7e616aeafbea522ae9c8a0f8b8ec6f204d2818d83ee0f",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=accountants&oldid=90281540",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "barrel",
+      "entryId": "ve-5999db6f",
+      "senseId": "kaikki:5be7000e16e53a2985",
+      "sourceHash": "5922a5a7f0730cbaee49fadaba418068185599af7f9d1c7d5c96550e0ec2d6e7",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=barrel&oldid=93679194",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bead",
+      "entryId": "ve-7c7033a7",
+      "senseId": "kaikki:bd924e80a0f0b5eea4",
+      "sourceHash": "434073bb781644e848bc13f0970b113c8aeb4730c125f4e78597a41fb06bc3d6",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bead&oldid=93679419",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "broom",
+      "entryId": "ve-a7df2b8",
+      "senseId": "kaikki:a7aafeea79673b83de",
+      "sourceHash": "ebff92b95a38560930a1fb084ca87667d8683be1c77b4958bb3774a5704566d2",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=broom&oldid=93682171",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "cannon",
+      "entryId": "ve-5ba39286",
+      "senseId": "kaikki:d9764a6c8c73013f25",
+      "sourceHash": "4d4a8017f657698badaa26b80b9c13f8cb5e6ebb3747d715ba254d944e6b710c",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=cannon&oldid=93683185",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "clause",
+      "entryId": "ve-5bfdcfe8",
+      "senseId": "kaikki:5704742f517616f009",
+      "sourceHash": "e5e8913274c8645fb73fc8dbe1327f101434b83d1936268d9ceada462aa979c9",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=clause&oldid=93143193",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "cosmetics",
+      "entryId": "ve-93ce31bf",
+      "senseId": "kaikki:4c33fa7b0056b145dc",
+      "sourceHash": "c6f708f30371dbb0554d1929033cc8f4ff89063e5296a13652083279421a7ef1",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=cosmetics&oldid=92693123",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "criteria",
+      "entryId": "ve-396d1656",
+      "senseId": "kaikki:8bffbc8dabb1f7b217",
+      "sourceHash": "275135153658200c1fecba048e971674ad66e4824635dd830cd79a5fa9cf93ed",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=criteria&oldid=92202814",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "detergent",
+      "entryId": "ve-826db9ff",
+      "senseId": "kaikki:e22773a2db594f0860",
+      "sourceHash": "87c0088e749d65dfa9e9b06d86cfaefa8ddb918dab8b4670a2cd84f990f40409",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=detergent&oldid=93520951",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "family room",
+      "entryId": "ve-eedac98c",
+      "senseId": "kaikki:38034f47eeb6bd1126",
+      "sourceHash": "6f1450eba683dc211015c0b7c5a1ae63b3ad732c9d25a0d36d4c80e2272b9a62",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=family%20room&oldid=91955213",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "glue",
+      "entryId": "ve-7c6ec7de",
+      "senseId": "kaikki:8996965d9b4b173e16",
+      "sourceHash": "d0a2d96dc56f347a0770033270ec6930a02d3c7678e8dd6e6837808bc42d1358",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=glue&oldid=93697316",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "incidentally",
+      "entryId": "ve-19dae8ab",
+      "senseId": "kaikki:4ea3829e13ea6e5fc3",
+      "sourceHash": "4fd7c65b02db6e09fcad5b96f7ff81f0a8521b6ab4ccd6f6bb37312031d1ea9e",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=incidentally&oldid=90579170",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "livestock",
+      "entryId": "ve-2c7f0d33",
+      "senseId": "kaikki:5428d53289bbf8cbba",
+      "sourceHash": "64a21cae3500b9db9eafbd1d8645a9e744aa48c9cb2d107052b0e425daf3124e",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=livestock&oldid=93705322",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "living room",
+      "entryId": "ve-23a21f89",
+      "senseId": "kaikki:a7d6779c67859068a0",
+      "sourceHash": "a9be64d9d2bf9debe7018b5f924d28b8501f8628258b3c66f8bec3d0922d5be8",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=living%20room&oldid=93140024",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "logogram",
+      "entryId": "ve-985280f7",
+      "senseId": "kaikki:4bccd78cdc62b5e19c",
+      "sourceHash": "8137596acb2410e51cefcbc613f992418e0033b1cc55655cda8541b954c6098f",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=logogram&oldid=90395201",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "masquerade",
+      "entryId": "ve-b9c7f2e9",
+      "senseId": "kaikki:6164538de9b7616c1f",
+      "sourceHash": "e0718a05a3f13a1209b05629dc221bb0198687cd695c5b155211a89ecc40eefb",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=masquerade&oldid=93437012",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "missionary",
+      "entryId": "ve-8ab58423",
+      "senseId": "kaikki:3cae8e16a0f6bcb5e3",
+      "sourceHash": "847ffb6dd274c3acd561fe48984bb0a2c3ce8c890b2ef92cac9794b13735d2c5",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=missionary&oldid=92984304",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "motor",
+      "entryId": "ve-a6809ce",
+      "senseId": "kaikki:f5c66df6e8ab70db71",
+      "sourceHash": "5d5bdf4c91fa5e0337ea1616a980ae3661567cc1c02d78b37d2a53c9afc1dc85",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=motor&oldid=93634712",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "packing list",
+      "entryId": "ve-6c41c79e",
+      "senseId": "kaikki:be7e267b34fc509f7e",
+      "sourceHash": "b7eb1cca4a316339601d8030b74b7835167380aa141b0fb347be88a714f8e54c",
+      "referenceUrl": "https://www.trade.gov/packing-list",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "pan",
+      "entryId": "ve-b8772fa",
+      "senseId": "kaikki:62e1772a61c6368e1d",
+      "sourceHash": "ab205ba000ff169e8a1dd0577a1582ee9fbc9d005ad3b07e32cc87201463b7e3",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Pan&oldid=93543208",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "paraphrase",
+      "entryId": "ve-e0abdaba",
+      "senseId": "kaikki:a2564a53230c10b8fe",
+      "sourceHash": "ce95cf46bae57d431dfe1888e37f0111388b0ec9b924ddc78cfe0cb611aa203f",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=paraphrase&oldid=92695859",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "print off",
+      "entryId": "ve-1a98d5db",
+      "senseId": "kaikki:459f0eaecab409294e",
+      "sourceHash": "02d4f7128b61533964737a0082435700fa940af5312228149a4f09aaa490cad4",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=print%20off&oldid=90923352",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "propaganda",
+      "entryId": "ve-1074fc34",
+      "senseId": "kaikki:2f30d9092a95848a95",
+      "sourceHash": "61304b8585d9e673898d45498a2d66af3f90a4ec802677e8f121b41fe6756359",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=propaganda&oldid=93646500",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "quantitative",
+      "entryId": "ve-8e223188",
+      "senseId": "kaikki:3494a3377d9fd266dc",
+      "sourceHash": "26a97b3dfbeec2f9ab2238af64b2ecb10b7acf675952f565a8b35694d1eeb82e",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=quantitative&oldid=90906987",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "scissors",
+      "entryId": "ve-2d8c66b2",
+      "senseId": "kaikki:a11b6eb43e68fe2be1",
+      "sourceHash": "6b01367bf1df28b112d0f4d21038e79097e3c9446880121cc49313901bd80c31",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=scissors&oldid=93478742",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "spectrum",
+      "entryId": "ve-82c2c3e",
+      "senseId": "kaikki:e7607679179d9571c2",
+      "sourceHash": "da4854ffad93835052b5e1ff053ce95db9062d8babf9ba8ebfead4cf8ecef011",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=spectrum&oldid=93517779",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "stale",
+      "entryId": "ve-b9fefca",
+      "senseId": "kaikki:cc8b2a3683aa33da18",
+      "sourceHash": "c485193c2a19bd2c9c02e06982e4c141665ebf51f53fe4991a21765dbed6484c",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=stale&oldid=93724598",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "synonym",
+      "entryId": "ve-8bf3c7f4",
+      "senseId": "kaikki:8deeede12e86aab151",
+      "sourceHash": "970265c1c734185068b59aed50317cf3563c080f381e807ce5fa91c42cc16171",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=synonym&oldid=93726508",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "textile",
+      "entryId": "ve-6bde3178",
+      "senseId": "kaikki:46db63b19c0f7bf63f",
+      "sourceHash": "4b836c589c98f64d0e783a389e6b3bd3317c3d3f088ada901670350703eb49f7",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=textile&oldid=93132370",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "pan",
+      "entryId": "ve-b8772fa",
+      "senseId": "kaikki:06cf3f78c1c816bb8e",
+      "sourceHash": "96266f8acc7033e02640bf79eac49e8c447d1bf526d762d69ac108d9ddf19bc3",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=pan&oldid=93713118",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
     }
   ]
 }
