@@ -185,6 +185,22 @@ test('a source grouping needs a non-gloss heading, independently bound children 
   ]) expect(inspectDictionaryReview({ ...groupedInput, ...patch }).errors.join(' ')).toMatch(/meaning group/i);
 });
 
+test.each(['{{lb|en|uncountable}}', '{{label|en|historical}}', '{{senseid|en|Q925}} {{lb|en|uncountable}}'])(
+  'source labels before an explicit non-gloss directory retain the child and revision requirements: %s', prefix => {
+    const sourceGloss = '# ' + prefix + ' {{non-gloss|Land beside a river.}}';
+    const grouping = { ...row, referenceUrl: restored.sourceUrl, meaningGroup: { sourceGloss } };
+    const value = { ...restoredInput, corrections: [grouping, restoredInput.corrections[1]] };
+    expect(inspectDictionaryReview(value).errors).toEqual([]);
+    for (const invalid of [
+      sourceGloss.replace(/^# /, '## '),
+      '# ' + prefix + ' Land beside a river.',
+      '# Ordinary lexical text. ' + prefix + ' {{non-gloss|Land beside a river.}}',
+    ]) expect(inspectDictionaryReview({ ...value, corrections: [{ ...grouping, meaningGroup: { sourceGloss: invalid } }, value.corrections[1]] }).errors.join(' ')).toMatch(/meaning group/i);
+    expect(inspectDictionaryReview({ ...value, restoredSources: [] }).errors.join(' ')).toMatch(/meaning group/i);
+    expect(inspectDictionaryReview({ ...value, corrections: [{ ...grouping, referenceUrl: 'https://en.wiktionary.org/w/index.php?title=bank&oldid=124' }, value.corrections[1]] }).errors.join(' ')).toMatch(/meaning group/i);
+  },
+);
+
 test('an explicitly labelled source heading also needs independently bound children', () => {
   const grouping = { ...row, referenceUrl: restored.sourceUrl, meaningGroup: { sourceGloss: "# {{lb|en|heading|transitive}} ''Land beside a river.''" } };
   expect(inspectDictionaryReview({ ...restoredInput, corrections: [grouping, restoredInput.corrections[1]] }).errors).toEqual([]);

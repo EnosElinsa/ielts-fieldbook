@@ -45,6 +45,8 @@ Edit the nested `draft` objects into complete candidates and export those object
 
 The first real run prepared 199 current truncation signals in one operation: 131 exact source matches, 68 manual matches and four records with direct source-example suggestions. The [subsequent authored review](vocabulary-truncated-learning-review.md) improves 98 exact meanings across words; it does not pretend the other cases were repaired automatically.
 
+The [current-learning sweep](vocabulary-remaining-learning-review.md) handles the remaining 101 signals together, including the 68 manual source matches. It adds 127 reviews through actual lexical repairs, restored children and corrected defaults. A directory is repaired by restoring and selecting its real meanings, not by disguising its old example as a note. Once the current snapshot changes, regenerate queues; retain earlier packages only as evidence. Continue by issue type across the corpus and accumulate consistent content before the full release pipeline. Do not resume choosing a few words' complete rare-sense inventories as the normal unit of work.
+
 ## Validate candidates together
 
 Supply a JSON array or `.jsonl`/`.ndjson` of candidate objects containing:

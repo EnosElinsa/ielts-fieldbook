@@ -100,7 +100,9 @@ test.each([['decade',/ten years/],['academic',/education|study/],['office',/work
   const result=resolveVocabularyLearningContext(raw,membership);
   expect(result.sense?.definition).toMatch(expected);
   expect(result.sense?.id).not.toBe(raw.senses[0].id);
-  expect(result.entry.senses).toContainEqual(raw.senses[0]);
+  const retained=result.entry.senses.find(sense=>sense.id===raw.senses[0].id);
+  expect(retained).toMatchObject({id:raw.senses[0].id,pos:raw.senses[0].pos,sourceUrl:raw.senses[0].sourceUrl});
+  expect(raw.senses[0]).toEqual(entry(term).senses[0]);
   expect(result.curriculum?.basis).toBe('common');
   const edited=structuredClone(raw);edited.senses[0].definition='My course-specific meaning.';
   expect(resolveVocabularyLearningContext(edited,membership).sense?.definition).toBe('My course-specific meaning.');

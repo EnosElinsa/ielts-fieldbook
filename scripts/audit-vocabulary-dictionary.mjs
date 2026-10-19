@@ -114,7 +114,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
         // Some source directories italicise the entire heading instead of using ng.
         // Require multiple restored children; ordinary or partly italic glosses stay lexical.
         const italicDirectory = children.length > 1 && /^#\s*(?:\{\{lb\|en\|[^{}]+\}\}\s*)?''(?!')(?:(?!'').)+''\s*$/.test(headingGloss);
-        const heading = italicDirectory || /^#\s*\{\{(?:ng|n-g|non-gloss)\|/.test(headingGloss) || (/^#[^#]/.test(headingGloss) && /\{\{lb\|en\|(?:[^{}|]+\|)*heading(?:\||\}\})/.test(headingGloss)) || /^#\s*\{\{place\|en\|place\|(?:c|co|s)\/[^{}|]+\}\}\s*:\s*$/.test(headingGloss) || /^#\s*A \[\[place name\]\]:\s*$/.test(headingGloss);
+        const heading = italicDirectory || /^#\s*(?:\{\{(?:lb|label)\|en\|[^{}]+\}\}\s*)*\{\{(?:ng|n-g|non-gloss)\|/.test(headingGloss) || (/^#[^#]/.test(headingGloss) && /\{\{lb\|en\|(?:[^{}|]+\|)*heading(?:\||\}\})/.test(headingGloss)) || /^#\s*\{\{place\|en\|place\|(?:c|co|s)\/[^{}|]+\}\}\s*:\s*$/.test(headingGloss) || /^#\s*A \[\[place name\]\]:\s*$/.test(headingGloss);
         if (!heading || plainSourceGloss(gloss || '') !== original?.definition || !children.length || children.some(child => child.sense.sourceUrl !== row.referenceUrl) || row.referenceOnly || row.usageReference || row.distinctionTask || diagrams.some(diagram => identity(diagram.entryId, diagram.senseId) === key)) errors.push(`Invalid meaning group: ${review.term}/${review.senseId}`);
       }
       if (row.usageReference !== undefined) {

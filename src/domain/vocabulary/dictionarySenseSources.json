@@ -12056,5 +12056,425 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "attend",
+    "entryId": "ve-4ecf66eb",
+    "parentSenseId": "kaikki:a1f11b5097d8e78af5",
+    "parentSourceHash": "9753464fed192403adba1d23a1551c223ee83831b456faaf648d3800a692f3ec",
+    "sourcePage": "attend",
+    "revision": 92316200,
+    "sourceGloss": "## {{lb|en|transitive}} To [[care for]] (someone requiring [[attention#Noun|attention]]); specifically, of a [[doctor#Noun|doctor]], [[nurse#Noun|nurse]], etc.: to [[provide]] [[professional#Adjective|professional]] [[care#Noun|care]] to (someone).",
+    "sense": {
+      "id": "wiktionary:restored:59a68e509f82497cdc",
+      "pos": "verb",
+      "definition": "To care for (someone requiring attention); specifically, of a doctor, nurse, etc.: to provide professional care to (someone).",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=attend&oldid=92316200",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "attend",
+    "entryId": "ve-4ecf66eb",
+    "parentSenseId": "kaikki:a1f11b5097d8e78af5",
+    "parentSourceHash": "9753464fed192403adba1d23a1551c223ee83831b456faaf648d3800a692f3ec",
+    "sourcePage": "attend",
+    "revision": 92316200,
+    "sourceGloss": "## {{lb|en|transitive}} To [[wait on]] (someone or their [[instruction]]s) as an [[attendant#Noun|attendant]], [[servant]], etc.; also (''specifically of a [[gentleman-in-waiting]] or [[lady-in-waiting]] to a [[member#Noun|member]] of [[royalty]]''), to [[accompany]] (someone) [[in order to]] [[assist#Verb|assist]] or wait upon them; to [[escort#Verb|escort]]. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:3ded5d13faeda776a4",
+      "pos": "verb",
+      "definition": "To wait on (someone or their instructions) as an attendant, servant, etc.; also (specifically of a gentleman-in-waiting or lady-in-waiting to a member of royalty), to accompany (someone) in order to assist or wait upon them; to escort.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=attend&oldid=92316200",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "attend",
+    "entryId": "ve-4ecf66eb",
+    "parentSenseId": "kaikki:a1f11b5097d8e78af5",
+    "parentSourceHash": "9753464fed192403adba1d23a1551c223ee83831b456faaf648d3800a692f3ec",
+    "sourcePage": "attend",
+    "revision": 92316200,
+    "sourceGloss": "## {{senseid|en|to be present at}}{{lb|en|transitive}} To be [[present#Adjective|present]] at (an [[event#Noun|event]] or [[place#Noun|place]]) in order to [[take part]] in some [[action#Noun|action]] or [[proceeding#Noun|proceedings]]; also, to [[regularly]] [[go#Verb|go]] to (an event or place). {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:6c99eacbc4bbbd2c3e",
+      "pos": "verb",
+      "definition": "To be present at (an event or place) in order to take part in some action or proceedings; also, to regularly go to (an event or place).",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=attend&oldid=92316200",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "attend",
+    "entryId": "ve-4ecf66eb",
+    "parentSenseId": "kaikki:a1f11b5097d8e78af5",
+    "parentSourceHash": "9753464fed192403adba1d23a1551c223ee83831b456faaf648d3800a692f3ec",
+    "sourcePage": "attend",
+    "revision": 92316200,
+    "sourceGloss": "## {{senseid|en|to turn one's consideration to, deal with}}{{lb|en|transitive}} To [[take#Verb|take]] action [[with respect to]] (someone, or something such as a [[concern#Noun|concern]], [[problem#Noun|problem]], or [[task#Noun|task]]); to [[deal with]], to [[handle#Verb|handle]]. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:8d3bc0b0fe29c0237c",
+      "pos": "verb",
+      "definition": "To take action with respect to (someone, or something such as a concern, problem, or task); to deal with, to handle.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=attend&oldid=92316200",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "attend",
+    "entryId": "ve-4ecf66eb",
+    "parentSenseId": "kaikki:a1f11b5097d8e78af5",
+    "parentSourceHash": "9753464fed192403adba1d23a1551c223ee83831b456faaf648d3800a692f3ec",
+    "sourcePage": "attend",
+    "revision": 92316200,
+    "sourceGloss": "## {{lb|en|transitive}} Of a (chiefly [[immaterial#Adjective|immaterial]]) [[thing]]: to be [[consequent#Adjective|consequent]] to or present with (someone or something); to accompany.",
+    "sense": {
+      "id": "wiktionary:restored:169e771f87eebb03e4",
+      "pos": "verb",
+      "definition": "Of a (chiefly immaterial) thing: to be consequent to or present with (someone or something); to accompany.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=attend&oldid=92316200",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "attend",
+    "entryId": "ve-4ecf66eb",
+    "parentSenseId": "kaikki:a1f11b5097d8e78af5",
+    "parentSourceHash": "9753464fed192403adba1d23a1551c223ee83831b456faaf648d3800a692f3ec",
+    "sourcePage": "attend",
+    "revision": 92316200,
+    "sourceGloss": "## {{lb|en|transitive|archaic|or|obsolete}} To [[look after]] (someone or something); to [[tend]].",
+    "sense": {
+      "id": "wiktionary:restored:4a986b38eac64c90b1",
+      "pos": "verb",
+      "definition": "To look after (someone or something); to tend.",
+      "example": "",
+      "register": "transitive, archaic, or, obsolete",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=attend&oldid=92316200",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "attend",
+    "entryId": "ve-4ecf66eb",
+    "parentSenseId": "kaikki:a1f11b5097d8e78af5",
+    "parentSourceHash": "9753464fed192403adba1d23a1551c223ee83831b456faaf648d3800a692f3ec",
+    "sourcePage": "attend",
+    "revision": 92316200,
+    "sourceGloss": "## {{lb|en|intransitive}} ''Followed by'' '''[[to#Particle|to]]''': to look after someone or something.",
+    "sense": {
+      "id": "wiktionary:restored:b837813bfd79f71302",
+      "pos": "verb",
+      "definition": "Followed by to: to look after someone or something.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=attend&oldid=92316200",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "attend",
+    "entryId": "ve-4ecf66eb",
+    "parentSenseId": "kaikki:a1f11b5097d8e78af5",
+    "parentSourceHash": "9753464fed192403adba1d23a1551c223ee83831b456faaf648d3800a692f3ec",
+    "sourcePage": "attend",
+    "revision": 92316200,
+    "sourceGloss": "## {{lb|en|intransitive}} To be [[ready#Adjective|ready]] to wait upon someone or their instructions as an attendant, servant, etc.; also (''followed by'' '''[[on#Preposition|on]]''' ''or'' '''[[upon]]'''), to accompany someone in order to assist or wait upon them.",
+    "sense": {
+      "id": "wiktionary:restored:939879e18317353c61",
+      "pos": "verb",
+      "definition": "To be ready to wait upon someone or their instructions as an attendant, servant, etc.; also (followed by on or upon), to accompany someone in order to assist or wait upon them.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=attend&oldid=92316200",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "attend",
+    "entryId": "ve-4ecf66eb",
+    "parentSenseId": "kaikki:a1f11b5097d8e78af5",
+    "parentSourceHash": "9753464fed192403adba1d23a1551c223ee83831b456faaf648d3800a692f3ec",
+    "sourcePage": "attend",
+    "revision": 92316200,
+    "sourceGloss": "## {{lb|en|intransitive}} ''Followed by'' '''[[at#Preposition|at]]''': to go to and be present at a place for some [[purpose#Noun|purpose]]; also {{lb|en|obsolete}}, ''followed by'' '''on''': to be present at and take part in an event.",
+    "sense": {
+      "id": "wiktionary:restored:b160e155a4392c0741",
+      "pos": "verb",
+      "definition": "Followed by at: to go to and be present at a place for some purpose; also , followed by on: to be present at and take part in an event.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=attend&oldid=92316200",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "attend",
+    "entryId": "ve-4ecf66eb",
+    "parentSenseId": "kaikki:a1f11b5097d8e78af5",
+    "parentSourceHash": "9753464fed192403adba1d23a1551c223ee83831b456faaf648d3800a692f3ec",
+    "sourcePage": "attend",
+    "revision": 92316200,
+    "sourceGloss": "## {{lb|en|intransitive}} ''Followed by'' '''to''': to take action with respect to someone or something; to deal with.",
+    "sense": {
+      "id": "wiktionary:restored:a19a29628b64800bc3",
+      "pos": "verb",
+      "definition": "Followed by to: to take action with respect to someone or something; to deal with.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=attend&oldid=92316200",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "attend",
+    "entryId": "ve-4ecf66eb",
+    "parentSenseId": "kaikki:a1f11b5097d8e78af5",
+    "parentSourceHash": "9753464fed192403adba1d23a1551c223ee83831b456faaf648d3800a692f3ec",
+    "sourcePage": "attend",
+    "revision": 92316200,
+    "sourceGloss": "## {{lb|en|intransitive}} ''Followed by'' '''on''' ''or'' '''upon''': of a (chiefly immaterial) thing: to be consequent on or present with.",
+    "sense": {
+      "id": "wiktionary:restored:03ef1db6ba9db449ba",
+      "pos": "verb",
+      "definition": "Followed by on or upon: of a (chiefly immaterial) thing: to be consequent on or present with.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=attend&oldid=92316200",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mercury",
+    "entryId": "ve-4a2e6842",
+    "parentSenseId": "kaikki:1feba2e4e7d2a27918",
+    "parentSourceHash": "68da713dd91f064952829f781f9be32499bd422a5fe48127ddd434f3fd0e2a75",
+    "sourcePage": "mercury",
+    "revision": 92753415,
+    "sourceGloss": "## {{senseid|en|Q925}} A [[silvery]]-[[colored#Adjective|coloured]], [[metallic#Adjective|metallic]] [[chemical element]] with the [[atomic number]] 80; it is [[liquid#Adjective|liquid]] at [[room temperature]], and [[toxic]]. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:c3b314dabdbe604139",
+      "pos": "noun",
+      "definition": "A silvery-coloured, metallic chemical element with the atomic number 80; it is liquid at room temperature, and toxic.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mercury&oldid=92753415",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mercury",
+    "entryId": "ve-4a2e6842",
+    "parentSenseId": "kaikki:1feba2e4e7d2a27918",
+    "parentSourceHash": "68da713dd91f064952829f781f9be32499bd422a5fe48127ddd434f3fd0e2a75",
+    "sourcePage": "mercury",
+    "revision": 92753415,
+    "sourceGloss": "## ''Preceded by'' '''[[the#Article|the]]''': mercury ''({{senseno|en|Q925}})'' as [[use#Verb|used]] in the [[column]] of a [[barometer]] or [[thermometer]], its [[fall#Noun|fall]] or [[rise#Noun|rise]] thus [[indicate|indicating]] the [[decrease#Noun|decrease]] or [[increase#Noun|increase]] of [[ambient#Adjective|ambient]] [[pressure#Noun|pressure]] or [[temperature]]. {{defdate|from 17th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:f3f723361b604e6977",
+      "pos": "noun",
+      "definition": "Preceded by the: mercury () as used in the column of a barometer or thermometer, its fall or rise thus indicating the decrease or increase of ambient pressure or temperature.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mercury&oldid=92753415",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mercury",
+    "entryId": "ve-4a2e6842",
+    "parentSenseId": "kaikki:1feba2e4e7d2a27918",
+    "parentSourceHash": "68da713dd91f064952829f781f9be32499bd422a5fe48127ddd434f3fd0e2a75",
+    "sourcePage": "mercury",
+    "revision": 92753415,
+    "sourceGloss": "## {{lb|en|medicine|historical}} A [[preparation]] [[contain]]ing mercury ''({{senseno|en|Q925}})'', especially [[calomel]] ([[mercurous chloride]]) or [[corrosive sublimate]] ([[mercuric chloride]]), formerly used as a [[medicine#Noun|medicine]] to [[treat#Verb|treat]] [[syphilis]], etc.",
+    "sense": {
+      "id": "wiktionary:restored:db1ea257fe299d2469",
+      "pos": "noun",
+      "definition": "A preparation containing mercury (), especially calomel (mercurous chloride) or corrosive sublimate (mercuric chloride), formerly used as a medicine to treat syphilis, etc.",
+      "example": "",
+      "register": "medicine, historical",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mercury&oldid=92753415",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mercury",
+    "entryId": "ve-4a2e6842",
+    "parentSenseId": "kaikki:1feba2e4e7d2a27918",
+    "parentSourceHash": "68da713dd91f064952829f781f9be32499bd422a5fe48127ddd434f3fd0e2a75",
+    "sourcePage": "mercury",
+    "revision": 92753415,
+    "sourceGloss": "## {{lb|en|science|historical}} One of the [[elemental#Adjective|elemental]] [[principle#Noun|principles]] formerly [[think#Verb|thought]] to be [[present#Adjective|present]] in all metals. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:699e71927ccac37522",
+      "pos": "noun",
+      "definition": "One of the elemental principles formerly thought to be present in all metals.",
+      "example": "",
+      "register": "science, historical",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mercury&oldid=92753415",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mercury",
+    "entryId": "ve-4a2e6842",
+    "parentSenseId": "kaikki:1feba2e4e7d2a27918",
+    "parentSourceHash": "68da713dd91f064952829f781f9be32499bd422a5fe48127ddd434f3fd0e2a75",
+    "sourcePage": "mercury",
+    "revision": 92753415,
+    "sourceGloss": "## {{lb|en|figurative|obsolete}} [[liveliness|Liveliness]], [[volatility]]. {{defdate|17th|18th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:049b613fe3dacea519",
+      "pos": "noun",
+      "definition": "Liveliness, volatility.",
+      "example": "",
+      "register": "figurative, obsolete",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mercury&oldid=92753415",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "thesis",
+    "entryId": "ve-685c1155",
+    "parentSenseId": "kaikki:926662577ad67160c5",
+    "parentSourceHash": "8ae61c9b299b681cc4b3da0f77fd8ad49565663eacb727f466c616fdc210f3b5",
+    "sourcePage": "thesis",
+    "revision": 93556250,
+    "sourceGloss": "## {{lb|en|rhetoric}} A [[proposition]] or [[statement]] [[support#Verb|supported]] by [[argument]]s.",
+    "sense": {
+      "id": "wiktionary:restored:f131aa3ebc006862fd",
+      "pos": "noun",
+      "definition": "A proposition or statement supported by arguments.",
+      "example": "",
+      "register": "rhetoric",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=thesis&oldid=93556250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "thesis",
+    "entryId": "ve-685c1155",
+    "parentSenseId": "kaikki:926662577ad67160c5",
+    "parentSourceHash": "8ae61c9b299b681cc4b3da0f77fd8ad49565663eacb727f466c616fdc210f3b5",
+    "sourcePage": "thesis",
+    "revision": 93556250,
+    "sourceGloss": "## {{lb|en|by extension}} A [[lengthy]] [[essay]] [[write|written]] to [[establish]] the [[validity]] of a thesis ''(sense 1.1)'', especially one [[submit]]ted in order to complete the requirements for a non-[[doctoral]] [[degree]] in the US and a doctoral degree in the UK; a [[dissertation]].",
+    "sense": {
+      "id": "wiktionary:restored:fbdf2119d7eb16336b",
+      "pos": "noun",
+      "definition": "A lengthy essay written to establish the validity of a thesis (sense 1.1), especially one submitted in order to complete the requirements for a non-doctoral degree in the US and a doctoral degree in the UK; a dissertation.",
+      "example": "",
+      "register": "by extension",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=thesis&oldid=93556250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "thesis",
+    "entryId": "ve-685c1155",
+    "parentSenseId": "kaikki:926662577ad67160c5",
+    "parentSourceHash": "8ae61c9b299b681cc4b3da0f77fd8ad49565663eacb727f466c616fdc210f3b5",
+    "sourcePage": "thesis",
+    "revision": 93556250,
+    "sourceGloss": "## {{lb|en|mathematics|computer science}} A [[conjecture]], especially one too vague to be formally stated or verified but useful as a working convention.",
+    "sense": {
+      "id": "wiktionary:restored:93e55d1f3544a5e576",
+      "pos": "noun",
+      "definition": "A conjecture, especially one too vague to be formally stated or verified but useful as a working convention.",
+      "example": "",
+      "register": "mathematics, computer science",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=thesis&oldid=93556250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "thesis",
+    "entryId": "ve-685c1155",
+    "parentSenseId": "kaikki:926662577ad67160c5",
+    "parentSourceHash": "8ae61c9b299b681cc4b3da0f77fd8ad49565663eacb727f466c616fdc210f3b5",
+    "sourcePage": "thesis",
+    "revision": 93556250,
+    "sourceGloss": "## {{lb|en|logic}} An [[affirmation]], or [[distinction]] from a [[supposition]] or [[hypothesis]].",
+    "sense": {
+      "id": "wiktionary:restored:e6fd3706245e1e794e",
+      "pos": "noun",
+      "definition": "An affirmation, or distinction from a supposition or hypothesis.",
+      "example": "",
+      "register": "logic",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=thesis&oldid=93556250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "thesis",
+    "entryId": "ve-685c1155",
+    "parentSenseId": "kaikki:926662577ad67160c5",
+    "parentSourceHash": "8ae61c9b299b681cc4b3da0f77fd8ad49565663eacb727f466c616fdc210f3b5",
+    "sourcePage": "thesis",
+    "revision": 93556250,
+    "sourceGloss": "## {{lb|en|philosophy}} In the [[dialectical]] [[method]] of {{w|Georg Wilhelm Friedrich Hegel}}: the [[initial#Adjective|initial]] [[stage#Noun|stage]] of [[reasoning#Noun|reasoning]] where a [[formal#Adjective|formal]] statement of a [[point#Noun|point]] is [[develop]]ed; this is [[follow]]ed by [[antithesis]] and [[synthesis]].",
+    "sense": {
+      "id": "wiktionary:restored:52412e57b3930ca968",
+      "pos": "noun",
+      "definition": "In the dialectical method of Georg Wilhelm Friedrich Hegel: the initial stage of reasoning where a formal statement of a point is developed; this is followed by antithesis and synthesis.",
+      "example": "",
+      "register": "philosophy",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=thesis&oldid=93556250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

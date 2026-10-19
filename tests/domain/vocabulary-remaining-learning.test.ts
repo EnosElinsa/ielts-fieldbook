@@ -1,0 +1,455 @@
+import { readFileSync } from 'node:fs';
+import { expect, test } from 'vitest';
+import { hasVocabularySenseEdits, learningTask, reviewedEntry } from '../../src/domain/vocabulary/content';
+import { getVocabularyLearningPriority, isVocabularyMeaningGroup, restoredDictionarySenses, supplementVocabularySense } from '../../src/domain/vocabulary/readiness';
+import type { VocabularyEntry, VocabularySense } from '../../src/domain/vocabulary/types';
+const catalogue = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
+const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+const entries = (term: string): VocabularyEntry => catalogue.entries.find((entry: VocabularyEntry) => entry.term === term);
+const original = (term: string, id: string): VocabularySense => JSON.parse(readFileSync('public/dictionary/' + index[term.toLowerCase()], 'utf8')).senses.find((sense: VocabularySense) => sense.id === id);
+const cases: [string, string][] = [
+  [
+    "physician",
+    "kaikki:d1a9415758c68a7ce9"
+  ],
+  [
+    "document",
+    "kaikki:fa7e046c81c5aca183"
+  ],
+  [
+    "flag",
+    "kaikki:030d980f69389bccc4"
+  ],
+  [
+    "fridge",
+    "kaikki:8f3058f1a9f8064967"
+  ],
+  [
+    "group",
+    "kaikki:6b12c85773d79cc130"
+  ],
+  [
+    "signature",
+    "kaikki:e3c071c8a59560c936"
+  ],
+  [
+    "biologist",
+    "kaikki:84a5f3b85e7aa6ad90"
+  ],
+  [
+    "cheek",
+    "kaikki:cbe22477eb60d4cb14"
+  ],
+  [
+    "country",
+    "kaikki:8145974babffa609de"
+  ],
+  [
+    "embassy",
+    "kaikki:e270b4a2d5b82b052e"
+  ],
+  [
+    "flour",
+    "kaikki:3601cc94e540ab1fe7"
+  ],
+  [
+    "general",
+    "kaikki:7319669086c9928a6e"
+  ],
+  [
+    "genetic",
+    "kaikki:efd6fe8a339b37a896"
+  ],
+  [
+    "kangaroo",
+    "kaikki:0e0c1fc82a1d17389d"
+  ],
+  [
+    "lip",
+    "kaikki:df87ef4189591513f0"
+  ],
+  [
+    "mass",
+    "kaikki:9bd116628508b7a1e3"
+  ],
+  [
+    "oculist",
+    "kaikki:8497876f1b350c2a9c"
+  ],
+  [
+    "officer",
+    "kaikki:c7bef204d42cf15cf8"
+  ],
+  [
+    "outdoor",
+    "kaikki:be4c572134e6c8369a"
+  ],
+  [
+    "plague",
+    "kaikki:41f69a1ead418138fb"
+  ],
+  [
+    "spirit",
+    "kaikki:fb2692b45e22d511fb"
+  ],
+  [
+    "tennis",
+    "kaikki:a0a756a8b55d462bc8"
+  ],
+  [
+    "wheel",
+    "kaikki:487165a727820eb2ff"
+  ],
+  [
+    "Bible",
+    "kaikki:696d5bf9616de3be78"
+  ],
+  [
+    "aboriginal",
+    "kaikki:a3bb914102fa66edce"
+  ],
+  [
+    "according",
+    "kaikki:e33446ec43b670abe5"
+  ],
+  [
+    "animation",
+    "kaikki:4ad30c42d73346345f"
+  ],
+  [
+    "antique",
+    "kaikki:8f8a6e742c0f950357"
+  ],
+  [
+    "arable",
+    "kaikki:6933b0c8978822d58c"
+  ],
+  [
+    "atmosphere",
+    "kaikki:859992c6dd2a7678de"
+  ],
+  [
+    "attain",
+    "kaikki:aa8534ec3cd20f11aa"
+  ],
+  [
+    "attend",
+    "kaikki:a1f11b5097d8e78af5"
+  ],
+  [
+    "bean",
+    "kaikki:2554db27c07f999e81"
+  ],
+  [
+    "buy out",
+    "kaikki:111c989aa773204983"
+  ],
+  [
+    "camel",
+    "kaikki:2a01c2c8fff0d2a0b5"
+  ],
+  [
+    "cell",
+    "kaikki:07464bae67fb62d903"
+  ],
+  [
+    "clay",
+    "kaikki:152479f81e8c368250"
+  ],
+  [
+    "cleanest",
+    "kaikki:aaae6a9c92bf820a7a"
+  ],
+  [
+    "co-operative",
+    "kaikki:64aaa4253369107433"
+  ],
+  [
+    "conjunction",
+    "kaikki:6a01f85dbb96b28a0d"
+  ],
+  [
+    "conservative",
+    "kaikki:727a91f191ab959910"
+  ],
+  [
+    "controversy",
+    "kaikki:a8594b6a839efa92b7"
+  ],
+  [
+    "copper",
+    "kaikki:acf0f59a0f183b85a3"
+  ],
+  [
+    "corpse",
+    "kaikki:372cab56bf40134763"
+  ],
+  [
+    "craft",
+    "kaikki:6972bb08bbf092b986"
+  ],
+  [
+    "cushion",
+    "kaikki:7ac6682d18e6b5d942"
+  ],
+  [
+    "decades",
+    "kaikki:47328e90d8c11f4a65"
+  ],
+  [
+    "decimation",
+    "kaikki:b92cf01c2d64b5daed"
+  ],
+  [
+    "despatch",
+    "kaikki:2a84e276e5f425a467"
+  ],
+  [
+    "distance",
+    "kaikki:e08d8b669ecb1a5004"
+  ],
+  [
+    "dock",
+    "kaikki:566be4e5ca296ec128"
+  ],
+  [
+    "dwarf",
+    "kaikki:def6c73c35205d4586"
+  ],
+  [
+    "elective",
+    "kaikki:9ce52a640a6dac78e0"
+  ],
+  [
+    "elephant",
+    "kaikki:0c2ddaeff6b0c451c4"
+  ],
+  [
+    "endow",
+    "kaikki:8839604a71ffbfa73a"
+  ],
+  [
+    "energy",
+    "kaikki:196ffbaf417463b2b3"
+  ],
+  [
+    "engineer",
+    "kaikki:ccaf289665ca69e682"
+  ],
+  [
+    "fancy",
+    "kaikki:8f739c531126a9337d"
+  ],
+  [
+    "festival",
+    "kaikki:c3e471f3f3afa8f572"
+  ],
+  [
+    "fireman",
+    "kaikki:891e2a84410e063b4a"
+  ],
+  [
+    "freight",
+    "kaikki:3575f8e4d5d2baf134"
+  ],
+  [
+    "generation",
+    "kaikki:cf24ee039c098ca226"
+  ],
+  [
+    "heap",
+    "kaikki:8c61cb766d8bb30223"
+  ],
+  [
+    "heart",
+    "kaikki:538b88b81a12a6dc77"
+  ],
+  [
+    "heritage",
+    "kaikki:ec1137bde546eb58b8"
+  ],
+  [
+    "high-voltage",
+    "kaikki:c87566de76f7501af5"
+  ],
+  [
+    "launch",
+    "kaikki:e0238985b39cfaa225"
+  ],
+  [
+    "loaf",
+    "kaikki:318339a8135307063b"
+  ],
+  [
+    "lover",
+    "kaikki:59c642d3f1475dcd7f"
+  ],
+  [
+    "lumber",
+    "kaikki:95fb55e709f6a19c2b"
+  ],
+  [
+    "manly",
+    "kaikki:c61890b9227ed1124f"
+  ],
+  [
+    "mercury",
+    "kaikki:1feba2e4e7d2a27918"
+  ],
+  [
+    "might",
+    "kaikki:4a1f8b7bf72ff6149a"
+  ],
+  [
+    "oasis",
+    "kaikki:590f45d9c351c719df"
+  ],
+  [
+    "office",
+    "kaikki:cd557d4b82d966b0a8"
+  ],
+  [
+    "organisation",
+    "kaikki:0580228dfb0dce4fe8"
+  ],
+  [
+    "organiser",
+    "kaikki:bc7184b9d52f082b42"
+  ],
+  [
+    "patent",
+    "kaikki:74ab0e1345c980e867"
+  ],
+  [
+    "penguin",
+    "kaikki:c76eee22dd9cb1c120"
+  ],
+  [
+    "plume",
+    "kaikki:696caa31657a8e765a"
+  ],
+  [
+    "prize",
+    "kaikki:4a59905e6942dbfc75"
+  ],
+  [
+    "pronoun",
+    "kaikki:47aff83faf0a3a780a"
+  ],
+  [
+    "prospect",
+    "kaikki:cf6638818eca37d5c3"
+  ],
+  [
+    "recession",
+    "kaikki:60bd7d3d851919a685"
+  ],
+  [
+    "resign",
+    "kaikki:20a48fb796d4db8b17"
+  ],
+  [
+    "ribbon",
+    "kaikki:eaca7e51d93678bd4a"
+  ],
+  [
+    "ridge",
+    "kaikki:e7753276782ab8b854"
+  ],
+  [
+    "saddle",
+    "kaikki:d962334171d73c6a3c"
+  ],
+  [
+    "sail",
+    "kaikki:130a49463b8a1f2dae"
+  ],
+  [
+    "seaman",
+    "kaikki:5cf35113b368c503e5"
+  ],
+  [
+    "seed",
+    "kaikki:656ebcd782cabbe6d2"
+  ],
+  [
+    "several",
+    "kaikki:9db417617af0d80584"
+  ],
+  [
+    "specialised",
+    "kaikki:56323c7ab66e23fc71"
+  ],
+  [
+    "stream",
+    "kaikki:7c9a526cc8ca885fc1"
+  ],
+  [
+    "supper",
+    "kaikki:c0d51b59accd3ff81d"
+  ],
+  [
+    "theatre",
+    "kaikki:c13f4a4b3b27750c6a"
+  ],
+  [
+    "thesis",
+    "kaikki:926662577ad67160c5"
+  ],
+  [
+    "uphold",
+    "kaikki:ccd54a7ddc6123de55"
+  ],
+  [
+    "warning",
+    "kaikki:54c44f1254fb7e020a"
+  ],
+  [
+    "worm",
+    "kaikki:5cb85e71ae8bb3ddb5"
+  ],
+  [
+    "yoga",
+    "kaikki:ac56cff38cc49f3e4d"
+  ]
+];
+test.each(cases)('%s replaces truncated learning text with meaning-specific teaching', (term, id) => {
+ const entry = entries(term), raw = original(term, id), sense = supplementVocabularySense(entry.id, raw, [raw], hasVocabularySenseEdits);
+ expect(sense.example).not.toMatch(/\[\s*(?:…|\.{3})\s*\]|\b(?:thou|thee|hath)\b|ſ/);
+ expect(sense.collocations?.length).toBeGreaterThan(0);
+ expect(sense.distinctions?.length).toBeGreaterThan(0);
+ expect(supplementVocabularySense(entry.id, { ...raw, example: 'My own saved sentence.', source: 'Personal note' }, [raw], hasVocabularySenseEdits).example).toBe('My own saved sentence.');
+});
+test.each(['attend', 'mercury', 'thesis'])('%s learns an actual meaning and retains its source heading as a reference', term => {
+ const entry = entries(term), id = cases.find(([word]) => word === term)![1], raw = original(term, id);
+ const heading = supplementVocabularySense(entry.id, raw, [raw], hasVocabularySenseEdits);
+ expect(isVocabularyMeaningGroup(entry.id, heading)).toBe(true);
+ expect(learningTask({ ...entry, senses: [heading] }, heading, 'definition')).toBeUndefined();
+ const current = reviewedEntry(entry);
+ expect(isVocabularyMeaningGroup(entry.id, current.senses[0])).toBe(false);
+ expect(current.senses[0].definition).not.toMatch(/^Senses relating/);
+ expect(current.senses[0].definition).toMatch(({ attend: /present at/, mercury: /atomic number 80/, thesis: /submitted for a degree/ } as Record<string, RegExp>)[term]);
+ const source = JSON.parse(readFileSync('public/dictionary/' + index[term], 'utf8')).senses;
+ expect(restoredDictionarySenses(entry.id, new Set(source.map((sense: VocabularySense) => sense.id))).filter(sense => sense.sourceUrl?.includes('title=' + term)).length).toBeGreaterThan(0);
+});
+test.each([
+ ['physician', /medical doctor/], ['embassy', /officials/], ['cell', /living organism/], ['engineer', /engineering/], ['office', /administrative work/],
+] as [string, RegExp][])('%s starts with its useful general meaning and respects a personal primary', (term, expected) => {
+ const entry = entries(term), current = reviewedEntry(entry);
+ expect(current.senses[0].definition).toMatch(expected);
+ expect(current.senses[0].id).toBe(({ physician: 'kaikki:818f1ed301c0a788f4', embassy: 'kaikki:fd5805fa4be55ee5fd', cell: 'kaikki:8c6229acaeca7b372f', engineer: 'kaikki:d898c6ddf65545d2a9', office: 'kaikki:efb993888520d4d56c' } as Record<string, string>)[term]);
+ expect(current.senses.some(sense => sense.id === entry.senses[0].id)).toBe(true);
+ const personal = { ...entry.senses[0], definition: 'My classroom meaning.', example: 'My saved context.' };
+ expect(reviewedEntry({ ...entry, senses: [personal] }).senses[0]).toEqual(personal);
+});
+test('the narrow source meanings are not silently broadened', () => {
+ const current = (term: string) => { const id = cases.find(([word]) => word === term)![1], raw = original(term, id); return supplementVocabularySense(entries(term).id, raw, [raw], hasVocabularySenseEdits); };
+ expect(current('decimation').definition).toMatch(/tenth|one person in every ten/);
+ expect(current('seed').distinctions?.join(' ')).toMatch(/botanical/);
+ expect(current('ridge').definition).toMatch(/animal/);
+ expect(current('plague').distinctions?.join(' ')).toMatch(/virus/);
+ expect(current('dock').usage).toMatch(/does not establish/);
+ expect(current('organisation').distinctions?.join(' ')).toMatch(/spelling error/);
+ expect(getVocabularyLearningPriority(entries('cell').id, current('cell'))).toBeUndefined();
+ expect(getVocabularyLearningPriority(entries('cell').id, reviewedEntry(entries('cell')).senses[0])).toBe('general');
+});

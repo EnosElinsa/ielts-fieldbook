@@ -27649,5 +27649,585 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/Pan#English",
       "license": "CC-BY-SA-4.0"
     }
+  },
+  {
+    "entryId": "ve-96ac507b",
+    "sense": {
+      "id": "kaikki:818f1ed301c0a788f4",
+      "definition": "A medical doctor trained to treat human patients.",
+      "example": "The physician discussed the treatment options with her patient.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "consult a physician",
+        "a family physician",
+        "a physician's advice"
+      ],
+      "usage": "Countable profession noun. In some varieties, physician also has a narrower internal-medicine meaning.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/physician#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The broad medical-doctor meaning and the narrower contrast with surgeon remain separate."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:d1a9415758c68a7ce9",
+      "definition": "A practitioner of physic, i.e. a specialist in internal medicine, especially as opposed to a surgeon; a practitioner who treats with medication rather than with surgery.",
+      "example": "His forefathers had been, as a rule, professional men—physicians and lawyers; his grandfather died under the walls of Chapultepec Castle while twisting a tourniquet for a cursing dragoon; an uncle remained indefinitely at Malvern Hill;[…].",
+      "pos": "noun",
+      "synonyms": [
+        "doctor",
+        "doc",
+        "leech",
+        "physic",
+        "physician",
+        "medic",
+        "medician",
+        "medical doctor"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "emergency physician",
+        "family physician",
+        "geophysician",
+        "interphysician",
+        "intraphysician",
+        "non-physician",
+        "nonphysician",
+        "physician assistant",
+        "physician associate",
+        "physiciancy",
+        "physicianed",
+        "physicianess",
+        "physician extender",
+        "physician finger",
+        "physician, heal thyself",
+        "physicianless",
+        "physicianlike",
+        "physicianly",
+        "physicianship"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/physician#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-f3e7f437",
+    "sense": {
+      "id": "kaikki:fd5805fa4be55ee5fd",
+      "definition": "A group of officials permanently representing a state abroad or at an international organisation.",
+      "example": "The embassy issued a statement about the new visa rules.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "contact an embassy",
+        "embassy staff",
+        "a diplomatic embassy"
+      ],
+      "usage": "Countable diplomatic-mission noun. The mission and its premises are related but distinct meanings.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/embassy#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "An embassy is the diplomatic mission; an ambassador is a person leading or representing it."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:e270b4a2d5b82b052e",
+      "definition": "The function or duty of an ambassador.",
+      "example": "The King told me, […] That I ſhould have the Character of Ambaſſador Extraordinary, and the ſame Allovvance I ſhou'd have had in Spain: Upon this Offer I made no Demurr, but immediately accepted it, and ſo my Ambaſſy vvas declar'd in May 1674.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "emb.",
+        "tent embassy"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/embassy#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7c70b163",
+    "sense": {
+      "id": "kaikki:8c6229acaeca7b372f",
+      "definition": "The basic unit of a living organism, enclosed by a cell membrane.",
+      "example": "The biologist observed a living cell under the microscope.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a living cell",
+        "a cell membrane",
+        "a nerve cell"
+      ],
+      "usage": "Countable biology noun. Different types of cells have different structures and functions.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cell#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A biological cell differs from a prison room, an electrical cell and a spreadsheet cell."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:07464bae67fb62d903",
+      "definition": "A single-room dwelling for a hermit.",
+      "example": "So, taking them apart into his cell, / He to that point fit speaches gan to frame […].",
+      "pos": "noun",
+      "synonyms": [
+        "cell",
+        "cyte"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "120-cell",
+        "16-cell",
+        "24-cell",
+        "57-cell",
+        "5-cell",
+        "600-cell",
+        "8-cell",
+        "absorption cell",
+        "air cell",
+        "alpha cell",
+        "angioimmunoblastic T-cell lymphoma",
+        "antigen-presenting cell",
+        "APUD cell",
+        "attocell",
+        "auxiliary cell",
+        "band cell",
+        "barycell",
+        "basal cell",
+        "basal cell carcinoma",
+        "basket cell",
+        "battery cell",
+        "B cell",
+        "B-cell",
+        "Bénard cell",
+        "beta cell",
+        "Betz cell",
+        "biological fuel cell",
+        "bipolar cell",
+        "bite cell",
+        "black queen cell virus"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cell#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-1308143c",
+    "sense": {
+      "id": "kaikki:d898c6ddf65545d2a9",
+      "definition": "A person qualified, working or studying in a branch of engineering.",
+      "example": "The engineer checked the design before construction began.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a mechanical engineer",
+        "an electrical engineer",
+        "an engineering student"
+      ],
+      "usage": "Countable person noun. Professional licensing and protected titles vary by jurisdiction.",
+      "register": "broadly",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/engineer#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Engineer does not always mean a civil engineer, a military engineer or an engine operator; context identifies the branch or role."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ccaf289665ca69e682",
+      "definition": "A soldier engaged in designing or constructing military works for attack or defence, or other engineering works.",
+      "example": "For tis the ſport to haue the enginer / Hoiſt with his ovvne petar, an't ſhall goe hard / But I vvill delue one yard belovve their mines, / And blovve them at the Moone: […]",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "also, figuratively",
+      "register": "also, figuratively",
+      "wordFamily": [
+        "astroengineer",
+        "bioneer",
+        "engineer boot",
+        "engineeress",
+        "engineerish",
+        "engineerization",
+        "engineer's blue",
+        "engineer's chain",
+        "engineership",
+        "engineer's scale",
+        "enginerd",
+        "engr.",
+        "fungineer",
+        "glycoengineer",
+        "Imagineer",
+        "microengineer",
+        "misengineer",
+        "motorneer",
+        "nanoengineer",
+        "neuroengineer",
+        "nonengineer",
+        "nonengineering",
+        "socioengineer",
+        "subengineer",
+        "tractioneer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/engineer#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-64e4ee05",
+    "sense": {
+      "id": "kaikki:efb993888520d4d56c",
+      "definition": "A room, group of rooms or building used for non-manual work, especially administrative work.",
+      "example": "Our office is on the second floor of the building.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "an office building",
+        "work in an office",
+        "rent an office"
+      ],
+      "usage": "Countable workplace noun. The staff and the position held are separate uses.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/office#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "An office is a workplace here; holding public office means occupying a position."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:cd557d4b82d966b0a8",
+      "definition": "A ceremonial duty or service, particularly",
+      "example": "Golde (gaue he him)[…]for all maner of veſſels of euery offyce[…]",
+      "pos": "noun",
+      "synonyms": [
+        "service",
+        "divine service",
+        "religious service",
+        "liturgy",
+        "doctor's office",
+        "office"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "610 Office",
+        "back office",
+        "booking office",
+        "box-office",
+        "box office",
+        "box-office bomb",
+        "branch office",
+        "call office",
+        "chain of office",
+        "circumlocution office",
+        "cloffice",
+        "coach-office",
+        "coffice",
+        "color of office",
+        "corner office",
+        "dead letter office",
+        "Divine Office",
+        "divine office",
+        "do a land-office business",
+        "doctor's office",
+        "drawing office",
+        "express office",
+        "family office",
+        "find an office",
+        "fire office",
+        "fiscal office",
+        "front office",
+        "garden office",
+        "general office",
+        "gingerbread office"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/office#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-4ecf66eb",
+    "sense": {
+      "id": "wiktionary:restored:6c99eacbc4bbbd2c3e",
+      "pos": "verb",
+      "definition": "To be present at or regularly go to an event or place.",
+      "example": "All new students must attend the introductory lecture.",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=attend&oldid=92316200",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "attend a lecture",
+        "attend a meeting",
+        "attend school"
+      ],
+      "usage": "Transitive: attend the meeting, without to.",
+      "distinctions": [
+        "Attend a meeting means be present; attend to a problem means deal with it."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:a1f11b5097d8e78af5",
+      "definition": "Senses relating to caring for or waiting on someone, or accompanying or being present.",
+      "example": "The fift [beadsman] had charge ſick perſons to attend, / And comfort thoſe, in point of death vvhich lay; […]",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "attendable",
+        "attended",
+        "attendee",
+        "attender",
+        "attending",
+        "attend to",
+        "coattend",
+        "disattend",
+        "misattend",
+        "overattend",
+        "preattend",
+        "reattend",
+        "reattendance",
+        "reattender",
+        "stretch-attend posture",
+        "tend",
+        "underattend"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/attend#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-4a2e6842",
+    "sense": {
+      "id": "wiktionary:restored:c3b314dabdbe604139",
+      "pos": "noun",
+      "definition": "The toxic silvery metallic element Hg, atomic number 80, liquid at room temperature.",
+      "example": "The laboratory stores mercury in a sealed container.",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mercury&oldid=92753415",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "elemental mercury",
+        "liquid mercury",
+        "mercury vapour"
+      ],
+      "usage": "Usually uncountable for the element. It is toxic and should not be handled as an ordinary classroom material.",
+      "distinctions": [
+        "Mercury is a chemical element; the planet Mercury is a distinct proper-name meaning."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:1feba2e4e7d2a27918",
+      "definition": "Senses relating to the metal.",
+      "example": "When therfore they perceaue a ſufficient quantitie of golde thus remaynynge on the tables, they gather it with diligence and put it in a tray or great ſhallowe dyſſhe of wod […] they beate or mixte (or amalgame it as they caule it) with Mercurie or quickſyluer, […]",
+      "pos": "noun",
+      "synonyms": [
+        "mul:Hg",
+        "mul:☿",
+        "azoth",
+        "hydrargyrum",
+        "quicksilver"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "alkylmercury",
+        "argental mercury",
+        "cadmium mercury cell",
+        "dichloromercury",
+        "dimercury",
+        "dimethylmercury",
+        "dodecamercury",
+        "eka-mercury",
+        "ethylmercury",
+        "fulminate of mercury",
+        "green iodide of mercury",
+        "hexamercury",
+        "horn mercury",
+        "mercurate",
+        "mercurial",
+        "mercuriate",
+        "mercuriation",
+        "mercuric",
+        "mercuricals",
+        "mercuriferous",
+        "mercurify",
+        "mercurio-syphilis",
+        "mercurism",
+        "mercurize",
+        "mercuroan",
+        "mercurochrome",
+        "mercurocuprate",
+        "mercurous",
+        "mercury arc",
+        "mercury arc rectifier"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mercury#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-685c1155",
+    "sense": {
+      "id": "wiktionary:restored:fbdf2119d7eb16336b",
+      "pos": "noun",
+      "definition": "A substantial academic essay or research document submitted for a degree.",
+      "example": "She submitted her thesis after three years of research.",
+      "register": "by extension",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=thesis&oldid=93556250",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "write a thesis",
+        "submit a thesis",
+        "a doctoral thesis"
+      ],
+      "usage": "Countable noun; plural theses. Degree-level conventions for thesis and dissertation differ between institutions and countries.",
+      "distinctions": [
+        "A degree thesis is a document; its central thesis can be the claim advanced within it."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:926662577ad67160c5",
+      "definition": "Senses relating to logic, rhetoric, etc.",
+      "example": "I submit these nine theses to Wikipedia’s community and to the world. I do this, as Martin Luther said when he posted his famous 95 theses, “Out of love for the truth and the desire to elucidate it.” […] I am confident that every thesis stands on solid ground.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "rhetoric",
+      "register": "rhetoric",
+      "wordFamily": [
+        "all but thesis",
+        "bachelor's thesis",
+        "blue water thesis",
+        "bowling alone thesis",
+        "Church-Turing thesis",
+        "conflict thesis",
+        "counterthesis",
+        "doctoral thesis",
+        "e-thesis",
+        "graduate thesis",
+        "Habakkuk thesis",
+        "master's thesis",
+        "Merton thesis",
+        "nonthesis",
+        "private language thesis",
+        "Rothbarth-Habakkuk thesis",
+        "thesis defense",
+        "thesis statement"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/thesis#English",
+      "license": "CC-BY-SA-4.0"
+    }
   }
 ]
