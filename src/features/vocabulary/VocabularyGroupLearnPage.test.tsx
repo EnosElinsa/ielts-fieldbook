@@ -142,15 +142,20 @@ test('a fully viewed final batch presents completion instead of dead end navigat
   expect(screen.getByText('Assessment: Not started')).toBeInTheDocument();
 });
 
-test('an exact dictionary diagram uses the learning card illustration layout', async () => {
+test('a supplementary dictionary diagram opens inside the learning copy without reserving an illustration column', async () => {
   const released = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
   Object.assign(VOCABULARY_CATALOG, released);
   const bank = released.entries.find((entry: any) => entry.term === 'bank');
   const member = released.memberships.find((row: any) => row.entryId === bank.id);
   mount(`/vocabulary/wordbooks/${member.bookId}/groups/${member.unitId}/learn?word=${bank.id}`);
+  await screen.findByText('View diagram');
+  expect(document.querySelector('#learning-meaning')).not.toHaveClass('has-visual');
+  expect(screen.queryByRole('img', { name: 'bank: A bank accepting savings and offering loans' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByText('View diagram'));
   const image = await screen.findByRole('img', { name: 'bank: A bank accepting savings and offering loans' });
-  expect(image.closest('#learning-meaning')).toHaveClass('has-visual');
+  expect(image.closest('.vocabulary-learning-copy')).toBeInTheDocument();
   expect(screen.getByText('a commercial bank', { exact: true })).toBeInTheDocument();
+  fireEvent.click(screen.getByText('Usage and meaning notes'));
   expect(screen.getByRole('heading', { name: 'Compare meanings' })).toBeInTheDocument();
 });
 

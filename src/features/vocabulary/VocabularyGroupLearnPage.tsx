@@ -15,7 +15,8 @@ import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
 import { catalogVocabularyEntry, hasVocabularySenseEdits } from '../../domain/vocabulary/content';
 import { vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
-import { getVocabularyIllustration, getVocabularyVisualConcept, getVocabularySenseDiagram } from '../../domain/vocabulary/media';
+import { getVocabularyVisualPresentation } from '../../domain/vocabulary/visualPresentation';
+import { VocabularyMeaningNotes } from './VocabularyMeaningNotes';
 import { hasVocabularyReadinessNotes } from '../../domain/vocabulary/readiness';
 import { getVocabularyMastery } from '../../domain/vocabulary/mastery';
 import { getLearnedVocabularyIds, vocabularyGroupProgress } from '../../domain/vocabulary/progress';
@@ -183,7 +184,8 @@ export function VocabularyGroupLearnPage() {
   const meaningVisible = !recallFirst || revealedKey === learningCardKey;
   useLayoutEffect(() => { setRevealedKey(''); }, [learningCardKey]);
   const activeResolved=word && selectedSense ? resolveVocabularyLearningContext(word.entry,{bookId,unitId,senseId:selectedSense.id}) : word?.resolved;
-  const hasVisual = Boolean(activeResolved && (getVocabularyIllustration(activeResolved) || getVocabularyVisualConcept(activeResolved) || getVocabularySenseDiagram(activeResolved)));
+  const visualPresentation = activeResolved ? getVocabularyVisualPresentation(activeResolved) : 'none';
+  const hasVisual = visualPresentation === 'inline';
   const presentation = selectedSense ? vocabularySensePresentation(selectedSense) : undefined;
   const publicEntry = word ? catalogVocabularyEntry(word.entry.id) : undefined;
   const publicSense = publicEntry && selectedSense ? resolveVocabularyLearningContext(publicEntry, { bookId, unitId, senseId:selectedSense.id }).sense : undefined;
@@ -226,12 +228,12 @@ export function VocabularyGroupLearnPage() {
 
           {presentation?.example ? <div className="vocabulary-learning-example"><h4>Example</h4><p>{presentation.example}</p></div> : null}
           {reliableCollocations && selectedSense?.collocations?.length ? <div className="vocabulary-learning-collocations"><h4>Common combinations</h4><ul>{selectedSense.collocations.map(item=><li key={item}>{item}</li>)}</ul></div> : null}
-          {presentation?.usage ? <div className="vocabulary-learning-usage"><h4>Usage note</h4><p>{presentation.usage}</p></div> : null}
-          {reviewedNotes && selectedSense?.distinctions?.length ? <div className="vocabulary-learning-usage"><h4>Compare meanings</h4>{selectedSense.distinctions.map(note => <p key={note}>{note}</p>)}</div> : null}
+          {selectedSense ? <VocabularyMeaningNotes entryId={word.entry.id} sense={selectedSense} showDistinctions={reviewedNotes} /> : null}
+          {visualPresentation === 'supplementary' && activeResolved ? <VocabularyLearningVisual resolved={activeResolved} /> : null}
           <details className="vocabulary-learning-provenance" key={`${word.entry.id}:${selectedSense?.id}`}><summary>Meaning source</summary><p>{meaningSource} See Word details for references and other meanings.</p></details>
           <Link className="btn text" to={entryUrl(word.entry.id,{bookId,unitId,senseId:selectedSense?.id},origin)} onClick={()=>rememberVocabularyPosition(origin,'learning-word')}>Word details<ArrowRight size={14}/></Link>
           {word.resolved.curriculum?.basis==='multiple' ? <div className="vocabulary-learning-selected-practice"><Link className="btn primary" to={practiceUrl(word.entry.id,selectedSense?.id,{bookId,unitId},origin,'definition')}>Practise this meaning<ArrowRight size={14}/></Link><p className="vocabulary-muted">This checks the selected meaning and keeps its own review progress. The whole-group assessment uses the first learning meaning for each word.</p></div> : null}
-          </div>{activeResolved && <VocabularyLearningVisual resolved={activeResolved} />}</div> : null}
+          </div>{hasVisual && activeResolved && <VocabularyLearningVisual resolved={activeResolved} />}</div> : null}
         </VocabularyLearningCard>
         <div className={`vocabulary-learning-controls${batchComplete ? ' is-complete' : ''}`}><button className="btn line" disabled={position===0} onClick={()=>navigateTo(position-1)}><ArrowLeft size={15}/>Previous word</button>{batchComplete ? <span className="vocabulary-learning-batch-complete"><Check size={16}/>Batch viewed</span> : <button className="btn primary" disabled={viewed.includes(word.entry.id) || !meaningVisible} onClick={()=>navigateTo(Math.min(position+1,batchEnd),true)}><Check size={15}/>{viewed.includes(word.entry.id)?'Viewed':position===batchEnd?'Mark viewed':'Mark viewed & next'}</button>}{!batchComplete || position<words.length-1 ? <button className="btn line" disabled={position===words.length-1} onClick={()=>navigateTo(position+1)}>{batchComplete && position===batchEnd ? 'Next batch' : 'Next word'}<ArrowRight size={15}/></button> : null}</div>
         {saveStatus==='failed'?<div role="alert" className="vocabulary-learning-save-error">Progress could not be saved. {savedOnDevice?'Your position is kept on this device.':'Your position is kept while this page is open.'} <button className="btn line" onClick={()=>sync.current?.flush()}>Retry save</button></div>:<p role="status" className="vocabulary-learning-save-status">{saveStatus==='pending'?(savedOnDevice?'Position saved on this device':'Position kept in this page'):saveStatus==='saving'?'Syncing progress…':saveStatus==='saved'?'Progress saved':'Mark each word viewed when you have finished learning it.'}</p>}

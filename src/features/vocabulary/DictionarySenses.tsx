@@ -11,8 +11,8 @@ import { VocabularySenseContent } from "./VocabularySenseContent";
 import { SelectField } from '../../components/SelectField';
 import { vocabularySensePresentation } from '../../domain/vocabulary/dictionaryPresentation';
 import { getVocabularyLearningPriority, isVocabularyMeaningGroup, isVocabularySpellingReference, isVocabularyUsageReference } from '../../domain/vocabulary/readiness';
-import { getVocabularySenseDiagram, type VocabularySenseDiagram } from '../../domain/vocabulary/media';
-import { AsyncMeaningDiagram } from './AsyncMeaningDiagram';
+import { getVocabularySenseDiagram } from '../../domain/vocabulary/media';
+import { VocabularyDiagramDisclosure } from './VocabularyDiagramDisclosure';
 import { practiceUrl } from "./vocabularyNavigation";
 import { loadTermDictionary, resetDictionaryCache } from './dictionary';
 export { resetDictionaryCache } from './dictionary';
@@ -23,13 +23,6 @@ const partOfSpeech = (sense: VocabularySense) => {
   return ({ adj: 'adjective', adv: 'adverb', name: 'proper name' } as Record<string, string>)[pos] || pos || 'other';
 };
 const label = (value: string) => value.replace(/^./, char => char.toUpperCase());
-function DiagramPreview({ diagram, number }: { diagram: VocabularySenseDiagram; number: number | undefined }) {
-  const [open, setOpen] = useState(false);
-  return <details className="vocabulary-dictionary-diagram" aria-label={`Diagram for meaning ${number}`} onToggle={event => setOpen(event.currentTarget.open)}>
-    <summary>View diagram</summary>
-    {open ? <AsyncMeaningDiagram diagram={diagram} /> : null}
-  </details>;
-}
 export function DictionarySenses({
   entry,
   excludeSenses = entry.senses,
@@ -105,10 +98,12 @@ export function DictionarySenses({
   useEffect(() => {
     onSources?.(senses);
   }, [senses, onSources]);
-  const withNotes = senses.filter(sense => !isVocabularyMeaningGroup(entry.id, sense) && !isVocabularyUsageReference(entry.id, sense) && sense.editorial && sense.collocations?.length && sense.distinctions?.length);
+  const withNotes = senses.filter(sense => !getVocabularyLearningPriority(entry.id, sense) && !isVocabularyMeaningGroup(entry.id, sense) && !isVocabularyUsageReference(entry.id, sense) && !isVocabularySpellingReference(entry.id, sense) && sense.editorial && sense.collocations?.length && sense.distinctions?.length);
   const everyday = senses.filter(sense => getVocabularyLearningPriority(entry.id, sense) === 'general');
-  const recommended = everyday.length ? everyday : withNotes;
-  const scope = !showAll && recommended.length ? recommended : senses;
+  const hasEverydayMeanings = [...loaded, ...excludeSenses].some(sense => getVocabularyLearningPriority(entry.id, sense) === 'general');
+  const recommended = hasEverydayMeanings ? everyday : withNotes;
+  const hasLearningFilter = hasEverydayMeanings || withNotes.length > 0;
+  const scope = !showAll && hasLearningFilter ? recommended : senses;
   const words = normalizeAnswer(query).split(' ').filter(Boolean);
   const visible = scope.filter(sense => {
     if (posFilter && partOfSpeech(sense) !== posFilter) return false;
@@ -217,8 +212,8 @@ export function DictionarySenses({
         Dictionary meanings beyond the selected learning meanings. Choose a
         meaning to practise it separately.
       </p>
-      {recommended.length ? <div className="vocabulary-dictionary-filter" role="group" aria-label="Dictionary meaning filter">
-        <button type="button" className="btn line" aria-pressed={!showAll} onClick={() => setShowAll(false)}>{everyday.length ? 'Everyday meanings' : 'With learning notes'} ({recommended.length})</button>
+      {!loading && senses.length > 0 && hasLearningFilter ? <div className="vocabulary-dictionary-filter" role="group" aria-label="Dictionary meaning filter">
+        <button type="button" className="btn line" aria-pressed={!showAll} onClick={() => setShowAll(false)}>{hasEverydayMeanings ? 'Everyday meanings' : 'With learning notes'} ({recommended.length})</button>
         <button type="button" className="btn line" aria-pressed={showAll} onClick={() => setShowAll(true)}>All meanings ({senses.length})</button>
       </div> : null}
       {!loading && !error && senses.length ? <>
@@ -234,7 +229,7 @@ export function DictionarySenses({
           <p className="vocabulary-muted" role="status" aria-live="polite" aria-atomic="true">{visible.length} of {scope.length} meanings</p>
           {query || posFilter ? <button type="button" className="btn line" onClick={clearFilters}>Clear filters</button> : null}
         </div>
-        {!visible.length ? <p className="vocabulary-muted">No meanings match your filters. <span>Try different words{!showAll && recommended.length ? ' or choose All meanings' : ''}.</span></p> : null}
+        {!visible.length ? <p className="vocabulary-muted">{!showAll && hasEverydayMeanings && !everyday.length && !query && !posFilter ? 'The everyday learning meanings are already shown above. Choose All meanings to browse further uses.' : <>No meanings match your filters. <span>Try different words{!showAll && hasLearningFilter ? ' or choose All meanings' : ''}.</span></>}</p> : null}
       </> : null}
       {loading ? (
         <InlineLoadingState message="Loading dictionary meanings…" onRetry={saving === null ? retryDictionary : undefined} retryLabel="Retry dictionary" />
@@ -272,7 +267,7 @@ export function DictionarySenses({
                   </button>}
                 </div>
                 <VocabularySenseContent entryId={entry.id} sense={sense} showLearningNotes />
-                {diagram ? <DiagramPreview diagram={diagram} number={meaningNumbers.get(sense.id)} /> : null}
+                {diagram ? <VocabularyDiagramDisclosure diagram={diagram} number={meaningNumbers.get(sense.id)} /> : null}
               </section>
             );})}
         </section>

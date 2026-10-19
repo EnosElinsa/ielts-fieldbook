@@ -2,7 +2,21 @@
 
 The October 17 review follows dictionary selection through saving, practice and return navigation. The existing system already preserves separate meanings, dated evidence in four skills, FSRS scheduling, source attribution, personal edits and frozen sessions. Improvements should make the next useful learning action clearer without weakening those guarantees.
 
-## Implemented in this batch
+## Current shared-rule delivery — 2026-10-19
+
+The user approved common-meaning learning cards, complete dictionary reference and selective visual presentation. This delivery changes shared components rather than adding another dictionary batch. Entry details, group learning and dictionary previews now keep the definition, matching example and collocations visible, with usage, distinctions and lexical relations under `Usage and meaning notes`. Repeated explanation text is suppressed. Fallback examples must match sense ID, definition and POS; missing material is stated explicitly.
+
+An explicit reviewed policy keeps 27 useful spatial, quantitative, structural or process diagram kinds inline (29 exact bindings). The other 825 existing bindings remain available through `View diagram`, load only when opened and reset on a meaning change. Shape counts do not judge teaching value. Supplementary diagrams occupy the text column, so closed diagrams reserve no empty illustration area. Existing photos and strictly matched concrete illustrations retain their behavior. Every historical diagram remains available.
+
+The dictionary retains the authored common-meaning filter even when the only common meaning is already on the main card. It explains that state and offers `All meanings`; specialist and historical notes do not become the default recommendation. Unclassified learning-note fallback excludes explicitly specialist, historical, proper-name and reference records. Filters wait for dictionary readiness, avoiding temporary zero counts while data is loading. Search, stable numbering, personal selections and exact practice/save identities remain intact.
+
+Local validation passes 7,198 tests with one conditional skip across 196 files, compilation, production build, dictionary audit, identity/SQL checks and bundle budgets. Four layouts (1440/light, 1440/dark, 390/dark, 320/light) pass 68 browser states, including selective loading, disclosure reset/cache reuse, common/all filtering, group learning and an exact-meaning practice round trip. Synthetic accounts intercept persistence writes. Representative desktop/mobile captures were inspected. All 2,566 vocabulary resources and 854 diagram renderings remain byte-identical. Publication requires exact-commit checks, Cloudflare Git deployment and matching production assets; these are recorded separately after release.
+
+The content ledger remains 3,210 reviewed of 51,988 meanings, with 48,778 pending. Unpublished round50 is preserved separately. This delivery does not establish improved retention or complete the full dictionary.
+
+Next content work should target a specific learning gap across existing core meanings: mismatched/missing natural examples, unsupported useful practice or an authored confusion set. Extend common-meaning metadata and verified pronunciation only with source evidence. Further aggregate/list/history hydration remains separate work; the already shipped current-page loading, confirmed-error recommendations and reviewed meaning-bound pronunciation remain in place. Do not restart per-word all-senses diagram batches as the default workflow. Earlier batch entries below retain their historical scope.
+
+## Dictionary implementation history
 
 The forty-ninth dictionary batch reviews all 44 preserved meanings of acquire, obtain, gain and earn. Seven fixed English source pages reconcile every lexical line: acquire 92637374, obtain 93626525, gain 93509703, earn 93392036, Gain 87357680, Earn 87739679 and EARN 85251484. There are no omitted children or restored records in this batch. It adds 23 contextual exercises with exact diagrams and 21 typed reading explanations, taking the ledger to 3,210 reviewed meanings among 51,988; 48,778 remain pending. Sixteen meanings receive general priority, six specialist, ten historical and three proper-name priority; nine remain unclassified. All four entries start with their ordinary acquisition or reward meaning.
 

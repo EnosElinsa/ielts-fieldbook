@@ -63,13 +63,33 @@ test('everyday meanings keep source numbers while All retains specialist and his
   expect(mocks.current.stateRef.current.vocabularyEvidence).toEqual([]);
 });
 
-test('a word with its only everyday meaning already displayed retains the useful learning-notes fallback', async () => {
+test('dictionary filters wait for loaded meanings rather than displaying temporary zero counts', async () => {
+  const { entry, dictionary } = priorityFixture('sensitive');
+  const primary = vocabularyTeaching.readiness.defaults.find(row => row.entryId === entry.id)!.sense;
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  let finish!: (value: any) => void;
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => url.endsWith('index.json')
+    ? { ok: true, json: async () => index }
+    : new Promise(resolve => { finish = resolve; })));
+  render(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[primary]} /></MemoryRouter>);
+  fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  await waitFor(() => expect(finish).toBeTypeOf('function'));
+  expect(screen.getByText('Loading dictionary meanings…')).toBeVisible();
+  expect(screen.queryByRole('group', { name: 'Dictionary meaning filter' })).not.toBeInTheDocument();
+  await act(async () => finish({ ok: true, json: async () => dictionary }));
+  expect(await screen.findByRole('button', { name: 'Everyday meanings (5)' })).toBeVisible();
+  expect(screen.getByRole('button', { name: 'All meanings (9)' })).toBeVisible();
+});
+
+test('specialist and historical meanings do not become a learning recommendation when the everyday meaning is already displayed', async () => {
   const { entry, dictionary } = priorityFixture('efficient');
   render(<MemoryRouter><DictionarySenses entry={entry} excludeSenses={[dictionary.senses[0]]} /></MemoryRouter>);
   await screen.findByText('Other dictionary meanings (4)');
   fireEvent.click(screen.getByText(/Other dictionary meanings/));
-  expect(screen.getByRole('button', { name: 'With learning notes (4)' })).toHaveAttribute('aria-pressed', 'true');
-  expect(screen.queryByRole('button', { name: /^Everyday meanings/ })).not.toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Everyday meanings (0)' })).toHaveAttribute('aria-pressed', 'true');
+  expect(screen.queryByRole('button', { name: /^With learning notes/ })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Practise this sense' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'All meanings (4)' }));
   expect(screen.getAllByRole('button', { name: 'Practise this sense' })).toHaveLength(4);
 });
 
@@ -188,8 +208,10 @@ test('a spelling-error reference remains readable without offering it as a corre
   const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.effect}`, 'utf8'));
   vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok: true, json: async () => url.endsWith('index.json') ? index : dictionary })));
   render(<MemoryRouter><DictionarySenses entry={entry} /></MemoryRouter>);
-  const definition = await screen.findByText('A recorded spelling error for affect when the intended meaning is influence.');
+  await screen.findByText(/Other dictionary meanings/);
   fireEvent.click(screen.getByText(/Other dictionary meanings/));
+  fireEvent.click(screen.getByRole('button', { name: /^All meanings/ }));
+  const definition = await screen.findByText('A recorded spelling error for affect when the intended meaning is influence.');
   const note = definition.closest('section')!;
   expect(within(note).getByText('Spelling reference')).toBeInTheDocument();
   expect(within(note).queryByRole('button', { name: 'Practise this sense' })).not.toBeInTheDocument();

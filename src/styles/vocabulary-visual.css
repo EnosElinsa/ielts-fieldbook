@@ -30,3 +30,7 @@
 .meaning-diagram-letter { font:500 140px 'Source Serif 4',Georgia,serif; fill:var(--ink); }
 .meaning-diagram-line { fill:none; stroke:var(--ink); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
 .vocabulary-dictionary-filter { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }
+.vocabulary-dictionary-diagram { margin-top:12px; }
+.vocabulary-dictionary-diagram > summary { width:fit-content; min-height:44px; padding:12px 0; cursor:pointer; color:var(--blue); font-size:13px; }
+.vocabulary-dictionary-diagram > summary:focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
+.vocabulary-dictionary-diagram .vocabulary-learning-visual { width:100%; max-width:520px; margin:8px 0 0; }

@@ -1,0 +1,4 @@
+.vocabulary-learning-notes { margin-top:16px; border-top:1px solid var(--rule); padding-top:12px; }
+.vocabulary-learning-notes > summary { cursor:pointer; width:fit-content; max-width:100%; min-height:32px; color:var(--muted); font-size:12px; line-height:1.7; }
+.vocabulary-learning-notes > summary:focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
+.vocabulary-learning-notes .vocabulary-detail { margin-top:12px; }

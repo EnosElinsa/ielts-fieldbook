@@ -499,7 +499,7 @@ test('a personal changed meaning never borrows an example from a different meani
   mocks.fb.state.vocabulary = [pea];
   mount(`/vocabulary/entry/${pea.id}?bookId=${book}&unitId=ielts-vocabulary-chapter-12-group-02`);
   const primary = document.querySelector('.vocabulary-primary-meaning')!;
-  expect(within(primary as HTMLElement).getByText('No example for this meaning.')).toBeInTheDocument();
+  expect(within(primary as HTMLElement).getByText('A learning example has not been added for this meaning yet.')).toBeInTheDocument();
   expect(within(primary as HTMLElement).queryByText(/soup|garden support/)).not.toBeInTheDocument();
   expect(screen.queryByRole('img')).not.toBeInTheDocument();
 });

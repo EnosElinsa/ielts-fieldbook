@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, expect, test } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import diagrams from '../../domain/vocabulary/senseDiagrams.json';
@@ -10,6 +10,8 @@ for (const row of diagrams) test(`${row.term}/${row.senseId} draws only its exac
   const sense = { id: row.senseId, definition: row.definition, pos: row.pos, example: '' };
   const resolved = { entry: { id: row.entryId, term: row.term, senses: [sense] }, sense, contentReviewed: false } as ResolvedVocabularyLearningContext;
   const view = render(<VocabularyLearningVisual resolved={resolved} />);
+  const supplementary = screen.queryByText('View diagram');
+  if (supplementary) fireEvent.click(supplementary);
   expect(await screen.findByRole('img')).toHaveAccessibleName(new RegExp(`^${row.term}:`));
   const diagramName = screen.getByRole('img').getAttribute('aria-label')!;
   expect(screen.getByText(/Illustrative diagram/)).toBeInTheDocument();
