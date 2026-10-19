@@ -3,10 +3,90 @@ import {expect,test} from 'vitest';
 import {VOCABULARY_CATALOG} from '../domain/vocabulary/catalog';
 import {emptyState} from '../domain';
 import {addVocabularyItem,recordVocabularyReview} from '../domain/vocabulary';
-import {ensureUnifiedPlans,previewBacklogChange,applyBacklogPreview,mutateStudyPlan} from './planTemplates';
+import {ensureUnifiedPlans,previewBacklogChange,applyBacklogPreview,mutateStudyPlan,nextLearningTarget} from './planTemplates';
+import {bindStudyPlanTargets} from './planTargets';
+import {vocabularyGroupProgress} from '../domain/vocabulary/progress';
 const now=new Date('2026-10-19T12:00:00');
 const setup=()=>{const s=emptyState();s.settings.days=[1,3];s.settings.dailyMinutes=30;s.settings.skills=['writing'];s.settings.planning={...s.settings.planning,vocabularyMode:'fixed',vocabularyMinutes:10};return s;};
 const task=(id,minutes=20,patch={})=>({id,dateKey:'2026-10-01',status:'pending',skill:'writing',kind:'1',title:id,estimatedMinutes:minutes,origin:'automatic',target:{type:'question',skill:'writing',questionId:id,mode:'overview'},...patch});
+
+test.each([9,12])('eligible learning members fit a %s minute budget and bind without phantom indexes',async minutes=>{
+ const s=setup();s.settings.days=[1];s.settings.skills=[];s.settings.planning.vocabularyMinutes=minutes;s.wordbookEnrollments=[{bookId:'eligible-book'}];
+ const entries=Array.from({length:12},(_,index)=>addVocabularyItem(s,{id:`eligible-${index}`,term:`eligible${index}`,meaning:'A meaning.'}).item);
+ entries.slice(0,3).forEach(entry=>entry.tags.push('archived'));
+ const unit={id:'eligible-group',bookId:'eligible-book',kind:'group',entryIds:[...entries.map(entry=>entry.id),entries[3].id],order:1};
+ const members=unit.entryIds.map((entryId,order)=>({entryId,order,bookId:unit.bookId,unitId:unit.id}));
+ VOCABULARY_CATALOG.units.push(unit);VOCABULARY_CATALOG.memberships.push(...members);
+ try {
+  ensureUnifiedPlans(s,undefined,now);
+  const batches=s.plans.filter(plan=>plan.target?.mode==='learning-batch');
+  expect(batches).toHaveLength(1);expect(batches[0]).toMatchObject({estimatedMinutes:9,quantity:9,target:{batchIndex:0}});
+  s.plans=batches;await bindStudyPlanTargets(s,{vocabulary:async()=>{}});
+  expect(batches[0].target.cards.map(ref=>ref.entryId)).toEqual(entries.slice(3).map(entry=>entry.id));
+  s.vocabularySessions=[{status:'submitted',mode:'definition',selection:{kind:'learning-batch',bookId:unit.bookId,unitId:unit.id,batchIndex:0,batchSize:10,cards:batches[0].target.cards},results:batches[0].target.cards.map(ref=>({...ref,response:'answer'}))}];
+  expect(vocabularyGroupProgress(s,unit)).toBe('Studied');expect(nextLearningTarget(s)).toBeNull();
+ }finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);for(const member of members)VOCABULARY_CATALOG.memberships.splice(VOCABULARY_CATALOG.memberships.indexOf(member),1);}
+});
+
+test('metadata-only learning remains prospective until scoped resource loading supplies exact cards',async()=>{
+ const s=setup();s.settings.days=[1];s.settings.planning.vocabularyMinutes=9;s.wordbookEnrollments=[{bookId:'external-book'}];
+ const unit={id:'external-group',bookId:'external-book',kind:'group',entryIds:Array.from({length:12},(_,i)=>`external-${i}`),archivedEntryIds:['external-0','external-1','external-2'],order:1};
+ VOCABULARY_CATALOG.units.push(unit);const members=[];
+ try {
+  ensureUnifiedPlans(s,undefined,now);s.plans=s.plans.filter(plan=>plan.target?.mode==='learning-batch');
+  expect(s.plans).toHaveLength(1);expect(s.plans[0]).toMatchObject({estimatedMinutes:9,quantity:9,target:{cards:[],batchIndex:0}});
+  await bindStudyPlanTargets(s,{vocabulary:async()=>{for(let i=0;i<12;i++){const entry=addVocabularyItem(s,{id:`external-${i}`,term:`external${i}`,meaning:'A meaning.'}).item;if(i<3)entry.tags.push('archived');members.push({entryId:entry.id,bookId:unit.bookId,unitId:unit.id,order:i});}VOCABULARY_CATALOG.memberships.push(...members);}});
+  expect(s.plans[0].target.cards).toHaveLength(9);expect(s.plans[0].target.cards[0].entryId).toBe('external-3');
+ }finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);for(const member of members)VOCABULARY_CATALOG.memberships.splice(VOCABULARY_CATALOG.memberships.indexOf(member),1);}
+});
+
+test('resizing cannot under-budget or truncate an exact frozen review',()=>{
+ const s=setup(),target={type:'vocabulary',mode:'due-review',binding:'frozen',assessmentMode:'definition',cards:[{entryId:'word',senseId:'one'},{entryId:'word',senseId:'two'}]};
+ s.plans=[task('frozen-resize',2,{dateKey:'2026-10-19',skill:'vocabulary',kind:'vocabulary',target})];const before=structuredClone(s.plans);
+ expect(()=>mutateStudyPlan(s,'frozen-resize',{type:'resize',estimatedMinutes:1},now)).toThrow(/prompt|frozen|exact/i);expect(s.plans).toEqual(before);
+ mutateStudyPlan(s,'frozen-resize',{type:'resize',estimatedMinutes:3},now);expect(s.plans[0].target).toEqual(target);
+});
+
+test('resource loading reconciles provisional automatic batch counts without touching frozen targets',async()=>{
+ const s=setup();s.settings.days=[1,3];s.settings.planning.vocabularyMinutes=12;s.wordbookEnrollments=[{bookId:'late-book'}];
+ const unit={id:'late-group',bookId:'late-book',kind:'group',entryIds:Array.from({length:12},(_,i)=>`late-${i}`),order:1};
+ VOCABULARY_CATALOG.units.push(unit);const members=[];
+ try {
+  ensureUnifiedPlans(s,undefined,now);s.plans=s.plans.filter(plan=>plan.target?.mode==='learning-batch');
+  expect(s.plans.map(plan=>plan.target.batchIndex)).toEqual([0,1]);
+  const frozen=task('keep-exact',2,{dateKey:'2026-10-21',skill:'vocabulary',kind:'vocabulary',target:{type:'vocabulary',mode:'learning-batch',bookId:unit.bookId,unitId:unit.id,batchIndex:0,batchSize:10,assessmentMode:'definition',binding:'frozen',cards:[{entryId:'fixed',senseId:'one'},{entryId:'fixed',senseId:'two'}]}});s.plans.push(frozen);const before=structuredClone(frozen);
+  await bindStudyPlanTargets(s,{vocabulary:async()=>{if(members.length)return;for(let i=0;i<12;i++){const entry=addVocabularyItem(s,{id:`late-${i}`,term:`lateword${i}`,meaning:'A meaning.'}).item;if(i<3)entry.tags.push('archived');members.push({entryId:entry.id,bookId:unit.bookId,unitId:unit.id,order:i});}VOCABULARY_CATALOG.memberships.push(...members);}});
+  expect(s.plans).toHaveLength(2);expect(s.plans[0]).toMatchObject({estimatedMinutes:9,quantity:9,target:{batchIndex:0}});expect(s.plans[0].target.cards).toHaveLength(9);expect(s.plans[1]).toEqual(before);
+ }finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);for(const member of members)VOCABULARY_CATALOG.memberships.splice(VOCABULARY_CATALOG.memberships.indexOf(member),1);}
+});
+
+test('count-only external metadata reserves prospective learning without inventing frozen cards',async()=>{
+ const s=setup();s.settings.days=[1];s.wordbookEnrollments=[{bookId:'count-only-book'}];
+ const unit={id:'count-only-group',bookId:'count-only-book',kind:'group',entryIds:[],totalSourceWords:12,order:1};VOCABULARY_CATALOG.units.push(unit);
+ try{ensureUnifiedPlans(s,undefined,now);s.plans=s.plans.filter(plan=>plan.target?.mode==='learning-batch');expect(s.plans).toHaveLength(1);await bindStudyPlanTargets(s,{vocabulary:async()=>{}});expect(s.plans[0]).toMatchObject({estimatedMinutes:10,quantity:10,target:{cards:[],batchIndex:0}});}
+ finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);}
+});
+
+test('restoring an older empty no-longer-due target repairs only that skipped dynamic slot',()=>{
+ const s=setup();s.plans=[task('old-empty',2,{dateKey:'2026-10-19',status:'skipped',skipReason:'no-longer-due',skill:'vocabulary',kind:'vocabulary',target:{type:'vocabulary',mode:'due-review',binding:'frozen',batchSize:2,assessmentMode:'definition',cards:[]}})];
+ mutateStudyPlan(s,'old-empty',{type:'restore'},now);expect(s.plans[0]).toMatchObject({status:'pending',target:{binding:'dynamic',batchSize:2,cards:[]}});
+});
+
+test.each(['bogus','audio','production',[]])('manual recall rejects invalid assessed mode %j before mutation',mode=>{
+ const s=setup(),before=structuredClone(s.plans);
+ expect(()=>mutateStudyPlan(s,null,{type:'add',skill:'vocabulary',practice:'due-review',assessmentMode:mode,dateKey:'2026-10-19',estimatedMinutes:5},now)).toThrow(/assessed recall mode/i);expect(s.plans).toEqual(before);
+});
+
+test('loading prospective membership rechecks exact frozen learning reservations before binding',async()=>{
+ const s=setup();s.settings.days=[1];s.settings.planning.vocabularyMinutes=20;s.settings.vocabulary.learningBatchSize=5;s.settings.vocabulary.mode='definition';s.wordbookEnrollments=[{bookId:'late-reserved-book'}];
+ const unit={id:'late-reserved-group',bookId:'late-reserved-book',kind:'group',entryIds:[],totalSourceWords:10,order:1};VOCABULARY_CATALOG.units.push(unit);const members=[];
+ const frozen=task('late-reserved',1,{dateKey:'2026-10-19',skill:'vocabulary',kind:'vocabulary',target:{type:'vocabulary',mode:'learning-batch',bookId:unit.bookId,unitId:unit.id,assessmentMode:'definition',batchIndex:0,batchSize:10,cards:[{entryId:'reserved-late-0',senseId:'reserved-sense-0'}]}});s.plans=[frozen];const before=structuredClone(frozen);
+ try{
+  ensureUnifiedPlans(s,undefined,now);s.plans=s.plans.filter(plan=>plan.target?.mode==='learning-batch');expect(s.plans).toHaveLength(3);
+  await bindStudyPlanTargets(s,{vocabulary:async()=>{if(members.length)return;for(let i=0;i<10;i++){const entry=addVocabularyItem(s,{id:`reserved-late-${i}`,term:`reservedlate${i}`,senses:[{id:`reserved-sense-${i}`,definition:'A meaning.',example:'',pos:'noun'}]}).item;members.push({entryId:entry.id,bookId:unit.bookId,unitId:unit.id,order:i});}VOCABULARY_CATALOG.memberships.push(...members);}});
+  expect(s.plans).toHaveLength(2);expect(s.plans[0]).toEqual(before);expect(s.plans[1].target.batchIndex).toBe(1);expect(s.plans[1].target.cards.map(ref=>ref.entryId)).toEqual(['reserved-late-5','reserved-late-6','reserved-late-7','reserved-late-8','reserved-late-9']);
+ }finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);for(const member of members)VOCABULARY_CATALOG.memberships.splice(VOCABULARY_CATALOG.memberships.indexOf(member),1);}
+});
 test('carryover wins capacity over generated work, started first, preserving content and drafts',()=>{
  const s=setup();ensureUnifiedPlans(s,undefined,now);
  const old=task('old'),started=task('started',20,{status:'in_progress',startedAt:'2026-10-18T12:00:00',dateKey:'2026-10-18',draft:{text:'Keep every word'}}),large=task('large',21);

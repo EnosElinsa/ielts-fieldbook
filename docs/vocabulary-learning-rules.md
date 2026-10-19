@@ -29,6 +29,8 @@ The automatic foundation modes are meaning recall and dictation. A preferred mod
 
 The initial estimate is approximately one minute per prompt. Review batches contain one mode and at most one meaning per word. Another saved meaning remains available for a later batch. The planner deducts the actual prompt count from vocabulary time, and creates new-word learning only when there is enough time left for that batch. Review filling the vocabulary allocation pauses new words.
 
+Learning batch indexes use the ordered eligible words, with archived words and duplicate memberships removed before counting or slicing. A short final batch uses only its actual prompt count. External wordbook metadata can reserve prospective learning time before resources arrive; exact cards are bound only after loading. If the loaded group is smaller, untouched automatic slots are reduced or removed without changing frozen or manually arranged work.
+
 ## Fixed tasks and recovery
 
 Future review slots reserve time without freezing their word lists. Starting a slot selects current eligible prompts, excludes targets already reserved by another frozen unfinished task, and saves the exact target list before opening practice. Submitting that assessment updates FSRS; moving its task date does not.
@@ -36,6 +38,8 @@ Future review slots reserve time without freezing their word lists. Starting a s
 An already started review keeps its full list and answer draft. Legacy tasks may contain multiple meanings of one word or more than 50 prompts. Those exact targets remain valid and are not reduced by free-practice filters, shuffle order, wordbook selection or session-size preferences.
 
 Loading failure is retryable. Missing targets are reported explicitly. If a dynamic slot no longer has eligible content, it is skipped with that reason instead of being recorded as completed. A planned assessment completes its task only after all exact targets have submitted answers in the required mode.
+
+Restoring a no-longer-due slot lets it select newly eligible words on its next start. Editing an unstarted dynamic review's duration also updates its prompt capacity. An exact frozen target cannot be shortened to fit a smaller duration.
 
 Practice opened from Planning or Today retains its source through settings, refresh, recovery and results. Direct visits default back to Vocabulary. Return paths are restricted to allowed internal routes.
 

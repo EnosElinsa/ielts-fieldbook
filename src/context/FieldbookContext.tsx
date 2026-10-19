@@ -65,7 +65,9 @@ import { speakingPrompts, speakingResponseDraft, updateSpeakingResponse } from '
 import { useConfirmationDialog } from '../components/useConfirmationDialog';
 import { loadExamCatalog, loadExamSections } from '../storage/examCatalog';
 import { getVocabularyReviewQueue } from '../domain/vocabulary';
-import { getVocabularyPlanningCandidates } from '../domain/vocabulary/planning';
+import { selectVocabularyPlanReview } from '../domain/vocabulary/planning';
+import { isAssessedReviewMode } from '../lib/vocabularyReviewTask';
+import { vocabularyLearningSource } from '../domain/vocabulary/learningSource';
 import { isVocabularySessionSelection } from '../domain/vocabulary/selection';
 import { vocabularyForwardState } from '../features/vocabulary/VocabularyRouteLink';
 import { safeVocabularyReturn, rememberVocabularyPosition } from '../features/vocabulary/vocabularyNavigation';
@@ -1377,7 +1379,10 @@ function useFieldbookValue() {
           const groups=VOCABULARY_CATALOG.units.filter(unit=>unit.bookId===target.bookId&&unit.kind!=='chapter').slice().sort((a,b)=>(a.order||0)-(b.order||0)||String(a.id).localeCompare(String(b.id)));
           let localIndex=target.batchOrdinal ?? target.batchIndex ?? 0;let group;
           for(const candidate of groups){
-            const total=Math.ceil(Number(candidate.entryCount||candidate.totalSourceWords||candidate.entryIds?.length||0)/(target.batchSize||10));
+            await loadVocabularyCatalog(target.bookId,{unitId:candidate.id});
+            const source=vocabularyLearningSource(stateRef.current,target.bookId,candidate.id);
+            if(!source.complete)throw new Error('The wordbook group is unavailable. Retry loading it.');
+            const total=Math.ceil(source.count/(target.batchSize||10));
             if(localIndex<total){group=candidate;break;}localIndex-=total;
           }
           if(!group)throw new Error('The wordbook group is unavailable. Retry loading it.');
@@ -1391,6 +1396,7 @@ function useFieldbookValue() {
         target={...target,...batch.selection,type:'vocabulary',mode:'learning-batch',assessmentMode:batch.mode,cards:refs};
       } else {
         if (target.binding === 'dynamic' || !target.binding && !target.cards?.length) {
+          if(!isAssessedReviewMode(target.assessmentMode))throw new Error('Choose an assessed recall mode.');
           const ids=stateRef.current.vocabulary.filter(entry=>!entry.tags.includes('archived')).map(entry=>entry.id);
           await loadVocabularyCatalog(undefined,{entryIds:ids,force:Boolean(options.force)});
           const capacity=Math.floor(Number(target.batchSize ?? plan.quantity ?? plan.estimatedMinutes ?? 10));
@@ -1447,9 +1453,9 @@ function useFieldbookValue() {
       if(!current||JSON.stringify(current)!==initial)throw new Error('This task changed while loading. Retry to open the current task.');
       if(dynamicReviewCapacity!==undefined){
         const reserved=new Set(draft.plans.filter(row=>row.id!==planId && ['pending','in_progress'].includes(row.status) && row.target?.type==='vocabulary' && row.target.binding!=='dynamic' && row.target.assessmentMode===target.assessmentMode).flatMap(row=>(row.target.cards||[]).map(ref=>JSON.stringify([ref.entryId,ref.senseId]))));
-        const cards=getVocabularyPlanningCandidates(draft,new Date(),target.assessmentMode).filter(({card})=>card.mode===target.assessmentMode && !reserved.has(JSON.stringify([card.entryId,card.senseId]))).slice(0,dynamicReviewCapacity).map(({card})=>({entryId:card.entryId,senseId:card.senseId}));
-        target={...target,binding:'frozen',cards};
+        const cards=selectVocabularyPlanReview(draft,new Date(),target.assessmentMode,dynamicReviewCapacity,reserved).map(({entryId,senseId})=>({entryId,senseId}));
         noLongerDue=cards.length===0;
+        target={...target,binding:noLongerDue?'dynamic':'frozen',cards};
         if(!noLongerDue && !isVocabularySessionSelection({kind:'planned-review',planId,cards}))throw new Error('The planned review target is invalid. Return to Planning and retry.');
       }
       Object.assign(current,{target,questionId:plan.questionId,sectionId:plan.sectionId,sentenceId:plan.sentenceId,attemptId:plan.attemptId,...(plan.speakingGroups ? {speakingGroups:plan.speakingGroups} : {})});

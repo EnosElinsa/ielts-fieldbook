@@ -6,6 +6,20 @@ import type {VocabularySessionRecord} from './session';
 
 export type VocabularyPlanningCandidate = {card:ReviewCard;reason:'error'|'recovery'|'due'|'missing'|'spaced'};
 
+/** Explicit specialist choices retain their assessed due queue; automatic planning stays foundation-only. */
+export function selectVocabularyPlanReview(store: Partial<VocabularyStore>, now: Date, mode: VocabularyMode, capacity: number, reserved: ReadonlySet<string> = new Set()): ReviewCard[] {
+  const learned = getLearnedVocabularyIds(store);
+  const candidates = mode === 'definition' || mode === 'dictation'
+    ? getVocabularyPlanningCandidates(store, now, mode).filter(row => row.card.mode === mode).map(row => row.card)
+    : getVocabularyReviewQueue(store, {mode, dueOnly:true, now}).filter(card => learned.has(card.entryId));
+  const words = new Set<string>();
+  return candidates.filter(card => {
+    if (reserved.has(JSON.stringify([card.entryId, card.senseId])) || words.has(card.entryId)) return false;
+    words.add(card.entryId);
+    return true;
+  }).slice(0, capacity);
+}
+
 /** Saved, attempted meanings only. Dates and evidence are read without changing account state.
  * One opportunity per exact entry/sense/mode; preference never crosses a reason or due-date priority.
  */

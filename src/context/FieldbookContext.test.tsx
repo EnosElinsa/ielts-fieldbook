@@ -6,7 +6,7 @@ import { emptyState, normalizeDraft } from '../domain';
 import { addVocabularyItem, getVocabularyReviewQueue, recordVocabularyReview } from '../domain/vocabulary';
 import { readFileSync } from 'node:fs';
 import { readDraftRecovery } from '../storage/recovery';
-import { ensureUnifiedPlans, previewBacklogChange } from '../lib/planTemplates';
+import { ensureUnifiedPlans, previewBacklogChange, studyBudget } from '../lib/planTemplates';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { TodayPage } from '../features/today/TodayPage';
 import { PlanningPage } from '../features/planning/PlanningPage';
@@ -1301,6 +1301,81 @@ test('empty dynamic vocabulary skips as no-longer-due without completion or navi
   expect(fieldbook.state.plans[0]).toMatchObject({status:'skipped',skipReason:'no-longer-due'});
   expect(fieldbook.state.plans[0].completedAt).toBeFalsy();
   expect(currentPath).toBe('/');
+});
+
+test.each(['add','replace'])('manual due review %s persists a numeric capacity and starts the requested mode',async type=>{
+  const entry=addVocabularyItem(mocks.initial,{id:'manual-review-word',term:'persistent',meaning:'Continuing over time.'}).item;
+  recordVocabularyReview(mocks.initial,{entryId:entry.id,senseId:entry.senses[0].id,mode:'definition',response:'wrong',result:'failure',occurredAt:'2020-01-01T00:00:00Z'});
+  await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=type==='replace'?[{id:'replace-me',dateKey:'2099-01-01',status:'pending',estimatedMinutes:5}]:[];});});
+  await act(async()=>{expect(await fieldbook.changePlan(type==='replace'?'replace-me':null,{type,skill:'vocabulary',practice:'due-review',assessmentMode:'definition',estimatedMinutes:5,dateKey:'2099-01-01',allowOverBudget:true})).toBe(true);});
+  const plan=fieldbook.state.plans[0];
+  expect(plan).toMatchObject({estimatedMinutes:5,quantity:5,target:{assessmentMode:'definition',batchSize:5,binding:'dynamic'}});
+  await act(async()=>{expect(await fieldbook.startPlan(plan.id)).toBe(true);});
+  expect(fieldbook.state.plans[0].target.cards).toEqual([{entryId:entry.id,senseId:entry.senses[0].id}]);
+});
+
+test('manual specialist recall remains startable when deliberately selected',async()=>{
+  const entry=addVocabularyItem(mocks.initial,{id:'specialist-word',term:'reliable',meaning:'Able to be trusted.',example:'The railway provides a reliable service.',synonyms:['dependable']}).item;
+  recordVocabularyReview(mocks.initial,{entryId:entry.id,senseId:entry.senses[0].id,mode:'cloze',response:'wrong',result:'failure',occurredAt:'2020-01-01T00:00:00Z'});
+  await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[];});});
+  await act(async()=>{expect(await fieldbook.changePlan(null,{type:'add',skill:'vocabulary',practice:'due-review',assessmentMode:'cloze',estimatedMinutes:5,dateKey:'2099-01-01',allowOverBudget:true})).toBe(true);});
+  const id=fieldbook.state.plans[0].id;
+  await act(async()=>{expect(await fieldbook.startPlan(id)).toBe(true);});
+  expect(fieldbook.state.plans[0]).toMatchObject({status:'in_progress',target:{assessmentMode:'cloze',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}});
+});
+
+test('dynamic start takes distinct words before applying capacity and retains priority',async()=>{
+  const first=addVocabularyItem(mocks.initial,{id:'a',term:'harbor',senses:[{id:'one',definition:'A sheltered port.',example:'',pos:'noun'},{id:'two',definition:'To shelter something.',example:'',pos:'verb'}]}).item;
+  const second=addVocabularyItem(mocks.initial,{id:'b',term:'beacon',meaning:'A guiding light.'}).item;
+  for(const entry of [first,second])for(const sense of entry.senses)recordVocabularyReview(mocks.initial,{entryId:entry.id,senseId:sense.id,mode:'definition',response:'wrong',result:'failure',occurredAt:'2020-01-01T00:00:00Z'});
+  const plan={id:'distinct',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:2,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'definition',batchSize:2,cards:[]}};
+  await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[plan];});});
+  await act(async()=>{expect(await fieldbook.startPlan(plan.id)).toBe(true);});
+  expect(fieldbook.state.plans[0].target.cards).toEqual([{entryId:'a',senseId:'one'},{entryId:'b',senseId:second.senses[0].id}]);
+});
+
+test('resizing a dynamic review updates prompt capacity, charged budgets, and actual start count',async()=>{
+  for(let i=0;i<10;i++){addVocabularyItem(mocks.initial,{id:`resize-${i}`,term:`word${i}`,meaning:'A meaning.'});}
+  for(const state of mocks.initial.vocabularyStates)state.manualStatus='unfamiliar';
+  await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.settings.days=[1,2,3,4,5,6,7];draft.settings.dailyMinutes=12;draft.settings.planning.vocabularyMode='fixed';draft.settings.planning.vocabularyMinutes=2;draft.plans=[{id:'resize',dateKey:'2099-01-01',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:10,quantity:10,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'definition',batchSize:10,cards:[]}}];});});
+  await act(async()=>{expect(await fieldbook.changePlan('resize',{type:'resize',estimatedMinutes:2})).toBe(true);});
+  expect(fieldbook.state.plans[0]).toMatchObject({estimatedMinutes:2,quantity:2,target:{batchSize:2}});
+  const budget=studyBudget(fieldbook.state.settings,'2099-01-01');
+  expect(fieldbook.state.plans.reduce((sum,row)=>sum+row.estimatedMinutes,0)).toBeLessThanOrEqual(budget.daily);
+  expect(fieldbook.state.plans.filter(row=>row.skill==='vocabulary').reduce((sum,row)=>sum+row.estimatedMinutes,0)).toBe(budget.vocabulary);
+  await act(async()=>{expect(await fieldbook.startPlan('resize')).toBe(true);});
+  expect(fieldbook.state.plans[0].target.cards).toHaveLength(2);
+});
+
+test('empty review save failure and restore retain dynamic semantics for newly eligible words',async()=>{
+  const plan={id:'empty-restorable',dateKey:'2099-01-01',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:2,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'definition',batchSize:2,cards:[]}};
+  await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[plan];});});
+  mocks.saveState.mockResolvedValueOnce(false);
+  await act(async()=>{expect(await fieldbook.startPlan(plan.id)).toBe(false);});
+  expect(fieldbook.state.plans[0]).toEqual(plan);
+  await act(async()=>{expect(await fieldbook.startPlan(plan.id)).toBe(true);});
+  expect(fieldbook.state.plans[0]).toMatchObject({status:'skipped',skipReason:'no-longer-due',target:{binding:'dynamic',cards:[]}});
+  await act(async()=>{expect(await fieldbook.changePlan(plan.id,{type:'restore',allowOverBudget:true})).toBe(true);await fieldbook.persist(draft=>{const entry=addVocabularyItem(draft,{id:'newly-due',term:'beacon',meaning:'A guiding light.'}).item;draft.vocabularyStates.find(row=>row.entryId===entry.id).manualStatus='unfamiliar';});});
+  await act(async()=>{expect(await fieldbook.startPlan(plan.id)).toBe(true);});
+  expect(fieldbook.state.plans[0]).toMatchObject({status:'in_progress',target:{binding:'frozen',cards:[{entryId:'newly-due'}]}});
+});
+
+test('a prospective book-wide learning ordinal resolves across eligible group batches',async()=>{
+  const groups=[{id:'ordinal-first',bookId:'ordinal-book',kind:'group',order:1,entryIds:[]},{id:'ordinal-second',bookId:'ordinal-book',kind:'group',order:2,entryIds:[]}];
+  const members=[];
+  for(let i=0;i<13;i++){const entry=addVocabularyItem(mocks.initial,{id:`ordinal-${i}`,term:`ordinal${i}`,meaning:'A meaning.'}).item;if(i<3)entry.tags.push('archived');const group=groups[i<12?0:1];group.entryIds.push(entry.id);members.push({id:`ordinal-member-${i}`,entryId:entry.id,bookId:group.bookId,unitId:group.id,order:i});}
+  VOCABULARY_CATALOG.units.push(...groups);VOCABULARY_CATALOG.memberships.push(...members);
+  try {
+    await mount('/planning');
+    await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[{id:'ordinal-plan',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:10,target:{type:'vocabulary',mode:'learning-batch',bookId:'ordinal-book',assessmentMode:'definition',batchIndex:1,batchSize:10,cards:[]}}];});});
+    await act(async()=>{expect(await fieldbook.startPlan('ordinal-plan')).toBe(true);});
+    expect(fieldbook.state.plans[0]).toMatchObject({status:'in_progress',target:{unitId:'ordinal-second',batchIndex:0,cards:[{entryId:'ordinal-12'}]}});
+  }finally{VOCABULARY_CATALOG.units=VOCABULARY_CATALOG.units.filter(group=>group.bookId!=='ordinal-book');VOCABULARY_CATALOG.memberships=VOCABULARY_CATALOG.memberships.filter(member=>member.bookId!=='ordinal-book');}
 });
 
 test('frozen legacy reviews load requested resources and remain retryable after failure',async()=>{

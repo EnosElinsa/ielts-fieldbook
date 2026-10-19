@@ -3,11 +3,12 @@ import { latestPracticeRecommendation, rewritePlanDescription, syncPendingPlan, 
 import { sessionSkill, speakingKinds } from './format';
 import { receptivePlanTemplates, ensureReceptivePlans } from './receptivePlans';
 import { isProtectedPlan, practiceFromWeakness } from '../domain/plans';
-import { getVocabularyReviewQueue } from '../domain/vocabulary';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
-import { getVocabularyPlanningCandidates } from '../domain/vocabulary/planning';
+import { vocabularyLearningSource } from '../domain/vocabulary/learningSource';
+import { getVocabularyPlanningCandidates, selectVocabularyPlanReview } from '../domain/vocabulary/planning';
+import { isAssessedReviewMode, vocabularyReviewTask } from './vocabularyReviewTask';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
-import { getLearnedVocabularyIds, vocabularyGroupProgress } from '../domain/vocabulary/progress';
+import { vocabularyGroupProgress } from '../domain/vocabulary/progress';
 import { dayBudget, normalizePlanning } from '../domain/planningPreferences';
 import { TASK_PRACTICES } from './planningTaskOptions';
 
@@ -501,10 +502,6 @@ function refreshEvidenceTargets(state, keys, skills, now) {
   }
 }
 
-function vocabularyReviewTask(mode, count) {
-  return {skill:'vocabulary',kind:'vocabulary',title:`Vocabulary - ${mode==='dictation'?'Dictation':'Meaning'} review`,description:`Recall up to ${count} ${count===1?'prompt':'prompts'} selected when you start.`,estimatedMinutes:count,quantity:count,deskMode:mode,target:{type:'vocabulary',mode:'due-review',assessmentMode:mode,binding:'dynamic',batchSize:count,cards:[]},completion:{type:'assessment',description:'Submit the review selected when you start.'}};
-}
-
 const isVocabularyPlan=plan=>plan.skill==='vocabulary'||plan.kind==='vocabulary';
 const startedPlan=plan=>plan.status==='in_progress'||Boolean(plan.startedAt);
 const frozenVocabularyPlan=plan=>plan.target?.type==='vocabulary'&&(plan.target.binding==='frozen'||plan.target.binding!=='dynamic'&&plan.target.cards?.length>0);
@@ -549,9 +546,10 @@ export function nextLearningTarget(state, reserved = new Set(), frozenCards = []
         if(session.status!=='submitted'||['audio','production'].includes(session.mode)||selection?.kind!=='learning-batch'||selection.bookId!==group.bookId||selection.unitId!==group.id)continue;
         session.results.filter(result=>String(result.response||'').trim()&&selection.cards.some(ref=>ref.entryId===result.entryId&&ref.senseId===result.senseId)).forEach(result=>answered.add(result.entryId));
       }
-      const ids=group.entryIds || VOCABULARY_CATALOG.memberships.filter(row=>row.bookId===group.bookId&&row.unitId===group.id).slice().sort((a,b)=>a.order-b.order).map(row=>row.entryId);
-      for(let index=0;index<Math.ceil(ids.length/batchSize);index++) {
-        if(ids.slice(index*batchSize,(index+1)*batchSize).every(id=>answered.has(id)))continue;
+      const source=vocabularyLearningSource(state,group.bookId,group.id),ids=source.entryIds;
+      for(let index=0;index<Math.ceil(source.count/batchSize);index++) {
+        const batchIds=ids.slice(index*batchSize,(index+1)*batchSize);
+        if(batchIds.length&&batchIds.every(id=>answered.has(id)))continue;
         const key=JSON.stringify([group.bookId,group.id,index,batchSize]);if(reserved.has(key))continue;
         if(frozenCards.some(ref=>ids.includes(ref.entryId))) {
           // Resolve the same contextual senses and mode fallback as the binder. If resources
@@ -622,7 +620,7 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
     while(remaining>0&&!candidates.length) {
       const target=nextLearningTarget(state,new Set(reserved),frozenCards);if(!target)break;
       const group=VOCABULARY_CATALOG.units.find(unit=>unit.id===target.unitId&&unit.bookId===target.bookId);
-      const groupSize=group?(group.entryIds||VOCABULARY_CATALOG.memberships.filter(row=>row.bookId===group.bookId&&row.unitId===group.id).map(row=>row.entryId)).length:null;
+      const groupSize=group?vocabularyLearningSource(state,group.bookId,group.id).count:null;
       const count=groupSize===null?batchSize:Math.min(batchSize,Math.max(0,groupSize-target.batchIndex*batchSize));
       if(!count||count>remaining)break;
       reserved.add(JSON.stringify([target.bookId,target.unitId||null,target.batchIndex,target.batchSize]));
@@ -710,11 +708,10 @@ export function manualStudyTask(state, action) {
   if(skill==='vocabulary') {
     if(practice==='due-review') {
       const mode=action.assessmentMode || state.settings.vocabulary?.mode || 'definition';
-      if(['audio','production'].includes(mode))throw new Error('Choose an assessed recall mode.');
-      const learned=getLearnedVocabularyIds(state);
-      const cards=getVocabularyReviewQueue(state,{mode,dueOnly:true}).filter(card=>learned.has(card.entryId));
+      if(!isAssessedReviewMode(mode))throw new Error('Choose an assessed recall mode.');
+      const cards=selectVocabularyPlanReview(state,new Date(),mode,minutes);
       if(!cards.length)throw new Error('No learned words are due for this recall mode.');
-      return vocabularyReviewTask(cards,mode,minutes);
+      return vocabularyReviewTask(mode,minutes);
     }
     const target=action.bookId&&action.unitId ? {type:'vocabulary',mode:'learning-batch',assessmentMode:['audio','production'].includes(state.settings.vocabulary?.mode)?'definition':state.settings.vocabulary?.mode||'dictation',bookId:action.bookId,unitId:action.unitId,batchIndex:Number(action.batchIndex)||0,batchSize:state.settings.vocabulary?.learningBatchSize||10,cards:[]} : nextLearningTarget(state);
     if(action.batchIndex!==undefined&&(!Number.isInteger(action.batchIndex)||action.batchIndex<0))throw new Error('Choose a valid batch number.');
@@ -784,7 +781,11 @@ export function mutateStudyPlan(state, planId, action, now = new Date()) {
   } else {
     if(!plan)throw new Error('Task not found.');
     if(action.type==='skip'&&plan.status!=='completed') {plan.previousStatus=plan.status;plan.status='skipped';plan.skipReason='user-skipped';if(state.activePlanId===plan.id)state.activePlanId=null;}
-    else if(action.type==='restore'&&plan.status==='skipped') {requireDayCapacity(state,plan.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);plan.status=plan.previousStatus==='in_progress'?'in_progress':'pending';delete plan.skipReason;delete plan.skippedAt;plan.restoredAt=new Date(now).toISOString();}
+    else if(action.type==='restore'&&plan.status==='skipped') {
+      requireDayCapacity(state,plan.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);
+      if(plan.skipReason==='no-longer-due'&&!plan.startedAt&&plan.target?.type==='vocabulary'&&plan.target.mode==='due-review'&&!plan.target.cards?.length)plan.target.binding='dynamic';
+      plan.status=plan.previousStatus==='in_progress'?'in_progress':'pending';delete plan.skipReason;delete plan.skippedAt;plan.restoredAt=new Date(now).toISOString();
+    }
     else if(action.type==='reschedule') {
       if(plan.status==='completed')throw new Error('Completed tasks cannot be rescheduled.');
       requireDayCapacity(state,action.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);plan.originalDateKey=plan.originalDateKey||plan.dateKey;plan.dateKey=action.dateKey;plan.rescheduledAt=new Date(now).toISOString();
@@ -793,7 +794,9 @@ export function mutateStudyPlan(state, planId, action, now = new Date()) {
       if(action.type==='resize') {
         const minutes=Number(action.estimatedMinutes);
         validatePlanDuration(plan,minutes);
+        if(frozenVocabularyPlan(plan)&&minutes<plan.target.cards.length)throw new Error('The exact frozen prompts need at least one minute each.');
         requireDayCapacity(state,plan.dateKey,minutes,plan.id,action.allowOverBudget);plan.estimatedMinutes=minutes;
+        if(plan.target?.type==='vocabulary'&&plan.target.mode==='due-review'&&!frozenVocabularyPlan(plan))Object.assign(plan,vocabularyReviewTask(plan.target.assessmentMode,minutes));
         if(plan.target?.type==='section')delete plan.target.questionIds;
       }else {
         const minutes=action.estimatedMinutes ?? (action.kind==='writing-mock'?60:action.kind==='speaking-mock'?15:plan.estimatedMinutes||studyBudget(state.settings,plan.dateKey).skill);

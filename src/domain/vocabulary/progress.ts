@@ -4,6 +4,7 @@ import { normalizeVocabularyBookId, normalizeVocabularyUnitId } from './identiti
 import { getVocabularyReviewQueue } from './index';
 import { vocabularyLearningTimeline } from './timeline';
 import type { ReviewQueueFilter, VocabularyStore } from './types';
+import { vocabularyLearningSource } from './learningSource';
 export type GroupProgress = 'Not started' | 'In progress' | 'Studied';
 type Group = { id: string; bookId: string; studyEntryIds?: string[]; entryIds?: string[]; totalSourceWords?: number };
 function historicalAttempt(row: any): boolean {
@@ -12,7 +13,7 @@ function historicalAttempt(row: any): boolean {
     && record.correct_rate !== null && record.correct_rate !== undefined && String(record.correct_rate).trim() !== '' && Number.isFinite(Number(record.correct_rate)));
 }
 export function vocabularyGroupProgress(state: Partial<VocabularyStore>, group: Group, learnedIds?: Set<string>): GroupProgress {
-  const ids = group.studyEntryIds || group.entryIds || [];
+  const ids = vocabularyLearningSource(state, group.bookId, group.id, group).entryIds;
   const rows = (state.wordbookProgress || []).filter(row => row.bookId === group.bookId && String(row.unitId) === String(group.id));
   if (rows.some(historicalAttempt)) return 'Studied';
   if (!ids.length) return 'Not started';
