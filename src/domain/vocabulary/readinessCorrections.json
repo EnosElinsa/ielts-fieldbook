@@ -31132,9 +31132,16 @@
   {
     "entryId": "ve-1a47d31d",
     "senseId": "kaikki:9d78f6be8eca072ddc",
-    "term": "acquire",
-    "example": "The museum hopes to acquire the painting.",
-    "definition": "To obtain or gain possession of something.",
+    "definition": "To get something or come to possess it.",
+    "example": "The museum plans to acquire an old map for its collection.",
+    "usage": "Acquire takes the thing obtained as its object. It can describe purchase, a gift or another means of obtaining possession.",
+    "collocations": [
+      "acquire a collection",
+      "acquire an asset"
+    ],
+    "distinctions": [
+      "Acquire and obtain can overlap when something is obtained. This sentence concerns adding a map to a collection; it does not specify whether the museum will buy it or receive it as a gift."
+    ],
     "originalSense": {
       "id": "kaikki:9d78f6be8eca072ddc",
       "definition": "To get.",
@@ -31172,8 +31179,68 @@
         "pre-acquired",
         "reacquire",
         "unacquire"
-      ]
-    }
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/acquire#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=acquire&oldid=92637374",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “The museum plans to acquire an old map for its collection.”, acquire means _____.",
+      "options": [
+        "get the map for the collection",
+        "make an appraisal without obtaining the map"
+      ],
+      "answer": "get the map for the collection",
+      "explanation": "Acquire and obtain can overlap when something is obtained. This sentence concerns adding a map to a collection; it does not specify whether the museum will buy it or receive it as a gift."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "previousSenses": [
+      {
+        "id": "kaikki:9d78f6be8eca072ddc",
+        "definition": "To obtain or gain possession of something.",
+        "example": "The museum hopes to acquire the painting.",
+        "pos": "verb",
+        "synonyms": [
+          "attain",
+          "come by",
+          "earn",
+          "gain",
+          "obtain",
+          "procure",
+          "secure",
+          "win"
+        ],
+        "antonyms": [
+          "abandon",
+          "lose",
+          "discard",
+          "dispose"
+        ],
+        "collocations": [],
+        "usage": "",
+        "register": "transitive",
+        "wordFamily": [
+          "acquihire",
+          "acquirability",
+          "acquirable",
+          "acquired taste",
+          "acquiree",
+          "acquirer",
+          "acquiry",
+          "after-acquired title",
+          "preacquire",
+          "pre-acquired",
+          "reacquire",
+          "unacquire"
+        ]
+      }
+    ]
   },
   {
     "entryId": "ve-abad7dc",
@@ -240642,7 +240709,7 @@
     "distinctions": [
       "This is a valid alternative spelling, not a misspelling and not the ordinary solve-a-problem meaning alone. Re-solve refers to solving again; it must not inherit the ordinary resolve recording."
     ],
-    "usage": "Separate source etymology. Re-solve has UK /ɹiːˈsɒlv/ and US /ɹiˈsɑlv/ in revision 81308222. No reviewed recording is supplied for this reading.",
+    "usage": "Use this reading when resolve means solve again. Its /s/ sound differs from the /z/ in ordinary resolve. No verified recording is available for this meaning.",
     "originalSense": {
       "id": "kaikki:c134e1f59d99a0361e",
       "definition": "Alternative spelling of re-solve.",
@@ -240676,6 +240743,2903 @@
     },
     "referenceUrl": "https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916",
     "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": "",
+    "previousSenses": [
+      {
+        "id": "kaikki:c134e1f59d99a0361e",
+        "definition": "An alternative spelling of re-solve: to solve again.",
+        "example": "The valid spelling resolve can also represent re-solve, meaning solve again; its /s/ reading differs from ordinary resolve with /z/.",
+        "pos": "verb",
+        "synonyms": [],
+        "antonyms": [],
+        "collocations": [
+          "re-solve an equation",
+          "solve again with new values"
+        ],
+        "usage": "Separate source etymology. Re-solve has UK /ɹiːˈsɒlv/ and US /ɹiˈsɑlv/ in revision 81308222. No reviewed recording is supplied for this reading.",
+        "register": "",
+        "wordFamily": [],
+        "source": "English Wiktionary via Kaikki.org",
+        "attribution": "English Wiktionary contributors",
+        "sourceUrl": "https://en.wiktionary.org/wiki/resolve#English",
+        "license": "CC-BY-SA-4.0",
+        "distinctions": [
+          "This is a valid alternative spelling, not a misspelling and not the ordinary solve-a-problem meaning alone. Re-solve refers to solving again; it must not inherit the ordinary resolve recording."
+        ]
+      }
+    ]
+  },
+  {
+    "entryId": "ve-1a47d31d",
+    "senseId": "kaikki:51b980f0f8d16e6c0a",
+    "definition": "To gain something, often through effort or experience, and make it one’s own.",
+    "example": "We use supervised practice to acquire the skills needed for the course.",
+    "usage": "Common with skills, knowledge, habits and experience. Acquisition can be gradual; the verb does not require that every kind of acquisition involve hard work.",
+    "collocations": [
+      "acquire a skill",
+      "acquire knowledge"
+    ],
+    "distinctions": [
+      "The focus is gaining a skill through practice. Earning a certificate concerns the award; acquiring a skill concerns the ability itself. These outcomes can occur together but are not identical."
+    ],
+    "originalSense": {
+      "id": "kaikki:51b980f0f8d16e6c0a",
+      "definition": "To gain, usually by one's own exertions; to get as one's own.",
+      "example": "to acquire a skill",
+      "pos": "verb",
+      "synonyms": [
+        "achieve",
+        "acquire",
+        "collect",
+        "find",
+        "gather",
+        "get",
+        "score"
+      ],
+      "antonyms": [
+        "abandon",
+        "lose",
+        "discard",
+        "dispose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "acquihire",
+        "acquirability",
+        "acquirable",
+        "acquired taste",
+        "acquiree",
+        "acquirer",
+        "acquiry",
+        "after-acquired title",
+        "preacquire",
+        "pre-acquired",
+        "reacquire",
+        "unacquire"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/acquire#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=acquire&oldid=92637374",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “We use supervised practice to acquire the skills needed for the course.”, acquire means _____.",
+      "options": [
+        "develop the required abilities",
+        "receive the course certificate without developing the abilities"
+      ],
+      "answer": "develop the required abilities",
+      "explanation": "The focus is gaining a skill through practice. Earning a certificate concerns the award; acquiring a skill concerns the ability itself. These outcomes can occur together but are not identical."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-1a47d31d",
+    "senseId": "kaikki:e97e14dee0be396040",
+    "definition": "To become affected by an illness.",
+    "example": "The report asks whether travellers can acquire an infection from contaminated water.",
+    "usage": "Medical use; acquire an infection means become infected. A possible source of infection does not mean every exposed traveller becomes ill.",
+    "collocations": [
+      "acquire an infection",
+      "acquired illness"
+    ],
+    "distinctions": [
+      "Acquiring an infection means becoming affected by it. It does not mean gaining immunity or receiving a qualification in medicine."
+    ],
+    "originalSense": {
+      "id": "kaikki:e97e14dee0be396040",
+      "definition": "To become affected by an illness.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "contract",
+        "catch",
+        "get"
+      ],
+      "antonyms": [
+        "abandon",
+        "lose",
+        "discard",
+        "dispose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "acquihire",
+        "acquirability",
+        "acquirable",
+        "acquired taste",
+        "acquiree",
+        "acquirer",
+        "acquiry",
+        "after-acquired title",
+        "preacquire",
+        "pre-acquired",
+        "reacquire",
+        "unacquire"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/acquire#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=acquire&oldid=92637374",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In “The report asks whether travellers can acquire an infection from contaminated water.”, acquire means _____.",
+      "options": [
+        "become affected by an infection",
+        "become immune simply through exposure"
+      ],
+      "answer": "become affected by an infection",
+      "explanation": "Acquiring an infection means becoming affected by it. It does not mean gaining immunity or receiving a qualification in medicine."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-1a47d31d",
+    "senseId": "kaikki:16632330823d9c67bd",
+    "definition": "To sample a signal and convert the samples into digital values.",
+    "example": "The data-acquisition unit can acquire the analogue signal as a sequence of digital samples.",
+    "usage": "Computing and measurement use. Sampling records values at selected instants; analogue-to-digital conversion represents them digitally.",
+    "collocations": [
+      "acquire data",
+      "acquire a signal"
+    ],
+    "distinctions": [
+      "This use concerns recording measurements from a signal. Merely obtaining an existing file does not describe the signal-sampling operation illustrated here."
+    ],
+    "originalSense": {
+      "id": "kaikki:16632330823d9c67bd",
+      "definition": "To sample signals and convert them into digital values.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "achieve",
+        "acquire",
+        "collect",
+        "find",
+        "gather",
+        "get",
+        "score"
+      ],
+      "antonyms": [
+        "abandon",
+        "lose",
+        "discard",
+        "dispose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "acquihire",
+        "acquirability",
+        "acquirable",
+        "acquired taste",
+        "acquiree",
+        "acquirer",
+        "acquiry",
+        "after-acquired title",
+        "preacquire",
+        "pre-acquired",
+        "reacquire",
+        "unacquire"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/acquire#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=acquire&oldid=92637374",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In “The data-acquisition unit can acquire the analogue signal as a sequence of digital samples.”, acquire means _____.",
+      "options": [
+        "sample the signal and represent its values digitally",
+        "invent measurements without sampling the signal"
+      ],
+      "answer": "sample the signal and represent its values digitally",
+      "explanation": "This use concerns recording measurements from a signal. Merely obtaining an existing file does not describe the signal-sampling operation illustrated here."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-1a47d31d",
+    "senseId": "kaikki:92652a6b57ef1246c8",
+    "definition": "To begin tracking a moving target with a detector or sight.",
+    "example": "The military radar may acquire a moving aircraft and begin tracking it.",
+    "usage": "North American military usage. Acquisition starts tracking with the detector; it can make a later attack possible, but does not itself report an attack or a hit.",
+    "collocations": [
+      "acquire a target",
+      "target acquisition"
+    ],
+    "distinctions": [
+      "Acquire concerns establishing a track on the moving aircraft. Seeing a target, tracking it and striking it are separate events."
+    ],
+    "originalSense": {
+      "id": "kaikki:92652a6b57ef1246c8",
+      "definition": "To begin tracking a mobile target with a particular detector or sight, generally with the implication that an attack on the target thereby becomes possible.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "achieve",
+        "acquire",
+        "collect",
+        "find",
+        "gather",
+        "get",
+        "score"
+      ],
+      "antonyms": [
+        "abandon",
+        "lose",
+        "discard",
+        "dispose"
+      ],
+      "collocations": [],
+      "usage": "Canada, US",
+      "register": "Canada, US",
+      "wordFamily": [
+        "acquihire",
+        "acquirability",
+        "acquirable",
+        "acquired taste",
+        "acquiree",
+        "acquirer",
+        "acquiry",
+        "after-acquired title",
+        "preacquire",
+        "pre-acquired",
+        "reacquire",
+        "unacquire"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/acquire#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=acquire&oldid=92637374",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In “The military radar may acquire a moving aircraft and begin tracking it.”, acquire means _____.",
+      "options": [
+        "begin tracking the moving aircraft",
+        "confirm that the aircraft has been struck"
+      ],
+      "answer": "begin tracking the moving aircraft",
+      "explanation": "Acquire concerns establishing a track on the moving aircraft. Seeing a target, tracking it and striking it are separate events."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-64aade1a",
+    "senseId": "kaikki:87233bb14f6a5ea513",
+    "definition": "To get or gain possession of something; to procure it.",
+    "example": "For this study, researchers must obtain written consent before collecting personal data.",
+    "usage": "A transitive verb common in formal writing: obtain permission, obtain information or obtain a document. The study’s stated rule supplies the requirement in this example.",
+    "collocations": [
+      "obtain permission",
+      "obtain information"
+    ],
+    "distinctions": [
+      "Obtain means get the required consent. Acquire and obtain can overlap; earn would add a different idea of payment, effort or worthiness and is not required by this meaning."
+    ],
+    "originalSense": {
+      "id": "kaikki:87233bb14f6a5ea513",
+      "definition": "To get hold of; to gain possession of, to procure; to acquire, in any way.",
+      "example": "obtain permission",
+      "pos": "verb",
+      "synonyms": [
+        "get",
+        "gain",
+        "acquire",
+        "attain",
+        "procure",
+        "exact"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "obtainability",
+        "obtainable",
+        "obtainance",
+        "obtainer",
+        "obtainment",
+        "preobtain",
+        "reobtain",
+        "unobtainability",
+        "unobtained"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/obtain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=obtain&oldid=93626525",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “For this study, researchers must obtain written consent before collecting personal data.”, obtain means _____.",
+      "options": [
+        "get the required consent",
+        "decide that consent is unnecessary"
+      ],
+      "answer": "get the required consent",
+      "explanation": "Obtain means get the required consent. Acquire and obtain can overlap; earn would add a different idea of payment, effort or worthiness and is not required by this meaning."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-64aade1a",
+    "senseId": "kaikki:294559cc75cee96d50",
+    "definition": "To bring it about that a particular objective or state of affairs is reached.",
+    "example": "In Defoe’s “obtained that he should be transported”, obtained means secured that outcome for the convicted man.",
+    "usage": "Obsolete obtain that construction. In current prose, use brought it about that, secured an order that, or another expression suited to the context.",
+    "collocations": [
+      "obtain that: older construction",
+      "secure a particular outcome"
+    ],
+    "distinctions": [
+      "This older clause construction concerns bringing about an outcome. It is separate from the ordinary transitive obtain permission and from conditions obtaining, meaning existing."
+    ],
+    "originalSense": {
+      "id": "kaikki:294559cc75cee96d50",
+      "definition": "To secure (that) a specific objective or state of affairs be reached.",
+      "example": "he was condemned to die for the felony, and being so well known for an old offender, had certainly died, but the merchant, upon his earnest application, had obtained that he should be transported, on condition that he restored all the rest of his bills, which he had done accordingly.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "intransitive, obsolete",
+      "wordFamily": [
+        "obtainability",
+        "obtainable",
+        "obtainance",
+        "obtainer",
+        "obtainment",
+        "preobtain",
+        "reobtain",
+        "unobtainability",
+        "unobtained"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/obtain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=obtain&oldid=93626525",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-64aade1a",
+    "senseId": "kaikki:f424934af6074ebfb2",
+    "definition": "To prevail, be victorious or succeed.",
+    "example": "In Swift’s “yet afterward obtained”, obtained means eventually succeeded or prevailed.",
+    "usage": "Obsolete intransitive use. There is no object naming something acquired in this quotation.",
+    "collocations": [
+      "obtain: prevail",
+      "obtain: succeed"
+    ],
+    "distinctions": [
+      "The older intransitive verb describes success. It does not mean that the subject received a document or that a condition simply remained in force."
+    ],
+    "originalSense": {
+      "id": "kaikki:f424934af6074ebfb2",
+      "definition": "To prevail, be victorious; to succeed.",
+      "example": "“O daughter deare!” (said she) “despeire no whit; / For never sore but might a salve obtain [...].”",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "intransitive, obsolete",
+      "wordFamily": [
+        "obtainability",
+        "obtainable",
+        "obtainance",
+        "obtainer",
+        "obtainment",
+        "preobtain",
+        "reobtain",
+        "unobtainability",
+        "unobtained"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/obtain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=obtain&oldid=93626525",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-64aade1a",
+    "senseId": "kaikki:abd2c7d65e6e5f2c46",
+    "definition": "To hold, keep, possess or occupy something.",
+    "example": "Milton’s “obtains the monarchy of Heav’n” uses obtains for holding or possessing that monarchy.",
+    "usage": "Obsolete transitive use. The emphasis is continued possession, rather than the ordinary modern act of getting something.",
+    "collocations": [
+      "obtain: hold or possess",
+      "hold a monarchy"
+    ],
+    "distinctions": [
+      "In this older sense, something is held or possessed. A modern sentence about obtaining a permit normally concerns getting it, not keeping it indefinitely."
+    ],
+    "originalSense": {
+      "id": "kaikki:abd2c7d65e6e5f2c46",
+      "definition": "To hold; to keep, possess or occupy.",
+      "example": "His mother then is mortal, but his Sire / He who obtains the monarchy of Heav'n, / And what will he not do to advance his Son?",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "obtainability",
+        "obtainable",
+        "obtainance",
+        "obtainer",
+        "obtainment",
+        "preobtain",
+        "reobtain",
+        "unobtainability",
+        "unobtained"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/obtain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=obtain&oldid=93626525",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-64aade1a",
+    "senseId": "kaikki:bde8961730190abeb9",
+    "definition": "To exist, be the case, hold true or remain in force.",
+    "example": "The same assumptions obtain in both versions of the model.",
+    "usage": "An intransitive use, especially in philosophy and formal discussion. Conditions, circumstances or assumptions can be the subject; no object naming an acquired thing follows.",
+    "collocations": [
+      "conditions obtain",
+      "circumstances obtain"
+    ],
+    "distinctions": [
+      "Here obtain means apply or hold true. The assumptions are the subject, not objects that the model acquires."
+    ],
+    "originalSense": {
+      "id": "kaikki:bde8961730190abeb9",
+      "definition": "To exist or be the case; to hold true, be in force.",
+      "example": "Even though the Pervaise confession had never come to light, no reasonable doubt could obtain; for the act in question […] was on a par with countless other acts committed by the oligarchs, and, before them, by the capitalists.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "especially",
+      "register": "especially, intransitive",
+      "wordFamily": [
+        "obtainability",
+        "obtainable",
+        "obtainance",
+        "obtainer",
+        "obtainment",
+        "preobtain",
+        "reobtain",
+        "unobtainability",
+        "unobtained"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/obtain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=obtain&oldid=93626525",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In “The same assumptions obtain in both versions of the model.”, obtain means _____.",
+      "options": [
+        "apply in both versions",
+        "are acquired as objects by both versions"
+      ],
+      "answer": "apply in both versions",
+      "explanation": "Here obtain means apply or hold true. The assumptions are the subject, not objects that the model acquires."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:035383c539978329c5",
+    "definition": "To acquire possession of something, including an advantage or experience.",
+    "example": "Volunteers can gain useful experience by helping at the museum.",
+    "usage": "A transitive use: gain experience, gain access, gain a friend or gain an advantage. An obtained benefit need not be money.",
+    "collocations": [
+      "gain experience",
+      "gain access"
+    ],
+    "distinctions": [
+      "Gain and acquire can overlap when something is obtained. Here the object is experience; the sentence does not establish a qualification or a level of mastery."
+    ],
+    "originalSense": {
+      "id": "kaikki:035383c539978329c5",
+      "definition": "To acquire possession of.",
+      "example": "Looks like you’ve gained a new friend.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "lose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “Volunteers can gain useful experience by helping at the museum.”, gain means _____.",
+      "options": [
+        "obtain useful experience",
+        "automatically receive a professional qualification"
+      ],
+      "answer": "obtain useful experience",
+      "explanation": "Gain and acquire can overlap when something is obtained. Here the object is experience; the sentence does not establish a qualification or a level of mastery."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:1ce5ffed4f4acb2b49",
+    "definition": "To benefit, profit or make progress.",
+    "example": "The business hopes to gain from a cheaper transport contract.",
+    "usage": "Intransitive here; from introduces the proposed source of advantage. A hoped-for gain is not a reported profit.",
+    "collocations": [
+      "gain from a change",
+      "stand to gain"
+    ],
+    "distinctions": [
+      "The business hopes to benefit from the contract. This is distinct from gaining on another business, which can mean getting nearer to overtaking it."
+    ],
+    "originalSense": {
+      "id": "kaikki:1ce5ffed4f4acb2b49",
+      "definition": "To have or receive advantage or profit; to acquire gain; to grow rich; to advance in interest, health, or happiness; to make progress.",
+      "example": "The sick man gains daily.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "lose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “The business hopes to gain from a cheaper transport contract.”, gain means _____.",
+      "options": [
+        "benefit from the contract",
+        "physically move closer to the contract"
+      ],
+      "answer": "benefit from the contract",
+      "explanation": "The business hopes to benefit from the contract. This is distinct from gaining on another business, which can mean getting nearer to overtaking it."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:77f848a273801153e0",
+    "definition": "To win or succeed in a contest, battle or case.",
+    "example": "In the dated expressions “gain a battle” and “gain a case at law”, gain means win.",
+    "usage": "Dated competitive use. Win a battle or win a case is the ordinary current wording for these expressions.",
+    "collocations": [
+      "gain a battle: win",
+      "gain a case: succeed"
+    ],
+    "distinctions": [
+      "Winning is the focus of this dated use. Gaining on an opponent only means becoming more likely to catch or overtake them and does not establish a win."
+    ],
+    "originalSense": {
+      "id": "kaikki:77f848a273801153e0",
+      "definition": "To come off winner or victor in; to be successful in; to obtain by competition.",
+      "example": "to gain a battle; to gain a case at law",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "lose"
+      ],
+      "collocations": [],
+      "usage": "dated",
+      "register": "dated, transitive",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:366092a6b7ab5081c8",
+    "definition": "To increase in amount, extent, quality or ability.",
+    "example": "During the planned ascent, the balloon should gain height.",
+    "usage": "The object can name what increases, such as height or speed. Gain in can introduce an area of improvement, as in gain in skill.",
+    "collocations": [
+      "gain height",
+      "gain in strength"
+    ],
+    "distinctions": [
+      "Gaining height means increasing altitude. It does not establish that the balloon has reached a particular destination or completed its ascent."
+    ],
+    "originalSense": {
+      "id": "kaikki:366092a6b7ab5081c8",
+      "definition": "To increase.",
+      "example": "Then they had bouts of wrestling and of cudgel play, so that every day they gained in skill and strength.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "lose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “During the planned ascent, the balloon should gain height.”, gain means _____.",
+      "options": [
+        "increase its altitude",
+        "finish the ascent simply by increasing its altitude"
+      ],
+      "answer": "increase its altitude",
+      "explanation": "Gaining height means increasing altitude. It does not establish that the balloon has reached a particular destination or completed its ascent."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:13a2a5a299f5bdb2ca",
+    "definition": "To become more likely to catch or overtake someone.",
+    "example": "The cyclist behind is starting to gain on the leader.",
+    "usage": "Often gain on someone. The gap becomes smaller; overtaking need not have happened yet.",
+    "collocations": [
+      "gain on the leader",
+      "gain ground"
+    ],
+    "distinctions": [
+      "Gaining on the leader means closing the gap. It is compatible with still being behind, whereas overtaking means passing the leader."
+    ],
+    "originalSense": {
+      "id": "kaikki:13a2a5a299f5bdb2ca",
+      "definition": "To grow more likely to catch or overtake someone.",
+      "example": "to gain ground",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "lose"
+      ],
+      "collocations": [],
+      "usage": "often, with-on",
+      "register": "intransitive, often, with-on",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “The cyclist behind is starting to gain on the leader.”, gain means _____.",
+      "options": [
+        "close the gap while still behind",
+        "already pass the leader"
+      ],
+      "answer": "close the gap while still behind",
+      "explanation": "Gaining on the leader means closing the gap. It is compatible with still being behind, whereas overtaking means passing the leader."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:0b708fa5475b8c79c2",
+    "definition": "To reach a place or destination.",
+    "example": "The walkers hope to gain the summit before sunset.",
+    "usage": "Transitive with a destination as the object: gain the summit, gain the shore or gain the street.",
+    "collocations": [
+      "gain the summit",
+      "gain the shore"
+    ],
+    "distinctions": [
+      "Gain the summit means reach it. Merely gaining height can leave the walkers below the summit, and a hope to reach it does not report arrival."
+    ],
+    "originalSense": {
+      "id": "kaikki:0b708fa5475b8c79c2",
+      "definition": "To reach.",
+      "example": "to gain the top of a mountain",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "lose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “The walkers hope to gain the summit before sunset.”, gain means _____.",
+      "options": [
+        "reach the summit",
+        "simply move uphill without reaching it"
+      ],
+      "answer": "reach the summit",
+      "explanation": "Gain the summit means reach it. Merely gaining height can leave the walkers below the summit, and a hope to reach it does not report arrival."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:67d5ec7a431d67a95b",
+    "definition": "To win someone over, draw them to one’s side or conciliate them.",
+    "example": "In Dryden’s phrase “gain the court”, gain concerns winning the court’s favour.",
+    "usage": "The person or group won over can be the object. The court in this quotation is not merely a physical destination.",
+    "collocations": [
+      "gain someone to one’s side",
+      "gain the court: win favour"
+    ],
+    "distinctions": [
+      "This use concerns allegiance or favour. Reaching a place, acquiring property and winning a person over are different meanings of gain. The quotation does not by itself make the use obsolete."
+    ],
+    "originalSense": {
+      "id": "kaikki:67d5ec7a431d67a95b",
+      "definition": "To draw into any interest or party; to win to one’s side; to conciliate.",
+      "example": "If he shall hear thee, thou hast gained thy brother.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "lose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:d3c85282c463c390eb",
+    "definition": "To put on body weight.",
+    "example": "The chart shows body weight increasing, so the note says the patient continues to gain.",
+    "usage": "Intransitive here; body-weight context supplies what increases. The word itself makes no judgement about whether the change is desirable.",
+    "collocations": [
+      "continue to gain",
+      "gain: put on weight"
+    ],
+    "distinctions": [
+      "Gain without an object can mean put on weight in this context. It does not automatically mean recover from illness or improve health."
+    ],
+    "originalSense": {
+      "id": "kaikki:d3c85282c463c390eb",
+      "definition": "To put on weight.",
+      "example": "I’ve been gaining.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "lose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “The chart shows body weight increasing, so the note says the patient continues to gain.”, gain means _____.",
+      "options": [
+        "put on body weight",
+        "necessarily become healthier"
+      ],
+      "answer": "put on body weight",
+      "explanation": "Gain without an object can mean put on weight in this context. It does not automatically mean recover from illness or improve health."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:22c4c6d6902fd5bd5f",
+    "definition": "Of a timekeeping device, to run fast, often by a stated amount.",
+    "example": "The old clock can gain two minutes in a day.",
+    "usage": "Dated in the checked source. A clock that gains runs ahead of correct time; the stated amount is its timing error.",
+    "collocations": [
+      "gain two minutes",
+      "a clock that gains"
+    ],
+    "distinctions": [
+      "A clock that gains shows a later time than the correct time. After a two-minute gain from an accurate setting, it can show 12:02 when correct time is 12:00; it is not two minutes slow."
+    ],
+    "originalSense": {
+      "id": "kaikki:22c4c6d6902fd5bd5f",
+      "definition": "To run fast, often by a specified amount.",
+      "example": "Don't rely on that clock: it gains.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "lose"
+      ],
+      "collocations": [],
+      "usage": "ambitransitive, dated",
+      "register": "ambitransitive, dated",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "learningPriority": "historical",
+    "distinctionTask": {
+      "prompt": "In “The old clock can gain two minutes in a day.”, gain means _____.",
+      "options": [
+        "run two minutes ahead over that day",
+        "run two minutes behind over that day"
+      ],
+      "answer": "run two minutes ahead over that day",
+      "explanation": "A clock that gains shows a later time than the correct time. After a two-minute gain from an accurate setting, it can show 12:02 when correct time is 12:00; it is not two minutes slow."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:48be374a0ff7dcdcd7",
+    "definition": "An act of acquiring something or an increase achieved.",
+    "example": "The new layout gives the room a gain in usable floor space.",
+    "usage": "Noun use: a gain in something. A gain can concern space, speed, knowledge or another amount, without being a financial profit.",
+    "collocations": [
+      "a gain in floor space",
+      "make a gain"
+    ],
+    "distinctions": [
+      "The noun names the increase in usable space. It does not name the verb form in can gain or necessarily imply that the room itself becomes larger."
+    ],
+    "originalSense": {
+      "id": "kaikki:48be374a0ff7dcdcd7",
+      "definition": "The act of gaining; acquisition.",
+      "example": "People are more willing to take a risk to avoid a loss than to make a gain.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "loss"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “The new layout gives the room a gain in usable floor space.”, gain means _____.",
+      "options": [
+        "an increase in usable floor space",
+        "a required increase in the room’s external dimensions"
+      ],
+      "answer": "an increase in usable floor space",
+      "explanation": "The noun names the increase in usable space. It does not name the verb form in can gain or necessarily imply that the room itself becomes larger."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:197304731ae9083550",
+    "definition": "Something obtained or gained.",
+    "example": "Under the group’s agreement, each gain is shared equally.",
+    "usage": "Countable noun; gains can name the things or benefits obtained. The example’s agreement supplies the sharing rule.",
+    "collocations": [
+      "share the gains",
+      "a personal gain"
+    ],
+    "distinctions": [
+      "Each gain refers to something obtained, rather than a factor multiplying a signal. Sharing follows the stated agreement; it is not part of the general definition of gain."
+    ],
+    "originalSense": {
+      "id": "kaikki:197304731ae9083550",
+      "definition": "The thing or things gained.",
+      "example": "Everyone shall share in the gains.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "loss"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “Under the group’s agreement, each gain is shared equally.”, gain means _____.",
+      "options": [
+        "a thing or benefit obtained",
+        "the factor multiplying an electronic signal"
+      ],
+      "answer": "a thing or benefit obtained",
+      "explanation": "Each gain refers to something obtained, rather than a factor multiplying a signal. Sharing follows the stated agreement; it is not part of the general definition of gain."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:55ff8b143f1aab3940",
+    "definition": "The factor by which a signal is multiplied.",
+    "example": "With a linear voltage gain of three, a 0.2 V input gives a 0.6 V output in this model.",
+    "usage": "Electronics. This example uses a linear voltage ratio: output divided by input is three. It states neither a power ratio nor a decibel value.",
+    "collocations": [
+      "voltage gain",
+      "signal gain"
+    ],
+    "distinctions": [
+      "The linear factor multiplies 0.2 V by three to give 0.6 V. It is not an extra 3 V added to the input, a profit, or a promise that any real amplifier behaves ideally."
+    ],
+    "originalSense": {
+      "id": "kaikki:55ff8b143f1aab3940",
+      "definition": "The factor by which a signal is multiplied.",
+      "example": "There follows the high and low-frequency replay equalization, which normally involves two adjustments with a further control allowing the replay gain to be set.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "loss"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In “With a linear voltage gain of three, a 0.2 V input gives a 0.6 V output in this model.”, gain means _____.",
+      "options": [
+        "a multiplying factor of three",
+        "an added voltage of three volts"
+      ],
+      "answer": "a multiplying factor of three",
+      "explanation": "The linear factor multiplies 0.2 V by three to give 0.6 V. It is not an extra 3 V added to the input, a profit, or a promise that any real amplifier behaves ideally."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:fd1af84aec82f33166",
+    "definition": "An obsolete preposition meaning against.",
+    "example": "As an obsolete preposition, gain means against; it does not name an increase or act as the ordinary verb gain.",
+    "usage": "Obsolete prepositional use. The modern ordinary preposition is against.",
+    "collocations": [
+      "gain: against",
+      "prepositional gain"
+    ],
+    "distinctions": [
+      "Part of speech matters: this gain introduces what something is against, rather than stating that someone obtains a benefit."
+    ],
+    "originalSense": {
+      "id": "kaikki:fd1af84aec82f33166",
+      "definition": "Against.",
+      "example": "",
+      "pos": "prep",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:bbadd8e8c57ceb19cf",
+    "definition": "Straight or direct; near or short.",
+    "example": "In the older or regional phrase “the gainest way”, gainest describes the most direct or shortest way.",
+    "usage": "Obsolete or dialectal adjective in the checked source. Gainest is its superlative in the quoted phrase.",
+    "collocations": [
+      "the gainest way",
+      "gain: direct or short"
+    ],
+    "distinctions": [
+      "The adjective describes a route. It does not mean that a route earns money, and the mixed historical/regional label should not be reduced to universally obsolete."
+    ],
+    "originalSense": {
+      "id": "kaikki:bbadd8e8c57ceb19cf",
+      "definition": "Straight, direct; near; short.",
+      "example": "the gainest way",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "dialectal, obsolete",
+      "register": "dialectal, obsolete",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:95b2ed6281c79efa12",
+    "definition": "Suitable, convenient or ready.",
+    "example": "In this older or regional adjective use, gain describes something suitable, convenient or ready.",
+    "usage": "Obsolete or dialectal adjective. Read the surrounding description to determine which of these related qualities is intended.",
+    "collocations": [
+      "gain: suitable",
+      "gain: convenient or ready"
+    ],
+    "distinctions": [
+      "This is a descriptive adjective, not the noun for a benefit. The related qualities should not be treated as three separately proven modern collocations."
+    ],
+    "originalSense": {
+      "id": "kaikki:95b2ed6281c79efa12",
+      "definition": "Suitable; convenient; ready.",
+      "example": "",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "dialectal, obsolete",
+      "register": "dialectal, obsolete",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:9e6039cfa9f13e672e",
+    "definition": "Easy or tolerable; handy or dexterous.",
+    "example": "As a regional adjective, gain can describe ease or tolerability, or someone being handy or dexterous.",
+    "usage": "Dialectal adjective. The range depends on regional context; it is not labelled universally obsolete.",
+    "collocations": [
+      "gain: easy or tolerable",
+      "gain: handy or dexterous"
+    ],
+    "distinctions": [
+      "A description of ease and a description of dexterity are related regional uses in this record. Neither is the electronic signal factor or the ordinary acquisition verb."
+    ],
+    "originalSense": {
+      "id": "kaikki:9e6039cfa9f13e672e",
+      "definition": "Easy; tolerable; handy, dexterous.",
+      "example": "",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "dialectal",
+      "register": "dialectal",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:1efbcfe6589da6967f",
+    "definition": "Honest or respectable; moderate or cheap.",
+    "example": "This regional adjective record includes honest or respectable and moderate or cheap, depending on context.",
+    "usage": "Dialectal adjective. The listed qualities are possible contextual readings, not claims that honesty and low price are equivalent.",
+    "collocations": [
+      "gain: honest or respectable",
+      "gain: moderate or cheap"
+    ],
+    "distinctions": [
+      "Choose the quality supported by the regional passage. Do not infer that a person described as gain is cheap, or that a cheap object is morally honest."
+    ],
+    "originalSense": {
+      "id": "kaikki:1efbcfe6589da6967f",
+      "definition": "Honest; respectable; moderate; cheap.",
+      "example": "",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "dialectal",
+      "register": "dialectal",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:d0af473271e9d56d89",
+    "definition": "Straightly or quickly; by the nearest way or means.",
+    "example": "In older or regional adverbial use, gain describes proceeding directly, quickly or by the nearest way.",
+    "usage": "Obsolete or dialectal adverb. It describes how an action proceeds, rather than naming a route as an adjective.",
+    "collocations": [
+      "gain: directly",
+      "gain: by the nearest way"
+    ],
+    "distinctions": [
+      "The adverb modifies an action. In the adjective phrase the gainest way, the word instead describes way."
+    ],
+    "originalSense": {
+      "id": "kaikki:d0af473271e9d56d89",
+      "definition": "Straightly; quickly; by the nearest way or means.",
+      "example": "",
+      "pos": "adv",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "dialectal, obsolete",
+      "register": "dialectal, obsolete",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:bcbb05defd2900d195",
+    "definition": "Suitably, conveniently, dexterously or moderately.",
+    "example": "This regional adverb can describe doing something suitably, conveniently, dexterously or moderately.",
+    "usage": "Dialectal adverb. Context selects the manner intended by the passage.",
+    "collocations": [
+      "gain: suitably or conveniently",
+      "gain: dexterously or moderately"
+    ],
+    "distinctions": [
+      "The adverb concerns manner. It does not mean that the action necessarily generates a gain or that all four listed manners apply at once."
+    ],
+    "originalSense": {
+      "id": "kaikki:bcbb05defd2900d195",
+      "definition": "Suitably; conveniently; dexterously; moderately.",
+      "example": "",
+      "pos": "adv",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "dialectal",
+      "register": "dialectal",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:afbfa7b615e256b960",
+    "definition": "Tolerably or fairly.",
+    "example": "In the regional phrase “gain quiet”, gain means fairly or pretty and modifies quiet.",
+    "usage": "Dialectal degree adverb. The quoted expression is glossed fairly/pretty quiet in the checked source.",
+    "collocations": [
+      "gain quiet",
+      "gain: fairly or pretty"
+    ],
+    "distinctions": [
+      "Here gain modifies an adjective. It is not an instruction to gain quietness, and it does not describe earning a reward."
+    ],
+    "originalSense": {
+      "id": "kaikki:afbfa7b615e256b960",
+      "definition": "Tolerably; fairly.",
+      "example": "gain quiet",
+      "pos": "adv",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "dialectal",
+      "register": "dialectal",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:13ede348d51f4a76e6",
+    "definition": "A square or bevelled notch in a supporting timber that receives the end of a floor beam.",
+    "example": "The carpenter cuts a gain in the timber to receive the end of the floor beam.",
+    "usage": "Architectural and carpentry noun. This record names the receiving notch; the illustration is a schematic joint, with no construction dimensions or load rating.",
+    "collocations": [
+      "cut a gain",
+      "a gain in a timber"
+    ],
+    "distinctions": [
+      "The gain is the notch, not the whole floor beam, a financial return or the factor multiplying an electronic signal."
+    ],
+    "originalSense": {
+      "id": "kaikki:13ede348d51f4a76e6",
+      "definition": "A square or bevelled notch cut out of a girder, binding joist, or other timber which supports a floor beam, so as to receive the end of the floor beam.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gain&oldid=93509703",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "In “The carpenter cuts a gain in the timber to receive the end of the floor beam.”, gain means _____.",
+      "options": [
+        "the receiving notch in the timber",
+        "the entire floor beam"
+      ],
+      "answer": "the receiving notch in the timber",
+      "explanation": "The gain is the notch, not the whole floor beam, a financial return or the factor multiplying an electronic signal."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:fb9a356c5b81d64635",
+    "definition": "Gain: a surname.",
+    "example": "Capitalised Gain is a family name in this record; it is not a statement that its bearer obtains a benefit.",
+    "usage": "Proper name; retain the capital G when using the surname.",
+    "collocations": [
+      "the surname Gain",
+      "Gain: family name"
+    ],
+    "distinctions": [
+      "The surname has its own lexical record. It should not be used as an ordinary gain exercise or treated as a misspelling."
+    ],
+    "originalSense": {
+      "id": "kaikki:fb9a356c5b81d64635",
+      "definition": "A surname.",
+      "example": "",
+      "pos": "name",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts",
+        "autogain",
+        "brain-gain",
+        "brain gain",
+        "capital gain",
+        "gain-ground",
+        "gainless",
+        "gain-of-function",
+        "gain of function",
+        "gain-of-function research",
+        "gainsharing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/Gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Gain&oldid=87357680",
+    "exampleKind": "reading-note",
+    "learningPriority": "proper-name",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:49daa3500a86f7eee7",
+    "definition": "To gain success, a reward or recognition through effort or work.",
+    "example": "On this course, learners must pass the assessed tasks to earn the certificate.",
+    "usage": "The sentence’s course rule connects the award to assessed work. Earn a reward, earn recognition and earn respect often foreground effort.",
+    "collocations": [
+      "earn a reward",
+      "earn recognition"
+    ],
+    "distinctions": [
+      "This meaning connects the award with work or achievement. Acquiring a skill concerns the ability itself; earning a certificate concerns the award under the course’s rules."
+    ],
+    "originalSense": {
+      "id": "kaikki:49daa3500a86f7eee7",
+      "definition": "To gain (success, reward, recognition) through applied effort or work.",
+      "example": "You can have the s'mores: you earned them, clearing the walkway of snow so well.",
+      "pos": "verb",
+      "synonyms": [
+        "deserve",
+        "merit",
+        "garner",
+        "win"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/earn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=earn&oldid=93392036",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “On this course, learners must pass the assessed tasks to earn the certificate.”, earn means _____.",
+      "options": [
+        "receive the certificate through the required achievement",
+        "receive the certificate merely by viewing the course page"
+      ],
+      "answer": "receive the certificate through the required achievement",
+      "explanation": "This meaning connects the award with work or achievement. Acquiring a skill concerns the ability itself; earning a certificate concerns the award under the course’s rules."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:88b43f72620318313d",
+    "definition": "To receive money or income for work, a role or an income-producing asset.",
+    "example": "The contract lets the director earn a fixed salary even if the project loses money.",
+    "usage": "Income use. Earn can describe salary or interest without saying that the recipient worked hard, deserved the amount, or made the project profitable.",
+    "collocations": [
+      "earn a salary",
+      "earn interest"
+    ],
+    "distinctions": [
+      "Receiving income and deserving a reward are different claims. This sentence states a contractual salary; it does not establish the fairness of that salary or the director’s effort."
+    ],
+    "originalSense": {
+      "id": "kaikki:88b43f72620318313d",
+      "definition": "To receive payment for work or for a role or position held (regardless of whether effort was applied or whether the remuneration is deserved or commensurate).",
+      "example": "He earns seven million dollars a year as CEO.  My bank account is only earning one percent interest.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/earn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=earn&oldid=93392036",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “The contract lets the director earn a fixed salary even if the project loses money.”, earn means _____.",
+      "options": [
+        "receive the stated salary",
+        "prove that the salary is deserved"
+      ],
+      "answer": "receive the stated salary",
+      "explanation": "Receiving income and deserving a reward are different claims. This sentence states a contractual salary; it does not establish the fairness of that salary or the director’s effort."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:58ce21aaca71f1272c",
+    "definition": "To receive payment for work, with the payment left unstated.",
+    "example": "The students start to earn when their paid placements begin.",
+    "usage": "Intransitive here: no salary or other payment is stated as a direct object after earn.",
+    "collocations": [
+      "begin to earn",
+      "start earning"
+    ],
+    "distinctions": [
+      "Earn without an object can mean receive pay for work. The sentence does not specify an amount, whereas earn a salary names the income as an object."
+    ],
+    "originalSense": {
+      "id": "kaikki:58ce21aaca71f1272c",
+      "definition": "To receive payment for work.",
+      "example": "Now that you are earning, you can start paying me rent.",
+      "pos": "verb",
+      "synonyms": [
+        "get",
+        "take in",
+        "rake in",
+        "rake it in"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/earn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=earn&oldid=93392036",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “The students start to earn when their paid placements begin.”, earn means _____.",
+      "options": [
+        "begin receiving pay for work",
+        "earn a specifically stated amount"
+      ],
+      "answer": "begin receiving pay for work",
+      "explanation": "Earn without an object can mean receive pay for work. The sentence does not specify an amount, whereas earn a salary names the income as an object."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:e6e815742ade9b869a",
+    "definition": "To cause someone to receive payment or a reward.",
+    "example": "The project could earn the team a small bonus.",
+    "usage": "The project is the subject, the team is the recipient and a small bonus is what the team may receive.",
+    "collocations": [
+      "earn someone a bonus",
+      "earn someone money"
+    ],
+    "distinctions": [
+      "Earn someone something identifies the recipient of a possible payment or reward. Could leaves the bonus uncertain; the sentence does not say the team has already received it."
+    ],
+    "originalSense": {
+      "id": "kaikki:e6e815742ade9b869a",
+      "definition": "To cause (someone) to receive payment or reward.",
+      "example": "My CD earns me six percent!",
+      "pos": "verb",
+      "synonyms": [
+        "yield",
+        "make",
+        "generate",
+        "render"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/earn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=earn&oldid=93392036",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “The project could earn the team a small bonus.”, earn means _____.",
+      "options": [
+        "bring the team a possible bonus",
+        "confirm that the bonus has already been paid"
+      ],
+      "answer": "bring the team a possible bonus",
+      "explanation": "Earn someone something identifies the recipient of a possible payment or reward. Could leaves the bonus uncertain; the sentence does not say the team has already received it."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:59abc82cac273d547d",
+    "definition": "To achieve or obtain something by being worthy of it.",
+    "example": "Her performance was good enough to earn a place in the final.",
+    "usage": "Worthiness or meeting a standard is the focus. Effort and merit can overlap; the meanings are not mutually exclusive.",
+    "collocations": [
+      "earn a place",
+      "earn a spot in the final"
+    ],
+    "distinctions": [
+      "A performance good enough to earn a place meets the relevant standard. It does not describe inherited membership, and it does not imply that every payment called earnings is deserved."
+    ],
+    "originalSense": {
+      "id": "kaikki:59abc82cac273d547d",
+      "definition": "To achieve by being worthy of.",
+      "example": "to earn a spot in the top 20",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/earn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=earn&oldid=93392036",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In “Her performance was good enough to earn a place in the final.”, earn means _____.",
+      "options": [
+        "qualify for a place through the performance",
+        "receive a place solely through inherited membership"
+      ],
+      "answer": "qualify for a place through the performance",
+      "explanation": "A performance good enough to earn a place meets the relevant standard. It does not describe inherited membership, and it does not imply that every payment called earnings is deserved."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:789ade23fce76ab685",
+    "definition": "To cause milk to curdle, especially in cheesemaking.",
+    "example": "In archaic cheesemaking vocabulary, earn can mean cause milk to curdle.",
+    "usage": "Archaic transitive verb. Milk is the thing acted on, rather than a person receiving wages.",
+    "collocations": [
+      "earn: curdle milk",
+      "milk as the object"
+    ],
+    "distinctions": [
+      "This use makes milk curdle. In the separate obsolete intransitive use, milk is the subject and curdles."
+    ],
+    "originalSense": {
+      "id": "kaikki:789ade23fce76ab685",
+      "definition": "To curdle (milk), especially in the cheesemaking process.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "run",
+        "yearn"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "UK, archaic, dialectal",
+      "register": "UK, archaic, dialectal, transitive",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/earn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=earn&oldid=93392036",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:adf597322712b93488",
+    "definition": "Of milk, to curdle, especially in cheesemaking.",
+    "example": "In this obsolete use, milk earns means that the milk curdles.",
+    "usage": "Obsolete intransitive verb. The milk undergoes the change; no object naming milk follows the verb.",
+    "collocations": [
+      "milk as the subject",
+      "earn: become curdled"
+    ],
+    "distinctions": [
+      "This is the intransitive counterpart of causing milk to curdle. It has no connection with a payment or reward."
+    ],
+    "originalSense": {
+      "id": "kaikki:adf597322712b93488",
+      "definition": "Of milk: to curdle, especially in the cheesemaking process.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "UK, dialectal, obsolete",
+      "register": "UK, dialectal, intransitive, obsolete",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/earn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=earn&oldid=93392036",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:5593cd3f315386d308",
+    "definition": "To long or yearn strongly for something or to do something.",
+    "example": "Spenser’s “his hart did earne” describes the knight’s strong desire to prove his valour.",
+    "usage": "Obsolete longing use. Hart is heart in the quotation, and earne is the quoted spelling of the verb.",
+    "collocations": [
+      "earne: yearn strongly",
+      "long to do something"
+    ],
+    "distinctions": [
+      "The knight longs to prove himself. The verb does not say that he has already won a reward or received wages."
+    ],
+    "originalSense": {
+      "id": "kaikki:5593cd3f315386d308",
+      "definition": "To strongly long or yearn (for something or to do something).",
+      "example": "And ever as he rode, his hart did earne / To prove his puissance in battell brave.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "UK, dialectal, obsolete",
+      "register": "UK, dialectal, obsolete, transitive",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/earn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=earn&oldid=93392036",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:15136e0b1a78b0fb0f",
+    "definition": "To grieve.",
+    "example": "In the Henry V quotation “we must erne therefore”, erne means grieve for Falstaff.",
+    "usage": "Obsolete intransitive grief use. Erne is the spelling in the quoted passage.",
+    "collocations": [
+      "erne: grieve",
+      "grieve for Falstaff"
+    ],
+    "distinctions": [
+      "The passage concerns grief following a death. The historical verb is separate from the ordinary income meaning of earn."
+    ],
+    "originalSense": {
+      "id": "kaikki:15136e0b1a78b0fb0f",
+      "definition": "To grieve.",
+      "example": "[M]y manly heart doth erne. […] Boy, briſsle thy Courage vp: For Falſtaffe hee is dead, and wee muſt erne therefore.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "UK, dialectal, obsolete",
+      "register": "UK, dialectal, intransitive, obsolete",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/earn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=earn&oldid=93392036",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:7a0df011e3764e5781",
+    "definition": "An alternative form of erne, an eagle or sea eagle.",
+    "example": "In Scott’s verse, the earn near a tarn is an eagle; the spelling is an alternative form of erne.",
+    "usage": "Bird noun. Erne can mean a sea eagle or, chiefly in poetic, regional or scientific use, an eagle more generally. The quotation does not identify a species.",
+    "collocations": [
+      "earn: bird noun",
+      "erne: alternative form"
+    ],
+    "distinctions": [
+      "This valid alternative form names a bird. It is neither a spelling error to practise correcting nor a verb about receiving wages."
+    ],
+    "originalSense": {
+      "id": "kaikki:7a0df011e3764e5781",
+      "definition": "Alternative form of erne",
+      "example": "They gleamed on many a dusky tarn ,\nHaunted by the lonely earn",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "UK, alt-of, alternative, dialectal",
+      "register": "UK, alt-of, alternative, dialectal",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/earn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=earn&oldid=93392036",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:2ecb3e43ea596c71df",
+    "definition": "EARN: the European Academic and Research Network, a former European academic computer network.",
+    "example": "Capitalised EARN abbreviates European Academic and Research Network in this record.",
+    "usage": "Historical network name used by universities and research institutions across Europe. The capitals identify an initialism.",
+    "collocations": [
+      "European Academic and Research Network",
+      "EARN: network initialism"
+    ],
+    "distinctions": [
+      "The initialism names the network, not a command to earn money or a certificate. It is not a generic label for every academic network."
+    ],
+    "originalSense": {
+      "id": "kaikki:2ecb3e43ea596c71df",
+      "definition": "Initialism of European Academic and Research Network: a former computer network connecting universities and research institutions across Europe.",
+      "example": "",
+      "pos": "name",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "abbreviation, alt-of, initialism",
+      "register": "abbreviation, alt-of, initialism",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/EARN#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=EARN&oldid=85251484",
+    "exampleKind": "reading-note",
+    "learningPriority": "proper-name",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:a129d468a980785af5",
+    "definition": "Earn: a river in Perth and Kinross, Scotland, flowing into the tidal River Tay.",
+    "example": "The capitalised name Earn identifies the Scottish river that flows into the tidal River Tay.",
+    "usage": "Geographical proper name. Use River Earn when a river name needs to be explicit.",
+    "collocations": [
+      "River Earn",
+      "the Earn and the Tay"
+    ],
+    "distinctions": [
+      "The river name is a separate proper-name record. It is unrelated to a person earning income and does not imply that the river is itself the Tay."
+    ],
+    "originalSense": {
+      "id": "kaikki:a129d468a980785af5",
+      "definition": "A river in Perth and Kinross council area, Scotland, which flows into the tidal River Tay.",
+      "example": "",
+      "pos": "name",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/Earn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Earn&oldid=87739679",
+    "exampleKind": "reading-note",
+    "learningPriority": "proper-name",
     "synonyms": [],
     "antonyms": [],
     "wordFamily": [],

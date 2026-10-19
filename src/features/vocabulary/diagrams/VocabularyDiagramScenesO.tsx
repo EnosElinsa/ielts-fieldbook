@@ -2,6 +2,8 @@ import type { VocabularySenseDiagram } from '../../../domain/vocabulary/media';
 import { VocabularyDiagramFrame, Arrow, Box, Label, blue, gold, green } from './VocabularyDiagramPrimitives';
 
 const descriptions: Record<string, [string, string]> = {
+  "obtain-permission": ["Rule for this study","The study requires written consent before collection. Obtain concerns getting that permission; the sequence is the rule stated in the example."],
+  "obtain-conditions": ["The same assumptions hold in both model versions","Both versions are described as having the same assumptions. In this intransitive use, obtain means apply or hold true; it does not take an acquired object."],
   "observe-watch": ["Birds watched from a hide without approaching their nests","The observer watches from a distance. Watching is separate from deliberately intervening, and the diagram supplies no causal explanation."],
   "observe-comply": ["A posted speed limit followed by a driver","Observe the limit means comply with the applicable rule. The illustrative speed limit is not a universal rule for all roads."],
   "observe-occasion": ["A family marks a festival with an evening meal","Observe the festival concerns keeping the occasion. No universal calendar date or way of celebrating is implied."],
@@ -24,6 +26,8 @@ const descriptions: Record<string, [string, string]> = {
 };
 function Scene({ kind }: { kind: string }) {
   switch (kind) {
+    case 'obtain-permission': return <><Label x={260} y={42}>Rule for this study</Label><Box x={25} y={118} width={215} label="Obtain consent" sub="Written permission"/><Arrow x1={250} y1={157} x2={275} y2={157}/><Box x={285} y={118} width={210} label="Collect data" sub="Only afterwards" color={green}/><Label x={260} y={292} small>Get the required consent first</Label></>;
+    case 'obtain-conditions': return <><Label x={260} y={42}>The same assumptions obtain</Label><Box x={25} y={111} width={215} label="Apply here" sub="Version one"/><Box x={285} y={111} width={210} label="Apply here" sub="Version two" color={green}/><path d="M132 214V244H390V214" className="meaning-diagram-line"/><Label x={260} y={300}>Obtain = apply or hold true</Label></>;
     case "observe-watch": return <><Box x={25} y={65} width={185} label="Hide" sub="Observer watches"/><path d="M225 112H310" className="meaning-diagram-line" strokeDasharray="7 7"/><path d="M331 113q16-22 32 0q16-22 32 0M390 152q16-22 32 0q16-22 32 0" className="meaning-diagram-line"/><Label x={390} y={216}>Birds</Label><Label x={260} y={284}>Watching from a distance</Label></>;
     case "observe-comply": return <><circle cx="130" cy="123" r="58" fill="none" stroke={gold} strokeWidth="8"/><Label x={130} y={133}>30</Label><Label x={130} y={217} small>Posted limit</Label><Box x={280} y={78} width={210} label="Driver" sub="Keeps within limit" color={green}/><Label x={260} y={292}>Follows the rule</Label></>;
     case "observe-occasion": return <><rect x="35" y="58" width="160" height="134" rx="12" className="meaning-diagram-line"/><path d="M35 96H195" className="meaning-diagram-line"/><Label x={115} y={143}>Festival</Label><Arrow x1={215} y1={126} x2={280} y2={126}/><Box x={300} y={79} width={190} label="Family meal" sub="Marks the occasion" color={green}/><Label x={260} y={281}>Observes the festival</Label></>;

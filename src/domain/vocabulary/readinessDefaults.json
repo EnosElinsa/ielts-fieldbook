@@ -26342,5 +26342,324 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-1a47d31d",
+    "originalSense": {
+      "id": "kaikki:9d78f6be8eca072ddc",
+      "definition": "To get.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "attain",
+        "come by",
+        "earn",
+        "gain",
+        "obtain",
+        "procure",
+        "secure",
+        "win"
+      ],
+      "antonyms": [
+        "abandon",
+        "lose",
+        "discard",
+        "dispose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "acquihire",
+        "acquirability",
+        "acquirable",
+        "acquired taste",
+        "acquiree",
+        "acquirer",
+        "acquiry",
+        "after-acquired title",
+        "preacquire",
+        "pre-acquired",
+        "reacquire",
+        "unacquire"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/acquire#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:9d78f6be8eca072ddc",
+      "definition": "To get something or come to possess it.",
+      "example": "The museum plans to acquire an old map for its collection.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "acquire a collection",
+        "acquire an asset"
+      ],
+      "usage": "Acquire takes the thing obtained as its object. It can describe purchase, a gift or another means of obtaining possession.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/acquire#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Acquire and obtain can overlap when something is obtained. This sentence concerns adding a map to a collection; it does not specify whether the museum will buy it or receive it as a gift."
+      ],
+      "distinctionTask": {
+        "prompt": "In “The museum plans to acquire an old map for its collection.”, acquire means _____.",
+        "options": [
+          "get the map for the collection",
+          "make an appraisal without obtaining the map"
+        ],
+        "answer": "get the map for the collection",
+        "explanation": "Acquire and obtain can overlap when something is obtained. This sentence concerns adding a map to a collection; it does not specify whether the museum will buy it or receive it as a gift."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-64aade1a",
+    "originalSense": {
+      "id": "kaikki:87233bb14f6a5ea513",
+      "definition": "To get hold of; to gain possession of, to procure; to acquire, in any way.",
+      "example": "obtain permission",
+      "pos": "verb",
+      "synonyms": [
+        "get",
+        "gain",
+        "acquire",
+        "attain",
+        "procure",
+        "exact"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "obtainability",
+        "obtainable",
+        "obtainance",
+        "obtainer",
+        "obtainment",
+        "preobtain",
+        "reobtain",
+        "unobtainability",
+        "unobtained"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/obtain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:87233bb14f6a5ea513",
+      "definition": "To get or gain possession of something; to procure it.",
+      "example": "For this study, researchers must obtain written consent before collecting personal data.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "obtain permission",
+        "obtain information"
+      ],
+      "usage": "A transitive verb common in formal writing: obtain permission, obtain information or obtain a document. The study’s stated rule supplies the requirement in this example.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/obtain#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Obtain means get the required consent. Acquire and obtain can overlap; earn would add a different idea of payment, effort or worthiness and is not required by this meaning."
+      ],
+      "distinctionTask": {
+        "prompt": "In “For this study, researchers must obtain written consent before collecting personal data.”, obtain means _____.",
+        "options": [
+          "get the required consent",
+          "decide that consent is unnecessary"
+        ],
+        "answer": "get the required consent",
+        "explanation": "Obtain means get the required consent. Acquire and obtain can overlap; earn would add a different idea of payment, effort or worthiness and is not required by this meaning."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "originalSense": {
+      "id": "kaikki:035383c539978329c5",
+      "definition": "To acquire possession of.",
+      "example": "Looks like you’ve gained a new friend.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "lose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "gainable",
+        "gainer",
+        "gain ground",
+        "gain line",
+        "gain momentum",
+        "gain on",
+        "gain one's spurs",
+        "gain over",
+        "gain steam",
+        "gain the wind",
+        "gain time",
+        "gain traction",
+        "gain upon",
+        "gain weight",
+        "outgain",
+        "overgain",
+        "undergain",
+        "ungained",
+        "what you gain on the swings you lose on the roundabouts",
+        "what you lose on the swings you gain on the roundabouts"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:035383c539978329c5",
+      "definition": "To acquire possession of something, including an advantage or experience.",
+      "example": "Volunteers can gain useful experience by helping at the museum.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "gain experience",
+        "gain access"
+      ],
+      "usage": "A transitive use: gain experience, gain access, gain a friend or gain an advantage. An obtained benefit need not be money.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gain#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Gain and acquire can overlap when something is obtained. Here the object is experience; the sentence does not establish a qualification or a level of mastery."
+      ],
+      "distinctionTask": {
+        "prompt": "In “Volunteers can gain useful experience by helping at the museum.”, gain means _____.",
+        "options": [
+          "obtain useful experience",
+          "automatically receive a professional qualification"
+        ],
+        "answer": "obtain useful experience",
+        "explanation": "Gain and acquire can overlap when something is obtained. Here the object is experience; the sentence does not establish a qualification or a level of mastery."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "originalSense": {
+      "id": "kaikki:49daa3500a86f7eee7",
+      "definition": "To gain (success, reward, recognition) through applied effort or work.",
+      "example": "You can have the s'mores: you earned them, clearing the walkway of snow so well.",
+      "pos": "verb",
+      "synonyms": [
+        "deserve",
+        "merit",
+        "garner",
+        "win"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "earnable",
+        "earn a crust",
+        "earn a living",
+        "earner",
+        "earnful",
+        "earnings",
+        "earn one's corn",
+        "earn one's crust",
+        "earn one's keep",
+        "earn one's spurs",
+        "earn one's stripes",
+        "earn one's wings",
+        "earn out",
+        "earnout",
+        "hard-earned",
+        "nonearning",
+        "outearn",
+        "outourn",
+        "overearn",
+        "pay as you earn",
+        "re-earn",
+        "reearn",
+        "underearn",
+        "unearn",
+        "unearned",
+        "unearning"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/earn#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:49daa3500a86f7eee7",
+      "definition": "To gain success, a reward or recognition through effort or work.",
+      "example": "On this course, learners must pass the assessed tasks to earn the certificate.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "earn a reward",
+        "earn recognition"
+      ],
+      "usage": "The sentence’s course rule connects the award to assessed work. Earn a reward, earn recognition and earn respect often foreground effort.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/earn#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This meaning connects the award with work or achievement. Acquiring a skill concerns the ability itself; earning a certificate concerns the award under the course’s rules."
+      ],
+      "distinctionTask": {
+        "prompt": "In “On this course, learners must pass the assessed tasks to earn the certificate.”, earn means _____.",
+        "options": [
+          "receive the certificate through the required achievement",
+          "receive the certificate merely by viewing the course page"
+        ],
+        "answer": "receive the certificate through the required achievement",
+        "explanation": "This meaning connects the award with work or achievement. Acquiring a skill concerns the ability itself; earning a certificate concerns the award under the course’s rules."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

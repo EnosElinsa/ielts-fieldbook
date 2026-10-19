@@ -6646,5 +6646,189 @@
     "definition": "A fixed decision or determination to do something.",
     "pos": "noun",
     "kind": "resolve-decision"
+  },
+  {
+    "entryId": "ve-1a47d31d",
+    "senseId": "kaikki:9d78f6be8eca072ddc",
+    "term": "acquire",
+    "definition": "To get something or come to possess it.",
+    "pos": "verb",
+    "kind": "acquire-possession"
+  },
+  {
+    "entryId": "ve-1a47d31d",
+    "senseId": "kaikki:51b980f0f8d16e6c0a",
+    "term": "acquire",
+    "definition": "To gain something, often through effort or experience, and make it one’s own.",
+    "pos": "verb",
+    "kind": "acquire-skill"
+  },
+  {
+    "entryId": "ve-1a47d31d",
+    "senseId": "kaikki:e97e14dee0be396040",
+    "term": "acquire",
+    "definition": "To become affected by an illness.",
+    "pos": "verb",
+    "kind": "acquire-illness"
+  },
+  {
+    "entryId": "ve-1a47d31d",
+    "senseId": "kaikki:16632330823d9c67bd",
+    "term": "acquire",
+    "definition": "To sample a signal and convert the samples into digital values.",
+    "pos": "verb",
+    "kind": "acquire-samples"
+  },
+  {
+    "entryId": "ve-1a47d31d",
+    "senseId": "kaikki:92652a6b57ef1246c8",
+    "term": "acquire",
+    "definition": "To begin tracking a moving target with a detector or sight.",
+    "pos": "verb",
+    "kind": "acquire-tracking"
+  },
+  {
+    "entryId": "ve-64aade1a",
+    "senseId": "kaikki:87233bb14f6a5ea513",
+    "term": "obtain",
+    "definition": "To get or gain possession of something; to procure it.",
+    "pos": "verb",
+    "kind": "obtain-permission"
+  },
+  {
+    "entryId": "ve-64aade1a",
+    "senseId": "kaikki:bde8961730190abeb9",
+    "term": "obtain",
+    "definition": "To exist, be the case, hold true or remain in force.",
+    "pos": "verb",
+    "kind": "obtain-conditions"
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:035383c539978329c5",
+    "term": "gain",
+    "definition": "To acquire possession of something, including an advantage or experience.",
+    "pos": "verb",
+    "kind": "gain-possession"
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:1ce5ffed4f4acb2b49",
+    "term": "gain",
+    "definition": "To benefit, profit or make progress.",
+    "pos": "verb",
+    "kind": "gain-benefit"
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:366092a6b7ab5081c8",
+    "term": "gain",
+    "definition": "To increase in amount, extent, quality or ability.",
+    "pos": "verb",
+    "kind": "gain-increase"
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:13a2a5a299f5bdb2ca",
+    "term": "gain",
+    "definition": "To become more likely to catch or overtake someone.",
+    "pos": "verb",
+    "kind": "gain-catchup"
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:0b708fa5475b8c79c2",
+    "term": "gain",
+    "definition": "To reach a place or destination.",
+    "pos": "verb",
+    "kind": "gain-reach"
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:d3c85282c463c390eb",
+    "term": "gain",
+    "definition": "To put on body weight.",
+    "pos": "verb",
+    "kind": "gain-weight"
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:22c4c6d6902fd5bd5f",
+    "term": "gain",
+    "definition": "Of a timekeeping device, to run fast, often by a stated amount.",
+    "pos": "verb",
+    "kind": "gain-clock"
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:48be374a0ff7dcdcd7",
+    "term": "gain",
+    "definition": "An act of acquiring something or an increase achieved.",
+    "pos": "noun",
+    "kind": "gain-acquisition"
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:197304731ae9083550",
+    "term": "gain",
+    "definition": "Something obtained or gained.",
+    "pos": "noun",
+    "kind": "gain-things"
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:55ff8b143f1aab3940",
+    "term": "gain",
+    "definition": "The factor by which a signal is multiplied.",
+    "pos": "noun",
+    "kind": "gain-signal"
+  },
+  {
+    "entryId": "ve-7c6e8f84",
+    "senseId": "kaikki:13ede348d51f4a76e6",
+    "term": "gain",
+    "definition": "A square or bevelled notch in a supporting timber that receives the end of a floor beam.",
+    "pos": "noun",
+    "kind": "gain-notch"
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:49daa3500a86f7eee7",
+    "term": "earn",
+    "definition": "To gain success, a reward or recognition through effort or work.",
+    "pos": "verb",
+    "kind": "earn-effort"
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:88b43f72620318313d",
+    "term": "earn",
+    "definition": "To receive money or income for work, a role or an income-producing asset.",
+    "pos": "verb",
+    "kind": "earn-income"
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:58ce21aaca71f1272c",
+    "term": "earn",
+    "definition": "To receive payment for work, with the payment left unstated.",
+    "pos": "verb",
+    "kind": "earn-intransitive"
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:e6e815742ade9b869a",
+    "term": "earn",
+    "definition": "To cause someone to receive payment or a reward.",
+    "pos": "verb",
+    "kind": "earn-recipient"
+  },
+  {
+    "entryId": "ve-7c6b587d",
+    "senseId": "kaikki:59abc82cac273d547d",
+    "term": "earn",
+    "definition": "To achieve or obtain something by being worthy of it.",
+    "pos": "verb",
+    "kind": "earn-worthiness"
   }
 ]
