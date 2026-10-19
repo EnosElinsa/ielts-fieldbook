@@ -737,7 +737,7 @@ export function VocabularyWordbooksPage() {
         {enrolled(book.id) ? study.next ? <><p className="vocabulary-group-path">{unitPath(book, study.next, study.hierarchy)}</p><Link className="btn primary" to={studyLink(study.next)}>{study.studied.length === study.available.length ? "Study again" : study.studied.length ? "Continue study" : "Start first group"}<ArrowRight size={16} /></Link><small>{study.next.studyEntryIds.length} words · Learn, then assess</small></> : study.studied.length ? <><p>All groups studied.</p><Link className="btn line" to={studyLink(study.available[0])}>Study again</Link></> : <p className="vocabulary-muted">{study.groups.some(group => group.entryIds.length) ? "All available words are archived. Restore a word to study this book." : "Study will be available when group content is loaded."}</p>
           : <button type="button" className="btn primary" disabled={Boolean(joining) || catalogBusy || !study.available.length} onClick={() => join(book.id)}><Plus size={15} />Add wordbook</button>}
       </div></div>
-      <p className="vocabulary-muted">A group is studied when you submit answers for all its active words. Mastery is tracked separately.</p>
+      <p className="vocabulary-muted">Studied means you submitted an answer for every active word, not necessarily a correct answer. Foundation mastery tracks spaced meaning, listening and spelling successes separately.</p>
       <div className="vocabulary-study-chapters">{study.hierarchy.filter(unit => !unit.parentId || !study.hierarchy.some(parent => parent.id === unit.parentId)).map(chapter)}</div>
       {!study.hierarchy.length && !catalogBusy && !catalogError ? <StateMessage message="No chapters available yet." /> : null}
 
@@ -1013,6 +1013,7 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
         })}
       </div>
       <h3 className="vocabulary-section-title">Wordbook progress · All time</h3>
+      <p className="vocabulary-muted">Studied counts submitted answers, including mistakes. Mastered tracks spaced meaning, listening and spelling successes; usage is separate.</p>
       <div className="vocabulary-table">
         {books(fb.state)
           .filter((book) =>

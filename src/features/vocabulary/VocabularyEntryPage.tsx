@@ -743,8 +743,7 @@ export function VocabularyEntryPage() {
                     ))}
                   </div>
                   <p className="vocabulary-muted">
-                    Assessed use: {mastery.productionSuccesses} successful
-                    spaced reviews
+                    Usage is tracked separately. Assessed use: {mastery.productionSuccesses} successful spaced reviews. Optional usage practice does not gate foundation mastery.
                   </p>
                   {mastery.missing.length ? (
                     <details className="vocabulary-mastery-requirements">
@@ -755,8 +754,7 @@ export function VocabularyEntryPage() {
                         ))}
                       </ul>
                       <p>
-                        Familiar: 3 spaced successes per skill. Mastered: 5 per
-                        skill and 2 assessed use successes. Counted successes in
+                        Familiar: 3 spaced successes in meaning, listening and spelling. Mastered: 5 in each. Counted successes in
                         each skill must be at least 24 hours apart.
                       </p>
                     </details>
