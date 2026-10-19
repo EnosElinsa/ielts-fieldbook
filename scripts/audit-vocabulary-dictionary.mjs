@@ -14,6 +14,7 @@ export const plainSourceGloss = value => value.replace(/<!--[^]*?-->/g, '').repl
   .replace(/\{\{(?:U|cap)\|([^{}|]+)\}\}/g, (_, term) => term[0].toUpperCase() + term.slice(1))
   .replace(/\{\{ellipsis of\|en\|([^{}|]+)\}\}/g, 'Ellipsis of $1')
   .replace(/\{\{syn of\|en\|you know\|id=singlish\|tr=([^{}]+)\}\}/g, 'Synonym of you know ($1).')
+  .replace(/\{\{synonym of\|en\|([^{}|]+)\|t=([^{}]+)\}\}/g, 'Synonym of $1 ($2)')
   .replace(/\{\{(?:m|l)\|en\|([^{}|]+)\|([^{}|=]+)\}\}/g, '$2')
   .replace(/\{\{(?:m|l)\|en\|([^{}|]+)(?:\|t=([^{}]+)|\|id=[^{}|]+)?\}\}/g, (_, term, gloss) => {
     const display = term.replace(/#.+$/, '');

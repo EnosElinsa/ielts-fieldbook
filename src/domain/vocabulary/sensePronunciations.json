@@ -1,5 +1,5 @@
 {
-  "version": "sense-pronunciation-2026-10-19.2",
+  "version": "sense-pronunciation-2026-10-20.1",
   "protectedTerms": [
     "record",
     "present",
@@ -11,7 +11,8 @@
     "bow",
     "resolve",
     "discount",
-    "survey"
+    "survey",
+    "sophisticate"
   ],
   "recordings": [
     {
@@ -394,6 +395,62 @@
       "fileTimestamp": "2020-03-29T17:40:21Z",
       "fileSha1": "e0cef6219b39bd86a05dd259ada0dad733601a7f",
       "playbackSha1": "e0cef6219b39bd86a05dd259ada0dad733601a7f"
+    },
+    {
+      "id": "commons:d4726e8e46ce7371e63f8edb6b96d8c10e6c63af",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/15/LL-Q1860_%28eng%29-Vealhurl-sophisticate-verb.wav",
+      "title": "LL-Q1860 (eng)-Vealhurl-sophisticate-verb.wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "The fixed Wiktionary pronunciation section establishes the reading and accent; Commons metadata establishes author and license. Retrieved original bytes match the Commons SHA-1.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-sophisticate-verb.wav&oldid=748884893",
+      "author": "Speaker: Vealhurl; Recorder: Vealhurl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 748884893,
+      "fileTimestamp": "2020-10-25T10:16:29Z",
+      "fileSha1": "d4726e8e46ce7371e63f8edb6b96d8c10e6c63af",
+      "playbackSha1": "d4726e8e46ce7371e63f8edb6b96d8c10e6c63af"
+    },
+    {
+      "id": "commons:223625180f8776f38e5622858243a6e51da5d924",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/7b/LL-Q1860_%28eng%29-Qwertygiy-sophisticate.wav",
+      "title": "LL-Q1860 (eng)-Qwertygiy-sophisticate.wav",
+      "accent": "us",
+      "status": "verified",
+      "availability": "network-unverified",
+      "wordformConfirmed": true,
+      "reason": "The fixed Wiktionary pronunciation section establishes the reading and accent; Commons metadata establishes author and license. Original retrieval was unavailable; no successful playback or byte-verification claim.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Qwertygiy-sophisticate.wav&oldid=978588842",
+      "author": "Speaker: Qwertygiy; Recorder: Qwertygiy",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 978588842,
+      "fileTimestamp": "2024-07-07T18:01:43Z",
+      "fileSha1": "223625180f8776f38e5622858243a6e51da5d924"
+    },
+    {
+      "id": "commons:3b14d3debd5164385752f5f9c2778880d5c02246",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/84/LL-Q1860_%28eng%29-Vealhurl-sophisticate-adj.wav",
+      "title": "LL-Q1860 (eng)-Vealhurl-sophisticate-adj.wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "The fixed Wiktionary pronunciation section establishes the reading and accent; Commons metadata establishes author and license. Retrieved original bytes match the Commons SHA-1.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-sophisticate-adj.wav&oldid=1287432509",
+      "author": "Speaker: Vealhurl; Recorder: Vealhurl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1287432509,
+      "fileTimestamp": "2020-10-25T10:17:05Z",
+      "fileSha1": "3b14d3debd5164385752f5f9c2778880d5c02246",
+      "playbackSha1": "3b14d3debd5164385752f5f9c2778880d5c02246"
     }
   ],
   "groups": [
@@ -697,6 +754,40 @@
       ],
       "recordings": {
         "uk": "commons:e0cef6219b39bd86a05dd259ada0dad733601a7f"
+      }
+    },
+    {
+      "id": "sophisticate-verb-2026-10-20",
+      "term": "sophisticate",
+      "scope": "Pronunciation 1: verbs",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=sophisticate&oldid=93723724",
+      "ipa": {
+        "uk": "/səˈfɪstɪkeɪt/",
+        "us": "/səˈfɪstɪkeɪt/"
+      },
+      "audioMarkup": [
+        "* {{audio|en|LL-Q1860 (eng)-Vealhurl-sophisticate-verb.wav|a=Southern England}}",
+        "* {{audio|en|LL-Q1860 (eng)-Qwertygiy-sophisticate.wav|a=US}}"
+      ],
+      "recordings": {
+        "uk": "commons:d4726e8e46ce7371e63f8edb6b96d8c10e6c63af",
+        "us": "commons:223625180f8776f38e5622858243a6e51da5d924"
+      }
+    },
+    {
+      "id": "sophisticate-noun-adjective-2026-10-20",
+      "term": "sophisticate",
+      "scope": "Pronunciation 2: adjective and noun",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=sophisticate&oldid=93723724",
+      "ipa": {
+        "uk": "/səˈfɪstɪkət/",
+        "us": "/səˈfɪstɪkət/"
+      },
+      "audioMarkup": [
+        "* {{audio|en|LL-Q1860 (eng)-Vealhurl-sophisticate-adj.wav|a=Southern England}}"
+      ],
+      "recordings": {
+        "uk": "commons:3b14d3debd5164385752f5f9c2778880d5c02246"
       }
     }
   ],
@@ -2500,6 +2591,24 @@
       "definition": "To collect information about people by asking them questions.",
       "pos": "verb",
       "groupId": "survey-verb"
+    },
+    {
+      "id": "sp1-c91f5b3439bd9c5df926",
+      "entryId": "ve-7bf27f35",
+      "term": "sophisticate",
+      "senseId": "kaikki:629b84e002f458f167",
+      "definition": "To make something less innocent or natural and more artificial.",
+      "pos": "verb",
+      "groupId": "sophisticate-verb-2026-10-20"
+    },
+    {
+      "id": "sp1-52362490b8c4f884961e",
+      "entryId": "ve-7bf27f35",
+      "term": "sophisticate",
+      "senseId": "kaikki:f2e5a23748aa0c20eb",
+      "definition": "A person with worldly experience or refined tastes.",
+      "pos": "noun",
+      "groupId": "sophisticate-noun-adjective-2026-10-20"
     }
   ]
 }

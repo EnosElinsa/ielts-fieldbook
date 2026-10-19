@@ -7,6 +7,11 @@ const row = { entryId: 'bank', senseId: 'river', originalSense: original, defini
 const review = { term: 'bank', entryId: 'bank', senseId: 'river', sourceHash: createHash('sha256').update(JSON.stringify(original)).digest('hex'), reviewedAreas: ['definition','example','collocations','distinctions'] };
 const input = { entries: [{ id: 'bank', term: 'bank' }], dictionaries: { bank: { senses: [original] } }, corrections: [row], records: [review], diagrams: [] };
 
+test('a synonym source gloss retains its term and explanation before an independent following clause', () => {
+  expect(plainSourceGloss('### {{senseid|en|gravitation}}{{lb|en|uncountable}} {{synonym of|en|gravitation|t=the [[attraction]] between [[body#Noun|bodies]]}}; also, a [[physical law]] accounting for it.'))
+    .toBe('Synonym of gravitation (the attraction between bodies); also, a physical law accounting for it.');
+});
+
 test('catalogue display casing resolves to the lowercase dictionary key without changing case-sensitive source pages', () => {
   const value = { ...input, entries: [{ id: 'bank', term: 'Bank' }], corrections: [{ ...row, learningPriority: 'general' }] };
   expect(inspectDictionaryReview(value).errors).toEqual([]);

@@ -12476,5 +12476,265 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "gravity",
+    "entryId": "ve-b605a0c3",
+    "parentSenseId": "kaikki:ee237e3c51f2c76939",
+    "parentSourceHash": "fdd2a3668de8d4b3584f55466414bb3e8f7378a676aa294f5a03af83a2f7a2d9",
+    "sourcePage": "gravity",
+    "revision": 92123739,
+    "sourceGloss": "## {{lb|en|uncountable}} Of an [[activity]] such as a [[ceremony]], a [[person#Noun|person]]'s [[conduct#Noun|conduct]], etc.: the [[quality#Noun|quality]] of being [[deeply]] [[serious#Adjective|serious]] and [[solemn]], especially in a [[dignified#Adjective|dignified]] [[manner#Noun|manner]]; seriousness, [[solemnity]]; {{lb|en|countable|archaic|or|obsolete}} a serious or solemn [[thing]], such as a [[matter#Noun|matter]], a [[comment#Noun|comment]], etc. {{defdate|from early 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:dff5577dd96efca9b4",
+      "pos": "noun",
+      "definition": "Of an activity such as a ceremony, a person's conduct, etc.: the quality of being deeply serious and solemn, especially in a dignified manner; seriousness, solemnity; a serious or solemn thing, such as a matter, a comment, etc.",
+      "example": "",
+      "register": "uncountable",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=gravity&oldid=92123739",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "gravity",
+    "entryId": "ve-b605a0c3",
+    "parentSenseId": "kaikki:ee237e3c51f2c76939",
+    "parentSourceHash": "fdd2a3668de8d4b3584f55466414bb3e8f7378a676aa294f5a03af83a2f7a2d9",
+    "sourcePage": "gravity",
+    "revision": 92123739,
+    "sourceGloss": "## {{lb|en|uncountable}} Of an activity, [[situation]], [[word#Noun|words]], etc.: the quality of having [[important]] or serious [[consequence#Verb|consequences]]; [[importance]], seriousness.",
+    "sense": {
+      "id": "wiktionary:restored:e584d2c8b8ce21467d",
+      "pos": "noun",
+      "definition": "Of an activity, situation, words, etc.: the quality of having important or serious consequences; importance, seriousness.",
+      "example": "",
+      "register": "uncountable",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=gravity&oldid=92123739",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "gravity",
+    "entryId": "ve-b605a0c3",
+    "parentSenseId": "kaikki:ee237e3c51f2c76939",
+    "parentSourceHash": "fdd2a3668de8d4b3584f55466414bb3e8f7378a676aa294f5a03af83a2f7a2d9",
+    "sourcePage": "gravity",
+    "revision": 92123739,
+    "sourceGloss": "## {{lb|en|uncountable|obsolete}} [[authority|Authority]], [[influence#Noun|influence]], [[weight#Noun|weight]]; also, {{non-gloss|[[use#Verb|used]] as a [[title#Noun|title]] for a person with authority or influence}}.",
+    "sense": {
+      "id": "wiktionary:restored:f6aa990facc8893520",
+      "pos": "noun",
+      "definition": "Authority, influence, weight; also, used as a title for a person with authority or influence.",
+      "example": "",
+      "register": "uncountable, obsolete",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=gravity&oldid=92123739",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "gravity",
+    "entryId": "ve-b605a0c3",
+    "parentSenseId": "kaikki:31e880af47e673fd56",
+    "parentSourceHash": "4e1a67fff07a8a0a01047d28e55657ac9120742ebeac97ba2abf7024bd4505b5",
+    "sourcePage": "gravity",
+    "revision": 92123739,
+    "sourceGloss": "### {{senseid|en|gravitation}}{{lb|en|uncountable}} {{synonym of|en|gravitation|t=the [[fundamental force]] of [[attraction]] which [[exist]]s between all matter in the [[universe]] that [[tend#Verb|tends]] to [[draw#Verb|draw]] [[body#Noun|bodies]] towards each other, due to matter [[cause#Verb|causing]] the [[curvature]] of [[spacetime]]}}; also, a [[physical law]] [[attempt#Verb|attempting]] to [[account for]] the [[phenomenon|phenomena]] of this [[force#Noun|force]].",
+    "sense": {
+      "id": "wiktionary:restored:8f53be14f335e677f5",
+      "pos": "noun",
+      "definition": "Synonym of gravitation (the fundamental force of attraction which exists between all matter in the universe that tends to draw bodies towards each other, due to matter causing the curvature of spacetime); also, a physical law attempting to account for the phenomena of this force.",
+      "example": "",
+      "register": "uncountable",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=gravity&oldid=92123739",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "notorious",
+    "entryId": "ve-b9de488d",
+    "parentSenseId": "kaikki:c8a7c3593f6d6ef199",
+    "parentSourceHash": "647a3553bf59ff02842a18a7a2185a845923fe40678b9597add91925967678ab",
+    "sourcePage": "notorious",
+    "revision": 93448180,
+    "sourceGloss": "## Of a [[person#Noun|person]] or [[entity]]: generally or widely known for something [[negative#Adjective|negative]]; [[infamous]].",
+    "sense": {
+      "id": "wiktionary:restored:8a8a88db2a9d3443be",
+      "pos": "adj",
+      "definition": "Of a person or entity: generally or widely known for something negative; infamous.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=notorious&oldid=93448180",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "notorious",
+    "entryId": "ve-b9de488d",
+    "parentSenseId": "kaikki:c8a7c3593f6d6ef199",
+    "parentSourceHash": "647a3553bf59ff02842a18a7a2185a845923fe40678b9597add91925967678ab",
+    "sourcePage": "notorious",
+    "revision": 93448180,
+    "sourceGloss": "## Of an [[act#Noun|act]], [[situation]], etc.: [[blameworthy]] in an obvious and [[offensive#Adjective|offensive]] [[way#Noun|way]]; [[blatant]], [[flagrant]].",
+    "sense": {
+      "id": "wiktionary:restored:2bcd50ca2ce641e636",
+      "pos": "adj",
+      "definition": "Of an act, situation, etc.: blameworthy in an obvious and offensive way; blatant, flagrant.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=notorious&oldid=93448180",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "subtle",
+    "entryId": "ve-7f8a4ebc",
+    "parentSenseId": "kaikki:845b7bb857daee162a",
+    "parentSourceHash": "898ffe4e3bd38101bcd98d5cb9d5f1272d7c0b0b20870a410983408b43ae66cb",
+    "sourcePage": "subtle",
+    "revision": 92748602,
+    "sourceGloss": "## Of an [[action#Noun|action]] or [[movement]]: very [[delicate#Adjective|delicate]] or [[slight#Adjective|slight]], and thus [[barely]] [[noticeable]]; not [[obvious]]; [[inconspicuous]], [[unintrusive]].",
+    "sense": {
+      "id": "wiktionary:restored:d18d610935af820699",
+      "pos": "adj",
+      "definition": "Of an action or movement: very delicate or slight, and thus barely noticeable; not obvious; inconspicuous, unintrusive.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "subtle",
+    "entryId": "ve-7f8a4ebc",
+    "parentSenseId": "kaikki:845b7bb857daee162a",
+    "parentSourceHash": "898ffe4e3bd38101bcd98d5cb9d5f1272d7c0b0b20870a410983408b43ae66cb",
+    "sourcePage": "subtle",
+    "revision": 92748602,
+    "sourceGloss": "## {{lb|en|archaic}} Having a delicate or [[fine#Adjective|fine]] [[substance#Noun|substance]] or [[texture#Noun|texture]]; hence, [[exquisite#Adjective|exquisite]], [[refined#Adjective|refined]].",
+    "sense": {
+      "id": "wiktionary:restored:ffa0193c92122b2ad9",
+      "pos": "adj",
+      "definition": "Having a delicate or fine substance or texture; hence, exquisite, refined.",
+      "example": "",
+      "register": "archaic",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "subtle",
+    "entryId": "ve-7f8a4ebc",
+    "parentSenseId": "kaikki:845b7bb857daee162a",
+    "parentSourceHash": "898ffe4e3bd38101bcd98d5cb9d5f1272d7c0b0b20870a410983408b43ae66cb",
+    "sourcePage": "subtle",
+    "revision": 92748602,
+    "sourceGloss": "## {{lb|en|archaic}} [[slender|Slender]], [[thin#Adjective|thin]].",
+    "sense": {
+      "id": "wiktionary:restored:96cba6eefb0a561615",
+      "pos": "adj",
+      "definition": "Slender, thin.",
+      "example": "",
+      "register": "archaic",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "subtle",
+    "entryId": "ve-7f8a4ebc",
+    "parentSenseId": "kaikki:845b7bb857daee162a",
+    "parentSourceHash": "898ffe4e3bd38101bcd98d5cb9d5f1272d7c0b0b20870a410983408b43ae66cb",
+    "sourcePage": "subtle",
+    "revision": 92748602,
+    "sourceGloss": "## {{lb|en|archaic}} Of a substance: [[finely]] [[powdered#Adjective|powdered]]; also, of [[particle]]s of a substance: very fine or [[small#Adjective|small]].",
+    "sense": {
+      "id": "wiktionary:restored:ae5c2a6d657c0fdcb1",
+      "pos": "adj",
+      "definition": "Of a substance: finely powdered; also, of particles of a substance: very fine or small.",
+      "example": "",
+      "register": "archaic",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "subtle",
+    "entryId": "ve-7f8a4ebc",
+    "parentSenseId": "kaikki:845b7bb857daee162a",
+    "parentSourceHash": "898ffe4e3bd38101bcd98d5cb9d5f1272d7c0b0b20870a410983408b43ae66cb",
+    "sourcePage": "subtle",
+    "revision": 92748602,
+    "sourceGloss": "## {{lb|en|archaic}} Of [[weight#Noun|weight]]: after the {{l|en|tare|t=weight of an [[empty#Adjective|empty]] [[container]]}} has been [[subtract]]ed; [[net#Adjective|net]].",
+    "sense": {
+      "id": "wiktionary:restored:c268b964f87308947b",
+      "pos": "adj",
+      "definition": "Of weight: after the tare (weight of an empty container) has been subtracted; net.",
+      "example": "",
+      "register": "archaic",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "subtle",
+    "entryId": "ve-7f8a4ebc",
+    "parentSenseId": "kaikki:845b7bb857daee162a",
+    "parentSourceHash": "898ffe4e3bd38101bcd98d5cb9d5f1272d7c0b0b20870a410983408b43ae66cb",
+    "sourcePage": "subtle",
+    "revision": 92748602,
+    "sourceGloss": "## {{lb|en|historical}} Of a substance, especially a [[gas#Noun|gas]] or [[liquid#Noun|liquid]]: of [[low#Adjective|low]] [[density]] or thin [[consistency]]; [[rarefied#Adjective|rarefied]], [[tenuous]]; hence, [[tend#Verb|tending]] to [[spread#Verb|spread]] everywhere due to this [[quality#Noun|quality]].",
+    "sense": {
+      "id": "wiktionary:restored:b543550d8590611f97",
+      "pos": "adj",
+      "definition": "Of a substance, especially a gas or liquid: of low density or thin consistency; rarefied, tenuous; hence, tending to spread everywhere due to this quality.",
+      "example": "",
+      "register": "historical",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "subtle",
+    "entryId": "ve-7f8a4ebc",
+    "parentSenseId": "kaikki:845b7bb857daee162a",
+    "parentSourceHash": "898ffe4e3bd38101bcd98d5cb9d5f1272d7c0b0b20870a410983408b43ae66cb",
+    "sourcePage": "subtle",
+    "revision": 92748602,
+    "sourceGloss": "## {{lb|en|nautical|obsolete|rare|except|historical}} {{synonym of|en|subtile|t=of a [[ship#Noun|ship]]: [[narrow#Adjective|narrow]], slender}}.",
+    "sense": {
+      "id": "wiktionary:restored:faaf3c42f3b577cafc",
+      "pos": "adj",
+      "definition": "Synonym of subtile (of a ship: narrow, slender).",
+      "example": "",
+      "register": "nautical, obsolete, rare, except, historical",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

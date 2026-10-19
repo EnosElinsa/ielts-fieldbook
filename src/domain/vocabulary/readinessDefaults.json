@@ -28229,5 +28229,1194 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/thesis#English",
       "license": "CC-BY-SA-4.0"
     }
+  },
+  {
+    "entryId": "ve-7c6f1d27",
+    "sense": {
+      "id": "kaikki:563af24b28e9f35aed",
+      "definition": "A written or spoken enumeration of items.",
+      "example": "I made a list of everything we need for the trip.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "make a list",
+        "a shopping list",
+        "a list of names"
+      ],
+      "usage": "Countable noun: a list of items. The enumeration can be on paper, digital or spoken.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/list#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A list records items; a schedule also organises events by time."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ed63fb307e20bbc2b7",
+      "definition": "A strip of fabric, especially from the edge of a piece of cloth.",
+      "example": "1. Gent[leman]. Well: there went but a paire of ſheeres betweene vs. / Luc[io]. I grant: as there may betweene the Liſts, and the Veluet. Thou art the Liſt. / 1. Gent. And thou the Veluet. Thou art good Veluet; thou'rt a three pild-piece I warrant thee: I had as liefe be a Lyſt of an Engliſh Kerſey, as be pil'd, as thou art pil'd, for a French Veluet. Do I ſpeake feelingly now?",
+      "pos": "noun",
+      "synonyms": [
+        "list"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "access control list",
+        "add to the list",
+        "adjacency list",
+        "A list",
+        "A-list",
+        "alist",
+        "association list",
+        "backlist",
+        "bigot list",
+        "binnacle list",
+        "blacklist",
+        "B-list",
+        "blocklist",
+        "blue list",
+        "booklist",
+        "bucket list",
+        "buddy list",
+        "bullet list",
+        "bulleted list",
+        "checklist",
+        "Christmas list",
+        "civil list",
+        "class list",
+        "C-list",
+        "clout list",
+        "codelist",
+        "dean's list",
+        "death list",
+        "decklist",
+        "definition list"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/list#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7c6fb7cc",
+    "sense": {
+      "id": "kaikki:f5685e4c8535a48b29",
+      "definition": "Letters, parcels and other physical items sent through the postal service.",
+      "example": "The receptionist sorted the morning mail.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "incoming mail",
+        "deliver the mail",
+        "sort the mail"
+      ],
+      "usage": "Usually uncountable in this physical postal-material meaning.",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mail#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Postal mail is physical; email uses an electronic network in separate meanings."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:7fa3064a3499546bf2",
+      "definition": "A bag or wallet.",
+      "example": "What, loo, man, see here of dyce a bale; / A brydelynge caste for that is in thy male!",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "regional",
+      "register": "countable, regional, uncountable",
+      "wordFamily": [
+        "accountable mail",
+        "admail",
+        "advertising mail",
+        "aeromail",
+        "air mail",
+        "airmail",
+        "balloon mail",
+        "barfmail",
+        "bicycle mail",
+        "bugmail",
+        "buttock mail",
+        "by return mail",
+        "carry the mail",
+        "certified mail",
+        "chain-mail",
+        "check is in the mail",
+        "cybermail",
+        "direct mail",
+        "dogsled mail",
+        "echomail",
+        "electronic mail",
+        "email",
+        "e-mail",
+        "e-mail address",
+        "facemail",
+        "fakemail",
+        "fan mail",
+        "flamemail",
+        "freemail",
+        "Gmail"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mail#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7c6e902a",
+    "sense": {
+      "id": "kaikki:a75a478d7f3ab0428c",
+      "definition": "A group of people associated for a particular purpose or activity.",
+      "example": "A gang of workers arrived to repair the road.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a gang of workers",
+        "a criminal gang",
+        "the whole gang"
+      ],
+      "usage": "Countable noun. The context can describe work, friendship or crime; crime is not inherent in every use.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gang#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A gang can be an associated group; this noun is distinct from the regional verb meaning go."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:d917116163521ce769",
+      "definition": "To go; walk; proceed.",
+      "example": "(Colin alone) Ah, Colin, thou’rt a prodigal; a thriftless loon thou’st been, that cou’d na’ keep a little pelf to thysall when thou had’st got it; now thou may’st gang in this poor geer to thy live's end, and worse too for aught I can tell; ’faith, mon, ’twas a smeart little bysack of money thou hadst scrap’d together, an the best part of it had na’ being last amongst thy kinsfolk, in the Isles of Skey and Mull; muckle gude may it do the weams of them that ha’ it! There was Jamie MacGregor and Sawney MacNab, and the twa braw lads of Kinruddin, with old Charley MacDougall, my mother's first husband's second cousin: by my sol I cou’d na’ see such near relations, and gentlemen of sich auncient families gang upon bare feet, while I rode a horseback: I had been na’ true Scot, an I cou’d na’ ge’en a countryman a gude last upon occasion (as he is going out, Miss Aubrey enters.)",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Northern-England, Scotland",
+      "register": "Northern-England, Scotland, intransitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gang#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7c79364a",
+    "sense": {
+      "id": "kaikki:678b1d9e9ebe1f31e8",
+      "definition": "The supporting axis or stalk of a vascular plant, including some modified underground structures.",
+      "example": "The plant's stem supports its leaves and flowers.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a plant stem",
+        "a woody stem",
+        "a green stem"
+      ],
+      "usage": "Some modified stems, such as rhizomes, grow underground. Location alone does not distinguish every stem from a root.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/stem#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A stem bears leaves or buds; a root has a different botanical structure and role."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:aa6a081e257a4a762f",
+      "definition": "The stock of a family; a race or generation of progenitors.",
+      "example": "Where ye may all that are of noble ſtemm / Approach, and kiſs her ſacred veſtures hemm.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "a-stem",
+        "bluestem",
+        "brain stem",
+        "brittlestem",
+        "celestial stem",
+        "consonant stem",
+        "destem",
+        "D-stem",
+        "flower stem",
+        "stem to stern",
+        "give the stem",
+        "G-stem",
+        "heavenly stem",
+        "i-stem",
+        "Mach stem",
+        "macrostem",
+        "mainstem",
+        "multistem",
+        "nonstem",
+        "oblique stem",
+        "o-stem",
+        "pipestem",
+        "pseudostem",
+        "question stem",
+        "redstem",
+        "ringstem",
+        "screwstem",
+        "softstem bulrush",
+        "Š-stem",
+        "stem-and-leaf"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/stem#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-921a1aec",
+    "sense": {
+      "id": "kaikki:a99eb4c1d5d66a72b5",
+      "definition": "Relating to the broad tradition of Western art music, as distinct from genres such as pop or jazz.",
+      "example": "She listens to classical music while she studies.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "classical music",
+        "a classical musician",
+        "a classical concert"
+      ],
+      "usage": "The broad genre use is wider than the Classical period of music history.",
+      "register": "informal",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/classical#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Bach can be called a classical composer in the broad genre sense even though his work belongs to the Baroque period."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:272793d037f2232287",
+      "definition": "Of or relating to the first class or rank, especially in literature or art.",
+      "example": "... Mr. Greaves, who may be juſtly reckoned a Claſſical Author on this Subject.",
+      "pos": "adj",
+      "synonyms": [
+        "classic"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "anteclassical",
+        "anticlassical",
+        "classical antiquity",
+        "Classical antiquity",
+        "Classical Arabic",
+        "Classical Armenian",
+        "Classical Chinese",
+        "classical cipher",
+        "classical college",
+        "classical computer",
+        "classical conditioning",
+        "classical dressage",
+        "Classical English",
+        "classical era",
+        "classical field theory",
+        "Classical Greece",
+        "Classical Greek",
+        "classical guitar",
+        "classical guitarist",
+        "classical hadrodynamics",
+        "Classical Hebrew",
+        "classical history",
+        "classical inheritance",
+        "classicalism",
+        "classicalist",
+        "classicality",
+        "classicalization",
+        "classicalize",
+        "Classical Japanese",
+        "classical language"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/classical#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-b301cd0",
+    "sense": {
+      "id": "kaikki:16daab436ccc07b9a4",
+      "definition": "Sudden, overwhelming fear or fright.",
+      "example": "For a moment, she felt panic when she could not find the exit.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "in a panic",
+        "cause panic",
+        "a wave of panic"
+      ],
+      "usage": "Usually uncountable for the feeling; a panic can name an episode of it.",
+      "register": "uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/panic#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Panic names fear; panicked describes a person affected by it, and panic buying names behaviour associated with it."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:06a10f98633f574796",
+      "definition": "Alternative letter-case form of Panic (“pertaining to the Greek god Pan”).",
+      "example": "",
+      "pos": "adj",
+      "synonyms": [
+        "Pandean",
+        "panical"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Greek, alt-of, archaic",
+      "register": "Greek, alt-of, archaic",
+      "wordFamily": [
+        "panical"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/panic#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-50edc705",
+    "sense": {
+      "id": "kaikki:6476618a97d49967b3",
+      "definition": "A constructed water feature that sends out one or more streams of water, often for decoration.",
+      "example": "Children watched the fountain in the town square.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "an ornamental fountain",
+        "a public fountain",
+        "a fountain in a square"
+      ],
+      "usage": "Countable noun. The water feature may include a statue, basin or other structure.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/fountain#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "An ornamental fountain is constructed; a natural spring is a different source meaning of fountain."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:d49bd3c49be307cc79",
+      "definition": "A natural source of water; a spring.",
+      "example": "A little fountaine became a riuer, and there was light, & the Sunne, and much water: this riuer is Eſther, whō the King married and made Queene.",
+      "pos": "noun",
+      "synonyms": [
+        "fount",
+        "syke",
+        "wellspring"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "air fountain",
+        "chain fountain",
+        "drinking fountain",
+        "fire fountain",
+        "fountain apple moss",
+        "fountain chair",
+        "fountain code",
+        "Fountaindale",
+        "fountain drink",
+        "fountaineer",
+        "fountain effect",
+        "fountaingrass",
+        "fountainhead",
+        "Fountain Hills",
+        "fountain lamp",
+        "fountainless",
+        "fountainlet",
+        "fountainlike",
+        "fountain of youth",
+        "fountainous",
+        "fountain pen",
+        "fountain pressure",
+        "Fountains Earth",
+        "fountain shell",
+        "fountain water",
+        "fountainwise",
+        "Heron's fountain",
+        "ice fountain",
+        "ink fountain",
+        "kugel fountain"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/fountain#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-14d548b2",
+    "sense": {
+      "id": "kaikki:fcae1860ead42edfda",
+      "definition": "Causing great wonder or surprise.",
+      "example": "The view from the summit was amazing.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "an amazing view",
+        "an amazing discovery",
+        "an amazing achievement"
+      ],
+      "usage": "Adjective here, describing what produces wonder.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/amazing#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "The view is amazing; the visitors who feel wonder are amazed."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:6f15a0876db3fb47e9",
+      "definition": "present participle and gerund of amaze",
+      "example": "Falling into her uſual Trance, ſhe at that inſtant wrought their Fancies to be perſuaded of the confuſed Articulation of Multitudes met as in a Fair, converſing and making a chattering, to the amazing of them all.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "form-of, gerund, participle, present",
+      "register": "form-of, gerund, participle, present",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/amazing#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-bab7a72",
+    "sense": {
+      "id": "kaikki:b4b89ad88152c3a995",
+      "definition": "To rebuke someone angrily.",
+      "example": "The teacher scolded the pupils for running in the corridor.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "scold someone for",
+        "scold a child",
+        "scold angrily"
+      ],
+      "usage": "Scold someone for something or for doing something. It can also be used without an object.",
+      "register": "ambitransitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/scold#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Scold names a rebuke; the separate noun scold labels a habitually reproachful person."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:fe3f09fc2e02ea5f57",
+      "definition": "A person who habitually scolds, in particular a troublesome and angry woman.",
+      "example": "A ſclaunderous tunge, a tunge of a ſkolde,\nWorketh more miſchiefe than can be tolde;\nThat, if I wiſt not to be controlde,\nYet ſomwhat to ſay I dare well be bolde,",
+      "pos": "noun",
+      "synonyms": [
+        "Karen",
+        "social justice warrior",
+        "wokescold",
+        "AWFUL",
+        "shrew"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/scold#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7bf27f35",
+    "sense": {
+      "id": "kaikki:f2e5a23748aa0c20eb",
+      "definition": "A person with worldly experience or refined tastes.",
+      "example": "The novel follows a young traveller who becomes an urban sophisticate.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "an urban sophisticate",
+        "a worldly sophisticate",
+        "a cultural sophisticate"
+      ],
+      "usage": "Countable noun. It describes perceived experience or taste, without proving superior judgement or worth.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sophisticate#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A sophisticate is a person; sophisticated is the adjective, and sophisticate can separately be a verb."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:629b84e002f458f167",
+      "definition": "To make (something) less innocent or natural; to artificialize.",
+      "example": "The party to which Mrs. Berlinton was the loadſtone, was far more attractive to the diſciples of nature, though leſs ſedulouſly ſought by thoſe whom the manners and maxims of the common world had ſophiſticated.",
+      "pos": "verb",
+      "synonyms": [
+        "denaturalize",
+        "denature"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "desophisticate",
+        "outsophisticate",
+        "sophisticated",
+        "sophisticated falsificationism",
+        "sophisticatedly",
+        "sophisticatedness",
+        "sophisticating",
+        "sophisticative",
+        "sophisticator",
+        "unsophisticate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sophisticate#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-6661b45d",
+    "sense": {
+      "id": "kaikki:e971083bc4061bf2c0",
+      "definition": "The edible fruit of a cucumber plant, usually with green skin and crisp pale flesh.",
+      "example": "She sliced a cucumber for the salad.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a sliced cucumber",
+        "cucumber salad",
+        "a cucumber slice"
+      ],
+      "usage": "Countable for one fruit; uncountable uses occur for chopped or sliced cucumber.",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cucumber#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This food use names the fruit; a cucumber vine is the plant that bears it."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:238e6bc7762501fdfd",
+      "definition": "A vine in the gourd family, Cucumis sativus.",
+      "example": "ASPARAGUS, cauliflowers, imperial Sileſia, royal and cabbage lettuces, burnet, purſlain, cucumbers, naſturtian flowers, peaſe and beans ſown in October, artichokes, ſcarlet ſtrawberries, and kidney beans.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "cucumberade",
+        "cucumber beetle",
+        "cucumber fish",
+        "cucumberfish",
+        "cucumberita",
+        "cucumber mosaic virus",
+        "cucumber time",
+        "cucumbertini",
+        "cucumber tree",
+        "Qcumber"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cucumber#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-53394e27",
+    "sense": {
+      "id": "kaikki:f1f4745e98b1965412",
+      "definition": "To look briefly, often followed by at.",
+      "example": "She glanced at her watch before leaving.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "glance at",
+        "glance around",
+        "glance over one's shoulder"
+      ],
+      "usage": "Intransitive pattern: glance at the watch. Use at before the object of the look in this pattern.",
+      "register": "figuratively, intransitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/glance#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Glance is a brief look; stare suggests a sustained, fixed look."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:659ecc091e26825424",
+      "definition": "To turn (one's eyes or look) at something, often briefly.",
+      "example": "Deare heart forbeare to glance thine eye aſide, / What needſt thou wound with cunning when thy might / Is more then my ore-preſt defence can bide?",
+      "pos": "verb",
+      "synonyms": [
+        "glance",
+        "gleg",
+        "glimpse",
+        "shufti",
+        "dekko"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "foreglance",
+        "glanceability",
+        "glanceable",
+        "glance away",
+        "glance off",
+        "glance over",
+        "glancer",
+        "glancing",
+        "glancingly",
+        "overglance",
+        "upglance"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/glance#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-265ac841",
+    "sense": {
+      "id": "kaikki:03115f5d053bc13df9",
+      "definition": "A collection or range of different things.",
+      "example": "The market sells a variety of fresh vegetables.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a variety of",
+        "a wide variety",
+        "a great variety"
+      ],
+      "usage": "A variety of is followed by a plural noun when naming different items.",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/variety#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "A variety of vegetables names a range; one vegetable variety can be a particular type in another meaning."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:89ecab64a2157e4140",
+      "definition": "A deviation or difference.",
+      "example": "The difference, therefore, in theſe animals, ariſes rather from their habits than their confirmation; and, upon examination, there will be leſs variety found betvween them than between birds that live upon land, and thoſe that ſwim upon the water.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "Abelian variety",
+        "affine variety",
+        "algebraic variety",
+        "antivariety",
+        "cinevariety",
+        "common or garden variety",
+        "convariety",
+        "eigenvariety",
+        "equational variety",
+        "garden variety",
+        "grape variety",
+        "Kummer variety",
+        "multivariety",
+        "nonstandard variety",
+        "pathovariety",
+        "prevariety",
+        "projective variety",
+        "pseudovariety",
+        "quasiprojective variety",
+        "quasivariety",
+        "standard variety",
+        "subvariety",
+        "supersingular variety",
+        "supervariety",
+        "supravariety",
+        "T-variety",
+        "type variety",
+        "varietal",
+        "varietism",
+        "varietist"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/variety#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7c70dbb5",
+    "sense": {
+      "id": "kaikki:8c7d43bf2bc8703ecd",
+      "definition": "Maize, a cereal crop grown for its grain.",
+      "example": "The farmer planted corn in the field beside the river.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "grow corn",
+        "a corn crop",
+        "corn grain"
+      ],
+      "usage": "This maize meaning is usual in North America, Australia and New Zealand, and widely understood elsewhere. British corn can also mean grain more generally.",
+      "register": "Australia, Canada, New-Zealand, US, uncountable, usually",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/corn#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Corn need not refer to maize in every region or older source; check the farming and regional context."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:8b60deda51f258f3f2",
+      "definition": "Any cereal plant (or its grain) that is the main crop or staple of a country or region.",
+      "example": "And hee ſaid, Beholde, I haue heard that there is corne in Egypt: get you downe thither and buy for vs from thence, that we may liue, and not die.",
+      "pos": "noun",
+      "synonyms": [
+        "cereal",
+        "grain"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Commonwealth, usually",
+      "register": "Commonwealth, uncountable, usually",
+      "wordFamily": [
+        "acknowledge the corn",
+        "Asian corn borer",
+        "baby corn",
+        "barleycorn",
+        "blue corn",
+        "breadcorn",
+        "broomcorn",
+        "broom corn",
+        "calico corn",
+        "California corn flakes",
+        "candy corn",
+        "can of corn",
+        "carry corn",
+        "cord grass",
+        "corn aphid",
+        "cornbind",
+        "cornbird",
+        "corn blotch leafminer",
+        "corn borer",
+        "corn bunting",
+        "corncake",
+        "corn cheese",
+        "corn chip",
+        "corn circle",
+        "corncob",
+        "corn-cob",
+        "corncockle",
+        "corn cockle",
+        "corn cracker",
+        "corn-cracker"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/corn#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-b605a0c3",
+    "sense": {
+      "id": "wiktionary:restored:8f53be14f335e677f5",
+      "pos": "noun",
+      "definition": "The attraction between bodies with mass, or a physical law describing that attraction.",
+      "example": "Gravity pulls the dropped ball towards the ground.",
+      "register": "uncountable",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=gravity&oldid=92123739",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "the force of gravity",
+        "Earth's gravity",
+        "gravity acts on a body"
+      ],
+      "usage": "A basic physical meaning. Gravity acts between bodies; the dropped ball example describes the Earth's attraction.",
+      "distinctions": [
+        "Mass is a property of a body; weight is the gravitational force acting on it in a particular gravitational field."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ee237e3c51f2c76939",
+      "definition": "Senses relating to seriousness.",
+      "example": "Page. Yonder is a moſt reuerend Gentleman; vvho (be-like) hauing receiued vvrong by ſome perſon, is at moſt odds vvith his ovvne grauity and patience, that euer you ſavv. / [Robert] Shal[low]. I haue liued foure-ſcore yeeres, and vpvvard: I neuer heard a man of his place, grauity, and learning, ſo vvide of his ovvne reſpect.",
+      "pos": "noun",
+      "synonyms": [
+        "graveness",
+        "soberness",
+        "sobriety",
+        "weightiness"
+      ],
+      "antonyms": [
+        "flippancy",
+        "levity",
+        "unseriousness"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "acceleration of gravity",
+        "aerogravity",
+        "anti-gravity",
+        "anti-gravity lean",
+        "API gravity",
+        "bigravity",
+        "center of gravity",
+        "contragravity",
+        "countergravity",
+        "electrogravity",
+        "gravital",
+        "gravitation",
+        "gravitic",
+        "gravitics",
+        "gravitied",
+        "graviton",
+        "gravity assist",
+        "gravity bomb",
+        "gravity bong",
+        "gravity boots",
+        "gravity brightened",
+        "gravity-brightening",
+        "gravity brightening",
+        "gravity cell",
+        "gravity dam",
+        "gravity-darkened",
+        "gravity-darkening",
+        "gravity darkening",
+        "gravity drag",
+        "gravity drop"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gravity#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-b9de488d",
+    "sense": {
+      "id": "wiktionary:restored:8a8a88db2a9d3443be",
+      "pos": "adj",
+      "definition": "Widely known for something bad or discreditable.",
+      "example": "The junction is notorious for frequent traffic jams.",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=notorious&oldid=93448180",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "notorious for",
+        "a notorious criminal",
+        "a notorious problem"
+      ],
+      "usage": "Notorious for identifies the negative feature associated with the reputation.",
+      "distinctions": [
+        "Famous means widely known; notorious normally adds a negative association in this sense."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:c8a7c3593f6d6ef199",
+      "definition": "Senses with an unfavourable connotation.",
+      "example": "Such Men theſe had, to Miſchiefe vvholly bent, / In Villanie, notorious for their skill, / Diſhoneſt, deſp'rate, mercileſſe, and rude, / That dar'd into Damnation to intrude.",
+      "pos": "adj",
+      "synonyms": [
+        "ill-famed",
+        "infamous",
+        "nithing"
+      ],
+      "antonyms": [
+        "famous",
+        "bait",
+        "fabled",
+        "famed",
+        "famous",
+        "famoused",
+        "iconic",
+        "irrecondite",
+        "known",
+        "legendary",
+        "mere",
+        "notable",
+        "noted",
+        "noteworthy",
+        "proverbial",
+        "recognizable",
+        "renowned",
+        "storied",
+        "well-known"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "notorify",
+        "notoriously",
+        "notoriousness",
+        "unnotorious",
+        "open and notorious"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notorious#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7f8a4ebc",
+    "sense": {
+      "id": "wiktionary:restored:d18d610935af820699",
+      "pos": "adj",
+      "definition": "So slight or delicate in action or movement that it is barely noticeable.",
+      "example": "A subtle movement of her hand signalled that he should wait.",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "a subtle movement",
+        "a subtle gesture",
+        "a subtle change"
+      ],
+      "usage": "The physical movement is small or unobtrusive.",
+      "distinctions": [
+        "Subtle here means barely noticeable; it does not imply a secret or dishonest intention."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:845b7bb857daee162a",
+      "definition": "Senses relating to tangible things.",
+      "example": "The mighty Magnet from the Center darts / This ſtrong, tho' ſubtile Force, thro' all the Parts: / Its active Rays ejaculated thence, / Irradiate all the wide Circumference.",
+      "pos": "adj",
+      "synonyms": [
+        "subtle",
+        "tricky",
+        "nice",
+        "delicate",
+        "knotty"
+      ],
+      "antonyms": [
+        "manifest",
+        "obvious",
+        "simple"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "nonsubtle",
+        "oversubtle",
+        "oversubtlety",
+        "subtely",
+        "subtile",
+        "subtilise",
+        "subtilize",
+        "subtilist",
+        "subtlist",
+        "subtle body",
+        "subtle jack",
+        "subtlely",
+        "subtleness",
+        "subtleship",
+        "subtlety",
+        "subtly",
+        "supersubtle",
+        "supersubtlety",
+        "suprasubtle",
+        "suprasubtlety",
+        "suttle",
+        "ultrasubtle",
+        "unsubtle",
+        "unsubtleness",
+        "unsubtlety",
+        "unsubtly",
+        "outsubtle"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/subtle#English",
+      "license": "CC-BY-SA-4.0"
+    }
   }
 ]

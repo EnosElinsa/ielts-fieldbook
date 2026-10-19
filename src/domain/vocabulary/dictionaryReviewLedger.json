@@ -46318,6 +46318,1657 @@
         "collocations",
         "distinctions"
       ]
+    },
+    {
+      "term": "exploit",
+      "entryId": "ve-10893476",
+      "senseId": "kaikki:4a2aeed70f747bd282",
+      "sourceHash": "e40444cc3c26f65c302a00e55c2f5c6c9cf8be2811b0ac61205c7324c9ef0108",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=exploit&oldid=93693116",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "classical",
+      "entryId": "ve-921a1aec",
+      "senseId": "kaikki:272793d037f2232287",
+      "sourceHash": "76afdf40eedb886e9641306da9471bd17f8b060be3d667eb3af69cd57c3c0925",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=classical&oldid=93684964",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "delight",
+      "entryId": "ve-9d08425a",
+      "senseId": "kaikki:d9b1165c26f9faad3a",
+      "sourceHash": "11f5d676c6f1ff40591ecda5b0d6311557d8976c414e20a7a0d6e43e1474b55c",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=delight&oldid=93688767",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "intermediate",
+      "entryId": "ve-1064ccf4",
+      "senseId": "kaikki:78f1620fb910f83558",
+      "sourceHash": "166529c4e796d8413f498128ec070b9b12e88e536b4108333d54ae24c3dbb033",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=intermediate&oldid=93338756",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "panic",
+      "entryId": "ve-b301cd0",
+      "senseId": "kaikki:d2409acfe603d5b307",
+      "sourceHash": "b92b9e143c90e8187f93679c15e12a01e71c536283e99d37c236313a061abf80",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=panic&oldid=93131988",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "ashamed",
+      "entryId": "ve-3efff132",
+      "senseId": "kaikki:3343cebc1de6ecdeac",
+      "sourceHash": "ffd44ea9800cd1e50878f2db52510e5e673a317560e5d813e78096097ef631a2",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=ashamed&oldid=93677924",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "berth",
+      "entryId": "ve-a76d5ec",
+      "senseId": "kaikki:df571578fb7b489b32",
+      "sourceHash": "27911a9f71d815a2dfe523c1bd307a64b3a7f37452807b849d5dbb9362acdcfe",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=berth&oldid=93593777",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "blight",
+      "entryId": "ve-59c82bf9",
+      "senseId": "kaikki:566b82cfc529e10fb2",
+      "sourceHash": "605fb2c44e0f36864a907193a5573a4eb3c6f6c36165f488b87fa6457c33c283",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=blight&oldid=92530151",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "blow",
+      "entryId": "ve-7c7050b3",
+      "senseId": "kaikki:a3f01b66593921f667",
+      "sourceHash": "37c6cb3deb7a4ffc0d5ab93d86c0cd850f198b7f4c8684feb49052734a54a793",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=blow&oldid=93681094",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "calamity",
+      "entryId": "ve-e0780143",
+      "senseId": "kaikki:880becfdcb99b3632a",
+      "sourceHash": "ee509815df00760be872ba00772a8c7f5bbbcbc2c7baf19206df175038d7f48a",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=calamity&oldid=93653148",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "catalogue",
+      "entryId": "ve-587182c6",
+      "senseId": "kaikki:6b9528573a451047e8",
+      "sourceHash": "62baf514f23324116e8d015827d01ab083ec7e59244f929533cbc30400a199f8",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=catalogue&oldid=93683615",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "cheerful",
+      "entryId": "ve-7c3208e3",
+      "senseId": "kaikki:44a29f803802e6fec9",
+      "sourceHash": "e53f480cda7eecadfcfb2cbabe5a4429dccf160efad943186bd32de371469608",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=cheerful&oldid=92132063",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "everlasting",
+      "entryId": "ve-f31abcab",
+      "senseId": "kaikki:9519cc534df40585ba",
+      "sourceHash": "7db1b1f2cab31c03c433239044e08ce229372219bc0c0c1917a41b8d5623cb2e",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=everlasting&oldid=92399010",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "foe",
+      "entryId": "ve-b8737a9",
+      "senseId": "kaikki:116964c9c40f82e07f",
+      "sourceHash": "6ae19c10f45562056b3f4c693ceecb31303cf9144ca800ffd19a0ae720061ae3",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=foe&oldid=93355113",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "forest",
+      "entryId": "ve-50b6537c",
+      "senseId": "kaikki:18a370e0c5e4d35d25",
+      "sourceHash": "be1dc2c31ce7870cd515be17b21d525d0851f1f453ab5c393183e3b430514bff",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=forest&oldid=93695346",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "fountain",
+      "entryId": "ve-50edc705",
+      "senseId": "kaikki:d49bd3c49be307cc79",
+      "sourceHash": "43b6724945fb5ac86233f2eee976b2b10ec1085b89c4660b083703e4786cae93",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=fountain&oldid=93695527",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "further",
+      "entryId": "ve-8560ea4f",
+      "senseId": "kaikki:95906f182b60162c68",
+      "sourceHash": "55b911c1e8066ecdaa42658138effc82b0a5cf1ffe4489238ed36ca9fd75538a",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=further&oldid=93696158",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "glance",
+      "entryId": "ve-53394e27",
+      "senseId": "kaikki:659ecc091e26825424",
+      "sourceHash": "3c3e4bf84d502a4b43751e193632228881cfece1b2c91e4289664510495e70ac",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=glance&oldid=92400267",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "greedy",
+      "entryId": "ve-5319af4d",
+      "senseId": "kaikki:4b1bd052804506f051",
+      "sourceHash": "99be87bc1aaf277b168c64b28420391e25cf5b14a61b9197b813ce47d2bae182",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=greedy&oldid=93529869",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "hatred",
+      "entryId": "ve-5e8b76eb",
+      "senseId": "kaikki:3cf8c7cbe9dab22fd6",
+      "sourceHash": "4c6fbf0cebc78450efc70b2360c16cc040e3bf41c63aa7424e53c56dc80fb09b",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=hatred&oldid=93699004",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "human",
+      "entryId": "ve-aa5cf9a",
+      "senseId": "kaikki:d6b7aa0a43274abb03",
+      "sourceHash": "7f2b3271d0b0a462200980b463291d89799f1781b1bdfede6d5cea742de58279",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=human&oldid=93700448",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "irritate",
+      "entryId": "ve-40a69261",
+      "senseId": "kaikki:93b69cf513b707bbb6",
+      "sourceHash": "71c36e49da3d2b233253dae5674f57d1ddc076bca7d6b3f4c66ae399102c7ff1",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=irritate&oldid=92549122",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "lemon",
+      "entryId": "ve-a58eac0",
+      "senseId": "kaikki:4c8f1a16883f84aca6",
+      "sourceHash": "966f52c68dc8cc213f5b51bfb768fc4eef9afd4e868677dd55925485db3d6294",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=lemon&oldid=93660423",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "lively",
+      "entryId": "ve-54ade446",
+      "senseId": "kaikki:4b7cc8ee3cc09a9aa5",
+      "sourceHash": "6d12e6c3c4f440db0cf4f1601d851db3cdb58573068cd873d179ea33ec404440",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=lively&oldid=93705347",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "mail",
+      "entryId": "ve-7c6fb7cc",
+      "senseId": "kaikki:7fa3064a3499546bf2",
+      "sourceHash": "46e369fd3af03a3753425a7a243a1222910c8d7039d58d0bd4a3c5dbbe984259",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=mail&oldid=93706187",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "mortality",
+      "entryId": "ve-35fc4868",
+      "senseId": "kaikki:7868cdeecc877dc2b1",
+      "sourceHash": "8d1a46b39887f502ced4c288a7edd8cc158b47918c1d09618ea586f8d9255b04",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=mortality&oldid=93708533",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "person",
+      "entryId": "ve-70e0ac30",
+      "senseId": "kaikki:e9e3587ce5bc82205b",
+      "sourceHash": "d27dbf37e7aa335abae8451aecd42896e29dfe4458b488faeb345e5b03246dc6",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=person&oldid=93714098",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "purse",
+      "entryId": "ve-b255684",
+      "senseId": "kaikki:75028c88581da25af0",
+      "sourceHash": "138c7aa9d0aabfc7a0e902f601261dc317f978a4312da849303badb1c92c2993",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=purse&oldid=93717241",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "rage",
+      "entryId": "ve-7c790a74",
+      "senseId": "kaikki:26aec8808155fcedbe",
+      "sourceHash": "e9484d06004b1900fd47769044eac3182691ee36546d0d8d1d5c3b5bb2374063",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=rage&oldid=93717901",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "sea",
+      "entryId": "ve-b878f32",
+      "senseId": "kaikki:46e4aaebad3d807c03",
+      "sourceHash": "6ae1435b9e3c9b3dd6eb48958985fa6193ad660179a14f5544ec6a3ebbd8a759",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=sea&oldid=93665881",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "shield",
+      "entryId": "ve-8193f65a",
+      "senseId": "kaikki:8ca05776c655136fee",
+      "sourceHash": "54e99a1fb01f1e8f07dc4c127d42960d3da2dd67135087051e7ea368492d67ea",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=shield&oldid=92707321",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "sophisticate",
+      "entryId": "ve-7bf27f35",
+      "senseId": "kaikki:629b84e002f458f167",
+      "sourceHash": "36abdfda132f216307d8c5d97549ccdfadde03a4ea5ebde9a4ffe76db3fbd14b",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=sophisticate&oldid=93723724",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "space",
+      "entryId": "ve-ba21f21",
+      "senseId": "kaikki:70136879578172883f",
+      "sourceHash": "55af0a22d2b2dbaeac83574338bc3e24507afe1d62d7ae1eb02e36c5999badf5",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=space&oldid=93723883",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "stone",
+      "entryId": "ve-ba00686",
+      "senseId": "kaikki:fc692b2262bd1a37cd",
+      "sourceHash": "59d822407ca001c8dba0769ed8513b62e465a1234c30ad7f7ee5c5a71a804fcc",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=stone&oldid=93725046",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "style",
+      "entryId": "ve-ba053d2",
+      "senseId": "kaikki:9dd297cc17fd9c1f0d",
+      "sourceHash": "5c3a815e419d1abe6a4703563c48e7dc349f47a9ea16a52128136604ae4f1bd4",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=style&oldid=93403987",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "thigh",
+      "entryId": "ve-aeb53ff",
+      "senseId": "kaikki:118ccdfaf8003126bc",
+      "sourceHash": "bd1b91dce411b28f140d4f25f00bacc33db1148206e658b35348fd0458ad3605",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=thigh&oldid=93727788",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "traveller",
+      "entryId": "ve-299c4066",
+      "senseId": "kaikki:3e7ca9b9a364c34d97",
+      "sourceHash": "8076736ddec6c940bf5b2e833c316a3c296534944eefecbf78f1dad3ea75699b",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=traveller&oldid=93729061",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "variety",
+      "entryId": "ve-265ac841",
+      "senseId": "kaikki:89ecab64a2157e4140",
+      "sourceHash": "08a16d2761fe62e392edc05aadb01ecbc28b9ec2e61b7cabcce2aa4a890257c9",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=variety&oldid=93646926",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "germany",
+      "entryId": "ve-a65c660e",
+      "senseId": "kaikki:59344778f8e3d05364",
+      "sourceHash": "197ec9efadd0975ee56b642cadc06aaba237df73316da291ba44d3bbd7a39c35",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Germany&oldid=93574868",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "abortion",
+      "entryId": "ve-3cfd5fe7",
+      "senseId": "kaikki:c4ce48a8640589f7ab",
+      "sourceHash": "f00a0aff14f3074483c0c620dd49269e0e36a5197f6e13153cfde032f9f56385",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=abortion&oldid=93675864",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "admire",
+      "entryId": "ve-4dba7b53",
+      "senseId": "kaikki:48f13d1e866bbdcd1f",
+      "sourceHash": "232b288f55d44f1b6686d78eae32bc49117ea707174fb3f98f14397659bd1a61",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=admire&oldid=93675227",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "aggravate",
+      "entryId": "ve-b8993f1",
+      "senseId": "kaikki:c793b74050aadec6bb",
+      "sourceHash": "ac0c395eb4a6dbaae6e7d8579c155234ece4dbdfbc945779b8410dca8af9083d",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=aggravate&oldid=93675563",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "alteration",
+      "entryId": "ve-809cad6",
+      "senseId": "kaikki:2d657cd72e3ab3c63f",
+      "sourceHash": "65e1df6a0f596b3fb789468f83f301459e72edd0273310f866932fbcc411b8ee",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=alteration&oldid=93676399",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "amazing",
+      "entryId": "ve-14d548b2",
+      "senseId": "kaikki:6f15a0876db3fb47e9",
+      "sourceHash": "6dcec679c3dbade70eace03dfa8aa62de192d74d68cd89c4831ae47743dde859",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=amazing&oldid=93676464",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "blot",
+      "entryId": "ve-7c7050b0",
+      "senseId": "kaikki:246b44914e7d7520e2",
+      "sourceHash": "91029ead62af6a6d436a1cea8a9d230bd9c40f78797f77abf478aaaaf55a4038",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=blot&oldid=93681051",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "book",
+      "entryId": "ve-7c703cec",
+      "senseId": "kaikki:7d09dc41b99ae33c32",
+      "sourceHash": "657c1f044061915302e55734bc9e2a9209476c3aace39e0505743da442bb3430",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=book&oldid=93681437",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "brain",
+      "entryId": "ve-a7debf3",
+      "senseId": "kaikki:35e7b551e7ab44af85",
+      "sourceHash": "a7a366dd013eaa8ab7bc8b637493d997d1196508a13b9a2be9cd1a9f7b0bffcc",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=brain&oldid=93681824",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "branch",
+      "entryId": "ve-5a3b5611",
+      "senseId": "kaikki:b9945e4fb28b84a1ba",
+      "sourceHash": "5bbfddd9d70678f89ba6ea626eca7b82911fbf7bc8c4fbb91cb4a0d5e5c73140",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=branch&oldid=93681817",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "brim",
+      "entryId": "ve-7c706cf1",
+      "senseId": "kaikki:3abcead783f2e76b52",
+      "sourceHash": "cd37c7b50190d20e4bfc3ee25841595bd4279f2177b6807dfb427c4e356285a3",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=brim&oldid=93682081",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "bronze",
+      "entryId": "ve-5a3c4ceb",
+      "senseId": "kaikki:5eff0035bc4e97cf38",
+      "sourceHash": "62fd948bdfb18f81691541ef19c9b7c81ff666bdf7a620ca14f5e92787f028f0",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bronze&oldid=93682200",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "celestial",
+      "entryId": "ve-9de1c829",
+      "senseId": "kaikki:add600df1f7430d2e7",
+      "sourceHash": "8d6775f82330a8439cb63cbef9acf056101d7b252cf7e777d33f86dd4c8e8b03",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=celestial&oldid=93526705",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "commence",
+      "entryId": "ve-82de6744",
+      "senseId": "kaikki:f9b498b77af07ba228",
+      "sourceHash": "6a04836ad20a09c10128d6d56c6422d68720c56e9d8ede4f32d083adde73190f",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=commence&oldid=93685764",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "corn",
+      "entryId": "ve-7c70dbb5",
+      "senseId": "kaikki:8b60deda51f258f3f2",
+      "sourceHash": "02707583f31519812b294a3001d03253865a681844691feefe64de91d5da96d9",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=corn&oldid=93686549",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "cousin",
+      "entryId": "ve-5c15eda8",
+      "senseId": "kaikki:7d6dbd9f3a1dc10ba0",
+      "sourceHash": "935ed723ee0e931e07861b9dfa6a8e93d133aa1dfa6262592944426302e90258",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=cousin&oldid=93592377",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "cucumber",
+      "entryId": "ve-6661b45d",
+      "senseId": "kaikki:238e6bc7762501fdfd",
+      "sourceHash": "55f567ba3b14b66c8ec285b094699bc98b050a4ec6d30ae6c1313ab5021e1cb2",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=cucumber&oldid=93561640",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "doom",
+      "entryId": "ve-7c6b032c",
+      "senseId": "kaikki:61873551936b935ae6",
+      "sourceHash": "b6b0f41f31a4badd76c80de9cdb36d1aa19c3074bf2f235c5d62fb2d0bd30523",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=doom&oldid=93690393",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "dragon",
+      "entryId": "ve-43764f14",
+      "senseId": "kaikki:61d0244ded7a070898",
+      "sourceHash": "b7908c6753464f1949a2a3f29c36631d23e66c770bd79e55061d3aa0559c1bb8",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=dragon&oldid=93690686",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "famous",
+      "entryId": "ve-5045c306",
+      "senseId": "kaikki:5346faa798dbe87804",
+      "sourceHash": "89277af158a016031879b4851a5f5923899be77d1e6df0467f2b70497e94d236",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=famous&oldid=91623414",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "federal",
+      "entryId": "ve-614d19f8",
+      "senseId": "kaikki:aae07708718ef83767",
+      "sourceHash": "8624055d0df15766261e259a6f3ddcdb287d84ff260bf7cd30402ed41bfdd5d7",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=federal&oldid=93076793",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "flower",
+      "entryId": "ve-50ff35c0",
+      "senseId": "kaikki:c287b8c3a2a3829749",
+      "sourceHash": "48b17f6c53e36d603b70980ee68e352feda0a226890f8b6d06c6dd2c6ecc18da",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=flower&oldid=93694803",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "flute",
+      "entryId": "ve-a36c1cb",
+      "senseId": "kaikki:4d09d1150637464360",
+      "sourceHash": "5ef7772187e010e263e6de8b85c9e24200f9b9835e5f0b7c20ec8e7b01b9a1ed",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=flute&oldid=93694814",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "foresee",
+      "entryId": "ve-6780c168",
+      "senseId": "kaikki:c223485995280a4823",
+      "sourceHash": "d673d15cc4dfebdfc9ac4c509be4f75ac1b314f8d62a1174f63c95496513bb50",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=foresee&oldid=93695268",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "friendship",
+      "entryId": "ve-9fe7ebf5",
+      "senseId": "kaikki:6e45a3b21ced3b0c45",
+      "sourceHash": "8649d1f49fbcc18caa3f1109694645e18cb16622fa3cdcd7228483e101bd4618",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=friendship&oldid=92775901",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "frog",
+      "entryId": "ve-7c6e3bb9",
+      "senseId": "kaikki:090a9367215dc15650",
+      "sourceHash": "39a891f28865a95f2f5ec61e5c9c9a0833db7e05a98bd0295b724ec1699cc865",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=frog&oldid=93580932",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "gang",
+      "entryId": "ve-7c6e902a",
+      "senseId": "kaikki:d917116163521ce769",
+      "sourceHash": "010555c50411fd7bf596a77615e261b13e43932f14f09a629f9fd8109e864fe0",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gang&oldid=93696416",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "garment",
+      "entryId": "ve-9d0c1583",
+      "senseId": "kaikki:6724d491c964a37b1d",
+      "sourceHash": "ee752c2eefa4d997e876e9dc712e5235c55e588e46cf18ef73f63b9d73e93f59",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=garment&oldid=93547968",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "germinate",
+      "entryId": "ve-ae863e8f",
+      "senseId": "kaikki:a1f63f8b88db969077",
+      "sourceHash": "3be40ed585b7dbb480b1b85146d62b8a4ead2661e1121b84c9c6f903c20ac95c",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=germinate&oldid=91351684",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "hallowed",
+      "entryId": "ve-f95c4b15",
+      "senseId": "kaikki:b1db763179e8b0b8f4",
+      "sourceHash": "2c1e75f793ebc993e40a97f92a3466e3866123ef6f8c8589aa01595ad9981105",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=hallowed&oldid=89526365",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "ignorant",
+      "entryId": "ve-66a58863",
+      "senseId": "kaikki:48978a8bc74a7952cb",
+      "sourceHash": "946ea4efe29f2691a2b69f2282e1ec05fb7fd5aa94c19c22d5909a8c65cfbee0",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=ignorant&oldid=93700960",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "inspire",
+      "entryId": "ve-5633cddf",
+      "senseId": "kaikki:f9c6a02243b595a9b5",
+      "sourceHash": "59e977ca595db51eb97e461b3f62674d5715034b3bab151e4cd95a0cb44c2bfd",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=inspire&oldid=93530707",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "instance",
+      "entryId": "ve-1cf1548c",
+      "senseId": "kaikki:893d8ec8bfb13b8a06",
+      "sourceHash": "235975336bb32496bdb68efb897df37aa4d7cacb19ea994fa2698eea74bf7b91",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=instance&oldid=93702025",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "invasive",
+      "entryId": "ve-29c2c69c",
+      "senseId": "kaikki:561b1ab7d8f86fee4e",
+      "sourceHash": "cfb504fdacf0d664a503bc9c9d47e3e84e3637a432fcd2d874daecd66548f9b2",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=invasive&oldid=92937778",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "limb",
+      "entryId": "ve-7c6f1cef",
+      "senseId": "kaikki:0b7bc771c3312de98d",
+      "sourceHash": "b22e9815999848e1261efb771e01a2363f92ad36cc7b98a2b22f97f8d16a2562",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=limb&oldid=93705135",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "linger",
+      "entryId": "ve-54a9677e",
+      "senseId": "kaikki:c42f1f7d75f79125c1",
+      "sourceHash": "382a6dbe241c0f72da82314a74efd6a79012e80ddf6b30cd7de223bdb46d0a6f",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=linger&oldid=93738760",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "list",
+      "entryId": "ve-7c6f1d27",
+      "senseId": "kaikki:ed63fb307e20bbc2b7",
+      "sourceHash": "21c0bf29fbe3b4a63a8cba66313d995542a6bbea3da8245dbd694487172c8a4e",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=list&oldid=93738807",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "marble",
+      "entryId": "ve-574c89f0",
+      "senseId": "kaikki:243a1f469d7e96bbb6",
+      "sourceHash": "dea715422ace77e9c4279e2128054e6e255f6dc69c48e7248829352a30496c33",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=marble&oldid=93706610",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "moist",
+      "entryId": "ve-a67fd09",
+      "senseId": "kaikki:50160659996b9e301d",
+      "sourceHash": "5380e8e3bfba7e028acb0f2591c43d5ac459a41933d4bcb5d3f0db019b9f02b4",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=moist&oldid=93471221",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "monk",
+      "entryId": "ve-7c6fc162",
+      "senseId": "kaikki:3e4033a63c72efe763",
+      "sourceHash": "ece164016bfacb49dcc3dc4d6418ca4c32b06a5bfd028ee94c1912778bfca2d4",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=monk&oldid=93708339",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "nourish",
+      "entryId": "ve-a9c64a91",
+      "senseId": "kaikki:cf24a0df67a94b24e0",
+      "sourceHash": "9675a1ecbc00f1497f59ddcae58d4b64066272122c80fc0d31432665e390fcb4",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=nourish&oldid=93710910",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "overcome",
+      "entryId": "ve-30c86cf",
+      "senseId": "kaikki:a3dfe67c1a2f24fcb7",
+      "sourceHash": "593e6f53e4050bb315f27632dee7c6f69c8569efc1fec870b2795d46828a5b19",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=overcome&oldid=93740138",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "overshadow",
+      "entryId": "ve-1cf7046d",
+      "senseId": "kaikki:ddd072ac5146df30ef",
+      "sourceHash": "f557942204ca2c40f1095425dc06f0d5ccd4df02ff1c8f4653f243b302b84f3f",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=overshadow&oldid=93628093",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "path",
+      "entryId": "ve-7c75ce88",
+      "senseId": "kaikki:1c4178636912d570f1",
+      "sourceHash": "1f8a4d97fb1b4426060fb3315115832c007b2817e7c5873301a5de6bcb24e123",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=path&oldid=93713527",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "premise",
+      "entryId": "ve-6ae6ee10",
+      "senseId": "kaikki:bbb370bfc6aac352f3",
+      "sourceHash": "ee648cb9de497924a091c23dd9f4851b026092bc5fce8d68c15facb5b2926d24",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=premise&oldid=93739026",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "preservation",
+      "entryId": "ve-7ab80cad",
+      "senseId": "kaikki:1be195110b253587f8",
+      "sourceHash": "d425716173df13b4f77b5675342145781b95ee982f8f62ef34e7d27cadfa9632",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=preservation&oldid=93716172",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "provision",
+      "entryId": "ve-c9578e8c",
+      "senseId": "kaikki:859234730e76edb9bd",
+      "sourceHash": "2c4b94731d212c21abdada807f99ae2392c735f948528253f5365a236374cc27",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=provision&oldid=93551455",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "pupil",
+      "entryId": "ve-b254155",
+      "senseId": "kaikki:ce1e211c5006c7d897",
+      "sourceHash": "23e5a886a36b42d5c074c0fe1588984f8ec00f14a71bd8563662aac6d716823d",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=pupil&oldid=93126515",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "purple",
+      "entryId": "ve-6fd0454b",
+      "senseId": "kaikki:a126d9a8daf4963849",
+      "sourceHash": "e714e29d64746ce1096413fcdba2f6653bba5de82df1c1bf6a93d91335ab6804",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=purple&oldid=93717249",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "puzzle",
+      "entryId": "ve-6fd46d49",
+      "senseId": "kaikki:789e26ea54b64ef0be",
+      "sourceHash": "9b7003c643b01f03bfa7f1d53632766c828d7c7dd9f0b83bda34d59c6dca2cdd",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=puzzle&oldid=93419706",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "radish",
+      "entryId": "ve-7ee50ea0",
+      "senseId": "kaikki:132512f74ceef74df9",
+      "sourceHash": "77af6a947aed2c3e844ca67f3e659de21e39a7e03d9df50d58249f05725ab857",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=radish&oldid=92352971",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "roar",
+      "entryId": "ve-7c7902ab",
+      "senseId": "kaikki:d0f1dede438efe1f07",
+      "sourceHash": "96d05dad23b33306695baeb02af4ebb16f34c48dea443fdbdd8cb52f8163e24a",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=roar&oldid=93719634",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "sacrifice",
+      "entryId": "ve-6dfceec6",
+      "senseId": "kaikki:8a029da3b583fee532",
+      "sourceHash": "e9b9b9889472cc345cb22b9c3a3d3b951687857a2b40f0bedee0af8246da2e0c",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=sacrifice&oldid=93664918",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "scold",
+      "entryId": "ve-bab7a72",
+      "senseId": "kaikki:fe3f09fc2e02ea5f57",
+      "sourceHash": "4833ef9616edd9cd127a8c11920d436cded6d8094f9b20e7c519672e56fc2d45",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=scold&oldid=93550627",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "stem",
+      "entryId": "ve-7c79364a",
+      "senseId": "kaikki:aa6a081e257a4a762f",
+      "sourceHash": "c4346575386d24d557e382ae10cd8818d1e17b7c98e89a26d73d99bd404f87ef",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=stem&oldid=93724804",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "tongue",
+      "entryId": "ve-688b7ce7",
+      "senseId": "kaikki:14238f9f2f17979faf",
+      "sourceHash": "0b9ede4380a4af025df14e6a2f79e3cba218f8151e42c9b24d668e961d039cb5",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=tongue&oldid=93728546",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "trial",
+      "entryId": "ve-add6667",
+      "senseId": "kaikki:d2626c605295fdb821",
+      "sourceHash": "e9444eb2bc22fe4766f5076c1570d57cf82dd3465ce0b1b5c21809de7ff2eb20",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=trial&oldid=93729168",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "well-being",
+      "entryId": "ve-71079fd",
+      "senseId": "kaikki:cd6c8ad04192aaa724",
+      "sourceHash": "af3e96722554e1a4ed6e8a69f7462c1b63ce5534543a8881e1f73073a6fb7182",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=well-being&oldid=93603337",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "wilderness",
+      "entryId": "ve-d7c3af2f",
+      "senseId": "kaikki:940e6966146dda188b",
+      "sourceHash": "1a7fb63ece0ebd554cdd1036c4cff66865883107320322b077b173adc83cae64",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=wilderness&oldid=92401044",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "gravity",
+      "entryId": "ve-b605a0c3",
+      "senseId": "wiktionary:restored:dff5577dd96efca9b4",
+      "sourceHash": "64c7b290813f01d42b9e93e509a1147ea9576c4a3aded5c65f719e00defdcab8",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gravity&oldid=92123739",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "gravity",
+      "entryId": "ve-b605a0c3",
+      "senseId": "wiktionary:restored:e584d2c8b8ce21467d",
+      "sourceHash": "c7a67dbb32de4785131d7110cf53aa08ded2f9ad775609677d935810b6cb88c1",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gravity&oldid=92123739",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "gravity",
+      "entryId": "ve-b605a0c3",
+      "senseId": "wiktionary:restored:f6aa990facc8893520",
+      "sourceHash": "366f451710bf17e4f0749dee85ca4b987e14b250fe6f3e9982bbe65c4cba6450",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gravity&oldid=92123739",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "gravity",
+      "entryId": "ve-b605a0c3",
+      "senseId": "wiktionary:restored:8f53be14f335e677f5",
+      "sourceHash": "c18027f1623ab02dd66fd91964197594c8d92f88b98a0ab458c112e2b9a45c22",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gravity&oldid=92123739",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "notorious",
+      "entryId": "ve-b9de488d",
+      "senseId": "wiktionary:restored:8a8a88db2a9d3443be",
+      "sourceHash": "063cd4bb4c62ca25f44eb892a42d363269ce8ce694459f3cc58925d466726c0e",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notorious&oldid=93448180",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "notorious",
+      "entryId": "ve-b9de488d",
+      "senseId": "wiktionary:restored:2bcd50ca2ce641e636",
+      "sourceHash": "b209abe553c913a3d698967d9bce207a1f8290ce2daa7620f4e847566c6acaa3",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notorious&oldid=93448180",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "subtle",
+      "entryId": "ve-7f8a4ebc",
+      "senseId": "wiktionary:restored:d18d610935af820699",
+      "sourceHash": "e0eb274f843305d206a347e4ed3fce21bb137cf3db7f2af13bc2a14c5400d290",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "subtle",
+      "entryId": "ve-7f8a4ebc",
+      "senseId": "wiktionary:restored:ffa0193c92122b2ad9",
+      "sourceHash": "a445eec6082d93cd1cf74a2fbb117c1072e8c0edacfb90e541cf10dcd0af9189",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "subtle",
+      "entryId": "ve-7f8a4ebc",
+      "senseId": "wiktionary:restored:96cba6eefb0a561615",
+      "sourceHash": "967a7fb1ba9996032a5512ada1408a02b4e3668c7bc5b7b986842bc6a37b1a53",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "subtle",
+      "entryId": "ve-7f8a4ebc",
+      "senseId": "wiktionary:restored:ae5c2a6d657c0fdcb1",
+      "sourceHash": "2d2b8a146d6739d46f98480b781315780fd83cba31ff803a398ef6f813aabf9b",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "subtle",
+      "entryId": "ve-7f8a4ebc",
+      "senseId": "wiktionary:restored:c268b964f87308947b",
+      "sourceHash": "a475378abe09404e217045cd9e201f8cda647e32f055dbf3a602ce79451c62bb",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "subtle",
+      "entryId": "ve-7f8a4ebc",
+      "senseId": "wiktionary:restored:b543550d8590611f97",
+      "sourceHash": "8fba047b2cbb8f413b89a88b25d55e0666d5be886f5c48fbe964d6107ec43b32",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "subtle",
+      "entryId": "ve-7f8a4ebc",
+      "senseId": "wiktionary:restored:faaf3c42f3b577cafc",
+      "sourceHash": "b68406ddd6c862de727389a7cab2e9aad74f221d5f7c2bd658cb990dfff8d0cb",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "gravity",
+      "entryId": "ve-b605a0c3",
+      "senseId": "kaikki:ee237e3c51f2c76939",
+      "sourceHash": "fdd2a3668de8d4b3584f55466414bb3e8f7378a676aa294f5a03af83a2f7a2d9",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gravity&oldid=92123739",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "notorious",
+      "entryId": "ve-b9de488d",
+      "senseId": "kaikki:c8a7c3593f6d6ef199",
+      "sourceHash": "647a3553bf59ff02842a18a7a2185a845923fe40678b9597add91925967678ab",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=notorious&oldid=93448180",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "subtle",
+      "entryId": "ve-7f8a4ebc",
+      "senseId": "kaikki:845b7bb857daee162a",
+      "sourceHash": "898ffe4e3bd38101bcd98d5cb9d5f1272d7c0b0b20870a410983408b43ae66cb",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=subtle&oldid=92748602",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "list",
+      "entryId": "ve-7c6f1d27",
+      "senseId": "kaikki:563af24b28e9f35aed",
+      "sourceHash": "097ad9f252299718c1e0c7459437e2ae0b31177b3380496beb8afb0bdb39fece",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=list&oldid=93738807",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "mail",
+      "entryId": "ve-7c6fb7cc",
+      "senseId": "kaikki:f5685e4c8535a48b29",
+      "sourceHash": "9926c3ce87ba4e0b5c08703308cbc6b39c7b16a9da3f221584ba1cfaa5db9edf",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=mail&oldid=93706187",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "gang",
+      "entryId": "ve-7c6e902a",
+      "senseId": "kaikki:a75a478d7f3ab0428c",
+      "sourceHash": "627ffa9d92fa03b99139120e7b7eb4bd407849c44595fb13fa3b14da71760956",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=gang&oldid=93696416",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "stem",
+      "entryId": "ve-7c79364a",
+      "senseId": "kaikki:678b1d9e9ebe1f31e8",
+      "sourceHash": "37e97302c64bf97d63c7bdc94df2d1df0f50af6012bfdc72e34666571f537298",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=stem&oldid=93724804",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "classical",
+      "entryId": "ve-921a1aec",
+      "senseId": "kaikki:a99eb4c1d5d66a72b5",
+      "sourceHash": "7a9f1ed5f9bc316269cc5309a929ec06a94fe2c24c309bdba2f00d3a94f929ad",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=classical&oldid=93684964",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "panic",
+      "entryId": "ve-b301cd0",
+      "senseId": "kaikki:16daab436ccc07b9a4",
+      "sourceHash": "370e86b4e4fac6ec635547efce411d578319e61e769d321284f2a671800c29fc",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=panic&oldid=93131988",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "fountain",
+      "entryId": "ve-50edc705",
+      "senseId": "kaikki:6476618a97d49967b3",
+      "sourceHash": "eb84b4480bda4d9e00f8f1bb027f32ddf7089c1a3812c95e0b684da735585b3e",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=fountain&oldid=93695527",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "amazing",
+      "entryId": "ve-14d548b2",
+      "senseId": "kaikki:fcae1860ead42edfda",
+      "sourceHash": "94792946b390478324a045bed9cf59ab03ba2206ed69f0aba165f526c84b65db",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=amazing&oldid=93676464",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "scold",
+      "entryId": "ve-bab7a72",
+      "senseId": "kaikki:b4b89ad88152c3a995",
+      "sourceHash": "4b22d4728f85a0d24969bb47f8286f4fc3d0804d54ede2d03ab27b9ce0e8986c",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=scold&oldid=93550627",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "sophisticate",
+      "entryId": "ve-7bf27f35",
+      "senseId": "kaikki:f2e5a23748aa0c20eb",
+      "sourceHash": "fe2db15a89388775046b3e7d0831cd1bb48365ddbf0441982600d76b1568d22b",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=sophisticate&oldid=93723724",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "cucumber",
+      "entryId": "ve-6661b45d",
+      "senseId": "kaikki:e971083bc4061bf2c0",
+      "sourceHash": "49fc46f9a6aa83d9b7302bfc353f6759c573365b32ab21ca482d147910d3e916",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=cucumber&oldid=93561640",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "glance",
+      "entryId": "ve-53394e27",
+      "senseId": "kaikki:f1f4745e98b1965412",
+      "sourceHash": "a14d16aa86ba6c7efd8e70d08228c2c898453871b069d44bf15098009c01e906",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=glance&oldid=92400267",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "variety",
+      "entryId": "ve-265ac841",
+      "senseId": "kaikki:03115f5d053bc13df9",
+      "sourceHash": "f9cf31adcf173693f70f129fb93639be697e6b0853cd683e35aea232f5ef89fd",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=variety&oldid=93646926",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
+    },
+    {
+      "term": "corn",
+      "entryId": "ve-7c70dbb5",
+      "senseId": "kaikki:8c7d43bf2bc8703ecd",
+      "sourceHash": "84fa3ec156b0cbac83f1aa53abb276baa9a95b82f9affc8c55b5d4284f77d995",
+      "referenceUrl": "https://en.wiktionary.org/w/index.php?title=corn&oldid=93686549",
+      "reviewedAreas": [
+        "definition",
+        "example",
+        "collocations",
+        "distinctions"
+      ]
     }
   ]
 }

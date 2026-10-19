@@ -1,5 +1,13 @@
 # Selected-meaning pronunciation audit
 
+## Current-learning extension — 2026-10-20
+
+Changing the sophisticate default from a verb to a noun requires its own pronunciation binding. [Wiktionary revision 93723724](https://en.wiktionary.org/w/index.php?title=sophisticate&oldid=93723724) explicitly separates verbs /səˈfɪstɪkeɪt/ from adjectives/nouns /səˈfɪstɪkət/. Two reviewed meanings receive exact definition/POS bindings. Other meanings of this protected word require their own review before acquiring a match.
+
+The verb group retains Southern England and US recordings. The noun/adjective group has a Southern England recording only; its US IPA does not establish a US recording. A US noun request exposes the missing match without borrowing the verb or automatically speaking an ambiguous headword. Commons description revisions [748884893](https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-sophisticate-verb.wav&oldid=748884893) and [1287432509](https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-sophisticate-adj.wav&oldid=1287432509) credit Vealhurl under CC BY-SA 4.0; [978588842](https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Qwertygiy-sophisticate.wav&oldid=978588842) credits Qwertygiy under CC0. The registry retains the original file timestamps, SHA-1 values and fixed source markup.
+
+Both UK original WAV files were retrieved and match their Commons SHA-1 values. The US verb retrieval was unsuccessful and remains explicitly network-unverified. No listening review or permanent remote availability is claimed. All preceding registry objects remain intact; totals are 21 groups, 23 recordings and 202 exact bindings. Targeted tests cover distinct noun/verb readings, missing US noun audio, exact frozen bindings and legacy session behavior.
+
 The initial pronunciation delivery binds 155 current public meanings of six reviewed homographs to 12 pronunciation groups and 15 attributed recordings. It does not claim dictionary-wide audio review. Matching uses the exact entry, term, sense ID, definition and POS in [the append-only registry](../src/domain/vocabulary/sensePronunciations.json). A POS substring, title or accent flag cannot establish a meaning match.
 
 ## Batch 48 extension
