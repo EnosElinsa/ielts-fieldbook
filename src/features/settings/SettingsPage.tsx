@@ -13,6 +13,8 @@ import { accountId } from '../../storage/remote';
 import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 import { requestSettingsBackup } from './backupActions';
 import { settingsChanges, settingsDraft, settingsPlanPreview, type SettingsDraft } from './settingsDraft';
+import { VocabularyBackLink } from '../vocabulary/VocabularyRouteLink';
+import { safeVocabularyReturn } from '../vocabulary/vocabularyNavigation';
 import './settings.css';
 import { PlanningSettings } from './PlanningSettings';
 import { studyBudget } from '../../lib/planTemplates';
@@ -32,6 +34,7 @@ export function SettingsPage() {
   const { confirm, dialog } = useConfirmationDialog(owner || 'anonymous');
   const navigate = useNavigate();
   const location = useLocation();
+  const returnTo = safeVocabularyReturn(new URLSearchParams(location.search).get('returnTo'), '');
   const { category: routeCategory } = useParams();
   const category = categories.some(([id]) => id === routeCategory) ? routeCategory : 'target';
   const [draft, setDraft] = useState(() => settingsDraft(fb.state.settings));
@@ -131,9 +134,10 @@ export function SettingsPage() {
   const weekDuration = `${Math.floor(weeklyMinutes / 60) ? `${Math.floor(weeklyMinutes / 60)}h ` : ''}${weeklyMinutes % 60 ? `${weeklyMinutes % 60}m` : ''}`.trim() || '0m';
   const affectedDates = [...new Set(preview.affected.map(plan => plan.dateKey))];
   return <section className="view active settings-page">
-    <div className="settings-category-picker"><SelectField aria-label="Settings category" value={category} onChange={event => navigate(`/settings/${event.target.value}`)}>{categories.map(([id,label]) => <option key={id} value={id}>{label}</option>)}</SelectField></div>
-    <nav className="settings-categories" aria-label="Settings categories">{categories.map(([id, label],index) => {const Icon=categoryIcons[index];return <div key={id}>{(index===0||index===5)&&<p className="settings-category-group">{index===0?'Learning':'Workspace'}</p>}<Link to={`/settings/${id}`} aria-current={category === id ? 'page' : undefined}><Icon size={17}/>{label}</Link></div>;})}</nav>
+    <div className="settings-category-picker"><SelectField aria-label="Settings category" value={category} onChange={event => navigate(`/settings/${event.target.value}${location.search}`, {state:location.state})}>{categories.map(([id,label]) => <option key={id} value={id}>{label}</option>)}</SelectField></div>
+    <nav className="settings-categories" aria-label="Settings categories">{categories.map(([id, label],index) => {const Icon=categoryIcons[index];return <div key={id}>{(index===0||index===5)&&<p className="settings-category-group">{index===0?'Learning':'Workspace'}</p>}<Link to={`/settings/${id}${location.search}`} state={location.state} aria-current={category === id ? 'page' : undefined}><Icon size={17}/>{label}</Link></div>;})}</nav>
     <div className="settings-content">
+      {returnTo || location.state?.vocabularyReturn ? <VocabularyBackLink/> : null}
       <header className="settings-section-heading"><h2>{categories.find(([id]) => id === category)?.[1]}</h2>{dirty&&<span className="settings-draft-status">Unsaved changes</span>}</header>
       {category === 'account' ? <AccountPage /> : <fieldset className="settings-fields" disabled={saving}>
         {category === 'target' && <div className="form">

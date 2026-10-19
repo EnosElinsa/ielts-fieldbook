@@ -91,3 +91,15 @@ test('future and completed active plans cannot displace today or an unfinished e
   mocks.state.plans[0].status='completed';rerender(<MemoryRouter><TodayPage/></MemoryRouter>);
   expect(within(container.querySelector('.study-next')).getByRole('heading',{name:'speaking task'})).toBeInTheDocument();
 });
+
+test('Today next task retains a stable focus anchor for practice returns',async()=>{
+  mocks.state.plans=[plan('vocabulary-review','vocabulary')];const view=renderPage();
+  await screen.findByRole('button',{name:'Start'});
+  expect(view.container.querySelector('#task-vocabulary-review')).toHaveAttribute('tabindex','-1');
+});
+
+test('Today completed tasks keep their return anchor after the next task changes',async()=>{
+  mocks.state.plans=[plan('review-done','vocabulary','completed'),plan('next','reading')];const view=renderPage();
+  await screen.findByRole('button',{name:'Start'});
+  expect(view.container.querySelector('#task-review-done')).toHaveAttribute('tabindex','-1');
+});

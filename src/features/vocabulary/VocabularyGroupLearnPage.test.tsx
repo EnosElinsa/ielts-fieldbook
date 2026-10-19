@@ -508,3 +508,13 @@ test('paste learning card uses the existing complete reviewed meaning, example a
   expect(screen.getByText('tomato paste')).toBeInTheDocument();
   expect(screen.queryByText('A soft moist mixture, in particular:')).not.toBeInTheDocument();
 });
+
+test('planned learning ignores URL card substitutions and keeps the account batch',async()=>{
+  const batch=buildLearningBatch(mocks.fb.state,'book','group',0,10,'definition');
+  mocks.fb.state.plans=[{id:'account-learning',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',...batch.selection,cards:batch.selection.cards}}];
+  mount(`/vocabulary/wordbooks/book/groups/group/learn?planId=account-learning&batch=1&batchSize=2&batchCards=${encodeURIComponent(JSON.stringify([{entryId:'word-12',senseId:'sense-12'}]))}`);
+  const link=await screen.findByRole('link',{name:'Start meaning recall · 10 words'});
+  const url=new URL(link.getAttribute('href')!,'http://local');
+  expect(url.searchParams.get('planId')).toBe('account-learning');
+  expect(JSON.parse(url.searchParams.get('batchCards')!)).toEqual(batch.selection.cards);
+});

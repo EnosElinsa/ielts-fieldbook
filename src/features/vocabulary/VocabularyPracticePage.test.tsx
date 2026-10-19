@@ -1188,3 +1188,75 @@ test('historical retry does not start after leaving the results while the catalo
   expect(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')).toBeNull();
   expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
 });
+
+test('planned review resolves account targets despite untrusted URL filters and multiple meanings', async()=>{
+  const entry=fb.current.state.vocabulary[0];
+  entry.senses.push({...entry.senses[0],id:'second-meaning',definition:'Another meaning'});
+  const refs=[{entryId:entry.id,senseId:'second-meaning'},{entryId:entry.id,senseId:entry.senses[0].id}];
+  fb.current.state.plans=[{id:'account-plan',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'due-review',assessmentMode:'dictation',cards:refs}}];
+  fb.current.state.settings.vocabulary={sessionSize:5,order:'random',autoPlay:false};
+  fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
+  mount(`?planId=account-plan&mode=definition&entryId=entry-1&dueOnly=true&wrongOnly=true&batchCards=${encodeURIComponent(JSON.stringify([{entryId:'entry-1',senseId:'sense-1'}]))}`);
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
+  fireEvent.click(screen.getByRole('button',{name:'Start session'}));
+  expect(readVocabularyDraft(owner.current)).toMatchObject({planId:'account-plan',mode:'dictation',selection:{kind:'planned-review',planId:'account-plan',cards:refs}});
+  expect(readVocabularyDraft(owner.current)?.cardIds.map(({entryId,senseId})=>({entryId,senseId}))).toEqual(refs);
+  expect(fb.current.loadVocabularyCatalog).toHaveBeenCalledWith(undefined,expect.objectContaining({entryIds:[entry.id]}));
+});
+
+test('unknown planned reviews remain unavailable instead of starting free practice',async()=>{
+  mount('?planId=missing&dueOnly=false');
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled());
+  expect(screen.getByText(/planned task is no longer available/i)).toBeInTheDocument();
+});
+
+test('planned review results keep each dictation sense in detail links and return origin in recovery',async()=>{
+  const entry=fb.current.state.vocabulary[0];entry.senses.push({...entry.senses[0],id:'second-meaning',definition:'Another meaning'});
+  const refs=entry.senses.map((sense:{id:string})=>({entryId:entry.id,senseId:sense.id}));
+  fb.current.state.plans=[{id:'exact-plan',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'due-review',assessmentMode:'dictation',cards:refs}}];
+  const source='/planning?week=next#task-exact-plan';
+  const view=mount(`?planId=exact-plan&returnTo=${encodeURIComponent(source)}`);
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
+  fireEvent.click(screen.getByRole('button',{name:'Start session'}));
+  expect(readVocabularyDraft(owner.current)?.returnTo).toBe(source);
+  view.unmount();
+  mount('?resume=true');
+  fireEvent.click(await screen.findByRole('button',{name:'Resume session'}));
+  await screen.findByRole('textbox',{name:'Answer 1'});
+  for(const input of screen.getAllByRole('textbox'))fireEvent.change(input,{target:{value:entry.term}});
+  fireEvent.click(screen.getByRole('button',{name:'Submit session'}));
+  await screen.findByRole('button',{name:'New session'});
+  const links=screen.getAllByRole('link',{name:'Details'});
+  expect(links.map(link=>new URL(link.getAttribute('href')!,'http://local').searchParams.get('senseId'))).toEqual(refs.map((ref:{senseId:string})=>ref.senseId));
+  expect(screen.getByRole('link',{name:'Back to Planning'})).toHaveAttribute('href',source);
+});
+
+test('a skipped no-longer-due task explains why it cannot start',async()=>{
+  fb.current.state.plans=[{id:'empty-slot',kind:'vocabulary',status:'skipped',skipReason:'no-longer-due',target:{type:'vocabulary',mode:'due-review',binding:'frozen',assessmentMode:'definition',cards:[]}}];
+  mount('?planId=empty-slot');
+  expect(await screen.findByText(/no longer due/i)).toBeInTheDocument();
+  expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
+});
+
+test('planned review resource failures retry without falling back to a free session',async()=>{
+  const entry=fb.current.state.vocabulary[0];
+  fb.current.state.plans=[{id:'retry-plan',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'due-review',assessmentMode:'definition',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}}];
+  fb.current.loadVocabularyCatalog=vi.fn().mockRejectedValueOnce(new Error('Offline')).mockResolvedValue(true);
+  mount('?planId=retry-plan');
+  const retry=await screen.findByRole('button',{name:'Retry catalog'});
+  expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+  fireEvent.click(retry);
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
+  fireEvent.click(screen.getByRole('button',{name:'Start session'}));
+  expect(readVocabularyDraft(owner.current)?.selection).toMatchObject({kind:'planned-review',planId:'retry-plan'});
+});
+
+test('planned review ignores legacy group-study query detection',async()=>{
+  const entry=fb.current.state.vocabulary[0];
+  fb.current.state.plans=[{id:'review-route',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'due-review',assessmentMode:'definition',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}}];
+  mount('?planId=review-route&bookId=unknown&unitId=unknown&dueOnly=false');
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
+  fireEvent.click(screen.getByRole('button',{name:'Start session'}));
+  expect(readVocabularyDraft(owner.current)?.selection).toMatchObject({kind:'planned-review',planId:'review-route'});
+});

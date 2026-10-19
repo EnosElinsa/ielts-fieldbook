@@ -57,8 +57,8 @@ export function VocabularyPracticeResults({ controller, results }: {
     const unitId = row.context?.unitId || (results.selection && 'unitId' in results.selection ? results.selection.unitId : results.filter.unitId);
     const valid = Boolean(raw && bookId && unitId && (VOCABULARY_CATALOG.memberships.some(member => member.entryId === row.entryId && member.bookId === bookId && member.unitId === unitId) || raw.sources.some(source => source.bookId === bookId && source.unitId === unitId)));
     const context = valid ? {bookId,unitId} : {};
-    const resolved = raw ? resolveVocabularyLearningContext(raw, {...context, ...(results.mode !== 'dictation' ? {senseId: row.senseId} : {})}) : null;
-    const senseId = results.mode === 'dictation' ? resolved?.sense?.id || row.senseId : row.senseId;
+    const resolved = raw ? resolveVocabularyLearningContext(raw, {...context, ...(results.mode !== 'dictation' || results.selection?.kind === 'planned-review' ? {senseId: row.senseId} : {})}) : null;
+    const senseId = results.mode === 'dictation' && results.selection?.kind !== 'planned-review' ? resolved?.sense?.id || row.senseId : row.senseId;
     return {raw,resolved,context,detail:entryUrl(row.entryId,{...context,senseId},resultReturnTo)};
   };
   const hasMistakes = results.mode !== "audio" && results.results.some(row => row.result === "failure" || row.result === "partial");

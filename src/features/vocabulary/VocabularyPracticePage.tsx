@@ -7,7 +7,7 @@ import { VocabularyPracticeSession } from "./VocabularyPracticeSession";
 import { VocabularyPracticeResults } from "./VocabularyPracticeResults";
 import { useVocabularyPracticeController } from "./useVocabularyPracticeController";
 import "../../styles/vocabulary-practice.css";
-import { VocabularyBackLink } from './VocabularyRouteLink';
+import { VocabularyBackLink, vocabularyForwardState } from './VocabularyRouteLink';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { useVocabularyPosition } from './vocabularyNavigation';
@@ -35,7 +35,7 @@ export function VocabularyPracticePage() {
           <IconButton
             label="Practice settings"
             disabled={saving}
-            onClick={() => navigateWithPracticeGuard('/settings/vocabulary', () => navigate('/settings/vocabulary'))}
+            onClick={() => { const to = `/settings/vocabulary?${new URLSearchParams({returnTo:location.pathname + location.search + location.hash})}`; navigateWithPracticeGuard(to, () => navigate(to, {state:vocabularyForwardState(location)})); }}
           >
             <Settings2 size={18} />
           </IconButton>

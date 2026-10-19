@@ -1,3 +1,4 @@
+import { safeVocabularyReturn } from '../lib/vocabularyReturn';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import type { VocabularyPracticeMode } from '../domain/vocabulary/preferences';
 import type { VocabularyPracticeSession, VocabularySessionAnswer } from '../domain/vocabulary/session';
@@ -20,6 +21,7 @@ function snapshot(value: unknown): VocabularyPracticeSession | null {
   const input = object(normalizeVocabularyIdentities(value));
   if (!input || !identifier(input.id) || !modes.includes(input.mode as VocabularyPracticeMode) || !time(input.startedAt) || !['active', 'paused'].includes(String(input.status)) || !Array.isArray(input.cardIds) || !input.cardIds.length || input.cardIds.length > 10000) return null;
   if (input.selection !== undefined && !isVocabularySessionSelection(input.selection)) return null;
+  if (input.returnTo !== undefined && (typeof input.returnTo !== 'string' || !safeVocabularyReturn(input.returnTo, ''))) return null;
   if (input.planId !== undefined && !identifier(input.planId)) return null;
   if (input.submittedAt !== undefined && !time(input.submittedAt)) return null;
   const ids = new Set<string>();
@@ -31,7 +33,8 @@ function snapshot(value: unknown): VocabularyPracticeSession | null {
     cardIds.push({ id: card.id, entryId: card.entryId, senseId: card.senseId, mode: card.mode as VocabularyPracticeMode });
   }
   const selection = input.selection as VocabularyPracticeSession['selection'];
-  if (selection?.kind === 'learning-batch' && (selection.cards.length !== cardIds.length || selection.cards.some((ref, index) => ref.entryId !== cardIds[index].entryId || ref.senseId !== cardIds[index].senseId))) return null;
+  if ((selection?.kind === 'learning-batch' || selection?.kind === 'planned-review') && (selection.cards.length !== cardIds.length || selection.cards.some((ref, index) => ref.entryId !== cardIds[index].entryId || ref.senseId !== cardIds[index].senseId))) return null;
+  if (selection?.kind === 'planned-review' && input.planId !== selection.planId) return null;
   let cardSnapshots: VocabularyPracticeSession['cardSnapshots'];
   if (input.cardSnapshots !== undefined) {
     if (typeof input.contentVersion !== 'string' || input.contentVersion.length > 100 || !Array.isArray(input.cardSnapshots) || input.cardSnapshots.length !== cardIds.length) return null;
@@ -82,7 +85,7 @@ function snapshot(value: unknown): VocabularyPracticeSession | null {
   if (time(filterInput.now)) filter.now = filterInput.now;
   if (filterInput.now instanceof Date && Number.isFinite(filterInput.now.getTime())) filter.now = filterInput.now.toISOString();
   if (typeof filterInput.wrongOnly === 'boolean') Object.assign(filter, { wrongOnly: filterInput.wrongOnly });
-  return { id: input.id, ...(input.planId ? { planId: input.planId as string } : {}), mode: input.mode as VocabularyPracticeMode, preferences: { ...normalizeVocabularyPreferences(input.preferences), mode: input.mode as VocabularyPracticeMode }, filter, cardIds, ...(cardSnapshots ? {cardSnapshots, contentVersion: input.contentVersion as string} : {}), answers, index: input.index, status: input.status as VocabularyPracticeSession['status'], startedAt: input.startedAt, ...(time(input.submittedAt) ? { submittedAt: input.submittedAt } : {}), ...(input.selection ? { selection: structuredClone(input.selection) as VocabularyPracticeSession['selection'] } : {}) };
+  return { id: input.id, ...(input.returnTo ? {returnTo:input.returnTo as string} : {}), ...(input.planId ? { planId: input.planId as string } : {}), mode: input.mode as VocabularyPracticeMode, preferences: { ...normalizeVocabularyPreferences(input.preferences), mode: input.mode as VocabularyPracticeMode }, filter, cardIds, ...(cardSnapshots ? {cardSnapshots, contentVersion: input.contentVersion as string} : {}), answers, index: input.index, status: input.status as VocabularyPracticeSession['status'], startedAt: input.startedAt, ...(time(input.submittedAt) ? { submittedAt: input.submittedAt } : {}), ...(input.selection ? { selection: structuredClone(input.selection) as VocabularyPracticeSession['selection'] } : {}) };
 }
 
 export function readVocabularyDraft(owner: string | null): VocabularyPracticeSession | null {

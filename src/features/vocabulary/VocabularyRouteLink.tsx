@@ -36,6 +36,8 @@ export function vocabularyForwardState(location: Location) {
 
 export function vocabularyReturnLabel(url: string) {
   const path = url.split(/[?#]/)[0];
+  if (path === '/planning') return 'Back to Planning';
+  if (path === '/' || path === '/today') return 'Back to Today';
   if (path === '/vocabulary/history') return 'Back to history';
   if (/^\/vocabulary\/history\//.test(path)) return 'Back to session word list';
   if (/\/groups\/[^/]+\/learn$/.test(path)) return 'Back to learning cards';

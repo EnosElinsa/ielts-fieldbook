@@ -2,7 +2,7 @@
 import { CardSkeleton, InlineLoadingState } from '../../components/AsyncState';
 import { useState } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { CalendarClock, Clock3, Replace, RotateCcw, SkipForward, ArrowLeft, Check, Plus, Copy, SlidersHorizontal, ArrowUp, ArrowDown, Settings2, MoreHorizontal } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { AccountDataBoundary } from '../../components/AccountDataBoundary';
@@ -12,6 +12,7 @@ import { calendarDays, studyBudget, compareStudyPlans } from '../../lib/planTemp
 import { studyTargetSummary } from '../../lib/planTargets';
 import { TaskStartButton, useStudySchedule } from './StudySchedule';
 import '../../styles/planning.css';
+import { useVocabularyPosition } from '../vocabulary/vocabularyNavigation';
 import { TaskEditor } from './TaskEditor';
 import { accountId } from '../../storage/remote';
 
@@ -19,6 +20,7 @@ export function PlanningPage(){return <AccountDataBoundary modules={['productive
 
 function PlanningCalendar(){
   const fb=useFieldbook();const schedule=useStudySchedule();const days=calendarDays();const today=days[0];const [editor,setEditor]=useState(null);
+  const location=useLocation();useVocabularyPosition(location.pathname+location.search+location.hash,!schedule.saving);
   const overdue=fb.state.plans.filter(plan=>plan.dateKey<today&&['pending','in_progress'].includes(plan.status)).slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey));
   return <section className="view active study-planning"><header className="study-page-head"><div><p className="kicker">Next seven days</p><h2>Planning</h2><p>{fb.state.settings.dailyMinutes || 30} min per study day</p></div><div className="btn-row"><Link className="btn line" to="/settings/schedule"><Settings2 size={16}/>Plan settings</Link><Link className="btn line" to="/today"><ArrowLeft size={16}/>Today</Link></div></header>
     {schedule.error&&<div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
@@ -38,7 +40,7 @@ function PlanTask({plan}){
   const fb=useFieldbook();const [dialog,setDialog]=useState(null);const [saving,setSaving]=useState(false);const [error,setError]=useState('');
   const completed=plan.status==='completed';
   async function change(action){setSaving(true);setError('');let feedback='';try{if(await fb.changePlan(plan.id,action,{onError:message=>{feedback=message;}}))setDialog(null);else setError(feedback||'Your task could not be saved. Retry the change.');}catch(cause){setError(cause instanceof Error?cause.message:'Your task could not be saved.');}finally{setSaving(false);}}
-  return <article className={`study-task ${plan.status}`}>
+  return <article id={`task-${plan.id}`} tabIndex={-1} className={`study-task ${plan.status}`}>
     <div className="study-task-meta"><span className={`study-skill study-skill-${plan.skill||'writing'}`}>{plan.skill || 'Practice'}</span><span><Clock3 size={14}/>{plan.estimatedMinutes || fb.state.settings.dailyMinutes} min</span>{plan.dateKey<dateKey(new Date())&&<span>Due {plan.dateKey}</span>}</div>
     <h4>{plan.title}</h4><p>{studyTargetSummary(plan)}</p><p>{plan.description}</p><small className="study-completion-condition">{plan.completion?.description}</small>
     <footer><span className="study-task-status">{completed&&<Check size={14}/>} {({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status}{plan.origin==='manual'?' · Edited':''}</span><div className="study-task-tools">{plan.status==='skipped'?<button type="button" className="btn line" disabled={saving} onClick={()=>{setError('');setDialog('restore');}}><RotateCcw size={16}/>Restore task</button>:<>

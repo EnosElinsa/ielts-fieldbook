@@ -74,3 +74,8 @@ test('each day exposes creation and shows its budget before saving a manual task
  expect(within(dialog).getByText(/Daily budget/)).toBeInTheDocument();
  expect(within(dialog).getByRole('checkbox',{name:/Keep extra/})).toBeInTheDocument();
 });
+
+test('planned task retains a stable focus anchor for practice returns',async()=>{
+  const view=mount();await screen.findByRole('button',{name:'Start'});
+  expect(view.container.querySelector('#task-task')).toHaveAttribute('tabindex','-1');
+});

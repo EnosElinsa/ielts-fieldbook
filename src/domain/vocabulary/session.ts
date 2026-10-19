@@ -21,6 +21,7 @@ export type VocabularySessionAnswer = {
 };
 export type VocabularyPracticeSession = {
   planId?: string;
+  returnTo?: string;
   id: string; mode: VocabularyPracticeMode; preferences: VocabularyPreferences; filter: ReviewQueueFilter;
   cardIds: { id: string; entryId: string; senseId: string; mode: VocabularyPracticeMode }[];
   answers: Record<string, VocabularySessionAnswer>; index: number;
@@ -37,6 +38,7 @@ export type VocabularySessionResult = {
 export type VocabularySessionSummary = { total: number; correct: number; incorrect: number; pending: number; listened?: number };
 export type VocabularySessionRecord = {
   planId?: string;
+  returnTo?: string;
   id: string; mode: VocabularyPracticeMode; status: 'submitted'; startedAt: string; submittedAt: string;
   preferences: VocabularyPreferences; filter: ReviewQueueFilter; summary: VocabularySessionSummary;
   results: VocabularySessionResult[]; entryIds: string[]; reviewIds: string[]; updatedAt: string; selection?: VocabularySessionSelection; contentVersion?: string; cardSnapshots?: ReviewCard[];
@@ -60,13 +62,19 @@ export function createVocabularySession(cards: ReviewCard[], mode: VocabularyPra
     });
     filter = { ...filter, bookId: selection.bookId, unitId: selection.unitId, dueOnly: false };
   }
-  if (mode === 'dictation' || mode === 'audio') {
+  const planned = selection?.kind === 'planned-review';
+  if (planned) selected = selection.cards.map(ref => {
+    const card = selected.find(item => item.entryId === ref.entryId && item.senseId === ref.senseId && item.mode === mode);
+    if (!card) throw new Error('Frozen planned review is unavailable.');
+    return card;
+  });
+  if (!planned && (mode === 'dictation' || mode === 'audio')) {
     const entries = new Set<string>();
     selected = selected.filter(card => entries.has(card.entryId) ? false : (entries.add(card.entryId), true));
   }
-  if (normalized.order === 'due') selected.sort((a, b) => a.dueAt.localeCompare(b.dueAt) || a.id.localeCompare(b.id));
-  if (normalized.order === 'random') selected.sort((a, b) => hashText(`${id}:${a.id}`).localeCompare(hashText(`${id}:${b.id}`)) || a.id.localeCompare(b.id));
-  if (selection?.kind !== 'unit' && selection?.kind !== 'specialist' && selection?.kind !== 'retry' && selection?.kind !== 'learning-batch') selected = selected.slice(0, normalized.sessionSize);
+  if (!planned && normalized.order === 'due') selected.sort((a, b) => a.dueAt.localeCompare(b.dueAt) || a.id.localeCompare(b.id));
+  if (!planned && normalized.order === 'random') selected.sort((a, b) => hashText(`${id}:${a.id}`).localeCompare(hashText(`${id}:${b.id}`)) || a.id.localeCompare(b.id));
+  if (!planned && selection?.kind !== 'unit' && selection?.kind !== 'specialist' && selection?.kind !== 'retry' && selection?.kind !== 'learning-batch') selected = selected.slice(0, normalized.sessionSize);
   if (selected.length > 10000) throw new Error('Vocabulary session size is invalid.');
   selected = selected.map(card => {
     if (card.entry?.id !== card.entryId || !Array.isArray(card.entry.senses)) return card;
@@ -77,7 +85,7 @@ export function createVocabularySession(cards: ReviewCard[], mode: VocabularyPra
   });
   const startedAt = nowIso();
   return {
-    id, mode, preferences: normalized, filter: { ...filter },
+    id, mode, ...(planned ? {planId: selection.planId} : {}), preferences: normalized, filter: { ...filter },
     cardIds: selected.map(card => ({ id: card.id, entryId: card.entryId, senseId: card.senseId, mode })),
     ...(selected.every(card => card.entry?.id === card.entryId && Array.isArray(card.entry.senses)) ? {contentVersion: selected[0]?.contentVersion || VOCABULARY_CONTENT_VERSION, cardSnapshots: structuredClone(selected)} : {}), answers: {}, index: 0, status: 'active', startedAt, ...(selection ? { selection: structuredClone(selection) } : {}),
   };
@@ -124,6 +132,7 @@ export function evaluateVocabularySessionAnswer(card: ReviewCard, response: stri
 export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S, session: VocabularyPracticeSession, cards: ReviewCard[]): { state: S; sessionRecord: VocabularySessionRecord; results: VocabularySessionResult[]; summary: VocabularySessionSummary } {
   const targetState = structuredClone(state);
   if (session.selection && !isVocabularySessionSelection(session.selection)) throw new Error('Invalid vocabulary session selection.');
+  if (session.selection?.kind === 'planned-review' && (session.planId !== session.selection.planId || session.selection.cards.length !== session.cardIds.length || session.selection.cards.some((ref, index) => ref.entryId !== session.cardIds[index].entryId || ref.senseId !== session.cardIds[index].senseId))) throw new Error('Planned review selection does not match this session.');
   const existing = (targetState as S & { vocabularySessions?: VocabularySessionRecord[] }).vocabularySessions || [];
   const prior = existing.find(record => record.id === session.id);
   if (prior) return { state: targetState, sessionRecord: structuredClone(prior), results: structuredClone(prior.results), summary: structuredClone(prior.summary) };
@@ -182,6 +191,7 @@ export function buildVocabularySessionCommit<S extends VocabularyStore>(state: S
   const summary: VocabularySessionSummary = { total: results.length, correct: audio ? 0 : results.filter(result => result.result === 'success').length, incorrect: audio ? 0 : results.filter(result => result.result === 'failure' || result.result === 'partial').length, pending: audio ? 0 : results.filter(result => result.result === 'pending').length, ...(audio ? { listened: results.filter(result => normalizeAnswer(session.answers[result.cardId]?.response) === 'listened').length } : {}) };
   const sessionRecord: VocabularySessionRecord = { id: session.id, mode: session.mode, status: 'submitted', startedAt: session.startedAt, submittedAt, preferences: structuredClone(session.preferences), filter: structuredClone(session.filter), summary, results: structuredClone(results), entryIds: [...new Set(session.cardIds.map(card => card.entryId))], reviewIds: session.mode === 'audio' ? [] : session.cardIds.map(card => `${session.id}:${card.id}`), updatedAt: submittedAt, ...(session.contentVersion ? { contentVersion: session.contentVersion, cardSnapshots: structuredClone(session.cardSnapshots) } : {}), ...(session.selection ? { selection: structuredClone(session.selection) } : {}) };
   if (session.planId) sessionRecord.planId = session.planId;
+  if (session.returnTo) sessionRecord.returnTo = session.returnTo;
   (targetState as S & { vocabularySessions?: VocabularySessionRecord[] }).vocabularySessions = [...existing, sessionRecord];
   return { state: targetState, sessionRecord, results, summary };
 }

@@ -1276,3 +1276,70 @@ test('an account switch while settings targets load prevents saving profile chan
   await act(async()=>{pending.resolve({questions:[{id:'q',sectionId:'part'}]});expect(await operation).toBe(false);});
   expect(mocks.saveState).not.toHaveBeenCalled();
 });
+
+test('dynamic vocabulary starts freeze current candidates durably and retain Planning origin',async()=>{
+  const entry=addVocabularyItem(mocks.initial,{term:'persistent',meaning:'Continuing over time.'}).item;
+  mocks.initial.vocabularyStates.find(row=>row.entryId===entry.id).manualStatus='unfamiliar';
+  mocks.initial.plans=[{id:'dynamic-review',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:1,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'dictation',cards:[]}}];
+  await mount('/planning?week=next#task-dynamic-review');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=draft.plans.filter(row=>row.id==='dynamic-review');});});
+  await act(async()=>{expect(await fieldbook.startPlan('dynamic-review')).toBe(true);});
+  expect(fieldbook.state.plans[0]).toMatchObject({status:'in_progress',target:{binding:'frozen',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}});
+  expect(new URLSearchParams(currentPath.split('?')[1]).get('returnTo')).toBe('/planning?week=next#task-dynamic-review');
+  expect(mocks.saveState.mock.calls.at(-1)[0].plans[0].target.binding).toBe('frozen');
+});
+
+test('empty dynamic vocabulary skips as no-longer-due without completion or navigation',async()=>{
+  mocks.initial.plans=[{id:'empty-review',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:10,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'definition',cards:[]}}];
+  await mount('/');
+  await act(async()=>{expect(await fieldbook.startPlan('empty-review')).toBe(true);});
+  expect(fieldbook.state.plans[0]).toMatchObject({status:'skipped',skipReason:'no-longer-due'});
+  expect(fieldbook.state.plans[0].completedAt).toBeFalsy();
+  expect(currentPath).toBe('/');
+});
+
+test('frozen legacy reviews load requested resources and remain retryable after failure',async()=>{
+  const entry=addVocabularyItem(mocks.initial,{term:'persistent',meaning:'Continuing over time.'}).item;
+  mocks.initial.plans=[{id:'legacy-review',kind:'vocabulary',skill:'vocabulary',status:'pending',target:{type:'vocabulary',mode:'due-review',assessmentMode:'definition',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}}];
+  await mount('/');
+  mocks.releasedRead.mockRejectedValueOnce(new Error('Offline'));
+  mocks.teachingRead.mockRejectedValueOnce(new Error('Offline'));
+  await act(async()=>{await expect(fieldbook.startPlan('legacy-review')).rejects.toThrow('Offline');});
+  expect(fieldbook.state.plans[0].status).toBe('pending');
+  await act(async()=>{expect(await fieldbook.startPlan('legacy-review',{force:true})).toBe(true);});
+  expect(mocks.releasedRead).toHaveBeenCalledWith(expect.objectContaining({entryIds:[entry.id],force:true}));
+});
+
+test('dynamic reviews reserve exact pairs by mode without changing existing frozen targets',async()=>{
+  const first=addVocabularyItem(mocks.initial,{id:'first',term:'first',meaning:'The first meaning.'}).item;
+  const second=addVocabularyItem(mocks.initial,{id:'second',term:'second',meaning:'The second meaning.'}).item;
+  for(const learning of mocks.initial.vocabularyStates)learning.manualStatus='unfamiliar';
+  const frozen={id:'reserved',kind:'vocabulary',skill:'vocabulary',status:'pending',target:{type:'vocabulary',mode:'due-review',assessmentMode:'dictation',cards:[{entryId:first.id,senseId:first.senses[0].id}]}};
+  const dynamic={id:'dynamic',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:10,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',batchSize:1,assessmentMode:'dictation',cards:[]}};
+  mocks.initial.plans=[frozen,dynamic];await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[structuredClone(frozen),structuredClone(dynamic)];});});
+  await act(async()=>{expect(await fieldbook.startPlan('dynamic')).toBe(true);});
+  expect(fieldbook.state.plans[0]).toEqual(frozen);
+  expect(fieldbook.state.plans[1].target.cards).toEqual([{entryId:second.id,senseId:second.senses[0].id}]);
+});
+
+test.each(['invalid',0,-1,10001,Infinity])('invalid dynamic review capacity %s remains retryable instead of being skipped',async(batchSize)=>{
+  mocks.initial.plans=[{id:'bad-capacity',kind:'vocabulary',status:'pending',target:{type:'vocabulary',mode:'due-review',binding:'dynamic',batchSize,assessmentMode:'definition',cards:[]}}];
+  await mount('/planning');
+  await act(async()=>{await expect(fieldbook.startPlan('bad-capacity')).rejects.toThrow(/capacity|size/i);});
+  expect(fieldbook.state.plans.find(plan=>plan.id==='bad-capacity').status).toBe('pending');
+});
+
+test('concurrent dynamic review starts reserve different pairs at durable save time',async()=>{
+  addVocabularyItem(mocks.initial,{id:'first',term:'first',meaning:'The first meaning.'});
+  addVocabularyItem(mocks.initial,{id:'second',term:'second',meaning:'The second meaning.'});
+  for(const learning of mocks.initial.vocabularyStates)learning.manualStatus='unfamiliar';
+  const plans=['one','two'].map(id=>({id,kind:'vocabulary',skill:'vocabulary',status:'pending',target:{type:'vocabulary',mode:'due-review',binding:'dynamic',batchSize:1,assessmentMode:'dictation',cards:[]}}));
+  mocks.initial.plans=structuredClone(plans);await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=structuredClone(plans);});});
+  await act(async()=>{expect(await Promise.all([fieldbook.startPlan('one'),fieldbook.startPlan('two')])).toEqual([true,true]);});
+  const targets=fieldbook.state.plans.map(plan=>plan.target);
+  expect(targets).toHaveLength(2);
+  expect(targets.every(target=>target.binding==='frozen' && target.cards.length===1)).toBe(true);
+  expect(targets[0].cards).not.toEqual(targets[1].cards);
+});

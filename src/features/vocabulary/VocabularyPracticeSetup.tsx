@@ -13,7 +13,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
   const { study, explicitEntry, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit, dueOnly, setDue, wrongOnly, setWrong, catalogStatus, queue, unitQueue, books, selectedUnit, selectedBook, chapter, catalogReady, studyReady, resume, recent, changeFilter, changeMode, begin, recover, discardResume, showRecentSession, retryCatalog } = controller;
   const [pickerOpen, setPickerOpen] = useState(false);
   const specialist = isSpecialistVocabularyMode(mode);
-  const launchCount = study ? queue.length : Math.min(preferences.sessionSize, queue.length);
+  const launchCount = study || controller.plannedReview ? queue.length : Math.min(preferences.sessionSize, queue.length);
   const preparing = !catalogReady && catalogStatus.status !== 'error';
   const batchOptions = !study && !explicitEntry;
   const reviewFilters = !study && (!explicitEntry || dueOnly || wrongOnly);
@@ -34,7 +34,9 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
         {controller.batchRequest ? <strong>{queue.length} words in this batch</strong> : study && unitQueue ? <strong>{unitQueue.totalWords} words in this group · {unitQueue.eligibleWords} ready for {modeLabel(mode).toLowerCase()}</strong> : null}
         {controller.filter.sourceId ? <p>Source Part: {controller.filter.sourceId} · {queue.length} matching {queue.length === 1 ? 'word' : 'words'}</p> : null}
         {controller.learningBatch.error ? <p role="alert">{controller.learningBatch.error}</p> : null}
-        {controller.plannedReview && catalogReady && !studyReady ? <p role="alert">The planned review could not be prepared. Your task has not been completed.</p> : null}
+        {controller.planFailure === 'no-longer-due' ? <p role="status">These words are no longer due. This task was skipped without marking it complete.</p> : null}
+        {controller.planFailure === 'stale-target' ? <p role="alert">This planned task is no longer available. Return to Planning and retry.</p> : null}
+        {controller.plannedReview && catalogReady && !studyReady && !controller.planFailure ? <p role="alert">The planned review could not be prepared. Your task has not been completed.</p> : null}
         <Link to={study ? '/vocabulary/review' : '/vocabulary/wordbooks'}>{study ? 'Switch to vocabulary review' : 'Study a complete wordbook group'} <ArrowRight size={14} /></Link>
       </div>
       <div className="practice-setup-controls">

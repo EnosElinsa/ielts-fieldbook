@@ -16,6 +16,7 @@ export type VocabularyLearningBatchSelection = {
 };
 export type VocabularySessionSelection =
   | VocabularyLearningBatchSelection
+  | { kind: 'planned-review'; planId: string; cards: { entryId: string; senseId: string }[] }
   | { kind: 'unit'; bookId: string; unitId: string }
   | { kind: 'specialist'; bookId: string; unitId: string }
   | { kind: 'batch' }
@@ -25,6 +26,16 @@ export const isVocabularySessionSelection = (value: unknown): value is Vocabular
   if (!value || typeof value !== 'object') return false;
   const input = value as Record<string, unknown>;
   if (input.kind === 'batch' || input.kind === 'retry') return Object.keys(input).length === 1;
+  if (input.kind === 'planned-review') {
+    if (Object.keys(input).length !== 3 || typeof input.planId !== 'string' || !validId(input.planId) || !Array.isArray(input.cards) || !input.cards.length || input.cards.length > 10000) return false;
+    const pairs = new Set<string>();
+    return input.cards.every(card => {
+      if (!card || typeof card !== 'object' || Array.isArray(card) || Object.keys(card).length !== 2 || typeof card.entryId !== 'string' || !validId(card.entryId) || typeof card.senseId !== 'string' || !validId(card.senseId)) return false;
+      const key = JSON.stringify([card.entryId, card.senseId]);
+      if (pairs.has(key)) return false;
+      pairs.add(key); return true;
+    });
+  }
   if (input.kind === 'learning-batch') {
     if (Object.keys(input).length !== 6 || typeof input.bookId !== 'string' || !validId(input.bookId) || typeof input.unitId !== 'string' || !validId(input.unitId)
       || !Number.isSafeInteger(input.batchIndex) || Number(input.batchIndex) < 0 || !Number.isSafeInteger(input.batchSize) || Number(input.batchSize) < 1 || Number(input.batchSize) > 50

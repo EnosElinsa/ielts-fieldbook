@@ -229,3 +229,14 @@ test('browser Back between categories retains the draft and canceled departure r
   await waitFor(() => expect(screen.getByLabelText('Location')).toHaveTextContent(/^\/$/));
   expect(screen.getByText('Today content')).toBeInTheDocument();
 });
+
+test('practice origin survives settings category changes and a direct refresh',async()=>{
+  const source='/vocabulary/review?planId=review&returnTo=%2Fplanning%3Fweek%3Dnext%23task-review';
+  const query=`?returnTo=${encodeURIComponent(source)}`;
+  render(<MemoryRouter initialEntries={[`/settings/vocabulary${query}`]}><Routes><Route path="/settings/:category?" element={<SettingsPage/>}/><Route path="/vocabulary/review" element={<p>Practice setup</p>}/></Routes></MemoryRouter>);
+  expect(screen.getByRole('link',{name:'Back to vocabulary review'})).toHaveAttribute('href',source);
+  fireEvent.click(screen.getByRole('link',{name:'Audio'}));
+  expect(screen.getByRole('link',{name:'Back to vocabulary review'})).toHaveAttribute('href',source);
+  fireEvent.click(screen.getByRole('link',{name:'Back to vocabulary review'}));
+  expect(screen.getByText('Practice setup')).toBeInTheDocument();
+});

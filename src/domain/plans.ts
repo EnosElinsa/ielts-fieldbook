@@ -41,10 +41,11 @@ export type PlanTarget =
   | { type: 'exam-review'; skill: 'reading' | 'listening'; attemptId: string }
   | { type: 'intensive'; skill: 'listening'; sectionId: string; sentenceId: string }
   | { type: 'error-review'; errorIds: string[] }
-  | { type: 'vocabulary'; mode: 'learning-batch' | 'due-review'; assessmentMode: string; bookId?: string; unitId?: string; batchIndex?: number; batchSize?: number; cards: {entryId:string; senseId:string}[] };
+  | { type: 'vocabulary'; binding?: 'dynamic' | 'frozen'; mode: 'learning-batch' | 'due-review'; assessmentMode: string; bookId?: string; unitId?: string; batchIndex?: number; batchSize?: number; cards: {entryId:string; senseId:string}[] };
 export type StudyPlan = {
   id: string; dateKey: string; skill: StudySkill; kind: string; title: string; description: string;
   estimatedMinutes: number; origin: 'automatic' | 'manual'; status: 'pending' | 'in_progress' | 'completed' | 'skipped';
+  skipReason?: 'no-longer-due';
   target: PlanTarget; completion: { type: 'attempt' | 'review' | 'assessment'; description: string };
   schemaVersion: 2; generationKey: string; startedAt: string | null; completedAt: string | null;
   [key: string]: unknown;
@@ -230,7 +231,7 @@ export function completeVocabularyPlan(state, session, now = undefined) {
   if (!plan || plan.status !== 'in_progress' || target?.type !== 'vocabulary' || !session || typeof session !== 'object') return null;
   if (session.planId !== plan.id || session.status !== 'submitted' || session.mode !== target.assessmentMode || ['audio','production'].includes(session.mode)) return null;
   if (!(Date.parse(session.startedAt) >= Date.parse(plan.startedAt)) || !(Date.parse(session.submittedAt) >= Date.parse(session.startedAt))) return null;
-  const identities = cards => (cards || []).map(card => `${card.entryId}:${card.senseId}`).sort();
+  const identities = cards => (cards || []).map(card => JSON.stringify([card.entryId,card.senseId])).sort();
   const wanted = identities(target.cards);
   if (!wanted.length || JSON.stringify(wanted) !== JSON.stringify(identities(session.results)) || session.results.some(result => !String(result.response || '').trim() || result.result === 'pending')) return null;
   if (target.mode === 'learning-batch') {

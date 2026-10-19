@@ -41,7 +41,7 @@ export function VocabularyGroupLearnPage() {
   const requestedPlan = boundVocabularyAssessment(fb.state, params.get('planId'));
   const boundPlan = requestedPlan?.target.bookId === bookId && requestedPlan.target.unitId === unitId ? requestedPlan : undefined;
   const preferences = normalizeVocabularyPreferences(state.settings?.vocabulary);
-  const requestedSize = Number(params.get('batchSize'));
+  const requestedSize = Number(boundPlan?.target.batchSize ?? params.get('batchSize'));
   const BATCH_SIZE = Number.isSafeInteger(requestedSize) && requestedSize >= 1 && requestedSize <= 50 ? requestedSize : preferences.learningBatchSize;
   const { status, retry } = useVocabularyCatalog(fb.loadVocabularyCatalog, bookId, unitId);
   const book = VOCABULARY_CATALOG.books.find(row => row.id === bookId);
@@ -113,7 +113,7 @@ export function VocabularyGroupLearnPage() {
 
   const position = Math.max(0, words.findIndex(row => row.entry.id === currentId));
   const word = words[position];
-  const batch = Math.floor(position / BATCH_SIZE);
+  const batch = boundPlan?.target.batchIndex ?? Math.floor(position / BATCH_SIZE);
   const batches = Math.ceil(words.length / BATCH_SIZE);
   useLayoutEffect(() => {
     const navigation = batchNavigation.current;
@@ -139,7 +139,7 @@ export function VocabularyGroupLearnPage() {
     if (status !== 'ready' || !words.length) return null;
     try {
       const identity = `${owner}:${bookId}:${unitId}:${BATCH_SIZE}:${batch}`;
-      const frozen = params.get('batchCards') && Number(params.get('batch')) === batch ? JSON.parse(params.get('batchCards')!) : frozenBatches.current.get(identity) || words.slice(batch * BATCH_SIZE, (batch + 1) * BATCH_SIZE).map(row => ({ entryId: row.entry.id, senseId: row.resolved.sense?.id || '' }));
+      const frozen = boundPlan ? boundPlan.target.cards : params.get('batchCards') && Number(params.get('batch')) === batch ? JSON.parse(params.get('batchCards')!) : frozenBatches.current.get(identity) || words.slice(batch * BATCH_SIZE, (batch + 1) * BATCH_SIZE).map(row => ({ entryId: row.entry.id, senseId: row.resolved.sense?.id || '' }));
       frozenBatches.current.set(identity, frozen);
       return buildLearningBatch(state, bookId, unitId, batch, BATCH_SIZE, boundPlan?.target?.assessmentMode || preferences.mode, frozen);
     } catch { return null; }
