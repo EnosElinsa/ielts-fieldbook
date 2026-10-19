@@ -93,6 +93,7 @@ export function useVocabularyPracticeController() {
   const cardsRef = useRef<ReviewCard[]>([]);
   const preferencesRef = useRef(preferences);
   const pendingCommit = useRef<Prepared | null>(null);
+  const submittedFromRoute = useRef<string | null>(null);
   const savingRef = useRef(false);
   const recoveringRef = useRef(false);
   const autoRecovery = useRef<string | null>(null);
@@ -197,6 +198,7 @@ export function useVocabularyPracticeController() {
     setRetryPreparing(false);
     sessionRef.current = null;
     pendingCommit.current = null;
+    submittedFromRoute.current = null;
     savingRef.current = false;
     setSession(null);
     setCards([]);
@@ -386,7 +388,15 @@ export function useVocabularyPracticeController() {
   useEffect(() => {
     if (sessionRef.current || savingRef.current) return;
     const id = historySessionId || params.get('sessionId');
-    if (!id) { setResults(null); return; }
+    if (!id) {
+      // Account/plan commits can arrive before the history transition commits.
+      // Keep the saved result visible on its submitting route in that interval.
+      if (submittedFromRoute.current === location.key) return;
+      submittedFromRoute.current = null;
+      setResults(null);
+      return;
+    }
+    submittedFromRoute.current = null;
     const record = ((fb.state.vocabularySessions || []) as SessionLog[]).find(record => record.id === id);
     if (record) {
       setResults(presentVocabularySession(record)); setCards([]); setError('');
@@ -837,6 +847,7 @@ export function useVocabularyPracticeController() {
       }
       clearVocabularyDraft(owner.current);
       setResume(null);
+      submittedFromRoute.current = location.key;
       setResults(prepared.sessionRecord);
       const resultParams = new URLSearchParams(params);
       resultParams.set('sessionId', prepared.sessionRecord.id);
@@ -920,6 +931,7 @@ export function useVocabularyPracticeController() {
   }
   function resetResults() {
     const record = results;
+    submittedFromRoute.current = null;
     retryGeneration.current += 1;
     retryPreparingRef.current = false;
     setRetryPreparing(false);

@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { useState } from 'react';
+import { Profiler, Suspense, useState } from 'react';
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Link, useLocation, useNavigate, Routes, Route } from "react-router-dom";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
@@ -661,6 +661,8 @@ test("submits the complete attempt once and retries the same frozen commit after
   await user.click(screen.getByRole("button", { name: "Submit session" }));
   expect(screen.getByRole("alert")).toHaveTextContent("could not be saved");
   expect(screen.queryByRole("table")).not.toBeInTheDocument();
+  expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('resilient');
+  expect(screen.getByRole('textbox', { name: 'Answer 2' })).toHaveValue('wrong');
   const [prepared, id] = fb.current.persistVocabularySession.mock.calls[0];
   expect(prepared.vocabularyReviews).toHaveLength(2);
   await user.click(screen.getByRole("button", { name: "Retry submission" }));
@@ -680,6 +682,57 @@ test("submits the complete attempt once and retries the same frozen commit after
   );
   await user.click(screen.getByRole("button", { name: "Submit session" }));
   expect(fb.current.persistVocabularySession.mock.calls[2][1]).not.toEqual(id);
+});
+
+test('successful planned submission retains results while completed account state precedes history navigation', async () => {
+  const entry = fb.current.state.vocabulary[0];
+  const refs = [{ entryId: entry.id, senseId: entry.senses[0].id }];
+  fb.current.state.plans = [{ id: 'transition-plan', kind: 'vocabulary', status: 'in_progress', startedAt: '2020-01-01', target: { type: 'vocabulary', mode: 'due-review', assessmentMode: 'definition', cards: refs } }];
+  let refresh!: () => void;
+  function AccountUpdates() {
+    const [, setRevision] = useState(0);
+    refresh = () => setRevision(value => value + 1);
+    return <VocabularyPracticePage />;
+  }
+  let releaseHistory!: () => void;
+  let historyReady = false;
+  const historyPending = new Promise<void>(resolve => { releaseHistory = () => { historyReady = true; resolve(); }; });
+  function DelayedHistory() {
+    if (!historyReady) throw historyPending;
+    return <VocabularyPracticePage />;
+  }
+  const frames: string[] = [];
+  let recording = false;
+  fb.current.persistVocabularySession.mockImplementation(async (prepared: any) => {
+    fb.current.state = prepared;
+    fb.current.stateRef.current = prepared;
+    refresh();
+    return true;
+  });
+  render(<MemoryRouter initialEntries={['/vocabulary/review?planId=transition-plan&returnTo=%2Ftoday%23task-transition-plan']}><Profiler id="submission-transition" onRender={() => { if (recording) frames.push(document.body.textContent || ''); }}><Suspense fallback={<p>Preparing saved results…</p>}><Routes><Route path="/vocabulary/review" element={<AccountUpdates />} /><Route path="/vocabulary/history/:sessionId" element={<DelayedHistory />} /></Routes><CurrentRoute /></Suspense></Profiler></MemoryRouter>);
+  fireEvent.click(await screen.findByRole('button', { name: 'Start session' }));
+  fireEvent.change(screen.getByRole('textbox', { name: 'Answer 1' }), { target: { value: entry.term } });
+  recording = true;
+  fireEvent.click(screen.getByRole('button', { name: 'Submit session' }));
+  expect(await screen.findByRole('heading', { name: '1 of 1 correct' })).toBeInTheDocument();
+  // The context saves review rows first, then asynchronously completes the plan
+  // in a fresh account-state clone while the history navigation can still wait.
+  await act(async () => {
+    const completed = structuredClone(fb.current.state);
+    completeVocabularyPlan(completed, completed.vocabularySessions.at(-1));
+    fb.current.state = completed;
+    fb.current.stateRef.current = completed;
+    refresh();
+  });
+  await waitFor(() => expect(fb.current.state.plans[0].status).toBe('completed'));
+  await act(async () => {});
+  expect(frames.some(frame => frame.includes('This planned task is no longer available'))).toBe(false);
+  expect(screen.queryByRole('button', { name: 'Start session' })).not.toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: '1 of 1 correct' })).toBeInTheDocument();
+  await act(async () => releaseHistory());
+  expect(await screen.findByRole('table')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Back to Today' })).toHaveAttribute('href', '/today#task-transition-plan');
+  expect(frames.some(frame => frame.includes('This planned task is no longer available'))).toBe(false);
 });
 
 test.each([
