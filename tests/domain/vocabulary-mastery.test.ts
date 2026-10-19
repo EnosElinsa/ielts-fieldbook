@@ -40,16 +40,27 @@ describe('evidence-based vocabulary mastery', () => {
     expect(vocabulary.getVocabularyMastery(boundary.store, boundary.entry.id).dimensions.meaning.spacedSuccesses).toBe(1);
   });
 
-  test('Familiar needs all four dimensions and Mastered also needs assessed spaced production', () => {
+  test('Familiar and Mastered require only spaced meaning, listening and spelling evidence', () => {
     const { store, entry, senseId } = fixture();
-    ['meaning', 'listening', 'spelling', 'usage'].forEach(dimension => [0, 1, 2].forEach(day => evidence(store, entry.id, senseId, dimension as VocabularyDimension, day)));
+    ['meaning', 'listening', 'spelling'].forEach(dimension => [0, 1, 2].forEach(day => evidence(store, entry.id, senseId, dimension as VocabularyDimension, day)));
     expect(vocabulary.getVocabularyMastery(store, entry.id).automatic).toBe('familiar');
-    ['meaning', 'listening', 'spelling', 'usage'].forEach(dimension => [3, 4].forEach(day => evidence(store, entry.id, senseId, dimension as VocabularyDimension, day)));
-    expect(vocabulary.getVocabularyMastery(store, entry.id).automatic).toBe('familiar');
+    ['meaning', 'listening', 'spelling'].forEach(dimension => [3, 4].forEach(day => evidence(store, entry.id, senseId, dimension as VocabularyDimension, day)));
+    expect(vocabulary.getVocabularyMastery(store, entry.id)).toMatchObject({ automatic: 'mastered', productionSuccesses: 0, dimensions: { usage: { spacedSuccesses: 0 } }, missing: [] });
     [4, 4.5, 5].forEach(day => evidence(store, entry.id, senseId, 'usage', day, { id: `production:${day}`, mode: 'production', verification: 'assessed' }));
     expect(vocabulary.getVocabularyMastery(store, entry.id)).toMatchObject({ automatic: 'mastered', productionSuccesses: 2, missing: [] });
     store.vocabularyStates[0].wrong.active = true;
     expect(vocabulary.getVocabularyMastery(store, entry.id).automatic).toBe('unstable');
+  });
+
+  test('production-only mistakes retain independent metrics without blocking foundation mastery', () => {
+    const {store, entry, senseId} = fixture();
+    ['meaning', 'listening', 'spelling'].forEach(dimension => [0,1,2,3,4].forEach(day => evidence(store, entry.id, senseId, dimension as VocabularyDimension, day)));
+    vocabulary.recordVocabularyReview(store, {entryId:entry.id,senseId,mode:'production',result:'failure',verification:'assessed',occurredAt:'2026-10-15T00:00:00Z'});
+    expect(vocabulary.getVocabularyMastery(store,entry.id)).toMatchObject({automatic:'mastered',productionSuccesses:0,missing:[]});
+    expect(vocabulary.deriveVocabularyStatus(store.vocabularyStates[0])).toBe('mastered');
+    expect(store.vocabularyStates[0].wrong.modes.production?.active).toBe(true);
+    vocabulary.recordVocabularyReview(store, {entryId:entry.id,senseId,mode:'dictation',result:'failure',occurredAt:'2026-10-16T00:00:00Z'});
+    expect(vocabulary.getVocabularyMastery(store,entry.id).automatic).toBe('unstable');
   });
 
   test('audio, self-report, pending, unverified and objective-only production cannot establish mastery', () => {

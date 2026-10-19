@@ -1,7 +1,7 @@
 import { learningTask } from './content';
 import { isVocabularyPracticeReference } from './readiness';
 import { resolveVocabularyLearningContext } from './context';
-import { vocabularyStatusSource } from './mastery';
+import { vocabularyStatusSource, hasVocabularyFoundationMistake, VOCABULARY_FOUNDATION_DIMENSIONS } from './mastery';
 import { matchesVocabularySource, vocabularySourceKey, normalizeVocabularySource, normalizeVocabularySources } from './sources';
 export { getVocabularyMastery, vocabularyStatusSource } from './mastery';
 export type { VocabularyMastery } from './mastery';
@@ -155,10 +155,10 @@ export function setVocabularyManualStatus(state: VocabularyStore, entryId: strin
 }
 
 export function deriveVocabularyStatus(state: VocabularyState): VocabularyStatus {
-  const dimensions = VOCABULARY_DIMENSIONS.map(key => state.dimensions[key]);
+  const dimensions = VOCABULARY_FOUNDATION_DIMENSIONS.map(key => state.dimensions[key]);
   const spaced = (record: { firstSuccessAt?: string; lastSuccessAt?: string }) => Boolean(record.firstSuccessAt && record.lastSuccessAt && Date.parse(record.lastSuccessAt) - Date.parse(record.firstSuccessAt) >= 86400000);
-  if (state.wrong.active) return 'unstable';
-  if (dimensions.every(d => d.successes >= 5 && spaced(d)) && (state.verifiedProduction?.successes || 0) >= 2 && spaced(state.verifiedProduction!)) return 'mastered';
+  if (hasVocabularyFoundationMistake(state)) return 'unstable';
+  if (dimensions.every(d => d.successes >= 5 && spaced(d))) return 'mastered';
   if (dimensions.every(d => d.successes >= 3 && spaced(d))) return 'familiar';
   if (state.dimensions.usage.successes >= 2) return 'active';
   if (dimensions.some(d => d.successes > 0)) return 'unstable';

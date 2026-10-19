@@ -1,6 +1,7 @@
 import type { VocabularyDimension, VocabularyEvidence, VocabularyState, VocabularyStatus, VocabularyStore } from './types';
 
 const dimensions: VocabularyDimension[] = ['meaning', 'listening', 'spelling', 'usage'];
+export const VOCABULARY_FOUNDATION_DIMENSIONS = ['meaning', 'listening', 'spelling'] as const;
 const statuses: VocabularyStatus[] = ['new', 'unfamiliar', 'unstable', 'active', 'familiar', 'mastered'];
 const dayMs = 86400000;
 export type VocabularyMastery = {
@@ -39,6 +40,12 @@ export function getVocabularySpacedProgress(events: VocabularyEvidence[]) {
 
 const spacedCount = (events: VocabularyEvidence[]) => getVocabularySpacedProgress(events).count;
 
+/** Preserve unresolved legacy flags, but keep production recovery independent. */
+export function hasVocabularyFoundationMistake(state?: VocabularyState): boolean {
+  const active = Object.entries(state?.wrong?.modes || {}).filter(([, value]) => value?.active);
+  return active.length ? active.some(([mode]) => mode !== 'production') : Boolean(state?.wrong?.active);
+}
+
 function senseMastery(store: Partial<VocabularyStore>, entryId: string, senseId: string, primarySenseId?: string): VocabularyMastery {
   const state = store.vocabularyStates?.find(item => item.entryId === entryId && item.senseId === senseId);
   // Older sense-less evidence belonged to the entry's original primary sense.
@@ -48,24 +55,24 @@ function senseMastery(store: Partial<VocabularyStore>, entryId: string, senseId:
     ...(state?.dimensions?.[dimension]?.nextReviewAt ? { nextReviewAt: state.dimensions[dimension].nextReviewAt } : {}),
   }])) as VocabularyMastery['dimensions'];
   const productionSuccesses = spacedCount(events.filter(event => event.mode === 'production' && event.dimension === 'usage'));
-  const counts = dimensions.map(dimension => result[dimension].spacedSuccesses);
+  const counts = VOCABULARY_FOUNDATION_DIMENSIONS.map(dimension => result[dimension].spacedSuccesses);
+  const wrong = hasVocabularyFoundationMistake(state);
   let automatic: VocabularyStatus = 'new';
-  if (state?.wrong?.active) automatic = 'unstable';
-  else if (counts.every(count => count >= 5) && productionSuccesses >= 2) automatic = 'mastered';
+  if (wrong) automatic = 'unstable';
+  else if (counts.every(count => count >= 5)) automatic = 'mastered';
   else if (counts.every(count => count >= 3)) automatic = 'familiar';
   else if (result.usage.spacedSuccesses >= 2) automatic = 'active';
   else if (counts.some(count => count > 0)) automatic = 'unstable';
   else if (dimensions.some(dimension => (state?.dimensions?.[dimension]?.failures || 0) > 0)
     || events.some(event => event.result === 'failure' && event.verification !== 'pending' && event.verification !== 'self-reported')) automatic = 'unfamiliar';
   const manual = vocabularyStatusSource(state) === 'manual';
-  return { automatic, effective: manual ? state!.manualStatus : automatic, manual, dimensions: result, productionSuccesses, missing: missingRequirements(automatic, result, productionSuccesses, Boolean(state?.wrong?.active)) };
+  return { automatic, effective: manual ? state!.manualStatus : automatic, manual, dimensions: result, productionSuccesses, missing: missingRequirements(automatic, result, wrong) };
 }
 
-function missingRequirements(status: VocabularyStatus, counts: VocabularyMastery['dimensions'], production: number, wrong: boolean) {
+function missingRequirements(status: VocabularyStatus, counts: VocabularyMastery['dimensions'], wrong: boolean) {
   const target = status === 'familiar' || status === 'mastered' ? 5 : 3;
   const label = target === 5 ? 'Mastered' : 'Familiar';
-  const missing = dimensions.filter(dimension => counts[dimension].spacedSuccesses < target).map(dimension => `${dimension[0].toUpperCase()}${dimension.slice(1)}: ${target - counts[dimension].spacedSuccesses} more spaced successes for ${label}`);
-  if (target === 5 && production < 2) missing.push(`Usage: ${2 - production} more assessed production successes for Mastered`);
+  const missing = VOCABULARY_FOUNDATION_DIMENSIONS.filter(dimension => counts[dimension].spacedSuccesses < target).map(dimension => `${dimension[0].toUpperCase()}${dimension.slice(1)}: ${target - counts[dimension].spacedSuccesses} more spaced successes for ${label}`);
   if (wrong) missing.unshift('Recover active wrong-word reviews before advancing.');
   return missing;
 }
@@ -85,7 +92,7 @@ export function getVocabularyMastery(store: Partial<VocabularyStore>, entryId: s
   const results = ids.map(id => senseMastery(store, entryId, id, primarySenseId));
   if (results.length === 1) return results[0];
   const lowest = (values: VocabularyStatus[]) => values.reduce((a, b) => statuses.indexOf(a) <= statuses.indexOf(b) ? a : b);
-  const wrong = states.some(state => state.wrong?.active);
+  const wrong = states.some(hasVocabularyFoundationMistake);
   const automatic = wrong ? 'unstable' : lowest(results.map(result => result.automatic));
   const manual = results.some(result => result.manual);
   const effective = manual ? lowest(results.map(result => result.effective)) : automatic;
@@ -95,5 +102,5 @@ export function getVocabularyMastery(store: Partial<VocabularyStore>, entryId: s
   })) as VocabularyMastery['dimensions'];
   const productionSuccesses = Math.min(...results.map(result => result.productionSuccesses));
   return { automatic, effective, manual, dimensions: counts, productionSuccesses,
-    missing: missingRequirements(automatic, counts, productionSuccesses, wrong) };
+    missing: missingRequirements(automatic, counts, wrong) };
 }

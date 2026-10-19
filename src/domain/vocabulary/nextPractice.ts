@@ -1,6 +1,6 @@
 import type {VocabularyDimension,VocabularyEntry,VocabularyMode,VocabularyStore} from './types';
 import {getVocabularyReviewQueue,VOCABULARY_MODE_DIMENSIONS} from './index';
-import {getVocabularySpacedProgress} from './mastery';
+import {getVocabularySpacedProgress,VOCABULARY_FOUNDATION_DIMENSIONS} from './mastery';
 import {VOCABULARY_CATALOG} from './catalog';
 import {getActiveVocabularyConfirmedErrors,VOCABULARY_ERROR_PRACTICE} from './confirmedErrors';
 import type {VocabularyConfirmedError} from './confirmedErrors';
@@ -14,7 +14,7 @@ export type VocabularyNextPractice = {
 
 export function getVocabularyNextPractice(
   store: Partial<VocabularyStore>, entry: VocabularyEntry,
-  request: {senseId: string; bookId?: string; unitId?: string; now?: string | Date},
+  request: {senseId: string; bookId?: string; unitId?: string; now?: string | Date; foundationMode?: 'definition'|'dictation'},
 ): VocabularyNextPractice | undefined {
   const now = new Date(request.now || new Date()).getTime();
   if (!Number.isFinite(now)) return;
@@ -31,30 +31,30 @@ export function getVocabularyNextPractice(
     const time = value instanceof Date ? value.getTime() : value ? Date.parse(String(value)) : NaN;
     return Number.isFinite(time) ? time : undefined;
   };
-  const available = cards.filter(card=>schedule(card.mode) === undefined || schedule(card.mode)! <= now);
-  const upcoming = cards.filter(card=>(schedule(card.mode) ?? -Infinity)>now)
+  const offered = cards.filter(card=>!request.foundationMode || card.mode===request.foundationMode);
+  const foundation = offered.filter(card=>card.mode==='definition'||card.mode==='dictation');
+  const available = offered.filter(card=>schedule(card.mode) === undefined || schedule(card.mode)! <= now);
+  const foundationAvailable = available.filter(card=>card.mode==='definition'||card.mode==='dictation');
+  const upcoming = foundation.filter(card=>(schedule(card.mode) ?? -Infinity)>now)
     .sort((a,b)=>schedule(a.mode)!-schedule(b.mode)!)[0];
-  const dimensions: VocabularyDimension[] = ['meaning','listening','spelling','usage'];
+  const dimensions: VocabularyDimension[] = [...VOCABULARY_FOUNDATION_DIMENSIONS];
   const primarySenseId = store.vocabulary?.find(row=>row.id===entry.id)?.senses[0]?.id;
   const events = (store.vocabularyEvidence || []).filter(event=>event.entryId===entry.id
     && (event.senseId===request.senseId || (!event.senseId && request.senseId===primarySenseId))
     && Date.parse(event.occurredAt)<=now);
   const progress = Object.fromEntries(dimensions.map(dimension=>[dimension,getVocabularySpacedProgress(events.filter(event=>event.dimension===dimension))])) as Record<VocabularyDimension,ReturnType<typeof getVocabularySpacedProgress>>;
-  const production = getVocabularySpacedProgress(events.filter(event=>event.mode==='production'&&event.dimension==='usage'));
   const familiar = dimensions.every(dimension=>progress[dimension].count>=3);
   const target = familiar ? 'mastered' : 'familiar', required = familiar ? 5 : 3;
-  const needsProduction = familiar && production.count<2;
   const nextSuccess = (dimension: VocabularyDimension) => progress[dimension].nextSuccessAt ? Date.parse(progress[dimension].nextSuccessAt!) : -Infinity;
-  const productionAt = production.nextSuccessAt ? Date.parse(production.nextSuccessAt) : -Infinity;
   // Saved dates constrain each mode; a different eligible mode may still advance a skill.
-  const pending = cards.flatMap(card=>{
+  const pending = foundation.flatMap(card=>{
     const times = VOCABULARY_MODE_DIMENSIONS[card.mode].filter(dimension=>progress[dimension].count<required).map(nextSuccess);
-    if (card.mode==='production' && needsProduction) times.push(productionAt);
     if (!times.length) return [];
     const at=Math.max(schedule(card.mode) ?? -Infinity,Math.min(...times));
     return at>now ? [{mode:card.mode,at}] : [];
   }).sort((a,b)=>a.at-b.at);
-  const changeAt = Math.min(upcoming ? schedule(upcoming.mode)! : Infinity,pending[0]?.at ?? Infinity);
+  const availabilityChange = offered.map(card=>schedule(card.mode)).filter((at):at is number=>at!==undefined&&at>now);
+  const changeAt = Math.min(...availabilityChange,pending[0]?.at ?? Infinity);
   const nextChangeAt = Number.isFinite(changeAt) ? new Date(changeAt).toISOString() : undefined;
   const response = (mode: VocabularyMode, reason: VocabularyNextPractice['reason'], skills = VOCABULARY_MODE_DIMENSIONS[mode]): VocabularyNextPractice => ({
     status:'ready',mode,reason,dimensions:[...skills],
@@ -64,30 +64,31 @@ export function getVocabularyNextPractice(
     alternatives:available.filter(card=>card.mode!==mode).map(card=>card.mode),
   });
   for (const error of getActiveVocabularyConfirmedErrors(store,cards,now)) {
-    const mode=VOCABULARY_ERROR_PRACTICE[error.kind].find(mode=>available.some(card=>card.mode===mode));
-    if (mode) return {...response(mode,'error'),error};
+    const remedial = request.foundationMode ? cards.filter(card=>(card.mode==='definition'||card.mode==='dictation')
+      && (schedule(card.mode)===undefined || schedule(card.mode)!<=now)) : available;
+    const mode=VOCABULARY_ERROR_PRACTICE[error.kind].find(mode=>remedial.some(card=>card.mode===mode));
+    if (mode && (!request.foundationMode || request.foundationMode===mode)) return {...response(mode,'error'),error};
   }
-  const recover = available.filter(card=>learning?.wrong?.modes?.[card.mode]?.active)
+  const recover = available.filter(card=>card.mode!=='production'&&learning?.wrong?.modes?.[card.mode]?.active)
     .sort((a,b)=>(schedule(a.mode) ?? now)-(schedule(b.mode) ?? now))[0];
   if (recover) return response(recover.mode,'recovery');
-  const due = available.filter(card=>schedule(card.mode)! <= now)
+  const due = foundationAvailable.filter(card=>schedule(card.mode)! <= now)
     .sort((a,b)=>schedule(a.mode)!-schedule(b.mode)!)[0];
   if (due) return response(due.mode,'due');
   for (const dimension of dimensions) {
     if (progress[dimension].count) continue;
-    const card = available.find(card=>VOCABULARY_MODE_DIMENSIONS[card.mode].includes(dimension));
+    const card = foundationAvailable.find(card=>VOCABULARY_MODE_DIMENSIONS[card.mode].includes(dimension));
     if (card) return response(card.mode,'missing',VOCABULARY_MODE_DIMENSIONS[card.mode].filter(key=>!progress[key].count));
   }
-  if (needsProduction && productionAt<=now && available.some(card=>card.mode==='production')) return response('production','production',['usage']);
   for (const dimension of [...dimensions].sort((a,b)=>progress[a].count-progress[b].count)) {
     if (progress[dimension].count>=required || nextSuccess(dimension)>now) continue;
-    const card=available.find(card=>VOCABULARY_MODE_DIMENSIONS[card.mode].includes(dimension));
+    const card=foundationAvailable.find(card=>VOCABULARY_MODE_DIMENSIONS[card.mode].includes(dimension));
     if (card) return response(card.mode,'spaced',VOCABULARY_MODE_DIMENSIONS[card.mode].filter(key=>progress[key].count<required&&nextSuccess(key)<=now));
   }
   const scheduledAt = upcoming ? schedule(upcoming.mode)! : Infinity;
   if (pending[0] && pending[0].at<scheduledAt) {
     const {mode,at}=pending[0],time=new Date(at).toISOString();
-    return {status:'waiting',mode,reason:mode==='production'&&needsProduction&&productionAt<=at?'production':'spaced',target,dueAt:time,nextChangeAt,dimensions:[...VOCABULARY_MODE_DIMENSIONS[mode]],alternatives:[]};
+    return {status:'waiting',mode,reason:'spaced',target,dueAt:time,nextChangeAt,dimensions:[...VOCABULARY_MODE_DIMENSIONS[mode]],alternatives:[]};
   }
   if (upcoming) return {status:'waiting',mode:upcoming.mode,reason:'due',dueAt:new Date(scheduledAt).toISOString(),nextChangeAt,dimensions:[...VOCABULARY_MODE_DIMENSIONS[upcoming.mode]],alternatives:[]};
 }
