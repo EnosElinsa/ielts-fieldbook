@@ -13,6 +13,9 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
   const { study, explicitEntry, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit, dueOnly, setDue, wrongOnly, setWrong, catalogStatus, queue, unitQueue, books, selectedUnit, selectedBook, chapter, catalogReady, studyReady, resume, recent, changeFilter, changeMode, begin, recover, discardResume, showRecentSession, retryCatalog } = controller;
   const [pickerOpen, setPickerOpen] = useState(false);
   const locked = controller.planRequested;
+  const plannedTarget = controller.boundVocabularyPlan?.target;
+  const plannedBook = plannedTarget?.bookId ? books.find(book => book.id === plannedTarget.bookId) : undefined;
+  const plannedUnit = plannedTarget?.unitId ? controller.units.find(unit => unit.id === plannedTarget.unitId && (!plannedTarget.bookId || unit.bookId === plannedTarget.bookId)) : undefined;
   const specialist = isSpecialistVocabularyMode(mode);
   const launchCount = study || controller.plannedReview ? queue.length : Math.min(preferences.sessionSize, queue.length);
   const preparing = !catalogReady && catalogStatus.status !== 'error';
@@ -46,7 +49,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
         <dl>
           <div><dt>Mode</dt><dd>{controller.boundAssessmentMode ? modeLabel(controller.boundAssessmentMode) : 'Unavailable'}</dd></div>
           <div><dt>Prompts</dt><dd>{controller.boundVocabularyPlan ? `${controller.boundVocabularyPlan.target.cards.length} prompts` : 'Unavailable'}</dd></div>
-          <div><dt>Source</dt><dd>{controller.origin.label.replace(/^Back to /, '')}{selectedBook ? ` · ${selectedBook.title}` : ''}{selectedUnit ? ` / ${selectedUnit.title}` : ''}</dd></div>
+          <div><dt>Source</dt><dd>{controller.origin.label.replace(/^Back to /, '')}{plannedBook ? ` · ${plannedBook.title}` : ''}{plannedUnit ? ` / ${plannedUnit.title}` : ''}</dd></div>
         </dl>
       </section> : <>
       <div className="practice-setup-controls">

@@ -296,6 +296,37 @@ test('planned review exposes its locked mode, full prompt count and origin witho
   expect(readVocabularyDraft(owner.current)?.mode).toBe('definition');
 });
 
+test.each([false, true])('locked source ignores hostile URL wordbook/group and retains only bound scope (scoped=%s)', async scoped => {
+  groupFixture(2);
+  VOCABULARY_CATALOG.books.push({ id: 'unrelated-book', title: 'Unrelated book', contentStatus: 'complete' } as any);
+  VOCABULARY_CATALOG.units.push({ id: 'unrelated-group', bookId: 'unrelated-book', title: 'Unrelated group', kind: 'group', contentStatus: 'complete' } as any);
+  const refs = [{ entryId: 'group-entry-0', senseId: 'group-sense-0' }];
+  fb.current.state.plans = [{ id: 'scope-plan', kind: 'vocabulary', status: 'in_progress', target: { type: 'vocabulary', mode: 'due-review', assessmentMode: 'definition', cards: refs, ...(scoped ? { bookId: 'test-book', unitId: 'test-group' } : {}) } }];
+  mount('?planId=scope-plan&bookId=unrelated-book&unitId=unrelated-group&returnTo=%2Fplanning');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
+  const task = screen.getByRole('region', { name: 'Planned task' });
+  expect(task).toHaveTextContent('Planning');
+  expect(task).not.toHaveTextContent('Unrelated book');
+  expect(task).not.toHaveTextContent('Unrelated group');
+  if (scoped) {
+    expect(task).toHaveTextContent('Test book');
+    expect(task).toHaveTextContent('Group 1');
+  } else {
+    expect(task).not.toHaveTextContent('Test book');
+    expect(task).not.toHaveTextContent('Group 1');
+  }
+  fireEvent.click(screen.getByRole('button', { name: 'Start session' }));
+  expect(readVocabularyDraft(owner.current)?.selection).toMatchObject({ kind: 'planned-review', cards: refs });
+});
+
+test('an empty legacy sessionId keeps free setup available instead of an indefinite results loader', async () => {
+  mount('?sessionId=&dueOnly=false');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
+  expect(screen.queryByText('Loading session results…')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Start session' }));
+  expect(screen.getAllByRole('textbox')).toHaveLength(2);
+});
+
 test.each(['ready', 'error'])('single-word launch distinguishes content preparation from %s outcome', async outcome => {
   let resolve!: () => void, reject!: (error: Error) => void;
   fb.current.loadVocabularyCatalog = vi.fn(() => new Promise<void>((yes, no) => { resolve = yes; reject = no; }));

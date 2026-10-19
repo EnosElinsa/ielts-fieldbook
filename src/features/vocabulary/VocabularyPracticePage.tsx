@@ -22,7 +22,7 @@ export function VocabularyPracticePage() {
   } = controller;
   const location = useLocation();
   const navigate = useNavigate();
-  const resultRequested = /^\/vocabulary\/history\//.test(location.pathname) || new URLSearchParams(location.search).has('sessionId');
+  const resultRequested = /^\/vocabulary\/history\//.test(location.pathname) || Boolean(new URLSearchParams(location.search).get('sessionId'));
   const showSetup = !session && !results && !resultRequested;
   useVocabularyPosition(location.pathname + location.search + location.hash, controller.catalogReady && showSetup);
   return (
