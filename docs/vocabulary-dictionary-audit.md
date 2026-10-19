@@ -2,9 +2,9 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 634 restored source meanings** (51,988 total). This ledger verifies **3096 records** across definition, examples or reading explanations, collocations and distinctions; **48,892 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1205 reviewed distinction exercises and 793 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 5 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 927 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 634 restored source meanings** (51,988 total). This ledger verifies **3125 records** across definition, examples or reading explanations, collocations and distinctions; **48,863 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1220 reviewed distinction exercises and 808 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 6 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 941 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 17 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
-Authored learning-priority metadata classifies 475 general, 177 specialist, 154 historical and 17 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
+Authored learning-priority metadata classifies 488 general, 181 specialist, 164 historical and 17 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
 
 | Term | Reviewed records | Raw + restored records | Pending |
 | --- | ---: | ---: | ---: |
@@ -14,6 +14,7 @@ Authored learning-priority metadata classifies 475 general, 177 specialist, 154 
 | address | 30 | 31 | 1 |
 | admit | 6 | 6 | 0 |
 | adopt | 9 | 9 | 0 |
+| advise | 9 | 9 | 0 |
 | affect | 15 | 15 | 0 |
 | aim | 20 | 20 | 0 |
 | allow | 13 | 13 | 0 |
@@ -46,6 +47,7 @@ Authored learning-priority metadata classifies 475 general, 177 specialist, 154 
 | clear | 49 | 49 | 0 |
 | communicate | 11 | 11 | 0 |
 | compare | 8 | 8 | 0 |
+| conclude | 9 | 9 | 0 |
 | condition | 17 | 17 | 0 |
 | conduct | 14 | 14 | 0 |
 | confirm | 5 | 5 | 0 |
@@ -145,6 +147,7 @@ Authored learning-priority metadata classifies 475 general, 177 specialist, 154 
 | produce | 11 | 11 | 0 |
 | project | 16 | 18 | 2 |
 | proof | 20 | 20 | 0 |
+| propose | 6 | 6 | 0 |
 | prove | 11 | 11 | 0 |
 | purpose | 8 | 8 | 0 |
 | question | 10 | 10 | 0 |
@@ -154,6 +157,7 @@ Authored learning-priority metadata classifies 475 general, 177 specialist, 154 
 | reason | 18 | 18 | 0 |
 | recognise | 1 | 1 | 0 |
 | recognize | 9 | 9 | 0 |
+| recommend | 5 | 5 | 0 |
 | record | 16 | 17 | 1 |
 | reflect | 7 | 7 | 0 |
 | refuse | 9 | 9 | 0 |

@@ -6342,5 +6342,125 @@
     "definition": "An employee subordinate to a particular manager in an organisation.",
     "pos": "noun",
     "kind": "report-employee"
+  },
+  {
+    "entryId": "ve-6b9833e1",
+    "senseId": "kaikki:3af44d12760319fdcf",
+    "term": "propose",
+    "definition": "To put forward a plan, action or idea for consideration.",
+    "pos": "verb",
+    "kind": "propose-plan"
+  },
+  {
+    "entryId": "ve-6b9833e1",
+    "senseId": "kaikki:f8ef790c3a98b6f9c1",
+    "term": "propose",
+    "definition": "To ask someone to marry you.",
+    "pos": "verb",
+    "kind": "propose-marriage"
+  },
+  {
+    "entryId": "ve-6b9833e1",
+    "senseId": "kaikki:3d19d73d35c17eaf91",
+    "term": "propose",
+    "definition": "To intend or plan to do something.",
+    "pos": "verb",
+    "kind": "propose-intention"
+  },
+  {
+    "entryId": "ve-2e100631",
+    "senseId": "kaikki:aa56e8ce0ac50c711b",
+    "term": "recommend",
+    "definition": "To endorse or suggest someone or something as a suitable choice.",
+    "pos": "verb",
+    "kind": "recommend-choice"
+  },
+  {
+    "entryId": "ve-2e100631",
+    "senseId": "kaikki:e4d6b05aa01681d5a9",
+    "term": "recommend",
+    "definition": "To make someone or something attractive, acceptable or worthy of approval.",
+    "pos": "verb",
+    "kind": "recommend-attraction"
+  },
+  {
+    "entryId": "ve-2e100631",
+    "senseId": "kaikki:4adc9d61490a3a8db7",
+    "term": "recommend",
+    "definition": "To advise that an action or course of action should be taken.",
+    "pos": "verb",
+    "kind": "recommend-action"
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:3e949b45d7447cb0e4",
+    "term": "advise",
+    "definition": "To give someone guidance or an opinion about what they should do.",
+    "pos": "verb",
+    "kind": "advise-person"
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:85ed0c4a907d3c20c5",
+    "term": "advise",
+    "definition": "To recommend an action or course of action as advice.",
+    "pos": "verb",
+    "kind": "advise-action"
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:8bf24635e68465918c",
+    "term": "advise",
+    "definition": "To give someone formal information or notice about something.",
+    "pos": "verb",
+    "kind": "advise-notice"
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:456cb680f028e74a55",
+    "term": "advise",
+    "definition": "To provide a sovereign or head of state with information they have requested.",
+    "pos": "verb",
+    "kind": "advise-sovereign"
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:350aefd530e71d92dd",
+    "term": "conclude",
+    "definition": "To come to an end or finish.",
+    "pos": "verb",
+    "kind": "conclude-end"
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:04935053b6531ecbe9",
+    "term": "conclude",
+    "definition": "To bring an activity, discussion or other process to an end.",
+    "pos": "verb",
+    "kind": "conclude-finish"
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:b0b5f5d0b8844b9242",
+    "term": "conclude",
+    "definition": "To bring about or settle something, such as an agreement or bargain.",
+    "pos": "verb",
+    "kind": "conclude-agreement"
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:db5e88da1c6719d35e",
+    "term": "conclude",
+    "definition": "To reach a judgment or decision after considering information or reasons.",
+    "pos": "verb",
+    "kind": "conclude-judgment"
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:f6ea2fbd3b28ce14b2",
+    "term": "conclude",
+    "definition": "In logic, to infer a conclusion from premises or reasons.",
+    "pos": "verb",
+    "kind": "conclude-logic"
   }
 ]

@@ -25754,5 +25754,298 @@
         "attribution": "Fieldbook editorial contributors"
       }
     }
+  },
+  {
+    "entryId": "ve-6b9833e1",
+    "originalSense": {
+      "id": "kaikki:3af44d12760319fdcf",
+      "definition": "To suggest a plan, course of action, etc.",
+      "example": "I propose going to see a film.",
+      "pos": "verb",
+      "synonyms": [
+        "put forth",
+        "suggest",
+        "project",
+        "forthput"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "counterpropose",
+        "prompose",
+        "proposable",
+        "proposal",
+        "proposee",
+        "propose marriage",
+        "proposement",
+        "repropose",
+        "unproposing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/propose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:3af44d12760319fdcf",
+      "definition": "To put forward a plan, action or idea for consideration.",
+      "example": "We propose holding the workshop online, but the committee has not agreed yet.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "propose a plan",
+        "propose doing something",
+        "propose that the date be changed"
+      ],
+      "usage": "Transitive; propose a plan, propose doing something, or propose that something be done. Compare the intention construction propose to do.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/propose#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Propose and suggest can overlap. Propose puts an option forward for consideration; it does not establish agreement or implementation."
+      ],
+      "distinctionTask": {
+        "prompt": "We propose holding the workshop online, but the committee has not agreed. We have _____.",
+        "options": [
+          "put forward an option for consideration",
+          "confirmed a decision already adopted"
+        ],
+        "answer": "put forward an option for consideration",
+        "explanation": "A proposal can still await agreement; proposing does not establish approval."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-2e100631",
+    "originalSense": {
+      "id": "kaikki:aa56e8ce0ac50c711b",
+      "definition": "To bestow commendation on; to represent favorably; to suggest, endorse or encourage as an appropriate choice.",
+      "example": "The board recommends Philips, given his ample experience in similar positions.",
+      "pos": "verb",
+      "synonyms": [
+        "commend"
+      ],
+      "antonyms": [
+        "deprecate",
+        "disapprove",
+        "discourage",
+        "disrecommend",
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "auto-recommend",
+        "misrecommend",
+        "recommendable",
+        "recommendary",
+        "recommendative",
+        "recommendatory",
+        "recommended",
+        "recommendee",
+        "recommender",
+        "rerecommend",
+        "unrecommend"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recommend#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:aa56e8ce0ac50c711b",
+      "definition": "To endorse or suggest someone or something as a suitable choice.",
+      "example": "I recommend this guide to new students because its examples are clear.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "recommend a guide to someone",
+        "recommend someone for a role",
+        "highly recommend"
+      ],
+      "usage": "Transitive; recommend something to someone or recommend someone for a role.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recommend#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Recommend endorses a choice as suitable. It does not guarantee that the choice will suit everyone or achieve a particular result; recommend and suggest can overlap."
+      ],
+      "distinctionTask": {
+        "prompt": "I recommend this guide to new students because its examples are clear. I _____.",
+        "options": [
+          "endorse it as a suitable choice",
+          "guarantee identical results for every reader"
+        ],
+        "answer": "endorse it as a suitable choice",
+        "explanation": "The recommendation gives a reason for a choice without guaranteeing an outcome."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "originalSense": {
+      "id": "kaikki:3e949b45d7447cb0e4",
+      "definition": "To give advice to; to offer an opinion to, as worthy or expedient to be followed.",
+      "example": "The dentist advised me to brush three times a day.",
+      "pos": "verb",
+      "synonyms": [
+        "counsel",
+        "warn"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "advice",
+        "advisable",
+        "advise against",
+        "advisee",
+        "advisement",
+        "adviser",
+        "advisingly",
+        "advisive",
+        "advisor",
+        "advisory",
+        "counteradvise",
+        "disadvise",
+        "foreadvise",
+        "misadvise",
+        "readvise",
+        "unadvise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/advise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:3e949b45d7447cb0e4",
+      "definition": "To give someone guidance or an opinion about what they should do.",
+      "example": "We advise new students to check the course requirements before applying.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "advise someone to do something",
+        "advise someone against doing something",
+        "advise someone on a choice"
+      ],
+      "usage": "Transitive; advise a person to do something, or advise a person against doing something.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/advise#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Advise is the verb; advice is normally an uncountable noun. Advising someone to act does not establish that they followed the advice or that the advice is correct."
+      ],
+      "distinctionTask": {
+        "prompt": "Complete the guidance to a person: ‘We advise new students _____ the requirements.’",
+        "options": [
+          "to check",
+          "check"
+        ],
+        "answer": "to check",
+        "explanation": "The pattern is advise someone to do something."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "originalSense": {
+      "id": "kaikki:db5e88da1c6719d35e",
+      "definition": "To come to a conclusion, to a final decision.",
+      "example": "From the evidence, I conclude that this man was murdered.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "begin",
+        "initiate",
+        "start",
+        "commence"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "concludable",
+        "concluder",
+        "concludible",
+        "conclusible",
+        "inconcludability",
+        "misconclude",
+        "reconclude",
+        "unconcluded"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conclude#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "sense": {
+      "id": "kaikki:db5e88da1c6719d35e",
+      "definition": "To reach a judgment or decision after considering information or reasons.",
+      "example": "From the small sample, we conclude that further research is needed.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "conclude that",
+        "conclude from the evidence",
+        "conclude on the basis of"
+      ],
+      "usage": "Often conclude that something is the case, or conclude something from stated information.",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conclude#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Conclude reports a reached judgment; it does not guarantee that the judgment is correct or fully supported. The stated conclusion here calls for more research and does not assert a causal mechanism."
+      ],
+      "distinctionTask": {
+        "prompt": "‘From the small sample, we conclude that further research is needed’ reports _____.",
+        "options": [
+          "a judgment reached from information",
+          "proof that every possible conclusion is correct"
+        ],
+        "answer": "a judgment reached from information",
+        "explanation": "The verb identifies the act of reaching a judgment; its accuracy still depends on the reasoning and information."
+      },
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    }
   }
 ]

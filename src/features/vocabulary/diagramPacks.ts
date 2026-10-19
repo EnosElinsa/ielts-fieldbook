@@ -2,6 +2,21 @@ import type { VocabularyDiagramPack } from './diagramTypes';
 
 export type VocabularyDiagramPackId = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "i" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w";
 const kinds: Readonly<Record<string, VocabularyDiagramPackId>> = {
+  "propose-plan": "p",
+  "propose-marriage": "p",
+  "propose-intention": "p",
+  "recommend-choice": "r",
+  "recommend-attraction": "r",
+  "recommend-action": "r",
+  "advise-person": "a",
+  "advise-action": "a",
+  "advise-notice": "a",
+  "advise-sovereign": "a",
+  "conclude-end": "c",
+  "conclude-finish": "c",
+  "conclude-agreement": "c",
+  "conclude-judgment": "c",
+  "conclude-logic": "c",
   "communicate-information": "c",
   "communicate-quality": "c",
   "communicate-infection": "c",

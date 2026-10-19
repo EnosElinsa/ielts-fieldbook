@@ -236206,5 +236206,1759 @@
     "antonyms": [],
     "wordFamily": [],
     "register": ""
+  },
+  {
+    "entryId": "ve-6b9833e1",
+    "senseId": "kaikki:3af44d12760319fdcf",
+    "definition": "To put forward a plan, action or idea for consideration.",
+    "example": "We propose holding the workshop online, but the committee has not agreed yet.",
+    "collocations": [
+      "propose a plan",
+      "propose doing something",
+      "propose that the date be changed"
+    ],
+    "distinctions": [
+      "Propose and suggest can overlap. Propose puts an option forward for consideration; it does not establish agreement or implementation."
+    ],
+    "usage": "Transitive; propose a plan, propose doing something, or propose that something be done. Compare the intention construction propose to do.",
+    "originalSense": {
+      "id": "kaikki:3af44d12760319fdcf",
+      "definition": "To suggest a plan, course of action, etc.",
+      "example": "I propose going to see a film.",
+      "pos": "verb",
+      "synonyms": [
+        "put forth",
+        "suggest",
+        "project",
+        "forthput"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "counterpropose",
+        "prompose",
+        "proposable",
+        "proposal",
+        "proposee",
+        "propose marriage",
+        "proposement",
+        "repropose",
+        "unproposing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/propose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=propose&oldid=93519209",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "We propose holding the workshop online, but the committee has not agreed. We have _____.",
+      "options": [
+        "put forward an option for consideration",
+        "confirmed a decision already adopted"
+      ],
+      "answer": "put forward an option for consideration",
+      "explanation": "A proposal can still await agreement; proposing does not establish approval."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6b9833e1",
+    "senseId": "kaikki:f8ef790c3a98b6f9c1",
+    "definition": "To ask someone to marry you.",
+    "example": "He plans to propose to his partner tonight; their answer is still unknown.",
+    "collocations": [
+      "propose to someone",
+      "propose marriage",
+      "decide to propose"
+    ],
+    "distinctions": [
+      "Propose to someone can mean ask that person to marry you. A proposal does not establish acceptance or a completed marriage. Propose to do something can instead express intention."
+    ],
+    "usage": "Intransitive, optionally followed by to and the person; the marriage meaning must come from context.",
+    "originalSense": {
+      "id": "kaikki:f8ef790c3a98b6f9c1",
+      "definition": "To ask for a person's hand in marriage.",
+      "example": "He proposed to her last night and she accepted him.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "sometimes, with-to",
+      "register": "intransitive, sometimes, with-to",
+      "wordFamily": [
+        "counterpropose",
+        "prompose",
+        "proposable",
+        "proposal",
+        "proposee",
+        "propose marriage",
+        "proposement",
+        "repropose",
+        "unproposing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/propose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=propose&oldid=93519209",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "He will propose to his partner by asking, ‘Will you marry me?’ He intends to _____.",
+      "options": [
+        "ask for agreement to marry",
+        "report that the wedding has already happened"
+      ],
+      "answer": "ask for agreement to marry",
+      "explanation": "The quoted question requests marriage; it does not supply the partner’s answer."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6b9833e1",
+    "senseId": "kaikki:3d19d73d35c17eaf91",
+    "definition": "To intend or plan to do something.",
+    "example": "In the next section, I propose to examine the survey’s limitations.",
+    "collocations": [
+      "propose to examine",
+      "propose to do something",
+      "what do you propose to do?"
+    ],
+    "distinctions": [
+      "Propose to examine states what the speaker intends to do. It does not mean asking the survey to marry, or necessarily asking a committee to approve a proposal. Intention does not establish completion."
+    ],
+    "usage": "Often formal; propose followed by a to-infinitive expresses intention.",
+    "originalSense": {
+      "id": "kaikki:3d19d73d35c17eaf91",
+      "definition": "To intend.",
+      "example": "He proposes to set up his own business.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "counterpropose",
+        "prompose",
+        "proposable",
+        "proposal",
+        "proposee",
+        "propose marriage",
+        "proposement",
+        "repropose",
+        "unproposing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/propose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=propose&oldid=93519209",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "‘In the next section, I propose to examine the limitations’ means I _____.",
+      "options": [
+        "intend to examine them",
+        "have already completed the examination"
+      ],
+      "answer": "intend to examine them",
+      "explanation": "The to-infinitive identifies a planned action, rather than a completed result."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6b9833e1",
+    "senseId": "kaikki:323834cd97c30d6875",
+    "definition": "To talk or converse, in an obsolete use.",
+    "example": "In the source’s Shakespeare passage, ‘Proposing with the prince and Claudio’ describes conversing with them, rather than putting forward a plan or asking to marry.",
+    "collocations": [
+      "Source pattern: proposing with someone",
+      "Historical reading: converse with",
+      "Source phrase: Proposing with the prince"
+    ],
+    "distinctions": [
+      "The source explicitly labels this talking meaning obsolete. The modern marriage construction propose to someone is a separate meaning; with in the quoted passage accompanies conversation."
+    ],
+    "usage": "Obsolete in the checked source; reading guidance for its attested converse meaning.",
+    "originalSense": {
+      "id": "kaikki:323834cd97c30d6875",
+      "definition": "To talk; to converse.",
+      "example": "HERO. Good Margaret, run thee to the parlour;\nThere shalt thou find my cousin Beatrice\nProposing with the prince and Claudio",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "counterpropose",
+        "prompose",
+        "proposable",
+        "proposal",
+        "proposee",
+        "propose marriage",
+        "proposement",
+        "repropose",
+        "unproposing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/propose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=propose&oldid=93519209",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6b9833e1",
+    "senseId": "kaikki:10262d03944223d5b4",
+    "definition": "To set something forth or place it before someone, in an obsolete use.",
+    "example": "In the source’s Chapman passage, the heavy cup is ‘propos’d brimful of wine’: it is set forth full of wine, rather than suggesting that someone fill it later.",
+    "collocations": [
+      "Source phrase: propos’d brimful of wine",
+      "Historical reading: set forth",
+      "Source object: the cup"
+    ],
+    "distinctions": [
+      "The cup provides the physical context for set forth. This source-labelled obsolete meaning is separate from the current meaning of presenting a plan for consideration."
+    ],
+    "usage": "Obsolete in the checked source; the source quotation retains the historical spelling propos’d.",
+    "originalSense": {
+      "id": "kaikki:10262d03944223d5b4",
+      "definition": "To set forth.",
+      "example": "[…]so weighty was the cup,\nThat being propos'd brimful of wine, one scarce could lift it up.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "counterpropose",
+        "prompose",
+        "proposable",
+        "proposal",
+        "proposee",
+        "propose marriage",
+        "proposement",
+        "repropose",
+        "unproposing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/propose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=propose&oldid=93519209",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-6b9833e1",
+    "senseId": "kaikki:4f51d00611ee088fb0",
+    "definition": "An objective or aim, in an obsolete noun use.",
+    "example": "In the source’s Florio passage, ‘She hath attained her propose’ means that she has achieved her aim. Propose is a noun in that passage.",
+    "collocations": [
+      "Source phrase: attained her propose",
+      "Historical noun: an aim",
+      "Historical reading: attain an objective"
+    ],
+    "distinctions": [
+      "The obsolete noun means an aim; it is not an instruction to use propose instead of proposal for a present-day plan submitted for consideration."
+    ],
+    "usage": "Obsolete countable noun in the checked source; retain the distinction from the valid modern verb.",
+    "originalSense": {
+      "id": "kaikki:4f51d00611ee088fb0",
+      "definition": "An objective or aim.",
+      "example": "whose aime hath beene to make us not good and wittie, but wise and learned; She hath attained her propose.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "counterpropose",
+        "prompose",
+        "proposable",
+        "proposal",
+        "proposee",
+        "propose marriage",
+        "proposement",
+        "repropose",
+        "unproposing"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/propose#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=propose&oldid=93519209",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-2e100631",
+    "senseId": "kaikki:aa56e8ce0ac50c711b",
+    "definition": "To endorse or suggest someone or something as a suitable choice.",
+    "example": "I recommend this guide to new students because its examples are clear.",
+    "collocations": [
+      "recommend a guide to someone",
+      "recommend someone for a role",
+      "highly recommend"
+    ],
+    "distinctions": [
+      "Recommend endorses a choice as suitable. It does not guarantee that the choice will suit everyone or achieve a particular result; recommend and suggest can overlap."
+    ],
+    "usage": "Transitive; recommend something to someone or recommend someone for a role.",
+    "originalSense": {
+      "id": "kaikki:aa56e8ce0ac50c711b",
+      "definition": "To bestow commendation on; to represent favorably; to suggest, endorse or encourage as an appropriate choice.",
+      "example": "The board recommends Philips, given his ample experience in similar positions.",
+      "pos": "verb",
+      "synonyms": [
+        "commend"
+      ],
+      "antonyms": [
+        "deprecate",
+        "disapprove",
+        "discourage",
+        "disrecommend",
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "auto-recommend",
+        "misrecommend",
+        "recommendable",
+        "recommendary",
+        "recommendative",
+        "recommendatory",
+        "recommended",
+        "recommendee",
+        "recommender",
+        "rerecommend",
+        "unrecommend"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recommend#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recommend&oldid=93603188",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "I recommend this guide to new students because its examples are clear. I _____.",
+      "options": [
+        "endorse it as a suitable choice",
+        "guarantee identical results for every reader"
+      ],
+      "answer": "endorse it as a suitable choice",
+      "explanation": "The recommendation gives a reason for a choice without guaranteeing an outcome."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-2e100631",
+    "senseId": "kaikki:e4d6b05aa01681d5a9",
+    "definition": "To make someone or something attractive, acceptable or worthy of approval.",
+    "example": "The flat has little to recommend it apart from its low rent.",
+    "collocations": [
+      "have much to recommend it",
+      "have little to recommend it",
+      "a feature that recommends something"
+    ],
+    "distinctions": [
+      "In have little to recommend it, features make the flat attractive or worthy of approval. The flat is not a person giving advice, and the sentence does not say it lacks every positive feature."
+    ],
+    "usage": "Transitive; especially in have much/little to recommend someone or something.",
+    "originalSense": {
+      "id": "kaikki:e4d6b05aa01681d5a9",
+      "definition": "To make acceptable; to attract favor to.",
+      "example": "A city that has much to recommend it.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "deprecate",
+        "disapprove",
+        "discourage",
+        "disrecommend",
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "auto-recommend",
+        "misrecommend",
+        "recommendable",
+        "recommendary",
+        "recommendative",
+        "recommendatory",
+        "recommended",
+        "recommendee",
+        "recommender",
+        "rerecommend",
+        "unrecommend"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recommend#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recommend&oldid=93603188",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The flat has little to recommend it apart from low rent. It has _____.",
+      "options": [
+        "few attractive features",
+        "little ability to give spoken advice"
+      ],
+      "answer": "few attractive features",
+      "explanation": "Recommend it refers to features that favour the flat as a choice."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-2e100631",
+    "senseId": "kaikki:4adc9d61490a3a8db7",
+    "definition": "To advise that an action or course of action should be taken.",
+    "example": "We recommend checking the opening hours before you travel.",
+    "collocations": [
+      "recommend doing something",
+      "recommend that you check",
+      "recommend against doing something"
+    ],
+    "distinctions": [
+      "A recommendation is advice, not a command or confirmation that the action occurred. For this example, recommend checking and recommend that you check are useful patterns; advise someone to check expresses the recipient directly."
+    ],
+    "usage": "Recommend an -ing action or a that-clause when advising a course of action.",
+    "originalSense": {
+      "id": "kaikki:4adc9d61490a3a8db7",
+      "definition": "To advise, propose, counsel favorably.",
+      "example": "The therapist recommends resting the mind and exercising the body.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "deprecate",
+        "disapprove",
+        "discourage",
+        "disrecommend",
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "auto-recommend",
+        "misrecommend",
+        "recommendable",
+        "recommendary",
+        "recommendative",
+        "recommendatory",
+        "recommended",
+        "recommendee",
+        "recommender",
+        "rerecommend",
+        "unrecommend"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recommend#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recommend&oldid=93603188",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "To advise an action, complete ‘We recommend _____ the opening hours before travelling.’",
+      "options": [
+        "checking",
+        "to checking"
+      ],
+      "answer": "checking",
+      "explanation": "Recommend can take an -ing clause; to checking does not fit this construction."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-2e100631",
+    "senseId": "kaikki:b765827b39243476d2",
+    "definition": "To entrust someone or something to another’s care or favourable acceptance, in an archaic use.",
+    "example": "The source’s archaic example describes parents committing a medieval oblate to God and a monastery. It concerns entrusting to care or acceptance, rather than a modern review of a service.",
+    "collocations": [
+      "Historical pattern: recommend someone to another’s care",
+      "Historical reading: entrust to",
+      "Source context: God and the monastery"
+    ],
+    "distinctions": [
+      "The checked source labels this entrusting meaning archaic. It is distinct from simply recommending someone as a candidate, though the meanings share favourable presentation."
+    ],
+    "usage": "Archaic transitive meaning in the checked source; reading guidance retains the source’s entrusting context.",
+    "originalSense": {
+      "id": "kaikki:b765827b39243476d2",
+      "definition": "To commit, to confide to another's care, confidence or acceptance, with favoring representations.",
+      "example": "A medieval oblate's parents recommended the boy for life to God and the monastery.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "deprecate",
+        "disapprove",
+        "discourage",
+        "disrecommend",
+        "oppose"
+      ],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, transitive",
+      "wordFamily": [
+        "auto-recommend",
+        "misrecommend",
+        "recommendable",
+        "recommendary",
+        "recommendative",
+        "recommendatory",
+        "recommended",
+        "recommendee",
+        "recommender",
+        "rerecommend",
+        "unrecommend"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recommend#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recommend&oldid=93603188",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-2e100631",
+    "senseId": "kaikki:a26aa9fc5a02d41740",
+    "definition": "A recommendation, in a colloquial noun use.",
+    "example": "In the source’s Kipling passage, ‘a recommend from that quarter’ is a recommendation received from a particular source. The dictionary labels this noun colloquial, rather than a misspelling.",
+    "collocations": [
+      "Source phrase: a recommend",
+      "Source phrase: a recommend from that quarter",
+      "Reading equivalent: a recommendation"
+    ],
+    "distinctions": [
+      "Recommend is normally learned first as a verb, while recommendation is the ordinary noun. Preserve this separately attested colloquial noun without relabelling it a spelling error or inferring an obsolete label from the quotation’s age."
+    ],
+    "usage": "Colloquial countable noun in the checked source; recommendation is the ordinary noun for general learning.",
+    "originalSense": {
+      "id": "kaikki:a26aa9fc5a02d41740",
+      "definition": "A recommendation.",
+      "example": "\"I'm glad to have a recommend from that quarter. Airheart's skipper of the San Jose now. […]\"",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "colloquial",
+      "register": "colloquial",
+      "wordFamily": [
+        "auto-recommend",
+        "misrecommend",
+        "recommendable",
+        "recommendary",
+        "recommendative",
+        "recommendatory",
+        "recommended",
+        "recommendee",
+        "recommender",
+        "rerecommend",
+        "unrecommend"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/recommend#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=recommend&oldid=93603188",
+    "exampleKind": "reading-note",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:3e949b45d7447cb0e4",
+    "definition": "To give someone guidance or an opinion about what they should do.",
+    "example": "We advise new students to check the course requirements before applying.",
+    "collocations": [
+      "advise someone to do something",
+      "advise someone against doing something",
+      "advise someone on a choice"
+    ],
+    "distinctions": [
+      "Advise is the verb; advice is normally an uncountable noun. Advising someone to act does not establish that they followed the advice or that the advice is correct."
+    ],
+    "usage": "Transitive; advise a person to do something, or advise a person against doing something.",
+    "originalSense": {
+      "id": "kaikki:3e949b45d7447cb0e4",
+      "definition": "To give advice to; to offer an opinion to, as worthy or expedient to be followed.",
+      "example": "The dentist advised me to brush three times a day.",
+      "pos": "verb",
+      "synonyms": [
+        "counsel",
+        "warn"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "advice",
+        "advisable",
+        "advise against",
+        "advisee",
+        "advisement",
+        "adviser",
+        "advisingly",
+        "advisive",
+        "advisor",
+        "advisory",
+        "counteradvise",
+        "disadvise",
+        "foreadvise",
+        "misadvise",
+        "readvise",
+        "unadvise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/advise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=advise&oldid=93500411",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Complete the guidance to a person: ‘We advise new students _____ the requirements.’",
+      "options": [
+        "to check",
+        "check"
+      ],
+      "answer": "to check",
+      "explanation": "The pattern is advise someone to do something."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:85ed0c4a907d3c20c5",
+    "definition": "To recommend an action or course of action as advice.",
+    "example": "We advise checking the course requirements before applying.",
+    "collocations": [
+      "advise doing something",
+      "advise caution",
+      "advise against an action"
+    ],
+    "distinctions": [
+      "Advise checking gives the action directly; advise new students to check identifies the recipient. Both are advice, rather than notice that the requirements have changed."
+    ],
+    "usage": "Transitive; an action, including an -ing clause, can be the object of advise.",
+    "originalSense": {
+      "id": "kaikki:85ed0c4a907d3c20c5",
+      "definition": "To recommend; to offer as advice.",
+      "example": "The dentist advised brushing three times a day.",
+      "pos": "verb",
+      "synonyms": [
+        "admonish",
+        "adjure",
+        "advise",
+        "advocate",
+        "counsel",
+        "encourage",
+        "urge",
+        "exhort",
+        "prompt",
+        "recommend",
+        "suggest",
+        "tip",
+        "warn"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "advice",
+        "advisable",
+        "advise against",
+        "advisee",
+        "advisement",
+        "adviser",
+        "advisingly",
+        "advisive",
+        "advisor",
+        "advisory",
+        "counteradvise",
+        "disadvise",
+        "foreadvise",
+        "misadvise",
+        "readvise",
+        "unadvise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/advise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=advise&oldid=93500411",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In ‘We advise checking the requirements’, checking identifies _____.",
+      "options": [
+        "the recommended action",
+        "the person receiving advice"
+      ],
+      "answer": "the recommended action",
+      "explanation": "The -ing clause names the action being advised, while no recipient is expressed."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:8bf24635e68465918c",
+    "definition": "To give someone formal information or notice about something.",
+    "example": "Staff will advise passengers of the platform change before departure.",
+    "collocations": [
+      "advise someone of a change",
+      "advise someone that",
+      "please advise"
+    ],
+    "distinctions": [
+      "This use notifies someone of information; it does not recommend that they cause the platform change. Useful formal patterns include advise someone of a change and advise someone that a change has occurred."
+    ],
+    "usage": "Transitive and formal; advise someone of something, or advise someone that something is the case.",
+    "originalSense": {
+      "id": "kaikki:8bf24635e68465918c",
+      "definition": "To formally give information or notice to; to inform or counsel.",
+      "example": "We were advised of the risk.",
+      "pos": "verb",
+      "synonyms": [
+        "inform",
+        "notify",
+        "acquaint",
+        "advise",
+        "apprise",
+        "discuss",
+        "enlighten",
+        "impart",
+        "inform",
+        "keep informed",
+        "let know",
+        "notify",
+        "tell"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "advice",
+        "advisable",
+        "advise against",
+        "advisee",
+        "advisement",
+        "adviser",
+        "advisingly",
+        "advisive",
+        "advisor",
+        "advisory",
+        "counteradvise",
+        "disadvise",
+        "foreadvise",
+        "misadvise",
+        "readvise",
+        "unadvise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/advise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=advise&oldid=93500411",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "Staff will advise passengers of the platform change. Advise means _____.",
+      "options": [
+        "formally notify them",
+        "recommend that they move the railway platform"
+      ],
+      "answer": "formally notify them",
+      "explanation": "The object of of is information to communicate, rather than an action the passengers are being urged to cause."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:835220468ed2981672",
+    "definition": "To consider or deliberate, in an archaic use.",
+    "example": "In the source’s Carlyle passage, the king is ‘advising of it for a moment’: he is considering the matter before ordering what should happen next.",
+    "collocations": [
+      "Source phrase: advising of it",
+      "Historical pattern: advise of a matter",
+      "Reading equivalent: deliberate"
+    ],
+    "distinctions": [
+      "The king is the person considering, rather than a person receiving a notification in the modern passive be advised of something. Keep the archaic intransitive construction separate."
+    ],
+    "usage": "Archaic intransitive meaning in the checked source, with of.",
+    "originalSense": {
+      "id": "kaikki:835220468ed2981672",
+      "definition": "To consider, to deliberate.",
+      "example": "[…] Samson is reported to the King accordingly. His Majesty, advising of it for a moment, orders that Samson be brought in with the other Twelve.",
+      "pos": "verb",
+      "synonyms": [
+        "admonish",
+        "adjure",
+        "advise",
+        "advocate",
+        "counsel",
+        "encourage",
+        "urge",
+        "exhort",
+        "prompt",
+        "recommend",
+        "suggest",
+        "tip",
+        "warn"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "archaic",
+      "register": "archaic, intransitive",
+      "wordFamily": [
+        "advice",
+        "advisable",
+        "advise against",
+        "advisee",
+        "advisement",
+        "adviser",
+        "advisingly",
+        "advisive",
+        "advisor",
+        "advisory",
+        "counteradvise",
+        "disadvise",
+        "foreadvise",
+        "misadvise",
+        "readvise",
+        "unadvise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/advise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=advise&oldid=93500411",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:57913890e684552c53",
+    "definition": "To see, watch or look at something, in an obsolete use.",
+    "example": "In the source’s Spenser passage, the historical form ‘auiz’d’ describes seeing the villain. The passage does not describe giving the villain advice.",
+    "collocations": [
+      "Source form: auiz’d",
+      "Source object: that villain",
+      "Historical reading: see or watch"
+    ],
+    "distinctions": [
+      "The checked source explicitly labels this perception meaning obsolete. Historical spelling in the quotation is evidence for that passage, not a proposed current spelling rule."
+    ],
+    "usage": "Obsolete transitive meaning in the checked source; reading guidance retains the source form.",
+    "originalSense": {
+      "id": "kaikki:57913890e684552c53",
+      "definition": "To look at, watch; to see.",
+      "example": "when that villain he auiz'd, which late / Affrighted had the fairest Florimell, / Full of fiers fury, and indignant hate, / To him he turned […]",
+      "pos": "verb",
+      "synonyms": [
+        "admonish",
+        "adjure",
+        "advise",
+        "advocate",
+        "counsel",
+        "encourage",
+        "urge",
+        "exhort",
+        "prompt",
+        "recommend",
+        "suggest",
+        "tip",
+        "warn"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete, transitive",
+      "wordFamily": [
+        "advice",
+        "advisable",
+        "advise against",
+        "advisee",
+        "advisement",
+        "adviser",
+        "advisingly",
+        "advisive",
+        "advisor",
+        "advisory",
+        "counteradvise",
+        "disadvise",
+        "foreadvise",
+        "misadvise",
+        "readvise",
+        "unadvise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/advise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=advise&oldid=93500411",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:e44d27ff7c73da819a",
+    "definition": "To consult with someone, in an obsolete use.",
+    "example": "In the source’s Duclos passage, ‘the king advised with his council’ describes consulting the council about a course of action.",
+    "collocations": [
+      "Source phrase: advised with his council",
+      "Historical pattern: advise with someone",
+      "Reading equivalent: consult with"
+    ],
+    "distinctions": [
+      "This obsolete intransitive advise with means consult. It is distinct from the present-day transitive construction advise the council to act, in which the council receives guidance."
+    ],
+    "usage": "Obsolete intransitive meaning in the checked source, with with.",
+    "originalSense": {
+      "id": "kaikki:e44d27ff7c73da819a",
+      "definition": "To consult (with).",
+      "example": "The armies drawing constantly nearer to each other, the king advised with his council, whether he should march against the Britons, or sall upon the count of Gharolois.",
+      "pos": "verb",
+      "synonyms": [
+        "admonish",
+        "adjure",
+        "advise",
+        "advocate",
+        "counsel",
+        "encourage",
+        "urge",
+        "exhort",
+        "prompt",
+        "recommend",
+        "suggest",
+        "tip",
+        "warn"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "intransitive, obsolete",
+      "wordFamily": [
+        "advice",
+        "advisable",
+        "advise against",
+        "advisee",
+        "advisement",
+        "adviser",
+        "advisingly",
+        "advisive",
+        "advisor",
+        "advisory",
+        "counteradvise",
+        "disadvise",
+        "foreadvise",
+        "misadvise",
+        "readvise",
+        "unadvise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/advise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=advise&oldid=93500411",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:ea2c0ca185c761ce26",
+    "definition": "In Scots law, to deliver judgment after a case has been reserved for further consideration.",
+    "example": "The Dictionary of the Scots Language explains the legal use as delivering judgment after further consideration. Its 1863 example says that a case “was advised” after being heard again; this is reading guidance for that specialised use.",
+    "collocations": [
+      "Scots legal pattern: a case was advised",
+      "Source phrase: finally advised",
+      "Scots legal context: deliver judgment"
+    ],
+    "distinctions": [
+      "This is a Scots legal sense, not ordinary advice offered to a client. The dictionary’s historical citations establish its recorded meaning; they do not supply a universal current procedure or a rule about which party wins."
+    ],
+    "usage": "Scots law in the checked Wiktionary revision and the Dictionary of the Scots Language; specialist reading guidance without an inferred obsolete label.",
+    "originalSense": {
+      "id": "kaikki:ea2c0ca185c761ce26",
+      "definition": "To deliver judgment after a case has been reserved for further consideration.",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [
+        "admonish",
+        "adjure",
+        "advise",
+        "advocate",
+        "counsel",
+        "encourage",
+        "urge",
+        "exhort",
+        "prompt",
+        "recommend",
+        "suggest",
+        "tip",
+        "warn"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "advice",
+        "advisable",
+        "advise against",
+        "advisee",
+        "advisement",
+        "adviser",
+        "advisingly",
+        "advisive",
+        "advisor",
+        "advisory",
+        "counteradvise",
+        "disadvise",
+        "foreadvise",
+        "misadvise",
+        "readvise",
+        "unadvise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/advise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=advise&oldid=93500411",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:456cb680f028e74a55",
+    "definition": "To provide a sovereign or head of state with information they have requested.",
+    "example": "At the monarch’s request, the secretary will advise her of the revised timetable.",
+    "collocations": [
+      "advise a sovereign of something",
+      "advise the head of state that",
+      "provide requested information"
+    ],
+    "distinctions": [
+      "This narrowly defined formal sense includes a prior request for information. The source’s contrast with inform is not a general rule prohibiting inform in every context involving a head of state."
+    ],
+    "usage": "Formal transitive meaning scoped here to requested information for a sovereign or head of state; no constitutional power or binding direction is implied.",
+    "originalSense": {
+      "id": "kaikki:456cb680f028e74a55",
+      "definition": "To provide information to a sovereign or head of state which they have previously asked for.",
+      "example": "Empress, I advise you that your audience with the Prime Minister is in 15 minutes, ma'am.",
+      "pos": "verb",
+      "synonyms": [
+        "admonish",
+        "adjure",
+        "advise",
+        "advocate",
+        "counsel",
+        "encourage",
+        "urge",
+        "exhort",
+        "prompt",
+        "recommend",
+        "suggest",
+        "tip",
+        "warn"
+      ],
+      "antonyms": [
+        "inform"
+      ],
+      "collocations": [],
+      "usage": "formal",
+      "register": "formal, transitive",
+      "wordFamily": [
+        "advice",
+        "advisable",
+        "advise against",
+        "advisee",
+        "advisement",
+        "adviser",
+        "advisingly",
+        "advisive",
+        "advisor",
+        "advisory",
+        "counteradvise",
+        "disadvise",
+        "foreadvise",
+        "misadvise",
+        "readvise",
+        "unadvise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/advise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=advise&oldid=93500411",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "At the monarch’s request, the secretary will advise her of the timetable. This supplies _____.",
+      "options": [
+        "information she previously requested",
+        "a command requiring her to change it"
+      ],
+      "answer": "information she previously requested",
+      "explanation": "This exact source sense concerns requested information, not an instruction or a constitutional rule."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-4dc2d2c9",
+    "senseId": "kaikki:1307af1ffb0ec17596",
+    "definition": "A misspelling of the noun advice.",
+    "example": "This imported noun record is a spelling reference: the ordinary noun is advice, while advise is a valid verb. It is not a second standard noun spelling.",
+    "collocations": [
+      "Correct noun: some advice",
+      "Correct noun: a piece of advice",
+      "Valid verb: advise someone"
+    ],
+    "distinctions": [
+      "Preserve the source’s misspelling record for recognition without treating it as a new practice meaning. The valid verb advise and the noun advice remain distinct."
+    ],
+    "usage": "Spelling reference only; advise is a valid verb, while the ordinary noun is advice.",
+    "originalSense": {
+      "id": "kaikki:1307af1ffb0ec17596",
+      "definition": "Misspelling of advice.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "alt-of, misspelling",
+      "register": "alt-of, misspelling",
+      "wordFamily": [
+        "advice",
+        "advisable",
+        "advise against",
+        "advisee",
+        "advisement",
+        "adviser",
+        "advisingly",
+        "advisive",
+        "advisor",
+        "advisory",
+        "counteradvise",
+        "disadvise",
+        "foreadvise",
+        "misadvise",
+        "readvise",
+        "unadvise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/advise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=advise&oldid=93500411",
+    "exampleKind": "reading-note",
+    "referenceOnly": true,
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:350aefd530e71d92dd",
+    "definition": "To come to an end or finish.",
+    "example": "The afternoon seminars conclude at four o’clock.",
+    "collocations": [
+      "conclude at a time",
+      "conclude with a discussion",
+      "the meeting will conclude"
+    ],
+    "distinctions": [
+      "The seminars themselves come to an end; no direct object follows conclude. This differs from a chair concluding a seminar, which names what the chair ends."
+    ],
+    "usage": "Intransitive ending meaning; the event is the subject.",
+    "originalSense": {
+      "id": "kaikki:350aefd530e71d92dd",
+      "definition": "To end; to come to an end.",
+      "example": "The story concluded with a moral.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "begin",
+        "initiate",
+        "start",
+        "commence"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "concludable",
+        "concluder",
+        "concludible",
+        "conclusible",
+        "inconcludability",
+        "misconclude",
+        "reconclude",
+        "unconcluded"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conclude#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=conclude&oldid=93388865",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "In ‘The seminars conclude at four’, conclude describes _____.",
+      "options": [
+        "the seminars coming to an end",
+        "a decision about whether the seminars are true"
+      ],
+      "answer": "the seminars coming to an end",
+      "explanation": "The event is the subject, and at four gives its ending time."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:04935053b6531ecbe9",
+    "definition": "To bring an activity, discussion or other process to an end.",
+    "example": "The chair will conclude the seminar with a short summary.",
+    "collocations": [
+      "conclude a meeting",
+      "conclude a speech with",
+      "conclude the discussion"
+    ],
+    "distinctions": [
+      "The chair ends the seminar; the seminar is the direct object. Concluding a discussion does not establish that everyone agrees with its conclusions."
+    ],
+    "usage": "Transitive ending meaning; conclude something, often with a final activity.",
+    "originalSense": {
+      "id": "kaikki:04935053b6531ecbe9",
+      "definition": "To bring to an end; to close; to finish.",
+      "example": "I will conclude this part with the speech of a counsellor of state.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "begin",
+        "initiate",
+        "start",
+        "commence"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "concludable",
+        "concluder",
+        "concludible",
+        "conclusible",
+        "inconcludability",
+        "misconclude",
+        "reconclude",
+        "unconcluded"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conclude#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=conclude&oldid=93388865",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The chair will conclude the seminar with a short summary. The chair will _____.",
+      "options": [
+        "bring the seminar to an end",
+        "guarantee agreement on every point"
+      ],
+      "answer": "bring the seminar to an end",
+      "explanation": "This transitive use names the activity being ended."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:b0b5f5d0b8844b9242",
+    "definition": "To bring about or settle something, such as an agreement or bargain.",
+    "example": "The two companies hope to conclude a supply agreement next week.",
+    "collocations": [
+      "conclude an agreement",
+      "conclude a bargain",
+      "conclude a treaty"
+    ],
+    "distinctions": [
+      "Concluding an agreement means reaching or settling it, not ending an existing agreement. Hope to leaves the outcome open; even a concluded agreement does not by itself establish completed performance."
+    ],
+    "usage": "Transitive; common with agreement, bargain or treaty. The source’s broader effect or make meaning is retained.",
+    "originalSense": {
+      "id": "kaikki:b0b5f5d0b8844b9242",
+      "definition": "To bring about as a result; to effect; to make.",
+      "example": "to conclude a bargain",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "begin",
+        "initiate",
+        "start",
+        "commence"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "concludable",
+        "concluder",
+        "concludible",
+        "conclusible",
+        "inconcludability",
+        "misconclude",
+        "reconclude",
+        "unconcluded"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conclude#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=conclude&oldid=93388865",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "The companies hope to conclude a new supply agreement. They hope to _____.",
+      "options": [
+        "reach and settle the agreement",
+        "terminate an existing agreement"
+      ],
+      "answer": "reach and settle the agreement",
+      "explanation": "Conclude an agreement means bring it about; hope to does not assert success."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:db5e88da1c6719d35e",
+    "definition": "To reach a judgment or decision after considering information or reasons.",
+    "example": "From the small sample, we conclude that further research is needed.",
+    "collocations": [
+      "conclude that",
+      "conclude from the evidence",
+      "conclude on the basis of"
+    ],
+    "distinctions": [
+      "Conclude reports a reached judgment; it does not guarantee that the judgment is correct or fully supported. The stated conclusion here calls for more research and does not assert a causal mechanism."
+    ],
+    "usage": "Often conclude that something is the case, or conclude something from stated information.",
+    "originalSense": {
+      "id": "kaikki:db5e88da1c6719d35e",
+      "definition": "To come to a conclusion, to a final decision.",
+      "example": "From the evidence, I conclude that this man was murdered.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "begin",
+        "initiate",
+        "start",
+        "commence"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "concludable",
+        "concluder",
+        "concludible",
+        "conclusible",
+        "inconcludability",
+        "misconclude",
+        "reconclude",
+        "unconcluded"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conclude#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=conclude&oldid=93388865",
+    "learningPriority": "general",
+    "distinctionTask": {
+      "prompt": "‘From the small sample, we conclude that further research is needed’ reports _____.",
+      "options": [
+        "a judgment reached from information",
+        "proof that every possible conclusion is correct"
+      ],
+      "answer": "a judgment reached from information",
+      "explanation": "The verb identifies the act of reaching a judgment; its accuracy still depends on the reasoning and information."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:4b92b20227ff2fc530",
+    "definition": "To make a final determination or judgment about someone or something, in an obsolete use.",
+    "example": "In the source’s Addison passage, ‘Can be concluded blest before he die’ concerns judging a person blessed before death. It does not describe ending that person’s life.",
+    "collocations": [
+      "Source pattern: be concluded blest",
+      "Historical reading: judge someone blessed",
+      "Historical reading: make a final judgment"
+    ],
+    "distinctions": [
+      "This source-labelled obsolete construction takes a judgment about a person. The separate current conclude that construction remains valid and does not inherit the obsolete label."
+    ],
+    "usage": "Obsolete in the checked source; reading guidance for the historical predicative construction.",
+    "originalSense": {
+      "id": "kaikki:4b92b20227ff2fc530",
+      "definition": "To make a final determination or judgment concerning; to judge; to decide.",
+      "example": "But no frail man, however great or high, / Can be concluded blest before he die.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "begin",
+        "initiate",
+        "start",
+        "commence"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "concludable",
+        "concluder",
+        "concludible",
+        "conclusible",
+        "inconcludability",
+        "misconclude",
+        "reconclude",
+        "unconcluded"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conclude#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=conclude&oldid=93388865",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:8b99be7dd14a429b67",
+    "definition": "To bar, restrain or preclude someone or something, including in legal contexts.",
+    "example": "In the source’s example ‘The defendant is concluded by his own plea’, concluded means barred or constrained by that plea. The sentence alone does not identify a universal legal rule or decide a real case.",
+    "collocations": [
+      "Source pattern: be concluded by",
+      "Source phrase: concluded by his own plea",
+      "Reading equivalent: be barred from"
+    ],
+    "distinctions": [
+      "This barring or estoppel use differs from deciding that a claim is true. The checked source says often passive; it does not label the whole meaning obsolete. Legal effects depend on the applicable rules and facts."
+    ],
+    "usage": "Specialist reading guidance for bar or restrain, often passive in the checked source; no added historical label.",
+    "originalSense": {
+      "id": "kaikki:8b99be7dd14a429b67",
+      "definition": "To shut off; to restrain; to limit; to estop; to bar.",
+      "example": "The defendant is concluded by his own plea.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "begin",
+        "initiate",
+        "start",
+        "commence"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "concludable",
+        "concluder",
+        "concludible",
+        "conclusible",
+        "inconcludability",
+        "misconclude",
+        "reconclude",
+        "unconcluded"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conclude#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=conclude&oldid=93388865",
+    "exampleKind": "reading-note",
+    "learningPriority": "specialist",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:9c8ff0ddf6254e9371",
+    "definition": "To shut up or enclose something, in an obsolete use.",
+    "example": "In the source’s Hooker passage, ‘concluded within the grave’ describes enclosure within it. This is the older physical meaning, rather than reasoning to a conclusion.",
+    "collocations": [
+      "Source phrase: concluded within the grave",
+      "Historical pattern: conclude within",
+      "Historical reading: enclose"
+    ],
+    "distinctions": [
+      "The checked source labels this enclosure meaning obsolete. It may overlap with the separately preserved historical include or confine meaning, but the source identities remain independent."
+    ],
+    "usage": "Obsolete transitive meaning in the checked source; often understood through its quoted passive form.",
+    "originalSense": {
+      "id": "kaikki:9c8ff0ddf6254e9371",
+      "definition": "To shut up; to enclose.",
+      "example": "The very person of Christ [was] concluded within the grave.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "begin",
+        "initiate",
+        "start",
+        "commence"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "concludable",
+        "concluder",
+        "concludible",
+        "conclusible",
+        "inconcludability",
+        "misconclude",
+        "reconclude",
+        "unconcluded"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conclude#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=conclude&oldid=93388865",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:138d38b0168b9810fc",
+    "definition": "To include, comprehend or confine together, in an obsolete use.",
+    "example": "In the source’s Jonson passage, ‘the chief end of Life is there concluded’ presents life’s chief aim as contained there, in the court described by the surrounding passage.",
+    "collocations": [
+      "Source phrase: there concluded",
+      "Source phrase: concluded all under sin",
+      "Historical reading: include or confine"
+    ],
+    "distinctions": [
+      "This older include or confine meaning overlaps with enclosure but has its own preserved source record. It is not the current academic sense of inferring a proposition from premises."
+    ],
+    "usage": "Obsolete in the checked source; reading guidance keeps the source’s inclusive and confining range without inventing a current exercise.",
+    "originalSense": {
+      "id": "kaikki:138d38b0168b9810fc",
+      "definition": "To include; to comprehend; to shut up together; to embrace; to confine.",
+      "example": "Banisht the Court? Let me be banisht Life;\n Since the chief end of Life is there concluded:\nWithin the Court is all the Kingdom bounded,\nAnd as her sacred Sphear doth comprehend\nTen thousand times so much, as so much Place\nIn any part of all the Empire else;\nSo every Body, moving in her Sphear,\nContains Ten thousand times as much in him,\nAs any other, her choice Orb excludes.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "begin",
+        "initiate",
+        "start",
+        "commence"
+      ],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "concludable",
+        "concluder",
+        "concludible",
+        "conclusible",
+        "inconcludability",
+        "misconclude",
+        "reconclude",
+        "unconcluded"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conclude#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=conclude&oldid=93388865",
+    "exampleKind": "reading-note",
+    "learningPriority": "historical",
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
+  },
+  {
+    "entryId": "ve-8dd4553c",
+    "senseId": "kaikki:f6ea2fbd3b28ce14b2",
+    "definition": "In logic, to infer a conclusion from premises or reasons.",
+    "example": "All squares are rectangles; figure A is a square, so we can conclude that figure A is a rectangle.",
+    "collocations": [
+      "conclude from premises",
+      "validly conclude that",
+      "conclude by deduction"
+    ],
+    "distinctions": [
+      "Logical consequence is a relation between premises and a conclusion, not a causal relation in every case. In a valid deduction, true premises guarantee the conclusion; validity alone does not establish that the premises are true."
+    ],
+    "usage": "Logic; the imported causal gloss is too narrow. This example uses a valid classification inference and does not claim that being a square causes a separate event.",
+    "originalSense": {
+      "id": "kaikki:f6ea2fbd3b28ce14b2",
+      "definition": "to deduce, to infer (develop a causal relation)",
+      "example": "",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "begin",
+        "initiate",
+        "start",
+        "commence"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "concludable",
+        "concluder",
+        "concludible",
+        "conclusible",
+        "inconcludability",
+        "misconclude",
+        "reconclude",
+        "unconcluded"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conclude#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=conclude&oldid=93388865",
+    "learningPriority": "specialist",
+    "distinctionTask": {
+      "prompt": "All squares are rectangles, and figure A is a square. We can validly conclude that _____.",
+      "options": [
+        "figure A is a rectangle",
+        "every rectangle is a square"
+      ],
+      "answer": "figure A is a rectangle",
+      "explanation": "The premises support classification of A as a rectangle; the converse does not follow."
+    },
+    "synonyms": [],
+    "antonyms": [],
+    "wordFamily": [],
+    "register": ""
   }
 ]
