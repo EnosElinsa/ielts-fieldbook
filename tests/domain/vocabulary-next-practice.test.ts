@@ -20,20 +20,22 @@ test('after meaning retrieval, missing listening and spelling recommend dictatio
  const {store,recommend}=fixture();evidence(store,'meaning');
  expect(recommend()).toMatchObject({status:'ready',mode:'dictation',reason:'missing',dimensions:['listening','spelling']});
 });
-test('missing usage prefers an authored distinction rather than assuming a sentence-gap exists',()=>{
+test('usage stays optional while foundation recall continues towards Familiar',()=>{
  const {store,recommend}=fixture();for(const d of ['meaning','listening','spelling'] as const)evidence(store,d);
- expect(recommend()).toMatchObject({mode:'distinction',reason:'missing',dimensions:['usage']});
+ expect(recommend()).toMatchObject({mode:'definition',reason:'spaced',dimensions:['meaning']});
+ expect(recommend()?.alternatives).toContain('distinction');
 });
-test('usage falls back from unavailable distinction and cloze to production with assessed-feedback guidance',()=>{
+test('unavailable specialist tasks do not replace foundation progress with production',()=>{
  const {store,entry,recommend}=fixture();delete entry.senses[0].distinctionTask;entry.senses[0].example='A contextual explanation without the headword.';
  for(const d of ['meaning','listening','spelling'] as const)evidence(store,d);
- expect(recommend()).toMatchObject({mode:'production',reason:'missing',dimensions:['usage']});
+ expect(recommend()).toMatchObject({mode:'definition',reason:'spaced',dimensions:['meaning']});
+ expect(recommend()?.alternatives).toContain('production');
  expect(recommend()?.alternatives).not.toContain('cloze');
  expect(recommend()?.alternatives).not.toContain('distinction');
 });
-test('the oldest scheduled due exercise takes priority over a never-practised skill',()=>{
- const {learning,recommend}=fixture();learning.cards.cloze={due:new Date(past)} as never;
- expect(recommend()).toMatchObject({status:'ready',mode:'cloze',reason:'due',dueAt:past});
+test('a scheduled due foundation exercise takes priority over a never-practised skill',()=>{
+ const {learning,recommend}=fixture();learning.cards.dictation={due:new Date(past)} as never;
+ expect(recommend()).toMatchObject({status:'ready',mode:'dictation',reason:'due',dueAt:past});
 });
 test('an eligible wrong-mode review takes priority and never switches to an unrelated mode',()=>{
  const {learning,recommend}=fixture();learning.cards.definition={due:new Date('2026-10-15T10:00:00Z')} as never;
@@ -118,26 +120,26 @@ test('remaining skills are ordered by their verified spaced progress',()=>{
  const {store,recommend}=fixture();successes(store,1);evidence(store,'meaning','2026-10-11T09:00:00Z');
  expect(recommend()).toMatchObject({mode:'dictation',reason:'spaced',dimensions:['listening','spelling'],target:'familiar'});
 });
-test('a future saved mode keeps its due date while an eligible alternative continues spaced learning',()=>{
+test('a future saved definition keeps its due date while dictation continues spaced learning',()=>{
  const {store,learning,recommend}=fixture();successes(store,1);learning.cards.definition={due:new Date(future)} as never;
- expect(recommend()).toMatchObject({mode:'distinction',reason:'spaced',dimensions:['meaning','usage'],nextChangeAt:future});
+ expect(recommend()).toMatchObject({mode:'dictation',reason:'spaced',dimensions:['listening','spelling'],nextChangeAt:future});
  expect(recommend()?.alternatives).not.toContain('definition');expect(learning.cards.definition?.due).toEqual(new Date(future));
 });
-test('Familiar meanings receive assessed production guidance before further recall practice',()=>{
+test('Familiar meanings continue foundation recall towards Mastered',()=>{
  const {store,recommend}=fixture();successes(store,3);
- expect(recommend()).toMatchObject({mode:'production',reason:'production',target:'mastered',dimensions:['usage']});
+ expect(recommend()).toMatchObject({mode:'definition',reason:'spaced',target:'mastered',dimensions:['meaning']});
 });
-test.each(['pending','self-reported','objective'] as const)('%s production does not complete the assessed-production requirement',verification=>{
+test.each(['pending','self-reported','objective'] as const)('%s production does not add requirements after foundation mastery',verification=>{
  const {store,recommend}=fixture();successes(store,5);production(store,'2026-10-15T09:00:00Z',verification);production(store,past,verification);
- expect(recommend()).toMatchObject({mode:'production',reason:'production'});
+ expect(recommend()).toBeUndefined();
 });
-test('two assessed productions on the same day still need another spaced production',()=>{
+test('same-day assessed productions remain independent after foundation mastery',()=>{
  const {store,recommend}=fixture();successes(store,5);production(store,now);production(store,'2026-10-17T10:00:01Z');
- expect(recommend()).toMatchObject({status:'waiting',mode:'production',reason:'production',dueAt:future,target:'mastered'});
+ expect(recommend()).toBeUndefined();
 });
-test('future production scheduling is respected even after five successes in every skill',()=>{
+test('future optional production scheduling does not create a foundation requirement',()=>{
  const {store,learning,recommend}=fixture();successes(store,5);learning.cards.production={due:new Date(future)} as never;
- expect(recommend()).toMatchObject({status:'waiting',mode:'production',dueAt:future});
+ expect(recommend()).toBeUndefined();
 });
 test('five spaced skill successes and two assessed production successes finish the unscheduled recommendation',()=>{
  const {store,recommend}=fixture();successes(store,5);production(store,'2026-10-14T09:00:00Z');production(store,past);

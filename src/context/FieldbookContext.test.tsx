@@ -1,12 +1,17 @@
 // @ts-nocheck
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter, useLocation } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { emptyState, normalizeDraft } from '../domain';
 import { addVocabularyItem, getVocabularyReviewQueue, recordVocabularyReview } from '../domain/vocabulary';
 import { readFileSync } from 'node:fs';
 import { readDraftRecovery } from '../storage/recovery';
+import { ensureUnifiedPlans, previewBacklogChange, studyBudget } from '../lib/planTemplates';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
+import { TodayPage } from '../features/today/TodayPage';
+import { PlanningPage } from '../features/planning/PlanningPage';
+import { VocabularyPracticePage } from '../features/vocabulary/VocabularyPracticePage';
+import '@testing-library/jest-dom/vitest';
 import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 import { speakingPrompts } from '../domain/speaking';
 import { ACCOUNT_MODULES, emptyCollectionStatuses } from '../storage/accountModules';
@@ -1275,4 +1280,259 @@ test('an account switch while settings targets load prevents saving profile chan
   mocks.owner='account-2';
   await act(async()=>{pending.resolve({questions:[{id:'q',sectionId:'part'}]});expect(await operation).toBe(false);});
   expect(mocks.saveState).not.toHaveBeenCalled();
+});
+
+test('dynamic vocabulary starts freeze current candidates durably and retain Planning origin',async()=>{
+  const entry=addVocabularyItem(mocks.initial,{term:'persistent',meaning:'Continuing over time.'}).item;
+  mocks.initial.vocabularyStates.find(row=>row.entryId===entry.id).manualStatus='unfamiliar';
+  mocks.initial.plans=[{id:'dynamic-review',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:1,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'dictation',cards:[]}}];
+  await mount('/planning?week=next#task-dynamic-review');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=draft.plans.filter(row=>row.id==='dynamic-review');});});
+  await act(async()=>{expect(await fieldbook.startPlan('dynamic-review')).toBe(true);});
+  expect(fieldbook.state.plans[0]).toMatchObject({status:'in_progress',target:{binding:'frozen',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}});
+  expect(new URLSearchParams(currentPath.split('?')[1]).get('returnTo')).toBe('/planning?week=next#task-dynamic-review');
+  expect(mocks.saveState.mock.calls.at(-1)[0].plans[0].target.binding).toBe('frozen');
+});
+
+test('empty dynamic vocabulary skips as no-longer-due without completion or navigation',async()=>{
+  mocks.initial.plans=[{id:'empty-review',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:10,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'definition',cards:[]}}];
+  await mount('/');
+  await act(async()=>{expect(await fieldbook.startPlan('empty-review')).toBe(true);});
+  expect(fieldbook.state.plans[0]).toMatchObject({status:'skipped',skipReason:'no-longer-due'});
+  expect(fieldbook.state.plans[0].completedAt).toBeFalsy();
+  expect(currentPath).toBe('/');
+});
+
+test.each(['add','replace'])('manual due review %s persists a numeric capacity and starts the requested mode',async type=>{
+  const entry=addVocabularyItem(mocks.initial,{id:'manual-review-word',term:'persistent',meaning:'Continuing over time.'}).item;
+  recordVocabularyReview(mocks.initial,{entryId:entry.id,senseId:entry.senses[0].id,mode:'definition',response:'wrong',result:'failure',occurredAt:'2020-01-01T00:00:00Z'});
+  await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=type==='replace'?[{id:'replace-me',dateKey:'2099-01-01',status:'pending',estimatedMinutes:5}]:[];});});
+  await act(async()=>{expect(await fieldbook.changePlan(type==='replace'?'replace-me':null,{type,skill:'vocabulary',practice:'due-review',assessmentMode:'definition',estimatedMinutes:5,dateKey:'2099-01-01',allowOverBudget:true})).toBe(true);});
+  const plan=fieldbook.state.plans[0];
+  expect(plan).toMatchObject({estimatedMinutes:5,quantity:5,target:{assessmentMode:'definition',batchSize:5,binding:'dynamic'}});
+  await act(async()=>{expect(await fieldbook.startPlan(plan.id)).toBe(true);});
+  expect(fieldbook.state.plans[0].target.cards).toEqual([{entryId:entry.id,senseId:entry.senses[0].id}]);
+});
+
+test('manual specialist recall remains startable when deliberately selected',async()=>{
+  const entry=addVocabularyItem(mocks.initial,{id:'specialist-word',term:'reliable',meaning:'Able to be trusted.',example:'The railway provides a reliable service.',synonyms:['dependable']}).item;
+  recordVocabularyReview(mocks.initial,{entryId:entry.id,senseId:entry.senses[0].id,mode:'cloze',response:'wrong',result:'failure',occurredAt:'2020-01-01T00:00:00Z'});
+  await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[];});});
+  await act(async()=>{expect(await fieldbook.changePlan(null,{type:'add',skill:'vocabulary',practice:'due-review',assessmentMode:'cloze',estimatedMinutes:5,dateKey:'2099-01-01',allowOverBudget:true})).toBe(true);});
+  const id=fieldbook.state.plans[0].id;
+  await act(async()=>{expect(await fieldbook.startPlan(id)).toBe(true);});
+  expect(fieldbook.state.plans[0]).toMatchObject({status:'in_progress',target:{assessmentMode:'cloze',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}});
+});
+
+test('dynamic start takes distinct words before applying capacity and retains priority',async()=>{
+  const first=addVocabularyItem(mocks.initial,{id:'a',term:'harbor',senses:[{id:'one',definition:'A sheltered port.',example:'',pos:'noun'},{id:'two',definition:'To shelter something.',example:'',pos:'verb'}]}).item;
+  const second=addVocabularyItem(mocks.initial,{id:'b',term:'beacon',meaning:'A guiding light.'}).item;
+  for(const entry of [first,second])for(const sense of entry.senses)recordVocabularyReview(mocks.initial,{entryId:entry.id,senseId:sense.id,mode:'definition',response:'wrong',result:'failure',occurredAt:'2020-01-01T00:00:00Z'});
+  const plan={id:'distinct',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:2,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'definition',batchSize:2,cards:[]}};
+  await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[plan];});});
+  await act(async()=>{expect(await fieldbook.startPlan(plan.id)).toBe(true);});
+  expect(fieldbook.state.plans[0].target.cards).toEqual([{entryId:'a',senseId:'one'},{entryId:'b',senseId:second.senses[0].id}]);
+});
+
+test('resizing a dynamic review updates prompt capacity, charged budgets, and actual start count',async()=>{
+  for(let i=0;i<10;i++){addVocabularyItem(mocks.initial,{id:`resize-${i}`,term:`word${i}`,meaning:'A meaning.'});}
+  for(const state of mocks.initial.vocabularyStates)state.manualStatus='unfamiliar';
+  await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.settings.days=[1,2,3,4,5,6,7];draft.settings.dailyMinutes=12;draft.settings.planning.vocabularyMode='fixed';draft.settings.planning.vocabularyMinutes=2;draft.plans=[{id:'resize',dateKey:'2099-01-01',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:10,quantity:10,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'definition',batchSize:10,cards:[]}}];});});
+  await act(async()=>{expect(await fieldbook.changePlan('resize',{type:'resize',estimatedMinutes:2})).toBe(true);});
+  expect(fieldbook.state.plans[0]).toMatchObject({estimatedMinutes:2,quantity:2,target:{batchSize:2}});
+  const budget=studyBudget(fieldbook.state.settings,'2099-01-01');
+  expect(fieldbook.state.plans.reduce((sum,row)=>sum+row.estimatedMinutes,0)).toBeLessThanOrEqual(budget.daily);
+  expect(fieldbook.state.plans.filter(row=>row.skill==='vocabulary').reduce((sum,row)=>sum+row.estimatedMinutes,0)).toBe(budget.vocabulary);
+  await act(async()=>{expect(await fieldbook.startPlan('resize')).toBe(true);});
+  expect(fieldbook.state.plans[0].target.cards).toHaveLength(2);
+});
+
+test('empty review save failure and restore retain dynamic semantics for newly eligible words',async()=>{
+  const plan={id:'empty-restorable',dateKey:'2099-01-01',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:2,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'definition',batchSize:2,cards:[]}};
+  await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[plan];});});
+  mocks.saveState.mockResolvedValueOnce(false);
+  await act(async()=>{expect(await fieldbook.startPlan(plan.id)).toBe(false);});
+  expect(fieldbook.state.plans[0]).toEqual(plan);
+  await act(async()=>{expect(await fieldbook.startPlan(plan.id)).toBe(true);});
+  expect(fieldbook.state.plans[0]).toMatchObject({status:'skipped',skipReason:'no-longer-due',target:{binding:'dynamic',cards:[]}});
+  await act(async()=>{expect(await fieldbook.changePlan(plan.id,{type:'restore',allowOverBudget:true})).toBe(true);await fieldbook.persist(draft=>{const entry=addVocabularyItem(draft,{id:'newly-due',term:'beacon',meaning:'A guiding light.'}).item;draft.vocabularyStates.find(row=>row.entryId===entry.id).manualStatus='unfamiliar';});});
+  await act(async()=>{expect(await fieldbook.startPlan(plan.id)).toBe(true);});
+  expect(fieldbook.state.plans[0]).toMatchObject({status:'in_progress',target:{binding:'frozen',cards:[{entryId:'newly-due'}]}});
+});
+
+test('a prospective book-wide learning ordinal resolves across eligible group batches',async()=>{
+  const groups=[{id:'ordinal-first',bookId:'ordinal-book',kind:'group',order:1,entryIds:[]},{id:'ordinal-second',bookId:'ordinal-book',kind:'group',order:2,entryIds:[]}];
+  const members=[];
+  for(let i=0;i<13;i++){const entry=addVocabularyItem(mocks.initial,{id:`ordinal-${i}`,term:`ordinal${i}`,meaning:'A meaning.'}).item;if(i<3)entry.tags.push('archived');const group=groups[i<12?0:1];group.entryIds.push(entry.id);members.push({id:`ordinal-member-${i}`,entryId:entry.id,bookId:group.bookId,unitId:group.id,order:i});}
+  VOCABULARY_CATALOG.units.push(...groups);VOCABULARY_CATALOG.memberships.push(...members);
+  try {
+    await mount('/planning');
+    await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[{id:'ordinal-plan',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:10,target:{type:'vocabulary',mode:'learning-batch',bookId:'ordinal-book',assessmentMode:'definition',batchIndex:1,batchSize:10,cards:[]}}];});});
+    await act(async()=>{expect(await fieldbook.startPlan('ordinal-plan')).toBe(true);});
+    expect(fieldbook.state.plans[0]).toMatchObject({status:'in_progress',target:{unitId:'ordinal-second',batchIndex:0,cards:[{entryId:'ordinal-12'}]}});
+  }finally{VOCABULARY_CATALOG.units=VOCABULARY_CATALOG.units.filter(group=>group.bookId!=='ordinal-book');VOCABULARY_CATALOG.memberships=VOCABULARY_CATALOG.memberships.filter(member=>member.bookId!=='ordinal-book');}
+});
+
+test('frozen legacy reviews load requested resources and remain retryable after failure',async()=>{
+  const entry=addVocabularyItem(mocks.initial,{term:'persistent',meaning:'Continuing over time.'}).item;
+  mocks.initial.plans=[{id:'legacy-review',kind:'vocabulary',skill:'vocabulary',status:'pending',target:{type:'vocabulary',mode:'due-review',assessmentMode:'definition',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}}];
+  await mount('/');
+  mocks.releasedRead.mockRejectedValueOnce(new Error('Offline'));
+  mocks.teachingRead.mockRejectedValueOnce(new Error('Offline'));
+  await act(async()=>{await expect(fieldbook.startPlan('legacy-review')).rejects.toThrow('Offline');});
+  expect(fieldbook.state.plans[0].status).toBe('pending');
+  await act(async()=>{expect(await fieldbook.startPlan('legacy-review',{force:true})).toBe(true);});
+  expect(mocks.releasedRead).toHaveBeenCalledWith(expect.objectContaining({entryIds:[entry.id],force:true}));
+});
+
+test.each(['due-review','learning-batch'])('dynamic reviews reserve exact pairs by mode without changing existing frozen %s targets',async reservedMode=>{
+  const first=addVocabularyItem(mocks.initial,{id:'first',term:'first',meaning:'The first meaning.'}).item;
+  const second=addVocabularyItem(mocks.initial,{id:'second',term:'second',meaning:'The second meaning.'}).item;
+  for(const learning of mocks.initial.vocabularyStates)learning.manualStatus='unfamiliar';
+  const frozen={id:'reserved',kind:'vocabulary',skill:'vocabulary',status:'pending',target:{type:'vocabulary',mode:reservedMode,assessmentMode:'dictation',cards:[{entryId:first.id,senseId:first.senses[0].id}]}};
+  const dynamic={id:'dynamic',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:10,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',batchSize:1,assessmentMode:'dictation',cards:[]}};
+  mocks.initial.plans=[frozen,dynamic];await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[structuredClone(frozen),structuredClone(dynamic)];});});
+  await act(async()=>{expect(await fieldbook.startPlan('dynamic')).toBe(true);});
+  expect(fieldbook.state.plans[0]).toEqual(frozen);
+  expect(fieldbook.state.plans[1].target.cards).toEqual([{entryId:second.id,senseId:second.senses[0].id}]);
+});
+
+test.each(['invalid',0,-1,10001,Infinity])('invalid dynamic review capacity %s remains retryable instead of being skipped',async(batchSize)=>{
+  mocks.initial.plans=[{id:'bad-capacity',kind:'vocabulary',status:'pending',target:{type:'vocabulary',mode:'due-review',binding:'dynamic',batchSize,assessmentMode:'definition',cards:[]}}];
+  await mount('/planning');
+  await act(async()=>{await expect(fieldbook.startPlan('bad-capacity')).rejects.toThrow(/capacity|size/i);});
+  expect(fieldbook.state.plans.find(plan=>plan.id==='bad-capacity').status).toBe('pending');
+});
+
+test('concurrent dynamic review starts reserve different pairs at durable save time',async()=>{
+  addVocabularyItem(mocks.initial,{id:'first',term:'first',meaning:'The first meaning.'});
+  addVocabularyItem(mocks.initial,{id:'second',term:'second',meaning:'The second meaning.'});
+  for(const learning of mocks.initial.vocabularyStates)learning.manualStatus='unfamiliar';
+  const plans=['one','two'].map(id=>({id,kind:'vocabulary',skill:'vocabulary',status:'pending',target:{type:'vocabulary',mode:'due-review',binding:'dynamic',batchSize:1,assessmentMode:'dictation',cards:[]}}));
+  mocks.initial.plans=structuredClone(plans);await mount('/planning');
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=structuredClone(plans);});});
+  await act(async()=>{expect(await Promise.all([fieldbook.startPlan('one'),fieldbook.startPlan('two')])).toEqual([true,true]);});
+  const targets=fieldbook.state.plans.map(plan=>plan.target);
+  expect(targets).toHaveLength(2);
+  expect(targets.every(target=>target.binding==='frozen' && target.cards.length===1)).toBe(true);
+  expect(targets[0].cards).not.toEqual(targets[1].cards);
+});
+
+test('bulk backlog saves are atomic, preserve drafts on failure and reject stale previews',async()=>{
+ await mount('/planning');
+ await act(async()=>{await fieldbook.mutatePlans(draft=>{draft.plans=[{id:'a',dateKey:'2020-01-01',status:'pending',estimatedMinutes:10},{id:'b',dateKey:'2020-01-02',status:'in_progress',startedAt:'2020-01-02',estimatedMinutes:10}];});fieldbook.setWritingDraft('q1','Keep unsaved writing');});
+ const preview=previewBacklogChange(fieldbook.state,{type:'skip',ids:['a','b'],includeStarted:true});
+ mocks.saveState.mockClear();mocks.saveState.mockResolvedValueOnce(false);
+ await act(async()=>{expect(await fieldbook.saveBacklogPreview(preview)).toBe(false);});
+ expect(fieldbook.state.plans.map(plan=>plan.status)).toEqual(['pending','in_progress']);expect(fieldbook.draftSaveStatus('q1')).toBe('unsaved');
+ await act(async()=>{expect(await fieldbook.saveBacklogPreview(preview)).toBe(true);});
+ expect(fieldbook.state.plans.map(plan=>plan.status)).toEqual(['skipped','skipped']);expect(mocks.saveState).toHaveBeenCalledTimes(2);
+ await act(async()=>{await expect(fieldbook.saveBacklogPreview(preview)).rejects.toThrow(/schedule changed/i);});expect(mocks.saveState).toHaveBeenCalledTimes(2);
+});
+
+function ReturnHistoryControls(){const location=useLocation(),navigate=useNavigate();return <><output aria-label="Owned history location">{location.pathname+location.search+location.hash}</output><button onClick={()=>navigate(-1)}>Browser back</button><button onClick={()=>navigate(1)}>Browser forward</button></>;}
+test.each(['/today?view=overdue','/planning?view=overdue#planning-backlog'])('actual task completion returns through owned history to the focused task from %s',async source=>{
+ const scroll=vi.spyOn(window,'scrollTo').mockImplementation(()=>{});sessionStorage.clear();window.history.replaceState({idx:0},'','/sentinel');window.history.pushState({idx:1},'',source);
+ mocks.initial.settings.days=[];mocks.initial.settings.vocabulary.autoPlay=false;
+ const entry=addVocabularyItem(mocks.initial,{id:'return-word',term:'persistent',meaning:'Continuing over time.'}).item;
+ mocks.initial.plans=[{id:'return-old',dateKey:'2020-01-01',kind:'vocabulary',skill:'vocabulary',status:'in_progress',startedAt:'2020-01-01T00:00:00Z',title:'Historical review',estimatedMinutes:120,target:{type:'vocabulary',mode:'due-review',binding:'frozen',assessmentMode:'dictation',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}}];
+ const view=render(<BrowserRouter><FieldbookProvider><Probe/><Routes><Route path="/sentinel" element={<p>Before source</p>}/><Route path="/today" element={<TodayPage/>}/><Route path="/planning" element={<PlanningPage/>}/><Route path="/vocabulary/review" element={<VocabularyPracticePage/>}/><Route path="/vocabulary/history/:sessionId" element={<VocabularyPracticePage/>}/></Routes><ReturnHistoryControls/></FieldbookProvider></BrowserRouter>);
+ try {
+  await waitFor(()=>expect(fieldbook.booted).toBe(true));
+  if(source.startsWith('/planning'))fireEvent.click(await screen.findByText(/Waiting list/));
+  fireEvent.click(await screen.findByRole('button',{name:'Resume'}));
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());fireEvent.click(screen.getByRole('button',{name:'Start session'}));
+  fireEvent.change(await screen.findByRole('textbox',{name:'Answer 1'}),{target:{value:'persistent'}});fireEvent.click(screen.getByRole('button',{name:'Submit session'}));
+  await waitFor(()=>expect(fieldbook.state.plans.find(plan=>plan.id==='return-old').status).toBe('completed'));
+  const destination=source.split('#')[0]+'#task-return-old';
+  const back=await screen.findByRole('link',{name:source.startsWith('/today')?'Back to Today':'Back to Planning'});
+  expect(back).toHaveAttribute('href',destination);fireEvent.click(back);
+  await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent(destination));
+  await waitFor(()=>expect(view.container.querySelector('#task-return-old')).toHaveFocus());
+  expect(view.container.querySelector('#task-return-old')).toHaveTextContent('Completed');
+  fireEvent.click(screen.getByRole('button',{name:'Browser back'}));expect(await screen.findByText('Before source')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:'Browser forward'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent(destination));
+ }finally{view.unmount();scroll.mockRestore();window.history.replaceState({},'','/');}
+});
+
+function DelayedStartNavigation(){const navigate=useNavigate();return <><ReturnHistoryControls/><button onClick={()=>navigate('/planning?view=intervening',{state:{keep:'intervening'}})}>Open intervening Planning</button></>;}
+test.each(['catalog','save'])('a delayed %s task start preserves an intervening browser entry and its history',async delay=>{
+ const scroll=vi.spyOn(window,'scrollTo').mockImplementation(()=>{});sessionStorage.clear();window.history.replaceState({idx:0},'','/sentinel');window.history.pushState({idx:1},'','/today?view=source');
+ mocks.initial.settings.days=[];
+ const entry=addVocabularyItem(mocks.initial,{id:'delayed-word',term:'persistent',meaning:'Continuing over time.'}).item;
+ const target={type:'vocabulary',mode:'due-review',binding:'frozen',assessmentMode:'dictation',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]};
+ mocks.initial.plans=[{id:'delayed-task',dateKey:'2099-01-01',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:120,target}];
+ const view=render(<BrowserRouter><FieldbookProvider><Probe/><DelayedStartNavigation/></FieldbookProvider></BrowserRouter>);
+ try {
+  await waitFor(()=>expect(fieldbook.booted).toBe(true));await act(async()=>{fieldbook.setWritingDraft('q1','Keep this live draft');});
+  const blocked=defer();mocks.teachingRead.mockClear();mocks.saveState.mockClear();
+  if(delay==='catalog')mocks.teachingRead.mockReturnValueOnce(blocked.promise);else mocks.saveState.mockReturnValueOnce(blocked.promise);
+  let starting;await act(async()=>{starting=fieldbook.startPlan('delayed-task');});
+  await waitFor(()=>expect(delay==='catalog'?mocks.teachingRead:mocks.saveState).toHaveBeenCalled());
+  fireEvent.click(screen.getByRole('button',{name:'Open intervening Planning'}));
+  expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/planning?view=intervening');
+  const intervening=structuredClone(window.history.state);
+  await act(async()=>{blocked.resolve(delay==='catalog'?{books:[],units:[],entries:[],memberships:[]}:true);await starting;});
+  expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/planning?view=intervening');expect(window.history.state).toEqual(intervening);
+  expect(fieldbook.state.plans.find(plan=>plan.id==='delayed-task')).toMatchObject({status:'in_progress',target});
+  expect(fieldbook.state.drafts.q1.text).toBe('Keep this live draft');expect(fieldbook.state.vocabularySessions).toHaveLength(0);
+  fireEvent.click(screen.getByRole('button',{name:'Browser back'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/today?view=source'));expect(window.location.hash).toBe('');
+  fireEvent.click(screen.getByRole('button',{name:'Browser back'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/sentinel'));
+  fireEvent.click(screen.getByRole('button',{name:'Browser forward'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/today?view=source'));
+  fireEvent.click(screen.getByRole('button',{name:'Browser forward'}));await waitFor(()=>expect(screen.getByLabelText('Owned history location')).toHaveTextContent('/planning?view=intervening'));expect(window.history.state).toEqual(intervening);
+ }finally{view.unmount();scroll.mockRestore();window.history.replaceState({},'','/');}
+});
+
+
+test.each(['due-review','learning-batch'])('settings save uses canonical regeneration and preserves frozen %s targets through queued replay',async mode=>{
+  mocks.initial.settings.days=[1,2,3,4,5,6,7];mocks.initial.settings.skills=['writing'];
+  await mount();
+  const frozen={id:'settings-frozen',dateKey:'2099-01-01',origin:'automatic',status:'pending',kind:'vocabulary',skill:'vocabulary',estimatedMinutes:1,target:{type:'vocabulary',binding:'frozen',mode,assessmentMode:'definition',cards:[{entryId:'word',senseId:'sense'}]},draft:{answer:'Keep the frozen answer'}};
+  const carry={id:'settings-carry',dateKey:'2000-01-01',origin:'automatic',status:'pending',kind:'1',skill:'writing',estimatedMinutes:10,target:{type:'question',skill:'writing',questionId:'q1',mode:'overview'}};
+  const started={...carry,id:'settings-started',dateKey:'2099-01-01',status:'in_progress',startedAt:'2026-10-01T00:00:00Z',draft:{text:'Keep started work'}};
+  const staleReview={...frozen,id:'settings-stale',dateKey:'2000-01-01',target:{...frozen.target,mode:'due-review'}};
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans.push(frozen,carry,staleReview,started);draft.activePlanId=staleReview.id;});});
+  const before=structuredClone(fieldbook.state),expected=structuredClone(before);expected.settings.dailyMinutes=60;ensureUnifiedPlans(expected);
+  mocks.saveState.mockResolvedValueOnce(false);
+  await act(async()=>{expect(await fieldbook.saveStudySettings({dailyMinutes:60})).toBe(false);});
+  expect(fieldbook.state).toEqual(before);
+  mocks.saveState.mockClear();const pending=defer();mocks.saveState.mockReturnValueOnce(pending.promise);
+  let saving,autosave;await act(async()=>{saving=fieldbook.saveStudySettings({dailyMinutes:60});});
+  await waitFor(()=>expect(mocks.saveState).toHaveBeenCalledTimes(1));
+  await act(async()=>{autosave=fieldbook.persist(draft=>{draft.drafts.q1.text='Typed while settings saved';});});
+  await act(async()=>{pending.resolve(true);expect(await saving).toBe(true);await autosave;});
+  const saved=mocks.saveState.mock.calls.at(-1)[0];
+  expect(saved.plans.find(plan=>plan.id===frozen.id)).toEqual(frozen);
+  expect(fieldbook.state.plans.find(plan=>plan.id===frozen.id)).toEqual(frozen);
+  expect(saved.plans.find(plan=>plan.id===started.id)).toEqual(started);
+  expect(fieldbook.state.plans.find(plan=>plan.id===started.id)).toEqual(started);
+  expect(fieldbook.state.plans.find(plan=>plan.id===carry.id)).toMatchObject({originalDateKey:carry.dateKey,target:carry.target});
+  // Target binding adds resource details after generation; rotation and schedule must remain identical.
+  const schedule=plans=>plans.map(({id,dateKey,kind,skill,rotationIndex,estimatedMinutes})=>({id,dateKey,kind,skill,rotationIndex,estimatedMinutes})).sort((a,b)=>a.id.localeCompare(b.id));
+  expect(schedule(saved.plans)).toEqual(schedule(expected.plans));
+  expect(schedule(fieldbook.state.plans)).toEqual(schedule(expected.plans));
+  expect(fieldbook.state.drafts.q1.text).toBe('Typed while settings saved');
+  expect(saved.activePlanId).toBeNull();expect(fieldbook.state.activePlanId).toBeNull();
+  expect(fieldbook.state.plans.find(plan=>plan.id===staleReview.id)).toMatchObject({status:'skipped',skipReason:'merged-review',target:staleReview.target});
+});
+
+
+test('a vocabulary-only settings rebuild commits newly generated tasks when every existing task is protected',async()=>{
+  mocks.initial.settings.days=[1,2,3,4,5,6,7];mocks.initial.settings.skills=['writing'];
+  await mount();
+  const frozen={id:'only-frozen',dateKey:'2099-01-01',origin:'automatic',status:'pending',kind:'vocabulary',skill:'vocabulary',estimatedMinutes:1,target:{type:'vocabulary',binding:'frozen',mode:'due-review',assessmentMode:'dictation',cards:[{entryId:'word',senseId:'sense'}]}};
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=[frozen];});});
+  mocks.saveState.mockClear();
+  await act(async()=>{expect(await fieldbook.saveStudySettings({vocabulary:{mode:'definition'}})).toBe(true);});
+  const saved=mocks.saveState.mock.calls.at(-1)[0];
+  expect(saved.plans.length).toBeGreaterThan(1);
+  expect(fieldbook.state.plans).toEqual(saved.plans);
+  expect(fieldbook.state.plans.find(plan=>plan.id===frozen.id)).toEqual(frozen);
+  expect(fieldbook.state.settings.vocabulary.mode).toBe('definition');
 });

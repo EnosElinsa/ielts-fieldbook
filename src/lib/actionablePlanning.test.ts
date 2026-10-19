@@ -88,8 +88,8 @@ test('split due-recall tasks cover each word once and remain stable on refresh',
    recordVocabularyReview(state,{entryId:word.id,senseId:word.senses[0].id,mode:'definition',response:'wrong',result:'failure',occurredAt:'2020-01-01T00:00:00Z'});
  }
  const tasks=ensureUnifiedPlans(state,undefined,now).filter(p=>p.dateKey==='2026-10-14'&&p.skill==='vocabulary');
- const ids=tasks.flatMap(p=>p.target.cards.map(card=>card.entryId));
- expect(ids).toHaveLength(65);expect(new Set(ids).size).toBe(65);
+ expect(tasks.reduce((sum,plan)=>sum+plan.target.batchSize,0)).toBe(65);
+ expect(tasks.every(plan=>plan.target.binding==='dynamic'&&plan.target.cards.length===0&&plan.target.assessmentMode==='definition'&&plan.estimatedMinutes===plan.target.batchSize)).toBe(true);
  const before=structuredClone(state.plans);ensureUnifiedPlans(state,undefined,now);expect(state.plans).toEqual(before);
 });
 test('rescheduling and restores honor overridden rest-day capacity',()=>{

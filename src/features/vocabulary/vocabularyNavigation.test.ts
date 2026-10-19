@@ -34,3 +34,14 @@ test('learning-card position and its own wordbook return remain the source of a 
   const result = new URL(vocabularyResultUrl('saved', new URLSearchParams({ returnTo: detail })), 'https://fieldbook.test');
   expect(result.searchParams.get('returnTo')).toBe(source);
 });
+
+test('planning and Today returns retain query and anchors while unrelated routes are rejected',()=>{
+  for (const source of ['/planning?week=next#task-review','/?view=due#task-review','/today?view=due#task-review']) {
+    const result=new URL(vocabularyResultUrl('saved',new URLSearchParams({returnTo:source})),'https://fieldbook.test');
+    expect(result.searchParams.get('returnTo')).toBe(source);
+  }
+  for (const unsafe of ['//evil.test','/settings/audio','/planning/elsewhere','/vocabulary/../settings','/planning?x=\\evil']) {
+    const result=new URL(vocabularyResultUrl('saved',new URLSearchParams({returnTo:unsafe})),'https://fieldbook.test');
+    expect(result.searchParams.has('returnTo')).toBe(false);
+  }
+});

@@ -245,14 +245,17 @@ test('same-day progress updates from a spacing wait to a real next practice whil
     expect(mocks.fb.persistNow).not.toHaveBeenCalled();
   } finally {vi.useRealTimers();}
 });
-test('familiar progress offers use in context for the same meaning with assessed-feedback guidance',async()=>{
+test('familiar progress advances foundation mastery and retains optional usage for the same meaning',async()=>{
   const path=progressMeaning(3);
   const before=structuredClone(mocks.fb.state);
   mount(path);
   const panel=await screen.findByRole('region',{name:'Next practice'});
-  expect(panel).toHaveTextContent('Mastered needs two assessed production successes');
-  expect(panel).toHaveTextContent('needs assessed feedback before it can count towards mastery');
-  const route=new URL(within(panel).getByRole('link',{name:'Practise Use in context'}).getAttribute('href')!,'https://test.test');
+  expect(panel).toHaveTextContent('another spaced success towards Mastered');
+  expect(panel).not.toHaveTextContent('Mastered needs two assessed production successes');
+  expect(within(panel).getByRole('link',{name:'Practise Meaning recall'})).toBeInTheDocument();
+  expect(screen.getByText(/Familiar: 3 spaced successes in meaning, listening and spelling/)).toHaveTextContent('Mastered: 5 in each');
+  expect(screen.getByText(/Usage is tracked separately/)).toBeInTheDocument();
+  const route=new URL(within(panel).getByRole('link',{name:'Use in context'}).getAttribute('href')!,'https://test.test');
   expect(route.searchParams.get('senseId')).toBe('progress-sense');expect(route.searchParams.get('mode')).toBe('production');
   expect(mocks.fb.state).toEqual(before);expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });

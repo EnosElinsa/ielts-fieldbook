@@ -53,3 +53,11 @@ test('a tracked return still works when browser storage cannot be written',()=>{
   expect(screen.getByText('/vocabulary/words?search=river')).toBeInTheDocument();
  } finally {setItem.mockRestore();}
 });
+
+test('Planning and Today provenance receives a specific return label after refresh',()=>{
+  for(const [url,label] of [['/planning?week=next#task-review','Back to Planning'],['/?view=due#task-review','Back to Today']]) {
+    const view=render(<MemoryRouter initialEntries={[`/vocabulary/review?returnTo=${encodeURIComponent(url)}`]}><VocabularyBackLink/></MemoryRouter>);
+    expect(screen.getByRole('link',{name:label})).toHaveAttribute('href',url);
+    view.unmount();
+  }
+});

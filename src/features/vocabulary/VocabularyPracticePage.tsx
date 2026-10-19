@@ -7,10 +7,11 @@ import { VocabularyPracticeSession } from "./VocabularyPracticeSession";
 import { VocabularyPracticeResults } from "./VocabularyPracticeResults";
 import { useVocabularyPracticeController } from "./useVocabularyPracticeController";
 import "../../styles/vocabulary-practice.css";
-import { VocabularyBackLink } from './VocabularyRouteLink';
+import { VocabularyBackLink, vocabularyForwardState } from './VocabularyRouteLink';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { useVocabularyPosition } from './vocabularyNavigation';
+import { PanelLoadingState } from '../../components/AsyncState';
 
 export function VocabularyPracticePage() {
   const controller = useVocabularyPracticeController();
@@ -21,21 +22,22 @@ export function VocabularyPracticePage() {
   } = controller;
   const location = useLocation();
   const navigate = useNavigate();
-  useVocabularyPosition(location.pathname + location.search + location.hash, controller.catalogReady && !session && !results);
+  const resultRequested = /^\/vocabulary\/history\//.test(location.pathname) || Boolean(new URLSearchParams(location.search).get('sessionId'));
+  const showSetup = !session && !results && !resultRequested;
+  useVocabularyPosition(location.pathname + location.search + location.hash, controller.catalogReady && showSetup);
   return (
     <section className="view active vocabulary-view vocabulary-practice-view">
       <VocabularyNavigation />
-      {!session && !results ? <VocabularyBackLink fallback={study && controller.bookId !== 'all' && controller.unitId !== 'all' ? `/vocabulary/wordbooks/${encodeURIComponent(controller.bookId)}/groups/${encodeURIComponent(controller.unitId)}/words` : '/vocabulary'}/> : null}
       <header className="practice-heading">
-        {!results && !session ? <div>
-          <span className="eyebrow">Vocabulary</span>
-          <h2>{results ? "Session complete" : study ? "Wordbook study" : "Vocabulary review"}</h2>
+        {showSetup ? <div className="practice-heading-context">
+          <VocabularyBackLink fallback={study && controller.bookId !== 'all' && controller.unitId !== 'all' ? `/vocabulary/wordbooks/${encodeURIComponent(controller.bookId)}/groups/${encodeURIComponent(controller.unitId)}/words` : '/vocabulary'}/>
+          <h2>{study ? "Wordbook study" : "Vocabulary review"}</h2>
         </div> : session ? <div><span className="eyebrow">{study ? 'Wordbook study' : 'Vocabulary review'}</span></div> : null}
         <div className="actions">
           <IconButton
             label="Practice settings"
             disabled={saving}
-            onClick={() => navigateWithPracticeGuard('/settings/vocabulary', () => navigate('/settings/vocabulary'))}
+            onClick={() => { const to = `/settings/vocabulary?${new URLSearchParams({returnTo:location.pathname + location.search + location.hash})}`; navigateWithPracticeGuard(to, () => navigate(to, {state:vocabularyForwardState(location)})); }}
           >
             <Settings2 size={18} />
           </IconButton>
@@ -72,7 +74,8 @@ export function VocabularyPracticePage() {
           Progress is open in this tab. Browser recovery is unavailable.
         </p>
       ) : null}
-      {!session && !results ? <VocabularyPracticeSetup controller={controller} /> : null}
+      {showSetup ? <VocabularyPracticeSetup controller={controller} /> : null}
+      {resultRequested && !session && !results && !error ? <PanelLoadingState message="Loading session results…" /> : null}
       {session ? <VocabularyPracticeSession controller={controller} session={session} /> : null}
       {results ? <VocabularyPracticeResults controller={controller} results={results} /> : null}
       <ModalFrame

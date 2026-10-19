@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { useState } from 'react';
+import { Profiler, Suspense, useState } from 'react';
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Link, useLocation, useNavigate, Routes, Route } from "react-router-dom";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
@@ -29,7 +29,9 @@ vi.mock("./VocabularyPages", () => ({
   VocabularyNavigation: () => <nav aria-label="Vocabulary views" />,
 }));
 
+const originalScrollTo=window.scrollTo;
 beforeEach(() => {
+  window.scrollTo=vi.fn();
   localStorage.clear();
   sessionStorage.clear();
   owner.current = "account-one";
@@ -125,6 +127,7 @@ test('single-word practice keeps its meaning and feedback without bulk settings 
   mount('?entryId=entry-0&senseId=sense-0&dueOnly=false&mode=definition');
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
   expect(screen.getByText('Definition 0')).toBeInTheDocument();
+  await user.click(screen.getByText('Advanced options'));
   for (const name of ['Wordbook', 'Session size', 'Order']) expect(screen.queryByRole('button', { name })).not.toBeInTheDocument();
   for (const name of ['Due only', 'Mistakes only']) expect(screen.queryByRole('checkbox', { name })).not.toBeInTheDocument();
   expect(screen.getByRole('group', { name: 'Practice layout' })).toBeInTheDocument();
@@ -144,6 +147,7 @@ test('single-word practice keeps its meaning and feedback without bulk settings 
 
 test('an explicitly filtered single-word link keeps its active filters removable', async () => {
   mount('?entryId=entry-0&senseId=sense-0&dueOnly=true&mode=definition');
+  await userEvent.click(screen.getByText('Advanced options'));
   const due = await screen.findByRole('checkbox', { name: 'Due only' });
   expect(due).toBeChecked();
   await userEvent.setup().click(due);
@@ -250,10 +254,77 @@ test('a supported-mode suggestion waits for the selected meaning’s catalogue p
   expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
 });
 
-test('general vocabulary review retains wordbook, batch size, order and scheduling controls', async () => {
+test('free review labels its three controls and keeps advanced settings collapsed with a focusable disclosure', async () => {
   mount('?dueOnly=false');
+  expect(screen.getAllByRole('heading', { name: 'Vocabulary review' })).toHaveLength(1);
+  for (const name of ['Mode', 'Wordbook', 'Range']) expect(screen.getByText(name, { selector: '.practice-field-label' })).toBeInTheDocument();
+  const advanced = screen.getByText('Advanced options');
+  expect(advanced.closest('details')).not.toHaveAttribute('open');
+  expect(screen.getByRole('button', { name: 'Session size' })).not.toBeVisible();
+  advanced.focus();
+  expect(advanced).toHaveFocus();
+  fireEvent.click(advanced);
   for (const name of ['Wordbook', 'Session size', 'Order']) expect(screen.getByRole('button', { name })).toBeInTheDocument();
   for (const name of ['Due only', 'Mistakes only']) expect(screen.getByRole('checkbox', { name })).toBeInTheDocument();
+  const header = screen.getByRole('heading', { name: 'Vocabulary review' }).closest('header')!;
+  expect(header).toContainElement(screen.getByRole('link', { name: 'Back to vocabulary' }));
+  expect(header).toContainElement(screen.getByRole('button', { name: 'Practice settings' }));
+});
+
+test('planned review exposes its locked mode, full prompt count and origin without free-review controls', async () => {
+  const entry = fb.current.state.vocabulary[0];
+  entry.senses = Array.from({ length: 56 }, (_, index) => ({ ...entry.senses[0], id: `planned-sense-${index}` }));
+  const refs = entry.senses.map((sense: { id: string }) => ({ entryId: entry.id, senseId: sense.id }));
+  fb.current.state.plans = [{ id: 'locked-layout', kind: 'vocabulary', status: 'in_progress', target: { type: 'vocabulary', mode: 'due-review', assessmentMode: 'definition', cards: refs } }];
+  fb.current.state.settings.vocabulary = { sessionSize: 5 };
+  mount('?planId=locked-layout&mode=dictation&wrongOnly=true&returnTo=%2Fplanning%3Fweek%3Dnext');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
+  const task = screen.getByRole('region', { name: 'Planned task' });
+  expect(task).toHaveTextContent('Meaning recall');
+  expect(task).toHaveTextContent('56 prompts');
+  expect(task).toHaveTextContent('Planning');
+  expect(task).toHaveTextContent('Locked');
+  for (const name of ['Review mode', 'Practice mode', 'Wordbook', 'Review preset', 'Session size', 'Order']) expect(screen.queryByRole('button', { name })).not.toBeInTheDocument();
+  expect(screen.queryByRole('checkbox', { name: 'Mistakes only' })).not.toBeInTheDocument();
+  expect(screen.queryByText('Mistake recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last.')).not.toBeInTheDocument();
+  await userEvent.click(screen.getByText('Advanced options'));
+  expect(screen.getByRole('button', { name: 'Feedback' })).toBeInTheDocument();
+  for (const name of ['Session size', 'Order']) expect(screen.queryByRole('button', { name })).not.toBeInTheDocument();
+  for (const name of ['Due only', 'Mistakes only']) expect(screen.queryByRole('checkbox', { name })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Start session' }));
+  expect(readVocabularyDraft(owner.current)?.cardIds).toHaveLength(56);
+  expect(readVocabularyDraft(owner.current)?.mode).toBe('definition');
+});
+
+test.each([false, true])('locked source ignores hostile URL wordbook/group and retains only bound scope (scoped=%s)', async scoped => {
+  groupFixture(2);
+  VOCABULARY_CATALOG.books.push({ id: 'unrelated-book', title: 'Unrelated book', contentStatus: 'complete' } as any);
+  VOCABULARY_CATALOG.units.push({ id: 'unrelated-group', bookId: 'unrelated-book', title: 'Unrelated group', kind: 'group', contentStatus: 'complete' } as any);
+  const refs = [{ entryId: 'group-entry-0', senseId: 'group-sense-0' }];
+  fb.current.state.plans = [{ id: 'scope-plan', kind: 'vocabulary', status: 'in_progress', target: { type: 'vocabulary', mode: 'due-review', assessmentMode: 'definition', cards: refs, ...(scoped ? { bookId: 'test-book', unitId: 'test-group' } : {}) } }];
+  mount('?planId=scope-plan&bookId=unrelated-book&unitId=unrelated-group&returnTo=%2Fplanning');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
+  const task = screen.getByRole('region', { name: 'Planned task' });
+  expect(task).toHaveTextContent('Planning');
+  expect(task).not.toHaveTextContent('Unrelated book');
+  expect(task).not.toHaveTextContent('Unrelated group');
+  if (scoped) {
+    expect(task).toHaveTextContent('Test book');
+    expect(task).toHaveTextContent('Group 1');
+  } else {
+    expect(task).not.toHaveTextContent('Test book');
+    expect(task).not.toHaveTextContent('Group 1');
+  }
+  fireEvent.click(screen.getByRole('button', { name: 'Start session' }));
+  expect(readVocabularyDraft(owner.current)?.selection).toMatchObject({ kind: 'planned-review', cards: refs });
+});
+
+test('an empty legacy sessionId keeps free setup available instead of an indefinite results loader', async () => {
+  mount('?sessionId=&dueOnly=false');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
+  expect(screen.queryByText('Loading session results…')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Start session' }));
+  expect(screen.getAllByRole('textbox')).toHaveLength(2);
 });
 
 test.each(['ready', 'error'])('single-word launch distinguishes content preparation from %s outcome', async outcome => {
@@ -308,7 +379,7 @@ test('planned batch ignores query mode mutation and submits exact frozen cards i
   expect(submitted).toMatchObject({mode:'definition',planId:'planned-mode',selection:{cards:refs}});
   expect(completeVocabularyPlan(fb.current.state,submitted)).toMatchObject({id:'planned-mode',status:'completed'});
 });
-afterEach(() => { cleanup(); Object.assign(VOCABULARY_CATALOG, originalCatalog); });
+afterEach(() => { cleanup(); window.scrollTo=originalScrollTo; Object.assign(VOCABULARY_CATALOG, originalCatalog); });
 function groupFixture(count: number) {
   const vocabulary = Array.from({ length: count }, (_, index) => ({
     ...fb.current.state.vocabulary[0], id: `group-entry-${index}`, term: `word${index}`,
@@ -590,6 +661,8 @@ test("submits the complete attempt once and retries the same frozen commit after
   await user.click(screen.getByRole("button", { name: "Submit session" }));
   expect(screen.getByRole("alert")).toHaveTextContent("could not be saved");
   expect(screen.queryByRole("table")).not.toBeInTheDocument();
+  expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('resilient');
+  expect(screen.getByRole('textbox', { name: 'Answer 2' })).toHaveValue('wrong');
   const [prepared, id] = fb.current.persistVocabularySession.mock.calls[0];
   expect(prepared.vocabularyReviews).toHaveLength(2);
   await user.click(screen.getByRole("button", { name: "Retry submission" }));
@@ -609,6 +682,57 @@ test("submits the complete attempt once and retries the same frozen commit after
   );
   await user.click(screen.getByRole("button", { name: "Submit session" }));
   expect(fb.current.persistVocabularySession.mock.calls[2][1]).not.toEqual(id);
+});
+
+test('successful planned submission retains results while completed account state precedes history navigation', async () => {
+  const entry = fb.current.state.vocabulary[0];
+  const refs = [{ entryId: entry.id, senseId: entry.senses[0].id }];
+  fb.current.state.plans = [{ id: 'transition-plan', kind: 'vocabulary', status: 'in_progress', startedAt: '2020-01-01', target: { type: 'vocabulary', mode: 'due-review', assessmentMode: 'definition', cards: refs } }];
+  let refresh!: () => void;
+  function AccountUpdates() {
+    const [, setRevision] = useState(0);
+    refresh = () => setRevision(value => value + 1);
+    return <VocabularyPracticePage />;
+  }
+  let releaseHistory!: () => void;
+  let historyReady = false;
+  const historyPending = new Promise<void>(resolve => { releaseHistory = () => { historyReady = true; resolve(); }; });
+  function DelayedHistory() {
+    if (!historyReady) throw historyPending;
+    return <VocabularyPracticePage />;
+  }
+  const frames: string[] = [];
+  let recording = false;
+  fb.current.persistVocabularySession.mockImplementation(async (prepared: any) => {
+    fb.current.state = prepared;
+    fb.current.stateRef.current = prepared;
+    refresh();
+    return true;
+  });
+  render(<MemoryRouter initialEntries={['/vocabulary/review?planId=transition-plan&returnTo=%2Ftoday%23task-transition-plan']}><Profiler id="submission-transition" onRender={() => { if (recording) frames.push(document.body.textContent || ''); }}><Suspense fallback={<p>Preparing saved results…</p>}><Routes><Route path="/vocabulary/review" element={<AccountUpdates />} /><Route path="/vocabulary/history/:sessionId" element={<DelayedHistory />} /></Routes><CurrentRoute /></Suspense></Profiler></MemoryRouter>);
+  fireEvent.click(await screen.findByRole('button', { name: 'Start session' }));
+  fireEvent.change(screen.getByRole('textbox', { name: 'Answer 1' }), { target: { value: entry.term } });
+  recording = true;
+  fireEvent.click(screen.getByRole('button', { name: 'Submit session' }));
+  expect(await screen.findByRole('heading', { name: '1 of 1 correct' })).toBeInTheDocument();
+  // The context saves review rows first, then asynchronously completes the plan
+  // in a fresh account-state clone while the history navigation can still wait.
+  await act(async () => {
+    const completed = structuredClone(fb.current.state);
+    completeVocabularyPlan(completed, completed.vocabularySessions.at(-1));
+    fb.current.state = completed;
+    fb.current.stateRef.current = completed;
+    refresh();
+  });
+  await waitFor(() => expect(fb.current.state.plans[0].status).toBe('completed'));
+  await act(async () => {});
+  expect(frames.some(frame => frame.includes('This planned task is no longer available'))).toBe(false);
+  expect(screen.queryByRole('button', { name: 'Start session' })).not.toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: '1 of 1 correct' })).toBeInTheDocument();
+  await act(async () => releaseHistory());
+  expect(await screen.findByRole('table')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Back to Today' })).toHaveAttribute('href', '/today#task-transition-plan');
+  expect(frames.some(frame => frame.includes('This planned task is no longer available'))).toBe(false);
 });
 
 test.each([
@@ -1187,4 +1311,81 @@ test('historical retry does not start after leaving the results while the catalo
   expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   expect(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')).toBeNull();
   expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+});
+
+test('planned review resolves account targets despite untrusted URL filters and multiple meanings', async()=>{
+  const entry=fb.current.state.vocabulary[0];
+  entry.senses.push({...entry.senses[0],id:'second-meaning',definition:'Another meaning'});
+  const refs=[{entryId:entry.id,senseId:'second-meaning'},{entryId:entry.id,senseId:entry.senses[0].id}];
+  fb.current.state.plans=[{id:'account-plan',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'due-review',assessmentMode:'dictation',cards:refs}}];
+  fb.current.state.settings.vocabulary={sessionSize:5,order:'random',autoPlay:false};
+  fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
+  mount(`?planId=account-plan&mode=definition&entryId=entry-1&dueOnly=true&wrongOnly=true&batchCards=${encodeURIComponent(JSON.stringify([{entryId:'entry-1',senseId:'sense-1'}]))}`);
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
+  fireEvent.click(screen.getByRole('button',{name:'Start session'}));
+  expect(readVocabularyDraft(owner.current)).toMatchObject({planId:'account-plan',mode:'dictation',selection:{kind:'planned-review',planId:'account-plan',cards:refs}});
+  expect(readVocabularyDraft(owner.current)?.cardIds.map(({entryId,senseId})=>({entryId,senseId}))).toEqual(refs);
+  expect(fb.current.loadVocabularyCatalog).toHaveBeenCalledWith(undefined,expect.objectContaining({entryIds:[entry.id]}));
+});
+
+test('unknown planned reviews remain unavailable instead of starting free practice',async()=>{
+  fb.current.state.vocabulary[0].senses[0].example = '';
+  mount('?planId=missing&dueOnly=false&entryId=entry-0&senseId=sense-0&mode=cloze');
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled());
+  expect(screen.getByText(/planned task is no longer available/i)).toBeInTheDocument();
+  expect(screen.queryByText('No words match these filters.')).not.toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'Explore wordbooks' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: /^Try / })).not.toBeInTheDocument();
+});
+
+test.each(['/planning?week=next#task-exact-plan', '/today?scenario=return#task-exact-plan'])('planned review results keep each dictation sense and one exact source return through recovery (%s)',async source=>{
+  const entry=fb.current.state.vocabulary[0];entry.senses.push({...entry.senses[0],id:'second-meaning',definition:'Another meaning'});
+  const refs=entry.senses.map((sense:{id:string})=>({entryId:entry.id,senseId:sense.id}));
+  fb.current.state.plans=[{id:'exact-plan',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'due-review',assessmentMode:'dictation',cards:refs}}];
+  const view=mount(`?planId=exact-plan&returnTo=${encodeURIComponent(source)}`);
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
+  fireEvent.click(screen.getByRole('button',{name:'Start session'}));
+  expect(readVocabularyDraft(owner.current)?.returnTo).toBe(source);
+  view.unmount();
+  mount('?resume=true');
+  fireEvent.click(await screen.findByRole('button',{name:'Resume session'}));
+  await screen.findByRole('textbox',{name:'Answer 1'});
+  for(const input of screen.getAllByRole('textbox'))fireEvent.change(input,{target:{value:entry.term}});
+  fireEvent.click(screen.getByRole('button',{name:'Submit session'}));
+  await screen.findByRole('button',{name:'New session'});
+  const links=screen.getAllByRole('link',{name:'Details'});
+  expect(links.map(link=>new URL(link.getAttribute('href')!,'http://local').searchParams.get('senseId'))).toEqual(refs.map((ref:{senseId:string})=>ref.senseId));
+  const label = source.startsWith('/today') ? 'Back to Today' : 'Back to Planning';
+  expect(screen.getAllByRole('link',{name:label})).toHaveLength(1);
+  expect(screen.getByRole('link',{name:label})).toHaveAttribute('href',source);
+});
+
+test('a skipped no-longer-due task explains why it cannot start',async()=>{
+  fb.current.state.plans=[{id:'empty-slot',kind:'vocabulary',status:'skipped',skipReason:'no-longer-due',target:{type:'vocabulary',mode:'due-review',binding:'frozen',assessmentMode:'definition',cards:[]}}];
+  mount('?planId=empty-slot');
+  expect(await screen.findByText(/no longer due/i)).toBeInTheDocument();
+  expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
+});
+
+test('planned review resource failures retry without falling back to a free session',async()=>{
+  const entry=fb.current.state.vocabulary[0];
+  fb.current.state.plans=[{id:'retry-plan',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'due-review',assessmentMode:'definition',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}}];
+  fb.current.loadVocabularyCatalog=vi.fn().mockRejectedValueOnce(new Error('Offline')).mockResolvedValue(true);
+  mount('?planId=retry-plan');
+  const retry=await screen.findByRole('button',{name:'Retry catalog'});
+  expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+  fireEvent.click(retry);
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
+  fireEvent.click(screen.getByRole('button',{name:'Start session'}));
+  expect(readVocabularyDraft(owner.current)?.selection).toMatchObject({kind:'planned-review',planId:'retry-plan'});
+});
+
+test('planned review ignores legacy group-study query detection',async()=>{
+  const entry=fb.current.state.vocabulary[0];
+  fb.current.state.plans=[{id:'review-route',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'due-review',assessmentMode:'definition',cards:[{entryId:entry.id,senseId:entry.senses[0].id}]}}];
+  mount('?planId=review-route&bookId=unknown&unitId=unknown&dueOnly=false');
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
+  fireEvent.click(screen.getByRole('button',{name:'Start session'}));
+  expect(readVocabularyDraft(owner.current)?.selection).toMatchObject({kind:'planned-review',planId:'review-route'});
 });

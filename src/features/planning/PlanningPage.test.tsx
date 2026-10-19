@@ -6,10 +6,10 @@ import '@testing-library/jest-dom/vitest';
 import { MemoryRouter } from 'react-router-dom';
 import { emptyState, dateKey } from '../../domain';
 import { PlanningPage } from './PlanningPage';
-const mocks=vi.hoisted(()=>({state:null,generate:vi.fn(),change:vi.fn(),start:vi.fn()}));
-vi.mock('../../context/FieldbookContext',()=>({useFieldbook:()=>({state:mocks.state,ensureUnifiedPlans:mocks.generate,changePlan:mocks.change,startPlan:mocks.start})}));
+const mocks=vi.hoisted(()=>({state:null,generate:vi.fn(),change:vi.fn(),start:vi.fn(),bulk:vi.fn()}));
+vi.mock('../../context/FieldbookContext',()=>({useFieldbook:()=>({state:mocks.state,ensureUnifiedPlans:mocks.generate,changePlan:mocks.change,startPlan:mocks.start,saveBacklogPreview:mocks.bulk})}));
 vi.mock('../../storage/examCatalog',()=>({loadExamCatalog:vi.fn().mockResolvedValue({sections:[],papers:[]}),loadExamSections:vi.fn().mockResolvedValue({sections:[]})}));
-beforeEach(()=>{vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(2026,9,17,12));mocks.state=emptyState();mocks.generate.mockReset().mockResolvedValue(true);mocks.change.mockReset().mockResolvedValue(true);mocks.start.mockReset().mockResolvedValue(true);mocks.state.plans=[{id:'task',dateKey:dateKey(new Date()),status:'pending',skill:'writing',title:'Chart',description:'Selected question',estimatedMinutes:20}];});
+beforeEach(()=>{vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(2026,9,17,12));mocks.state=emptyState();mocks.generate.mockReset().mockResolvedValue(true);mocks.change.mockReset().mockResolvedValue(true);mocks.start.mockReset().mockResolvedValue(true);mocks.bulk.mockReset().mockResolvedValue(true);mocks.state.plans=[{id:'task',dateKey:dateKey(new Date()),status:'pending',skill:'writing',title:'Chart',description:'Selected question',estimatedMinutes:20}];});
 afterEach(()=>{cleanup();vi.useRealTimers();});
 const mount=()=>render(<MemoryRouter><PlanningPage/></MemoryRouter>);
 async function taskAction(name){
@@ -19,7 +19,7 @@ async function taskAction(name){
 test('calendar includes seven days, rest days and overdue tasks',async()=>{
   mocks.state.plans.push({...mocks.state.plans[0],id:'overdue',dateKey:'2020-01-01',title:'Old task'});
   const {container}=mount();expect(container.querySelectorAll('.study-day')).toHaveLength(7);
-  expect(await screen.findAllByText('Rest day')).toHaveLength(1);expect(await screen.findAllByText('No tasks yet. Add a task or adjust your plan settings.')).toHaveLength(5);expect(screen.getByRole('heading',{name:'Old task'})).toBeInTheDocument();
+  expect(await screen.findAllByText('Rest day')).toHaveLength(1);expect(await screen.findAllByText('No tasks yet. Add a task or adjust your plan settings.')).toHaveLength(5);await userEvent.click(screen.getByText(/Waiting list/));expect(screen.getByRole('heading',{name:'Old task'})).toBeInTheDocument();
 });
 test('replace and reschedule save explicit actions',async()=>{
   mount();await taskAction('Replace task');
@@ -73,4 +73,28 @@ test('each day exposes creation and shows its budget before saving a manual task
  expect(within(dialog).getByRole('spinbutton',{name:'Task minutes'})).toBeInTheDocument();
  expect(within(dialog).getByText(/Daily budget/)).toBeInTheDocument();
  expect(within(dialog).getByRole('checkbox',{name:/Keep extra/})).toBeInTheDocument();
+});
+
+test('planned task retains a stable focus anchor for practice returns',async()=>{
+  const view=mount();await screen.findByRole('button',{name:'Start'});
+  expect(view.container.querySelector('#task-task')).toHaveAttribute('tabindex','-1');
+});
+
+test('backlog starts collapsed, defaults to pending only and keeps a failed bulk save retryable',async()=>{
+ mocks.state.plans.push({id:'old',dateKey:'2020-01-01',status:'pending',skill:'writing',kind:'1',title:'Old pending',estimatedMinutes:20},{id:'started',dateKey:'2020-01-02',status:'in_progress',startedAt:'2020-01-02',skill:'writing',kind:'1',title:'Old started',estimatedMinutes:20});
+ const view=mount();await waitFor(()=>expect(mocks.generate).toHaveBeenCalled());
+ expect(view.container.querySelector('#planning-backlog')).not.toHaveAttribute('open');
+ await userEvent.click(screen.getByText(/Waiting list.*2/));
+ expect(screen.getByRole('checkbox',{name:'Select Old pending'})).toBeChecked();expect(screen.getByRole('checkbox',{name:'Select Old started'})).not.toBeChecked();expect(screen.getByRole('checkbox',{name:'Select Old started'})).toBeDisabled();
+ await userEvent.click(screen.getByRole('button',{name:'Preview skip'}));
+ expect(screen.getByRole('dialog',{name:'Review backlog changes'})).toHaveTextContent('Old pending');
+ mocks.bulk.mockResolvedValueOnce(false);await userEvent.click(screen.getByRole('button',{name:'Save backlog changes'}));expect(await screen.findByRole('alert')).toHaveTextContent(/could not be saved/i);
+ await userEvent.click(screen.getByRole('button',{name:'Save backlog changes'}));expect(mocks.bulk).toHaveBeenCalledTimes(2);
+});
+
+test('past skipped history stays collapsed with restore actions and preserves return anchors',async()=>{
+ mocks.state.plans.push({id:'skipped-old',dateKey:'2020-01-01',status:'skipped',skipReason:'bulk-skip',skill:'writing',title:'Skipped old task',estimatedMinutes:20});
+ mount();await userEvent.click(screen.getByText(/Skipped history/));
+ expect(screen.getByRole('heading',{name:'Skipped old task'})).toBeInTheDocument();
+ await userEvent.click(screen.getByRole('button',{name:'Restore task'}));expect(screen.getByRole('dialog',{name:'Restore task'})).toBeInTheDocument();
 });

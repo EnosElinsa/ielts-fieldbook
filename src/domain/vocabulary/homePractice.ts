@@ -60,7 +60,8 @@ export function getVocabularyHomePractice(store: Partial<VocabularyStore>, at: s
   const savedStates = [...scopes.values()].flatMap(scope=>[...scope.states.values()]);
   const savedEvents = [...scopes.values()].flatMap(scope=>[...scope.events.values()].flat());
   // A never-scheduled mode is a learning opportunity, not an overdue review.
-  const dueCards = getDueVocabularyReviewQueue({...store,vocabulary:entries,vocabularyStates:savedStates,vocabularyEvidence:savedEvents},{now:new Date(now),scheduledOnly:true});
+  const dueCards = getDueVocabularyReviewQueue({...store,vocabulary:entries,vocabularyStates:savedStates,vocabularyEvidence:savedEvents},{now:new Date(now),scheduledOnly:true})
+    .filter(card=>card.mode==='definition'||card.mode==='dictation');
   const practice = ready[0] || waiting[0];
   return {dueCards,...(practice?{practice}:{}),...(Number.isFinite(nextChange)?{nextChangeAt:new Date(nextChange).toISOString()}:{})};
 }

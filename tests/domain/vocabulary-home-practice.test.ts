@@ -38,6 +38,15 @@ test('persisted due cards remain available as a batch with their exact meaning',
  expect(recommend().dueCards.map(card=>[card.entryId,card.senseId,card.mode])).toEqual([['home-entry','saved-meaning','definition']]);
 });
 
+test('home defaults due batches to foundation while specialist exercises remain manually available',()=>{
+ const {store,learning,recommend}=fixture();event(store);
+ learning.cards.cloze={due:new Date(past)} as never;
+ learning.cards.definition={due:new Date(past)} as never;
+ expect(recommend().dueCards.map(card=>card.mode)).toEqual(['definition']);
+ expect(getVocabularyReviewQueue(store,{mode:'cloze',now,dueOnly:true})).toHaveLength(1);
+ expect(recommend().practice?.recommendation.alternatives).toContain('cloze');
+});
+
 test('legacy saved due dates remain a valid review schedule',()=>{
  const {store,learning,recommend}=fixture();event(store);learning.legacyProgress={nextReviewAt:past};
  expect(recommend().dueCards.length).toBeGreaterThan(0);

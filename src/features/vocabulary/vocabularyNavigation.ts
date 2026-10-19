@@ -1,3 +1,4 @@
+import { safeVocabularyReturn } from '../../lib/vocabularyReturn';
 import { useContext, useEffect, useState, useRef, useMemo } from "react";
 import { WorkspaceScrollRestoration } from '../../components/WorkspaceScrollRestoration';
 import { useLocation, useNavigationType, useSearchParams } from 'react-router-dom';
@@ -63,16 +64,7 @@ export function groupPath(bookId: string, unitId: string) {
   }
   return [book?.title, ...names].filter(Boolean).join(" / ");
 }
-export function safeVocabularyReturn(
-  value: string | null,
-  fallback = "/vocabulary",
-) {
-  return value &&
-    /^\/vocabulary(?:\/[^?#]*)?(?:\?[^#]*)?(?:#[^\s]*)?$/.test(value) &&
-    !/[\r\n\\]/.test(value)
-    ? normalizeVocabularyRoute(value)
-    : fallback;
-}
+export { safeVocabularyReturn } from '../../lib/vocabularyReturn';
 export function entryUrl(
   entryId: string,
   request: {

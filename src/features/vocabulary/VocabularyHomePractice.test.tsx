@@ -125,12 +125,14 @@ test('foreground return refreshes eligibility and changing account cancels the o
  expect(within(panel()).queryByText('compass')).not.toBeInTheDocument();
 });
 
-test('unassessed production remains a suggested learning task with its assessment requirement',()=>{
+test('unassessed production does not prevent foundation mastery or demand a production task',()=>{
  const {entry}=saved();successes(entry.id,new Date(Date.now()-7*86400000).toISOString(),5);
  mocks.fb.state.vocabularyEvidence.push({entryId:entry.id,senseId:'saved-direction',dimension:'usage',mode:'production',verification:'pending',result:'pending',occurredAt:new Date(Date.now()-86400000).toISOString(),sourceType:'personal',sourceId:'pending'});
  // No saved due cards: this is skill guidance, not an overdue batch.
- show();expect(within(panel()).getByRole('link',{name:/Practise Use in context/})).toBeInTheDocument();
- expect(within(panel()).getByText(/needs assessed feedback/)).toBeInTheDocument();
+ const before=structuredClone(mocks.fb.state);show();
+ expect(within(panel()).queryByRole('link',{name:/Practise Use in context/})).not.toBeInTheDocument();
+ expect(within(panel()).getByRole('heading',{name:'Choose a wordbook'})).toBeInTheDocument();
+ expect(mocks.fb.state).toEqual(before);expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
 
 test('saved meaning guidance precedes an enrolled wordbook while a waiting meaning leaves its group available',()=>{
@@ -144,10 +146,11 @@ test('saved meaning guidance precedes an enrolled wordbook while a waiting meani
  expect(within(panel()).getByText(/Next saved-meaning practice:/)).toBeInTheDocument();
 });
 
-test('an unavailable contextual task offers assessed production instead of an unusable sentence gap',()=>{
+test('an unavailable contextual task keeps the foundation next step and optional production separate',()=>{
  const {entry}=saved();entry.senses[0].example='A reading explanation without the target word.';
  for(const dimension of ['meaning','listening','spelling'] as VocabularyDimension[])mocks.fb.state.vocabularyEvidence.push({entryId:entry.id,senseId:'saved-direction',dimension,mode:dimension==='meaning'?'definition':'dictation',verification:'objective',result:'success',occurredAt:new Date(Date.now()-86400000).toISOString(),sourceType:'personal',sourceId:'lesson'});
- show();expect(within(panel()).getByRole('link',{name:/Practise Use in context/})).toBeInTheDocument();
+ show();expect(within(panel()).getByRole('link',{name:/Practise Meaning recall/})).toBeInTheDocument();
+ expect(within(panel()).getByRole('link',{name:'Use in context'})).toBeInTheDocument();
  expect(within(panel()).queryByRole('link',{name:'Sentence gap'})).not.toBeInTheDocument();
 });
 

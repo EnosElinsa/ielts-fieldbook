@@ -3,9 +3,12 @@ import { latestPracticeRecommendation, rewritePlanDescription, syncPendingPlan, 
 import { sessionSkill, speakingKinds } from './format';
 import { receptivePlanTemplates, ensureReceptivePlans } from './receptivePlans';
 import { isProtectedPlan, practiceFromWeakness } from '../domain/plans';
-import { getVocabularyReviewQueue } from '../domain/vocabulary';
+import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
+import { vocabularyLearningSource } from '../domain/vocabulary/learningSource';
+import { getVocabularyPlanningCandidates, selectVocabularyPlanReview } from '../domain/vocabulary/planning';
+import { isAssessedReviewMode, vocabularyReviewTask } from './vocabularyReviewTask';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
-import { getLearnedVocabularyIds, vocabularyGroupProgress } from '../domain/vocabulary/progress';
+import { vocabularyGroupProgress } from '../domain/vocabulary/progress';
 import { dayBudget, normalizePlanning } from '../domain/planningPreferences';
 import { TASK_PRACTICES } from './planningTaskOptions';
 
@@ -482,14 +485,14 @@ function replaceAutomaticTarget(plan, task) {
 }
 
 function refreshEvidenceTargets(state, keys, skills, now) {
-  const candidates=state.plans.filter(plan=>keys.includes(plan.dateKey)&&plan.schemaVersion===2&&plan.origin==='automatic'&&!isProtectedPlan(plan)&&plan.skill!=='vocabulary'&&plan.kind!=='vocabulary').slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)||a.id.localeCompare(b.id));
+  const candidates=state.plans.filter(plan=>keys.includes(plan.dateKey)&&plan.schemaVersion===2&&plan.origin==='automatic'&&!protectedSchedulePlan(plan)&&plan.skill!=='vocabulary'&&plan.kind!=='vocabulary').slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)||a.id.localeCompare(b.id));
   const review=reviewTask(state,skills,now,1);
   const reviewKey=review&&evidenceTargetKey(review);
   const alreadyScheduled=reviewKey&&state.plans.some(plan=>plan.status!=='skipped'&&plan.status!=='completed'&&(keys.includes(plan.dateKey)||plan.status==='in_progress')&&evidenceTargetKey(plan)===reviewKey);
   const reviewSlot=review&&candidates.find(plan=>studyDaySkills(state.settings,plan.dateKey,skills).includes(review.skill));
   if (review&&!alreadyScheduled&&reviewSlot) {
     const plan=reviewSlot;
-    replaceAutomaticTarget(plan,{...review,estimatedMinutes:plan.estimatedMinutes});
+    replaceAutomaticTarget(plan,{...review,estimatedMinutes:plan.estimatedMinutes});plan.order=-1;
   }
   for (const plan of candidates) {
     if (['error-review','intensive','exam-review'].includes(plan.target?.type)) continue;
@@ -499,30 +502,38 @@ function refreshEvidenceTargets(state, keys, skills, now) {
   }
 }
 
-function vocabularyReviewTask(dueCards, mode, minutes) {
-  const cards=dueCards.slice(0,Math.max(1,minutes)).map(({entryId,senseId})=>({entryId,senseId}));
-  return {skill:'vocabulary',kind:'vocabulary',title:'Vocabulary - Due recall',description:`Recall ${cards.length} due words.`,estimatedMinutes:minutes,deskMode:mode,target:{type:'vocabulary',mode:'due-review',assessmentMode:mode,cards},completion:{type:'assessment',description:'Submit recall answers for these exact words.'}};
+const isVocabularyPlan=plan=>plan.skill==='vocabulary'||plan.kind==='vocabulary';
+const startedPlan=plan=>plan.status==='in_progress'||Boolean(plan.startedAt);
+const frozenVocabularyPlan=plan=>plan.target?.type==='vocabulary'&&(plan.target.binding==='frozen'||plan.target.binding!=='dynamic'&&plan.target.cards?.length>0);
+const protectedSchedulePlan=plan=>isProtectedPlan(plan)||Boolean(plan.originalDateKey)||frozenVocabularyPlan(plan);
+const cardIdentity=(card,mode=card.mode)=>JSON.stringify([card.entryId,card.senseId,mode]);
+const taskMinutes=plan=>Math.max(1,Number(plan.estimatedMinutes)||Number(plan.quantity)||1);
+
+/** Automatic allocation never spends the reserved vocabulary share on old skill work. */
+function remainingCapacity(state,key) {
+  const budget=studyBudget(state.settings,key);
+  const rows=state.plans.filter(plan=>plan.dateKey===key&&plan.status!=='skipped');
+  const total=rows.reduce((sum,plan)=>sum+taskMinutes(plan),0);
+  const vocabulary=rows.filter(isVocabularyPlan).reduce((sum,plan)=>sum+taskMinutes(plan),0);
+  return {total:Math.max(0,budget.daily-total),vocabulary:Math.max(0,Math.min(budget.vocabulary-vocabulary,budget.daily-total)),skill:Math.max(0,Math.min(budget.skill-(total-vocabulary),budget.daily-total))};
 }
 
-function vocabularyRecallKey(target) {
-  if(target?.mode!=='due-review')return null;
-  return JSON.stringify([target.assessmentMode,(target.cards||[]).map(card=>JSON.stringify([card.entryId,card.senseId])).sort()]);
+function carryBacklog(state,keys,now,selectedIds,previousDates=new Map()) {
+  const today=keys[0];
+  const backlog=state.plans.filter(plan=>plan.dateKey<today&&['pending','in_progress'].includes(plan.status)&&(!selectedIds||selectedIds.has(plan.id)))
+    .sort((a,b)=>Number(startedPlan(b))-Number(startedPlan(a))||String(a.originalDateKey||a.dateKey).localeCompare(String(b.originalDateKey||b.dateKey))||a.id.localeCompare(b.id));
+  for(const plan of backlog) {
+    if(plan.target?.mode==='due-review'&&!startedPlan(plan)&&!plan.restoredAt) {
+      plan.previousStatus=plan.status;plan.status='skipped';plan.skipReason='merged-review';plan.skippedAt=new Date(now).toISOString();
+      if(state.activePlanId===plan.id)state.activePlanId=null;
+      continue;
+    }
+    const key=keys.find(key=>{const capacity=remainingCapacity(state,key);return taskMinutes(plan)<=capacity.total&&taskMinutes(plan)<=capacity[isVocabularyPlan(plan)?'vocabulary':'skill'];});
+    if(key){plan.originalDateKey=plan.originalDateKey||plan.dateKey;plan.dateKey=key;if(previousDates.get(plan.id)!==key)plan.rescheduledAt=new Date(now).toISOString();}
+  }
 }
 
-function refreshVocabularyTarget(state, keys, dueCards, mode, cap) {
-  if(!dueCards.length||cap<=0)return;
-  const plan=state.plans.filter(plan=>keys.includes(plan.dateKey)&&plan.schemaVersion===2&&plan.origin==='automatic'&&!isProtectedPlan(plan)&&plan.kind==='vocabulary').slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)||a.id.localeCompare(b.id))[0];
-  if(!plan)return;
-  const reserved=new Set(state.plans.filter(row=>row.id!==plan.id&&row.status!=='completed'&&row.status!=='skipped'&&(keys.includes(row.dateKey)||row.status==='in_progress')&&row.target?.mode==='due-review').flatMap(row=>row.target.cards.map(card=>JSON.stringify([card.entryId,card.senseId]))));
-  const available=dueCards.filter(card=>!reserved.has(JSON.stringify([card.entryId,card.senseId])));
-  if(!available.length)return;
-  const task=vocabularyReviewTask(available,mode,Math.min(cap,plan.estimatedMinutes));
-  const recallKey=vocabularyRecallKey(task.target);
-  if(state.plans.some(row=>row.status!=='completed'&&row.status!=='skipped'&&(keys.includes(row.dateKey)||row.status==='in_progress')&&vocabularyRecallKey(row.target)===recallKey))return;
-  replaceAutomaticTarget(plan,task);
-}
-
-export function nextLearningTarget(state, reserved = new Set()) {
+export function nextLearningTarget(state, reserved = new Set(), frozenCards = []) {
   const batchSize=state.settings.vocabulary?.learningBatchSize || 10;
   const assessmentMode=['audio','production'].includes(state.settings.vocabulary?.mode)?'definition':state.settings.vocabulary?.mode || 'dictation';
   for(const enrollment of state.wordbookEnrollments || []) {
@@ -535,10 +546,19 @@ export function nextLearningTarget(state, reserved = new Set()) {
         if(session.status!=='submitted'||['audio','production'].includes(session.mode)||selection?.kind!=='learning-batch'||selection.bookId!==group.bookId||selection.unitId!==group.id)continue;
         session.results.filter(result=>String(result.response||'').trim()&&selection.cards.some(ref=>ref.entryId===result.entryId&&ref.senseId===result.senseId)).forEach(result=>answered.add(result.entryId));
       }
-      const ids=group.entryIds || VOCABULARY_CATALOG.memberships.filter(row=>row.bookId===group.bookId&&row.unitId===group.id).slice().sort((a,b)=>a.order-b.order).map(row=>row.entryId);
-      for(let index=0;index<Math.ceil(ids.length/batchSize);index++) {
-        if(ids.slice(index*batchSize,(index+1)*batchSize).every(id=>answered.has(id)))continue;
+      const source=vocabularyLearningSource(state,group.bookId,group.id),ids=source.entryIds;
+      for(let index=0;index<Math.ceil(source.count/batchSize);index++) {
+        const batchIds=ids.slice(index*batchSize,(index+1)*batchSize);
+        if(batchIds.length&&batchIds.every(id=>answered.has(id)))continue;
         const key=JSON.stringify([group.bookId,group.id,index,batchSize]);if(reserved.has(key))continue;
+        if(frozenCards.some(ref=>ids.includes(ref.entryId))) {
+          // Resolve the same contextual senses and mode fallback as the binder. If resources
+          // are not loaded yet, defer the overlapping batch rather than inventing identities.
+          try {
+            const batch=buildLearningBatch(state,group.bookId,group.id,index,batchSize,assessmentMode);
+            if(!batch.cards.length||batch.cards.some(card=>frozenCards.some(ref=>ref.entryId===card.entryId&&ref.senseId===card.senseId&&ref.mode===batch.mode)))continue;
+          } catch {continue;}
+        }
         reserved.add(key);
         return {type:'vocabulary',mode:'learning-batch',assessmentMode,bookId:group.bookId,unitId:group.id,batchIndex:index,batchSize,cards:[]};
       }
@@ -552,81 +572,99 @@ export function nextLearningTarget(state, reserved = new Set()) {
   return null;
 }
 
-export function ensureUnifiedPlans(state, persistIfChanged, now = new Date()) {
-  const before = JSON.stringify(state.plans);
-  const keys = calendarDays(now); const today = keys[0]; const generationKey = planningSettingsKey(state.settings);
-  // Migrate only recognizable untouched automatic plans. Keep every unfinished past task visible.
-  state.plans = (state.plans || []).filter(plan => {
-    if (isProtectedPlan(plan) || String(plan.dateKey || '') < today) return true;
-    if (plan.schemaVersion === 2) return plan.generationKey === generationKey;
-    return !/^plan-(?:(?:reading|listening)-)?\d{4}-\d{2}-\d{2}$/.test(plan.id || '');
-  });
-  const skills = selectedStudySkills(state.settings);
-  const uniqueId=(id)=>{let next=id;let suffix=2;while(state.plans.some(plan=>plan.id===next))next=`${id}-${suffix++}`;return next;};
-  const prior=state.plans.filter(plan=>plan.dateKey<today&&Number.isInteger(plan.rotationIndex)).slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)).pop();
-  let sequence = prior ? prior.rotationIndex+1 : 0;
-  const reserved=new Set(state.plans.filter(plan=>plan.target?.mode==='learning-batch'&&plan.status!=='skipped').map(plan=>JSON.stringify([plan.target.bookId,plan.target.unitId||null,plan.target.batchIndex,plan.target.batchSize])));
-  const learned=getLearnedVocabularyIds(state);const preferred=state.settings.vocabulary?.mode || 'dictation';
-  let dueCards=[];let dueMode='definition';
-  for(const mode of [...new Set([preferred,'definition','dictation','cloze','synonym','distinction'])].filter(mode=>!['audio','production'].includes(mode))) {
-    const cards=getVocabularyReviewQueue(state,{mode,dueOnly:true,now}).filter(card=>learned.has(card.entryId));
-    if(cards.length){dueCards=cards;dueMode=mode;break;}
+export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), recoveryIds?) {
+  const before=JSON.stringify(state.plans);
+  const previous=(state.plans||[]).slice();
+  const keys=calendarDays(now),today=keys[0],generationKey=planningSettingsKey(state.settings);
+  // Reclaim only untouched generated slots, before allocating carryover.
+  state.plans=previous.filter(plan=>plan.dateKey<today||protectedSchedulePlan(plan)||!(plan.origin==='automatic'||plan.schemaVersion===2||/^plan-(?:(?:reading|listening)-)?\d{4}-\d{2}-\d{2}$/.test(plan.id||'')));
+  const previousDates=new Map();
+  if(!recoveryIds)for(const plan of state.plans)if(plan.originalDateKey<today&&plan.dateKey>=today&&plan.status==='pending'&&!isProtectedPlan(plan)&&!frozenVocabularyPlan(plan)) {
+    previousDates.set(plan.id,plan.dateKey);plan.dateKey=plan.originalDateKey;
   }
-  for (const key of keys) {
-    const budget = studyBudget(state.settings,key);
-    const daySkills=studyDaySkills(state.settings,key,skills);
-    if (!(state.settings.days || []).includes(new Date(`${key}T00:00:00`).getDay() || 7) || !skills.length) continue;
-    if (!budget.daily) continue;
-    const existing = state.plans.filter(plan=>plan.dateKey===key);
-    const retainedRotation=existing.find(plan=>Number.isInteger(plan.rotationIndex));
+  carryBacklog(state,keys,now,recoveryIds,previousDates);
+  const skills=selectedStudySkills(state.settings);
+  const reserved=new Set(state.plans.filter(plan=>plan.target?.mode==='learning-batch'&&plan.status!=='skipped').map(plan=>JSON.stringify([plan.target.bookId,plan.target.unitId||null,plan.target.batchIndex,plan.target.batchSize])));
+  const frozenCards=state.plans.filter(plan=>['pending','in_progress'].includes(plan.status)&&frozenVocabularyPlan(plan)).flatMap(plan=>(plan.target.cards||[]).map(card=>({...card,mode:plan.target.assessmentMode})));
+  const identities=new Set(frozenCards.map(card=>cardIdentity(card)));
+  let candidates=getVocabularyPlanningCandidates(state,now,state.settings.vocabulary?.mode).filter(({card})=>!identities.has(cardIdentity(card)));
+  const historical=previous.filter(plan=>(plan.originalDateKey||plan.dateKey)<today&&Number.isInteger(plan.rotationIndex)).sort((a,b)=>String(a.originalDateKey||a.dateKey).localeCompare(String(b.originalDateKey||b.dateKey))||a.rotationIndex-b.rotationIndex).pop();
+  let sequence=historical ? historical.rotationIndex+1 : 0;
+  const add=(key,task,id,order,rotationIndex?)=>{
+    if(state.plans.some(plan=>plan.id===id&&plan.status==='skipped'))return;
+    let unique=id,index=2;while(state.plans.some(plan=>plan.id===unique))unique=`${id}-${index++}`;
+    const proposed={id:unique,dateKey:key,...task,order,...(rotationIndex===undefined?{}:{rotationIndex}),schemaVersion:2,generationKey,origin:'automatic',status:'pending',startedAt:null,completedAt:null,linkedSessionId:null};
+    const old=previous.find(plan=>plan.id===unique&&!protectedSchedulePlan(plan));
+    // Preserve resource bindings when an otherwise unchanged automatic task is regenerated.
+    if(old&&old.generationKey===generationKey&&old.skill===proposed.skill&&old.kind===proposed.kind&&old.deskMode===proposed.deskMode&&old.estimatedMinutes===proposed.estimatedMinutes&&evidenceTargetKey(old)===evidenceTargetKey(proposed)&&!isVocabularyPlan(old)) {
+      proposed.target=old.target;proposed.questionId=old.questionId;
+      for(const field of ['targetLabel','quantity','sectionId','driver','title','description','completion'])if(old[field]!==undefined)proposed[field]=old[field];
+    }
+    if(old){for(const field of Object.keys(old))delete old[field];Object.assign(old,proposed);state.plans.push(old);}else state.plans.push(proposed);
+  };
+  for(const key of keys) {
+    const budget=studyBudget(state.settings,key);if(!budget.daily)continue;
+    const retainedRotation=previous.filter(plan=>plan.dateKey===key&&!plan.originalDateKey&&Number.isInteger(plan.rotationIndex)).sort((a,b)=>a.rotationIndex-b.rotationIndex)[0];
     if(retainedRotation)sequence=retainedRotation.rotationIndex;
-    if (budget.planning.multipleTasks && existing.some(plan=>plan.generationKey===generationKey)) { sequence++; continue; }
-    const existingMinutes = existing.filter(plan=>plan.status!=='skipped').reduce((sum,plan)=>sum+(Number(plan.estimatedMinutes)||budget.daily),0);
-    let available = Math.max(0,budget.daily-existingMinutes);
-    let vocabulary = null;
-    const vocabMinutes = Math.min(budget.vocabulary,available);
-    if (!existing.some(plan=>plan.skill==='vocabulary'||plan.kind==='vocabulary') && vocabMinutes>0) {
-      if (key===today && dueCards.length) {
-        vocabulary=vocabularyReviewTask(dueCards,dueMode,vocabMinutes);
-      } else if (vocabMinutes>=5 && (budget.planning.multipleTasks || vocabMinutes===10)) {
-        const target=nextLearningTarget(state,reserved);
-        if(target)vocabulary={skill:'vocabulary',kind:'vocabulary',title:`Vocabulary - Learn ${target.batchSize} words`,description:'Learn the batch, then submit recall answers.',estimatedMinutes:vocabMinutes,deskMode:target.assessmentMode,target,completion:{type:'assessment',description:'Submit the exact learning batch assessment.'}};
-      }
-    }
+    let remaining=remainingCapacity(state,key).vocabulary;
     const vocabularyTasks=[];
-    if(vocabulary) {
-      const count=budget.planning.multipleTasks ? Math.max(1,Math.ceil(vocabulary.estimatedMinutes/budget.planning.blockMinutes)) : 1;
-      const total=vocabulary.estimatedMinutes;
-      let cardOffset=0;
-      for(let index=0;index<count;index++) {
-        const minutes=Math.floor(total/count)+(index<total%count?1:0);
-        const target=vocabulary.target.mode==='due-review'?{...vocabulary.target,cards:vocabulary.target.cards.slice(cardOffset,cardOffset+minutes)}:index===0?vocabulary.target:nextLearningTarget(state,reserved);
-        cardOffset+=minutes;
-        if(!target || target.mode==='due-review'&&!target.cards.length)break;
-        vocabularyTasks.push({...vocabulary,estimatedMinutes:minutes,target,...(target.mode==='due-review'?{description:`Recall ${target.cards.length} due words.`}:{})});
+    while(remaining>0&&candidates.length) {
+      const mode=candidates[0].card.mode,words=new Set(),chosen=[];
+      for(const candidate of candidates)if(candidate.reason===candidates[0].reason&&candidate.card.mode===mode&&!words.has(candidate.card.entryId)&&chosen.length<Math.min(remaining,budget.planning.blockMinutes)){chosen.push(candidate);words.add(candidate.card.entryId);}
+      if(!chosen.length)break;
+      vocabularyTasks.push(vocabularyReviewTask(mode,chosen.length));remaining-=chosen.length;
+      const consumed=new Set(chosen.map(({card})=>cardIdentity(card)));candidates=candidates.filter(({card})=>!consumed.has(cardIdentity(card)));
+    }
+    // Existing learning batches are indivisible; new batches must fit their actual prompt count.
+    const batchSize=state.settings.vocabulary?.learningBatchSize||10;
+    while(remaining>0&&!candidates.length) {
+      const target=nextLearningTarget(state,new Set(reserved),frozenCards);if(!target)break;
+      const group=VOCABULARY_CATALOG.units.find(unit=>unit.id===target.unitId&&unit.bookId===target.bookId);
+      const groupSize=group?vocabularyLearningSource(state,group.bookId,group.id).count:null;
+      const count=groupSize===null?batchSize:Math.min(batchSize,Math.max(0,groupSize-target.batchIndex*batchSize));
+      if(!count||count>remaining)break;
+      reserved.add(JSON.stringify([target.bookId,target.unitId||null,target.batchIndex,target.batchSize]));
+      vocabularyTasks.push({skill:'vocabulary',kind:'vocabulary',title:`Vocabulary - Learn ${count} words`,description:'Learn the batch, then submit recall answers.',estimatedMinutes:count,quantity:count,deskMode:target.assessmentMode,target,completion:{type:'assessment',description:'Submit the exact learning batch assessment.'}});remaining-=count;
+      if(!budget.planning.multipleTasks)break;
+    }
+    vocabularyTasks.forEach((task,index)=>add(key,task,`study-${key}-vocabulary${index?`-${index+1}`:''}`,index));
+    // Unused vocabulary time remains available for new ordinary practice, but never for carryover.
+    const available=remainingCapacity(state,key).total;
+    const daySkills=studyDaySkills(state.settings,key,skills);
+    if(available>0&&daySkills.length) {
+      if(budget.planning.multipleTasks) {
+        allocateStudyBlocks(skills,budget,available,sequence).forEach(({skill,minutes},index)=>{
+          add(key,skillTask(state,skill,minutes,sequence+index),`study-${key}-slot-${index+1}`,index+vocabularyTasks.length,sequence+index);
+        });
+      } else if(!state.plans.some(plan=>plan.dateKey===key&&plan.status!=='skipped'&&!isVocabularyPlan(plan))) {
+        const weighted=daySkills.flatMap(skill=>Array(Math.max(1,budget.planning.weights[skill])).fill(skill));
+        const task=skillTask(state,weighted[sequence%weighted.length],available,Math.floor(sequence/skills.length));
+        if(task.skill!=='reading'||available>=2)add(key,task,`study-${key}-skill`,vocabularyTasks.length,sequence);
       }
     }
-    const vocabReserved = vocabularyTasks.reduce((sum,task)=>sum+task.estimatedMinutes,0);
-    if (budget.planning.multipleTasks && available-vocabReserved>0) {
-      const slots=allocateStudyBlocks(skills,budget,available-vocabReserved,sequence);
-      slots.forEach(({skill,minutes},index)=>{
-        const task=key===today&&index===0 ? reviewTask(state,daySkills,now,minutes)||skillTask(state,skill,minutes,sequence+index) : skillTask(state,skill,minutes,sequence+index);
-        state.plans.push({id:uniqueId(`study-${key}-slot-${index+1}`),dateKey:key,...task,order:index+vocabularyTasks.length,rotationIndex:sequence+index,schemaVersion:2,generationKey,origin:'automatic',status:'pending',startedAt:null,completedAt:null,linkedSessionId:null});
-      });
-    } else if (!existing.some(plan=>plan.skill!=='vocabulary'&&plan.kind!=='vocabulary') && available-vocabReserved>0) {
-      const weighted=daySkills.flatMap(skill=>Array(Math.max(1,budget.planning.weights[skill])).fill(skill));
-      if(!weighted.length)continue;
-      const selected = weighted[sequence % weighted.length];
-      const task = key===today ? reviewTask(state,daySkills,now,available-vocabReserved) || skillTask(state,selected,available-vocabReserved,Math.floor(sequence/skills.length)) : skillTask(state,selected,available-vocabReserved,Math.floor(sequence/skills.length));
-      if(task.skill!=='reading'||task.estimatedMinutes>=2)state.plans.push({id:uniqueId(`study-${key}-skill`),dateKey:key,...task,rotationIndex:sequence,schemaVersion:2,generationKey,origin:'automatic',status:'pending',startedAt:null,completedAt:null,linkedSessionId:null});
-    }
-    vocabularyTasks.forEach((task,index)=>state.plans.push({id:uniqueId(`study-${key}-vocabulary${index?`-${index+1}`:''}`),dateKey:key,...task,order:index,schemaVersion:2,generationKey,origin:'automatic',status:'pending',startedAt:null,completedAt:null,linkedSessionId:null}));
     sequence++;
   }
   refreshEvidenceTargets(state,keys,skills,now);
-  refreshVocabularyTarget(state,keys,dueCards,dueMode,studyBudget(state.settings,today).vocabulary);
-  if (JSON.stringify(state.plans)!==before) persistIfChanged?.();
-  return state.plans.filter(plan=>keys.includes(plan.dateKey)).slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey)||a.id.localeCompare(b.id));
+  if(JSON.stringify(state.plans)!==before)persistIfChanged?.();
+  return state.plans.filter(plan=>keys.includes(plan.dateKey)).slice().sort(compareStudyPlans);
+}
+
+/** A snapshot guard makes the reviewed transaction exact, including concurrent edits and midnight. */
+function backlogSnapshot(state,now) {
+  return JSON.stringify([dateKey(now),state.plans,state.activePlanId,planningSettingsKey(state.settings)]);
+}
+export function previewBacklogChange(state,action,now=new Date()) {
+  if(!['replan','skip'].includes(action.type))throw new Error('Choose replan or skip.');
+  const draft=structuredClone(state),today=dateKey(now),ids=new Set(action.ids||[]);
+  const selected=draft.plans.filter(plan=>ids.has(plan.id)&&plan.dateKey<today&&['pending','in_progress'].includes(plan.status)&&(action.includeStarted||!startedPlan(plan)));
+  if(!selected.length)throw new Error('Select at least one eligible waiting task.');
+  if(action.type==='replan')ensureUnifiedPlans(draft,undefined,now,new Set(selected.map(plan=>plan.id)));
+  else for(const plan of selected){plan.previousStatus=plan.status;plan.status='skipped';plan.skipReason='bulk-skip';plan.skippedAt=new Date(now).toISOString();plan.origin='manual';if(draft.activePlanId===plan.id)draft.activePlanId=null;}
+  return {snapshot:backlogSnapshot(state,now),createdAt:new Date(now).toISOString(),action,plans:draft.plans,activePlanId:draft.activePlanId,changes:selected.map(plan=>({id:plan.id,title:plan.title,from:state.plans.find(row=>row.id===plan.id).dateKey,to:plan.dateKey,status:plan.status,waiting:plan.dateKey<today&&plan.status!=='skipped'}))};
+}
+export function applyBacklogPreview(state,preview,now=new Date()) {
+  if(backlogSnapshot(state,now)!==preview.snapshot)throw new Error('Your schedule changed. Preview the backlog again before saving.');
+  state.plans=structuredClone(preview.plans);state.activePlanId=preview.activePlanId;
 }
 
 function studyDaySkills(settings,key,skills) {
@@ -670,11 +708,10 @@ export function manualStudyTask(state, action) {
   if(skill==='vocabulary') {
     if(practice==='due-review') {
       const mode=action.assessmentMode || state.settings.vocabulary?.mode || 'definition';
-      if(['audio','production'].includes(mode))throw new Error('Choose an assessed recall mode.');
-      const learned=getLearnedVocabularyIds(state);
-      const cards=getVocabularyReviewQueue(state,{mode,dueOnly:true}).filter(card=>learned.has(card.entryId));
+      if(!isAssessedReviewMode(mode))throw new Error('Choose an assessed recall mode.');
+      const cards=selectVocabularyPlanReview(state,new Date(),mode,minutes);
       if(!cards.length)throw new Error('No learned words are due for this recall mode.');
-      return vocabularyReviewTask(cards,mode,minutes);
+      return vocabularyReviewTask(mode,minutes);
     }
     const target=action.bookId&&action.unitId ? {type:'vocabulary',mode:'learning-batch',assessmentMode:['audio','production'].includes(state.settings.vocabulary?.mode)?'definition':state.settings.vocabulary?.mode||'dictation',bookId:action.bookId,unitId:action.unitId,batchIndex:Number(action.batchIndex)||0,batchSize:state.settings.vocabulary?.learningBatchSize||10,cards:[]} : nextLearningTarget(state);
     if(action.batchIndex!==undefined&&(!Number.isInteger(action.batchIndex)||action.batchIndex<0))throw new Error('Choose a valid batch number.');
@@ -743,17 +780,23 @@ export function mutateStudyPlan(state, planId, action, now = new Date()) {
     state.plans.push(plan);
   } else {
     if(!plan)throw new Error('Task not found.');
-    if(action.type==='skip'&&plan.status!=='completed') {plan.previousStatus=plan.status;plan.status='skipped';if(state.activePlanId===plan.id)state.activePlanId=null;}
-    else if(action.type==='restore'&&plan.status==='skipped') {requireDayCapacity(state,plan.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);plan.status=plan.previousStatus==='in_progress'?'in_progress':'pending';}
+    if(action.type==='skip'&&plan.status!=='completed') {plan.previousStatus=plan.status;plan.status='skipped';plan.skipReason='user-skipped';if(state.activePlanId===plan.id)state.activePlanId=null;}
+    else if(action.type==='restore'&&plan.status==='skipped') {
+      requireDayCapacity(state,plan.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);
+      if(plan.skipReason==='no-longer-due'&&!plan.startedAt&&plan.target?.type==='vocabulary'&&plan.target.mode==='due-review'&&!plan.target.cards?.length)plan.target.binding='dynamic';
+      plan.status=plan.previousStatus==='in_progress'?'in_progress':'pending';delete plan.skipReason;delete plan.skippedAt;plan.restoredAt=new Date(now).toISOString();
+    }
     else if(action.type==='reschedule') {
       if(plan.status==='completed')throw new Error('Completed tasks cannot be rescheduled.');
-      requireDayCapacity(state,action.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);plan.dateKey=action.dateKey;
+      requireDayCapacity(state,action.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);plan.originalDateKey=plan.originalDateKey||plan.dateKey;plan.dateKey=action.dateKey;plan.rescheduledAt=new Date(now).toISOString();
     } else if(action.type==='resize'||action.type==='replace') {
       if(plan.status!=='pending'||plan.startedAt)throw new Error('Only unstarted tasks can be edited.');
       if(action.type==='resize') {
         const minutes=Number(action.estimatedMinutes);
         validatePlanDuration(plan,minutes);
+        if(frozenVocabularyPlan(plan)&&minutes<plan.target.cards.length)throw new Error('The exact frozen prompts need at least one minute each.');
         requireDayCapacity(state,plan.dateKey,minutes,plan.id,action.allowOverBudget);plan.estimatedMinutes=minutes;
+        if(plan.target?.type==='vocabulary'&&plan.target.mode==='due-review'&&!frozenVocabularyPlan(plan))Object.assign(plan,vocabularyReviewTask(plan.target.assessmentMode,minutes));
         if(plan.target?.type==='section')delete plan.target.questionIds;
       }else {
         const minutes=action.estimatedMinutes ?? (action.kind==='writing-mock'?60:action.kind==='speaking-mock'?15:plan.estimatedMinutes||studyBudget(state.settings,plan.dateKey).skill);

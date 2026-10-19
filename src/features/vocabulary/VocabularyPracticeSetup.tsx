@@ -12,39 +12,56 @@ import type { VocabularyPracticeController } from "./useVocabularyPracticeContro
 export function VocabularyPracticeSetup({ controller }: { controller: VocabularyPracticeController }) {
   const { study, explicitEntry, preferences, setPreferences, mode, bookId, setBook, unitId, setUnit, dueOnly, setDue, wrongOnly, setWrong, catalogStatus, queue, unitQueue, books, selectedUnit, selectedBook, chapter, catalogReady, studyReady, resume, recent, changeFilter, changeMode, begin, recover, discardResume, showRecentSession, retryCatalog } = controller;
   const [pickerOpen, setPickerOpen] = useState(false);
+  const locked = controller.planRequested;
+  const plannedTarget = controller.boundVocabularyPlan?.target;
+  const plannedBook = plannedTarget?.bookId ? books.find(book => book.id === plannedTarget.bookId) : undefined;
+  const plannedUnit = plannedTarget?.unitId ? controller.units.find(unit => unit.id === plannedTarget.unitId && (!plannedTarget.bookId || unit.bookId === plannedTarget.bookId)) : undefined;
   const specialist = isSpecialistVocabularyMode(mode);
-  const launchCount = study ? queue.length : Math.min(preferences.sessionSize, queue.length);
+  const launchCount = study || controller.plannedReview ? queue.length : Math.min(preferences.sessionSize, queue.length);
   const preparing = !catalogReady && catalogStatus.status !== 'error';
-  const batchOptions = !study && !explicitEntry;
-  const reviewFilters = !study && (!explicitEntry || dueOnly || wrongOnly);
+  const batchOptions = !locked && !study && !explicitEntry;
+  const reviewFilters = !locked && !study && (!explicitEntry || dueOnly || wrongOnly);
   const focused = controller.focusedPractice;
   const queuedSense = queue[0]?.entry.senses.find(sense => sense.id === queue[0]?.senseId);
   const selectedMeaning = controller.filter.senseId ? focused?.sense : queuedSense || focused?.sense;
   const unsupportedMode = Boolean(catalogReady && controller.filter.senseId && focused?.sense && !focused.reference && !focused.entry.tags.includes('archived') && !focused.modes.includes(mode === 'audio' ? 'dictation' : mode));
-  const fallbackMode = unsupportedMode && !controller.boundAssessmentMode && focused?.modes.includes('definition') ? 'definition' : undefined;
+  const fallbackMode = !locked && unsupportedMode && !controller.boundAssessmentMode && focused?.modes.includes('definition') ? 'definition' : undefined;
   return (
     <>
-      <div className="practice-context-card">
-        <span className="eyebrow">{controller.batchRequest ? `Learning batch ${Number(controller.learningBatch.batch?.selection.batchIndex || 0) + 1}` : study ? 'One complete group' : explicitEntry ? 'A single word' : 'A focused review batch'}</span>
-        <h3>{study ? selectedBook?.title || 'Choose a wordbook' : explicitEntry ? focused?.entry.term || queue[0]?.entry.term || 'Practise this word' : 'Vocabulary review'}</h3>
-        <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : explicitEntry ? !catalogReady ? preparing ? 'Loading your selected meaning…' : 'Retry loading to see your selected meaning.' : selectedMeaning?.definition || 'This selected meaning is unavailable.' : 'Review due words, retry mistakes, or build a custom review.'}</p>
+      <div className="practice-context">
+        {!locked && (study || explicitEntry) ? <>
+          <h3>{study ? selectedBook?.title || 'Choose a wordbook' : focused?.entry.term || queue[0]?.entry.term || 'Practise this word'}</h3>
+          <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : !catalogReady ? preparing ? 'Loading your selected meaning…' : 'Retry loading to see your selected meaning.' : selectedMeaning?.definition || 'This selected meaning is unavailable.'}</p>
+        </> : !locked ? <p>Review due words, retry mistakes, or build a custom review.</p> : null}
         {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
         {mode === 'production' ? <p>Your sentences are saved for review. A self-rating does not verify correct usage.</p> : null}
-        {wrongOnly ? <p>Mistake recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last.</p> : null}
+        {!locked && wrongOnly ? <p>Mistake recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last.</p> : null}
         {controller.batchRequest ? <strong>{queue.length} words in this batch</strong> : study && unitQueue ? <strong>{unitQueue.totalWords} words in this group · {unitQueue.eligibleWords} ready for {modeLabel(mode).toLowerCase()}</strong> : null}
-        {controller.filter.sourceId ? <p>Source Part: {controller.filter.sourceId} · {queue.length} matching {queue.length === 1 ? 'word' : 'words'}</p> : null}
+        {!locked && controller.filter.sourceId ? <p>Source Part: {controller.filter.sourceId} · {queue.length} matching {queue.length === 1 ? 'word' : 'words'}</p> : null}
         {controller.learningBatch.error ? <p role="alert">{controller.learningBatch.error}</p> : null}
-        {controller.plannedReview && catalogReady && !studyReady ? <p role="alert">The planned review could not be prepared. Your task has not been completed.</p> : null}
-        <Link to={study ? '/vocabulary/review' : '/vocabulary/wordbooks'}>{study ? 'Switch to vocabulary review' : 'Study a complete wordbook group'} <ArrowRight size={14} /></Link>
+        {controller.planFailure === 'no-longer-due' ? <p role="status">These words are no longer due. This task was skipped without marking it complete.</p> : null}
+        {controller.planFailure === 'stale-target' ? <p role="alert">This planned task is no longer available. Return to Planning and retry.</p> : null}
+        {controller.plannedReview && catalogReady && !studyReady && !controller.planFailure ? <p role="alert">The planned review could not be prepared. Your task has not been completed.</p> : null}
+        {!locked ? <Link to={study ? '/vocabulary/review' : '/vocabulary/wordbooks'}>{study ? 'Switch to vocabulary review' : 'Study a complete wordbook group'} <ArrowRight size={14} /></Link> : null}
       </div>
+      {locked ? <section className="practice-planned-task" aria-label="Planned task">
+        <span className="practice-locked-label">Locked planned task</span>
+        <dl>
+          <div><dt>Mode</dt><dd>{controller.boundAssessmentMode ? modeLabel(controller.boundAssessmentMode) : 'Unavailable'}</dd></div>
+          <div><dt>Prompts</dt><dd>{controller.boundVocabularyPlan ? `${controller.boundVocabularyPlan.target.cards.length} prompts` : 'Unavailable'}</dd></div>
+          <div><dt>Source</dt><dd>{controller.origin.label.replace(/^Back to /, '')}{plannedBook ? ` · ${plannedBook.title}` : ''}{plannedUnit ? ` / ${plannedUnit.title}` : ''}</dd></div>
+        </dl>
+      </section> : <>
       <div className="practice-setup-controls">
+        <div className="practice-field"><span className="practice-field-label">Mode</span>
         {controller.boundAssessmentMode ? <span>{modeLabel(controller.boundAssessmentMode)}</span> : controller.groupModes?.length === 0 ? <span>No practice tasks are available in this group.</span> : <FilterMenu
           label={study || explicitEntry ? 'Practice mode' : 'Review mode'}
           value={mode}
           options={controller.groupModes ? controller.groupModes.filter(item => !controller.batchRequest || item.value !== 'audio' && controller.learningBatch.batch?.selection.cards.every(ref => item.queue.cards.some(card => card.entryId === ref.entryId && card.senseId === ref.senseId))).map(item=>{ const count = controller.batchRequest ? queue.length : item.queue.eligibleWords; return {value:item.value,label:`${item.label} · ${count} ${count === 1 ? 'word' : 'words'}${item.value==='audio'?' · Listening activity':''}`}; }) : MODES}
           onChange={changeMode}
         />}
-        {!explicitEntry ? <FilterMenu
+        </div>
+        {!explicitEntry ? <div className="practice-field"><span className="practice-field-label">Wordbook</span><FilterMenu
           label="Wordbook"
           value={bookId}
           options={[
@@ -59,12 +76,13 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
             setUnit("all");
             changeFilter("bookId", value);
           }}
-        /> : null}
-        {study ? <button className="btn line" type="button" disabled={bookId === 'all'} onClick={() => setPickerOpen(true)}>{selectedUnit?.title || 'Choose a group'}</button> : explicitEntry ? null : <FilterMenu label="Review preset" value={wrongOnly ? 'wrong' : dueOnly ? 'due' : 'custom'} options={[{value:'due',label:'Due for review'},{value:'wrong',label:'Words to retry'},{value:'custom',label:'Custom selection'}]} onChange={value => { setDue(value === 'due'); setWrong(value === 'wrong'); controller.setReviewPreset(value); }} />}
+        /></div> : null}
+        {!explicitEntry ? <div className="practice-field"><span className="practice-field-label">Range</span>{study ? <button className="btn line" type="button" disabled={bookId === 'all'} onClick={() => setPickerOpen(true)}>{selectedUnit?.title || 'Choose a group'}</button> : <FilterMenu label="Review preset" value={wrongOnly ? 'wrong' : dueOnly ? 'due' : 'custom'} options={[{value:'due',label:'Due for review'},{value:'wrong',label:'Words to retry'},{value:'custom',label:'Custom selection'}]} onChange={value => { setDue(value === 'due'); setWrong(value === 'wrong'); controller.setReviewPreset(value); }} />}</div> : null}
         {pickerOpen ? <VocabularyGroupPicker state={controller.state} bookId={bookId} currentUnitId={unitId} onClose={() => setPickerOpen(false)} onSelect={(value: string) => { setUnit(value); changeFilter('unitId',value); }} /> : null}
       </div>
+      </>}
       {controller.modeNotice ? <p role="status">{controller.modeNotice}</p> : null}
-      <details className="practice-setup-details" open={!study || undefined}><summary>{study || explicitEntry ? 'Practice options' : 'Review options'}</summary>
+      <details className="practice-setup-details"><summary>Advanced options</summary>
       <div className="practice-setup-options">
         {reviewFilters ?
         <div className="practice-filter-checks">
@@ -127,7 +145,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
                 }),
               )
             }
-          /> : study ? <span className="practice-switch">Wordbook source order · {controller.batchRequest ? 'selected batch' : 'whole group'}</span> : null}
+          /> : study && !locked ? <span className="practice-switch">Wordbook source order · {controller.batchRequest ? 'selected batch' : 'whole group'}</span> : null}
           <FilterMenu
             label="Feedback"
             value={preferences.feedback}
@@ -227,10 +245,10 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
           <h3>{modeLabel(mode)}</h3>
           <p role={preparing ? 'status' : undefined}>
             {preparing ? 'Preparing practice…' : !catalogReady ? 'Retry loading the wordbook to prepare practice.' : queue.length
-              ? `${launchCount} ${launchCount === 1 ? 'word' : 'words'} · ${preferences.layout === "list" ? "List" : "Focus"} · ${preferences.feedback === "end" ? "Results after submission" : "Feedback during practice"}`
-              : unsupportedMode ? 'No exercise is available for this meaning in this mode.' : "No words match these filters."}
+              ? `${launchCount} ${locked ? launchCount === 1 ? 'prompt' : 'prompts' : launchCount === 1 ? 'word' : 'words'} · ${preferences.layout === "list" ? "List" : "Focus"} · ${preferences.feedback === "end" ? "Results after submission" : "Feedback during practice"}`
+              : locked ? 'This planned task cannot start. Use the recovery action above.' : unsupportedMode ? 'No exercise is available for this meaning in this mode.' : "No words match these filters."}
           </p>
-          {!study && controller.filter.scheduledOnly ? <p className="vocabulary-muted">Only saved meanings with an existing review schedule are included.</p> : null}
+          {!locked && !study && controller.filter.scheduledOnly ? <p className="vocabulary-muted">Only saved meanings with an existing review schedule are included.</p> : null}
           {fallbackMode ? <button type="button" className="btn line" onClick={() => changeMode(fallbackMode)}>Try {modeLabel(fallbackMode)}</button> : null}
           {study && catalogReady && !controller.batchRequest && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? <p role="status">{specialist ? <>{controller.unitQueue.eligibleWords} of {controller.unitQueue.totalWords} words have a {modeLabel(mode).toLowerCase()} exercise. This optional practice covers these words only. Choose Dictation to study the complete group.</> : <>Some words are unavailable for this mode. Reload the wordbook or choose Dictation to study the complete group.</>}</p> : null}
           <button
@@ -243,7 +261,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
             <Play size={17} />
             {study && specialist && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? 'Start specialist subset' : 'Start session'}
           </button>
-          {catalogReady && !queue.length ? (
+          {!locked && catalogReady && !queue.length ? (
             <Link
               className="practice-empty-link"
               to="/vocabulary/wordbooks"

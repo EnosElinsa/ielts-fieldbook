@@ -1,4 +1,4 @@
-import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
+import { VocabularyLink as Link, VocabularyBackLink, useVocabularyReturn } from './VocabularyRouteLink';
 import { useLocation, useNavigationType } from 'react-router-dom';
 import { useContext, useEffect, useRef } from 'react';
 import { WorkspaceScrollRestoration } from '../../components/WorkspaceScrollRestoration';
@@ -28,6 +28,8 @@ export function VocabularyPracticeResults({ controller, results }: {
   const { resultFilter, setResultFilter, resultRows, nextGroup, nextBatch, resetResults, resultReturnTo, retryMistakes, retryPreparing } = controller;
   const table = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const origin = useVocabularyReturn('/vocabulary/history');
+  const returnsToToday = ['/', '/today'].includes(origin.to.split(/[?#]/)[0]);
   const workspaceScroll = useContext(WorkspaceScrollRestoration);
   const navigationType = useNavigationType();
   const positionKey = `fieldbook:session-position:${accountId()}:${results.id}:${resultFilter}`;
@@ -57,8 +59,8 @@ export function VocabularyPracticeResults({ controller, results }: {
     const unitId = row.context?.unitId || (results.selection && 'unitId' in results.selection ? results.selection.unitId : results.filter.unitId);
     const valid = Boolean(raw && bookId && unitId && (VOCABULARY_CATALOG.memberships.some(member => member.entryId === row.entryId && member.bookId === bookId && member.unitId === unitId) || raw.sources.some(source => source.bookId === bookId && source.unitId === unitId)));
     const context = valid ? {bookId,unitId} : {};
-    const resolved = raw ? resolveVocabularyLearningContext(raw, {...context, ...(results.mode !== 'dictation' ? {senseId: row.senseId} : {})}) : null;
-    const senseId = results.mode === 'dictation' ? resolved?.sense?.id || row.senseId : row.senseId;
+    const resolved = raw ? resolveVocabularyLearningContext(raw, {...context, ...(results.mode !== 'dictation' || results.selection?.kind === 'planned-review' ? {senseId: row.senseId} : {})}) : null;
+    const senseId = results.mode === 'dictation' && results.selection?.kind !== 'planned-review' ? resolved?.sense?.id || row.senseId : row.senseId;
     return {raw,resolved,context,detail:entryUrl(row.entryId,{...context,senseId},resultReturnTo)};
   };
   const hasMistakes = results.mode !== "audio" && results.results.some(row => row.result === "failure" || row.result === "partial");
@@ -221,7 +223,7 @@ export function VocabularyPracticeResults({ controller, results }: {
           </button>
         ) : null}
         {nextBatch ? <Link className={`btn ${hasMistakes ? 'line' : 'primary'}`} to={nextBatch}>Next batch<ArrowRight size={15}/></Link> : nextGroup ? <Link className={`btn ${hasMistakes ? "line" : "primary"}`} to={`/vocabulary/wordbooks/${encodeURIComponent(nextGroup.bookId)}/groups/${encodeURIComponent(nextGroup.id)}/learn`}>Next group <ArrowRight size={15} /></Link> : null}
-        {results.planId ? <Link className="btn line" to="/">Back to Today<ArrowRight size={15}/></Link> : null}
+        {results.planId && !returnsToToday ? <Link className="btn line" to="/">Back to Today<ArrowRight size={15}/></Link> : null}
         <button className="btn line" type="button" onClick={resetResults}>
           New session
         </button>

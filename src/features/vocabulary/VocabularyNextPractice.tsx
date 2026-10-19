@@ -30,13 +30,13 @@ export function VocabularyNextPractice({recommendation,to,onPractice,busy=false,
         ? dimensions.length===1 && dimensions[0]==='usage' ? 'No verified use in context for this meaning yet.' : `No verified ${dimensions.join(' or ')} retrieval for this meaning yet.`
         : reason==='recovery' ? 'Review an active mistake in this exercise. Your saved recovery rules still apply.'
         : reason==='spaced' ? `Build ${dimensions.join(' and ')} with another spaced success towards ${target==='mastered'?'Mastered':'Familiar'}. Successes count at least 24 hours apart.`
-        : reason==='production' ? 'Practise using this meaning in your own sentence. Mastered needs two assessed production successes at least 24 hours apart.'
+        : reason==='production' ? 'Practise using this meaning in your own sentence. Usage is tracked separately from foundation mastery.'
         : 'This exercise is due for this meaning.'}</p>
       {error && reason==='error' ? <>
         <p className="vocabulary-muted">Last error: “{short(error.response)}” → “{short(error.expectedAnswer)}”.</p>
         <p className="vocabulary-muted">{mode!==error.failedMode ? `Supporting practice does not clear the original ${modeLabel(error.failedMode)} mistake. Return to that exercise when it is due. ` : ''}Recovery needs 3 correct retries in the failed mode, with at least 24 hours between the first and last.</p>
       </> : null}
-      {mode==='production' ? <p className="vocabulary-muted">Use in context needs assessed feedback before it can count towards mastery.</p> : null}
+      {mode==='production' ? <p className="vocabulary-muted">Use in context needs assessed feedback to count as verified usage. It is optional for foundation mastery.</p> : null}
       {mode==='dictation' ? <p className="vocabulary-muted">Audio is word-level. Check that its pronunciation matches this meaning.</p> : null}
       {action(mode)}
       {alternatives.length ? <details><summary>Other available exercises</summary><div className="vocabulary-next-practice-alternatives">{alternatives.map(target=><span key={target}>{action(target,true)}</span>)}</div></details> : null}

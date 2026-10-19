@@ -59,12 +59,18 @@ import type { VocabularyEntry, VocabularySkill, VocabularySource } from '../doma
 import { vocabularySourceKey } from '../domain/vocabulary/sources';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
-import { ensurePlans, ensureUnifiedPlans, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan } from '../lib/planTemplates';
-import { bindSpeakingPlan, isProtectedPlan } from '../domain/plans';
+import { ensurePlans, ensureUnifiedPlans, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan, applyBacklogPreview } from '../lib/planTemplates';
+import { bindSpeakingPlan } from '../domain/plans';
 import { speakingPrompts, speakingResponseDraft, updateSpeakingResponse } from '../domain/speaking';
 import { useConfirmationDialog } from '../components/useConfirmationDialog';
 import { loadExamCatalog, loadExamSections } from '../storage/examCatalog';
 import { getVocabularyReviewQueue } from '../domain/vocabulary';
+import { selectVocabularyPlanReview } from '../domain/vocabulary/planning';
+import { isAssessedReviewMode } from '../lib/vocabularyReviewTask';
+import { vocabularyLearningSource } from '../domain/vocabulary/learningSource';
+import { isVocabularySessionSelection } from '../domain/vocabulary/selection';
+import { vocabularyForwardState } from '../features/vocabulary/VocabularyRouteLink';
+import { safeVocabularyReturn, rememberVocabularyPosition } from '../features/vocabulary/vocabularyNavigation';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
 import { completeReceptivePlanIfMatched, receptivePlanPath } from '../lib/receptivePlans';
 import { bindStudyPlanTargets } from '../lib/planTargets';
@@ -105,7 +111,10 @@ const FieldbookContext = createContext<FieldbookContextValue | null>(null);
 
 function useFieldbookValue() {
   const navigate = useNavigate();
-  const {pathname: accountRoute} = useLocation();
+  const accountLocation = useLocation();
+  const latestAccountLocation = useRef(accountLocation);
+  latestAccountLocation.current = accountLocation;
+  const accountRoute = accountLocation.pathname;
   const [state, setState] = useState(() => loadState());
   const [toastMessage, setToastMessage] = useState('');
   const [toastVisible, setToastVisible] = useState(false);
@@ -500,7 +509,7 @@ function useFieldbookValue() {
     });
     committedVocabularyFields.current.filter(change => change.owner === owner).forEach(change => applyVocabularyFields(target, change));
     committedStudySettings.current.filter(change => change.owner === owner).forEach(change => {
-      let staleSettings = false;
+      let staleSettings = change.beforeVocabulary !== undefined && JSON.stringify(target.settings.vocabulary) === change.beforeVocabulary;
       Object.entries(change.after).forEach(([key, value]) => {
         if (JSON.stringify(target.settings[key]) === change.before[key]) { staleSettings = true; target.settings[key] = structuredClone(value); }
       });
@@ -637,6 +646,7 @@ function useFieldbookValue() {
       const index = target.plans.findIndex(plan => plan.id === before.id && JSON.stringify(plan) === JSON.stringify(before));
       if (index < 0) return;
       stalePlans = true;
+      if (target.activePlanId === before.id && change.beforeActivePlanId === before.id) target.activePlanId = change.afterActivePlanId;
       const replacement = change.addedPlans.find(plan => plan.id === before.id);
       if (replacement) target.plans[index] = structuredClone(replacement);
       else target.plans.splice(index, 1);
@@ -748,23 +758,28 @@ function useFieldbookValue() {
         owner,
         before: Object.fromEntries(Object.keys(studyChanges).map(key => [key, JSON.stringify(current.settings[key])])),
         after: studyChanges,
+        beforeVocabulary: Object.prototype.hasOwnProperty.call(changes, 'vocabulary') ? beforeVocabulary : undefined,
         removedPlanIds: [],
         removedPlans: [],
         addedPlans: [],
+        beforeActivePlanId: current.activePlanId,
+        afterActivePlanId: current.activePlanId,
       };
       const previousPlanningKey = planningSettingsKey(current.settings);
       Object.assign(current.settings, studyChanges);
       if (Object.prototype.hasOwnProperty.call(changes, 'vocabulary')) current.settings.vocabulary = normalizeVocabularyPreferences({ ...current.settings.vocabulary, ...changes.vocabulary });
       if (planningSettingsKey(current.settings) !== previousPlanningKey) {
-        change.removedPlans = structuredClone(current.plans.filter(plan => !isProtectedPlan(plan) && plan.dateKey >= dateKey(new Date())));
-        change.removedPlanIds = change.removedPlans.map(plan => plan.id);
-        current.plans = current.plans.filter(plan => !change.removedPlanIds.includes(plan.id));
-        const retainedPlanIds = new Set(current.plans.map(plan => plan.id));
-        if (change.removedPlanIds.includes(current.activePlanId)) current.activePlanId = null;
+        const previousPlans = structuredClone(current.plans);
         ensureUnifiedPlans(current);
         try { await bindCurrentPlanTargets(current); }
         catch (error) { if(alive.current && owner===accountId() && epoch===loadEpoch.current && generation===saveGeneration.current){setSaveFailed(false);setSaveStatus('failed');studySettingsErrorRef.current=`${error instanceof Error ? error.message : 'Could not load the planned exercises.'} Your changes are still here. Retry saving.`;setStudySettingsError(studySettingsErrorRef.current);}return false; }
-        change.addedPlans = current.plans.filter(plan => !retainedPlanIds.has(plan.id));
+        // Replay only the canonical planner/binder changes, preserving concurrent plan edits.
+        const previousById = new Map(previousPlans.map(plan => [plan.id, JSON.stringify(plan)]));
+        const currentById = new Map(current.plans.map(plan => [plan.id, JSON.stringify(plan)]));
+        change.removedPlans = previousPlans.filter(plan => currentById.get(plan.id) !== JSON.stringify(plan));
+        change.removedPlanIds = change.removedPlans.map(plan => plan.id);
+        change.addedPlans = current.plans.filter(plan => previousById.get(plan.id) !== JSON.stringify(plan));
+        change.afterActivePlanId = current.activePlanId;
       }
       let saved = false;
       const collections = ['profile', 'plans'];
@@ -1294,13 +1309,36 @@ function useFieldbookValue() {
     if(['replace','add','duplicate','resize'].includes(action.type))await bindCurrentPlanTargets(draft);
   },options),[mutatePlans,loadVocabularyCatalog,ensureQuestionBank]);
 
+  const saveBacklogPreview = useCallback((preview,options?)=>mutatePlans(draft=>applyBacklogPreview(draft,preview),options),[mutatePlans]);
+
   const startPlan = useCallback(async(planId:string, options={})=>{
     const owner=accountId();const epoch=loadEpoch.current;
+    const taskSource = ['/planning','/today','/'].includes(accountLocation.pathname);
+    const sourceHash = taskSource ? `#task-${planId}` : accountLocation.hash;
+    const sourceUrl = safeVocabularyReturn(accountLocation.pathname + accountLocation.search + sourceHash, '/vocabulary');
+    const returnState = vocabularyForwardState({...accountLocation, hash:sourceHash});
+    const sourceHistoryIndex = window.history.state?.idx;
+    const sourceHistoryKey = window.history.state?.key;
+    const openVocabularyTask = path => {
+      // A delayed start may finish after the learner leaves. Keep its saved progress,
+      // but only navigate while the original router and browser entry are still owned.
+      if(latestAccountLocation.current.key!==accountLocation.key
+        || window.history.state?.idx!==sourceHistoryIndex
+        || window.history.state?.key!==sourceHistoryKey)return;
+      // Back pops this owned source entry. Replace its hash before pushing practice,
+      // so successful completion can still render the exact historical task.
+      if(taskSource && sourceHash!==accountLocation.hash)navigate(sourceUrl,{replace:true,state:accountLocation.state});
+      navigate(path,{state:returnState});
+    };
+    rememberVocabularyPosition(sourceUrl, `task-${planId}`);
+    rememberVocabularyPosition(accountLocation.pathname + accountLocation.search + accountLocation.hash, `task-${planId}`);
+    let noLongerDue = false;
+    let dynamicReviewCapacity: number | undefined;
     let plan=structuredClone(stateRef.current.plans.find(row=>row.id===planId));
     if(!plan)throw new Error('Task is unavailable. Reload your plan.');
     if(plan.status==='skipped')throw new Error('Restore this task before starting it.');
     if(plan.status==='completed'){
-      if(plan.kind==='vocabulary'&&plan.linkedSessionId)navigate(`/vocabulary/history/${encodeURIComponent(plan.linkedSessionId)}`);
+      if(plan.kind==='vocabulary'&&plan.linkedSessionId)openVocabularyTask(`/vocabulary/history/${encodeURIComponent(plan.linkedSessionId)}?${new URLSearchParams({returnTo:sourceUrl})}`);
       else legacyStartPlan(planId);
       return true;
     }
@@ -1341,7 +1379,10 @@ function useFieldbookValue() {
           const groups=VOCABULARY_CATALOG.units.filter(unit=>unit.bookId===target.bookId&&unit.kind!=='chapter').slice().sort((a,b)=>(a.order||0)-(b.order||0)||String(a.id).localeCompare(String(b.id)));
           let localIndex=target.batchOrdinal ?? target.batchIndex ?? 0;let group;
           for(const candidate of groups){
-            const total=Math.ceil(Number(candidate.entryCount||candidate.totalSourceWords||candidate.entryIds?.length||0)/(target.batchSize||10));
+            await loadVocabularyCatalog(target.bookId,{unitId:candidate.id});
+            const source=vocabularyLearningSource(stateRef.current,target.bookId,candidate.id);
+            if(!source.complete)throw new Error('The wordbook group is unavailable. Retry loading it.');
+            const total=Math.ceil(source.count/(target.batchSize||10));
             if(localIndex<total){group=candidate;break;}localIndex-=total;
           }
           if(!group)throw new Error('The wordbook group is unavailable. Retry loading it.');
@@ -1354,8 +1395,23 @@ function useFieldbookValue() {
         if(target.cards?.length && JSON.stringify(target.cards)!==JSON.stringify(refs))throw new Error('This word batch has changed. Replace the task or retry.');
         target={...target,...batch.selection,type:'vocabulary',mode:'learning-batch',assessmentMode:batch.mode,cards:refs};
       } else {
-        const cards=getVocabularyReviewQueue(stateRef.current,{mode:target.assessmentMode,dueOnly:false});
-        if(!target.cards?.length||target.cards.some(ref=>!cards.some(card=>card.entryId===ref.entryId&&card.senseId===ref.senseId)))throw new Error('Some selected review words are unavailable. Retry loading them.');
+        if (target.binding === 'dynamic' || !target.binding && !target.cards?.length) {
+          if(!isAssessedReviewMode(target.assessmentMode))throw new Error('Choose an assessed recall mode.');
+          const ids=stateRef.current.vocabulary.filter(entry=>!entry.tags.includes('archived')).map(entry=>entry.id);
+          await loadVocabularyCatalog(undefined,{entryIds:ids,force:Boolean(options.force)});
+          const capacity=Math.floor(Number(target.batchSize ?? plan.quantity ?? plan.estimatedMinutes ?? 10));
+          if(!Number.isSafeInteger(capacity) || capacity<1 || capacity>10000)throw new Error('The planned review capacity must be between 1 and 10,000 cards.');
+          dynamicReviewCapacity=capacity;
+        } else {
+          await loadVocabularyCatalog(undefined,{entryIds:[...new Set((target.cards||[]).map(ref=>ref.entryId))],force:Boolean(options.force)});
+          target={...target,binding:'frozen'};
+        }
+        if (dynamicReviewCapacity===undefined) {
+          if (!isVocabularySessionSelection({kind:'planned-review',planId,cards:target.cards})) throw new Error('The planned review target is invalid. Return to Planning and retry.');
+          const vocabulary=[...new Map([...VOCABULARY_CATALOG.entries,...stateRef.current.vocabulary].map(entry=>[entry.id,entry])).values()];
+          const cards=getVocabularyReviewQueue({...stateRef.current,vocabulary},{mode:target.assessmentMode,dueOnly:false});
+          if(target.cards.some(ref=>!cards.some(card=>card.entryId===ref.entryId&&card.senseId===ref.senseId)))throw new Error('Some selected review words are unavailable. Retry loading them.');
+        }
       }
     } else {
       const reviewId=target?.attemptId||plan.attemptId;
@@ -1395,25 +1451,34 @@ function useFieldbookValue() {
     const saved=await mutatePlans(draft=>{
       const current=draft.plans.find(row=>row.id===planId);
       if(!current||JSON.stringify(current)!==initial)throw new Error('This task changed while loading. Retry to open the current task.');
+      if(dynamicReviewCapacity!==undefined){
+        const reserved=new Set(draft.plans.filter(row=>row.id!==planId && ['pending','in_progress'].includes(row.status) && row.target?.type==='vocabulary' && row.target.binding!=='dynamic' && row.target.assessmentMode===target.assessmentMode).flatMap(row=>(row.target.cards||[]).map(ref=>JSON.stringify([ref.entryId,ref.senseId]))));
+        const cards=selectVocabularyPlanReview(draft,new Date(),target.assessmentMode,dynamicReviewCapacity,reserved).map(({entryId,senseId})=>({entryId,senseId}));
+        noLongerDue=cards.length===0;
+        target={...target,binding:noLongerDue?'dynamic':'frozen',cards};
+        if(!noLongerDue && !isVocabularySessionSelection({kind:'planned-review',planId,cards}))throw new Error('The planned review target is invalid. Return to Planning and retry.');
+      }
       Object.assign(current,{target,questionId:plan.questionId,sectionId:plan.sectionId,sentenceId:plan.sentenceId,attemptId:plan.attemptId,...(plan.speakingGroups ? {speakingGroups:plan.speakingGroups} : {})});
-      domainStartPlan(draft,planId);
+      if (noLongerDue) { current.status='skipped'; current.skipReason='no-longer-due'; current.updatedAt=new Date().toISOString(); if(draft.activePlanId===planId)draft.activePlanId=null; }
+      else domainStartPlan(draft,planId);
       if(skill!=='vocabulary')draft.settings.activeSkill=skill;
     },options);
     if(!saved)return false;
+    if(noLongerDue)return true;
     setActiveDeskMode(inferredDeskMode(plan));
     if(skill==='vocabulary'){
-      const params=new URLSearchParams({planId,mode:target.assessmentMode,dueOnly:'false',batchSize:String(target.cards.length),batchCards:JSON.stringify(target.cards)});
+      const params=new URLSearchParams({planId,returnTo:sourceUrl,mode:target.assessmentMode,dueOnly:'false',batchSize:String(target.cards.length),batchCards:JSON.stringify(target.cards)});
       if(target.mode==='learning-batch'){
         params.set('batch',String(target.batchIndex));params.set('batchSize',String(target.batchSize));
-        navigate(`/vocabulary/wordbooks/${encodeURIComponent(target.bookId)}/groups/${encodeURIComponent(target.unitId)}/learn?${params}`);
-      } else navigate(`/vocabulary/review?${params}`);
+        openVocabularyTask(`/vocabulary/wordbooks/${encodeURIComponent(target.bookId)}/groups/${encodeURIComponent(target.unitId)}/learn?${params}`);
+      } else openVocabularyTask(`/vocabulary/review?${params}`);
     } else if(skill==='reading'||skill==='listening'){
       const path=receptivePlanPath({...plan,target},skill);const params=new URLSearchParams({planId});if(target.questionIds)params.set('questions',JSON.stringify(target.questionIds));navigate(`${path}${path.includes('?')?'&':'?'}${params}`);
     } else if(plan.kind==='review')navigate('/review');
     else if(skill==='speaking') {startSpeakingPractice(plan.questionId,target.part,plan.storyId); const nextPrompt = target.prompts?.find(prompt => !(plan.completedPromptKeys || []).includes(prompt.promptKey)) || target.prompts?.[0]; setQuestionIndex(Math.max(0, target.prompts?.indexOf(nextPrompt) || 0)); setSpeakingDraft(plan.questionId,{...nextPrompt,practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});}
     else {chooseQuestion(plan.questionId);const existing=normalizeDraft(stateRef.current.drafts[plan.questionId]);setWritingDraft(plan.questionId,existing.text,{practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});navigate('/write');}
     return true;
-  },[legacyStartPlan,ensureAccountModule,ensureQuestionBank,loadVocabularyCatalog,mutatePlans,navigate,startSpeakingPractice,chooseQuestion,setSpeakingDraft,setWritingDraft]);
+  },[legacyStartPlan,ensureAccountModule,ensureQuestionBank,loadVocabularyCatalog,mutatePlans,navigate,startSpeakingPractice,chooseQuestion,setSpeakingDraft,setWritingDraft,accountLocation]);
 
   const saveAttempt = useCallback(
     async (exportForReview: boolean, saveFields: { focus: string; next: string; errors: string }, options?) => {
@@ -1767,6 +1832,7 @@ function useFieldbookValue() {
       setSpeakingDraft,
       startPlan,
       mutatePlans,
+      saveBacklogPreview,
       changePlan,
       ensureUnifiedPlans: refreshUnifiedPlans,
       startSpeakingPractice,
@@ -1889,6 +1955,7 @@ function useFieldbookValue() {
       setWritingDraft,
       startPlan,
       mutatePlans,
+      saveBacklogPreview,
       changePlan,
       refreshUnifiedPlans,
       startSpeakingPractice,

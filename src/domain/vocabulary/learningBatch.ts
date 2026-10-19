@@ -1,24 +1,19 @@
-import { VOCABULARY_CATALOG } from './catalog';
 import { buildUnitPracticeQueue, isVocabularySessionSelection, type VocabularyLearningBatchSelection } from './selection';
 import { VOCABULARY_PRACTICE_MODES, type VocabularyPracticeMode } from './preferences';
 import { getVocabularyReviewQueue } from './index';
 import { resolveVocabularyLearningContext } from './context';
-import { catalogVocabularyEntry } from './content';
 import type { ReviewCard, VocabularyStore } from './types';
 import { normalizeVocabularyScope } from './identities';
+import { vocabularyLearningSource } from './learningSource';
 
 export type LearningBatch = { selection: VocabularyLearningBatchSelection; cards: ReviewCard[]; mode: VocabularyPracticeMode; totalBatches: number };
 
 export function buildLearningBatch(state: Partial<VocabularyStore>, bookId: string, unitId: string, batchIndex = 0, batchSize = 10, preferredMode: VocabularyPracticeMode = 'dictation', frozen?: VocabularyLearningBatchSelection['cards']): LearningBatch {
   ({ bookId, unitId } = normalizeVocabularyScope({ bookId, unitId }));
   if (!Number.isSafeInteger(batchIndex) || batchIndex < 0 || !Number.isSafeInteger(batchSize) || batchSize < 1 || batchSize > 50) throw new Error('Invalid learning batch.');
-  const members = VOCABULARY_CATALOG.memberships.filter(row => row.bookId === bookId && row.unitId === unitId).slice().sort((a, b) => a.order - b.order);
-  const seen = new Set<string>();
-  const entries = members.flatMap(member => {
-    const entry = state.vocabulary?.find(row => row.id === member.entryId) || catalogVocabularyEntry(member.entryId);
-    if (!entry || entry.tags.includes('archived') || seen.has(entry.id)) return [];
-    seen.add(entry.id); return [resolveVocabularyLearningContext(entry, { bookId, unitId }).entry];
-  });
+  const source = vocabularyLearningSource(state, bookId, unitId);
+  if (!frozen && !source.complete) throw new Error('This learning batch is unavailable. Retry loading its wordbook.');
+  const entries = source.entries;
   const totalBatches = Math.ceil(entries.length / batchSize);
   const refs = frozen || entries.slice(batchIndex * batchSize, (batchIndex + 1) * batchSize).map(entry => ({ entryId: entry.id, senseId: entry.senses[0]?.id || '' }));
   const selection: VocabularyLearningBatchSelection = { kind: 'learning-batch', bookId, unitId, batchIndex, batchSize, cards: refs };

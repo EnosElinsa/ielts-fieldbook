@@ -1,4 +1,5 @@
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
+import { vocabularyLearningSource } from '../domain/vocabulary/learningSource';
 import type { StudyPlan } from '../domain/plans';
 import type { ExamCatalog } from '../domain/exam/types';
 import { displayName } from './format';
@@ -56,8 +57,26 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
       if(!scoped.sections.some(row=>row.skill==='listening'&&row.id===target.sectionId&&row.sentences?.some(sentence=>sentence.id===target.sentenceId)))throw new Error('The selected listening sentence is unavailable.');
     } else if (target.type==='vocabulary' && target.mode==='learning-batch' && !target.cards.length && target.bookId && target.unitId) {
       await sources.vocabulary(target.bookId,target.unitId);
+      const automatic = plan.origin === 'automatic' && !plan.startedAt && !plan.originalDateKey && target.binding !== 'frozen';
+      const source = vocabularyLearningSource(state,target.bookId,target.unitId);
+      // A catalog may expose only a group count until its source is published.
+      // Keep that future allocation prospective; exact starts still require resources.
+      if (automatic && !source.complete && !source.entryIds.length) continue;
+      if (automatic && source.complete && (target.batchIndex || 0) * (target.batchSize || 10) >= source.count) {
+        // Provisional metadata can shrink once resources arrive. Only untouched,
+        // unbound automatic slots may disappear; exact/manual work stays explicit.
+        state.plans = state.plans.filter((row: StudyPlan) => row !== plan);
+        continue;
+      }
       const batch=buildLearningBatch(state,target.bookId,target.unitId,target.batchIndex||0,target.batchSize||10,target.assessmentMode as any);
       if (!batch.cards.length) throw new Error('The selected word batch is unavailable. Retry your plan.');
+      if (automatic) {
+        const overlaps = state.plans.some((row: StudyPlan) => row !== plan && ['pending','in_progress'].includes(row.status) && row.target?.type === 'vocabulary' && row.target.binding !== 'dynamic' && row.target.assessmentMode === batch.mode && row.target.cards.some(ref => batch.cards.some(card => card.entryId === ref.entryId && card.senseId === ref.senseId)));
+        if (overlaps) { state.plans = state.plans.filter((row: StudyPlan) => row !== plan); continue; }
+        if (batch.cards.length > plan.estimatedMinutes) throw new Error('The loaded learning batch needs more study time. Refresh your plan.');
+        plan.estimatedMinutes = batch.cards.length;
+        plan.title = `Vocabulary - Learn ${batch.cards.length} words`;
+      }
       Object.assign(target,{cards:batch.selection.cards,assessmentMode:batch.mode});
       plan.quantity=batch.cards.length;
     }
@@ -72,7 +91,10 @@ export function studyTargetSummary(plan: any): string {
     return `${displayName(plan.targetLabel || `Question ${target.questionId || ''}`)} · ${count} ${count === 1 ? 'response' : 'responses'}`;
   }
   if (target.type==='section') return `${plan.targetLabel || target.sectionId || ''} · ${target.questionIds?.length || plan.quantity || 0} questions`;
-  if (target.type==='vocabulary') return `${target.mode==='learning-batch'?`Batch ${(target.batchIndex||0)+1}`:'Due review'} · ${target.cards.length || target.batchSize || plan.quantity || 0} words`;
+  if (target.type==='vocabulary') {
+    const count=target.cards.length || target.batchSize || plan.quantity || 0;
+    return `${target.mode==='learning-batch'?`Batch ${(target.batchIndex||0)+1}`:'Review'} · ${count} ${count===1?'prompt':'prompts'}`;
+  }
   if (target.type==='intensive') return '1 listening sentence';
   if (target.type==='exam-review') return 'Review the selected attempt';
   if (target.type==='error-review') return `${target.errorIds.length} ${target.errorIds.length===1?'mistake':'mistakes'}`;
