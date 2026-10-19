@@ -63,7 +63,7 @@ test('candidate checks reject stale identities, duplicate tasks and machine-writ
   expect(validateQualityCandidates(report, [candidate])).toMatchObject({ structurallyValid: 1, readyForPublication: 0, semanticReviewRequired: 1, errors: [] });
   for (const patch of [
     { workItemId: 'unknown' }, { sourceHash: 'stale' }, { displayHash: 'changed' }, { collocations: [] },
-    { distinctions: [' '] }, { referenceUrl: 'javascript:alert(1)' }, { reviewedAreas: ['example'] },
+    { distinctions: [' '] }, { referenceUrl: 'javascript:alert(1)' }, { referenceUrl: [candidate.referenceUrl] }, { learningPriority: ['general'] }, { reviewedAreas: ['example'] },
     { distinctionTask: { prompt: 'Choose _____.', options: ['bank', ' BANK '], answer: 'bank', explanation: 'A bank.' } },
   ]) expect(validateQualityCandidates(report, [{ ...candidate, ...patch }]).errors.length).toBeGreaterThan(0);
   expect(validateQualityCandidates(report, [candidate, candidate]).errors.join(' ')).toMatch(/duplicate/i);
@@ -81,4 +81,15 @@ test('reading notes and source references do not acquire compulsory example, clo
   expect(report.work.find(row => row.senseId === 'note')?.signals).toEqual([]);
   expect(report.work.find(row => row.senseId === 'ref')?.signals).toEqual([]);
   expect(report.summary).toMatchObject({ reviewed: 0, pending: 2 });
+});
+
+test('visible content-review signals precede enrichment opportunities without labelling either as semantic approval', () => {
+  const enrichment = sense('enrichment', 'A financial service.');
+  enrichment.collocations = []; enrichment.distinctions = [];
+  const review = sense('review', 'A slope.', 'Thou shalt rest beside the bank.');
+  const report = buildQualityReport({ sources: [source('enrichment', { originalSense: enrichment, displaySense: enrichment }), source('review', { originalSense: review, displaySense: review })],
+    lessons: [lesson('review', { sense: review }), ...['a', 'b', 'c'].map(unitId => lesson('enrichment', { sense: enrichment, modes: ['cloze'], scope: { kind: 'group', bookId: 'b', unitId } }))] });
+  expect(report.work[0].senseId).toBe('review');
+  expect(report.summary).toMatchObject({ learningVariants: 2, learningWithReviewSignals: 1, learningWithoutReviewSignals: 1, learningWithEnrichmentSignals: 1, pending: 2, reviewed: 0 });
+  expect(report.signalKinds).toMatchObject({ 'archaic-example': 'content-review', 'example-fragment-signal': 'content-review', 'missing-collocations': 'enrichment', 'no-distinction-task': 'enrichment' });
 });

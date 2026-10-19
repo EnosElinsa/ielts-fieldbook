@@ -10,7 +10,9 @@ export const qualitySignals = [
   'truncated-example', 'archaic-example', 'example-fragment-signal', 'missing-collocations',
   'missing-distinctions', 'duplicate-gloss', 'no-cloze-task', 'no-distinction-task',
 ] as const;
+export const qualityCandidateFields = ['definition', 'example', 'pos', 'usage', 'register', 'collocations', 'distinctions', 'exampleKind', 'learningPriority', 'distinctionTask'] as const;
 type Signal = typeof qualitySignals[number];
+const enrichmentSignals = new Set<Signal>(['missing-collocations', 'missing-distinctions', 'no-cloze-task', 'no-distinction-task']);
 type WorkItem = {
   workItemId: string; entryId: string; term: string; senseId: string; sourceHash: string | null; displayHash: string;
   originalSense: VocabularySense | null; displaySense: VocabularySense;
@@ -94,8 +96,8 @@ export function buildQualityReport(input: { sources: QualitySource[]; lessons: Q
     }
     if (duplicateIds.has(identity(item.entryId, item.senseId)) && sources.get(identity(item.entryId, item.senseId))?.displaySense.definition === sense.definition) flags.add('duplicate-gloss');
     item.signals = qualitySignals.filter(flag => flags.has(flag));
-    const critical = item.signals.some(flag => ['missing-definition', 'missing-pos', 'missing-example', 'source-markup', 'relation-example', 'reference-example'].includes(flag));
-    item.tier = item.scopes.length && item.signals.length ? critical ? 0 : 1 : ['specialist', 'historical', 'proper-name'].includes(item.priority || '') ? 3 : 2;
+    const needsReview = item.signals.some(flag => !enrichmentSignals.has(flag));
+    item.tier = item.scopes.length && item.signals.length ? needsReview ? 0 : 1 : ['specialist', 'historical', 'proper-name'].includes(item.priority || '') ? 3 : 2;
     item.scopes.sort((a, b) => compare(JSON.stringify(stable(a)), JSON.stringify(stable(b))));
   }
   const work = [...variants.values()].sort((a, b) => a.tier - b.tier || b.scopes.length - a.scopes.length || compare(a.term, b.term) || compare(a.senseId, b.senseId) || compare(a.displayHash, b.displayHash));
@@ -115,9 +117,12 @@ export function buildQualityReport(input: { sources: QualitySource[]; lessons: Q
       learningWithCloze: learning.filter(row => row.modes?.includes('cloze')).length,
       learningWithDistinctionTask: learning.filter(row => row.modes?.includes('distinction')).length,
       learningWithoutSignals: learning.filter(row => !row.signals.length).length,
+      learningWithReviewSignals: learning.filter(row => row.signals.some(flag => !enrichmentSignals.has(flag))).length,
+      learningWithoutReviewSignals: learning.filter(row => !row.signals.some(flag => !enrichmentSignals.has(flag))).length,
+      learningWithEnrichmentSignals: learning.filter(row => row.signals.some(flag => enrichmentSignals.has(flag))).length,
       duplicateGlossGroups: duplicateGroups.length,
     },
-    byIssue, work,
+    byIssue, signalKinds: Object.fromEntries(qualitySignals.map(flag => [flag, enrichmentSignals.has(flag) ? 'enrichment' : 'content-review'])), work,
   };
 }
 
@@ -136,7 +141,13 @@ export function exportQualityWork(report: QualityReport, options: { scope?: stri
 /** Validate offline candidates without modifying teaching data or the review ledger. */
 export function validateQualityCandidates(report: QualityReport, candidates: unknown[]) {
   const work = new Map(report.work.map(row => [row.workItemId, row])), seen = new Set<string>(), errors: string[] = [];
-  const allowed = new Set(['workItemId', 'sourceHash', 'displayHash', 'definition', 'example', 'pos', 'usage', 'register', 'collocations', 'distinctions', 'exampleKind', 'learningPriority', 'referenceUrl', 'distinctionTask']);
+  const identityFields = ['workItemId', 'sourceHash', 'displayHash', 'referenceUrl'];
+  const editable = new Set<string>(qualityCandidateFields);
+  const focusedPreviews: {
+    workItemId: string; entryId: string; term: string; senseId: string; sourceHash: string | null; displayHash: string; referenceUrl: string; scopes: Scope[];
+    status: 'semantic-review-required'; changedFields: string[]; reviewFields: string[]; sense: VocabularySense;
+    metadata: { readingNote: boolean; referenceOnly: boolean; learningPriority: string | null };
+  }[] = [];
   let structurallyValid = 0;
   const text = (value: unknown): value is string => typeof value === 'string' && Boolean(value.trim());
   for (const [index, value] of candidates.entries()) {
@@ -148,21 +159,45 @@ export function validateQualityCandidates(report: QualityReport, candidates: unk
     seen.add(id);
     if (item && row.sourceHash !== item.sourceHash) fail('Stale source hash.');
     if (item && row.displayHash !== item.displayHash) fail('Stale displayed-content hash.');
+    const focused = Object.hasOwn(row, 'changes');
+    const allowed = new Set(focused ? [...identityFields, 'changes'] : [...identityFields, ...qualityCandidateFields]);
     for (const key of Object.keys(row)) if (!allowed.has(key)) fail('Unsupported field (approval is not accepted): ' + key);
-    for (const key of ['definition', 'example']) if (!text(row[key]) || /\b(?:TODO|TBD)\b|definition pending|example pending/.test(String(row[key]))) fail('Missing or placeholder ' + key + '.');
-    for (const key of ['pos', 'usage', 'register']) if (row[key] !== undefined && !text(row[key])) fail('Invalid ' + key + '.');
-    for (const key of ['collocations', 'distinctions']) {
-      const values = row[key];
-      if (!Array.isArray(values) || !values.length || !values.every(text) || new Set(values.filter(text).map(normalized)).size !== values.length) fail('Missing, blank or repeated ' + key + '.');
+    try { if (!text(row.referenceUrl)) throw new Error('Expected URL text.'); const url = new URL(row.referenceUrl); if (url.protocol !== 'https:' || url.username || url.password) fail('Expected an HTTPS reference URL.'); } catch { fail('Invalid reference URL.'); }
+    let fields = row;
+    if (focused) {
+      if (!row.changes || typeof row.changes !== 'object' || Array.isArray(row.changes)) { fail('Expected a changes object.'); continue; }
+      fields = row.changes as Record<string, unknown>;
+      if (!Object.keys(fields).length) fail('Focused changes must contain at least one field.');
+      for (const key of Object.keys(fields)) if (!editable.has(key)) fail('Unsupported change field (approval is not accepted): ' + key);
     }
-    try { const url = new URL(String(row.referenceUrl)); if (url.protocol !== 'https:' || url.username || url.password) fail('Expected an HTTPS reference URL.'); } catch { fail('Invalid reference URL.'); }
-    if (row.exampleKind !== undefined && row.exampleKind !== 'reading-note') fail('Invalid example kind.');
-    if (row.learningPriority !== undefined && !['general', 'specialist', 'historical', 'proper-name'].includes(String(row.learningPriority))) fail('Invalid learning priority.');
-    if (row.distinctionTask !== undefined) {
-      const task = row.distinctionTask as Record<string, unknown> | null;
-      if (!task || Array.isArray(task) || typeof task !== 'object' || !text(task.prompt) || !task.prompt.includes('_____') || !Array.isArray(task.options) || task.options.length < 2 || !task.options.every(text) || new Set(task.options.filter(text).map(normalized)).size !== task.options.length || !text(task.answer) || !task.options.includes(task.answer) || !text(task.explanation) || Object.keys(task).some(key => !['prompt', 'options', 'answer', 'explanation'].includes(key))) fail('Invalid distinction task.');
+    for (const key of qualityCandidateFields) {
+      const required = !focused && ['definition', 'example', 'collocations', 'distinctions'].includes(key);
+      if (!required && (!Object.hasOwn(fields, key) || (!focused && fields[key] === undefined))) continue;
+      const value = fields[key];
+      if (['definition', 'example'].includes(key) && (!text(value) || /\b(?:TODO|TBD)\b|definition pending|example pending/i.test(String(value)))) fail('Missing or placeholder ' + key + '.');
+      if (['pos', 'usage', 'register'].includes(key) && !text(value)) fail('Invalid ' + key + '.');
+      if (['collocations', 'distinctions'].includes(key) && (!Array.isArray(value) || !value.length || !value.every(text) || new Set(value.filter(text).map(normalized)).size !== value.length)) fail('Missing, blank or repeated ' + key + '.');
+      if (key === 'exampleKind' && value !== 'reading-note') fail('Invalid example kind.');
+      if (key === 'learningPriority' && (!text(value) || !['general', 'specialist', 'historical', 'proper-name'].includes(value))) fail('Invalid learning priority.');
+      if (key === 'distinctionTask') {
+        const task = value as Record<string, unknown> | null;
+        if (!task || Array.isArray(task) || typeof task !== 'object' || !text(task.prompt) || !task.prompt.includes('_____') || !Array.isArray(task.options) || task.options.length < 2 || !task.options.every(text) || new Set(task.options.filter(text).map(normalized)).size !== task.options.length || !text(task.answer) || !task.options.includes(task.answer) || !text(task.explanation) || Object.keys(task).some(key => !['prompt', 'options', 'answer', 'explanation'].includes(key))) fail('Invalid distinction task.');
+      }
+    }
+    if (focused && item && errors.length === start) {
+      const before: Record<string, unknown> = { ...item.displaySense, exampleKind: item.readingNote ? 'reading-note' : undefined, learningPriority: item.priority ?? undefined };
+      const changedFields = qualityCandidateFields.filter(key => Object.hasOwn(fields, key) && JSON.stringify(stable(before[key])) !== JSON.stringify(stable(fields[key])));
+      if (!changedFields.length) { fail('Focused changes do not change the current content.'); continue; }
+      const sense = structuredClone(item.displaySense);
+      for (const key of changedFields) if (!['exampleKind', 'learningPriority'].includes(key)) Object.assign(sense, { [key]: structuredClone(fields[key]) });
+      focusedPreviews.push({ workItemId: item.workItemId, entryId: item.entryId, term: item.term, senseId: item.senseId,
+        sourceHash: item.sourceHash, displayHash: item.displayHash, referenceUrl: String(row.referenceUrl), scopes: structuredClone(item.scopes),
+        status: 'semantic-review-required', changedFields,
+        reviewFields: changedFields.some(key => key === 'definition' || key === 'pos') ? [...qualityCandidateFields, 'diagram', 'pronunciation'] : [...changedFields], sense,
+        metadata: { readingNote: item.readingNote || fields.exampleKind === 'reading-note', referenceOnly: item.referenceOnly,
+          learningPriority: fields.learningPriority === undefined ? item.priority : String(fields.learningPriority) } });
     }
     if (errors.length === start) structurallyValid++;
   }
-  return { candidates: candidates.length, structurallyValid, readyForPublication: 0, semanticReviewRequired: structurallyValid, errors };
+  return { candidates: candidates.length, structurallyValid, readyForPublication: 0, semanticReviewRequired: structurallyValid, focusedPreviews, errors };
 }

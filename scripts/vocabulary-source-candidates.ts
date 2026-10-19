@@ -1,4 +1,5 @@
 import type { QualityReport } from './vocabulary-quality';
+import { qualityCandidateFields } from './vocabulary-quality';
 // @ts-expect-error The existing source renderer is shared with its executable audit.
 import { plainSourceGloss } from './audit-vocabulary-dictionary.mjs';
 
@@ -82,8 +83,10 @@ function usageExample(line: string): { text?: string; reason?: string } {
   return { text };
 }
 
-export function prepareSourceCandidates(report: QualityReport, items: QualityReport['work'], responses: unknown[]) {
+export function prepareSourceCandidates(report: QualityReport, items: QualityReport['work'], responses: unknown[], options: { fields?: string[] } = {}) {
   if (!items.length || items.length > 1000) throw new Error('Supply 1–1000 work items.');
+  const requestedFields = options.fields;
+  if (requestedFields !== undefined && (!Array.isArray(requestedFields) || !requestedFields.length || new Set(requestedFields).size !== requestedFields.length || requestedFields.some(key => !qualityCandidateFields.includes(key as typeof qualityCandidateFields[number])))) throw new Error('Choose nonempty, distinct supported fields.');
   const current = new Map(report.work.map(row => [row.workItemId, row])), seen = new Set<string>(), pages = pagesFrom(responses);
   const prepared = items.map(input => {
     const item = current.get(input.workItemId);
@@ -98,20 +101,30 @@ export function prepareSourceCandidates(report: QualityReport, items: QualityRep
     const examples = (block?.examples || []).map(raw => ({ raw, ...usageExample(raw) }));
     const suggestions = [...new Set(examples.flatMap(row => row.text ? [row.text] : []))];
     const referenceUrl = page ? 'https://en.wiktionary.org/w/index.php?title=' + encodeURIComponent(page.title) + '&oldid=' + page.revision : '';
-    const draft = { workItemId: item.workItemId, sourceHash: item.sourceHash, displayHash: item.displayHash,
+    const legacyDraft = { workItemId: item.workItemId, sourceHash: item.sourceHash, displayHash: item.displayHash,
       definition: item.displaySense.definition, pos: item.displaySense.pos, example: suggestions[0] || '',
       collocations: [...(item.displaySense.collocations || [])], distinctions: [...(item.displaySense.distinctions || [])], referenceUrl };
-    const missingFields = [!draft.example && 'example', !draft.collocations.some(text => text.trim()) && 'collocations', !draft.distinctions.some(text => text.trim()) && 'distinctions'].filter(Boolean) as string[];
+    let draft: Record<string, unknown> = legacyDraft;
+    let missingFields = [!legacyDraft.example && 'example', !legacyDraft.collocations.some(text => text.trim()) && 'collocations', !legacyDraft.distinctions.some(text => text.trim()) && 'distinctions'].filter(Boolean) as string[];
+    let unchangedFields: string[] = [];
+    if (requestedFields) {
+      const before: Record<string, unknown> = { ...item.displaySense, exampleKind: item.readingNote ? 'reading-note' : undefined, learningPriority: item.priority ?? undefined };
+      const values: Record<string, unknown> = { ...before, example: suggestions[0] || '' };
+      const changes = Object.fromEntries(requestedFields.map(key => [key, structuredClone(values[key] ?? (['collocations', 'distinctions'].includes(key) ? [] : key === 'distinctionTask' ? null : ''))]));
+      draft = { workItemId: item.workItemId, sourceHash: item.sourceHash, displayHash: item.displayHash, referenceUrl, changes };
+      missingFields = requestedFields.filter(key => changes[key] === null || changes[key] === '' || Array.isArray(changes[key]) && !changes[key].length);
+      unchangedFields = requestedFields.filter(key => JSON.stringify(changes[key]) === JSON.stringify(before[key]));
+    }
     return { workItemId: item.workItemId, term: item.term, senseId: item.senseId, scopes: item.scopes,
       status: matched ? 'semantic-review-required' : 'manual-source-match-required',
       reason: matched ? null : !sameMeaning ? 'The displayed teaching meaning differs from the preserved original.' : available.length !== 1 ? 'Missing or conflicting revision-bound page.' : `Expected one exact original gloss/POS match; found ${matches.length}.`,
       source: page ? { title: page.title, revision: page.revision, url: referenceUrl, gloss: block?.line || null } : null,
       sourceBlocks: matched ? undefined : blocks, exampleSuggestions: suggestions,
       rejectedExamples: examples.filter(row => !row.text).map(({ raw, reason }) => ({ raw, reason })),
-      draft, missingFields };
+      draft, missingFields, ...(requestedFields ? { unchangedFields } : {}) };
   });
   return { schemaVersion: 1, items: prepared, matched: prepared.filter(row => row.status === 'semantic-review-required').length,
     withExampleSuggestions: prepared.filter(row => row.exampleSuggestions.length).length,
     manualSourceMatches: prepared.filter(row => row.status === 'manual-source-match-required').length,
-    readyForPublication: 0, semanticReviewRequired: prepared.length };
+    readyForPublication: 0, semanticReviewRequired: prepared.length, requestedFields: requestedFields ? [...requestedFields] : null };
 }

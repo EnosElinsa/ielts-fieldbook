@@ -41,7 +41,7 @@ The command checks the current runtime quality snapshot before reading the packa
 
 An exact original gloss/POS and case-sensitive page match produces a revision-linked draft. Only direct `ux`, `uxi` or `usex` English usage examples attached to that definition become suggestions. Nested child/adjacent meanings, quotations, unsupported templates, sentence fragments, archaic wording and truncation markers cannot seed an example automatically. Existing collocations and comparisons are retained; missing fields stay explicit. Duplicate-gloss ambiguity, changed teaching definitions and unsupported source formatting become manual-source-match items with source context. Even exact matching is evidence for review, not linguistic approval.
 
-Edit the nested `draft` objects into complete candidates and export those objects as the array/JSONL described below. Inspect `missingFields`, source context and all example suggestions first. The preparation wrapper is evidence, not a candidate submission. The command never writes the source dictionaries, teaching supplements or editorial ledger. All prepared items still require semantic review and zero are marked ready for publication.
+Edit the nested `draft` objects into candidates and export those objects as the array/JSONL described below. Inspect `missingFields`, source context and all example suggestions first. The preparation wrapper is evidence, not a candidate submission. The command never writes the source dictionaries, teaching supplements or editorial ledger. All prepared items still require semantic review and zero are marked ready for publication.
 
 The first real run prepared 199 current truncation signals in one operation: 131 exact source matches, 68 manual matches and four records with direct source-example suggestions. The [subsequent authored review](vocabulary-truncated-learning-review.md) improves 98 exact meanings across words; it does not pretend the other cases were repaired automatically.
 
@@ -49,7 +49,9 @@ The [current-learning sweep](vocabulary-remaining-learning-review.md) handles th
 
 ## Validate candidates together
 
-Supply a JSON array or `.jsonl`/`.ndjson` of candidate objects containing:
+For an issue-specific repair, use the [focused candidate workflow](vocabulary-focused-candidates.md). `vocabulary:prepare -- --fields example` prepares only an example change; omitted definitions, collocations, distinctions, tasks and metadata remain in the current snapshot. The candidate checker produces an attributed, scoped merge preview for review, without publishing it. This avoids inventing extra teaching fields just to repair one field. A changed definition or part of speech requires review of the retained teaching fields as well.
+
+The original complete-candidate format remains available. Supply a JSON array or `.jsonl`/`.ndjson` of complete candidate objects containing:
 
 - `workItemId`, `sourceHash` and `displayHash` copied from the exported item. `sourceHash` is null for a teaching meaning without an indexed source sense.
 - Nonblank `definition` and `example`; nonempty, nonrepeated `collocations` and `distinctions` arrays; an HTTPS `referenceUrl`.
@@ -60,7 +62,7 @@ Supply a JSON array or `.jsonl`/`.ndjson` of candidate objects containing:
 npm run vocabulary:quality -- --candidates local/vocabulary-work/candidates.jsonl --output local/vocabulary-work/validation.json
 ```
 
-The checker rejects stale source/display fingerprints, repeated work identities, unknown fields, blank learning fields and invalid exercise structures. Approval fields such as `reviewedAreas` are rejected. Even a structurally valid candidate returns **zero ready for publication** and requires semantic review. It never edits teaching JSON, source records or the editorial ledger. Reference URLs are recorded and structurally checked; the checker does not fetch or substantiate their claims.
+The checker rejects stale source/display fingerprints, repeated work identities, unknown fields, blank learning fields and invalid exercise structures. Focused changes additionally reject empty or ineffective patches and cannot mix full-format fields with `changes`. Approval fields such as `reviewedAreas` are rejected. Even a structurally valid candidate returns **zero ready for publication** and requires semantic review. It never edits teaching JSON, source records or the editorial ledger. Reference URLs are recorded and structurally checked; the checker does not fetch or substantiate their claims.
 
 Semantic review must confirm that the example, collocations, distinctions, exercise answer and any technical explanation fit the exact meaning. Ambiguous interchangeable options cannot become a uniquely graded distinction question. Reading notes remain explicitly typed; historical or specialist references do not need forced cloze tasks or diagrams. Visuals are selected for information they communicate, rather than required per sense.
 
