@@ -10,7 +10,7 @@ The integrated working tree currently contains **52,152 source senses: 5,027 ful
 
 The shared runtime also recognizes old public snapshots after harmless list deduplication,preserves deliberate personal clears,and keeps source,default and course variants separate. Settings separates automatic learning sources and balance from practice/audio defaults. Local draft conflicts preserve open answers and offer an explicit confirmed reload of the saved version. Planning,Settings and Today load projected scheduling evidence without full productive/receptive histories. Initial plans/drafts and server paging of Planning history remain open loading work.
 
-Frontend publication and remaining platform/data work are still open; consult the ledger before making a completion claim.
+Runtime release [1d00811](https://github.com/EnosElinsa/ielts-fieldbook/commit/1d0081196d595cfdaac6b3a9ff7ad57116cc2480) is deployed through Cloudflare Git integration. All10,260 tests,11 production browser flows and4,418 historical resource hashes passed. Production input-to-next-frame measured median6.2ms/max15.7ms on this machine. Remaining platform/data work stays open in the ledger,including scoped initial plans/drafts,server-paged Planning history and the47,125 pending source senses. Two authors now have118whole terms/582pending senses in nonoverlapping fourth-job packages;these assignments are not counted as reviews.
 
 ## Previous whole-queue content delivery — 2026-10-20
 

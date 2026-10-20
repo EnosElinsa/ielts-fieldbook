@@ -6,7 +6,9 @@ The current integrated working tree has52,152 source senses:5,027 independently 
 
 Two authors and one independent reviewer process complete terms in isolated output directories. The third packages contain636 exact display variants. After auxiliary-field revisions and independent final review,root integrated549 accepted variants:501field repairs and48retains. The installed snapshot adds213 full source reviews after787 actual display routes,8,657 individual-edit checks,187 typed-note route checks and480 generated-task checks. Seventy-four original whole-variant holds and13 indexed-only proposals remain outside the merge. Potential full-review teaching variants are not source reviews. An explicit independently sourced not-applicable decision can replace an optional collocation/distinction quota only when bound to the exact final material hash;definition and example/reading note remain required.
 
-The [unified implementation ledger](unified-learning-implementation.md) is the release checklist. Packages continue internally and compatible accepted changes are combined; each small set of words does not trigger a deployment.
+The [unified implementation ledger](unified-learning-implementation.md) is the release checklist. Runtime release1d0081196d595cfdaac6b3a9ff7ad57116cc2480 is deployed and verified. Packages continue internally and compatible accepted changes are combined; each small set of words does not trigger a deployment.
+
+The fresh fourth-job manifest covers7,021terms/52,152source senses/55,795exact work items in163packages,at source snapshot89f20983e75abc20ff8c862ee2257184c176b5f484075323c87ee43c2d1419ff. Its first two exclusively claimed packages contain118whole terms/582pending source senses. Author candidates and independent review preparation stay in separate ignored output directories and do not change the5,027full-review total.
 
 ## Workflow
 
@@ -17,18 +19,18 @@ The issue workflow in [vocabulary-bulk-workflow.md](vocabulary-bulk-workflow.md)
 Create a current quality report using the existing workflow, then run:
 
 ```powershell
-node node_modules/vite-node/vite-node.mjs scripts/manage-vocabulary-review-jobs.ts create --report local/audits/vocabulary-quality.json --output local/dictionary-review/job
-node node_modules/vite-node/vite-node.mjs scripts/manage-vocabulary-review-jobs.ts claim --manifest local/dictionary-review/job/manifest.json --package review-0001 --actor author-a
+node node_modules/vite-node/vite-node.mjs --script scripts/manage-vocabulary-review-jobs.ts create --report local/audits/vocabulary-quality.json --output local/dictionary-review/job
+node node_modules/vite-node/vite-node.mjs --script scripts/manage-vocabulary-review-jobs.ts claim --manifest local/dictionary-review/job/manifest.json --package review-0001 --actor author-a
 ```
 
-Creation requires a new or empty directory inside ignored `local/`. It writes `manifest.json` and `review-*.json` packages with complete source/display work rows. The manifest binds the source snapshot, complete work inventory, package membership, every term and every exact work item to SHA-256 fingerprints. The CLI recomputes the current source snapshot before creating or changing a job. Changed source data, teaching content or teaching scopes require a fresh job; an old job remains evidence.
+Creation requires a new or empty directory inside ignored `local/`. Use vite-node's `--script` option so the CLI entry point receives its own filename and arguments. It writes `manifest.json` and `review-*.json` packages with complete source/display work rows. The manifest binds the source snapshot, complete work inventory, package membership, every term and every exact work item to SHA-256 fingerprints. The CLI recomputes the current source snapshot before creating or changing a job. Changed source data, teaching content or teaching scopes require a fresh job; an old job remains evidence.
 
 All authors claim through one central manifest. A package claim covers every term in that package and rejects an existing owner. Do not create separate manifests for authors handling the same inventory. The CLI takes an exclusive lock while updating and replaces the manifest atomically, preventing concurrent claims from overwriting one another. It never edits dictionary JSON, teaching supplements or the editorial ledger.
 
 For subsequent actions, write a JSON request and supply it with:
 
 ```powershell
-node node_modules/vite-node/vite-node.mjs scripts/manage-vocabulary-review-jobs.ts update --manifest local/dictionary-review/job/manifest.json --request local/dictionary-review/request.json
+node node_modules/vite-node/vite-node.mjs --script scripts/manage-vocabulary-review-jobs.ts update --manifest local/dictionary-review/job/manifest.json --request local/dictionary-review/request.json
 ```
 
 A request contains `term`, `actor`, the term's `workFingerprint` and `to`. Supported stages are:
