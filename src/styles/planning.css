@@ -54,7 +54,7 @@
 .study-completion-condition strong{font-size:10px;text-transform:uppercase;letter-spacing:.06em}
 .study-task-instructions{margin:12px 0;font-size:12px;line-height:1.6}
 .study-task-instructions summary{cursor:pointer;color:var(--muted)}
-.study-collection-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px;margin:20px 0}
+.study-collection-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px;margin:20px 0;border:0;padding:0;min-width:0}
 .study-collection label{font-size:12px;display:grid;gap:7px;min-width:0}
 .study-collection input,.study-collection select{max-width:100%;min-width:0;padding:9px;border:1px solid var(--rule);border-radius:8px;background:var(--sheet);color:var(--ink)}
 .study-collection .check-field{display:flex;align-items:center;gap:8px;margin:10px 0}

@@ -1,0 +1,2932 @@
+{
+  "removeCorrections": [],
+  "restoreCorrections": [],
+  "removeCorrectionVariants": [
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:9037c9546ce94a0ae2",
+      "variantId": "vq:19b24c3e75555cb0de34690e1d04a38d61a5ea378b4c64f949ba29165bd4096f"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:cd0cf60a1932b6e8d5",
+      "variantId": "vq:094d601b8e625765ee2acad452b3b76773ab4bb75f9e07ac31fb6e365aca4fd5"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:0b78e26b66087b5e12",
+      "variantId": "vq:d3da47987ac99f9d524d3a416b4ce2b0ed7be78117bcad0508d21fa8019079e7"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:0bf4d380f0f5b81433",
+      "variantId": "vq:aaa52e62f1f188ecdb775eeca1c3ecdde37764416d663686f284df7383d33f1d"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:3b48718559daa1e1e9",
+      "variantId": "vq:102a78532574f802289b07437e5fe2fa45da5784e1e525985510bd299f39dc8d"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:6e7084f24d5fc6bb86",
+      "variantId": "vq:45bd7879e0f34ee2472a3ac70ed0df1d75f7a01470a2f2444511e35afc91fb67"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:796d5ff91a49f846bf",
+      "variantId": "vq:e18a871da805b00b9197eb858409f6680375507bcc31e2b30668dccd4f58fec5"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:a761ab8bf7e5cbd7e4",
+      "variantId": "vq:cb0367445548eb82515a9a3bb45f7a22f0b0737dc0eb912867a22fa0b6d0e36e"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:aaafb4a14db22589a7",
+      "variantId": "vq:539570919efcd80f3fcadad8f678000bbb5d2c17f4115c5e662ecdddc71287bd"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:cd0cf60a1932b6e8d5",
+      "variantId": "vq:9c3743020d83ba6487d67c218559ab57a44f1a104a40e9ac3cf99aa9c5e24ad4"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:d6ebc8ea7664410315",
+      "variantId": "vq:7c25447330c07e4811d66ae437321913e7fd93a07ac02da246ff438fa228dd27"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:e400953293c696b7c2",
+      "variantId": "vq:648a960c70cfd482babb87392406fe0eee802da61ca1596eaf1ccdb928f2356b"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:ebe155059864f38ae5",
+      "variantId": "vq:3ff33d27dc8ae323133750749230a0d3db1a8576f361b27546ce179fad7267f5"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:ed97907e1578ae77f3",
+      "variantId": "vq:3fb8521bde823d806f8cc77cadcdf04e292c55a77ee734aba2d933d18580f3ba"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:f68fecda020ad60461",
+      "variantId": "vq:f5aef7d958ccb72d6b66303b0b7f33f9d2ed24ddbf30eb6ac7b7712f4e790459"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:f720037239c1c4ee2e",
+      "variantId": "vq:1874b8daa3b9e036f51a6aeb419675118b7c9e665003dd2580a2e63fef8c4e43"
+    },
+    {
+      "entryId": "ve-9cd81d7",
+      "senseId": "kaikki:fb70d78609cb29c44e",
+      "variantId": "vq:abaab18f8da415145103954160b713d15adb572b2b74adffe58a9f5953853b49"
+    },
+    {
+      "entryId": "ve-43f4793d",
+      "senseId": "kaikki:bbcc6fda6b82e23c11",
+      "variantId": "vq:d52974865917fd777739e9e3669cb25f9e46f53d34f8e96d018157d72b0b9639"
+    },
+    {
+      "entryId": "ve-43f4793d",
+      "senseId": "kaikki:447fa706a924adb955",
+      "variantId": "vq:0a2f324eaf83656e4e36cbe8d20455079d42631c64011d06fbd4e440869284e3"
+    },
+    {
+      "entryId": "ve-43f4793d",
+      "senseId": "kaikki:9edc5641fe744cbb04",
+      "variantId": "vq:9934235c0faeec74d758b2e45a53022db3104ba96eed51ab72e9f8238ad69595"
+    },
+    {
+      "entryId": "ve-43f4793d",
+      "senseId": "kaikki:b38e621459800db9a7",
+      "variantId": "vq:cc83e02d9aa90b202404d0dfea8ea2088606977333063e5c98131c62f0aeabaa"
+    },
+    {
+      "entryId": "ve-43f4793d",
+      "senseId": "kaikki:f0e5fd3c7b91675e47",
+      "variantId": "vq:a719384a88ea8d093fb3ea45c492c6f0255e327833c2c1220853c16de539f4ca"
+    },
+    {
+      "entryId": "ve-43f4793d",
+      "senseId": "kaikki:fa37cce68bbf17db23",
+      "variantId": "vq:6415489bcf89832e27ddb5c126758214842aafdc59eab6a3c4941dbcd64aea97"
+    },
+    {
+      "entryId": "ve-ba07dac9",
+      "senseId": "kaikki:d32bc21f8316b88805",
+      "variantId": "vq:6ce9cc53901e63643e2f463fbbf8d32783c0748d911f723565966ee848dd6cd0"
+    },
+    {
+      "entryId": "ve-ba07dac9",
+      "senseId": "kaikki:0313cba07f7fe4f131",
+      "variantId": "vq:ba7be5914140bff44015286270f6cba12f8fc9f44cefbe5aaafcac7ffd89345d"
+    },
+    {
+      "entryId": "ve-ba07dac9",
+      "senseId": "kaikki:327176b222a215a9c7",
+      "variantId": "vq:56accaeb3487fb4487396ee2f1569bc613ef8b2cf9f87d79d6c9f47c5390a7fc"
+    },
+    {
+      "entryId": "ve-ba07dac9",
+      "senseId": "kaikki:39e0929e66f1dd39cd",
+      "variantId": "vq:8a261cb8b02c4348749a77bd4d343952f5b49f0626805f34457882ce8aba34fa"
+    },
+    {
+      "entryId": "ve-ba07dac9",
+      "senseId": "kaikki:69165a639b49cde5db",
+      "variantId": "vq:0225bc7f2b205e79c5d0a7ac9737bf557a9a7ad473ee487676a90ef4ec95e505"
+    },
+    {
+      "entryId": "ve-ba07dac9",
+      "senseId": "kaikki:a34fba74cbfd7b75b7",
+      "variantId": "vq:8612ab3b57736e6a69019aee1d6a084206bd268471828904bd61579e0bdd61b9"
+    },
+    {
+      "entryId": "ve-ba07dac9",
+      "senseId": "kaikki:b7598f98f6c260a696",
+      "variantId": "vq:0705126d76f03d043441f9c4a1ece56675130432e8f3399042f0134ac7984ea9"
+    },
+    {
+      "entryId": "ve-ba07dac9",
+      "senseId": "kaikki:e195424390c2a1fc9a",
+      "variantId": "vq:b977a6a3a79798b3b025741a1b388893435619d0b0ffc0193c381f3a7c98f362"
+    },
+    {
+      "entryId": "ve-4a85e2fd",
+      "senseId": "kaikki:075e0735014a229fa2",
+      "variantId": "vq:6b8e0f1a9ff5d1c57fcf41a0a592f70a43dbbf70461be71abeaf396b11fe65e8"
+    },
+    {
+      "entryId": "ve-4a85e2fd",
+      "senseId": "kaikki:09496621ec72d60e17",
+      "variantId": "vq:79ede2f8dab2214ffc4ab291714a0e481ad2d8c4a9c0a45385b3f34ee7de4c9e"
+    },
+    {
+      "entryId": "ve-4a85e2fd",
+      "senseId": "kaikki:2c7a4f1c7c6cb18728",
+      "variantId": "vq:787d8c19994f22d5b506ca1aba9664aa2f5ceb2505e4bbbd6c757f0f00d99a0d"
+    },
+    {
+      "entryId": "ve-4a85e2fd",
+      "senseId": "kaikki:3cdae474e5d037c019",
+      "variantId": "vq:9546c5a65052db297d8c88a6f5d9b899af2db6aeab4040eb979116be65fa1c40"
+    },
+    {
+      "entryId": "ve-4a85e2fd",
+      "senseId": "kaikki:bdc7d8f014489fd6d9",
+      "variantId": "vq:6c965032b24a13cd8f4cc7c7d109c74282e1f9d0bf4ea95e1a116e776bffe2bd"
+    },
+    {
+      "entryId": "ve-f169a30a",
+      "senseId": "kaikki:a49662054c5146ef4f",
+      "variantId": "vq:587db258d16d51796a4bf01c40fe41dd9b6c3b1f9d1e2f7dae3e91175a07fcc1"
+    },
+    {
+      "entryId": "ve-f1114ace",
+      "senseId": "kaikki:ed9abfc32996e71a45",
+      "variantId": "vq:109ea9f19a13b71666dfb183e7b28a3076bea509586b8e6d8a7e4fcde9db6a27"
+    },
+    {
+      "entryId": "ve-f1114ace",
+      "senseId": "kaikki:ed9abfc32996e71a45",
+      "variantId": "vq:7b0d649da14d3f353bce812af9db1f3ec6e35155b54483e71e3f59d5b6699522"
+    },
+    {
+      "entryId": "ve-f1114ace",
+      "senseId": "kaikki:55d0fb061ce995c659",
+      "variantId": "vq:6f01f8e053687256e0f898d536fe1297d797d3b4b0ad62d3c1ab3154edbc4844"
+    },
+    {
+      "entryId": "ve-f1114ace",
+      "senseId": "kaikki:8d981d19de06355dda",
+      "variantId": "vq:4296fed4cc53b3d0ee892abf90562c089dcccc2d3b3e538419db5659dc516f24"
+    },
+    {
+      "entryId": "ve-f1114ace",
+      "senseId": "kaikki:8e4637cba1675d6446",
+      "variantId": "vq:24fd49a3ffd2b6a8497d56788aa4f5e719f8cbdd398bd500f7c72349c8f0d066"
+    },
+    {
+      "entryId": "ve-f1114ace",
+      "senseId": "kaikki:b881119973f7b2809a",
+      "variantId": "vq:f57c99ed767f68a885a5027dc882a4a1c83f479edc2761e9204c0ad61866526f"
+    },
+    {
+      "entryId": "ve-f1114ace",
+      "senseId": "kaikki:dae33c11f0afcd93c7",
+      "variantId": "vq:6b535e3e3ef90d019c9c45e5d54796762d7b1c5d63c4d47a3d3beac6d9253139"
+    },
+    {
+      "entryId": "ve-f1114ace",
+      "senseId": "kaikki:ed9abfc32996e71a45",
+      "variantId": "vq:dd50be243da109deacbd020028d316ed8c83b825cc3a1f38ca54980338fb212b"
+    },
+    {
+      "entryId": "ve-17a5308e",
+      "senseId": "sense-c4b4274",
+      "variantId": "vq:f67dd7ad869083bbb5320fb62d5018a70ea63e58db4b63cc0afd761f30c1f833"
+    },
+    {
+      "entryId": "ve-7c6ba968",
+      "senseId": "kaikki:c2638dbebaa6a80ae0",
+      "variantId": "vq:62b0dcb32fbbcebabc7d21596bfd2650850770d247cbc488998e9f7c59050eac"
+    },
+    {
+      "entryId": "ve-7c6ba968",
+      "senseId": "kaikki:127be209c1841e9898",
+      "variantId": "vq:f91eac78b881f942fe09731ffa62b3870f2299aab8da452f56e8e823d14a0859"
+    },
+    {
+      "entryId": "ve-7c6ba968",
+      "senseId": "kaikki:388b113c2957cedfe0",
+      "variantId": "vq:f423cf453bfe067e168bd4bbbf640492718cdb348f76b29a87aae56a0c7213d3"
+    },
+    {
+      "entryId": "ve-7c6ba968",
+      "senseId": "kaikki:58498900e53dec944d",
+      "variantId": "vq:2310611fe8d2ea4161a2f31e19abd4e709bf11655fdf96a57c941138c6607343"
+    },
+    {
+      "entryId": "ve-7c6ba968",
+      "senseId": "kaikki:71c0543771a024b66d",
+      "variantId": "vq:45ac9e662025451d11a8844626576689fe0a2fdac9c31517a78026349fa0f82f"
+    },
+    {
+      "entryId": "ve-7c6ba968",
+      "senseId": "kaikki:97c1a499997be4320a",
+      "variantId": "vq:f67ee38fc2e900c09544e6cfc36521142851de887482755a9a0a516d6be6e78d"
+    },
+    {
+      "entryId": "ve-7c6ba968",
+      "senseId": "kaikki:d490a6f3907c75faa8",
+      "variantId": "vq:d923cc642fd1cc701e4237e6b559600d5aba4adfcd2a5553785b86be40edcbcb"
+    },
+    {
+      "entryId": "ve-7c6ba968",
+      "senseId": "kaikki:f839ee6842b93b5e6a",
+      "variantId": "vq:47f6c05ccc0c12c4f9d9fe3648ecbf23f10b78ea71239be0eb4fc0e1cce07054"
+    },
+    {
+      "entryId": "ve-45fb997d",
+      "senseId": "kaikki:d103151a94fe64c229",
+      "variantId": "vq:2500fdce321beb85bf68e523c422f0cb8b7c78b59d86dd8bed0781adc1c4099b"
+    },
+    {
+      "entryId": "ve-45fb997d",
+      "senseId": "kaikki:a4b0e60d51f8f58d9f",
+      "variantId": "vq:24bfe55c701ccd37d0aa95245414aca5e0fe4102a8786fe5f4dfb1f6b1b740b5"
+    },
+    {
+      "entryId": "ve-45fb997d",
+      "senseId": "kaikki:a72013c4ba319cadb8",
+      "variantId": "vq:5ee82fae7d925f28ea9f28aaa208abdeed7417a8e02cd13c75ab84e81e37e2b2"
+    },
+    {
+      "entryId": "ve-45fb997d",
+      "senseId": "kaikki:e5f3f61347fba42702",
+      "variantId": "vq:1562cf445953390a5db90c106ed8ff0978f2eb8580496d9c158c4ca512ee2659"
+    },
+    {
+      "entryId": "ve-b347f892",
+      "senseId": "kaikki:df7f32eecac7fe454d",
+      "variantId": "vq:a944feb0379c5761d6fa35f60e541a82ff7e306a8291e6b9f5789dcce7a1b7e0"
+    },
+    {
+      "entryId": "ve-b347f892",
+      "senseId": "kaikki:2b6c0c6757c3dbe9e3",
+      "variantId": "vq:b01ccfe4564232421a18c5766e5172dbd5bc21f36d2231660cea6d3a222e591b"
+    },
+    {
+      "entryId": "ve-b347f892",
+      "senseId": "kaikki:2ec0e949d3653561b6",
+      "variantId": "vq:a31a4f41ec4d2e54513d0e4af9aee87d5703062dfd67edcdc1d913830a5370ab"
+    },
+    {
+      "entryId": "ve-b347f892",
+      "senseId": "kaikki:36fac3dc2c3d06074d",
+      "variantId": "vq:2baabebf13b74a8fe161f36cf40d1956375d51ca65f2a597e92f28c465edf41f"
+    },
+    {
+      "entryId": "ve-b347f892",
+      "senseId": "kaikki:756db46711825238d4",
+      "variantId": "vq:f4c682b9bf4eb81325ad3975e6da6110e68233217c9c567f109ba06d05f2878b"
+    },
+    {
+      "entryId": "ve-b0852b56",
+      "senseId": "kaikki:577c580893f3863703",
+      "variantId": "vq:214abb2cc01cf5c97de655102ede91a78ff7a875c1ffddd6c771ff924357ac14"
+    },
+    {
+      "entryId": "ve-b0852b56",
+      "senseId": "kaikki:f98756741e99048297",
+      "variantId": "vq:e993f1b61df080b37448948c6b0c79fb6ae6cd9c31adaf89e2276b92deafaa9b"
+    },
+    {
+      "entryId": "ve-7c6e2f1a",
+      "senseId": "kaikki:dced7d74a9f0bad113",
+      "variantId": "vq:511c3fa81817cff530b763cb35a2157af6885bb746bb40fc88ce1a7f7e768329"
+    },
+    {
+      "entryId": "ve-7c6e2f1a",
+      "senseId": "kaikki:00c3e26defa03ebe30",
+      "variantId": "vq:d4ae7a104a328b364ca1d49e6d32439d12313851ddac4b673c833b61a0b81a7d"
+    },
+    {
+      "entryId": "ve-7c6e2f1a",
+      "senseId": "kaikki:0f76c77069f610fd23",
+      "variantId": "vq:a98d279c4823f16e906a4e98d29b823c1729616a7bed80d0b3d762ee2f7facc6"
+    },
+    {
+      "entryId": "ve-7c6e2f1a",
+      "senseId": "kaikki:2e753d61d9ec1177fb",
+      "variantId": "vq:73dc06f7cceb8fa24401f7483b87de96db04f3a57ad82a2f9a2572f97b1773bc"
+    },
+    {
+      "entryId": "ve-7c6e2f1a",
+      "senseId": "kaikki:433f4b0ec51b6a8857",
+      "variantId": "vq:533bac777e3d9cbbad87866448226e498e34b13a5e420d53834ea7de428d11dc"
+    },
+    {
+      "entryId": "ve-7c6e2f1a",
+      "senseId": "kaikki:4a72aa363bfe03ed9e",
+      "variantId": "vq:421dba7815a07fbc84a819b884acc92a48db90678298ea1837ca10e6707631bd"
+    },
+    {
+      "entryId": "ve-7c6e2f1a",
+      "senseId": "kaikki:626a07f426be6a52a7",
+      "variantId": "vq:4e83027dff9dff7fc5764abd478ff1ebcdd35914201f551bcd507c32022fa092"
+    },
+    {
+      "entryId": "ve-7c6e2f1a",
+      "senseId": "kaikki:c97dbcba90cff92529",
+      "variantId": "vq:b324d3d4baca84c5ee4ed79d018515a68c713644529db9e9f3761aa28e0694ee"
+    },
+    {
+      "entryId": "ve-57f72683",
+      "senseId": "kaikki:9cbd013368191c2066",
+      "variantId": "vq:083717f2fa0d6b717fdce76eef492199be09f4bb81632b3662928702f2603199"
+    },
+    {
+      "entryId": "ve-57f72683",
+      "senseId": "kaikki:9cbd013368191c2066",
+      "variantId": "vq:79adc04acfa7ff3a434846d0ecab1da14c6a4c8550d23b5a5e070d7dda68e437"
+    },
+    {
+      "entryId": "ve-f241c0e1",
+      "senseId": "kaikki:44a556da10ce688336",
+      "variantId": "vq:adf5504b652c2df22010ceb2107db62d8603801cb545da7ce14a8f88d6e45ca1"
+    },
+    {
+      "entryId": "ve-f241c0e1",
+      "senseId": "kaikki:62d17c3f8b5838a9f7",
+      "variantId": "vq:346be4a48fce11269bc97d2df3a10f41a263899e89f04be40fb4801d5cf4545c"
+    },
+    {
+      "entryId": "ve-f241c0e1",
+      "senseId": "kaikki:dc386d77fd2f04acdf",
+      "variantId": "vq:5906ac591264b24c9eed8d65da9d8e98e09b7f8dbff26fdc5d85f7c28c35b15e"
+    },
+    {
+      "entryId": "ve-50cebec3",
+      "senseId": "kaikki:b9344d93da8792f5cc",
+      "variantId": "vq:bb01ab95aa5dad0b3c558224f097515407036d4e75783b9f7066760d1afc67a1"
+    },
+    {
+      "entryId": "ve-50cebec3",
+      "senseId": "kaikki:311de2b6d818da887d",
+      "variantId": "vq:e4ac2f648c0b99bd3d2138a2c214f8675546f63f213a682ce33f98929aa6edef"
+    },
+    {
+      "entryId": "ve-50cebec3",
+      "senseId": "kaikki:6a92e96783a22b49b8",
+      "variantId": "vq:67a1b9ae055b019c129b60470be56e08697b6508768d80b16fa509e63f5257ef"
+    },
+    {
+      "entryId": "ve-50cebec3",
+      "senseId": "kaikki:729841ddea8dfaac3b",
+      "variantId": "vq:dc332917ae6825b825b0b377482b1ae6fdb01abc71c2cbc19686a6c4cb7f3d1c"
+    },
+    {
+      "entryId": "ve-50cebec3",
+      "senseId": "kaikki:ba5b58fbb13bba54cc",
+      "variantId": "vq:36788f954b8392ecdc20f97ecd0b1478735053807d8393613bd2d504a124cf6b"
+    },
+    {
+      "entryId": "ve-50cebec3",
+      "senseId": "kaikki:fe7a315d89fce409e5",
+      "variantId": "vq:6545c47688257c81fdd44fef33983f85d8c61e8ba67d18975d4c6cd079712d51"
+    },
+    {
+      "entryId": "ve-df543063",
+      "senseId": "kaikki:7e6b67a1d757952946",
+      "variantId": "vq:fcbc39e1d29d725b4d53033368ed0277eb876247490f790458df98f051eda2b3"
+    },
+    {
+      "entryId": "ve-df543063",
+      "senseId": "kaikki:53b5ee52d3ffc4da0b",
+      "variantId": "vq:95bee3bf0f21c8a272e5428449eeade72ace783aeec37d90c5e97c86f72df802"
+    },
+    {
+      "entryId": "ve-df543063",
+      "senseId": "kaikki:6e7ceacf98239e65db",
+      "variantId": "vq:7233ba49768ce87e8f389c61bce856368d14ab05fafd0f31264bd5d7fd343418"
+    },
+    {
+      "entryId": "ve-df543063",
+      "senseId": "kaikki:a7d4bd19489e02c463",
+      "variantId": "vq:e490b46aae99a16431bdfcffe0249a4538c76bdcad2ede3dd01409794e1cd7a0"
+    },
+    {
+      "entryId": "ve-df543063",
+      "senseId": "kaikki:b87f9f11dcf6b34314",
+      "variantId": "vq:f99b7c0ecd05bf60015459a5f19e705e8c58e80741188974199693db00f0a286"
+    },
+    {
+      "entryId": "ve-df543063",
+      "senseId": "kaikki:e0af9be12b474f1340",
+      "variantId": "vq:e32c9016df5a5f7720dc5d4d053477767a7e0860376e0083bea7db2a16fa5e91"
+    },
+    {
+      "entryId": "ve-50e6d598",
+      "senseId": "kaikki:04070425fb076a2fef",
+      "variantId": "vq:dad7e9e6061e35526ff8bb9894bf24a26905b713cf5750215d2a68b774a0619c"
+    },
+    {
+      "entryId": "ve-50e6d598",
+      "senseId": "kaikki:4da36e926124dcd9da",
+      "variantId": "vq:6733523e26ce73e97de36bcf94b9dddba8d5e37f802041eeb7135ab4fd87f225"
+    },
+    {
+      "entryId": "ve-50e6d598",
+      "senseId": "kaikki:ac0484b2d40a773998",
+      "variantId": "vq:7a9736a468b59192a6c1d7a809f3c8aa4da98ff769f01b5d88cb5784aa859591"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:6d9f4a4e9c30913668",
+      "variantId": "vq:2651ffc30ce2e0b49b54752065c8be61df6083964e733102a96c21d85313956d"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:03c53029bc3eb3879c",
+      "variantId": "vq:8fcfddb1b6aa087c6c8e8f1afa715b71d1c478a8b0e6bbe7baa44f55bd335b1f"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:06e3bf07d75cadb947",
+      "variantId": "vq:f8ad88e783d23aa2e05494ddc3266cb637673af2ea3d682e632504292461fa87"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:0d0fe370f9c4cae1fd",
+      "variantId": "vq:a988bfdc4b1c9a26b6b6c67f7025eb19574f160b265d5b35b6f73a62c3668d16"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:14212880d1ab60babf",
+      "variantId": "vq:1fb9360affa4937536c9f37f771bf3af4344377e56798b0289899af7be61ee3e"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:3d246fae36998a8e88",
+      "variantId": "vq:b74bc796b60bacdd5db67e4485ff612ce6d9c22c1f18ac45dc4389df576b2350"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:46eea861207f23c724",
+      "variantId": "vq:476405d9f25d70cfa8773dcc46a359c46bcde48ab53e79c57243c27b14e37f58"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:47030231836a3dd6fe",
+      "variantId": "vq:daedfe193a811637ec60c893f8cd35ae8b85cc6b3f879e9b9ecd0a5cbb76359a"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:496bd42dab990afbc4",
+      "variantId": "vq:a348c2c7d75a641009f7d773e6f20c5d65db8c7a806773a158cfcedc13909710"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:543824dc0be88ed08e",
+      "variantId": "vq:3f868921624b3a0cb653c957d1517037762bce652bb5cc5fc8b0edf06bd15596"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:79e6f402553323b178",
+      "variantId": "vq:5f92eddb505e343a59808d78206c1817130e3558e036d49bf805d01a24f0ebd8"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:7ff582038c50ff90a9",
+      "variantId": "vq:c1764607450eb46191b0c98b6121c654bbab8d87cbb00a7882d5344e2dcf2520"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:9c4136552748d1b9b3",
+      "variantId": "vq:94a9db2593cbbc14bc475f922c3997eb1a8c836c0003e085df8b55b97a0e3889"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:b9c65f576e50f57a2c",
+      "variantId": "vq:1741bab5a59c667040549be41c8e3348507f57f32e160c590d7362a0d0bb5b67"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:baf2b9b34ff038b614",
+      "variantId": "vq:3f26fac7e4f4858d2bad742ace77eb03fb29790e6309da485ca46e20d4d54e5d"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:c48d8ff3def15fd7d0",
+      "variantId": "vq:d75a75e4bfe0d9b96638fb821610839c0234e7e8eb89d86ef1bd53e63990df03"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:c78a907be53a51c0a2",
+      "variantId": "vq:f6d992e48d6c1dc10d2f77e2baef6afc1dc1d09d66817614c22152b828a53e40"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:ef8a53d394744cf414",
+      "variantId": "vq:61c59b3b51c598636f2f724b2919fc16e6189dc3ce5c6f153b8e2cf42e460453"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:f426a1f2e191d8dd9d",
+      "variantId": "vq:9f5bc9bc35241e910280857616c4766f87d62518260ec08bc736496a213b8a31"
+    },
+    {
+      "entryId": "ve-50e8e511",
+      "senseId": "kaikki:fb50f29d7f66ea527e",
+      "variantId": "vq:de46d2471f4bffb776069d84752d76089b9e2ac8ac95d2c2bd7cddc6d32729c5"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:d7cfec4d74285056bb",
+      "variantId": "vq:fc90c1a9b6795315580fc02e291f1f0790e149aeb6f5b9f7c6f66b800638146b"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:03c3e1ad9c6fea20bd",
+      "variantId": "vq:b271abc1e859e7a5ab5ad401f58cbb1ff6f3c9c5385f0643ed3e8eda4ae94c37"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:07c5d4604b526b29dc",
+      "variantId": "vq:eaa79440117f927de1ba575bf0a0d754a9416d2e7d993e97caf7cde2b1580a5f"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:2dd1735ea5c0fe8695",
+      "variantId": "vq:8ab6a41fea863a6bed2d06a6f13d778683a61e28705b3ef501f5e998479e746f"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:3b48661a54c05bb8b8",
+      "variantId": "vq:1e66de5852322ea868674b745b5a37486b5fd0c45dcd437a0af124ea04fdcfb7"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:424c93b8f30b33be40",
+      "variantId": "vq:d808781c6f7597e22f7f900ad162b9b58a6e16af5c3fa8f071a50642103c3326"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:44aafdce1dba10d6c2",
+      "variantId": "vq:2631d3d84e71b52e202205bc655066b2752a70dba12b2b9406d59a72f97819ab"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:519df96fa3eba16496",
+      "variantId": "vq:ff9f712d6e85780eb78d36c8be3e489b8820a62c1e6365aaa2e1d13f77305a87"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:5a7bb260c3cc984050",
+      "variantId": "vq:4a32215cc3aa04378cfbe0f84a273aebaef10131338b2d9ddada61e18d81eeb1"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:636847fadd40230bfd",
+      "variantId": "vq:32f0e9261556f7fe079cf7d1ecc82a368dbaf164a0cf806f27d7a96224dceeda"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:68e1754faa3872b6d3",
+      "variantId": "vq:d81f8f93e52051d9eeb11e84d7cebdfb45ff0ac889139d88d82042bbfa76beaa"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:8738050e621671d380",
+      "variantId": "vq:076ea602ff77e6241555e2d980fc6f5db44b3251462a1fbca4e39e0e3ad01e0c"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:9d1e003ed16d75d83e",
+      "variantId": "vq:6c7b80a218965c0f15b56816ac299ca038a2b930a73fa8186c328b298252ab78"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:a0822ff5819e4f7a75",
+      "variantId": "vq:dcde8005f32d610ea8371df1e33dd7601cc792cf584127c031e8268dd340a9ce"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:ad9a540fbd2bd99902",
+      "variantId": "vq:8701de853df731f8dceb7064d6dbf04091053dedc222bef14f8c0bb7ccc17aa8"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:be05c467aa56480277",
+      "variantId": "vq:66d083f69429e94a425ebf96c4e6aa38019756d97ba5e0901d067fa970ab7d69"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:cf431bca2db5fa23da",
+      "variantId": "vq:b097c372895988184c73dedffeae88502e538a81429e0504fe5eb89a25687877"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:d0675f5286987548a6",
+      "variantId": "vq:b0280a8cf680171da0ae7759fa3cb0140d2722f468004a972508cac7411b80bf"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:d1e84e2aaf7ad70b83",
+      "variantId": "vq:c5956732f77635d28c655fe33bbb31fea133536b929346127ac88012f0943c1c"
+    },
+    {
+      "entryId": "ve-529df397",
+      "senseId": "kaikki:d83a0f56d3fb7cf55f",
+      "variantId": "vq:f5fe33342c505b3303c03e602653bcfc0971c927534cfc4d7db603e25b7e2fd3"
+    },
+    {
+      "entryId": "ve-a65c660e",
+      "senseId": "kaikki:49c3c27cc62d0ff300",
+      "variantId": "vq:4a5a618dd7111336f87b57542789b9a08e083f5c2b13f8328e4f7487e22db0ee"
+    },
+    {
+      "entryId": "ve-a65c660e",
+      "senseId": "kaikki:59344778f8e3d05364",
+      "variantId": "vq:079aa10f41802633cb525f591054d12f098129bb27a4c1d00732455343fa80ab"
+    },
+    {
+      "entryId": "ve-a65c660e",
+      "senseId": "kaikki:15391c33b5dcf0357c",
+      "variantId": "vq:2e923ed380f5f859706139583df59f7dd370235f7d245ad07430cfa3576ea61e"
+    },
+    {
+      "entryId": "ve-a65c660e",
+      "senseId": "kaikki:162be1e41ce9e1bca3",
+      "variantId": "vq:011c099d676f68b8b8f0924f4524bf22e709cb25fac86a070e337197de222604"
+    },
+    {
+      "entryId": "ve-a65c660e",
+      "senseId": "kaikki:20de09f568486187b5",
+      "variantId": "vq:d0c2a26ccbd9c0d701db2e6fa5659a0d91169c3b4f66213493ad0fbc2a89c1e2"
+    },
+    {
+      "entryId": "ve-a65c660e",
+      "senseId": "kaikki:845ba9b9dccf4cded4",
+      "variantId": "vq:7bd4494ce5eb83ff8e4ec457421f30b032f4832bba7cc9a6097d54d5152c5820"
+    },
+    {
+      "entryId": "ve-a65c660e",
+      "senseId": "kaikki:c7ffe00c1b72ebb6aa",
+      "variantId": "vq:d66f6548dd0d1e08b7c3bdf5f3feb86a25e43c5d0a2ed6ea85bf0d6330933514"
+    },
+    {
+      "entryId": "ve-a65c660e",
+      "senseId": "kaikki:d4d9715b29f06b09b2",
+      "variantId": "vq:e6a3df9154aab67514d121bc72dcee5886f240bf31f226592e453f67b283d849"
+    },
+    {
+      "entryId": "ve-ba72f783",
+      "senseId": "kaikki:7c6369dce4b57c9685",
+      "variantId": "vq:dd1fc40b75da6c1720fd8be622dea29b9f54f1a30767b43207eb83b09cfeeb47"
+    },
+    {
+      "entryId": "ve-ba72f783",
+      "senseId": "kaikki:7c6369dce4b57c9685",
+      "variantId": "vq:b7e58f2bc8609c4a6f24f2c26c75f7c15f10be5f33f14eafa164b03bb3b45356"
+    },
+    {
+      "entryId": "ve-ba72f783",
+      "senseId": "kaikki:0ee41dc39af499d465",
+      "variantId": "vq:b66859331881578e5798116399e1e0ca29e0dd5c5eb364d69aeb725408cbad41"
+    },
+    {
+      "entryId": "ve-ba72f783",
+      "senseId": "kaikki:7d507e4a488471ab74",
+      "variantId": "vq:a5dfc7e8f17651d6c2e05fcae43ee7ad192b732c006625d17bbb79bde056751c"
+    },
+    {
+      "entryId": "ve-ba72f783",
+      "senseId": "kaikki:a38e7e1179c89a1e76",
+      "variantId": "vq:3113f2b1759c9a1215a2e535f710d616c3fddf1b0df06dac33bc6ef0d3a6a280"
+    },
+    {
+      "entryId": "ve-15f3e7bf",
+      "senseId": "kaikki:40527b2e48bf64eb0e",
+      "variantId": "vq:5544d558c319b3f1127639817fb32f952a68c1e990933c2cef2c3972f5271a85"
+    },
+    {
+      "entryId": "ve-15f3e7bf",
+      "senseId": "kaikki:6752fccb201f79b03c",
+      "variantId": "vq:e24306294196bfa55f7b6e4dfca94fb0fd83ee0eb25b5a836248fd20fe42bb83"
+    },
+    {
+      "entryId": "ve-3882ce0b",
+      "senseId": "kaikki:8721f0ff828850570d",
+      "variantId": "vq:c8c545b1485df480a787c8e0bce0ce1564c6e2c0e7f904bf6247f3adb956168a"
+    },
+    {
+      "entryId": "ve-3882ce0b",
+      "senseId": "kaikki:700b733e7cddb98862",
+      "variantId": "vq:a0351eddb779fc86910aae9dbebd41c4767ebb3655ca6545b173bec5d509fd4f"
+    },
+    {
+      "entryId": "ve-3882ce0b",
+      "senseId": "kaikki:8964c0024a8676f26b",
+      "variantId": "vq:05d6644915b7a1aa4db2129120f94e1839ede3945f809fa65cd408f1bcc6644e"
+    },
+    {
+      "entryId": "ve-3882ce0b",
+      "senseId": "kaikki:bacb8fd53252add3ac",
+      "variantId": "vq:2d1e91b91af40e6909768cf514dce49a5b068e8561219e39a46cea103750b797"
+    },
+    {
+      "entryId": "ve-3882ce0b",
+      "senseId": "kaikki:e89de05ee8e1567a76",
+      "variantId": "vq:91906242093b24dd599dcbcddf4de135e525e9548fee10031309a9a71b3a7217"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:d91b0bb98ce9dd3c69",
+      "variantId": "vq:6bf66fb7992fac06cd1a82bc8a2050eb8787ac358770b36c1ace3bafc3b588ae"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:02304eba07137f618e",
+      "variantId": "vq:9437554ef1acbcf20cabfaf7e1bea591f1bbcd7523d59541f7296ab739b04878"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:0361ccb975677cba35",
+      "variantId": "vq:5dc26753c7a80e078008b2415b9b588c3c4ac22674aac7841023db8cbcddc07c"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:0ac9f440713409533a",
+      "variantId": "vq:1b42cb65411c3a2ec78a9c1817db9d2fb455c1b472988df0184d1d81d8097a05"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:1621f92edbf00c4fe8",
+      "variantId": "vq:14a652c15279c0bd4f2f6e2009f07a7a1a9e15a07deede5a16d6fc8ffe897f73"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:1ca12456b5eb74ea73",
+      "variantId": "vq:d87ff8961ec88ede1b2c89a9143ec7bb18b2501bc15c9a021f69be51b9686d97"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:56c447930e874afed0",
+      "variantId": "vq:09956b8fe08e5312aea9f6c24e5afc9911e969b73093d5335827fea94a269b9c"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:619939fa602794cdac",
+      "variantId": "vq:6743aa3f7fb50f6c2e34e98d117e5384b8f3e48d2941bd5762a6e42fa267d988"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:62e043f1b204a3587b",
+      "variantId": "vq:f165f5feb7c61955590b015de6222479753f9292a24127fcf918e3ba6329a032"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:69f247a29a8a78a914",
+      "variantId": "vq:215e154d5c6e705a7bf79101fa59f1df8fc6cdd6c00b237617bed06a5e5acb1f"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:7716278c0e4ec6aeb4",
+      "variantId": "vq:6a7a354d7f1391ff500da05f1b304eddb90a1187031113add5a76dba2db6cae3"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:7cf7c2787f7052a80d",
+      "variantId": "vq:ce31f35a7c7993cfc6d48d1bee40b4b5554d404c58f28e7b45fbef2df8cfa7a0"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:866017e6ebd73f09a1",
+      "variantId": "vq:b9af8e544bd1e100995fc2411eec449007be1928afd218d0002af16445e20b56"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:8d2d59e250f52c5f2f",
+      "variantId": "vq:6326a9edd6a845dea9d88ba4172d030db34df8a419b61491ffd12d498c24ac46"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:a4699ed8280ed40913",
+      "variantId": "vq:e5657eed6feadff1d1cdd163b7c0ae16f54abbef7027cf58b9d1caac8d688893"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:a98089eabbbecd0c8e",
+      "variantId": "vq:309ad5023f18439e8f9ed0a919c266104c8c511bd8a170eb770e73296f110b68"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:ad671f5930290e9689",
+      "variantId": "vq:22147b7e671a83f26a31740133b9cafb7b955ed7b9ef4b7a97e491e471bc4894"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:aef17f04c7ae1d9fa7",
+      "variantId": "vq:8b7c700fec16b3b414a6f1c4f3f14a30aaef430f6e641a3f6fb7da90dde7fff2"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:cc94286848a42cf9f5",
+      "variantId": "vq:85e7bbaf7f0e6c48db028b5239e968213441d358e5058734098644147a7e966d"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:ccfd11a4d30904f74e",
+      "variantId": "vq:30573a73063ce0469e509f071c2b95e77ebc2a7006689be8ad93930abcc403dd"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:e1d7ad051d08104d66",
+      "variantId": "vq:8345aa1b0df971d1074ed3ab3ed42a9539f4e4e5afa6856ab7dcd1be4e874894"
+    },
+    {
+      "entryId": "ve-a4698bb",
+      "senseId": "kaikki:ff29146c1d766ebf87",
+      "variantId": "vq:ebc6c51c60f4fb69237dfb64f2aa9c9cfdb971e0da0cc787f397106fb03b263e"
+    },
+    {
+      "entryId": "ve-dc262b74",
+      "senseId": "kaikki:3083755c61b8027f59",
+      "variantId": "vq:0bf25fc1f888c246768f15fe6ada034ace5e3ff185adb4facbefa74d1398f241"
+    },
+    {
+      "entryId": "ve-dc262b74",
+      "senseId": "kaikki:3083755c61b8027f59",
+      "variantId": "vq:ba63b074a933782ebdeb84224859c86aef909053ef0fafd7b6272b51690515a4"
+    },
+    {
+      "entryId": "ve-dc262b74",
+      "senseId": "kaikki:16be6575253b0c2c76",
+      "variantId": "vq:c4a1c9a70b4febafadcc3efd2c39f943371c87445302aa42f0e42662def10748"
+    },
+    {
+      "entryId": "ve-dc262b74",
+      "senseId": "kaikki:680ee2cdfb3d7ef951",
+      "variantId": "vq:6bf0d5653ad611c94a0cdc111911feff338c6a9339ad7537d282b503ae6efc18"
+    },
+    {
+      "entryId": "ve-dc262b74",
+      "senseId": "kaikki:6bcf4ac84741eaa636",
+      "variantId": "vq:981b419c0734528e874161b1949612298da91b20f42eb01b86b31b188d547892"
+    },
+    {
+      "entryId": "ve-dc262b74",
+      "senseId": "kaikki:700f9fd2b31c5b95f3",
+      "variantId": "vq:ddef731a077f4c8fbdf9a5f1e7f5b83ca4164c205cd6ffc7ac7219fd96b0edf3"
+    },
+    {
+      "entryId": "ve-dc262b74",
+      "senseId": "kaikki:913ba4dce07e0dce91",
+      "variantId": "vq:209def5902786ea26442c45dd4fc02db30dc2da45d5185012f165ae748af465a"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:5741e00f1035b19483",
+      "variantId": "vq:e7c63238b24742868cc8b9244dab98e9851ab2cec11f7578966d7c65b864d925"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:13675c59c5f0578b23",
+      "variantId": "vq:36b107030b7778d841996708baa37fc4f5918494ade91f5af1289b39ef824cf0"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:4abb9d2999a3fedd5f",
+      "variantId": "vq:e51fcc60e0b6f6d655b61e58ef3b2637a5ec4ebf4da7aba44b2f0093c5cd8f5e"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:4c9aca70228ba999c3",
+      "variantId": "vq:31eecca8fda61b54d1e1502b6aed240db3bbfcce1fef2055b333b571311de4dc"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:6143b87e3b0a970f3e",
+      "variantId": "vq:8a767f86b07d8f927c49b6cd24e916a01f7c09ef292da32d68768df1965bf26c"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:8f4f0e091389410e5e",
+      "variantId": "vq:ad8f3ab1621ab02666737818e9af6916e937c455a0bcff1ca755f0b29f5310d4"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:a002bc940ae4f0516c",
+      "variantId": "vq:65d3b6738bfce034ccde92aa6f3e3b4c50c0da297454a71978d7956320429a3a"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:a4506b7d8046bcf4b7",
+      "variantId": "vq:5f2490d71c19724ad751e5886eb17196c631770cdbe3a1dee8b6d41a131afed8"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:aac6c31af9aae0632b",
+      "variantId": "vq:a6b184dc3b24d2c6a05973dd36e8e479c5ade30ca9ea0fe1ae24a4aca5276071"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:b2c99aed6f3bd819c2",
+      "variantId": "vq:1ac5ebb515691dba91fab6e701de29cca42fdb0b955d6f76ec5c1c6fc5682199"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:b2d26d78e665da83cb",
+      "variantId": "vq:b3060785568ea3ab79d1b34695bb962e1e7d74789de2c5c29489534148b24ae5"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:be7003bf53981d9ed7",
+      "variantId": "vq:edfeaca40e6d4e78d87b73646964020cb3d08ee2e7f7f069c48c51432ea4224d"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:c996a76a92bc708783",
+      "variantId": "vq:4da5f2bf171e7313808c30d134be9cbeaff64cacbc8f494b663d9a9574de28ef"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:e61aa98377c739ed64",
+      "variantId": "vq:8d5a31e1469ae789634790532e4a5f749374b95fd27c821a1c19a5654972250c"
+    },
+    {
+      "entryId": "ve-596f28",
+      "senseId": "kaikki:fb26a279a6167c63fa",
+      "variantId": "vq:a5cc4d4dfed7d49ed2f763c40632d0615f95997f065a7d3c148a736fad8d4afa"
+    },
+    {
+      "entryId": "ve-33f5a09c",
+      "senseId": "kaikki:bf565e78c576b1367f",
+      "variantId": "vq:cdb0502946cba6f6dbfa08b171df72708b093831f19ea107afd747c56e21d263"
+    },
+    {
+      "entryId": "ve-33f5a09c",
+      "senseId": "kaikki:29e88ca8b2d94a69e4",
+      "variantId": "vq:97540c71bf11aa531070925f438655c55f21633e4b58cb986a1a348c74707139"
+    },
+    {
+      "entryId": "ve-33f5a09c",
+      "senseId": "kaikki:47c3abc2093563d036",
+      "variantId": "vq:7c0549e8a728ee09a4dddd3f291cabc06c09548ed666f7ea13d0ad8e9a550686"
+    },
+    {
+      "entryId": "ve-33f5a09c",
+      "senseId": "kaikki:c042277f92a9f369ec",
+      "variantId": "vq:bead2351a6d57c24e488b9a0afad86a4c2b35a01ab1ef93f20994915ec3933d7"
+    },
+    {
+      "entryId": "ve-e7e9ba0d",
+      "senseId": "kaikki:46755b6ea2b19e59b6",
+      "variantId": "vq:e6b50c0da260fc2a0ae0f34ff74870f7c538dd63df8ae9cc0e1326cb6a1d4b72"
+    },
+    {
+      "entryId": "ve-e7e9ba0d",
+      "senseId": "kaikki:9b1531d5faefc0e934",
+      "variantId": "vq:57b7fd83e87d186d8efc55c91a1dcf1acf152f4f7408a7a94b2433819f7985c6"
+    },
+    {
+      "entryId": "ve-e7e9ba0d",
+      "senseId": "kaikki:9c25bb4a919f2cc1df",
+      "variantId": "vq:f0d609b62057f43bd33035435fffa338e562cea9fb7f9016ae71b07525501439"
+    },
+    {
+      "entryId": "ve-e7e9ba0d",
+      "senseId": "kaikki:a462523c987afb7a37",
+      "variantId": "vq:fc8ae940958d7501c7d1dc7269f6beff09b80906d96ba997a0c657fdc3354655"
+    },
+    {
+      "entryId": "ve-e7e9ba0d",
+      "senseId": "kaikki:dce703883870176e18",
+      "variantId": "vq:90954699626e7d179df2431cba8e57f635530ff6ae1047411d46e817a1ccb240"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:bf0711c3cbf9db48ee",
+      "variantId": "vq:108195d38b3913a45da9c7f04f7188b00a847054283fae9cf4d737a4296c7ac9"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:08c36e80c6c8fd5a76",
+      "variantId": "vq:b97efc50674a30e2b5a4c58ca1324bc6f13c465943309860799ac0f8d8ad5577"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:14afa686a9b67cda34",
+      "variantId": "vq:1129ff90369f0c3807e39cde6a9c997939df68d411aa4327d975d023c6b3fcb4"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:17c6483abaa38f749d",
+      "variantId": "vq:223de47cb369b44a96d3b1763b9146d95c4bd7895a59f0f20dc2cb5370b00681"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:18a983c9118fad1eba",
+      "variantId": "vq:8f69df9defa171b8e7e0d895ee3581059de0d3e74cf3c133bb4a47f629489da8"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:3d082bd56ec0b635ab",
+      "variantId": "vq:0077ac311c3b2551ef2de94b5da091e1f4067450036452eb4d8dc4a6835ccc28"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:44bb73c6eeba5266bc",
+      "variantId": "vq:eba9e42b35d4e407bfa94eb5291569128b1179218d76bd5d49dae2c315e76440"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:a139c6ad51c87e4710",
+      "variantId": "vq:a75c316fdcad46f6b6ccc3e353237a88f986fcfde9da8cb8e7ebd066ea0f475a"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:c1dc85e263240d7b0d",
+      "variantId": "vq:50583dd04f63ab6eb0f98b7d2ec1507fa17765c327f58f07ff6803f2f38bfe85"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:df75c19f558030a1cc",
+      "variantId": "vq:a7cdd7c3f739d656a4e57b9702edba1b525991a911052d20450d6f4ebea3a311"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:e3805b1ff136278a02",
+      "variantId": "vq:104bbd54f694483f080b0430b184e97726d40448160c0e933b0080adae75afdc"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:e99acdb0f87ee84e08",
+      "variantId": "vq:eb9879774a894f97a41e8c2d98ca409c5f735d798a981fde03260402f755121e"
+    },
+    {
+      "entryId": "ve-5fad67c0",
+      "senseId": "kaikki:f29b58799a8a368fa1",
+      "variantId": "vq:158cbd1f4990a6c2e2d85444daacdca2c795dfec3bb84c8a7f3a5d0049479ebc"
+    },
+    {
+      "entryId": "ve-5c42d906",
+      "senseId": "kaikki:791530b9de65a71ddb",
+      "variantId": "vq:b433440eb3ecc6348f5d3c8d9265ccffaf41c43232c7d017fe37fcb315470afd"
+    },
+    {
+      "entryId": "ve-2517eb9e",
+      "senseId": "kaikki:c3cd179711774be8ed",
+      "variantId": "vq:fc33f86b06f7aab1b78547c9638da0e97c9d31dc9915ef76c2b24041699409a7"
+    },
+    {
+      "entryId": "ve-2517eb9e",
+      "senseId": "kaikki:c3cd179711774be8ed",
+      "variantId": "vq:e330a6f08477dcd0369fa958eca347a5410494f256770f06f7ea91ae528fdca2"
+    },
+    {
+      "entryId": "ve-2517eb9e",
+      "senseId": "kaikki:17b94f9d1fbc33c14d",
+      "variantId": "vq:417e9559a10d9f9f864f1b86ccf08c5c3046f4f4b2a842e8aaad5eecc20408e8"
+    },
+    {
+      "entryId": "ve-2517eb9e",
+      "senseId": "kaikki:2887b6c95c6f888e75",
+      "variantId": "vq:8883d89e5127eae41870ae1471ef93fe1911fb378de61ad33efdd717a1b8f662"
+    },
+    {
+      "entryId": "ve-2517eb9e",
+      "senseId": "kaikki:37aab2196b076dfb0c",
+      "variantId": "vq:b87f5403eabb567b5c19c5b9840d4a376779e0ba70537d13c6a07d6b3d3f2302"
+    },
+    {
+      "entryId": "ve-2517eb9e",
+      "senseId": "kaikki:5e9dd48a8626a4f1f3",
+      "variantId": "vq:410dccf23d9e84dbe7bf2c4b6b27d05fb50a79430b0b4e6e7eaa1f60f7cdbafb"
+    },
+    {
+      "entryId": "ve-2517eb9e",
+      "senseId": "kaikki:5eb39e5d606792e63b",
+      "variantId": "vq:90e00b9dd7bbf01f7acb58b78b72a5644c12b63de6273bd27342d77a2dbcb44c"
+    },
+    {
+      "entryId": "ve-2517eb9e",
+      "senseId": "kaikki:7a981d23563ea8666b",
+      "variantId": "vq:7a68571787dd1fb9896979f42e8e50c743f039e3f5f8aa654053ae6ff4fe164e"
+    },
+    {
+      "entryId": "ve-2517eb9e",
+      "senseId": "kaikki:8eb8ee6d55ca7aa45b",
+      "variantId": "vq:8a9b5da76c60995ff3cb105886b56f201fd5274b6ef1e5ab706373aaa6bb33e6"
+    },
+    {
+      "entryId": "ve-2517eb9e",
+      "senseId": "kaikki:8f6c6a206ebb4af280",
+      "variantId": "vq:bddd6ec20963becee97e8ecb9af15ad922b58b49d480497f24e34a2e17ed9ca1"
+    },
+    {
+      "entryId": "ve-2517eb9e",
+      "senseId": "kaikki:db3a983408ae47780b",
+      "variantId": "vq:19c4cb3d7da70d6fa9554b29ad17297f9449c363d1cd7b710a1145147c3f50fa"
+    },
+    {
+      "entryId": "ve-2517eb9e",
+      "senseId": "kaikki:f0c566791cf4d397c6",
+      "variantId": "vq:7e4277362c3eff72b699864881e385517f23b65c6ccbae18676c596b32977f34"
+    },
+    {
+      "entryId": "ve-d283271a",
+      "senseId": "sense-22e80a60",
+      "variantId": "vq:5cb36982090b40980af45dd52075c249c23a485398c88b47c32766688e4a13c1"
+    },
+    {
+      "entryId": "ve-8aa45ddf",
+      "senseId": "kaikki:62278aeff28c8e260f",
+      "variantId": "vq:2c80758846795695ab6b5775eb2d1a7ce60e826726d176a9202b69fe1ee5ef07"
+    },
+    {
+      "entryId": "ve-8aa45ddf",
+      "senseId": "kaikki:042cae3ad0f189fed4",
+      "variantId": "vq:c0f69f90ad9bb86c9f52ee288220f2dbc8710a792bcb3d21ebd5fe2e9f5bc0c0"
+    },
+    {
+      "entryId": "ve-95feb5dc",
+      "senseId": "kaikki:a8d90b5216ade5c783",
+      "variantId": "vq:ea2b1a447170426d309381ae5291fe5c4b6709b01b8ae7c70aee58f0e564d4bc"
+    },
+    {
+      "entryId": "ve-95feb5dc",
+      "senseId": "kaikki:4562d2a6346944d676",
+      "variantId": "vq:8d015da1ef4c2e9db48c2ec50be4662b8ae5f4f58400fa5623195a8c07d20d1b"
+    },
+    {
+      "entryId": "ve-95feb5dc",
+      "senseId": "kaikki:5b5f97410d2626714e",
+      "variantId": "vq:d52d49dd764c010c0909d17c658c83bfe8546b1e669bb07984e23af7b09fdfe9"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:31dcf68e0840b890c6",
+      "variantId": "vq:feb12239b5f5b581cfcebb381a9bc2fecbcb154d03a34ddf9eff7bb065e1e67d"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:31dcf68e0840b890c6",
+      "variantId": "vq:9da8d6b36919da8d35b8187b57d2d6fd808e23054f4b0866edda0b9aac6622d9"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:31dcf68e0840b890c6",
+      "variantId": "vq:d72f1f003be18378f6cc124759d3b14c526875cd5143391e91af6b64f5c47873"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:0c57c86638359c1ed7",
+      "variantId": "vq:098b7619421ff4503e0f5b875fcb2272777e2156ffc9357bef62918e809eed5f"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:28c914cad183181b33",
+      "variantId": "vq:5ee2e1606def1ddedf91ad8e0dfc57985df46b04006392ec91b8d42b4072eeb4"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:3a29475aeb0c293785",
+      "variantId": "vq:8b539b7f13f2d89c03af7961c87942d60b8b10ef08c77b3b1b24cbba367c75a0"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:3fc047a242ef55a6b8",
+      "variantId": "vq:a5764132ae255987cc701b0d3e93cb01929d2b272acadc6a8d4526c339f710b0"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:404fdfa19f58b22d21",
+      "variantId": "vq:ddf6025e011436f54cd919f7349c249ede1b0acc88c9a3aee9668dc09c1ebf5d"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:53450e3fcf6d2ced74",
+      "variantId": "vq:24abd32348116754af72f4efc41eb45b34791461e27931f326a78c6f4428bc80"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:5751f3651d4963821b",
+      "variantId": "vq:126f1bfd6901c5ce9fb46487d578f716d93c9fb9ab1da67df1fee587e949c559"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:811861d3c2bb9a598c",
+      "variantId": "vq:3e34bdd75886676cecd7ccc476b8b21b387ca4824881ba7b0a71e59a234dfd2b"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:822ce9ac044565e5dc",
+      "variantId": "vq:68c243bc3152f1fe769fc0c0e4264c2ed137c385d2f12937b70e9cd04ef91a57"
+    },
+    {
+      "entryId": "ve-9156a6b3",
+      "senseId": "kaikki:8bc3d86dbb17c5c24a",
+      "variantId": "vq:849004e56435a3070959a24e2f4a9acb10f44c96cca32bdb26558455df220945"
+    },
+    {
+      "entryId": "ve-b41c1290",
+      "senseId": "sense-379e64aa",
+      "variantId": "vq:0dc33aca2da3146e6ade1d16470c8b84c3093699cc65882c39cfa3c44f47dba8"
+    },
+    {
+      "entryId": "ve-6c00b80f",
+      "senseId": "kaikki:2eb912293d77ced1d8",
+      "variantId": "vq:0bef9c172373304634b5f2d6b29bf4ebf0ae7107af807d9e187606f9dec3d3fb"
+    },
+    {
+      "entryId": "ve-6c00b80f",
+      "senseId": "kaikki:210d2a53174b3156fc",
+      "variantId": "vq:a1cc9e947d6fd9b4c336ec148039663fc83d98d2f9b9527a8079fc9e70d36b45"
+    },
+    {
+      "entryId": "ve-6c00b80f",
+      "senseId": "kaikki:37fc3370c8f561f343",
+      "variantId": "vq:6a32432c62871c3842c372ea56afe90907b71ecd65040941c315bb5de21541f3"
+    },
+    {
+      "entryId": "ve-6c00b80f",
+      "senseId": "kaikki:51c5673fc247b0fa68",
+      "variantId": "vq:4a4ce1ef3d6a321c452fd3120e4b18add0ca2195cee81e42148e156c550cf890"
+    },
+    {
+      "entryId": "ve-6c00b80f",
+      "senseId": "kaikki:63b38b3bf32879da8f",
+      "variantId": "vq:b4151dc7a642744fc830899009ea981a59832aaca54e1f2282c7ef808d46d376"
+    },
+    {
+      "entryId": "ve-6c00b80f",
+      "senseId": "kaikki:e525ac81ab78fb21d8",
+      "variantId": "vq:a76762707c5d61a4d0be930a255a4b34fd1a6f57a3eb9f6408d01c1add519861"
+    },
+    {
+      "entryId": "ve-7dbd5cef",
+      "senseId": "kaikki:334345eebd1031947f",
+      "variantId": "vq:a93bee03c9ba8600e5904b81032add43242302ae660694b7f16ac4f003ef0dcc"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:55f3cc054f4f8b7e12",
+      "variantId": "vq:f7876bab921c437cc8f11c2cd925b090894b4aa7109d5a0b8e19fb058d59675d"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:01b15b2b4c8c199856",
+      "variantId": "vq:babddfb2cc2ea0a6d462a89004289ad1d770f20c163c1ea9a74bc1da9e2210c2"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:0b66ce05c3c96370b6",
+      "variantId": "vq:401e47efd591d41bc41235e7d4ec8b4efec9ad3324bf94dda969b179d9d020e6"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:1016c6b2ad464c2a8e",
+      "variantId": "vq:9a44ba310ec6e5e51a04406330c25f3c1dd6d3160382f9dd9b395f4059d97817"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:14b5e05ee258bbbdfa",
+      "variantId": "vq:d445ffd0fbbb16c320a829cda949f3236241838c9084fa52d16ac4dbb8b2647a"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:1b5737d10de08868c9",
+      "variantId": "vq:ced97722946401d8b537834f0ed336b37e4c33408eaad459e32559c9059da0bd"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:26af47a01e5fee01e8",
+      "variantId": "vq:bd2ba871d7bcae1ad7ff0dfbb24dadde5fc42088677ea75dde30a3378886730b"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:2acbff6b7232118436",
+      "variantId": "vq:3fed3d23a8969aa6ba0b480a1bc924a3339b5aa1805e71b4d5020855c25cad3d"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:2cbd83bab7db71d353",
+      "variantId": "vq:ffea2dcab18d69ee5019e919288a4a408d647d5f928f3076bbbe5dcf8e40b0a4"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:3206b040f413dac6ed",
+      "variantId": "vq:6f2b5c76f69e4041280361261276433c9d5434b0719ffa1e63593efc7fd34dfe"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:320cedd48fced05394",
+      "variantId": "vq:83d9e3436bed38c5d90f58892d57f51a77b444d286a3f3ff21addf08eab2c204"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:3352da5928748d3653",
+      "variantId": "vq:7aeed1100ee810bf71b6d39b987f806296a74c320aeae8609170d834361cd185"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:4d3fa99a8597925a24",
+      "variantId": "vq:12a73dbaeb3ba5df94d275fa1a90bd73f4c8c0bf84a1be1bf2d3c904e127051c"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:5e142147db10f03408",
+      "variantId": "vq:c0cb3259dc650d8d59a6a6b371792b6bbb040ac57d7ddacc98eaae68cf943dfa"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:bec1fb7a0bc3dd7c97",
+      "variantId": "vq:bbe9f4f2533cde6d112b61794b1f24bdf24eb2ff0b601899c5bf00b2eaaca831"
+    },
+    {
+      "entryId": "ve-a5721db",
+      "senseId": "kaikki:ebaa847595b82efdf6",
+      "variantId": "vq:074edde3acebccffe24b35ec411caf46b8a0e39ebb587484a6071b047440c3c8"
+    },
+    {
+      "entryId": "ve-a590bfe",
+      "senseId": "kaikki:e4e96fa283bd2a09ad",
+      "variantId": "vq:df1fe5237330523d3f915f2d0a8c34ebb14d03935fd0e04be52565466b13d2ec"
+    },
+    {
+      "entryId": "ve-a590bfe",
+      "senseId": "kaikki:7e390faf338ef37dd2",
+      "variantId": "vq:e3f4bb49e3a2eb7a22ad0f22a3d84af4bee5b191a9e470189527077648c13b88"
+    },
+    {
+      "entryId": "ve-12652a0f",
+      "senseId": "kaikki:4decff00d59369c959",
+      "variantId": "vq:0c62d180cdb5d97fd2418a4957e8b16457ab889575d481e43e55d2153b66a87d"
+    },
+    {
+      "entryId": "ve-12652a0f",
+      "senseId": "kaikki:4decff00d59369c959",
+      "variantId": "vq:f639695206579c81bf788ae4fb392c87fe10b04e8f987306074d76ec0633e13e"
+    },
+    {
+      "entryId": "ve-12652a0f",
+      "senseId": "kaikki:330c0e42b702fa332f",
+      "variantId": "vq:767d7699830dc644337b4f62f1cfcb6a43d399e1588fbd8bda2d54ccadaee61a"
+    },
+    {
+      "entryId": "ve-12652a0f",
+      "senseId": "kaikki:4decff00d59369c959",
+      "variantId": "vq:384c23ecfa60523dfd9bff7c359ae50ef3b3c111b8fc9cfbb469d9319276698f"
+    },
+    {
+      "entryId": "ve-2c6bfcfd",
+      "senseId": "kaikki:cf049eabd945efb96b",
+      "variantId": "vq:a150791c8fbc586ddfa186c38a31f070cadf6a847b187d1297fc9ec3271c1b76"
+    },
+    {
+      "entryId": "ve-2c6bfcfd",
+      "senseId": "kaikki:1c7f82b9cd39db0dfb",
+      "variantId": "vq:be06aebbbd72e003513900bd506ff4525069b4b4477139a8a2a2dac0eb929975"
+    },
+    {
+      "entryId": "ve-2c6bfcfd",
+      "senseId": "kaikki:344da204956ab977d0",
+      "variantId": "vq:f2d4772473fde2a07cf8549098668e1d15110f15203207dab63d10abc397de32"
+    },
+    {
+      "entryId": "ve-2c6bfcfd",
+      "senseId": "kaikki:4c5d60856675d8ccd7",
+      "variantId": "vq:52499643a2c8de132a649ece4bcbaf6dd0f7f33f40b6deac79f32adbc87d8a83"
+    },
+    {
+      "entryId": "ve-2c6bfcfd",
+      "senseId": "kaikki:777d4b0046217df9b2",
+      "variantId": "vq:a5600fc8b27f2c836d8738edc5b29df061350328f110eb3ff33939daeb99605b"
+    },
+    {
+      "entryId": "ve-2c6bfcfd",
+      "senseId": "kaikki:78fc6b7ead72851982",
+      "variantId": "vq:f82a02dd1a70ce0710b763a6d48215fa116a8d6dca3d92a13c9817d7e4d50dff"
+    },
+    {
+      "entryId": "ve-2c6bfcfd",
+      "senseId": "kaikki:83b9a046cef1740f4f",
+      "variantId": "vq:ccffdda5291954a00853ffd2ef2c975f4ac43411371256ba1d0ae78b313191dd"
+    },
+    {
+      "entryId": "ve-2c6bfcfd",
+      "senseId": "kaikki:c3472c29627779479c",
+      "variantId": "vq:17a00263ad47e0feb4b8f91630e4df055c620f2ffa9bbef32c429b34c1c3687b"
+    },
+    {
+      "entryId": "ve-2c6bfcfd",
+      "senseId": "kaikki:c6a67a48fd8715a3fe",
+      "variantId": "vq:b81ecd7ab6dbe31dbb9423c5f1552c9f668c484b6821009ba772014809b1d816"
+    },
+    {
+      "entryId": "ve-2c6bfcfd",
+      "senseId": "kaikki:cf273957165e0f69bc",
+      "variantId": "vq:c2e0be1213fe46362c5f99fed04d9ec3c50c8365bddb0aabeeda723a2f4b68e8"
+    },
+    {
+      "entryId": "ve-2c6bfcfd",
+      "senseId": "kaikki:e7c12c95df3dd27571",
+      "variantId": "vq:c64b05d544b1d0fa77581cc4c4e98467c0a0787bf69e60d8dcad9b60593e0734"
+    },
+    {
+      "entryId": "ve-2c6bfcfd",
+      "senseId": "kaikki:f1f1f44d94fe753e5d",
+      "variantId": "vq:4fb56b31c79695ff589c3f207cb64068b1025902b7f1b444308a7a7d0d284c99"
+    },
+    {
+      "entryId": "ve-6b955f63",
+      "senseId": "kaikki:c995245c5232b8e054",
+      "variantId": "vq:ed41b644a9b92f6759292138b27d4c8e9a2b406ec6ab088502150567e116a94b"
+    },
+    {
+      "entryId": "ve-6b955f63",
+      "senseId": "kaikki:b578f18608b09f3fb3",
+      "variantId": "vq:c035840ffb9d69d50c7d1a98462c67b3b2c336945b77cf4ac537431055fd820b"
+    },
+    {
+      "entryId": "ve-5247bdde",
+      "senseId": "kaikki:40e24b7a88b4257af1",
+      "variantId": "vq:543902709c7674ebb4daffeafd1e42281589e7c5429c322eacdef6cce145f37a"
+    },
+    {
+      "entryId": "ve-5247bdde",
+      "senseId": "kaikki:0489fefa4e93e43645",
+      "variantId": "vq:9579d7d6870185f0040a4a0fe22e9f63b20b73564da74d94a2a21cafae3a930b"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:8aa0ecec32e7016339",
+      "variantId": "vq:b12b9df8143aa2682f36505549437973a6085c95862869ade4906808421461c5"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:0e1e905439421e1191",
+      "variantId": "vq:89cc6c2338c423f27f2c6ff030e7d9980b7ae3669653974ccea356f7ec40fd95"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:110612e59e78a40cac",
+      "variantId": "vq:6b48bc52b26d530df5d050d73c7c2b0570c1347f80143bbfe5c41bea1ae32204"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:36be241fa694665026",
+      "variantId": "vq:d4f38bb26d8bcb863fd9b25ad11eea37eaa87dcbb9ff0a959665f14761a375bf"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:6d61a01ff6a0730670",
+      "variantId": "vq:3696ee9d1ebb96bff7a69ac85f462e0415ac388bf1f9cd19feeea4e463336ad0"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:7e726f77fea8a19336",
+      "variantId": "vq:c1949cac02060f35fce1533f81db6677cd1f01c06a4944b9b65f7f562a2dd60f"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:8937e79684e54fde3a",
+      "variantId": "vq:ff890a113942013520ae521deeb58161b38a59ea9263768b8fee84288b97d3f0"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:a4ba99305759ca8d66",
+      "variantId": "vq:bb3a5eef9b483fce964dcbe71221fc6d6b7a9d1036c1367db94daf930a76d3cf"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:ca3349a644db401e95",
+      "variantId": "vq:fdf26a8cd871562d6b717ab98fadf8aadae8059f9fc11057672f024235aea68d"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:db1bc2a282eeb06f6b",
+      "variantId": "vq:009f28a52c05ce10ebecd3909d5f6c916ff47df4123bd9a877bf7e645c8e01da"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:dda642cd0e29827557",
+      "variantId": "vq:ecdf82b4e4f8cd0badac84be3d8acec31cf22d15d493cf7c1f7ade097a200b62"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:e7c2fd8468b3491fad",
+      "variantId": "vq:cd40ece5bffaf1dad778978d160e5290f00a463e6e057eed57004a9c7e317bc5"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:f5ee3e1e1ffd100e0b",
+      "variantId": "vq:1a1c75c783ca2e36ecb10204c6a87edabffeec89415cbc1b2622e2a1347504a4"
+    },
+    {
+      "entryId": "ve-b87345d",
+      "senseId": "kaikki:f6464af29589f91a83",
+      "variantId": "vq:5920674fcd5a8e20361985bed556eaf7c1c9123512cf784e71630dd1862caecb"
+    },
+    {
+      "entryId": "ve-9459ed20",
+      "senseId": "editorial:adelaide:australian-city",
+      "variantId": "vq:7b079a68b3ab30fec168071fcf9b6b068481c18b6f12264d2b91493d05468706"
+    },
+    {
+      "entryId": "ve-9459ed20",
+      "senseId": "kaikki:c429f338f4eb161cfb",
+      "variantId": "vq:6a6142bb4032873a68e534314ea08405ec2d7404c5dabbbd4d87eeb31d85fb1b"
+    },
+    {
+      "entryId": "ve-12ceed5",
+      "senseId": "kaikki:a59b2311d0be6e6c6b",
+      "variantId": "vq:e66731b8fa667797b09a83d4ee0e99d93d14639346ff6766575632f30804fff1"
+    },
+    {
+      "entryId": "ve-12ceed5",
+      "senseId": "kaikki:61dc3acce9fb063dbc",
+      "variantId": "vq:675e4ef97c73b79accfba0f740100bbd0da5274537df14d0acb2d04e34796cff"
+    },
+    {
+      "entryId": "ve-12ceed5",
+      "senseId": "kaikki:972953941fbaa4197a",
+      "variantId": "vq:036e3b2b583a94209d068be3a3a13f8a98c0321d89a7ac7b14b4e7ffbcc1c479"
+    },
+    {
+      "entryId": "ve-175ad728",
+      "senseId": "kaikki:7e7990a4f49375293e",
+      "variantId": "vq:46116ebce2051d9fd2ff8a4ecd79af7c14eb1dd1ad706e3de6d23455a3329724"
+    },
+    {
+      "entryId": "ve-175ad728",
+      "senseId": "kaikki:607b9e7103459c7646",
+      "variantId": "vq:b70c85df77f7488e37e4a228342ecc9cb44507f41f6874425bc540564bb4847f"
+    },
+    {
+      "entryId": "ve-175ad728",
+      "senseId": "kaikki:659c851ba37b099dfb",
+      "variantId": "vq:3042cef35469f9b97657629a2078042d34b5466d5f2bb08ddb3961277f9a4773"
+    },
+    {
+      "entryId": "ve-175ad728",
+      "senseId": "kaikki:9b615f40d0d87b7511",
+      "variantId": "vq:c591fffe8e4c7dee69dda9c5ff871bf5e589ca7f5a807e3b3d8ed5a152f762b5"
+    },
+    {
+      "entryId": "ve-f19e14b0",
+      "senseId": "kaikki:59e5e65db24970ad0c",
+      "variantId": "vq:1d8e95eec08d170c8086ad049b8bcb0c72cdf7388874cb3a7476ce1039d1fd14"
+    },
+    {
+      "entryId": "ve-f19e14b0",
+      "senseId": "kaikki:15babfe6d049738826",
+      "variantId": "vq:1d22705527c37e83237bee3f326807ec905d56bae76a4fcb82cfc51877ee2950"
+    },
+    {
+      "entryId": "ve-f19e14b0",
+      "senseId": "kaikki:98c6bf74bc2d343d2d",
+      "variantId": "vq:9b5dd799c6cb7006807062b248450e3028c2cd8c24e378d53a76184847d3a4a7"
+    },
+    {
+      "entryId": "ve-f19e14b0",
+      "senseId": "kaikki:b95c94d59cb1f5636b",
+      "variantId": "vq:ed52e65d084fba6c4874acd280f9f19af4b418b29c5ba45971d027626e057409"
+    },
+    {
+      "entryId": "ve-f19e14b0",
+      "senseId": "kaikki:c15933e3db66587a75",
+      "variantId": "vq:853f6d3245c4eada38e9bd0cdff7a62291cc1f04c029e6ce6d502ff397e8a439"
+    },
+    {
+      "entryId": "ve-2560aad1",
+      "senseId": "kaikki:1bd735c3ac895d947e",
+      "variantId": "vq:f6101af0cebfc135f32ef894e335ae700ea5b7b4f59641e78a8a598835a250fd"
+    },
+    {
+      "entryId": "ve-2560aad1",
+      "senseId": "kaikki:2d4eca696bb46b0823",
+      "variantId": "vq:2de6d8918f1f2e1334b8029535ce92323de0675904ed54ef7ff971662ec0440b"
+    },
+    {
+      "entryId": "ve-2e788cb3",
+      "senseId": "kaikki:623edef254284cf7eb",
+      "variantId": "vq:5c4c462199610da64cd7e4b089e96f703a03d933a0c71c57204624e26b4b39c3"
+    },
+    {
+      "entryId": "ve-2e788cb3",
+      "senseId": "kaikki:6db6e23118070a1cde",
+      "variantId": "vq:613a5c9e7b0ffc936423e6cee113d56e2890ace7a5a69acc27c9c74e4f7e382e"
+    },
+    {
+      "entryId": "ve-2e788cb3",
+      "senseId": "kaikki:9e46e6ba622b99792a",
+      "variantId": "vq:1e913bf3c6f710cc195c956ae22c40e3ad536be0e657fc517929ad0e8c19bd4e"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:879e4ec3a960e1f734",
+      "variantId": "vq:3455aff572101395af6c276be78b8a61f74f9fc4bd7b8f93ea8d168c7944bf77"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:879e4ec3a960e1f734",
+      "variantId": "vq:5eef1b13943080ad12e5ccfe7d0b7ce0451811ba88c4f50850f2971746d8c198"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:130248f9c6c74e2216",
+      "variantId": "vq:a9cfc33c147de82f6ba33c0b05f12a31cf8393f8f946a11f95e776134f7e9a4e"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:1fd924d32794effece",
+      "variantId": "vq:27c53d65b7b2d6b6967640612a7d5bb58954fd1006bfb8d25673bfb65452dd4b"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:2ea553de378cefb88e",
+      "variantId": "vq:4fc1af77558ad16f25bb5669e7ac8c042b2def97f5fc3317334be3cafda53f14"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:3a98e88f39076d48cb",
+      "variantId": "vq:5450b07cb6995c3ce341b654268fdef57ecbdd126edc4ab8bcf12e838738dfd6"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:4d743b8331ce67f3d6",
+      "variantId": "vq:4af01533963ac62757714a5f0479d0206679c30693fe86b9c82fa02f55c26884"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:56a445e47a4a3f0b86",
+      "variantId": "vq:c5b4b9d14061873f396e2b374d901c64c946e869810122d7371b71e7edfdaf45"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:6bd78175414966dca9",
+      "variantId": "vq:7fe3a2a183b472aba923025740feefe175fdf0c5bb4e807a8b3b662151a26849"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:97a1ab5c0150794f91",
+      "variantId": "vq:8fb5b73a655d7617fba783a24a37254a42231ff2d8f8ead494afbeba1dff9234"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:9ffa30e44530e38f8b",
+      "variantId": "vq:ceaf7be801ba367597f4fcdf27bcc7d27e521519059a5366db06f5f4c21ec6a7"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:e6079d1bb45bb452b6",
+      "variantId": "vq:abc5318202c2f330dae46c7aa754a200c58646fc0f81439de72fdf3b3db5cfcc"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:e891128e7cb4d8698a",
+      "variantId": "vq:ff0779f6b10961aa98622d1661eca4443849cf2d057934e20a214b4f4b20583a"
+    },
+    {
+      "entryId": "ve-4efbe53f",
+      "senseId": "kaikki:f27858f48ab979999c",
+      "variantId": "vq:0d053cc367c1b743aef29f43c70282d2f442a499b3fa50d6e630a92509c3ccd7"
+    },
+    {
+      "entryId": "ve-d2b6fdad",
+      "senseId": "kaikki:856e073d441787a2a3",
+      "variantId": "vq:ccbc7ffc9b6b893a8a3fc2955ffd980e4660b9020247a036d971fdaeb9143ccb"
+    },
+    {
+      "entryId": "ve-e5ed1cf5",
+      "senseId": "editorial:source-curriculum:astronomical:adj",
+      "variantId": "vq:11c3eec8e39d0746767c2bd80466d669dfc6876c6d52dfb21b879a89efb3ba59"
+    },
+    {
+      "entryId": "ve-e5ed1cf5",
+      "senseId": "kaikki:73bc10664c28d03d9c",
+      "variantId": "vq:0d052c63ab9628589567d01c22b9f36abe127dd3f6355e714e115c116d9c4815"
+    },
+    {
+      "entryId": "ve-e5ed1cf5",
+      "senseId": "kaikki:3f20b02a8ea01966bc",
+      "variantId": "vq:fd107bb78e1e634bf7bbd0c908d3824adfa184146f1ee7f15c37af8b380f4614"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:e520fd0305754b7fbb",
+      "variantId": "vq:22e7c5f25aad7cc2c30844a3d6be2a6af73f671406a1722cc8828be13656f77e"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:0a7a2cdaed3e303210",
+      "variantId": "vq:c9a5ed9fa17ad49d9f058c52eccaf5e624c7910163bb7fbcc43727dc855ff84a"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:1825f732b34d204e7d",
+      "variantId": "vq:f18ad04c7a37fcb3276bffd55c0cd78f075ca6c399e12e63e1aee3fd905c00fe"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:1a8c5add9c9bdf61e3",
+      "variantId": "vq:4b1afeb15f659bbd97c1eec9c0f26793b0331ee328f3a27930daffac55f9b17d"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:48bc2a412cd0656507",
+      "variantId": "vq:1a2ad58ba7da497a4440f9f6500e9984be760e0529fe66efdd93347eeabf526e"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:4dd694bdf566d11b1f",
+      "variantId": "vq:7d6657226497e826b156c7e8235e46a3ad7af187a9583d1c0b9b24a9ac8f4242"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:562c9a3f1a50f6ec92",
+      "variantId": "vq:00df2c22f980efd8253ac4e0679dc7a2adec67e280da520c7d919a6f95e7f91b"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:5739ae0946e517df6c",
+      "variantId": "vq:7b4f0f6cd1f378d0a8d7c7b6cc5a03b88209c62aa17c8f385c2e291296afd9dd"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:6e735ff2f9d4ec7f3c",
+      "variantId": "vq:cf09e23338f19dcc5a2010ea1e018ecfccc10a6860a92db9976cc91c120b7395"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:74d54420a56053472b",
+      "variantId": "vq:8b30da32de5fabfb65902fc5209755e0f1184eea94dd50b636253ac31811f458"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:89f1c44c06ae3e6c12",
+      "variantId": "vq:5ebfab7c29cded4e390b6b099b1ba3b41d5501b9dde9abcce68eda412675b70c"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:add466bd65304386ea",
+      "variantId": "vq:da0026b3f2885acd1c9bb1a0a363493df9a9521dce2739f34b4b89441cfd8b0a"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:b031f0121e0f651a07",
+      "variantId": "vq:53ac7c5808fdcbfd5b14b40412781761e8d2310e5855034d88dc5e3eccdb3e4c"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:ce1024d16f0e611a2d",
+      "variantId": "vq:2b5542f42e598377bfe9fb7d37b027c01ab76b8af90b4da2ff94a505e8e55cb1"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:db35a730cce716adc9",
+      "variantId": "vq:75c5e26e3feab0a1ff6053b126bf229030f21e785320d80b3be6dbcbc9e8f7b5"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:de64cfe326f818d088",
+      "variantId": "vq:c3dce5053002af99e28a84ea2fb2a14a38e27d902fa490de561b427daa831bb4"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:e7e91c484a270322e7",
+      "variantId": "vq:db1cbdcfa34774499c53cba0d675cb664160c06ad8ec4059b31d9cb1aeb6efbb"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:f0b1b979fef477dcbe",
+      "variantId": "vq:46824051d0d3f82a065053b17f343b5ba5c686c5c8945cd8eac8212e33043174"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:f2ef8f0256c11102cf",
+      "variantId": "vq:bb293e174b774318a6fd8cc6a0264e159d83853cdf7a1f4a942801bfb5bcfc20"
+    },
+    {
+      "entryId": "ve-2a705aa6",
+      "senseId": "kaikki:ffbdfd0b96b8c87181",
+      "variantId": "vq:21be34bf5315541b54ffc7deea8ec4dae6f3be07780c138925d440869ed9859d"
+    },
+    {
+      "entryId": "ve-787bb00d",
+      "senseId": "kaikki:f84742b629e6536409",
+      "variantId": "vq:6a491bcf203d854d3a1f53ce653bdc43c47de1ac2306fd239b76b742f31c6fed"
+    },
+    {
+      "entryId": "ve-787bb00d",
+      "senseId": "kaikki:2e70868c8b906c0527",
+      "variantId": "vq:99f9abf1e1e3c306149bada3a2ffdea378c9738570850cc34fb1ccaee51fb86b"
+    },
+    {
+      "entryId": "ve-787bb00d",
+      "senseId": "kaikki:2e77d77205cbe15151",
+      "variantId": "vq:b8b0ff9df565665f72aa3cc1b58850601e6d029f81fb904afd583ada02ee6734"
+    },
+    {
+      "entryId": "ve-787bb00d",
+      "senseId": "kaikki:3561e5026bf3300e0f",
+      "variantId": "vq:0178be4a11764cd406c1a26c97b0fdf1a79212f0004a9efcd7cd5fe2049fe85f"
+    },
+    {
+      "entryId": "ve-787bb00d",
+      "senseId": "kaikki:41dd140aaff2328858",
+      "variantId": "vq:63e3da8f470fc6a3e70f6aaa5f824f6ac0eb3be25643b62f0b1cd97e4d1bff08"
+    },
+    {
+      "entryId": "ve-787bb00d",
+      "senseId": "kaikki:54ccfb16d4f8dd5b26",
+      "variantId": "vq:dce97c2a258b6525b5f5ef4d46f7a3f385b3b108c476a4b012317b8081bf6bb8"
+    },
+    {
+      "entryId": "ve-787bb00d",
+      "senseId": "kaikki:7e00781de4329ae0b1",
+      "variantId": "vq:bfe19a393866e1b201becbe99da241195a40ab72deebd0332bbe7d69272a122b"
+    },
+    {
+      "entryId": "ve-787bb00d",
+      "senseId": "kaikki:7e6eccb6e9715bff2c",
+      "variantId": "vq:f8946acb70518830b4230058e6abf6e993693a637fd8e451a81b94a6633822d2"
+    },
+    {
+      "entryId": "ve-787bb00d",
+      "senseId": "kaikki:8561e1a479e17f8180",
+      "variantId": "vq:43a9b64eb7d70b5d1fcb4d7196e9252c83bd8264a17e67ace6a6244da7eeaf33"
+    },
+    {
+      "entryId": "ve-787bb00d",
+      "senseId": "kaikki:878a8d9eae1ddb3599",
+      "variantId": "vq:3bcae27cf6645c3a308432eb1756657df6cd014bd2559fc66bac54b233d01af5"
+    },
+    {
+      "entryId": "ve-787bb00d",
+      "senseId": "kaikki:fe4abad6469adad09e",
+      "variantId": "vq:bcc270887ab41e0ddc2fcb293f0040feae062d58d5a8ff8e1c838bce14823138"
+    },
+    {
+      "entryId": "ve-5241654b",
+      "senseId": "kaikki:4e79935b6ea35d4e88",
+      "variantId": "vq:54742e57de7a487d394465f98ca9287f965b0c1e97e0d7d87d22397132da52de"
+    },
+    {
+      "entryId": "ve-ad9a00a1",
+      "senseId": "kaikki:5dfe7ace0dd53dffbe",
+      "variantId": "vq:4cdfa47313eac2fe0217f930675bc6d2a1dd65b0dcfa03aba941d05c523a5381"
+    },
+    {
+      "entryId": "ve-ad9a00a1",
+      "senseId": "kaikki:cec1efa09337dd81f3",
+      "variantId": "vq:1f1c511263470e8d05fe52b0ea383eb6b63d12ec29721b4322bf4281e85d8f68"
+    },
+    {
+      "entryId": "ve-ad9a00a1",
+      "senseId": "kaikki:cec1efa09337dd81f3",
+      "variantId": "vq:45a30dfa4a48c24adaf7259230a7447072cc5240628357a8e34add4572c183bc"
+    },
+    {
+      "entryId": "ve-ad9a00a1",
+      "senseId": "kaikki:f37d3a51ffb7f1cfff",
+      "variantId": "vq:6e94acd1cd7449a28a43eddd978510c1550d2a55660810ec9442b77bc512751b"
+    },
+    {
+      "entryId": "ve-b87487d",
+      "senseId": "kaikki:da9945181f1ba97c49",
+      "variantId": "vq:dbe4b8b47552e8e2a227bbeac401bf0425910f2502207542742a5cf3a5106e5e"
+    },
+    {
+      "entryId": "ve-b87487d",
+      "senseId": "kaikki:5062e545f120fad6b5",
+      "variantId": "vq:5030388abf62f989c89443b19ca9fa44ea9df2d940bcee65fd99a6ec7e0b7838"
+    },
+    {
+      "entryId": "ve-b87487d",
+      "senseId": "kaikki:6c9cf2873f7dc1bc57",
+      "variantId": "vq:4e3aea2c8210a59075052d245423b3f7a8c861761a19c4d1d73caabde5171830"
+    },
+    {
+      "entryId": "ve-b87487d",
+      "senseId": "kaikki:bfd832fb2d0f0be845",
+      "variantId": "vq:271585398302ccdac560d762250601aa05e42b983a69325d3b254cb9639a70e6"
+    },
+    {
+      "entryId": "ve-b87487d",
+      "senseId": "kaikki:ccd19d50b4e5d2e969",
+      "variantId": "vq:4425bde7499fb083fe5a7e84ef79db3389a9b3cf303ed48e6abe245f275bb3ef"
+    },
+    {
+      "entryId": "ve-b87487d",
+      "senseId": "kaikki:ff8c470d12f00581c6",
+      "variantId": "vq:e0ca5d742e4e8df1cb83aa42b74807363eeb7fbb3b24999b04ec3a584c2485e1"
+    },
+    {
+      "entryId": "ve-bb303699",
+      "senseId": "kaikki:90d235487bbc61df00",
+      "variantId": "vq:f5ecc0d1302771106cf9cc8cc74da1e7575332e599bbb18a94790ffc1319d280"
+    },
+    {
+      "entryId": "ve-8c067420",
+      "senseId": "kaikki:318ff3a294837e81a8",
+      "variantId": "vq:4031ba71c0d90094f36157bca85370972b996a170b8a1db267b32b0a55d324cc"
+    },
+    {
+      "entryId": "ve-8c067420",
+      "senseId": "kaikki:11902e59a61c6df9a7",
+      "variantId": "vq:464d67ca3029af09163b501f9b3faebc8e3cb65a8ba28de513f0adb5db809f1a"
+    },
+    {
+      "entryId": "ve-8c067420",
+      "senseId": "kaikki:2f3150c7ae48b1a3a3",
+      "variantId": "vq:303fc2ba77cd32a0b7539518660e7af3776788a3ca2713e5dcc251d7a7ee0bae"
+    },
+    {
+      "entryId": "ve-83a70a0e",
+      "senseId": "kaikki:e189f56366f688d178",
+      "variantId": "vq:fa2b05d9bcc1466cd0d1d5a51dfcf043f5b71c024bb7ed34d31a6df359c6a017"
+    },
+    {
+      "entryId": "ve-7c703496",
+      "senseId": "kaikki:c611f07d93c09b3e20",
+      "variantId": "vq:a31c1defb1b390dca3cc3ef66ad50d394fb967a9d4b61a902f4273580bf4c873"
+    },
+    {
+      "entryId": "ve-7c703496",
+      "senseId": "kaikki:0aba09b3b4812a2b2f",
+      "variantId": "vq:5d592687f17e42b8ac25b79740ec747bfb2fc0d34b69190f7dd464873c3e6cc6"
+    },
+    {
+      "entryId": "ve-7c703496",
+      "senseId": "kaikki:273b6eeaafd5b42bc6",
+      "variantId": "vq:d32852980db0b3bcd1e65307ac47722bbf4b576eeb2cbd29fd77308a11a5f631"
+    },
+    {
+      "entryId": "ve-7c703496",
+      "senseId": "kaikki:961e47ae7da988171a",
+      "variantId": "vq:046d7395845a0642674466035bed5b4f45d5a94ff6036d23d674a528767cabb1"
+    },
+    {
+      "entryId": "ve-7c703496",
+      "senseId": "kaikki:c611f07d93c09b3e20",
+      "variantId": "vq:aca4c64c340407d6a4168314e8a1ea6c3b5bd353dce514ebfa55c9809222bc3f"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "editorial:curriculum:culture-and-history:ve-a7d2665:proper noun",
+      "variantId": "vq:accebbc4d546b71ad7e1c646e13fcd0c8af7e22e192c7dee15d0905a89a1fccb"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:696d5bf9616de3be78",
+      "variantId": "vq:535e60f2d5d4ca9175fb026febd60eeb116f09b7823710e7d946dd0ca79f1db9"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:04765f8d85a1e540bc",
+      "variantId": "vq:be076d0c8d2ce029a325c16e2fe2f33f4e2060d5cd566555bc3bda187191eb9f"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:1fc7378948d31c168c",
+      "variantId": "vq:a442b8347bca06653a93327f2ebea87f0e9571730f7d263f41e5fdcefb214507"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:62f481dbb417e1dc70",
+      "variantId": "vq:c29e46f125fd90084a4ee220b1735b2cf1609e19cd2416e8ab210191b028fbf0"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:6ca9a82d19e8fa7836",
+      "variantId": "vq:43cc3e28b89f4406277349e858cc0ad2c74f16f02ea0a529856e4a1fb8406b16"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:6e12c3f18c90288ddf",
+      "variantId": "vq:e31ef1dc9500e57b0df266154333142a3fb711eb30c29868f146dfcc2f8edbe8"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:6ea0faf858c06604d7",
+      "variantId": "vq:2ad28271d6bfec2cc63389af37a7cba31d1da23626a702065fabecf7ef7a7e50"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:8fd5e74c732ae7d946",
+      "variantId": "vq:3ba681d4e6e72f8bad7c6b650e3a4adacf3a8f8701058de13816c5a960922081"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:a70d9f1da0d30fba14",
+      "variantId": "vq:98a55f75c50f8106878aa88fb55a9e20dd4e6fa3d438feb0d647f5a53c13bad3"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:b018fb303f3e8b3502",
+      "variantId": "vq:4259345995454eb581cc97f92e20bafc0fd3aad77a103c857a3e5f93d80fad77"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:b9426e7b473fdb7f60",
+      "variantId": "vq:ba07a58736c257982c73c7f9d3849c5669628554d47c93769a72637f2db32321"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:c7b97d5bd4e3733cc0",
+      "variantId": "vq:2dcb0233196a6b79b7697ea60e376f11919dc0603b08a90806cb98918501873c"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:e3ea4045f7c6dfbfa8",
+      "variantId": "vq:877b01f5f08a7c643ce88b00725ccdb136e1edf7c85058979a9573876c8bd0bc"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:ec7c37b1143454a5ce",
+      "variantId": "vq:9b19d8ed447a061a3e83d3dd7bca29b3420185bb31b773c5144e4f03fe4895af"
+    },
+    {
+      "entryId": "ve-a7d2665",
+      "senseId": "kaikki:edaac204355e8146e5",
+      "variantId": "vq:a26a5032c57c870f49a96b1ed1558e5d5264a4e8462a2df17e18377ec1ced2d6"
+    },
+    {
+      "entryId": "ve-2e179bf5",
+      "senseId": "kaikki:a1446d370a33025384",
+      "variantId": "vq:2be39c43ba0bef86202e15a678b7e2632de891c9ab0a01f8260f9d6bd3ea30fd"
+    },
+    {
+      "entryId": "ve-2e179bf5",
+      "senseId": "kaikki:02acf7be58de84e4a7",
+      "variantId": "vq:2262bfaf36ec28f75045a7d362b6c2da5cc84d2354c0955c1cb414227176af2c"
+    },
+    {
+      "entryId": "ve-2e179bf5",
+      "senseId": "kaikki:8324cb8aeb093113d0",
+      "variantId": "vq:a64455d5612ccceaab83e41d5fba0d0d4640b87b0ce85e9fff3db13932b21fc5"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "editorial:boston:massachusetts-city",
+      "variantId": "vq:8a59af1379df070516b38bfbb51f1e8bf8d03a06c314f90f309836229cb87c7f"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:29d64909cd36f470fd",
+      "variantId": "vq:df370cb5ee677a52a488e3728585b23127ae535a97ef62ec4f366aecd693b74a"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:3046bc37ee091eae54",
+      "variantId": "vq:c5ee47dcdc77e270869647350dc5505adfc0f8f4cd28d687965d786ad1571340"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:6d0b3a32aac9d72633",
+      "variantId": "vq:80fb14cd60eb77edfa1dc31b09b418671d2eac62a31f0266844d5fff187ce027"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:6d31fcdcb044ef2158",
+      "variantId": "vq:a766b777e304b484c66459028e0c08457965ba8269db44e8c892a697d52e95d5"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:73debb8cf05e7783b2",
+      "variantId": "vq:42e52351566cd8d54b0cdfaaf411560523dabef9a787c41cdf4fb8ad7baa0ba7"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:943d0d7161069a6c8d",
+      "variantId": "vq:7e7917b1bdbc805942d744f08473098c8a7e5a2bab40577d1ffbd99f9e1ce2b4"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:9d63f800f13c5c29f1",
+      "variantId": "vq:d0668dded48d9d5c9d617d1692abb43b0c3dda65bb7e719c3ab4dba5ce775842"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:a489a9f03789d03bf5",
+      "variantId": "vq:943ca94102ad3e6cf59c9919554c357663092966936f74710af4bd1f0beb0d54"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:aed84067b22b1cfa79",
+      "variantId": "vq:e1f14d2e27e79e18d8be26f190b3fe51efd20dbf9760313069dfb5f71698b704"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:b4ed5a408cc5bfbfe7",
+      "variantId": "vq:bf66ec2a9b9e1e36e8f7131455110bfede05777485d6cf809f953c8ffc9c43a6"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:bd3c20d1db3e33e4af",
+      "variantId": "vq:5c27681636b3680091605f648c6dd8308fd63c11bfba5f46d3e1e0dccb503812"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:d1e9a72532969b6cbd",
+      "variantId": "vq:1e0f12e661e120d446b2721f4cd14a729076d1ec36208ceddc5c8623a70382d2"
+    },
+    {
+      "entryId": "ve-597dd14e",
+      "senseId": "kaikki:f6e94201ecad4a5320",
+      "variantId": "vq:6a66afcbca0d0cb641960b5f6cbba9ef6d5bd41e128e17cc465176adbae56a41"
+    },
+    {
+      "entryId": "ve-e7981e67",
+      "senseId": "kaikki:c5557baeeb43e096f6",
+      "variantId": "vq:345ee2fcd1bce4a3808dd08f749aebd4d1659e86c1db5861dd341057194d38d6"
+    },
+    {
+      "entryId": "ve-e7981e67",
+      "senseId": "kaikki:3ead7ded95f01fec9b",
+      "variantId": "vq:494437a21511538b8d8753f8443a9f57e79c400b55e246134c49bff5129dcfec"
+    },
+    {
+      "entryId": "ve-e7981e67",
+      "senseId": "kaikki:d3730c60bb197f0802",
+      "variantId": "vq:b4b631cec46b67f318472d632d4720a9f9af1ea3dbc1f9875e47b87e8de158e1"
+    },
+    {
+      "entryId": "ve-e7981e67",
+      "senseId": "kaikki:ed9996d5bca870df4d",
+      "variantId": "vq:f973d3aa99df132f102c2e7754680f6ed0343eb3253d2f10483c22e6c1ab8975"
+    },
+    {
+      "entryId": "ve-a22692ae",
+      "senseId": "kaikki:03c98d9b5c9745b068",
+      "variantId": "vq:1b650fbb4ad21fea3221721e17419f560848687af34991f19c0d797bfedd6643"
+    },
+    {
+      "entryId": "ve-a22692ae",
+      "senseId": "kaikki:8e2b2dfe17cca2baea",
+      "variantId": "vq:263986de35f8e6515e0caf9c99b6cc6dc975f0366959d79ed6fcae6674ab5a75"
+    },
+    {
+      "entryId": "ve-a22692ae",
+      "senseId": "kaikki:97d41546f84146ec4d",
+      "variantId": "vq:4fa00454249e7bbb9de694704e85191e2420456a3185e5cd5ee9aa03ea02316b"
+    },
+    {
+      "entryId": "ve-a22692ae",
+      "senseId": "kaikki:a635707cba50f21024",
+      "variantId": "vq:9487dc8ab65e36da379c9933a844656627ab296bbf76f66104e2295fb091644d"
+    },
+    {
+      "entryId": "ve-a22692ae",
+      "senseId": "kaikki:b3a31a4d7bc6afd37d",
+      "variantId": "vq:023ae5c594624fc4d5ab352166abb9cb2925b6aade8f3276a8fe5f6cc2197dae"
+    },
+    {
+      "entryId": "ve-a22692ae",
+      "senseId": "kaikki:b4ae0b985fc41a0e7a",
+      "variantId": "vq:efc2b656e8bcc62e9375c494183c0c5090d1c1a3819615456bf92fb74cbb81c8"
+    },
+    {
+      "entryId": "ve-a22692ae",
+      "senseId": "kaikki:c461c82c4132b4bb17",
+      "variantId": "vq:b00d59187dcb7cdcd64d824d453c7f80150b3124199620d7154df80eb138c1c9"
+    },
+    {
+      "entryId": "ve-a22692ae",
+      "senseId": "kaikki:d772fe3174558bdbc6",
+      "variantId": "vq:f086c7ceafc2d95f00ab9b4f155374f5eccdcd9c84b3dd543940abdd039578e9"
+    },
+    {
+      "entryId": "ve-a22692ae",
+      "senseId": "kaikki:ecd36b350350aefe39",
+      "variantId": "vq:c7712a4af8e3a22cc8c161860baca0ee3dbbb76925a8aa483cf2da973ca5db81"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:350f91fbf637e81183",
+      "variantId": "vq:efd44323f7ef9a14caba7303d7fcb306b9aad50530b4cde59afba4902c9ae34a"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:059dedfea5d9098f94",
+      "variantId": "vq:b3a1dd98689360657f2018820327afd713e76cbe63aa27460569b0b07e39de0f"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:073508922c936ef5a6",
+      "variantId": "vq:8ad18326353d0094d979829ea37771a2cfa8848fe50dc50339f2beb3e3690894"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:111e8656c57ee803b3",
+      "variantId": "vq:f1ba68553ed3fa7700dce374bca0c72c9c8899f79a64caa34e493ad888004e66"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:13c5d45ed52088cd38",
+      "variantId": "vq:9d2069aeefc924d492009d8636e356013dfb70c3449d907943c56d432eca81fe"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:1ba09e1c13c8246c74",
+      "variantId": "vq:0adfb802831c94042ea63812b1f707d10b2f738dcdd4f2f75546ca80234d818f"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:28f1dce9e7bc1a46a7",
+      "variantId": "vq:fee11b5d5a676fffc165cec7af1095479a9aeeda74a35d5e291e536a6aae0bbe"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:2e6e43f3688d96ee45",
+      "variantId": "vq:47dde654989a5d4608a58bc6f0a3de312857981314430ce690479a35b1f7c0e2"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:47a5ae72b2db109672",
+      "variantId": "vq:9bc1268e66bd249ae2393ad9348b28bce863f667b21adcc9e81cbebb2553674e"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:51aa86894acd1a09ef",
+      "variantId": "vq:d93d580f8c0970d0c121836d5e43a5ef74c27f7b4b30e81c496b12a3a9a3310c"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:5e4ef406be79bc3f9d",
+      "variantId": "vq:5e62f60b11c60e084bb923bdc9341e91e3ac5a008d5d9a87c38d1f07345a9117"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:6eda4f379f796cb00f",
+      "variantId": "vq:746a0c3c2a2be22446073ec86400567dcecc7bab61e1fa720f9273f625dad454"
+    },
+    {
+      "entryId": "ve-a226747a",
+      "senseId": "kaikki:8281221376d9094c5d",
+      "variantId": "vq:ffed699899bd3828355e5198d2494c46a922ad3018249ce75c598e579db05f24"
+    },
+    {
+      "entryId": "ve-bffa86a8",
+      "senseId": "kaikki:8112b0a56cec698ad3",
+      "variantId": "vq:734aed7aad76f6d57861d5063f437540ca161384047f714cf6ef320653171a72"
+    },
+    {
+      "entryId": "ve-5a65d47c",
+      "senseId": "kaikki:ff6b68b71369f1e2fa",
+      "variantId": "vq:1da86a7c4e0c3b33981103edab626c27612d78027bc20528835d6875a9a85582"
+    },
+    {
+      "entryId": "ve-5a65d47c",
+      "senseId": "kaikki:ff6b68b71369f1e2fa",
+      "variantId": "vq:5fa6013f9729cc2166cce59ad23d23f76f0292b356e2254161a325b32bfe8529"
+    },
+    {
+      "entryId": "ve-5a65d47c",
+      "senseId": "kaikki:0659a2914900ed5efb",
+      "variantId": "vq:ae5a78d7c896b013a770407f5fbe1d44f5aa02844e58783bf2c814180ad4a977"
+    },
+    {
+      "entryId": "ve-5a65d47c",
+      "senseId": "kaikki:2502d0cb2aceb932e4",
+      "variantId": "vq:af60314451a7e4996ce6e85e3fe02cd0f0edc43fa373bfc4e292a051c128f018"
+    },
+    {
+      "entryId": "ve-5a65d47c",
+      "senseId": "kaikki:5784dade090a8df236",
+      "variantId": "vq:43b6becec3b5acd23518b243cc5735ac80de30caddc9c88d0c36afe45bbb13f3"
+    },
+    {
+      "entryId": "ve-5a65d47c",
+      "senseId": "kaikki:5f1dfe825b13d0dd4a",
+      "variantId": "vq:01d456b74dee7a769c1d6b4152af3cfca4e752956faa274053722dbc721c9131"
+    },
+    {
+      "entryId": "ve-5a65d47c",
+      "senseId": "kaikki:a077054ba001638f09",
+      "variantId": "vq:529853db81c2da599ff08efb9262b02c9ce016322f59784d1d3395dd347b8b7e"
+    },
+    {
+      "entryId": "ve-5a65d47c",
+      "senseId": "kaikki:bbc4b176aa23cbaf2d",
+      "variantId": "vq:9a6f8d3e6750148936be2c044b7757b2cc49f940f7f576425a4101273b41d3a7"
+    },
+    {
+      "entryId": "ve-5a65d47c",
+      "senseId": "kaikki:ff38f60e72585736f5",
+      "variantId": "vq:263c251cf199f18715aea6fc75cee317beb63c3d18dba8f3c6218ca3a025fcdb"
+    },
+    {
+      "entryId": "ve-1335a251",
+      "senseId": "kaikki:7e7dda50b39e9eee60",
+      "variantId": "vq:7dcec7dd5d8b4d968ae8b19469d955422abaf01c57c4229f479d95290bad092c"
+    },
+    {
+      "entryId": "ve-5b4e4aff",
+      "senseId": "kaikki:c09974d315ffe2edf0",
+      "variantId": "vq:ee9e8d16d5c8c3f51a274cd4177ff70e7772e258bf3f242fdc9db4b5582677f6"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:f3375d2363a14a82d7",
+      "variantId": "vq:7597f064dc8a7f6e9cf9362968e00a9412be90bea343952d3c2ff31c19f7128f"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:2c33a30c7e23bdf4b1",
+      "variantId": "vq:bf0800843d9b801488b2489245e2bde49680723edb6e28151bbc7f8d36670f9d"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:2e979ff32a8cdbd9a5",
+      "variantId": "vq:6f60ab70de3b690f4e92994fc586d4c5aed3bb9242df35986e708c9ae5773bdd"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:30c0b6e8ce65a4bf25",
+      "variantId": "vq:e0b9841103142ce2d1f71c14837d661e583f09736a2a3266fd82853921b2a9f9"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:3bd394394a54ab09c1",
+      "variantId": "vq:24296cda6f86825229b7e6276d8034158d97df6c6cc94baf8d35015b49d08ada"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:552204f56d2481342a",
+      "variantId": "vq:abe4279cbd84e6a2289c426db6c5b156eed0e7f13d46f2b00efa45fd14638444"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:7c1573370b509b96ba",
+      "variantId": "vq:b60662cce7a7d3e81eee2a90a752a555a2457e1dc1ba7aa374c3b464d8944030"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:87db20f6f4a537b74f",
+      "variantId": "vq:0a2f73afeca4b38a34ff3b8232b6fc0718b43fd0cbe73b9d5167d0343992dabb"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:a612e56fecd6825c91",
+      "variantId": "vq:7b97549fe6291b40c97a939677cf55f1d206e71ff68ccb959a84925542241a93"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:ac297066a7084d285d",
+      "variantId": "vq:786362929a2ca4bc02d69cb4bef201929c3288a3bbb39d313e98ddf1cb0878a7"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:bc932dd379b550bee3",
+      "variantId": "vq:6167dee977d47f54ff349eaeb79b9f2fa5a50e7ad33087845684b4df4a00a96f"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:bea82af1ed4377c16e",
+      "variantId": "vq:45956ddb8d8600ab66d86317c0eef7162ca12657829a2714a20f2338ffe5e8f8"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:cee99d8d8a6fea7915",
+      "variantId": "vq:f3fcc81411bc792c17b3f7cdae190e96cb20304fada615a8527a041ffad53eaa"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:d6845e3459b2d8059c",
+      "variantId": "vq:09591351e5eb7a013a0ea02438d023dc4210a792c3f0e7b1b09cf6b2169ec690"
+    },
+    {
+      "entryId": "ve-e64390b5",
+      "senseId": "kaikki:dfb84c11923e4f0db3",
+      "variantId": "vq:ca7c00e8789ada87913c8782551fa3df4083b58d1345e6c811e66437f2b46c20"
+    },
+    {
+      "entryId": "ve-1e46bb99",
+      "senseId": "kaikki:8762fbbd8e7e8a08d0",
+      "variantId": "vq:424ea499b2583ac64f52b16adc9a1e9ecca9baf413d22773936d1be253a28cfd"
+    },
+    {
+      "entryId": "ve-1e46bb99",
+      "senseId": "kaikki:d3be9ee6b007a154fa",
+      "variantId": "vq:bdbe7070e15ab4ad2b622778780fa9cd2b47ad281d60dffc012dc5d6f38ea189"
+    },
+    {
+      "entryId": "ve-1e46bb99",
+      "senseId": "kaikki:3031bb3e4a9fd7e7fc",
+      "variantId": "vq:225b57d51f150023dacf1a023f5ef1f09d7e3eacbda0215b90ac7bd1e4c79eb9"
+    },
+    {
+      "entryId": "ve-1e46bb99",
+      "senseId": "kaikki:4840c88eda4e3e2fb1",
+      "variantId": "vq:de2b5a7b271833da141c28c383747963926ba9d0fff8ea8caf2d1b12c6f549b4"
+    },
+    {
+      "entryId": "ve-1e46bb99",
+      "senseId": "kaikki:59f9f9c2bff5d61cee",
+      "variantId": "vq:6c84a115cda57046802f39f46c0ab0e35c02f0fe56ec5a4c2de34a4ff2a99e9e"
+    },
+    {
+      "entryId": "ve-1e46bb99",
+      "senseId": "kaikki:7503c1463fb925739e",
+      "variantId": "vq:29f9dcc7c21cb1174e2c3e8326728214267183971c7c274f1877023ce16004bb"
+    },
+    {
+      "entryId": "ve-1e46bb99",
+      "senseId": "kaikki:80a93afa847a9a0960",
+      "variantId": "vq:162c034db915954e9ec8118ca4b43246ce366cd95b1706184e0b792733c2f6c8"
+    },
+    {
+      "entryId": "ve-1e46bb99",
+      "senseId": "kaikki:8762fbbd8e7e8a08d0",
+      "variantId": "vq:72a4c1a2a9c1539650394fb2aad538bc039a9d1fa5c0a41d19f214e50b8ac3dd"
+    },
+    {
+      "entryId": "ve-5ba38f2d",
+      "senseId": "kaikki:abc34d3373550d12d4",
+      "variantId": "vq:2ca194c00725a6fe6abfa96fec1e754614346b90db785b0eab4744c148be73e5"
+    },
+    {
+      "entryId": "ve-5ba38f2d",
+      "senseId": "kaikki:2ac28bf67c457ff5f7",
+      "variantId": "vq:7c258d9c00840f3c28a693c34011fab0067aaeb185a3c22c1c7c29a558999516"
+    },
+    {
+      "entryId": "ve-5ba38f2d",
+      "senseId": "kaikki:3d59922ed0f76c71a3",
+      "variantId": "vq:cddb39a6b42be0379170bb04be38f552e9013309dbaf8898abf96e6e582694bc"
+    },
+    {
+      "entryId": "ve-5ba38f2d",
+      "senseId": "kaikki:51e5316c4a87ffd72e",
+      "variantId": "vq:8402a8ae94f874a8af91efef7d9e55cc59b78f0978b08325eeb34030af13f21a"
+    },
+    {
+      "entryId": "ve-5ba38f2d",
+      "senseId": "kaikki:840504e537d5682006",
+      "variantId": "vq:bfeb7c1b442ce8d102b6ae7fda06a1410b6da25f1d2c0a7d90b639954aa7d418"
+    },
+    {
+      "entryId": "ve-5ba38f2d",
+      "senseId": "kaikki:d03f30c43f9df293c0",
+      "variantId": "vq:196575795a308df911cc48c9974279fdd6b7322957f688a32b151e36c5458ee6"
+    },
+    {
+      "entryId": "ve-5ba38f2d",
+      "senseId": "kaikki:dd35606d3c441b0705",
+      "variantId": "vq:cfa90da3a899ac6195cb51cb9d8c74bd74788f890cb62076f8f523e8bd76cfa0"
+    },
+    {
+      "entryId": "ve-d31e250f",
+      "senseId": "kaikki:85166d86b0d723e1da",
+      "variantId": "vq:fdae953600b3eb88fc4768265ab205790bbc9e8313991f29e151c754a9f8bd56"
+    },
+    {
+      "entryId": "ve-d31e250f",
+      "senseId": "kaikki:c1eac07ca9d1d9bb20",
+      "variantId": "vq:a5f11e0b99cb099dcacac5784b0a3106856ebf880e31b8e6d22690630a855f07"
+    },
+    {
+      "entryId": "ve-56900ecf",
+      "senseId": "kaikki:821848e8623cd9d01d",
+      "variantId": "vq:fbaa71b06348aa715a723da8d89deb7f5047ac8ba1763f313ea3079032aef1c3"
+    },
+    {
+      "entryId": "ve-56900ecf",
+      "senseId": "kaikki:571f743a6edead1e39",
+      "variantId": "vq:1978e62865331a56b269aabaae282e923ad816bc448b657cf6e9b9e219fde35a"
+    },
+    {
+      "entryId": "ve-56900ecf",
+      "senseId": "kaikki:bc9ce521c172e42313",
+      "variantId": "vq:97d290eb6475c6198f10ab2f1bd46488a3e532372783ee0db1e938a3022f5968"
+    },
+    {
+      "entryId": "ve-56900ecf",
+      "senseId": "kaikki:c67fe1bc5fa8bce742",
+      "variantId": "vq:900081822c06c4ffe9d682c3f10c0556ac061b11aa5f359de71050fd269d3f02"
+    },
+    {
+      "entryId": "ve-56900ecf",
+      "senseId": "kaikki:e5f3b9cc4c538d37fd",
+      "variantId": "vq:0c69f6c1ae620fe049176d3ff505e710555ade2973b6e18bdfe26158ec05f185"
+    },
+    {
+      "entryId": "ve-56900ecf",
+      "senseId": "kaikki:f38a8ba917b0e8ad0a",
+      "variantId": "vq:7a2cc1dc9b705f1908f4c47f8ae916f8d725d0713e2511b171a44ba82f30764c"
+    },
+    {
+      "entryId": "ve-56900ecf",
+      "senseId": "kaikki:f3d5f72a7c9df5f568",
+      "variantId": "vq:bff61704a640832f5ca0113787dc0782df6b39e6bfe2f9977b2587c0395fa1d9"
+    },
+    {
+      "entryId": "ve-d0ebfb78",
+      "senseId": "kaikki:e339f8e183cd87f5ca",
+      "variantId": "vq:1242307436fa3fbb159af03509e42a342a0ff5d56ecb410bcbd94b9bcf0cf06e"
+    },
+    {
+      "entryId": "ve-d0ebfb78",
+      "senseId": "kaikki:937742c9423da24439",
+      "variantId": "vq:50c1382f8a8b3f1e2fbe2f1de97ea98b024c35fa54491195ed75a819e4bf09e7"
+    },
+    {
+      "entryId": "ve-d0ebfb78",
+      "senseId": "kaikki:9afaf3a29a51c287fd",
+      "variantId": "vq:55cb9509a68a626123324473f3755f79f25973368c64a15d405a984d88b1b9a2"
+    },
+    {
+      "entryId": "ve-d0ebfb78",
+      "senseId": "kaikki:9e4bf5b30688c59f04",
+      "variantId": "vq:e573ad4f68d491232edf4b186f52c34528eb5c035f2d5914c091934ec521989b"
+    },
+    {
+      "entryId": "ve-d0ebfb78",
+      "senseId": "kaikki:d072a940d3012de0ed",
+      "variantId": "vq:26902cb622ef1d1351d1e8a7fc4a4a4fbaab5418ff75f01a6c0b212fca1da9e3"
+    },
+    {
+      "entryId": "ve-d0ebfb78",
+      "senseId": "kaikki:eaf0ad6cbf027f4fec",
+      "variantId": "vq:d4a956b55598cbe1f0a5a47e877b7dbd7a68a4b00e92c68d7af5acded760d764"
+    },
+    {
+      "entryId": "ve-6026a93a",
+      "senseId": "kaikki:88bbfdade05ac826f9",
+      "variantId": "vq:5d5a31ca3a522491b3c08725b0b3be2b14dba9a6315e4c3bac567fe1bd1ba90c"
+    },
+    {
+      "entryId": "ve-c7c15b33",
+      "senseId": "kaikki:325dd3d41ab1cd045a",
+      "variantId": "vq:87c082db6d67ffbf92cd92e010724f0572886229de56c7150879267bcaab75bf"
+    },
+    {
+      "entryId": "ve-c7c15b33",
+      "senseId": "kaikki:0e9c96890c4ce3481f",
+      "variantId": "vq:5726b99bfeaebc68cfedbcdb3d046d18df9d0c5eaf87e8f5aa42151d15bc2c96"
+    },
+    {
+      "entryId": "ve-c7c15b33",
+      "senseId": "kaikki:91707e347f894d6da6",
+      "variantId": "vq:499d941b071978563bd591ade975b7c17c76ee3f66b902a0246af28586dae27d"
+    },
+    {
+      "entryId": "ve-c7c15b33",
+      "senseId": "kaikki:96afdc6850dd7de77a",
+      "variantId": "vq:b8629444847a8335c9817e6e43d0518ad2f72dbb7820501e07b04661f2d9e92f"
+    },
+    {
+      "entryId": "ve-87dceee",
+      "senseId": "kaikki:65eef89a7e3fd6e525",
+      "variantId": "vq:df8066b4ef960a14d5061d82446678c6a153f75844734d253454069e8f477478"
+    },
+    {
+      "entryId": "ve-87dceee",
+      "senseId": "kaikki:65eef89a7e3fd6e525",
+      "variantId": "vq:ef09d6c8fe19dea65f594260f7de44f63b3d825535385338bb880300b963146c"
+    },
+    {
+      "entryId": "ve-e46db68d",
+      "senseId": "kaikki:f10d078aaae91ab88b",
+      "variantId": "vq:b2a4edecaaa30227e5f9fe479a3e528815f4d72b795f25fb422e7ef9f97baeb1"
+    },
+    {
+      "entryId": "ve-e46db68d",
+      "senseId": "kaikki:b6d9606defd4a768ec",
+      "variantId": "vq:113da1789b15c04d4262ce5d07d64b079adc4a954a5da64233b0d25dd89db8a9"
+    },
+    {
+      "entryId": "ve-3f00800a",
+      "senseId": "kaikki:0363497c6b457fa1a8",
+      "variantId": "vq:65f60cf559054821f125990fe9b17cf04269340a1dd1f082425ba4e2e8a246fb"
+    },
+    {
+      "entryId": "ve-3f00800a",
+      "senseId": "kaikki:0e23060f6ce0b166d7",
+      "variantId": "vq:895ebfa5f2d2920334d7b9b337de1bfc1588064c4a8939d44103a02c05a99ea3"
+    },
+    {
+      "entryId": "ve-3f00800a",
+      "senseId": "kaikki:5c69939f14f87f7329",
+      "variantId": "vq:742dcc6abe6d609e4d112fcb74c6a3faba662e4b51b701fe84cca4bded0640ed"
+    },
+    {
+      "entryId": "ve-3f00800a",
+      "senseId": "kaikki:6856731458ac8889ac",
+      "variantId": "vq:5abde97c20150cd0d5141daf710d456fab78dc2e3fb50c51f1213f8204cbdc1f"
+    },
+    {
+      "entryId": "ve-3f00800a",
+      "senseId": "kaikki:8dafe258d92aefbc2b",
+      "variantId": "vq:8e6deaff3a165086ce61df74d8d766ab8be1fce4af00a4e878b83fbaa2d7da8e"
+    },
+    {
+      "entryId": "ve-3f00800a",
+      "senseId": "kaikki:983aff520052367f86",
+      "variantId": "vq:6c208f5f3d7eee401d4d0a9198ac944f7de5e91eb51a198d23579592e34b543b"
+    },
+    {
+      "entryId": "ve-3f00800a",
+      "senseId": "kaikki:c6b787687a38fb7487",
+      "variantId": "vq:e28fb4477377d47268351846e4f434771ad864bb48ed65b4b4990d0cace38b6f"
+    },
+    {
+      "entryId": "ve-3f2227c1",
+      "senseId": "kaikki:ac4edc1dabc2613e64",
+      "variantId": "vq:fbf27466c07a1ed183865b553e91deeca18518cdf38ba28951afd53b703ae4e2"
+    },
+    {
+      "entryId": "ve-3f2227c1",
+      "senseId": "kaikki:73ef8d0aecd14c2839",
+      "variantId": "vq:cdfd4e535b572da04b2bb5da050afd140f13051ab7044d61cb6e4cebf2efdbf3"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:20709514ce1d288970",
+      "variantId": "vq:35ca46ac7299514526d268d26751213c72ca2f163830c3511d82a6bcd2b89e0d"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:07ce45c8cabf89ca55",
+      "variantId": "vq:0a93eb3417217ee7059f4c852ac1b5f1d995db259faa30e98c533ec991069495"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:162add9e094e235479",
+      "variantId": "vq:24d2bca89a54efe91b03bba28ef3d15d79e3354e02ab2ecc061df23a51c6df9c"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:1b02d1b5cd6d2728b7",
+      "variantId": "vq:4d341d659e9e67ab866b9701703e1dbb60899a88a7525d6f86a9f8983185b0d7"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:2905ebd7c50aaf1c97",
+      "variantId": "vq:0a85f451323d4ce714223058ebe318edb2cd15d64598faf58c722847243472b4"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:2f0df64e8d7d3d6108",
+      "variantId": "vq:d7cb490bef38efcf5f69c8ed118087b9c57e6a854150cd9c4ea97200d9e37ecd"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:353410ec022ed65646",
+      "variantId": "vq:e504202777d68223093677477fe63a992ea92f63fdead6cf1229d87b52c42af8"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:3aae1fac3a7a7c1755",
+      "variantId": "vq:5447ce530cd4d7a437f51c05f7ee970f1c14962cafdd0d68101da4dded40e485"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:3ac62ae5c6712272cf",
+      "variantId": "vq:6c9db0fc194251490acc7689aa39d64c50a6c7fbd4136d4aa5a419d482e20bc0"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:3b0f5e252a3122cf18",
+      "variantId": "vq:cd191c0b7835ea5e491bb9832cafa7a621d9d519d970ed9f75eebef7269ed716"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:48827b8965c90c9fa9",
+      "variantId": "vq:c5f72737478ad11ef46519857614bd254484077699bbd6de96d01f359576e936"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:4c98f6d098bcab8fe1",
+      "variantId": "vq:dfa239640c6d05501e663c012c4dd7992a353e3893acd76b448f45604c7272a0"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:529ba0689a65f9e51d",
+      "variantId": "vq:8b652a5cdcebb5e0f1dc6fb5e2e8bca99e56053c00d6ecea80271c551020fe77"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:76198433c051368263",
+      "variantId": "vq:91fce75c64c8410e7890a43337b4c53fc92770d95c110c46b79706a1390d5e4a"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:90b5c6ddbe9df02e31",
+      "variantId": "vq:f5effe51513cda993e7647ba904b1f9506a681d7ee9e81696d7c5e5c01ad0443"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:98ff3f5190f5e554db",
+      "variantId": "vq:078e8b36d44e61a6b8e4da6dedb5c8354876463b8903e41386c6d914a38563b4"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:a621ff054877de986f",
+      "variantId": "vq:67a7614d5124cf98b2a5a8b782d95c0c9331f693a22789ec8d234030c3ae52c8"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:b3e8ee9f322e049950",
+      "variantId": "vq:5c419007e2b2a9a6ceacad28d6806e26d5f0fe915f58b2c08b867f7c36ee44d2"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:c26e043b48e6cdb263",
+      "variantId": "vq:a9a74f6ec3eefac05096eacabc1922c8a5ce1dbd33498326ea6340f0f290951c"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:c462bd7b3e37990a31",
+      "variantId": "vq:3f719c314494992c417093434eeb206c1677f234bd9a10499a5eda47f389ecf5"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:cb37426cf36cab264c",
+      "variantId": "vq:7ba0395145dd60c456a667b091f96337e3a02688dc15ef154702e26a61975b84"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:edf54403984fc3a856",
+      "variantId": "vq:cf3dadf38ab1ddbb1ca4f22b6c87747ca38394759d3a81d0f4256946cd5a226b"
+    },
+    {
+      "entryId": "ve-dd889ef2",
+      "senseId": "kaikki:f56cd5eb15e593b0da",
+      "variantId": "vq:5d242dd86f723b7f618308d92a0897cc70717095a81e67da26d2dbceb1626e0d"
+    },
+    {
+      "entryId": "ve-b1d8e1b5",
+      "senseId": "kaikki:9d79b53c3da63f00b4",
+      "variantId": "vq:408ce1edf2475f05283ff54bdd0ab6ccfab315d6dfbb6835351dfec900dd6008"
+    },
+    {
+      "entryId": "ve-b1d8e1b5",
+      "senseId": "kaikki:452ff76ab8ba82889d",
+      "variantId": "vq:89888a3450db0818af35c7a421daeb0c910839e053310daf048cb85179f5a372"
+    },
+    {
+      "entryId": "ve-b1d8e1b5",
+      "senseId": "kaikki:bc4022cbddca6fb444",
+      "variantId": "vq:853c945478094d17d3d69f0bc567fa7ce54603f9e82886adef8abed39ca98bf7"
+    },
+    {
+      "entryId": "ve-c561b3ab",
+      "senseId": "kaikki:b0483a3bc7c6d93264",
+      "variantId": "vq:08e60b5da691c40cebe6d2f8714a98798c929fbf603a1eb1603307750d3cb1b0"
+    },
+    {
+      "entryId": "ve-c561b3ab",
+      "senseId": "kaikki:fce96585655bb602f7",
+      "variantId": "vq:1b7585ac3d5e6f48317492b288afb12c520463356282c7c81889fbbe6b18fb8c"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:b85c233fc9db0172ba",
+      "variantId": "vq:dc7cd33c8fee52e5dce03c3e7d7a207a0a026a5df5eb79646df9fcf3ab22d59a"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:228ead53a2c6993737",
+      "variantId": "vq:6c04f4906521ee550b00323205170aff84a74f1c3f0552bddd6463cb9d75e973"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:39ca10106b88ecad64",
+      "variantId": "vq:3b2a9fd33a844cd10264ccf3e12e5011daa3d2b3551a4e65a0aeedf484137d1d"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:42ab592fc9b672c356",
+      "variantId": "vq:3bb46fcc985cb95188ff39a88583808a03f05934a7611c0c0ba7aca5a8685c0a"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:45505552eeb4dd1497",
+      "variantId": "vq:d739926dc33cd8ff9c8af92aa9326dc6b3224c55bf9a08187bdc00ab8f95678b"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:4e7e828dce2622d465",
+      "variantId": "vq:69e376c5206948bd3d6ad0d54fbd56db341776799a0927a75b2f2e6d389376ea"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:5cdcdf944f650a9327",
+      "variantId": "vq:8ce85985eaff1697fd14c682c3aec173dbb0749f47ce4118b56ea1df7ea06896"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:6040bfb0fed65526e6",
+      "variantId": "vq:4ac155dbf07bb146c9fa9e199459ca85bc7c86ff4bf8bb1dec7ab2de7c7a0589"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:84040fbbfea5325586",
+      "variantId": "vq:7b448a00341b26d241a21dd409a041de9095823a8f299378fc06c1f0864447ff"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:925e95c96fe1d864dc",
+      "variantId": "vq:84db8dc0c1e50633e5869856d49534f2eda350983de7e4bacd99732ace3e0c32"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:9edc9f19b24200a383",
+      "variantId": "vq:41309c881471c5f3f20b38111e5b7670a9a62b88860cf003c16c59d828d68c52"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:abec33caa97bd31527",
+      "variantId": "vq:08e1c4b7e91262377416ab2fab6b90b96ba32fb0aa1890011ee0163050ea55ab"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:d55ebe79d3fb8643cb",
+      "variantId": "vq:2b85a742cee7591dadd9d5c45b34dc41c84d6dbede7d366702a0c870820ed812"
+    },
+    {
+      "entryId": "ve-b871f0e",
+      "senseId": "kaikki:f5d7387768d0f85161",
+      "variantId": "vq:b7d1e022cc5d428b72745c877c06645f8edbfa263216ce7b78ed33123502dc82"
+    },
+    {
+      "entryId": "ve-4e5ca31e",
+      "senseId": "kaikki:fe1245475ae948828a",
+      "variantId": "vq:a7a297edfe5daec669be5cb4dbd215df75d6538a8d0809dadc4539463ebb4d08"
+    },
+    {
+      "entryId": "ve-4e5ca31e",
+      "senseId": "kaikki:29ccb20b7e52ae0149",
+      "variantId": "vq:bcb41e85996ade1bd67fe10d22fa1db958e1b0c34751c4cd79e393bccb2a574f"
+    },
+    {
+      "entryId": "ve-a47e1a46",
+      "senseId": "kaikki:f3406f788b04d2a71b",
+      "variantId": "vq:dd0506898d8210eb62a68716abb70f3873a122053dce67e997832d8184169005"
+    },
+    {
+      "entryId": "ve-a47e1a46",
+      "senseId": "kaikki:0fb78c83ba6d46d037",
+      "variantId": "vq:b2a2c0ea0c595b7a38f5850a1ad6d2b8188562eb0223153451d8aafab958e6e2"
+    },
+    {
+      "entryId": "ve-a47e1a46",
+      "senseId": "kaikki:494fe4d8d1e4b24d34",
+      "variantId": "vq:e28045920d579dc7dc9fd0691790bb6a4c29721c9d99eb98cf0324c1edfed897"
+    },
+    {
+      "entryId": "ve-a47e1a46",
+      "senseId": "kaikki:aab20b03ec77509c5f",
+      "variantId": "vq:6c9365a71b3a4f81b5db40ae5d57da6f257f596036fb2b70a5e4ba410d3585ea"
+    },
+    {
+      "entryId": "ve-cf6577ad",
+      "senseId": "kaikki:9ff03e3756a07b4cac",
+      "variantId": "vq:2a35616dd8b539290337321dff2f40a886b8fe978562d55c4789f7cc5ff6a519"
+    },
+    {
+      "entryId": "ve-cf6577ad",
+      "senseId": "kaikki:1b14a2adfe07691ad5",
+      "variantId": "vq:6f831727e1670b1667b102997bda6ce5ee4211d9ab4c65c310a28a94394146df"
+    },
+    {
+      "entryId": "ve-cf6577ad",
+      "senseId": "kaikki:d17c96e8d176ddd588",
+      "variantId": "vq:c206158bfca2a318b4c83a59ce0d803a82d08f8b38c86b3976af49211e44d299"
+    }
+  ],
+  "restoreCorrectionVariants": []
+}

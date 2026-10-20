@@ -50,7 +50,7 @@ import {
 import { downloadFile, hydrateState, loadState, saveState, saveVocabularyImport, saveVocabularySession, loadVocabularyCatalog as readVocabularyCatalog, ensureAccountModule as readAccountModule, ensureCompleteAccount as readCompleteAccount, getCollectionStatuses, ensureQuestionBank as readQuestionBank, ensureSpeakingSample as readSpeakingSample } from '../storage';
 import { vocabularyTaskSubmissionOutcome } from '../domain/vocabulary/submissionOutcome';
 import { ACCOUNT_MODULES } from '../storage/accountModules';
-import { loadVocabularyHistoryPage, loadVocabularySession, refreshPlanningState as readPlanningState } from '../storage/remote';
+import { loadVocabularyHistoryPage, loadVocabularySession, refreshPlanningState as readPlanningState, loadPlanningHistoryPage as readPlanningHistoryPage, loadPlanningRows, rememberPlanningRows } from '../storage/remote';
 import { subscribeQuestionBank } from '../storage';
 import { loadReleasedVocabulary, loadReleasedVocabularyTeaching, VocabularyScopeUnavailableError } from '../storage/vocabularyCatalog';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
@@ -175,6 +175,8 @@ function useFieldbookValue() {
   const committedPlanChanges = useRef([]);
   const saveQueue = useRef(Promise.resolve());
   const pendingAutomaticSave = useRef(null);
+  const acceptedPlanningRows = useRef(new Map());
+  const planningStateRevision = useRef(0);
   const completingAttempt = useRef(false);
   const saveGeneration = useRef(0);
   const lastSaved = useRef(null);
@@ -275,6 +277,8 @@ function useFieldbookValue() {
     const owner = accountId();
     const epoch = loadEpoch.current;
     let frozen = structuredClone(next);
+    let planningRowsAtEnqueue = new Map(acceptedPlanningRows.current);
+    let planningRevisionAtEnqueue = planningStateRevision.current;
     let collections = readySaveCollections();
     if (options?.collections) collections = options.collections.filter(key => !collections || collections.includes(key));
     let scopes = changedDraftScopes(frozen);
@@ -284,7 +288,7 @@ function useFieldbookValue() {
       scopes = [...combined.values()].map(scope => ({ ...scope, stamp: JSON.stringify(draftScopeValue(stateRef.current, scope.id, scope.promptKey)) }));
     }
     markDraftScopes(scopes, 'pending', true);
-    writeDraftRecovery(owner, completion ? stateRef.current.drafts : frozen.drafts);
+    if (!getCollectionStatuses() || getCollectionStatuses().drafts === 'ready') writeDraftRecovery(owner, completion ? stateRef.current.drafts : frozen.drafts);
     setSaveStatus('saving');
     if (!silent) pendingAutomaticSave.current = null;
     if (silent && pendingAutomaticSave.current?.epoch === epoch) {
@@ -292,18 +296,33 @@ function useFieldbookValue() {
       pendingAutomaticSave.current.generation = generation;
       pendingAutomaticSave.current.collections = collections;
       pendingAutomaticSave.current.scopes = scopes;
+      pendingAutomaticSave.current.planningRowsAtEnqueue = planningRowsAtEnqueue;
+      pendingAutomaticSave.current.planningRevisionAtEnqueue = planningRevisionAtEnqueue;
       return pendingAutomaticSave.current.operation;
     }
-    const automatic = silent ? { snapshot:frozen, generation, collections, scopes, epoch, operation:null } : null;
+    const automatic = silent ? { snapshot:frozen, generation, collections, scopes, planningRowsAtEnqueue, planningRevisionAtEnqueue, epoch, operation:null } : null;
     if (automatic) pendingAutomaticSave.current = automatic;
     const operation = saveQueue.current.catch(() => {}).then(async () => {
       if (automatic) {
         frozen = automatic.snapshot; generation = automatic.generation;
         collections = automatic.collections;
         scopes = automatic.scopes;
+        planningRowsAtEnqueue = automatic.planningRowsAtEnqueue;
+        planningRevisionAtEnqueue = automatic.planningRevisionAtEnqueue;
         if (pendingAutomaticSave.current === automatic) pendingAutomaticSave.current = null;
       }
       if (!alive.current || accountId() !== owner || epoch !== loadEpoch.current) return false;
+      if (planningRevisionAtEnqueue !== planningStateRevision.current && (!collections || collections.some(key => key === 'profile' || key === 'plans'))) {
+        saveFeedback(options)('Your schedule was refreshed while this save was waiting. Review the latest tasks and retry saving.');
+        markDraftScopes(scopes, 'failed');
+        if (generation === saveGeneration.current) { setSaveFailed(!options?.onError); setSaveStatus('failed'); }
+        return false;
+      }
+      // Rows accepted after this snapshot was frozen were never explicit deletions.
+      // Reads share this queue, so acceptance cannot race an executing save.
+      for (const [id, plan] of acceptedPlanningRows.current) {
+        if (planningRowsAtEnqueue.get(id) !== plan && !frozen.plans.some(row => row.id === id)) frozen.plans.push(structuredClone(plan));
+      }
       applyCommittedVocabulary(frozen, owner);
       if (!completion) {
         const outstanding = new Set(changedDraftScopes(frozen).map(scope => scope.key));
@@ -345,6 +364,41 @@ function useFieldbookValue() {
     const next = { ...stateRef.current };
     const baseline = { ...(lastSaved.current || loadState()) };
     Object.entries(data).forEach(([key, rows]) => {
+      if (key === 'drafts' && rows && typeof rows === 'object' && !Array.isArray(rows)) {
+        const loaded = structuredClone(rows);
+        const prior = before.drafts || {}, current = next.drafts || {};
+        new Set([...Object.keys(prior), ...Object.keys(current)]).forEach(id => {
+          if (JSON.stringify(prior[id]) === JSON.stringify(current[id])) return;
+          if (!Object.hasOwn(current, id)) { delete loaded[id]; return; }
+          const previous = normalizeDraft(prior[id]), live = normalizeDraft(current[id]), merged = normalizeDraft(loaded[id]);
+          new Set([...Object.keys(previous), ...Object.keys(live)]).forEach(field => {
+            if (field === 'responses' || field === 'sections' || JSON.stringify(previous[field]) === JSON.stringify(live[field])) return;
+            if (Object.hasOwn(live, field)) merged[field] = structuredClone(live[field]); else delete merged[field];
+          });
+          if (previous.sections || live.sections) {
+            const sections = { ...merged.sections };
+            const empty = normalizeDraft({sections:{}}).sections;
+            new Set([...Object.keys(previous.sections || {}), ...Object.keys(live.sections || {})]).forEach(section => {
+              if ((previous.sections?.[section] ?? empty[section]) === (live.sections?.[section] ?? empty[section])) return;
+              if (Object.hasOwn(live.sections || {}, section)) sections[section] = live.sections[section]; else delete sections[section];
+            });
+            merged.sections = sections;
+          }
+          if (previous.responses || live.responses) {
+            const responses = { ...merged.responses };
+            new Set([...Object.keys(previous.responses || {}), ...Object.keys(live.responses || {})]).forEach(prompt => {
+              if (JSON.stringify(previous.responses?.[prompt]) === JSON.stringify(live.responses?.[prompt])) return;
+              if (Object.hasOwn(live.responses || {}, prompt)) responses[prompt] = structuredClone(live.responses[prompt]); else delete responses[prompt];
+            });
+            merged.responses = responses;
+          }
+          loaded[id] = normalizeDraft(merged);
+        });
+        next.drafts = loaded;
+        baseline.drafts = structuredClone(rows);
+        hydratedCollections.current.add('drafts');
+        return;
+      }
       if (!Array.isArray(rows)) return;
       const prior = new Map((before[key] || []).map(row => [row.id, JSON.stringify(row)]));
       const current = new Map((next[key] || []).map(row => [row.id, row]));
@@ -399,7 +453,7 @@ function useFieldbookValue() {
         return stateRef.current;
       });
     }
-    const before = Object.fromEntries([...ACCOUNT_MODULES[module],'planningEvidence'].map(key=>[key,structuredClone(stateRef.current[key]||[])]));
+    const before = Object.fromEntries([...ACCOUNT_MODULES[module],'planningEvidence',...(module==='productive'?['drafts']:[])].map(key=>[key,structuredClone(stateRef.current[key]||(key==='drafts'?{}:[]))]));
     const finishTiming = timeOperation(module);
     setModuleStatus(status => ({...status, [module]:'loading'}));
     const request = readAccountModule(module).then(async ({data}) => {
@@ -407,7 +461,12 @@ function useFieldbookValue() {
       if (module.startsWith('vocabulary')) await ensureVocabularyTeaching(data.vocabulary || [], options);
       if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
       const next = mergeAccountData(data, before);
-      if (module === 'productive') repairAssessments(next);
+      if (module === 'productive') {
+        repairAssessments(next);
+        const recovery = readDraftRecovery(owner);
+        const changed = recovery ? differentDrafts(recovery.drafts, next.drafts) : {};
+        setRecoveryDrafts(Object.keys(changed).length ? changed : null);
+      }
       if (module.startsWith('vocabulary')) {
         const corrected = resolveRegionalSpellingWrongWords(next);
         if (corrected.length) void persistNow(next);
@@ -425,11 +484,39 @@ function useFieldbookValue() {
     return request;
   }, [mergeAccountData, persistNow, ensureVocabularyTeaching]);
 
-  const ensureCompleteAccount = useCallback(async () => {
-    await Promise.all(['productive','vocabulary','receptive'].map(module => ensureAccountModule(module)));
-    await readCompleteAccount();
+  const acceptPlanningRows=useCallback(result=>{
+    const current=stateRef.current;
+    const known=new Set(current.plans.map(plan=>plan.id));
+    for(const plan of result.plans)if(!known.has(plan.id))acceptedPlanningRows.current.set(plan.id,structuredClone(plan));
+    const plans=[...new Map([...result.plans,...current.plans].map(row=>[row.id,row])).values()];
+    rememberPlanningRows(result.rows);
+    const next={...current,plans};stateRef.current=next;setState(next);
+    if(lastSaved.current)lastSaved.current={...lastSaved.current,plans:[...new Map([...result.plans,...lastSaved.current.plans].map(row=>[row.id,row])).values()]};
+    return {...result,plans:result.plans.map(row=>plans.find(plan=>plan.id===row.id))};
+  },[]);
+  const queuePlanningRead=useCallback(read=>{
+    const owner=accountId(),epoch=loadEpoch.current;
+    const operation=saveQueue.current.catch(()=>{}).then(async()=>{
+      if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)throw new Error('Account load superseded');
+      const result=await read();
+      if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)throw new Error('Account load superseded');
+      return acceptPlanningRows(result);
+    });
+    saveQueue.current=operation.then(()=>true,()=>false);
+    return operation;
+  },[acceptPlanningRows]);
+  const loadPlanningHistoryPage=useCallback(options=>queuePlanningRead(()=>readPlanningHistoryPage(options)),[queuePlanningRead]);
+  const ensurePlanningRows=useCallback(async ids=>{
+    await queuePlanningRead(()=>loadPlanningRows(ids));return structuredClone(stateRef.current);
+  },[queuePlanningRead]);
+  const ensureCompleteAccount=useCallback(async()=>{
+    await Promise.all(['productive','vocabulary','receptive'].map(module=>ensureAccountModule(module)));
+    await queuePlanningRead(async()=>{
+      const complete=await readCompleteAccount();
+      return {plans:complete?.plans||[],rows:complete?.planningRows||[]};
+    });
     return structuredClone(stateRef.current);
-  }, [ensureAccountModule]);
+  },[ensureAccountModule,queuePlanningRead]);
 
   const ensureVocabularySession = useCallback(async (id) => {
     const owner = accountId(), epoch = loadEpoch.current;
@@ -444,17 +531,22 @@ function useFieldbookValue() {
     return row;
   }, []);
 
-  const refreshPlanningState=useCallback(async()=>{
+  const refreshPlanningState=useCallback(()=>{
     const owner=accountId(),epoch=loadEpoch.current;
-    await saveQueue.current.catch(()=>{});
-    const latest=await readPlanningState();
-    if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)throw new Error('Account load superseded');
-    committedStudySettings.current=committedStudySettings.current.filter(row=>row.owner!==owner);
-    committedPlanChanges.current=committedPlanChanges.current.filter(row=>row.owner!==owner);
-    committedVocabularyPreferences.current=committedVocabularyPreferences.current.filter(row=>row.owner!==owner);
-    const next={...stateRef.current,...latest};stateRef.current=next;setState(next);
-    acknowledgeSaved(next,['profile','plans']);
-    return latest;
+    pendingAutomaticSave.current=null;
+    const operation=saveQueue.current.catch(()=>{}).then(async()=>{
+      if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)throw new Error('Account load superseded');
+      const latest=await readPlanningState();
+      if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)throw new Error('Account load superseded');
+      planningStateRevision.current+=1;acceptedPlanningRows.current.clear();
+      committedStudySettings.current=committedStudySettings.current.filter(row=>row.owner!==owner);
+      committedPlanChanges.current=committedPlanChanges.current.filter(row=>row.owner!==owner);
+      committedVocabularyPreferences.current=committedVocabularyPreferences.current.filter(row=>row.owner!==owner);
+      const next={...stateRef.current,...latest};stateRef.current=next;setState(next);
+      acknowledgeSaved(next,['profile','plans']);
+      return latest;
+    });
+    saveQueue.current=operation.then(()=>true,()=>false);return operation;
   },[]);
 
   const ensureQuestionBank = useCallback((skill, force = false) => {
@@ -1015,7 +1107,8 @@ function useFieldbookValue() {
       stateRef.current.drafts[id] = next;
       markDraftEdited(id, current, next);
       saveGeneration.current += 1;
-      writeDraftRecovery(accountId(), stateRef.current.drafts);
+      const statuses = getCollectionStatuses(), recovery = statuses && statuses.drafts !== 'ready' ? readDraftRecovery(accountId())?.drafts : {};
+      writeDraftRecovery(accountId(), { ...recovery, ...stateRef.current.drafts });
       setSaveStatus('saving');
       setState((prev) => ({
         ...prev,
@@ -1036,7 +1129,8 @@ function useFieldbookValue() {
     stateRef.current.drafts[topicId] = next;
     markDraftEdited(topicId, current, next);
     saveGeneration.current += 1;
-    writeDraftRecovery(accountId(), stateRef.current.drafts);
+    const statuses = getCollectionStatuses(), recovery = statuses && statuses.drafts !== 'ready' ? readDraftRecovery(accountId())?.drafts : {};
+    writeDraftRecovery(accountId(), { ...recovery, ...stateRef.current.drafts });
     setSaveStatus('saving');
     setState((prev) => ({ ...prev, drafts: { ...prev.drafts, [topicId]: next } }));
     return true;
@@ -1083,8 +1177,10 @@ function useFieldbookValue() {
   useEffect(() => {
     let cancelled = false;
     loadEpoch.current += 1;
+    acceptedPlanningRows.current.clear();
     draftStatusesRef.current = {};
     setDraftStatuses({});
+    setRecoveryDrafts(null);
     hydratedCollections.current.clear();
     moduleReads.current.clear(); bankReads.current.clear(); vocabularyCatalogReads.current.clear();
     vocabularyTeachingReads.current.clear(); vocabularyTeachingIds.current.clear();
@@ -1109,15 +1205,16 @@ function useFieldbookValue() {
       finishTiming();
       const statuses = getCollectionStatuses();
       if (statuses) Object.entries(statuses).forEach(([key, status]) => { if (status === 'ready') hydratedCollections.current.add(key); });
+      const moduleReady = (module, keys) => !statuses || (module === 'planning' ? Array.isArray(draft.planningEvidence) : keys.every(key => statuses[key] === 'ready') && (module !== 'productive' || statuses.drafts === 'ready'));
       Object.entries(ACCOUNT_MODULES).forEach(([module,keys]) => {
-        const ready = !statuses || (module==='planning'?Array.isArray(draft.planningEvidence):keys.every(key => statuses[key] === 'ready'));
+        const ready = moduleReady(module, keys);
         if (ready) moduleReads.current.set(module, Promise.resolve(draft));
       });
-      setModuleStatus(Object.fromEntries(Object.entries(ACCOUNT_MODULES).map(([module,keys]) => [module, !statuses || (module==='planning'?Array.isArray(draft.planningEvidence):keys.every(key => statuses[key] === 'ready')) ? 'ready' : 'unloaded'])));
+      setModuleStatus(Object.fromEntries(Object.entries(ACCOUNT_MODULES).map(([module,keys]) => [module, moduleReady(module, keys) ? 'ready' : 'unloaded'])));
       setBankStatus({writing:draft.questions.length?'ready':'unloaded',speaking:draft.speakingTopics.length?'ready':'unloaded'});
       lastSaved.current = structuredClone(draft);
       const correctedSpellings = resolveRegionalSpellingWrongWords(draft);
-      const recovery = readDraftRecovery(accountId());
+      const recovery = !statuses || statuses.drafts === 'ready' ? readDraftRecovery(accountId()) : null;
       const changedDrafts = recovery ? differentDrafts(recovery.drafts, draft.drafts) : {};
       if (Object.keys(changedDrafts).length) setRecoveryDrafts(changedDrafts);
       if (!statuses) {
@@ -1749,7 +1846,8 @@ function useFieldbookValue() {
   const importFeedback = useCallback(async (text, filename) => {
     const owner = accountId();
     const epoch = loadEpoch.current;
-    await ensureCompleteAccount();
+    try { await ensureCompleteAccount(); }
+    catch (cause) { if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return { saved: false }; throw cause; }
     if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return { saved: false };
     const draft = structuredClone(stateRef.current);
     const result = importAssessmentText(draft, text, filename);
@@ -1840,6 +1938,8 @@ function useFieldbookValue() {
       ensureSpeakingSample,
       ensureVocabularySession,
       loadVocabularyHistoryPage,
+      loadPlanningHistoryPage,
+      ensurePlanningRows,
       refreshPlanningState,
       saveFailed,
       saveFailureMessage,
@@ -1986,6 +2086,8 @@ function useFieldbookValue() {
       ensureSpeakingSample,
       ensureVocabularySession,
       refreshPlanningState,
+      loadPlanningHistoryPage,
+      ensurePlanningRows,
       activeSkill,
       vocabularyCatalogRevision,
       backupMenuOpen,

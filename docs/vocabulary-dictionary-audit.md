@@ -2,12 +2,14 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 798 restored source meanings** (52,152 total). This ledger verifies **5027 records** across definition, examples or reading explanations, collocations and distinctions; **47,125 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1413 reviewed distinction exercises and 854 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 6 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 1148 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 32 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 798 restored source meanings** (52,152 total). This ledger verifies **5579 records** across definition, examples or reading explanations, collocations and distinctions; **46,573 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1413 reviewed distinction exercises and 854 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 6 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 1511 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 32 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
 Authored learning-priority metadata classifies 947 general, 255 specialist, 210 historical and 25 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
 
 | Term | Reviewed records | Raw + restored records | Pending |
 | --- | ---: | ---: | ---: |
+| 3d printing | 2 | 2 | 0 |
+| a plus | 2 | 2 | 0 |
 | ability | 7 | 7 | 0 |
 | aboriginal | 1 | 10 | 9 |
 | abortion | 1 | 6 | 5 |
@@ -31,6 +33,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | adapt | 5 | 5 | 0 |
 | additional | 1 | 2 | 1 |
 | address | 30 | 31 | 1 |
+| adelaide | 1 | 2 | 1 |
 | adequate | 1 | 4 | 3 |
 | adjust | 4 | 4 | 0 |
 | admire | 1 | 7 | 6 |
@@ -44,6 +47,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | advise | 9 | 9 | 0 |
 | affair | 1 | 9 | 8 |
 | affect | 15 | 15 | 0 |
+| african | 3 | 3 | 0 |
 | age | 1 | 22 | 21 |
 | agent | 1 | 11 | 10 |
 | aggravate | 1 | 9 | 8 |
@@ -53,6 +57,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | aid | 9 | 12 | 3 |
 | aim | 20 | 20 | 0 |
 | airplane | 1 | 5 | 4 |
+| alberta | 4 | 4 | 0 |
 | allergic | 4 | 4 | 0 |
 | allergy | 2 | 2 | 0 |
 | alleviate | 1 | 2 | 1 |
@@ -78,6 +83,8 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | announcer | 1 | 1 | 0 |
 | annual | 8 | 9 | 1 |
 | answer | 18 | 18 | 0 |
+| antarctic | 5 | 5 | 0 |
+| antarctica | 2 | 2 | 0 |
 | anthropologist | 1 | 1 | 0 |
 | antibiotic | 2 | 3 | 1 |
 | anticipate | 4 | 4 | 0 |
@@ -89,8 +96,10 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | appreciate | 4 | 4 | 0 |
 | approach | 21 | 21 | 0 |
 | approve | 6 | 6 | 0 |
-| arabic | 1 | 13 | 12 |
+| arabian | 3 | 3 | 0 |
+| arabic | 13 | 13 | 0 |
 | arable | 1 | 4 | 3 |
+| arctic ocean | 1 | 1 | 0 |
 | argument | 17 | 17 | 0 |
 | aromatic | 1 | 6 | 5 |
 | arouse | 1 | 3 | 2 |
@@ -110,18 +119,25 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | assume | 5 | 5 | 0 |
 | assure | 4 | 4 | 0 |
 | astound | 1 | 2 | 1 |
+| astronomical | 2 | 2 | 0 |
 | at risk | 1 | 1 | 0 |
+| atlanta | 20 | 20 | 0 |
+| atlantic | 11 | 11 | 0 |
+| atlantic ocean | 1 | 1 | 0 |
+| atm | 14 | 14 | 0 |
 | atmosphere | 1 | 7 | 6 |
 | atmospheric | 1 | 3 | 2 |
 | attain | 1 | 8 | 7 |
 | attempt | 9 | 9 | 0 |
 | attend | 12 | 15 | 3 |
 | attitude | 7 | 7 | 0 |
+| australia | 3 | 3 | 0 |
 | authority | 6 | 6 | 0 |
 | auxiliary | 1 | 9 | 8 |
 | available | 5 | 5 | 0 |
 | avalanche | 1 | 6 | 5 |
 | avoid | 10 | 12 | 2 |
+| bachelor's degree | 1 | 1 | 0 |
 | background | 1 | 14 | 13 |
 | backpack | 1 | 5 | 4 |
 | bacteria | 1 | 5 | 4 |
@@ -129,6 +145,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | bait | 1 | 17 | 16 |
 | ballet | 1 | 7 | 6 |
 | bandage | 1 | 4 | 3 |
+| bangkok | 3 | 3 | 0 |
 | bank | 45 | 45 | 0 |
 | barbecue | 7 | 9 | 2 |
 | barrel | 1 | 19 | 18 |
@@ -143,14 +160,17 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | bean | 1 | 16 | 15 |
 | bear | 61 | 61 | 0 |
 | beggar | 1 | 7 | 6 |
+| belfast | 1 | 2 | 1 |
 | benefit | 7 | 7 | 0 |
+| benz | 4 | 4 | 0 |
 | berth | 1 | 15 | 14 |
 | beside | 1 | 4 | 3 |
 | beverage | 1 | 3 | 2 |
 | bias | 1 | 15 | 14 |
-| bible | 1 | 16 | 15 |
+| bible | 15 | 16 | 1 |
 | bibliography | 3 | 3 | 0 |
 | biologist | 1 | 1 | 0 |
+| birmingham | 3 | 4 | 1 |
 | blanket | 11 | 11 | 0 |
 | blight | 1 | 10 | 9 |
 | block | 1 | 29 | 28 |
@@ -158,8 +178,10 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | bloom | 1 | 31 | 30 |
 | blot | 1 | 14 | 13 |
 | blow | 1 | 55 | 54 |
+| bmw | 6 | 6 | 0 |
 | book | 1 | 34 | 33 |
 | bore | 1 | 24 | 23 |
+| boston | 13 | 14 | 1 |
 | bough | 1 | 3 | 2 |
 | boundary | 5 | 6 | 1 |
 | brain | 1 | 13 | 12 |
@@ -169,7 +191,11 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | breed | 1 | 19 | 18 |
 | brilliant | 1 | 15 | 14 |
 | brim | 1 | 13 | 12 |
+| brisbane | 4 | 4 | 0 |
 | bristle | 1 | 10 | 9 |
+| britain | 9 | 9 | 0 |
+| british | 13 | 13 | 0 |
+| british columbia | 1 | 1 | 0 |
 | broad | 1 | 19 | 18 |
 | bronze | 1 | 15 | 14 |
 | brook | 1 | 12 | 11 |
@@ -179,22 +205,29 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | bunch | 1 | 18 | 17 |
 | bundle | 1 | 20 | 19 |
 | bury | 1 | 14 | 13 |
-| bustle | 1 | 8 | 7 |
+| bustle | 8 | 8 | 0 |
 | buy out | 1 | 5 | 4 |
 | cafeteria | 2 | 2 | 0 |
 | calamity | 1 | 2 | 1 |
 | calculate | 6 | 6 | 0 |
 | calculus | 1 | 6 | 5 |
+| cambridge | 15 | 15 | 0 |
 | camel | 1 | 9 | 8 |
+| camouflage | 7 | 7 | 0 |
 | campaign | 1 | 8 | 7 |
 | campus | 4 | 4 | 0 |
+| canada | 7 | 7 | 0 |
+| canberra | 2 | 2 | 0 |
 | candle | 7 | 8 | 1 |
 | cannon | 1 | 20 | 19 |
 | canteen | 5 | 5 | 0 |
+| cantonese | 7 | 7 | 0 |
 | capacity | 12 | 12 | 0 |
 | capital | 19 | 19 | 0 |
 | captive | 1 | 8 | 7 |
 | capture | 1 | 10 | 9 |
+| cardiff | 6 | 7 | 1 |
+| cardiovascular | 1 | 1 | 0 |
 | career | 1 | 11 | 10 |
 | carpet | 7 | 8 | 1 |
 | carrier | 1 | 15 | 14 |
@@ -203,9 +236,12 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | cater | 7 | 14 | 7 |
 | cattle | 5 | 7 | 2 |
 | cause | 10 | 10 | 0 |
+| cd player | 1 | 1 | 0 |
+| cd-rom | 1 | 1 | 0 |
 | celebrate | 1 | 4 | 3 |
 | celestial | 1 | 12 | 11 |
 | cell | 2 | 25 | 23 |
+| celsius | 4 | 4 | 0 |
 | central park | 1 | 1 | 0 |
 | ceremony | 1 | 6 | 5 |
 | certificate | 8 | 9 | 1 |
@@ -218,6 +254,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | cheek | 1 | 14 | 13 |
 | cheerful | 1 | 2 | 1 |
 | chemical | 1 | 6 | 5 |
+| chicago | 2 | 2 | 0 |
 | chicken | 1 | 14 | 13 |
 | choose | 7 | 7 | 0 |
 | chop down | 1 | 3 | 2 |
@@ -233,6 +270,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | cliff | 1 | 10 | 9 |
 | climate | 4 | 5 | 1 |
 | clinic | 7 | 9 | 2 |
+| clinical | 7 | 7 | 0 |
 | clothe | 1 | 2 | 1 |
 | co-operative | 1 | 2 | 1 |
 | coastal | 1 | 2 | 1 |
@@ -253,6 +291,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | concentrate | 1 | 6 | 5 |
 | concert | 5 | 6 | 1 |
 | conclude | 9 | 9 | 0 |
+| conclusively | 2 | 2 | 0 |
 | condition | 17 | 17 | 0 |
 | condom | 1 | 2 | 1 |
 | conduct | 14 | 14 | 0 |
@@ -270,7 +309,9 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | contrast | 9 | 9 | 0 |
 | contribute | 1 | 1 | 0 |
 | controversy | 1 | 1 | 0 |
+| convert | 23 | 23 | 0 |
 | convince | 6 | 6 | 0 |
+| convincing | 3 | 3 | 0 |
 | coordinate | 1 | 7 | 6 |
 | copper | 1 | 17 | 16 |
 | copy | 1 | 16 | 15 |
@@ -289,6 +330,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | country | 1 | 12 | 11 |
 | course | 31 | 31 | 0 |
 | cousin | 1 | 14 | 13 |
+| coventry | 2 | 3 | 1 |
 | craft | 1 | 14 | 13 |
 | cram | 1 | 14 | 13 |
 | creature | 1 | 5 | 4 |
@@ -329,6 +371,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | deliberate | 1 | 6 | 5 |
 | delight | 1 | 5 | 4 |
 | demand | 12 | 12 | 0 |
+| dementia | 2 | 2 | 0 |
 | demonstrate | 4 | 4 | 0 |
 | dental | 1 | 6 | 5 |
 | depart | 1 | 11 | 10 |
@@ -349,6 +392,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | deteriorate | 2 | 2 | 0 |
 | determine | 8 | 8 | 0 |
 | diabetic | 1 | 4 | 3 |
+| diagnosis | 4 | 4 | 0 |
 | differentiate | 9 | 9 | 0 |
 | difficult | 1 | 4 | 3 |
 | digest | 2 | 15 | 13 |
@@ -362,6 +406,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | discover | 10 | 10 | 0 |
 | discuss | 6 | 6 | 0 |
 | disease | 2 | 5 | 3 |
+| disorientation | 3 | 3 | 0 |
 | disposal | 2 | 4 | 2 |
 | dispute | 8 | 8 | 0 |
 | dissertation | 2 | 2 | 0 |
@@ -372,6 +417,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | diversity | 3 | 3 | 0 |
 | divide | 1 | 18 | 17 |
 | dizzy | 5 | 8 | 3 |
+| dna | 14 | 14 | 0 |
 | dock | 1 | 27 | 26 |
 | document | 1 | 8 | 7 |
 | documentary | 5 | 5 | 0 |
@@ -384,6 +430,8 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | dragon | 1 | 15 | 14 |
 | draw | 166 | 166 | 0 |
 | driver | 1 | 6 | 5 |
+| drone | 16 | 16 | 0 |
+| dublin | 6 | 7 | 1 |
 | dump | 1 | 30 | 29 |
 | durable | 2 | 2 | 0 |
 | dwarf | 1 | 11 | 10 |
@@ -396,12 +444,15 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | economy | 13 | 13 | 0 |
 | ecosystem | 3 | 3 | 0 |
 | edible | 1 | 5 | 4 |
+| edinburgh | 8 | 8 | 0 |
 | editor | 6 | 7 | 1 |
+| edmonton | 5 | 5 | 0 |
 | education | 3 | 3 | 0 |
 | effect | 14 | 14 | 0 |
 | effective | 8 | 8 | 0 |
 | efficient | 5 | 5 | 0 |
 | effort | 1 | 5 | 4 |
+| el nino | 1 | 1 | 0 |
 | elective | 1 | 4 | 3 |
 | elementary | 6 | 8 | 2 |
 | elephant | 1 | 7 | 6 |
@@ -418,6 +469,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | enemy | 1 | 6 | 5 |
 | energy | 1 | 7 | 6 |
 | engineer | 2 | 13 | 11 |
+| england | 6 | 6 | 0 |
 | entertain | 1 | 9 | 8 |
 | enthusiastic | 1 | 2 | 1 |
 | entrance | 1 | 12 | 11 |
@@ -431,10 +483,14 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | essential | 1 | 10 | 9 |
 | establish | 4 | 4 | 0 |
 | ethical | 5 | 5 | 0 |
+| euro | 8 | 9 | 1 |
+| europe | 4 | 4 | 0 |
+| european | 5 | 6 | 1 |
 | evaluate | 3 | 3 | 0 |
 | everlasting | 1 | 11 | 10 |
 | evidence | 5 | 5 | 0 |
 | evil | 1 | 12 | 11 |
+| evolutionary | 2 | 2 | 0 |
 | evolve | 2 | 10 | 8 |
 | exaggerate | 1 | 2 | 1 |
 | exception | 1 | 6 | 5 |
@@ -460,6 +516,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | eyesight | 1 | 2 | 1 |
 | facility | 5 | 8 | 3 |
 | faculty | 6 | 6 | 0 |
+| fahrenheit | 1 | 1 | 0 |
 | fair | 35 | 35 | 0 |
 | fall | 6 | 40 | 34 |
 | family room | 1 | 1 | 0 |
@@ -478,10 +535,12 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | female | 1 | 9 | 8 |
 | fence | 1 | 16 | 15 |
 | ferry | 8 | 12 | 4 |
+| fertility | 3 | 3 | 0 |
 | festival | 5 | 5 | 0 |
 | field | 33 | 33 | 0 |
 | figure | 29 | 29 | 0 |
 | film | 1 | 9 | 8 |
+| filthy | 6 | 6 | 0 |
 | financial | 2 | 2 | 0 |
 | fine | 44 | 44 | 0 |
 | fireman | 1 | 6 | 5 |
@@ -496,16 +555,20 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | foe | 1 | 8 | 7 |
 | food | 3 | 4 | 1 |
 | force | 1 | 29 | 28 |
+| ford | 8 | 9 | 1 |
 | forecast | 1 | 5 | 4 |
 | foreign | 1 | 14 | 13 |
 | foresee | 1 | 2 | 1 |
 | forest | 1 | 15 | 14 |
 | form | 32 | 32 | 0 |
 | former | 1 | 5 | 4 |
+| forthcoming | 6 | 6 | 0 |
 | fountain | 2 | 14 | 12 |
 | fraction | 1 | 9 | 8 |
 | fragment | 1 | 9 | 8 |
+| france | 3 | 3 | 0 |
 | freight | 1 | 12 | 11 |
+| french | 20 | 20 | 0 |
 | fridge | 3 | 7 | 4 |
 | friendship | 1 | 5 | 4 |
 | fringe | 1 | 13 | 12 |
@@ -528,23 +591,27 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | generation | 1 | 12 | 11 |
 | genetic | 1 | 5 | 4 |
 | geography | 8 | 10 | 2 |
-| germany | 1 | 8 | 7 |
+| german | 20 | 21 | 1 |
+| germany | 7 | 8 | 1 |
 | germinate | 1 | 2 | 1 |
 | gifted | 1 | 3 | 2 |
 | glance | 2 | 22 | 20 |
 | glare | 1 | 11 | 10 |
-| glasgow | 1 | 5 | 4 |
+| glasgow | 4 | 5 | 1 |
 | glide | 1 | 12 | 11 |
 | glimpse | 1 | 11 | 10 |
 | global | 3 | 7 | 4 |
 | glorious | 1 | 6 | 5 |
 | glue | 1 | 6 | 5 |
 | go down | 1 | 11 | 10 |
+| golf club | 2 | 2 | 0 |
 | grand | 1 | 10 | 9 |
 | grasp | 8 | 8 | 0 |
 | gravity | 5 | 6 | 1 |
 | greasy | 1 | 9 | 8 |
+| great britain | 5 | 5 | 0 |
 | greedy | 1 | 5 | 4 |
+| greek | 22 | 22 | 0 |
 | gross | 1 | 17 | 16 |
 | ground | 39 | 39 | 0 |
 | group | 1 | 19 | 18 |
@@ -573,7 +640,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | herd | 1 | 14 | 13 |
 | heritage | 1 | 5 | 4 |
 | high-voltage | 1 | 1 | 0 |
-| historic | 1 | 6 | 5 |
+| historic | 6 | 6 | 0 |
 | hit | 8 | 46 | 38 |
 | homesick | 1 | 1 | 0 |
 | honesty | 1 | 5 | 4 |
@@ -586,6 +653,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | humid | 1 | 1 | 0 |
 | hunting | 1 | 6 | 5 |
 | hut | 1 | 8 | 7 |
+| id | 15 | 20 | 5 |
 | identify | 7 | 7 | 0 |
 | ignorant | 1 | 6 | 5 |
 | illustrate | 4 | 4 | 0 |
@@ -601,7 +669,11 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | inadequate | 1 | 2 | 1 |
 | incidentally | 1 | 1 | 0 |
 | inclusive | 1 | 4 | 3 |
+| incorrect | 4 | 4 | 0 |
 | increment | 1 | 6 | 5 |
+| independence day | 5 | 5 | 0 |
+| indian | 13 | 17 | 4 |
+| indian ocean | 1 | 1 | 0 |
 | indignant | 1 | 1 | 0 |
 | indignity | 1 | 2 | 1 |
 | individual | 4 | 7 | 3 |
@@ -630,6 +702,8 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | interior | 1 | 7 | 6 |
 | intermediate | 5 | 8 | 3 |
 | international | 1 | 8 | 7 |
+| internet | 11 | 11 | 0 |
+| internet cafe | 2 | 2 | 0 |
 | interpret | 5 | 5 | 0 |
 | interpretation | 1 | 9 | 8 |
 | interrupt | 4 | 4 | 0 |
@@ -639,6 +713,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | invasive | 1 | 8 | 7 |
 | investigate | 3 | 3 | 0 |
 | invisible | 1 | 8 | 7 |
+| ireland | 3 | 4 | 1 |
 | irregular | 1 | 9 | 8 |
 | irreversible | 1 | 3 | 2 |
 | irrigation | 1 | 1 | 0 |
@@ -646,11 +721,12 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | island | 1 | 19 | 18 |
 | isolated | 1 | 9 | 8 |
 | issue | 31 | 33 | 2 |
-| italian | 1 | 11 | 10 |
+| italian | 11 | 11 | 0 |
 | jail | 1 | 6 | 5 |
 | jealous | 1 | 6 | 5 |
 | jeans | 1 | 4 | 3 |
 | jewellery | 1 | 3 | 2 |
+| jewish | 6 | 7 | 1 |
 | joint | 1 | 20 | 19 |
 | journal | 8 | 11 | 3 |
 | joy | 1 | 11 | 10 |
@@ -664,6 +740,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | knock | 1 | 25 | 24 |
 | know | 19 | 19 | 0 |
 | knowledge | 14 | 14 | 0 |
+| l-shaped | 1 | 1 | 0 |
 | labour | 1 | 16 | 15 |
 | lack | 5 | 8 | 3 |
 | landmark | 5 | 5 | 0 |
@@ -671,6 +748,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | lane | 1 | 22 | 21 |
 | laptop | 2 | 3 | 1 |
 | latest | 2 | 6 | 4 |
+| latin | 16 | 16 | 0 |
 | launch | 1 | 16 | 15 |
 | lawn | 1 | 11 | 10 |
 | lay | 46 | 46 | 0 |
@@ -682,11 +760,13 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | learn | 8 | 8 | 0 |
 | least | 1 | 8 | 7 |
 | lecture | 6 | 6 | 0 |
+| leeds | 2 | 4 | 2 |
 | left | 17 | 17 | 0 |
 | legal | 1 | 12 | 11 |
 | lemon | 1 | 16 | 15 |
 | levy | 1 | 17 | 16 |
 | lie | 23 | 23 | 0 |
+| lifespan | 2 | 2 | 0 |
 | lifestyle | 1 | 2 | 1 |
 | light | 72 | 72 | 0 |
 | limb | 1 | 13 | 12 |
@@ -697,6 +777,7 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | list | 2 | 35 | 33 |
 | litter | 2 | 17 | 15 |
 | lively | 1 | 16 | 15 |
+| liverpool | 12 | 12 | 0 |
 | livestock | 1 | 1 | 0 |
 | living room | 1 | 2 | 1 |
 | loaf | 1 | 8 | 7 |

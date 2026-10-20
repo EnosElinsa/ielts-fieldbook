@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { emptyState, migrateState, persistShape, STATE_VERSION } from '../domain';
+import { emptyState, migrateState, persistShape, STATE_VERSION, dateKey } from '../domain';
 import { normalizeVocabularyIdentities, normalizeVocabularyScope } from '../domain/vocabulary/identities';
 import { getSupabase, supabaseConfigured } from '../lib/supabase';
 import { cachedRead, clearReadCache, readCacheKey, readSnapshot, subscribeRead } from '../lib/readCache';
@@ -23,17 +23,18 @@ type Snapshot = {
 let snapshot: Snapshot | null = null;
 let profileBaseline: unknown = null;
 let planBaselines = new Map<string,unknown>();
+let planStamp: string | null = null;
 let accountReady = false;
 let planningLoaded = false;
 let statuses = emptyCollectionStatuses();
 let accountState = emptyState();
 const moduleLoads = new Map<AccountModule, Promise<unknown>>();
-const moduleRows = new Map<AccountModule, { generation: number; owner: string | null; promise: Promise<unknown> }>();
+const moduleRows = new Map<AccountModule, { generation: number; owner: string | null; promise: Promise<unknown>; prefetched:boolean }>();
 let pendingCommit: { stamp: string; batch: unknown } | null = null;
 export function getCollectionStatuses() { return { ...statuses }; }
 export function resetAccountStore() {
   planningLoaded = false;
-  profileBaseline=null;planBaselines.clear();
+  profileBaseline=null;planBaselines.clear();planStamp=null;
   resetAccountIdentity(); snapshot = null; accountReady = false; statuses = emptyCollectionStatuses();
   accountState = emptyState(); moduleLoads.clear(); moduleRows.clear(); pendingCommit = null;
   clearReadCache();
@@ -203,15 +204,24 @@ export async function ensureSpeakingSample(topicId: string) {
   return sample;
 }
 
-function readAccountModuleRows(module: AccountModule, generation: number, owner: string | null) {
-  const existing = moduleRows.get(module);
-  if (existing?.generation === generation && existing.owner === owner) return existing.promise;
+function accountModuleCollections(module: AccountModule) {
   const keys = ACCOUNT_MODULES[module];
   if (!keys) throw new Error('Unknown account module');
-  const collections = module.startsWith('vocabulary') ? [...keys, 'lexicon'] : keys;
-  const promise = (module === 'planning' ? readPlanningEvidence(generation, owner).then(rows=>[rows]) : Promise.all(collections.map(key => selectAll(key === 'lexicon' ? 'lexicon' : USER_TABLES[key]))))
+  return module.startsWith('vocabulary') ? [...keys, 'lexicon'] : module === 'productive' ? [...keys, 'drafts'] : [...keys];
+}
+
+function readAccountModuleRows(module: AccountModule, generation: number, owner: string | null, consume=false) {
+  const existing = moduleRows.get(module);
+  if (existing?.generation === generation && existing.owner === owner) {
+    if(consume&&existing.prefetched){existing.prefetched=false;return existing.promise.catch(()=>{assertAccount(generation,owner);if(moduleRows.get(module)===existing)moduleRows.delete(module);return readAccountModuleRows(module,generation,owner,true);});}
+    return existing.promise;
+  }
+  const keys = ACCOUNT_MODULES[module];
+  if (!keys) throw new Error('Unknown account module');
+  const collections = accountModuleCollections(module);
+  const promise = (module === 'planning' ? readPlanningEvidence(generation, owner).then(rows=>[rows]) : Promise.all(collections.map(key => selectAll(key === 'lexicon' || key === 'drafts' ? key : USER_TABLES[key]))))
     .then(rows => { assertAccount(generation, owner); return rows; });
-  const pending = { generation, owner, promise };
+  const pending = { generation, owner, promise, prefetched:!consume };
   moduleRows.set(module, pending);
   // Prefetch failure must not reject an otherwise usable base workspace.
   void promise.catch(() => { if (moduleRows.get(module) === pending) moduleRows.delete(module); });
@@ -237,35 +247,39 @@ export async function ensureAccountModule(module: AccountModule) {
   const keys = ACCOUNT_MODULES[module];
   if (!keys) throw new Error('Unknown account module');
   if (!accountReady || !accountId()) throw new Error('Sign in to load account records.');
-  const result = () => ({ data: { ...Object.fromEntries(keys.map(key => [key, structuredClone(accountState[key] || [])])), ...(planningLoaded?{planningEvidence:structuredClone(accountState.planningEvidence||[])}:{}), ...(module==='vocabularyCore'?{vocabularySessions:structuredClone(accountState.vocabularySessions||[]),vocabularyGroupAttempts:structuredClone(accountState.vocabularyGroupAttempts||[])}:{}) }, statuses: getCollectionStatuses() });
+  const result = () => ({ data: { ...Object.fromEntries(keys.map(key => [key, structuredClone(accountState[key] || [])])), ...(module==='productive'?{drafts:structuredClone(accountState.drafts||{})}:{}), ...(planningLoaded?{planningEvidence:structuredClone(accountState.planningEvidence||[])}:{}), ...(module==='vocabularyCore'?{vocabularySessions:structuredClone(accountState.vocabularySessions||[]),vocabularyGroupAttempts:structuredClone(accountState.vocabularyGroupAttempts||[])}:{}) }, statuses: getCollectionStatuses() });
   if(module==='planning'){
     if(planningLoaded)return result();
     if(moduleLoads.has(module))return moduleLoads.get(module);
     const generation=accountGeneration(),owner=accountId();
-    const request=readAccountModuleRows(module,generation,owner).then(([rows])=>{
+    const request=readAccountModuleRows(module,generation,owner,true).then(([rows])=>{
       assertAccount(generation,owner);
       accountState.planningEvidence=rows.filter(row=>statuses[row.id]!=='ready');planningLoaded=true;
       return result();
     }).finally(()=>{if(generation===accountGeneration()&&owner===accountId())moduleLoads.delete(module);});
     moduleLoads.set(module,request);return request;
   }
-  if (keys.every(key => statuses[key] === 'ready')) return result();
+  if (keys.every(key => statuses[key] === 'ready') && (module !== 'productive' || statuses.drafts === 'ready')) return result();
   if (moduleLoads.has(module)) return moduleLoads.get(module);
   const generation = accountGeneration();
   const id = accountId();
-  const collections = module.startsWith('vocabulary') ? [...keys, 'lexicon'] : keys;
+  const collections = accountModuleCollections(module);
   collections.forEach(key => { statuses[key] = 'loading'; });
   const promise = (async () => {
     try {
-      const rows = await readAccountModuleRows(module, generation, id);
+      const rows = await readAccountModuleRows(module, generation, id,true);
       assertAccount(generation, id);
-      const raw = Object.fromEntries(collections.map((key, index) => [key, rowsToList(rows[index])]));
+      const raw = Object.fromEntries(collections.map((key, index) => [key, key === 'drafts' ? rowsToDrafts(rows[index]) : rowsToList(rows[index])]));
       const normalized = migrateState({ ...emptyState(), ...raw });
       keys.forEach(key => {
         accountState[key] = normalized[key] || [];
         // Preserve raw vocabulary baselines so legacy migrations are persisted.
         snapshot.lists[key] = structuredClone(module.startsWith('vocabulary') ? raw[key] || [] : normalized[key] || []);
       });
+      if (module === 'productive') {
+        accountState.drafts = normalized.drafts || {};
+        snapshot.drafts = structuredClone(accountState.drafts);
+      }
       if(planningLoaded)accountState.planningEvidence=(accountState.planningEvidence||[]).filter(row=>!keys.includes(row.id));
       if (module==='vocabularyCore' && statuses.vocabularySessions!=='ready') {
         const attempts=[];
@@ -309,7 +323,50 @@ export async function ensureCompleteAccount() {
   const id = accountId();
   await Promise.all(['productive','vocabulary','receptive'].map(module => ensureAccountModule(module as AccountModule)));
   assertAccount(generation, id);
-  return structuredClone(accountState);
+  const complete=await readPlanningWorkspace(true);
+  assertAccount(generation,id);
+  if(planStamp&&complete.planStamp!==planStamp)throw new Error('Your schedule changed on another device. Refresh planning before exporting or replacing account data.');
+  return {...structuredClone(accountState),plans:migrateState({...emptyState(),plans:rowsToList(complete.plans)}).plans,planningRows:complete.plans};
+}
+
+async function readPlanningWorkspace(full=false) {
+  const {data,error}=await getSupabase().rpc('load_planning_workspace',{options:{today:dateKey(new Date()),full}});
+  if(error)throw error;
+  if(!data||!Array.isArray(data.plans)||!/^[a-f0-9]{32}$/.test(data.planStamp))throw new Error('Invalid planning workspace response. Retry loading your account.');
+  return data;
+}
+
+export type PlanningHistoryOptions={offset?:number;limit?:number;status?:string;skill?:string;origin?:string;reason?:string;from?:string;to?:string;targetId?:string;allIds?:boolean;skippedOnly?:boolean};
+export async function loadPlanningHistoryPage(options:PlanningHistoryOptions={}) {
+  const owner=accountId(),generation=accountGeneration();
+  if(!owner||!accountReady)throw new Error('Sign in to load planning history.');
+  const {data,error}=await getSupabase().rpc('load_planning_history',{options:{...options,limit:Math.min(100,Math.max(1,Math.floor(options.limit||20))),offset:Math.max(0,Math.floor(options.offset||0))}});
+  assertAccount(generation,owner);if(error)throw error;
+  if(planStamp&&data?.planStamp!==planStamp)throw new Error('Your schedule changed on another device. Refresh planning and review the latest tasks.');
+  if(!Array.isArray(data?.plans)||!Number.isSafeInteger(data.total)||!Number.isSafeInteger(data.offset))throw new Error('Invalid planning history response. Retry loading history.');
+  return {...data,rows:data.plans,plans:migrateState({...emptyState(),plans:rowsToList(data.plans)}).plans};
+}
+
+/** Accept only after the owning context merges these rows; a read alone is never writable. */
+export function rememberPlanningRows(rows) {
+  const normalized=migrateState({...emptyState(),plans:rowsToList(rows)}).plans;
+  for(const row of rows){
+    if(planBaselines.has(row.id))continue;
+    const plan=normalized.find(item=>item.id===String(row.id));
+    planBaselines.set(row.id,structuredClone(row.payload));
+    snapshot.lists.plans.push(structuredClone(plan));accountState.plans.push(structuredClone(plan));
+  }
+}
+
+export async function loadPlanningRows(ids:string[]) {
+  const owner=accountId(),generation=accountGeneration();
+  if(!owner||!accountReady)throw new Error('Sign in to load these tasks.');
+  const rows=[];
+  for(let offset=0;offset<ids.length;offset+=80){
+    const {data,error}=await getSupabase().from('plans').select('id,payload').in('id',ids.slice(offset,offset+80)).range(0,79);
+    assertAccount(generation,owner);if(error)throw error;rows.push(...(data||[]));
+  }
+  return {rows,plans:migrateState({...emptyState(),plans:rowsToList(rows)}).plans};
 }
 
 /** History rows omit frozen questions/answers. Fetch those only for one result. */
@@ -350,9 +407,8 @@ export async function loadVocabularySession(id: string) {
 export async function refreshPlanningState() {
   const owner=accountId(),generation=accountGeneration();
   if(!owner||!accountReady)throw new Error('Sign in to refresh planning.');
-  const [profileResult,plans]=await Promise.all([getSupabase().from('profiles').select('settings,active_plan_id,reviewed_at').eq('id',owner).maybeSingle(),selectAll('plans')]);
-  assertAccount(generation,owner);if(profileResult.error)throw profileResult.error;
-  const profile=profileResult.data;
+  const workspace=await readPlanningWorkspace();const {profile,plans}=workspace;
+  assertAccount(generation,owner);planStamp=workspace.planStamp;
   const raw={settings:profile?.settings||{},activePlanId:profile?.active_plan_id||null,reviewedAt:profile?.reviewed_at||null,plans:rowsToList(plans)};
   const normalized=migrateState({...emptyState(),...raw});
   profileBaseline=profile?{settings:raw.settings,activePlanId:raw.activePlanId,reviewedAt:raw.reviewedAt}:null;
@@ -367,7 +423,7 @@ export async function hydrateState(options?: { modules?: AccountModule[]; prefet
   clearReadCache();
   accountState = emptyState();
   planningLoaded = false;
-  statuses = emptyCollectionStatuses(); moduleLoads.clear(); moduleRows.clear(); pendingCommit = null; snapshot = null; accountReady = false;
+  statuses = emptyCollectionStatuses(); moduleLoads.clear(); moduleRows.clear(); pendingCommit = null; snapshot = null; accountReady = false;planStamp=null;planBaselines.clear();
   if (!supabaseConfigured()) {
     setAccountIdentity(null);
     accountReady = false;
@@ -385,16 +441,12 @@ export async function hydrateState(options?: { modules?: AccountModule[]; prefet
     snapshot = emptySnapshot();
     return emptyState();
   }
-  const base = Promise.all([
-    supabase.from('profiles').select('settings, active_plan_id, reviewed_at').eq('id', session.user.id).maybeSingle(),
-    selectAll('plans'), selectAll('drafts'),
-  ]);
+  const base = readPlanningWorkspace(!options);
   for (const module of new Set(options?.prefetchModules || [])) readAccountModuleRows(module, generation, session.user.id);
   for (const skill of new Set(options?.prefetchBanks || [])) void ensureQuestionBank(skill).catch(() => {});
-  const [profileResult, plans, drafts] = await base;
+  const workspace = await base;const {profile,plans}=workspace;
   assertAccount(generation, session.user.id);
-  if (profileResult.error) throw profileResult.error;
-  const profile = profileResult.data;
+  planStamp=workspace.planStamp;
   profileBaseline=profile?{settings:profile.settings||{},activePlanId:profile.active_plan_id||null,reviewedAt:profile.reviewed_at||null}:null;
   planBaselines=new Map(plans.map(row=>[row.id,structuredClone(row.payload)]));
   const raw = {
@@ -402,13 +454,12 @@ export async function hydrateState(options?: { modules?: AccountModule[]; prefet
     settings: (profile && profile.settings) || {},
     activePlanId: profile ? profile.active_plan_id : null,
     reviewedAt: profile ? profile.reviewed_at : null,
-    drafts: rowsToDrafts(drafts),
     plans: rowsToList(plans),
   };
   const state = migrateState(raw);
   snapshot = takeSnapshot(state);
   accountState = state;
-  statuses.profile = statuses.plans = statuses.drafts = 'ready';
+  statuses.profile = statuses.plans = 'ready';
   accountReady = true;
   await Promise.all((options?.modules || (options ? [] : ['productive','vocabulary','receptive'])).map(module => ensureAccountModule(module as AccountModule)));
   if (!options) {
@@ -454,7 +505,7 @@ export async function saveState(state, onQuotaToast?: (message: string) => void,
       changes.profile = { settings: shaped.settings || {}, activePlanId: shaped.activePlanId || null, reviewedAt: shaped.reviewedAt || null };
     }
     if (!Object.keys(changes.lists).length && !changes.drafts && !changes.profile) return true;
-    const baseline={...(changes.profile?{profile:profileBaseline}:{}),...(changes.lists.plans?{planSet:Object.fromEntries(planBaselines),plans:Object.fromEntries([...changes.lists.plans.upserts.map(row=>row.id),...changes.lists.plans.deletes].map(id=>[id,planBaselines.get(id)||null]))}:{})};
+    const baseline={...(changes.profile?{profile:profileBaseline}:{}),...(changes.lists.plans?{...(planStamp?{planStamp}:{planSet:Object.fromEntries(planBaselines)}),plans:Object.fromEntries([...changes.lists.plans.upserts.map(row=>row.id),...changes.lists.plans.deletes].map(id=>[id,planBaselines.get(id)||null]))}:{})};
     if(Object.keys(baseline).length)changes.baseline=baseline;
     const stamp = JSON.stringify(changes);
     const batch = pendingCommit?.stamp === stamp ? pendingCommit.batch : { id: crypto.randomUUID(), ...changes };
@@ -463,6 +514,7 @@ export async function saveState(state, onQuotaToast?: (message: string) => void,
     if (error) throw error;
     assertAccount(generation, expectedAccount);
     if (receipt?.id !== batch.id || typeof receipt.alreadyCommitted !== 'boolean') throw new Error('Invalid workspace acknowledgement');
+    if(changes.lists.plans&&planStamp&&!/^[a-f0-9]{32}$/.test(receipt.planStamp))throw new Error('Invalid planning acknowledgement');
     const updated = snapshot || emptySnapshot();
     for (const key of Object.keys(changes.lists)) {
       updated.lists[key] = next.lists[key];
@@ -474,7 +526,7 @@ export async function saveState(state, onQuotaToast?: (message: string) => void,
       updated.profile = next.profile;
       Object.assign(accountState, changes.profile);
     }
-    if(changes.lists.plans){for(const row of changes.lists.plans.upserts)planBaselines.set(row.id,structuredClone(row.payload));for(const id of changes.lists.plans.deletes)planBaselines.delete(id);}
+    if(changes.lists.plans){planStamp=receipt.planStamp||null;for(const row of changes.lists.plans.upserts)planBaselines.set(row.id,structuredClone(row.payload));for(const id of changes.lists.plans.deletes)planBaselines.delete(id);}
     snapshot = updated;
     pendingCommit = null;
     return true;

@@ -6,7 +6,7 @@ import { emptyState, normalizeDraft } from '../domain';
 import { addVocabularyItem, getVocabularyReviewQueue, recordVocabularyReview } from '../domain/vocabulary';
 import { readFileSync } from 'node:fs';
 import { IDBFactory } from 'fake-indexeddb';
-import { readDraftRecovery } from '../storage/recovery';
+import { readDraftRecovery, writeDraftRecovery } from '../storage/recovery';
 import { ensureUnifiedPlans, previewBacklogChange, studyBudget } from '../lib/planTemplates';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { TodayPage } from '../features/today/TodayPage';
@@ -17,7 +17,7 @@ import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 import { speakingPrompts } from '../domain/speaking';
 import { ACCOUNT_MODULES, emptyCollectionStatuses } from '../storage/accountModules';
 
-const mocks = vi.hoisted(() => ({ initial: null, statuses: null, planningRead:vi.fn(), moduleRead: vi.fn(), completeRead: vi.fn(), releasedRead: vi.fn(), teachingRead: vi.fn(), saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), catalogRead: vi.fn(), examCatalogRead:vi.fn(), examSectionsRead:vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
+const mocks = vi.hoisted(() => ({ initial: null, statuses: null, planningRead:vi.fn(), historyRead:vi.fn(), planRowsRead:vi.fn(), moduleRead: vi.fn(), completeRead: vi.fn(), releasedRead: vi.fn(), teachingRead: vi.fn(), saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), catalogRead: vi.fn(), examCatalogRead:vi.fn(), examSectionsRead:vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
 vi.mock('../storage/examCatalog',()=>({loadExamCatalog:(...args)=>mocks.examCatalogRead(...args),loadExamSections:(...args)=>mocks.examSectionsRead(...args)}));
 vi.mock('../storage', () => ({
   loadState: () => structuredClone(mocks.initial),
@@ -39,7 +39,7 @@ vi.mock('../storage/vocabularyCatalog', () => ({
   loadReleasedVocabularyTeaching: (...args) => mocks.teachingRead(...args),
   VocabularyScopeUnavailableError: class extends Error {},
 }));
-vi.mock('../storage/remote', () => ({ accountId: () => mocks.owner, refreshPlanningState:(...args)=>mocks.planningRead(...args),loadVocabularySession:async()=>null,loadVocabularyHistoryPage:async()=>({rows:[],total:0}) }));
+vi.mock('../storage/remote', () => ({ accountId: () => mocks.owner, refreshPlanningState:(...args)=>mocks.planningRead(...args),loadVocabularySession:async()=>null,loadVocabularyHistoryPage:async()=>({rows:[],total:0}),rememberPlanningRows:()=>{},loadPlanningRows:(...args)=>mocks.planRowsRead(...args),loadPlanningHistoryPage:(...args)=>mocks.historyRead(...args) }));
 
 let fieldbook;
 test('an acknowledged draft save cannot discard recovery for text edited during the request', async () => {
@@ -142,6 +142,8 @@ beforeEach(() => {
   mocks.teachingRead.mockReset().mockResolvedValue({books:[], units:[], entries:[], memberships:[]});
   mocks.saveState.mockReset().mockResolvedValue(true);
   mocks.planningRead.mockReset();
+  mocks.planRowsRead.mockReset().mockImplementation(async ids=>({rows:[],plans:(fieldbook?.state||mocks.initial).plans.filter(plan=>ids.includes(plan.id))}));
+  mocks.historyRead.mockReset().mockImplementation(async options=>{const all=(fieldbook?.state||mocks.initial).plans.filter(plan=>['completed','skipped'].includes(plan.status));return {rows:[],plans:options.allIds?[]:all.slice(options.offset||0,(options.offset||0)+20),total:all.length,offset:options.offset||0,ids:all.map(plan=>plan.id)};});
   mocks.downloadFile.mockReset();
   mocks.saveVocabularyImport.mockReset().mockResolvedValue(true);
   mocks.saveVocabularySession.mockReset().mockResolvedValue(true);
@@ -154,6 +156,56 @@ beforeEach(() => {
   mocks.initial.drafts = { q1: normalizeDraft({ text: 'A response that must survive.', practiceMode: 'full' }), sp1: normalizeDraft({ transcript: 'A response that must survive.', practiceMode: 'full' }) };
 });
 afterEach(() => { cleanup(); vi.useRealTimers(); fieldbook = null; });
+
+test.each(['history page','selected rows','full backup'])('%s hydration serializes saves and preserves newly loaded plans in older queued snapshots',async method=>{
+  await mount();
+  const pending=defer(),writes=[];
+  const historical={id:'late-history',dateKey:'2000-01-01',status:'skipped',skill:'vocabulary',title:'Preserved historical task'};
+  const read=method==='history page'?mocks.historyRead:method==='selected rows'?mocks.planRowsRead:mocks.completeRead;
+  read.mockReturnValueOnce(pending.promise);
+  mocks.saveState.mockImplementation(async snapshot=>{writes.push(structuredClone(snapshot));return true;});
+  let loading,first,second;
+  await act(async()=>{loading=method==='history page'?fieldbook.loadPlanningHistoryPage({}):method==='selected rows'?fieldbook.ensurePlanningRows(['late-history']):fieldbook.ensureCompleteAccount();});
+  await waitFor(()=>expect(read).toHaveBeenCalled());
+  await act(async()=>{first=fieldbook.persist(draft=>{draft.settings.dailyMinutes=41;});second=fieldbook.persist(draft=>{draft.settings.dailyMinutes=42;});});
+  const writesBeforeHydration=writes.length;
+  await act(async()=>{pending.resolve(method==='full backup'?{...mocks.initial,plans:[historical],planningRows:[]}:{rows:[],plans:[historical],total:1,offset:0});await loading;await first;await second;});
+  expect(writesBeforeHydration).toBe(0);
+  expect(writes).toHaveLength(2);
+  expect(writes.every(snapshot=>snapshot.plans.some(plan=>plan.id===historical.id))).toBe(true);
+  expect(fieldbook.state.plans.some(plan=>plan.id===historical.id)).toBe(true);
+  await act(async()=>{await fieldbook.persist(draft=>{draft.plans=draft.plans.filter(plan=>plan.id!==historical.id);});});
+  expect(writes.at(-1).plans.some(plan=>plan.id===historical.id)).toBe(false);
+});
+
+test('reloading historical rows after a scoped refresh still rebases older queued snapshots',async()=>{
+  await mount();
+  const historical={id:'returned-history',dateKey:'2000-01-01',status:'skipped',skill:'vocabulary',title:'Returned history'};
+  mocks.historyRead.mockResolvedValueOnce({rows:[],plans:[historical],total:1,offset:0});
+  await act(async()=>{await fieldbook.loadPlanningHistoryPage({});});
+  mocks.planningRead.mockResolvedValueOnce({settings:fieldbook.state.settings,plans:[],activePlanId:null});
+  await act(async()=>{await fieldbook.refreshPlanningState();});
+  expect(fieldbook.state.plans).toEqual([]);
+  const pending=defer();mocks.historyRead.mockReturnValueOnce(pending.promise);
+  let loading,saving;
+  await act(async()=>{loading=fieldbook.loadPlanningHistoryPage({});});
+  await waitFor(()=>expect(mocks.historyRead).toHaveBeenCalledTimes(2));
+  await act(async()=>{saving=fieldbook.persist(draft=>{draft.settings.dailyMinutes=45;});});
+  await act(async()=>{pending.resolve({rows:[],plans:[historical],total:1,offset:0});await loading;await saving;});
+  expect(mocks.saveState.mock.calls.at(-1)[0].plans.map(plan=>plan.id)).toContain(historical.id);
+});
+
+test('a snapshot frozen during refresh cannot overwrite the freshly loaded planning baseline',async()=>{
+  await mount();const pending=defer();mocks.planningRead.mockReturnValueOnce(pending.promise);
+  const error=vi.fn();let refreshing,saving;
+  await act(async()=>{refreshing=fieldbook.refreshPlanningState();});
+  await waitFor(()=>expect(mocks.planningRead).toHaveBeenCalled());
+  await act(async()=>{const draft=structuredClone(fieldbook.state);draft.settings.dailyMinutes=45;saving=fieldbook.persistNow(draft,{onError:error});});
+  const latest={settings:{...fieldbook.state.settings,dailyMinutes:85},plans:[],activePlanId:null};
+  await act(async()=>{pending.resolve(latest);await refreshing;expect(await saving).toBe(false);});
+  expect(mocks.saveState).not.toHaveBeenCalled();expect(fieldbook.state.settings.dailyMinutes).toBe(85);
+  expect(error).toHaveBeenCalledWith(expect.stringMatching(/schedule was refreshed/));
+});
 
 test('speaking draft status distinguishes unsaved, debounce and queue waiting, transport, failure and retry', async () => {
   await mount(); vi.useFakeTimers();
@@ -462,6 +514,70 @@ test('base hydration opens workspace without loading account modules and later m
   expect(fieldbook.state.settings.dailyMinutes).toBe(75);
   expect(fieldbook.state.sessions[0].id).toBe('late');
   expect(fieldbook.moduleStatus.productive).toBe('ready');
+});
+
+test('productive draft hydration merges saved drafts without replacing edits made while loading', async () => {
+  mocks.initial.drafts = {};
+  mocks.statuses = {profile:'ready',plans:'ready',drafts:'unloaded',sessions:'unloaded'};
+  const pending = defer();
+  mocks.moduleRead.mockImplementationOnce(() => pending.promise);
+  await mount();
+  let request;
+  await act(async () => { request = fieldbook.ensureAccountModule('productive'); });
+  await act(async () => { fieldbook.setWritingDraft('q1', 'Live local answer'); });
+  await act(async () => {
+    pending.resolve({data:{sessions:[],assessments:[],errors:[],stories:[],drafts:{q1:normalizeDraft({text:'Older remote answer'}),q2:normalizeDraft({text:'Saved second answer'})}},statuses:{}});
+    await request;
+  });
+  expect(fieldbook.state.drafts.q1.text).toBe('Live local answer');
+  expect(fieldbook.state.drafts.q2.text).toBe('Saved second answer');
+  expect(fieldbook.draftSaveStatus('q1')).toBe('unsaved');
+  expect(fieldbook.draftSaveStatus('q2')).toBe('saved');
+});
+
+test('a settings save before productive hydration preserves local recovery and defers its comparison', async () => {
+  mocks.initial.drafts = {};
+  mocks.statuses = {profile:'ready',plans:'ready',drafts:'unloaded',sessions:'unloaded'};
+  const recovery = {q1:normalizeDraft({text:'Recovered local answer'})};
+  writeDraftRecovery(mocks.owner, recovery);
+  await mount('/settings/schedule');
+  expect(fieldbook.recoveryDrafts).toBeNull();
+  await act(async () => { await fieldbook.persist(draft => { draft.settings.dailyMinutes = 45; }); });
+  expect(readDraftRecovery(mocks.owner)?.drafts).toEqual(recovery);
+  expect(mocks.saveState.mock.calls.at(-1)[2].collections).not.toContain('drafts');
+  mocks.moduleRead.mockResolvedValueOnce({data:{sessions:[],assessments:[],errors:[],stories:[],drafts:{q1:normalizeDraft({text:'Older cloud answer'})}},statuses:{}});
+  await act(async () => { await fieldbook.ensureAccountModule('productive'); });
+  expect(fieldbook.state.drafts.q1.text).toBe('Older cloud answer');
+  expect(fieldbook.recoveryDrafts).toEqual(recovery);
+});
+
+test('delayed writing hydration keeps untouched saved sections while preserving a local section edit', async () => {
+  mocks.initial.drafts = {};
+  mocks.statuses = {profile:'ready',plans:'ready',drafts:'unloaded',sessions:'unloaded'};
+  const pending = defer(); mocks.moduleRead.mockImplementationOnce(() => pending.promise);
+  await mount(); let request;
+  await act(async () => { request = fieldbook.ensureAccountModule('productive'); });
+  await act(async () => { fieldbook.setWritingDraft('q1', 'New overview', {sections:{overview:'New overview'}}); });
+  const cloud = normalizeDraft({text:'Saved introduction',sections:{intro:'Saved introduction',overview:'Old overview'}});
+  await act(async () => { pending.resolve({data:{sessions:[],assessments:[],errors:[],stories:[],drafts:{q1:cloud}},statuses:{}}); await request; });
+  expect(fieldbook.state.drafts.q1.sections.intro).toBe('Saved introduction');
+  expect(fieldbook.state.drafts.q1.sections.overview).toBe('New overview');
+  expect(fieldbook.state.drafts.q1.text).toBe('New overview');
+});
+
+test('delayed productive drafts preserve a saved speaking sibling while keeping the edited response', async () => {
+  mocks.initial.drafts = {};
+  mocks.statuses = {profile:'ready',plans:'ready',drafts:'unloaded',sessions:'unloaded'};
+  const [first, second] = speakingPrompts({title:'Home',questions:['Where do you live?','What do you like about it?']}, '1');
+  const pending = defer();
+  mocks.moduleRead.mockImplementationOnce(() => pending.promise);
+  await mount(); let request;
+  await act(async () => { request = fieldbook.ensureAccountModule('productive'); });
+  await act(async () => { fieldbook.setSpeakingDraft('sp1', {...first,transcript:'New first answer'}); });
+  const cloud = normalizeDraft({responses:{[first.promptKey]:{...first,transcript:'Old first answer'},[second.promptKey]:{...second,transcript:'Saved second answer'}}});
+  await act(async () => { pending.resolve({data:{sessions:[],assessments:[],errors:[],stories:[],drafts:{sp1:cloud}},statuses:{}}); await request; });
+  expect(fieldbook.speakingDraft('sp1',first.promptKey).transcript).toBe('New first answer');
+  expect(fieldbook.speakingDraft('sp1',second.promptKey).transcript).toBe('Saved second answer');
 });
 
 test('pending module results cannot merge into a different account', async () => {

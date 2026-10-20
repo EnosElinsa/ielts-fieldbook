@@ -24,7 +24,7 @@ async function main() {
         grant select,insert,update,delete on public.${table} to authenticated;`);
     }
     const migrationDir = path.resolve(__dirname, '../../supabase/migrations');
-    for (const migration of ['20261010090000_unified_vocabulary.sql', '20261010170000_vocabulary_sessions.sql', '20261013120000_workspace_commits.sql', '20261013160000_neutral_vocabulary_identities.sql', '20261014120000_exam_annotations.sql', '20261020120000_planning_conflict_guards.sql', '20261020140000_planning_schedule_baseline.sql']) {
+    for (const migration of ['20261010090000_unified_vocabulary.sql', '20261010170000_vocabulary_sessions.sql', '20261013120000_workspace_commits.sql', '20261013160000_neutral_vocabulary_identities.sql', '20261014120000_exam_annotations.sql', '20261020120000_planning_conflict_guards.sql', '20261020140000_planning_schedule_baseline.sql', '20261020220000_planning_history_pages.sql']) {
       await db.exec(fs.readFileSync(path.join(migrationDir, migration), 'utf8'));
     }
     const indexNames = (await db.query("select indexname from pg_indexes where schemaname='public' and indexname in ('wordbook_memberships_book_unit_id','wordbook_units_book_id','word_entries_term_id') order by indexname")).rows.map(row => row.indexname);
@@ -132,9 +132,31 @@ async function main() {
     assert.equal(await count('workspace_commit_receipts', 'rewrite-history'), 0);
     await commit({ id: 'delete-plan', lists: { plans: { upserts: [], deletes: ['plan'] } } });
     assert.equal(await count('plans', 'plan'), 0);
+    const history = Array.from({length:27},(_,i)=>({id:`paged-${String(i).padStart(2,'0')}`,payload:{id:`paged-${String(i).padStart(2,'0')}`,dateKey:'2010-01-01',status:i%2?'completed':'skipped',skill:'vocabulary',origin:'manual',order:i,rotationIndex:i,...(i===26?{archivedAt:'2010-01-02'}:{}),...(i===25?{target:{mode:'learning-batch',bookId:'last-book'}}:{})}}));
+    await commit({id:'seed-paged-history',lists:{plans:{upserts:history,deletes:[]}}});
+    const workspace=async(options={})=>(await db.query('select public.load_planning_workspace($1) as value',[options])).rows[0].value;
+    const historyPage=async(options={})=>(await db.query('select public.load_planning_history($1) as value',[options])).rows[0].value;
+    const scoped=await workspace({today:'2026-10-20'});
+    assert.equal(scoped.historyCount,26);
+    assert.deepEqual(scoped.plans.filter(row=>row.id.startsWith('paged-')).map(row=>row.id).sort(),['paged-25','paged-26']);
+    assert.equal((await workspace({today:'2026-10-20',full:true})).plans.filter(row=>row.id.startsWith('paged-')).length,27);
+    const firstPage=await historyPage();assert.equal(firstPage.total,26);assert.equal(firstPage.plans.length,20);assert.equal(firstPage.plans[0].id,'paged-25');
+    const lastPage=await historyPage({targetId:'paged-00'});assert.equal(lastPage.offset,20);assert.equal(lastPage.plans.length,6);assert.equal(lastPage.plans.at(-1).id,'paged-00');
+    assert.equal((await historyPage({status:'archived'})).plans[0].id,'paged-26');
+    assert.equal((await historyPage({status:'completed',origin:'manual',skill:'vocabulary',from:'2010-01-01',to:'2010-01-01'})).total,13);
+    const idsOnly=await historyPage({allIds:true,skippedOnly:true});assert.equal(idsOnly.ids.length,13);assert.deepEqual(idsOnly.plans,[]);
+    const stamped={id:'compact-stamped-plan',lists:{plans:diff('stamp-task')},baseline:{planStamp:scoped.planStamp,plans:{'stamp-task':null}}};
+    const ack=(await commit(stamped)).rows[0].result;assert.match(ack.planStamp,/^[a-f0-9]{32}$/);assert.notEqual(ack.planStamp,scoped.planStamp);
+    await assert.rejects(()=>commit({...stamped,id:'stale-compact-stamp'}),/schedule changed on another device/);
+    await commit({id:'intervening-legacy-save',lists:{plans:diff('intervening-task')}});
+    assert.deepEqual((await commit(stamped)).rows[0].result,{...ack,alreadyCommitted:true});
+    await assert.rejects(()=>commit({id:'stale-replay-stamp',lists:{plans:diff('must-not-exist')},baseline:{planStamp:ack.planStamp,plans:{'must-not-exist':null}}}),/schedule changed on another device/);
+    assert.equal(await count('plans','must-not-exist'),0);
     await assert.rejects(() => db.exec("update workspace_commit_receipts set payload_hash='changed'"), /permission denied/);
 
     await db.exec(`set request.jwt.claim.sub='${other}';`);
+    assert.equal((await historyPage()).total,0);
+    assert.equal((await workspace()).historyCount,0);
     assert.equal(await count('sessions', 'session'), 0);
     assert.equal(await count('workspace_commit_receipts', 'save-1'), 0);
     assert.deepEqual((await commit(batch)).rows[0].result, { id: 'save-1', alreadyCommitted: false });

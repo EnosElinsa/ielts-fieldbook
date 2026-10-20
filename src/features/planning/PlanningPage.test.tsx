@@ -59,7 +59,7 @@ test('skill selection stays disabled while its replacement saves',async()=>{
 test('skip and restore preserve explicit tasks',async()=>{
   const view=mount();await taskAction('Skip task');expect(mocks.change).toHaveBeenCalledWith('task',{type:'skip'},{onError:expect.any(Function)});
   mocks.state.plans[0].status='skipped';view.rerender(<MemoryRouter><PlanningPage/></MemoryRouter>);
-  await userEvent.click(screen.getByRole('button',{name:/History ·/}));await userEvent.click(screen.getByRole('button',{name:'Restore task'}));await userEvent.click(screen.getByRole('button',{name:'Save change'}));expect(mocks.change).toHaveBeenLastCalledWith('task',expect.objectContaining({type:'restore'}),{onError:expect.any(Function)});
+  await userEvent.click(screen.getByRole('button',{name:'History',exact:true}));await userEvent.click(screen.getByRole('button',{name:'Restore task'}));await userEvent.click(screen.getByRole('button',{name:'Save change'}));expect(mocks.change).toHaveBeenLastCalledWith('task',expect.objectContaining({type:'restore'}),{onError:expect.any(Function)});
 });
 test('failed edit stays open and keeps the selected date for retry',async()=>{
   mocks.change.mockResolvedValueOnce(false);mount();await taskAction('Reschedule task');
@@ -107,7 +107,7 @@ test('automatic replan preview distinguishes selected tasks from related schedul
 
 test('history keeps skipped identities and restores only through an explicit dated action',async()=>{
  mocks.state.plans.push({id:'skipped-old',dateKey:'2020-01-01',status:'skipped',skipReason:'bulk-skip',skill:'writing',title:'Skipped old task',estimatedMinutes:20});
- mount();await userEvent.click(screen.getByRole('button',{name:/History ·/}));
+ mount();await userEvent.click(screen.getByRole('button',{name:'History',exact:true}));
  expect(screen.getByRole('heading',{name:'Skipped old task'})).toBeInTheDocument();
  await userEvent.click(screen.getByRole('button',{name:'Restore task'}));expect(screen.getByRole('dialog',{name:'Restore task'})).toBeInTheDocument();
 });
@@ -139,7 +139,7 @@ test('system-handled history excludes archived tasks and still offers an explici
     {id:'visible',dateKey:'2020-01-01',status:'skipped',skipReason:'no-longer-due',origin:'automatic',skill:'vocabulary',title:'Current decision',estimatedMinutes:1},
     {id:'archived',dateKey:'2020-01-01',status:'skipped',skipReason:'no-longer-due',origin:'automatic',archivedAt:'2020-02-01T00:00:00Z',skill:'vocabulary',title:'Archived decision',estimatedMinutes:1},
   ];
-  mount();await userEvent.click(screen.getByRole('button',{name:/History ·/}));
+  mount();await userEvent.click(screen.getByRole('button',{name:'History',exact:true}));
   await userEvent.selectOptions(screen.getByRole('combobox',{name:'Status'}),'system');
   expect(screen.getByRole('heading',{name:'Current decision'})).toBeInTheDocument();
   expect(screen.queryByRole('heading',{name:'Archived decision'})).not.toBeInTheDocument();

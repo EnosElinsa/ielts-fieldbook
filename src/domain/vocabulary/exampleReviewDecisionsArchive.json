@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "archivedOn": "2026-10-20",
   "originalReceiptFileSha256": "98a056fb41b99ac0db36273a453f78b8cc8fc3a02c8dfb2ccd5f37e648cb936a",
-  "activeReceipts": 312,
+  "activeReceipts": 309,
   "records": [
     {
       "receipt": {
@@ -17,6 +17,60 @@
         "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
       },
       "reason": "The displayed-content variant was superseded by an independently reviewed update."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:5eef1b13943080ad12e5ccfe7d0b7ce0451811ba88c4f50850f2971746d8c198",
+        "entryId": "ve-4efbe53f",
+        "senseId": "kaikki:879e4ec3a960e1f734",
+        "sourceHash": "155977b5afa2401e401d6580c2948d1b6c8d322b777164ff1103ceea6a3cf7ea",
+        "displayHash": "b2f63b397ca7b88200503a6e59a28433003726c8522f7a7af6962d49df02bc00",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Arabic&oldid=93361552",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed fourth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:0bf25fc1f888c246768f15fe6ada034ace5e3ff185adb4facbefa74d1398f241",
+        "entryId": "ve-dc262b74",
+        "senseId": "kaikki:3083755c61b8027f59",
+        "sourceHash": "aa18c91ff5049c9731fa321f941afb04294d951ffb1ae34c78d94f807b8ac4d9",
+        "displayHash": "8e4c8a6f2fd15728d76a67020119cd4b3df5a2d051c4dccd4c5e68c916fbe3a1",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=historic&oldid=93699742",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed fourth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:9da8d6b36919da8d35b8187b57d2d6fd808e23054f4b0866edda0b9aac6622d9",
+        "entryId": "ve-9156a6b3",
+        "senseId": "kaikki:31dcf68e0840b890c6",
+        "sourceHash": "095f98387af8001d00ffcfa04d7d15df0d26c64723c2d75cff5fdf05c22b0725",
+        "displayHash": "319eb46b066bcfdd95651710ddfa2dca8f646d3c9f941235e88d4f9a76f56f2a",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=Italian&oldid=93519447",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed fourth-package update; its current variants no longer trigger the fragment signal."
+    }
+  ],
+  "transitions": [
+    {
+      "date": "2026-10-20",
+      "priorActiveSha256": "e388063bff86ba316f92e69ab4379d11aaa8c077b66930c5bd348f318e4ec59c",
+      "archivedReceiptIds": [
+        "vq:5eef1b13943080ad12e5ccfe7d0b7ce0451811ba88c4f50850f2971746d8c198",
+        "vq:0bf25fc1f888c246768f15fe6ada034ace5e3ff185adb4facbefa74d1398f241",
+        "vq:9da8d6b36919da8d35b8187b57d2d6fd808e23054f4b0866edda0b9aac6622d9"
+      ],
+      "activeReceipts": 309
     }
   ]
 }

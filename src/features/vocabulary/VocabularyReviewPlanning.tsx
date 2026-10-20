@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { TaskStartButton } from '../planning/StudySchedule';
@@ -33,6 +33,7 @@ export function ScheduleVocabularyReview({controller:c}:{controller:VocabularyPr
 
 export function ReviewStartButton({controller:c,disabled,label}:{controller:VocabularyPracticeController;disabled:boolean;label:string}){
  const [matching,setMatching]=useState<StudyPlan[]|null>(null);
+ useEffect(()=>{if(c.planRequested)setMatching(null);},[c.planRequested]);
  function start(){
   if(c.planRequested||c.study){c.begin();return;}
   const identities=new Set(c.queue.map(card=>JSON.stringify([card.entryId,card.senseId])));
