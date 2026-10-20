@@ -517,6 +517,14 @@ test('multiple meanings preserve explicit selection in the details return link a
   await screen.findByRole('heading',{name:'book'});
   const meaningButtons=screen.getAllByRole('button',{name:/Meaning \d/});
   expect(meaningButtons.length).toBeGreaterThan(1);
+  expect(screen.getByLabelText('Meanings to learn')).toHaveTextContent('Each meaning keeps its own review progress.');
+  expect(meaningButtons.every(button=>Boolean(button.querySelector('.vocabulary-learning-meaning-preview')?.textContent))).toBe(true);
+  expect(meaningButtons.filter(button=>button.getAttribute('aria-pressed')==='true')).toHaveLength(1);
+  await userEvent.setup().click(screen.getByRole('button',{name:'Recall first'}));
+  expect(screen.getByLabelText('Meanings to learn').querySelector('.vocabulary-learning-meaning-preview')).toBeNull();
+  await userEvent.setup().click(screen.getByRole('button',{name:'Reveal meaning'}));
+  expect(screen.getByLabelText('Meanings to learn').querySelector('.vocabulary-learning-meaning-preview')).not.toBeNull();
+  await userEvent.setup().click(screen.getByRole('button',{name:'Read first'}));
   await userEvent.setup().click(meaningButtons.find(button=>button.textContent?.includes('noun'))!);
   const assessment = new URL(screen.getByRole('link', { name: /^Start / }).getAttribute('href')!, 'http://local.test');
   expect(JSON.parse(assessment.searchParams.get('batchCards')!).find((ref: any) => ref.entryId === book.id).senseId).toBe('kaikki:7d09dc41b99ae33c32');

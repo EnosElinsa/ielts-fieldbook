@@ -17,7 +17,8 @@ const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'
 const raw = (term: string): VocabularySense[] => JSON.parse(readFileSync('public/dictionary/' + index[term], 'utf8')).senses;
 const entry = (term: string): VocabularyEntry => catalog.entries.find((e: VocabularyEntry) => e.term === term);
 const records = ledger.records.filter(r => terms.includes(r.term));
-const rows = corrections.filter(r => records.some(l => l.entryId === r.entryId && l.senseId === r.senseId));
+// This batch's original source reviews remain distinct from later scoped teaching variants.
+const rows = corrections.filter(r => !('variantId' in r) && records.some(l => l.entryId === r.entryId && l.senseId === r.senseId));
 const at = (term: string, i: number) => {
   const row = rows.find(r => r.entryId === entry(term).id && r.senseId === raw(term)[i].id);
   expect(row, `${term} meaning ${i}`).toBeDefined(); return row!;

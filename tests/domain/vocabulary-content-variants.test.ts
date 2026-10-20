@@ -60,6 +60,30 @@ test('full match rejects same definition/example/POS with a different optional n
   const data = empty(); data.readiness.corrections = [row]; reset(data);
   assert.deepEqual(readiness.supplementVocabularySense('test:token', sibling, [sibling], () => false, sourceScope), sibling);
 });
+
+test('legacy supplementation cannot use a learner snapshot to authorize replacing its edited example or task', () => {
+  const raw=sense({example:'Old public example with token.',usage:''});
+  const task={prompt:'Choose token.',options:['token','other'],answer:'token',explanation:'Public task.'};
+  const old={...raw,example:'The token has public teaching.',distinctionTask:task};
+  const final={...old,collocations:['public token']};
+  const data=empty();
+  data.readiness.corrections=[{entryId:'test:token',senseId:raw.id,originalSense:raw,example:old.example,distinctionTask:task},variant('updated',old,final,[sourceScope])];
+  reset(data);
+  for(const patch of [{example:'My own token example.'},{distinctionTask:{...task,prompt:'My own question.'}}]) {
+    const personal={...old,...patch};
+    assert.deepEqual(project(readiness.supplementVocabularySense('test:token',personal,[raw,old],content.hasVocabularySenseEdits,sourceScope)),project(personal));
+  }
+});
+
+test('resolving another route does not retag a caller-owned source reference', () => {
+  const raw=sense(),after={...raw,example:'Token is an error in this reading.'};
+  const data=empty();data.readiness.corrections=[variant('reference',raw,after,[sourceScope],{referenceOnly:true})];reset(data);
+  const selected=readiness.supplementVocabularySense('test:token',raw,[raw],content.hasVocabularySenseEdits,sourceScope);
+  assert.equal(readiness.isVocabularySpellingReference('test:token',selected),true);
+  const other=readiness.applyVocabularyContentVariant('test:token',selected,selected,[raw],content.hasVocabularySenseEdits,defaultScope);
+  assert.equal(readiness.isVocabularySpellingReference('test:token',other),false);
+  assert.equal(readiness.isVocabularySpellingReference('test:token',selected),true);
+});
 test('identical final content keeps reading-note metadata isolated by the actual route', () => {
   const raw = sense(), after = { ...raw, example: 'The token remains visible.' }; const data = empty();
   data.readiness.corrections = [variant('s', raw, after, [sourceScope], { exampleKind: 'reading-note', learningPriority: 'historical' }), variant('g', raw, after, [groupScope], { learningPriority: 'general' })]; reset(data);
@@ -74,6 +98,21 @@ test('ambiguous exact variants fail closed', () => {
   const raw = sense(); const data = empty();
   data.readiness.corrections = [variant('a', raw, { ...raw, usage: 'A' }, [sourceScope]), variant('b', raw, { ...raw, usage: 'B' }, [sourceScope])]; reset(data);
   assert.deepEqual(readiness.supplementVocabularySense('test:token', raw, [raw], () => false, sourceScope), raw);
+});
+
+test('a superseding route accepts its exact earlier public snapshots while preserving personal edits', () => {
+  const original = sense({ usage:'Original source.' });
+  const previous = sense({ example:'The token had earlier reviewed teaching.', usage:'Earlier review.' });
+  const final = sense({ example:'The token has current reviewed teaching.', usage:'Current review.' });
+  const row = { ...variant('replacement', original, final, [sourceScope]), previousSenses:[clone(previous)] };
+  const data = empty(); data.readiness.corrections = [row]; reset(data);
+  for (const publicSnapshot of [original,previous,final]) {
+    const actual = readiness.supplementVocabularySense('test:token', publicSnapshot, [], content.hasVocabularySenseEdits, sourceScope);
+    assert.deepEqual(project(actual),project(final));
+  }
+  const personal = { ...previous, usage:'My own interpretation.' };
+  assert.deepEqual(project(readiness.supplementVocabularySense('test:token',personal,[],content.hasVocabularySenseEdits,sourceScope)),project(personal));
+  assert.deepEqual(project(readiness.supplementVocabularySense('test:token',previous,[],content.hasVocabularySenseEdits,groupScope)),project(previous));
 });
 test('explicit empty fields remain edits when old snapshot omitted that field', () => {
   const raw = sense(), after = { ...raw, distinctions: ['New public guidance.'], usage: 'New usage.' };

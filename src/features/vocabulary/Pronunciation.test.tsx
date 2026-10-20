@@ -2,6 +2,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-libra
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { Pronunciation, playbackMessage } from './Pronunciation';
 import type { VocabularyEntry } from '../../domain/vocabulary/types';
+import * as sensePronunciation from '../../domain/vocabulary/sensePronunciation';
 const state = vi.hoisted(() => ({ load: vi.fn(), play: vi.fn(), stop: vi.fn() }));
 vi.mock('../../domain/vocabulary/media', () => ({ getVocabularyMedia: state.load }));
 vi.mock('./playback', () => ({ createVocabularyPlayback: () => ({ play: state.play, stop: state.stop }) }));
@@ -12,6 +13,33 @@ const record={...entry,id:'ve-7e9f7328',term:'record',senses:[noun,verb],pronunc
 beforeEach(() => { state.load.mockReset(); state.play.mockReset(); state.stop.mockReset(); });
 afterEach(() => { cleanup(); vi.useRealTimers(); });
 describe('pronunciation controls', () => {
+ test('a verified meaning recording with a failed availability check offers an explicit retry',async()=>{
+  const audio={url:'https://example.org/matched.ogg',title:'Matched reading',accent:'us' as const,status:'verified' as const,availability:'failed' as const,wordformConfirmed:true,sourceUrl:'https://example.org/revision',author:'Speaker',license:'CC0',licenseUrl:'https://creativecommons.org/publicdomain/zero/1.0/',changes:'None',reason:'HTTP 429 observed.'};
+  const lookup=vi.spyOn(sensePronunciation,'getVocabularyPronunciation').mockReturnValue({required:true,recordings:[audio]});
+  state.play.mockResolvedValue({ok:false,reason:'sense-recording-failed',accent:'us'});
+  try {
+   render(<Pronunciation entry={record} sense={noun} accent="us"/>);
+   await waitFor(()=>expect(screen.queryByText('Loading pronunciation details…')).toBeNull());
+   expect(screen.getByRole('button',{name:'Play US pronunciation of record'}).textContent).toBe('Retry · US audio');
+   fireEvent.click(screen.getByRole('button',{name:'Play US pronunciation of record'}));
+   await waitFor(()=>expect(state.play).toHaveBeenCalledWith(record,expect.objectContaining({recording:audio,sense:noun})));
+   expect(screen.getByRole('button',{name:'US — Speaker'})).toBeDefined();
+   expect(screen.getByRole('status').textContent).toContain('could not play');
+  } finally { lookup.mockRestore(); }
+ });
+ test('a source transcription without a regional label is not presented as UK or US',async()=>{
+  const lookup=vi.spyOn(sensePronunciation,'getVocabularyPronunciation').mockReturnValue({required:true,recordings:[],group:{id:'general-reading',term:'refuse',scope:'fuse again',sourceUrl:'https://example.org/revision',ipa:{general:'/ɹiːˈfjuːz/'},audioMarkup:[],recordings:{}}});
+  try {
+   const view=render(<Pronunciation entry={{...entry,term:'refuse'}} accent="uk"/>);
+   await waitFor(()=>expect(screen.queryByText('Loading pronunciation details…')).toBeNull());
+   expect(screen.getByText('IPA /ɹiːˈfjuːz/')).toBeDefined();
+   expect(screen.queryByText('UK /ɹiːˈfjuːz/')).toBeNull();
+   view.rerender(<Pronunciation entry={{...entry,term:'refuse'}} accent="us"/>);
+   expect(screen.getByText('IPA /ɹiːˈfjuːz/')).toBeDefined();
+   expect(screen.queryByText('US /ɹiːˈfjuːz/')).toBeNull();
+   expect(screen.getByRole('button',{name:'Play US pronunciation of refuse'}).textContent).toContain('No matched audio');
+  } finally { lookup.mockRestore(); }
+ });
  test('legacy history discloses its missing saved match even before playback succeeds',async()=>{
   state.load.mockResolvedValue({recordings:[]});state.play.mockResolvedValue({ok:false,source:'none',reason:'target-voice-unavailable',accent:'us'});
   render(<Pronunciation compact entry={record} sense={noun} accent="us" options={{pronunciation:'legacy'}}/>);

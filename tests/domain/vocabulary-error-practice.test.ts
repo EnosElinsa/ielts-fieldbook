@@ -4,6 +4,7 @@ import {addVocabularyItem,getVocabularyReviewQueue,recordVocabularyReview} from 
 import {getVocabularyNextPractice} from '../../src/domain/vocabulary/nextPractice';
 import {buildVocabularySessionCommit,createVocabularySession,updateVocabularySessionAnswer} from '../../src/domain/vocabulary/session';
 import type {VocabularyEntry,VocabularyMode,VocabularyStore} from '../../src/domain/vocabulary/types';
+import {resolveVocabularyLearningContext} from '../../src/domain/vocabulary/context';
 
 const past='2026-10-16T09:00:00.000Z',now='2026-10-17T10:00:00.000Z',future='2026-10-18T10:00:00.000Z';
 const corrections=JSON.parse(readFileSync('src/domain/vocabulary/readinessCorrections.json','utf8'));
@@ -149,10 +150,13 @@ test.each([
 });
 
 test.each(['pos','example','source','task'] as const)('current %s edits cannot reuse an old confirmed diagnosis',field=>{
- const {store,recommend}=failed('distinction','effect','kaikki:2114daefbbfa5151d9');
+ const {store,recommend,senseId}=failed('distinction','effect','kaikki:2114daefbbfa5151d9');
  const sense=store.vocabulary[0].senses[0];
+ expect(sense.id).toBe(senseId);
  if(field==='task')sense.distinctionTask!.prompt='A new personal question.';
  else sense[field]='Changed learner content';
+ const resolved=resolveVocabularyLearningContext(store.vocabulary[0],{senseId});
+ expect(resolved.sense).toMatchObject(sense);
  expect(recommend()).not.toHaveProperty('error');
 });
 

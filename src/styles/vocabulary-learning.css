@@ -24,8 +24,13 @@
 .vocabulary-learning-progress-track { height: 6px; border-radius: 10px; overflow: hidden; background: var(--rule); }
 .vocabulary-learning-progress-track > span { display: block; width: 100%; height: 100%; background: var(--blue); border-radius: inherit; transform-origin: left; transition: transform 300ms cubic-bezier(.22,1,.36,1); }
 .vocabulary-learning-checkpoint .btn { min-height:40px; margin-top:6px; }
-.vocabulary-learning-meanings { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-.vocabulary-learning-meanings .btn { min-height: 44px; white-space: normal; text-align: left; }
+.vocabulary-learning-meaning-picker { margin-top:20px; }
+.vocabulary-learning-meaning-picker > p { color:var(--muted); font-size:12px; line-height:1.6; margin:0 0 8px; }
+.vocabulary-learning-meanings { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.vocabulary-learning-meanings .btn { min-width:0; min-height:44px; display:flex; flex-direction:column; align-items:stretch; justify-content:flex-start; gap:6px; white-space:normal; text-align:left; }
+.vocabulary-learning-meaning-label { display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:12px; }
+.vocabulary-learning-meaning-label svg { flex-shrink:0; }
+.vocabulary-learning-meaning-preview { font-size:13px; font-weight:400; line-height:1.5; overflow-wrap:anywhere; }
 .vocabulary-learning-meanings [aria-pressed="true"] { background: var(--blue); color: white; border-color: var(--blue); }
 .vocabulary-learning-selected-practice { margin-top: 16px; }
 .vocabulary-learning-selected-practice p { font-size: 12px; line-height: 1.6; max-width: 65ch; }
@@ -73,7 +78,8 @@
   .vocabulary-learning-definition { margin-top: 18px; }
   .vocabulary-learning-definition p { font-size: 17px; }
   .vocabulary-learning-card h3 { margin-top: 8px; }
-  .vocabulary-learning-meanings { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin-top: 12px; }
+  .vocabulary-learning-meaning-picker { margin-top:12px; }
+  .vocabulary-learning-meanings { grid-template-columns: minmax(0,1fr); }
   .vocabulary-learning-meanings .btn { font-size: 12px; padding: 8px; }
   .vocabulary-learning-controls { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
   .vocabulary-learning-controls .btn { justify-content: center; white-space: normal; }

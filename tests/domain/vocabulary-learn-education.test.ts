@@ -72,6 +72,8 @@ test('previous public AI skill notes receive the copy update without becoming a 
 test('personal AI skill notes remain intact when public teaching receives the copy update',()=>{
  const current=corrections.find(r=>r.senseId===raw('skill',1).id)!;
  const personal={...structuredClone(current.previousSenses!.at(-1)!),distinctions:['My tutor’s bibliography advice.']} as VocabularySense;
- expect(supplementVocabularySense(current.entryId,personal,[],hasVocabularySenseEdits)).toBe(personal);
+ const before=structuredClone(personal);
+ expect(supplementVocabularySense(current.entryId,personal,[],hasVocabularySenseEdits)).toStrictEqual(before);
+ expect(personal).toStrictEqual(before);
  expect(personal.distinctions).toEqual(['My tutor’s bibliography advice.']);
 });

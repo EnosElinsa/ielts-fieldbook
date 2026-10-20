@@ -37,7 +37,7 @@ test.each([
 });
 
 test('every exact binding retains current public identity and revision-bound provenance',()=>{
-  expect(registry.groups).toHaveLength(21);expect(registry.recordings).toHaveLength(23);
+  expect(registry.groups).toHaveLength(33);expect(registry.recordings).toHaveLength(36);
   expect(new Set(registry.bindings.map(r=>r.id)).size).toBe(registry.bindings.length);
   expect(new Set(registry.groups.map(r=>r.id)).size).toBe(registry.groups.length);
   expect(new Set(registry.recordings.map(r=>r.id)).size).toBe(registry.recordings.length);
@@ -60,6 +60,28 @@ test('every exact binding retains current public identity and revision-bound pro
       expect(audio.url).toMatch(/^https:\/\/upload\.wikimedia\.org\//);
     }
   }
+});
+
+test.each([
+ ['kaikki:398ea99dfb8f16be81','permit-etym1-ordinary-verb'],
+ ['kaikki:3d1a8d829445655585','permit-etym1-noun-denominal'],
+ ['kaikki:1bfb246afe7b961fc7','permit-etym2-fish'],
+ ['kaikki:2ce6d3e637cf03dcd1','refuse-etym1-waste'],
+ ['kaikki:1f45c4610eb25c3c1c','refuse-etym2-decline'],
+ ['kaikki:62d20c159fbc81a325','refuse-etym3-fuse-again'],
+])('source-specific reading %s selects %s independently of the part of speech',(id,group)=>{
+ const {entry,sense}=fixture(id),result=getVocabularyPronunciation(entry,sense);
+ expect(result.required).toBe(true);expect(result.group?.id).toBe(group);
+ const frozen=freezeVocabularyPronunciation(entry,sense);
+ expect(frozen).toHaveProperty('bindingId',result.binding?.id);
+ expect(getVocabularyPronunciation(entry,sense,{version:1,bindingId:null}).group).toBeUndefined();
+ expect(getVocabularyPronunciation(entry,{...sense,definition:'My own meaning.'}).binding).toBeUndefined();
+});
+
+test('fuse-again keeps its general transcription and cannot borrow the declining-verb recording',()=>{
+ const {entry,sense}=fixture('kaikki:62d20c159fbc81a325'),result=getVocabularyPronunciation(entry,sense);
+ expect(result.group?.ipa).toEqual({uk:'',us:'',general:'/ɹiːˈfjuːz/'});
+ expect(result.recordings).toEqual([]);
 });
 
 test.each(['definition','pos','id','source','entryId','term'])('an edited or mismatched %s cannot inherit a public binding',field=>{

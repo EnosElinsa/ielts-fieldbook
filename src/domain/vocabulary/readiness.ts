@@ -1,7 +1,7 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default, type VocabularyLearningPriority, type VocabularyContentScope, vocabularyEditableSenseFields } from './runtimeData';
 import type { VocabularyEntry, VocabularySense } from './types';
 
-export const VOCABULARY_READINESS_VERSION = 'core-2026-10-20.4';
+export const VOCABULARY_READINESS_VERSION = 'core-2026-10-20.5';
 const identity = (entryId:string, senseId:string) => `${entryId}\u0000${senseId}`;
 const core = new Map<string,Supplement>();
 const additions = new Map<string,Supplement>();
@@ -48,7 +48,8 @@ function normalizedVocabularyContent(left:VocabularySense,right:VocabularySense)
 }
 function matchingVariant(entryId:string,sense:VocabularySense,scope:VocabularyContentScope|undefined,afterOnly=false):Supplement|undefined {
  const rows=(variants.get(identity(entryId,sense.id))||[]).filter(row=>row.contentVariant && (!scope || row.contentVariant.scopes.some(candidate=>exactScope(candidate,scope))) &&
-  (normalizedVocabularyContent(sense,row.contentVariant.afterContent) || !afterOnly && normalizedVocabularyContent(sense,row.contentVariant.beforeContent)));
+  (normalizedVocabularyContent(sense,row.contentVariant.afterContent) || !afterOnly &&
+   [row.contentVariant.beforeContent,...(row.previousSenses || [])].some(previous=>normalizedVocabularyContent(sense,previous))));
  return rows.length===1?rows[0]:undefined;
 }
 /** Metadata belongs to the complete final variant, never a source-pair sibling. */
@@ -72,9 +73,9 @@ export function markVocabularyContentScope<T extends VocabularySense>(sense:T,sc
 export function applyVocabularyContentVariant(entryId:string,publicSense:VocabularySense,learnerSense:VocabularySense,baselines:VocabularySense[],edited:(sense:VocabularySense,baselines:VocabularySense[])=>boolean,scope:VocabularyContentScope):VocabularySense {
  ensureReadiness();
  const row=matchingVariant(entryId,publicSense,scope);
- if(!row?.contentVariant || learnerSense.id!==publicSense.id) return markVocabularyContentScope(learnerSense,scope);
+ if(!row?.contentVariant || learnerSense.id!==publicSense.id) return markVocabularyContentScope({...learnerSense},scope);
  const known=[...baselines,...vocabularyReadinessBaselines(entryId,publicSense.id)].filter(sense=>sense.id===learnerSense.id);
- if(edited(learnerSense,known)) return markVocabularyContentScope(learnerSense,scope);
+ if(edited(learnerSense,known)) return markVocabularyContentScope({...learnerSense},scope);
  // Replace the whole editable snapshot: absent optional teaching stays absent.
  const result={...learnerSense,...publicSense};
  for(const field of vocabularyEditableSenseFields) delete (result as unknown as Record<string,unknown>)[field];
@@ -218,7 +219,9 @@ export function supplementVocabularySense(entryId:string,sense:VocabularySense,b
  if(matchingVariant(entryId,publicSense,scope,true)) return applyVocabularyContentVariant(entryId,publicSense,sense,known,edited,scope);
  const selected=supplementLegacyVocabularySense(entryId,publicSense,known,()=>false);
  const learner=supplementLegacyVocabularySense(entryId,sense,known,edited);
- return applyVocabularyContentVariant(entryId,selected,learner,[...known,publicSense,selected],edited,scope);
+ // The input can be a learner edit. Only the matched public selection may
+ // extend its baselines; the learner cannot authorize its own replacement.
+ return applyVocabularyContentVariant(entryId,selected,learner,[...known,selected],edited,scope);
 }
 
 export function applyVocabularyReadiness(entry:VocabularyEntry, originals:VocabularySense[], edited:(sense:VocabularySense,baselines:VocabularySense[])=>boolean):VocabularyEntry {

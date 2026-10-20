@@ -2,7 +2,7 @@ import { vocabularyTeaching } from './runtimeData';
 import { VOCABULARY_CATALOG } from './catalog';
 import { vocabularyCurriculumBaselines } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
-import { applyVocabularyContentVariant, applyVocabularyReadiness, hasVocabularyReadinessContext, isVocabularyReadingNote, isVocabularyPracticeReference, supplementVocabularySense, vocabularyReadinessBaselines, VOCABULARY_READINESS_VERSION } from './readiness';
+import { applyVocabularyContentVariant, applyVocabularyReadiness, exactVocabularyContent, hasVocabularyReadinessContext, isVocabularyReadingNote, isVocabularyPracticeReference, supplementVocabularySense, vocabularyReadinessBaselines, VOCABULARY_READINESS_VERSION } from './readiness';
 import { vocabularySensePresentation } from './dictionaryPresentation';
 import sentenceGapForms from './sentenceGapForms.json';
 export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-18.2/${VOCABULARY_READINESS_VERSION}`;
@@ -165,7 +165,7 @@ function existingReviewedEntry(entry: VocabularyEntry): VocabularyEntry {
   const baselines = [...catalogVocabularySenses(entry.id).filter(original => original.id === sense.id), ...vocabularyReadinessBaselines(entry.id, sense.id)];
   const supplemented = supplementVocabularySense(entry.id, sense, baselines, hasVocabularySenseEdits, {kind:'default'});
   // Apply exact teaching before a legacy cleanup can look like a learner edit.
-  if (supplemented !== sense || hasVocabularySenseEdits(sense, baselines)) return supplemented;
+  if (!exactVocabularyContent(supplemented,sense) || hasVocabularySenseEdits(sense, baselines)) return supplemented;
   return {...sense, synonyms:[]};
  })};
 }

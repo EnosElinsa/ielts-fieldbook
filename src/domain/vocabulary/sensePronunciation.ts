@@ -5,7 +5,7 @@ import type { VocabularyAccent, VocabularyRecording } from './media';
 /** IDs refer to retained, immutable registry rows. Null freezes a missing match. */
 export type FrozenVocabularyPronunciation = { version: 1; bindingId: string | null } | 'legacy';
 type Binding = typeof registry.bindings[number];
-type Group = { id: string; term: string; scope: string; sourceUrl: string; ipa: Record<VocabularyAccent, string>; audioMarkup: string[]; recordings: Partial<Record<VocabularyAccent, string>> };
+type Group = { id: string; term: string; scope: string; sourceUrl: string; ipa: Partial<Record<VocabularyAccent, string>> & { general?: string }; audioMarkup: string[]; recordings: Partial<Record<VocabularyAccent, string>> };
 const bindings = new Map(registry.bindings.map(row => [row.id, row]));
 const groups = new Map((registry.groups as Group[]).map(row => [row.id, row]));
 const recordings = new Map((registry.recordings as (VocabularyRecording & { id: string })[]).map(row => [row.id, row]));

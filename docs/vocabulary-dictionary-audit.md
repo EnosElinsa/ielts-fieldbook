@@ -2,7 +2,7 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 798 restored source meanings** (52,152 total). This ledger verifies **5579 records** across definition, examples or reading explanations, collocations and distinctions; **46,573 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1413 reviewed distinction exercises and 854 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 6 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 1511 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 32 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 798 restored source meanings** (52,152 total). This ledger verifies **6149 records** across definition, examples or reading explanations, collocations and distinctions; **46,003 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1413 reviewed distinction exercises and 854 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 7 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 1862 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 32 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
 Authored learning-priority metadata classifies 947 general, 255 specialist, 210 historical and 25 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
 
@@ -11,42 +11,99 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | 3d printing | 2 | 2 | 0 |
 | a plus | 2 | 2 | 0 |
 | ability | 7 | 7 | 0 |
-| aboriginal | 1 | 10 | 9 |
-| abortion | 1 | 6 | 5 |
-| abuse | 1 | 15 | 14 |
-| academic | 2 | 13 | 11 |
-| academy | 1 | 14 | 13 |
-| access | 13 | 14 | 1 |
-| accessory | 1 | 8 | 7 |
-| accident | 1 | 14 | 13 |
-| accommodate | 1 | 12 | 11 |
-| according | 1 | 3 | 2 |
+| aboriginal | 10 | 10 | 0 |
+| abortion | 6 | 6 | 0 |
+| abroad | 9 | 9 | 0 |
+| absence | 7 | 7 | 0 |
+| absent | 11 | 11 | 0 |
+| absorb | 11 | 11 | 0 |
+| abstract | 17 | 17 | 0 |
+| abuse | 15 | 15 | 0 |
+| academic | 13 | 13 | 0 |
+| academy | 13 | 14 | 1 |
+| accelerate | 8 | 8 | 0 |
+| accent | 20 | 20 | 0 |
+| access | 14 | 14 | 0 |
+| accessible | 7 | 7 | 0 |
+| accessory | 8 | 8 | 0 |
+| accident | 14 | 14 | 0 |
+| accidental | 9 | 9 | 0 |
+| accommodate | 12 | 12 | 0 |
+| accommodation | 3 | 4 | 1 |
+| accompany | 8 | 8 | 0 |
+| accomplish | 6 | 6 | 0 |
+| accord | 14 | 14 | 0 |
+| according | 3 | 3 | 0 |
 | account | 13 | 13 | 0 |
-| accountancy | 1 | 2 | 1 |
+| accountable | 4 | 4 | 0 |
+| accountancy | 2 | 2 | 0 |
+| accountant | 6 | 6 | 0 |
 | accountants | 1 | 1 | 0 |
 | accounting | 4 | 4 | 0 |
-| accurate | 1 | 5 | 4 |
-| acid | 1 | 11 | 10 |
+| accredit | 8 | 8 | 0 |
+| accumulate | 4 | 4 | 0 |
+| accuracy | 2 | 2 | 0 |
+| accurate | 5 | 5 | 0 |
+| accurately | 1 | 1 | 0 |
+| accuse | 4 | 4 | 0 |
+| accustom | 4 | 4 | 0 |
+| acid | 11 | 11 | 0 |
+| acoustic | 7 | 7 | 0 |
+| acquaintance | 4 | 4 | 0 |
 | acquire | 5 | 5 | 0 |
-| activate | 1 | 11 | 10 |
-| actress | 1 | 2 | 1 |
+| acquisition | 3 | 3 | 0 |
+| act | 35 | 35 | 0 |
+| action | 27 | 27 | 0 |
+| action plan | 1 | 1 | 0 |
+| activate | 11 | 11 | 0 |
+| activity | 6 | 6 | 0 |
+| actor | 7 | 7 | 0 |
+| actress | 2 | 2 | 0 |
+| actual | 5 | 6 | 1 |
+| acupuncture | 2 | 2 | 0 |
+| acute | 17 | 17 | 0 |
 | adapt | 5 | 5 | 0 |
-| additional | 1 | 2 | 1 |
+| adaptation | 8 | 8 | 0 |
+| add | 15 | 15 | 0 |
+| addictive | 5 | 5 | 0 |
+| addition | 7 | 7 | 0 |
+| additional | 2 | 2 | 0 |
 | address | 30 | 31 | 1 |
 | adelaide | 1 | 2 | 1 |
-| adequate | 1 | 4 | 3 |
+| adequate | 4 | 4 | 0 |
+| adjacent | 6 | 6 | 0 |
+| adjective | 8 | 8 | 0 |
 | adjust | 4 | 4 | 0 |
-| admire | 1 | 7 | 6 |
-| admission | 5 | 7 | 2 |
+| administer | 7 | 7 | 0 |
+| administration | 8 | 8 | 0 |
+| admire | 7 | 7 | 0 |
+| admission | 7 | 7 | 0 |
 | admit | 6 | 6 | 0 |
+| adolescence | 1 | 1 | 0 |
 | adopt | 9 | 9 | 0 |
-| adorn | 1 | 3 | 2 |
-| adventure | 1 | 14 | 13 |
-| adverb | 1 | 3 | 2 |
-| adverse | 1 | 3 | 2 |
+| adorn | 3 | 3 | 0 |
+| adult | 6 | 6 | 0 |
+| advance | 7 | 10 | 3 |
+| advanced | 7 | 7 | 0 |
+| advanced degree | 1 | 1 | 0 |
+| advantage | 8 | 8 | 0 |
+| adventure | 14 | 14 | 0 |
+| adverb | 3 | 3 | 0 |
+| adverse | 3 | 3 | 0 |
+| adversity | 2 | 2 | 0 |
+| advertise | 5 | 5 | 0 |
+| advertisement | 6 | 6 | 0 |
+| advertisements | 1 | 1 | 0 |
+| advertising | 3 | 3 | 0 |
+| advice | 10 | 10 | 0 |
+| advisable | 2 | 2 | 0 |
 | advise | 9 | 9 | 0 |
-| affair | 1 | 9 | 8 |
+| adviser | 2 | 2 | 0 |
+| aesthetic | 5 | 5 | 0 |
+| affair | 9 | 9 | 0 |
 | affect | 15 | 15 | 0 |
+| affection | 7 | 7 | 0 |
+| affirm | 6 | 6 | 0 |
 | african | 3 | 3 | 0 |
 | age | 1 | 22 | 21 |
 | agent | 1 | 11 | 10 |

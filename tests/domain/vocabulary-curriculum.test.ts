@@ -94,7 +94,7 @@ test('a source recommendation cannot override notes on a different primary ident
   expect(explicit.sense?.id).toBe('editorial:core:fruit-centre');
 });
 
-test.each([['decade',/ten years/],['academic',/education|study/],['office',/work|room/]])('general lists select modern %s meanings without retargeting legacy identities',(term,expected)=>{
+test.each([['decade',/ten years/],['academic',/education|study|higher learning|scholarship/],['office',/work|room/]])('general lists select modern %s meanings without retargeting legacy identities',(term,expected)=>{
   const raw=entry(term);
   const membership=catalog.memberships.find((row:any)=>row.entryId===raw.id&&row.bookId==='ielts-listening-vocabulary');
   const result=resolveVocabularyLearningContext(raw,membership);

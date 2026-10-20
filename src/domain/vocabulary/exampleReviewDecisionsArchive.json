@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "archivedOn": "2026-10-20",
   "originalReceiptFileSha256": "98a056fb41b99ac0db36273a453f78b8cc8fc3a02c8dfb2ccd5f37e648cb936a",
-  "activeReceipts": 309,
+  "activeReceipts": 304,
   "records": [
     {
       "receipt": {
@@ -59,6 +59,76 @@
         "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
       },
       "reason": "The displayed-content variant was superseded by an independently reviewed fourth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:1a7b1c88dd02ec22f66e5097eceda97f95372535f49eb39c9c7afb338dd07a6b",
+        "entryId": "ve-a1e14e5",
+        "senseId": "kaikki:81a805ad7f14918766",
+        "sourceHash": "468b1df4e7deb388ac53c7ea9164fec289f0acf3df86866f8c1318b8c4069778",
+        "displayHash": "9b6917de2f64e1c65d60fe79e26440c9b43994b55778235da3915984469b90f0",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=abuse&oldid=93738084",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed fifth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:a4157d24007c2883f6dfd9939cf427722c5e0ef6062274aa6a323ada17e64059",
+        "entryId": "ve-398a4991",
+        "senseId": "kaikki:43a2ee94cc805bc9bb",
+        "sourceHash": "5e0b4ab8bd9830d755ffcdbef35d4d4a0fccf3963b5ace23d09f9c6ffee88fab",
+        "displayHash": "8fc132c4776f5c230825867ef5b249dd8f794c79249386a6b0e4dd4bf3ac88ab",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=accountancy&oldid=93143511",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed fifth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:8ba7098237662b84c20c5a496a765fa8eb7c2790555f138281234635e3b484c8",
+        "entryId": "ve-326f71d3",
+        "senseId": "kaikki:8fd72cfb973c58aa93",
+        "sourceHash": "1bcb4f593cdbd6d722dcd893e9c0571f53ee38f95b74ed6e67a545124c7ace6a",
+        "displayHash": "ea6757ebc471d557705702fa82ecd54d5458c0360e24fecd13d58dda870ffe79",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=accurate&oldid=93597523",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed fifth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:3d56a52246768acc16858043c34b8c22242c6521dd0f4b4844a372ddf813cefa",
+        "entryId": "ve-6ec8f57c",
+        "senseId": "kaikki:0420b80832cdfcd3c6",
+        "sourceHash": "56ae35108c9730f897fae440b1ae262ded2918d116b9dde5359b27b0942ee56e",
+        "displayHash": "61edbe50f0a7e9a0e35521aa60b4b1ecaf75988e0bcf8831770c0587941f0133",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=additional&oldid=92011999",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed fifth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:9360e00813b3faf9458bbb71da99ef159a605cb61f24dc36a5df7c590c48024b",
+        "entryId": "ve-e7fa09eb",
+        "senseId": "kaikki:6d1893c61b6fe4441f",
+        "sourceHash": "f8689f9770e9b19d70c7d09fba9a7324713d1eac3718dfef2d02779fbefdca6f",
+        "displayHash": "69844335ba7bca3cd72ac7537f5bfa11e8c473ad960ecf9e5e47d74b4c9e4be1",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=adventure&oldid=93675313",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed fifth-package update; its current variants no longer trigger the fragment signal."
     }
   ],
   "transitions": [
@@ -71,6 +141,18 @@
         "vq:9da8d6b36919da8d35b8187b57d2d6fd808e23054f4b0866edda0b9aac6622d9"
       ],
       "activeReceipts": 309
+    },
+    {
+      "date": "2026-10-20",
+      "priorActiveSha256": "3dfcc4c33d1ac9786f01cf9eabb3fe6b2d539780ee6a7edaf7f367d5b8622a46",
+      "archivedReceiptIds": [
+        "vq:1a7b1c88dd02ec22f66e5097eceda97f95372535f49eb39c9c7afb338dd07a6b",
+        "vq:a4157d24007c2883f6dfd9939cf427722c5e0ef6062274aa6a323ada17e64059",
+        "vq:8ba7098237662b84c20c5a496a765fa8eb7c2790555f138281234635e3b484c8",
+        "vq:3d56a52246768acc16858043c34b8c22242c6521dd0f4b4844a372ddf813cefa",
+        "vq:9360e00813b3faf9458bbb71da99ef159a605cb61f24dc36a5df7c590c48024b"
+      ],
+      "activeReceipts": 304
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "version": "sense-pronunciation-2026-10-20.1",
+  "version": "sense-pronunciation-2026-10-20.review-continuation.1",
   "protectedTerms": [
     "record",
     "present",
@@ -12,7 +12,12 @@
     "resolve",
     "discount",
     "survey",
-    "sophisticate"
+    "sophisticate",
+    "permit",
+    "reject",
+    "suspect",
+    "produce",
+    "refuse"
   ],
   "recordings": [
     {
@@ -451,6 +456,246 @@
       "fileTimestamp": "2020-10-25T10:17:05Z",
       "fileSha1": "3b14d3debd5164385752f5f9c2778880d5c02246",
       "playbackSha1": "3b14d3debd5164385752f5f9c2778880d5c02246"
+    },
+    {
+      "id": "commons:e7eb1602b46800321151f0b9ee52c9a9fe044d43",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/4b/En-us-permit-noun.ogg",
+      "title": "En-us-permit-noun.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. Root downloaded matching bytes and decoded them as audio; the reviewer independently rehashed those bytes. No auditory review was performed.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-permit-noun.ogg&oldid=1007206283",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1007206283,
+      "fileTimestamp": "2005-06-14T21:09:31Z",
+      "fileSha1": "e7eb1602b46800321151f0b9ee52c9a9fe044d43",
+      "playbackSha1": "e7eb1602b46800321151f0b9ee52c9a9fe044d43"
+    },
+    {
+      "id": "commons:db970e678be483fb5d432191af5eb8cd8d1326b3",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/En-us-permit-verb.ogg",
+      "title": "En-us-permit-verb.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "failed",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. The actual root HTTP request returned429; availability remains failed, with no playback checksum or listening claim.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-permit-verb.ogg&oldid=1229151733",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229151733,
+      "fileTimestamp": "2005-06-14T21:10:08Z",
+      "fileSha1": "db970e678be483fb5d432191af5eb8cd8d1326b3"
+    },
+    {
+      "id": "commons:526b1f2648473811a5355c2c9af031a0480dc573",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/En-us-produce-noun.ogg",
+      "title": "En-us-produce-noun.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. Root downloaded matching bytes and decoded them as audio; the reviewer independently rehashed those bytes. No auditory review was performed.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-produce-noun.ogg&oldid=1229154446",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229154446,
+      "fileTimestamp": "2006-09-09T21:30:34Z",
+      "fileSha1": "526b1f2648473811a5355c2c9af031a0480dc573",
+      "playbackSha1": "526b1f2648473811a5355c2c9af031a0480dc573"
+    },
+    {
+      "id": "commons:e514986c63aac67429b86720b2d8230d72076659",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/e7/En-us-produce-verb.ogg",
+      "title": "En-us-produce-verb.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "failed",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. The actual root HTTP request returned429; availability remains failed, with no playback checksum or listening claim.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-produce-verb.ogg&oldid=1229154462",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229154462,
+      "fileTimestamp": "2006-09-09T21:29:59Z",
+      "fileSha1": "e514986c63aac67429b86720b2d8230d72076659"
+    },
+    {
+      "id": "commons:0469e8b4d17bbf932c0f28c9de37c709c16f1d9c",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/e3/En-us-refuse.ogg",
+      "title": "En-us-refuse.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. Root downloaded matching bytes and decoded them as audio; the reviewer independently rehashed those bytes. No auditory review was performed.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-refuse.ogg&oldid=1227879299",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1227879299,
+      "fileTimestamp": "2007-02-17T09:06:33Z",
+      "fileSha1": "0469e8b4d17bbf932c0f28c9de37c709c16f1d9c",
+      "playbackSha1": "0469e8b4d17bbf932c0f28c9de37c709c16f1d9c"
+    },
+    {
+      "id": "commons:b7da8edfe6716bbb134e43fcda5441b00814541f",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/d5/En-us-reject.ogg",
+      "title": "En-us-reject.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "failed",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. The actual root HTTP request returned429; availability remains failed, with no playback checksum or listening claim.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-reject.ogg&oldid=1229158422",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229158422,
+      "fileTimestamp": "2007-03-13T09:27:31Z",
+      "fileSha1": "b7da8edfe6716bbb134e43fcda5441b00814541f"
+    },
+    {
+      "id": "commons:95d24243e69e2030b3775297656ad8bfc8df998e",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/64/En-us-suspect-noun-adj.ogg",
+      "title": "En-us-suspect-noun-adj.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. Root downloaded matching bytes and decoded them as audio; the reviewer independently rehashed those bytes. No auditory review was performed.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-suspect-noun-adj.ogg&oldid=1229166217",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1229166217,
+      "fileTimestamp": "2005-06-14T03:45:38Z",
+      "fileSha1": "95d24243e69e2030b3775297656ad8bfc8df998e",
+      "playbackSha1": "95d24243e69e2030b3775297656ad8bfc8df998e"
+    },
+    {
+      "id": "commons:da6b31beade201e8dfd3b0da17fc87debc8ae311",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/En-us-suspect-verb.ogg",
+      "title": "En-us-suspect-verb.ogg",
+      "accent": "us",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. Root downloaded matching bytes and decoded them as audio; the reviewer independently rehashed those bytes. No auditory review was performed.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-suspect-verb.ogg&oldid=1016725663",
+      "author": "Dvortygirl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1016725663,
+      "fileTimestamp": "2005-06-14T03:42:30Z",
+      "fileSha1": "da6b31beade201e8dfd3b0da17fc87debc8ae311",
+      "playbackSha1": "da6b31beade201e8dfd3b0da17fc87debc8ae311"
+    },
+    {
+      "id": "commons:a29ba36d658e8215dd2817c2ab8ab2ff9de24034",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3f/LL-Q1860_%28eng%29-Vealhurl-refuse_%28noun%29.wav",
+      "title": "LL-Q1860 (eng)-Vealhurl-refuse (noun).wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "http-audio",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. Root downloaded matching bytes and decoded them as audio; the reviewer independently rehashed those bytes. No auditory review was performed.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20%28eng%29-Vealhurl-refuse%20%28noun%29.wav&oldid=748786498",
+      "author": "Speaker: Vealhurl Recorder: Vealhurl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 748786498,
+      "fileTimestamp": "2020-03-27T14:16:23Z",
+      "fileSha1": "a29ba36d658e8215dd2817c2ab8ab2ff9de24034",
+      "playbackSha1": "a29ba36d658e8215dd2817c2ab8ab2ff9de24034"
+    },
+    {
+      "id": "commons:f0f1fc22474a30fdeb697953bf033dc4fe38c38e",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/LL-Q1860_%28eng%29-Vealhurl-reject_%28noun%29.wav",
+      "title": "LL-Q1860 (eng)-Vealhurl-reject (noun).wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "failed",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. The actual root HTTP request returned429; availability remains failed, with no playback checksum or listening claim.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20%28eng%29-Vealhurl-reject%20%28noun%29.wav&oldid=748790097",
+      "author": "Speaker: Vealhurl Recorder: Vealhurl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 748790097,
+      "fileTimestamp": "2020-04-03T18:05:46Z",
+      "fileSha1": "f0f1fc22474a30fdeb697953bf033dc4fe38c38e"
+    },
+    {
+      "id": "commons:de92cfa8373013c62007ab2387b8b0bff27ee018",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/LL-Q1860_%28eng%29-Vealhurl-reject_%28verb%29.wav",
+      "title": "LL-Q1860 (eng)-Vealhurl-reject (verb).wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "failed",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. The actual root HTTP request returned429; availability remains failed, with no playback checksum or listening claim.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20%28eng%29-Vealhurl-reject%20%28verb%29.wav&oldid=1284953686",
+      "author": "Speaker: Vealhurl Recorder: Vealhurl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1284953686,
+      "fileTimestamp": "2020-04-03T18:05:47Z",
+      "fileSha1": "de92cfa8373013c62007ab2387b8b0bff27ee018"
+    },
+    {
+      "id": "commons:0552aa9b1549f742bc5a3907dc8149c0eda55823",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/LL-Q1860_%28eng%29-Vealhurl-suspect_%28noun%29.wav",
+      "title": "LL-Q1860 (eng)-Vealhurl-suspect (noun).wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "failed",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. The actual root HTTP request returned429; availability remains failed, with no playback checksum or listening claim.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20%28eng%29-Vealhurl-suspect%20%28noun%29.wav&oldid=739037015",
+      "author": "Speaker: Vealhurl Recorder: Vealhurl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 739037015,
+      "fileTimestamp": "2023-02-12T19:26:53Z",
+      "fileSha1": "0552aa9b1549f742bc5a3907dc8149c0eda55823"
+    },
+    {
+      "id": "commons:bd9388ceb9152f1aaa5b12186a28691089156f7a",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/LL-Q1860_%28eng%29-Vealhurl-suspect_%28verb%29.wav",
+      "title": "LL-Q1860 (eng)-Vealhurl-suspect (verb).wav",
+      "accent": "uk",
+      "status": "verified",
+      "availability": "failed",
+      "wordformConfirmed": true,
+      "reason": "Independent revision-bound Wiktionary hierarchy verifies the wordform, exact lexical scope and recording accent; captured Commons file metadata verifies attribution and licence. This is source verification, not listening. The actual root HTTP request returned429; availability remains failed, with no playback checksum or listening claim.",
+      "sourceUrl": "https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20%28eng%29-Vealhurl-suspect%20%28verb%29.wav&oldid=1127269274",
+      "author": "Speaker: Vealhurl Recorder: Vealhurl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "changes": "Original external recording; no audio edits.",
+      "fileRevision": 1127269274,
+      "fileTimestamp": "2023-02-12T19:26:55Z",
+      "fileSha1": "bd9388ceb9152f1aaa5b12186a28691089156f7a"
     }
   ],
   "groups": [
@@ -789,6 +1034,202 @@
       "recordings": {
         "uk": "commons:3b14d3debd5164385752f5f9c2778880d5c02246"
       }
+    },
+    {
+      "id": "permit-etym1-ordinary-verb",
+      "term": "permit",
+      "scope": "Etymology 1: most verb senses, excluding the two formal-authorisation senses",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+      "ipa": {
+        "uk": "/pəˈmɪt/",
+        "us": "/pɚˈmɪt/"
+      },
+      "audioMarkup": [
+        "*: {{audio|en|en-us-permit-verb.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:db970e678be483fb5d432191af5eb8cd8d1326b3"
+      }
+    },
+    {
+      "id": "permit-etym1-noun-denominal",
+      "term": "permit",
+      "scope": "Etymology 1: nouns and denominal formal-authorisation verb senses",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+      "ipa": {
+        "uk": "/ˈpɜːmɪt/",
+        "us": "/ˈpɝmɪt/"
+      },
+      "audioMarkup": [
+        "*: {{audio|en|en-us-permit-noun.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:e7eb1602b46800321151f0b9ee52c9a9fe044d43"
+      }
+    },
+    {
+      "id": "permit-etym2-fish",
+      "term": "permit",
+      "scope": "Etymology 2: Trachinotus falcatus fish noun",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=permit&oldid=93562391",
+      "ipa": {
+        "uk": "/ˈpɜːmɪt/",
+        "us": "/ˈpɝmɪt/"
+      },
+      "audioMarkup": [
+        "* {{audio|en|en-us-permit-noun.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:e7eb1602b46800321151f0b9ee52c9a9fe044d43"
+      }
+    },
+    {
+      "id": "reject-verb",
+      "term": "reject",
+      "scope": "Pronunciation: explicit verb branch",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=reject&oldid=91918120",
+      "ipa": {
+        "uk": "/ɹɪˈd͡ʒɛkt/",
+        "us": "/ɹɪˈd͡ʒɛkt/ · /ɹəˈd͡ʒɛkt/"
+      },
+      "audioMarkup": [
+        "*** {{audio|en|LL-Q1860 (eng)-Vealhurl-reject (verb).wav|a=Southern England}}",
+        "*** {{audio|en|En-us-reject.ogg|a=US}}"
+      ],
+      "recordings": {
+        "uk": "commons:de92cfa8373013c62007ab2387b8b0bff27ee018",
+        "us": "commons:b7da8edfe6716bbb134e43fcda5441b00814541f"
+      }
+    },
+    {
+      "id": "reject-noun",
+      "term": "reject",
+      "scope": "Pronunciation: explicit noun branch",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=reject&oldid=91918120",
+      "ipa": {
+        "uk": "/ˈɹiːd͡ʒɛkt/",
+        "us": "/ˈɹiːd͡ʒɛkt/"
+      },
+      "audioMarkup": [
+        "*** {{audio|en|LL-Q1860 (eng)-Vealhurl-reject (noun).wav|a=Southern England}}"
+      ],
+      "recordings": {
+        "uk": "commons:f0f1fc22474a30fdeb697953bf033dc4fe38c38e"
+      }
+    },
+    {
+      "id": "suspect-verb",
+      "term": "suspect",
+      "scope": "Pronunciation: explicit Verb branch",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=suspect&oldid=93536805",
+      "ipa": {
+        "uk": "/səˈspɛkt/",
+        "us": "/səˈspɛkt/"
+      },
+      "audioMarkup": [
+        "*** {{audio|en|LL-Q1860 (eng)-Vealhurl-suspect (verb).wav|a=Southern England}}",
+        "*** {{audio|en|en-us-suspect-verb.ogg|a=US}}"
+      ],
+      "recordings": {
+        "uk": "commons:bd9388ceb9152f1aaa5b12186a28691089156f7a",
+        "us": "commons:da6b31beade201e8dfd3b0da17fc87debc8ae311"
+      }
+    },
+    {
+      "id": "suspect-noun-adjective",
+      "term": "suspect",
+      "scope": "Pronunciation: explicit Adjective, noun branch",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=suspect&oldid=93536805",
+      "ipa": {
+        "uk": "/ˈsʌspɛkt/",
+        "us": "/ˈsʌspɛkt/"
+      },
+      "audioMarkup": [
+        "*** {{audio|en|LL-Q1860 (eng)-Vealhurl-suspect (noun).wav|a=Southern England}}",
+        "*** {{audio|en|en-us-suspect-noun-adj.ogg|a=US}}"
+      ],
+      "recordings": {
+        "uk": "commons:0552aa9b1549f742bc5a3907dc8149c0eda55823",
+        "us": "commons:95d24243e69e2030b3775297656ad8bfc8df998e"
+      }
+    },
+    {
+      "id": "produce-etym1-verb",
+      "term": "produce",
+      "scope": "Etymology 1: yielding, presenting, media, mathematical, prolonging and music senses",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=produce&oldid=93585702",
+      "ipa": {
+        "uk": "/pɹəˈd͡ʒuːs/ · /pɹəˈdjuːs/",
+        "us": "/pɹəˈdus/"
+      },
+      "audioMarkup": [
+        "** {{audio|en|en-us-produce-verb.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:e514986c63aac67429b86720b2d8230d72076659"
+      }
+    },
+    {
+      "id": "produce-etym2-noun",
+      "term": "produce",
+      "scope": "Etymology 2: output, farm foods, offspring, livestock and pet-feed nouns",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=produce&oldid=93585702",
+      "ipa": {
+        "uk": "/ˈpɹɒd͡ʒuːs/ · /ˈpɹɒdjuːs/",
+        "us": "/ˈpɹoʊ.d(j)us/ · /ˈpɹɑ.dus/"
+      },
+      "audioMarkup": [
+        "** {{audio|en|en-us-produce-noun.ogg|a=US}}"
+      ],
+      "recordings": {
+        "us": "commons:526b1f2648473811a5355c2c9af031a0480dc573"
+      }
+    },
+    {
+      "id": "refuse-etym1-waste",
+      "term": "refuse",
+      "scope": "Etymology 1: discarded adjective and waste noun",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=refuse&oldid=93504534",
+      "ipa": {
+        "uk": "",
+        "us": "",
+        "general": "/ˈɹɛfjuːs/"
+      },
+      "audioMarkup": [
+        "* {{audio|en|LL-Q1860 (eng)-Vealhurl-refuse (noun).wav|a=Southern England}}"
+      ],
+      "recordings": {
+        "uk": "commons:a29ba36d658e8215dd2817c2ab8ab2ff9de24034"
+      }
+    },
+    {
+      "id": "refuse-etym2-decline",
+      "term": "refuse",
+      "scope": "Etymology 2: declining/withholding verbs and obsolete refusal noun",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=refuse&oldid=93504534",
+      "ipa": {
+        "uk": "/ɹɪˈfjuːz/",
+        "us": "/ɹɪˈfjuz/"
+      },
+      "audioMarkup": [
+        "*** {{audio|en|en-us-refuse.ogg|a=California}}"
+      ],
+      "recordings": {
+        "us": "commons:0469e8b4d17bbf932c0f28c9de37c709c16f1d9c"
+      }
+    },
+    {
+      "id": "refuse-etym3-fuse-again",
+      "term": "refuse",
+      "scope": "Etymology 3: fuse again after heating or melting",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=refuse&oldid=93504534",
+      "ipa": {
+        "uk": "",
+        "us": "",
+        "general": "/ɹiːˈfjuːz/"
+      },
+      "audioMarkup": [],
+      "recordings": {}
     }
   ],
   "bindings": [
@@ -2609,6 +3050,429 @@
       "definition": "A person with worldly experience or refined tastes.",
       "pos": "noun",
       "groupId": "sophisticate-noun-adjective-2026-10-20"
+    },
+    {
+      "id": "sp1-9fa0c164632e1a96cb3c",
+      "entryId": "ve-70e0b1f2",
+      "term": "permit",
+      "senseId": "kaikki:398ea99dfb8f16be81",
+      "definition": "To allow something to happen or give permission for it.",
+      "pos": "verb",
+      "groupId": "permit-etym1-ordinary-verb"
+    },
+    {
+      "id": "sp1-fc4877c73b65a3d2dba0",
+      "entryId": "ve-70e0b1f2",
+      "term": "permit",
+      "senseId": "kaikki:4db3737430b5bc3c15",
+      "definition": "To allow someone to do something; to give them permission.",
+      "pos": "verb",
+      "groupId": "permit-etym1-ordinary-verb"
+    },
+    {
+      "id": "sp1-41a9fbe1dc4a6cd0767c",
+      "entryId": "ve-70e0b1f2",
+      "term": "permit",
+      "senseId": "kaikki:e731e8c3ef8f58a33b",
+      "definition": "To make something possible, without an expressed object.",
+      "pos": "verb",
+      "groupId": "permit-etym1-ordinary-verb"
+    },
+    {
+      "id": "sp1-d70e2ff680d6ecbc4b72",
+      "entryId": "ve-70e0b1f2",
+      "term": "permit",
+      "senseId": "kaikki:6bbc3c48d48f060eb1",
+      "definition": "To allow or admit of something.",
+      "pos": "verb",
+      "groupId": "permit-etym1-ordinary-verb"
+    },
+    {
+      "id": "sp1-164032bd86ee587afa6c",
+      "entryId": "ve-70e0b1f2",
+      "term": "permit",
+      "senseId": "kaikki:3d1a8d829445655585",
+      "definition": "To grant formal authorisation for something.",
+      "pos": "verb",
+      "groupId": "permit-etym1-noun-denominal"
+    },
+    {
+      "id": "sp1-22f32aa4390d02e33d4d",
+      "entryId": "ve-70e0b1f2",
+      "term": "permit",
+      "senseId": "kaikki:2763739fdf70143873",
+      "definition": "To attempt to obtain, or succeed in obtaining, formal authorisation for something.",
+      "pos": "verb",
+      "groupId": "permit-etym1-noun-denominal"
+    },
+    {
+      "id": "sp1-3a81af18403aaddec269",
+      "entryId": "ve-70e0b1f2",
+      "term": "permit",
+      "senseId": "kaikki:4ac974fea8eeef2ca4",
+      "definition": "Now archaic and rare: to hand something over or resign it to someone.",
+      "pos": "verb",
+      "groupId": "permit-etym1-ordinary-verb"
+    },
+    {
+      "id": "sp1-4404d5e2ebd1b0a6382d",
+      "entryId": "ve-70e0b1f2",
+      "term": "permit",
+      "senseId": "kaikki:9526dd71537cd2600c",
+      "definition": "An authorising document or other token that makes a specified activity allowed or legal.",
+      "pos": "noun",
+      "groupId": "permit-etym1-noun-denominal"
+    },
+    {
+      "id": "sp1-d3f24b39a568600f2309",
+      "entryId": "ve-70e0b1f2",
+      "term": "permit",
+      "senseId": "kaikki:65a99ed87d3dd62e81",
+      "definition": "Obsolete noun: formal permission.",
+      "pos": "noun",
+      "groupId": "permit-etym1-noun-denominal"
+    },
+    {
+      "id": "sp1-725cb3ce9a7da86a92cb",
+      "entryId": "ve-70e0b1f2",
+      "term": "permit",
+      "senseId": "kaikki:1bfb246afe7b961fc7",
+      "definition": "A pompano fish of the species Trachinotus falcatus.",
+      "pos": "noun",
+      "groupId": "permit-etym2-fish"
+    },
+    {
+      "id": "sp1-c06d4ba1932dea7429ac",
+      "entryId": "ve-70e0b1f2",
+      "term": "permit",
+      "senseId": "wiktionary:restored:1a85a2c88b267fd757",
+      "definition": "To grant or give someone permission for something.",
+      "pos": "verb",
+      "groupId": "permit-etym1-ordinary-verb"
+    },
+    {
+      "id": "sp1-dd8abeb099832cdd1443",
+      "entryId": "ve-70e0b1f2",
+      "term": "permit",
+      "senseId": "wiktionary:restored:b2e67ed525552ed499",
+      "definition": "A restricted licence for someone learning to drive who has not yet met the requirements for a full driver’s licence.",
+      "pos": "noun",
+      "groupId": "permit-etym1-noun-denominal"
+    },
+    {
+      "id": "sp1-98b3921e07d95cfcc531",
+      "entryId": "ve-7e9ff9ea",
+      "term": "reject",
+      "senseId": "kaikki:5ab0b63ad82e3c9210",
+      "definition": "To refuse to accept something.",
+      "pos": "verb",
+      "groupId": "reject-verb"
+    },
+    {
+      "id": "sp1-339735996569ca4578c8",
+      "entryId": "ve-7e9ff9ea",
+      "term": "reject",
+      "senseId": "kaikki:df93cc355e3feb3066",
+      "definition": "In basketball, to block a shot.",
+      "pos": "verb",
+      "groupId": "reject-verb"
+    },
+    {
+      "id": "sp1-39ccffe8057493a3072e",
+      "entryId": "ve-7e9ff9ea",
+      "term": "reject",
+      "senseId": "kaikki:553fba3fff10e658ec",
+      "definition": "To refuse a romantic approach or invitation.",
+      "pos": "verb",
+      "groupId": "reject-verb"
+    },
+    {
+      "id": "sp1-37c11500a512a702b941",
+      "entryId": "ve-7e9ff9ea",
+      "term": "reject",
+      "senseId": "kaikki:582ebd29d97f2b0438",
+      "definition": "Something that has been rejected.",
+      "pos": "noun",
+      "groupId": "reject-noun"
+    },
+    {
+      "id": "sp1-95db848c84d1a205ff51",
+      "entryId": "ve-7e9ff9ea",
+      "term": "reject",
+      "senseId": "kaikki:70a76741c822362e10",
+      "definition": "Derogatory slang: an unpopular person.",
+      "pos": "noun",
+      "groupId": "reject-noun"
+    },
+    {
+      "id": "sp1-e6a78db28ae54e13f767",
+      "entryId": "ve-7e9ff9ea",
+      "term": "reject",
+      "senseId": "kaikki:39cf7c37731092c51c",
+      "definition": "A defective product rejected during production or quality checking.",
+      "pos": "noun",
+      "groupId": "reject-noun"
+    },
+    {
+      "id": "sp1-ca72df78dd42e47daabc",
+      "entryId": "ve-7e9ff9ea",
+      "term": "reject",
+      "senseId": "kaikki:b0367da8042d40b086",
+      "definition": "In aviation, a rejected takeoff.",
+      "pos": "noun",
+      "groupId": "reject-noun"
+    },
+    {
+      "id": "sp1-7e8594a8391f95e4299a",
+      "entryId": "ve-71f2f412",
+      "term": "suspect",
+      "senseId": "kaikki:78ec9b13ae210c471f",
+      "definition": "To imagine or suppose that something is true or exists, without proof.",
+      "pos": "verb",
+      "groupId": "suspect-verb"
+    },
+    {
+      "id": "sp1-ed7f6e6d8dcd55fb42fe",
+      "entryId": "ve-71f2f412",
+      "term": "suspect",
+      "senseId": "kaikki:9cc0ababe2ec4725b1",
+      "definition": "To distrust or have doubts about someone or something.",
+      "pos": "verb",
+      "groupId": "suspect-verb"
+    },
+    {
+      "id": "sp1-f30ef03622e83add94a3",
+      "entryId": "ve-71f2f412",
+      "term": "suspect",
+      "senseId": "kaikki:6eb1c17f0274b266ef",
+      "definition": "To believe someone may be guilty of something.",
+      "pos": "verb",
+      "groupId": "suspect-verb"
+    },
+    {
+      "id": "sp1-d2ff3a0fa51142dbd178",
+      "entryId": "ve-71f2f412",
+      "term": "suspect",
+      "senseId": "kaikki:46a17605826716dea4",
+      "definition": "To have suspicion, without an expressed object.",
+      "pos": "verb",
+      "groupId": "suspect-verb"
+    },
+    {
+      "id": "sp1-e997a7d34f5d345e3788",
+      "entryId": "ve-71f2f412",
+      "term": "suspect",
+      "senseId": "kaikki:4b6b064146c81a92bf",
+      "definition": "Obsolete: to look up to or respect someone.",
+      "pos": "verb",
+      "groupId": "suspect-verb"
+    },
+    {
+      "id": "sp1-975d47c46bba49b6c8bb",
+      "entryId": "ve-71f2f412",
+      "term": "suspect",
+      "senseId": "kaikki:605c73219d63d1d48f",
+      "definition": "A person suspected of something, especially of committing a crime.",
+      "pos": "noun",
+      "groupId": "suspect-noun-adjective"
+    },
+    {
+      "id": "sp1-ebf3793ec3ffaa906fb5",
+      "entryId": "ve-71f2f412",
+      "term": "suspect",
+      "senseId": "kaikki:77f22f7e6cf360815b",
+      "definition": "Viewed with suspicion; considered questionable or doubtful.",
+      "pos": "adj",
+      "groupId": "suspect-noun-adjective"
+    },
+    {
+      "id": "sp1-5368c1e8e51dae1cbe5d",
+      "entryId": "ve-71f2f412",
+      "term": "suspect",
+      "senseId": "kaikki:399065de18d966f2a6",
+      "definition": "Nonstandard: viewing something with suspicion; suspecting.",
+      "pos": "adj",
+      "groupId": "suspect-noun-adjective"
+    },
+    {
+      "id": "sp1-0b1a6d515735fb69dec7",
+      "entryId": "ve-6b91edff",
+      "term": "produce",
+      "senseId": "kaikki:11f27e5737eb3aa0d8",
+      "definition": "To make, yield, generate or bring something into existence.",
+      "pos": "verb",
+      "groupId": "produce-etym1-verb"
+    },
+    {
+      "id": "sp1-a63cf47064695905d41f",
+      "entryId": "ve-6b91edff",
+      "term": "produce",
+      "senseId": "kaikki:32830c776c36c3be0d",
+      "definition": "To make or yield something, without stating it as a direct object.",
+      "pos": "verb",
+      "groupId": "produce-etym1-verb"
+    },
+    {
+      "id": "sp1-b3121b6d6e56fae73904",
+      "entryId": "ve-6b91edff",
+      "term": "produce",
+      "senseId": "kaikki:a904fd66d8dee21d8b",
+      "definition": "To bring forward or make something available for inspection or use.",
+      "pos": "verb",
+      "groupId": "produce-etym1-verb"
+    },
+    {
+      "id": "sp1-32cd339b7d74c82a17c7",
+      "entryId": "ve-6b91edff",
+      "term": "produce",
+      "senseId": "kaikki:cabf574aac6b861810",
+      "definition": "To organise, finance or oversee the making of a film, programme or other production.",
+      "pos": "verb",
+      "groupId": "produce-etym1-verb"
+    },
+    {
+      "id": "sp1-99b7d241bbad8886d51d",
+      "entryId": "ve-6b91edff",
+      "term": "produce",
+      "senseId": "kaikki:d256d8e4247a3afb52",
+      "definition": "To extend a line segment or side beyond an endpoint along the same straight line.",
+      "pos": "verb",
+      "groupId": "produce-etym1-verb"
+    },
+    {
+      "id": "sp1-ec004c1fc349f446a848",
+      "entryId": "ve-6b91edff",
+      "term": "produce",
+      "senseId": "kaikki:8f5f2c7c14acc33b28",
+      "definition": "To prolong or extend something in time or extent.",
+      "pos": "verb",
+      "groupId": "produce-etym1-verb"
+    },
+    {
+      "id": "sp1-a8f826d7387979a2951f",
+      "entryId": "ve-6b91edff",
+      "term": "produce",
+      "senseId": "kaikki:5a17e452b9f8931d88",
+      "definition": "To shape a musical recording using production techniques or technology.",
+      "pos": "verb",
+      "groupId": "produce-etym1-verb"
+    },
+    {
+      "id": "sp1-48a605d1645a201d092f",
+      "entryId": "ve-6b91edff",
+      "term": "produce",
+      "senseId": "kaikki:4c06e919537331f428",
+      "definition": "What is made, yielded or generated.",
+      "pos": "noun",
+      "groupId": "produce-etym2-noun"
+    },
+    {
+      "id": "sp1-68dd9c33ed1bc0e940fd",
+      "entryId": "ve-6b91edff",
+      "term": "produce",
+      "senseId": "kaikki:782eabca13ecd1d9a9",
+      "definition": "Farm or garden food products collectively, especially fruit and vegetables.",
+      "pos": "noun",
+      "groupId": "produce-etym2-noun"
+    },
+    {
+      "id": "sp1-e799c8c2780c064516db",
+      "entryId": "ve-6b91edff",
+      "term": "produce",
+      "senseId": "kaikki:d49b929b0033acf05e",
+      "definition": "The offspring of an animal, especially in breeding terminology.",
+      "pos": "noun",
+      "groupId": "produce-etym2-noun"
+    },
+    {
+      "id": "sp1-e66e5babd3bf14ebcdda",
+      "entryId": "ve-6b91edff",
+      "term": "produce",
+      "senseId": "kaikki:6567315fe5d1135d92",
+      "definition": "Livestock feed and pet food supplies.",
+      "pos": "noun",
+      "groupId": "produce-etym2-noun"
+    },
+    {
+      "id": "sp1-415ffa533974a3137e7f",
+      "entryId": "ve-7e9d6477",
+      "term": "refuse",
+      "senseId": "kaikki:2ce6d3e637cf03dcd1",
+      "definition": "Waste material that has been discarded.",
+      "pos": "noun",
+      "groupId": "refuse-etym1-waste"
+    },
+    {
+      "id": "sp1-3818a0bb2f978dfaf210",
+      "entryId": "ve-7e9d6477",
+      "term": "refuse",
+      "senseId": "kaikki:d9ad4f4e59cc6d675c",
+      "definition": "Rejected or discarded as unwanted or unsuitable.",
+      "pos": "adj",
+      "groupId": "refuse-etym1-waste"
+    },
+    {
+      "id": "sp1-8e54d679b3ab3981fbd0",
+      "entryId": "ve-7e9d6477",
+      "term": "refuse",
+      "senseId": "kaikki:c228758d7c6d27ba36",
+      "definition": "To decline or reject a request, offer or demand.",
+      "pos": "verb",
+      "groupId": "refuse-etym2-decline"
+    },
+    {
+      "id": "sp1-f6598bafe6e20926ae78",
+      "entryId": "ve-7e9d6477",
+      "term": "refuse",
+      "senseId": "kaikki:e67eda9792fc683433",
+      "definition": "To decline to act or give permission.",
+      "pos": "verb",
+      "groupId": "refuse-etym2-decline"
+    },
+    {
+      "id": "sp1-339d78d39fda5fe25d2e",
+      "entryId": "ve-7e9d6477",
+      "term": "refuse",
+      "senseId": "kaikki:475d97937116d7d617",
+      "definition": "To withhold something from someone or deny them access to it.",
+      "pos": "verb",
+      "groupId": "refuse-etym2-decline"
+    },
+    {
+      "id": "sp1-5a7b6ff3d06b8386496e",
+      "entryId": "ve-7e9d6477",
+      "term": "refuse",
+      "senseId": "kaikki:562ae85a5edf34f476",
+      "definition": "To hold part of a military line back from its usual alignment.",
+      "pos": "verb",
+      "groupId": "refuse-etym2-decline"
+    },
+    {
+      "id": "sp1-61b327b6d7a5dd7cb6fa",
+      "entryId": "ve-7e9d6477",
+      "term": "refuse",
+      "senseId": "kaikki:dafa18f47b34f8fff7",
+      "definition": "To disown or renounce someone or something.",
+      "pos": "verb",
+      "groupId": "refuse-etym2-decline"
+    },
+    {
+      "id": "sp1-8fc393c817675793a824",
+      "entryId": "ve-7e9d6477",
+      "term": "refuse",
+      "senseId": "kaikki:1f45c4610eb25c3c1c",
+      "definition": "A refusal or rejection.",
+      "pos": "noun",
+      "groupId": "refuse-etym2-decline"
+    },
+    {
+      "id": "sp1-40e503d0158ebcadf79f",
+      "entryId": "ve-7e9d6477",
+      "term": "refuse",
+      "senseId": "kaikki:62d20c159fbc81a325",
+      "definition": "To fuse material again, as by heating or melting.",
+      "pos": "verb",
+      "groupId": "refuse-etym3-fuse-again"
     }
   ]
 }

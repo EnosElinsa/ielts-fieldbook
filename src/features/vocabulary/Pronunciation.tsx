@@ -38,7 +38,7 @@ export function Pronunciation({ entry, sense: selectedSense, accent = 'uk', opti
       const media = pronunciation.required ? { recordings: pronunciation.recordings, loadError: false } : await getVocabularyMedia(entry, { retry });
       if (!current()) return;
       setMediaError(Boolean(media.loadError)); onMedia?.(media.recordings);
-      setOthers(media.recordings.filter(recording => (pronunciation.required || recording.accent !== accent) && recording.status !== 'missing' && recording.availability !== 'failed' && recording.wordformConfirmed !== false));
+      setOthers(media.recordings.filter(recording => (pronunciation.required || recording.accent !== accent) && recording.status !== 'missing' && (recording.availability !== 'failed' || recording.status === 'verified' && recording.wordformConfirmed === true) && recording.wordformConfirmed !== false));
     } catch { if (current()) setMediaError(true); }
     finally { if (current()) setMediaLoading(false); }
   };
@@ -59,14 +59,18 @@ export function Pronunciation({ entry, sense: selectedSense, accent = 'uk', opti
     ? `${playback.accent === 'uk' ? 'British' : playback.accent === 'us' ? 'American' : playback.accent === 'other' ? 'Other accent' : 'Unverified accent'} · ${playback.source === 'speech' ? 'Device voice' : 'Recorded pronunciation'}${playback.senseMatch === 'matched' ? ' · matches this meaning' : playback.senseMatch === 'unverified' ? ' · reading unverified' : playback.senseMatch === 'legacy' && readingSensitive ? ' · meaning match not saved' : ''}`
     : message;
   const recovery = Boolean(playback && !playback.ok && playback.reason !== 'cancelled' || others.some(recording => recording.url === activeAction) || activeAction?.startsWith('device:') || playback?.senseMatch === 'unverified');
-  const ipa = pronunciation.group?.ipa[accent] || (!readingSensitive ? entry.pronunciation?.ipa : undefined);
+  const regionalIpa = pronunciation.group?.ipa[accent];
+  const generalIpa = pronunciation.group?.ipa.general;
+  const ipa = regionalIpa || generalIpa || (!readingSensitive ? entry.pronunciation?.ipa : undefined);
   return <div className={`vocabulary-pronunciation${compact ? ' is-compact' : ''}`}>
-    {ipa && !compact ? <span className="vocabulary-ipa">{pronunciation.group ? `${accent.toUpperCase()} ${ipa}` : ipa}</span> : null}
+    {ipa && !compact ? <span className="vocabulary-ipa">{pronunciation.group ? `${regionalIpa ? accent.toUpperCase() : 'IPA'} ${ipa}` : ipa}</span> : null}
     <div className="vocabulary-pronunciation-actions" role="group" aria-label="Word pronunciation">
       {(compact ? [accent] : ['uk', 'us'] as const).map(target => {
         const action = target === accent ? 'target' : `accent:${target}`;
         const missing = pronunciation.required && !pronunciation.recordings.some(recording=>recording.accent===target);
-        return <button key={target} className="btn line" type="button" aria-label={`${activeAction === action ? 'Stop' : 'Play'} ${target.toUpperCase()} pronunciation of ${entry.term}`} onClick={() => void play(undefined, target)}>{activeAction === action ? 'Stop' : missing ? `${target.toUpperCase()} · No matched audio` : compact ? `Play ${target.toUpperCase()}` : target === 'uk' ? 'Listen · UK' : 'Listen · US'}</button>;
+        const retry = pronunciation.required ? pronunciation.recordings.find(recording=>recording.accent===target&&recording.status==='verified'&&recording.wordformConfirmed===true&&recording.availability==='failed') : undefined;
+        const playing = activeAction === (retry?.url || action);
+        return <button key={target} className="btn line" type="button" aria-label={`${playing ? 'Stop' : 'Play'} ${target.toUpperCase()} pronunciation of ${entry.term}`} onClick={() => void play(retry, target)}>{playing ? 'Stop' : missing ? `${target.toUpperCase()} · No matched audio` : retry ? `Retry · ${target.toUpperCase()} audio` : compact ? `Play ${target.toUpperCase()}` : target === 'uk' ? 'Listen · UK' : 'Listen · US'}</button>;
       })}
     </div>
     {pronunciation.legacy && readingSensitive ? <span className="vocabulary-pronunciation-note">Meaning match was not saved for this session.</span> : null}
