@@ -131,7 +131,7 @@ test('resources use deterministic content-addressed URLs', () => {
   const second = buildVocabularyResources(process.cwd());
   expect(second.manifestUrl).toBe(first.manifestUrl);
   expect(first.manifestUrl).toMatch(/manifest\.[a-f0-9]{16}\.json$/);
-  for (const [url, content] of first.resources) {
+  for (const [url, content] of first.resources.byteEntries()) {
     const hash = createHash('sha256').update(content).digest('hex').slice(0, 16);
     expect(url.endsWith(`.${hash}.json`)).toBe(true);
     // Pages decodes paths before looking up files. A request must continue to
@@ -139,7 +139,7 @@ test('resources use deterministic content-addressed URLs', () => {
     expect(url).toMatch(/^\/[a-zA-Z0-9._/-]+$/);
     expect(decodeURIComponent(url)).toBe(url);
   }
-}, 15000); // Reconstruct all retained release catalogs twice, including on slower CI hosts.
+}, 30000); // Rebuild twice and hash the complete retained corpus on slower CI hosts.
 
 test('shared serialized sections preserve native JSON bytes in manifests and source/teaching packs', () => {
   const manifest = release.manifest;
