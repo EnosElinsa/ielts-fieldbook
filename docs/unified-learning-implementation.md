@@ -7,7 +7,7 @@ Implemented means code exists; final release verification is recorded separately
 | Requirement | Current implementation / evidence | Remaining acceptance or dependency |
 | --- | --- | --- |
 | Daily/week time, weekday overrides, module weights, vocabulary-only plans, legacy fixed allocation | planningPreferences / PlanningSettings / unified planner regressions; full suite passed | Verified build is deployed |
-| New-word goal default10 including0; reserve after protected tasks before review; actual/shortfall | planTemplates / PlanningPage; budget and partial-list regressions and combined production-build short-budget browser case passed | Production continuation verification pending |
+| New-word goal default10 including0; reserve after protected tasks before review; actual/shortfall | planTemplates / PlanningPage; budget and partial-list regressions and combined production-build short-budget browser case passed | Production15-flow continuation passed |
 | Book order, rotation, pause, group/member order, cross-book dedup, shared Home selector | nextLearningTarget / nextHomeLearning | Distinct-meaning guidance is limited to exact sense labels |
 | Exact partial lists; existing fixed/start/history contracts preserved | exact targets / binder / GroupLearnPage regression; full suite passed | Verified runtime release |
 | Review reasons and priority, independent mode schedules | persisted selectionReason / review selectors; full suite passed | Verified runtime release |
@@ -17,11 +17,11 @@ Implemented means code exists; final release verification is recorded separately
 | Waiting today/date/replan/hold/resume/skip; started opt-in; page/all selection; impact preview | TaskCollection / previewBacklogChange | Preview includes related generated task changes |
 | Only unstarted automatic dynamic review merges; manual/fixed/started retained | planner regressions; full suite passed | Verified runtime release |
 | Structured cards, separate material/reschedule/condition/instructions | PlanningPage / selectable-task wrapper; screenshots inspected at1440/390/320 | Verified runtime release |
-| History filters,20/page,deep links,explicit selection scope,archive/unarchive | Server-paged TaskCollection; SQL pagination/filter/rank and cross-page selection regressions; combined browser archive/unarchive and unloaded archived deep link passed | Production compatibility migration installed; frontend publication pending |
+| History filters,20/page,deep links,explicit selection scope,archive/unarchive | Server-paged TaskCollection; SQL pagination/filter/rank and cross-page selection regressions; combined browser archive/unarchive and unloaded archived deep link passed | Production migration and15-flow frontend acceptance passed |
 | Archive preserves identity, prevents regeneration; restore visibility separate from scheduling | planner/task regressions; full suite passed | Verified runtime release |
 | Six settings groups,planning vs self-practice scope,account save,drafts/leave guard/reset/retry/account switch | SettingsPage / settingsDraft; six-group and legacy URL regressions; responsive browser passed | Verified runtime release |
 | Cached180ms preview,fresh recompute before save,baseline conflict handling | settingsPlanPreview / remote / SQL; SQL and full suite passed | Production guards installed |
-| Planned/Self-directed review,origin/date/mode/count/source/condition,one explicit association | ReviewPlanning / Setup; association dialog clears after navigating; full planned requirements verified in combined production-build browser | Production continuation verification pending |
+| Planned/Self-directed review,origin/date/mode/count/source/condition,one explicit association | ReviewPlanning / Setup; association dialog clears after navigating; full planned requirements verified in combined production-build browser | Production15-flow continuation passed |
 | One-time fixed/dynamic appointment;freeze on start;future empty due appointment | reviewPlanning / typed targets | Recurrence outside this round |
 | Unlinked practice updates evidence;empty automatic task separate from completion | startPlan / submissionOutcome; full suite passed | Verified runtime release |
 | Visible type/source/count/order/feedback/layout;1–100;per-word/per-sense selection | Setup / CustomVocabularySelection; production-build browser at1440/390/320 passed | Verified runtime release |
@@ -32,8 +32,8 @@ Implemented means code exists; final release verification is recorded separately
 | Immediate input,250ms save,no queue rebuild;pause/navigation await persistence | controller regressions; production-build beforeinput-to-frame median3.1ms/max10.1ms | Browser shutdown cannot guarantee async pagehide |
 | Discard does not skip;frozen task restart;same-ID retry;separate learning/task results | Context / submissionOutcome; production-build failure/retry flow passed | Verified runtime release |
 | Cross-device atomic baselines,receipts,conflict refresh | remote +12:00/14:00 migrations | Guards installed before frontend |
-| Load only needed scheduling/history data | Base uses coherent scoped plan/profile RPC; productive drafts load on module entry and merge fieldwise; Planning,Settings and Today use projected evidence;vocabularyCore excludes frozen history | Compact whole-plan stamp guards scoped writes; local15-flow acceptance passed,production pending |
-| Vocabulary and Planning history server20/page,individual detail load,unloaded records never deleted | remote history/detail; Planning target-page ranking,IDs-only selection and explicit row acceptance; backups request full plans | Migration installed; local acceptance passed,production pending |
+| Load only needed scheduling/history data | Base uses coherent scoped plan/profile RPC; productive drafts load on module entry and merge fieldwise; Planning,Settings and Today use projected evidence;vocabularyCore excludes frozen history | Compact whole-plan stamp guards scoped writes; production15-flow acceptance passed |
+| Vocabulary and Planning history server20/page,individual detail load,unloaded records never deleted | remote history/detail; Planning target-page ranking,IDs-only selection and explicit row acceptance; backups request full plans | Production migration,archive/cold-link and15-flow acceptance passed |
 | Frozen wrong-cause evidence/actionable recommendations/exact-sense audio | Preserved | Broader independently verified pronunciation coverage ongoing |
 | Whole-term packages,two authors+independent reviewer,isolated outputs,one-snapshot integration | Four applied snapshot receipts; fourth packages independently checked again after installation | Continue46,573 pending source senses; unresolved and indexed-only proposals remain excluded |
 | Source versions/licences,all-field review,teaching/media,selective diagrams,no paid model API | Partial:1,317 new independent full reviews;2,036 focused repairs since initial baseline | Remaining dictionary and unresolved cases stay open |
@@ -77,10 +77,9 @@ The table's production gates are satisfied by this exact-build and11-flow verifi
 
 ## Next retained work
 
-1. Publish and verify scoped plan/draft hydration and server-paged Planning History, preserving unloaded records,task identities,atomic baselines and bulk impact previews.
-2. Verify the combined15-flow browser suite on production,including short-budget,productive-draft,planned association and cross-page archive/deep-link cases.
-3. Expand independently verified exact-sense pronunciation and distinct-meaning guidance beyond sense labels.
-4. Continue46,573 pending source-sense reviews and preserve unresolved cases. Create subsequent whole-term packages from the new quality snapshot; the fourth snapshot is frozen historical evidence. Preparation,candidates and claims are not new approvals.
+1. Expand independently verified exact-sense pronunciation and distinct-meaning guidance beyond sense labels.
+2. Independently review and merge the frozen fifth packages,with exact task/media predicates and original/final source-sibling coverage. Neither author potential nor source preparation increases the ledger.
+3. Continue46,573 pending source-sense reviews and preserve unresolved cases. Create subsequent whole-term packages from the new quality snapshot; the fourth snapshot is frozen historical evidence. Preparation,candidates and claims are not new approvals.
 
 ## Fourth content integration and scoped-loading continuation
 
@@ -101,3 +100,11 @@ Production compatibility migration20261020220000 is installed before frontend pu
 The regenerated quality report binds source snapshot2955979ce5a1d92dcf18ba1f57fb586646c0bdb18fe2ecd276021e3f47df5d36. Three superseded punctuation-review receipts (Arabic,Historic,Italian) were archived; their new variants no longer trigger that signal,so no replacement approvals were invented. Active exact-example receipts:309. All9,087 learning variants have an example or typed reading note and no outstanding automated content-review signals; this is not semantic approval. Fifth packages0003/0004 are claimed by the two authors:107whole terms,577pending source senses and794exact variants. Their candidates do not increase the5,579complete-review total.
 
 The continuation production build passed all15 combined isolated browser flows with0console/page errors (local/unified-testing/browser-fourth-preview.json). New checks cover on-demand productive drafts,explicit one-task association,one-word remaining budget,cross-page25-task archive/unarchive and an unloaded archived deep link that opens page2. Previewing makes no changes; unarchive preserves skipped status,date and identity. Input-to-next-frame for26letters measured median4.0ms/max6.2ms on this machine. Screenshots cover1440/390/320,dark/light,keyboard and reduced motion. The final four new component regressions passed after build-only fixture type corrections. These are local-build results; frontend publication and exact production verification remain pending at this commit.
+
+## Continuation production acceptance
+
+Runtime commit15411b6d78e444038a962324c1bb63f3ef1441f5 is pushed to master and deployed through Cloudflare Git integration (deployment3bc15d7f-0a79-4877-b87e-07a8f8f6a0f6). Cloudflare Pages,Supabase Preview,four test shards and Check build/audit all passed for that exact commit. The production entry JS/CSS SHA256 match the locally accepted build,and Planning,Settings and Review direct routes return it (local/unified-testing/deployed-build.json).
+
+All15 production isolated browser flows passed with0console/page errors (local/unified-testing/browser-fourth-production.json). The archived deep-link flow reloads the app before asserting the target's individual fetch and page2 placement; its result does not rely on rows loaded by the preceding bulk action. Production beforeinput-to-next-frame for26letters measured median3.8ms/max5.8ms on this machine. This is a controlled observation,not a guarantee for other devices.
+
+All4,418 historical production resource URLs retain their SHA256,covering1,143,969,737bytes with0remaining errors (local/unified-testing/resources-fourth-production.json). Six requests initially timed out through the local proxy; five succeeded on narrow retries and the last succeeded as HTTP200 with a per-request direct connection. No historical file was replaced or removed. Browser fixtures intercepted synthetic account data and did not modify real learner rows. The full dictionary and the retained guidance/pronunciation work remain open.
