@@ -7,7 +7,10 @@ import { buildVocabularyResources, vocabularyResourceHeaders } from '../../scrip
 let release: ReturnType<typeof buildVocabularyResources>;
 // Every assertion reads the same release. Generate it once; the determinism test
 // still compares a second independent build of the complete retained corpus.
-beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 15_000);
+// This includes every archived teaching release, not only the current pack.
+// A complete build took 17.5 s on CI; allow shared-runner variation while
+// retaining every source, content-hash and historical-byte assertion below.
+beforeAll(() => { release = buildVocabularyResources(process.cwd()); }, 45_000);
 
 test('learning priority is delivered in scoped teaching while the preceding complete release keeps its original bytes', () => {
   const baseline = JSON.parse(readFileSync('src/domain/vocabulary/resourceDictionaryRound19Baseline.json', 'utf8'));
