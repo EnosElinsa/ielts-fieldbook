@@ -63,6 +63,8 @@ describe('vocabulary sessions', () => {
     const { cards } = fixture('production');
     cards[0].dueAt = '2030-01-01T00:00:00Z';
     cards[1].dueAt = '2020-01-01T00:00:00Z';
+    cards[0].scheduledDueAt = cards[0].dueAt;
+    cards[1].scheduledDueAt = cards[1].dueAt;
     const session = createVocabularySession(cards, 'production', { sessionSize: 100, order: 'due' });
     expect(session.cardIds).toHaveLength(3);
     expect(session.cardIds[0].id).toBe(cards[1].id);

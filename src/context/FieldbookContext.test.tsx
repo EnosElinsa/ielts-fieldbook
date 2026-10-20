@@ -5,6 +5,7 @@ import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { emptyState, normalizeDraft } from '../domain';
 import { addVocabularyItem, getVocabularyReviewQueue, recordVocabularyReview } from '../domain/vocabulary';
 import { readFileSync } from 'node:fs';
+import { IDBFactory } from 'fake-indexeddb';
 import { readDraftRecovery } from '../storage/recovery';
 import { ensureUnifiedPlans, previewBacklogChange, studyBudget } from '../lib/planTemplates';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
@@ -16,7 +17,7 @@ import { FieldbookProvider, useFieldbook } from './FieldbookContext';
 import { speakingPrompts } from '../domain/speaking';
 import { ACCOUNT_MODULES, emptyCollectionStatuses } from '../storage/accountModules';
 
-const mocks = vi.hoisted(() => ({ initial: null, statuses: null, moduleRead: vi.fn(), completeRead: vi.fn(), releasedRead: vi.fn(), teachingRead: vi.fn(), saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), catalogRead: vi.fn(), examCatalogRead:vi.fn(), examSectionsRead:vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
+const mocks = vi.hoisted(() => ({ initial: null, statuses: null, planningRead:vi.fn(), moduleRead: vi.fn(), completeRead: vi.fn(), releasedRead: vi.fn(), teachingRead: vi.fn(), saveState: vi.fn(), saveVocabularyImport: vi.fn(), saveVocabularySession:vi.fn(), catalogRead: vi.fn(), examCatalogRead:vi.fn(), examSectionsRead:vi.fn(), downloadFile: vi.fn(), owner: 'account-1' }));
 vi.mock('../storage/examCatalog',()=>({loadExamCatalog:(...args)=>mocks.examCatalogRead(...args),loadExamSections:(...args)=>mocks.examSectionsRead(...args)}));
 vi.mock('../storage', () => ({
   loadState: () => structuredClone(mocks.initial),
@@ -38,7 +39,7 @@ vi.mock('../storage/vocabularyCatalog', () => ({
   loadReleasedVocabularyTeaching: (...args) => mocks.teachingRead(...args),
   VocabularyScopeUnavailableError: class extends Error {},
 }));
-vi.mock('../storage/remote', () => ({ accountId: () => mocks.owner }));
+vi.mock('../storage/remote', () => ({ accountId: () => mocks.owner, refreshPlanningState:(...args)=>mocks.planningRead(...args),loadVocabularySession:async()=>null,loadVocabularyHistoryPage:async()=>({rows:[],total:0}) }));
 
 let fieldbook;
 test('an acknowledged draft save cannot discard recovery for text edited during the request', async () => {
@@ -131,6 +132,7 @@ async function prepareCompletion(skill = 'writing') {
 }
 
 beforeEach(() => {
+  vi.stubGlobal('indexedDB',new IDBFactory());
   localStorage.clear();
   mocks.owner = 'account-1';
   mocks.statuses = null;
@@ -139,6 +141,7 @@ beforeEach(() => {
   mocks.releasedRead.mockReset().mockRejectedValue(new Error('Static resource unavailable'));
   mocks.teachingRead.mockReset().mockResolvedValue({books:[], units:[], entries:[], memberships:[]});
   mocks.saveState.mockReset().mockResolvedValue(true);
+  mocks.planningRead.mockReset();
   mocks.downloadFile.mockReset();
   mocks.saveVocabularyImport.mockReset().mockResolvedValue(true);
   mocks.saveVocabularySession.mockReset().mockResolvedValue(true);
@@ -340,18 +343,19 @@ test('speaking mock starts with frozen three-stage prompts and progresses only w
   mocks.initial.speakingTopics = [long, short];
   mocks.initial.plans = [{ id: 'mock', kind: 'speaking-mock', status: 'pending', skill: 'speaking', target: { type: 'question', skill: 'speaking', questionId: 'sp2', mode: 'timed', part: '1' } }];
   await mount(); await act(async () => { await fieldbook.startPlan('mock'); });
-  expect(fieldbook.state.plans[0].speakingGroups.p3.prompts).toHaveLength(2);
-  const firstGroup = structuredClone(fieldbook.state.plans[0].target.prompts);
+  const plan = () => fieldbook.state.plans.find(row => row.id === 'mock');
+  expect(plan().speakingGroups.p3.prompts).toHaveLength(2);
+  const firstGroup = structuredClone(plan().target.prompts);
   const save = async (question, prompt) => {
     await act(async () => { fieldbook.setPendingAttempt({ id: crypto.randomUUID(), question, ...prompt, essay: 'Answer', skill: 'speaking', planId: 'mock', practiceMode: 'timed' }); });
     await act(async () => { await fieldbook.saveAttempt(false, { focus: '', next: '', errors: '' }); });
   };
-  await save(short, firstGroup[0]); expect(fieldbook.state.plans[0].stage || 'p1').toBe('p1'); expect(fieldbook.questionIndex).toBe(1);
-  await save(short, firstGroup[1]); expect(fieldbook.state.plans[0].stage).toBe('p2'); expect(fieldbook.deskPart).toBe('2');
-  await save(long, fieldbook.state.plans[0].target.prompts[0]); expect(fieldbook.state.plans[0].stage).toBe('p3'); expect(fieldbook.deskPart).toBe('3');
-  const thirdGroup = structuredClone(fieldbook.state.plans[0].target.prompts);
-  await save(long, thirdGroup[0]); expect(fieldbook.state.plans[0].status).toBe('in_progress');
-  await save(long, thirdGroup[1]); expect(fieldbook.state.plans[0].status).toBe('completed'); expect(currentPath).toBe('/review');
+  await save(short, firstGroup[0]); expect(plan().stage || 'p1').toBe('p1'); expect(fieldbook.questionIndex).toBe(1);
+  await save(short, firstGroup[1]); expect(plan().stage).toBe('p2'); expect(fieldbook.deskPart).toBe('2');
+  await save(long, plan().target.prompts[0]); expect(plan().stage).toBe('p3'); expect(fieldbook.deskPart).toBe('3');
+  const thirdGroup = structuredClone(plan().target.prompts);
+  await save(long, thirdGroup[0]); expect(plan().status).toBe('in_progress');
+  await save(long, thirdGroup[1]); expect(plan().status).toBe('completed'); expect(currentPath).toBe('/review');
 });
 
 test('targeted practice protects an existing draft when replacement is declined', async () => {
@@ -806,6 +810,25 @@ test('a planned review waits for task completion, reports a failed task save and
   expect(mocks.saveState.mock.calls.at(-1)[2].collections.sort()).toEqual(['plans','profile']);
 });
 
+test('a task completed on another device is refreshed after a submission conflict without replacing its completion', async () => {
+  const refs = [{entryId:'word',senseId:'sense'}];
+  mocks.initial.plans = [{id:'review-plan',kind:'vocabulary',status:'in_progress',startedAt:'2026-10-20T01:00:00Z',target:{type:'vocabulary',mode:'due-review',assessmentMode:'dictation',cards:refs}}];
+  mocks.initial.activePlanId='review-plan';
+  mocks.statuses={plans:'ready',profile:'ready'};
+  await mount('/vocabulary/review');
+  const draft=structuredClone(fieldbook.stateRef.current);
+  draft.vocabularySessions.push({id:'our-session',planId:'review-plan',status:'submitted',mode:'dictation',startedAt:'2026-10-20T01:01:00Z',submittedAt:'2026-10-20T01:10:00Z',results:refs.map(ref=>({...ref,response:'wrong answer',result:'failure'}))});
+  mocks.saveState.mockImplementationOnce(async (_next,onError)=>{onError?.('Your plan changed on another device. Refresh the preview before saving.');return false;});
+  mocks.planningRead.mockResolvedValue({settings:fieldbook.state.settings,activePlanId:null,plans:[{...draft.plans[0],status:'completed',linkedSessionId:'other-session'}]});
+  const onResult=vi.fn();
+  await act(async()=>{expect(await fieldbook.persistVocabularySession(draft,'our-session',{onResult})).toBe(true);});
+  expect(mocks.planningRead).toHaveBeenCalledTimes(1);
+  expect(onResult).toHaveBeenLastCalledWith(expect.objectContaining({learningSaved:true,taskStatus:'already-completed'}));
+  expect(fieldbook.state.plans[0].linkedSessionId).toBe('other-session');
+  expect(fieldbook.state.vocabularySessions).toHaveLength(1);
+  expect(mocks.saveState).toHaveBeenCalledTimes(1);
+});
+
 test('vocabulary browsing commits only after save and preserves assessment updates queued during saving', async () => {
   mocks.initial.wordbookProgress=[{id:'progress',bookId:'book',unitId:'group',completedEntryIds:[],status:'in_progress',updatedAt:'2026-10-12'}];
   await mount();
@@ -1232,7 +1255,7 @@ test('plan edits commit after durable save and exclude unloaded collections',asy
   expect(fieldbook.state.plans).toEqual(before);
   expect(mocks.saveState.mock.calls.at(-1)[2].collections.sort()).toEqual(['plans','profile']);
   await act(async()=>{expect(await fieldbook.changePlan('manual',{type:'skip'})).toBe(true);});
-  expect(fieldbook.state.plans[0]).toMatchObject({status:'skipped',origin:'manual'});
+  expect(fieldbook.state.plans[0]).toMatchObject({status:'skipped',manuallyEditedAt:expect.any(String)});
 });
 
 test('committed plan edits survive an older queued draft and do not restore a completed active pointer',async()=>{
@@ -1283,7 +1306,7 @@ test('direct settings saves load released vocabulary metadata before generating 
     await mount();
     let saved;
     await act(async()=>{saved=await fieldbook.saveStudySettings({dailyMinutes:60});});
-    expect(saved).toBe(true);
+    expect(saved,fieldbook.getStudySettingsError()).toBe(true);
     expect(mocks.saveState).toHaveBeenCalled();
     const options=mocks.saveState.mock.calls.at(-1)[2];
     expect(options.collections).toEqual(['profile','plans']);
@@ -1324,8 +1347,9 @@ test('empty dynamic vocabulary skips as no-longer-due without completion or navi
   mocks.initial.plans=[{id:'empty-review',kind:'vocabulary',skill:'vocabulary',status:'pending',estimatedMinutes:10,target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'definition',cards:[]}}];
   await mount('/');
   await act(async()=>{expect(await fieldbook.startPlan('empty-review')).toBe(true);});
-  expect(fieldbook.state.plans[0]).toMatchObject({status:'skipped',skipReason:'no-longer-due'});
-  expect(fieldbook.state.plans[0].completedAt).toBeFalsy();
+  const plan=fieldbook.state.plans.find(row=>row.id==='empty-review');
+  expect(plan).toMatchObject({status:'skipped',skipReason:'no-longer-due'});
+  expect(plan.completedAt).toBeFalsy();
   expect(currentPath).toBe('/');
 });
 
@@ -1471,7 +1495,7 @@ test.each(['/today?view=overdue','/planning?view=overdue#planning-backlog'])('ac
  const view=render(<BrowserRouter><FieldbookProvider><Probe/><Routes><Route path="/sentinel" element={<p>Before source</p>}/><Route path="/today" element={<TodayPage/>}/><Route path="/planning" element={<PlanningPage/>}/><Route path="/vocabulary/review" element={<VocabularyPracticePage/>}/><Route path="/vocabulary/history/:sessionId" element={<VocabularyPracticePage/>}/></Routes><ReturnHistoryControls/></FieldbookProvider></BrowserRouter>);
  try {
   await waitFor(()=>expect(fieldbook.booted).toBe(true));
-  if(source.startsWith('/planning'))fireEvent.click(await screen.findByText(/Waiting list/));
+  if(source.startsWith('/planning')&&screen.queryByRole('button',{name:/Waiting ·/})?.getAttribute('aria-pressed')!=='true')fireEvent.click(await screen.findByRole('button',{name:/Waiting ·/}));
   fireEvent.click(await screen.findByRole('button',{name:'Resume'}));
   await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());fireEvent.click(screen.getByRole('button',{name:'Start session'}));
   fireEvent.change(await screen.findByRole('textbox',{name:'Answer 1'}),{target:{value:'persistent'}});fireEvent.click(screen.getByRole('button',{name:'Submit session'}));
@@ -1522,7 +1546,7 @@ test.each(['due-review','learning-batch'])('settings save uses canonical regener
   const frozen={id:'settings-frozen',dateKey:'2099-01-01',origin:'automatic',status:'pending',kind:'vocabulary',skill:'vocabulary',estimatedMinutes:1,target:{type:'vocabulary',binding:'frozen',mode,assessmentMode:'definition',cards:[{entryId:'word',senseId:'sense'}]},draft:{answer:'Keep the frozen answer'}};
   const carry={id:'settings-carry',dateKey:'2000-01-01',origin:'automatic',status:'pending',kind:'1',skill:'writing',estimatedMinutes:10,target:{type:'question',skill:'writing',questionId:'q1',mode:'overview'}};
   const started={...carry,id:'settings-started',dateKey:'2099-01-01',status:'in_progress',startedAt:'2026-10-01T00:00:00Z',draft:{text:'Keep started work'}};
-  const staleReview={...frozen,id:'settings-stale',dateKey:'2000-01-01',target:{...frozen.target,mode:'due-review'}};
+  const staleReview={...frozen,id:'settings-stale',dateKey:'2000-01-01',target:{...frozen.target,mode:'due-review',binding:'dynamic',cards:[]}};
   await act(async()=>{await fieldbook.persist(draft=>{draft.plans.push(frozen,carry,staleReview,started);draft.activePlanId=staleReview.id;});});
   const before=structuredClone(fieldbook.state),expected=structuredClone(before);expected.settings.dailyMinutes=60;ensureUnifiedPlans(expected);
   mocks.saveState.mockResolvedValueOnce(false);

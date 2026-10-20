@@ -44,6 +44,32 @@ test('planned learning retains its required fixed batch mode and whole-group ass
   expect(screen.getByRole('link',{name:'Start meaning recall · 10 words'})).toHaveAttribute('href',expect.stringContaining('planId=planned'));
 });
 const path = '/vocabulary/wordbooks/book/groups/group/learn';
+test('exact planned learning browses only its frozen words and retains the original task batch when navigating', async () => {
+  const cards=[{entryId:'word-11',senseId:'sense-11'},{entryId:'word-3',senseId:'sense-3'},{entryId:'word-1',senseId:'sense-1'}];
+  mocks.fb.state.plans=[{id:'exact-plan',kind:'vocabulary',status:'in_progress',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',selectionPolicy:'exact',bookId:'book',unitId:'group',batchIndex:1,batchSize:10,cards}}];
+  const plannedEntry=VOCABULARY_CATALOG.entries.find(entry=>entry.id==='word-11')!;
+  plannedEntry.senses.push({...plannedEntry.senses[0],id:'other-sense-11',definition:'Another unplanned meaning.'});
+  mocks.fb.state.vocabularySessions=[{id:'prior-subset',status:'submitted',mode:'definition',selection:{kind:'learning-batch',bookId:'book',unitId:'group',batchIndex:1,batchSize:10,cards},results:cards.map(ref=>({...ref,response:'answer'}))}];
+  mount(`${path}?planId=exact-plan&batch=1&batchSize=10&sense=other-sense-11&selectedEntryIds=${encodeURIComponent(JSON.stringify(['word-2']))}`);
+  await screen.findByRole('heading',{name:'Word 11'});
+  expect(screen.getByText('Meaning 11')).toBeInTheDocument();
+  expect(screen.getByLabelText('Group progress')).toHaveTextContent('Assessment: In progress');
+  fireEvent.click(screen.getByRole('button',{name:'Next word'}));
+  await screen.findByRole('heading',{name:'Word 3'});
+  fireEvent.click(screen.getByRole('button',{name:'Next word'}));
+  await screen.findByRole('heading',{name:'Word 1'});
+  const route=new URL(screen.getByLabelText('Route').textContent!,'https://local.test');
+  expect(route.searchParams.get('planId')).toBe('exact-plan');
+  expect(route.searchParams.get('batch')).toBe('1');
+  expect(route.searchParams.get('batchSize')).toBe('10');
+  const assessment=new URL(screen.getByRole('link',{name:'Start meaning recall · 3 words'}).getAttribute('href')!,'https://local.test');
+  expect(assessment.searchParams.get('planId')).toBe('exact-plan');
+  expect(assessment.searchParams.get('batch')).toBe('1');
+  expect(assessment.searchParams.get('batchSize')).toBe('10');
+  expect(JSON.parse(assessment.searchParams.get('batchCards')!)).toEqual(cards);
+  expect(screen.getByRole('button',{name:'Next word'})).toBeDisabled();
+  expect(screen.getByRole('button',{name:'Whole group · 12 words'})).toBeInTheDocument();
+});
 function entry(index: number) {
   return { id:`word-${index}`, term:`Word ${index}`, category:'word', meaning:`Meaning ${index}`, example:`Example ${index}.`, tags:[], sources:[{type:'wordbook',id:`source-${index}`,bookId:'book',unitId:'group'}], senses:[{id:`sense-${index}`,definition:`Meaning ${index}`,example:index===1?'Meronym: stock animal':`Example ${index}.`,pos:'noun',collocations:['reliable phrase']}], createdAt:'2026-01-01T00:00:00Z',updatedAt:'2026-01-01T00:00:00Z' };
 }

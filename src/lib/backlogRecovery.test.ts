@@ -7,7 +7,9 @@ import {ensureUnifiedPlans,previewBacklogChange,applyBacklogPreview,mutateStudyP
 import {bindStudyPlanTargets} from './planTargets';
 import {vocabularyGroupProgress} from '../domain/vocabulary/progress';
 const now=new Date('2026-10-19T12:00:00');
-const setup=()=>{const s=emptyState();s.settings.days=[1,3];s.settings.dailyMinutes=30;s.settings.skills=['writing'];s.settings.planning={...s.settings.planning,vocabularyMode:'fixed',vocabularyMinutes:10};return s;};
+// These legacy recovery cases opt into full carryover. The default 30% limit
+// has its own coverage in unified-learning-planner.test.ts.
+const setup=()=>{const s=emptyState();s.settings.days=[1,3];s.settings.dailyMinutes=30;s.settings.skills=['writing'];s.settings.planning={...s.settings.planning,vocabularyMode:'fixed',vocabularyMinutes:10,carryoverPercent:100};return s;};
 const task=(id,minutes=20,patch={})=>({id,dateKey:'2026-10-01',status:'pending',skill:'writing',kind:'1',title:id,estimatedMinutes:minutes,origin:'automatic',target:{type:'question',skill:'writing',questionId:id,mode:'overview'},...patch});
 
 test.each([9,12])('eligible learning members fit a %s minute budget and bind without phantom indexes',async minutes=>{
@@ -56,14 +58,22 @@ test('resource loading reconciles provisional automatic batch counts without tou
   expect(s.plans.map(plan=>plan.target.batchIndex)).toEqual([0,1]);
   const frozen=task('keep-exact',2,{dateKey:'2026-10-21',skill:'vocabulary',kind:'vocabulary',target:{type:'vocabulary',mode:'learning-batch',bookId:unit.bookId,unitId:unit.id,batchIndex:0,batchSize:10,assessmentMode:'definition',binding:'frozen',cards:[{entryId:'fixed',senseId:'one'},{entryId:'fixed',senseId:'two'}]}});s.plans.push(frozen);const before=structuredClone(frozen);
   await bindStudyPlanTargets(s,{vocabulary:async()=>{if(members.length)return;for(let i=0;i<12;i++){const entry=addVocabularyItem(s,{id:`late-${i}`,term:`lateword${i}`,meaning:'A meaning.'}).item;if(i<3)entry.tags.push('archived');members.push({entryId:entry.id,bookId:unit.bookId,unitId:unit.id,order:i});}VOCABULARY_CATALOG.memberships.push(...members);}});
-  expect(s.plans).toHaveLength(2);expect(s.plans[0]).toMatchObject({estimatedMinutes:9,quantity:9,target:{batchIndex:0}});expect(s.plans[0].target.cards).toHaveLength(9);expect(s.plans[1]).toEqual(before);
+  const loaded=s.plans.filter(plan=>plan.id!=='keep-exact');
+  expect(loaded.map(plan=>plan.quantity)).toEqual([7,2]);
+  expect(loaded.flatMap(plan=>plan.target.cards.map(ref=>ref.entryId))).toEqual(Array.from({length:9},(_,i)=>`late-${i+3}`));
+  expect(loaded.every(plan=>plan.estimatedMinutes===plan.target.cards.length)).toBe(true);
+  expect(s.plans.find(plan=>plan.id==='keep-exact')).toEqual(before);
  }finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);for(const member of members)VOCABULARY_CATALOG.memberships.splice(VOCABULARY_CATALOG.memberships.indexOf(member),1);}
 });
 
-test('count-only external metadata reserves prospective learning without inventing frozen cards',async()=>{
+test('count-only metadata defers new learning and preserves existing prospective allocations without inventing cards',async()=>{
  const s=setup();s.settings.days=[1];s.wordbookEnrollments=[{bookId:'count-only-book'}];
  const unit={id:'count-only-group',bookId:'count-only-book',kind:'group',entryIds:[],totalSourceWords:12,order:1};VOCABULARY_CATALOG.units.push(unit);
- try{ensureUnifiedPlans(s,undefined,now);s.plans=s.plans.filter(plan=>plan.target?.mode==='learning-batch');expect(s.plans).toHaveLength(1);await bindStudyPlanTargets(s,{vocabulary:async()=>{}});expect(s.plans[0]).toMatchObject({estimatedMinutes:10,quantity:10,target:{cards:[],batchIndex:0}});}
+ try{
+  ensureUnifiedPlans(s,undefined,now);s.plans=s.plans.filter(plan=>plan.target?.mode==='learning-batch');expect(s.plans).toHaveLength(0);
+  s.plans=[task('existing-prospective',10,{dateKey:'2026-10-19',skill:'vocabulary',kind:'vocabulary',quantity:10,target:{type:'vocabulary',mode:'learning-batch',bookId:unit.bookId,unitId:unit.id,assessmentMode:'definition',batchIndex:0,batchSize:10,cards:[]}})];
+  await bindStudyPlanTargets(s,{vocabulary:async()=>{}});expect(s.plans[0]).toMatchObject({estimatedMinutes:10,quantity:10,target:{cards:[],batchIndex:0}});
+ }
  finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);}
 });
 
@@ -79,12 +89,14 @@ test.each(['bogus','audio','production',[]])('manual recall rejects invalid asse
 
 test('loading prospective membership rechecks exact frozen learning reservations before binding',async()=>{
  const s=setup();s.settings.days=[1];s.settings.planning.vocabularyMinutes=20;s.settings.vocabulary.learningBatchSize=5;s.settings.vocabulary.mode='definition';s.wordbookEnrollments=[{bookId:'late-reserved-book'}];
- const unit={id:'late-reserved-group',bookId:'late-reserved-book',kind:'group',entryIds:[],totalSourceWords:10,order:1};VOCABULARY_CATALOG.units.push(unit);const members=[];
- const frozen=task('late-reserved',1,{dateKey:'2026-10-19',skill:'vocabulary',kind:'vocabulary',target:{type:'vocabulary',mode:'learning-batch',bookId:unit.bookId,unitId:unit.id,assessmentMode:'definition',batchIndex:0,batchSize:10,cards:[{entryId:'reserved-late-0',senseId:'reserved-sense-0'}]}});s.plans=[frozen];const before=structuredClone(frozen);
+ const unit={id:'late-reserved-group',bookId:'late-reserved-book',kind:'group',entryIds:Array.from({length:10},(_,i)=>`reserved-late-${i}`),totalSourceWords:10,order:1};VOCABULARY_CATALOG.units.push(unit);const members=[];
+ const frozen=task('late-reserved',1,{dateKey:'2026-10-19',skill:'vocabulary',kind:'vocabulary',target:{type:'vocabulary',mode:'learning-batch',bookId:unit.bookId,unitId:unit.id,assessmentMode:'definition',batchIndex:0,batchSize:10,cards:[{entryId:'reserved-late-0',senseId:'reserved-sense-0'}]}});const before=structuredClone(frozen);
  try{
-  ensureUnifiedPlans(s,undefined,now);s.plans=s.plans.filter(plan=>plan.target?.mode==='learning-batch');expect(s.plans).toHaveLength(3);
+  ensureUnifiedPlans(s,undefined,now);s.plans=s.plans.filter(plan=>plan.target?.mode==='learning-batch');expect(s.plans).toHaveLength(2);s.plans.push(frozen);
   await bindStudyPlanTargets(s,{vocabulary:async()=>{if(members.length)return;for(let i=0;i<10;i++){const entry=addVocabularyItem(s,{id:`reserved-late-${i}`,term:`reservedlate${i}`,senses:[{id:`reserved-sense-${i}`,definition:'A meaning.',example:'',pos:'noun'}]}).item;members.push({entryId:entry.id,bookId:unit.bookId,unitId:unit.id,order:i});}VOCABULARY_CATALOG.memberships.push(...members);}});
-  expect(s.plans).toHaveLength(2);expect(s.plans[0]).toEqual(before);expect(s.plans[1].target.batchIndex).toBe(1);expect(s.plans[1].target.cards.map(ref=>ref.entryId)).toEqual(['reserved-late-5','reserved-late-6','reserved-late-7','reserved-late-8','reserved-late-9']);
+  expect(s.plans).toHaveLength(3);expect(s.plans.find(plan=>plan.id===frozen.id)).toEqual(before);
+  const loaded=s.plans.filter(plan=>plan.id!==frozen.id);expect(loaded.map(plan=>plan.quantity)).toEqual([4,5]);
+  expect(loaded.flatMap(plan=>plan.target.cards.map(ref=>ref.entryId))).toEqual(Array.from({length:9},(_,i)=>`reserved-late-${i+1}`));
  }finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);for(const member of members)VOCABULARY_CATALOG.memberships.splice(VOCABULARY_CATALOG.memberships.indexOf(member),1);}
 });
 test('carryover wins capacity over generated work, started first, preserving content and drafts',()=>{
@@ -96,7 +108,7 @@ test('carryover wins capacity over generated work, started first, preserving con
  const before=structuredClone(s);ensureUnifiedPlans(s,undefined,now);expect(s).toEqual(before);
 });
 test('pending past review slots merge with history, frozen future and started reviews survive',()=>{
- const s=setup();const target={type:'vocabulary',mode:'due-review',assessmentMode:'definition',cards:[{entryId:'x',senseId:'s'}]};
+ const s=setup();const target={type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'definition',cards:[]};
  s.plans=[task('stale',5,{kind:'vocabulary',skill:'vocabulary',target}),task('running',5,{kind:'vocabulary',skill:'vocabulary',target:structuredClone(target),status:'in_progress',startedAt:'2026-10-01'}),task('fixed',5,{dateKey:'2026-10-21',kind:'vocabulary',skill:'vocabulary',target:{...target,binding:'frozen'}})];
  const before=structuredClone(s.plans);ensureUnifiedPlans(s,undefined,now);
  expect(s.plans.find(p=>p.id==='stale')).toMatchObject({...before[0],status:'skipped',skipReason:'merged-review'});
@@ -139,7 +151,9 @@ test('smaller settings reallocate pending automatic carryover without overtime o
 test('no-capacity and rest-day previews keep selected indivisible work waiting',()=>{
  const s=setup();s.settings.days=[];s.plans=[task('old'),task('large',120,{status:'in_progress',startedAt:'2026-10-01'})];
  const preview=previewBacklogChange(s,{type:'replan',ids:['old','large'],includeStarted:true},now);
- expect(preview.changes.every(row=>row.waiting)).toBe(true);expect(preview.plans).toEqual(s.plans);
+ expect(preview.changes.every(row=>row.waiting)).toBe(true);
+ expect(preview.plans.map(({waitingReason,...plan})=>plan).sort((a,b)=>a.id.localeCompare(b.id))).toEqual([...s.plans].sort((a,b)=>a.id.localeCompare(b.id)));
+ expect(preview.plans.every(plan=>Boolean(plan.waitingReason))).toBe(true);
 });
 
 test('homogeneous batching never spends capacity on a foundation gap ahead of another due mode',()=>{
@@ -150,10 +164,10 @@ test('homogeneous batching never spends capacity on a foundation gap ahead of an
 });
 
 test('explicitly restored historical reviews stay actionable rather than immediately merging again',()=>{
- const s=setup();s.plans=[task('review',5,{kind:'vocabulary',skill:'vocabulary',target:{type:'vocabulary',mode:'due-review',assessmentMode:'definition',cards:[{entryId:'word',senseId:'sense'}]}})];
+ const s=setup();s.plans=[task('review',5,{kind:'vocabulary',skill:'vocabulary',target:{type:'vocabulary',mode:'due-review',binding:'dynamic',assessmentMode:'definition',cards:[]}})];
  ensureUnifiedPlans(s,undefined,now);expect(s.plans.find(p=>p.id==='review').status).toBe('skipped');
  mutateStudyPlan(s,'review',{type:'restore',allowOverBudget:true},now);ensureUnifiedPlans(s,undefined,now);
- expect(s.plans.find(p=>p.id==='review')).toMatchObject({status:'pending',dateKey:'2026-10-19',target:{cards:[{entryId:'word',senseId:'sense'}]}});
+ expect(s.plans.find(p=>p.id==='review')).toMatchObject({status:'pending',dateKey:'2026-10-19',target:{binding:'dynamic',cards:[]}});
 });
 
 test('a final short learning batch consumes its actual prompt count in spare vocabulary capacity',()=>{
@@ -174,8 +188,9 @@ test.each(['learning-batch','due-review'])('frozen %s identities reserve overlap
   ensureUnifiedPlans(s,undefined,now);const generated=s.plans.filter(row=>row.id!==frozen.id&&row.target?.mode==='learning-batch');
   expect(generated.length).toBeGreaterThan(0);expect(generated.every(row=>row.target.batchIndex>=2)).toBe(true);expect(frozen).toEqual(before);
   const stable=structuredClone(s.plans);ensureUnifiedPlans(s,undefined,now);expect(s.plans).toEqual(stable);
-  frozen.target.assessmentMode='dictation';ensureUnifiedPlans(s,undefined,now);expect(s.plans.some(row=>row.id!==frozen.id&&row.target?.mode==='learning-batch'&&row.target.batchIndex===0)).toBe(true);
-  frozen.target.assessmentMode='definition';frozen.target.cards=frozen.target.cards.map(ref=>({...ref,senseId:'another-sense'}));ensureUnifiedPlans(s,undefined,now);expect(s.plans.some(row=>row.id!==frozen.id&&row.target?.mode==='learning-batch'&&row.target.batchIndex===0)).toBe(true);
+  const reservedIds=new Set(frozen.target.cards.map(ref=>ref.entryId));
+  frozen.target.assessmentMode='dictation';ensureUnifiedPlans(s,undefined,now);expect(s.plans.filter(row=>row.id!==frozen.id&&row.target?.mode==='learning-batch').flatMap(row=>row.target.entryIds).some(id=>reservedIds.has(id))).toBe(false);
+  frozen.target.assessmentMode='definition';frozen.target.cards=frozen.target.cards.map(ref=>({...ref,senseId:'another-sense'}));ensureUnifiedPlans(s,undefined,now);expect(s.plans.filter(row=>row.id!==frozen.id&&row.target?.mode==='learning-batch').flatMap(row=>row.target.entryIds).some(id=>reservedIds.has(id))).toBe(false);
  }finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);for(const member of members)VOCABULARY_CATALOG.memberships.splice(VOCABULARY_CATALOG.memberships.indexOf(member),1);}
 });
 
@@ -186,6 +201,6 @@ test('frozen reservations compare resolved learning batches when archived words 
  const unit={id:'shift-unit',bookId:'shift-book',kind:'group',entryIds:entries.map(row=>row.id),order:1},members=entries.map((entry,order)=>({entryId:entry.id,bookId:unit.bookId,unitId:unit.id,order}));
  VOCABULARY_CATALOG.units.push(unit);VOCABULARY_CATALOG.memberships.push(...members);
  s.plans=[task('frozen-shift',1,{dateKey:'2026-10-19',skill:'vocabulary',kind:'vocabulary',target:{type:'vocabulary',binding:'frozen',mode:'due-review',assessmentMode:'definition',cards:[{entryId:entries[10].id,senseId:entries[10].senses[0].id}]}})];
- try {ensureUnifiedPlans(s,undefined,now);const batches=s.plans.filter(row=>row.target?.mode==='learning-batch');expect(batches.length).toBeGreaterThan(0);expect(batches.some(row=>row.target.batchIndex===1)).toBe(false);}
+ try {ensureUnifiedPlans(s,undefined,now);const batches=s.plans.filter(row=>row.target?.mode==='learning-batch');expect(batches.length).toBeGreaterThan(0);expect(batches.flatMap(row=>row.target.entryIds)).toEqual(entries.slice(5).filter(entry=>entry.id!==entries[10].id).map(entry=>entry.id));expect(batches.every(row=>row.target.selectionPolicy==='exact')).toBe(true);}
  finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);for(const member of members)VOCABULARY_CATALOG.memberships.splice(VOCABULARY_CATALOG.memberships.indexOf(member),1);}
 });

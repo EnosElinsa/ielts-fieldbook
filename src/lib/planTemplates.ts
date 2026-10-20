@@ -6,11 +6,14 @@ import { isProtectedPlan, practiceFromWeakness } from '../domain/plans';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
 import { vocabularyLearningSource } from '../domain/vocabulary/learningSource';
 import { getVocabularyPlanningCandidates, selectVocabularyPlanReview } from '../domain/vocabulary/planning';
+import { normalizeReviewScope, normalizeSelectedMeanings } from '../domain/vocabulary/reviewPlanning';
+import { isVocabularySessionSelection } from '../domain/vocabulary/selection';
 import { isAssessedReviewMode, vocabularyReviewTask } from './vocabularyReviewTask';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
-import { vocabularyGroupProgress } from '../domain/vocabulary/progress';
+import { vocabularyGroupProgress, getLearnedVocabularyIds } from '../domain/vocabulary/progress';
 import { dayBudget, normalizePlanning } from '../domain/planningPreferences';
 import { TASK_PRACTICES } from './planningTaskOptions';
+import { planningEvidenceView } from '../domain/planningEvidence';
 
 export const planTemplates = {
   balanced: [
@@ -408,7 +411,7 @@ export function studyBudget(settings, key: string | undefined = undefined) {
 }
 
 export function selectedStudySkills(settings) {
-  if (Array.isArray(settings.skills) && settings.skills.length) return ['writing','speaking','reading','listening'].filter(skill => settings.skills.includes(skill));
+  if (Array.isArray(settings.skills)) return ['writing','speaking','reading','listening'].filter(skill => settings.skills.includes(skill));
   return ['writing','speaking','reading','listening'].includes(settings.skillMix) ? [settings.skillMix] : ['writing','speaking','reading','listening'];
 }
 
@@ -434,6 +437,7 @@ function deterministicQuestion(state, skill, kind, sequence) {
 }
 
 export function skillTask(state, skill, minutes, sequence = 0, useEvidence = true) {
+  state=planningEvidenceView(state);
   let template;
   if (skill === 'writing') {
     const task2 = state.settings.focus === 'task2' || state.settings.focus !== 'task1' && sequence % 2 === 1;
@@ -505,14 +509,14 @@ function refreshEvidenceTargets(state, keys, skills, now) {
 const isVocabularyPlan=plan=>plan.skill==='vocabulary'||plan.kind==='vocabulary';
 const startedPlan=plan=>plan.status==='in_progress'||Boolean(plan.startedAt);
 const frozenVocabularyPlan=plan=>plan.target?.type==='vocabulary'&&(plan.target.binding==='frozen'||plan.target.binding!=='dynamic'&&plan.target.cards?.length>0);
-const protectedSchedulePlan=plan=>isProtectedPlan(plan)||Boolean(plan.originalDateKey)||frozenVocabularyPlan(plan);
+const protectedSchedulePlan=plan=>isProtectedPlan(plan)||Boolean(plan.originalDateKey || plan.onHold || plan.archivedAt)||frozenVocabularyPlan(plan);
 const cardIdentity=(card,mode=card.mode)=>JSON.stringify([card.entryId,card.senseId,mode]);
 const taskMinutes=plan=>Math.max(1,Number(plan.estimatedMinutes)||Number(plan.quantity)||1);
 
 /** Automatic allocation never spends the reserved vocabulary share on old skill work. */
 function remainingCapacity(state,key) {
   const budget=studyBudget(state.settings,key);
-  const rows=state.plans.filter(plan=>plan.dateKey===key&&plan.status!=='skipped');
+  const rows=state.plans.filter(plan=>plan.dateKey===key&&plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt);
   const total=rows.reduce((sum,plan)=>sum+taskMinutes(plan),0);
   const vocabulary=rows.filter(isVocabularyPlan).reduce((sum,plan)=>sum+taskMinutes(plan),0);
   return {total:Math.max(0,budget.daily-total),vocabulary:Math.max(0,Math.min(budget.vocabulary-vocabulary,budget.daily-total)),skill:Math.max(0,Math.min(budget.skill-(total-vocabulary),budget.daily-total))};
@@ -520,23 +524,35 @@ function remainingCapacity(state,key) {
 
 function carryBacklog(state,keys,now,selectedIds,previousDates=new Map()) {
   const today=keys[0];
-  const backlog=state.plans.filter(plan=>plan.dateKey<today&&['pending','in_progress'].includes(plan.status)&&(!selectedIds||selectedIds.has(plan.id)))
+  const backlog=state.plans.filter(plan=>plan.dateKey<today&&['pending','in_progress'].includes(plan.status)&&!plan.onHold&&!plan.archivedAt&&(!selectedIds||selectedIds.has(plan.id)))
     .sort((a,b)=>Number(startedPlan(b))-Number(startedPlan(a))||String(a.originalDateKey||a.dateKey).localeCompare(String(b.originalDateKey||b.dateKey))||a.id.localeCompare(b.id));
   for(const plan of backlog) {
-    if(plan.target?.mode==='due-review'&&!startedPlan(plan)&&!plan.restoredAt) {
+    if(plan.origin==='automatic'&&plan.target?.mode==='due-review'&&!frozenVocabularyPlan(plan)&&!startedPlan(plan)&&!plan.restoredAt) {
       plan.previousStatus=plan.status;plan.status='skipped';plan.skipReason='merged-review';plan.skippedAt=new Date(now).toISOString();
       if(state.activePlanId===plan.id)state.activePlanId=null;
       continue;
     }
-    const key=keys.find(key=>{const capacity=remainingCapacity(state,key);return taskMinutes(plan)<=capacity.total&&taskMinutes(plan)<=capacity[isVocabularyPlan(plan)?'vocabulary':'skill'];});
-    if(key){plan.originalDateKey=plan.originalDateKey||plan.dateKey;plan.dateKey=key;if(previousDates.get(plan.id)!==key)plan.rescheduledAt=new Date(now).toISOString();}
+    const key=keys.find(key=>{const capacity=remainingCapacity(state,key),budget=studyBudget(state.settings,key);const carried=state.plans.filter(row=>row.id!==plan.id&&row.dateKey===key&&row.originalDateKey&&row.status!=='skipped'&&!row.archivedAt&&!row.onHold).reduce((sum,row)=>sum+taskMinutes(row),0);return taskMinutes(plan)+carried<=Math.floor(budget.daily*budget.planning.carryoverPercent/100)&&taskMinutes(plan)<=capacity.total&&taskMinutes(plan)<=capacity[isVocabularyPlan(plan)?'vocabulary':'skill'];});
+    if(key){delete plan.waitingReason;plan.originalDateKey=plan.originalDateKey||plan.dateKey;plan.dateKey=key;if(previousDates.get(plan.id)!==key)plan.rescheduledAt=new Date(now).toISOString();}
+    else plan.waitingReason='This whole task does not fit the carryover limit and remaining module budget on the next seven study days. Choose a date, increase the limit or keep it waiting.';
   }
 }
 
-export function nextLearningTarget(state, reserved = new Set(), frozenCards = []) {
-  const batchSize=state.settings.vocabulary?.learningBatchSize || 10;
-  const assessmentMode=['audio','production'].includes(state.settings.vocabulary?.mode)?'definition':state.settings.vocabulary?.mode || 'dictation';
-  for(const enrollment of state.wordbookEnrollments || []) {
+export function nextLearningTarget(state, reserved = new Set(), frozenCards = [], capacity?, lastBookId?, asOf?) {
+  const settings=state.settings || {};
+  const batchSize=settings.vocabulary?.learningBatchSize || 10;
+  const assessmentMode=['audio','production'].includes(settings.vocabulary?.mode)?'definition':settings.vocabulary?.mode || 'dictation';
+  const preferences=normalizePlanning(settings.planning,settings.dailyMinutes);
+  let enrollments=(state.wordbookEnrollments || []).filter(row=>!preferences.pausedWordbooks.includes(row.bookId)).slice();
+  const order=new Map(preferences.wordbookOrder.map((id,index)=>[id,index]));
+  enrollments.sort((a,b)=>(order.get(a.bookId)??Infinity)-(order.get(b.bookId)??Infinity));
+  if(preferences.wordbookMode==='round-robin'&&enrollments.length){
+    const latest=[...(state.plans||[])].filter(plan=>plan.status!=='skipped'&&plan.target?.mode==='learning-batch'&&(!asOf||plan.dateKey<=asOf)).sort(compareStudyPlans).at(-1);
+    const last=enrollments.findIndex(row=>row.bookId===(lastBookId||latest?.target.bookId));
+    if(last>=0)enrollments=[...enrollments.slice(last+1),...enrollments.slice(0,last+1)];
+  }
+  const learned=capacity===undefined?null:getLearnedVocabularyIds(state);
+  for(const enrollment of enrollments) {
     const groups=VOCABULARY_CATALOG.units.filter(unit=>unit.bookId===enrollment.bookId&&unit.kind!=='chapter').slice().sort((a,b)=>(a.order||0)-(b.order||0)||String(a.id).localeCompare(String(b.id)));
     for(const group of groups) {
       if(vocabularyGroupProgress(state,group)==='Studied')continue;
@@ -547,6 +563,13 @@ export function nextLearningTarget(state, reserved = new Set(), frozenCards = []
         session.results.filter(result=>String(result.response||'').trim()&&selection.cards.some(ref=>ref.entryId===result.entryId&&ref.senseId===result.senseId)).forEach(result=>answered.add(result.entryId));
       }
       const source=vocabularyLearningSource(state,group.bookId,group.id),ids=source.entryIds;
+      if(capacity!==undefined){
+        const limit=Math.min(batchSize,Math.max(0,Math.floor(capacity)));
+        const available=ids.filter(id=>!learned.has(id)&&!frozenCards.some(ref=>ref.entryId===id)).slice(0,limit);
+        if(!available.length)continue;
+        const cards=available.map(id=>{const entry=source.entries.find(row=>row.id===id);return entry?.senses[0]?{entryId:id,senseId:entry.senses[0].id}:null;});
+        return {type:'vocabulary',mode:'learning-batch',assessmentMode,bookId:group.bookId,unitId:group.id,batchIndex:Math.floor(ids.indexOf(available[0])/batchSize),batchSize,selectionPolicy:'exact',entryIds:available,binding:cards.every(Boolean)?'frozen':'dynamic',cards:cards.every(Boolean)?cards:[]};
+      }
       for(let index=0;index<Math.ceil(source.count/batchSize);index++) {
         const batchIds=ids.slice(index*batchSize,(index+1)*batchSize);
         if(batchIds.length&&batchIds.every(id=>answered.has(id)))continue;
@@ -563,7 +586,7 @@ export function nextLearningTarget(state, reserved = new Set(), frozenCards = []
         return {type:'vocabulary',mode:'learning-batch',assessmentMode,bookId:group.bookId,unitId:group.id,batchIndex:index,batchSize,cards:[]};
       }
     }
-    if(!groups.length){
+    if(!groups.length&&capacity===undefined){
       let index=0;while(reserved.has(JSON.stringify([enrollment.bookId,null,index,batchSize])))index++;
       reserved.add(JSON.stringify([enrollment.bookId,null,index,batchSize]));
       return {type:'vocabulary',mode:'learning-batch',assessmentMode,bookId:enrollment.bookId,batchIndex:index,batchSize,cards:[]};
@@ -572,7 +595,25 @@ export function nextLearningTarget(state, reserved = new Set(), frozenCards = []
   return null;
 }
 
+/** Home follows today's task contract, or the same remaining budget used by Planning. */
+export function nextHomeLearning(state, now = new Date()) {
+  const today=dateKey(now),plans=state.plans||[];
+  const eligible=plans.filter(plan=>plan.dateKey===today&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status)&&plan.target?.mode==='learning-batch');
+  const plan=eligible.sort((a,b)=>Number(startedPlan(b))-Number(startedPlan(a))||compareStudyPlans(a,b))[0];
+  if(plan)return {target:plan.target,plan};
+  const settings=state.settings||{},budget=studyBudget(settings,today);
+  const rows=plans.filter(plan=>plan.dateKey===today&&plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt);
+  const retainedNew=rows.filter(plan=>plan.target?.mode==='learning-batch').reduce((sum,plan)=>sum+(plan.target.cards?.length||plan.target.entryIds?.length||plan.quantity||plan.target.batchSize||0),0);
+  const capacity=Math.min(Math.max(0,budget.planning.newWordsPerDay-retainedNew),remainingCapacity({...state,settings,plans},today).vocabulary);
+  if(capacity<=0)return null;
+  const reserved=plans.filter(plan=>['pending','in_progress'].includes(plan.status)&&plan.target?.mode==='learning-batch').flatMap(plan=>plan.target.cards?.length?plan.target.cards:(plan.target.entryIds||[]).map(entryId=>({entryId})));
+  const target=nextLearningTarget({...state,plans:plans.filter(plan=>plan.dateKey<=today)},new Set(),reserved,capacity);
+  return target?{target,plan:null}:null;
+}
+
 export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), recoveryIds?) {
+  const writable=state;
+  state=planningEvidenceView(state);
   const before=JSON.stringify(state.plans);
   const previous=(state.plans||[]).slice();
   const keys=calendarDays(now),today=keys[0],generationKey=planningSettingsKey(state.settings);
@@ -585,7 +626,7 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
   carryBacklog(state,keys,now,recoveryIds,previousDates);
   const skills=selectedStudySkills(state.settings);
   const reserved=new Set(state.plans.filter(plan=>plan.target?.mode==='learning-batch'&&plan.status!=='skipped').map(plan=>JSON.stringify([plan.target.bookId,plan.target.unitId||null,plan.target.batchIndex,plan.target.batchSize])));
-  const frozenCards=state.plans.filter(plan=>['pending','in_progress'].includes(plan.status)&&frozenVocabularyPlan(plan)).flatMap(plan=>(plan.target.cards||[]).map(card=>({...card,mode:plan.target.assessmentMode})));
+  const frozenCards=state.plans.filter(plan=>['pending','in_progress'].includes(plan.status)&&plan.target?.type==='vocabulary').flatMap(plan=>(plan.target.cards?.length?plan.target.cards:(plan.target.entryIds||[]).map(entryId=>({entryId,senseId:''}))).map(card=>({...card,mode:plan.target.assessmentMode})));
   const identities=new Set(frozenCards.map(card=>cardIdentity(card)));
   let candidates=getVocabularyPlanningCandidates(state,now,state.settings.vocabulary?.mode).filter(({card})=>!identities.has(cardIdentity(card)));
   const historical=previous.filter(plan=>(plan.originalDateKey||plan.dateKey)<today&&Number.isInteger(plan.rotationIndex)).sort((a,b)=>String(a.originalDateKey||a.dateKey).localeCompare(String(b.originalDateKey||b.dateKey))||a.rotationIndex-b.rotationIndex).pop();
@@ -608,43 +649,50 @@ export function ensureUnifiedPlans(state, persistIfChanged, now = new Date(), re
     if(retainedRotation)sequence=retainedRotation.rotationIndex;
     let remaining=remainingCapacity(state,key).vocabulary;
     const vocabularyTasks=[];
+    const retainedNew=state.plans.filter(plan=>plan.dateKey===key&&plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt&&plan.target?.mode==='learning-batch').reduce((sum,plan)=>sum+(plan.target.cards?.length||plan.target.entryIds?.length||plan.quantity||plan.target.batchSize||0),0);
+    let newAllowance=Math.min(remaining,Math.max(0,budget.planning.newWordsPerDay-retainedNew));
+    let lastBookId;
+    while(newAllowance>0){
+      const target=nextLearningTarget(state,reserved,frozenCards,newAllowance,lastBookId,key);if(!target)break;
+      lastBookId=target.bookId;
+      const count=target.entryIds?.length||target.cards?.length||Math.min(target.batchSize,newAllowance);if(!count)break;
+      const refs=target.cards?.length?target.cards:(target.entryIds||[]).map(entryId=>({entryId,senseId:''}));
+      frozenCards.push(...refs.map(ref=>({...ref,mode:target.assessmentMode})));
+      vocabularyTasks.push({skill:'vocabulary',kind:'vocabulary',title:`Vocabulary - Learn ${count} words`,description:'Learn the selected words, then submit their recall answers.',estimatedMinutes:count,quantity:count,deskMode:target.assessmentMode,target,completion:{type:'assessment',description:'Submit an answer for every selected word. Accuracy is tracked separately.'}});
+      newAllowance-=count;remaining-=count;
+      if(!budget.planning.multipleTasks)break;
+    }
     while(remaining>0&&candidates.length) {
       const mode=candidates[0].card.mode,words=new Set(),chosen=[];
       for(const candidate of candidates)if(candidate.reason===candidates[0].reason&&candidate.card.mode===mode&&!words.has(candidate.card.entryId)&&chosen.length<Math.min(remaining,budget.planning.blockMinutes)){chosen.push(candidate);words.add(candidate.card.entryId);}
       if(!chosen.length)break;
-      vocabularyTasks.push(vocabularyReviewTask(mode,chosen.length));remaining-=chosen.length;
+      const reviewTask=vocabularyReviewTask(mode,chosen.length);
+      vocabularyTasks.push({...reviewTask,target:{...reviewTask.target,reviewReason:chosen[0].reason},reviewReason:chosen[0].reason});remaining-=chosen.length;
       const consumed=new Set(chosen.map(({card})=>cardIdentity(card)));candidates=candidates.filter(({card})=>!consumed.has(cardIdentity(card)));
     }
-    // Existing learning batches are indivisible; new batches must fit their actual prompt count.
-    const batchSize=state.settings.vocabulary?.learningBatchSize||10;
-    while(remaining>0&&!candidates.length) {
-      const target=nextLearningTarget(state,new Set(reserved),frozenCards);if(!target)break;
-      const group=VOCABULARY_CATALOG.units.find(unit=>unit.id===target.unitId&&unit.bookId===target.bookId);
-      const groupSize=group?vocabularyLearningSource(state,group.bookId,group.id).count:null;
-      const count=groupSize===null?batchSize:Math.min(batchSize,Math.max(0,groupSize-target.batchIndex*batchSize));
-      if(!count||count>remaining)break;
-      reserved.add(JSON.stringify([target.bookId,target.unitId||null,target.batchIndex,target.batchSize]));
-      vocabularyTasks.push({skill:'vocabulary',kind:'vocabulary',title:`Vocabulary - Learn ${count} words`,description:'Learn the batch, then submit recall answers.',estimatedMinutes:count,quantity:count,deskMode:target.assessmentMode,target,completion:{type:'assessment',description:'Submit the exact learning batch assessment.'}});remaining-=count;
-      if(!budget.planning.multipleTasks)break;
-    }
     vocabularyTasks.forEach((task,index)=>add(key,task,`study-${key}-vocabulary${index?`-${index+1}`:''}`,index));
+    const vocabularyOrder=state.plans.filter(plan=>plan.dateKey===key&&plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt&&isVocabularyPlan(plan)).length;
     // Unused vocabulary time remains available for new ordinary practice, but never for carryover.
     const available=remainingCapacity(state,key).total;
     const daySkills=studyDaySkills(state.settings,key,skills);
     if(available>0&&daySkills.length) {
       if(budget.planning.multipleTasks) {
         allocateStudyBlocks(skills,budget,available,sequence).forEach(({skill,minutes},index)=>{
-          add(key,skillTask(state,skill,minutes,sequence+index),`study-${key}-slot-${index+1}`,index+vocabularyTasks.length,sequence+index);
+          add(key,skillTask(state,skill,minutes,sequence+index),`study-${key}-slot-${index+1}`,index+vocabularyOrder,sequence+index);
         });
       } else if(!state.plans.some(plan=>plan.dateKey===key&&plan.status!=='skipped'&&!isVocabularyPlan(plan))) {
         const weighted=daySkills.flatMap(skill=>Array(Math.max(1,budget.planning.weights[skill])).fill(skill));
         const task=skillTask(state,weighted[sequence%weighted.length],available,Math.floor(sequence/skills.length));
-        if(task.skill!=='reading'||available>=2)add(key,task,`study-${key}-skill`,vocabularyTasks.length,sequence);
+        if(task.skill!=='reading'||available>=2)add(key,task,`study-${key}-skill`,vocabularyOrder,sequence);
       }
     }
     sequence++;
   }
   refreshEvidenceTargets(state,keys,skills,now);
+  // Retained frozen tasks and regenerated slots share one stable display order.
+  state.plans.sort(compareStudyPlans);
+  if(state.activePlanId&&!state.plans.some(plan=>plan.id===state.activePlanId&&!['completed','skipped'].includes(plan.status)&&!plan.onHold&&!plan.archivedAt))state.activePlanId=null;
+  writable.plans=state.plans;writable.activePlanId=state.activePlanId;
   if(JSON.stringify(state.plans)!==before)persistIfChanged?.();
   return state.plans.filter(plan=>keys.includes(plan.dateKey)).slice().sort(compareStudyPlans);
 }
@@ -654,13 +702,25 @@ function backlogSnapshot(state,now) {
   return JSON.stringify([dateKey(now),state.plans,state.activePlanId,planningSettingsKey(state.settings)]);
 }
 export function previewBacklogChange(state,action,now=new Date()) {
-  if(!['replan','skip'].includes(action.type))throw new Error('Choose replan or skip.');
+  if(!['replan','skip','hold','resume','reschedule','archive','unarchive'].includes(action.type))throw new Error('Choose a supported task action.');
   const draft=structuredClone(state),today=dateKey(now),ids=new Set(action.ids||[]);
-  const selected=draft.plans.filter(plan=>ids.has(plan.id)&&plan.dateKey<today&&['pending','in_progress'].includes(plan.status)&&(action.includeStarted||!startedPlan(plan)));
+  const history=['archive','unarchive'].includes(action.type);
+  const selected=draft.plans.filter(plan=>ids.has(plan.id)&&(history?['completed','skipped'].includes(plan.status):['pending','in_progress'].includes(plan.status)&&(action.includeStarted||!startedPlan(plan))));
   if(!selected.length)throw new Error('Select at least one eligible waiting task.');
   if(action.type==='replan')ensureUnifiedPlans(draft,undefined,now,new Set(selected.map(plan=>plan.id)));
-  else for(const plan of selected){plan.previousStatus=plan.status;plan.status='skipped';plan.skipReason='bulk-skip';plan.skippedAt=new Date(now).toISOString();plan.origin='manual';if(draft.activePlanId===plan.id)draft.activePlanId=null;}
-  return {snapshot:backlogSnapshot(state,now),createdAt:new Date(now).toISOString(),action,plans:draft.plans,activePlanId:draft.activePlanId,changes:selected.map(plan=>({id:plan.id,title:plan.title,from:state.plans.find(row=>row.id===plan.id).dateKey,to:plan.dateKey,status:plan.status,waiting:plan.dateKey<today&&plan.status!=='skipped'}))};
+  else for(const plan of selected){
+    try {mutateStudyPlan(draft,plan.id,action.type==='reschedule'?{type:'reschedule',dateKey:action.dateKey}:{type:action.type},now);if(action.type==='skip')plan.skipReason='bulk-skip';}
+    catch(cause){if(action.type!=='reschedule')throw cause;plan.waitingReason=cause.message;}
+  }
+  const selectedIds=new Set(selected.map(plan=>plan.id)),beforeById=new Map(state.plans.map(plan=>[plan.id,plan])),afterById=new Map(draft.plans.map(plan=>[plan.id,plan]));
+  // Selection controls the requested action. Preview scope includes every
+  // resulting schedule edit, including regenerated automatic slots.
+  const changedIds=[...new Set([...selectedIds,...beforeById.keys(),...afterById.keys()])].filter(id=>selectedIds.has(id)||JSON.stringify(beforeById.get(id))!==JSON.stringify(afterById.get(id)));
+  const changes=changedIds.map(id=>{
+    const before=beforeById.get(id),after=afterById.get(id),plan=after||before;
+    return {id,title:plan.title,previousTitle:before?.title,selected:selectedIds.has(id),changeType:!before?'added':!after?'removed':JSON.stringify(before)===JSON.stringify(after)?'unchanged':'updated',from:before?.dateKey||'',to:after?.dateKey||'',fromMinutes:before?.estimatedMinutes||0,toMinutes:after?.estimatedMinutes||0,status:plan.status,onHold:plan.onHold,archived:Boolean(plan.archivedAt),reason:plan.waitingReason,requirementsChanged:Boolean(before&&after&&JSON.stringify([before.target,before.completion])!==JSON.stringify([after.target,after.completion])),waiting:Boolean(after&&after.dateKey<today&&!['skipped','completed'].includes(after.status))};
+  });
+  return {snapshot:backlogSnapshot(state,now),createdAt:new Date(now).toISOString(),action,plans:draft.plans,activePlanId:draft.activePlanId,changes};
 }
 export function applyBacklogPreview(state,preview,now=new Date()) {
   if(backlogSnapshot(state,now)!==preview.snapshot)throw new Error('Your schedule changed. Preview the backlog again before saving.');
@@ -709,6 +769,16 @@ export function manualStudyTask(state, action) {
     if(practice==='due-review') {
       const mode=action.assessmentMode || state.settings.vocabulary?.mode || 'definition';
       if(!isAssessedReviewMode(mode))throw new Error('Choose an assessed recall mode.');
+      if(action.reviewType||action.binding){
+        if(!['due','wrong','custom'].includes(action.reviewType))throw new Error('Choose a review type.');
+        if(minutes>100)throw new Error('Schedule at most 100 questions in one review.');
+        const binding=action.binding==='frozen'?'frozen':'dynamic';
+        const cards=binding==='frozen'?action.cards:[];
+        if(binding==='frozen'&&(!isVocabularySessionSelection({kind:'planned-review',planId:'validate',cards})||cards.length!==minutes))throw new Error('Select an exact word and meaning for every planned question.');
+        const selectedMeanings=normalizeSelectedMeanings(action.selectedMeanings);
+        const target={type:'vocabulary',mode:'due-review',assessmentMode:mode,binding,batchSize:minutes,reviewType:action.reviewType,reviewFilter:normalizeReviewScope(action.reviewFilter),questionOrder:['source','random','due'].includes(action.questionOrder)?action.questionOrder:'source',...(selectedMeanings?{selectedMeanings}:{}),cards};
+        return {...vocabularyReviewTask(mode,minutes),title:`Vocabulary · ${action.reviewType==='due'?'Due review':action.reviewType==='wrong'?'Mistake recovery':'Selected meanings'}`,target,completion:{type:'assessment',description:'Answer and submit every frozen question. Incorrect answers count as completed attempts.'}};
+      }
       const cards=selectVocabularyPlanReview(state,new Date(),mode,minutes);
       if(!cards.length)throw new Error('No learned words are due for this recall mode.');
       return vocabularyReviewTask(mode,minutes);
@@ -746,7 +816,7 @@ export function manualStudyTask(state, action) {
 
 function requireDayCapacity(state, key, minutes, excludedId, allowed) {
   if(!/^\d{4}-\d{2}-\d{2}$/.test(key)||dateKey(`${key}T00:00:00`)!==key)throw new Error('Choose a valid date.');
-  const used=state.plans.filter(row=>row.id!==excludedId&&row.dateKey===key&&row.status!=='skipped').reduce((n,row)=>n+Number(row.estimatedMinutes||0),0);
+  const used=state.plans.filter(row=>row.id!==excludedId&&row.dateKey===key&&row.status!=='skipped'&&!row.onHold&&!row.archivedAt).reduce((n,row)=>n+Number(row.estimatedMinutes||0),0);
   const budget=studyBudget(state.settings,key).daily;
   if(used+minutes>budget&&!allowed)throw new Error(`This change exceeds the daily budget by ${used+minutes-budget} minutes. Confirm to keep the extra time.`);
 }
@@ -768,7 +838,7 @@ export function mutateStudyPlan(state, planId, action, now = new Date()) {
     if(action.type==='duplicate') {
       task=structuredClone(plan);
       // Retain the chosen material but discard all attempt/completion state.
-      for(const key of ['id','startedAt','completedAt','linkedSessionId','completedPromptKeys','previousStatus','stage','speakingGroups','manuallyEditedAt'])delete task[key];
+      for(const key of ['id','startedAt','completedAt','linkedSessionId','completedPromptKeys','previousStatus','stage','speakingGroups','manuallyEditedAt','onHold','heldAt','archivedAt','unarchivedAt','skippedAt','skipReason','originalDateKey','rescheduledAt'])delete task[key];
       if(task.kind==='writing-mock')task.stage='task1';
       if(task.kind==='speaking-mock'){task.stage='p1';task.target={type:'question',skill:'speaking',questionId:null,part:'1',mode:'timed'};task.questionId=null;}
       if(task.kind==='writing-mock'){task.target={type:'question',skill:'writing',questionId:null,mode:'timed'};task.questionId=null;}
@@ -780,15 +850,27 @@ export function mutateStudyPlan(state, planId, action, now = new Date()) {
     state.plans.push(plan);
   } else {
     if(!plan)throw new Error('Task not found.');
-    if(action.type==='skip'&&plan.status!=='completed') {plan.previousStatus=plan.status;plan.status='skipped';plan.skipReason='user-skipped';if(state.activePlanId===plan.id)state.activePlanId=null;}
+    if(action.type==='hold') {
+      if(!['pending','in_progress'].includes(plan.status))throw new Error('Only unfinished tasks can be held.');
+      plan.onHold=true;plan.heldAt=new Date(now).toISOString();
+      if(state.activePlanId===plan.id)state.activePlanId=null;
+    } else if(action.type==='resume') {delete plan.onHold;}
+    else if(action.type==='archive') {
+      if(!['completed','skipped'].includes(plan.status))throw new Error('Only history can be archived.');
+      plan.archivedAt=new Date(now).toISOString();
+    } else if(action.type==='unarchive') {delete plan.archivedAt;plan.unarchivedAt=new Date(now).toISOString();}
+    else if(action.type==='skip'&&plan.status!=='completed') {plan.previousStatus=plan.status;plan.status='skipped';plan.skipReason='user-skipped';plan.skippedAt=new Date(now).toISOString();if(state.activePlanId===plan.id)state.activePlanId=null;}
     else if(action.type==='restore'&&plan.status==='skipped') {
-      requireDayCapacity(state,plan.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);
+      const restoreDate=action.dateKey||plan.dateKey;
+      requireDayCapacity(state,restoreDate,plan.estimatedMinutes,plan.id,action.allowOverBudget);
+      if(restoreDate!==plan.dateKey){plan.originalDateKey=plan.originalDateKey||plan.dateKey;plan.dateKey=restoreDate;plan.rescheduledAt=new Date(now).toISOString();}
+      delete plan.archivedAt;delete plan.onHold;
       if(plan.skipReason==='no-longer-due'&&!plan.startedAt&&plan.target?.type==='vocabulary'&&plan.target.mode==='due-review'&&!plan.target.cards?.length)plan.target.binding='dynamic';
       plan.status=plan.previousStatus==='in_progress'?'in_progress':'pending';delete plan.skipReason;delete plan.skippedAt;plan.restoredAt=new Date(now).toISOString();
     }
     else if(action.type==='reschedule') {
       if(plan.status==='completed')throw new Error('Completed tasks cannot be rescheduled.');
-      requireDayCapacity(state,action.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);plan.originalDateKey=plan.originalDateKey||plan.dateKey;plan.dateKey=action.dateKey;plan.rescheduledAt=new Date(now).toISOString();
+      requireDayCapacity(state,action.dateKey,plan.estimatedMinutes,plan.id,action.allowOverBudget);plan.originalDateKey=plan.originalDateKey||plan.dateKey;plan.dateKey=action.dateKey;plan.rescheduledAt=new Date(now).toISOString();delete plan.onHold;
     } else if(action.type==='resize'||action.type==='replace') {
       if(plan.status!=='pending'||plan.startedAt)throw new Error('Only unstarted tasks can be edited.');
       if(action.type==='resize') {
@@ -809,10 +891,11 @@ export function mutateStudyPlan(state, planId, action, now = new Date()) {
       const index=rows.indexOf(plan);const next=index+(action.direction==='up'?-1:1);
       if(next<0||next>=rows.length)return plan;
       [rows[index],rows[next]]=[rows[next],rows[index]];
-      rows.forEach((row,order)=>{row.order=order;row.origin='manual';row.manuallyEditedAt=new Date(now).toISOString();});
+      rows.forEach((row,order)=>{row.order=order;row.manuallyEditedAt=new Date(now).toISOString();});
     } else throw new Error('This task cannot be changed.');
   }
-  plan.origin='manual';plan.manuallyEditedAt=new Date(now).toISOString();
+  if(action.type==='add'||action.type==='duplicate')plan.origin='manual';
+  plan.manuallyEditedAt=new Date(now).toISOString();
   return plan;
 }
 

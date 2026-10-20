@@ -10,11 +10,25 @@ vi.mock("../../context/FieldbookContext", () => ({ useFieldbook: () => fb.curren
 vi.mock("../../domain/vocabulary/catalog", () => ({ VOCABULARY_CATALOG: { entries: [], books: [], units: [], memberships: [] } }));
 
 beforeEach(() => {
-  const state = { vocabulary: [], vocabularyStates: [], vocabularyEvidence: [], vocabularyReviews: [], vocabularyActivities: [], vocabularySessions: [], wordbookProgress: [], wordbookEnrollments: [] };
+  const state = { settings:{dailyMinutes:30,days:[1,2,3,4,5,6,7]}, vocabulary: [], vocabularyStates: [], vocabularyEvidence: [], vocabularyReviews: [], vocabularyActivities: [], vocabularySessions: [], wordbookProgress: [], wordbookEnrollments: [] };
   fb.current = { state, stateRef: { current: state }, persistNow: vi.fn(async () => true), toast: vi.fn(), openModal: vi.fn() };
   Object.assign(VOCABULARY_CATALOG, { entries: [], books: [], units: [], memberships: [] });
 });
 afterEach(cleanup);
+
+test('history loads metadata by page and source and retains a failed page for retry',async()=>{
+  const row={id:'page-one',mode:'dictation',submittedAt:'2026-10-20T12:00:00Z',summary:{total:3,correct:2,incorrect:1},sourceSnapshot:{origin:'manual'},planId:'manual-task'};
+  fb.current.loadVocabularyHistoryPage=vi.fn().mockResolvedValueOnce({rows:[row],total:21}).mockRejectedValueOnce(new Error('offline')).mockResolvedValue({rows:[{...row,id:'page-two'}],total:21});
+  render(<MemoryRouter><VocabularyHistoryPage/></MemoryRouter>);
+  expect(await screen.findByText('User arranged',{selector:'small'})).toBeInTheDocument();
+  expect(fb.current.loadVocabularyHistoryPage).toHaveBeenCalledWith({source:'all',offset:0,limit:20});
+  fireEvent.click(screen.getByRole('button',{name:'Next page'}));
+  expect(await screen.findByText(/History could not be loaded/)).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:'Retry loading'}));
+  expect(await screen.findByText('Page 2 of 2 · 21 sessions · 20 per page')).toBeInTheDocument();
+  fireEvent.change(screen.getByRole('combobox',{name:'Session source'}),{target:{value:'manual'}});
+  await waitFor(()=>expect(fb.current.loadVocabularyHistoryPage).toHaveBeenLastCalledWith({source:'manual',offset:0,limit:20}));
+});
 
 test('standalone vocabulary ranges include the entire first local day and exclude future results', () => {
   vi.useFakeTimers(); vi.setSystemTime(new Date(2026, 9, 14, 12));
@@ -169,7 +183,10 @@ test('vocabulary home recommends the enrolled group instead of word management',
   fixture();
   fb.current.state.vocabulary = [];
   render(<MemoryRouter initialEntries={['/vocabulary']}><VocabularyPage /></MemoryRouter>);
-  expect(await screen.findByRole('link', { name: /Start learning/ })).toHaveAttribute('href', '/vocabulary/wordbooks/book/groups/first/learn');
+  const link=await screen.findByRole('link', { name: /Start learning/ });
+  const target=new URL(link.getAttribute('href')!, 'http://localhost');
+  expect(target.pathname).toBe('/vocabulary/wordbooks/book/groups/first/learn');
+  expect(JSON.parse(target.searchParams.get('selectedEntryIds')!)).toEqual(['one','two']);
   expect(screen.queryByRole('button', { name: 'Add vocabulary' })).not.toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'My words' })).toHaveAttribute('href', '/vocabulary/words');
 });

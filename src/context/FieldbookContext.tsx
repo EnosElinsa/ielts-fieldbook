@@ -48,7 +48,9 @@ import {
   wordCount,
 } from '../domain';
 import { downloadFile, hydrateState, loadState, saveState, saveVocabularyImport, saveVocabularySession, loadVocabularyCatalog as readVocabularyCatalog, ensureAccountModule as readAccountModule, ensureCompleteAccount as readCompleteAccount, getCollectionStatuses, ensureQuestionBank as readQuestionBank, ensureSpeakingSample as readSpeakingSample } from '../storage';
+import { vocabularyTaskSubmissionOutcome } from '../domain/vocabulary/submissionOutcome';
 import { ACCOUNT_MODULES } from '../storage/accountModules';
+import { loadVocabularyHistoryPage, loadVocabularySession, refreshPlanningState as readPlanningState } from '../storage/remote';
 import { subscribeQuestionBank } from '../storage';
 import { loadReleasedVocabulary, loadReleasedVocabularyTeaching, VocabularyScopeUnavailableError } from '../storage/vocabularyCatalog';
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
@@ -59,13 +61,14 @@ import type { VocabularyEntry, VocabularySkill, VocabularySource } from '../doma
 import { vocabularySourceKey } from '../domain/vocabulary/sources';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
-import { ensurePlans, ensureUnifiedPlans, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan, applyBacklogPreview } from '../lib/planTemplates';
+import { ensurePlans, ensureUnifiedPlans, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan, applyBacklogPreview, compareStudyPlans } from '../lib/planTemplates';
 import { bindSpeakingPlan } from '../domain/plans';
 import { speakingPrompts, speakingResponseDraft, updateSpeakingResponse } from '../domain/speaking';
 import { useConfirmationDialog } from '../components/useConfirmationDialog';
 import { loadExamCatalog, loadExamSections } from '../storage/examCatalog';
 import { getVocabularyReviewQueue } from '../domain/vocabulary';
 import { selectVocabularyPlanReview } from '../domain/vocabulary/planning';
+import { selectScheduledVocabularyReview } from '../domain/vocabulary/reviewPlanning';
 import { isAssessedReviewMode } from '../lib/vocabularyReviewTask';
 import { vocabularyLearningSource } from '../domain/vocabulary/learningSource';
 import { isVocabularySessionSelection } from '../domain/vocabulary/selection';
@@ -155,7 +158,7 @@ function useFieldbookValue() {
   const [recoveryDrafts, setRecoveryDrafts] = useState(null);
   const [draftRevision, setDraftRevision] = useState(0);
   const [vocabularyCatalogRevision, setVocabularyCatalogRevision] = useState(0);
-  const [moduleStatus, setModuleStatus] = useState({productive:'unloaded', vocabulary:'unloaded', receptive:'unloaded'});
+  const [moduleStatus, setModuleStatus] = useState({planning:'unloaded',productive:'unloaded', vocabulary:'unloaded', vocabularyCore:'unloaded', receptive:'unloaded'});
   const [bankStatus, setBankStatus] = useState({writing:'unloaded', speaking:'unloaded'});
   const [bankErrors, setBankErrors] = useState({writing:'', speaking:''});
   const moduleReads = useRef(new Map());
@@ -386,7 +389,7 @@ function useFieldbookValue() {
     const epoch = loadEpoch.current;
     if (moduleReads.current.has(module)) {
       const loaded = moduleReads.current.get(module);
-      if (module !== 'vocabulary') return loaded;
+      if (!module.startsWith('vocabulary')) return loaded;
       // Account rows are merged once. A later page can widen teaching readiness
       // without replaying that older snapshot over a learner's current edits.
       return loaded.then(async () => {
@@ -396,16 +399,16 @@ function useFieldbookValue() {
         return stateRef.current;
       });
     }
-    const before = structuredClone(stateRef.current);
+    const before = Object.fromEntries([...ACCOUNT_MODULES[module],'planningEvidence'].map(key=>[key,structuredClone(stateRef.current[key]||[])]));
     const finishTiming = timeOperation(module);
     setModuleStatus(status => ({...status, [module]:'loading'}));
     const request = readAccountModule(module).then(async ({data}) => {
       if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
-      if (module === 'vocabulary') await ensureVocabularyTeaching(data.vocabulary || [], options);
+      if (module.startsWith('vocabulary')) await ensureVocabularyTeaching(data.vocabulary || [], options);
       if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
       const next = mergeAccountData(data, before);
       if (module === 'productive') repairAssessments(next);
-      if (module === 'vocabulary') {
+      if (module.startsWith('vocabulary')) {
         const corrected = resolveRegionalSpellingWrongWords(next);
         if (corrected.length) void persistNow(next);
       }
@@ -423,10 +426,36 @@ function useFieldbookValue() {
   }, [mergeAccountData, persistNow, ensureVocabularyTeaching]);
 
   const ensureCompleteAccount = useCallback(async () => {
-    await Promise.all(Object.keys(ACCOUNT_MODULES).map(module => ensureAccountModule(module)));
+    await Promise.all(['productive','vocabulary','receptive'].map(module => ensureAccountModule(module)));
     await readCompleteAccount();
     return structuredClone(stateRef.current);
   }, [ensureAccountModule]);
+
+  const ensureVocabularySession = useCallback(async (id) => {
+    const owner = accountId(), epoch = loadEpoch.current;
+    const current = stateRef.current.vocabularySessions?.find(row=>row.id===id);
+    if (current) return current;
+    const row = await loadVocabularySession(id);
+    if (!alive.current || owner!==accountId() || epoch!==loadEpoch.current) throw new Error('Account load superseded');
+    if (row) {
+      const next={...stateRef.current,vocabularySessions:[...(stateRef.current.vocabularySessions||[]).filter(item=>item.id!==id),row]};
+      stateRef.current=next;setState(next);
+    }
+    return row;
+  }, []);
+
+  const refreshPlanningState=useCallback(async()=>{
+    const owner=accountId(),epoch=loadEpoch.current;
+    await saveQueue.current.catch(()=>{});
+    const latest=await readPlanningState();
+    if(!alive.current||owner!==accountId()||epoch!==loadEpoch.current)throw new Error('Account load superseded');
+    committedStudySettings.current=committedStudySettings.current.filter(row=>row.owner!==owner);
+    committedPlanChanges.current=committedPlanChanges.current.filter(row=>row.owner!==owner);
+    committedVocabularyPreferences.current=committedVocabularyPreferences.current.filter(row=>row.owner!==owner);
+    const next={...stateRef.current,...latest};stateRef.current=next;setState(next);
+    acknowledgeSaved(next,['profile','plans']);
+    return latest;
+  },[]);
 
   const ensureQuestionBank = useCallback((skill, force = false) => {
     if (!force && bankReads.current.has(skill)) return bankReads.current.get(skill);
@@ -652,6 +681,7 @@ function useFieldbookValue() {
       else target.plans.splice(index, 1);
     });
     if (staleSettings || stalePlans) change.addedPlans.forEach(plan => { if (!target.plans.some(row => row.id === plan.id)) target.plans.push(structuredClone(plan)); });
+    if (staleSettings || stalePlans) target.plans.sort(compareStudyPlans);
     if (change.removedPlanIds.includes(target.activePlanId) && !target.plans.some(plan => plan.id === target.activePlanId)) target.activePlanId = null;
   }
 
@@ -714,20 +744,34 @@ function useFieldbookValue() {
     return operation.then(async saved=>{
       if(!saved || !alive.current || accountId()!==owner || epoch!==loadEpoch.current)return false;
       const session=frozen.vocabularySessions?.find(row=>row.id===sessionId);
+      const outcome=vocabularyTaskSubmissionOutcome(stateRef.current,session);
       if(session?.planId){
-        let completed=false;
-        try { completed=await mutatePlans(draft=>completeVocabularyPlan(draft,session),{onError:()=>{}}); } catch { /* Keep the prepared session available for retry. */ }
+        if(outcome.taskStatus!=='completed'){options?.onResult?.(outcome);return true;}
+          let completed=false,planFeedback='';
+          try { completed=await mutatePlans(draft=>completeVocabularyPlan(draft,session),{onError:message=>{planFeedback=message;}}); } catch { /* Keep the prepared session available for retry. */ }
         if(!alive.current || accountId()!==owner || epoch!==loadEpoch.current)return false;
+          if(!completed&&/changed on another device|baseline conflict|refresh.*preview/i.test(planFeedback)){
+            try{
+              await refreshPlanningState();
+              if(!alive.current || accountId()!==owner || epoch!==loadEpoch.current)return false;
+              const latestOutcome=vocabularyTaskSubmissionOutcome(stateRef.current,session);
+              if(['already-completed','changed','requirements-unmet'].includes(latestOutcome.taskStatus)){
+                options?.onResult?.(latestOutcome);setSaveFailed(false);setSaveStatus('saved');return true;
+              }
+            }catch{/* Keep the same session for an explicit retry when refresh is unavailable. */}
+          }
         if(!completed){
+          options?.onResult?.({...outcome,taskStatus:'retry',message:'Learning saved. The task update failed; retry this same submission to update the task.'});
           saveFeedback(options)('Your review is saved, but the task status could not be saved. Retry submission to finish updating the task.');
           setSaveFailed(!options?.onError);setSaveStatus('failed');
           return false;
         }
       }
+      options?.onResult?.(outcome);
       if(readVocabularyDraft(owner)?.id===sessionId)clearVocabularyDraft(owner);
       return true;
     });
-  },[toast]);
+  },[toast,refreshPlanningState]);
 
   const saveVocabularyPreferences = useCallback(async(input)=>{
     studySettingsErrorRef.current = '';
@@ -756,9 +800,8 @@ function useFieldbookValue() {
     const owner = accountId();
     const epoch = loadEpoch.current;
     try {
-      await ensureAccountModule('productive');
-      await ensureAccountModule('vocabulary');
-      await ensureAccountModule('receptive');
+      await ensureAccountModule('planning');
+      await ensureAccountModule('vocabularyCore',{entryIds:[]});
       if (stateRef.current.wordbookEnrollments?.length) await loadVocabularyCatalog();
     } catch { if(alive.current && owner===accountId() && epoch===loadEpoch.current){studySettingsErrorRef.current = 'Could not load your study data. Your changes are still here. Check your connection and retry.'; setStudySettingsError(studySettingsErrorRef.current);} return false; }
     if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) return false;
@@ -1050,7 +1093,7 @@ function useFieldbookValue() {
       let draft;
       setLoadError('');
       const finishTiming = timeOperation('workspace');
-      const prefetchModules = accountRoute.startsWith('/vocabulary') ? ['vocabulary']
+      const prefetchModules = accountRoute.startsWith('/vocabulary') ? [/^\/vocabulary\/(progress|import)(?:\/|$)/.test(accountRoute)?'vocabulary':'vocabularyCore']
         : /^\/(reading|listening)/.test(accountRoute) ? ['receptive']
         : accountRoute.startsWith('/write') || accountRoute.startsWith('/speak') ? ['productive']
         : accountRoute.startsWith('/review') ? ['productive','vocabulary']
@@ -1067,10 +1110,10 @@ function useFieldbookValue() {
       const statuses = getCollectionStatuses();
       if (statuses) Object.entries(statuses).forEach(([key, status]) => { if (status === 'ready') hydratedCollections.current.add(key); });
       Object.entries(ACCOUNT_MODULES).forEach(([module,keys]) => {
-        const ready = !statuses || keys.every(key => statuses[key] === 'ready');
+        const ready = !statuses || (module==='planning'?Array.isArray(draft.planningEvidence):keys.every(key => statuses[key] === 'ready'));
         if (ready) moduleReads.current.set(module, Promise.resolve(draft));
       });
-      setModuleStatus(Object.fromEntries(Object.entries(ACCOUNT_MODULES).map(([module,keys]) => [module, !statuses || keys.every(key => statuses[key] === 'ready') ? 'ready' : 'unloaded'])));
+      setModuleStatus(Object.fromEntries(Object.entries(ACCOUNT_MODULES).map(([module,keys]) => [module, !statuses || (module==='planning'?Array.isArray(draft.planningEvidence):keys.every(key => statuses[key] === 'ready')) ? 'ready' : 'unloaded'])));
       setBankStatus({writing:draft.questions.length?'ready':'unloaded',speaking:draft.speakingTopics.length?'ready':'unloaded'});
       lastSaved.current = structuredClone(draft);
       const correctedSpellings = resolveRegionalSpellingWrongWords(draft);
@@ -1079,7 +1122,9 @@ function useFieldbookValue() {
       if (Object.keys(changedDrafts).length) setRecoveryDrafts(changedDrafts);
       if (!statuses) {
         repairAssessments(draft);
-        ensurePlans(draft, draft.settings.activeSkill || 'writing', null);
+        // Source metadata must replace editorial starter groups before reserving
+        // any wordbook task. The schedule flow performs that async load.
+        if(!draft.wordbookEnrollments?.length)ensurePlans(draft, draft.settings.activeSkill || 'writing', null);
       }
       if (!cancelled) {
         setSelectedQuestionId(String((draft.questions[0] || FALLBACK_QUESTIONS[0]).id));
@@ -1305,7 +1350,7 @@ function useFieldbookValue() {
   },[toast]);
 
   const refreshUnifiedPlans = useCallback(async(options?)=>{
-    await Promise.all(['productive','vocabulary','receptive'].map(module=>ensureAccountModule(module)));
+    await Promise.all(['planning','vocabularyCore'].map(module=>ensureAccountModule(module,{entryIds:[]})));
     if(stateRef.current.wordbookEnrollments?.length)await loadVocabularyCatalog();
     return mutatePlans(async draft=>{
       for(const session of draft.vocabularySessions || [])completeVocabularyPlan(draft,session);
@@ -1368,7 +1413,7 @@ function useFieldbookValue() {
     }
     const skill=plan.skill || (String(plan.kind).startsWith('reading')?'reading':String(plan.kind).startsWith('listening')?'listening':String(plan.kind).startsWith('speaking')||plan.kind==='stories'?'speaking':plan.kind==='vocabulary'?'vocabulary':'writing');
     const initial=JSON.stringify(plan);
-    await ensureAccountModule(skill==='vocabulary'?'vocabulary':['reading','listening'].includes(skill)?'receptive':'productive');
+    await ensureAccountModule(skill==='vocabulary'?'vocabularyCore':['reading','listening'].includes(skill)?'receptive':'productive');
     let target=plan.target;
     if(skill==='writing'||skill==='speaking') {
       if(plan.kind==='review'){
@@ -1407,7 +1452,17 @@ function useFieldbookValue() {
           target={...target,unitId:group.id,batchIndex:localIndex};
         }
         await loadVocabularyCatalog(target.bookId,{unitId:target.unitId});
-        const batch=buildLearningBatch(stateRef.current,target.bookId,target.unitId,target.batchIndex||0,target.batchSize||10,target.assessmentMode,target.cards?.length?target.cards:undefined);
+        let exact=target.cards?.length?target.cards:undefined;
+        if(!exact&&target.selectionPolicy==='exact'){
+          const source=vocabularyLearningSource(stateRef.current,target.bookId,target.unitId);
+          if(!target.entryIds?.length||!source.complete)throw new Error('The selected words are unavailable. Retry loading this group.');
+          exact=target.entryIds.map(entryId=>{
+            const entry=source.entries.find(row=>row.id===entryId);
+            if(!entry?.senses[0]?.id)throw new Error('A selected word is unavailable. Retry loading this group.');
+            return {entryId,senseId:entry.senses[0].id};
+          });
+        }
+        const batch=buildLearningBatch(stateRef.current,target.bookId,target.unitId,target.batchIndex||0,target.batchSize||10,target.assessmentMode,exact);
         if(!batch.cards.length)throw new Error('The selected word batch is unavailable. Replace the task or retry.');
         const refs=batch.cards.map(({entryId,senseId})=>({entryId,senseId}));
         if(target.cards?.length && JSON.stringify(target.cards)!==JSON.stringify(refs))throw new Error('This word batch has changed. Replace the task or retry.');
@@ -1471,8 +1526,9 @@ function useFieldbookValue() {
       if(!current||JSON.stringify(current)!==initial)throw new Error('This task changed while loading. Retry to open the current task.');
       if(dynamicReviewCapacity!==undefined){
         const reserved=new Set(draft.plans.filter(row=>row.id!==planId && ['pending','in_progress'].includes(row.status) && row.target?.type==='vocabulary' && row.target.binding!=='dynamic' && row.target.assessmentMode===target.assessmentMode).flatMap(row=>(row.target.cards||[]).map(ref=>JSON.stringify([ref.entryId,ref.senseId]))));
-        const cards=selectVocabularyPlanReview(draft,new Date(),target.assessmentMode,dynamicReviewCapacity,reserved).map(({entryId,senseId})=>({entryId,senseId}));
+        const cards=selectScheduledVocabularyReview(draft,target,new Date(),dynamicReviewCapacity,current.origin==='manual'?new Set():reserved).map(({entryId,senseId})=>({entryId,senseId}));
         noLongerDue=cards.length===0;
+        if(noLongerDue&&current.origin==='manual')throw new Error('No questions match this task right now. The task remains scheduled. Try its date or change its range.');
         target={...target,binding:noLongerDue?'dynamic':'frozen',cards};
         if(!noLongerDue && !isVocabularySessionSelection({kind:'planned-review',planId,cards}))throw new Error('The planned review target is invalid. Return to Planning and retry.');
       }
@@ -1782,6 +1838,9 @@ function useFieldbookValue() {
       ensureCompleteAccount,
       ensureQuestionBank,
       ensureSpeakingSample,
+      ensureVocabularySession,
+      loadVocabularyHistoryPage,
+      refreshPlanningState,
       saveFailed,
       saveFailureMessage,
       studySettingsError,
@@ -1925,6 +1984,8 @@ function useFieldbookValue() {
       ensureCompleteAccount,
       ensureQuestionBank,
       ensureSpeakingSample,
+      ensureVocabularySession,
+      refreshPlanningState,
       activeSkill,
       vocabularyCatalogRevision,
       backupMenuOpen,

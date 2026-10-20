@@ -55,7 +55,7 @@ function addLesson(entry: VocabularyEntry, scope: Scope) {
     const fallback = !vocabularySensePresentation(sense).example ? publicVocabularyExample(entry.id, sense) : undefined;
     const modes = ['cloze', 'distinction'].filter(mode => learningTask(current.entry, sense, mode));
     lessons.push({ entryId: entry.id, term: entry.term, sense: fallback ? { ...sense, example: fallback.example } : sense, scope, modes,
-      readingNote: isVocabularyReadingNote(entry.id, fallback?.sense || sense), referenceOnly: isVocabularyPracticeReference(entry.id, sense) });
+      readingNote: isVocabularyReadingNote(entry.id, fallback?.sense || sense), referenceOnly: isVocabularyPracticeReference(entry.id, sense), priority: getVocabularyLearningPriority(entry.id,sense) || null });
   }
 }
 for (const entry of entries.values()) addLesson(entry, { kind: 'default' });

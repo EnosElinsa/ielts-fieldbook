@@ -2,11 +2,13 @@
 
 ## Configure a study week
 
-Open **Settings → Study time** to set the global daily budget, enabled weekdays, weekday minute overrides and focus modules. Blank weekday minutes inherit the global budget; zero minutes creates a rest day.
+Open **Settings → Time and modules** to set the global daily budget, enabled weekdays, weekday minute overrides and focus modules. Blank weekday minutes inherit the global budget; zero minutes creates a rest day. The six settings groups also cover Learning goals, Scheduling and overdue, Vocabulary sources and balance, Practice and audio, and Appearance and account. Legacy settings URLs still open their corresponding group; one draft survives category changes.
 
-Choose fixed vocabulary minutes or a percentage of each day. New accounts default to 20%; existing accounts retain an explicit legacy reservation of up to ten minutes. When no learning batch or due recall is available, the planner assigns that time to the other modules.
+Under **Vocabulary sources and balance**, choose fixed vocabulary minutes or a percentage of each day. New accounts default to 20%; existing accounts retain an explicit legacy reservation of up to ten minutes. After protected tasks, the planner reserves time for the daily new-word target (default 10, including 0 to pause), then adds reviews. It shows the actual quantity and shortfall when time is limited. When no vocabulary work is available, the planner assigns that time to the other modules.
 
-Set task block minutes and choose whether to split practice into multiple tasks. **Prefer full responses** allocates complete writing blocks before a shorter remainder when enough time is available. Module weights live in **Settings → Skills**; zero excludes a module from balanced automatic scheduling, while a weekday focus prioritizes the selected module.
+Set task block minutes and choose whether to split practice into multiple tasks. **Prefer full responses** allocates complete writing blocks before a shorter remainder when enough time is available. Module weights live in **Time and modules**; zero excludes a module from balanced automatic scheduling, while a weekday focus prioritizes the selected module. Leaving all four skills unchecked creates a vocabulary-only plan.
+
+New words follow enabled wordbooks, book order, group order and the next unfinished position. Users can reorder or pause books, or rotate after each batch. Shared entry identities prevent the same word from becoming a new word in another book. New automatic tasks can reserve an exact partial list; old fixed batches, started tasks and history retain their original requirements. Home and Planning share this selector.
 
 Before saving, the preview shows affected tasks, the generated seven-day schedule and minutes by module. Preview and saving use the same planner with the full current schedule. Saving regenerates eligible automatic tasks through the existing account save queue. Started, completed, skipped, manually edited and frozen assessment tasks remain protected. Previous completion records and material bindings are retained.
 
@@ -20,11 +22,13 @@ The editor displays the destination day's existing load, resulting total and rem
 
 ## Recover missed days
 
-The seven-day window places older unfinished tasks before generating new work. Completed tasks and future manual arrangements keep their places. Started older tasks have priority over unstarted ones; remaining tasks use their original date order. Automatic carryover respects study days, total minutes and vocabulary time, and does not split a task or modify its learning evidence. A task too long for any available day stays in the collapsed waiting list. Protected future manual, started or frozen allocations remain intact after a budget reduction, even if that leaves existing overtime; automatic placement adds no further overtime.
+Planning uses Schedule, Waiting and History. The seven-day window places eligible older unfinished tasks before generating new work. Automatic carryover defaults to at most 30% of each day's budget and also respects study days, remaining total time, module time and indivisible task size. Change the allowance under **Scheduling and overdue**. Protected future manual, started or frozen allocations remain intact after a budget reduction, even if that leaves existing overtime; automatic placement adds no further overtime. Tasks that cannot fit remain in Waiting with a reason.
 
-Unstarted historical vocabulary review snapshots are merged and replanned from current memory state. Started reviews retain their exact targets and drafts. Future review slots reserve prompt capacity and choose their words when opened, so they do not repeatedly freeze the same overdue words. Actual review work uses the vocabulary budget before new-word learning.
+Only unstarted automatic dynamic reviews can merge and reselect from current memory state. Manual tasks, exact fixed lists and started tasks retain their targets. Future dynamic slots reserve prompt capacity and freeze their words when opened. Reviews prioritize confirmed mistakes, recovery, valid mode-specific due schedules, foundation gaps and spaced consolidation. A completed, submitted graded attempt finishes a task even if some answers are wrong; mastery and mistake recovery remain separate.
 
-Use the backlog actions to preview rearranging or bulk skipping. Started work requires an explicit selection for a bulk skip. The preview lists affected tasks and dates; the save is transactional and retryable. Skipped records and drafts remain available, and no skip is counted as learning. Rearranging a task never moves its words' FSRS dates. See [vocabulary learning rules](vocabulary-learning-rules.md) for the exact mastery and review semantics.
+Waiting supports today, a selected date, capped automatic replan, hold, resume and skip. Started work is excluded from bulk selection until explicitly enabled. Waiting and History show 20 items per page, total counts and target-page deep links. Selecting this page differs from selecting all filtered results. Each bulk action previews both selected tasks and related schedule changes before the atomic save.
+
+History filters completion, user skips, system decisions and archives by date, module, origin and reason. Archive skipped results hides records recoverably and retains their identity so automatic generation cannot recreate them. Unarchiving only restores visibility; restoring a skipped task for execution requires a date. No skip counts as learning, and rearranging never changes FSRS due times. See [vocabulary learning rules](vocabulary-learning-rules.md) and the [unified implementation ledger](unified-learning-implementation.md) for remaining loading and verification work.
 
 ## Unified select controls
 
@@ -34,9 +38,9 @@ Popup content is portaled to the body and positioned relative to the trigger in 
 
 ## Validation scope
 
-Browser checks use an isolated local account fixture with external requests blocked. They exercise the real rendered app and save queue without changing remote account records. This change requires no database migration. Production publication is verified separately through GitHub Check and Cloudflare Pages for the release commit.
+Browser checks use an isolated local account fixture with external requests blocked. They exercise the real rendered app and save queue without changing learner records. The October 20 unified change requires the planning conflict-guard and schedule-baseline migrations; both compatibility layers were installed before frontend publication. Exact-commit publication and final test evidence are tracked in the unified ledger.
 
-Verified on October 14, 2026:
+Historical verification on October 14, 2026 (not evidence for the current uncommitted change):
 
 - `npm test -- --maxWorkers=2 --testTimeout=30000`: 133 suites passed, 1119 tests passed, one existing archive-resource test skipped because `LEGACY_VOCABULARY_RESOURCE_DIRECTORY` is not configured.
 - `npm run build`: identity consistency check, TypeScript project compilation and Vite production build passed.

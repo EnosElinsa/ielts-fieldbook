@@ -41,14 +41,17 @@ export function VocabularyGroupLearnPage() {
   const [params, setParams] = useVocabularySearchParams();
   const requestedPlan = boundVocabularyAssessment(fb.state, params.get('planId'));
   const boundPlan = requestedPlan?.target.bookId === bookId && requestedPlan.target.unitId === unitId ? requestedPlan : undefined;
+  const exactCards=boundPlan?.target.mode==='learning-batch'&&boundPlan.target.selectionPolicy==='exact'?boundPlan.target.cards:undefined;
   const preferences = normalizeVocabularyPreferences(state.settings?.vocabulary);
   const requestedSize = Number(boundPlan?.target.batchSize ?? params.get('batchSize'));
-  const BATCH_SIZE = Number.isSafeInteger(requestedSize) && requestedSize >= 1 && requestedSize <= 50 ? requestedSize : preferences.learningBatchSize;
+  const BATCH_SIZE = exactCards?.length || (Number.isSafeInteger(requestedSize) && requestedSize >= 1 && requestedSize <= 50 ? requestedSize : preferences.learningBatchSize);
   const { status, retry } = useVocabularyCatalog(fb.loadVocabularyCatalog, bookId, unitId);
   const book = VOCABULARY_CATALOG.books.find(row => row.id === bookId);
   const unit = VOCABULARY_CATALOG.units.find(row => row.bookId === bookId && row.id === unitId);
   const isGroup = unit && unit.kind !== 'chapter' && !VOCABULARY_CATALOG.units.some(row => row.bookId === bookId && row.parentId === unitId);
-  const words = useMemo(() => groupWords(state, bookId, unitId).flatMap(row => row.entry && !row.entry.tags.includes('archived') ? [{ ...row, entry: row.entry, resolved: resolveVocabularyLearningContext(row.entry, { bookId, unitId }) }] : []), [state, bookId, unitId, status]);
+  const selectedIds=useMemo(()=>{try{const ids=JSON.parse(params.get('selectedEntryIds')||'null');return Array.isArray(ids)&&ids.length>0&&ids.length<=50&&ids.every(id=>typeof id==='string')?ids as string[]:null;}catch{return null;}},[params.get('selectedEntryIds')]);
+  const sourceWords = useMemo(() => groupWords(state, bookId, unitId).flatMap(row => row.entry && !row.entry.tags.includes('archived') ? [{ ...row, entry: row.entry, resolved: resolveVocabularyLearningContext(row.entry, { bookId, unitId }) }] : []), [state, bookId, unitId, status]);
+  const words = useMemo(() => exactCards ? exactCards.flatMap(ref=>{const row=sourceWords.find(row=>row.entry.id===ref.entryId);return row?[row]:[];}) : sourceWords.filter(row=>!selectedIds||selectedIds.includes(row.entry.id)), [sourceWords, exactCards, selectedIds]);
   const wordIds = words.map(row => row.entry.id);
   const idsKey = wordIds.join('\n');
   const key = vocabularyLearningPendingKey(owner, bookId, unitId);
@@ -101,7 +104,7 @@ export function VocabularyGroupLearnPage() {
       const next = new URLSearchParams(params); next.delete('word'); setParams(next, { replace:true, state: location.state });
     }
     const requested = accountChanged ? null : params.get('word');
-    const requestedBatch = params.has('batch') ? Number(params.get('batch')) : null;
+    const requestedBatch = exactCards ? 0 : params.has('batch') ? Number(params.get('batch')) : null;
     const batchStart = requestedBatch !== null && Number.isSafeInteger(requestedBatch) && requestedBatch >= 0 ? wordIds[requestedBatch * BATCH_SIZE] : undefined;
     const position = requested && wordIds.includes(requested) ? requested : batchStart || (learning?.currentEntryId && wordIds.includes(learning.currentEntryId) ? learning.currentEntryId : wordIds[0]);
     setCurrentId(position); setViewed(validIds); viewedRef.current = validIds;
@@ -114,7 +117,7 @@ export function VocabularyGroupLearnPage() {
 
   const position = Math.max(0, words.findIndex(row => row.entry.id === currentId));
   const word = words[position];
-  const batch = boundPlan?.target.batchIndex ?? Math.floor(position / BATCH_SIZE);
+  const batch = exactCards ? 0 : boundPlan?.target.batchIndex ?? Math.floor(position / BATCH_SIZE);
   const batches = Math.ceil(words.length / BATCH_SIZE);
   useLayoutEffect(() => {
     const navigation = batchNavigation.current;
@@ -129,7 +132,7 @@ export function VocabularyGroupLearnPage() {
   const origin = `${location.pathname}?${originParams}`;
   useVocabularyPosition(origin, status === 'ready' && Boolean(word));
   const assessedIds = getLearnedVocabularyIds({ ...state, vocabularyStates: [] });
-  const progress = unit ? vocabularyGroupProgress(state, { ...unit, studyEntryIds: wordIds }, assessedIds) : 'Not started';
+  const progress = unit ? vocabularyGroupProgress(state, { ...unit, studyEntryIds: sourceWords.map(row=>row.entry.id) }, assessedIds) : 'Not started';
   const assessmentStatus = progress === 'Studied' ? 'Assessed' : progress;
   const mastered = useMemo(() => words.filter(row => getVocabularyMastery(state, row.entry.id, row.resolved.sense?.id).automatic === 'mastered').length, [state, words]);
   const assessments = useMemo(() => {
@@ -142,7 +145,7 @@ export function VocabularyGroupLearnPage() {
       const identity = `${owner}:${bookId}:${unitId}:${BATCH_SIZE}:${batch}`;
       const frozen = boundPlan ? boundPlan.target.cards : params.get('batchCards') && Number(params.get('batch')) === batch ? JSON.parse(params.get('batchCards')!) : frozenBatches.current.get(identity) || words.slice(batch * BATCH_SIZE, (batch + 1) * BATCH_SIZE).map(row => ({ entryId: row.entry.id, senseId: row.resolved.sense?.id || '' }));
       frozenBatches.current.set(identity, frozen);
-      return buildLearningBatch(state, bookId, unitId, batch, BATCH_SIZE, boundPlan?.target?.assessmentMode || preferences.mode, frozen);
+      return buildLearningBatch(state, bookId, unitId, boundPlan?.target.batchIndex ?? batch, boundPlan?.target.batchSize ?? BATCH_SIZE, boundPlan?.target?.assessmentMode || preferences.mode, frozen);
     } catch { return null; }
   }, [state, bookId, unitId, batch, BATCH_SIZE, preferences.mode, status, words.length, params.toString(), boundPlan]);
   const boundBatch = Boolean(boundPlan && currentBatch && currentBatch.mode === boundPlan.target.assessmentMode && JSON.stringify(currentBatch.selection.cards) === JSON.stringify(boundPlan.target.cards));
@@ -170,15 +173,16 @@ export function VocabularyGroupLearnPage() {
     if (nextId !== word.entry.id) setRevealedKey('');
     const next = new URLSearchParams(params); next.set('word', nextId); if(nextId!==word.entry.id) next.delete('sense');
     const nextBatch = Math.floor(index / BATCH_SIZE);
-    const nextRefs = frozenBatches.current.get(`${owner}:${bookId}:${unitId}:${BATCH_SIZE}:${nextBatch}`) || words.slice(nextBatch * BATCH_SIZE, (nextBatch + 1) * BATCH_SIZE).map(row => ({entryId:row.entry.id,senseId:row.resolved.sense?.id || ''}));
-    next.set('batch', String(nextBatch)); next.set('batchSize', String(BATCH_SIZE)); next.set('batchCards', JSON.stringify(nextRefs));
-    if (nextBatch !== batch) next.delete('planId');
+    const nextRefs = exactCards || frozenBatches.current.get(`${owner}:${bookId}:${unitId}:${BATCH_SIZE}:${nextBatch}`) || words.slice(nextBatch * BATCH_SIZE, (nextBatch + 1) * BATCH_SIZE).map(row => ({entryId:row.entry.id,senseId:row.resolved.sense?.id || ''}));
+    next.set('batch', String(exactCards ? boundPlan!.target.batchIndex : nextBatch)); next.set('batchSize', String(exactCards ? boundPlan!.target.batchSize : BATCH_SIZE)); next.set('batchCards', JSON.stringify(nextRefs));
+    if (nextBatch !== batch && !exactCards) next.delete('planId');
     setParams(next, { replace:true, state: location.state });
     requestAnimationFrame(() => { if (mounted.current && owner === accountId()) document.getElementById('learning-word')?.focus({ preventScroll:true }); });
     sync.current?.update({ viewedEntryIds:nextViewed, currentEntryId:nextId, updatedAt:new Date().toISOString() }, markViewed ? 800 : 2500);
   }
 
-  const selectedSenseId = params.get('sense') || currentBatch?.selection.cards.find(ref => ref.entryId === word?.entry.id)?.senseId;
+  const batchSenseId=currentBatch?.selection.cards.find(ref=>ref.entryId===word?.entry.id)?.senseId;
+  const selectedSenseId = boundPlan ? batchSenseId : params.get('sense') || batchSenseId;
   const selectedSense = word?.resolved.curriculum?.senses.find(sense=>sense.id===selectedSenseId) || word?.resolved.sense;
   const learningCardKey = `${owner}:${bookId}:${unitId}:${word?.entry.id}:${selectedSense?.id}`;
   const meaningVisible = !recallFirst || revealedKey === learningCardKey;
@@ -245,7 +249,7 @@ export function VocabularyGroupLearnPage() {
             <div className="vocabulary-learning-progress-track" aria-hidden="true"><span style={{transform:`scaleX(${batchWords.length ? batchViewed/batchWords.length : 0})`}}/></div>
             {firstUnviewedIndex >= 0 && firstUnviewedIndex !== position ? <button className="btn text" onClick={() => navigateTo(firstUnviewedIndex)}>Continue learning this batch<ArrowRight size={14}/></button> : null}
           </div>
-          <VocabularyLearningAssessment key={`${key}:${batch}:${BATCH_SIZE}`} batch={currentBatch} assessments={assessments} groupWords={words.length} bound={boundBatch} batchUrl={batchAssessmentUrl} groupUrl={assessmentUrl}/>
+          <VocabularyLearningAssessment key={`${key}:${batch}:${BATCH_SIZE}`} batch={currentBatch} assessments={assessments} groupWords={sourceWords.length} bound={boundBatch} batchUrl={batchAssessmentUrl} groupUrl={assessmentUrl}/>
           <Link className="btn text" to={`/vocabulary/wordbooks/${encodeURIComponent(bookId)}/groups/${encodeURIComponent(unitId)}/words`}>View group words<ArrowRight size={14}/></Link>
         </section>
       </div>}

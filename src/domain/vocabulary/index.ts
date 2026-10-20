@@ -76,7 +76,7 @@ export function addVocabularyItem(state: Partial<VocabularyStore>, input: Partia
     let sense = item!.senses.find(current => normalizeAnswer(current.definition) === normalizeAnswer(cleaned));
     if (!sense && item!.senses.length === 1 && !item!.senses[0].definition && cleaned) {
       sense = item!.senses[0];
-      Object.assign(sense, { definition: cleaned, example: english(raw.example), pos: english(raw.pos) || 'expression', collocations: englishList(raw.collocations), usage: english(raw.usage), synonyms: englishList(raw.synonyms), antonyms: englishList(raw.antonyms), distinctions: englishList(raw.distinctions), source: english(raw.source) || 'Personal note', license: english(raw.license), attribution: english(raw.attribution), sourceUrl: english(raw.sourceUrl) });
+      Object.assign(sense, { definition: cleaned, example: english(raw.example), pos: english(raw.pos) || 'expression', collocations: raw.collocations===undefined?undefined:englishList(raw.collocations), usage: raw.usage===undefined?undefined:english(raw.usage), synonyms: raw.synonyms===undefined?undefined:englishList(raw.synonyms), antonyms: raw.antonyms===undefined?undefined:englishList(raw.antonyms), distinctions: raw.distinctions===undefined?undefined:englishList(raw.distinctions), source: english(raw.source) || 'Personal note', license: english(raw.license), attribution: english(raw.attribution), sourceUrl: english(raw.sourceUrl) });
     }
     if (!sense) {
       const requestedId = english(raw.id);
@@ -85,8 +85,8 @@ export function addVocabularyItem(state: Partial<VocabularyStore>, input: Partia
       sense = {
         id: senseId, definition: cleaned,
         example: english(raw.example), pos: english(raw.pos) || 'expression',
-        collocations: englishList(raw.collocations), synonyms: englishList(raw.synonyms), antonyms: englishList(raw.antonyms), distinctions: englishList(raw.distinctions),
-        usage: english(raw.usage), source: english(raw.source) || 'Personal note', license: english(raw.license), attribution: english(raw.attribution), sourceUrl: english(raw.sourceUrl),
+        collocations: raw.collocations===undefined?undefined:englishList(raw.collocations), synonyms: raw.synonyms===undefined?undefined:englishList(raw.synonyms), antonyms: raw.antonyms===undefined?undefined:englishList(raw.antonyms), distinctions: raw.distinctions===undefined?undefined:englishList(raw.distinctions),
+        usage: raw.usage===undefined?undefined:english(raw.usage), source: english(raw.source) || 'Personal note', license: english(raw.license), attribution: english(raw.attribution), sourceUrl: english(raw.sourceUrl),
       };
       item!.senses.push(sense);
     } else if (!sense.example && english(raw.example)) sense.example = english(raw.example);
@@ -133,7 +133,7 @@ export function updateVocabularyItem(state: VocabularyStore, entryId: string, in
   if (input.senses) input.senses.forEach((raw, index) => {
     const sense = item.senses.find(s => s.id === raw.id) || item.senses[index];
     if (!sense) return;
-    Object.assign(sense, { definition: english(raw.definition), example: english(raw.example), pos: english(raw.pos) || 'expression', collocations: englishList(raw.collocations), usage: english(raw.usage), synonyms: englishList(raw.synonyms), antonyms: englishList(raw.antonyms), distinctions: englishList(raw.distinctions) });
+    Object.assign(sense, { definition: english(raw.definition), example: english(raw.example), pos: english(raw.pos) || 'expression', collocations: raw.collocations===undefined?undefined:englishList(raw.collocations), usage: raw.usage===undefined?undefined:english(raw.usage), synonyms: raw.synonyms===undefined?undefined:englishList(raw.synonyms), antonyms: raw.antonyms===undefined?undefined:englishList(raw.antonyms), distinctions: raw.distinctions===undefined?undefined:englishList(raw.distinctions) });
   });
   item.meaning = item.senses[0]?.definition || ''; item.example = item.senses[0]?.example || '';
   item.enrichmentPending = item.senses.every(s => !s.definition);
@@ -270,26 +270,31 @@ export function getVocabularyReviewQueue(state: Partial<VocabularyStore>, filter
     const modes = filter.mode ? [filter.mode] : VOCABULARY_MODES;
     modes.forEach(mode => {
       if (!supportsMode(entry, sense, mode) || (filter.dimension && !modeDimensions[mode].includes(filter.dimension))) return;
-      if (filter.scheduledOnly) {
-        const due = learning?.cards[mode]?.due || learning?.legacyProgress?.nextReviewAt;
+      if (filter.scheduledOnly || filter.dueOnly === true) {
+        // Legacy progress has no mode identity. Preserve it as history, but do
+        // not invent schedules for every practice mode from that one date.
+        const due = learning?.cards[mode]?.due;
         if (!due || !Number.isFinite(due instanceof Date ? due.getTime() : Date.parse(String(due)))) return;
       }
       const dueAt = validTime(learning?.cards[mode]?.due || learning?.legacyProgress?.nextReviewAt || entry.createdAt);
       if (filter.dueOnly !== false && new Date(dueAt).getTime() > at) return;
       const cardContext = sense.id === resolved.sense?.id ? resolved.context : resolveVocabularyLearningContext(raw, { ...filter, senseId: sense.id }).context;
-      cards.push({ id: `${entry.id}:${sense.id}:${mode}`, entryId: entry.id, senseId: sense.id, entry, mode, dimension: modeDimensions[mode][0], dueAt, sources, task: learningTask(entry, sense, mode), contentVersion: resolved.contentVersion, context: cardContext });
+      const rawSchedule=learning?.cards[mode]?.due;
+      const schedule=rawSchedule instanceof Date?rawSchedule.toISOString():typeof rawSchedule==='string'?rawSchedule:null;
+      cards.push({ id: `${entry.id}:${sense.id}:${mode}`, entryId: entry.id, senseId: sense.id, entry, mode, dimension: modeDimensions[mode][0], dueAt, scheduledDueAt:schedule&&Number.isFinite(Date.parse(schedule))?schedule:null, sources, task: learningTask(entry, sense, mode), contentVersion: resolved.contentVersion, context: cardContext });
     });
     });
   });
   return cards.sort((a, b) => a.dueAt.localeCompare(b.dueAt) || a.id.localeCompare(b.id));
 }
 export function dueVocabulary(state: VocabularyStore, now?: string | Date, skill?: VocabularySource['skill']) {
-  const ids = new Set(getVocabularyReviewQueue(state, { now, skill }).map(card => card.entryId));
+  const ids = new Set(getVocabularyReviewQueue(state, { now, skill, dueOnly: true }).map(card => card.entryId));
   return state.vocabulary.filter(entry => ids.has(entry.id));
 }
 export function getActiveWrongWords(state: VocabularyStore, filter: ReviewQueueFilter = {}) {
   return state.vocabularyStates.filter(learning => learning.wrong.active).flatMap(learning => {
     const entry = state.vocabulary.find(e => e.id === learning.entryId); if (!entry || entry.tags.includes('archived')) return [];
+    if (filter.mode && !learning.wrong.modes[filter.mode]?.active) return [];
     if (filter.dimension && !Object.entries(learning.wrong.modes).some(([mode, wrong]) => wrong?.active && modeDimensions[mode as VocabularyMode].includes(filter.dimension!))) return [];
     if ((filter.bookId || filter.unitId || filter.skill || filter.sourceType || filter.sourceId) && !entry.sources.some(s => matchesVocabularySource(s, filter, learning.senseId))) return [];
     return [{ ...learning, entry, learningState: learning }];
@@ -339,7 +344,7 @@ export function normalizeVocabularyCollections(source: Partial<VocabularyStore>)
     ids.add(entry.id);terms.add(key);return true;
   });
   if(canonical){
-    data.vocabulary=raw.map(entry=>({...entry,term:english(entry.term),tags:englishList(entry.tags),sources:normalizeVocabularySources((entry.sources||[]).map(source=>({...source,context:english(source.context)}))),senses:entry.senses.map(sense=>({...sense,definition:english(sense.definition),example:english(sense.example),pos:english(sense.pos)||'expression',collocations:englishList(sense.collocations),usage:english(sense.usage),synonyms:englishList(sense.synonyms),antonyms:englishList(sense.antonyms),distinctions:englishList(sense.distinctions),wordFamily:sense.wordFamily === undefined ? undefined : englishList(sense.wordFamily),register:sense.register === undefined ? undefined : english(sense.register),source:english(sense.source),license:english(sense.license)})),meaning:english(entry.senses[0].definition),example:english(entry.senses[0].example)}));
+    data.vocabulary=raw.map(entry=>({...entry,term:english(entry.term),tags:englishList(entry.tags),sources:normalizeVocabularySources((entry.sources||[]).map(source=>({...source,context:english(source.context)}))),senses:entry.senses.map(sense=>({...sense,definition:english(sense.definition),example:english(sense.example),pos:english(sense.pos)||'expression',collocations:sense.collocations===undefined?undefined:englishList(sense.collocations),usage:sense.usage===undefined?undefined:english(sense.usage),synonyms:sense.synonyms===undefined?undefined:englishList(sense.synonyms),antonyms:sense.antonyms===undefined?undefined:englishList(sense.antonyms),distinctions:sense.distinctions===undefined?undefined:englishList(sense.distinctions),wordFamily:sense.wordFamily === undefined ? undefined : englishList(sense.wordFamily),register:sense.register === undefined ? undefined : english(sense.register),source:english(sense.source),license:english(sense.license)})),meaning:english(entry.senses[0].definition),example:english(entry.senses[0].example)}));
     const prior=new Map(states.map(learning=>[`${learning.entryId}:${learning.senseId}`,learning]));
     data.vocabulary.forEach(entry=>entry.senses.forEach(sense=>{
       const existing=prior.get(`${entry.id}:${sense.id}`);

@@ -1,13 +1,20 @@
 // @ts-nocheck
-import { expect, test } from 'vitest';
+import { afterEach, expect, test } from 'vitest';
 import { emptyState } from '../domain';
 import { completePlanIfMatched, completeVocabularyPlan, startPlan } from '../domain/plans';
 import { ensureUnifiedPlans, nextUnifiedPlan, studyBudget, mutateStudyPlan } from './planTemplates';
 import { addVocabularyItem, recordVocabularyReview } from '../domain/vocabulary';
+import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 
 const now = new Date('2026-10-13T12:00:00');
 // Keep legacy scheduling regressions separate from the new multi-task defaults.
-const setup = () => { const state = emptyState(); state.settings.days = [1,2,3,4,5,6,7]; state.settings.planning={...state.settings.planning,vocabularyMode:'fixed',vocabularyMinutes:10,multipleTasks:false}; return state; };
+const setup = () => { const state = emptyState(); state.settings.days = [1,2,3,4,5,6,7]; state.settings.planning={...state.settings.planning,vocabularyMode:'fixed',vocabularyMinutes:10,multipleTasks:false,carryoverPercent:100}; return state; };
+const fixtureGroups=[];let fixtureId=0;
+function enroll(state,count=100){
+  const bookId=`unified-plans-fixture-${++fixtureId}`,unit={id:`${bookId}-group`,bookId,kind:'group',order:1,entryIds:Array.from({length:count},(_,i)=>`${bookId}-word-${i}`)};
+  VOCABULARY_CATALOG.units.push(unit);fixtureGroups.push(unit);state.wordbookEnrollments=[{id:bookId,bookId,updatedAt:''}];return unit;
+}
+afterEach(()=>{for(const unit of fixtureGroups.splice(0))VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);});
 
 test('seven calendar days rotate all selected skills and are deterministic and idempotent', () => {
   const left = setup(); const right = setup();
@@ -21,17 +28,19 @@ test('seven calendar days rotate all selected skills and are deterministic and i
   expect(left.plans).toHaveLength(7);
 });
 
-test('vocabulary uses at most one third and ten minutes, with short budgets reserved for due review', () => {
+test('vocabulary obeys its allocation and exact new-word batches fit short budgets', () => {
   for (const minutes of [5,15,20,29,30,60]) {
     const state = setup(); state.settings.dailyMinutes = minutes;
-    state.wordbookEnrollments = [{id:'e',bookId:'book',updatedAt:''}];
+    enroll(state);
     state.settings.planning.vocabularyMinutes=Math.min(10,Math.floor(minutes/3));
     const budget = studyBudget(state.settings);
     expect(budget.vocabulary).toBeLessThanOrEqual(Math.floor(minutes/3));
     expect(budget.vocabulary).toBeLessThanOrEqual(10);
     const plans = ensureUnifiedPlans(state, undefined, now);
     for (const day of new Set(plans.map(plan=>plan.dateKey))) expect(plans.filter(plan=>plan.dateKey===day).reduce((sum,plan)=>sum+plan.estimatedMinutes,0)).toBeLessThanOrEqual(minutes);
-    expect(plans.some(plan=>plan.target?.mode === 'learning-batch')).toBe(minutes>=30);
+    const learning=plans.filter(plan=>plan.target?.mode === 'learning-batch');
+    expect(learning.length).toBeGreaterThan(0);
+    expect(learning.every(plan=>plan.estimatedMinutes<=budget.vocabulary&&plan.estimatedMinutes===plan.target.entryIds.length&&plan.target.selectionPolicy==='exact')).toBe(true);
     expect(plans.some(plan=>plan.kind==='2'&&['timed','full'].includes(plan.deskMode)&&plan.estimatedMinutes<40)).toBe(false);
   }
 });
@@ -53,7 +62,7 @@ test('skip and restore are protected from generation', () => {
   const state = setup(); ensureUnifiedPlans(state, undefined, now);
   const plan = state.plans[0]; mutateStudyPlan(state,plan.id,{type:'skip'});
   ensureUnifiedPlans(state,undefined,now); expect(plan.status).toBe('skipped');
-  mutateStudyPlan(state,plan.id,{type:'restore'}); expect(plan.status).toBe('pending'); expect(plan.origin).toBe('manual');
+  mutateStudyPlan(state,plan.id,{type:'restore'}); expect(plan.status).toBe('pending'); expect(plan.origin).toBe('automatic');expect(plan.manuallyEditedAt).toBeTruthy();
 });
 
 test('rolling seven-day extension continues the skill rotation and rescheduling does not duplicate ids',()=>{
@@ -65,7 +74,7 @@ test('rolling seven-day extension continues the skill rotation and rescheduling 
 });
 
 test('new due evidence replaces the prebuilt next-day task without exceeding its budget',()=>{
-  const state=setup();state.wordbookEnrollments=[{id:'e',bookId:'missing-book',updatedAt:''}];
+  const state=setup();enroll(state);
   ensureUnifiedPlans(state,undefined,now);
   const planned=structuredClone(state.plans.find(plan=>plan.dateKey==='2026-10-14'&&plan.skill!=='vocabulary'));
   expect(planned.kind).toBe('speaking-p1');
@@ -160,8 +169,8 @@ test('due review excludes unlearned words and keeps a supported preferred assess
   expect(plan.target).toMatchObject({binding:'dynamic',cards:[],batchSize:1});expect(plan.estimatedMinutes).toBe(1);
 });
 
-test('newly due vocabulary replaces a prebuilt learning batch within its reserved budget',()=>{
-  const state=setup();state.wordbookEnrollments=[{id:'e',bookId:'missing-book',updatedAt:''}];state.settings.vocabulary.mode='definition';
+test('newly due vocabulary shares the reserved budget after the daily new-word allowance',()=>{
+  const state=setup();enroll(state);state.settings.vocabulary.mode='definition';state.settings.vocabulary.learningBatchSize=5;state.settings.planning.newWordsPerDay=5;
   ensureUnifiedPlans(state,undefined,now);
   const nextDay=new Date('2026-10-14T12:00:00');state.plans.filter(plan=>plan.dateKey==='2026-10-13').forEach(plan=>{plan.status='completed';});
   const batch=state.plans.find(plan=>plan.dateKey==='2026-10-14'&&plan.kind==='vocabulary');
@@ -169,26 +178,28 @@ test('newly due vocabulary replaces a prebuilt learning batch within its reserve
   const word=addVocabularyItem(state,{term:'recalledword',meaning:'A learned word.'}).item;
   recordVocabularyReview(state,{entryId:word.id,senseId:word.senses[0].id,mode:'definition',response:'wrong',result:'failure',occurredAt:'2020-01-01T00:00:00Z'});
   ensureUnifiedPlans(state,undefined,nextDay);
-  expect(batch).toMatchObject({estimatedMinutes:1,target:{type:'vocabulary',mode:'due-review',assessmentMode:'definition',binding:'dynamic',cards:[],batchSize:1}});
+  const day=state.plans.filter(plan=>plan.dateKey==='2026-10-14');
+  expect(day.find(plan=>plan.target?.mode==='learning-batch')).toMatchObject({estimatedMinutes:5,target:{batchSize:5,selectionPolicy:'exact'}});
+  expect(day.find(plan=>plan.target?.mode==='due-review')).toMatchObject({estimatedMinutes:1,target:{type:'vocabulary',mode:'due-review',assessmentMode:'definition',binding:'dynamic',cards:[],batchSize:1}});
   expect(state.plans.filter(plan=>plan.dateKey==='2026-10-14').reduce((total,plan)=>total+plan.estimatedMinutes,0)).toBe(30);
   expect(state.plans.filter(plan=>plan.target?.mode==='due-review')).toHaveLength(2);
   const retained=structuredClone(state.plans);let saved=0;ensureUnifiedPlans(state,()=>saved++,nextDay);
   expect(state.plans).toEqual(retained);expect(saved).toBe(0);
 });
 
-test('vocabulary due priority preserves a started batch and uses the next automatic vocabulary slot',()=>{
-  const state=setup();state.wordbookEnrollments=[{id:'e',bookId:'missing-book',updatedAt:''}];ensureUnifiedPlans(state,undefined,now);
+test('vocabulary review preserves a started batch and uses remaining automatic vocabulary capacity',()=>{
+  const state=setup();enroll(state);state.settings.vocabulary.learningBatchSize=5;state.settings.planning.newWordsPerDay=5;ensureUnifiedPlans(state,undefined,now);
   const batch=state.plans.find(plan=>plan.dateKey==='2026-10-14'&&plan.kind==='vocabulary');startPlan(state,batch.id,now.toISOString());
   const retained=structuredClone(batch);
   const word=addVocabularyItem(state,{term:'dueword',meaning:'Due for recall.'}).item;
   recordVocabularyReview(state,{entryId:word.id,senseId:word.senses[0].id,mode:'dictation',response:'wrong',result:'failure',occurredAt:'2020-01-01T00:00:00Z'});
   state.plans.filter(plan=>plan.dateKey==='2026-10-13').forEach(plan=>{plan.status='completed';});ensureUnifiedPlans(state,undefined,new Date('2026-10-14T12:00:00'));
   expect(state.plans.find(plan=>plan.id===batch.id)).toEqual(retained);
-  expect(state.plans.find(plan=>plan.dateKey==='2026-10-15'&&plan.kind==='vocabulary').target.mode).toBe('due-review');
+  expect(state.plans.some(plan=>plan.dateKey==='2026-10-14'&&plan.target?.mode==='due-review')).toBe(true);
 });
 
 test('new learning honors batch-size and mode preferences, while appearance changes preserve plans',()=>{
-  const state=setup();state.wordbookEnrollments=[{id:'e',bookId:'missing-book',updatedAt:''}];state.settings.vocabulary.learningBatchSize=5;state.settings.vocabulary.mode='definition';
+  const state=setup();enroll(state);state.settings.vocabulary.learningBatchSize=5;state.settings.vocabulary.mode='definition';
   ensureUnifiedPlans(state,undefined,now);const batch=state.plans.find(row=>row.kind==='vocabulary');expect(batch.target).toMatchObject({batchSize:5,assessmentMode:'definition'});
   const before=structuredClone(state.plans);state.settings.vocabulary.volume=0.5;ensureUnifiedPlans(state,undefined,now);expect(state.plans).toEqual(before);
 });
@@ -197,5 +208,5 @@ test('manual mock replacement requires its entire duration in the daily budget',
   const state=setup();ensureUnifiedPlans(state,undefined,now);const plan=state.plans[0];
   expect(()=>mutateStudyPlan(state,plan.id,{type:'replace',skill:'writing',kind:'writing-mock'})).toThrow(/budget/i);
   state.settings.dailyMinutes=60;mutateStudyPlan(state,plan.id,{type:'replace',skill:'writing',kind:'writing-mock'});
-  expect(plan).toMatchObject({kind:'writing-mock',estimatedMinutes:60,origin:'manual',deskMode:'timed'});
+  expect(plan).toMatchObject({kind:'writing-mock',estimatedMinutes:60,origin:'automatic',deskMode:'timed'});expect(plan.manuallyEditedAt).toBeTruthy();
 });

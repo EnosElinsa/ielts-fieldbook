@@ -31347,5 +31347,1993 @@
       "distinctions": []
     },
     "reason": "Editorial selection of a specific source meaning for this learning context. This recommendation does not claim verification against a source-book passage."
+  },
+  {
+    "bookId": "ielts-listening-practice-21",
+    "unitId": "ielts-listening-practice-21-chapter-02-group-01",
+    "entryId": "ve-c16f8074",
+    "term": "natural",
+    "sense": {
+      "id": "wiktionary:restored:7f60cc065473b00d13",
+      "pos": "adj",
+      "definition": "Formed by nature; not manufactured or created by artificial processes.",
+      "example": "The lake is a natural feature of the landscape.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=natural&oldid=93709359",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "a natural feature",
+        "natural materials"
+      ],
+      "distinctions": [
+        "Natural here means formed by nature; artificial means made by people."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:4f4360819f994c8134",
+      "definition": "Existing in nature.",
+      "example": "The path follows the river's natural course.",
+      "pos": "adj",
+      "synonyms": [
+        "congenital",
+        "inborn",
+        "connate",
+        "connatural",
+        "congenital",
+        "congenite",
+        "genetous",
+        "inborn",
+        "inbred",
+        "indigenous",
+        "ingenite",
+        "innate",
+        "native",
+        "natural",
+        "to the manner born",
+        "unlearned",
+        "unlearnt",
+        "aboriginal",
+        "autochthonal",
+        "autochthonous",
+        "endemic",
+        "indigenous",
+        "inlandish",
+        "native"
+      ],
+      "antonyms": [
+        "aberrant",
+        "abnormal",
+        "artificial"
+      ],
+      "collocations": [
+        "natural materials",
+        "a natural feature"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "all-natural",
+        "Cartesian natural transformation",
+        "conatural",
+        "connatural",
+        "contranatural",
+        "cosmological natural selection",
+        "counternatural",
+        "dinatural",
+        "extra-natural",
+        "hypernatural",
+        "infranatural",
+        "liquefied natural gas",
+        "liquid natural gas",
+        "liquified natural gas",
+        "metanatural",
+        "naptural",
+        "natlang",
+        "natty",
+        "natural advantages",
+        "natural aging",
+        "natural astrology",
+        "natural birth",
+        "natural-born",
+        "natural breast",
+        "natural burial",
+        "natural business year",
+        "natural causes",
+        "natural child",
+        "natural childbirth",
+        "natural convection"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/natural#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Natural means occurring in nature; artificial means made by people."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-practice-21",
+    "unitId": "ielts-listening-practice-21-chapter-03-group-03",
+    "entryId": "ve-c16f8074",
+    "term": "natural",
+    "sense": {
+      "id": "wiktionary:restored:7f60cc065473b00d13",
+      "pos": "adj",
+      "definition": "Formed by nature; not manufactured or created by artificial processes.",
+      "example": "The lake is a natural feature of the landscape.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=natural&oldid=93709359",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "a natural feature",
+        "natural materials"
+      ],
+      "distinctions": [
+        "Natural here means formed by nature; artificial means made by people."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:4f4360819f994c8134",
+      "definition": "Existing in nature.",
+      "example": "The path follows the river's natural course.",
+      "pos": "adj",
+      "synonyms": [
+        "congenital",
+        "inborn",
+        "connate",
+        "connatural",
+        "congenital",
+        "congenite",
+        "genetous",
+        "inborn",
+        "inbred",
+        "indigenous",
+        "ingenite",
+        "innate",
+        "native",
+        "natural",
+        "to the manner born",
+        "unlearned",
+        "unlearnt",
+        "aboriginal",
+        "autochthonal",
+        "autochthonous",
+        "endemic",
+        "indigenous",
+        "inlandish",
+        "native"
+      ],
+      "antonyms": [
+        "aberrant",
+        "abnormal",
+        "artificial"
+      ],
+      "collocations": [
+        "natural materials",
+        "a natural feature"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "all-natural",
+        "Cartesian natural transformation",
+        "conatural",
+        "connatural",
+        "contranatural",
+        "cosmological natural selection",
+        "counternatural",
+        "dinatural",
+        "extra-natural",
+        "hypernatural",
+        "infranatural",
+        "liquefied natural gas",
+        "liquid natural gas",
+        "liquified natural gas",
+        "metanatural",
+        "naptural",
+        "natlang",
+        "natty",
+        "natural advantages",
+        "natural aging",
+        "natural astrology",
+        "natural birth",
+        "natural-born",
+        "natural breast",
+        "natural burial",
+        "natural business year",
+        "natural causes",
+        "natural child",
+        "natural childbirth",
+        "natural convection"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/natural#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Natural means occurring in nature; artificial means made by people."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-vocabulary",
+    "unitId": "ielts-listening-vocabulary-chapter-02-group-02",
+    "entryId": "ve-c16f8074",
+    "term": "natural",
+    "sense": {
+      "id": "wiktionary:restored:7f60cc065473b00d13",
+      "pos": "adj",
+      "definition": "Formed by nature; not manufactured or created by artificial processes.",
+      "example": "The lake is a natural feature of the landscape.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=natural&oldid=93709359",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "a natural feature",
+        "natural materials"
+      ],
+      "distinctions": [
+        "Natural here means formed by nature; artificial means made by people."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:4f4360819f994c8134",
+      "definition": "Existing in nature.",
+      "example": "The path follows the river's natural course.",
+      "pos": "adj",
+      "synonyms": [
+        "congenital",
+        "inborn",
+        "connate",
+        "connatural",
+        "congenital",
+        "congenite",
+        "genetous",
+        "inborn",
+        "inbred",
+        "indigenous",
+        "ingenite",
+        "innate",
+        "native",
+        "natural",
+        "to the manner born",
+        "unlearned",
+        "unlearnt",
+        "aboriginal",
+        "autochthonal",
+        "autochthonous",
+        "endemic",
+        "indigenous",
+        "inlandish",
+        "native"
+      ],
+      "antonyms": [
+        "aberrant",
+        "abnormal",
+        "artificial"
+      ],
+      "collocations": [
+        "natural materials",
+        "a natural feature"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "all-natural",
+        "Cartesian natural transformation",
+        "conatural",
+        "connatural",
+        "contranatural",
+        "cosmological natural selection",
+        "counternatural",
+        "dinatural",
+        "extra-natural",
+        "hypernatural",
+        "infranatural",
+        "liquefied natural gas",
+        "liquid natural gas",
+        "liquified natural gas",
+        "metanatural",
+        "naptural",
+        "natlang",
+        "natty",
+        "natural advantages",
+        "natural aging",
+        "natural astrology",
+        "natural birth",
+        "natural-born",
+        "natural breast",
+        "natural burial",
+        "natural business year",
+        "natural causes",
+        "natural child",
+        "natural childbirth",
+        "natural convection"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/natural#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Natural means occurring in nature; artificial means made by people."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-01-group-05",
+    "entryId": "ve-c16f8074",
+    "term": "natural",
+    "sense": {
+      "id": "wiktionary:restored:7f60cc065473b00d13",
+      "pos": "adj",
+      "definition": "Formed by nature; not manufactured or created by artificial processes.",
+      "example": "The lake is a natural feature of the landscape.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=natural&oldid=93709359",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "a natural feature",
+        "natural materials"
+      ],
+      "distinctions": [
+        "Natural here means formed by nature; artificial means made by people."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:4f4360819f994c8134",
+      "definition": "Existing in nature.",
+      "example": "The lake is a natural feature of the landscape.",
+      "pos": "adjective",
+      "synonyms": [
+        "congenital",
+        "inborn",
+        "connate",
+        "connatural",
+        "congenital",
+        "congenite",
+        "genetous",
+        "inborn",
+        "inbred",
+        "indigenous",
+        "ingenite",
+        "innate",
+        "native",
+        "natural",
+        "to the manner born",
+        "unlearned",
+        "unlearnt",
+        "aboriginal",
+        "autochthonal",
+        "autochthonous",
+        "endemic",
+        "indigenous",
+        "inlandish",
+        "native"
+      ],
+      "antonyms": [
+        "aberrant",
+        "abnormal",
+        "artificial"
+      ],
+      "collocations": [
+        "natural environment",
+        "natural feature"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "all-natural",
+        "Cartesian natural transformation",
+        "conatural",
+        "connatural",
+        "contranatural",
+        "cosmological natural selection",
+        "counternatural",
+        "dinatural",
+        "extra-natural",
+        "hypernatural",
+        "infranatural",
+        "liquefied natural gas",
+        "liquid natural gas",
+        "liquified natural gas",
+        "metanatural",
+        "naptural",
+        "natlang",
+        "natty",
+        "natural advantages",
+        "natural aging",
+        "natural astrology",
+        "natural birth",
+        "natural-born",
+        "natural breast",
+        "natural burial",
+        "natural business year",
+        "natural causes",
+        "natural child",
+        "natural childbirth",
+        "natural convection"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/natural#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-essentials",
+    "unitId": "ielts-listening-essentials-chapter-02-group-01",
+    "entryId": "ve-756436e6",
+    "term": "sweater",
+    "sense": {
+      "id": "kaikki:b655214903ab6c054f",
+      "definition": "A similar garment worn for warmth.",
+      "example": "She put on a sweater when the room became cold.",
+      "pos": "noun",
+      "synonyms": [
+        "jumper",
+        "pullover",
+        "jersey",
+        "cardigan",
+        "wooly"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "a woollen sweater",
+        "put on a sweater"
+      ],
+      "usage": "Garment worn for warmth; this source labels the use chiefly US.",
+      "register": "US",
+      "wordFamily": [
+        "Bill Cosby sweater",
+        "Cosby sweater",
+        "polo-necked sweater",
+        "polo neck sweater",
+        "sweater curse",
+        "sweater dress",
+        "sweater-dress",
+        "sweaterdress",
+        "sweater girl",
+        "sweaterless",
+        "sweaterlike",
+        "sweatermaker",
+        "sweater meat",
+        "sweater puppies",
+        "sweater up",
+        "sweater vest",
+        "sweatery",
+        "turtleneck sweater"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sweater#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Sweater and jumper can name the same knitted upper-body garment; regional usage differs."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:65cfefe289a2eb8996",
+      "definition": "A knitted garment worn on the upper body.",
+      "example": "She put on a sweater when the room became cold.",
+      "pos": "noun",
+      "synonyms": [
+        "sweatshirt"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "a woollen sweater",
+        "put on a sweater"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "Bill Cosby sweater",
+        "Cosby sweater",
+        "polo-necked sweater",
+        "polo neck sweater",
+        "sweater curse",
+        "sweater dress",
+        "sweater-dress",
+        "sweaterdress",
+        "sweater girl",
+        "sweaterless",
+        "sweaterlike",
+        "sweatermaker",
+        "sweater meat",
+        "sweater puppies",
+        "sweater up",
+        "sweater vest",
+        "sweatery",
+        "turtleneck sweater"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sweater#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Sweater and jumper can name the same knitted upper-body garment; regional usage differs."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-vocabulary",
+    "unitId": "ielts-listening-vocabulary-chapter-01-group-08",
+    "entryId": "ve-756436e6",
+    "term": "sweater",
+    "sense": {
+      "id": "kaikki:b655214903ab6c054f",
+      "definition": "A similar garment worn for warmth.",
+      "example": "She put on a sweater when the room became cold.",
+      "pos": "noun",
+      "synonyms": [
+        "jumper",
+        "pullover",
+        "jersey",
+        "cardigan",
+        "wooly"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "a woollen sweater",
+        "put on a sweater"
+      ],
+      "usage": "Garment worn for warmth; this source labels the use chiefly US.",
+      "register": "US",
+      "wordFamily": [
+        "Bill Cosby sweater",
+        "Cosby sweater",
+        "polo-necked sweater",
+        "polo neck sweater",
+        "sweater curse",
+        "sweater dress",
+        "sweater-dress",
+        "sweaterdress",
+        "sweater girl",
+        "sweaterless",
+        "sweaterlike",
+        "sweatermaker",
+        "sweater meat",
+        "sweater puppies",
+        "sweater up",
+        "sweater vest",
+        "sweatery",
+        "turtleneck sweater"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sweater#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Sweater and jumper can name the same knitted upper-body garment; regional usage differs."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:65cfefe289a2eb8996",
+      "definition": "A knitted garment worn on the upper body.",
+      "example": "She put on a sweater when the room became cold.",
+      "pos": "noun",
+      "synonyms": [
+        "sweatshirt"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "a woollen sweater",
+        "put on a sweater"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "Bill Cosby sweater",
+        "Cosby sweater",
+        "polo-necked sweater",
+        "polo neck sweater",
+        "sweater curse",
+        "sweater dress",
+        "sweater-dress",
+        "sweaterdress",
+        "sweater girl",
+        "sweaterless",
+        "sweaterlike",
+        "sweatermaker",
+        "sweater meat",
+        "sweater puppies",
+        "sweater up",
+        "sweater vest",
+        "sweatery",
+        "turtleneck sweater"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sweater#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Sweater and jumper can name the same knitted upper-body garment; regional usage differs."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-11-group-01",
+    "entryId": "ve-756436e6",
+    "term": "sweater",
+    "sense": {
+      "id": "kaikki:b655214903ab6c054f",
+      "definition": "A similar garment worn for warmth.",
+      "example": "She put on a sweater when the room became cold.",
+      "pos": "noun",
+      "synonyms": [
+        "jumper",
+        "pullover",
+        "jersey",
+        "cardigan",
+        "wooly"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "a woollen sweater",
+        "put on a sweater"
+      ],
+      "usage": "Garment worn for warmth; this source labels the use chiefly US.",
+      "register": "US",
+      "wordFamily": [
+        "Bill Cosby sweater",
+        "Cosby sweater",
+        "polo-necked sweater",
+        "polo neck sweater",
+        "sweater curse",
+        "sweater dress",
+        "sweater-dress",
+        "sweaterdress",
+        "sweater girl",
+        "sweaterless",
+        "sweaterlike",
+        "sweatermaker",
+        "sweater meat",
+        "sweater puppies",
+        "sweater up",
+        "sweater vest",
+        "sweatery",
+        "turtleneck sweater"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sweater#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Sweater and jumper can name the same knitted upper-body garment; regional usage differs."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:65cfefe289a2eb8996",
+      "definition": "A knitted garment worn on the upper body.",
+      "example": "She put on a sweater when the room became cold.",
+      "pos": "noun",
+      "synonyms": [
+        "sweatshirt"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "a woollen sweater",
+        "put on a sweater"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "Bill Cosby sweater",
+        "Cosby sweater",
+        "polo-necked sweater",
+        "polo neck sweater",
+        "sweater curse",
+        "sweater dress",
+        "sweater-dress",
+        "sweaterdress",
+        "sweater girl",
+        "sweaterless",
+        "sweaterlike",
+        "sweatermaker",
+        "sweater meat",
+        "sweater puppies",
+        "sweater up",
+        "sweater vest",
+        "sweatery",
+        "turtleneck sweater"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sweater#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Sweater and jumper can name the same knitted upper-body garment; regional usage differs."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-practice-20",
+    "unitId": "ielts-listening-practice-20-chapter-02-group-02",
+    "entryId": "ve-dd826787",
+    "term": "concert",
+    "sense": {
+      "id": "kaikki:c088298ecae07dcee3",
+      "definition": "A musical performance, usually public, in which several performers or instruments take part.",
+      "example": "I’m going to the rock concert on Friday.",
+      "pos": "noun",
+      "synonyms": [
+        "gig"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "attend a concert",
+        "a rock concert"
+      ],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "cats' concert",
+        "concert band",
+        "concert bass drum",
+        "concertful",
+        "concertgoer",
+        "concert-goer",
+        "concertgoing",
+        "concert grand",
+        "concert hall",
+        "concertion",
+        "concertist",
+        "concertize",
+        "concertless",
+        "concertlike",
+        "concertmaster",
+        "concertmeister",
+        "concertmistress",
+        "concert party",
+        "concert performance",
+        "concert pitch",
+        "concert room",
+        "concert spiritual",
+        "concert T-shirt",
+        "Dutch concert",
+        "headphone concert",
+        "house concert",
+        "in concert",
+        "midconcert",
+        "miniconcert",
+        "nonconcert"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/concert#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This noun names a musical performance; concert as a verb can mean make a plan together."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:4a5f9517a8e1a9ef21",
+      "definition": "To plan together; to settle or adjust by conference, agreement, or consultation.",
+      "example": "It was concerted to begin the siege in March.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/concert#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-vocabulary",
+    "unitId": "ielts-listening-vocabulary-chapter-01-group-02",
+    "entryId": "ve-dd826787",
+    "term": "concert",
+    "sense": {
+      "id": "kaikki:c088298ecae07dcee3",
+      "definition": "A musical performance, usually public, in which several performers or instruments take part.",
+      "example": "I’m going to the rock concert on Friday.",
+      "pos": "noun",
+      "synonyms": [
+        "gig"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "attend a concert",
+        "a rock concert"
+      ],
+      "usage": "",
+      "register": "countable",
+      "wordFamily": [
+        "cats' concert",
+        "concert band",
+        "concert bass drum",
+        "concertful",
+        "concertgoer",
+        "concert-goer",
+        "concertgoing",
+        "concert grand",
+        "concert hall",
+        "concertion",
+        "concertist",
+        "concertize",
+        "concertless",
+        "concertlike",
+        "concertmaster",
+        "concertmeister",
+        "concertmistress",
+        "concert party",
+        "concert performance",
+        "concert pitch",
+        "concert room",
+        "concert spiritual",
+        "concert T-shirt",
+        "Dutch concert",
+        "headphone concert",
+        "house concert",
+        "in concert",
+        "midconcert",
+        "miniconcert",
+        "nonconcert"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/concert#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This noun names a musical performance; concert as a verb can mean make a plan together."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:4a5f9517a8e1a9ef21",
+      "definition": "To plan together; to settle or adjust by conference, agreement, or consultation.",
+      "example": "It was concerted to begin the siege in March.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/concert#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-practice-21",
+    "unitId": "ielts-listening-practice-21-chapter-03-group-03",
+    "entryId": "ve-5c19a6c8",
+    "term": "cotton",
+    "sense": {
+      "id": "wiktionary:restored:17825e9e9cacd70727",
+      "pos": "noun",
+      "definition": "A soft, fibrous, usually white substance consisting of fine hairs, especially the substance around the seeds of a plant of genus Gossypium.",
+      "example": "The cotton fibres around the seeds are collected and processed.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=cotton&oldid=93515448",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "cotton fibres",
+        "raw cotton"
+      ],
+      "distinctions": [
+        "This cotton is the plant fibre; cotton fabric is a manufactured product made from that fibre."
+      ],
+      "usage": "uncountable",
+      "register": "uncountable",
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ac516661615088bd0f",
+      "definition": "Soft fibres from the cotton plant, used to make thread and cloth.",
+      "example": "This shirt is made from cotton.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "cotton fibres",
+        "made from cotton"
+      ],
+      "usage": "usually",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "absorbent cotton",
+        "balloon cotton",
+        "black cotton soil",
+        "bless my cotton socks",
+        "bless someone's cotton socks",
+        "bless someone's little cotton socks",
+        "bog cotton",
+        "cellucotton",
+        "cottolin",
+        "cotton and melon aphid",
+        "cotton aphid",
+        "cotton ball",
+        "Cotton Belt",
+        "cotton blend",
+        "cotton boll",
+        "cotton bollworm",
+        "cotton bud",
+        "cotton bush",
+        "cotton candy",
+        "cotton-candy",
+        "cotton card",
+        "cotton ceiling",
+        "Cotton County",
+        "cotton fever",
+        "cottonfield",
+        "cotton fish",
+        "cotton fleahopper",
+        "cotton gin",
+        "cottongrass",
+        "cotton-headed"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cotton#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Cotton is a plant fibre; wool is an animal fibre."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-vocabulary",
+    "unitId": "ielts-listening-vocabulary-chapter-03-group-12",
+    "entryId": "ve-5c19a6c8",
+    "term": "cotton",
+    "sense": {
+      "id": "wiktionary:restored:17825e9e9cacd70727",
+      "pos": "noun",
+      "definition": "A soft, fibrous, usually white substance consisting of fine hairs, especially the substance around the seeds of a plant of genus Gossypium.",
+      "example": "The cotton fibres around the seeds are collected and processed.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=cotton&oldid=93515448",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "cotton fibres",
+        "raw cotton"
+      ],
+      "distinctions": [
+        "This cotton is the plant fibre; cotton fabric is a manufactured product made from that fibre."
+      ],
+      "usage": "uncountable",
+      "register": "uncountable",
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ac516661615088bd0f",
+      "definition": "Soft fibres from the cotton plant, used to make thread and cloth.",
+      "example": "This shirt is made from cotton.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "cotton fibres",
+        "made from cotton"
+      ],
+      "usage": "usually",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "absorbent cotton",
+        "balloon cotton",
+        "black cotton soil",
+        "bless my cotton socks",
+        "bless someone's cotton socks",
+        "bless someone's little cotton socks",
+        "bog cotton",
+        "cellucotton",
+        "cottolin",
+        "cotton and melon aphid",
+        "cotton aphid",
+        "cotton ball",
+        "Cotton Belt",
+        "cotton blend",
+        "cotton boll",
+        "cotton bollworm",
+        "cotton bud",
+        "cotton bush",
+        "cotton candy",
+        "cotton-candy",
+        "cotton card",
+        "cotton ceiling",
+        "Cotton County",
+        "cotton fever",
+        "cottonfield",
+        "cotton fish",
+        "cotton fleahopper",
+        "cotton gin",
+        "cottongrass",
+        "cotton-headed"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cotton#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Cotton is a plant fibre; wool is an animal fibre."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-10-group-03",
+    "entryId": "ve-5c19a6c8",
+    "term": "cotton",
+    "sense": {
+      "id": "wiktionary:restored:17825e9e9cacd70727",
+      "pos": "noun",
+      "definition": "A soft, fibrous, usually white substance consisting of fine hairs, especially the substance around the seeds of a plant of genus Gossypium.",
+      "example": "The cotton fibres around the seeds are collected and processed.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=cotton&oldid=93515448",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "cotton fibres",
+        "raw cotton"
+      ],
+      "distinctions": [
+        "This cotton is the plant fibre; cotton fabric is a manufactured product made from that fibre."
+      ],
+      "usage": "uncountable",
+      "register": "uncountable",
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:ac516661615088bd0f",
+      "definition": "Soft fibres from the cotton plant, used to make thread and cloth.",
+      "example": "This shirt is made from cotton.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "cotton fibres",
+        "made from cotton"
+      ],
+      "usage": "usually",
+      "register": "uncountable, usually",
+      "wordFamily": [
+        "absorbent cotton",
+        "balloon cotton",
+        "black cotton soil",
+        "bless my cotton socks",
+        "bless someone's cotton socks",
+        "bless someone's little cotton socks",
+        "bog cotton",
+        "cellucotton",
+        "cottolin",
+        "cotton and melon aphid",
+        "cotton aphid",
+        "cotton ball",
+        "Cotton Belt",
+        "cotton blend",
+        "cotton boll",
+        "cotton bollworm",
+        "cotton bud",
+        "cotton bush",
+        "cotton candy",
+        "cotton-candy",
+        "cotton card",
+        "cotton ceiling",
+        "Cotton County",
+        "cotton fever",
+        "cottonfield",
+        "cotton fish",
+        "cotton fleahopper",
+        "cotton gin",
+        "cottongrass",
+        "cotton-headed"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cotton#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Cotton is a plant fibre; wool is an animal fibre."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-12-group-01",
+    "entryId": "ve-a891144",
+    "term": "cater",
+    "sense": {
+      "id": "wiktionary:restored:e7932c0c4820395e79",
+      "pos": "verb",
+      "definition": "To provide with food, especially for a special occasion as a professional service.",
+      "example": "The company catered our wedding.",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=cater&oldid=93683655",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "cater a wedding",
+        "cater for guests"
+      ],
+      "distinctions": [
+        "This food-service use allows cater an event and cater for people; cater to a whim is a separate figurative use."
+      ],
+      "usage": "ambitransitive",
+      "register": "ambitransitive",
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:8385bf1ecf22ab364d",
+      "definition": "To provide food and drink for an event or group.",
+      "example": "A local company will cater the wedding reception.",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "cater for guests",
+        "cater an event"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cater#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook group curriculum",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      },
+      "distinctions": []
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-essentials",
+    "unitId": "ielts-listening-essentials-chapter-02-group-18",
+    "entryId": "ve-d01fca93",
+    "term": "canteen",
+    "sense": {
+      "id": "kaikki:40197f2a604b323884",
+      "definition": "A small cafeteria or snack bar, especially one in a military establishment, school, or place of work.",
+      "example": "He ordered a salad at the canteen.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "a school canteen",
+        "eat in the canteen"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "amma canteen",
+        "canteen cowboy",
+        "canteen culture",
+        "canteen cup",
+        "canteenless",
+        "canteen lizard",
+        "canteen truck",
+        "canteen wagon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/canteen#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This canteen is a place to buy or eat food; a separate canteen sense is a portable water vessel."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:652864a3a4c535194e",
+      "definition": "A water bottle, flask, or other vessel, typically used by a soldier or camper as a bottle for carrying water or liquor for drink.",
+      "example": "Come, stack arms, Men! Pile on the rails; stir up the campfire bright; no matter if the canteen fails, we'll make a roaring night. Here Shenandoah brawls along, there burly Blue Ridge echoes strong, to swell the Brigade's rousing song, of “Stonewall Jackson’s Way.”",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "amma canteen",
+        "canteen cowboy",
+        "canteen culture",
+        "canteen cup",
+        "canteenless",
+        "canteen lizard",
+        "canteen truck",
+        "canteen wagon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/canteen#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-vocabulary",
+    "unitId": "ielts-listening-vocabulary-chapter-01-group-06",
+    "entryId": "ve-92373801",
+    "term": "particulars",
+    "sense": {
+      "id": "kaikki:d89525bca8823baf59",
+      "definition": "The details or specifics of something.",
+      "example": "The overall plan is well understood, but we still have to work out the particulars.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "plural, plural-only",
+      "register": "plural, plural-only",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/particulars#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "originalSense": {
+      "id": "kaikki:59f9b8eba41fefd069",
+      "definition": "Specific details or facts about someone or something.",
+      "example": "The application asks for your personal particulars.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "form-of, plural",
+      "register": "form-of, plural",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/particulars#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-vocabulary",
+    "unitId": "ielts-listening-vocabulary-chapter-01-group-09",
+    "entryId": "ve-92373801",
+    "term": "particulars",
+    "sense": {
+      "id": "kaikki:d89525bca8823baf59",
+      "definition": "The details or specifics of something.",
+      "example": "The overall plan is well understood, but we still have to work out the particulars.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "plural, plural-only",
+      "register": "plural, plural-only",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/particulars#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "originalSense": {
+      "id": "kaikki:59f9b8eba41fefd069",
+      "definition": "Specific details or facts about someone or something.",
+      "example": "The application asks for your personal particulars.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "form-of, plural",
+      "register": "form-of, plural",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/particulars#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-reading-keywords",
+    "unitId": "ielts-reading-keywords-chapter-03-group-04",
+    "entryId": "ve-b533f877",
+    "term": "obligation",
+    "sense": {
+      "id": "kaikki:cce7b96f7a629bce81",
+      "definition": "A social, legal, or moral requirement, duty, contract, or promise that compels someone to follow or avoid a particular course of action.",
+      "example": "We have an obligation to keep our promise.",
+      "pos": "noun",
+      "synonyms": [
+        "duty"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "an obligation to do something",
+        "fulfil an obligation"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "collateralized debt obligation",
+        "collateralized fund obligation",
+        "collateralized loan obligation",
+        "counterobligation",
+        "debt obligation",
+        "disobligation",
+        "holy day of obligation",
+        "moral obligation",
+        "remaining performance obligation",
+        "Sunday obligation"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/obligation#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "An obligation is a requirement or duty; a preference is something someone would like."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:cc5f519f99af9b076a",
+      "definition": "The act of binding oneself by a social, legal, or moral tie to someone.",
+      "example": "Signing the contract creates an obligation to pay on time.",
+      "pos": "noun",
+      "synonyms": [
+        "commitment"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "collateralized debt obligation",
+        "collateralized fund obligation",
+        "collateralized loan obligation",
+        "counterobligation",
+        "debt obligation",
+        "disobligation",
+        "holy day of obligation",
+        "moral obligation",
+        "remaining performance obligation",
+        "Sunday obligation"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/obligation#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-17-group-01",
+    "entryId": "ve-b533f877",
+    "term": "obligation",
+    "sense": {
+      "id": "kaikki:cce7b96f7a629bce81",
+      "definition": "A social, legal, or moral requirement, duty, contract, or promise that compels someone to follow or avoid a particular course of action.",
+      "example": "We have an obligation to keep our promise.",
+      "pos": "noun",
+      "synonyms": [
+        "duty"
+      ],
+      "antonyms": [],
+      "collocations": [
+        "an obligation to do something",
+        "fulfil an obligation"
+      ],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "collateralized debt obligation",
+        "collateralized fund obligation",
+        "collateralized loan obligation",
+        "counterobligation",
+        "debt obligation",
+        "disobligation",
+        "holy day of obligation",
+        "moral obligation",
+        "remaining performance obligation",
+        "Sunday obligation"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/obligation#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "An obligation is a requirement or duty; a preference is something someone would like."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:cc5f519f99af9b076a",
+      "definition": "The act of binding oneself by a social, legal, or moral tie to someone.",
+      "example": "Signing the contract creates an obligation to pay on time.",
+      "pos": "noun",
+      "synonyms": [
+        "commitment"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "collateralized debt obligation",
+        "collateralized fund obligation",
+        "collateralized loan obligation",
+        "counterobligation",
+        "debt obligation",
+        "disobligation",
+        "holy day of obligation",
+        "moral obligation",
+        "remaining performance obligation",
+        "Sunday obligation"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/obligation#English",
+      "license": "CC-BY-SA-4.0",
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-essentials",
+    "unitId": "ielts-listening-essentials-chapter-01-group-05",
+    "entryId": "ve-bcd2f7a",
+    "term": "youth",
+    "sense": {
+      "id": "kaikki:f3dc222df35042a3fe",
+      "definition": "The part of life following childhood; the period of existence preceding maturity or age; the whole early part of life, from childhood, or, sometimes, from infancy, to adulthood.",
+      "example": "She spent much of her youth by the sea.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "in someone’s youth",
+        "spend your youth"
+      ],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "fountain of youth",
+        "hilltop youth",
+        "in the flower of one's youth",
+        "middle youth",
+        "mid youth",
+        "permayouth",
+        "transyouth",
+        "yoof",
+        "youth academy",
+        "youth bulge",
+        "youth center",
+        "youth centre",
+        "youth-centric",
+        "youth club",
+        "youth court",
+        "youth crew",
+        "youth crime",
+        "youth culture",
+        "youth custody centre",
+        "youth detention center",
+        "youth detention centre",
+        "youthemism",
+        "youthen",
+        "youthfest",
+        "youthful",
+        "youth group",
+        "youthhead",
+        "youthhood",
+        "youth hostel",
+        "youthify"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/youth#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This sense names an early period of life; youth can separately name the state of being young."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:41bdbb5ff35e718286",
+      "definition": "The quality or state of being young.",
+      "example": "He spent much of his youth outdoors.",
+      "pos": "noun",
+      "synonyms": [
+        "juvenility",
+        "youngness",
+        "youngth",
+        "youthfulness"
+      ],
+      "antonyms": [
+        "age",
+        "dotage",
+        "old age",
+        "senility"
+      ],
+      "collocations": [
+        "in someone's youth",
+        "retain your youth"
+      ],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "fountain of youth",
+        "hilltop youth",
+        "in the flower of one's youth",
+        "middle youth",
+        "mid youth",
+        "permayouth",
+        "transyouth",
+        "yoof",
+        "youth academy",
+        "youth bulge",
+        "youth center",
+        "youth centre",
+        "youth-centric",
+        "youth club",
+        "youth court",
+        "youth crew",
+        "youth crime",
+        "youth culture",
+        "youth custody centre",
+        "youth detention center",
+        "youth detention centre",
+        "youthemism",
+        "youthen",
+        "youthfest",
+        "youthful",
+        "youth group",
+        "youthhead",
+        "youthhood",
+        "youth hostel",
+        "youthify"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/youth#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Youth here is the state or period of being young; a youth can separately mean a young person."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-listening-vocabulary",
+    "unitId": "ielts-listening-vocabulary-chapter-01-group-09",
+    "entryId": "ve-bcd2f7a",
+    "term": "youth",
+    "sense": {
+      "id": "kaikki:f3dc222df35042a3fe",
+      "definition": "The part of life following childhood; the period of existence preceding maturity or age; the whole early part of life, from childhood, or, sometimes, from infancy, to adulthood.",
+      "example": "She spent much of her youth by the sea.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "in someone’s youth",
+        "spend your youth"
+      ],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "fountain of youth",
+        "hilltop youth",
+        "in the flower of one's youth",
+        "middle youth",
+        "mid youth",
+        "permayouth",
+        "transyouth",
+        "yoof",
+        "youth academy",
+        "youth bulge",
+        "youth center",
+        "youth centre",
+        "youth-centric",
+        "youth club",
+        "youth court",
+        "youth crew",
+        "youth crime",
+        "youth culture",
+        "youth custody centre",
+        "youth detention center",
+        "youth detention centre",
+        "youthemism",
+        "youthen",
+        "youthfest",
+        "youthful",
+        "youth group",
+        "youthhead",
+        "youthhood",
+        "youth hostel",
+        "youthify"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/youth#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This sense names an early period of life; youth can separately name the state of being young."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:41bdbb5ff35e718286",
+      "definition": "The quality or state of being young.",
+      "example": "He spent much of his youth outdoors.",
+      "pos": "noun",
+      "synonyms": [
+        "juvenility",
+        "youngness",
+        "youngth",
+        "youthfulness"
+      ],
+      "antonyms": [
+        "age",
+        "dotage",
+        "old age",
+        "senility"
+      ],
+      "collocations": [
+        "in someone's youth",
+        "retain your youth"
+      ],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "fountain of youth",
+        "hilltop youth",
+        "in the flower of one's youth",
+        "middle youth",
+        "mid youth",
+        "permayouth",
+        "transyouth",
+        "yoof",
+        "youth academy",
+        "youth bulge",
+        "youth center",
+        "youth centre",
+        "youth-centric",
+        "youth club",
+        "youth court",
+        "youth crew",
+        "youth crime",
+        "youth culture",
+        "youth custody centre",
+        "youth detention center",
+        "youth detention centre",
+        "youthemism",
+        "youthen",
+        "youthfest",
+        "youthful",
+        "youth group",
+        "youthhead",
+        "youthhood",
+        "youth hostel",
+        "youthify"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/youth#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Youth here is the state or period of being young; a youth can separately mean a young person."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
+  },
+  {
+    "bookId": "ielts-vocabulary",
+    "unitId": "ielts-vocabulary-chapter-19-group-01",
+    "entryId": "ve-bcd2f7a",
+    "term": "youth",
+    "sense": {
+      "id": "kaikki:f3dc222df35042a3fe",
+      "definition": "The part of life following childhood; the period of existence preceding maturity or age; the whole early part of life, from childhood, or, sometimes, from infancy, to adulthood.",
+      "example": "She spent much of her youth by the sea.",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "in someone’s youth",
+        "spend your youth"
+      ],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "fountain of youth",
+        "hilltop youth",
+        "in the flower of one's youth",
+        "middle youth",
+        "mid youth",
+        "permayouth",
+        "transyouth",
+        "yoof",
+        "youth academy",
+        "youth bulge",
+        "youth center",
+        "youth centre",
+        "youth-centric",
+        "youth club",
+        "youth court",
+        "youth crew",
+        "youth crime",
+        "youth culture",
+        "youth custody centre",
+        "youth detention center",
+        "youth detention centre",
+        "youthemism",
+        "youthen",
+        "youthfest",
+        "youthful",
+        "youth group",
+        "youthhead",
+        "youthhood",
+        "youth hostel",
+        "youthify"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/youth#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "This sense names an early period of life; youth can separately name the state of being young."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:41bdbb5ff35e718286",
+      "definition": "The quality or state of being young.",
+      "example": "He spent much of his youth outdoors.",
+      "pos": "noun",
+      "synonyms": [
+        "juvenility",
+        "youngness",
+        "youngth",
+        "youthfulness"
+      ],
+      "antonyms": [
+        "age",
+        "dotage",
+        "old age",
+        "senility"
+      ],
+      "collocations": [
+        "in someone's youth",
+        "retain your youth"
+      ],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "fountain of youth",
+        "hilltop youth",
+        "in the flower of one's youth",
+        "middle youth",
+        "mid youth",
+        "permayouth",
+        "transyouth",
+        "yoof",
+        "youth academy",
+        "youth bulge",
+        "youth center",
+        "youth centre",
+        "youth-centric",
+        "youth club",
+        "youth court",
+        "youth crew",
+        "youth crime",
+        "youth culture",
+        "youth custody centre",
+        "youth detention center",
+        "youth detention centre",
+        "youthemism",
+        "youthen",
+        "youthfest",
+        "youthful",
+        "youth group",
+        "youthhead",
+        "youthhood",
+        "youth hostel",
+        "youthify"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/youth#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Youth here is the state or period of being young; a youth can separately mean a young person."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "reason": "Independently reviewed atomic public meaning selection. Content review does not confirm the original course source."
   }
 ]

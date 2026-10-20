@@ -8,6 +8,7 @@ import { SettingsPage } from './SettingsPage';
 import { DEFAULT_VOCABULARY_PREFERENCES } from '../../domain/vocabulary/preferences';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { SETTINGS_BACKUP_EVENT } from './backupActions';
+import { rebaseSettingsDraft } from './settingsDraft';
 
 const context = vi.hoisted(() => ({ current: null as any, owner: 'one', setTheme: vi.fn() }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => context.current }));
@@ -41,6 +42,39 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); window.history.replaceState(null, '', '/'); });
 
+test('settings use six groups and keep planning sources separate from self-directed defaults', async () => {
+  setup(); const user=userEvent.setup();
+  const navigation=screen.getByRole('navigation',{name:'Settings categories'});
+  expect(navigation.querySelectorAll('a')).toHaveLength(6);
+  await user.click(screen.getByRole('link',{name:'Vocabulary sources and balance'}));
+  expect(screen.getByRole('spinbutton',{name:'Daily new words'})).toBeInTheDocument();
+  expect(screen.queryByRole('combobox',{name:'Default mode'})).not.toBeInTheDocument();
+  await user.click(screen.getByRole('link',{name:'Practice and audio'}));
+  expect(screen.getByRole('combobox',{name:'Default mode'})).toBeInTheDocument();
+  expect(screen.getByRole('combobox',{name:'Accent'})).toBeInTheDocument();
+  expect(screen.queryByRole('spinbutton',{name:'Daily new words'})).not.toBeInTheDocument();
+});
+
+test('refreshing conflicting settings retains changed fields and accepts untouched remote fields',()=>{
+  const before={dailyMinutes:30,planning:{newWordsPerDay:10,carryoverPercent:30,wordbookOrder:['a','b']}};
+  const draft={dailyMinutes:45,planning:{...before.planning,newWordsPerDay:12}};
+  const remote={dailyMinutes:60,planning:{newWordsPerDay:5,carryoverPercent:20,wordbookOrder:['b','a']}};
+  expect(rebaseSettingsDraft(before,draft,remote)).toEqual({dailyMinutes:45,planning:{newWordsPerDay:12,carryoverPercent:20,wordbookOrder:['b','a']}});
+});
+
+test('a settings conflict can refresh its baseline without losing this page draft',async()=>{
+  context.current.saveStudySettings.mockResolvedValueOnce(false);
+  const latest={settings:{...context.current.state.settings,targetBand:'7.5',dailyMinutes:60},plans:[]};
+  context.current.refreshPlanningState=vi.fn(async()=>latest);
+  setup();const user=userEvent.setup();
+  fireEvent.change(screen.getByRole('spinbutton',{name:'Minutes a day'}),{target:{value:'45'}});
+  await user.click(screen.getByRole('button',{name:'Save settings'}));
+  await user.click(screen.getByRole('button',{name:'Refresh saved settings and retain my edits'}));
+  expect(screen.getByRole('spinbutton',{name:'Minutes a day'})).toHaveValue(45);
+  await user.click(screen.getByRole('button',{name:'Save settings'}));
+  expect(context.current.saveStudySettings).toHaveBeenLastCalledWith({dailyMinutes:45});
+});
+
 test.each(['account', 'backup'])('%s hides unrelated save controls when there are no settings edits', category => {
   setup(category);
   expect(screen.queryByRole('button', { name: 'Save settings' })).not.toBeInTheDocument();
@@ -51,7 +85,7 @@ test.each(['account', 'backup'])('%s hides unrelated save controls when there ar
 test('pending learning settings remain saveable from the account category', async () => {
   setup(); const user = userEvent.setup();
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Minutes a day' }), { target: { value: '45' } });
-  await user.click(screen.getByRole('link', { name: 'Account' }));
+  await user.click(screen.getByRole('link', { name: 'Appearance and account' }));
   expect(screen.getByText('Account controls')).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Save settings' })).toBeEnabled();
   await user.click(screen.getByRole('button', { name: 'Save settings' }));
@@ -70,14 +104,14 @@ test('weekly overrides and vocabulary allocation can be saved as actionable sett
 test('one draft survives categories and previews changed automatic and missed-day tasks', async () => {
   setup(); const user = userEvent.setup();
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Minutes a day' }), { target: { value: '45' } });
-  expect(screen.getByRole('region', { name: 'Affected study tasks' })).toHaveTextContent('2 existing tasks will change');
+  expect(await screen.findByRole('region', { name: 'Affected study tasks' })).toHaveTextContent('2 existing tasks will change');
   await user.click(screen.getByText('2 existing tasks will change'));
   expect(screen.getByText('Automatic task')).toBeInTheDocument();
   expect(screen.getByText('Past task')).toBeInTheDocument();
   expect(screen.queryByText('Manual task')).not.toBeInTheDocument();
-  await user.click(screen.getByRole('link', { name: 'Vocabulary' }));
+  await user.click(screen.getByRole('link', { name: 'Vocabulary sources and balance' }));
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Learning batch size' }), { target: { value: '5' } });
-  await user.click(screen.getByRole('link', { name: 'Study time' }));
+  await user.click(screen.getByRole('link', { name: 'Time and modules' }));
   expect(screen.getByRole('spinbutton', { name: 'Minutes a day' })).toHaveValue(45);
   await user.click(screen.getByRole('button', { name: 'Save settings' }));
   expect(context.current.saveStudySettings).toHaveBeenCalledWith({ dailyMinutes: 45, vocabulary: { learningBatchSize: 5 } });
@@ -94,9 +128,9 @@ test('audio-only changes use preference persistence with no affected-plan previe
 });
 
 test('vocabulary mode rebuilds planning via study persistence', async () => {
-  setup('vocabulary'); const user = userEvent.setup();
+  setup('practice'); const user = userEvent.setup();
   await selectChoice(await screen.getByLabelText('Default mode'), 'Meaning recall');
-  expect(screen.getByRole('region', { name: 'Affected study tasks' })).toHaveTextContent('Automatic task');
+  expect(await screen.findByRole('region', { name: 'Affected study tasks' })).toHaveTextContent('Automatic task');
   await user.click(screen.getByRole('button', { name: 'Save settings' }));
   expect(context.current.saveStudySettings).toHaveBeenCalledWith({ vocabulary: { mode: 'definition' } });
 });
@@ -144,7 +178,7 @@ test('time presets update the weekly commitment and study-day controls are keybo
   screen.getByRole('checkbox',{name:'Wed'}).focus();
   await user.keyboard(' ');
   expect(screen.getByText('3h')).toBeInTheDocument();
-  await selectChoice(await screen.getByLabelText('Settings category'), 'Audio');
+  await selectChoice(await screen.getByLabelText('Settings category'), 'Practice and audio');
   expect(screen.getByRole('combobox',{name:'Accent'})).toBeInTheDocument();
 });
 
@@ -169,7 +203,7 @@ test('theme saves locally and backup actions reach the Shell event contract', as
   const listener = (event: Event) => actions.push((event as CustomEvent).detail);
   document.addEventListener(SETTINGS_BACKUP_EVENT, listener);
   try {
-    await user.click(screen.getByRole('link', { name: 'Backup' }));
+    await user.click(screen.getByRole('link', { name: 'Appearance and account' }));
     await user.click(screen.getByRole('button', { name: 'Export backup' }));
     await user.click(screen.getByRole('button', { name: 'Import backup' }));
     expect(actions).toEqual(['export', 'import']);
@@ -214,7 +248,7 @@ test('browser Back between categories retains the draft and canceled departure r
   window.history.pushState({ idx: 1 }, '', '/settings/schedule');
   render(<BrowserRouter><Routes><Route path="/settings/:category?" element={<SettingsPage />} /><Route path="/" element={<p>Today content</p>} /></Routes><Location /></BrowserRouter>);
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Minutes a day' }), { target: { value: '45' } });
-  await userEvent.setup().click(screen.getByRole('link', { name: 'Vocabulary' }));
+  await userEvent.setup().click(screen.getByRole('link', { name: 'Vocabulary sources and balance' }));
   act(() => window.history.back());
   await waitFor(() => expect(screen.getByLabelText('Location')).toHaveTextContent('/settings/schedule'));
   expect(screen.getByRole('spinbutton', { name: 'Minutes a day' })).toHaveValue(45);
@@ -236,7 +270,7 @@ test('practice origin survives settings category changes and a direct refresh',a
   const query=`?returnTo=${encodeURIComponent(source)}`;
   render(<MemoryRouter initialEntries={[`/settings/vocabulary${query}`]}><Routes><Route path="/settings/:category?" element={<SettingsPage/>}/><Route path="/vocabulary/review" element={<p>Practice setup</p>}/></Routes></MemoryRouter>);
   expect(screen.getByRole('link',{name:'Back to vocabulary review'})).toHaveAttribute('href',source);
-  fireEvent.click(screen.getByRole('link',{name:'Audio'}));
+  fireEvent.click(screen.getByRole('link',{name:'Practice and audio'}));
   expect(screen.getByRole('link',{name:'Back to vocabulary review'})).toHaveAttribute('href',source);
   fireEvent.click(screen.getByRole('link',{name:'Back to vocabulary review'}));
   expect(screen.getByText('Practice setup')).toBeInTheDocument();

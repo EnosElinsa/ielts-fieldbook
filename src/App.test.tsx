@@ -239,9 +239,9 @@ describe('Fieldbook UI', () => {
     const minutes = await screen.findByRole('spinbutton', { name: 'Minutes a day' });
     fireEvent.change(minutes, { target: { value: '45' } });
     const categories = screen.getByRole('navigation', { name: 'Settings categories' });
-    await user.click(within(categories).getByRole('link', { name: 'Vocabulary' }));
+    await user.click(within(categories).getByRole('link', { name: 'Vocabulary sources and balance' }));
     expect(await screen.findByRole('spinbutton', { name: 'Learning batch size' })).toBeTruthy();
-    await user.click(within(categories).getByRole('link', { name: 'Study time' }));
+    await user.click(within(categories).getByRole('link', { name: 'Time and modules' }));
     expect((screen.getByRole('spinbutton', { name: 'Minutes a day' }) as HTMLInputElement).value).toBe('45');
     const rail = document.querySelector('.rail') as HTMLElement;
     await user.click(within(rail).getByRole('link', { name: 'Today' }));
@@ -252,7 +252,7 @@ describe('Fieldbook UI', () => {
 
   it('Settings backup export uses the existing complete-account download flow', async () => {
     renderAt('/settings/backup');
-    await screen.findByRole('heading', { level: 2, name: 'Backup' });
+    await screen.findByRole('heading', { level: 2, name: 'Appearance and account' });
     const content = document.querySelector('.settings-content') as HTMLElement;
     await userEvent.setup().click(await within(content).findByRole('button', { name: 'Export backup' }));
     await waitFor(() => expect(downloads).toHaveLength(1));

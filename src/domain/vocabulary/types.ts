@@ -35,14 +35,14 @@ export type VocabularyState = {
   verifiedProduction?: { successes: number; firstSuccessAt?: string; lastSuccessAt?: string };
 };
 export type VocabularyEvidence = {
-  id?: string; entryId: string; senseId?: string; skill?: VocabularySkill;
+  id?: string; sessionId?: string; entryId: string; senseId?: string; skill?: VocabularySkill;
   sourceType: VocabularySource['type']; sourceId: string; bookId?: string; unitId?: string;
   mode: VocabularyMode; dimension: VocabularyDimension; result: VocabularyResult;
   response?: string; context?: string; occurredAt: string; durationMs?: number;
   verification?: 'self-reported' | 'pending' | 'source-record' | 'assessed' | 'objective'; imported?: boolean; scheduling?: boolean;
 };
 export type VocabularyReview = {
-  id: string; entryId: string; senseId: string; mode: VocabularyMode; result: VocabularyResult;
+  id: string; sessionId?: string; entryId: string; senseId: string; mode: VocabularyMode; result: VocabularyResult;
   response?: string; occurredAt: string | null; durationMs?: number; errorType?: string; verification?: string;
   sourceLabel?: string; sourceHistoryId?: string; imported?: boolean; scheduling?: boolean;
   bookId?: string; unitId?: string; updatedAt: string;
@@ -55,6 +55,8 @@ export type VocabularyStore = {
   wordbookEnrollments: { id: string; bookId: string; updatedAt: string }[];
   vocabularyImportBatches: { id: string; [key: string]: unknown }[];
   vocabularySessions?: VocabularySessionRecord[];
+  /** Read-only session scope; answers remain in the already-loaded review rows. */
+  vocabularyGroupAttempts?: Pick<VocabularySessionRecord, 'id' | 'mode' | 'status' | 'selection' | 'filter'>[];
 };
 export type ReviewQueueFilter = {
   wrongOnly?: boolean;
@@ -67,5 +69,5 @@ export type ReviewCard = {
   pronunciation?: import('./sensePronunciation').FrozenVocabularyPronunciation;
   task?: import('./content').VocabularyLearningTask; contentVersion?: string;
   context?: import('./context').VocabularyLearningContext;
-  dimension: VocabularyDimension; dueAt: string; sources: VocabularySource[];
+  dimension: VocabularyDimension; dueAt: string; scheduledDueAt?: string|null; sources: VocabularySource[];
 };

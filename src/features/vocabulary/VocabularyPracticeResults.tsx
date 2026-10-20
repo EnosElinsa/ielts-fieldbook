@@ -20,6 +20,7 @@ import { VocabularyAnswerDiff } from './VocabularyAnswerDiff';
 import { VocabularySourceLinks } from './VocabularySourceLinks';
 import type { VocabularySessionResult } from '../../domain/vocabulary/session';
 import type { VocabularyPracticeController } from "./useVocabularyPracticeController";
+import { vocabularyTaskSubmissionOutcome } from '../../domain/vocabulary/submissionOutcome';
 
 export function VocabularyPracticeResults({ controller, results }: {
   controller: VocabularyPracticeController;
@@ -90,8 +91,10 @@ export function VocabularyPracticeResults({ controller, results }: {
   const recoveringWords = new Set(results.results.filter(row => row.result === 'success' && recoveryMode && learningStates?.some(learning =>
     learning.entryId === row.entryId && learning.senseId === row.senseId && learning.wrong?.modes?.[recoveryMode]?.active,
   )).map(row => `${row.entryId}:${row.senseId}`)).size;
+  const taskOutcome=controller.submissionOutcome||vocabularyTaskSubmissionOutcome(controller.state,results);
   return (
     <section className="practice-results">
+      <aside className="practice-task-outcome" role="status"><strong>{results.sourceSnapshot?.origin==='manual'?'User-arranged review':results.planId?'Planned review':'Self-directed review'}</strong><p>{taskOutcome.message}</p>{results.planId&&<Link to={`/planning#task-${encodeURIComponent(results.planId)}`}>View linked task</Link>}</aside>
       <div className="practice-result-title">
         <div>
           <span>

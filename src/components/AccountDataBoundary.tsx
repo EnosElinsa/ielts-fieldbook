@@ -16,14 +16,14 @@ export function useAccountRequirements({ modules = [], banks = [], vocabularyEnt
   const [revision, setRevision] = useState(0);
   const [prepared, setPrepared] = useState('');
   const booting = fb.booted === false;
-  const needsVocabulary = Boolean(fb.moduleStatus && modules.includes('vocabulary'));
+  const needsVocabulary = Boolean(fb.moduleStatus && modules.some(module=>module.startsWith('vocabulary')));
   const ready = !booting && (!needsVocabulary || prepared === requirementKey) && modules.every(module => !fb.moduleStatus || fb.moduleStatus[module] === 'ready') && banks.every(bank => !fb.bankStatus || fb.bankStatus[bank] === 'ready');
   useEffect(() => {
     if (booting) { setPrepared(''); setFailure(null); return; }
     if (!fb.moduleStatus) return;
     let alive = true; setFailure(null);
     const requests = [
-      ...moduleKey.split('|').filter(Boolean).map(module => module === 'vocabulary' && vocabularyScope !== 'all'
+      ...moduleKey.split('|').filter(Boolean).map(module => module.startsWith('vocabulary') && vocabularyScope !== 'all'
         ? fb.ensureAccountModule(module,{entryIds:JSON.parse(vocabularyScope)}) : fb.ensureAccountModule(module)),
       ...bankKey.split('|').filter(Boolean).map(bank => fb.ensureQuestionBank(bank, revision > 0)),
     ];

@@ -19,7 +19,7 @@ async function taskAction(name){
 test('calendar includes seven days, rest days and overdue tasks',async()=>{
   mocks.state.plans.push({...mocks.state.plans[0],id:'overdue',dateKey:'2020-01-01',title:'Old task'});
   const {container}=mount();expect(container.querySelectorAll('.study-day')).toHaveLength(7);
-  expect(await screen.findAllByText('Rest day')).toHaveLength(1);expect(await screen.findAllByText('No tasks yet. Add a task or adjust your plan settings.')).toHaveLength(5);await userEvent.click(screen.getByText(/Waiting list/));expect(screen.getByRole('heading',{name:'Old task'})).toBeInTheDocument();
+  expect(await screen.findAllByText('Rest day')).toHaveLength(1);expect(await screen.findAllByText('No tasks yet. Add a task or adjust your plan settings.')).toHaveLength(5);await userEvent.click(screen.getByRole('button',{name:/Waiting ·/}));expect(screen.getByRole('heading',{name:'Old task'})).toBeInTheDocument();
 });
 test('replace and reschedule save explicit actions',async()=>{
   mount();await taskAction('Replace task');
@@ -59,7 +59,7 @@ test('skill selection stays disabled while its replacement saves',async()=>{
 test('skip and restore preserve explicit tasks',async()=>{
   const view=mount();await taskAction('Skip task');expect(mocks.change).toHaveBeenCalledWith('task',{type:'skip'},{onError:expect.any(Function)});
   mocks.state.plans[0].status='skipped';view.rerender(<MemoryRouter><PlanningPage/></MemoryRouter>);
-  await userEvent.click(screen.getByRole('button',{name:'Restore task'}));await userEvent.click(screen.getByRole('button',{name:'Save change'}));expect(mocks.change).toHaveBeenLastCalledWith('task',expect.objectContaining({type:'restore'}),{onError:expect.any(Function)});
+  await userEvent.click(screen.getByRole('button',{name:/History ·/}));await userEvent.click(screen.getByRole('button',{name:'Restore task'}));await userEvent.click(screen.getByRole('button',{name:'Save change'}));expect(mocks.change).toHaveBeenLastCalledWith('task',expect.objectContaining({type:'restore'}),{onError:expect.any(Function)});
 });
 test('failed edit stays open and keeps the selected date for retry',async()=>{
   mocks.change.mockResolvedValueOnce(false);mount();await taskAction('Reschedule task');
@@ -76,25 +76,74 @@ test('each day exposes creation and shows its budget before saving a manual task
 });
 
 test('planned task retains a stable focus anchor for practice returns',async()=>{
-  const view=mount();await screen.findByRole('button',{name:'Start'});
+  const view=mount();await screen.findAllByRole('button',{name:'Start'});
   expect(view.container.querySelector('#task-task')).toHaveAttribute('tabindex','-1');
 });
 
-test('backlog starts collapsed, defaults to pending only and keeps a failed bulk save retryable',async()=>{
+test('waiting selection protects started tasks and keeps failed bulk saves retryable',async()=>{
  mocks.state.plans.push({id:'old',dateKey:'2020-01-01',status:'pending',skill:'writing',kind:'1',title:'Old pending',estimatedMinutes:20},{id:'started',dateKey:'2020-01-02',status:'in_progress',startedAt:'2020-01-02',skill:'writing',kind:'1',title:'Old started',estimatedMinutes:20});
- const view=mount();await waitFor(()=>expect(mocks.generate).toHaveBeenCalled());
- expect(view.container.querySelector('#planning-backlog')).not.toHaveAttribute('open');
- await userEvent.click(screen.getByText(/Waiting list.*2/));
- expect(screen.getByRole('checkbox',{name:'Select Old pending'})).toBeChecked();expect(screen.getByRole('checkbox',{name:'Select Old started'})).not.toBeChecked();expect(screen.getByRole('checkbox',{name:'Select Old started'})).toBeDisabled();
+ mount();await userEvent.click(screen.getByRole('button',{name:/Waiting ·/}));
+ expect(screen.getByRole('checkbox',{name:'Select Old pending'})).not.toBeChecked();
+ expect(screen.getByRole('checkbox',{name:'Select Old started'})).toBeDisabled();
+ await userEvent.click(screen.getByRole('button',{name:'Select this page'}));
  await userEvent.click(screen.getByRole('button',{name:'Preview skip'}));
- expect(screen.getByRole('dialog',{name:'Review backlog changes'})).toHaveTextContent('Old pending');
- mocks.bulk.mockResolvedValueOnce(false);await userEvent.click(screen.getByRole('button',{name:'Save backlog changes'}));expect(await screen.findByRole('alert')).toHaveTextContent(/could not be saved/i);
- await userEvent.click(screen.getByRole('button',{name:'Save backlog changes'}));expect(mocks.bulk).toHaveBeenCalledTimes(2);
+ expect(screen.getByRole('dialog',{name:'Review task changes'})).toHaveTextContent('Old pending');
+ mocks.bulk.mockResolvedValueOnce(false);await userEvent.click(screen.getByRole('button',{name:'Save task changes'}));expect(await screen.findByRole('alert')).toHaveTextContent(/could not be saved/i);
+ await userEvent.click(screen.getByRole('button',{name:'Save task changes'}));expect(mocks.bulk).toHaveBeenCalledTimes(2);
 });
 
-test('past skipped history stays collapsed with restore actions and preserves return anchors',async()=>{
+test('automatic replan preview distinguishes selected tasks from related schedule changes',async()=>{
+ Object.assign(mocks.state.settings,{dailyMinutes:30,days:[1,2,3,4,5,6,7],skills:['writing'],planning:{vocabularyMode:'ratio',vocabularyPercent:0,newWordsPerDay:0,carryoverPercent:30}});
+ mocks.state.plans=[{id:'study-2026-10-17-slot-1',dateKey:'2026-10-17',status:'pending',origin:'automatic',schemaVersion:2,skill:'writing',kind:'1',title:'Original automatic work',estimatedMinutes:30},{id:'waiting',dateKey:'2026-10-16',status:'pending',origin:'manual',skill:'writing',kind:'1',title:'Selected waiting work',estimatedMinutes:6,target:{type:'question'}}];
+ mount();await userEvent.click(screen.getByRole('button',{name:/Waiting ·/}));
+ await userEvent.click(screen.getByRole('checkbox',{name:'Select Selected waiting work'}));
+ await userEvent.click(screen.getByRole('button',{name:'Preview automatic replan'}));
+ const dialog=screen.getByRole('dialog',{name:'Review task changes'});
+ expect(within(dialog).getAllByText('Selected task')).toHaveLength(1);
+ expect(within(dialog).getAllByText('Related schedule change').length).toBeGreaterThan(0);
+ expect(dialog).toHaveTextContent('30 → 24 min');
+ expect(dialog).toHaveTextContent('Added to schedule');
+});
+
+test('history keeps skipped identities and restores only through an explicit dated action',async()=>{
  mocks.state.plans.push({id:'skipped-old',dateKey:'2020-01-01',status:'skipped',skipReason:'bulk-skip',skill:'writing',title:'Skipped old task',estimatedMinutes:20});
- mount();await userEvent.click(screen.getByText(/Skipped history/));
+ mount();await userEvent.click(screen.getByRole('button',{name:/History ·/}));
  expect(screen.getByRole('heading',{name:'Skipped old task'})).toBeInTheDocument();
  await userEvent.click(screen.getByRole('button',{name:'Restore task'}));expect(screen.getByRole('dialog',{name:'Restore task'})).toBeInTheDocument();
+});
+
+test('history pagination locates a deep link and separates user skips from system handling',async()=>{
+  mocks.state.plans=Array.from({length:25},(_,index)=>({id:`history-${index}`,dateKey:`2020-01-${String(index+1).padStart(2,'0')}`,status:'skipped',skipReason:index===24?'no-longer-due':'user-skipped',skill:'vocabulary',title:`History item ${index}`,estimatedMinutes:1}));
+  render(<MemoryRouter initialEntries={['/planning#task-history-0']}><PlanningPage/></MemoryRouter>);
+  expect(await screen.findByRole('heading',{name:'History item 0'})).toBeInTheDocument();
+  expect(screen.getByText(/Page 2 of 2/)).toBeInTheDocument();
+  await userEvent.selectOptions(screen.getByRole('combobox',{name:'Status'}),'skipped');
+  expect(screen.queryByRole('heading',{name:'History item 24'})).not.toBeInTheDocument();
+  await userEvent.selectOptions(screen.getByRole('combobox',{name:'Status'}),'system');
+  expect(screen.getByRole('heading',{name:'History item 24'})).toBeInTheDocument();
+});
+
+test('waiting distinguishes this-page selection from all filtered tasks before a bulk preview',async()=>{
+  mocks.state.plans=Array.from({length:25},(_,index)=>({id:`waiting-${index}`,dateKey:'2020-01-01',status:'pending',origin:'manual',skill:'writing',kind:'1',title:`Waiting item ${index}`,estimatedMinutes:5}));
+  mount();await userEvent.click(screen.getByRole('button',{name:/Waiting ·/}));
+  await userEvent.click(screen.getByRole('button',{name:'Select this page'}));
+  expect(screen.getAllByRole('checkbox',{checked:true})).toHaveLength(20);
+  await userEvent.click(screen.getByRole('button',{name:'Select all filtered results'}));
+  await userEvent.click(screen.getByRole('button',{name:'Preview hold'}));
+  expect(screen.getByRole('dialog')).toHaveTextContent('25 selected tasks · 0 related schedule changes');
+  expect(mocks.bulk).not.toHaveBeenCalled();
+});
+
+test('system-handled history excludes archived tasks and still offers an explicit archive filter',async()=>{
+  mocks.state.plans=[
+    {id:'visible',dateKey:'2020-01-01',status:'skipped',skipReason:'no-longer-due',origin:'automatic',skill:'vocabulary',title:'Current decision',estimatedMinutes:1},
+    {id:'archived',dateKey:'2020-01-01',status:'skipped',skipReason:'no-longer-due',origin:'automatic',archivedAt:'2020-02-01T00:00:00Z',skill:'vocabulary',title:'Archived decision',estimatedMinutes:1},
+  ];
+  mount();await userEvent.click(screen.getByRole('button',{name:/History ·/}));
+  await userEvent.selectOptions(screen.getByRole('combobox',{name:'Status'}),'system');
+  expect(screen.getByRole('heading',{name:'Current decision'})).toBeInTheDocument();
+  expect(screen.queryByRole('heading',{name:'Archived decision'})).not.toBeInTheDocument();
+  await userEvent.selectOptions(screen.getByRole('combobox',{name:'Status'}),'archived');
+  expect(screen.getByRole('heading',{name:'Archived decision'})).toBeInTheDocument();
+  expect(screen.queryByRole('heading',{name:'Current decision'})).not.toBeInTheDocument();
 });

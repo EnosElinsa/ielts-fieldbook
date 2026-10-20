@@ -10,6 +10,7 @@ import { TASK_PRACTICES } from '../../lib/planningTaskOptions';
 import { loadExamCatalog, loadExamSections } from '../../storage/examCatalog';
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { accountId } from '../../storage/remote';
+import { dateKey as todayKey } from '../../domain/utils';
 const capital=value=>value[0].toUpperCase()+value.slice(1);
 const titles={add:'Add task',replace:'Replace task',resize:'Edit duration',reschedule:'Reschedule task',duplicate:'Duplicate task',restore:'Restore task'};
 
@@ -18,7 +19,7 @@ export function TaskEditor({mode,plan,dateKey,onClose}) {
   const [skill,setSkill]=useState(plan?.skill||'writing');
   const [practice,setPractice]=useState(mode==='replace'?'recommended':plan?.kind?.endsWith('-mock')?plan.kind:'recommended');
   const [minutes,setMinutes]=useState(plan?.estimatedMinutes||Math.min(30,studyBudget(fb.state.settings,dateKey).daily)||30);
-  const [date,setDate]=useState(dateKey||plan?.dateKey);
+  const [date,setDate]=useState(mode==='restore'?todayKey(new Date()):dateKey||plan?.dateKey);
   const [material,setMaterial]=useState('');const [sentence,setSentence]=useState('');const [batch,setBatch]=useState(1);const [search,setSearch]=useState('');
   const [materials,setMaterials]=useState([]);const [sentences,setSentences]=useState([]);const [loading,setLoading]=useState(false);const [materialError,setMaterialError]=useState('');const [retry,setRetry]=useState(0);
   const [saving,setSaving]=useState(false);const [error,setError]=useState('');const [allowOverBudget,setAllowOverBudget]=useState(false);
@@ -59,7 +60,7 @@ export function TaskEditor({mode,plan,dateKey,onClose}) {
     ...(skill==='vocabulary'&&material?{bookId:selected?.bookId,unitId:material,batchIndex:batch-1}:{})};
   const preview=useMemo(()=>{try{if(!editing){if(mode==='resize')validatePlanDuration(plan,Number(minutes));return {task:plan};}return {task:manualStudyTask(fb.state,config)};}catch(cause){return {error:cause.message};}},[editing,mode,plan,skill,practice,minutes,material,sentence,batch,fb.state]);
   const duration=mode==='resize'||editing?Number(minutes):Number(plan?.estimatedMinutes||0);
-  const used=fb.state.plans.filter(row=>row.dateKey===date&&row.status!=='skipped'&&(mode==='duplicate'||row.id!==plan?.id)).reduce((sum,row)=>sum+Number(row.estimatedMinutes||0),0);
+  const used=fb.state.plans.filter(row=>row.dateKey===date&&row.status!=='skipped'&&!row.onHold&&!row.archivedAt&&(mode==='duplicate'||row.id!==plan?.id)).reduce((sum,row)=>sum+Number(row.estimatedMinutes||0),0);
   const budget=studyBudget(fb.state.settings,date).daily;const over=Math.max(0,used+duration-budget);
   const kind=preview.task?.kind||'';
   const part=skill==='writing'?kind==='writing-mock'?'1':kind:preview.task?.target?.part==='3'?'2':preview.task?.target?.part||'1';
@@ -78,7 +79,7 @@ export function TaskEditor({mode,plan,dateKey,onClose}) {
       {editing&&<><div className="task-editor-grid"><div className="study-edit-field"><span>Skill</span><FilterMenu label="Skill" value={skill} disabled={saving} onChange={value=>{setSkill(value);setPractice(value==='vocabulary'?'learning-batch':'recommended');reset();}} options={Object.keys(TASK_PRACTICES).map(value=>({value,label:capital(value)}))}/></div>
       <label className="study-edit-field">Practice type<SelectField aria-label="Practice type" value={practice} options={options} disabled={saving} onValueChange={value=>{setPractice(value);reset();const minimum=options.find(row=>row.value===value)?.minimum||1;if(value.endsWith('-mock'))setMinutes(minimum);else if(minutes<minimum)setMinutes(minimum);}}/></label></div></>}
       {(editing||mode==='resize')&&<label className="study-edit-field">Task minutes<input aria-label="Task minutes" type="number" min={1} max={180} value={minutes||''} onChange={event=>{setMinutes(Number(event.target.value));setAllowOverBudget(false);}}/></label>}
-      {['add','duplicate','reschedule'].includes(mode)&&<div className="study-edit-field"><label htmlFor="task-study-date">Study date</label><DateField id="task-study-date" label="Study date" value={date} onChange={value=>{setDate(value);setAllowOverBudget(false);}}/></div>}
+      {['add','duplicate','reschedule','restore'].includes(mode)&&<div className="study-edit-field"><label htmlFor="task-study-date">Study date</label><DateField id="task-study-date" label="Study date" value={date} onChange={value=>{setDate(value);setAllowOverBudget(false);}}/></div>}
       {editing&&!practice.endsWith('-mock')&&practice!=='due-review'&&<section className="task-materials"><h3>Study material</h3><p>Use the recommendation or choose a specific source.</p>
         {loading?<PanelLoadingState message="Loading available materials…" onRetry={()=>setRetry(value=>value+1)} retryLabel="Retry materials" />:<><label className="study-edit-field">Search material<input type="search" aria-label="Search material" value={search} onChange={event=>setSearch(event.target.value)} placeholder="Search questions, passages or groups"/></label>
           <label className="study-edit-field">Material<SelectField aria-label="Material" disabled={saving} value={material} onValueChange={value=>{setMaterial(value);setBatch(1);}} options={[{value:'',label:practice==='listening-intensive'?'Choose a listening part':'Recommended material'},...visible.map(row=>({value:row.id,label:row.label}))]}/></label>

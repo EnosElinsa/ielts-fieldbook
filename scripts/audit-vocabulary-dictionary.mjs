@@ -8,10 +8,54 @@ const identity = (entryId, senseId) => JSON.stringify([entryId, senseId]);
 const dictionaryTerm = entry => entry?.term?.trim().toLowerCase();
 const hash = value => createHash('sha256').update(JSON.stringify(value) ?? 'null').digest('hex');
 const areas = ['definition', 'example', 'collocations', 'distinctions'];
+const editable = ['definition','example','pos','collocations','usage','synonyms','antonyms','distinctions','distinctionTask','wordFamily','register'];
+const stable = value => Array.isArray(value) ? value.map(stable) : value && typeof value === 'object' ? Object.fromEntries(Object.entries(value).sort(([a],[b])=>a<b?-1:a>b?1:0).map(([key,item])=>[key,stable(item)])) : value;
+const fingerprint = value => hash(stable(value));
+const project = sense => Object.fromEntries(['id',...editable].filter(field=>Object.hasOwn(sense || {},field)).map(field=>[field,sense[field]]));
+export const reviewMaterialFingerprint = row => hash({definition:row.definition,pos:row.pos ?? row.originalSense?.pos,example:row.example,collocations:row.collocations,distinctions:row.distinctions});
+const sourceScope = scope => scope?.kind === 'dictionary-source';
+const isVariant = row => row.variantId !== undefined || row.contentVariant !== undefined;
+const fullRowIdentity = row => JSON.stringify([row.entryId,row.senseId,...(isVariant(row)?[row.variantId]:[])]);
+/** Validate the installed full-content schema without promoting a teaching review to source approval. */
+export function inspectReadinessVariants(corrections) {
+ const errors=[], legacy=new Map(), variants=new Map(), canonical=new Map();
+ const seen=new Set();
+ for(const row of corrections) {
+  const key=identity(row.entryId,row.senseId), registration=fullRowIdentity(row);
+  if(seen.has(registration)) errors.push('Duplicate supplement identity: '+registration);
+  seen.add(registration);
+  if(!isVariant(row)) { legacy.set(key,row); continue; }
+  const value=row.contentVariant, label=row.entryId+'/'+row.senseId+'/'+row.variantId;
+  const fail=message=>errors.push('Invalid content variant '+label+': '+message);
+  if(typeof row.variantId!=='string' || !row.variantId.trim() || !value || typeof value!=='object' || Array.isArray(value)) { fail('missing identity or metadata'); continue; }
+  if(value.schemaVersion!==1 || typeof value.workItemId!=='string' || !value.workItemId.trim() || typeof value.sourceView!=='boolean' || !(value.sourceHash===null || /^[a-f0-9]{64}$/.test(value.sourceHash || '')) || ['beforeDisplayHash','reviewedMaterialHash','afterDisplayHash'].some(field=>!/^[a-f0-9]{64}$/.test(value[field] || ''))) fail('invalid version or fingerprint');
+  for(const field of ['beforeContent','afterContent']) {
+   const sense=value[field];
+   if(!sense || typeof sense!=='object' || Array.isArray(sense) || sense.id!==row.senseId || typeof sense.definition!=='string' || !sense.definition.trim() || typeof sense.example!=='string' || typeof sense.pos!=='string' || !sense.pos.trim() || Object.keys(sense).some(name=>!['id',...editable].includes(name))) { fail('invalid '+field+' snapshot'); continue; }
+   for(const name of ['collocations','synonyms','antonyms','distinctions','wordFamily']) if(sense[name]!==undefined && (!Array.isArray(sense[name]) || sense[name].some(text=>typeof text!=='string'))) fail('invalid '+field+'/'+name);
+   for(const name of ['usage','register']) if(sense[name]!==undefined && typeof sense[name]!=='string') fail('invalid '+field+'/'+name);
+  }
+  if(!Array.isArray(value.scopes) || !value.scopes.length || value.scopes.some(scope=>!scope || typeof scope!=='object' || Array.isArray(scope) || !['dictionary-source','default','group'].includes(scope.kind) || (scope.kind==='group' ? typeof scope.bookId!=='string' || !scope.bookId.trim() || typeof scope.unitId!=='string' || !scope.unitId.trim() || Object.keys(scope).some(key=>!['kind','bookId','unitId'].includes(key)) : Object.keys(scope).some(key=>key!=='kind')))) fail('invalid exact scopes');
+  else {
+   if(new Set(value.scopes.map(fingerprint)).size!==value.scopes.length) fail('duplicate exact scope');
+   if(value.sourceView!==value.scopes.some(sourceScope)) fail('sourceView and dictionary-source route disagree');
+  }
+  if(value.afterContent && fingerprint(project({id:row.senseId,...row}))!==fingerprint(value.afterContent)) fail('row material differs from complete after snapshot');
+  if(row.exampleKind!==undefined && row.exampleKind!=='reading-note') fail('invalid example kind');
+  if(row.referenceOnly!==undefined && typeof row.referenceOnly!=='boolean') fail('invalid reference-only flag');
+  variants.set(registration,row);
+  if(value.sourceView && Array.isArray(value.scopes) && value.scopes.some(sourceScope)) {
+   if(canonical.has(key)) { fail('ambiguous canonical dictionary-source variant'); canonical.set(key,null); }
+   else canonical.set(key,row);
+  }
+ }
+ return {errors,legacy,variants,canonical};
+}
 export const plainSourceGloss = value => value.replace(/<!--[^]*?-->/g, '').replace(/^#+\s*/, '')
   .replace(/\{\{(?:lb|label)\|(?:[^{}]|\{\{[^{}]*\}\})*\}\}/g, '')
   .replace(/\[\[(?:File|Image):[^]*?\]\]/g, '')
   .replace(/\{\{(?:U|cap)\|([^{}|]+)\}\}/g, (_, term) => term[0].toUpperCase() + term.slice(1))
+  .replace(/\{\{taxfmt\|([A-Z][a-z]+)\|genus\}\}/g, '$1')
   .replace(/\{\{ellipsis of\|en\|([^{}|]+)\}\}/g, 'Ellipsis of $1')
   .replace(/\{\{syn of\|en\|you know\|id=singlish\|tr=([^{}]+)\}\}/g, 'Synonym of you know ($1).')
   .replace(/\{\{synonym of\|en\|([^{}|]+)\|t=([^{}]+)\}\}/g, 'Synonym of $1 ($2)')
@@ -38,7 +82,12 @@ function dictionarySourcePage(sense, fallback) {
 export function inspectDictionaryReview({ entries, dictionaries, corrections, records, diagrams, restoredSources = [] }) {
   const errors = [], inventory = [], byTerm = [];
   const entryById = new Map(entries.map(entry => [entry.id, entry]));
-  const supplements = new Map(corrections.map(row => [identity(row.entryId, row.senseId), row]));
+  const partition=inspectReadinessVariants(corrections);
+  errors.push(...partition.errors);
+  const legacySupplements=partition.legacy;
+  // Only the canonical source route may supersede a source-pair ledger binding.
+  const supplements=new Map(legacySupplements);
+  for(const [key,row] of partition.canonical) { if(row) supplements.set(key,row); else supplements.delete(key); }
   for (const row of corrections) if (row.contentScope !== undefined && (
     !Array.isArray(row.contentScope) || !row.contentScope.length || row.contentScope.some(scope =>
       !scope || typeof scope !== 'object' || Array.isArray(scope) ||
@@ -79,7 +128,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
     try { url = new URL(sense.sourceUrl); } catch { /* Invalid evidence is reported below. */ }
     if (!Number.isSafeInteger(revision) || revision <= 0 || url?.origin !== 'https://en.wiktionary.org' || url.pathname !== '/w/index.php' || url.searchParams.get('title') !== sourcePage || url.searchParams.get('oldid') !== String(revision)) errors.push(`Invalid restored source revision: ${term}/${sense.id}`);
     if (!(topLevel ? /^#[^#:*]/ : /^#{2,4}[^#:*]/).test(sourceGloss || '') || plainSourceGloss(sourceGloss || '') !== sense.definition || !sense.definition?.trim() || !sense.pos?.trim() || sense.license !== 'CC-BY-SA-4.0' || sense.attribution !== 'English Wiktionary contributors') errors.push(`Invalid restored source attribution or gloss: ${term}/${sense.id}`);
-    const row = supplements.get(key);
+    const row = legacySupplements.get(key);
     if (!row || row.dictionaryParentSenseId !== parentSenseId || row.dictionarySourceAnchorSenseId !== evidence.anchorSenseId || hash(row.originalSense) !== hash(sense)) errors.push(`Restored supplement parent or source mismatch: ${term}/${sense.id}`);
     restoredKeys.add(key);
     sourceIds.add(sense.id);
@@ -89,15 +138,51 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
     if (errors.length === start) sources.set(JSON.stringify([term, sense.id]), sense);
   }
   for (const row of corrections) if ((row.dictionaryParentSenseId || row.dictionarySourceAnchorSenseId) && !restoredKeys.has(identity(row.entryId, row.senseId))) errors.push(`Missing restored source evidence: ${row.entryId}/${row.senseId}`);
+  for(const row of partition.variants.values()) {
+    const value=row.contentVariant, entry=entryById.get(row.entryId), original=sources.get(JSON.stringify([dictionaryTerm(entry),row.senseId]));
+    if(!entry || value.sourceHash!==null && (!original || hash(original)!==value.sourceHash || hash(row.originalSense)!==value.sourceHash) || value.sourceView && (!original || value.sourceHash===null)) errors.push('Variant source binding mismatch: '+row.entryId+'/'+row.senseId+'/'+row.variantId);
+    const before=(Array.isArray(row.previousSenses)?row.previousSenses:[]).find(sense=>fingerprint(project(sense))===fingerprint(value.beforeContent) && fingerprint(sense)===value.beforeDisplayHash);
+    if(!before) errors.push('Variant before display fingerprint mismatch: '+row.variantId);
+    else if(fingerprint({...Object.fromEntries(Object.entries(before).filter(([field])=>!editable.includes(field))),...value.afterContent,editorial:{source:'Fieldbook core content review',license:'CC-BY-4.0',attribution:'Fieldbook editorial contributors'}})!==value.afterDisplayHash) errors.push('Variant after display fingerprint mismatch: '+row.variantId);
+  }
+  const variantLearningPriorities={general:0,specialist:0,historical:0,'proper-name':0};
   const learningPriorities = { general: 0, specialist: 0, historical: 0, 'proper-name': 0 };
-  for (const row of corrections.filter(row => row.learningPriority !== undefined)) {
+  for (const row of [...legacySupplements.values()].filter(row => row.learningPriority !== undefined)) {
     const entry = entryById.get(row.entryId), key = identity(row.entryId, row.senseId);
     const original = sources.get(JSON.stringify([dictionaryTerm(entry), row.senseId]));
     if (!Object.hasOwn(learningPriorities, row.learningPriority) || !entry || !original ||
-      !records.some(record => identity(record.entryId, record.senseId) === key) || hash(row.originalSense) !== hash(original) ||
+      (!records.some(record => identity(record.entryId, record.senseId) === key) && !restoredKeys.has(key)) || hash(row.originalSense) !== hash(original) ||
       !row.definition?.trim() || !(row.pos || row.originalSense?.pos)?.trim() || row.referenceOnly || row.meaningGroup || row.usageReference) {
       errors.push(`Invalid learning priority: ${row.entryId}/${row.senseId}`);
     } else learningPriorities[row.learningPriority]++;
+  }
+  for(const row of partition.variants.values()) if(row.learningPriority!==undefined) {
+    if(!Object.hasOwn(variantLearningPriorities,row.learningPriority) || !row.definition?.trim() || !row.pos?.trim() || row.referenceOnly || row.meaningGroup || row.usageReference) errors.push('Invalid variant learning priority: '+row.variantId);
+    else variantLearningPriorities[row.learningPriority]++;
+  }
+  function validateReferenceTypes(row,term,original,key) {
+      if (row.meaningGroup !== undefined) {
+        const gloss = row.meaningGroup?.sourceGloss;
+        const headingGloss = (gloss || '').replace(/<!--[^]*?-->/g, '').replace(/^#(?!#)\s*(?:\{\{(?:senseid|sid)\|en\|[^{}]+\}\}\s*)*/, '# ');
+        const children = restoredSources.filter(source => source.entryId === row.entryId && source.parentSenseId === row.senseId && sources.has(JSON.stringify([source.term, source.sense.id])));
+        // Some source directories italicise the entire heading instead of using ng.
+        // Require multiple restored children; ordinary or partly italic glosses stay lexical.
+        const italicDirectoryMatch = /^#\s*(?:\{\{lb\|en\|[^{}]+\}\}\s*)?''(?!')((?:(?!'').)+)''\s*:?\s*$/.exec(headingGloss);
+        const italicDirectory = children.length > 1 && Boolean(italicDirectoryMatch) && /[\p{L}\p{N}]/u.test(plainSourceGloss(italicDirectoryMatch[1]));
+        const heading = italicDirectory || /^#\s*(?:\{\{(?:lb|label)\|en\|[^{}]+\}\}\s*)*\{\{(?:ng|n-g|non-gloss)\|/.test(headingGloss) || (/^#[^#]/.test(headingGloss) && /\{\{lb\|en\|(?:[^{}|]+\|)*heading(?:\||\}\})/.test(headingGloss)) || /^#\s*\{\{place\|en\|place\|(?:c|co|s)\/[^{}|]+\}\}\s*:\s*$/.test(headingGloss) || /^#\s*A \[\[place name\]\]:\s*$/.test(headingGloss);
+        if (!heading || plainSourceGloss(gloss || '') !== original?.definition || !children.length || children.some(child => child.sense.sourceUrl !== row.referenceUrl) || row.referenceOnly || row.usageReference || row.distinctionTask || diagrams.some(diagram => identity(diagram.entryId, diagram.senseId) === key)) errors.push(`Invalid meaning group: ${term}/${row.senseId}`);
+      }
+      if (row.usageReference !== undefined) {
+        const match = row.usageReference?.sourceGloss?.match(/^#\s*\{\{used in phrasal verbs\|([^{}]+)\}\}\s*$/);
+        const phrases = match?.[1].split('|').filter(value => !value.includes('='));
+        let url; try { url = new URL(row.referenceUrl); } catch { /* Report below. */ }
+        if (!phrases?.length || !original?.definition.startsWith('Used in phrasal verbs: ') || phrases.some(phrase => !original.definition.includes(phrase)) || url?.origin !== 'https://en.wiktionary.org' || url.pathname !== '/w/index.php' || url.searchParams.get('title') !== term || !/^[1-9]\d*$/.test(url.searchParams.get('oldid') || '') || row.referenceOnly || row.meaningGroup || row.distinctionTask || diagrams.some(diagram => identity(diagram.entryId, diagram.senseId) === key)) errors.push(`Invalid usage reference: ${term}/${row.senseId}`);
+      }
+
+  }
+  for(const row of supplements.values()) if((row.meaningGroup || row.usageReference) && !records.some(record=>identity(record.entryId,record.senseId)===identity(row.entryId,row.senseId))) {
+    const term=dictionaryTerm(entryById.get(row.entryId));
+    validateReferenceTypes(row,term,sources.get(JSON.stringify([term,row.senseId])),identity(row.entryId,row.senseId));
   }
   const seen = new Set(), reviewed = new Set();
   let tasks = 0, spellingReferences = 0, readingNotes = 0, meaningGroups = 0, usageReferences = 0;
@@ -116,23 +201,13 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
       if (row.exampleKind !== undefined && row.exampleKind !== 'reading-note') errors.push(`Invalid example kind: ${review.term}/${review.senseId}`);
       if (row.referenceOnly !== undefined && typeof row.referenceOnly !== 'boolean') errors.push(`Invalid spelling reference flag: ${review.term}/${review.senseId}`);
       if (row.referenceOnly && (!/\bmisspelling\b/i.test(`${original?.definition || ''} ${original?.usage || ''}`) || row.distinctionTask || diagrams.some(diagram => identity(diagram.entryId, diagram.senseId) === key))) errors.push(`Invalid spelling reference: ${review.term}/${review.senseId}`);
-      if (row.meaningGroup !== undefined) {
-        const gloss = row.meaningGroup?.sourceGloss;
-        const headingGloss = (gloss || '').replace(/<!--[^]*?-->/g, '').replace(/^#(?!#)\s*(?:\{\{(?:senseid|sid)\|en\|[^{}]+\}\}\s*)*/, '# ');
-        const children = restoredSources.filter(source => source.entryId === review.entryId && source.parentSenseId === review.senseId && sources.has(JSON.stringify([source.term, source.sense.id])));
-        // Some source directories italicise the entire heading instead of using ng.
-        // Require multiple restored children; ordinary or partly italic glosses stay lexical.
-        const italicDirectory = children.length > 1 && /^#\s*(?:\{\{lb\|en\|[^{}]+\}\}\s*)?''(?!')(?:(?!'').)+''\s*$/.test(headingGloss);
-        const heading = italicDirectory || /^#\s*(?:\{\{(?:lb|label)\|en\|[^{}]+\}\}\s*)*\{\{(?:ng|n-g|non-gloss)\|/.test(headingGloss) || (/^#[^#]/.test(headingGloss) && /\{\{lb\|en\|(?:[^{}|]+\|)*heading(?:\||\}\})/.test(headingGloss)) || /^#\s*\{\{place\|en\|place\|(?:c|co|s)\/[^{}|]+\}\}\s*:\s*$/.test(headingGloss) || /^#\s*A \[\[place name\]\]:\s*$/.test(headingGloss);
-        if (!heading || plainSourceGloss(gloss || '') !== original?.definition || !children.length || children.some(child => child.sense.sourceUrl !== row.referenceUrl) || row.referenceOnly || row.usageReference || row.distinctionTask || diagrams.some(diagram => identity(diagram.entryId, diagram.senseId) === key)) errors.push(`Invalid meaning group: ${review.term}/${review.senseId}`);
+      validateReferenceTypes(row,review.term,original,key);
+      const inapplicable = review.notApplicable || {};
+      for (const [area, decision] of Object.entries(inapplicable)) {
+        let url; try { url = new URL(decision?.referenceUrl); } catch { /* Report below. */ }
+        if (!['collocations','distinctions'].includes(area) || row[area]?.length || !decision?.reason?.trim() || url?.protocol !== 'https:' || decision.materialHash !== reviewMaterialFingerprint(row)) errors.push(`Invalid inapplicable ${area}: ${review.term}/${review.senseId}`);
       }
-      if (row.usageReference !== undefined) {
-        const match = row.usageReference?.sourceGloss?.match(/^#\s*\{\{used in phrasal verbs\|([^{}]+)\}\}\s*$/);
-        const phrases = match?.[1].split('|').filter(value => !value.includes('='));
-        let url; try { url = new URL(row.referenceUrl); } catch { /* Report below. */ }
-        if (!phrases?.length || !original?.definition.startsWith('Used in phrasal verbs: ') || phrases.some(phrase => !original.definition.includes(phrase)) || url?.origin !== 'https://en.wiktionary.org' || url.pathname !== '/w/index.php' || url.searchParams.get('title') !== review.term || !/^[1-9]\d*$/.test(url.searchParams.get('oldid') || '') || row.referenceOnly || row.meaningGroup || row.distinctionTask || diagrams.some(diagram => identity(diagram.entryId, diagram.senseId) === key)) errors.push(`Invalid usage reference: ${review.term}/${review.senseId}`);
-      }
-      for (const area of areas) if (!review.reviewedAreas.includes(area) || !row[area]?.length) errors.push(`Incomplete ${area}: ${review.term}/${review.senseId}`);
+      for (const area of areas) if (!review.reviewedAreas.includes(area) || (!row[area]?.length && !Object.hasOwn(inapplicable,area))) errors.push(`Incomplete ${area}: ${review.term}/${review.senseId}`);
       if (row.distinctionTask) {
         const task = row.distinctionTask;
         if (!task.prompt?.includes('_____') || !task.options?.includes(task.answer) || new Set(task.options).size < 2 || new Set(task.options.map(option => option.trim().toLowerCase())).size !== task.options.length || !task.explanation?.trim()) errors.push(`Invalid distinction task: ${review.term}/${review.senseId}`);
@@ -160,7 +235,7 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
   for (const item of byTerm) item.reviewed = inventory.filter(sense => sense.term === item.term && sense.status === 'reviewed').length;
   const summary = {
     terms: byTerm.length, senses: inventory.length, preservedSenses, restoredSenses: restoredSources.length, reviewed: reviewed.size, pending: inventory.length-reviewed.size,
-    diagrams: diagrams.length, tasks, spellingReferences, readingNotes, meaningGroups, usageReferences, learningPriorities,
+    diagrams: diagrams.length, tasks, spellingReferences, readingNotes, meaningGroups, usageReferences, learningPriorities, variantLearningPriorities, legacyCorrectionRows:legacySupplements.size, contentVariants:partition.variants.size, canonicalSourceVariants:[...partition.canonical.values()].filter(Boolean).length,
     rawMissingExamples: inventory.filter(row => row.flags.includes('missing-example')).length,
     rawExampleReviewSignals: inventory.filter(row => row.flags.includes('example-review-signal')).length,
     rawMissingCollocations: inventory.filter(row => row.flags.includes('missing-collocations')).length,

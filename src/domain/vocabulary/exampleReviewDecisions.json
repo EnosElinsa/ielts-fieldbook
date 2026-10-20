@@ -1089,17 +1089,6 @@
     "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
   },
   {
-    "workItemId": "vq:7eaf4aaea2bf7460abbf65c021599fa010f801f6c6bfecf74610366e3d1fbcaf",
-    "entryId": "ve-b87385a",
-    "senseId": "kaikki:f01be3016d87ba812b",
-    "sourceHash": "1b7cb7cc434dd988ee015253f46f6a88f870ad649a58dfee15490cb8da1dc32e",
-    "displayHash": "7d94c27023cfcb154698bce642fd8e25430d6a19c8c3699510cb7f9fd3ee4cd0",
-    "issue": "example-fragment-signal",
-    "decision": "retain-valid-example",
-    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=flu&oldid=92975454",
-    "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
-  },
-  {
     "workItemId": "vq:85d9b910f99d0077410f506e9c33b09b7725eba020ac1e1481cfcb4e08ddf1f0",
     "entryId": "ve-57a1a25e",
     "senseId": "kaikki:25e405c98dcc9d3525",
@@ -3430,5 +3419,16 @@
     "decision": "retain-valid-example",
     "referenceUrl": "https://en.wiktionary.org/w/index.php?title=year&oldid=93664402",
     "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+  },
+  {
+    "workItemId": "vq:a5d52306a5ac912c11599d3f4d3960370406adf4844446e2334c298b261df3a9",
+    "entryId": "ve-b87385a",
+    "senseId": "kaikki:f01be3016d87ba812b",
+    "sourceHash": "1b7cb7cc434dd988ee015253f46f6a88f870ad649a58dfee15490cb8da1dc32e",
+    "displayHash": "1bd305fc213027bde005e5725686f4104145ae493afa586791b6ec76373ac3eb",
+    "issue": "example-fragment-signal",
+    "decision": "retain-valid-example",
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=flu&oldid=92975454",
+    "rationale": "Independently retained for this exact influenza noun variant. Cached revision 92975454 identifies influenza at line 22 and explicitly records catch/transmit flu at line 23; the noun pattern at line 20 and usage note at line 31 support the normally uncountable noun with or without the definite article. Catch flu is therefore a valid concise usage phrase for this meaning and POS. A finite clause or sentence-final punctuation is not required for a valid phrase example. This receipt applies only to the fragment signal on the exact current source/display identity; it does not add or independently approve an exercise."
   }
 ]

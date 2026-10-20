@@ -502,7 +502,7 @@ test('speaking weakest criterion skips unscored pronunciation', () => {
   assert.equal(core.practiceFromWeakness(state, 'speaking').kind, 'speaking-p1');
 });
 
-test('today session orders recall, practice, then the due correction', () => {
+test('today session excludes vocabulary without mode schedules and retains practice then due correction', () => {
   const state = core.migrateState({
     lexicon: [{ id: 'l1', term: 'overall', skill: 'writing', meaning: '总体上', nextReviewAt: '2020-01-01T00:00:00.000Z' }],
     errors: [{ id: 'e1', code: 'GRA-PREP', text: 'Use account for once.', resolved: false, sourceSessionId: 's1', nextReviewAt: '2020-01-01T00:00:00.000Z' }],
@@ -518,10 +518,10 @@ test('today session orders recall, practice, then the due correction', () => {
     }],
   });
   const session = core.todaySession(state, '2026-09-19T00:00:00.000Z', 'writing');
-  assert.deepEqual(session.steps.map(step => step.id), ['recall', 'practice', 'correction']);
-  assert.equal(session.steps[1].driver, 'criterion:GRA');
-  assert.equal(session.steps[2].errorId, 'e1');
-  assert.match(session.steps[2].detail, /GRA-PREP/);
+  assert.deepEqual(session.steps.map(step => step.id), ['practice', 'correction']);
+  assert.equal(session.steps[0].driver, 'criterion:GRA');
+  assert.equal(session.steps[1].errorId, 'e1');
+  assert.match(session.steps[1].detail, /GRA-PREP/);
 });
 
 test('a failed vocabulary review starts relearning and activates the error state', () => {

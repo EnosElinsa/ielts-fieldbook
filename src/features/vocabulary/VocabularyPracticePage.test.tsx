@@ -1,4 +1,7 @@
 import { readFileSync } from 'node:fs';
+import { IDBFactory } from 'fake-indexeddb';
+import { createEmptyCard } from 'ts-fsrs';
+import { vocabularySessionDrafts } from '../../storage/vocabularySessionDrafts';
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Profiler, Suspense, useState } from 'react';
 import userEvent from "@testing-library/user-event";
@@ -11,8 +14,8 @@ import { getVocabularyReviewQueue, type VocabularyEntry } from "../../domain/voc
 import * as vocabularyDomain from '../../domain/vocabulary';
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
-import { createVocabularySession, evaluateVocabularySessionAnswer } from '../../domain/vocabulary/session';
-import { readVocabularyDraft } from '../../storage/vocabularyDrafts';
+import { createVocabularySession, evaluateVocabularySessionAnswer, updateVocabularySessionAnswer } from '../../domain/vocabulary/session';
+
 import { freezeVocabularyPronunciation } from '../../domain/vocabulary/sensePronunciation';
 import { WorkspaceScrollRestoration } from '../../components/WorkspaceScrollRestoration';
 
@@ -32,6 +35,7 @@ vi.mock("./VocabularyPages", () => ({
 
 const originalScrollTo=window.scrollTo;
 beforeEach(() => {
+  vi.stubGlobal('indexedDB',new IDBFactory());
   window.scrollTo=vi.fn();
   localStorage.clear();
   sessionStorage.clear();
@@ -59,7 +63,7 @@ beforeEach(() => {
   }));
   const state = {
     vocabulary,
-    vocabularyStates: [],
+    vocabularyStates: vocabulary.map((entry,index)=>({id:`state-${index}`,entryId:entry.id,senseId:entry.senses[0].id,cards:Object.fromEntries(['dictation','definition','cloze','synonym','distinction','production'].map(mode=>[mode,createEmptyCard(new Date('2020-01-01'))])),dimensions:Object.fromEntries(['meaning','listening','spelling','usage'].map(d=>[d,{successes:0,failures:0,partials:0}])),reviewCount:0,wrong:{active:false,successesSinceFailure:0,modes:{}}})),
     vocabularyReviews: [],
     vocabularyEvidence: vocabulary.map(entry => ({entryId:entry.id,mode:'dictation',verification:'objective',result:'success'})),
     vocabularySessions: [],
@@ -85,7 +89,7 @@ test('typing in a frozen planned review does not rebuild its review queue', asyn
   const queue = vi.spyOn(vocabularyDomain, 'getVocabularyReviewQueue');
   try {
     mount('?planId=typing-plan&mode=dictation&dueOnly=false');
-    fireEvent.click(await screen.findByRole('button', { name: 'Start session' }));
+    fireEvent.click(await readyStart());
     const before = queue.mock.calls.length;
     const input = screen.getByRole('textbox', { name: 'Answer 1' });
     for (const value of ['r', 're', 'res', 'resilient']) {
@@ -94,14 +98,14 @@ test('typing in a frozen planned review does not rebuild its review queue', asyn
     }
     expect(queue.mock.calls.length).toBe(before);
     fireEvent(window, new Event('pagehide'));
-    expect(readVocabularyDraft(owner.current)?.answers[readVocabularyDraft(owner.current)!.cardIds[0].id].response).toBe('resilient');
+    await waitFor(async()=>{const draft=await latestDraft();expect(draft?.answers[draft.cardIds[0].id]?.response).toBe('resilient');});
   } finally { queue.mockRestore(); }
 });
 
 test('typing updates immediately without writing the full draft per letter, then pagehide flushes the latest answer', async () => {
   fb.current.state.settings.vocabulary = { autoPlay: false };
   mount('?mode=dictation&dueOnly=false');
-  fireEvent.click(await screen.findByRole('button', { name: 'Start session' }));
+  fireEvent.click(await readyStart());
   const input = screen.getByRole('textbox', { name: 'Answer 1' });
   const writes = vi.spyOn(Storage.prototype, 'setItem');
   for (const value of ['c', 'ca', 'cat', 'cata', 'catastrophic']) {
@@ -110,21 +114,55 @@ test('typing updates immediately without writing the full draft per letter, then
   }
   expect(writes.mock.calls.filter(([key]) => key.startsWith('fieldbook-vocabulary-draft'))).toHaveLength(0);
   fireEvent(window, new Event('pagehide'));
-  const draft = readVocabularyDraft(owner.current)!;
-  expect(draft.answers[draft.cardIds[0].id].response).toBe('catastrophic');
+  await waitFor(async()=>{const current=await latestDraft();expect(current?.answers[current.cardIds[0].id]?.response).toBe('catastrophic');});
   writes.mockRestore();
+});
+
+test('a stale tab cannot submit over a newer local draft revision', async () => {
+  fb.current.state.settings.vocabulary = { autoPlay: false };
+  mount('?mode=dictation&dueOnly=false');
+  fireEvent.click(await readyStart());
+  await savedDraft();
+  const [row] = await vocabularySessionDrafts.list(owner.current!);
+  const otherTab = { ...row.session, answers: { ...row.session.answers } };
+  await vocabularySessionDrafts.save(owner.current!, otherTab, row.revision);
+  fireEvent.change(screen.getByRole('textbox', { name: 'Answer 1' }), { target: { value: 'resilient' } });
+  fireEvent.change(screen.getByRole('textbox', { name: 'Answer 2' }), { target: { value: 'sustainable' } });
+  fireEvent.click(screen.getByRole('button', { name: 'Submit session' }));
+  expect(await screen.findByText(/pause here and reload its saved draft before submitting/)).toBeInTheDocument();
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+  expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('resilient');
+  expect((await vocabularySessionDrafts.list(owner.current!))[0].revision).toBe(row.revision + 1);
+});
+
+test('a local draft conflict offers an explicit reload of the newer answers', async () => {
+  fb.current.state.settings.vocabulary={autoPlay:false};
+  mount('?mode=dictation&dueOnly=false');fireEvent.click(await readyStart());await savedDraft();
+  const [row]=await vocabularySessionDrafts.list(owner.current!);
+  const cardId=row.session.cardIds[0].id;
+  const other=updateVocabularySessionAnswer(row.session,cardId,'newer answer');
+  await vocabularySessionDrafts.save(owner.current!,other,row.revision);
+  fireEvent.change(screen.getByRole('textbox',{name:'Answer 1'}),{target:{value:'this tab answer'}});
+  fireEvent(window,new Event('pagehide'));
+  fireEvent.click(await screen.findByRole('button',{name:'Reload saved draft'}));
+  expect(screen.getByRole('textbox',{name:'Answer 1',hidden:true})).toHaveValue('this tab answer');
+  const dialog=screen.getByRole('dialog',{name:'Reload saved answers?'});
+  expect(dialog).toHaveTextContent('replaces the answers in this tab');
+  fireEvent.click(screen.getByRole('button',{name:'Replace with saved answers'}));
+  await waitFor(()=>expect(screen.getByRole('textbox',{name:'Answer 1'})).toHaveValue('newer answer'));
+  expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
 });
 
 test('discarding a just-typed session cancels its pending save so the draft cannot reappear', async () => {
   fb.current.state.settings.vocabulary = { autoPlay: false };
   mount('?mode=dictation&dueOnly=false');
-  fireEvent.click(await screen.findByRole('button', { name: 'Start session' }));
+  fireEvent.click(await readyStart());
   fireEvent.change(screen.getByRole('textbox', { name: 'Answer 1' }), { target: { value: 'latest' } });
   fireEvent.click(screen.getByRole('button', { name: 'Pause session' }));
   fireEvent.click(await screen.findByRole('button', { name: 'Discard session' }));
   fireEvent(window, new Event('pagehide'));
   await new Promise(resolve => setTimeout(resolve, 350));
-  expect(readVocabularyDraft(owner.current)).toBeNull();
+  await waitFor(async()=>expect((await latestDraft())).toBeNull());
 });
 
 test('historical dictation labels separate meanings of a repeated word without dropping either saved result', async () => {
@@ -151,14 +189,14 @@ test('dictation uses the frozen selected reading and exposes deliberate audio re
   const entry={...raw,senses:[sense]};fb.current.state.vocabulary=[entry];fb.current.state.settings.vocabulary={autoPlay:false,accent:'uk'};
   player.play.mockResolvedValueOnce({ok:false,source:'none',reason:'sense-recording-unavailable',accent:'uk'}).mockResolvedValue({ok:true,source:'recording',accent:'us',senseMatch:'matched'});
   mount(`?entryId=${entry.id}&senseId=${sense.id}&dueOnly=false&mode=dictation`);
-  fireEvent.click(await screen.findByRole('button',{name:'Start session'}));
+  fireEvent.click(await readyStart());
   fireEvent.click(screen.getByRole('button',{name:'Replay current word'}));
   await waitFor(()=>expect(player.play).toHaveBeenCalledWith(expect.objectContaining({id:entry.id}),expect.objectContaining({sense:expect.objectContaining({id:sense.id}),pronunciation:freezeVocabularyPronunciation(entry,sense)})));
   fireEvent.click(await screen.findByRole('button',{name:'Play matching US recording'}));
   await waitFor(()=>expect(player.play).toHaveBeenLastCalledWith(expect.objectContaining({id:entry.id}),expect.objectContaining({accent:'us',pronunciation:freezeVocabularyPronunciation(entry,sense)})));
   expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
   expect(fb.current.state.vocabularyReviews).toEqual([]);
-  const draft=readVocabularyDraft(owner.current)!;expect(draft.answers).toEqual({});
+  const draft=await savedDraft();expect(draft.answers).toEqual({});
   expect(draft.cardSnapshots![0].pronunciation).toEqual(freezeVocabularyPronunciation(entry,sense));
 });
 test('audio-loop failure retains the missing-reading explanation and never records a listened activity',async()=>{
@@ -168,12 +206,12 @@ test('audio-loop failure retains the missing-reading explanation and never recor
   fb.current.state.vocabulary=[{...raw,senses:[sense]}];fb.current.state.settings.vocabulary={autoPlay:false,accent:'uk'};
   player.play.mockResolvedValue({ok:false,source:'none',reason:'sense-recording-unavailable',accent:'uk'});
   mount(`?entryId=${raw.id}&senseId=${sense.id}&dueOnly=false&mode=audio`);
-  fireEvent.click(await screen.findByRole('button',{name:'Start session'}));
+  fireEvent.click(await readyStart());
   fireEvent.click(screen.getByRole('button',{name:'Play loop'}));
   await waitFor(()=>expect(screen.getByRole('group',{name:'Pronunciation recovery'})).toBeInTheDocument());
   expect(screen.getByText(/No verified UK recording for this meaning/)).toBeInTheDocument();
   expect(screen.queryByText('Audio loop complete')).not.toBeInTheDocument();
-  expect(readVocabularyDraft(owner.current)?.answers).toEqual({});
+  await waitFor(async()=>expect((await latestDraft())?.answers).toEqual({}));
   expect(fb.current.state.vocabularyActivities).toEqual([]);
 });
 test('the home due-review link launches only saved meanings with an actual due schedule and freezes that restriction',async()=>{
@@ -184,8 +222,8 @@ test('the home due-review link launches only saved meanings with an actual due s
   expect(screen.getByText(/1 word ·/)).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button',{name:'Start session'}));
   expect(screen.getAllByRole('textbox')).toHaveLength(1);
-  expect(readVocabularyDraft(owner.current)?.filter).toMatchObject({dueOnly:true,scheduledOnly:true});
-  expect(readVocabularyDraft(owner.current)?.cardIds).toEqual([expect.objectContaining({entryId:'entry-0',senseId:'sense-0'})]);
+  await waitFor(async()=>expect((await latestDraft())?.filter).toMatchObject({dueOnly:true,scheduledOnly:true}));
+  await waitFor(async()=>expect((await latestDraft())?.cardIds).toEqual([expect.objectContaining({entryId:'entry-0',senseId:'sense-0'})]));
 });
 
 test('single-word practice keeps its meaning and feedback without bulk settings or resetting saved preferences', async () => {
@@ -194,13 +232,12 @@ test('single-word practice keeps its meaning and feedback without bulk settings 
   mount('?entryId=entry-0&senseId=sense-0&dueOnly=false&mode=definition');
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
   expect(screen.getByText('Definition 0')).toBeInTheDocument();
-  await user.click(screen.getByText('Advanced options'));
   for (const name of ['Wordbook', 'Session size', 'Order']) expect(screen.queryByRole('button', { name })).not.toBeInTheDocument();
   for (const name of ['Due only', 'Mistakes only']) expect(screen.queryByRole('checkbox', { name })).not.toBeInTheDocument();
   expect(screen.getByRole('group', { name: 'Practice layout' })).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'Feedback' }));
-  await user.click(screen.getByRole('option', { name: 'During practice' }));
-  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(screen.getByRole('option', { name: 'After each answer' }));
+  await user.click(await readyStart());
   expect(screen.getAllByRole('textbox')).toHaveLength(1);
   await user.type(screen.getByRole('textbox', { name: 'Answer 1' }), 'resilient');
   await user.click(screen.getByRole('button', { name: 'Submit session' }));
@@ -214,14 +251,11 @@ test('single-word practice keeps its meaning and feedback without bulk settings 
 
 test('an explicitly filtered single-word link keeps its active filters removable', async () => {
   mount('?entryId=entry-0&senseId=sense-0&dueOnly=true&mode=definition');
-  await userEvent.click(screen.getByText('Advanced options'));
-  const due = await screen.findByRole('checkbox', { name: 'Due only' });
-  expect(due).toBeChecked();
-  await userEvent.setup().click(due);
-  expect(screen.queryByRole('checkbox', { name: 'Due only' })).not.toBeInTheDocument();
-  expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled();
+  const due = await screen.findByRole('button', { name: 'Remove due filter' });
+  await userEvent.click(due);
+  expect(screen.queryByRole('button',{name:'Remove due filter'})).not.toBeInTheDocument();
+  await readyStart();
 });
-
 test.each(['cloze', 'synonym', 'distinction'])('an unsupported single-meaning %s task retains the meaning and offers exact meaning recall', async mode => {
   const entry = fb.current.state.vocabulary[0];
   entry.senses[0].example = '';
@@ -239,10 +273,11 @@ test.each(['cloze', 'synonym', 'distinction'])('an unsupported single-meaning %s
   expect(screen.getByText('Definition 0')).toBeInTheDocument();
   expect(fb.current.persistNow).not.toHaveBeenCalled();
   expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
-  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(await readyStart());
   expect(screen.getAllByRole('textbox')).toHaveLength(1);
   await user.type(screen.getByRole('textbox', { name: 'Answer 1' }), 'resilient');
   await user.click(screen.getByRole('button', { name: 'Submit session' }));
+  await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalled());
   const saved = fb.current.persistVocabularySession.mock.calls[0][0].vocabularySessions[0];
   expect(saved).toMatchObject({ mode: 'definition', filter: { entryId: entry.id, senseId: entry.senses[0].id, dueOnly: false }, results: [expect.objectContaining({ entryId: entry.id, senseId: entry.senses[0].id })] });
 });
@@ -321,21 +356,14 @@ test('a supported-mode suggestion waits for the selected meaning’s catalogue p
   expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
 });
 
-test('free review labels its three controls and keeps advanced settings collapsed with a focusable disclosure', async () => {
+test('free review exposes named controls, custom size and text layout choices', async () => {
   mount('?dueOnly=false');
-  expect(screen.getAllByRole('heading', { name: 'Vocabulary review' })).toHaveLength(1);
-  for (const name of ['Mode', 'Wordbook', 'Range']) expect(screen.getByText(name, { selector: '.practice-field-label' })).toBeInTheDocument();
-  const advanced = screen.getByText('Advanced options');
-  expect(advanced.closest('details')).not.toHaveAttribute('open');
-  expect(screen.getByRole('button', { name: 'Session size' })).not.toBeVisible();
-  advanced.focus();
-  expect(advanced).toHaveFocus();
-  fireEvent.click(advanced);
-  for (const name of ['Wordbook', 'Session size', 'Order']) expect(screen.getByRole('button', { name })).toBeInTheDocument();
-  for (const name of ['Due only', 'Mistakes only']) expect(screen.getByRole('checkbox', { name })).toBeInTheDocument();
-  const header = screen.getByRole('heading', { name: 'Vocabulary review' }).closest('header')!;
-  expect(header).toContainElement(screen.getByRole('link', { name: 'Back to vocabulary' }));
-  expect(header).toContainElement(screen.getByRole('button', { name: 'Practice settings' }));
+  await readyStart();
+  for(const name of ['Mode','Word source','Review type','Session size','Question order','Feedback timing','Practice layout']) expect(screen.getByText(name,{selector:'.practice-field-label'})).toBeVisible();
+  expect(screen.getByRole('spinbutton',{name:'Custom question count'})).toBeVisible();
+  expect(screen.getByRole('button',{name:'List layout'})).toHaveTextContent('List');
+  expect(screen.getByRole('button',{name:'Focus layout'})).toHaveTextContent('Focus');
+  for(const name of ['Due only','Mistakes only'])expect(screen.queryByRole('checkbox',{name})).not.toBeInTheDocument();
 });
 
 test('planned review exposes its locked mode, full prompt count and origin without free-review controls', async () => {
@@ -354,13 +382,12 @@ test('planned review exposes its locked mode, full prompt count and origin witho
   for (const name of ['Review mode', 'Practice mode', 'Wordbook', 'Review preset', 'Session size', 'Order']) expect(screen.queryByRole('button', { name })).not.toBeInTheDocument();
   expect(screen.queryByRole('checkbox', { name: 'Mistakes only' })).not.toBeInTheDocument();
   expect(screen.queryByText('Mistake recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last.')).not.toBeInTheDocument();
-  await userEvent.click(screen.getByText('Advanced options'));
   expect(screen.getByRole('button', { name: 'Feedback' })).toBeInTheDocument();
   for (const name of ['Session size', 'Order']) expect(screen.queryByRole('button', { name })).not.toBeInTheDocument();
   for (const name of ['Due only', 'Mistakes only']) expect(screen.queryByRole('checkbox', { name })).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Start session' }));
-  expect(readVocabularyDraft(owner.current)?.cardIds).toHaveLength(56);
-  expect(readVocabularyDraft(owner.current)?.mode).toBe('definition');
+  await waitFor(async()=>expect((await latestDraft())?.cardIds).toHaveLength(56));
+  await waitFor(async()=>expect((await latestDraft())?.mode).toBe('definition'));
 });
 
 test.each([false, true])('locked source ignores hostile URL wordbook/group and retains only bound scope (scoped=%s)', async scoped => {
@@ -383,7 +410,7 @@ test.each([false, true])('locked source ignores hostile URL wordbook/group and r
     expect(task).not.toHaveTextContent('Group 1');
   }
   fireEvent.click(screen.getByRole('button', { name: 'Start session' }));
-  expect(readVocabularyDraft(owner.current)?.selection).toMatchObject({ kind: 'planned-review', cards: refs });
+  await waitFor(async()=>expect((await latestDraft())?.selection).toMatchObject({ kind: 'planned-review', cards: refs }));
 });
 
 test('an empty legacy sessionId keeps free setup available instead of an indefinite results loader', async () => {
@@ -434,14 +461,15 @@ test('planned batch ignores query mode mutation and submits exact frozen cards i
   fb.current.state.plans=[{id:'planned-mode',kind:'vocabulary',status:'in_progress',startedAt:'2020-01-01',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',bookId:'test-book',unitId:'test-group',batchIndex:0,batchSize:2,cards:refs}}];
   mount(`?bookId=test-book&unitId=test-group&dueOnly=false&planId=planned-mode&mode=dictation&batch=0&batchSize=2&batchCards=${encodeURIComponent(JSON.stringify(refs))}`);
   const user=userEvent.setup();
-  await user.click(await screen.findByRole('button',{name:'Start session'}));
-  const draft=JSON.parse(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')!).session;
+  await user.click(await readyStart());
+  const draft=(await savedDraft());
   expect(draft.mode).toBe('definition');
   expect(draft.planId).toBe('planned-mode');
   expect(draft.selection.cards).toEqual(refs);
   await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'word0');
   await user.type(screen.getByRole('textbox',{name:'Answer 2'}),'word1');
   await user.click(screen.getByRole('button',{name:'Submit session'}));
+  await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalled());
   const submitted=fb.current.persistVocabularySession.mock.calls[0][0].vocabularySessions[0];
   expect(submitted).toMatchObject({mode:'definition',planId:'planned-mode',selection:{cards:refs}});
   expect(completeVocabularyPlan(fb.current.state,submitted)).toMatchObject({id:'planned-mode',status:'completed'});
@@ -493,7 +521,7 @@ test('fixed learning batch ignores review size, resumes from home, and submits i
   const user = userEvent.setup();
   const view = mount(query);
   await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
-  await user.click(screen.getByRole('button',{name:'Start session'}));
+  await user.click(await readyStart());
   expect(screen.getAllByRole('textbox')).toHaveLength(10);
   fireEvent.change(screen.getByRole('textbox',{name:'Answer 1'}),{target:{value:'word0'}});
   await user.click(screen.getByRole('button',{name:'Exit session'}));
@@ -506,7 +534,7 @@ test('fixed learning batch ignores review size, resumes from home, and submits i
   await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1));
   const [prepared] = fb.current.persistVocabularySession.mock.calls[0];
   expect(prepared.vocabularySessions[0]).toMatchObject({planId:'planned-batch',selection:{kind:'learning-batch',cards:refs}});
-  expect(screen.getByRole('link',{name:'Next batch'})).toHaveAttribute('href',expect.stringContaining('batch=1'));
+  expect(await screen.findByRole('link',{name:'Next batch'})).toHaveAttribute('href',expect.stringContaining('batch=1'));
 });
 
 test("whole group uses all 55 words in source order and preserves answers across pages and recovery", async () => {
@@ -515,7 +543,7 @@ test("whole group uses all 55 words in source order and preserves answers across
   const view = mount('?bookId=test-book&unitId=test-group&dueOnly=false');
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
   expect(screen.queryByRole('button', { name: 'Session size' })).not.toBeInTheDocument();
-  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(await readyStart());
   expect(screen.getAllByRole('textbox')).toHaveLength(50);
   await waitFor(() => expect(player.play).toHaveBeenCalledWith(expect.objectContaining({ term: 'word0' }), expect.anything()));
   await user.click(screen.getByRole('textbox', { name: 'Answer 1' }));
@@ -528,7 +556,7 @@ test("whole group uses all 55 words in source order and preserves answers across
   await user.click(screen.getByRole('button', { name: 'Keep progress' }));
   view.unmount();
   mount('?bookId=test-book&unitId=test-group&dueOnly=false');
-  await user.click(screen.getByRole('button', { name: 'Resume session' }));
+  await user.click(await screen.findByRole('button', { name: 'Resume session' }));
   expect(screen.getByRole('textbox', { name: 'Answer 51' })).toHaveValue('word50');
   await user.click(screen.getByRole('button', { name: 'Previous page' }));
   expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('river 2');
@@ -539,10 +567,10 @@ test("235-word group submits one frozen full-group attempt beyond the old cap", 
   groupFixture(235);
   mount('?bookId=test-book&unitId=test-group&dueOnly=false');
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
-  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(await readyStart());
   await user.click(screen.getByRole('button', { name: 'Submit session' }));
   await user.click(screen.getByRole('button', { name: 'Submit anyway' }));
-  expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1);
+  await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1));
   const [prepared] = fb.current.persistVocabularySession.mock.calls[0];
   expect(prepared.vocabularyReviews).toHaveLength(235);
   expect(prepared.vocabularySessions[0].selection).toEqual({ kind: 'unit', bookId: 'test-book', unitId: 'test-group' });
@@ -554,7 +582,7 @@ test("catalog-only draft recovery waits for the saved book and retains answers w
   const savedCatalog = { ...VOCABULARY_CATALOG };
   const view = mount('?bookId=test-book&unitId=test-group&dueOnly=false');
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
-  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(await readyStart());
   await user.click(screen.getByRole('textbox', { name: 'Answer 1' }));
   await user.paste('saved-answer');
   await user.click(screen.getByRole('button', { name: 'Exit session' }));
@@ -564,14 +592,14 @@ test("catalog-only draft recovery waits for the saved book and retains answers w
   Object.assign(VOCABULARY_CATALOG, originalCatalog);
   fb.current.loadVocabularyCatalog.mockRejectedValue(new Error('offline'));
   mount();
-  await user.click(screen.getByRole('button', { name: 'Resume session' }));
+  await user.click(await screen.findByRole('button', { name: 'Resume session' }));
   expect(screen.getByText(/The saved wordbook could not be loaded/)).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: 'Resume session' })).toBeEnabled();
+  expect(await screen.findByRole('button', { name: 'Resume session' })).toBeEnabled();
   let release: () => void;
   fb.current.loadVocabularyCatalog.mockImplementationOnce(() => new Promise<void>(resolve => {
     release = () => { Object.assign(VOCABULARY_CATALOG, savedCatalog); resolve(); };
   }));
-  await user.click(screen.getByRole('button', { name: 'Resume session' }));
+  await user.click(await screen.findByRole('button', { name: 'Resume session' }));
   expect(screen.getByRole('button', { name: 'Loading session…' })).toBeDisabled();
   expect(fb.current.loadVocabularyCatalog).toHaveBeenLastCalledWith('test-book', expect.objectContaining({ unitId: 'test-group' }));
   release!();
@@ -582,7 +610,7 @@ test("catalog-only draft recovery waits for the saved book and retains answers w
 test("dictation shortcuts navigate without stealing answer text and pause with Escape", async () => {
   const user = userEvent.setup();
   mount();
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   const first = screen.getByRole("textbox", { name: "Answer 1" });
   await user.type(first, "river 2");
   expect(first).toHaveValue("river 2");
@@ -603,7 +631,7 @@ test("dictation shortcuts navigate without stealing answer text and pause with E
 test("production textarea retains multiline editing on Enter and arrows", async () => {
   const user = userEvent.setup();
   mount("?mode=production");
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   const first = screen.getByRole("textbox", { name: "Answer 1" });
   await user.type(first, "A river.{enter}Second line");
   expect(first).toHaveValue("A river.\nSecond line");
@@ -614,7 +642,7 @@ test("production textarea retains multiline editing on Enter and arrows", async 
 test("self-review selects open with arrow keys and restore practice focus after selection", async () => {
   const user = userEvent.setup();
   mount('?mode=production');
-  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(await readyStart());
   await user.type(screen.getByRole('textbox', { name: 'Answer 1' }), 'A resilient community.');
   const rating = screen.getByRole('combobox', { name: 'Self review 1' });
   rating.focus();
@@ -632,7 +660,7 @@ test("distinction choice focus targets the correct word and preserves radio navi
   const user = userEvent.setup();
   fb.current.state.vocabulary.forEach((entry: any) => { entry.senses[0].distinctionTask = { prompt: 'Choose a synonym', options: ['A', 'B'], answer: 'A', explanation: 'A is correct.' }; });
   mount('?mode=distinction');
-  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(await readyStart());
   const radio = screen.getAllByRole('radio')[2];
   await user.click(radio);
   expect(fireEvent.keyDown(radio, { key: 'ArrowDown', cancelable: true })).toBe(true);
@@ -647,17 +675,20 @@ test("result filters preserve marked rows and mistake retry ignores the review b
   groupFixture(55);
   mount('?bookId=test-book&unitId=test-group&dueOnly=false');
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
-  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(await readyStart());
   await user.click(screen.getByRole('button', { name: 'Flag word 1' }));
   await user.click(screen.getByRole('button', { name: 'Submit session' }));
   await user.click(screen.getByRole('button', { name: 'Submit anyway' }));
-  await user.click(screen.getByRole('button', { name: 'Result filter' }));
+  await user.click(await screen.findByRole('button', { name: 'Result filter' }));
   await user.click(screen.getByRole('option', { name: 'Flagged' }));
   expect(screen.getAllByRole('row')).toHaveLength(2);
   await user.click(screen.getByRole('button', { name: 'Retry mistakes' }));
   expect(screen.getAllByRole('textbox')).toHaveLength(50);
   expect(screen.getByText('1–50 of 55')).toBeInTheDocument();
 });
+async function latestDraft(account=owner.current){return account?(await vocabularySessionDrafts.list(account))[0]?.session||null:null;}
+async function savedDraft(){let result;await waitFor(async()=>{result=await latestDraft();expect(result).not.toBeNull();});return result!;}
+async function readyStart(){const button=await screen.findByRole('button',{name:'Start session'});await waitFor(()=>expect(button).toBeEnabled());return button;}
 function mount(query = "") {
   return render(
     <MemoryRouter initialEntries={[`/vocabulary/review${query}`]}>
@@ -671,11 +702,11 @@ test('exact Part review includes collected words without advancing learning befo
   entry.sources = [{ type: 'reading', id: 'part-one', senseId: entry.senses[0].id, exam: { sectionId: 'part-one', paragraphId: 'A', quote: 'resilient' } }];
   fb.current.state.vocabularyEvidence = [];
   mount('?sourceType=reading&sourceId=part-one&mode=definition&dueOnly=false');
-  await userEvent.setup().click(await screen.findByRole('button', { name: 'Start session' }));
+  await userEvent.setup().click(await readyStart());
   expect(screen.getAllByRole('textbox')).toHaveLength(1);
   expect(fb.current.state.vocabularyEvidence).toEqual([]);
   expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
-  expect(readVocabularyDraft(owner.current)?.filter).toMatchObject({ sourceType: 'reading', sourceId: 'part-one' });
+  await waitFor(async()=>expect((await latestDraft())?.filter).toMatchObject({ sourceType: 'reading', sourceId: 'part-one' }));
 });
 
 test('a saved result has a return to history and New session opens setup rather than its origin',async()=>{
@@ -686,14 +717,14 @@ test('a saved result has a return to history and New session opens setup rather 
   await screen.findByRole('heading',{name:/of .* correct/});
   expect(screen.getByRole('link',{name:'Back to history'})).toHaveAttribute('href','/vocabulary/history');
   await userEvent.setup().click(screen.getByRole('button',{name:'New session'}));
-  expect(await screen.findByRole('button',{name:'Start session'})).toBeInTheDocument();
+  expect(await readyStart()).toBeInTheDocument();
   expect(screen.getByLabelText('Current URL')).toHaveTextContent('/vocabulary/review');
 });
 
 test("dictation rows conceal answers and autoplay on start and row focus", async () => {
   const user = userEvent.setup();
   const view = mount();
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   expect(view.container.innerHTML).not.toContain("resilient");
   expect(view.container.innerHTML).not.toContain("sustainable");
   expect(screen.getAllByRole("textbox")).toHaveLength(2);
@@ -719,14 +750,14 @@ test("submits the complete attempt once and retries the same frozen commit after
     .mockResolvedValueOnce(false)
     .mockResolvedValueOnce(true);
   render(<MemoryRouter initialEntries={['/vocabulary/review']}><VocabularyPracticePage/><CurrentRoute/></MemoryRouter>);
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   await user.type(
     screen.getByRole("textbox", { name: "Answer 1" }),
     "resilient",
   );
   await user.type(screen.getByRole("textbox", { name: "Answer 2" }), "wrong");
   await user.click(screen.getByRole("button", { name: "Submit session" }));
-  expect(screen.getByRole("alert")).toHaveTextContent("could not be saved");
+  expect(await screen.findByRole("alert")).toHaveTextContent("could not be saved");
   expect(screen.queryByRole("table")).not.toBeInTheDocument();
   expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('resilient');
   expect(screen.getByRole('textbox', { name: 'Answer 2' })).toHaveValue('wrong');
@@ -736,9 +767,9 @@ test("submits the complete attempt once and retries the same frozen commit after
   expect(fb.current.persistVocabularySession.mock.calls[1]).toEqual([
     prepared,
     id,
-    { onError: expect.any(Function) },
+    { onError: expect.any(Function), onResult: expect.any(Function) },
   ]);
-  expect(screen.getByRole("table")).toBeInTheDocument();
+  expect(await screen.findByRole("table")).toBeInTheDocument();
   expect(screen.getByRole('heading', {name: '1 of 2 correct'})).toBeInTheDocument();
   await screen.findByText(`/vocabulary/history/${id}`);
   await user.click(screen.getByRole("button", { name: "Retry mistakes" }));
@@ -748,6 +779,7 @@ test("submits the complete attempt once and retries the same frozen commit after
     "sustainable",
   );
   await user.click(screen.getByRole("button", { name: "Submit session" }));
+  await waitFor(() => expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(3));
   expect(fb.current.persistVocabularySession.mock.calls[2][1]).not.toEqual(id);
 });
 
@@ -777,7 +809,7 @@ test('successful planned submission retains results while completed account stat
     return true;
   });
   render(<MemoryRouter initialEntries={['/vocabulary/review?planId=transition-plan&returnTo=%2Ftoday%23task-transition-plan']}><Profiler id="submission-transition" onRender={() => { if (recording) frames.push(document.body.textContent || ''); }}><Suspense fallback={<p>Preparing saved results…</p>}><Routes><Route path="/vocabulary/review" element={<AccountUpdates />} /><Route path="/vocabulary/history/:sessionId" element={<DelayedHistory />} /></Routes><CurrentRoute /></Suspense></Profiler></MemoryRouter>);
-  fireEvent.click(await screen.findByRole('button', { name: 'Start session' }));
+  fireEvent.click(await readyStart());
   fireEvent.change(screen.getByRole('textbox', { name: 'Answer 1' }), { target: { value: entry.term } });
   recording = true;
   fireEvent.click(screen.getByRole('button', { name: 'Submit session' }));
@@ -822,7 +854,7 @@ test.each([
 test("keeps responses locally when exiting and resumes without persisting a review", async () => {
   const user = userEvent.setup();
   mount();
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   await user.type(
     screen.getByRole("textbox", { name: "Answer 1" }),
     "my response",
@@ -830,7 +862,7 @@ test("keeps responses locally when exiting and resumes without persisting a revi
   await user.click(screen.getByRole("button", { name: "Exit session" }));
   await user.click(screen.getByRole("button", { name: "Keep progress" }));
   expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
-  await user.click(screen.getByRole("button", { name: "Resume session" }));
+  await user.click(await screen.findByRole("button", { name: "Resume session" }));
   expect(screen.getByRole("textbox", { name: "Answer 1" })).toHaveValue(
     "my response",
   );
@@ -839,7 +871,7 @@ test("keeps responses locally when exiting and resumes without persisting a revi
 test("confirms unanswered cards before submitting and keeps production pending", async () => {
   const user = userEvent.setup();
   mount("?mode=production");
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   await user.type(
     screen.getByRole("textbox", { name: "Answer 1" }),
     "A resilient community recovered.",
@@ -854,14 +886,14 @@ test("confirms unanswered cards before submitting and keeps production pending",
       (review: any) => review.result,
     ),
   ).toEqual(["pending", "failure"]);
-  expect(screen.getByText("Pending", { selector: "dt" })).toBeInTheDocument();
+  expect(await screen.findByText("Pending", { selector: "dt" })).toBeInTheDocument();
 });
 
 test("focus layout moves with Enter and stops playback on unmount", async () => {
   const user = userEvent.setup();
   fb.current.state.settings.vocabulary = { layout: "cards" };
   const view = mount();
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   expect(screen.getAllByRole("textbox")).toHaveLength(1);
   await user.type(
     screen.getByRole("textbox", { name: "Answer 1" }),
@@ -875,7 +907,7 @@ test("focus layout moves with Enter and stops playback on unmount", async () => 
 test("central settings departure preserves an active session through the practice guard", async () => {
   const user = userEvent.setup();
   mount();
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   await user.click(screen.getByRole("button", { name: "Practice settings" }));
   expect(screen.getByRole('dialog',{name:'Exit practice session'})).toBeInTheDocument();
   expect(fb.current.saveVocabularyPreferences).not.toHaveBeenCalled();
@@ -886,7 +918,7 @@ test("central settings departure preserves an active session through the practic
 test("clears the old owner session and cancels playback when the account changes", async () => {
   const user = userEvent.setup();
   const view = mount();
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   await user.type(
     screen.getByRole("textbox", { name: "Answer 1" }),
     "old account response",
@@ -917,7 +949,7 @@ test("immediate feedback is local and locks an answer only after leaving the row
   const user = userEvent.setup();
   fb.current.state.settings.vocabulary = { feedback: "immediate" };
   mount();
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   await user.type(screen.getByRole("textbox", { name: "Answer 1" }), "wrong");
   expect(screen.queryByText("Incorrect")).not.toBeInTheDocument();
   await user.click(screen.getByRole("textbox", { name: "Answer 2" }));
@@ -938,13 +970,14 @@ test("audio loop records listened words in one batch without mastery reviews", a
     audioExamples: false,
   };
   mount("?mode=audio");
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   await waitFor(() =>
     expect(screen.getByRole("status")).toHaveTextContent("Audio loop complete"),
   );
   expect(player.play).toHaveBeenCalledTimes(2);
   expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
   await user.click(screen.getByRole("button", { name: "Submit session" }));
+  await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalled());
   const submitted = fb.current.persistVocabularySession.mock.calls[0][0];
   expect(submitted.vocabularyActivities).toHaveLength(2);
   expect(submitted.vocabularyReviews).toHaveLength(0);
@@ -959,11 +992,9 @@ test("dictation deduplicates senses and follows the frozen snapshot order", asyn
   });
   fb.current.state.settings.vocabulary = { order: "random" };
   const view = mount();
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   expect(screen.getAllByRole("textbox")).toHaveLength(2);
-  const stored = JSON.parse(
-    localStorage.getItem("fieldbook-vocabulary-draft-v1:account-one")!,
-  );
+  const stored = {session:await savedDraft()};
   const firstEntry = fb.current.state.vocabulary.find(
     (entry: any) => entry.id === stored.session.cardIds[0].entryId,
   );
@@ -988,7 +1019,7 @@ test("blocked automatic audio asks for a gesture and manual replay recovers", as
     .mockResolvedValueOnce({ ok: false, source: "none", reason: "blocked" })
     .mockResolvedValue({ ok: true, source: "speech", accent: "uk", voice: "Test UK voice" });
   mount();
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   await waitFor(() =>
     expect(screen.getByRole("status")).toHaveTextContent(
       "Select Play to enable audio",
@@ -1006,7 +1037,7 @@ test("a failed submission stays frozen after local recovery and keeps the same t
     .mockResolvedValueOnce(false)
     .mockResolvedValueOnce(true);
   const view = mount();
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   await user.type(
     screen.getByRole("textbox", { name: "Answer 1" }),
     "resilient",
@@ -1016,12 +1047,13 @@ test("a failed submission stays frozen after local recovery and keeps the same t
     "sustainable",
   );
   await user.click(screen.getByRole("button", { name: "Submit session" }));
+  await screen.findByRole('alert');
   const timestamp =
     fb.current.persistVocabularySession.mock.calls[0][0].vocabularySessions[0]
       .submittedAt;
   view.unmount();
   mount();
-  await user.click(screen.getByRole("button", { name: "Resume session" }));
+  await user.click(await screen.findByRole("button", { name: "Resume session" }));
   expect(screen.getByRole("textbox", { name: "Answer 1" })).toBeDisabled();
   await user.click(screen.getByRole("button", { name: "Retry submission" }));
   expect(
@@ -1038,7 +1070,7 @@ test("pausing an audio loop cancels the between-word delay", async () => {
   };
   const clearTimer = vi.spyOn(window, "clearTimeout");
   mount("?mode=audio");
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   await waitFor(() =>
     expect(screen.getByText("1 / 2 listened")).toBeInTheDocument(),
   );
@@ -1053,7 +1085,7 @@ test("audio sessions respect disabled autoplay and allow manual loop playback", 
   fb.current.state.settings.vocabulary = { autoPlay: false, audioGapMs: 0, audioExamples: false };
   const user = userEvent.setup();
   mount("?mode=audio");
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   expect(player.play).not.toHaveBeenCalled();
   await user.click(screen.getByRole("button", { name: "Play loop" }));
   await waitFor(() => expect(player.play).toHaveBeenCalledTimes(2));
@@ -1064,7 +1096,7 @@ test.each(["definition", "cloze"])(
   async (reviewMode) => {
     const user = userEvent.setup();
     mount(`?mode=${reviewMode}`);
-    await user.click(screen.getByRole("button", { name: "Start session" }));
+    await user.click(await readyStart());
     if (reviewMode === "definition")
       expect(screen.getByText("Definition 0")).toBeInTheDocument();
     else expect(screen.getAllByText("A _____ community.")).toHaveLength(2);
@@ -1078,6 +1110,7 @@ test.each(["definition", "cloze"])(
       "sustainable",
     );
     await user.click(screen.getByRole("button", { name: "Submit session" }));
+    await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalled());
     expect(
       fb.current.persistVocabularySession.mock.calls[0][0].vocabularyReviews.every(
         (review: any) =>
@@ -1096,7 +1129,7 @@ test("authored distinction choices grade the selected answer and show it in the 
     explanation: "Robust things resist damage.",
   };
   mount("?mode=distinction");
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   await user.click(screen.getByRole("radio", { name: "robust" }));
   expect(screen.queryByText("Correct")).not.toBeInTheDocument();
   await user.click(screen.getByRole("button", { name: "Submit session" }));
@@ -1109,13 +1142,13 @@ test("authored distinction choices grade the selected answer and show it in the 
       result: "success",
     }),
   );
-  expect(screen.getByRole("table")).toHaveTextContent("robust");
+  expect(await screen.findByRole("table")).toHaveTextContent("robust");
 });
 
 test("recent history opens a result log without starting a completed attempt", async () => {
   const user = userEvent.setup();
   const view = mount();
-  await user.click(screen.getByRole("button", { name: "Start session" }));
+  await user.click(await readyStart());
   await user.type(
     screen.getByRole("textbox", { name: "Answer 1" }),
     "resilient",
@@ -1125,6 +1158,7 @@ test("recent history opens a result log without starting a completed attempt", a
     "sustainable",
   );
   await user.click(screen.getByRole("button", { name: "Submit session" }));
+  await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalled());
   const persisted = fb.current.persistVocabularySession.mock.calls[0][0];
   fb.current.state = persisted;
   view.unmount();
@@ -1135,7 +1169,7 @@ test("recent history opens a result log without starting a completed attempt", a
   await user.click(
     screen.getByRole("button", { name: /Dictation.*2 words.*2 correct/ }),
   );
-  expect(screen.getByRole("table")).toBeInTheDocument();
+  expect(await screen.findByRole("table")).toBeInTheDocument();
   expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
   const detail = screen.getAllByRole('link', { name: /Details/ })[0];
   const href = detail.getAttribute('href')!;
@@ -1146,7 +1180,8 @@ test("recent history opens a result log without starting a completed attempt", a
   expect(await screen.findByRole('table')).toBeInTheDocument();
   expect(screen.getByText('No results in this view.')).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'New session' }));
-  expect(await screen.findByRole('button', { name: 'Start session' })).toBeInTheDocument();
+  expect(await screen.findByRole('button',{name:'Start session'})).toBeDisabled();
+  expect(screen.getByText('No words match these filters.')).toBeInTheDocument();
 });
 
 function CurrentRoute(){return <output>{useLocation().pathname}</output>}
@@ -1156,7 +1191,7 @@ test('result detail links retain the session and filtered source without nesting
   const detail = '/vocabulary/entry/entry-0?senseId=sense-0&returnTo=' + encodeURIComponent(oldSession);
   mount('?entryId=entry-0&senseId=sense-0&dueOnly=false&returnTo=' + encodeURIComponent(detail));
   const user = userEvent.setup();
-  await user.click(await screen.findByRole('button', { name: 'Start session' }));
+  await user.click(await readyStart());
   await user.type(screen.getByRole('textbox', { name: 'Answer 1' }), 'resilient');
   await user.click(screen.getByRole('button', { name: 'Submit session' }));
   const link = await screen.findByRole('link', { name: 'Details' });
@@ -1181,7 +1216,7 @@ test('imperative account and command navigation wait for the active session deci
   fb.current.setSkill = vi.fn();
   render(<MemoryRouter initialEntries={['/vocabulary/review?dueOnly=false']}><ImperativeNavigation /><VocabularyPracticePage /><CurrentRoute /></MemoryRouter>);
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
-  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(await readyStart());
   await user.click(screen.getByRole('button', { name: 'Account menu route' }));
   expect(screen.getByText('/vocabulary/review')).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'Cancel' }));
@@ -1189,41 +1224,41 @@ test('imperative account and command navigation wait for the active session deci
   expect(fb.current.setSkill).not.toHaveBeenCalled();
   await user.click(screen.getByRole('button', { name: 'Keep progress' }));
   expect(fb.current.setSkill).toHaveBeenCalledWith('writing', '/write');
-  expect(screen.getByText('/write')).toBeInTheDocument();
+  expect(await screen.findByText('/write')).toBeInTheDocument();
 });
 
 test('More closes before the practice departure decision', async () => {
   const user = userEvent.setup();
   render(<MemoryRouter initialEntries={['/vocabulary/review?dueOnly=false']}><ImperativeNavigation /><VocabularyPracticePage /><CurrentRoute /></MemoryRouter>);
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
-  await user.click(screen.getByRole('button', { name: 'Start session' }));
+  await user.click(await readyStart());
   await user.click(screen.getByRole('button', { name: 'Open More' }));
   await user.click(screen.getByRole('button', { name: 'Progress from More' }));
   expect(screen.queryByRole('dialog', { name: 'More navigation' })).not.toBeInTheDocument();
   expect(screen.getByRole('dialog', { name: 'Exit practice session' })).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'Keep progress' }));
-  expect(screen.getByText('/progress')).toBeInTheDocument();
+  expect(await screen.findByText('/progress')).toBeInTheDocument();
 });
 test('active internal navigation lets learners cancel or keep their draft before departure',async()=>{
 const user=userEvent.setup();render(<MemoryRouter initialEntries={['/vocabulary/review?dueOnly=false']}><Link to='/vocabulary/words'>Leave for words</Link><VocabularyPracticePage/><CurrentRoute/></MemoryRouter>);
-await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());await user.click(screen.getByRole('button',{name:'Start session'}));
+await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());await user.click(await readyStart());
 await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'my answer');await user.click(screen.getByRole('link',{name:'Leave for words'}));
 expect(screen.getByRole('dialog',{name:'Exit practice session'})).toBeInTheDocument();await user.click(screen.getByRole('button',{name:'Cancel'}));expect(screen.getByText('/vocabulary/review')).toBeInTheDocument();
-await user.click(screen.getByRole('link',{name:'Leave for words'}));await user.click(screen.getByRole('button',{name:'Keep progress'}));expect(screen.getByText('/vocabulary/words')).toBeInTheDocument();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
+await user.click(screen.getByRole('link',{name:'Leave for words'}));await user.click(screen.getByRole('button',{name:'Keep progress'}));expect(await screen.findByText('/vocabulary/words')).toBeInTheDocument();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
 });
 
 test('submitted group stays on history across refresh and word-detail return',async()=>{
 const user=userEvent.setup();groupFixture(2);fb.current.state.settings={vocabulary:{mode:'production'}};
 const view=render(<MemoryRouter initialEntries={['/vocabulary/study?bookId=test-book&unitId=test-group&dueOnly=false']}><Routes><Route path='/vocabulary/study' element={<VocabularyPracticePage/>}/><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes><CurrentRoute/></MemoryRouter>);
-await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());expect(screen.getByRole('button',{name:'Practice mode'})).toHaveTextContent('Dictation');await user.click(screen.getByRole('button',{name:'Start session'}));await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'word0');await user.type(screen.getByRole('textbox',{name:'Answer 2'}),'word1');await user.click(screen.getByRole('button',{name:'Submit session'}));
-const state=fb.current.persistVocabularySession.mock.calls[0][0];const id=state.vocabularySessions[0].id;expect(await screen.findByRole('table')).toBeInTheDocument();expect(await screen.findByText(`/vocabulary/history/${id}`)).toBeInTheDocument();
+await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());expect(screen.getByRole('button',{name:'Practice mode'})).toHaveTextContent('Dictation');await user.click(await readyStart());await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'word0');await user.type(screen.getByRole('textbox',{name:'Answer 2'}),'word1');await user.click(screen.getByRole('button',{name:'Submit session'}));
+await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalled());const state=fb.current.persistVocabularySession.mock.calls[0][0];const id=state.vocabularySessions[0].id;expect(await screen.findByRole('table')).toBeInTheDocument();expect(await screen.findByText(`/vocabulary/history/${id}`)).toBeInTheDocument();
 const returnTo=new URL(screen.getAllByRole('link',{name:/Details/})[0].getAttribute('href')!,'https://test.test').searchParams.get('returnTo')!;expect(returnTo).toContain(`/vocabulary/history/${id}`);expect(returnTo).toContain('bookId=test-book');view.unmount();fb.current.state=state;
 render(<MemoryRouter initialEntries={[returnTo]}><Routes><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes><CurrentRoute/></MemoryRouter>);expect(await screen.findByRole('table')).toBeInTheDocument();expect(await screen.findByText(`/vocabulary/history/${id}`)).toBeInTheDocument();expect(screen.queryByRole('button',{name:'Start session'})).not.toBeInTheDocument();
 });
 
 test('mobile More dialog links still protect an active vocabulary draft',async()=>{
 const user=userEvent.setup();render(<MemoryRouter initialEntries={['/vocabulary/review?dueOnly=false']}><div role='dialog' aria-label='More navigation'><Link to='/vocabulary/words'>My words from More</Link></div><VocabularyPracticePage/><CurrentRoute/></MemoryRouter>);
-await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());await user.click(screen.getByRole('button',{name:'Start session'}));await user.click(screen.getByRole('link',{name:'My words from More'}));expect(screen.getByRole('dialog',{name:'Exit practice session'})).toBeInTheDocument();await user.click(screen.getByRole('button',{name:'Cancel'}));expect(screen.getByText('/vocabulary/review')).toBeInTheDocument();
+await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());await user.click(await readyStart());await user.click(screen.getByRole('link',{name:'My words from More'}));expect(screen.getByRole('dialog',{name:'Exit practice session'})).toBeInTheDocument();await user.click(screen.getByRole('button',{name:'Cancel'}));expect(screen.getByText('/vocabulary/review')).toBeInTheDocument();
 });
 
 test('legacy identity-only distinction draft keeps the old accepted synonym', async () => {
@@ -1244,8 +1279,8 @@ test('explicit unlearned catalog drill keeps its group sense and makes no prepar
   const raw=released.entries.find((entry:any)=>entry.term==='core');fb.current.state.vocabulary=[];fb.current.state.vocabularyEvidence=[];fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
   const before=JSON.stringify(fb.current.state);const view=mount(`?entryId=${raw.id}&senseId=editorial%3Acore%3Afruit-centre&bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-02&dueOnly=false&returnTo=%2Fvocabulary%2Fentry%2F${raw.id}`);
   await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());expect(screen.getByText(/containing its seeds/)).toBeInTheDocument();
-  await userEvent.setup().click(screen.getByRole('button',{name:'Start session'}));expect(screen.getAllByRole('textbox')).toHaveLength(1);
-  const draft=JSON.parse(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')!).session;expect(draft.cardSnapshots[0].context).toMatchObject({bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02',senseId:'editorial:core:fruit-centre'});expect(draft.cardSnapshots[0].entry.senses[0].definition).toContain('seeds');expect(JSON.stringify(fb.current.state)).toBe(before);expect(fb.current.persistNow).not.toHaveBeenCalled();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();view.unmount();
+  await userEvent.setup().click(await readyStart());expect(screen.getAllByRole('textbox')).toHaveLength(1);
+  const draft=(await savedDraft());expect(draft.cardSnapshots[0].context).toMatchObject({bookId:'ielts-vocabulary',unitId:'ielts-vocabulary-chapter-12-group-02',senseId:'editorial:core:fruit-centre'});expect(draft.cardSnapshots[0].entry.senses[0].definition).toContain('seeds');expect(JSON.stringify(fb.current.state)).toBe(before);expect(fb.current.persistNow).not.toHaveBeenCalled();expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();view.unmount();
   mount('?dueOnly=false');expect(await screen.findByText('No words match these filters.')).toBeInTheDocument();expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
 });
 
@@ -1269,7 +1304,7 @@ test.each([false, true])('historical food core retry retains changed-sense dicta
   render(<MemoryRouter initialEntries={['/vocabulary/history/legacy-food']}><Routes><Route path='/vocabulary/history/:sessionId' element={<VocabularyPracticePage/>}/></Routes></MemoryRouter>);
   await userEvent.setup().click(await screen.findByRole('button',{name:'Retry mistakes'}));
   expect(screen.getAllByRole('textbox')).toHaveLength(rows.length);
-  const draft = JSON.parse(localStorage.getItem('fieldbook-vocabulary-draft-v1:account-one')!).session;
+  const draft = (await savedDraft());
   expect(draft.cardIds).toContainEqual({id:'ve-7c70dbbe:editorial:core:fruit-centre:dictation',entryId:'ve-7c70dbbe',senseId:'editorial:core:fruit-centre',mode:'dictation'});
   expect(JSON.stringify(fb.current.state)).toBe(before);
   expect(fb.current.persistVocabularySession).not.toHaveBeenCalled();
@@ -1290,6 +1325,7 @@ test('historical retry uses the frozen non-dictation task and preserves stored h
   expect(screen.getByText('Original money meaning.')).toBeInTheDocument();
   await user.type(screen.getByRole('textbox',{name:'Answer 1'}),'original-answer');
   await user.click(screen.getByRole('button',{name:'Submit session'}));
+  await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalled());
   const submitted = fb.current.persistVocabularySession.mock.calls[0][0];
   expect(submitted.vocabularySessions[1].results[0]).toMatchObject({result:'success',senseId:card.senseId,expectedAnswer:'original-answer',prompt:'Original money meaning.'});
   expect(submitted.vocabularySessions[0]).toEqual(record);
@@ -1390,8 +1426,8 @@ test('planned review resolves account targets despite untrusted URL filters and 
   mount(`?planId=account-plan&mode=definition&entryId=entry-1&dueOnly=true&wrongOnly=true&batchCards=${encodeURIComponent(JSON.stringify([{entryId:'entry-1',senseId:'sense-1'}]))}`);
   await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
   fireEvent.click(screen.getByRole('button',{name:'Start session'}));
-  expect(readVocabularyDraft(owner.current)).toMatchObject({planId:'account-plan',mode:'dictation',selection:{kind:'planned-review',planId:'account-plan',cards:refs}});
-  expect(readVocabularyDraft(owner.current)?.cardIds.map(({entryId,senseId})=>({entryId,senseId}))).toEqual(refs);
+  await waitFor(async()=>expect((await latestDraft())).toMatchObject({planId:'account-plan',mode:'dictation',selection:{kind:'planned-review',planId:'account-plan',cards:refs}}));
+  await waitFor(async()=>expect((await latestDraft())?.cardIds.map(({entryId,senseId})=>({entryId,senseId}))).toEqual(refs));
   expect(fb.current.loadVocabularyCatalog).toHaveBeenCalledWith(undefined,expect.objectContaining({entryIds:[entry.id]}));
 });
 
@@ -1412,7 +1448,7 @@ test.each(['/planning?week=next#task-exact-plan', '/today?scenario=return#task-e
   const view=mount(`?planId=exact-plan&returnTo=${encodeURIComponent(source)}`);
   await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
   fireEvent.click(screen.getByRole('button',{name:'Start session'}));
-  expect(readVocabularyDraft(owner.current)?.returnTo).toBe(source);
+  await waitFor(async()=>expect((await latestDraft())?.returnTo).toBe(source));
   view.unmount();
   mount('?resume=true');
   fireEvent.click(await screen.findByRole('button',{name:'Resume session'}));
@@ -1445,7 +1481,7 @@ test('planned review resource failures retry without falling back to a free sess
   fireEvent.click(retry);
   await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
   fireEvent.click(screen.getByRole('button',{name:'Start session'}));
-  expect(readVocabularyDraft(owner.current)?.selection).toMatchObject({kind:'planned-review',planId:'retry-plan'});
+  await waitFor(async()=>expect((await latestDraft())?.selection).toMatchObject({kind:'planned-review',planId:'retry-plan'}));
 });
 
 test('planned review ignores legacy group-study query detection',async()=>{
@@ -1454,5 +1490,5 @@ test('planned review ignores legacy group-study query detection',async()=>{
   mount('?planId=review-route&bookId=unknown&unitId=unknown&dueOnly=false');
   await waitFor(()=>expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled());
   fireEvent.click(screen.getByRole('button',{name:'Start session'}));
-  expect(readVocabularyDraft(owner.current)?.selection).toMatchObject({kind:'planned-review',planId:'review-route'});
+  await waitFor(async()=>expect((await latestDraft())?.selection).toMatchObject({kind:'planned-review',planId:'review-route'}));
 });

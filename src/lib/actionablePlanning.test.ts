@@ -3,6 +3,7 @@ import { expect, test } from 'vitest';
 import { emptyState, migrateState } from '../domain';
 import { addVocabularyItem, recordVocabularyReview } from '../domain/vocabulary';
 import { ensureUnifiedPlans, mutateStudyPlan, studyBudget } from './planTemplates';
+import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 const now = new Date('2026-10-14T12:00:00');
 const setup = () => { const state=emptyState(); state.settings.days=[1,2,3,4,5,6,7]; state.settings.dailyMinutes=90; return state; };
 test('new 90-minute schedules split into several skills with bounded task sizes and no duplicates',()=>{
@@ -73,11 +74,15 @@ test('a focus day keeps due reviews in its selected module even when multiple ta
  expect(tasks.every(p=>p.skill==='listening')).toBe(true);
 });
 test('large vocabulary allocations split into distinct bounded batches',()=>{
- const state=setup();state.wordbookEnrollments=[{bookId:'missing-book',id:'enrolled'}];
- state.settings.planning={...state.settings.planning,vocabularyMode:'fixed',vocabularyMinutes:65,blockMinutes:25};
+ const state=setup(),unit={id:'large-allocation-group',bookId:'large-allocation-book',kind:'group',order:1,entryIds:Array.from({length:65},(_,i)=>`large-allocation-${i}`)};state.wordbookEnrollments=[{bookId:unit.bookId,id:'enrolled'}];
+ state.settings.planning={...state.settings.planning,vocabularyMode:'fixed',vocabularyMinutes:65,blockMinutes:25,newWordsPerDay:65};
+ VOCABULARY_CATALOG.units.push(unit);
+ try{
  const tasks=ensureUnifiedPlans(state,undefined,now).filter(p=>p.dateKey==='2026-10-14'&&p.skill==='vocabulary');
  expect(tasks.length).toBeGreaterThan(1);expect(tasks.every(p=>p.estimatedMinutes<=25)).toBe(true);
  expect(new Set(tasks.map(p=>p.target.batchIndex)).size).toBe(tasks.length);
+ expect(tasks.flatMap(p=>p.target.entryIds)).toEqual(unit.entryIds);
+ }finally{VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(unit),1);}
 });
 
 test('split due-recall tasks cover each word once and remain stable on refresh',()=>{

@@ -1007,3 +1007,21 @@
 .practice-recovery-note strong { font-size:14px; }
 .practice-recovery-note p { margin:6px 0; color:var(--muted); font-size:13px; max-width:72ch; }
 .practice-recovery-note .btn { min-height:44px; white-space:normal; }
+
+/* Review setup keeps sources, task ownership and execution options readable at narrow widths. */
+.practice-planned-list,.practice-schedule-review,.practice-custom-selection,.practice-task-outcome{border:1px solid var(--rule);border-radius:16px;padding:20px;margin:20px 0;background:var(--sheet);min-width:0}
+.practice-planned-list header p,.practice-planned-list article p,.practice-task-outcome p{color:var(--muted);line-height:1.6;overflow-wrap:anywhere}
+.practice-planned-list article{display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px solid var(--rule);padding:16px 0}
+.practice-planned-list article>div{min-width:0}.practice-planned-list h4{margin:6px 0}.practice-planned-list article p{margin:4px 0}
+.practice-setup-options .practice-configuration{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;width:100%}
+.practice-setup-options .practice-field{min-width:0;align-items:stretch}.practice-field-label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px}
+.practice-size-presets{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}.practice-size-presets .btn{min-width:38px;justify-content:center}
+.practice-size-presets .btn[aria-pressed=true],.practice-layout-toggle .btn[aria-pressed=true]{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.practice-schedule-review fieldset{display:grid;gap:16px;border:0;padding:20px 0 0;min-width:0}
+.practice-schedule-review label,.practice-custom-selection label{display:flex;flex-direction:column;gap:8px}.practice-schedule-review label.check-field{flex-direction:row;align-items:center}
+.practice-custom-words{display:grid;gap:8px;margin:16px 0}.practice-custom-words>label{display:flex;flex-direction:row;align-items:flex-start;gap:12px;padding:12px;border:1px solid var(--rule);border-radius:10px;cursor:pointer}.practice-custom-words>label>input{flex:none;margin-top:4px}.practice-custom-words>label>span{display:grid;gap:4px;min-width:0;overflow-wrap:anywhere}.practice-custom-words label:has(input:checked){border-color:var(--blue);background:var(--surface-soft)}.practice-custom-words strong{font-size:14px}.practice-custom-words span>span{color:var(--muted);font-size:12px;line-height:1.6}
+.practice-schedule-review input:not([type=checkbox]),.practice-schedule-review select,.practice-field input[type=number]{width:100%;min-width:0;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);padding:10px;border-radius:8px}
+.practice-resume-list{display:flex;flex-wrap:wrap;gap:10px}.practice-resume-list h3{width:100%}.practice-match-list{display:grid;gap:16px;max-height:55vh;overflow:auto}.practice-match-list article{border:1px solid var(--rule);border-radius:12px;padding:16px}
+.practice-range-help{color:var(--muted);max-width:75ch;line-height:1.6}.practice-layout-toggle .btn,.practice-size-presets .btn{transition:background-color .15s,color .15s,border-color .15s}
+@media(max-width:620px){.practice-setup-options .practice-configuration{grid-template-columns:1fr;gap:20px}.practice-planned-list article{align-items:stretch;flex-direction:column}.practice-planned-list,.practice-schedule-review,.practice-custom-selection,.practice-task-outcome{padding:16px}.practice-resume .actions{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.practice-layout-toggle .btn,.practice-size-presets .btn{transition:none}}

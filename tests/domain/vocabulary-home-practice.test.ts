@@ -47,9 +47,9 @@ test('home defaults due batches to foundation while specialist exercises remain 
  expect(recommend().practice?.recommendation.alternatives).toContain('cloze');
 });
 
-test('legacy saved due dates remain a valid review schedule',()=>{
+test('legacy dates without mode schedules do not create strict due reviews',()=>{
  const {store,learning,recommend}=fixture();event(store);learning.legacyProgress={nextReviewAt:past};
- expect(recommend().dueCards.length).toBeGreaterThan(0);
+ expect(recommend().dueCards).toHaveLength(0);
 });
 
 test('eligible recovery outranks other due and missing skill candidates',()=>{
@@ -149,7 +149,7 @@ test('a scheduled-only batch excludes unsaved public defaults and unscheduled mo
  const {store,entry,learning}=fixture();learning.cards.definition={due:new Date(past)} as never;
  const filter={now,dueOnly:true,scheduledOnly:true};
  expect(getVocabularyReviewQueue(store,filter).map(card=>card.mode)).toEqual(['definition']);
- expect(getVocabularyReviewQueue(store,{now,dueOnly:true}).length).toBeGreaterThan(1);
+ expect(getVocabularyReviewQueue(store,{now,dueOnly:true}).map(card=>card.mode)).toEqual(['definition']);
  const original=VOCABULARY_CATALOG.entries;
  VOCABULARY_CATALOG.entries=[{...entry,senses:[{...entry.senses[0],id:'unsaved-default'}]}] as typeof original;
  try{expect(getVocabularyReviewQueue(store,filter).every(card=>card.senseId==='saved-meaning')).toBe(true);}

@@ -27,7 +27,9 @@ UNCERTAIN = re.compile(
     r"nonstandard|normally say|unusual|fragment", re.I
 )
 CHINESE = re.compile(r"[\u3400-\u9fff]")
-PLACEHOLDER = re.compile(r"definition pending|meaning pending|a phrase referring to|the word is", re.I)
+# A complete usage explanation can begin "The word is used...". Only the
+# unfinished stub itself is a placeholder; ordinary explanatory prose is valid.
+PLACEHOLDER = re.compile(r"definition pending|meaning pending|a phrase referring to|^\s*the word is\s*[.…-]*\s*$", re.I)
 
 
 def read(relative):
@@ -36,6 +38,33 @@ def read(relative):
 
 def identity(row):
     return row["entryId"], row["senseId"]
+
+
+EDITABLE = ("definition", "example", "pos", "collocations", "usage", "synonyms", "antonyms",
+            "distinctions", "distinctionTask", "wordFamily", "register")
+
+
+def correction_identity(row):
+    return (*identity(row), row.get("variantId")) if "variantId" in row or "contentVariant" in row else identity(row)
+
+
+def content(sense):
+    return {field: sense[field] for field in ("id", *EDITABLE) if field in sense}
+
+
+def exact_scope(left, right):
+    return left.get("kind") == right.get("kind") and (left.get("kind") != "group" or
+           (left.get("bookId"), left.get("unitId")) == (right.get("bookId"), right.get("unitId")))
+
+
+def apply_variant(rows, entry_id, sense, scope):
+    matches = [row for row in rows if row.get("entryId") == entry_id and row.get("senseId") == sense.get("id") and
+               any(exact_scope(candidate, scope) for candidate in row.get("contentVariant", {}).get("scopes", [])) and
+               any(content(sense) == row["contentVariant"].get(field) for field in ("beforeContent", "afterContent"))]
+    if len(matches) != 1:
+        return sense
+    result = {key: value for key, value in sense.items() if key not in EDITABLE}
+    return {**result, **matches[0]["contentVariant"]["afterContent"]}
 
 
 def member_key(row):
@@ -93,7 +122,8 @@ def audit():
     correction_rows = data[DOMAIN + "readinessCorrections.json"]
     defaults_rows = data[DOMAIN + "readinessDefaults.json"]
     core = {identity(r): r for r in core_rows}
-    corrections = {identity(r): r for r in correction_rows}
+    variant_rows = [row for row in correction_rows if "variantId" in row or "contentVariant" in row]
+    corrections = {identity(r): r for r in correction_rows if "variantId" not in r and "contentVariant" not in r}
     defaults = {r["entryId"]: r for r in defaults_rows}
     entries = {e["id"]: e for e in catalog["entries"]}
     bindings = {member_key(r): r for r in context["bindings"]}
@@ -114,20 +144,53 @@ def audit():
     def supplement(entry_id, sense):
         result = dict(sense)
         row = corrections.get((entry_id, sense.get("id"))) or core.get((entry_id, sense.get("id")))
-        if row:
-            for field in ("definition", "example", "pos", "usage"):
-                if row.get(field):
-                    result[field] = row[field]
+        if not row:
+            return result
+        # Legacy contentScope remains a definition/example/POS gate. The new
+        # exact variant layer is selected only after this released behavior.
+        scopes = row.get("contentScope")
+        if scopes and not any(all(sense.get(field) == candidate.get(field) for field in ("definition", "example", "pos")) or
+                              (sense.get("definition") == (row.get("definition") or candidate.get("definition")) and
+                               sense.get("example") == row.get("example") and sense.get("pos") == (row.get("pos") or candidate.get("pos"))) for candidate in scopes):
+            return result
+        if row.get("meaningGroup") and not any(sense.get("definition") == baseline.get("definition") and
+                                               sense.get("pos") == baseline.get("pos") for baseline in
+                                               [row.get("originalSense") or {}, *row.get("previousSenses", []),
+                                                {"definition": row.get("definition"), "pos": row.get("pos") or (row.get("originalSense") or {}).get("pos")}]):
+            return result
+        for field in EDITABLE:
+            if field in row and (field not in ("definition", "pos") or row[field]):
+                result[field] = row[field]
         return result
+
+    def displayed_default(entry, sense):
+        # The UI can display a separate public example when raw example text is
+        # relation/reference material. This model only uses an exact public
+        # definition/POS match; it never uses a partial variant snapshot.
+        example = sense.get("example", "")
+        reference = re.match(r"^\s*(?:(?:Near[- ]|Coordinate |Related |Derived )?(?:Synonyms?|Antonyms?|Meronyms?|Holonyms?|Hypernyms?|Hyponyms?|terms)|Citations|Thesaurus|Wikisaurus|Appendix|Category)\s*:", example, re.I)
+        if present(example) and not reference:
+            return sense
+        candidates = [supplement(entry["id"], row) for row in entry.get("senses", []) if row.get("id") == sense.get("id")]
+        candidates += [row["sense"] for rows in data.values() if isinstance(rows, list) for row in rows if isinstance(row, dict) and row.get("entryId") == entry["id"] and isinstance(row.get("sense"), dict) and row["sense"].get("id") == sense.get("id")]
+        candidates += [row["sense"] for row in [*context["bindings"], *context["defaults"]] if row["entryId"] == entry["id"] and row["sense"].get("id") == sense.get("id")]
+        for candidate in candidates:
+            if candidate.get("definition") == sense.get("definition") and candidate.get("pos", "").strip() == sense.get("pos", "").strip() and present(candidate.get("example")) and not re.match(r"^\s*(?:Near[- ]synonyms?|Synonyms?|Holonyms?|Meronyms?|Citations):", candidate["example"], re.I):
+                return {**sense, "example": candidate["example"]}
+        return sense
 
     def fallback_resolve(entry, membership=None):
         binding = bindings.get(member_key(membership)) if membership else None
         binding = binding or context_defaults.get(entry["id"])
-        if binding:
+        if binding and (membership and member_key(membership) in bindings or entry["id"] not in defaults):
             return dict(binding["sense"]), "context-binding" if membership and member_key(membership) in bindings else "context-default"
         candidate = defaults.get(entry["id"])
         base = candidate["sense"] if candidate else learning.get(entry["term"].lower()) or (entry.get("senses") or [{}])[0]
-        return supplement(entry["id"], base), "readiness-default" if candidate else "learning-overlay" if entry["term"].lower() in learning else "catalogue"
+        selected = supplement(entry["id"], base)
+        scope = {"kind": "default"}
+        selected = apply_variant(variant_rows, entry["id"], selected, scope)
+        selected = apply_variant(variant_rows, entry["id"], displayed_default(entry, selected), scope)
+        return selected, "readiness-default" if candidate else "learning-overlay" if entry["term"].lower() in learning else "catalogue"
 
     def curriculum(entry, membership):
         if not membership:
@@ -150,11 +213,14 @@ def audit():
     def resolve(entry, membership=None):
         sense, origin = fallback_resolve(entry, membership)
         basis, rows = curriculum(entry, membership)
-        return (dict(rows[0]["sense"]), "curriculum-" + basis) if rows else (sense, origin)
+        scope = {"kind": "group", "bookId": membership["bookId"], "unitId": membership["unitId"]} if membership else {"kind": "default"}
+        if rows:
+            return apply_variant(variant_rows, entry["id"], dict(rows[0]["sense"]), scope), "curriculum-" + basis
+        return apply_variant(variant_rows, entry["id"], sense, scope), origin
 
     for name, rows, required, key_fn in [
         ("core", core_rows, ("entryId", "senseId", "definition", "example", "pos"), identity),
-        ("corrections", correction_rows, ("entryId", "senseId", "example"), identity),
+        ("corrections", correction_rows, ("entryId", "senseId", "example"), correction_identity),
         ("defaults", defaults_rows, ("entryId",), lambda r: r["entryId"]),
     ]:
         counts = Counter(key_fn(r) for r in rows)
@@ -165,6 +231,11 @@ def audit():
             if row["entryId"] not in entries:
                 defects.append({"type": "unknown-overlay-entry", "source": name, "entryId": row["entryId"]})
             for field in required:
+                # Structural source references and explicitly pending source-only
+                # restorations can remain readable without a teaching example.
+                reading_only = row.get("meaningGroup") or row.get("usageReference") or (row.get("dictionaryParentSenseId") or row.get("dictionarySourceAnchorSenseId")) and row.get("example") == "" and row.get("learningPriority") is None
+                if field == "example" and reading_only:
+                    continue
                 if not present(row.get(field)):
                     defects.append({"type": "missing-overlay-field", "source": name, "entryId": row["entryId"], "field": field})
             sense = row.get("sense", row)
@@ -172,6 +243,20 @@ def audit():
                 text = sense.get(field, "")
                 if CHINESE.search(text) or PLACEHOLDER.search(text):
                     defects.append({"type": "language-or-placeholder", "source": name, "entryId": row["entryId"], "field": field})
+    for row in variant_rows:
+        value = row.get("contentVariant")
+        if not isinstance(row.get("variantId"), str) or not row.get("variantId") or not isinstance(value, dict) or value.get("schemaVersion") != 1 or not present(value.get("workItemId")):
+            defects.append({"type": "invalid-content-variant", "entryId": row.get("entryId"), "variantId": row.get("variantId")})
+            continue
+        for name in ("beforeContent", "afterContent"):
+            snapshot = value.get(name)
+            if not isinstance(snapshot, dict) or snapshot.get("id") != row.get("senseId") or any(field not in ("id", *EDITABLE) for field in snapshot) or any(not present(snapshot.get(field)) for field in ("definition", "pos")) or not isinstance(snapshot.get("example"), str):
+                defects.append({"type": "invalid-variant-snapshot", "variantId": row["variantId"], "field": name})
+        scopes = value.get("scopes")
+        if not isinstance(scopes, list) or not scopes or any(not isinstance(scope, dict) or scope.get("kind") not in ("dictionary-source", "default", "group") or (scope.get("kind") == "group" and (not present(scope.get("bookId")) or not present(scope.get("unitId")))) for scope in scopes):
+            defects.append({"type": "invalid-variant-scope", "variantId": row["variantId"]})
+        if content({"id": row["senseId"], **row}) != value.get("afterContent"):
+            defects.append({"type": "variant-after-material-mismatch", "variantId": row["variantId"]})
     if len(core_rows) != 1168:
         defects.append({"type": "unexpected-core-count", "expected": 1168, "actual": len(core_rows)})
     original_missing_ids = {e["id"] for e in catalog["entries"] if not present((e.get("senses") or [{}])[0].get("definition"))}
@@ -271,7 +356,7 @@ def audit():
                                          "senseId": sense.get("id", row.get("senseId")), "usage": sense["usage"]})
     summary = {"entriesScanned": len(entry_rows), "membershipsScanned": len(catalog["memberships"]), "groupsScanned": len(groups),
                "coreRows": len(core_rows), "coreUniqueEntries": len(core_ids), "coreRowsByFile": {p: len(data[p]) for p in core_paths}, "correctionRows": len(correction_rows),
-               "correctionUniqueEntries": len({r['entryId'] for r in correction_rows}), "readinessDefaults": len(defaults_rows),
+               "correctionUniqueEntries": len({r['entryId'] for r in correction_rows}), "contentVariants": len(variant_rows), "legacyCorrectionRows": len(corrections), "readinessDefaults": len(defaults_rows),
                "originalMissingDefinitionEntries": sum(r["originalMissingDefinition"] for r in entry_rows), "originalMissingExampleEntries": sum(r["originalMissingExample"] for r in entry_rows),
                "currentMissingDefinitionEntries": sum(r["missingDefinition"] for r in entry_rows), "currentMissingExampleEntries": sum(r["missingExample"] for r in entry_rows),
                "currentMissingPosEntries": sum(r["missingPos"] for r in entry_rows), "membershipMissingDefinition": sum(r["missingDefinition"] for r in membership_rows),

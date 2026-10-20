@@ -37,13 +37,15 @@ vi.mock('../../src/lib/supabase', () => ({
       return response;
     },
     from: (table) => ({
-      select: () => {
+      select: (projection) => {
+        mocks.selects.push({table,projection});
         let rows = mocks.rows[table] || [];
         const query = {
           range: async (from, to) => {
             mocks.reads.push(table);
             if (mocks.readPromises[table]) await mocks.readPromises[table];
-            return { data: structuredClone(rows.slice(from, to + 1)), error: mocks.readError === table ? new Error('Read failed') : null };
+            const page=rows.slice(from,to+1).map(row=>projection?.includes(':payload->')?Object.fromEntries(projection.split(',').map(part=>{const [alias,path]=part.split(':');return [alias,path?row.payload?.[path.replace(/^payload->>?/,'')]:row[alias]];})):row);
+            return { data: structuredClone(page), error: mocks.readError === table ? new Error('Read failed') : null };
           },
           eq: (key, value) => { rows = rows.filter(row => (key.startsWith('payload->>') ? row.payload?.[key.slice(10)] : row[key]) === value); return query; },
           in: (key, values) => { rows = rows.filter(row => values.includes(row[key])); return query; },
@@ -74,11 +76,74 @@ beforeEach(() => {
   mocks.rpcPromise = null;
   mocks.workspaceResult = null;
   mocks.reads = [];
+  mocks.selects = [];
   mocks.readPromises = {};
   mocks.readError = null;
   mocks.failTable = null;
   mocks.user = 'account-1';
   mocks.sessions = [];
+});
+
+test('ordinary vocabulary loading excludes immutable session history and partial detail reads never delete unseen results',async()=>{
+  const {hydrateState,ensureAccountModule,loadVocabularySession,getCollectionStatuses,saveState}=await import('../../src/storage/remote');
+  mocks.rows.vocabulary_sessions=[{id:'visible',payload:{id:'visible',mode:'dictation',status:'submitted',results:[],cardSnapshots:[{large:'frozen'}]}},{id:'unseen',payload:{id:'unseen',results:[]}}];
+  const state=await hydrateState({modules:['vocabularyCore']});
+  expect(mocks.selects.filter(row=>row.table==='vocabulary_sessions').map(row=>row.projection)).toEqual(['id,mode:payload->>mode,status:payload->>status,selection:payload->selection,filter:payload->filter']);
+  expect(mocks.reads).not.toContain('vocabulary_activities');
+  expect(mocks.reads).not.toContain('vocabulary_import_batches');
+  expect(getCollectionStatuses().vocabularySessions).toBe('unloaded');
+  const detail=await loadVocabularySession('visible');
+  expect(detail.cardSnapshots).toEqual([{large:'frozen'}]);
+  expect(getCollectionStatuses().vocabularySessions).toBe('unloaded');
+  state.vocabularySessions=[detail];state.settings.dailyMinutes=45;
+  expect(await saveState(state)).toBe(true);
+  expect(mocks.rpcCalls.at(-1).args.batch.lists.vocabularySessions).toBeUndefined();
+  const full=await ensureAccountModule('vocabulary');
+  expect(full.data.vocabularySessions.map(row=>row.id)).toEqual(['unseen','visible']);
+});
+
+test('planning reads only scheduling evidence, never marks partial histories writable and retires summaries on full load',async()=>{
+  const {hydrateState,ensureAccountModule,getCollectionStatuses,saveState}=await import('../../src/storage/remote');
+  const {planningEvidenceView}=await import('../../src/domain/planningEvidence');
+  mocks.rows.sessions=[{id:'writing-one',payload:{id:'writing-one',date:'2026-10-01',skill:'writing',practiceMode:'timed',questionId:'q1',essay:'Private long essay',audioId:'recording'}}];
+  mocks.rows.assessments=[{id:'score',payload:{id:'score',sessionId:'writing-one',date:'2026-10-01',criteria:[{name:'Grammar',score:'5'}],rawText:'Long imported markdown'}}];
+  mocks.rows.exam_attempts=[{id:'reading-one',payload:{id:'reading-one',status:'paused',skill:'reading',sectionIds:['section'],answers:{one:'private'},catalogSnapshot:{large:'resource'}}}];
+  const state=await hydrateState({modules:['planning']});
+  expect(state.sessions).toEqual([]);expect(state.examAttempts).toEqual([]);
+  const view=planningEvidenceView(state);
+  expect(view.sessions[0]).toMatchObject({id:'writing-one',skill:'writing',practiceMode:'timed'});
+  expect(view.sessions[0]).not.toHaveProperty('essay');
+  expect(view.examAttempts[0]).not.toHaveProperty('catalogSnapshot');
+  expect(view.examAttempts[0]).not.toHaveProperty('answers');
+  expect(view.assessments[0]).not.toHaveProperty('rawText');
+  expect(getCollectionStatuses()).toMatchObject({sessions:'unloaded',assessments:'unloaded',examAttempts:'unloaded',stories:'unloaded'});
+  state.settings.dailyMinutes=45;
+  expect(await saveState(state,undefined,{collections:['profile','sessions','examAttempts']})).toBe(true);
+  expect(mocks.rpcCalls.at(-1).args.batch.lists).toEqual({});
+  expect(mocks.deletes).toEqual([]);
+  const full=await ensureAccountModule('productive');
+  expect(full.data.sessions[0].essay).toBe('Private long essay');
+  expect(full.data.planningEvidence.map(row=>row.id)).not.toContain('sessions');
+  const after=planningEvidenceView({...state,...full.data,sessions:[]});
+  expect(after.sessions).toEqual([]); // Deleting a fully loaded row cannot resurrect a summary.
+});
+
+test('a failed planning summary read is retryable and does not make partially read collections writable',async()=>{
+  const {hydrateState,ensureAccountModule,getCollectionStatuses}=await import('../../src/storage/remote');
+  await hydrateState({modules:[]});mocks.readError='assessments';
+  await expect(ensureAccountModule('planning')).rejects.toThrow('Read failed');
+  expect(getCollectionStatuses().sessions).toBe('unloaded');
+  mocks.readError=null;
+  expect((await ensureAccountModule('planning')).data.planningEvidence).toHaveLength(6);
+});
+
+test('core loads only group-attempt metadata and keeps frozen result history separate',async()=>{
+  const {hydrateState,getCollectionStatuses}=await import('../../src/storage/remote');
+  mocks.rows.vocabulary_sessions=[{id:'batch',payload:{id:'batch',mode:'dictation',status:'submitted',selection:{kind:'learning-batch',bookId:'book',unitId:'group',cards:[{entryId:'one',senseId:'sense'}]},filter:{bookId:'book',unitId:'group'},results:[{entryId:'one',response:'one',example:'Frozen example'}],cardSnapshots:[{large:'frozen'}]}}];
+  const state=await hydrateState({modules:['vocabularyCore']});
+  expect(state.vocabularyGroupAttempts).toEqual([{id:'batch',mode:'dictation',status:'submitted',selection:{kind:'learning-batch',bookId:'book',unitId:'group',cards:[{entryId:'one',senseId:'sense'}]},filter:{bookId:'book',unitId:'group'}}]);
+  expect(state.vocabularySessions).toEqual([]);
+  expect(getCollectionStatuses().vocabularySessions).toBe('unloaded');
 });
 
 test('database statement timeouts explain server delay without blaming the browser connection', async () => {

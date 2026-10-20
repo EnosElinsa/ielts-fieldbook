@@ -17,12 +17,14 @@ const identifier = (value: unknown): value is string => typeof value === 'string
 const time = (value: unknown): value is string => typeof value === 'string' && value.length < 100 && Number.isFinite(Date.parse(value));
 
 // Validate frozen content; legacy identity-only drafts remain supported.
-function snapshot(value: unknown): VocabularyPracticeSession | null {
+export function validateVocabularyDraft(value: unknown): VocabularyPracticeSession | null {
   const input = object(normalizeVocabularyIdentities(value));
   if (!input || !identifier(input.id) || !modes.includes(input.mode as VocabularyPracticeMode) || !time(input.startedAt) || !['active', 'paused'].includes(String(input.status)) || !Array.isArray(input.cardIds) || !input.cardIds.length || input.cardIds.length > 10000) return null;
   if (input.selection !== undefined && !isVocabularySessionSelection(input.selection)) return null;
   if (input.returnTo !== undefined && (typeof input.returnTo !== 'string' || !safeVocabularyReturn(input.returnTo, ''))) return null;
   if (input.planId !== undefined && !identifier(input.planId)) return null;
+  if (input.parentSessionId !== undefined && !identifier(input.parentSessionId)) return null;
+  if(input.sourceSnapshot!==undefined){const source=object(input.sourceSnapshot);if(!source||!['automatic','manual','self-directed'].includes(String(source.origin))||(source.planId!==undefined&&!identifier(source.planId))||(source.dateKey!==undefined&&!/^\d{4}-\d{2}-\d{2}$/.test(String(source.dateKey)))||(source.title!==undefined&&(typeof source.title!=='string'||source.title.length>500)))return null;}
   if (input.submittedAt !== undefined && !time(input.submittedAt)) return null;
   const ids = new Set<string>();
   const cardIds: VocabularyPracticeSession['cardIds'] = [];
@@ -85,7 +87,7 @@ function snapshot(value: unknown): VocabularyPracticeSession | null {
   if (time(filterInput.now)) filter.now = filterInput.now;
   if (filterInput.now instanceof Date && Number.isFinite(filterInput.now.getTime())) filter.now = filterInput.now.toISOString();
   if (typeof filterInput.wrongOnly === 'boolean') Object.assign(filter, { wrongOnly: filterInput.wrongOnly });
-  return { id: input.id, ...(input.returnTo ? {returnTo:input.returnTo as string} : {}), ...(input.planId ? { planId: input.planId as string } : {}), mode: input.mode as VocabularyPracticeMode, preferences: { ...normalizeVocabularyPreferences(input.preferences), mode: input.mode as VocabularyPracticeMode }, filter, cardIds, ...(cardSnapshots ? {cardSnapshots, contentVersion: input.contentVersion as string} : {}), answers, index: input.index, status: input.status as VocabularyPracticeSession['status'], startedAt: input.startedAt, ...(time(input.submittedAt) ? { submittedAt: input.submittedAt } : {}), ...(input.selection ? { selection: structuredClone(input.selection) as VocabularyPracticeSession['selection'] } : {}) };
+  return { id: input.id, ...(input.parentSessionId?{parentSessionId:input.parentSessionId as string}:{}), ...(input.sourceSnapshot?{sourceSnapshot:structuredClone(input.sourceSnapshot) as VocabularyPracticeSession['sourceSnapshot']}:{}), ...(input.returnTo ? {returnTo:input.returnTo as string} : {}), ...(input.planId ? { planId: input.planId as string } : {}), mode: input.mode as VocabularyPracticeMode, preferences: { ...normalizeVocabularyPreferences(input.preferences), mode: input.mode as VocabularyPracticeMode }, filter, cardIds, ...(cardSnapshots ? {cardSnapshots, contentVersion: input.contentVersion as string} : {}), answers, index: input.index, status: input.status as VocabularyPracticeSession['status'], startedAt: input.startedAt, ...(time(input.submittedAt) ? { submittedAt: input.submittedAt } : {}), ...(input.selection ? { selection: structuredClone(input.selection) as VocabularyPracticeSession['selection'] } : {}) };
 }
 
 export function readVocabularyDraft(owner: string | null): VocabularyPracticeSession | null {
@@ -93,13 +95,13 @@ export function readVocabularyDraft(owner: string | null): VocabularyPracticeSes
   if (!owner?.trim()) return null;
   try {
     const stored = object(JSON.parse(localStorage.getItem(key(owner)) || 'null'));
-    return stored?.version === 1 && time(stored.savedAt) ? snapshot(stored.session) : null;
+    return stored?.version === 1 && time(stored.savedAt) ? validateVocabularyDraft(stored.session) : null;
   } catch { return null; }
 }
 export function writeVocabularyDraft(owner: string | null, session: VocabularyPracticeSession): boolean {
   if (!owner?.trim()) return false;
   try {
-    const safe = snapshot(session);
+    const safe = validateVocabularyDraft(session);
     if (!safe) return false;
     localStorage.setItem(key(owner), JSON.stringify({ version: 1, savedAt: new Date().toISOString(), session: safe }));
     return true;

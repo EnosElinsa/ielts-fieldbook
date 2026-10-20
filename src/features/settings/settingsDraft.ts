@@ -17,6 +17,13 @@ export function settingsDraft(settings: Record<string, any>) {
 export type SettingsDraft = ReturnType<typeof settingsDraft>;
 export const sameSetting = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
 
+/** Retain only the user's changed fields when refreshing another device's settings. */
+export function rebaseSettingsDraft(previous: any, edited: any, latest: any): any {
+  if(sameSetting(previous,edited))return latest;
+  if(previous&&edited&&latest&&![previous,edited,latest].some(Array.isArray)&&[previous,edited,latest].every(value=>typeof value==='object'))return Object.fromEntries([...new Set([...Object.keys(latest),...Object.keys(edited)])].map(key=>[key,rebaseSettingsDraft(previous[key],edited[key],latest[key])]));
+  return edited;
+}
+
 export function settingsChanges(draft: SettingsDraft, baseline: SettingsDraft): Record<string, any> {
   const changes = Object.fromEntries(Object.entries(draft).filter(([key, value]) => !sameSetting(value, baseline[key as keyof SettingsDraft])));
   if (changes.vocabulary) changes.vocabulary = Object.fromEntries(Object.entries(draft.vocabulary).filter(([key, value]) => !sameSetting(value, baseline.vocabulary[key as keyof typeof draft.vocabulary])));
@@ -29,7 +36,9 @@ export function settingsPlanPreview(settings: Record<string, any>, changes: Reco
   const rebuild = planningSettingsKey(next) !== planningSettingsKey(settings);
   const now=new Date(`${today}T12:00:00`);
   // The planner needs the complete previous schedule for rotation, reservations and carryover.
-  const draft=structuredClone({...emptyState(),...state,settings:next,plans});
+  // Only plans and activePlanId are mutated by generation. Learning data is a
+  // read-only input; avoid copying every frozen answer/media snapshot here.
+  const draft=rebuild?{...emptyState(),...state,settings:next,plans:structuredClone(plans)}:{plans};
   const generated: any[]=rebuild?ensureUnifiedPlans(draft,undefined,now):[];
   const nextPlans=new Map(draft.plans.map((plan: any)=>[plan.id,plan]));
   const affected=rebuild?plans.filter(plan=>!sameSetting(plan,nextPlans.get(plan.id))):[];

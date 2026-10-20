@@ -69,6 +69,22 @@ test('review accounting reconciles every source sense and flags changed source f
   expect(changed.summary.reviewed).toBe(0);
 });
 
+test('optional material can be explicitly inapplicable only with exact reviewed evidence', () => {
+  const correction = {...row, collocations: []};
+  const materialHash = createHash('sha256').update(JSON.stringify({definition:correction.definition,pos:original.pos,example:correction.example,collocations:[],distinctions:correction.distinctions})).digest('hex');
+  const decision = {reason:'This historical sense has no verified productive collocations.',referenceUrl:'https://en.wiktionary.org/w/index.php?title=bank&oldid=123',materialHash};
+  const record = {...review,notApplicable:{collocations:decision}};
+  const value = {...input,corrections:[correction],records:[record]};
+  expect(inspectDictionaryReview(value).errors).toEqual([]);
+  expect(inspectDictionaryReview(value).summary.reviewed).toBe(1);
+  for(const invalid of [{reason:''},{referenceUrl:'http://unverified.test'},{materialHash:'stale'}]) {
+    expect(inspectDictionaryReview({...value,records:[{...record,notApplicable:{collocations:{...decision,...invalid}}}]}).errors.join(' ')).toMatch(/inapplicable|incomplete/i);
+  }
+  expect(inspectDictionaryReview({...value,corrections:[{...correction,definition:'Changed meaning.'}]}).summary.reviewed).toBe(0);
+  expect(inspectDictionaryReview({...value,records:[review]}).summary.reviewed).toBe(0);
+  expect(inspectDictionaryReview({...value,corrections:[{...correction,example:''}],records:[{...record,notApplicable:{...record.notApplicable,example:decision}}]}).summary.reviewed).toBe(0);
+});
+
 test('orphaned identities, duplicate reviews and mismatched diagrams fail the audit', () => {
   const result = inspectDictionaryReview({ ...input, records: [review, review, { ...review, senseId: 'absent' }], diagrams: [{ entryId: 'bank', senseId: 'river', term: 'bank', pos: 'noun', definition: 'A financial institution.', kind: 'financial-bank' }] });
   expect(result.errors.join(' ')).toMatch(/duplicate/i);
@@ -238,6 +254,17 @@ test.each(["# ''Land beside a river.''", "# {{lb|en|geography}} ''Land beside a 
     }
   },
 );
+
+test('complete italic directories allow an external colon but reject punctuation-only headings',()=>{
+  for(const [definition,gloss,valid] of [['Land beside a river.:',"# ''Land beside a river.'':",true],['!!!:',"# ''!!!'':",false]] as const){
+    const parent={...original,definition};
+    const second={...restored,id:'second-restored',definition:'A sloping river edge.'};
+    const grouping={...row,originalSense:parent,definition,referenceUrl:restored.sourceUrl,meaningGroup:{sourceGloss:gloss}};
+    const data={...restoredInput,dictionaries:{bank:{senses:[parent]}},restoredSources:[{...evidence,parentSourceHash:hash(parent)},{...evidence,parentSourceHash:hash(parent),sourceGloss:'## A sloping river edge.',sense:second}],corrections:[grouping,restoredInput.corrections[1],{...row,senseId:second.id,originalSense:second,dictionaryParentSenseId:original.id}],records:[{...review,sourceHash:hash(parent)},{...review,senseId:restored.id,sourceHash:hash(restored)},{...review,senseId:second.id,sourceHash:hash(second)}]};
+    expect(inspectDictionaryReview(data).errors.some((error:string)=>error.includes('Invalid meaning group'))).toBe(!valid);
+  }
+  expect(plainSourceGloss('## {{taxfmt|Gossypium|genus}} cultivated for fiber.')).toBe('Gossypium cultivated for fiber.');
+});
 
 test('a phrasal-verb usage reference needs exact source wording and a revision, with no exercise', () => {
   const source = { ...original, definition: 'Used in phrasal verbs: lead off, lead on.' };

@@ -38,15 +38,16 @@ const LegalModal = lazy(()=>import('../features/modals/LegalModal').then(m=>({de
 function WorkspaceRoute() {
   const {pathname, search, key} = useLocation();
   let modules = []; let banks = [];
-  if (pathname.startsWith('/vocabulary')) modules = ['vocabulary'];
+  if (pathname.startsWith('/vocabulary')) modules = [/^\/vocabulary\/(progress|import)(?:\/|$)/.test(pathname)?'vocabulary':'vocabularyCore'];
   else if (/^\/(reading|listening)/.test(pathname)) modules = ['receptive'];
   else if (pathname.startsWith('/progress')) modules = ['productive','vocabulary','receptive'];
   else if (pathname.startsWith('/write')) { modules = ['productive']; banks = ['writing']; }
   else if (pathname.startsWith('/speak')) { modules = ['productive']; banks = ['speaking']; }
   else if (pathname.startsWith('/stories')) {modules=['productive'];banks=['speaking'];}
   else if (pathname.startsWith('/review')) modules=['productive','vocabulary'];
-  else if (pathname.startsWith('/settings')) modules=['productive','vocabulary','receptive'];
-  return <PageErrorBoundary resetKey={`${accountId()}:${key}`}><AccountDataBoundary modules={modules} banks={banks} vocabularyEntryIds={vocabularyTeachingScope(pathname,search)}><Outlet /></AccountDataBoundary></PageErrorBoundary>;
+  else if (pathname.startsWith('/settings')) modules=['planning','vocabularyCore'];
+  const teachingScope=pathname.startsWith('/settings')||pathname.startsWith('/vocabulary/history')?[]:vocabularyTeachingScope(pathname,search);
+  return <PageErrorBoundary resetKey={`${accountId()}:${key}`}><AccountDataBoundary modules={modules} banks={banks} vocabularyEntryIds={teachingScope}><Outlet /></AccountDataBoundary></PageErrorBoundary>;
 }
 
 function RailHint({ label, enabled, children }) {

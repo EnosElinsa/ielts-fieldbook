@@ -2,7 +2,7 @@ import { vocabularyTeaching } from './runtimeData';
 import { VOCABULARY_CATALOG } from './catalog';
 import { vocabularyCurriculumBaselines } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
-import { applyVocabularyReadiness, hasVocabularyReadinessContext, isVocabularyReadingNote, isVocabularyPracticeReference, supplementVocabularySense, vocabularyReadinessBaselines, VOCABULARY_READINESS_VERSION } from './readiness';
+import { applyVocabularyContentVariant, applyVocabularyReadiness, hasVocabularyReadinessContext, isVocabularyReadingNote, isVocabularyPracticeReference, supplementVocabularySense, vocabularyReadinessBaselines, VOCABULARY_READINESS_VERSION } from './readiness';
 import { vocabularySensePresentation } from './dictionaryPresentation';
 import sentenceGapForms from './sentenceGapForms.json';
 export const VOCABULARY_CONTENT_VERSION = `reviewed-2026-10-18.2/${VOCABULARY_READINESS_VERSION}`;
@@ -134,12 +134,13 @@ function comparableSenseValue(value: unknown): string {
 export function hasVocabularySenseEdits(sense: VocabularySense, baselines: (VocabularySense | undefined | null)[]): boolean {
  const known = baselines.filter((item): item is VocabularySense => Boolean(item));
  // Older saved snapshots omit optional dictionary fields. Missing metadata is not a learner edit;
- // explicitly stored empty values still are, so clearing a field remains respected.
+ // explicitly stored empty values require an explicit value in the same public snapshot.
+ // A missing old public field cannot authorise refilling a learner's deliberate clear.
  // Match one complete public snapshot. Mixing fields from old and new snapshots
  // would mistake a deliberately cleared learning note for untouched source data.
  return sense.source === 'Personal note' || Boolean(known.length && !known.some(item =>
   editableSenseFields.every(field => sense[field] === undefined ||
-   comparableSenseValue(item[field] ?? (Array.isArray(sense[field]) ? [] : '')) === comparableSenseValue(sense[field]))
+   Object.hasOwn(item,field) && comparableSenseValue(item[field]) === comparableSenseValue(sense[field]))
  ));
 }
 function existingReviewedEntry(entry: VocabularyEntry): VocabularyEntry {
@@ -152,7 +153,7 @@ function existingReviewedEntry(entry: VocabularyEntry): VocabularyEntry {
    const baselines = [...catalogVocabularySenses(entry.id).filter(sense => sense.id === primary.id),
     ...vocabularyReadinessBaselines(entry.id, primary.id), ...vocabularyCurriculumBaselines(entry.id, primary.id),
     ...[...contextSenses.bindings, ...contextSenses.defaults].filter(row => row.entryId === entry.id && row.sense.id === primary.id).flatMap(row => [row.sense, ...(row.originalSense ? [row.originalSense] : [])])];
-   if (hasVocabularySenseEdits(primary, [...baselines, ...baselines.map(sense => supplementVocabularySense(entry.id, sense, [sense], () => false))])) return entry;
+   if (hasVocabularySenseEdits(primary, [...baselines, ...baselines.map(sense => supplementVocabularySense(entry.id, sense, [sense], () => false, {kind:'default'}))])) return entry;
   }
   const found = entry.senses.find(sense => sense.id === replacement.id);
   return {...entry,meaning:replacement.definition,example:replacement.example,senses:[found || replacement,...entry.senses.filter(sense => sense.id !== replacement.id)]};
@@ -162,7 +163,7 @@ function existingReviewedEntry(entry: VocabularyEntry): VocabularyEntry {
  return {...entry, senses:entry.senses.map((sense,index)=> {
   if (index !== 0 || !['order','treat','recipe'].includes(entry.term)) return sense;
   const baselines = [...catalogVocabularySenses(entry.id).filter(original => original.id === sense.id), ...vocabularyReadinessBaselines(entry.id, sense.id)];
-  const supplemented = supplementVocabularySense(entry.id, sense, baselines, hasVocabularySenseEdits);
+  const supplemented = supplementVocabularySense(entry.id, sense, baselines, hasVocabularySenseEdits, {kind:'default'});
   // Apply exact teaching before a legacy cleanup can look like a learner edit.
   if (supplemented !== sense || hasVocabularySenseEdits(sense, baselines)) return supplemented;
   return {...sense, synonyms:[]};
@@ -181,7 +182,19 @@ export function reviewedEntry(entry:VocabularyEntry):VocabularyEntry {
  const existing=existingReviewedEntry(entry);
  const originals=catalogVocabularySenses(entry.id);
  const canonical=(learningSenses as Record<string,VocabularySense>)[entry.term.toLowerCase()];
- return applyVocabularyReadiness(existing,[...originals,...(canonical ? [canonical]:[])],hasVocabularySenseEdits);
+ const ready=applyVocabularyReadiness(existing,[...originals,...(canonical ? [canonical]:[])],hasVocabularySenseEdits);
+ const senses=ready.senses.map(sense=>{
+  const known=[...originals.filter(item=>item.id===sense.id),...vocabularyReadinessBaselines(entry.id,sense.id),...vocabularyCurriculumBaselines(entry.id,sense.id)];
+  if(hasVocabularySenseEdits(sense,known)) return sense;
+  const publicSense=known.find(item=>!hasVocabularySenseEdits(sense,[item])) || sense;
+  const displayed=publicVocabularyExample(entry.id,publicSense);
+  if(!displayed) return sense;
+  // A reviewed default may name the actual displayed fallback example. Keep the
+  // learner snapshot separate so an explicitly cleared field is still protected.
+  return applyVocabularyContentVariant(entry.id,{...publicSense,example:displayed.example},sense,known,hasVocabularySenseEdits,{kind:'default'});
+ });
+ const primary=senses[0];
+ return {...ready,senses,meaning:primary?.definition || ready.meaning,example:primary?.example || ready.example};
 }
 /** A separate display example, never an update to a learner's deliberately empty notes. */
 export function publicVocabularyExample(entryId: string, sense: VocabularySense): { example: string; sense: VocabularySense } | undefined {
@@ -189,7 +202,7 @@ export function publicVocabularyExample(entryId: string, sense: VocabularySense)
  if (current.example || !current.definition) return;
  const originals = [...catalogVocabularySenses(entryId).filter(row => row.id === sense.id), ...vocabularyReadinessBaselines(entryId, sense.id)];
  const candidates = [
-  ...originals.map(row => supplementVocabularySense(entryId, row, originals, () => false)),
+  ...originals.map(row => supplementVocabularySense(entryId, row, originals, () => false, {kind:'default'})),
   ...vocabularyCurriculumBaselines(entryId, sense.id),
   ...[...contextSenses.bindings, ...contextSenses.defaults].filter(row => row.entryId === entryId && row.sense.id === sense.id).map(row => row.sense),
  ];
@@ -227,7 +240,7 @@ export function learningTask(entry: VocabularyEntry, sense: VocabularySense, mod
  const originalSense = originalSenses.find(item => item.id === sense.id) || (dictionarySense?.id === sense.id ? dictionarySense : undefined);
  const manifestSenses = [...contextSenses.bindings, ...contextSenses.defaults].filter(item => item.entryId === entry.id && item.sense.id === sense.id).flatMap(item => [item.sense, item.originalSense]) as unknown as (VocabularySense | null)[];
  const reviewedOriginal = originalSenses.length ? reviewedEntry(catalogEntry || {...entry,senses:originalSenses}).senses.find(item => item.id === sense.id) : undefined;
- const customContent = hasVocabularySenseEdits(sense, [originalSense, reviewedOriginal, ...manifestSenses, ...vocabularyCurriculumBaselines(entry.id,sense.id)]);
+ const customContent = hasVocabularySenseEdits(sense, [originalSense, reviewedOriginal, ...manifestSenses, ...vocabularyCurriculumBaselines(entry.id,sense.id), ...vocabularyReadinessBaselines(entry.id,sense.id)]);
  const currentTeaching = hasVocabularyReadinessContext(entry.id, sense);
  const commonTask = reviewed[entry.term.toLowerCase()];
  // A stable ID preserves identity, not an old task's teaching context. Current

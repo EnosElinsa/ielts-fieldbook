@@ -23,6 +23,22 @@ describe('account-scoped vocabulary learning evidence', () => {
     state.vocabularySessions[0].selection={kind:'unit',bookId:'book',unitId:'group'};
     expect(vocabularyGroupProgress(state, group)).toBe('Studied');
   });
+  it('retains completed learning batches from light session metadata and saved reviews', () => {
+    const state: any = {
+      vocabularyGroupAttempts: [{ id: 'batch-session', status: 'submitted', mode: 'dictation', selection: { kind: 'learning-batch', bookId: 'book', unitId: 'group', cards: [{entryId:'one',senseId:'s1'},{entryId:'two',senseId:'s2'}] } }],
+      vocabularyReviews: [
+        { id: 'batch-session:one:s1:dictation', entryId:'one',senseId:'s1',mode:'dictation',response:'one' },
+        { id: 'batch-session:two:s2:dictation', sessionId:'batch-session',entryId:'two',senseId:'s2',mode:'dictation',response:'two' },
+      ],
+      wordbookProgress: [{bookId:'book',unitId:'group',completedEntryIds:['one','two']}],
+    };
+    expect(vocabularyGroupProgress(state, group)).toBe('Studied');
+    state.vocabularyReviews[1].response='';
+    expect(vocabularyGroupProgress(state, group)).toBe('In progress');
+    state.vocabularyReviews[1].response='two';
+    state.vocabularyGroupAttempts[0].selection.kind='specialist';
+    expect(vocabularyGroupProgress(state, group)).toBe('In progress');
+  });
 });
 
 it('blank objective submissions do not manufacture learned evidence',()=>{const state:any={vocabularyReviews:[{entryId:'one',response:'',result:'failure'}],vocabularyEvidence:[{entryId:'one',response:'',mode:'dictation',verification:'objective'}],vocabularySessions:[{status:'submitted',mode:'dictation',results:[{entryId:'one',response:''}]}]};expect(getLearnedVocabularyIds(state).size).toBe(0);expect(vocabularyGroupProgress(state,group)).toBe('Not started');});
@@ -32,8 +48,10 @@ it('due review excludes unlearned words and respects mode and scheduled dates', 
     vocabulary: ['one', 'two'].map(id => ({ id, term: id, tags: [], sources: [], senses: [{ id: 'sense', definition: 'Meaning', example: '' }], createdAt: '2026-01-01' })),
     vocabularyReviews: [{ entryId: 'one', response: 'Meaning', result: 'success' }],
   };
-  expect(getDueVocabularyReviewQueue(state, { now: '2026-10-13' }).map(card => card.mode).sort()).toEqual(['definition', 'dictation', 'production']);
-  expect(getDueVocabularyReviewQueue(state, { mode: 'definition', now: '2026-10-13' })).toHaveLength(1);
+  expect(getDueVocabularyReviewQueue(state, { now: '2026-10-13' })).toHaveLength(0);
+  state.vocabularyStates = [{ entryId: 'one', senseId: 'sense', cards: { definition: { due: '2026-10-12' }, dictation: { due: '2027-01-01' } } }];
+  expect(getDueVocabularyReviewQueue(state, { now: '2026-10-13' }).map(card => card.mode)).toEqual(['definition']);
+  expect(getDueVocabularyReviewQueue(state, { mode: 'dictation', now: '2026-10-13' })).toHaveLength(0);
   state.vocabularyStates = [{ entryId: 'one', senseId: 'sense', cards: { definition: { due: '2027-01-01' } } }];
   expect(getDueVocabularyReviewQueue(state, { mode: 'definition', now: '2026-10-13' })).toHaveLength(0);
 });

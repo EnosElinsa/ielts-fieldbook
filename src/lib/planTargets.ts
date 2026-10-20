@@ -4,6 +4,7 @@ import type { StudyPlan } from '../domain/plans';
 import type { ExamCatalog } from '../domain/exam/types';
 import { displayName } from './format';
 import { bindSpeakingPlan } from '../domain/plans';
+import { planningEvidenceView } from '../domain/planningEvidence';
 
 type Sources = {
   bank: (skill: 'writing' | 'speaking') => Promise<any[]>;
@@ -38,7 +39,7 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
       const skill = target.skill;
       if (!catalogs.has(skill)) catalogs.set(skill, await sources.catalog(skill));
       const catalog = catalogs.get(skill)!;
-      const tried = new Set((state.examAttempts || []).filter((attempt:any)=>attempt.skill===skill && attempt.status==='completed').flatMap((attempt:any)=>attempt.sectionIds));
+      const tried = new Set((planningEvidenceView(state).examAttempts || []).filter((attempt:any)=>attempt.skill===skill && attempt.status==='completed').flatMap((attempt:any)=>attempt.sectionIds));
       const candidates = catalog.sections.filter(section=>section.skill===skill && section.status==='ready').sort((a,b)=>a.id.localeCompare(b.id));
       const fresh = candidates.filter(section=>!tried.has(section.id) && !reserved.has(section.id));
       const choices = fresh.length ? fresh : candidates;
@@ -62,13 +63,17 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
       // A catalog may expose only a group count until its source is published.
       // Keep that future allocation prospective; exact starts still require resources.
       if (automatic && !source.complete && !source.entryIds.length) continue;
-      if (automatic && source.complete && (target.batchIndex || 0) * (target.batchSize || 10) >= source.count) {
+      if (automatic && target.selectionPolicy!=='exact' && source.complete && (target.batchIndex || 0) * (target.batchSize || 10) >= source.count) {
         // Provisional metadata can shrink once resources arrive. Only untouched,
         // unbound automatic slots may disappear; exact/manual work stays explicit.
         state.plans = state.plans.filter((row: StudyPlan) => row !== plan);
         continue;
       }
-      const batch=buildLearningBatch(state,target.bookId,target.unitId,target.batchIndex||0,target.batchSize||10,target.assessmentMode as any);
+      const plannedIds=target.selectionPolicy==='exact'?target.entryIds:undefined;
+      const exactIds=plannedIds&&automatic?plannedIds.filter(entryId=>source.entryIds.includes(entryId)&&!state.plans.some((row:StudyPlan)=>row!==plan&&['pending','in_progress'].includes(row.status)&&row.target?.type==='vocabulary'&&row.target.binding!=='dynamic'&&row.target.cards.some(ref=>ref.entryId===entryId))):plannedIds;
+      if(automatic&&exactIds&&!exactIds.length){state.plans=state.plans.filter((row:StudyPlan)=>row!==plan);continue;}
+      const exact=exactIds?.map(entryId=>({entryId,senseId:source.entries.find(entry=>entry.id===entryId)?.senses[0]?.id||''}));
+      const batch=buildLearningBatch(state,target.bookId,target.unitId,target.batchIndex||0,target.batchSize||10,target.assessmentMode as any,exact);
       if (!batch.cards.length) throw new Error('The selected word batch is unavailable. Retry your plan.');
       if (automatic) {
         const overlaps = state.plans.some((row: StudyPlan) => row !== plan && ['pending','in_progress'].includes(row.status) && row.target?.type === 'vocabulary' && row.target.binding !== 'dynamic' && row.target.assessmentMode === batch.mode && row.target.cards.some(ref => batch.cards.some(card => card.entryId === ref.entryId && card.senseId === ref.senseId)));
@@ -77,7 +82,7 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
         plan.estimatedMinutes = batch.cards.length;
         plan.title = `Vocabulary - Learn ${batch.cards.length} words`;
       }
-      Object.assign(target,{cards:batch.selection.cards,assessmentMode:batch.mode});
+      Object.assign(target,{cards:batch.selection.cards,assessmentMode:batch.mode,...(exact?{binding:'frozen',entryIds:exactIds}:{})});
       plan.quantity=batch.cards.length;
     }
   }
@@ -92,7 +97,7 @@ export function studyTargetSummary(plan: any): string {
   }
   if (target.type==='section') return `${plan.targetLabel || target.sectionId || ''} · ${target.questionIds?.length || plan.quantity || 0} questions`;
   if (target.type==='vocabulary') {
-    const count=target.cards.length || target.batchSize || plan.quantity || 0;
+    const count=target.cards?.length || target.entryIds?.length || plan.quantity || target.batchSize || 0;
     return `${target.mode==='learning-batch'?`Batch ${(target.batchIndex||0)+1}`:'Review'} · ${count} ${count===1?'prompt':'prompts'}`;
   }
   if (target.type==='intensive') return '1 listening sentence';

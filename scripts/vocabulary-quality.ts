@@ -4,13 +4,13 @@ import type { VocabularySense } from '../src/domain/vocabulary/types';
 
 export type Scope = { kind: 'default' | 'group'; bookId?: string; unitId?: string };
 export type QualitySource = { entryId: string; term: string; originalSense: VocabularySense; displaySense: VocabularySense; reviewStatus: 'reviewed' | 'pending'; priority?: string; readingNote?: boolean; referenceOnly?: boolean };
-export type QualityLesson = { entryId: string; term: string; sense: VocabularySense; scope: Scope; modes: string[]; readingNote?: boolean; referenceOnly?: boolean };
+export type QualityLesson = { entryId: string; term: string; sense: VocabularySense; scope: Scope; modes: string[]; readingNote?: boolean; referenceOnly?: boolean; priority?: string | null };
 export const qualitySignals = [
   'missing-definition', 'missing-pos', 'missing-example', 'source-markup', 'relation-example', 'reference-example',
   'truncated-example', 'archaic-example', 'example-fragment-signal', 'missing-collocations',
   'missing-distinctions', 'duplicate-gloss', 'no-cloze-task', 'no-distinction-task',
 ] as const;
-export const qualityCandidateFields = ['definition', 'example', 'pos', 'usage', 'register', 'collocations', 'distinctions', 'exampleKind', 'learningPriority', 'distinctionTask'] as const;
+export const qualityCandidateFields = ['definition', 'example', 'pos', 'usage', 'register', 'collocations', 'distinctions', 'synonyms', 'antonyms', 'wordFamily', 'exampleKind', 'learningPriority', 'distinctionTask'] as const;
 type Signal = typeof qualitySignals[number];
 const enrichmentSignals = new Set<Signal>(['missing-collocations', 'missing-distinctions', 'no-cloze-task', 'no-distinction-task']);
 type WorkItem = {
@@ -50,22 +50,26 @@ export function buildQualityReport(input: { sources: QualitySource[]; lessons: Q
   }
   const duplicateGroups = [...duplicates.values()].filter(rows => rows.length > 1);
   const duplicateIds = new Set(duplicateGroups.flat());
-  function variant(entryId: string, term: string, sense: VocabularySense, metadata: { readingNote?: boolean; referenceOnly?: boolean }) {
-    const fingerprint = displayHash(sense), key = JSON.stringify([entryId, sense.id, fingerprint]);
-    const existing = variants.get(key);
-    if (existing) {
-      if (existing.readingNote !== Boolean(metadata.readingNote) || existing.referenceOnly !== Boolean(metadata.referenceOnly)) throw new Error('Conflicting exact-content metadata: ' + key);
-      return existing;
-    }
+  function variant(entryId: string, term: string, sense: VocabularySense, metadata: { readingNote?: boolean; referenceOnly?: boolean; priority?: string | null }) {
+    const fingerprint = displayHash(sense), baseKey = JSON.stringify([entryId, sense.id, fingerprint]);
     const source = sources.get(identity(entryId, sense.id));
     if (source && source.term !== term) throw new Error('Source term mismatch: ' + entryId);
-    const matchesSource = source && displayHash(source.displaySense) === fingerprint;
+    const sameSourceContent=Boolean(source && displayHash(source.displaySense)===fingerprint);
+    const priority=Object.hasOwn(metadata,'priority')?metadata.priority || null:sameSourceContent?source?.priority || null:null;
+    const exactMetadata={readingNote:Boolean(metadata.readingNote),referenceOnly:Boolean(metadata.referenceOnly),priority};
+    const initial=variants.get(baseKey);
+    const sameMetadata=(item:WorkItem)=>item.readingNote===exactMetadata.readingNote && item.referenceOnly===exactMetadata.referenceOnly && item.priority===exactMetadata.priority;
+    // Preserve old work identities; split identical text only when authored route metadata differs.
+    const key=initial && !sameMetadata(initial)?JSON.stringify([entryId,sense.id,fingerprint,exactMetadata]):baseKey;
+    const existing=variants.get(key);
+    if(existing) return existing;
+    const matchesSource=sameSourceContent && Boolean(source && Boolean(source.readingNote)===exactMetadata.readingNote && Boolean(source.referenceOnly)===exactMetadata.referenceOnly && (source.priority || null)===priority);
     const item: WorkItem = {
       workItemId: 'vq:' + hash(key), entryId, term, senseId: sense.id,
       sourceHash: source ? hash(source.originalSense) : null, displayHash: fingerprint,
       originalSense: source ? structuredClone(source.originalSense) : null, displaySense: structuredClone(sense),
       reviewStatus: matchesSource ? source.reviewStatus : 'context-review-required',
-      priority: matchesSource ? source.priority || null : null,
+      priority,
       readingNote: Boolean(metadata.readingNote), referenceOnly: Boolean(metadata.referenceOnly),
       scopes: [], modes: null, rawSignals: [], resolvedSignals: [], signals: [], tier: 2,
     };
@@ -202,8 +206,9 @@ export function validateQualityCandidates(report: QualityReport, candidates: unk
       if (!required && (!Object.hasOwn(fields, key) || (!focused && fields[key] === undefined))) continue;
       const value = fields[key];
       if (['definition', 'example'].includes(key) && (!text(value) || /\b(?:TODO|TBD)\b|definition pending|example pending/i.test(String(value)))) fail('Missing or placeholder ' + key + '.');
-      if (['pos', 'usage', 'register'].includes(key) && !text(value)) fail('Invalid ' + key + '.');
-      if (['collocations', 'distinctions'].includes(key) && (!Array.isArray(value) || !value.length || !value.every(text) || new Set(value.filter(text).map(normalized)).size !== value.length)) fail('Missing, blank or repeated ' + key + '.');
+      if (key === 'pos' && !text(value)) fail('Invalid ' + key + '.');
+      if (['usage', 'register'].includes(key) && !(focused && value === '') && !text(value)) fail('Invalid ' + key + '.');
+      if (['collocations', 'distinctions', 'synonyms', 'antonyms', 'wordFamily'].includes(key) && (!Array.isArray(value) || (!focused && ['collocations','distinctions'].includes(key) && !value.length) || !value.every(text) || new Set(value.filter(text).map(normalized)).size !== value.length)) fail('Missing, blank or repeated ' + key + '.');
       if (key === 'exampleKind' && value !== 'reading-note') fail('Invalid example kind.');
       if (key === 'learningPriority' && (!text(value) || !['general', 'specialist', 'historical', 'proper-name'].includes(value))) fail('Invalid learning priority.');
       if (key === 'distinctionTask') {

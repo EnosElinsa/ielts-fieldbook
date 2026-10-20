@@ -33,7 +33,7 @@ export type StudyPlanAction =
   | {type:'resize';estimatedMinutes:number;allowOverBudget?:boolean}
   | {type:'reschedule'|'duplicate';dateKey:string;allowOverBudget?:boolean}
   | {type:'restore';allowOverBudget?:boolean}
-  | {type:'skip'}
+  | {type:'skip'|'hold'|'resume'|'archive'|'unarchive'}
   | {type:'reorder';direction:'up'|'down'};
 export type PlanTarget =
   | { type: 'question'; skill: 'writing' | 'speaking'; questionId: string | null; part?: string; mode: string; prompts?: { promptKey: string; promptText: string; promptIndex: number; part: string }[] }
@@ -41,12 +41,13 @@ export type PlanTarget =
   | { type: 'exam-review'; skill: 'reading' | 'listening'; attemptId: string }
   | { type: 'intensive'; skill: 'listening'; sectionId: string; sentenceId: string }
   | { type: 'error-review'; errorIds: string[] }
-  | { type: 'vocabulary'; binding?: 'dynamic' | 'frozen'; mode: 'learning-batch' | 'due-review'; assessmentMode: string; bookId?: string; unitId?: string; batchIndex?: number; batchSize?: number; cards: {entryId:string; senseId:string}[] };
+  | { type: 'vocabulary'; binding?: 'dynamic' | 'frozen'; mode: 'learning-batch' | 'due-review'; assessmentMode: string; bookId?: string; unitId?: string; batchIndex?: number; batchSize?: number; selectionPolicy?: 'exact'; entryIds?: string[]; reviewType?:'due'|'wrong'|'custom';reviewFilter?:import('./vocabulary/types').ReviewQueueFilter;reviewReason?:string;questionOrder?:'source'|'random'|'due';selectedMeanings?:{entryId:string;senseId:string}[];cards: {entryId:string; senseId:string}[] };
 export type StudyPlan = {
   id: string; dateKey: string; skill: StudySkill; kind: string; title: string; description: string;
   estimatedMinutes: number; origin: 'automatic' | 'manual'; status: 'pending' | 'in_progress' | 'completed' | 'skipped';
   skipReason?: 'no-longer-due' | 'merged-review' | 'bulk-skip' | 'user-skipped';
   originalDateKey?: string; rescheduledAt?: string; skippedAt?: string;
+  onHold?: boolean; heldAt?: string; archivedAt?: string; unarchivedAt?: string;
   target: PlanTarget; completion: { type: 'attempt' | 'review' | 'assessment'; description: string };
   schemaVersion: 2; generationKey: string; startedAt: string | null; completedAt: string | null;
   [key: string]: unknown;

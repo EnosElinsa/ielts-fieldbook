@@ -122,6 +122,7 @@ export function persistShape(state) {
   delete payload.lexicon;
   delete payload.questions;
   delete payload.speakingTopics;
+  delete payload.planningEvidence;
   payload.assessments = (state.assessments || []).map(migrateAssessmentVocabulary);
   return normalizeVocabularyIdentities(payload);
 }

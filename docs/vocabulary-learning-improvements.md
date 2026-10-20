@@ -2,11 +2,21 @@
 
 The October 17 review follows dictionary selection through saving, practice and return navigation. The existing system already preserves separate meanings, dated evidence in four skills, FSRS scheduling, source attribution, personal edits and frozen sessions. Improvements should make the next useful learning action clearer without weakening those guarantees.
 
-## Whole-queue content delivery — 2026-10-20
+## Unified delivery — 2026-10-20
+
+The approved [unified implementation ledger](unified-learning-implementation.md) replaces the previous two plans and retains every requirement, its evidence, dependencies and remaining work. It covers Planning, six-group Settings, planned and self-directed Review, account/session IndexedDB drafts, input responsiveness, atomic conflict guards, scoped loading and dictionary review. A new feedback item never removes an older requirement.
+
+The integrated working tree currently contains **52,152 source senses: 5,027 fully reviewed and 47,125 pending**. This includes765 independently accepted full reviews and1,469 focused field repairs;these measures overlap and must not be added. The revised third packages passed independent source/semantic review and root runtime gates before adding213 full reviews. Their13 indexed-only proposals and74 whole-variant holds remain unmerged. Author candidates,source downloads and automated checks confer no semantic approval.
+
+The shared runtime also recognizes old public snapshots after harmless list deduplication,preserves deliberate personal clears,and keeps source,default and course variants separate. Settings separates automatic learning sources and balance from practice/audio defaults. Local draft conflicts preserve open answers and offer an explicit confirmed reload of the saved version. Planning,Settings and Today load projected scheduling evidence without full productive/receptive histories. Initial plans/drafts and server paging of Planning history remain open loading work.
+
+Frontend publication and remaining platform/data work are still open; consult the ledger before making a completion claim.
+
+## Previous whole-queue content delivery — 2026-10-20
 
 The next collocation queue now has a reusable collection/preparation path in [the bulk workflow](vocabulary-bulk-workflow.md#collect-and-prepare-an-entire-issue-queue). One job covers all 5,895 opportunities: 4,733 source pages and 1,162 absent-page receipts are cached; a resume reuses every title result. Six processing packages preserve all variants, with 3,742 exact source matches and 2,153 explicit source-resolution items. Source headings cannot be treated as lexical meanings. These are authoring inputs, not newly published content or semantic approvals. Model API generation is still unimplemented; the complete dictionary objective remains open and processing packages are not individual releases.
 
-The collocation follow-up integrates 248 scoped field repairs, restores 49 real meanings under seven source headings and separates latest as a generic superlative from its actual recency adjective. Eight defaults and twelve topic selections are corrected while distinct course teaching is retained. The complete dictionary now has **4,262 reviewed / 47,846 pending among 52,108 records**. Current learning has 3,449 variants with collocations or reading cues and 1,307 with distinction notes. The 248 partial field repairs are additional work, not 248 all-field semantic approvals. The remaining whole-queue authoring and full dictionary review are unfinished.
+The previous collocation follow-up integrates 248 scoped field repairs, restores 49 real meanings under seven source headings and separates latest as a generic superlative from its actual recency adjective. Eight defaults and twelve topic selections are corrected while distinct course teaching is retained. At that release, the complete dictionary had **4,262 reviewed / 47,846 pending among 52,108 records**. Current learning then had 3,449 variants with collocations or reading cues and 1,307 with distinction notes. The 248 partial field repairs were additional work, not 248 all-field semantic approvals. These are historical counts; current progress is reported above.
 
 The [fragment review](vocabulary-fragment-learning-review.md) previously accounted for all 513 original current-learning fragment signals in one release: 312 valid examples retained, 199 lexical examples rewritten and two source directories repaired by restoring actual meanings. At that release, the dictionary had 4,204 reviewed / 47,855 pending among 52,059 records, with 3,194 current learning variants having collocations or reading cues and 1,051 having distinction notes. Dated sections below document earlier releases.
 

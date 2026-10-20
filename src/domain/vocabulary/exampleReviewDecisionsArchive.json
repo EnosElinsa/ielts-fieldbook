@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "archivedOn": "2026-10-20",
+  "originalReceiptFileSha256": "98a056fb41b99ac0db36273a453f78b8cc8fc3a02c8dfb2ccd5f37e648cb936a",
+  "activeReceipts": 312,
+  "records": [
+    {
+      "receipt": {
+        "workItemId": "vq:7eaf4aaea2bf7460abbf65c021599fa010f801f6c6bfecf74610366e3d1fbcaf",
+        "entryId": "ve-b87385a",
+        "senseId": "kaikki:f01be3016d87ba812b",
+        "sourceHash": "1b7cb7cc434dd988ee015253f46f6a88f870ad649a58dfee15490cb8da1dc32e",
+        "displayHash": "7d94c27023cfcb154698bce642fd8e25430d6a19c8c3699510cb7f9fd3ee4cd0",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=flu&oldid=92975454",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed update."
+    }
+  ]
+}

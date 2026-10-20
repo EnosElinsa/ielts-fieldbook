@@ -55,17 +55,23 @@ export function buildVocabularyResources(root: string) {
   const retainedDictionaryCatalogs = [];
   let beforeDictionaryExpansion = teaching;
   for (const filename of data('resourceDictionaryRevisions') as string[]) {
-    const baseline = data(filename) as { removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections']; removeDefaults?: string[]; restoreDefaults?: VocabularyTeachingData['readiness']['defaults']; removeTopics?: {bookId:string;unitId:string;entryId:string;senseId:string}[] };
+    const baseline = data(filename) as { removeCorrections: {entryId:string; senseId:string}[]; restoreCorrections: VocabularyTeachingData['readiness']['corrections']; removeDefaults?: string[]; restoreDefaults?: VocabularyTeachingData['readiness']['defaults']; removeTopics?: {bookId:string;unitId:string;entryId:string;senseId:string}[]; removeCorrectionVariants?: {entryId:string;senseId:string;variantId:string}[]; restoreCorrectionVariants?: VocabularyTeachingData['readiness']['corrections']; restoreCorrectionsSnapshot?: VocabularyTeachingData['readiness']['corrections']; restoreDefaultsSnapshot?: VocabularyTeachingData['readiness']['defaults']; restoreTopics?: VocabularyTeachingData['curriculum']['topics']; restoreSources?: VocabularyTeachingData['curriculum']['source']; restoreContext?: VocabularyTeachingData['context'] };
     const removed = new Set(baseline.removeCorrections.map(row => JSON.stringify([row.entryId,row.senseId])));
     const restored = new Map(baseline.restoreCorrections.map(row => [JSON.stringify([row.entryId,row.senseId]),row]));
     const removedDefaults = new Set(baseline.removeDefaults || []);
     const restoredDefaults = new Map((baseline.restoreDefaults || []).map(row => [row.entryId,row]));
     const topicIdentity = (row: VocabularyTeachingData['curriculum']['topics'][number]) => JSON.stringify([row.bookId,row.unitId,row.entryId,row.sense.id]);
     const removedTopics = new Set((baseline.removeTopics || []).map(row => JSON.stringify([row.bookId,row.unitId,row.entryId,row.senseId])));
+    const variantIdentity = (row: {entryId:string;senseId:string;variantId?:string}) => JSON.stringify([row.entryId,row.senseId,row.variantId]);
+    const removedVariants = new Set((baseline.removeCorrectionVariants || []).map(variantIdentity));
+    const restoredVariants = new Map((baseline.restoreCorrectionVariants || []).map(row => [variantIdentity(row),row]));
     beforeDictionaryExpansion = { ...beforeDictionaryExpansion, readiness: { ...beforeDictionaryExpansion.readiness,
-      corrections: beforeDictionaryExpansion.readiness.corrections.filter(row => !removed.has(JSON.stringify([row.entryId,row.senseId]))).map(row => restored.get(JSON.stringify([row.entryId,row.senseId])) || row),
-      defaults: beforeDictionaryExpansion.readiness.defaults.filter(row => !removedDefaults.has(row.entryId)).map(row => restoredDefaults.get(row.entryId) || row),
-    }, ...(removedTopics.size ? { curriculum: { ...beforeDictionaryExpansion.curriculum, topics: beforeDictionaryExpansion.curriculum.topics.filter(row => !removedTopics.has(topicIdentity(row))) } } : {}) };
+      corrections: baseline.restoreCorrectionsSnapshot ?? beforeDictionaryExpansion.readiness.corrections.filter(row => !removed.has(JSON.stringify([row.entryId,row.senseId])) && !(row.variantId && removedVariants.has(variantIdentity(row)))).map(row => (row.variantId ? restoredVariants.get(variantIdentity(row)) : undefined) || restored.get(JSON.stringify([row.entryId,row.senseId])) || row),
+      defaults: baseline.restoreDefaultsSnapshot ?? beforeDictionaryExpansion.readiness.defaults.filter(row => !removedDefaults.has(row.entryId)).map(row => restoredDefaults.get(row.entryId) || row),
+    }, curriculum: { ...beforeDictionaryExpansion.curriculum,
+      topics: baseline.restoreTopics ?? (removedTopics.size ? beforeDictionaryExpansion.curriculum.topics.filter(row => !removedTopics.has(topicIdentity(row))) : beforeDictionaryExpansion.curriculum.topics),
+      source: baseline.restoreSources ?? beforeDictionaryExpansion.curriculum.source,
+    }, context: baseline.restoreContext ?? beforeDictionaryExpansion.context };
     retainedDictionaryCatalogs.push(catalog(source, beforeDictionaryExpansion));
   }
   const learningBaseline = data('resourceLearningBaseline') as {

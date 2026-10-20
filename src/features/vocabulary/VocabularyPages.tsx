@@ -28,7 +28,9 @@ import {
   setVocabularyManualStatus,
 } from "../../domain/vocabulary";
 import { accountId } from '../../storage/remote';
-import { readVocabularyDraft } from '../../storage/vocabularyDrafts';
+import { useVocabularyLocalDrafts } from './useVocabularyLocalDrafts';
+import { nextHomeLearning } from '../../lib/planTemplates';
+import { TaskStartButton } from '../planning/StudySchedule';
 import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
 import { normalizeVocabularyPreferences } from '../../domain/vocabulary/preferences';
 import { getVocabularyHomePractice } from '../../domain/vocabulary/homePractice';
@@ -287,18 +289,24 @@ function VocabularyHomePage() {
     window.addEventListener('focus',refresh);document.addEventListener('visibilitychange',onVisible);
     return ()=>{window.clearTimeout(timer);window.removeEventListener('focus',refresh);document.removeEventListener('visibilitychange',onVisible);};
   },[guidance.nextChangeAt,practiceClock,owner]);
-  const saved = readVocabularyDraft(owner);
+  const deviceSessions=useVocabularyLocalDrafts(owner);
+  const saved = deviceSessions.drafts[0]?.session;
   const preferences = normalizeVocabularyPreferences(fb.state.settings?.vocabulary);
   const mode = preferences.mode === 'audio' ? 'definition' : preferences.mode;
   const dueCards = guidance.dueCards;
   const reviewMode = dueCards.some(card => card.mode === mode) ? mode : dueCards[0]?.mode || mode;
   const due = dueCards.filter(card => card.mode === reviewMode);
-  const enrollment = [...(fb.state.wordbookEnrollments || [])].sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || ''))).map(row => ({ book: VOCABULARY_CATALOG.books.find(book => book.id === row.bookId), study: bookStudy(fb.state, row.bookId) })).find(row => row.book && row.study.next);
-  const nextGroup = enrollment?.study.next;
+  const nextLearning=useMemo(()=>nextHomeLearning(fb.state),[fb.state,fb.vocabularyCatalogRevision,practiceClock]);
+  const nextTarget=nextLearning?.target;
+  const selectedEntryIds=nextTarget?.entryIds||nextTarget?.cards?.map(card=>card.entryId)||[];
+  const enrollment=nextTarget?{book:VOCABULARY_CATALOG.books.find(book=>book.id===nextTarget.bookId),study:bookStudy(fb.state,nextTarget.bookId)}:undefined;
+  const nextGroup=enrollment?.study.groups.find(group=>group.id===nextTarget?.unitId);
+  const nextLearningUrl=nextGroup?`${studyLink(nextGroup)}?${new URLSearchParams({batchSize:String(selectedEntryIds.length||nextTarget.batchSize),batch:String(nextTarget.selectionPolicy==='exact'?0:nextTarget.batchIndex||0),...(selectedEntryIds.length?{selectedEntryIds:JSON.stringify(selectedEntryIds)}:{})})}`:'/vocabulary/wordbooks';
   const suggestion = !saved && (!due.length || ['recovery','error'].includes(guidance.practice?.recommendation.reason || '')) ? guidance.practice : undefined;
   const showSuggestion = suggestion && (suggestion.recommendation.status==='ready' || !nextGroup);
   const learning = nextGroup && fb.state.wordbookProgress.find(row => row.bookId === nextGroup.bookId && row.unitId === nextGroup.id)?.learning;
   const resumeParams = new URLSearchParams({ resume: 'true', mode: saved?.mode || mode });
+  if (saved)resumeParams.set('resumeSessionId',saved.id);
   if (saved?.planId) resumeParams.set('planId', saved.planId);
   let resumeTo = `/vocabulary/review?${resumeParams}`;
   if (saved?.selection && 'bookId' in saved.selection) {
@@ -306,25 +314,26 @@ function VocabularyHomePage() {
     if (saved.selection.kind === 'learning-batch') {
       params.set('batch', String(saved.selection.batchIndex)); params.set('batchSize', String(saved.selection.batchSize)); params.set('batchCards', JSON.stringify(saved.selection.cards));
     }
+    params.set('resumeSessionId',saved.id);
     if (saved.planId) params.set('planId', saved.planId);
     resumeTo = `/vocabulary/study?${params}`;
   }
-  const href = saved ? resumeTo : due.length ? `/vocabulary/review?${new URLSearchParams({ mode: reviewMode, dueOnly: 'true', scheduledOnly:'true' })}` : nextGroup ? studyLink(nextGroup) : '/vocabulary/wordbooks';
+  const href = saved ? resumeTo : due.length ? `/vocabulary/review?${new URLSearchParams({ mode: reviewMode, dueOnly: 'true', scheduledOnly:'true' })}` : nextLearningUrl;
   const action = saved ? 'Continue session' : due.length ? 'Review due words' : nextGroup ? learning?.viewedEntryIds?.length ? 'Continue learning' : 'Start learning' : 'Study wordbooks';
   const title = saved ? 'Continue your session' : due.length ? 'Words due for review' : enrollment ? enrollment.book.title : 'Choose a wordbook';
   return <VocabularyLayout ready={catalogStatus !== 'loading'}>
     <div className="page-tools"><h2>Vocabulary</h2><Link className="btn line" to="/settings/vocabulary">Practice settings</Link></div>
     <section className="vocabulary-home-next" aria-label="Next vocabulary task">
-      <span className="vocabulary-eyebrow">{saved ? `${saved.cardIds.length} words · Session saved` : showSuggestion ? 'Your saved meaning' : due.length ? `${due.length} ${reviewMode} cards due` : nextGroup ? `${preferences.learningBatchSize} words per batch` : 'Wordbook study'}</span>
+      <span className="vocabulary-eyebrow">{saved ? `${saved.cardIds.length} words · Session saved` : showSuggestion ? 'Your saved meaning' : due.length ? `${due.length} ${reviewMode} cards due` : nextGroup ? `${selectedEntryIds.length||nextTarget.batchSize} new words selected` : 'Wordbook study'}</span>
       {showSuggestion ? <>
         <h3><Link to={`/vocabulary/entry/${encodeURIComponent(suggestion.entry.id)}?${new URLSearchParams({senseId:suggestion.sense.id,returnTo:'/vocabulary'})}`}>{suggestion.entry.term}</Link></h3>
         <p className="vocabulary-home-meaning">{suggestion.sense.definition}</p>
         <VocabularyNextPractice primaryAction recommendation={suggestion.recommendation} to={mode=>practiceUrl(suggestion.entry.id,suggestion.sense.id,{},'/vocabulary',mode)}/>
-        {suggestion.recommendation.status==='waiting' ? <Link className="btn line" to={nextGroup?studyLink(nextGroup):'/vocabulary/wordbooks'}>{nextGroup?'Continue learning':'Study wordbooks'}<ArrowRight size={16} aria-hidden="true"/></Link> : null}
+        {suggestion.recommendation.status==='waiting' ? <Link className="btn line" to={nextLearningUrl}>{nextGroup?'Continue learning':'Study wordbooks'}<ArrowRight size={16} aria-hidden="true"/></Link> : null}
       </> : <>
         <h3>{catalogStatus==='ready'||saved?title:'Your next vocabulary task'}</h3>
         {nextGroup && !saved && !due.length && catalogStatus==='ready' ? <p>{unitPath(enrollment.book, nextGroup, enrollment.study.hierarchy)}</p> : null}
-        {catalogStatus === 'loading' && !saved ? <PanelLoadingState message="Preparing your vocabulary recommendations..." /> : catalogStatus === 'error' && !saved ? <StateMessage kind="error" message="Vocabulary recommendations could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16}/></Link>}
+        {catalogStatus === 'loading' && !saved ? <PanelLoadingState message="Preparing your vocabulary recommendations..." /> : catalogStatus === 'error' && !saved ? <StateMessage kind="error" message="Vocabulary recommendations could not be loaded." onRetry={() => setRetry(value => value + 1)} /> : !saved&&!due.length&&nextLearning?.plan ? <TaskStartButton plan={nextLearning.plan}/> : <Link className="btn primary" to={href}>{action}<ArrowRight size={16}/></Link>}
         {!saved && !due.length && nextGroup && suggestion?.recommendation.status==='waiting' ? <p className="vocabulary-muted vocabulary-home-waiting">Next saved-meaning practice: <time dateTime={suggestion.recommendation.dueAt}>{new Date(suggestion.recommendation.dueAt).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</time>.</p> : null}
       </>}
     </section>
@@ -1067,18 +1076,35 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
 
 export function VocabularyHistoryPage() {
   const fb = useFieldbook();
-  const sessions = [...(fb.state.vocabularySessions || [])].sort((a, b) => String(b.submittedAt).localeCompare(String(a.submittedAt)));
+  const owner=accountId();
+  const [source,setSource]=useState('all'),[page,setPage]=useState(0),[revision,setRevision]=useState(0);
+  const [loaded,setLoaded]=useState(null),[error,setError]=useState('');
+  const requestKey=JSON.stringify([owner,source,page,revision]);
+  useEffect(()=>{
+    if(!fb.loadVocabularyHistoryPage)return;
+    let active=true;setError('');
+    void fb.loadVocabularyHistoryPage({source,offset:page*20,limit:20}).then(result=>{if(active)setLoaded({key:requestKey,...result});},()=>{if(active)setError('History could not be loaded. Your saved results are unchanged.');});
+    return()=>{active=false;};
+  },[fb.loadVocabularyHistoryPage,requestKey]);
+  const local=[...(fb.state.vocabularySessions||[])].filter(log=>source==='all'||(source==='self-directed'?!log.planId:source==='planned'?Boolean(log.planId):log.sourceSnapshot?.origin===source)).sort((a,b)=>String(b.submittedAt).localeCompare(String(a.submittedAt)));
+  const ready=!fb.loadVocabularyHistoryPage||loaded?.key===requestKey;
+  const sessions=fb.loadVocabularyHistoryPage?(ready?loaded.rows:[]):local.slice(page*20,(page+1)*20);
+  const total=fb.loadVocabularyHistoryPage?(ready?loaded.total:0):local.length;
+  const pages=Math.max(1,Math.ceil(total/20));
   return <VocabularyLayout><div className="page-tools"><h2>Vocabulary history</h2><Link className="btn line" to="/vocabulary/review">Review vocabulary</Link></div>
-    {sessions.length ? <div className="vocabulary-history-list">{sessions.map(log => {
+    <label className="vocabulary-history-source">Session source<select value={source} onChange={event=>{setSource(event.target.value);setPage(0);}}><option value="all">All sources</option><option value="planned">All planned reviews</option><option value="automatic">System arranged</option><option value="manual">User arranged</option><option value="self-directed">Self-directed</option></select></label>
+    {error?<StateMessage kind="error" message={error} onRetry={()=>setRevision(value=>value+1)}/>:!ready?<PanelLoadingState message="Loading history…"/>:sessions.length ? <div className="vocabulary-history-list">{sessions.map(log => {
       const bookId = log.selection?.bookId || log.filter?.bookId;
       const unitId = log.selection?.unitId || log.filter?.unitId;
-      const total = log.summary?.total ?? log.results.length;
-      const summary = log.summary || {correct:log.results.filter(row=>row.result==='success').length,incorrect:log.results.filter(row=>['failure','partial'].includes(row.result)).length,pending:log.results.filter(row=>row.result==='pending').length};
+      const total = log.summary?.total ?? log.results?.length ?? 0;
+      const results=log.results||[];
+      const summary = log.summary || {correct:results.filter(row=>row.result==='success').length,incorrect:results.filter(row=>['failure','partial'].includes(row.result)).length,pending:results.filter(row=>row.result==='pending').length};
       const validDate = log.submittedAt && Number.isFinite(Date.parse(log.submittedAt));
       return <Link className="vocabulary-history-row" key={log.id} to={`/vocabulary/history/${encodeURIComponent(log.id)}`}>
-        <div className="vocabulary-history-main"><strong>{label(log.mode)}</strong><span>{bookId && unitId ? groupPath(bookId,unitId) || 'Wordbook assessment' : log.selection?.kind === 'retry' ? 'Mistake retry' : 'Vocabulary review'}</span><time dateTime={validDate ? log.submittedAt : undefined}>{validDate ? new Date(log.submittedAt).toLocaleString('en-GB',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : 'Submission date unavailable'}</time></div>
+        <div className="vocabulary-history-main"><strong>{label(log.mode)}</strong><span>{bookId && unitId ? groupPath(bookId,unitId) || 'Wordbook assessment' : log.selection?.kind === 'retry' ? 'Mistake retry' : 'Vocabulary review'}</span><small>{log.sourceSnapshot?.origin==='manual'?'User arranged':log.sourceSnapshot?.origin==='automatic'?'System arranged':log.planId?'Planned review':'Self-directed'}</small><time dateTime={validDate ? log.submittedAt : undefined}>{validDate ? new Date(log.submittedAt).toLocaleString('en-GB',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : 'Submission date unavailable'}</time></div>
         <div className="vocabulary-history-summary"><strong>{total} {total===1?'word':'words'}</strong><small>{log.mode === 'audio' ? 'Listening activity · No mastery assessment' : `${summary.correct || 0} correct · ${summary.incorrect || 0} incorrect`}</small>{log.mode !== 'audio' && summary.pending ? <small>{summary.pending} awaiting feedback</small> : null}</div><ArrowRight size={16} />
       </Link>;
     })}</div> : <StateMessage message="Your submitted vocabulary sessions will appear here." />}
+    {ready&&!error&&<nav className="study-pagination" aria-label="Vocabulary history pages"><button className="btn line" disabled={!page} onClick={()=>setPage(value=>value-1)}>Previous page</button><span>Page {page+1} of {pages} · {total} sessions · 20 per page</span><button className="btn line" disabled={page+1>=pages} onClick={()=>setPage(value=>value+1)}>Next page</button></nav>}
   </VocabularyLayout>;
 }

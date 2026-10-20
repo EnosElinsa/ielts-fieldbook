@@ -144,7 +144,11 @@ test('group mode coverage cannot silently choose another sense or attach unrelat
   const noun = entry('fundamental');
   expect(learningTask(noun, noun.senses[0], 'synonym')).toBeUndefined();
   const adjective = resolveVocabularyLearningContext(noun, { bookId: 'ielts-reading-keywords', unitId: 'ielts-reading-keywords-chapter-01-group-01' });
-  expect(learningTask(adjective.entry, adjective.sense!, 'synonym')?.acceptedAnswers).toContain('basic');
+  expect(adjective.sense?.pos).toMatch(/^(adj|adjective)$/);
+  expect(adjective.sense?.definition).toMatch(/basic|necessary/);
+  // The reviewed course context has its own example. Do not attach the older
+  // common-context substitution exercise solely because the sense ID matches.
+  expect(learningTask(adjective.entry, adjective.sense!, 'synonym')).toBeUndefined();
   expect(resolveVocabularyLearningContext(entry('stable')).sense?.definition).toContain('Not changing');
   expect(resolveVocabularyLearningContext(entry('construct')).sense?.pos).toBe('verb');
 });

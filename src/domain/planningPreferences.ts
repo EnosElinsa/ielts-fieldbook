@@ -3,12 +3,15 @@ export type PlanningSkill = typeof PLANNING_SKILLS[number];
 export type PlanningPreferences = {
   vocabularyMode: 'ratio' | 'fixed'; vocabularyPercent: number; vocabularyMinutes: number;
   blockMinutes: number; multipleTasks: boolean; preferFullTasks: boolean;
+  newWordsPerDay: number; carryoverPercent: number;
+  wordbookMode: 'ordered' | 'round-robin'; wordbookOrder: string[]; pausedWordbooks: string[];
   weights: Record<PlanningSkill, number>;
   week: Record<string, { minutes?: number; focus?: PlanningSkill | 'balanced' }>;
 };
 export const DEFAULT_PLANNING: PlanningPreferences = {
   vocabularyMode: 'ratio', vocabularyPercent: 20, vocabularyMinutes: 10,
   blockMinutes: 30, multipleTasks: true, preferFullTasks: false,
+  newWordsPerDay: 10, carryoverPercent: 30, wordbookMode: 'ordered', wordbookOrder: [], pausedWordbooks: [],
   weights: { writing: 1, speaking: 1, reading: 1, listening: 1 }, week: {},
 };
 const bounded = (value: unknown, fallback: number, min: number, max: number) =>
@@ -16,6 +19,7 @@ const bounded = (value: unknown, fallback: number, min: number, max: number) =>
 export function normalizePlanning(value: any, legacyMinutes?: number): PlanningPreferences {
   const raw = value && typeof value === 'object' ? value : {};
   const legacy = !value && legacyMinutes !== undefined;
+  const ids = (input: unknown) => Array.isArray(input) ? [...new Set(input.filter((id): id is string => typeof id === 'string' && id.trim() === id && id.length > 0 && id.length <= 500))] : [];
   const weights = Object.fromEntries(PLANNING_SKILLS.map(skill => [skill, bounded(raw.weights?.[skill], 1, 0, 10)])) as PlanningPreferences['weights'];
   const week: PlanningPreferences['week'] = {};
   for (let day=1;day<=7;day++) {
@@ -26,6 +30,8 @@ export function normalizePlanning(value: any, legacyMinutes?: number): PlanningP
     };
   }
   return { vocabularyMode: legacy || raw.vocabularyMode === 'fixed' ? 'fixed' : 'ratio',
+    newWordsPerDay: bounded(raw.newWordsPerDay,10,0,100), carryoverPercent: bounded(raw.carryoverPercent,30,0,100),
+    wordbookMode: raw.wordbookMode === 'round-robin' ? 'round-robin' : 'ordered', wordbookOrder: ids(raw.wordbookOrder), pausedWordbooks: ids(raw.pausedWordbooks),
     vocabularyPercent: bounded(raw.vocabularyPercent,20,0,100),
     vocabularyMinutes: legacy ? Math.min(10,Math.floor((legacyMinutes || 30)/3)) : bounded(raw.vocabularyMinutes,10,0,180),
     blockMinutes: bounded(raw.blockMinutes,30,10,90), multipleTasks: raw.multipleTasks !== false,

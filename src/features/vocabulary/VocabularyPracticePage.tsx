@@ -12,9 +12,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { useVocabularyPosition } from './vocabularyNavigation';
 import { PanelLoadingState } from '../../components/AsyncState';
+import { useState } from 'react';
 
 export function VocabularyPracticePage() {
   const controller = useVocabularyPracticeController();
+  const [reloadOpen,setReloadOpen]=useState(false);
   const {
     session, results, study, exitOpen, setExitOpen,
     incompleteOpen, setIncompleteOpen, saving, error, storageError, submissionPending,
@@ -37,7 +39,7 @@ export function VocabularyPracticePage() {
           <IconButton
             label="Practice settings"
             disabled={saving}
-            onClick={() => { const to = `/settings/vocabulary?${new URLSearchParams({returnTo:location.pathname + location.search + location.hash})}`; navigateWithPracticeGuard(to, () => navigate(to, {state:vocabularyForwardState(location)})); }}
+            onClick={() => { const to = `/settings/practice?${new URLSearchParams({returnTo:location.pathname + location.search + location.hash})}`; navigateWithPracticeGuard(to, () => navigate(to, {state:vocabularyForwardState(location)})); }}
           >
             <Settings2 size={18} />
           </IconButton>
@@ -70,14 +72,15 @@ export function VocabularyPracticePage() {
         </div>
       ) : null}
       {storageError && session ? (
-        <p className="practice-error" role="status">
-          Progress is open in this tab. Browser recovery is unavailable.
-        </p>
+        <div className="practice-error" role="status"><p>{controller.localDrafts.error||'Your local draft could not be saved.'} Answers remain open in this tab.</p><div className="btn-row"><button type="button" className="btn line" disabled={saving||controller.recovering} onClick={()=>void controller.retryLocalDraft()}>Retry local save</button><button type="button" className="btn line" disabled={saving||controller.recovering} onClick={()=>setReloadOpen(true)}>Reload saved draft</button></div></div>
       ) : null}
       {showSetup ? <VocabularyPracticeSetup controller={controller} /> : null}
       {resultRequested && !session && !results && !error ? <PanelLoadingState message="Loading session results…" /> : null}
       {session ? <VocabularyPracticeSession controller={controller} session={session} /> : null}
       {results ? <VocabularyPracticeResults controller={controller} results={results} /> : null}
+      <ModalFrame open={reloadOpen} onClose={()=>setReloadOpen(false)} title="Reload saved answers?">
+        <div className="practice-confirm-dialog"><h2>Reload saved answers?</h2><p>This replaces the answers in this tab with the latest draft saved on this device. Answers that were not saved in this tab will be discarded.</p><div className="btn-row"><button type="button" className="btn primary" onClick={()=>{setReloadOpen(false);void controller.reloadSavedSession();}}>Replace with saved answers</button><button type="button" className="btn line" onClick={()=>setReloadOpen(false)}>Keep this tab open</button></div></div>
+      </ModalFrame>
       <ModalFrame
         open={exitOpen}
         onClose={() => setExitOpen(false)}

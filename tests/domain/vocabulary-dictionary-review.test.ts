@@ -95,7 +95,10 @@ test.each(ledger.records)('$term/$senseId survives selection, reopening and targ
   const base = catalog.entries.find((e: VocabularyEntry) => e.id === row.entryId) as VocabularyEntry;
   const original = (JSON.parse(readFileSync(`public/dictionary/${index[row.term]}`, 'utf8')).senses.find((s: VocabularySense) => s.id === row.senseId) || restoredSources.find(s => s.term === row.term && s.sense.id === row.senseId)?.sense) as VocabularySense;
   expect(original, `missing independent source for ${row.term}/${row.senseId}`).toBeDefined();
-  const expected = corrections.find(s => s.entryId === row.entryId && s.senseId === row.senseId)!;
+  const sourceVariant = corrections.find(s => s.entryId === row.entryId && s.senseId === row.senseId && 'contentVariant' in s && s.contentVariant?.sourceView);
+  const correction = sourceVariant || corrections.find(s => s.entryId === row.entryId && s.senseId === row.senseId)!;
+  const fields = ['definition','example','pos','collocations','usage','synonyms','antonyms','distinctions','distinctionTask','wordFamily','register'];
+  const expected = 'contentVariant' in correction && correction.contentVariant ? correction.contentVariant.afterContent : {...original,...Object.fromEntries(fields.filter(field=>(correction as any)[field]!==undefined).map(field=>[field,(correction as any)[field]]))};
   const selected = supplementVocabularySense(row.entryId, original, [original], hasVocabularySenseEdits);
   expect(selected.definition).toBe(expected.definition);
   expect(selected.example).toBe(expected.example);

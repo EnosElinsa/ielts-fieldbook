@@ -2,7 +2,15 @@ import type { VocabularySense } from './types';
 import type { CurriculumRow } from './curriculum';
 
 export type VocabularyLearningPriority = 'general' | 'specialist' | 'historical' | 'proper-name';
-export type ReadinessSupplement = { entryId: string; senseId: string; dictionaryParentSenseId?: string; dictionarySourceAnchorSenseId?: string; definition?: string; example: string; exampleKind?: 'reading-note'; learningPriority?: VocabularyLearningPriority; meaningGroup?: { sourceGloss: string }; usageReference?: { sourceGloss: string }; pos?: string; usage?: string; referenceOnly?: boolean; originalSense?: VocabularySense; previousSenses?: VocabularySense[]; contentScope?: Pick<VocabularySense, 'definition' | 'example' | 'pos'>[] } & Pick<VocabularySense, 'collocations' | 'distinctions' | 'distinctionTask' | 'synonyms' | 'antonyms' | 'wordFamily' | 'register'>;
+export type VocabularyContentScope = { kind: 'dictionary-source' } | { kind: 'default' } | { kind: 'group'; bookId: string; unitId: string };
+export const vocabularyEditableSenseFields = ['definition', 'example', 'pos', 'collocations', 'usage', 'synonyms', 'antonyms', 'distinctions', 'distinctionTask', 'wordFamily', 'register'] as const;
+export type VocabularySenseContent = Pick<VocabularySense, 'id' | typeof vocabularyEditableSenseFields[number]>;
+export type VocabularyContentVariant = {
+  schemaVersion: 1; workItemId: string; sourceView: boolean; sourceHash: string | null;
+  beforeDisplayHash: string; reviewedMaterialHash: string; afterDisplayHash: string;
+  beforeContent: VocabularySenseContent; afterContent: VocabularySenseContent; scopes: VocabularyContentScope[];
+};
+export type ReadinessSupplement = { entryId: string; senseId: string; variantId?: string; contentVariant?: VocabularyContentVariant; dictionaryParentSenseId?: string; dictionarySourceAnchorSenseId?: string; definition?: string; example: string; exampleKind?: 'reading-note'; learningPriority?: VocabularyLearningPriority; meaningGroup?: { sourceGloss: string }; usageReference?: { sourceGloss: string }; pos?: string; usage?: string; referenceOnly?: boolean; originalSense?: VocabularySense; previousSenses?: VocabularySense[]; contentScope?: Pick<VocabularySense, 'definition' | 'example' | 'pos'>[] } & Pick<VocabularySense, 'collocations' | 'distinctions' | 'distinctionTask' | 'synonyms' | 'antonyms' | 'wordFamily' | 'register'>;
 export type ReadinessDefault = { entryId: string; sense: VocabularySense; originalSense?: VocabularySense };
 export type ContextBinding = { bookId?: string; unitId?: string; entryId: string; sense: VocabularySense; originalSense?: VocabularySense | null; status: 'reviewed' | 'unresolved' | 'unreviewed'; contentReviewed: boolean };
 export type VocabularyTeachingData = {
@@ -22,7 +30,7 @@ export const vocabularyTeaching: VocabularyTeachingData = {
   context: { version: 'context-2026-10-10.2', bindings: [], defaults: [], unresolved: [] },
 };
 export let vocabularyTeachingRevision = 0;
-const identity = (row: { entryId: string; bookId?: string; unitId?: string; senseId?: string; sense?: VocabularySense }) => JSON.stringify([row.bookId, row.unitId, row.entryId, row.senseId || row.sense?.id]);
+const identity = (row: { entryId: string; bookId?: string; unitId?: string; senseId?: string; sense?: VocabularySense; variantId?: string }) => JSON.stringify([row.bookId, row.unitId, row.entryId, row.senseId || row.sense?.id, ...(row.variantId ? [row.variantId] : [])]);
 function mergeRows<T extends Parameters<typeof identity>[0]>(current: T[], incoming: T[]): T[] {
   return [...new Map([...current, ...incoming].map(row => [identity(row), row])).values()];
 }

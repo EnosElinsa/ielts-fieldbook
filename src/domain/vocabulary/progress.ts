@@ -19,7 +19,21 @@ export function vocabularyGroupProgress(state: Partial<VocabularyStore>, group: 
   if (!ids.length) return 'Not started';
   let partial = rows.some(row => row.completedEntryIds?.length);
   const batchAnswered = new Set<string>();
-  for (const session of state.vocabularySessions || []) {
+  const sessions = state.vocabularySessions || [];
+  const loaded = new Set(sessions.map(session=>session.id));
+  const reviewsBySession = new Map<string, NonNullable<VocabularyStore['vocabularySessions']>[number]['results']>();
+  for (const review of state.vocabularyReviews || []) {
+    // Older session reviews predate the explicit sessionId field. Their exact
+    // generated suffix identifies the session without guessing at colon splits.
+    const suffix=`:${review.entryId}:${review.senseId}:${review.mode}`;
+    const sessionId=review.sessionId || (review.id?.endsWith(suffix) ? review.id.slice(0,-suffix.length) : undefined);
+    if(!sessionId)continue;
+    const result={entryId:review.entryId,senseId:review.senseId,response:review.response || ''} as NonNullable<VocabularyStore['vocabularySessions']>[number]['results'][number];
+    const answers=reviewsBySession.get(sessionId)||[];
+    answers.push(result);reviewsBySession.set(sessionId,answers);
+  }
+  const light=(state.vocabularyGroupAttempts || []).filter(session=>!loaded.has(session.id)).map(session=>({...session,results:reviewsBySession.get(session.id)||[]}));
+  for (const session of [...sessions,...light]) {
     if (session.status !== 'submitted' || session.mode === 'audio') continue;
     const selected = session.selection ? session.selection.kind === 'unit' && session.selection.bookId === group.bookId && session.selection.unitId === group.id
       : session.filter?.bookId === group.bookId && session.filter?.unitId === group.id && session.filter.dueOnly === false && !session.filter.wrongOnly;
@@ -41,6 +55,10 @@ export function vocabularyGroupProgress(state: Partial<VocabularyStore>, group: 
 }
 export function getLearnedVocabularyIds(state: Partial<VocabularyStore>): Set<string> {
   const learned = new Set<string>();
+  (state.vocabularyStates||[]).filter(item=>Object.values(item.cards||{}).some(card=>card?.due&&Number.isFinite(new Date(card.due).getTime()))).forEach(item=>{
+    const attempts=(state.vocabularyReviews||[]).filter(review=>review.entryId===item.entryId);
+    if(!attempts.length || attempts.some(review=>String(review.response||'').trim() || review.imported && review.result!=='pending')) learned.add(item.entryId);
+  });
   (state.vocabularyReviews || []).filter(review => String(review.response || '').trim() || (review.imported && review.result !== 'pending')).forEach(review => learned.add(review.entryId));
   (state.vocabularyStates || []).filter(item => item.manualStatus && item.manualStatus !== 'new').forEach(item => learned.add(item.entryId));
   (state.vocabularyEvidence || []).filter(item => item.mode && item.verification !== 'pending' && (String(item.response || '').trim() || item.imported || (item.verification === 'objective' && !('response' in item)))).forEach(item => learned.add(item.entryId));

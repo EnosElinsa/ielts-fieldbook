@@ -12,9 +12,10 @@ import { needsStudySetup, StudySetup } from './StudySetup';
 import { accountId } from '../../storage/remote';
 import '../../styles/planning.css';
 import { useVocabularyPosition } from '../vocabulary/vocabularyNavigation';
+import { planningEvidenceView } from '../../domain/planningEvidence';
 
 export function TodayPage() {
-  return <AccountDataBoundary modules={['productive','vocabulary','receptive']}><UnifiedToday /></AccountDataBoundary>;
+  return <AccountDataBoundary modules={['planning','vocabularyCore']} vocabularyEntryIds={[]}><UnifiedToday /></AccountDataBoundary>;
 }
 
 function UnifiedToday() {
@@ -23,7 +24,7 @@ function UnifiedToday() {
   const plans=fb.state.plans || [];const todays=plans.filter(plan=>plan.dateKey===today).sort(compareStudyPlans);
   const active=plans.find(plan=>plan.id===fb.state.activePlanId&&plan.status==='in_progress'&&plan.dateKey<=today);
   const next=active || nextUnifiedPlan(todays);
-  const resume=(fb.state.examAttempts||[]).filter(attempt=>['active','paused'].includes(attempt.status)&&(!attempt.planId||!plans.some(plan=>plan.id===attempt.planId&&['pending','in_progress'].includes(plan.status)))).sort((a,b)=>String(b.updatedAt||b.startedAt).localeCompare(String(a.updatedAt||a.startedAt)))[0];
+  const resume=(planningEvidenceView(fb.state).examAttempts||[]).filter(attempt=>['active','paused'].includes(attempt.status)&&(!attempt.planId||!plans.some(plan=>plan.id===attempt.planId&&['pending','in_progress'].includes(plan.status)))).sort((a,b)=>String(b.updatedAt||b.startedAt).localeCompare(String(a.updatedAt||a.startedAt)))[0];
   const resumeParams=new URLSearchParams(resume?{attempt:resume.id}:{});
   if(resume?.retryOfAttemptId)resumeParams.set('retry',resume.retryOfAttemptId);
   if(resume?.planId)resumeParams.set('planId',resume.planId);

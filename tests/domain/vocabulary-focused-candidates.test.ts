@@ -31,7 +31,7 @@ test('an example-only candidate does not require optional teaching fields and pr
 
 test.each([
   {}, { example: 'We rested by the bank.' }, { example: '' }, { example: 'Example pending' },
-  { collocations: [] }, { distinctions: ['bank', ' BANK '] }, { exampleKind: 'sentence' },
+  { collocations: [''] }, { distinctions: ['bank', ' BANK '] }, { exampleKind: 'sentence' },
   { learningPriority: 'common' }, { learningPriority: ['general'] }, { reviewedAreas: ['example'] }, { id: 'different' },
   { distinctionTask: { prompt: 'Choose _____.', options: ['bank', ' BANK '], answer: 'bank', explanation: 'Land.' } },
 ])('invalid or ineffective focused changes cannot become a publishable candidate: %j', changes => {
@@ -41,6 +41,18 @@ test.each([
   expect(result.errors.length).toBeGreaterThan(0);
   expect(result.focusedPreviews).toEqual([]);
   expect(result.readyForPublication).toBe(0);
+});
+
+test('focused withdrawals explicitly clear optional lists and labels while remaining subject to independent review',()=>{
+  const {report,candidate}=fixture();
+  const changes={synonyms:[],antonyms:[],wordFamily:[],collocations:[],distinctions:[],usage:'',register:''};
+  const result=validateQualityCandidates(report,[{...candidate,changes}]);
+  expect(result).toMatchObject({structurallyValid:1,readyForPublication:0,errors:[]});
+  expect(result.focusedPreviews[0].sense).toMatchObject(changes);
+  expect(result.focusedPreviews[0].changedFields).toEqual(expect.arrayContaining(['synonyms','collocations','distinctions','usage','register']));
+  for(const invalid of [{synonyms:['bank',' BANK ']},{wordFamily:['']},{antonyms:null},{usage:null},{pos:''},{definition:''}]){
+    expect(validateQualityCandidates(report,[{...candidate,changes:invalid}]).structurallyValid).toBe(0);
+  }
 });
 
 test('focused candidates retain stale, duplicate, source and root-field protection', () => {

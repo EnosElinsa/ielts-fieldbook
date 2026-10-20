@@ -27,7 +27,7 @@ export function getVocabularyNextPractice(
   if (!cards.length || !cards[0].entry.senses.find(sense=>sense.id===request.senseId)?.definition.trim()) return;
   const learning = store.vocabularyStates?.find(row=>row.entryId===entry.id&&row.senseId===request.senseId);
   const schedule = (mode: VocabularyMode) => {
-    const value = learning?.cards[mode]?.due || learning?.legacyProgress?.nextReviewAt;
+    const value = learning?.cards[mode]?.due;
     const time = value instanceof Date ? value.getTime() : value ? Date.parse(String(value)) : NaN;
     return Number.isFinite(time) ? time : undefined;
   };

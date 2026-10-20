@@ -5,6 +5,7 @@ import { getVocabularyLearningPriority, isVocabularyMeaningGroup, restoredDictio
 import type { VocabularyEntry, VocabularySense } from '../../src/domain/vocabulary/types';
 const catalogue = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'));
 const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+const ledger = JSON.parse(readFileSync('src/domain/vocabulary/dictionaryReviewLedger.json', 'utf8'));
 const entries = (term: string): VocabularyEntry => catalogue.entries.find((entry: VocabularyEntry) => entry.term === term);
 const original = (term: string, id: string): VocabularySense => JSON.parse(readFileSync('public/dictionary/' + index[term.toLowerCase()], 'utf8')).senses.find((sense: VocabularySense) => sense.id === id);
 const cases: [string, string][] = [
@@ -416,7 +417,15 @@ const cases: [string, string][] = [
 test.each(cases)('%s replaces truncated learning text with meaning-specific teaching', (term, id) => {
  const entry = entries(term), raw = original(term, id), sense = supplementVocabularySense(entry.id, raw, [raw], hasVocabularySenseEdits);
  expect(sense.example).not.toMatch(/\[\s*(?:…|\.{3})\s*\]|\b(?:thou|thee|hath)\b|ſ/);
- expect(sense.collocations?.length).toBeGreaterThan(0);
+ if(term==='festival'&&id==='kaikki:c3e471f3f3afa8f572') {
+  expect(sense.collocations).toEqual([]);
+  expect(sense.pos).toBe('adj');
+  expect(sense.usage).toMatch(/Historical adjective.*noun festival used attributively/);
+  expect(sense.register).toMatch(/historical adjective/);
+  const reviewed=ledger.records.find((row:{entryId:string;senseId:string})=>row.entryId===entry.id&&row.senseId===id);
+  expect(reviewed.notApplicable.collocations.referenceUrl).toBe('https://en.wiktionary.org/w/index.php?title=festival&oldid=93427473');
+  expect(reviewed.notApplicable.collocations.reason).toMatch(/do not establish productive adjective combinations/);
+ } else expect(sense.collocations?.length).toBeGreaterThan(0);
  expect(sense.distinctions?.length).toBeGreaterThan(0);
  expect(supplementVocabularySense(entry.id, { ...raw, example: 'My own saved sentence.', source: 'Personal note' }, [raw], hasVocabularySenseEdits).example).toBe('My own saved sentence.');
 });

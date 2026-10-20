@@ -13,6 +13,7 @@ const mocks=vi.hoisted(()=>({fb:null as any,owner:'home-a',draft:null as any}));
 vi.mock('../../context/FieldbookContext',()=>({useFieldbook:()=>mocks.fb}));
 vi.mock('../../storage/remote',()=>({accountId:()=>mocks.owner}));
 vi.mock('../../storage/vocabularyDrafts',()=>({readVocabularyDraft:()=>mocks.draft}));
+vi.mock('./useVocabularyLocalDrafts',()=>({useVocabularyLocalDrafts:()=>({drafts:mocks.draft?[{session:mocks.draft}]:[],ready:true,error:''})}));
 vi.mock('../../storage/vocabularyCatalog',()=>({loadReleasedVocabularyTeaching:vi.fn(async()=>({}))}));
 vi.mock('../../domain/vocabulary/catalog',()=>({VOCABULARY_CATALOG:{entries:[],books:[],units:[],memberships:[]}}));
 
@@ -73,9 +74,9 @@ test('the existing due batch keeps the preferred supported mode',()=>{
 
 test('a saved session takes priority even while teaching metadata fails',async()=>{
  const {learning}=saved();learning.wrong.active=true;learning.wrong.modes.dictation={active:true,successesSinceFailure:0};
- mocks.draft={mode:'cloze',cardIds:[{id:'frozen'}],planId:'plan-home'};
+ mocks.draft={id:'home-session',mode:'cloze',cardIds:[{id:'frozen'}],planId:'plan-home'};
  mocks.fb.loadVocabularyCatalog=vi.fn(async()=>false);show();await act(async()=>{});
- expect(within(panel()).getByRole('link',{name:/Continue session/})).toHaveAttribute('href','/vocabulary/review?resume=true&mode=cloze&planId=plan-home');
+ expect(within(panel()).getByRole('link',{name:/Continue session/})).toHaveAttribute('href','/vocabulary/review?resume=true&mode=cloze&resumeSessionId=home-session&planId=plan-home');
  expect(within(panel()).queryByText(/No verified/)).not.toBeInTheDocument();
 });
 
@@ -137,12 +138,13 @@ test('unassessed production does not prevent foundation mastery or demand a prod
 
 test('saved meaning guidance precedes an enrolled wordbook while a waiting meaning leaves its group available',()=>{
  const {learning}=saved();
- Object.assign(VOCABULARY_CATALOG,{books:[{id:'book',title:'My course'}],units:[{id:'group',bookId:'book',title:'First group',kind:'group',entryIds:['public-word']}],memberships:[{bookId:'book',unitId:'group',entryId:'public-word'}]});
+ mocks.fb.state.settings={dailyMinutes:30,days:[1,2,3,4,5,6,7],skills:[],planning:{newWordsPerDay:10}};
+ Object.assign(VOCABULARY_CATALOG,{books:[{id:'book',title:'My course'}],units:[{id:'group',bookId:'book',title:'First group',kind:'group',entryIds:['public-word']}],memberships:[{bookId:'book',unitId:'group',entryId:'public-word',order:0}],entries:[{id:'public-word',term:'public word',tags:[],sources:[{type:'wordbook',id:'book:group',bookId:'book',unitId:'group'}],senses:[{id:'public-sense',definition:'An ordinary word.',example:'Use this public word.',pos:'noun'}]}]});
  mocks.fb.state.wordbookEnrollments=[{bookId:'book'}];const view=show();
  expect(within(panel()).getByRole('link',{name:/Practise Meaning recall/})).toBeInTheDocument();
  for(const mode of ['definition','dictation','production','cloze'] as VocabularyMode[])due(learning,mode,86400000);
  mocks.fb.state={...mocks.fb.state};view.rerender(<MemoryRouter><VocabularyPage/></MemoryRouter>);
- expect(within(panel()).getByRole('link',{name:/Start learning/})).toHaveAttribute('href','/vocabulary/wordbooks/book/groups/group/learn');
+ expect(within(panel()).getByRole('link',{name:/Start learning/}).getAttribute('href')).toMatch(/^\/vocabulary\/wordbooks\/book\/groups\/group\/learn\?/);
  expect(within(panel()).getByText(/Next saved-meaning practice:/)).toBeInTheDocument();
 });
 

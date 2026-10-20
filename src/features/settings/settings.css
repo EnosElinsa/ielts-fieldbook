@@ -29,7 +29,8 @@
 .settings-categories { padding-right: 20px; position: sticky; top: 24px; }
 .settings-category-group { margin: 4px 12px 12px; font-size: 11px; text-transform: uppercase; color: var(--muted); }
 .settings-categories > div:nth-child(6) { margin-top: 24px; }
-.settings-categories a { display: flex; align-items: center; gap: 10px; padding: 11px 12px; font-size: 13px; }
+.settings-categories a { display: flex; align-items: center; gap: 10px; padding: 11px 12px; font-size: 13px; line-height: 1.45; }
+.settings-categories a svg { flex-shrink: 0; }
 .settings-categories a:hover { color: var(--ink); background: var(--surface-hover); }
 .settings-categories a[aria-current="page"] { color: var(--blue); background: var(--soft-blue); font-weight: 700; }
 .settings-content { min-height: calc(100dvh - 200px); display: flex; flex-direction: column; }
@@ -119,3 +120,6 @@
   .settings-skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .settings-task-options { margin-top: 16px; }
 }
+.settings-source-list{list-style:none;padding:0;display:grid;gap:12px;margin-top:16px}
+.settings-source-list li{display:flex;align-items:center;flex-wrap:wrap;gap:12px;border:1px solid var(--rule);border-radius:10px;padding:12px}
+.settings-source-list li>span{flex:1;min-width:140px;overflow-wrap:anywhere}

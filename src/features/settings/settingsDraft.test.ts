@@ -36,6 +36,7 @@ test('settings preview includes missed-day recovery while preserving frozen work
   expect(state).toEqual(before);
   expect(preview.generated.find(plan=>plan.id==='carry')).toMatchObject({dateKey:'2026-10-14',originalDateKey:'2026-10-01',target:before.plans[0].target});
   for(const id of ['manual','started','frozen'])expect(preview.generated.find(plan=>plan.id===id)).toEqual(before.plans.find(plan=>plan.id===id));
-  expect(preview.affected.map(plan=>plan.id).sort()).toEqual(['carry','stale-review']);
+  expect(preview.affected.map(plan=>plan.id).sort()).toEqual(['carry','stale-review','waiting']);
+  expect(actual.plans.find(plan=>plan.id==='waiting')).toMatchObject({dateKey:'2026-10-01',waitingReason:expect.stringMatching(/carryover limit/i)});
   expect(settingsPlanPreview(state.settings,changes,state.plans,'2026-10-14',state)).toEqual(preview);
 });
