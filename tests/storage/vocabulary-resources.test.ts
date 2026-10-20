@@ -17,14 +17,17 @@ test('learning priority is delivered in scoped teaching while the preceding comp
   const before = JSON.parse(readFileSync('src/domain/vocabulary/resourceDictionaryRound18Baseline.json', 'utf8'));
   expect(baseline.restoreCorrections).toHaveLength(33);
   expect(baseline.restoreCorrections.every((row: any) => row.learningPriority === undefined)).toBe(true);
+  const entryId = baseline.restoreCorrections[0].entryId;
   // The latest previous manifest is reconstructed by reversing the priority-only batch.
+  // Each entry belongs to one shard. Inspect that shard instead of reparsing
+  // every unrelated teaching pack from every retained release.
   const previous = [...release.resources.keys()].filter(url => url.startsWith('/vocabulary-resources/manifest.')).map(url => JSON.parse(release.resources.get(url)!)).find(value =>
-    value.entryTeachingResources && value.entryShards && Object.values(value.entryTeachingResources).some(url => {
-      const rows = JSON.parse(release.resources.get(url as string)!).teaching.readiness.corrections;
-      return rows.some((row: any) => row.senseId === 'kaikki:b1a831f5de690f1a08' && row.definition === baseline.restoreCorrections[0].definition && row.learningPriority === undefined);
+    value.entryTeachingResources && value.entryShards && [value.entryTeachingResources[value.entryShards[entryId]]].some(url => {
+      if (!url) return false;
+      const rows = JSON.parse(release.resources.get(url)!).teaching.readiness.corrections;
+      return rows.some((row: any) => row.entryId === entryId && row.senseId === 'kaikki:b1a831f5de690f1a08' && row.definition === baseline.restoreCorrections[0].definition && row.learningPriority === undefined);
     }));
   expect(previous).toBeDefined();
-  const entryId = baseline.restoreCorrections[0].entryId;
   const currentRows = JSON.parse(release.resources.get(release.manifest.entryTeachingResources[release.manifest.entryShards[entryId]])!).teaching.readiness.corrections;
   expect(currentRows.find((row: any) => row.entryId === entryId && row.senseId === baseline.restoreCorrections[0].senseId).learningPriority).toBe('general');
   expect(before.removeCorrections.length).toBe(33);
