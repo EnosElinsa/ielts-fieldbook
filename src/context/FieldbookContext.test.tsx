@@ -1362,6 +1362,30 @@ test('a failed additional teaching scope retries without discarding already merg
   expect(mocks.moduleRead).toHaveBeenCalledTimes(1);
 });
 
+test('forcing a prepared teaching scope refreshes its resources and merges memberships without replaying account rows', async () => {
+  mocks.statuses=emptyCollectionStatuses();
+  const saved=structuredClone(VOCABULARY_CATALOG.entries.slice(0,2));
+  mocks.moduleRead.mockImplementation(async()=>{
+    ACCOUNT_MODULES.vocabularyCore.forEach(key=>{mocks.statuses[key]='ready';});
+    return {data:{vocabulary:structuredClone(saved)},statuses:mocks.statuses};
+  });
+  const memberships=VOCABULARY_CATALOG.memberships;
+  try {
+    await mount();
+    await act(async()=>{await fieldbook.ensureAccountModule('vocabularyCore',{entryIds:[]});});
+    const member={id:'scoped-teaching-member',entryId:saved[0].id,bookId:'test-book',unitId:'test-unit',order:1};
+    mocks.teachingRead.mockResolvedValue({books:[],units:[],entries:[],memberships:[member]});
+    await act(async()=>{await fieldbook.ensureAccountModule('vocabularyCore',{entryIds:[saved[0].id]});});
+    expect(VOCABULARY_CATALOG.memberships).toContainEqual(member);
+    await act(async()=>{await fieldbook.persist(draft=>{draft.vocabulary[0].senses[0].example='My own saved sentence.';});});
+    mocks.teachingRead.mockClear();
+    await act(async()=>{await fieldbook.ensureAccountModule('vocabularyCore',{entryIds:[saved[0].id],force:true});});
+    expect(mocks.teachingRead).toHaveBeenCalledWith({entryIds:[saved[0].id],allowMissingEntryIds:true,force:true});
+    expect(mocks.moduleRead).toHaveBeenCalledTimes(1);
+    expect(fieldbook.state.vocabulary[0].senses[0].example).toBe('My own saved sentence.');
+  } finally {VOCABULARY_CATALOG.memberships=memberships;}
+});
+
 test('plan edits commit after durable save and exclude unloaded collections',async()=>{
   mocks.initial.plans=[{id:'manual',kind:'1',skill:'writing',status:'pending',dateKey:'2026-10-13',estimatedMinutes:20}];
   mocks.statuses={profile:'ready',plans:'ready',drafts:'ready',sessions:'unloaded',vocabulary:'unloaded',examAttempts:'unloaded'};

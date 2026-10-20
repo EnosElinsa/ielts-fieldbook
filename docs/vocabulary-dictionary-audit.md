@@ -2,7 +2,7 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 798 restored source meanings** (52,152 total). This ledger verifies **6149 records** across definition, examples or reading explanations, collocations and distinctions; **46,003 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1413 reviewed distinction exercises and 854 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 7 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 1862 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 32 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 798 restored source meanings** (52,152 total). This ledger verifies **7296 records** across definition, examples or reading explanations, collocations and distinctions; **44,856 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1413 reviewed distinction exercises and 854 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 7 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 2531 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 32 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
 Authored learning-priority metadata classifies 947 general, 255 specialist, 210 historical and 25 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
 
@@ -126,80 +126,235 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | altitude | 10 | 10 | 0 |
 | amazing | 2 | 3 | 1 |
 | ambitious | 1 | 4 | 3 |
-| amplify | 1 | 4 | 3 |
+| amplify | 4 | 4 | 0 |
+| amuse | 4 | 4 | 0 |
+| amusement park | 1 | 1 | 0 |
+| analogy | 3 | 3 | 0 |
+| analyse | 1 | 1 | 0 |
 | analysis | 7 | 7 | 0 |
-| analytical | 1 | 2 | 1 |
-| analyze | 1 | 4 | 3 |
-| ancient | 10 | 11 | 1 |
-| and | 1 | 11 | 10 |
-| anecdote | 1 | 4 | 3 |
-| anger | 1 | 5 | 4 |
-| angle | 1 | 20 | 19 |
-| animation | 1 | 6 | 5 |
+| analyst | 6 | 6 | 0 |
+| analytical | 2 | 2 | 0 |
+| analyze | 4 | 4 | 0 |
+| anatomy | 8 | 8 | 0 |
+| ancestor | 6 | 6 | 0 |
+| anchor | 31 | 31 | 0 |
+| ancient | 11 | 11 | 0 |
+| and | 10 | 11 | 1 |
+| and so forth | 1 | 1 | 0 |
+| anecdote | 4 | 4 | 0 |
+| anger | 5 | 5 | 0 |
+| angle | 20 | 20 | 0 |
+| angry | 5 | 5 | 0 |
+| angular | 8 | 9 | 1 |
+| animal | 12 | 13 | 1 |
+| animation | 6 | 6 | 0 |
+| ankle | 3 | 3 | 0 |
+| annex | 9 | 9 | 0 |
+| anniversary | 2 | 2 | 0 |
 | announce | 4 | 4 | 0 |
+| announcement | 3 | 3 | 0 |
 | announcer | 1 | 1 | 0 |
-| annual | 8 | 9 | 1 |
+| annoy | 4 | 4 | 0 |
+| annual | 9 | 9 | 0 |
+| anonymous | 6 | 7 | 1 |
 | answer | 18 | 18 | 0 |
 | antarctic | 5 | 5 | 0 |
 | antarctica | 2 | 2 | 0 |
+| antenna | 5 | 5 | 0 |
 | anthropologist | 1 | 1 | 0 |
-| antibiotic | 2 | 3 | 1 |
+| anthropology | 2 | 2 | 0 |
+| antibacterial | 3 | 3 | 0 |
+| antibiotic | 3 | 3 | 0 |
 | anticipate | 4 | 4 | 0 |
-| antique | 1 | 14 | 13 |
-| anxiety | 1 | 4 | 3 |
-| apartment | 1 | 5 | 4 |
-| apply | 1 | 11 | 10 |
-| appointment | 8 | 10 | 2 |
+| antique | 13 | 14 | 1 |
+| antonym | 1 | 1 | 0 |
+| anxiety | 4 | 4 | 0 |
+| apart from | 1 | 1 | 0 |
+| apartment | 5 | 5 | 0 |
+| apathetic | 3 | 3 | 0 |
+| ape | 9 | 9 | 0 |
+| apologise | 1 | 1 | 0 |
+| apology | 3 | 3 | 0 |
+| app | 15 | 15 | 0 |
+| apparatus | 9 | 9 | 0 |
+| appeal | 21 | 21 | 0 |
+| appearance | 8 | 8 | 0 |
+| appearances | 1 | 1 | 0 |
+| appetiser | 1 | 1 | 0 |
+| appetite | 3 | 3 | 0 |
+| applaud | 4 | 4 | 0 |
+| apple juice | 2 | 2 | 0 |
+| appliance | 5 | 5 | 0 |
+| applicant | 2 | 2 | 0 |
+| application | 11 | 12 | 1 |
+| application form | 1 | 1 | 0 |
+| applied | 3 | 3 | 0 |
+| applied mathematics | 1 | 1 | 0 |
+| applied science | 1 | 1 | 0 |
+| apply | 11 | 11 | 0 |
+| appointment | 10 | 10 | 0 |
 | appreciate | 4 | 4 | 0 |
+| apprentice | 5 | 5 | 0 |
 | approach | 21 | 21 | 0 |
+| appropriate | 9 | 9 | 0 |
+| approval | 3 | 3 | 0 |
 | approve | 6 | 6 | 0 |
+| approximate | 7 | 7 | 0 |
+| approximately | 1 | 1 | 0 |
+| apron | 7 | 8 | 1 |
+| aptitude | 2 | 2 | 0 |
 | arabian | 3 | 3 | 0 |
 | arabic | 13 | 13 | 0 |
-| arable | 1 | 4 | 3 |
+| arable | 4 | 4 | 0 |
+| arbitrary | 6 | 6 | 0 |
+| arch | 17 | 17 | 0 |
+| archaeological | 1 | 1 | 0 |
+| archaeologist | 1 | 1 | 0 |
+| archaeology | 1 | 1 | 0 |
+| architect | 4 | 4 | 0 |
+| architecture | 7 | 7 | 0 |
+| architectures | 1 | 1 | 0 |
+| arctic | 10 | 10 | 0 |
 | arctic ocean | 1 | 1 | 0 |
+| arduous | 3 | 3 | 0 |
+| area | 7 | 7 | 0 |
+| arena | 11 | 11 | 0 |
 | argument | 17 | 17 | 0 |
-| aromatic | 1 | 6 | 5 |
-| arouse | 1 | 3 | 2 |
+| arid | 3 | 3 | 0 |
+| aristocrat | 3 | 3 | 0 |
+| arithmetic | 5 | 5 | 0 |
+| army | 9 | 9 | 0 |
+| aromatic | 5 | 6 | 1 |
+| arouse | 3 | 3 | 0 |
+| arrange | 4 | 4 | 0 |
+| array | 14 | 14 | 0 |
+| arrest | 14 | 14 | 0 |
+| arrival | 4 | 5 | 1 |
+| arrive | 6 | 7 | 1 |
+| arrow | 19 | 19 | 0 |
+| art | 21 | 21 | 0 |
+| art gallery | 1 | 1 | 0 |
+| artefact | 1 | 1 | 0 |
+| artery | 2 | 2 | 0 |
 | arthritis | 1 | 1 | 0 |
-| article | 2 | 14 | 12 |
+| article | 14 | 14 | 0 |
 | artificial | 5 | 5 | 0 |
-| as far as | 1 | 4 | 3 |
-| ashamed | 1 | 2 | 1 |
-| aspire | 1 | 3 | 2 |
+| artist | 6 | 6 | 0 |
+| artistic | 5 | 5 | 0 |
+| artwork | 3 | 3 | 0 |
+| as a matter of fact | 1 | 1 | 0 |
+| as a whole | 1 | 1 | 0 |
+| as far as | 4 | 4 | 0 |
+| as long as | 3 | 4 | 1 |
+| as usual | 1 | 1 | 0 |
+| ascending | 4 | 4 | 0 |
+| ash | 24 | 25 | 1 |
+| ashamed | 2 | 2 | 0 |
+| asleep | 4 | 4 | 0 |
+| aspect | 17 | 17 | 0 |
+| aspire | 3 | 3 | 0 |
+| aspirin | 3 | 3 | 0 |
+| assault | 9 | 9 | 0 |
+| assemble | 3 | 3 | 0 |
 | assert | 7 | 7 | 0 |
 | assess | 3 | 3 | 0 |
-| assign | 1 | 10 | 9 |
-| assignment | 2 | 8 | 6 |
-| assistant | 5 | 6 | 1 |
+| assessment | 2 | 2 | 0 |
+| assign | 10 | 10 | 0 |
+| assignment | 8 | 8 | 0 |
+| assist | 7 | 7 | 0 |
+| assistance | 1 | 1 | 0 |
+| assistant | 6 | 6 | 0 |
+| assistant professor | 1 | 1 | 0 |
+| associate | 19 | 20 | 1 |
+| associate professor | 1 | 1 | 0 |
 | association | 6 | 6 | 0 |
-| assort | 1 | 4 | 3 |
+| assort | 4 | 4 | 0 |
 | assume | 5 | 5 | 0 |
+| assumption | 9 | 9 | 0 |
 | assure | 4 | 4 | 0 |
-| astound | 1 | 2 | 1 |
+| asthma | 1 | 1 | 0 |
+| astonish | 1 | 1 | 0 |
+| astound | 2 | 2 | 0 |
+| astrology | 1 | 1 | 0 |
+| astronaut | 2 | 2 | 0 |
 | astronomical | 2 | 2 | 0 |
+| astronomy | 2 | 2 | 0 |
+| asylum | 5 | 5 | 0 |
+| at a time | 3 | 3 | 0 |
+| at least | 2 | 2 | 0 |
+| at present | 1 | 1 | 0 |
 | at risk | 1 | 1 | 0 |
+| at the moment | 2 | 2 | 0 |
+| at the outset | 1 | 1 | 0 |
+| athlete | 3 | 3 | 0 |
 | atlanta | 20 | 20 | 0 |
 | atlantic | 11 | 11 | 0 |
 | atlantic ocean | 1 | 1 | 0 |
+| atlas | 19 | 20 | 1 |
 | atm | 14 | 14 | 0 |
-| atmosphere | 1 | 7 | 6 |
-| atmospheric | 1 | 3 | 2 |
-| attain | 1 | 8 | 7 |
+| atmosphere | 7 | 7 | 0 |
+| atmospheric | 3 | 3 | 0 |
+| atom | 13 | 13 | 0 |
+| attach | 8 | 8 | 0 |
+| attachment | 8 | 8 | 0 |
+| attack | 25 | 25 | 0 |
+| attain | 7 | 8 | 1 |
 | attempt | 9 | 9 | 0 |
-| attend | 12 | 15 | 3 |
+| attend | 13 | 15 | 2 |
+| attendance | 4 | 5 | 1 |
+| attention | 6 | 6 | 0 |
+| attentive | 2 | 2 | 0 |
 | attitude | 7 | 7 | 0 |
+| attorney | 9 | 9 | 0 |
+| attract | 3 | 3 | 0 |
+| attraction | 3 | 3 | 0 |
+| attractive | 3 | 3 | 0 |
+| attribute | 9 | 9 | 0 |
+| auction | 3 | 3 | 0 |
+| audience | 7 | 7 | 0 |
+| audio | 3 | 3 | 0 |
+| audit | 11 | 11 | 0 |
+| auditorium | 2 | 2 | 0 |
+| augment | 7 | 7 | 0 |
+| aural | 3 | 3 | 0 |
 | australia | 3 | 3 | 0 |
+| author | 7 | 7 | 0 |
 | authority | 6 | 6 | 0 |
-| auxiliary | 1 | 9 | 8 |
+| auto | 9 | 9 | 0 |
+| auxiliary | 8 | 9 | 1 |
 | available | 5 | 5 | 0 |
-| avalanche | 1 | 6 | 5 |
-| avoid | 10 | 12 | 2 |
+| avalanche | 6 | 6 | 0 |
+| avenue | 4 | 4 | 0 |
+| average | 12 | 12 | 0 |
+| aviation | 5 | 5 | 0 |
+| avocado | 4 | 4 | 0 |
+| avoid | 12 | 12 | 0 |
+| await | 8 | 8 | 0 |
+| awake | 10 | 10 | 0 |
+| award | 9 | 10 | 1 |
+| awards | 2 | 2 | 0 |
+| aware | 3 | 3 | 0 |
+| awesome | 4 | 4 | 0 |
+| awful | 10 | 10 | 0 |
+| awkward | 5 | 5 | 0 |
+| ax | 4 | 4 | 0 |
+| axis | 9 | 10 | 1 |
+| bachelor | 5 | 5 | 0 |
 | bachelor's degree | 1 | 1 | 0 |
-| background | 1 | 14 | 13 |
-| backpack | 1 | 5 | 4 |
-| bacteria | 1 | 5 | 4 |
-| badge | 1 | 13 | 12 |
-| bait | 1 | 17 | 16 |
+| back | 47 | 48 | 1 |
+| back up | 12 | 12 | 0 |
+| backbone | 3 | 3 | 0 |
+| background | 13 | 14 | 1 |
+| backpack | 5 | 5 | 0 |
+| backpacker | 3 | 3 | 0 |
+| backup | 11 | 11 | 0 |
+| bacteria | 5 | 5 | 0 |
+| badge | 13 | 13 | 0 |
+| badminton | 3 | 4 | 1 |
+| baggage | 4 | 4 | 0 |
+| bait | 17 | 17 | 0 |
+| bake | 9 | 9 | 0 |
+| baker | 6 | 7 | 1 |
 | ballet | 1 | 7 | 6 |
 | bandage | 1 | 4 | 3 |
 | bangkok | 3 | 3 | 0 |

@@ -2,7 +2,7 @@
 
 Generated with `npm run vocabulary:quality` from checked-in public data and the actual learning-context and exercise resolvers. No account data or external services are read.
 
-Source snapshot: `936596a9f2799df511f6b40468e0598dca3a32646b95410effaed90964878e66`.
+Source snapshot: `133e80cc21f2957939e3c62d23bb0710bffa5c7ce9a30a7f0314740b88aba751`.
 
 ## Coverage
 
@@ -11,21 +11,21 @@ Source snapshot: `936596a9f2799df511f6b40468e0598dca3a32646b95410effaed90964878e
 | Catalogue words | 7021 |
 | Source dictionary terms | 5853 |
 | Source and restored dictionary senses | 52152 |
-| Existing editorial reviews | 6149 |
-| Dictionary senses still pending | 46003 |
+| Existing editorial reviews | 7296 |
+| Dictionary senses still pending | 44856 |
 | Words with a resolved learning meaning | 7021 |
 | Distinct learning-content variants | 9087 |
 | Default/group learning contexts, including multiple-meaning lessons | 16296 |
 | Learning variants with a displayed example or reading note | 9087 |
-| Learning variants with collocations or reading cues | 3538 |
-| Learning variants with distinction notes | 1503 |
-| Learning variants supporting sentence gaps | 7702 |
+| Learning variants with collocations or reading cues | 3584 |
+| Learning variants with distinction notes | 1549 |
+| Learning variants supporting sentence gaps | 7690 |
 | Learning variants supporting distinction questions | 303 |
 | Learning variants with content-review signals | 0 |
 | Learning variants without content-review signals | 9087 |
-| Learning variants with enrichment opportunities | 8781 |
-| Exact-content decisions retaining valid examples | 304 |
-| Source groups sharing a normalised definition and POS within one word | 10 |
+| Learning variants with enrichment opportunities | 8766 |
+| Exact-content decisions retaining valid examples | 290 |
+| Source groups sharing a normalised definition and POS within one word | 11 |
 
 Learning variants preserve exact content and provenance. A word can have a default, topic-specific content and additional multiple-meaning lessons. Shared text is counted once per exact variant, with every default/group scope retained. Dictionary counts exclude separate teaching variants. Context-review-required does not reverse or add an editorial dictionary review.
 
@@ -35,18 +35,18 @@ Learning variants preserve exact content and provenance. A word can have a defau
 | --- | --- | ---: | ---: | ---: |
 | missing-definition | content-review | 0 | 0 | 0 |
 | missing-pos | content-review | 0 | 0 | 0 |
-| missing-example | content-review | 0 | 0 | 16862 |
+| missing-example | content-review | 0 | 0 | 16439 |
 | source-markup | content-review | 0 | 0 | 1 |
-| relation-example | content-review | 0 | 0 | 305 |
-| reference-example | content-review | 0 | 0 | 21 |
-| truncated-example | content-review | 0 | 0 | 2197 |
-| archaic-example | content-review | 0 | 0 | 1438 |
-| example-fragment-signal | content-review | 0 | 302 | 3895 |
-| missing-collocations | enrichment | 5540 | 5540 | 45545 |
-| missing-distinctions | enrichment | 7580 | 7580 | 45658 |
-| duplicate-gloss | content-review | 0 | 0 | 20 |
-| no-cloze-task | enrichment | 1364 | 1364 | Not scanned |
-| no-distinction-task | enrichment | 8763 | 8763 | Not scanned |
+| relation-example | content-review | 0 | 0 | 302 |
+| reference-example | content-review | 0 | 0 | 19 |
+| truncated-example | content-review | 0 | 0 | 2147 |
+| archaic-example | content-review | 0 | 0 | 1399 |
+| example-fragment-signal | content-review | 0 | 288 | 3822 |
+| missing-collocations | enrichment | 5480 | 5480 | 44690 |
+| missing-distinctions | enrichment | 7523 | 7523 | 44846 |
+| duplicate-gloss | content-review | 0 | 0 | 22 |
+| no-cloze-task | enrichment | 1361 | 1361 | Not scanned |
+| no-distinction-task | enrichment | 8748 | 8748 | Not scanned |
 
 These signals are candidates for review, not proven linguistic defects. A phrase can be a valid example; an old quotation can be appropriate reading material; two glosses can belong to distinct source identities. Typed reading notes and reference records do not require sentence gaps. Exercise availability is scanned for learning variants only, not every reference meaning. The availability of a question is not proof of its semantic quality. No missing-diagram signal is generated.
 

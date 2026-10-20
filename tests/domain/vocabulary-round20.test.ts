@@ -3,6 +3,7 @@ import {expect,test} from 'vitest';
 import {hasVocabularySenseEdits,learningTask,reviewedEntry} from '../../src/domain/vocabulary/content';
 import {resolveVocabularyLearningContext} from '../../src/domain/vocabulary/context';
 import {getVocabularyLearningPriority,isVocabularyReadingNote,supplementVocabularySense} from '../../src/domain/vocabulary/readiness';
+// Fixed counts describe the original batch; later scope variants have separate source and route checks.
 import corrections from '../../src/domain/vocabulary/readinessCorrections.json';
 import ledger from '../../src/domain/vocabulary/dictionaryReviewLedger.json';
 import diagrams from '../../src/domain/vocabulary/senseDiagrams.json';
@@ -99,7 +100,7 @@ test('an accepted premise remains conditional and kindness does not grant an unl
 test('all 17 original meanings have source-bound reviews, twelve tasks and eleven exact diagram bindings',()=>{
  const rows=ledger.records.filter(row=>terms.includes(row.term));
  expect(rows).toHaveLength(17);
- const notes=corrections.filter(row=>rows.some(r=>r.entryId===row.entryId&&r.senseId===row.senseId));
+ const notes=corrections.filter(row=>!('contentVariant' in row)&&rows.some(r=>r.entryId===row.entryId&&r.senseId===row.senseId));
  expect(notes.filter(row=>row.distinctionTask)).toHaveLength(12);
  expect(diagrams.filter(row=>terms.includes(row.term))).toHaveLength(11);
  expect(notes.filter(row=>row.exampleKind==='reading-note')).toHaveLength(5);

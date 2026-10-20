@@ -2,6 +2,7 @@ import {readFileSync} from 'node:fs';
 import {expect,test} from 'vitest';
 import {hasVocabularySenseEdits,learningTask,reviewedEntry} from '../../src/domain/vocabulary/content';
 import {isVocabularyMeaningGroup,isVocabularyReadingNote,supplementVocabularySense} from '../../src/domain/vocabulary/readiness';
+// Fixed counts describe the original batch; later scope variants have separate source and route checks.
 import corrections from '../../src/domain/vocabulary/readinessCorrections.json';
 import sources from '../../src/domain/vocabulary/dictionarySenseSources.json';
 import type {VocabularyEntry,VocabularySense} from '../../src/domain/vocabulary/types';
@@ -89,7 +90,7 @@ test('claim keeps causing a loss separate from winning and from land assertions'
 });
 
 test('all new reading explanations stay out of sentence gaps and lose that classification after a personal edit',()=>{
- const rows=corrections.filter(row=>terms.some(term=>entry(term).id===row.entryId)&&row.exampleKind==='reading-note');expect(rows).toHaveLength(17);
+ const rows=corrections.filter(row=>!('contentVariant' in row)&&terms.some(term=>entry(term).id===row.entryId)&&row.exampleKind==='reading-note');expect(rows).toHaveLength(17);
  for(const row of rows){
   const source=row.originalSense as VocabularySense,sense=supplementVocabularySense(row.entryId,source,[source],hasVocabularySenseEdits);
   const base=entry(terms.find(term=>entry(term).id===row.entryId)!);

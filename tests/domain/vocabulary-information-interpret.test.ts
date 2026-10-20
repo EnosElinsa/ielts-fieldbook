@@ -1,5 +1,6 @@
 import {readFileSync} from 'node:fs';
 import {expect,test} from 'vitest';
+// Fixed counts describe the original batch; later scope variants have separate source and route checks.
 import corrections from '../../src/domain/vocabulary/readinessCorrections.json';
 import ledger from '../../src/domain/vocabulary/dictionaryReviewLedger.json';
 import sources from '../../src/domain/vocabulary/dictionarySenseSources.json';
@@ -9,7 +10,7 @@ const terms=['information','data','analysis','interpret'];
 const index=JSON.parse(readFileSync('public/dictionary/index.json','utf8'));
 const raw=(term:string,n:number)=>JSON.parse(readFileSync('public/dictionary/'+index[term],'utf8')).senses[n];
 const records=ledger.records.filter(r=>terms.includes(r.term));
-const rows=corrections.filter(r=>records.some(l=>l.entryId===r.entryId&&l.senseId===r.senseId));
+const rows=corrections.filter(r=>!('contentVariant' in r)&&records.some(l=>l.entryId===r.entryId&&l.senseId===r.senseId));
 const at=(term:string,n:number)=>rows.find(r=>r.senseId===raw(term,n).id);
 
 test('all 30 preserved meanings retain their source identity without duplicate restorations',()=>{

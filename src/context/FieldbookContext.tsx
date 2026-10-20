@@ -416,12 +416,12 @@ function useFieldbookValue() {
 
   const ensureVocabularyTeaching = useCallback((entries, options = {}) => {
     const ids = [...new Set(options.entryIds || entries.map(entry => entry.id))]
-      .filter(id => !vocabularyTeachingIds.current.has(id)).sort();
+      .filter(id => options.force || !vocabularyTeachingIds.current.has(id)).sort();
     if (!ids.length) return Promise.resolve();
-    const key = JSON.stringify(ids);
+    const key = JSON.stringify([ids,Boolean(options.force)]);
     if (vocabularyTeachingReads.current.has(key)) return vocabularyTeachingReads.current.get(key);
     const owner = accountId(), epoch = loadEpoch.current;
-    const request = loadReleasedVocabularyTeaching({entryIds:ids,allowMissingEntryIds:true}).then(teaching => {
+    const request = loadReleasedVocabularyTeaching({entryIds:ids,allowMissingEntryIds:true,...(options.force?{force:true}:{})}).then(teaching => {
       if (!alive.current || owner !== accountId() || epoch !== loadEpoch.current) throw new Error('Account load superseded');
       for (const key of ['books','units','memberships']) {
         const identity = row => key === 'units' ? `${row.bookId}:${row.id}` : row.id;

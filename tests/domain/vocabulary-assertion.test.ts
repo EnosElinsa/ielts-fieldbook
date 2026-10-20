@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { expect, test } from 'vitest';
+// Fixed counts describe the original batch; later scope variants have separate source and route checks.
 import corrections from '../../src/domain/vocabulary/readinessCorrections.json';
 import defaults from '../../src/domain/vocabulary/readinessDefaults.json';
 import ledger from '../../src/domain/vocabulary/dictionaryReviewLedger.json';
@@ -18,7 +19,7 @@ const catalog = JSON.parse(readFileSync('public/vocabulary-catalog.json', 'utf8'
 const raw = (term: string): VocabularySense[] => JSON.parse(readFileSync('public/dictionary/' + index[term], 'utf8')).senses;
 const entry = (term: string): VocabularyEntry => catalog.entries.find((e: VocabularyEntry) => e.term === term);
 const records = ledger.records.filter(r => terms.includes(r.term));
-const rows = corrections.filter(r => records.some(l => l.entryId === r.entryId && l.senseId === r.senseId));
+const rows = corrections.filter(r => !('contentVariant' in r) && records.some(l => l.entryId === r.entryId && l.senseId === r.senseId));
 const at = (term: string, i: number) => {
   const row = rows.find(r => r.entryId === entry(term).id && r.senseId === raw(term)[i].id);
   expect(row, `${term} meaning ${i}`).toBeDefined(); return row!;

@@ -11,7 +11,7 @@ test('an ordinary single-word review uses its explicit entry',()=>{
 });
 
 test.each([
-  ['/vocabulary/words',''],['/vocabulary',''],['/vocabulary/review','?mode=definition'],
+  ['/vocabulary/words',''],['/vocabulary',''],['/vocabulary/review','?mode=definition&dueOnly=false'],
   ['/vocabulary/review','?entryId=ve-example&scheduledOnly=true'],
   ['/vocabulary/review','?entryId=ve-example&batchCards=%5B%5D'],
   ['/vocabulary/review','?entryId=ve-example&batch=1'],
@@ -22,6 +22,10 @@ test.each([
   ['/progress','?entryId=ve-example'],
 ])('aggregate or historical %s keeps complete account teaching', (path,search)=>{
   expect(vocabularyTeachingScope(path,search)).toBeUndefined();
+});
+
+test.each(['','?mode=definition','?scheduledOnly=true','?dueOnly=false&wrongOnly=true'])('scheduled and mistake setup defer teaching selection to current-mode evidence: %s',search=>{
+  expect(vocabularyTeachingScope('/vocabulary/review',search)).toEqual([]);
 });
 
 test.each([

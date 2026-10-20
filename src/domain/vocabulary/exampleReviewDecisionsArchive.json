@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "archivedOn": "2026-10-20",
   "originalReceiptFileSha256": "98a056fb41b99ac0db36273a453f78b8cc8fc3a02c8dfb2ccd5f37e648cb936a",
-  "activeReceipts": 304,
+  "activeReceipts": 290,
   "records": [
     {
       "receipt": {
@@ -129,6 +129,202 @@
         "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
       },
       "reason": "The displayed-content variant was superseded by an independently reviewed fifth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:e2cb90b2a7fa4a645e0d85fa00f3e17bc3965b924e536e700c7d387c43c46a75",
+        "entryId": "ve-1297b67f",
+        "senseId": "kaikki:3a4eff8c3f3e3233f9",
+        "sourceHash": "c6a208d49079abe6595291d39655aff2617f06b90ac3df0c26e9547240717f5e",
+        "displayHash": "8a50dc2d9d97368ba2c2a8ec67548bad56c1a04a8d59cd5c8dd699861436b3db",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=ancient&oldid=93676630",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed sixth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:7af68de64bfbc92f079ffb007937e4b5350c47f01ec3ba6c531fc343d8315166",
+        "entryId": "ve-6b2dc596",
+        "senseId": "kaikki:e34b92ce8b64abfd71",
+        "sourceHash": "b3f09567d98404d753b907eee957beb2f2af64f8b363a62e96f5136174bc60ba",
+        "displayHash": "12ff1ff84dc0e97b50693b1341d688349c3887478579476468df3f2e73588659",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=anecdote&oldid=93676562",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed sixth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:2fc0de8b06c1f684120804b87a6240df31e8705f5af6aab75f2b5f6387442554",
+        "entryId": "ve-a202dba",
+        "senseId": "kaikki:0b883ac78124885766",
+        "sourceHash": "f2466280c541930a717979a95d515a133f95dea0f8fc4afd59df9c29199005e3",
+        "displayHash": "d943f0806580a4a62eacf263dbe3e2a2e44ab33796b5094f4804e9f1974571aa",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=anger&oldid=93567852",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed sixth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:f7f419ac69ddc468d16e597cee92f12f9f7bf2920c0cb276989e8d9d0d363743",
+        "entryId": "ve-a202c84",
+        "senseId": "kaikki:3969a6f428f641a1f2",
+        "sourceHash": "3a58288e0d74be0ff4bea83070d6301e40f631a889fc5b428c2a58b2c982b1e9",
+        "displayHash": "96eaac09a5a103bfaa997fbb02a0adbb63336676113ceac006c64a0cb0ba3d0b",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=angle&oldid=93676674",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed sixth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:f924ceaf0902a0add718c8448e514dbd71c10f7eafc5d16b5d6b31465c10ed8e",
+        "entryId": "ve-51e7cf84",
+        "senseId": "kaikki:a02684b5186c3aaebe",
+        "sourceHash": "8779ee3ee4c28f0317df17ff36263a06c7ebb2b97028ae71e0d2deccff333a8e",
+        "displayHash": "a393bd7af16e02d202190147371172890174e119b59c7675fe439f131b6f1559",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=announcer&oldid=93648386",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed sixth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:a1a006bb219a804086e84f46d0ceafbc4bff8bf11b39b78be7c7557a9bc915fb",
+        "entryId": "ve-4e22601c",
+        "senseId": "kaikki:00c04e5c3474923a84",
+        "sourceHash": "f84e6919e445d7e640ecf45052fae7bcf24c24177347f5d0cf7779833d4e679d",
+        "displayHash": "927abb1ba056a642885a47ae537c08b3eed8d3b701806f58da8141923c3237b7",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=annual&oldid=93676713",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed sixth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:f28c3812bca539e19cf2d81d12016abb3a5ba2e700080efe5c02a95c027208f6",
+        "entryId": "ve-2e9c1be1",
+        "senseId": "kaikki:0932b12fea76beec07",
+        "sourceHash": "1861291d22ad9b1df8e2cc4ff2c68bd5e456bb70510fdcfc3ed6b43c6229200e",
+        "displayHash": "babd89bd868e478db02d3079fb1543c272959a51cc77cce68aae5a8878dda1bd",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=apartment&oldid=93738105",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed sixth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:950a51e0b053ba20f731ff56a2701abaed2e3ecd0a2137b913f62a86e92d6254",
+        "entryId": "ve-6dcace91",
+        "senseId": "kaikki:f6fea2ad0d2e7a6d7f",
+        "sourceHash": "9de6725f89ed08fcdcfe59e392493ac2fbdaa1453b05183ec4235f01ca881fce",
+        "displayHash": "e1e3d93432d276b365cf849910e6be9f26286c8130b43813a6cde579d95713f3",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=assistant&oldid=93678023",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed seventh-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:e02a855a23f9b99817695b081a10cbb37746f356be736b6e8b0407cc41cc324c",
+        "entryId": "ve-98324124",
+        "senseId": "kaikki:d845d8abb6b06ddfad",
+        "sourceHash": "5c6da49c09fa93fd760c37f2e98fb9e0d9300862a424ea02ee429ad99bcfff21",
+        "displayHash": "388a70bd2ad094f35805a831d04360d1b276f12762a8c9ffa7cbeafaef8f754e",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=atmospheric&oldid=91310035",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed seventh-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:d7cbf738a2e265134cf38d97f7d0a0ec03a315c71c1fb8eb76859bcba6893c21",
+        "entryId": "ve-28bc31a8",
+        "senseId": "kaikki:dda29e83e1f154c2e4",
+        "sourceHash": "f82b37eda6eb2820759146898bd6e37c19d4f41e073a379b6c1be80ade6acd8e",
+        "displayHash": "aafc66b6822481f4b0c487ae28af89e33642516f8e07df409651baa9cd8f65b4",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=attempt&oldid=93678251",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed seventh-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:d006114269170f1e03ef2aa38ac62930b56f9b0c9d4bd8728c2da07e4f5d52b9",
+        "entryId": "ve-2094baef",
+        "senseId": "kaikki:6bcd81b7ba877cc281",
+        "sourceHash": "4c81694b9d3209b16141db5495cc6c25ebea329bfefaece5c4da62d40b263d68",
+        "displayHash": "5d313448a574d79efeb76db6e9cf1e8113e9135e019766753d2bf92dc82f23a4",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=auxiliary&oldid=93663186",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed seventh-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:5aa71f75bc900d5f46ac1b34bf2038627f44d68f0f0ef6c9948ed6e3905e64ae",
+        "entryId": "ve-52786bab",
+        "senseId": "kaikki:f028cc88ff50f3287d",
+        "sourceHash": "2e9e8cc56f38b441b4ba805ac1ffd010c7c32b675502683d2721211d961bc1cf",
+        "displayHash": "90b35dc56896a395743e6518270869a1c63f79e8ae87277e96ada79d8a3b64a2",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=background&oldid=93678734",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed seventh-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:bdea64076c6ba5f3b2bbd257a1c45b995b1167345a70f56808af9d45dd6bf7e4",
+        "entryId": "ve-a78cc80",
+        "senseId": "kaikki:c5786711170c847ff3",
+        "sourceHash": "2392ee4d8eea498d6492877f340bfef2ec69ddc0a73ecb9db87fcdd7e3d66ec2",
+        "displayHash": "411a180dc0fb70a2fb8a72df059636a4cd30c8c68b1fdcdcda0ed19ab42b2a97",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=badge&oldid=93678832",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed seventh-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:f25e0b11df9a077f16aeeb7777965e88a37f4ab6554c9665c4730a09a0e41aff",
+        "entryId": "ve-7c7045bb",
+        "senseId": "kaikki:6233cb7f2f7c7ad78e",
+        "sourceHash": "8e39042d11006c3b090a1ec03816bf246f0f5485894bb88fae1a6843ecb0bd7e",
+        "displayHash": "48dc424540bcb1211395e925ff6cce9b87f929265846faa684b0d3f87a718d39",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bait&oldid=93678892",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed seventh-package update; its current variants no longer trigger the fragment signal."
     }
   ],
   "transitions": [
@@ -153,6 +349,34 @@
         "vq:9360e00813b3faf9458bbb71da99ef159a605cb61f24dc36a5df7c590c48024b"
       ],
       "activeReceipts": 304
+    },
+    {
+      "date": "2026-10-21",
+      "priorActiveSha256": "7f6eb1c701b0d4f4aae7093715e25ddba27e7202bc02cc40b4bef50c315a095c",
+      "archivedReceiptIds": [
+        "vq:e2cb90b2a7fa4a645e0d85fa00f3e17bc3965b924e536e700c7d387c43c46a75",
+        "vq:7af68de64bfbc92f079ffb007937e4b5350c47f01ec3ba6c531fc343d8315166",
+        "vq:2fc0de8b06c1f684120804b87a6240df31e8705f5af6aab75f2b5f6387442554",
+        "vq:f7f419ac69ddc468d16e597cee92f12f9f7bf2920c0cb276989e8d9d0d363743",
+        "vq:f924ceaf0902a0add718c8448e514dbd71c10f7eafc5d16b5d6b31465c10ed8e",
+        "vq:a1a006bb219a804086e84f46d0ceafbc4bff8bf11b39b78be7c7557a9bc915fb",
+        "vq:f28c3812bca539e19cf2d81d12016abb3a5ba2e700080efe5c02a95c027208f6"
+      ],
+      "activeReceipts": 297
+    },
+    {
+      "date": "2026-10-21",
+      "priorActiveSha256": "305dc53c99f3eca521ec374a780535e6e0ce1f3c5e8ce59a4ceef4420ed42f05",
+      "archivedReceiptIds": [
+        "vq:950a51e0b053ba20f731ff56a2701abaed2e3ecd0a2137b913f62a86e92d6254",
+        "vq:e02a855a23f9b99817695b081a10cbb37746f356be736b6e8b0407cc41cc324c",
+        "vq:d7cbf738a2e265134cf38d97f7d0a0ec03a315c71c1fb8eb76859bcba6893c21",
+        "vq:d006114269170f1e03ef2aa38ac62930b56f9b0c9d4bd8728c2da07e4f5d52b9",
+        "vq:5aa71f75bc900d5f46ac1b34bf2038627f44d68f0f0ef6c9948ed6e3905e64ae",
+        "vq:bdea64076c6ba5f3b2bbd257a1c45b995b1167345a70f56808af9d45dd6bf7e4",
+        "vq:f25e0b11df9a077f16aeeb7777965e88a37f4ab6554c9665c4730a09a0e41aff"
+      ],
+      "activeReceipts": 290
     }
   ]
 }

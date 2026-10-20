@@ -1,10 +1,11 @@
 import { expect, test } from 'vitest';
+// Fixed counts describe the original batch; later scope variants have separate source and route checks.
 import corrections from '../../src/domain/vocabulary/readinessCorrections.json';
 import ledger from '../../src/domain/vocabulary/dictionaryReviewLedger.json';
 import sources from '../../src/domain/vocabulary/dictionarySenseSources.json';
 const terms = ['assess', 'evaluate', 'calculate', 'predict'];
 const records = ledger.records.filter(row => terms.includes(row.term));
-const rows = corrections.filter(row => records.some(record => record.entryId === row.entryId && record.senseId === row.senseId));
+const rows = corrections.filter(row => !('contentVariant' in row) && records.some(record => record.entryId === row.entryId && record.senseId === row.senseId));
 const meaning = (term: string, start: string) => rows.find(row => row.entryId === records.find(record => record.term === term)?.entryId && row.originalSense.definition.startsWith(start));
 
 test('all seventeen original meanings receive independent reviews without duplicate restored records', () => {

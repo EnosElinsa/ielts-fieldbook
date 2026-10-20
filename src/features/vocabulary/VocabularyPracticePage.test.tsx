@@ -18,6 +18,7 @@ import { createVocabularySession, evaluateVocabularySessionAnswer, updateVocabul
 
 import { freezeVocabularyPronunciation } from '../../domain/vocabulary/sensePronunciation';
 import { WorkspaceScrollRestoration } from '../../components/WorkspaceScrollRestoration';
+import * as releasedVocabulary from '../../storage/vocabularyCatalog';
 
 const { fb, player, owner } = vi.hoisted(() => ({
   fb: { current: null as any },
@@ -100,6 +101,139 @@ test('typing in a frozen planned review does not rebuild its review queue', asyn
     fireEvent(window, new Event('pagehide'));
     await waitFor(async()=>{const draft=await latestDraft();expect(draft?.answers[draft.cardIds[0].id]?.response).toBe('resilient');});
   } finally { queue.mockRestore(); }
+});
+
+test('ordinary due review prepares teaching only for saved schedules in its current mode', async () => {
+  const states=fb.current.state.vocabularyStates;
+  states[1].cards.definition.due=new Date('2099-01-01');
+  fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
+  const teaching=vi.spyOn(releasedVocabulary,'loadReleasedVocabularyTeaching').mockResolvedValue({books:[],units:[],entries:[],memberships:[]});
+  try {
+    mount('?mode=definition&dueOnly=true');
+    await readyStart();
+    expect(teaching).toHaveBeenLastCalledWith({entryIds:['entry-0'],allowMissingEntryIds:true,force:false});
+    expect(screen.getByText('20 requested · 1 available questions · 1 words')).toBeInTheDocument();
+  } finally {teaching.mockRestore();}
+});
+
+test('mistake review prepares the current mode even when its recovery word is not due', async () => {
+  const states=fb.current.state.vocabularyStates;
+  states[0].wrong={active:true,modes:{dictation:{active:true}}};
+  states[1].wrong={active:true,modes:{definition:{active:true}}};
+  states[1].cards.definition.due=new Date('2099-01-01');
+  fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
+  const teaching=vi.spyOn(releasedVocabulary,'loadReleasedVocabularyTeaching').mockResolvedValue({books:[],units:[],entries:[],memberships:[]});
+  try {
+    mount('?mode=definition&wrongOnly=true&dueOnly=false');
+    await readyStart();
+    expect(teaching).toHaveBeenLastCalledWith({entryIds:['entry-1'],allowMissingEntryIds:true,force:false});
+    fireEvent.click(await readyStart());
+    expect(screen.getByText('Definition 1')).toBeInTheDocument();
+  } finally {teaching.mockRestore();}
+});
+
+test('switching review mode waits for its different teaching scope before allowing a start', async () => {
+  const states=fb.current.state.vocabularyStates;
+  states[0].cards.dictation.due=new Date('2099-01-01');states[1].cards.definition.due=new Date('2099-01-01');
+  fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
+  let release:()=>void=()=>{};
+  const teaching=vi.spyOn(releasedVocabulary,'loadReleasedVocabularyTeaching').mockResolvedValueOnce({books:[],units:[],entries:[],memberships:[]}).mockImplementation(()=>new Promise(resolve=>{release=()=>resolve({books:[],units:[],entries:[],memberships:[]});}));
+  try {
+    mount('?mode=definition&dueOnly=true');await readyStart();
+    const user=userEvent.setup();await user.click(screen.getByRole('button',{name:'Review mode'}));await user.click(screen.getByRole('option',{name:'Dictation'}));
+    expect(teaching).toHaveBeenLastCalledWith({entryIds:['entry-1'],allowMissingEntryIds:true,force:false});
+    expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
+    await act(async()=>release());await readyStart();
+  } finally {teaching.mockRestore();}
+});
+
+test('empty due setup skips teaching and becomes available when a schedule reaches its boundary', async () => {
+  const time=Date.parse('2026-10-21T10:00:00Z');
+  vi.useFakeTimers({toFake:['Date','setTimeout','clearTimeout']});
+  vi.setSystemTime(time);
+  fb.current.state.vocabularyStates.forEach((row:any)=>{row.cards.definition.due=new Date(time+1000);});
+  fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
+  const teaching=vi.spyOn(releasedVocabulary,'loadReleasedVocabularyTeaching').mockResolvedValue({books:[],units:[],entries:[],memberships:[]});
+  try {
+    await act(async()=>{mount('?mode=definition&dueOnly=true');});
+    expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
+    expect(teaching).not.toHaveBeenCalled();
+    await act(async()=>{await vi.advanceTimersByTimeAsync(1025);});
+    await act(async()=>{});
+    expect(teaching).toHaveBeenLastCalledWith({entryIds:['entry-0','entry-1'],allowMissingEntryIds:true,force:false});
+    expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled();
+  } finally {teaching.mockRestore();vi.useRealTimers();}
+});
+
+test('failed due teaching blocks practice until an explicit forced retry succeeds', async () => {
+  fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
+  const teaching=vi.spyOn(releasedVocabulary,'loadReleasedVocabularyTeaching').mockRejectedValueOnce(new Error('offline')).mockResolvedValue({books:[],units:[],entries:[],memberships:[]});
+  try {
+    mount('?mode=definition&dueOnly=true');
+    await screen.findByText('The wordbook could not be loaded.');
+    expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
+    fireEvent.click(screen.getByRole('button',{name:'Retry catalog'}));
+    await readyStart();
+    expect(teaching).toHaveBeenLastCalledWith({entryIds:['entry-0','entry-1'],allowMissingEntryIds:true,force:true});
+  } finally {teaching.mockRestore();}
+});
+
+test('a late previous-mode response cannot unlock the new teaching scope', async () => {
+  const states=fb.current.state.vocabularyStates;
+  states[0].cards.dictation.due=new Date('2099-01-01');states[1].cards.definition.due=new Date('2099-01-01');
+  fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
+  const releases:Array<()=>void>=[];
+  const teaching=vi.spyOn(releasedVocabulary,'loadReleasedVocabularyTeaching').mockImplementation(()=>new Promise(resolve=>{releases.push(()=>resolve({books:[],units:[],entries:[],memberships:[]}));}));
+  try {
+    mount('?mode=definition&dueOnly=true');
+    const user=userEvent.setup();await user.click(screen.getByRole('button',{name:'Review mode'}));await user.click(screen.getByRole('option',{name:'Dictation'}));
+    expect(releases).toHaveLength(2);
+    await act(async()=>releases[0]());
+    expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
+    await act(async()=>releases[1]());await readyStart();
+  } finally {teaching.mockRestore();}
+});
+
+test('active due practice does not prepare teaching again on keystrokes or foreground events', async () => {
+  fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
+  fb.current.state.settings.vocabulary={autoPlay:false};
+  const teaching=vi.spyOn(releasedVocabulary,'loadReleasedVocabularyTeaching').mockResolvedValue({books:[],units:[],entries:[],memberships:[]});
+  try {
+    mount('?mode=dictation&dueOnly=true');fireEvent.click(await readyStart());
+    const calls=teaching.mock.calls.length,input=screen.getByRole('textbox',{name:'Answer 1'});
+    for(const value of ['r','re','resilient']){fireEvent.change(input,{target:{value}});expect(input).toHaveValue(value);}
+    fireEvent(window,new Event('focus'));fireEvent(document,new Event('visibilitychange'));
+    expect(teaching).toHaveBeenCalledTimes(calls);
+  } finally {teaching.mockRestore();}
+});
+
+test('switching from due review to custom selection prepares every saved word before enabling practice', async () => {
+  fb.current.state.vocabularyStates[1].cards.definition.due=new Date('2099-01-01');
+  fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
+  const teaching=vi.spyOn(releasedVocabulary,'loadReleasedVocabularyTeaching').mockResolvedValue({books:[],units:[],entries:[],memberships:[]});
+  try {
+    mount('?mode=definition&dueOnly=true');await readyStart();
+    expect(teaching).toHaveBeenLastCalledWith({entryIds:['entry-0'],allowMissingEntryIds:true,force:false});
+    const user=userEvent.setup();await user.click(screen.getByRole('button',{name:'Review preset'}));await user.click(screen.getByRole('option',{name:'Custom selection'}));
+    await readyStart();
+    expect(teaching).toHaveBeenLastCalledWith({entryIds:['entry-0','entry-1'],allowMissingEntryIds:true,force:false});
+  } finally {teaching.mockRestore();}
+});
+
+test('an old account teaching failure cannot overwrite the new account readiness', async () => {
+  fb.current.loadVocabularyCatalog=vi.fn(async()=>true);
+  let rejectOld!:(error:Error)=>void;
+  const teaching=vi.spyOn(releasedVocabulary,'loadReleasedVocabularyTeaching').mockImplementationOnce(()=>new Promise((_,reject)=>{rejectOld=reject;})).mockResolvedValue({books:[],units:[],entries:[],memberships:[]});
+  try {
+    const view=mount('?mode=definition&dueOnly=true');
+    expect(screen.getByRole('button',{name:'Start session'})).toBeDisabled();
+    owner.current='account-two';fb.current.state={...fb.current.state};
+    view.rerender(<MemoryRouter><VocabularyPracticePage/></MemoryRouter>);
+    await readyStart();
+    await act(async()=>rejectOld(new Error('old account offline')));
+    expect(screen.getByRole('button',{name:'Start session'})).toBeEnabled();
+    expect(screen.queryByText('The wordbook could not be loaded.')).not.toBeInTheDocument();
+  } finally {teaching.mockRestore();}
 });
 
 test('typing updates immediately without writing the full draft per letter, then pagehide flushes the latest answer', async () => {
