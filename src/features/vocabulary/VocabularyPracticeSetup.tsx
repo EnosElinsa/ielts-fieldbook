@@ -51,6 +51,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
           <div><dt>Prompts</dt><dd>{controller.boundVocabularyPlan ? `${controller.boundVocabularyPlan.target.cards.length} prompts` : 'Unavailable'}</dd></div>
           <div><dt>Source</dt><dd>{controller.origin.label.replace(/^Back to /, '')}{plannedBook ? ` · ${plannedBook.title}` : ''}{plannedUnit ? ` / ${plannedUnit.title}` : ''}</dd></div>
         </dl>
+        <p>Submit an answer for every planned word to complete this task. Incorrect answers count as completed attempts; they stay in your review schedule.</p>
       </section> : <>
       <div className="practice-setup-controls">
         <div className="practice-field"><span className="practice-field-label">Mode</span>

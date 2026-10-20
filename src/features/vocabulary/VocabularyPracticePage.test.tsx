@@ -7,7 +7,8 @@ import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { VocabularyPracticePage } from "./VocabularyPracticePage";
 import { completeVocabularyPlan } from '../../domain/plans';
-import { getVocabularyReviewQueue } from "../../domain/vocabulary";
+import { getVocabularyReviewQueue, type VocabularyEntry } from "../../domain/vocabulary";
+import * as vocabularyDomain from '../../domain/vocabulary';
 import { VOCABULARY_CATALOG } from "../../domain/vocabulary/catalog";
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { createVocabularySession, evaluateVocabularySessionAnswer } from '../../domain/vocabulary/session';
@@ -77,6 +78,25 @@ beforeEach(() => {
   };
 });
 const originalCatalog = { books: [...VOCABULARY_CATALOG.books], units: [...VOCABULARY_CATALOG.units], entries: [...VOCABULARY_CATALOG.entries], memberships: [...VOCABULARY_CATALOG.memberships] };
+
+test('typing in a frozen planned review does not rebuild its review queue', async () => {
+  fb.current.state.settings.vocabulary = { autoPlay: false, layout: 'list' };
+  fb.current.state.plans = [{ id: 'typing-plan', kind: 'vocabulary', status: 'in_progress', startedAt: '2020-01-01', target: { type: 'vocabulary', mode: 'due-review', binding: 'frozen', assessmentMode: 'dictation', cards: fb.current.state.vocabulary.map((entry: VocabularyEntry) => ({entryId: entry.id, senseId: entry.senses[0].id})) } }];
+  const queue = vi.spyOn(vocabularyDomain, 'getVocabularyReviewQueue');
+  try {
+    mount('?planId=typing-plan&mode=dictation&dueOnly=false');
+    fireEvent.click(await screen.findByRole('button', { name: 'Start session' }));
+    const before = queue.mock.calls.length;
+    const input = screen.getByRole('textbox', { name: 'Answer 1' });
+    for (const value of ['r', 're', 'res', 'resilient']) {
+      fireEvent.change(input, { target: { value } });
+      expect(input).toHaveValue(value);
+    }
+    expect(queue.mock.calls.length).toBe(before);
+    fireEvent(window, new Event('pagehide'));
+    expect(readVocabularyDraft(owner.current)?.answers[readVocabularyDraft(owner.current)!.cardIds[0].id].response).toBe('resilient');
+  } finally { queue.mockRestore(); }
+});
 
 test('typing updates immediately without writing the full draft per letter, then pagehide flushes the latest answer', async () => {
   fb.current.state.settings.vocabulary = { autoPlay: false };

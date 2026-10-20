@@ -4,6 +4,8 @@ Repairing one example should not require rewriting a definition or inventing col
 
 ## Prepare a whole issue queue
 
+Use [whole-queue collection and preparation](vocabulary-bulk-workflow.md#collect-and-prepare-an-entire-issue-queue) for complete issue inventories. `vocabulary:prepare -- --all` produces the entire job in one invocation, shares source parsing and protects existing authoring directories. The bounded example below remains available for focused investigation.
+
 ```powershell
 npm run vocabulary:quality
 npm run vocabulary:quality -- --export --scope learning --issue archaic-example --limit 1000 --output local/vocabulary-work/archaic-work.json

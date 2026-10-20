@@ -702,13 +702,31 @@ function useFieldbookValue() {
         if(generation===saveGeneration.current){setSaveFailed(!saved && !options?.onError);setSaveStatus(saved?'saved':'failed');}
         if(saved){
           keys.forEach(key=>{const previous=new Map((before[key]||[]).map(row=>[row.id,JSON.stringify(row)]));(frozen[key]||[]).forEach(row=>{if(previous.get(row.id)!==JSON.stringify(row))committedVocabularyImports.current.push({owner,key,before:previous.get(row.id),after:structuredClone(row)});});});
-          const next=structuredClone(stateRef.current);applyCommittedVocabulary(next,owner);stateRef.current=next;setState(next);if(readVocabularyDraft(owner)?.id===sessionId)clearVocabularyDraft(owner);
-          const session = frozen.vocabularySessions?.find(row=>row.id===sessionId);
-          void mutatePlans(draft=>completeVocabularyPlan(draft,session)).catch(()=>{});
+          const next=structuredClone(stateRef.current);applyCommittedVocabulary(next,owner);stateRef.current=next;setState(next);
         }
       }
       return saved;
-    });saveQueue.current=operation;return operation;
+    });
+    saveQueue.current=operation;
+    // Queue the plan write only after this operation settles. Awaiting a write
+    // inside its own saveQueue would deadlock. A session RPC replay is safe if
+    // the practice saved but the following plan write needs another attempt.
+    return operation.then(async saved=>{
+      if(!saved || !alive.current || accountId()!==owner || epoch!==loadEpoch.current)return false;
+      const session=frozen.vocabularySessions?.find(row=>row.id===sessionId);
+      if(session?.planId){
+        let completed=false;
+        try { completed=await mutatePlans(draft=>completeVocabularyPlan(draft,session),{onError:()=>{}}); } catch { /* Keep the prepared session available for retry. */ }
+        if(!alive.current || accountId()!==owner || epoch!==loadEpoch.current)return false;
+        if(!completed){
+          saveFeedback(options)('Your review is saved, but the task status could not be saved. Retry submission to finish updating the task.');
+          setSaveFailed(!options?.onError);setSaveStatus('failed');
+          return false;
+        }
+      }
+      if(readVocabularyDraft(owner)?.id===sessionId)clearVocabularyDraft(owner);
+      return true;
+    });
   },[toast]);
 
   const saveVocabularyPreferences = useCallback(async(input)=>{

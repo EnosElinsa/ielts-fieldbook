@@ -32,6 +32,7 @@
     "test": "vitest run",
     "vocabulary:quality": "vite-node scripts/audit-vocabulary-quality.ts",
     "vocabulary:prepare": "vite-node scripts/prepare-vocabulary-candidates.ts",
+    "vocabulary:sources": "vite-node scripts/collect-vocabulary-sources.ts",
     "test:identities": "node scripts/verify-vocabulary-identities.mjs && node tests/storage/neutral-identities-sql.cjs",
     "collect:exams": "node scripts/collect-exams.mjs",
     "import:exams": "node scripts/import-exams.mjs",

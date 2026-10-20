@@ -1,7 +1,7 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type ReadinessSupplement as Supplement, type ReadinessDefault as Default, type VocabularyLearningPriority } from './runtimeData';
 import type { VocabularyEntry, VocabularySense } from './types';
 
-export const VOCABULARY_READINESS_VERSION = 'core-2026-10-20.2';
+export const VOCABULARY_READINESS_VERSION = 'core-2026-10-20.3';
 const identity = (entryId:string, senseId:string) => `${entryId}\u0000${senseId}`;
 const core = new Map<string,Supplement>();
 const additions = new Map<string,Supplement>();
@@ -123,6 +123,15 @@ export function supplementVocabularySense(entryId:string, sense:VocabularySense,
  const missing=core.get(key), addition=additions.get(key);
  if (!missing && !addition) return sense;
  const row=addition || missing!;
+ // Public courses can reuse a source ID for distinct lexical teaching.
+ // A directory correction applies only to recognised directory content.
+ if (row.meaningGroup && !isVocabularyMeaningGroup(entryId,sense)) return sense;
+ // Focused repairs name the public text they reviewed. A shared source ID
+ // alone cannot authorise replacing another course's definition or example.
+ if (row.contentScope && !row.contentScope.some(scope =>
+  scope.definition === sense.definition && scope.example === sense.example && scope.pos === sense.pos ||
+  (row.definition || scope.definition) === sense.definition && row.example === sense.example && (row.pos || scope.pos) === sense.pos
+ )) return sense;
  const supplemented:VocabularySense={...sense,
   ...(row.definition ? {definition:row.definition}:{}),
   ...(row.pos ? {pos:row.pos}:{}),example:row.example,

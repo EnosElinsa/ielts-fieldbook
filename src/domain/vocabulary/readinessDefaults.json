@@ -31052,5 +31052,624 @@
       "sourceUrl": "https://en.wiktionary.org/wiki/decade#English",
       "license": "CC-BY-SA-4.0"
     }
+  },
+  {
+    "entryId": "ve-a693254",
+    "sense": {
+      "id": "wiktionary:restored:c42c90bde709f263b2",
+      "pos": "noun",
+      "definition": "A material with the properties of metallic elements, including an alloy.",
+      "example": "The frame is made from a strong metal alloy.",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=metal&oldid=93707395",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "a metal frame",
+        "metal alloys"
+      ],
+      "distinctions": [
+        "An alloy such as brass is a metallic material but is not a single chemical element."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:30420a446aee8dc3d5",
+      "definition": "Chemical elements or alloys, their ores, and the mines where their ores come from.",
+      "example": "Manganism has been known about since the 19th century, when miners exposed to ores containing manganese, a silvery metal, began to totter, slur their speech and behave like someone inebriated.",
+      "pos": "noun",
+      "synonyms": [
+        "metal"
+      ],
+      "antonyms": [
+        "nonmetal"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "Aich's metal",
+        "Albion metal",
+        "alkali metal",
+        "alkaline-earth metal",
+        "alkaline earth metal",
+        "alkylmetal",
+        "allylmetal",
+        "alternative metal",
+        "alt-metal",
+        "arylmetal",
+        "avant-metal",
+        "Babbitt metal",
+        "babbitt metal",
+        "Babbitt's metal",
+        "bare metal",
+        "base metal",
+        "Bath metal",
+        "bean metal",
+        "bell metal",
+        "bell-metal ore",
+        "bi-metal strip",
+        "biometal",
+        "bite my shiny metal ass",
+        "black metal",
+        "blond metal",
+        "blue metal",
+        "Britannia metal",
+        "bush-metal",
+        "cannon metal",
+        "Celtic metal"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/metal#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7c6e23af",
+    "sense": {
+      "id": "wiktionary:restored:4b42c0d8e3e2315811",
+      "pos": "verb",
+      "definition": "To become aware of something through the skin or by touching it.",
+      "example": "You can feel the rough surface with your fingertips.",
+      "register": "transitive, copulative",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=feel&oldid=93693862",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "feel the texture",
+        "feel a pulse"
+      ],
+      "distinctions": [
+        "This use takes the thing sensed as an object; feel for a switch instead describes searching by touch."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:68e9b97b8b91041713",
+      "definition": "To use or experience the sense of touch.",
+      "example": "You can feel a heartbeat if you put your fingers on your breast.",
+      "pos": "verb",
+      "synonyms": [
+        "feel",
+        "grope",
+        "handle",
+        "touch"
+      ],
+      "antonyms": [
+        "misfeel"
+      ],
+      "collocations": [],
+      "usage": "copulative",
+      "register": "copulative, transitive",
+      "wordFamily": [
+        "feelable",
+        "feel around",
+        "feel bad",
+        "feel-bad",
+        "feel eight feet tall",
+        "feeler",
+        "feel for",
+        "feel free",
+        "feel-good",
+        "feelgoodery",
+        "feel-goodery",
+        "feel-good factor",
+        "feel-goodism",
+        "feelie",
+        "feeling",
+        "feel in one's water",
+        "feel in one's waters",
+        "feel like",
+        "feel like death",
+        "feel like oneself",
+        "feelness",
+        "feel nine feet tall",
+        "feel no pain",
+        "feel oneself",
+        "feel one's legs",
+        "feel one's oats",
+        "feel one's way",
+        "feel out",
+        "feelsome",
+        "feel someone's collar"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/feel#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-b874ff0",
+    "sense": {
+      "id": "wiktionary:restored:a1b29e051613207adc",
+      "pos": "verb",
+      "definition": "To strike someone or something with a blow.",
+      "example": "The player used a bat to hit the ball.",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=hit&oldid=93699789",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "hit a ball",
+        "hit something with a bat"
+      ],
+      "distinctions": [
+        "This use describes delivering a blow; a ball hitting a wall describes the separate contact sense."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:2dd99e488cc040d750",
+      "definition": "To strike.",
+      "example": "One boy hit the other.",
+      "pos": "verb",
+      "synonyms": [
+        "beat"
+      ],
+      "antonyms": [
+        "miss",
+        "block"
+      ],
+      "collocations": [],
+      "usage": "physical",
+      "register": "physical, transitive",
+      "wordFamily": [
+        "a hit dog will holler",
+        "don't let the door hit you on the way out",
+        "flood-hit",
+        "hard-hitting",
+        "hit above one's weight",
+        "hit a brick wall",
+        "hit a clip",
+        "hit a false note",
+        "hit a home run",
+        "hit a lick",
+        "hit and hope",
+        "hit-and-miss",
+        "hit and run",
+        "hit a nerve",
+        "hit-a-pin bagatelle",
+        "hit a raw nerve",
+        "hit a six",
+        "hit a snag",
+        "hit a stain",
+        "hit at",
+        "hit a wall",
+        "hit away",
+        "hit back",
+        "hit below one's weight",
+        "hit below the belt",
+        "hit bottom",
+        "hit different",
+        "hit hard",
+        "hit home",
+        "hit into the long grass"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/hit#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7c79a6ba",
+    "sense": {
+      "id": "wiktionary:restored:1b8837d77c9bb89b03",
+      "pos": "verb",
+      "definition": "To go, or cause something to go, down into a liquid or similar substance.",
+      "example": "The stone began to sink below the surface of the water.",
+      "register": "ergative",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=sink&oldid=93722600",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "sink in water",
+        "sink below the surface"
+      ],
+      "distinctions": [
+        "Sink describes downward movement; float describes remaining supported on or in a liquid."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:df010823271a740ce7",
+      "definition": "To move or be moved into something.",
+      "example": "A stone sinks in water.  The sun gradually sank in the west.",
+      "pos": "verb",
+      "synonyms": [
+        "bury",
+        "descend",
+        "founder",
+        "go down",
+        "dip",
+        "dunk",
+        "submerge"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "ergative, physical",
+      "register": "ergative, physical",
+      "wordFamily": [
+        "countersink",
+        "like a rat from a sinking ship",
+        "loose lips sink ships",
+        "resink",
+        "sinkable",
+        "sinkage",
+        "sinkant",
+        "sinkbox",
+        "sinker",
+        "sinkful",
+        "sink in",
+        "sinking fund",
+        "sinking head",
+        "sinking pump",
+        "sinking ship",
+        "sink like a stone",
+        "sink one's teeth in",
+        "into",
+        "sink or swim",
+        "sinky",
+        "slop sink",
+        "unsinkability",
+        "unsinkable"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sink#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7c6e14c2",
+    "sense": {
+      "id": "wiktionary:restored:75903af5091766ad1f",
+      "pos": "verb",
+      "definition": "To move to a lower position under gravity.",
+      "example": "The apple began to fall from the branch.",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=fall&oldid=93693487",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "fall to the ground",
+        "fall from a branch"
+      ],
+      "distinctions": [
+        "Fall is intransitive here; drop can also be transitive when someone causes an object to fall."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:77d29b5aecb074a6cf",
+      "definition": "To be moved downwards.",
+      "example": "Thrown from a cliff, the stone fell 100 feet before hitting the ground.",
+      "pos": "verb",
+      "synonyms": [
+        "drop",
+        "plummet",
+        "plunge"
+      ],
+      "antonyms": [
+        "ascend",
+        "go up",
+        "rise",
+        "get up",
+        "pick oneself up",
+        "stand up",
+        "beat",
+        "defeat",
+        "overthrow",
+        "smite",
+        "vanquish",
+        "rise"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "almost fall off one's chair",
+        "fall off one's chair",
+        "nearly fall off one's chair",
+        "atfall",
+        "befall",
+        "bottom falls out",
+        "catch a falling knife",
+        "chip-fell-out-of-a-oak",
+        "easy as falling off a log",
+        "fair fall",
+        "fallable",
+        "fall aboard",
+        "fall aboard of",
+        "fall about",
+        "fall about someone's ears",
+        "fall about the place",
+        "fall abreast of",
+        "fall abroad of",
+        "fall across",
+        "fall adown",
+        "fall afire",
+        "fall afoul",
+        "fall afoul of",
+        "fall after",
+        "fallage",
+        "fall all over someone or oneself",
+        "fall among",
+        "fall apart",
+        "fall around",
+        "fall asleep"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/fall#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-7c6fbb70",
+    "sense": {
+      "id": "wiktionary:restored:fd3211928a24fb55fe",
+      "pos": "noun",
+      "definition": "A visible impression, sign, scratch or stain.",
+      "example": "The wet glass left a mark on the table.",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "leave a mark",
+        "a scratch mark"
+      ],
+      "distinctions": [
+        "A mark can be accidental or intentional; the word alone does not establish how it was made."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:53bf2e9a1cf3b628c8",
+      "definition": "Boundary, land within a boundary.",
+      "example": "",
+      "pos": "noun",
+      "synonyms": [
+        "observance"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "obsolete",
+      "register": "obsolete",
+      "wordFamily": [
+        "accent mark",
+        "airmark",
+        "atmark",
+        "beauty mark",
+        "bench-mark",
+        "benchmark",
+        "beside the mark",
+        "birthmark",
+        "bitemark",
+        "black mark",
+        "blue check mark",
+        "bookmark",
+        "brandmark",
+        "breath mark",
+        "brushmark",
+        "byte-order mark",
+        "byte order mark",
+        "cardinal mark",
+        "catchmark",
+        "center mark",
+        "centre mark",
+        "certification mark",
+        "chatter mark",
+        "check mark",
+        "checkmark",
+        "chest mark",
+        "chop mark",
+        "claiming mark",
+        "classmark",
+        "coachmark"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mark#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-b8761f7",
+    "sense": {
+      "id": "wiktionary:restored:4c5cca8bf50f754a80",
+      "pos": "noun",
+      "definition": "A small label attached to something.",
+      "example": "She put a luggage tag on her bag.",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=tag&oldid=93740008",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors",
+      "collocations": [
+        "a luggage tag",
+        "a price tag"
+      ],
+      "distinctions": [
+        "A tag can carry identifying information; a separate sense names a small projecting piece of skin."
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "wordFamily": [],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:85a25eedbd6814304b",
+      "definition": "Physical appendage.",
+      "example": "He has a tag hung on his bag.",
+      "pos": "noun",
+      "synonyms": [
+        "ticket"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "auto tag",
+        "keytag",
+        "backtag",
+        "betag",
+        "biotag",
+        "cryotag",
+        "detag",
+        "ditag",
+        "ear-tag",
+        "emotag",
+        "gamertag",
+        "geotag",
+        "hangtag",
+        "ink tag",
+        "nametag",
+        "nanotag",
+        "on tag",
+        "phone tag",
+        "telephone tag",
+        "pyrotag",
+        "rhyme-tag",
+        "skintag",
+        "slashtag",
+        "subtag",
+        "swing tag",
+        "tag alder",
+        "tag-along right",
+        "tag and rag",
+        "tagback",
+        "tagball"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/tag#English",
+      "license": "CC-BY-SA-4.0"
+    }
+  },
+  {
+    "entryId": "ve-553b6bfe",
+    "sense": {
+      "id": "kaikki:6a6ddcc7566478f876",
+      "definition": "Most recent.",
+      "example": "Here is the latest news on the accident.",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [
+        "the latest news",
+        "the latest version"
+      ],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/latest#English",
+      "license": "CC-BY-SA-4.0",
+      "distinctions": [
+        "Latest here means most recent; the separate superlative of late compares how late things are."
+      ],
+      "editorial": {
+        "source": "Fieldbook core content review",
+        "license": "CC-BY-4.0",
+        "attribution": "Fieldbook editorial contributors"
+      }
+    },
+    "originalSense": {
+      "id": "kaikki:a41576109b11c20e4b",
+      "definition": "superlative form of late: most late",
+      "example": "",
+      "pos": "adj",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "form-of, superlative",
+      "register": "form-of, superlative",
+      "wordFamily": [
+        "latest and greatest",
+        "latestly"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/latest#English",
+      "license": "CC-BY-SA-4.0"
+    }
   }
 ]

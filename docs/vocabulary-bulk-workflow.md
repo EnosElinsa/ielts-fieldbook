@@ -20,6 +20,36 @@ The compact committed output is [vocabulary-quality-report.md](vocabulary-qualit
 
 Different group teaching remains separate even when it shares a source sense ID. Work items retain their original source fingerprint, exact displayed-content fingerprint, text, entry/sense identities and all applicable scopes. A source entry and a different teaching version cannot inherit each other's editorial approval. Proper-name case differences and distinct etymologies can produce similar glosses: duplicate signals must be inspected, not automatically deleted.
 
+## Collect and prepare an entire issue queue
+
+The normal work unit is now the entire matching issue queue. Source collection and candidate preparation no longer require manually exporting successive 200/1,000-item offsets. The existing bounded commands below remain useful for targeted investigation.
+
+```powershell
+npm run vocabulary:quality
+npm run vocabulary:sources -- --work local/audits/vocabulary-quality.json --scope learning --issue missing-collocations --cache local/vocabulary-work/revision-cache --output local/vocabulary-work/sources.json
+npm run vocabulary:prepare -- --all --scope learning --issue missing-collocations --sources local/vocabulary-work/sources.json --fields collocations,distinctions --output local/vocabulary-work/collocations-job
+```
+
+The collector uses sequential requests of 20 case-sensitive titles, retries only unresolved titles and persists successful replies immediately. Repeating the same command reuses valid cached pages and explicit missing-page results. `--seed responses.json` imports existing MediaWiki responses; imported evidence is retained in the cache after collection. `--refresh-missing` checks absent pages again without refetching valid revisions. `--batch-size` accepts 1–50 source titles. Missing pages and failed requests are separate report fields: incomplete requests set a nonzero exit status but retain successful evidence. Conflicting cached revisions remain explicit rather than silently choosing the last or highest revision. This command collects source evidence only and never edits the dictionary or grants review status.
+
+Whole-queue preparation checks the runtime snapshot once, shares a source/page index and includes every matching variant, including the final partial package. `--batch-size` accepts 1–1,000 authoring items. Output must be a new or empty directory inside ignored `local/`, so rerunning cannot overwrite authored work. The directory contains:
+
+- `manifest.json`: source snapshot, exact total, package counts and route counts.
+- `prepared-*.json`: complete source context and fingerprint-bound focused drafts.
+- `authoring.jsonl`: current and original meanings, existing teaching fields, register, metadata, scopes, source evidence and requested changes for model/reviewer input.
+- `routes.json`: separate source-resolution, authoring and candidate-review inventories.
+- `AUTHORING.md`: output format, abstention handling and semantic review requirements.
+
+Unindexed teaching meanings, changed teaching contexts, absent pages, revision conflicts, ambiguous matches, gloss mismatches and source organisation headings have distinct `sourceIssue` codes. Known sense identifiers, single-line references and simple first-attestation dates may be omitted only from gloss comparison; the complete original source line remains in the evidence. Unknown/nested templates, changed lexical wording and distinct meanings stay unresolved. Prepositional phrases retain their source POS. A source heading cannot provide a lexical example from its overview or borrow one from a child.
+
+The 2026-10-20 run covers all **5,895** current-learning collocation opportunities at snapshot `3835105a2503da4df92215f7a676ad1a95932567c5d1af18388ad42f491b8334`. Collection resolves 4,733 existing pages and 1,162 absent pages, with zero failed requests or conflicting revisions. A fresh resume reuses all 5,895 title results. Preparation yields six processing packages, 3,742 exact source matches, 2,153 source-resolution items and 1,802 items with direct source-example suggestions. Those suggestions do not complete the requested collocation/distinction fields: candidate-review and publication-ready counts both remain zero. Earlier strict preparation had 2,927 exact matches; removing nonlexical metadata from comparison eliminates 815 unnecessary manual source matches while keeping heading and semantic safeguards.
+
+The first 250 inventory decisions have now produced 248 integrated field repairs, plus source-heading repairs and the separately reviewed recency selection for latest. Indexed field repairs are scoped to exact public definition/example/POS text so unrelated course variants sharing a source ID are preserved. Five unique core phrases also retain their original core teaching fields. These partial repairs do not count as all-field dictionary reviews.
+
+The same queue identifies seven source headings: metal, feel, hit, sink, fall, mark and tag. Their 49 genuine child lines are registered as separate source-bound meanings, including 13 typed reading notes. Seven heading corrections retain the raw references, while eight defaults and twelve topic selections choose lexical teaching, including the real recency adjective of latest. The mark course retains both its visible-sign and examination-score meanings. These changes add 58 full ledger reviews: 49 children, seven headings and two distinct latest senses. The dictionary now contains 52,108 records, with 4,262 reviewed and 47,846 pending. Existing diagrams and distinction tasks are retained; no diagram or exercise quota is introduced.
+
+This implements reusable evidence collection, whole-queue authoring input and exception routing. It does not call a model API or automatically generate/approve teaching content. Use the returned drafts as input for bulk authoring; do not count an empty generated package, a source match or a model judgment as a completed editorial review. Accumulate the full issue-class update before release rather than deploying these six processing packages separately.
+
 ## Record valid examples once
 
 `src/domain/vocabulary/exampleReviewDecisions.json` stores explicit `retain-valid-example` decisions for exact source and displayed-content fingerprints. Each receipt requires its work-item/entry/sense identities, an HTTPS reference and a rationale. The report exposes `rawSignals`, `resolvedSignals`, `signals` and `rawByIssue`, so accepted short examples remain auditable while leaving the pending fragment queue. No other issue can be suppressed this way. A changed source or displayed variant makes an old decision fail; a same-ID teaching variant does not inherit it. Receipts alone do not add editorial reviews or approve the other teaching fields.

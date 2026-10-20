@@ -7,6 +7,14 @@ const row = { entryId: 'bank', senseId: 'river', originalSense: original, defini
 const review = { term: 'bank', entryId: 'bank', senseId: 'river', sourceHash: createHash('sha256').update(JSON.stringify(original)).digest('hex'), reviewedAreas: ['definition','example','collocations','distinctions'] };
 const input = { entries: [{ id: 'bank', term: 'bank' }], dictionaries: { bank: { senses: [original] } }, corrections: [row], records: [review], diagrams: [] };
 
+test('focused public content scopes are checked even before a dictionary review is granted',()=>{
+ const valid={definition:original.definition,example:original.example,pos:original.pos};
+ expect(inspectDictionaryReview({...input,records:[],corrections:[{...row,contentScope:[valid]}]}).errors).toEqual([]);
+ for(const contentScope of [[],null,[null],[{...valid,definition:''}],[{...valid,example:undefined}],[{...valid,pos:''}],[{...valid,senseId:'another'}]]){
+  expect(inspectDictionaryReview({...input,records:[],corrections:[{...row,contentScope}]}).errors.join(' ')).toMatch(/content scope/i);
+ }
+});
+
 test('a synonym source gloss retains its term and explanation before an independent following clause', () => {
   expect(plainSourceGloss('### {{senseid|en|gravitation}}{{lb|en|uncountable}} {{synonym of|en|gravitation|t=the [[attraction]] between [[body#Noun|bodies]]}}; also, a [[physical law]] accounting for it.'))
     .toBe('Synonym of gravitation (the attraction between bodies); also, a physical law accounting for it.');

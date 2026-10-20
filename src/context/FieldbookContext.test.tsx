@@ -780,6 +780,32 @@ test('a failed session commit keeps live learning unchanged and can retry the pr
   expect(mocks.saveVocabularySession.mock.calls[0][1]).toBe(mocks.saveVocabularySession.mock.calls[1][1]);
 });
 
+test('a planned review waits for task completion, reports a failed task save and retries without duplicating the session', async () => {
+  const refs = Array.from({length:30}, (_, index) => ({entryId:`word-${index}`, senseId:`sense-${index}`}));
+  mocks.initial.plans = [{id:'review-plan',kind:'vocabulary',status:'in_progress',startedAt:'2026-10-20T01:00:00Z',target:{type:'vocabulary',mode:'due-review',assessmentMode:'dictation',cards:refs}}];
+  mocks.initial.activePlanId = 'review-plan';
+  mocks.statuses = {plans:'ready',profile:'ready'};
+  await mount('/vocabulary/review');
+  const draft = structuredClone(fieldbook.stateRef.current);
+  draft.vocabularySessions.push({id:'submitted-30',planId:'review-plan',status:'submitted',mode:'dictation',startedAt:'2026-10-20T01:01:00Z',submittedAt:'2026-10-20T01:10:00Z',results:refs.map((ref,index)=>({...ref,response:`answer-${index}`,result:index<24?'success':'failure'}))});
+  const pending = defer();
+  mocks.saveState.mockClear();
+  mocks.saveState.mockImplementationOnce(() => pending.promise);
+  const onError = vi.fn();
+  let settled = false, completion;
+  await act(async () => { completion = fieldbook.persistVocabularySession(draft,'submitted-30',{onError}).then(result=>{settled=true;return result;}); });
+  await waitFor(() => expect(mocks.saveState).toHaveBeenCalledTimes(1));
+  expect(settled).toBe(false);
+  await act(async () => { pending.resolve(false); expect(await completion).toBe(false); });
+  expect(onError).toHaveBeenCalledWith(expect.stringMatching(/review is saved.*task/i));
+  expect(fieldbook.state.plans[0].status).toBe('in_progress');
+  expect(fieldbook.state.vocabularySessions).toHaveLength(1);
+  await act(async () => { expect(await fieldbook.persistVocabularySession(draft,'submitted-30',{onError})).toBe(true); });
+  expect(fieldbook.state.plans[0]).toMatchObject({status:'completed',linkedSessionId:'submitted-30'});
+  expect(fieldbook.state.vocabularySessions).toHaveLength(1);
+  expect(mocks.saveState.mock.calls.at(-1)[2].collections.sort()).toEqual(['plans','profile']);
+});
+
 test('vocabulary browsing commits only after save and preserves assessment updates queued during saving', async () => {
   mocks.initial.wordbookProgress=[{id:'progress',bookId:'book',unitId:'group',completedEntryIds:[],status:'in_progress',updatedAt:'2026-10-12'}];
   await mount();

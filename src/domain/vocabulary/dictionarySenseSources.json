@@ -13476,5 +13476,985 @@
       "license": "CC-BY-SA-4.0",
       "attribution": "English Wiktionary contributors"
     }
+  },
+  {
+    "term": "metal",
+    "entryId": "ve-a693254",
+    "parentSenseId": "kaikki:30420a446aee8dc3d5",
+    "parentSourceHash": "7382bb532c6f9e7a1bec5f21e29156d7b83865a56dd9f5f06fee013d2a245873",
+    "sourcePage": "metal",
+    "revision": 93707395,
+    "sourceGloss": "## {{senseid|en|Q11646938}} Any of a number of chemical [[element]]s in the periodic table that form a [[metallic bond]] with other metal atoms; generally [[shiny]], somewhat [[malleable]] and [[hard]], often a [[conductor]] of heat and [[electricity]].",
+    "sense": {
+      "id": "wiktionary:restored:9af62448d90580f5bd",
+      "pos": "noun",
+      "definition": "Any of a number of chemical elements in the periodic table that form a metallic bond with other metal atoms; generally shiny, somewhat malleable and hard, often a conductor of heat and electricity.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=metal&oldid=93707395",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "metal",
+    "entryId": "ve-a693254",
+    "parentSenseId": "kaikki:30420a446aee8dc3d5",
+    "parentSourceHash": "7382bb532c6f9e7a1bec5f21e29156d7b83865a56dd9f5f06fee013d2a245873",
+    "sourcePage": "metal",
+    "revision": 93707395,
+    "sourceGloss": "## {{senseid|en|Q11426}} Any material with similar physical properties as those chemical elements, especially as a combination of several of them, such as an [[alloy]].",
+    "sense": {
+      "id": "wiktionary:restored:c42c90bde709f263b2",
+      "pos": "noun",
+      "definition": "Any material with similar physical properties as those chemical elements, especially as a combination of several of them, such as an alloy.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=metal&oldid=93707395",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "metal",
+    "entryId": "ve-a693254",
+    "parentSenseId": "kaikki:30420a446aee8dc3d5",
+    "parentSourceHash": "7382bb532c6f9e7a1bec5f21e29156d7b83865a56dd9f5f06fee013d2a245873",
+    "sourcePage": "metal",
+    "revision": 93707395,
+    "sourceGloss": "## {{lb|en|astronomy}} An element which was not directly created after the [[Big Bang]] but instead formed through [[nuclear]] reactions; any element other than hydrogen and [[helium]].",
+    "sense": {
+      "id": "wiktionary:restored:68e167005161ba9d09",
+      "pos": "noun",
+      "definition": "An element which was not directly created after the Big Bang but instead formed through nuclear reactions; any element other than hydrogen and helium.",
+      "example": "",
+      "register": "astronomy",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=metal&oldid=93707395",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "metal",
+    "entryId": "ve-a693254",
+    "parentSenseId": "kaikki:30420a446aee8dc3d5",
+    "parentSourceHash": "7382bb532c6f9e7a1bec5f21e29156d7b83865a56dd9f5f06fee013d2a245873",
+    "sourcePage": "metal",
+    "revision": 93707395,
+    "sourceGloss": "## {{senseid|en|stones for road surface}} Crushed rock, stones etc. used to make a [[road]].",
+    "sense": {
+      "id": "wiktionary:restored:d85437c6427cd815a3",
+      "pos": "noun",
+      "definition": "Crushed rock, stones etc. used to make a road.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=metal&oldid=93707395",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "metal",
+    "entryId": "ve-a693254",
+    "parentSenseId": "kaikki:30420a446aee8dc3d5",
+    "parentSourceHash": "7382bb532c6f9e7a1bec5f21e29156d7b83865a56dd9f5f06fee013d2a245873",
+    "sourcePage": "metal",
+    "revision": 93707395,
+    "sourceGloss": "## {{lb|en|mining}} The [[ore]] from which a metal is derived.<ref>{{R:Raymond Glossary}}</ref>",
+    "sense": {
+      "id": "wiktionary:restored:8f64c89b9519bcc063",
+      "pos": "noun",
+      "definition": "The ore from which a metal is derived.<ref></ref>",
+      "example": "",
+      "register": "mining",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=metal&oldid=93707395",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "metal",
+    "entryId": "ve-a693254",
+    "parentSenseId": "kaikki:30420a446aee8dc3d5",
+    "parentSourceHash": "7382bb532c6f9e7a1bec5f21e29156d7b83865a56dd9f5f06fee013d2a245873",
+    "sourcePage": "metal",
+    "revision": 93707395,
+    "sourceGloss": "## {{lb|en|obsolete}} A mine from which ores are taken.",
+    "sense": {
+      "id": "wiktionary:restored:0576939136a52b19d4",
+      "pos": "noun",
+      "definition": "A mine from which ores are taken.",
+      "example": "",
+      "register": "obsolete",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=metal&oldid=93707395",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "feel",
+    "entryId": "ve-7c6e23af",
+    "parentSenseId": "kaikki:68e9b97b8b91041713",
+    "parentSourceHash": "feabbe68b86e575fcc3aab14ccba012ac71178a3f599ed526399c75bfb4e1e3e",
+    "sourcePage": "feel",
+    "revision": 93693862,
+    "sourceGloss": "## {{lb|en|transitive|copulative}} To become aware of through the [[skin]]; to use the [[sense]] of [[touch]] on.",
+    "sense": {
+      "id": "wiktionary:restored:4b42c0d8e3e2315811",
+      "pos": "verb",
+      "definition": "To become aware of through the skin; to use the sense of touch on.",
+      "example": "",
+      "register": "transitive, copulative",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=feel&oldid=93693862",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "feel",
+    "entryId": "ve-7c6e23af",
+    "parentSenseId": "kaikki:68e9b97b8b91041713",
+    "parentSourceHash": "feabbe68b86e575fcc3aab14ccba012ac71178a3f599ed526399c75bfb4e1e3e",
+    "sourcePage": "feel",
+    "revision": 93693862,
+    "sourceGloss": "## {{lb|en|transitive}} To [[find]] one's [[way]] ([[literally]] or [[figuratively]]) by touching or using cautious movements.",
+    "sense": {
+      "id": "wiktionary:restored:bb7e562946fade1e97",
+      "pos": "verb",
+      "definition": "To find one's way (literally or figuratively) by touching or using cautious movements.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=feel&oldid=93693862",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "feel",
+    "entryId": "ve-7c6e23af",
+    "parentSenseId": "kaikki:68e9b97b8b91041713",
+    "parentSourceHash": "feabbe68b86e575fcc3aab14ccba012ac71178a3f599ed526399c75bfb4e1e3e",
+    "sourcePage": "feel",
+    "revision": 93693862,
+    "sourceGloss": "## {{lb|en|intransitive}} To [[receive]] [[information]] by [[touch]] or by any [[neuron]]s other than those responsible for sight, smell, taste, or hearing.",
+    "sense": {
+      "id": "wiktionary:restored:916323ccc9ab38621d",
+      "pos": "verb",
+      "definition": "To receive information by touch or by any neurons other than those responsible for sight, smell, taste, or hearing.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=feel&oldid=93693862",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "feel",
+    "entryId": "ve-7c6e23af",
+    "parentSenseId": "kaikki:68e9b97b8b91041713",
+    "parentSourceHash": "feabbe68b86e575fcc3aab14ccba012ac71178a3f599ed526399c75bfb4e1e3e",
+    "sourcePage": "feel",
+    "revision": 93693862,
+    "sourceGloss": "## {{lb|en|intransitive}} To search by sense of touch.",
+    "sense": {
+      "id": "wiktionary:restored:663f758271ef453362",
+      "pos": "verb",
+      "definition": "To search by sense of touch.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=feel&oldid=93693862",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "hit",
+    "entryId": "ve-b874ff0",
+    "parentSenseId": "kaikki:2dd99e488cc040d750",
+    "parentSourceHash": "59ff24250a2dbc77c04aaee8afec24a26d86aaa6f0bb9aa3438dddca7998afb8",
+    "sourcePage": "hit",
+    "revision": 93699789,
+    "sourceGloss": "## {{lb|en|transitive}} To administer a [[blow]] to, directly or with a weapon or missile.",
+    "sense": {
+      "id": "wiktionary:restored:a1b29e051613207adc",
+      "pos": "verb",
+      "definition": "To administer a blow to, directly or with a weapon or missile.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=hit&oldid=93699789",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "hit",
+    "entryId": "ve-b874ff0",
+    "parentSenseId": "kaikki:2dd99e488cc040d750",
+    "parentSourceHash": "59ff24250a2dbc77c04aaee8afec24a26d86aaa6f0bb9aa3438dddca7998afb8",
+    "sourcePage": "hit",
+    "revision": 93699789,
+    "sourceGloss": "## {{lb|en|transitive}} To come into [[contact]] with forcefully and suddenly.",
+    "sense": {
+      "id": "wiktionary:restored:7b8caa5b2899fb9450",
+      "pos": "verb",
+      "definition": "To come into contact with forcefully and suddenly.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=hit&oldid=93699789",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "hit",
+    "entryId": "ve-b874ff0",
+    "parentSenseId": "kaikki:2dd99e488cc040d750",
+    "parentSourceHash": "59ff24250a2dbc77c04aaee8afec24a26d86aaa6f0bb9aa3438dddca7998afb8",
+    "sourcePage": "hit",
+    "revision": 93699789,
+    "sourceGloss": "## {{lb|en|intransitive}} To strike against something.",
+    "sense": {
+      "id": "wiktionary:restored:a2d9cd9c45e0f9aeb9",
+      "pos": "verb",
+      "definition": "To strike against something.",
+      "example": "",
+      "register": "intransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=hit&oldid=93699789",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "hit",
+    "entryId": "ve-b874ff0",
+    "parentSenseId": "kaikki:2dd99e488cc040d750",
+    "parentSourceHash": "59ff24250a2dbc77c04aaee8afec24a26d86aaa6f0bb9aa3438dddca7998afb8",
+    "sourcePage": "hit",
+    "revision": 93699789,
+    "sourceGloss": "## {{lb|en|transitive}} To activate a [[button]] or [[key]] by [[press]]ing and releasing it.",
+    "sense": {
+      "id": "wiktionary:restored:76e3b66cb5d20d4c62",
+      "pos": "verb",
+      "definition": "To activate a button or key by pressing and releasing it.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=hit&oldid=93699789",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "hit",
+    "entryId": "ve-b874ff0",
+    "parentSenseId": "kaikki:2dd99e488cc040d750",
+    "parentSourceHash": "59ff24250a2dbc77c04aaee8afec24a26d86aaa6f0bb9aa3438dddca7998afb8",
+    "sourcePage": "hit",
+    "revision": 93699789,
+    "sourceGloss": "## {{lb|en|transitive|slang}} To kill a person, usually on the instructions of a third party.",
+    "sense": {
+      "id": "wiktionary:restored:333038655dd342a4bb",
+      "pos": "verb",
+      "definition": "To kill a person, usually on the instructions of a third party.",
+      "example": "",
+      "register": "transitive, slang",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=hit&oldid=93699789",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "hit",
+    "entryId": "ve-b874ff0",
+    "parentSenseId": "kaikki:2dd99e488cc040d750",
+    "parentSourceHash": "59ff24250a2dbc77c04aaee8afec24a26d86aaa6f0bb9aa3438dddca7998afb8",
+    "sourcePage": "hit",
+    "revision": 93699789,
+    "sourceGloss": "## {{lb|en|transitive|military}} To attack, especially amphibiously.",
+    "sense": {
+      "id": "wiktionary:restored:3c8480f4eefe8aa7ad",
+      "pos": "verb",
+      "definition": "To attack, especially amphibiously.",
+      "example": "",
+      "register": "transitive, military",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=hit&oldid=93699789",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "hit",
+    "entryId": "ve-b874ff0",
+    "parentSenseId": "kaikki:2dd99e488cc040d750",
+    "parentSourceHash": "59ff24250a2dbc77c04aaee8afec24a26d86aaa6f0bb9aa3438dddca7998afb8",
+    "sourcePage": "hit",
+    "revision": 93699789,
+    "sourceGloss": "## {{label|en|figurative|ambitransitive}} To affect someone, as if dealing a blow to that person.",
+    "sense": {
+      "id": "wiktionary:restored:0fe28f6562e9e4e371",
+      "pos": "verb",
+      "definition": "To affect someone, as if dealing a blow to that person.",
+      "example": "",
+      "register": "figurative, ambitransitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=hit&oldid=93699789",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "sink",
+    "entryId": "ve-7c79a6ba",
+    "parentSenseId": "kaikki:df010823271a740ce7",
+    "parentSourceHash": "98684bbf98ec2a7d344a9bf710832e2f82a811c8e6a85488cd46205ceca5968d",
+    "sourcePage": "sink",
+    "revision": 93722600,
+    "sourceGloss": "## {{lb|en|ergative}} To [[descend]] or [[submerge]] (or to cause to do so) into a [[liquid]] or similar substance.",
+    "sense": {
+      "id": "wiktionary:restored:1b8837d77c9bb89b03",
+      "pos": "verb",
+      "definition": "To descend or submerge (or to cause to do so) into a liquid or similar substance.",
+      "example": "",
+      "register": "ergative",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=sink&oldid=93722600",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "sink",
+    "entryId": "ve-7c79a6ba",
+    "parentSenseId": "kaikki:df010823271a740ce7",
+    "parentSourceHash": "98684bbf98ec2a7d344a9bf710832e2f82a811c8e6a85488cd46205ceca5968d",
+    "sourcePage": "sink",
+    "revision": 93722600,
+    "sourceGloss": "## {{lb|en|transitive}} To (directly or indirectly) cause a [[vessel]] to sink, generally by making it no longer [[watertight]].<!--intransitive sense, so not a circular definition-->",
+    "sense": {
+      "id": "wiktionary:restored:5c19e55ae84acc92a3",
+      "pos": "verb",
+      "definition": "To (directly or indirectly) cause a vessel to sink, generally by making it no longer watertight.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=sink&oldid=93722600",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "sink",
+    "entryId": "ve-7c79a6ba",
+    "parentSenseId": "kaikki:df010823271a740ce7",
+    "parentSourceHash": "98684bbf98ec2a7d344a9bf710832e2f82a811c8e6a85488cd46205ceca5968d",
+    "sourcePage": "sink",
+    "revision": 93722600,
+    "sourceGloss": "## {{lb|en|transitive}} To push (something) into something.",
+    "sense": {
+      "id": "wiktionary:restored:73976cd773ccd56afd",
+      "pos": "verb",
+      "definition": "To push (something) into something.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=sink&oldid=93722600",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "sink",
+    "entryId": "ve-7c79a6ba",
+    "parentSenseId": "kaikki:df010823271a740ce7",
+    "parentSourceHash": "98684bbf98ec2a7d344a9bf710832e2f82a811c8e6a85488cd46205ceca5968d",
+    "sourcePage": "sink",
+    "revision": 93722600,
+    "sourceGloss": "## {{lb|en|transitive}} To make by digging or delving.",
+    "sense": {
+      "id": "wiktionary:restored:d8bca3ff811de1433e",
+      "pos": "verb",
+      "definition": "To make by digging or delving.",
+      "example": "",
+      "register": "transitive",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=sink&oldid=93722600",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "sink",
+    "entryId": "ve-7c79a6ba",
+    "parentSenseId": "kaikki:df010823271a740ce7",
+    "parentSourceHash": "98684bbf98ec2a7d344a9bf710832e2f82a811c8e6a85488cd46205ceca5968d",
+    "sourcePage": "sink",
+    "revision": 93722600,
+    "sourceGloss": "## {{lb|en|transitive|snooker|pool|billiards|golf}} To [[pot]]; hit a ball into a [[pocket]] or hole.",
+    "sense": {
+      "id": "wiktionary:restored:62a9bd94c57f8a8957",
+      "pos": "verb",
+      "definition": "To pot; hit a ball into a pocket or hole.",
+      "example": "",
+      "register": "transitive, snooker, pool, billiards, golf",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=sink&oldid=93722600",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "fall",
+    "entryId": "ve-7c6e14c2",
+    "parentSenseId": "kaikki:77d29b5aecb074a6cf",
+    "parentSourceHash": "c00e443c658f782a0a8ce8e2e5401a230ebf8ad1f3f9716d3c04cb206b9eef6e",
+    "sourcePage": "fall",
+    "revision": 93693487,
+    "sourceGloss": "## To move to a lower position under the effect of [[gravity]].",
+    "sense": {
+      "id": "wiktionary:restored:75903af5091766ad1f",
+      "pos": "verb",
+      "definition": "To move to a lower position under the effect of gravity.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=fall&oldid=93693487",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "fall",
+    "entryId": "ve-7c6e14c2",
+    "parentSenseId": "kaikki:77d29b5aecb074a6cf",
+    "parentSourceHash": "c00e443c658f782a0a8ce8e2e5401a230ebf8ad1f3f9716d3c04cb206b9eef6e",
+    "sourcePage": "fall",
+    "revision": 93693487,
+    "sourceGloss": "## To come down, to [[drop]] or [[descend]].",
+    "sense": {
+      "id": "wiktionary:restored:63023951d40ee537d0",
+      "pos": "verb",
+      "definition": "To come down, to drop or descend.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=fall&oldid=93693487",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "fall",
+    "entryId": "ve-7c6e14c2",
+    "parentSenseId": "kaikki:77d29b5aecb074a6cf",
+    "parentSourceHash": "c00e443c658f782a0a8ce8e2e5401a230ebf8ad1f3f9716d3c04cb206b9eef6e",
+    "sourcePage": "fall",
+    "revision": 93693487,
+    "sourceGloss": "## To come as if by dropping down.",
+    "sense": {
+      "id": "wiktionary:restored:b86665619953c24736",
+      "pos": "verb",
+      "definition": "To come as if by dropping down.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=fall&oldid=93693487",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "fall",
+    "entryId": "ve-7c6e14c2",
+    "parentSenseId": "kaikki:77d29b5aecb074a6cf",
+    "parentSourceHash": "c00e443c658f782a0a8ce8e2e5401a230ebf8ad1f3f9716d3c04cb206b9eef6e",
+    "sourcePage": "fall",
+    "revision": 93693487,
+    "sourceGloss": "## To come to the ground [[deliberately]], to [[prostrate]] oneself.",
+    "sense": {
+      "id": "wiktionary:restored:0114db49c295c8c437",
+      "pos": "verb",
+      "definition": "To come to the ground deliberately, to prostrate oneself.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=fall&oldid=93693487",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "fall",
+    "entryId": "ve-7c6e14c2",
+    "parentSenseId": "kaikki:77d29b5aecb074a6cf",
+    "parentSourceHash": "c00e443c658f782a0a8ce8e2e5401a230ebf8ad1f3f9716d3c04cb206b9eef6e",
+    "sourcePage": "fall",
+    "revision": 93693487,
+    "sourceGloss": "## To be brought to the ground.",
+    "sense": {
+      "id": "wiktionary:restored:259b573f782c5a25f0",
+      "pos": "verb",
+      "definition": "To be brought to the ground.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=fall&oldid=93693487",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## An [[omen]]; a symptomatic indicator of something. {{defdate|from 8th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:927fa4eece3fe533ae",
+      "pos": "noun",
+      "definition": "An omen; a symptomatic indicator of something.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## A characteristic feature. {{defdate|from 16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:34f624246eee43c5a5",
+      "pos": "noun",
+      "definition": "A characteristic feature.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## {{sid|en|visual impression, blemish, stain}} A visible impression or sign; a [[blemish]], [[scratch]], or [[stain]], whether [[accidental]] or [[intentional]]. {{defdate|from 9th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:fd3211928a24fb55fe",
+      "pos": "noun",
+      "definition": "A visible impression or sign; a blemish, scratch, or stain, whether accidental or intentional.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## A [[sign]] or [[brand]] on a person. {{defdate|from 10th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:abe3141538edf8e49b",
+      "pos": "noun",
+      "definition": "A sign or brand on a person.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## A written character or sign. {{defdate|from 10th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:e9fe604cb1763be0dd",
+      "pos": "noun",
+      "definition": "A written character or sign.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## A stamp or other indication of provenance, quality etc. {{defdate|from 11th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:4ff41e827947796460",
+      "pos": "noun",
+      "definition": "A stamp or other indication of provenance, quality etc.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## Badge or sign of honour, rank, or official station.",
+    "sense": {
+      "id": "wiktionary:restored:3452f31ed7fbcbf1ad",
+      "pos": "noun",
+      "definition": "Badge or sign of honour, rank, or official station.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## {{lb|en|archaic}} [[preeminence|Preeminence]]; high position.",
+    "sense": {
+      "id": "wiktionary:restored:6a2931845eec2ceb3a",
+      "pos": "noun",
+      "definition": "Preeminence; high position.",
+      "example": "",
+      "register": "archaic",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## {{lb|en|logic}} A characteristic or essential [[attribute]]; a [[differential]].",
+    "sense": {
+      "id": "wiktionary:restored:580721efeafe208806",
+      "pos": "noun",
+      "definition": "A characteristic or essential attribute; a differential.",
+      "example": "",
+      "register": "logic",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## An indication or sign used for reference or measurement. {{defdate|from 14th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:16eadca2bb54d61d0d",
+      "pos": "noun",
+      "definition": "An indication or sign used for reference or measurement.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## {{lb|en|cooking}} A specified [[level]] on a scale denoting gas-powered oven [[temperatures]]. {{defdate|from 20th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:9e97d3dba5ae3a0ab5",
+      "pos": "noun",
+      "definition": "A specified level on a scale denoting gas-powered oven temperatures.",
+      "example": "",
+      "register": "cooking",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## {{lb|en|nautical}} One of the bits of leather or coloured [[bunting]] placed upon a [[sound]]ing line at intervals of from two to five [[fathom]]s. (The unmarked fathoms are called \"[[deep]]s\".)",
+    "sense": {
+      "id": "wiktionary:restored:995f33f3db86916663",
+      "pos": "noun",
+      "definition": "One of the bits of leather or coloured bunting placed upon a sounding line at intervals of from two to five fathoms. (The unmarked fathoms are called \"deeps\".)",
+      "example": "",
+      "register": "nautical",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## {{lb|en|obsolete}} [[resemblance|Resemblance]], [[likeness]], [[image]]. {{defdate|14th–16th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:ded6d6054f5b0dd29f",
+      "pos": "noun",
+      "definition": "Resemblance, likeness, image.",
+      "example": "",
+      "register": "obsolete",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## A particular design or make of an item {{qualifier|now usually with following numeral}}. {{defdate|from 15th c.}}",
+    "sense": {
+      "id": "wiktionary:restored:19939338b7216c24dc",
+      "pos": "noun",
+      "definition": "A particular design or make of an item .",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "mark",
+    "entryId": "ve-7c6fbb70",
+    "parentSenseId": "kaikki:8ca7a1267a91d0a9fb",
+    "parentSourceHash": "29e8d7b2ba5fef4ba10697d999f030c568888d534f98f20cb02870c2e394d275",
+    "sourcePage": "mark",
+    "revision": 93706622,
+    "sourceGloss": "## {{lb|en|product design/engineering}} The [[model number]] of a device; a device [[model]].",
+    "sense": {
+      "id": "wiktionary:restored:18ebcda3b5e672f749",
+      "pos": "noun",
+      "definition": "The model number of a device; a device model.",
+      "example": "",
+      "register": "product design/engineering",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=mark&oldid=93706622",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "tag",
+    "entryId": "ve-b8761f7",
+    "parentSenseId": "kaikki:85a25eedbd6814304b",
+    "parentSourceHash": "1f8a1dd3ddc60bfe580f14c716064a7530db0d76d7b0f83067ab554d615055c6",
+    "sourcePage": "tag",
+    "revision": 93740008,
+    "sourceGloss": "## A small [[label]].",
+    "sense": {
+      "id": "wiktionary:restored:4c5cca8bf50f754a80",
+      "pos": "noun",
+      "definition": "A small label.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=tag&oldid=93740008",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "tag",
+    "entryId": "ve-b8761f7",
+    "parentSenseId": "kaikki:85a25eedbd6814304b",
+    "parentSourceHash": "1f8a1dd3ddc60bfe580f14c716064a7530db0d76d7b0f83067ab554d615055c6",
+    "sourcePage": "tag",
+    "revision": 93740008,
+    "sourceGloss": "## A [[skin tag]], an [[excrescence]] of skin.",
+    "sense": {
+      "id": "wiktionary:restored:a263dc021a45671375",
+      "pos": "noun",
+      "definition": "A skin tag, an excrescence of skin.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=tag&oldid=93740008",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "tag",
+    "entryId": "ve-b8761f7",
+    "parentSenseId": "kaikki:85a25eedbd6814304b",
+    "parentSourceHash": "1f8a1dd3ddc60bfe580f14c716064a7530db0d76d7b0f83067ab554d615055c6",
+    "sourcePage": "tag",
+    "revision": 93740008,
+    "sourceGloss": "## A dangling lock of sheep's wool, matted with dung; a [[dung tag]].",
+    "sense": {
+      "id": "wiktionary:restored:bb803441adc507968e",
+      "pos": "noun",
+      "definition": "A dangling lock of sheep's wool, matted with dung; a dung tag.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=tag&oldid=93740008",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "tag",
+    "entryId": "ve-b8761f7",
+    "parentSenseId": "kaikki:85a25eedbd6814304b",
+    "parentSourceHash": "1f8a1dd3ddc60bfe580f14c716064a7530db0d76d7b0f83067ab554d615055c6",
+    "sourcePage": "tag",
+    "revision": 93740008,
+    "sourceGloss": "## Any slight appendage, as to an article of dress; something slight hanging loosely.",
+    "sense": {
+      "id": "wiktionary:restored:40eb7d1c2d721c45e7",
+      "pos": "noun",
+      "definition": "Any slight appendage, as to an article of dress; something slight hanging loosely.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=tag&oldid=93740008",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "tag",
+    "entryId": "ve-b8761f7",
+    "parentSenseId": "kaikki:85a25eedbd6814304b",
+    "parentSourceHash": "1f8a1dd3ddc60bfe580f14c716064a7530db0d76d7b0f83067ab554d615055c6",
+    "sourcePage": "tag",
+    "revision": 93740008,
+    "sourceGloss": "## A metallic binding, tube, or point, at the end of a string, or lace, to stiffen it.",
+    "sense": {
+      "id": "wiktionary:restored:0caae82dd0c1efe4e0",
+      "pos": "noun",
+      "definition": "A metallic binding, tube, or point, at the end of a string, or lace, to stiffen it.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=tag&oldid=93740008",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "tag",
+    "entryId": "ve-b8761f7",
+    "parentSenseId": "kaikki:85a25eedbd6814304b",
+    "parentSourceHash": "1f8a1dd3ddc60bfe580f14c716064a7530db0d76d7b0f83067ab554d615055c6",
+    "sourcePage": "tag",
+    "revision": 93740008,
+    "sourceGloss": "## {{lb|en|biochemistry}} Any short peptide sequence artificially attached to proteins mostly in order to help purify, solubilize or visualize these proteins.",
+    "sense": {
+      "id": "wiktionary:restored:745f7f1995dc4b38df",
+      "pos": "noun",
+      "definition": "Any short peptide sequence artificially attached to proteins mostly in order to help purify, solubilize or visualize these proteins.",
+      "example": "",
+      "register": "biochemistry",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=tag&oldid=93740008",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
+  },
+  {
+    "term": "tag",
+    "entryId": "ve-b8761f7",
+    "parentSenseId": "kaikki:85a25eedbd6814304b",
+    "parentSourceHash": "1f8a1dd3ddc60bfe580f14c716064a7530db0d76d7b0f83067ab554d615055c6",
+    "sourcePage": "tag",
+    "revision": 93740008,
+    "sourceGloss": "## Something mean and paltry; rabble.",
+    "sense": {
+      "id": "wiktionary:restored:c9256bf1f0d89492d0",
+      "pos": "noun",
+      "definition": "Something mean and paltry; rabble.",
+      "example": "",
+      "register": "",
+      "source": "English Wiktionary, restored submeaning",
+      "sourceUrl": "https://en.wiktionary.org/w/index.php?title=tag&oldid=93740008",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "English Wiktionary contributors"
+    }
   }
 ]

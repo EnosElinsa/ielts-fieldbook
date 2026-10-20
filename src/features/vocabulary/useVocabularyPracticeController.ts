@@ -34,7 +34,10 @@ export function useVocabularyPracticeController() {
   const [params, setParams] = useVocabularySearchParams();
   const requestedPlan = (fb.state.plans as {id:string;status:string;skipReason?:string}[] | undefined)?.find(plan => plan.id === params.get('planId'));
   const noLongerDue = requestedPlan?.status === 'skipped' && requestedPlan?.skipReason === 'no-longer-due';
-  const boundVocabularyPlan = boundVocabularyAssessment(fb.state, params.get('planId'));
+  const planId = params.get('planId');
+  // Answer edits do not change the account task. Keep its frozen identities stable
+  // so typing cannot invalidate the (potentially large) review queue.
+  const boundVocabularyPlan = useMemo(() => boundVocabularyAssessment(fb.state, planId), [fb.state.plans, planId]);
   const plannedReview = boundVocabularyPlan?.target.mode !== 'learning-batch' ? boundVocabularyPlan?.target.cards : undefined;
   const plannedEntryIds = plannedReview ? JSON.stringify([...new Set(plannedReview.map(ref => ref.entryId))]) : '';
   const boundAssessmentMode = boundVocabularyPlan?.target?.assessmentMode as VocabularyPracticeMode | undefined;
@@ -311,7 +314,8 @@ export function useVocabularyPracticeController() {
   const queue = useMemo(() => {
     if (params.has('planId') && !boundVocabularyPlan) return [];
     if (plannedReview) {
-      const vocabulary = [...new Map([...(VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]), ...(fb.state.vocabulary || [])].map(entry => [entry.id, entry])).values()];
+      const wanted = new Set(plannedReview.map(ref => ref.entryId));
+      const vocabulary = [...new Map([...(VOCABULARY_CATALOG.entries as unknown as VocabularyEntry[]), ...(fb.state.vocabulary || [])].filter(entry => wanted.has(entry.id)).map(entry => [entry.id, entry])).values()];
       const available = getVocabularyReviewQueue({...fb.state, vocabulary}, {mode:boundAssessmentMode as VocabularyMode, dueOnly:false});
       return plannedReview.map(ref => available.find(card => card.entryId === ref.entryId && card.senseId === ref.senseId)).filter((card): card is ReviewCard => Boolean(card));
     }

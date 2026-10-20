@@ -39,6 +39,14 @@ export function inspectDictionaryReview({ entries, dictionaries, corrections, re
   const errors = [], inventory = [], byTerm = [];
   const entryById = new Map(entries.map(entry => [entry.id, entry]));
   const supplements = new Map(corrections.map(row => [identity(row.entryId, row.senseId), row]));
+  for (const row of corrections) if (row.contentScope !== undefined && (
+    !Array.isArray(row.contentScope) || !row.contentScope.length || row.contentScope.some(scope =>
+      !scope || typeof scope !== 'object' || Array.isArray(scope) ||
+      typeof scope.definition !== 'string' || !scope.definition.trim() ||
+      typeof scope.example !== 'string' || typeof scope.pos !== 'string' || !scope.pos.trim() ||
+      Object.keys(scope).some(field => !['definition', 'example', 'pos'].includes(field))
+    )
+  )) errors.push(`Invalid content scope: ${row.entryId}/${row.senseId}`);
   const sources = new Map();
   for (const [term, dictionary] of Object.entries(dictionaries)) {
     const seen = new Set();

@@ -97,6 +97,10 @@ test('a focused draft requests only the chosen fields and can enter the same can
   expect(result.items[0]).toMatchObject({ status: 'semantic-review-required', missingFields: [], draft: { workItemId: item.workItemId,
     sourceHash: item.sourceHash, displayHash: item.displayHash, referenceUrl: 'https://en.wiktionary.org/w/index.php?title=bank&oldid=12345',
     changes: { example: 'We walked along the river bank.' } } });
+  expect(result.items[0]).toMatchObject({ currentSense: item.displaySense, originalSense: item.originalSense,
+    metadata: { readingNote: false, referenceOnly: false, learningPriority: null } });
+  result.items[0].currentSense.synonyms!.push('independent authoring copy');
+  expect(item.displaySense.synonyms).toEqual(['riverside']);
   expect(result.items[0].draft).not.toHaveProperty('collocations');
   expect(result.items[0].draft).not.toHaveProperty('definition');
   expect(validateQualityCandidates(report, [result.items[0].draft])).toMatchObject({ structurallyValid: 1, readyForPublication: 0, errors: [] });

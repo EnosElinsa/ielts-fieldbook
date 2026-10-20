@@ -2,9 +2,9 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 705 restored source meanings** (52,059 total). This ledger verifies **4204 records** across definition, examples or reading explanations, collocations and distinctions; **47,855 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1413 reviewed distinction exercises and 854 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 6 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 1046 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 25 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 754 restored source meanings** (52,108 total). This ledger verifies **4262 records** across definition, examples or reading explanations, collocations and distinctions; **47,846 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1413 reviewed distinction exercises and 854 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 6 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 1059 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 32 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
-Authored learning-priority metadata classifies 903 general, 230 specialist, 198 historical and 25 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
+Authored learning-priority metadata classifies 940 general, 237 specialist, 201 historical and 25 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
 
 | Term | Reviewed records | Raw + restored records | Pending |
 | --- | ---: | ---: | ---: |
@@ -387,6 +387,7 @@ Authored learning-priority metadata classifies 903 general, 230 specialist, 198 
 | extinction | 1 | 4 | 3 |
 | eyesight | 1 | 2 | 1 |
 | fair | 35 | 35 | 0 |
+| fall | 6 | 40 | 34 |
 | family room | 1 | 1 | 0 |
 | famous | 1 | 4 | 3 |
 | fancy | 1 | 29 | 28 |
@@ -398,6 +399,7 @@ Authored learning-priority metadata classifies 903 general, 230 specialist, 198 
 | federal | 1 | 10 | 9 |
 | fee | 1 | 13 | 12 |
 | feedback | 1 | 6 | 5 |
+| feel | 5 | 20 | 15 |
 | fellowship | 1 | 9 | 8 |
 | female | 1 | 9 | 8 |
 | fence | 1 | 16 | 15 |
@@ -482,6 +484,7 @@ Authored learning-priority metadata classifies 903 general, 230 specialist, 198 
 | heritage | 1 | 5 | 4 |
 | high-voltage | 1 | 1 | 0 |
 | historic | 1 | 6 | 5 |
+| hit | 8 | 46 | 38 |
 | homesick | 1 | 1 | 0 |
 | honesty | 1 | 5 | 4 |
 | hook | 1 | 56 | 55 |
@@ -559,6 +562,7 @@ Authored learning-priority metadata classifies 903 general, 230 specialist, 198 
 | labour | 1 | 16 | 15 |
 | landscape | 1 | 9 | 8 |
 | lane | 1 | 22 | 21 |
+| latest | 2 | 6 | 4 |
 | launch | 1 | 16 | 15 |
 | lawn | 1 | 11 | 10 |
 | lay | 46 | 46 | 0 |
@@ -609,6 +613,7 @@ Authored learning-priority metadata classifies 903 general, 230 specialist, 198 
 | map | 1 | 25 | 24 |
 | marble | 1 | 13 | 12 |
 | maritime | 1 | 4 | 3 |
+| mark | 16 | 59 | 43 |
 | martial | 1 | 14 | 13 |
 | masquerade | 1 | 11 | 10 |
 | mass | 1 | 16 | 15 |
@@ -627,6 +632,7 @@ Authored learning-priority metadata classifies 903 general, 230 specialist, 198 
 | mercury | 6 | 14 | 8 |
 | metabolic | 1 | 4 | 3 |
 | metabolism | 1 | 4 | 3 |
+| metal | 7 | 17 | 10 |
 | meteorology | 1 | 2 | 1 |
 | might | 1 | 10 | 9 |
 | mild | 1 | 9 | 8 |
@@ -888,6 +894,7 @@ Authored learning-priority metadata classifies 903 general, 230 specialist, 198 
 | shutter | 2 | 11 | 9 |
 | sideways | 1 | 10 | 9 |
 | signature | 1 | 14 | 13 |
+| sink | 6 | 32 | 26 |
 | site | 1 | 9 | 8 |
 | skill | 13 | 13 | 0 |
 | skirt | 1 | 13 | 12 |
@@ -968,6 +975,7 @@ Authored learning-priority metadata classifies 903 general, 230 specialist, 198 
 | synonym | 1 | 4 | 3 |
 | syrup | 1 | 7 | 6 |
 | table | 43 | 43 | 0 |
+| tag | 8 | 33 | 25 |
 | tale | 1 | 14 | 13 |
 | teach | 8 | 8 | 0 |
 | temper | 1 | 22 | 21 |
