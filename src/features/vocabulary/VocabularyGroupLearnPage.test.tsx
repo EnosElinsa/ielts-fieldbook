@@ -38,7 +38,8 @@ test('planned learning retains its required fixed batch mode and whole-group ass
   const groupLink=screen.getByRole('link',{name:'Start meaning recall · 12 words'});
   expect(new URL(groupLink.getAttribute('href')!,'http://local.test').searchParams.has('planId')).toBe(false);
   expect(screen.getByRole('combobox',{name:'Test type'})).toBeEnabled();
-  fireEvent.change(screen.getByRole('combobox',{name:'Test type'}),{target:{value:'dictation'}});
+  await userEvent.click(screen.getByRole('combobox',{name:'Test type'}));
+  await userEvent.click(screen.getByRole('option',{name:'Dictation'}));
   fireEvent.click(screen.getByRole('button',{name:'This batch · 10 words'}));
   expect(screen.getByRole('combobox',{name:'Test type'})).toBeDisabled();
   expect(screen.getByRole('link',{name:'Start meaning recall · 10 words'})).toHaveAttribute('href',expect.stringContaining('planId=planned'));
@@ -95,7 +96,8 @@ test('assessment scope and type produce one explicit start link without changing
   expect(within(scope).getByRole('button', { name: 'This batch · 1 word' })).toHaveAttribute('aria-pressed', 'true');
   const start = screen.getByRole('link', { name: 'Start dictation · 1 word' });
   expect(JSON.parse(new URL(start.getAttribute('href')!, 'https://test.local').searchParams.get('batchCards')!)).toEqual([{ entryId: 'word-12', senseId: 'sense-12' }]);
-  fireEvent.change(screen.getByRole('combobox', { name: 'Test type' }), { target: { value: 'definition' } });
+  await userEvent.click(screen.getByRole('combobox', { name: 'Test type' }));
+  await userEvent.click(screen.getByRole('option', { name: 'Meaning recall' }));
   expect(new URL(screen.getByRole('link', { name: 'Start meaning recall · 1 word' }).getAttribute('href')!, 'https://test.local').searchParams.get('mode')).toBe('definition');
   fireEvent.click(within(scope).getByRole('button', { name: 'Whole group · 12 words' }));
   const groupUrl = new URL(screen.getByRole('link', { name: 'Start meaning recall · 12 words' }).getAttribute('href')!, 'https://test.local');
@@ -111,10 +113,12 @@ test('whole-group specialist tests disclose partial coverage and cannot silently
   Object.assign(VOCABULARY_CATALOG.entries[1].senses[0], { source: 'Personal note', example: 'Example 2 is a useful sentence.' });
   mount();
   await screen.findByRole('heading', { name: 'Word 1' });
-  expect(within(screen.getByRole('combobox', { name: 'Test type' })).queryByRole('option', { name: /Sentence gaps/ })).not.toBeInTheDocument();
+  await userEvent.click(screen.getByRole('combobox', { name: 'Test type' }));
+  expect(screen.queryByRole('option', { name: /Sentence gaps/ })).not.toBeInTheDocument();
+  await userEvent.keyboard('{Escape}');
   fireEvent.click(screen.getByRole('button', { name: 'Whole group · 12 words' }));
-  expect(screen.getByRole('option', { name: 'Sentence gaps · 1/12' })).toBeInTheDocument();
-  fireEvent.change(screen.getByRole('combobox', { name: 'Test type' }), { target: { value: 'cloze' } });
+  await userEvent.click(screen.getByRole('combobox', { name: 'Test type' }));
+  await userEvent.click(screen.getByRole('option', { name: 'Sentence gaps · 1/12' }));
   expect(screen.getByRole('link', { name: 'Start sentence gaps · 1 word' })).toHaveAttribute('href', expect.stringContaining('mode=cloze'));
   expect(screen.getByText(/1 of 12 words.*sentence-gap/)).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'This batch · 10 words' }));

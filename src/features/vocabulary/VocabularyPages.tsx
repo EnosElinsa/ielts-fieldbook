@@ -2,6 +2,7 @@
 import { useVocabularySearchParams } from './vocabularyNavigation';
 import { normalizeVocabularyScope } from '../../domain/vocabulary/identities';
 import { PanelLoadingState, StateMessage } from '../../components/AsyncState';
+import { SelectField as ThemedSelectField } from '../../components/SelectField';
 import { VocabularyLink as Link, VocabularyBackLink } from './VocabularyRouteLink';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { NavLink, useParams, useLocation } from "react-router-dom";
@@ -1092,7 +1093,7 @@ export function VocabularyHistoryPage() {
   const total=fb.loadVocabularyHistoryPage?(ready?loaded.total:0):local.length;
   const pages=Math.max(1,Math.ceil(total/20));
   return <VocabularyLayout><div className="page-tools"><h2>Vocabulary history</h2><Link className="btn line" to="/vocabulary/review">Review vocabulary</Link></div>
-    <label className="vocabulary-history-source">Session source<select value={source} onChange={event=>{setSource(event.target.value);setPage(0);}}><option value="all">All sources</option><option value="planned">All planned reviews</option><option value="automatic">System arranged</option><option value="manual">User arranged</option><option value="self-directed">Self-directed</option></select></label>
+    <label className="vocabulary-history-source">Session source<ThemedSelectField aria-label="Session source" value={source} onValueChange={value=>{setSource(value);setPage(0);}}><option value="all">All sources</option><option value="planned">All planned reviews</option><option value="automatic">System arranged</option><option value="manual">User arranged</option><option value="self-directed">Self-directed</option></ThemedSelectField></label>
     {error?<StateMessage kind="error" message={error} onRetry={()=>setRevision(value=>value+1)}/>:!ready?<PanelLoadingState message="Loading history…"/>:sessions.length ? <div className="vocabulary-history-list">{sessions.map(log => {
       const bookId = log.selection?.bookId || log.filter?.bookId;
       const unitId = log.selection?.unitId || log.filter?.unitId;

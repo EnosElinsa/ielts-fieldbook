@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { SelectField } from '../../components/SelectField';
 import type { LearningBatch } from '../../domain/vocabulary/learningBatch';
 import { VOCABULARY_PRACTICE_MODES, type VocabularyPracticeMode } from '../../domain/vocabulary/preferences';
 import type { availableUnitPracticeModes } from '../../domain/vocabulary/selection';
@@ -44,12 +45,12 @@ export function VocabularyLearningAssessment({ batch, assessments, groupWords, b
     <div className="vocabulary-learning-test-launch">
       <label className="vocabulary-learning-test-type" htmlFor={`${id}-type`}>
         <span className="vocabulary-learning-field-label">Test type</span>
-        <select id={`${id}-type`} value={mode?.value || ''} disabled={!modes.length || (scope === 'batch' && bound)} aria-describedby={`${id}-availability`} onChange={event => setRequestedMode(event.target.value as VocabularyPracticeMode)}>
+        <SelectField id={`${id}-type`} aria-label="Test type" value={mode?.value || ''} disabled={!modes.length || (scope === 'batch' && bound)} aria-describedby={`${id}-availability`} onValueChange={value => setRequestedMode(value as VocabularyPracticeMode)}>
           {!modes.length ? <option value="">No test available</option> : modes.map(item => {
             const available = assessments.find(assessment => assessment.value === item.value)?.queue.eligibleWords || 0;
             return <option key={item.value} value={item.value}>{item.label}{scope === 'group' && available < groupWords ? ` · ${available}/${groupWords}` : ''}</option>;
           })}
-        </select>
+        </SelectField>
       </label>
       {mode && count ? <Link className="btn primary" to={scope === 'batch' ? batchUrl(mode.value) : groupUrl(mode.value)}>Start {mode.label.toLowerCase()} · {wordsLabel(count)}<ArrowRight size={15}/></Link> : null}
     </div>
