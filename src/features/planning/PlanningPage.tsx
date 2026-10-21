@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Link, useLocation } from 'react-router-dom';
-import { CalendarClock, Clock3, Replace, RotateCcw, SkipForward, ArrowLeft, Check, Plus, Copy, SlidersHorizontal, ArrowUp, ArrowDown, Settings2, MoreHorizontal } from 'lucide-react';
+import { CalendarClock, Clock3, Replace, RotateCcw, SkipForward, ArrowLeft, Check, Plus, Copy, SlidersHorizontal, ArrowUp, ArrowDown, Settings2, MoreHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { AccountDataBoundary } from '../../components/AccountDataBoundary';
 
@@ -22,6 +22,7 @@ export function PlanningPage(){return <AccountDataBoundary modules={['planning',
 
 function PlanningCalendar(){
   const fb=useFieldbook();const schedule=useStudySchedule();const today=dateKey(new Date());const [anchor,setAnchor]=useState(today);const days=calendarDays(new Date(`${anchor}T12:00:00`));const [editor,setEditor]=useState(null);
+  const dateRange=new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric'}).formatRange(new Date(`${days[0]}T12:00:00`),new Date(`${days[6]}T12:00:00`));
   const location=useLocation();useVocabularyPosition(location.pathname+location.search+location.hash,!schedule.saving);
   const overdue=fb.state.plans.filter(plan=>(plan.dateKey<today||plan.onHold)&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status)).slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey));
   const history=fb.state.plans.filter(plan=>['completed','skipped'].includes(plan.status)).sort((a,b)=>-compareStudyPlans(a,b));
@@ -40,7 +41,14 @@ function PlanningCalendar(){
     {schedule.saving&&<InlineLoadingState message="Updating your schedule…" />}
     {tab==='schedule'&&<>
     {focus&&<aside className="study-focus"><div><p className="kicker">Today's focus</p><strong>{focus.title}</strong><p>{focus.status==='in_progress'?'Continue your saved task':'Next in your schedule'} · {focus.estimatedMinutes} min estimated</p></div><TaskStartButton plan={focus}/></aside>}
-    <div className="study-date-navigation"><button type="button" className="btn line" onClick={()=>setAnchor(dateKey(addLocalDays(new Date(`${anchor}T12:00:00`),-7)))}>Previous week</button><span>{days[0]} — {days[6]}</span><button type="button" className="btn line" onClick={()=>setAnchor(today)}>Today</button><button type="button" className="btn line" onClick={()=>setAnchor(dateKey(addLocalDays(new Date(`${anchor}T12:00:00`),7)))}>Next week</button></div>
+    <nav className="study-date-navigation" aria-label="Schedule dates">
+      <p className="study-date-range" aria-live="polite" aria-atomic="true">{dateRange}</p>
+      <div className="study-date-controls">
+        <button type="button" className="btn line study-date-today" onClick={()=>setAnchor(today)}>Today</button>
+        <button type="button" className="btn line study-week-arrow" aria-label="Previous week" title="Previous week" onClick={()=>setAnchor(dateKey(addLocalDays(new Date(`${anchor}T12:00:00`),-7)))}><ChevronLeft size={18}/></button>
+        <button type="button" className="btn line study-week-arrow" aria-label="Next week" title="Next week" onClick={()=>setAnchor(dateKey(addLocalDays(new Date(`${anchor}T12:00:00`),7)))}><ChevronRight size={18}/></button>
+      </div>
+    </nav>
     <div className="study-calendar" aria-busy={schedule.saving}>{days.map(day=>{
       const tasks=fb.state.plans.filter(plan=>plan.dateKey===day&&!plan.onHold&&!plan.archivedAt).sort(compareStudyPlans);
       const used=tasks.filter(plan=>plan.status!=='skipped').reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0);
@@ -67,7 +75,6 @@ function PlanTask({plan}){
     {plan.reviewReason&&<p className="study-task-reason">Review reason: {({error:'Confirmed mistake',recovery:'Mistake recovery',due:'Scheduled review is due',missing:'Build a missing skill',spaced:'Spaced consolidation'})[plan.reviewReason]||plan.reviewReason}</p>}
     <p className="study-task-material">{studyTargetSummary(plan)}</p>
     {plan.completion?.description&&<p className="study-completion-condition"><strong>Complete when</strong><span>{plan.completion.description}</span></p>}
-    {plan.description&&<details className="study-task-instructions"><summary>Practice instructions</summary><p>{plan.description}</p></details>}
     <footer><span className="study-task-status">{completed&&<Check size={14}/>} {({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status}{plan.origin==='manual'?' · User arranged':' · System arranged'}</span><div className="study-task-tools">{plan.status==='skipped'?<button type="button" className="btn line" disabled={saving} onClick={()=>{setError('');setDialog('restore');}}><RotateCcw size={16}/>Restore task</button>:<>
       {!plan.onHold&&<TaskStartButton plan={plan}/>}
       <DropdownMenu.Root>
