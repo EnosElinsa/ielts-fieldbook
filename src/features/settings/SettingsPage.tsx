@@ -156,7 +156,16 @@ export function SettingsPage() {
   const affectedDates = [...new Set(preview.affected.map(plan => plan.dateKey))];
   return <section className="view active settings-page">
     <div className="settings-category-picker"><SelectField aria-label="Settings category" value={category} onChange={event => navigate(`/settings/${event.target.value}${location.search}`, {state:location.state})}>{categories.map(([id,label]) => <option key={id} value={id}>{label}</option>)}</SelectField></div>
-    <nav className="settings-categories" aria-label="Settings categories">{categories.map(([id, label],index) => {const Icon=categoryIcons[index];return <div key={id}>{(index===0||index===5)&&<p className="settings-category-group">{index===0?'Learning':'Workspace'}</p>}<Link to={`/settings/${id}${location.search}`} state={location.state} aria-current={category === id ? 'page' : undefined}><Icon size={17}/>{label}</Link></div>;})}</nav>
+    <nav className="settings-categories" aria-label="Settings categories">
+      {['Learning','Workspace'].map((group,groupIndex)=><div className="settings-category-section" key={group}>
+        <p className="settings-category-group">{group}</p>
+        {categories.map(([id,label],index)=>{
+          if((index<5)!==(groupIndex===0))return null;
+          const Icon=categoryIcons[index];
+          return <Link key={id} to={`/settings/${id}${location.search}`} state={location.state} aria-current={category===id?'page':undefined}><Icon size={18} aria-hidden="true"/><span>{label}</span></Link>;
+        })}
+      </div>)}
+    </nav>
     <div className="settings-content">
       {returnTo || location.state?.vocabularyReturn ? <VocabularyBackLink/> : null}
       <header className="settings-section-heading"><h2>{categories.find(([id]) => id === category)?.[1]}</h2>{dirty&&<span className="settings-draft-status">Unsaved changes</span>}</header>

@@ -1,4 +1,4 @@
-.view.active.settings-page { display: grid; grid-template-columns: 184px minmax(0, 1fr); gap: 36px; align-items: start; }
+.view.active.settings-page { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 32px; align-items: start; }
 .settings-categories { display: grid; gap: 4px; border-right: 1px solid var(--rule); padding-right: 18px; }
 .settings-categories a { color: var(--muted); text-decoration: none; padding: 9px 12px; border-radius: 6px; }
 .settings-categories a[aria-current="page"] { color: var(--ink); background: var(--surface-hover); font-weight: 600; }
@@ -26,11 +26,12 @@
   .settings-plan-preview li { align-items: flex-start; }
 }
 .settings-category-picker { display: none; }
-.settings-categories { padding-right: 20px; position: sticky; top: 24px; }
-.settings-category-group { margin: 4px 12px 12px; font-size: 11px; text-transform: uppercase; color: var(--muted); }
-.settings-categories > div:nth-child(6) { margin-top: 24px; }
-.settings-categories a { display: flex; align-items: center; gap: 10px; padding: 11px 12px; font-size: 13px; line-height: 1.45; }
-.settings-categories a svg { flex-shrink: 0; }
+.settings-categories { min-width: 0; gap: 24px; padding-right: 20px; position: sticky; top: 24px; }
+.settings-category-section { display: grid; gap: 4px; min-width: 0; }
+.settings-category-group { margin: 4px 12px 8px; font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.settings-categories a { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 11px 12px; font-size: 13px; line-height: 1.5; }
+.settings-categories a > svg { flex: 0 0 18px; }
+.settings-categories a > span { min-width: 0; overflow-wrap: break-word; text-wrap: pretty; }
 .settings-categories a:hover { color: var(--ink); background: var(--surface-hover); }
 .settings-categories a[aria-current="page"] { color: var(--blue); background: var(--soft-blue); font-weight: 700; }
 .settings-content { min-height: calc(100dvh - 200px); display: flex; flex-direction: column; }
@@ -81,7 +82,7 @@
 .settings-save-buttons { display: flex; gap: 8px; }
 .settings-save-buttons .btn { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 42px; }
 .settings-fields { margin-bottom: 28px; }
-@media (max-width: 1000px) { .view.active.settings-page { grid-template-columns: 160px minmax(0,1fr); gap: 24px; } .settings-categories { padding-right: 14px; } }
+@media (max-width: 1100px) { .view.active.settings-page { grid-template-columns: 216px minmax(0,1fr); gap: 24px; } .settings-categories { padding-right: 14px; } }
 @media (max-width: 820px) {
   .view.active.settings-page { grid-template-columns: minmax(0, 1fr); gap: 22px; }
   .settings-categories { display: none; }

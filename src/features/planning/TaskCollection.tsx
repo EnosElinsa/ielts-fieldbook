@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useLocation } from 'react-router-dom';
 import { useFieldbook } from '../../context/FieldbookContext';
@@ -7,11 +7,14 @@ import { dateKey } from '../../domain/utils';
 import type { StudyPlan } from '../../domain/plans';
 import type { ReactNode } from 'react';
 import { useVocabularyPosition } from '../vocabulary/vocabularyNavigation';
+import { DateField } from '../../components/ui';
 
 const PAGE_SIZE=20;
+const DEFAULT_FILTERS={status:'all',skill:'all',origin:'all',reason:'all',from:'',to:''};
 export function TaskCollection({tasks,kind,renderTask}:{tasks:StudyPlan[];kind:'waiting'|'history';renderTask:(plan:StudyPlan)=>ReactNode}){
   const fb=useFieldbook(),location=useLocation();
-  const [filters,setFilters]=useState({status:'all',skill:'all',origin:'all',reason:'all',from:'',to:''});
+  const fieldId=useId();
+  const [filters,setFilters]=useState(DEFAULT_FILTERS);
   const [includeStarted,setIncludeStarted]=useState(false),[selected,setSelected]=useState<string[]>([]);
   const [page,setPage]=useState(0),[preview,setPreview]=useState<ReturnType<typeof previewBacklogChange>|null>(null),[saving,setSaving]=useState(false),[error,setError]=useState('');
   const [scheduleDate,setScheduleDate]=useState(dateKey(new Date()));
@@ -52,15 +55,22 @@ export function TaskCollection({tasks,kind,renderTask}:{tasks:StudyPlan[];kind:'
       <label>Module<select value={filters.skill} onChange={event=>filter('skill',event.target.value)}><option value="all">All modules</option>{['vocabulary','listening','reading','writing','speaking'].map(value=><option key={value}>{value}</option>)}</select></label>
       <label>Source<select value={filters.origin} onChange={event=>filter('origin',event.target.value)}><option value="all">All sources</option><option value="automatic">System arranged</option><option value="manual">User arranged</option></select></label>
       {kind==='history'&&<label>Reason<select value={filters.reason} onChange={event=>filter('reason',event.target.value)}><option value="all">All reasons</option>{['user-skipped','bulk-skip','merged-review','no-longer-due'].map(value=><option key={value}>{value}</option>)}</select></label>}
-      <label>From<input type="date" value={filters.from} onChange={event=>filter('from',event.target.value)}/></label><label>To<input type="date" value={filters.to} onChange={event=>filter('to',event.target.value)}/></label>
+      <div className="study-date-filters">
+        <div className="study-collection-date"><label htmlFor={`${fieldId}-from`}>From</label><DateField id={`${fieldId}-from`} label="From" value={filters.from} max={filters.to||undefined} onChange={value=>filter('from',value)}/></div>
+        <div className="study-collection-date"><label htmlFor={`${fieldId}-to`}>To</label><DateField id={`${fieldId}-to`} label="To" value={filters.to} min={filters.from||undefined} onChange={value=>filter('to',value)}/></div>
+        <button type="button" className="btn text study-clear-filters" disabled={Object.entries(DEFAULT_FILTERS).every(([key,value])=>filters[key as keyof typeof filters]===value)} onClick={()=>{setFilters(DEFAULT_FILTERS);setPage(0);setSelected([]);}}>Reset filters</button>
+      </div>
     </fieldset>
     {kind==='waiting'&&<label className="check-field"><input type="checkbox" disabled={saving||preparing} checked={includeStarted} onChange={event=>{setIncludeStarted(event.target.checked);setSelected([]);}}/>Include started tasks in selection</label>}
-    <fieldset disabled={saving||loading||preparing} className="study-collection-actions"><legend>{selection.length} selected · {total} matching tasks</legend>
-      <div className="btn-row"><button type="button" className="btn line" onClick={()=>setSelected([...new Set([...selection,...visible.filter(eligible).map(plan=>plan.id)])])}>Select this page</button><button type="button" className="btn line" onClick={()=>void selectAll()}>Select all filtered results</button><button type="button" className="btn line" onClick={()=>setSelected([])}>Clear selection</button></div>
-      <div className="btn-row">{kind==='waiting'?<>
+    <fieldset disabled={saving||loading||preparing} className="study-collection-actions"><legend className="sr-only">Batch task actions</legend>
+      <div className="study-selection-toolbar">
+        <p className="study-selection-summary" role="status">{selection.length} selected · {total} matching tasks</p>
+        <div className="btn-row study-selection-controls"><button type="button" className="btn line" disabled={!visible.some(eligible)} onClick={()=>setSelected([...new Set([...selection,...visible.filter(eligible).map(plan=>plan.id)])])}>Select this page</button><button type="button" className="btn line" disabled={!total} onClick={()=>void selectAll()}>Select all filtered results</button><button type="button" className="btn text" disabled={!selection.length} onClick={()=>setSelected([])}>Clear selection</button></div>
+      </div>
+      <div className="btn-row study-bulk-controls">{kind==='waiting'?<>
         <button type="button" className="btn primary" disabled={!selection.length} onClick={()=>prepare('replan')}>Preview automatic replan</button>
         <button type="button" className="btn line" disabled={!selection.length} onClick={()=>prepare('reschedule',selection,{dateKey:dateKey(new Date())})}>Preview arrange today</button>
-        <label>Arrange date<input type="date" value={scheduleDate} onChange={event=>setScheduleDate(event.target.value)}/></label>
+        <div className="study-collection-date"><label htmlFor={`${fieldId}-arrange`}>Arrange date</label><DateField id={`${fieldId}-arrange`} label="Arrange date" value={scheduleDate} onChange={setScheduleDate}/></div>
         <button type="button" className="btn line" disabled={!selection.length||!scheduleDate} onClick={()=>prepare('reschedule',selection,{dateKey:scheduleDate})}>Preview arrange</button>
         <button type="button" className="btn line" disabled={!selection.length} onClick={()=>prepare('hold')}>Preview hold</button>
         <button type="button" className="btn line" disabled={!selection.some(id=>tasks.find(plan=>plan.id===id)?.onHold)} onClick={()=>prepare('resume')}>Preview return to waiting</button>

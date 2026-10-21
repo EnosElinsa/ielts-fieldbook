@@ -4,6 +4,9 @@
 
 /* Shared form choices remain consistent without a feature page's stylesheet. */
 .filter-trigger.select-field { min-height: 42px; }
+.date-pop button:disabled{opacity:.4;cursor:not-allowed}
+.date-pop button:disabled:hover{background:none;color:var(--ink)}
+.date-pop.opens-above{top:auto;bottom:calc(100% + 6px)}
 label.check-field {
   display: flex;
   flex-direction: row;
