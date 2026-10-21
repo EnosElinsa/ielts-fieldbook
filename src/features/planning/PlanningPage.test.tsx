@@ -146,9 +146,11 @@ test('history pagination locates a deep link and separates user skips from syste
   render(<MemoryRouter initialEntries={['/planning#task-history-0']}><PlanningPage/></MemoryRouter>);
   expect(await screen.findByRole('heading',{name:'History item 0'})).toBeInTheDocument();
   expect(screen.getByText(/Page 2 of 2/)).toBeInTheDocument();
-  await userEvent.selectOptions(screen.getByRole('combobox',{name:'Status'}),'skipped');
+  await userEvent.click(screen.getByRole('combobox',{name:'Status'}));
+  await userEvent.click(screen.getByRole('option',{name:'Skipped by you'}));
   expect(screen.queryByRole('heading',{name:'History item 24'})).not.toBeInTheDocument();
-  await userEvent.selectOptions(screen.getByRole('combobox',{name:'Status'}),'system');
+  await userEvent.click(screen.getByRole('combobox',{name:'Status'}));
+  await userEvent.click(screen.getByRole('option',{name:'System handled'}));
   expect(screen.getByRole('heading',{name:'History item 24'})).toBeInTheDocument();
 });
 
@@ -169,10 +171,12 @@ test('system-handled history excludes archived tasks and still offers an explici
     {id:'archived',dateKey:'2020-01-01',status:'skipped',skipReason:'no-longer-due',origin:'automatic',archivedAt:'2020-02-01T00:00:00Z',skill:'vocabulary',title:'Archived decision',estimatedMinutes:1},
   ];
   mount();await userEvent.click(screen.getByRole('button',{name:'History',exact:true}));
-  await userEvent.selectOptions(screen.getByRole('combobox',{name:'Status'}),'system');
+  await userEvent.click(screen.getByRole('combobox',{name:'Status'}));
+  await userEvent.click(screen.getByRole('option',{name:'System handled'}));
   expect(screen.getByRole('heading',{name:'Current decision'})).toBeInTheDocument();
   expect(screen.queryByRole('heading',{name:'Archived decision'})).not.toBeInTheDocument();
-  await userEvent.selectOptions(screen.getByRole('combobox',{name:'Status'}),'archived');
+  await userEvent.click(screen.getByRole('combobox',{name:'Status'}));
+  await userEvent.click(screen.getByRole('option',{name:'Archived'}));
   expect(screen.getByRole('heading',{name:'Archived decision'})).toBeInTheDocument();
   expect(screen.queryByRole('heading',{name:'Current decision'})).not.toBeInTheDocument();
 });

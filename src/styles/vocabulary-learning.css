@@ -62,7 +62,7 @@
 .vocabulary-learning-assessments .vocabulary-learning-scope-note { margin: 10px 0 20px; max-width: 64ch; line-height: 1.6; }
 .vocabulary-learning-test-launch { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 14px; }
 .vocabulary-learning-test-type { min-width: 0; }
-.vocabulary-learning-test-type select { width: 100%; min-height: 44px; font-size: 14px; }
+.vocabulary-learning-test-type .select-field { width: 100%; min-height: 44px; font-size: 14px; }
 .vocabulary-learning-test-launch > .btn { min-height: 44px; white-space: normal; text-align: center; }
 .vocabulary-learning-assessments .vocabulary-learning-availability { margin: 12px 0 16px; min-height: 21px; line-height: 1.6; }
 .vocabulary-learning-assessments > .btn.text { padding-left: 0; }

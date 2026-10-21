@@ -26,7 +26,8 @@ test('history loads metadata by page and source and retains a failed page for re
   expect(await screen.findByText(/History could not be loaded/)).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button',{name:'Retry loading'}));
   expect(await screen.findByText('Page 2 of 2 · 21 sessions · 20 per page')).toBeInTheDocument();
-  fireEvent.change(screen.getByRole('combobox',{name:'Session source'}),{target:{value:'manual'}});
+  fireEvent.click(screen.getByRole('combobox',{name:'Session source'}));
+  fireEvent.click(screen.getByRole('option',{name:'User arranged'}));
   await waitFor(()=>expect(fb.current.loadVocabularyHistoryPage).toHaveBeenLastCalledWith({source:'manual',offset:0,limit:20}));
 });
 
