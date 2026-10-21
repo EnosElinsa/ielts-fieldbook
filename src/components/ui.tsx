@@ -1,6 +1,6 @@
 import { SelectField } from './SelectField';
-import { useEffect, useId, useRef, useState } from 'react';
-import { House, Library, PencilLine, RotateCcw, ChartNoAxesCombined, NotebookTabs, CircleUserRound, Mic2, Settings2 } from 'lucide-react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import { CalendarDays, House, Library, PencilLine, RotateCcw, ChartNoAxesCombined, NotebookTabs, CircleUserRound, Mic2, Settings2 } from 'lucide-react';
 
 export function FilterMenu({ label, value, options, onChange, disabled }: {
   label:string; value:string; options:{value:string;label:string;disabled?:boolean}[];
@@ -27,21 +27,51 @@ export function DateField({
   label,
   value,
   onChange,
+  min,
+  max,
 }: {
   id: string;
   label: string;
   value: string;
   onChange: (value: string) => void;
+  min?: string;
+  max?: string;
 }) {
   const selected = parseIso(value);
+  const today = new Date();
+  const todayIso = isoFrom(today);
+  const initialDate = selected || parseIso(min && todayIso < min ? min : max && todayIso > max ? max : todayIso) || today;
+  const outsideRange = (iso: string) => Boolean((min && iso < min) || (max && iso > max));
   const [open, setOpen] = useState(false);
-  const [cursor, setCursor] = useState(() => selected || new Date());
+  const [cursor, setCursor] = useState(() => initialDate);
+  const [popupLayout, setPopupLayout] = useState({ above: false, maxHeight: 340 });
   const root = useRef<HTMLDivElement>(null);
+  const popup = useRef<HTMLDivElement>(null);
   const popId = useId();
 
   useEffect(() => {
     if (selected) setCursor(selected);
   }, [value]);
+
+  useLayoutEffect(() => {
+    if (!open) return undefined;
+    const position = () => {
+      if (!root.current || !popup.current) return;
+      const trigger = root.current.getBoundingClientRect();
+      const bottomInset = window.innerWidth <= 740 ? 80 : 16;
+      const below = window.innerHeight - trigger.bottom - bottomInset;
+      const above = trigger.top - 16;
+      const opensAbove = below < Math.min(popup.current.scrollHeight, 340) + 6 && above > below;
+      setPopupLayout({ above: opensAbove, maxHeight: Math.max(0, Math.min(340, (opensAbove ? above : below) - 6)) });
+    };
+    position();
+    window.addEventListener('resize', position);
+    window.addEventListener('scroll', position, true);
+    return () => {
+      window.removeEventListener('resize', position);
+      window.removeEventListener('scroll', position, true);
+    };
+  }, [open]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -74,7 +104,6 @@ export function DateField({
     date.setDate(start.getDate() + index);
     return date;
   });
-  const today = new Date();
   const labelText = selected
     ? selected.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
     : 'Choose a date';
@@ -90,21 +119,18 @@ export function DateField({
         aria-expanded={open}
         aria-controls={popId}
         onClick={() => {
-          setOpen((current) => {
-            const next = !current;
-            if (next) window.dispatchEvent(new CustomEvent('fieldbook-popover', { detail: popId }));
-            return next;
-          });
+          if (!open) {
+            setCursor(initialDate);
+            window.dispatchEvent(new CustomEvent('fieldbook-popover', { detail: popId }));
+          }
+          setOpen(!open);
         }}
       >
         <span>{labelText}</span>
-        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-          <rect x="2.5" y="3.5" width="11" height="10" rx="1.5" />
-          <path d="M2.5 6.5h11M5.5 2.5v2M10.5 2.5v2" />
-        </svg>
+        <CalendarDays size={14} aria-hidden="true" />
       </button>
       {open ? (
-        <div className="filter-pop date-pop" id={popId} role="dialog" aria-label={label}>
+        <div className={`filter-pop date-pop${popupLayout.above ? ' opens-above' : ''}`} style={{ maxHeight: popupLayout.maxHeight }} ref={popup} id={popId} role="dialog" aria-label={label}>
           <div className="date-nav">
             <button type="button" aria-label="Previous month" onClick={() => setCursor(new Date(year, month - 1, 1))}>
               ‹
@@ -131,6 +157,8 @@ export function DateField({
                 <button
                   key={iso}
                   type="button"
+                  aria-label={date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  disabled={outsideRange(iso)}
                   className={`${outside ? 'is-out' : ''}${isToday ? ' is-today' : ''}${isSelected ? ' is-selected' : ''}`}
                   onClick={() => {
                     onChange(iso);
@@ -154,6 +182,7 @@ export function DateField({
             </button>
             <button
               type="button"
+              disabled={outsideRange(todayIso)}
               onClick={() => {
                 const next = new Date();
                 onChange(isoFrom(next));

@@ -73,7 +73,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
         </> : !locked ? <p>Review due words, retry mistakes, or build a custom review.</p> : null}
         {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
         {mode === 'production' ? <p>Your sentences are saved for review. A self-rating does not verify correct usage.</p> : null}
-        {!locked && wrongOnly ? <p>Mistake recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last.</p> : null}
+        {!locked && wrongOnly && (study || explicitEntry) ? <p>Mistake recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last.</p> : null}
         {!locked && explicitEntry && dueOnly ? <button type="button" className="btn line" onClick={()=>controller.setReviewPreset('custom')} aria-label="Remove due filter">Due for review · Remove filter</button> : null}
         {controller.batchRequest ? <strong>{queue.length} words in this batch</strong> : study && unitQueue ? <strong>{unitQueue.totalWords} words in this group · {unitQueue.eligibleWords} ready for {modeLabel(mode).toLowerCase()}</strong> : null}
         {!locked && controller.filter.sourceId ? <p>Source Part: {controller.filter.sourceId} · {queue.length} matching {queue.length === 1 ? 'word' : 'words'}</p> : null}
@@ -128,7 +128,16 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
       <div className="practice-setup-options">
         <div className="practice-configuration">
           {batchOptions ?
-          <div className="practice-field"><span className="practice-field-label">Session size</span><div className="practice-size-presets">{[5,10,20,50,100].map(count=><button className="btn line" type="button" key={count} aria-pressed={Number(sizeInput)===count} onClick={()=>{setSizeInput(String(count));setPreferences(current=>({...current,sessionSize:count}));}}>{count}</button>)}</div><label>Custom question count<input type="number" aria-label="Custom question count" min={1} max={100} step={1} value={sizeInput} onChange={event=>{setSizeInput(event.target.value);if(/^\d+$/.test(event.target.value)&&Number(event.target.value)>=1&&Number(event.target.value)<=100)setPreferences(current=>({...current,sessionSize:Number(event.target.value)}));}}/></label>{!validSize&&<span role="alert">Enter a whole number from 1 to 100.</span>}</div>
+          <div className="practice-session-size">
+            <span className="practice-field-label">Session size</span>
+            <div className="practice-size-controls">
+              <div className="practice-size-presets" role="group" aria-label="Session size">
+                {[5,10,20,50,100].map(count=><button className="btn line" type="button" key={count} aria-pressed={validSize&&Number(sizeInput)===count} onClick={()=>{setSizeInput(String(count));setPreferences(current=>({...current,sessionSize:count}));}}>{count}</button>)}
+              </div>
+              <label className="practice-custom-size"><span>Custom</span><input type="number" aria-label="Custom question count" aria-invalid={!validSize} min={1} max={100} step={1} value={sizeInput} onChange={event=>{setSizeInput(event.target.value);if(/^\d+$/.test(event.target.value)&&Number(event.target.value)>=1&&Number(event.target.value)<=100)setPreferences(current=>({...current,sessionSize:Number(event.target.value)}));}}/></label>
+            </div>
+            {!validSize&&<span className="practice-size-error" role="alert">Enter a whole number from 1 to 100.</span>}
+          </div>
           : null}
           {batchOptions ? <div className="practice-field"><span className="practice-field-label">Question order</span><FilterMenu
             label="Order"

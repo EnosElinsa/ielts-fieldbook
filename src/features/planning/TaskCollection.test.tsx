@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
@@ -10,8 +10,9 @@ import '@testing-library/jest-dom/vitest';
 const mocks=vi.hoisted(()=>({fb:null as any}));
 vi.mock('../../context/FieldbookContext',()=>({useFieldbook:()=>mocks.fb}));
 vi.mock('../vocabulary/vocabularyNavigation',()=>({useVocabularyPosition:()=>{}}));
-afterEach(cleanup);
+afterEach(()=>{cleanup();vi.useRealTimers();});
 beforeEach(()=>{
+  vi.setSystemTime(new Date('2026-10-21T12:00:00'));
   const state={...emptyState(),plans:[] as StudyPlan[]};
   state.plans=Array.from({length:25},(_,i)=>({id:`history-${i}`,title:`Historical task ${i}`,description:'Historical review',dateKey:'2000-01-01',kind:'vocabulary',skill:'vocabulary',status:'skipped',origin:'manual',estimatedMinutes:2,target:{type:'vocabulary',mode:'due-review',assessmentMode:'dictation',binding:'dynamic',cards:[]},completion:{type:'assessment',description:'Submit every answer.'},schemaVersion:2,generationKey:`history-${i}`,startedAt:null,completedAt:null}));
   mocks.fb={state,saveStatus:'saved',loadPlanningHistoryPage:vi.fn(async options=>{
@@ -21,6 +22,10 @@ beforeEach(()=>{
 });
 function mount(path='/planning'){
   return render(<MemoryRouter initialEntries={[path]}><TaskCollection tasks={mocks.fb.state.plans} kind="history" renderTask={plan=><article>{plan.title}</article>}/></MemoryRouter>);
+}
+function chooseDate(field:string,date:string){
+  fireEvent.click(screen.getByRole('button',{name:field}));
+  fireEvent.click(within(screen.getByRole('dialog',{name:field})).getByRole('button',{name:date}));
 }
 test('server-paged history keeps page selection separate from all filtered results and previews the full selection',async()=>{
   mount();await screen.findByText('Historical task 0');expect(screen.queryByText('Historical task 24')).not.toBeInTheDocument();
@@ -57,4 +62,52 @@ test('filters stay fixed while all-result selection is loading',async()=>{
   await act(async()=>finish({plans:[],total:25,offset:0,ids:mocks.fb.state.plans.map((plan:StudyPlan)=>plan.id)}));
   expect(screen.getByText('25 selected · 25 matching tasks')).toBeInTheDocument();
   expect(screen.getByLabelText('Source')).toBeEnabled();
+});
+
+test('resetting filters restores the full history, first page and empty selection',async()=>{
+  mount();await screen.findByText('Historical task 0');
+  const reset=screen.getByRole('button',{name:'Reset filters'});
+  expect(reset).toBeDisabled();
+  fireEvent.change(screen.getByLabelText('Status'),{target:{value:'skipped'}});
+  fireEvent.change(screen.getByLabelText('Source'),{target:{value:'manual'}});
+  chooseDate('From','1 October 2026');
+  chooseDate('To','21 October 2026');
+  await waitFor(()=>expect(mocks.fb.loadPlanningHistoryPage).toHaveBeenLastCalledWith(expect.objectContaining({status:'skipped',origin:'manual',from:'2026-10-01',to:'2026-10-21'})));
+  fireEvent.click(screen.getByRole('button',{name:'Next page'}));await screen.findByText('Historical task 24');
+  fireEvent.click(screen.getByRole('button',{name:'Select this page'}));
+  expect(screen.getByText('5 selected · 25 matching tasks')).toBeInTheDocument();
+  fireEvent.click(reset);await screen.findByText('Historical task 0');
+  expect(mocks.fb.loadPlanningHistoryPage).toHaveBeenLastCalledWith(expect.objectContaining({status:'all',skill:'all',origin:'all',reason:'all',from:'',to:'',offset:0}));
+  expect(screen.getByLabelText('Status')).toHaveValue('all');
+  expect(screen.getByLabelText('Source')).toHaveValue('all');
+  expect(screen.getByRole('button',{name:'From'})).toHaveTextContent('Choose a date');
+  expect(screen.getByRole('button',{name:'To'})).toHaveTextContent('Choose a date');
+  expect(screen.getByText('0 selected · 25 matching tasks')).toBeInTheDocument();
+  expect(reset).toBeDisabled();
+});
+
+test('date filters show English labels, preserve ISO values and prevent reversed ranges',async()=>{
+  mount();await screen.findByText('Historical task 0');
+  expect(screen.getByRole('button',{name:'From'})).toHaveTextContent('Choose a date');
+  chooseDate('From','21 October 2026');
+  expect(screen.getByRole('button',{name:'From'})).toHaveTextContent('21 Oct 2026');
+  fireEvent.click(screen.getByRole('button',{name:'To'}));
+  let calendar=within(screen.getByRole('dialog',{name:'To'}));
+  expect(calendar.getByText('October 2026')).toBeInTheDocument();
+  expect(calendar.getByRole('button',{name:'20 October 2026'})).toBeDisabled();
+  expect(calendar.getByRole('button',{name:'21 October 2026'})).toBeEnabled();
+  fireEvent.click(calendar.getByRole('button',{name:'22 October 2026'}));
+  await waitFor(()=>expect(mocks.fb.loadPlanningHistoryPage).toHaveBeenLastCalledWith(expect.objectContaining({from:'2026-10-21',to:'2026-10-22'})));
+  fireEvent.click(screen.getByRole('button',{name:'From'}));
+  calendar=within(screen.getByRole('dialog',{name:'From'}));
+  expect(calendar.getByRole('button',{name:'23 October 2026'})).toBeDisabled();
+  fireEvent.click(calendar.getByRole('button',{name:'Clear'}));
+  expect(screen.getByRole('button',{name:'From'})).toHaveTextContent('Choose a date');
+  chooseDate('To','20 October 2026');
+  fireEvent.click(screen.getByRole('button',{name:'From'}));
+  calendar=within(screen.getByRole('dialog',{name:'From'}));
+  expect(calendar.getByRole('button',{name:'Today'})).toBeDisabled();
+  expect(calendar.getByRole('button',{name:'21 October 2026'})).toBeDisabled();
+  fireEvent.click(calendar.getByRole('button',{name:'10 October 2026'}));
+  await waitFor(()=>expect(mocks.fb.loadPlanningHistoryPage).toHaveBeenLastCalledWith(expect.objectContaining({from:'2026-10-10',to:'2026-10-20'})));
 });
