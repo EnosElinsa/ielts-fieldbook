@@ -145,7 +145,9 @@ test('resources use deterministic content-addressed URLs', () => {
     expect(url).toMatch(/^\/[a-zA-Z0-9._/-]+$/);
     expect(decodeURIComponent(url)).toBe(url);
   }
-}, 30000); // Rebuild twice and hash the complete retained corpus on slower CI hosts.
+// The expanded retained corpus took 31.8 s on CI. This is a correctness check,
+// not a runtime speed budget; use the same allowance as the complete-build hook.
+}, 45_000);
 
 test('shared serialized sections preserve native JSON bytes in manifests and source/teaching packs', () => {
   const manifest = release.manifest;
