@@ -21,6 +21,13 @@ test('calendar includes seven days, rest days and overdue tasks',async()=>{
   const {container}=mount();expect(container.querySelectorAll('.study-day')).toHaveLength(7);
   expect(await screen.findAllByText('Rest day')).toHaveLength(1);expect(await screen.findAllByText('No tasks yet. Add a task or adjust your plan settings.')).toHaveLength(5);await userEvent.click(screen.getByRole('button',{name:/Waiting ·/}));expect(screen.getByRole('heading',{name:'Old task'})).toBeInTheDocument();
 });
+test('the settings shortcut opens waiting tasks directly',async()=>{
+  mocks.state.plans.push({...mocks.state.plans[0],id:'waiting',dateKey:'2020-01-01',title:'Waiting task'});
+  render(<MemoryRouter initialEntries={['/planning?view=waiting']}><PlanningPage/></MemoryRouter>);
+  expect(await screen.findByRole('heading',{name:'Waiting task'})).toBeInTheDocument();
+  expect(screen.getByRole('button',{name:'Waiting · 1'})).toHaveAttribute('aria-pressed','true');
+  expect(screen.queryByRole('navigation',{name:'Schedule dates'})).not.toBeInTheDocument();
+});
 test.each([
   ['2026-10-17','17 – 23 Oct 2026','24 – 30 Oct 2026','10 – 16 Oct 2026'],
   ['2026-10-28','28 Oct – 3 Nov 2026','4 – 10 Nov 2026','21 – 27 Oct 2026'],

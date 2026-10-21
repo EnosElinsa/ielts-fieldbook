@@ -10,3 +10,10 @@
 .vocabulary-pronunciation [role=status] { max-width:100%; overflow-wrap:anywhere; }
 .practice-audio-choices { padding:0 0 12px; }
 .vocabulary-pronunciation-note { width:100%; font-size:12px; color:var(--muted); }
+.vocabulary-device-voices{min-width:0}
+.vocabulary-device-voices>legend{font-size:14px;font-weight:600;padding:0 6px}
+.vocabulary-device-voices>p{line-height:1.6}
+.vocabulary-device-voices label{min-width:min(180px,100%);font-size:13px}
+.vocabulary-device-voices .select-field{width:100%;min-height:44px}
+.vocabulary-device-voices .btn{min-height:44px;flex-shrink:0}
+@media(max-width:420px){.vocabulary-device-voices>div{align-items:stretch;flex-direction:column}.vocabulary-device-voices label{flex:auto;min-width:0}.vocabulary-device-voices .btn{align-self:flex-start}}
