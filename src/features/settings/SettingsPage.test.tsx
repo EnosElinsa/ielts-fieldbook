@@ -101,6 +101,30 @@ test('weekly overrides and vocabulary allocation can be saved as actionable sett
  expect(context.current.saveStudySettings.mock.calls[0][0].planning).toMatchObject({blockMinutes:25,week:{1:{minutes:90}}});
 });
 
+test('catch-up presets explain the daily minutes and save the selected limit',async()=>{
+  context.current.state.settings.dailyMinutes=90;
+  setup('overdue');const user=userEvent.setup();
+  const input=screen.getByRole('spinbutton',{name:'Daily catch-up limit'});
+  expect(input).toHaveAccessibleDescription('For a 90-minute study day: up to 27 min for overdue tasks.');
+  await user.click(screen.getByRole('button',{name:'50%'}));
+  expect(input).toHaveValue(50);
+  expect(input).toHaveAccessibleDescription('For a 90-minute study day: up to 45 min for overdue tasks.');
+  await user.click(screen.getByRole('button',{name:'Save settings'}));
+  expect(context.current.saveStudySettings).toHaveBeenCalledWith({planning:expect.objectContaining({carryoverPercent:50})});
+});
+
+test('catch-up can be turned off and its example follows the shared daily-time draft',async()=>{
+  setup('overdue');const user=userEvent.setup();
+  await user.click(screen.getByRole('link',{name:'Time and modules'}));
+  fireEvent.change(screen.getByRole('spinbutton',{name:'Minutes a day'}),{target:{value:'45'}});
+  await user.click(screen.getByRole('link',{name:'Scheduling and overdue'}));
+  expect(screen.getByRole('spinbutton',{name:'Daily catch-up limit'})).toHaveAccessibleDescription('For a 45-minute study day: up to 13 min for overdue tasks.');
+  await user.click(screen.getByRole('button',{name:'Off'}));
+  expect(screen.getByRole('spinbutton',{name:'Daily catch-up limit'})).toHaveAccessibleDescription('Automatic catch-up is off. Arrange unfinished tasks from the Waiting list.');
+  await user.click(screen.getByRole('button',{name:'Save settings'}));
+  expect(context.current.saveStudySettings).toHaveBeenCalledWith({dailyMinutes:45,planning:expect.objectContaining({carryoverPercent:0})});
+});
+
 test('one draft survives categories and previews changed automatic and missed-day tasks', async () => {
   setup(); const user = userEvent.setup();
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Minutes a day' }), { target: { value: '45' } });

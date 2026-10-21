@@ -26,7 +26,9 @@ function PlanningCalendar(){
   const location=useLocation();useVocabularyPosition(location.pathname+location.search+location.hash,!schedule.saving);
   const overdue=fb.state.plans.filter(plan=>(plan.dateKey<today||plan.onHold)&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status)).slice().sort((a,b)=>a.dateKey.localeCompare(b.dateKey));
   const history=fb.state.plans.filter(plan=>['completed','skipped'].includes(plan.status)).sort((a,b)=>-compareStudyPlans(a,b));
-  const [tab,setTab]=useState('schedule');
+  const requestedView=new URLSearchParams(location.search).get('view');
+  const [tab,setTab]=useState(()=>['waiting','history'].includes(requestedView)?requestedView:'schedule');
+  useEffect(()=>{if(['waiting','history'].includes(requestedView))setTab(requestedView);},[requestedView]);
   const [targetError,setTargetError]=useState('');const targetId=location.hash.startsWith('#task-')?location.hash.slice(6):'';
   const linkedTask=fb.state.plans.find(plan=>plan.id===targetId);
   useEffect(()=>{if(!targetId||linkedTask)return;let active=true;fb.ensurePlanningRows([targetId]).then(state=>{if(active&&!state.plans.some(plan=>plan.id===targetId))setTargetError('This task is unavailable. Check its link or refresh planning.');}).catch(cause=>{if(active)setTargetError(cause.message);});return()=>{active=false;};},[targetId,Boolean(linkedTask),fb.ensurePlanningRows]);
