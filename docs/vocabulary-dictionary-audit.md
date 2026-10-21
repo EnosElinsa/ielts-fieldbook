@@ -2,7 +2,7 @@
 
 Run: `node scripts/audit-vocabulary-dictionary.mjs`. Source records and stable identities are retained.
 
-The complete index has **5,853 terms, 51,354 preserved raw senses and 798 restored source meanings** (52,152 total). This ledger verifies **7296 records** across definition, examples or reading explanations, collocations and distinctions; **44,856 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1413 reviewed distinction exercises and 854 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 7 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 2531 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 32 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
+The complete index has **5,853 terms, 51,354 preserved raw senses and 798 restored source meanings** (52,152 total). This ledger verifies **9551 records** across definition, examples or reading explanations, collocations and distinctions; **42,601 remain pending**. Earlier default-learning patches are not counted as full dictionary review. 1413 reviewed distinction exercises and 854 exact-bound diagrams accompany this batch. Diagram coverage is additional to the four text areas, not implied for every reviewed sense. 7 reviewed records are spelling-error references, retained for reading and excluded from new practice queues. 4137 explicitly classified reading explanations are labelled Reading note and excluded from new sentence-gap tasks. 32 reviewed records are source organisation headings, labelled Meaning group and excluded from the initial learning-notes list and all new practice modes. They are references, not individual lexical meanings. Source phrase-list references: 1. These are labelled Usage reference, accessible under All meanings and excluded from new practice. Earlier batches still need example-type annotation.
 
 Authored learning-priority metadata classifies 947 general, 255 specialist, 210 historical and 25 proper-name meanings. These are classifications of reviewed records, not additional text reviews or evidence of mastery. Unclassified meanings remain accessible.
 
@@ -355,52 +355,217 @@ Authored learning-priority metadata classifies 947 general, 255 specialist, 210 
 | bait | 17 | 17 | 0 |
 | bake | 9 | 9 | 0 |
 | baker | 6 | 7 | 1 |
-| ballet | 1 | 7 | 6 |
-| bandage | 1 | 4 | 3 |
+| balcony | 2 | 2 | 0 |
+| bald | 12 | 12 | 0 |
+| balding | 3 | 3 | 0 |
+| baldness | 1 | 1 | 0 |
+| ballet | 7 | 7 | 0 |
+| balloon | 20 | 20 | 0 |
+| ballroom | 3 | 3 | 0 |
+| band | 27 | 27 | 0 |
+| bandage | 4 | 4 | 0 |
+| bands | 2 | 2 | 0 |
 | bangkok | 3 | 3 | 0 |
 | bank | 45 | 45 | 0 |
-| barbecue | 7 | 9 | 2 |
-| barrel | 1 | 19 | 18 |
+| bank statement | 1 | 1 | 0 |
+| bank transfer | 1 | 1 | 0 |
+| banking | 7 | 7 | 0 |
+| banned | 2 | 2 | 0 |
+| banner | 16 | 16 | 0 |
+| banquet | 6 | 6 | 0 |
+| baptise | 1 | 1 | 0 |
+| bar | 56 | 57 | 1 |
+| bar chart | 1 | 1 | 0 |
+| bar code | 2 | 2 | 0 |
+| barbecue | 9 | 9 | 0 |
+| barber | 5 | 7 | 2 |
+| bark | 23 | 23 | 0 |
+| barn | 8 | 8 | 0 |
+| barrel | 19 | 19 | 0 |
 | barren | 9 | 9 | 0 |
-| barrier | 6 | 9 | 3 |
-| basic | 6 | 11 | 5 |
-| basin | 1 | 11 | 10 |
-| battery | 1 | 14 | 13 |
-| battle | 1 | 13 | 12 |
-| beach | 1 | 11 | 10 |
-| bead | 1 | 10 | 9 |
-| bean | 1 | 16 | 15 |
+| barrier | 8 | 9 | 1 |
+| base | 56 | 56 | 0 |
+| based on | 2 | 2 | 0 |
+| basement | 3 | 3 | 0 |
+| bases | 4 | 4 | 0 |
+| basic | 10 | 11 | 1 |
+| basin | 11 | 11 | 0 |
+| basis | 8 | 8 | 0 |
+| bat | 33 | 33 | 0 |
+| bath | 18 | 20 | 2 |
+| bathroom | 3 | 3 | 0 |
+| batteries | 1 | 1 | 0 |
+| battery | 13 | 14 | 1 |
+| battle | 12 | 13 | 1 |
+| bay | 28 | 29 | 1 |
+| beach | 10 | 11 | 1 |
+| beach towel | 1 | 1 | 0 |
+| beaches | 3 | 3 | 0 |
+| bead | 10 | 10 | 0 |
+| beak | 20 | 20 | 0 |
+| beam | 29 | 30 | 1 |
+| bean | 16 | 16 | 0 |
 | bear | 61 | 61 | 0 |
-| beggar | 1 | 7 | 6 |
+| bear in mind | 1 | 1 | 0 |
+| beard | 20 | 21 | 1 |
+| beast | 18 | 18 | 0 |
+| beat | 44 | 44 | 0 |
+| beats | 4 | 4 | 0 |
+| beautiful | 5 | 5 | 0 |
+| beauty | 15 | 15 | 0 |
+| because | 7 | 7 | 0 |
+| become | 6 | 6 | 0 |
+| bed | 5 | 8 | 3 |
+| bed linen | 1 | 1 | 0 |
+| bed sheet | 1 | 1 | 0 |
+| bedroom | 2 | 3 | 1 |
+| bedsit | 1 | 1 | 0 |
+| beef | 17 | 17 | 0 |
+| beggar | 7 | 7 | 0 |
+| begin | 3 | 3 | 0 |
+| beginner | 3 | 3 | 0 |
+| beginning | 6 | 6 | 0 |
+| behalf | 2 | 2 | 0 |
+| behave | 4 | 4 | 0 |
+| behaviour | 1 | 1 | 0 |
+| behaviours | 1 | 1 | 0 |
+| behind | 21 | 21 | 0 |
 | belfast | 1 | 2 | 1 |
+| belief | 6 | 6 | 0 |
+| bell | 32 | 33 | 1 |
+| belong | 7 | 7 | 0 |
+| beloved | 3 | 3 | 0 |
+| below | 10 | 10 | 0 |
+| belt | 27 | 27 | 0 |
+| belts | 3 | 3 | 0 |
+| bench | 23 | 23 | 0 |
+| benchmark | 4 | 4 | 0 |
+| bend | 31 | 32 | 1 |
+| beneficial | 4 | 4 | 0 |
 | benefit | 7 | 7 | 0 |
 | benz | 4 | 4 | 0 |
-| berth | 1 | 15 | 14 |
-| beside | 1 | 4 | 3 |
-| beverage | 1 | 3 | 2 |
-| bias | 1 | 15 | 14 |
+| berry | 17 | 18 | 1 |
+| berth | 15 | 15 | 0 |
+| beside | 4 | 4 | 0 |
+| bet | 14 | 14 | 0 |
+| betray | 7 | 7 | 0 |
+| better | 11 | 12 | 1 |
+| beverage | 3 | 3 | 0 |
+| bewilder | 1 | 1 | 0 |
+| beyond | 13 | 13 | 0 |
+| bias | 15 | 15 | 0 |
 | bible | 15 | 16 | 1 |
 | bibliography | 3 | 3 | 0 |
+| bicycle | 12 | 12 | 0 |
+| bid | 16 | 16 | 0 |
+| bilateral | 6 | 6 | 0 |
+| bill | 31 | 31 | 0 |
+| billiards | 3 | 3 | 0 |
+| billion | 2 | 2 | 0 |
+| binary | 15 | 15 | 0 |
+| bind | 26 | 26 | 0 |
+| biochemistry | 3 | 3 | 0 |
+| biodegradable | 2 | 2 | 0 |
+| biodiversity | 1 | 1 | 0 |
+| biography | 3 | 3 | 0 |
+| biological | 5 | 5 | 0 |
+| biological clock | 2 | 2 | 0 |
 | biologist | 1 | 1 | 0 |
+| biology | 4 | 4 | 0 |
+| biorhythm | 2 | 2 | 0 |
+| bird | 20 | 22 | 2 |
+| birds of prey | 1 | 1 | 0 |
 | birmingham | 3 | 4 | 1 |
+| birth | 9 | 9 | 0 |
+| biscuit | 15 | 15 | 0 |
+| bishop | 21 | 22 | 1 |
+| bite | 34 | 35 | 1 |
+| bitter | 11 | 11 | 0 |
+| black tea | 2 | 2 | 0 |
+| black velvet | 3 | 3 | 0 |
+| blackout | 9 | 9 | 0 |
+| blade | 32 | 32 | 0 |
+| blame | 9 | 9 | 0 |
 | blanket | 11 | 11 | 0 |
-| blight | 1 | 10 | 9 |
-| block | 1 | 29 | 28 |
-| blond | 1 | 7 | 6 |
-| bloom | 1 | 31 | 30 |
-| blot | 1 | 14 | 13 |
-| blow | 1 | 55 | 54 |
+| blast | 36 | 37 | 1 |
+| bleed | 22 | 22 | 0 |
+| blend | 5 | 5 | 0 |
+| bless | 13 | 13 | 0 |
+| blight | 10 | 10 | 0 |
+| blind | 33 | 33 | 0 |
+| block | 29 | 29 | 0 |
+| blocks | 2 | 2 | 0 |
+| blond | 7 | 7 | 0 |
+| blood | 22 | 22 | 0 |
+| blood flow | 1 | 1 | 0 |
+| blood sample | 1 | 1 | 0 |
+| blood type | 1 | 1 | 0 |
+| bloom | 30 | 31 | 1 |
+| blossom | 9 | 9 | 0 |
+| blot | 14 | 14 | 0 |
+| blouse | 10 | 10 | 0 |
+| blow | 54 | 55 | 1 |
+| blow up | 21 | 21 | 0 |
+| blueprint | 6 | 6 | 0 |
 | bmw | 6 | 6 | 0 |
-| book | 1 | 34 | 33 |
-| bore | 1 | 24 | 23 |
+| board | 26 | 26 | 0 |
+| boarder | 5 | 6 | 1 |
+| boarding school | 1 | 1 | 0 |
+| boast | 10 | 10 | 0 |
+| boat | 16 | 17 | 1 |
+| boat trip | 1 | 1 | 0 |
+| boil | 17 | 17 | 0 |
+| bolt | 24 | 27 | 3 |
+| bomb | 30 | 30 | 0 |
+| bombard | 10 | 10 | 0 |
+| bond | 33 | 33 | 0 |
+| bone | 32 | 32 | 0 |
+| bones | 9 | 9 | 0 |
+| bonus | 6 | 7 | 1 |
+| book | 34 | 34 | 0 |
+| booking | 6 | 6 | 0 |
+| booklet | 1 | 1 | 0 |
+| booklist | 2 | 2 | 0 |
+| boot | 43 | 43 | 0 |
+| booth | 7 | 8 | 1 |
+| boots | 6 | 6 | 0 |
+| border | 12 | 12 | 0 |
+| bore | 24 | 24 | 0 |
+| boring | 12 | 12 | 0 |
+| born | 6 | 6 | 0 |
+| boss | 12 | 12 | 0 |
 | boston | 13 | 14 | 1 |
-| bough | 1 | 3 | 2 |
-| boundary | 5 | 6 | 1 |
-| brain | 1 | 13 | 12 |
-| branch | 1 | 27 | 26 |
+| botanical garden | 1 | 1 | 0 |
+| botanist | 1 | 1 | 0 |
+| botany | 5 | 5 | 0 |
+| bother | 6 | 6 | 0 |
+| bough | 3 | 3 | 0 |
+| bounce | 41 | 41 | 0 |
+| bound | 22 | 22 | 0 |
+| boundary | 6 | 6 | 0 |
+| bow | 31 | 34 | 3 |
+| bowl | 8 | 9 | 1 |
+| bowling | 12 | 12 | 0 |
+| bowling alley | 1 | 1 | 0 |
+| bowls | 4 | 4 | 0 |
+| box | 23 | 25 | 2 |
+| boxing ring | 1 | 1 | 0 |
+| boycott | 4 | 4 | 0 |
+| bracelet | 4 | 4 | 0 |
+| brain | 13 | 13 | 0 |
+| brainstorm | 7 | 7 | 0 |
+| brake | 19 | 19 | 0 |
+| branch | 27 | 27 | 0 |
+| brandy | 5 | 5 | 0 |
+| brass | 14 | 17 | 3 |
 | break | 107 | 107 | 0 |
-| breakthrough | 1 | 7 | 6 |
-| breed | 1 | 19 | 18 |
+| break the mould | 1 | 1 | 0 |
+| breakfast | 6 | 6 | 0 |
+| breakthrough | 7 | 7 | 0 |
+| breathtaking | 2 | 2 | 0 |
+| breed | 18 | 19 | 1 |
+| breeding | 10 | 10 | 0 |
+| breeze | 12 | 13 | 1 |
 | brilliant | 1 | 15 | 14 |
 | brim | 1 | 13 | 12 |
 | brisbane | 4 | 4 | 0 |

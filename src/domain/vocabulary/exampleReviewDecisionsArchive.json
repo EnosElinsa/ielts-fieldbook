@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "archivedOn": "2026-10-20",
   "originalReceiptFileSha256": "98a056fb41b99ac0db36273a453f78b8cc8fc3a02c8dfb2ccd5f37e648cb936a",
-  "activeReceipts": 290,
+  "activeReceipts": 285,
   "records": [
     {
       "receipt": {
@@ -325,6 +325,90 @@
         "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
       },
       "reason": "The displayed-content variant was superseded by an independently reviewed seventh-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:e3c73081223b77660fd882ee60a4f85abad1680667ce6242d8ae7f6aef6f4c9c",
+        "entryId": "ve-8cfa71a8",
+        "senseId": "kaikki:83e5b9da9203f70beb",
+        "sourceHash": "97c21426e63504d7595f6d39753a922a9fa75ccde8bc9c3ef9955445cb8f61bf",
+        "displayHash": "c969eab09940f0a53e97dab4ae41829475e93ad4541deedf509c9fa137f03c1a",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=battery&oldid=93668253",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed eighth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:b0e98e5692c28c57fdfa4fab79aba6e53e7f87a1f88f4f62a2f4b6023e16b00b",
+        "entryId": "ve-599afccf",
+        "senseId": "kaikki:550de0c0fdd3371749",
+        "sourceHash": "ff886cd8cd32244b17b2b04d847d348e49f335a86dd5457615c416e9325e7c97",
+        "displayHash": "af43c5380a6cfa407c07f09a4db071c9075da42425692eae3456266365816173",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=battle&oldid=93679364",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed eighth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:a8943f75c448e4eb99cc8fd36fe89234278d0e88a245ca142043585a209a95a7",
+        "entryId": "ve-a7a65ec",
+        "senseId": "kaikki:c0ed5157f57b709205",
+        "sourceHash": "3437e6fec11896afb9f81f5ea9353b8ff29d6442aa6736dc4a109766660a8ecd",
+        "displayHash": "8d87f2d057ec0b1e7525a7bdc7fa4dd1d037fe51dffaf6390b643d3f3ef4027a",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=block&oldid=93681025",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed tenth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:443f4c0127fb8e91126c35502dcc3a2a0f8824c318ccfb42bde28425f8330edd",
+        "entryId": "ve-a7a658e",
+        "senseId": "kaikki:470a491b3e26cd793d",
+        "sourceHash": "266ffaeed29dadd1b3d1e96b796ecd4ba5d1e88198b5f3dfe85f934a633e7bb5",
+        "displayHash": "eaad205d2ee4a050a7fe4f8e187324de49eb0641b4266b9b89852d62493dc66b",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=blond&oldid=93741685",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The displayed-content variant was superseded by an independently reviewed tenth-package update; its current variants no longer trigger the fragment signal."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:af361484f918ed77563c129b6207410bb0f125b5995fe502d0f988a2726dd323",
+        "entryId": "ve-7c703e9f",
+        "senseId": "kaikki:bb04975e0a3f08c153",
+        "sourceHash": "8ea4415fae25291d7241c0df1b2051a16fcc960cc484f3770a8fa7ab0285593c",
+        "displayHash": "de510076bcb1838c9b0e7dd9dbefc6944d3436e8a62450783234c1d5f3983511",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bore&oldid=93681526",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The exact displayed variant was superseded by independently reviewed eleventh content; current variants no longer trigger the fragment heuristic."
+    },
+    {
+      "receipt": {
+        "workItemId": "vq:9984da459500e9db93394c09050a7ebe415ca2382fc9a7feb3d7057555a8fda7",
+        "entryId": "ve-15a06901",
+        "senseId": "kaikki:8d497ec22f41bf04ac",
+        "sourceHash": "935da29704feb55ac10c3c11e1b8dd347c3ab621559bee039282ea38e7ec1b16",
+        "displayHash": "fccb9db887078af983a24e80d8a0fcab39e51ea5f1f0ca1a561ccb5323648a2b",
+        "issue": "example-fragment-signal",
+        "decision": "retain-valid-example",
+        "referenceUrl": "https://en.wiktionary.org/w/index.php?title=breakthrough&oldid=92053031",
+        "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
+      },
+      "reason": "The exact displayed variant was superseded. A separate independent decision approves the complete new adjective-phrase display; this original receipt remains unchanged."
     }
   ],
   "transitions": [
@@ -377,6 +461,40 @@
         "vq:f25e0b11df9a077f16aeeb7777965e88a37f4ab6554c9665c4730a09a0e41aff"
       ],
       "activeReceipts": 290
+    },
+    {
+      "date": "2026-10-21",
+      "priorActiveSha256": "7163f488b376faaff0f840cfb6a57610d41f33f0110fb8aeb6faa292b1bed709",
+      "archivedReceiptIds": [
+        "vq:e3c73081223b77660fd882ee60a4f85abad1680667ce6242d8ae7f6aef6f4c9c",
+        "vq:b0e98e5692c28c57fdfa4fab79aba6e53e7f87a1f88f4f62a2f4b6023e16b00b"
+      ],
+      "activeReceipts": 288
+    },
+    {
+      "date": "2026-10-21",
+      "priorActiveSha256": "3be91ec3e67fcb8d286be3722b85f8cbb214e6e16ed9429fe3c896f99ce4086b",
+      "archivedReceiptIds": [
+        "vq:a8943f75c448e4eb99cc8fd36fe89234278d0e88a245ca142043585a209a95a7",
+        "vq:443f4c0127fb8e91126c35502dcc3a2a0f8824c318ccfb42bde28425f8330edd"
+      ],
+      "activeReceipts": 286
+    },
+    {
+      "date": "2026-10-21",
+      "priorActiveSha256": "760693f18acac4e924fa73a925479cc17d0c6c172f19bea3acabc0450821a047",
+      "archivedReceiptIds": [
+        "vq:af361484f918ed77563c129b6207410bb0f125b5995fe502d0f988a2726dd323",
+        "vq:9984da459500e9db93394c09050a7ebe415ca2382fc9a7feb3d7057555a8fda7"
+      ],
+      "newExactReceiptIds": [
+        "vq:87fb1111f50609a76d22e4777d17d61c512e9138e8a756a2f9658a4e4af172a5"
+      ],
+      "independentSupplement": {
+        "path": "local/unified-dictionary/review-eleventh/breakthrough-fragment-retain-supplement.json",
+        "sha256": "4667ff3f687671337362ed2186acf98e48ad0e218d6f7d16677bbae5e6dee881"
+      },
+      "activeReceipts": 285
     }
   ]
 }

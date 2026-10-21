@@ -143,28 +143,6 @@
     "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
   },
   {
-    "workItemId": "vq:e3c73081223b77660fd882ee60a4f85abad1680667ce6242d8ae7f6aef6f4c9c",
-    "entryId": "ve-8cfa71a8",
-    "senseId": "kaikki:83e5b9da9203f70beb",
-    "sourceHash": "97c21426e63504d7595f6d39753a922a9fa75ccde8bc9c3ef9955445cb8f61bf",
-    "displayHash": "c969eab09940f0a53e97dab4ae41829475e93ad4541deedf509c9fa137f03c1a",
-    "issue": "example-fragment-signal",
-    "decision": "retain-valid-example",
-    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=battery&oldid=93668253",
-    "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
-  },
-  {
-    "workItemId": "vq:b0e98e5692c28c57fdfa4fab79aba6e53e7f87a1f88f4f62a2f4b6023e16b00b",
-    "entryId": "ve-599afccf",
-    "senseId": "kaikki:550de0c0fdd3371749",
-    "sourceHash": "ff886cd8cd32244b17b2b04d847d348e49f335a86dd5457615c416e9325e7c97",
-    "displayHash": "af43c5380a6cfa407c07f09a4db071c9075da42425692eae3456266365816173",
-    "issue": "example-fragment-signal",
-    "decision": "retain-valid-example",
-    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=battle&oldid=93679364",
-    "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
-  },
-  {
     "workItemId": "vq:eecd58b2b4aa2dca3a5d29476481aab912167dfcd7612f575c62bc733fb331a3",
     "entryId": "ve-59558879",
     "senseId": "kaikki:4daf78e242633245d1",
@@ -184,50 +162,6 @@
     "issue": "example-fragment-signal",
     "decision": "retain-valid-example",
     "referenceUrl": "https://en.wiktionary.org/w/index.php?title=beverage&oldid=91628990",
-    "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
-  },
-  {
-    "workItemId": "vq:a8943f75c448e4eb99cc8fd36fe89234278d0e88a245ca142043585a209a95a7",
-    "entryId": "ve-a7a65ec",
-    "senseId": "kaikki:c0ed5157f57b709205",
-    "sourceHash": "3437e6fec11896afb9f81f5ea9353b8ff29d6442aa6736dc4a109766660a8ecd",
-    "displayHash": "8d87f2d057ec0b1e7525a7bdc7fa4dd1d037fe51dffaf6390b643d3f3ef4027a",
-    "issue": "example-fragment-signal",
-    "decision": "retain-valid-example",
-    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=block&oldid=93681025",
-    "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
-  },
-  {
-    "workItemId": "vq:443f4c0127fb8e91126c35502dcc3a2a0f8824c318ccfb42bde28425f8330edd",
-    "entryId": "ve-a7a658e",
-    "senseId": "kaikki:470a491b3e26cd793d",
-    "sourceHash": "266ffaeed29dadd1b3d1e96b796ecd4ba5d1e88198b5f3dfe85f934a633e7bb5",
-    "displayHash": "eaad205d2ee4a050a7fe4f8e187324de49eb0641b4266b9b89852d62493dc66b",
-    "issue": "example-fragment-signal",
-    "decision": "retain-valid-example",
-    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=blond&oldid=93741685",
-    "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
-  },
-  {
-    "workItemId": "vq:af361484f918ed77563c129b6207410bb0f125b5995fe502d0f988a2726dd323",
-    "entryId": "ve-7c703e9f",
-    "senseId": "kaikki:bb04975e0a3f08c153",
-    "sourceHash": "8ea4415fae25291d7241c0df1b2051a16fcc960cc484f3770a8fa7ab0285593c",
-    "displayHash": "de510076bcb1838c9b0e7dd9dbefc6944d3436e8a62450783234c1d5f3983511",
-    "issue": "example-fragment-signal",
-    "decision": "retain-valid-example",
-    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bore&oldid=93681526",
-    "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
-  },
-  {
-    "workItemId": "vq:9984da459500e9db93394c09050a7ebe415ca2382fc9a7feb3d7057555a8fda7",
-    "entryId": "ve-15a06901",
-    "senseId": "kaikki:8d497ec22f41bf04ac",
-    "sourceHash": "935da29704feb55ac10c3c11e1b8dd347c3ab621559bee039282ea38e7ec1b16",
-    "displayHash": "fccb9db887078af983a24e80d8a0fcab39e51ea5f1f0ca1a561ccb5323648a2b",
-    "issue": "example-fragment-signal",
-    "decision": "retain-valid-example",
-    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=breakthrough&oldid=92053031",
     "rationale": "Retained after checking this usage against the exact definition and part of speech. Lack of sentence-final punctuation alone does not require rewriting a valid phrase, clause or quoted example."
   },
   {
@@ -3188,5 +3122,16 @@
     "decision": "retain-valid-example",
     "referenceUrl": "https://en.wiktionary.org/w/index.php?title=flu&oldid=92975454",
     "rationale": "Independently retained for this exact influenza noun variant. Cached revision 92975454 identifies influenza at line 22 and explicitly records catch/transmit flu at line 23; the noun pattern at line 20 and usage note at line 31 support the normally uncountable noun with or without the definite article. Catch flu is therefore a valid concise usage phrase for this meaning and POS. A finite clause or sentence-final punctuation is not required for a valid phrase example. This receipt applies only to the fragment signal on the exact current source/display identity; it does not add or independently approve an exercise."
+  },
+  {
+    "workItemId": "vq:87fb1111f50609a76d22e4777d17d61c512e9138e8a756a2f9658a4e4af172a5",
+    "entryId": "ve-15a06901",
+    "senseId": "kaikki:8d497ec22f41bf04ac",
+    "sourceHash": "935da29704feb55ac10c3c11e1b8dd347c3ab621559bee039282ea38e7ec1b16",
+    "displayHash": "db90015f0dd2202054d267b3f58e88e84a213873bad9592040c9905cf5ec14e0",
+    "issue": "example-fragment-signal",
+    "decision": "retain-valid-example",
+    "referenceUrl": "https://en.wiktionary.org/w/index.php?title=breakthrough&oldid=92053031",
+    "rationale": "The complete current default display was independently read. The noun phrase a breakthrough technological advance places breakthrough attributively before technological advance and clearly illustrates the adjective meaning characterized by major progress or overcoming an obstacle. The pinned English Adjective headword and its exact definition include this phrase as their own collocation example. Its lack of a finite verb or final punctuation is valid for this adjective phrase; the major-progress reading is distinct from the adjacent immunology adjective sense. The current collocations, usage, register and adjective/noun distinction remain consistent with that reading."
   }
 ]

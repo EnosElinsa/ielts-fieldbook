@@ -62,9 +62,9 @@ test('a selected additional sense keeps its enrichment and its own distinction e
   const saved = { ...entry, senses: [structuredClone(selected), ...entry.senses] };
   expect(reviewedEntry(saved).senses.find(s => s.id === raw.id)?.collocations).toContain('river bank');
   const task = learningTask(saved, selected, 'distinction');
-  expect(task?.options).toEqual(['bank', 'shore']);
-  expect(task?.acceptedAnswers).toEqual(['bank']);
-  expect(task?.prompt).toContain('river');
+  expect(task?.options).toEqual(['land along the water', 'a financial institution']);
+  expect(task?.acceptedAnswers).toEqual(['land along the water']);
+  expect(task?.prompt).toBe('In “the bank of the river”, bank names _____.');
 });
 
 test('intentional edits to a selected dictionary meaning remain intact', () => {

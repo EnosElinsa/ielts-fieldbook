@@ -41,10 +41,13 @@ describe('reviewed learning content',()=>{
   expect(learningTask(e,sense,'synonym')).toBeUndefined();
   expect(learningTask(e,sense,'distinction')?.prompt).toBe(sense.distinctionTask!.prompt);
  });
- test('an unchanged common context retains its authored substitution and irregular-form tasks',()=>{
+ test('a reviewed source sentence does not inherit irregular-form or synonym tasks from a different common context',()=>{
   const result=resolveVocabularyLearningContext(releasedEntry('begin'));
-  expect(learningTask(result.entry,result.sense!,'cloze')?.acceptedAnswers).toEqual(['began']);
-  expect(learningTask(result.entry,result.sense!,'synonym')?.acceptedAnswers).toEqual(['started']);
+  expect(result.sense!.id).toBe('kaikki:31da449bf40eb36e43');
+  expect(result.sense!.example).toBe('I began playing the piano at the age of five.');
+  expect(learningTask(result.entry,result.sense!,'cloze')).toBeUndefined();
+  expect(learningTask(result.entry,result.sense!,'synonym')).toBeUndefined();
+  expect(getVocabularyReviewQueue(store(result.entry),{mode:'definition',senseId:result.sense!.id,dueOnly:false})).toHaveLength(1);
  });
  test('personal examples and other permit meanings cannot receive the common-context task',()=>{
   const e=reviewedEntry(releasedEntry('permit')); const sense=e.senses[0];

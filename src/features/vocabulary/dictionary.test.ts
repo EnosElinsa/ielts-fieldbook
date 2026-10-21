@@ -51,7 +51,9 @@ test('additional meanings receive same-sense teaching content without changing t
     editorial: { attribution: 'Fieldbook editorial contributors' },
     source: 'English Wiktionary via Kaikki.org',
   });
-  expect(enriched.find(s => s.id === 'kaikki:c130710755a265600e')?.distinctions?.join(' ')).toMatch(/shore/);
+  expect(enriched.find(s => s.id === 'kaikki:c130710755a265600e')?.distinctions).toEqual([
+    'This bank is land along a watercourse; a financial bank is an institution.',
+  ]);
   expect(await loadTermDictionary('bank', 'personal-bank')).toEqual(before.senses);
   expect(raw).toEqual(before);
 });
