@@ -8,6 +8,7 @@ import { ExamBankPage } from './ExamBankPage';
 import { ExamImage, ExamPracticePage, ExamStimulus } from './ExamPracticePage';
 import { ExamReviewPage } from './ExamReviewPage';
 import { ExamSourcePage } from './ExamSourcePage';
+import { IntensiveWorkbenchPage } from './IntensiveWorkbenchPage';
 import { HeadingReference } from './ReadingPassage';
 import { examCatalogKey, loadExamCatalog } from '../../storage/examCatalog';
 import { cachedRead, clearReadCache } from '../../lib/readCache';
@@ -17,10 +18,12 @@ vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb 
 vi.mock('../../storage/remote', () => ({ accountId: () => mocks.owner }));
 vi.mock('../../storage/examCatalog', async importOriginal => ({ ...await importOriginal<typeof import('../../storage/examCatalog')>(), loadExamCatalog: vi.fn(async () => mocks.catalog), loadExamSections: async () => mocks.catalog, resolveExamAsset: async () => '/audio.mp3' }));
 vi.mock('../../storage/examRecovery', () => ({ readExamRecovery: (owner: string, key: string) => mocks.recovery.get(`${owner}:${key}`), readExamRecoveries: (owner: string, scope: string) => [...mocks.recovery].filter(([key]) => key === `${owner}:${scope}` || key.startsWith(`${owner}:${scope}:`)).map(([, data]) => structuredClone(data)), writeExamRecovery: (owner: string, key: string, data: any) => mocks.recovery.set(`${owner}:${key}`, structuredClone(data)), clearExamRecovery: (owner: string, key: string) => mocks.recovery.delete(`${owner}:${key}`) }));
+vi.mock('./IntensiveAudio', () => ({ IntensiveAudio: () => <button>Play sentence audio</button> }));
 const provenance = { sourceUrl: 'https://example.org/source', sourceVersion: '1', fetchedAt: '2026-01-01', contentHash: 'hash', authorization: 'owned' };
 const catalog: ExamCatalog = { schemaVersion: 1, papers: [{ id: 'paper', book: 8, test: 1, title: 'Cambridge 8 Test 1', provenance }], sections: [{ id: 'section', paperId: 'paper', skill: 'reading', part: 1, title: 'The city garden', questionTypes: ['gap', 'true-false'], questionCount: 2, sentences: [], status: 'ready', provenance }], passages: [{ id: 'passage', sectionId: 'section', title: 'The city garden', paragraphs: [{ id: 'A', text: 'The garden opened in 1990.' }], provenance }], questions: [{ id: 'q1', paperId: 'paper', sectionId: 'section', skill: 'reading', number: 1, type: 'gap', prompt: 'The garden opened in _____.', answer: '1990', maxWords: 1, provenance }, { id: 'q2', paperId: 'paper', sectionId: 'section', skill: 'reading', number: 2, type: 'true-false', prompt: 'The garden opened in 2000.', answer: 'FALSE', explanation: 'The source gives 1990.', provenance }], assets: [] };
 function Location() { return <output aria-label="URL">{useLocation().pathname}</output>; }
 function SearchLocation() { return <output aria-label="Search URL">{useLocation().search}</output>; }
+function FullLocation() { const location = useLocation(); return <output aria-label="Full URL">{location.pathname + location.search + location.hash}</output>; }
 function practice(path = '/reading/section') { return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/reading" element={<ExamBankPage skill="reading" />} /><Route path="/reading/:sectionId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/mock/:paperId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/review/:attemptId" element={<ExamReviewPage skill="reading" />} /></Routes><Location /></MemoryRouter>); }
 beforeEach(() => { clearReadCache(); mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); sessionStorage.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, ensureAccountModule: vi.fn().mockResolvedValue(undefined), persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.useRealTimers(); });
@@ -301,11 +304,82 @@ test('submitted mock results provide exact Part vocabulary and reading evidence 
   const question = { ...catalog.questions[0], explanation: 'The opening year is stated in paragraph A.', sourceExplanation: 'Original explanation.', evidence: { paragraphId: 'A', text: 'opened in 1990' } };
   mocks.fb.state.examAttempts = [{ id: 'submitted', skill: 'reading', mode: 'mock', status: 'completed', sourceId: 'paper', sectionIds: ['section'], questionSnapshot: [question], responses: { q1: '1990' }, results: { q1: true }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-10-14', startedAt: '2026-10-14' }];
   render(<MemoryRouter initialEntries={['/reading/review/submitted']}><Routes><Route path='/reading/review/:attemptId' element={<ExamReviewPage skill='reading' />} /></Routes></MemoryRouter>);
+  await userEvent.setup().click(await screen.findByText('Vocabulary from this part'));
   await screen.findByRole('region', { name: 'Part vocabulary' });
   expect(screen.getByRole('button', { name: /Saved/ })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Locate evidence' })).toBeEnabled();
-  expect(screen.getByText('Original source explanation')).toBeInTheDocument();
+  expect(screen.queryByText('Original source explanation')).not.toBeInTheDocument();
+  expect(screen.queryByText('Original explanation.')).not.toBeInTheDocument();
   expect(screen.getByText('The opening year is stated in paragraph A.')).toBeInTheDocument();
+});
+
+test.each(['reading', 'listening'] as const)('%s shortcuts move between answers and open the submit confirmation', async skill => {
+  mocks.catalog.sections[0].skill = skill;
+  mocks.catalog.questions = [1, 2].map(number => ({ ...catalog.questions[0], skill, id: `q${number}`, number }));
+  if (skill === 'listening') mocks.catalog.assets = [{ id: 'audio', sectionId: 'section', paperId: 'paper', kind: 'audio', storagePath: 'audio.mp3', provenance }];
+  render(<MemoryRouter initialEntries={[`/${skill}/section`]}><Routes><Route path={`/${skill}/:sectionId`} element={<ExamPracticePage skill={skill} />} /></Routes></MemoryRouter>);
+  const user = userEvent.setup();
+  const first = await screen.findByRole('textbox', { name: 'Answer 1' });
+  const second = screen.getByRole('textbox', { name: 'Answer 2' });
+  await user.click(first); await user.type(first, '1990'); await user.keyboard('{Enter}');
+  await waitFor(() => expect(second).toHaveFocus());
+  await user.keyboard('{Shift>}{Enter}{/Shift}');
+  await waitFor(() => expect(first).toHaveFocus());
+  await user.keyboard('{Alt>}{ArrowRight}{/Alt}');
+  await waitFor(() => expect(second).toHaveFocus());
+  expect(first).toHaveValue('1990');
+  first.focus();
+  fireEvent.keyDown(first, { key: 'Enter', isComposing: true });
+  expect(first).toHaveFocus();
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  await user.keyboard('{Control>}{Enter}{/Control}');
+  expect(await screen.findByRole('dialog', { name: 'Submit with unanswered questions?' })).toBeVisible();
+});
+
+test('review shares question material and keeps Chinese explanations out of the English interface', async () => {
+  const stimulusHtml = '<p>Applicant details: [1 ____] and [2 ____]</p>';
+  const questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, groupId: 'form', stimulusHtml, explanation: '中文解析', sourceExplanation: '来源解析' }));
+  mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', mode: 'practice', status: 'completed', sourceId: 'paper', sectionIds: ['section'], questionSnapshot: questions, responses: {}, results: { q1: false, q2: false }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-10-14', startedAt: '2026-10-14' }];
+  const { container } = practice('/reading/review/saved');
+  expect(await screen.findByRole('complementary', { name: 'Question reference' })).toBeVisible();
+  expect(container.querySelectorAll('.exam-stimulus')).toHaveLength(1);
+  expect(screen.queryByText('中文解析')).not.toBeInTheDocument();
+  expect(screen.queryByText('来源解析')).not.toBeInTheDocument();
+  expect(screen.getAllByText(/An English explanation is not available yet/)).toHaveLength(2);
+});
+
+test('review to intensive and back restores this attempt, question, filters and unsaved notes', async () => {
+  mocks.catalog.sections[0].skill = 'listening';
+  mocks.catalog.sections[0].sentences = [{ id: 's1', text: 'The garden opened in 1990.', start: 0, end: 3 }, { id: 's2', text: 'The garden closed.', start: 3, end: 5 }];
+  mocks.catalog.questions = mocks.catalog.questions.map((question: any) => ({ ...question, skill: 'listening', evidence: { sentenceId: 's1', text: 'The garden opened in 1990.' } }));
+  mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'listening', mode: 'practice', status: 'completed', sourceId: 'section', sectionIds: ['section'], questionSnapshot: mocks.catalog.questions, responses: { q1: '1990', q2: 'TRUE' }, results: { q1: true, q2: false }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-10-14', startedAt: '2026-10-14' }];
+  render(<MemoryRouter initialEntries={['/listening/review/saved?planId=task']}><Routes><Route path="/listening/review/:attemptId" element={<ExamReviewPage skill="listening" />} /><Route path="/listening/intensive/:sectionId" element={<IntensiveWorkbenchPage />} /></Routes><FullLocation /></MemoryRouter>);
+  const user = userEvent.setup();
+  await user.click(await screen.findByRole('button', { name: 'All answers (2)' }));
+  await user.type(screen.getByRole('textbox', { name: 'Evidence for question 2' }), 'My unsaved evidence');
+  const card = document.getElementById('exam-review-q2')!;
+  await user.click(within(card).getByRole('link', { name: 'Practise this sentence' }));
+  const back = await screen.findByRole('link', { name: 'Back to review' });
+  expect(back).toHaveAttribute('href', '/listening/review/saved?planId=task#exam-review-q2');
+  await screen.findByRole('textbox', { name: 'Sentence dictation' });
+  await user.click(screen.getByRole('button', { name: /Sentence 2/ }));
+  await user.click(screen.getByRole('link', { name: 'Back to review' }));
+  expect(await screen.findByRole('textbox', { name: 'Evidence for question 2' })).toHaveValue('My unsaved evidence');
+  expect(screen.getByRole('button', { name: 'All answers (2)' })).toHaveAttribute('aria-pressed', 'true');
+  expect(screen.getByLabelText('Full URL')).toHaveTextContent('/listening/review/saved?planId=task#exam-review-q2');
+  expect(screen.getByRole('button', { name: 'Save review notes' })).toBeEnabled();
+});
+
+test('a review question return address restores its Part and reveals a correct answer hidden by the wrong-only filter', async () => {
+  mocks.catalog.sections.push({ ...mocks.catalog.sections[0], id: 'section-two', part: 2 });
+  const questions = [catalog.questions[0], { ...catalog.questions[0], id: 'q2', sectionId: 'section-two', number: 2 }, { ...catalog.questions[0], id: 'q3', sectionId: 'section-two', number: 3 }];
+  mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', mode: 'mock', status: 'completed', sourceId: 'paper', sectionIds: ['section', 'section-two'], questionSnapshot: questions, responses: { q2: '1990' }, results: { q1: false, q2: true, q3: false }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-10-14', startedAt: '2026-10-14' }];
+  practice('/reading/review/saved#exam-review-q2');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Passage 2' })).toHaveAttribute('aria-pressed', 'true'));
+  expect(document.getElementById('exam-review-q2')).toBeVisible();
+  expect(screen.getByRole('button', { name: 'All answers (2)' })).toHaveAttribute('aria-pressed', 'true');
+  await userEvent.setup().click(screen.getByRole('button', { name: 'Wrong answers (1)' }));
+  expect(document.getElementById('exam-review-q2')).toBeNull();
 });
 
 test('direct result links do not expose an unsubmitted mock answer or vocabulary helper', async () => {

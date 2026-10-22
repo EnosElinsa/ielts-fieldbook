@@ -35,6 +35,24 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
+it('returns to the exact review after sentence navigation and reopening the intensive URL', async () => {
+  const origin = '/listening/review/attempt-one?planId=review-task#exam-review-q2';
+  const path = '/listening/intensive/part?sentence=s1&returnTo=' + encodeURIComponent(origin);
+  const view = render(<MemoryRouter initialEntries={[path]}><IntensiveWorkbenchPage sectionId="part" /><NavigationProbe /></MemoryRouter>);
+  const back = await screen.findByRole('link', { name: 'Back to review' });
+  expect(back).toHaveAttribute('href', origin);
+  await selectChoice(await screen.findByLabelText('Jump to sentence'), 'Sentence 2');
+  expect(new URLSearchParams(screen.getByLabelText('Sentence URL').textContent!).get('returnTo')).toBe(origin);
+  view.unmount();
+  open('/listening/intensive/part?sentence=s2&returnTo=' + encodeURIComponent(origin));
+  expect(await screen.findByRole('link', { name: 'Back to review' })).toHaveAttribute('href', origin);
+});
+
+it.each(['https://example.com', '//example.com', '/account', '/listening/../account'])('ignores an invalid intensive return destination: %s', async returnTo => {
+  open('/listening/intensive/part?returnTo=' + encodeURIComponent(returnTo));
+  expect(await screen.findByRole('link', { name: 'Listening practice' })).toHaveAttribute('href', '/listening/part');
+});
+
 it('stores sentence navigation in history and restores the last sentence after reopening', async () => {
   const user = userEvent.setup();
   const view = render(<MemoryRouter><IntensiveWorkbenchPage sectionId="part" /><NavigationProbe /></MemoryRouter>);

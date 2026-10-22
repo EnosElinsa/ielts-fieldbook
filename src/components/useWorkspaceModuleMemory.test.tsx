@@ -21,6 +21,7 @@ function Harness({ owner = 'one', ready = true }: { owner?: string; ready?: bool
     <output aria-label="State">{JSON.stringify(location.state)}</output>
     <button onClick={() => memory.selectModule('vocabulary')}>Vocabulary</button>
     <button onClick={() => memory.selectModule('writing')}>Writing</button>
+    <button onClick={() => memory.selectModule('planning')}>Planning</button>
     <button onClick={() => navigate('/vocabulary/entry/apple?bookId=fruit#sense', { state: originState })}>Apple</button>
     <button onClick={() => navigate('/vocabulary/words?tag=fruit')}>Words</button>
     <button onClick={() => navigate('/write/questions?tag=task2')}>Questions</button>
@@ -38,6 +39,13 @@ beforeEach(() => {
   Object.defineProperty(window, 'scrollY', { value: 0, configurable: true });
 });
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
+
+test('Planning navigation opens the schedule instead of restoring a completed task link', async () => {
+  rememberModuleContext('one', 'planning', { url: '/planning?view=history#task-completed', state: null, scroll: { x: 0, y: 500 } });
+  render(<MemoryRouter initialEntries={['/write']}><Harness /></MemoryRouter>);
+  await userEvent.setup().click(screen.getByText('Planning'));
+  expect(screen.getByLabelText('Location').textContent).toBe('/planning');
+});
 
 test('module clicks resume deep URLs, history return chains, and scroll after a reload', async () => {
   const user = userEvent.setup();

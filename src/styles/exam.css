@@ -71,6 +71,57 @@
 
 .exam-back-links { display: flex; gap: 4px; flex-wrap: wrap; }
 .exam-review-title { flex: 1; }
+
+/* Practice shortcuts and a spacious review workbench. */
+.exam-shortcuts { padding: 12px 18px; border-bottom: 1px solid var(--rule); color: var(--muted); font-size: 13px; }
+.exam-shortcuts summary { cursor: pointer; color: var(--ink); width: fit-content; }
+.exam-shortcuts ul { display: flex; flex-wrap: wrap; gap: 12px 28px; padding: 0; list-style: none; line-height: 1.8; }
+.exam-shortcuts kbd { font: 11px 'DM Mono',monospace; border: 1px solid var(--rule); background: var(--surface-soft); border-radius: 4px; padding: 3px 5px; color: var(--ink); }
+.exam-review { max-width: 1440px; width: 100%; }
+.exam-review-vocabulary { margin: 18px 0; border: 1px solid var(--rule); border-radius: 10px; padding: 14px 18px; background: var(--sheet); }
+.exam-review-vocabulary > summary { cursor: pointer; font-size: 13px; color: var(--muted); }
+.exam-review-vocabulary .part-vocabulary { margin: 16px 0 0; border: 0; padding: 0; }
+.exam-review-workspace { display: grid; align-items: start; gap: 28px; }
+.exam-review-workspace.has-reference { grid-template-columns: minmax(300px,.9fr) minmax(0,1.1fr); }
+.exam-review-reference { position: sticky; top: 24px; min-width: 0; max-height: calc(100dvh - 48px); overflow: auto; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 24px; scrollbar-gutter: stable; }
+.exam-review-reference h3 { margin: 10px 0; font-size: 18px; }
+.exam-review-reference header p { color: var(--muted); font-size: 13px; line-height: 1.7; }
+.exam-review-reference details { border-top: 1px solid var(--rule); margin-top: 20px; padding-top: 16px; }
+.exam-review-reference summary { cursor: pointer; font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+.exam-review-reference .exam-stimulus { background: transparent; padding: 0; margin: 0; line-height: 1.85; font-size: 15px; }
+.exam-review-reference .exam-stimulus table { font-size: 14px; }
+.exam-review-reference .exam-stimulus td,.exam-review-reference .exam-stimulus th { padding: 12px; }
+.exam-review-workspace .exam-review-list { gap: 24px; min-width: 0; }
+.exam-review-workspace .exam-review-card { padding: clamp(20px,2vw,32px); border-radius: 12px; scroll-margin-top: 24px; }
+.exam-review-workspace .exam-review-card > header { gap: 10px; padding-bottom: 18px; border-bottom: 1px solid var(--rule); }
+.exam-review-workspace .exam-review-card h3 { font: 600 17px/1.7 Manrope,Arial,sans-serif; margin: 20px 0; }
+.exam-review-workspace .exam-review-card dl { gap: 14px; }
+.exam-review-workspace .exam-review-card dl div { padding: 16px; }
+.exam-review-workspace .exam-review-card dt { font-size: 11px; letter-spacing: .04em; }
+.exam-review-workspace .exam-review-card dd { font: 600 16px/1.6 Manrope,Arial,sans-serif; }
+.exam-review-explanation { margin: 24px 0 16px; }
+.exam-review-workspace h4 { font-size: 13px; margin: 0 0 14px; }
+.exam-review-workspace .exam-explanation { font-size: 14px; line-height: 1.85; white-space: pre-line; overflow-wrap: anywhere; }
+.exam-review-workspace .exam-review-card blockquote { display: flex; align-items: start; gap: 10px; margin: 14px 0 0; padding: 14px 16px; font: 15px/1.8 Manrope,Arial,sans-serif; overflow-wrap: anywhere; }
+.exam-review-card blockquote svg { flex-shrink: 0; margin-top: 6px; }
+.exam-review-notes { border-top: 1px solid var(--rule); margin: 24px 0; padding-top: 22px; }
+.exam-review-notes .exam-annotations { margin-top: 0; display: grid; gap: 18px; }
+.exam-review-notes .exam-annotations label,.exam-review-notes .exam-error-tag label { font-size: 12px; line-height: 1.7; margin: 0; }
+.exam-review-notes .exam-annotations textarea { min-height: 96px; padding: 12px; font-size: 14px; line-height: 1.7; margin-top: 8px; }
+.exam-review-notes .exam-annotations input { padding: 12px; margin-top: 8px; font-size: 14px; }
+.exam-review-notes .exam-error-tag { margin-top: 18px; }
+.exam-review-workspace .exam-review-card > .btn { min-height: 40px; }
+@media(max-width:1100px) {
+  .exam-review-workspace.has-reference { grid-template-columns: minmax(0,1fr); }
+  .exam-review-reference { position: static; max-height: none; }
+}
+@media(max-width:560px) {
+  .exam-review-workspace { gap: 20px; }
+  .exam-review-reference,.exam-review-workspace .exam-review-card { padding: 18px; }
+  .exam-review-workspace .exam-review-card dl { grid-template-columns: minmax(0,1fr); gap: 10px; }
+  .exam-review-workspace .exam-review-card > header strong { flex-basis: 100%; padding-left: 38px; }
+  .exam-shortcuts ul { display: grid; gap: 10px; }
+}
 .exam-review-actions>p { flex: 1; }
 @media(max-width:740px) {
  .exam-review-head { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 14px; padding-bottom: 16px; }

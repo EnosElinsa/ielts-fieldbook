@@ -106,7 +106,8 @@ export function useWorkspaceModuleMemory({ owner, ready, activeSkill, setSkill }
     if (module === activeModule) return;
     const link = workspaceModules.find(link => link.id === module);
     if (!link) return;
-    const context = ready ? readModuleContext(owner, module) : null;
+    // Planning is an overview: task deep links still work when opened explicitly.
+    const context = ready && module !== 'planning' ? readModuleContext(owner, module) : null;
     const destination = context?.url || link.to;
     navigateWithPracticeGuard(destination, () => {
       // A delayed confirmation must never carry the previous account's context to a new owner.

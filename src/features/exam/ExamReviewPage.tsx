@@ -1,3 +1,4 @@
+import { ExamStudyLink } from './ExamNavigation';
 import { questionEndNumber, questionLabel, questionNumberLabel, questionSlotCount } from '../../domain/exam/questionSlots';
 import { SelectField } from '../../components/SelectField';
 import { PageLoadingState, StateMessage } from '../../components/AsyncState';
@@ -43,15 +44,38 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
   useEffect(() => { generation.current += 1; setAnnotations(readExamRecovery<Record<string, { evidence: string; keywords: string; reason: string }>>(owner, recoveryKey) || {}); setSaving(false); setSaveError(''); }, [owner, attemptId, recoveryKey]);
   const { catalog, loading, error, reload } = useExamCatalog(skill, undefined, attempt?.sectionIds || []);
   const questions = useMemo(() => attempt ? (attempt.questionSnapshot || catalog.questions.filter(question => attempt.questionTypes ? !!attempt.questionTypes[question.id] : attempt.sectionIds.includes(question.sectionId))).slice().sort((a, b) => a.number - b.number) : [], [catalog.questions, attempt]);
+  const restoredAnchor = useRef('');
+  useEffect(() => {
+    const anchorKey = `${identity}:${location.hash}`;
+    if (!location.hash) { restoredAnchor.current = ''; return; }
+    if (restoredAnchor.current === anchorKey || !attempt) return;
+    const target = questions.find(question => `#exam-review-${question.id}` === location.hash);
+    if (!target) return;
+    restoredAnchor.current = anchorKey;
+    setSelectedSection(target.sectionId);
+    if (attempt.results?.[target.id] ?? gradeQuestion(target, attempt.responses[target.id] || '')) setFilter('all');
+  }, [identity, location.hash, questions]);
   useEffect(() => {
     if (!location.hash || loading) return;
     const target = document.getElementById(location.hash.slice(1));
     target?.scrollIntoView?.({ block: 'center' }); target?.focus({ preventScroll: true });
   }, [location.hash, catalog, selectedSection, filter]);
-  if (!attempt) return <section className="view active"><Link className="btn text back-link" to={`/${skill}`}><ArrowLeft size={15} />Back to bank</Link><StateMessage title="Attempt not found." message="This account does not have a saved attempt with that id." /></section>;
-  if (attempt.status !== 'completed') return <section className="view active"><Link className="btn text back-link" to={`/${skill}`}><ArrowLeft size={15} />Back to bank</Link><StateMessage message={attempt.status === 'discarded' ? 'This session was discarded without a score.' : 'Submit this attempt to view its results.'} /></section>;
-  if (loading && !attempt.questionSnapshot) return <section className="view active"><PageLoadingState variant="workbench" message="Loading answer explanations…" onRetry={reload} /></section>;
-  if (error && !attempt.questionSnapshot) return <section className="view active"><StateMessage kind="error" message={error} onRetry={reload} /></section>;
+  if (!attempt) return <section className="view active">
+<Link className="btn text back-link" to={`/${skill}`}>
+<ArrowLeft size={15} />Back to bank</Link>
+<StateMessage title="Attempt not found." message="This account does not have a saved attempt with that id." />
+</section>;
+  if (attempt.status !== 'completed') return <section className="view active">
+<Link className="btn text back-link" to={`/${skill}`}>
+<ArrowLeft size={15} />Back to bank</Link>
+<StateMessage message={attempt.status === 'discarded' ? 'This session was discarded without a score.' : 'Submit this attempt to view its results.'} />
+</section>;
+  if (loading && !attempt.questionSnapshot) return <section className="view active">
+<PageLoadingState variant="workbench" message="Loading answer explanations…" onRetry={reload} />
+</section>;
+  if (error && !attempt.questionSnapshot) return <section className="view active">
+<StateMessage kind="error" message={error} onRetry={reload} />
+</section>;
   const questionRows = questions.length ? questions : Object.keys(attempt.results || {}).map(id => ({ id, number: 0, type: attempt.questionTypes?.[id] || 'gap', prompt: 'Historical question content unavailable.', answer: '', sectionId: attempt.sectionIds[0], paperId: attempt.sourceId, skill, provenance: { sourceUrl: '', sourceVersion: '', fetchedAt: '', contentHash: '', authorization: '' } } as ExamQuestion));
   const score = attempt.score ?? Object.values(attempt.results || {}).filter(Boolean).length; const total = attempt.total ?? questionRows.length; const wrong = questionRows.filter(question => !(attempt.results?.[question.id] ?? gradeQuestion(question, attempt.responses[question.id] || '')));
   const sectionId = attempt.sectionIds.includes(selectedSection) ? selectedSection : attempt.sectionIds[0];
@@ -59,6 +83,7 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
   const partWrong = wrong.filter(question => question.sectionId === sectionId);
   const visibleRows = filter === 'wrong' && partWrong.length ? partWrong : partRows;
   const hasPooled = questionRows.some(question => questionSlotCount(question) > 1);
+  const references = visibleRows.filter((question, index) => question.stimulusHtml && (!question.groupId || visibleRows.findIndex(row => row.groupId === question.groupId) === index));
   const dirty = Object.keys(annotations).length > 0;
   const notes = (questionId: string) => annotations[questionId] || { evidence: attempt.evidence?.[questionId] || '', keywords: attempt.keywords?.[questionId] || '', reason: attempt.errorReasons?.[questionId] || '' };
   const setNote = (questionId: string, change: Partial<{ evidence: string; keywords: string; reason: string }>) => { if (accountId() !== owner) return; const next = { ...annotations, [questionId]: { ...notes(questionId), ...change } }; writeExamRecovery(owner, recoveryKey, next); setAnnotations(next); };
@@ -84,5 +109,81 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
     else { if (JSON.stringify(readExamRecovery(owner, recoveryKey)) === snapshot) clearExamRecovery(owner, recoveryKey); setAnnotations({}); fb.toast('Review notes saved.'); }
   };
   const retry = () => navigate(`/${skill}/${attempt.sectionIds[0]}?retry=${encodeURIComponent(attempt.id)}`);
-  return <section className="view active exam-review"><div className="exam-review-head"><div className="exam-back-links"><Link className="btn text back-link" to={`/${skill}`}><ArrowLeft size={15} />Bank</Link><Link className="btn text" to={`/${skill}/review`}>Review queue</Link></div><div className="exam-review-title"><span className="exam-eyebrow">{attempt.mode === 'mock' ? 'Full mock' : skill === 'reading' ? 'Passage practice' : 'Part practice'} · {new Date(attempt.completedAt || attempt.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span><h2>Practice results</h2>{attempt.mode === 'practice' && attempt.answerRevealed && <p className="exam-source-foot">Supported practice · answers were checked before submission.</p>}</div><div className="exam-score"><strong aria-label="Attempt score">{score} <small>/ {total}</small></strong><span>{total ? Math.round(score / total * 100) : 0}% correct</span></div></div><div className="exam-review-actions"><p>{wrong.length ? `${wrong.length} ${hasPooled ? 'answer group' : 'question'}${wrong.length === 1 ? '' : 's'} to review. Retrying clears the answers and review notes for the new attempt.` : 'All answers are correct. You can still add review notes.'}</p>{wrong.length > 0 && <button className="btn primary" onClick={retry}><RotateCcw size={15} />Retry wrong answers</button>}<button className="btn line" disabled={saving || !dirty} onClick={() => void saveNotes()}><Save size={15} />{saving ? 'Saving…' : 'Save review notes'}</button></div>{saveError && <p role="alert" className="exam-notice">{saveError}</p>}<nav className="exam-part-tabs" aria-label="Result Parts">{attempt.sectionIds.map((id, i) => { const section = catalog.sections.find(row => row.id === id); return <button type="button" key={id} aria-pressed={sectionId === id} className={sectionId === id ? 'active' : ''} onClick={() => setSelectedSection(id)}>{skill === 'reading' ? 'Passage' : 'Part'} {section?.part || i + 1}</button>; })}</nav>{catalog.sections.some(row => row.id === sectionId) && <PartVocabularyPanel key={`${owner}:${attempt.id}:${sectionId}`} catalog={catalog} attempt={attempt} sectionId={sectionId} />}<ExamSessionHistory sessions={sessions.filter(row => row.mode === attempt.mode && row.sourceId === attempt.sourceId)} currentId={attempt.id} /><div className="exam-review-filter"><div className="exam-part-tabs" role="group" aria-label="Answers to review"><button aria-pressed={filter === 'wrong' && partWrong.length > 0} className={filter === 'wrong' && partWrong.length > 0 ? 'active' : ''} disabled={!partWrong.length} onClick={() => setFilter('wrong')}>{hasPooled ? 'Wrong answer groups' : 'Wrong answers'} ({partWrong.length})</button><button aria-pressed={filter === 'all' || !partWrong.length} className={filter === 'all' || !partWrong.length ? 'active' : ''} onClick={() => setFilter('all')}>{hasPooled ? 'All answer groups' : 'All answers'} ({partRows.length})</button></div><span role="status">{saving ? 'Saving notes…' : dirty ? 'Unsaved review notes' : 'Review notes saved'}</span></div><div className="exam-review-list">{visibleRows.map((question, index) => { const prompt = readingQuestionPrompt(question, questionRows, catalog.passages.filter(p => p.sectionId === question.sectionId).flatMap(p => p.paragraphs)); const response = attempt.responses[question.id] || ''; const correct = attempt.results?.[question.id] ?? gradeQuestion(question, response); const annotation = notes(question.id); const sentenceId = skill === 'listening' ? evidenceSentenceId(question, catalog.sections.find(section => section.id === question.sectionId)) : undefined; return <article id={`exam-review-${question.id}`} tabIndex={-1} className={`exam-review-card ${correct ? 'is-correct' : 'is-wrong'}`} key={question.id}><header><span className={`exam-number${questionSlotCount(question) > 1 ? " is-range" : ""}`}>{question.number ? questionNumberLabel(question) : '—'}</span><span className="exam-eyebrow">{QUESTION_TYPE_NAMES[question.type]}</span><strong>{correct ? 'Correct' : 'Review this answer'}{question.points && question.points > 1 ? ` · ${attempt.earnedPoints?.[question.id] || 0}/${question.points} points` : ''}</strong></header>{question.stimulusHtml && (index === 0 || visibleRows[index - 1]?.groupId !== question.groupId || !question.groupId) && <ExamStimulus html={question.stimulusHtml} assets={catalog.assets} />}<h3>{prompt.slice(questionNumberPrefixLength(prompt, question.number, questionEndNumber(question)))}</h3><ExamImage asset={catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`${questionLabel(question)} diagram`} /><dl><div><dt>Your response</dt><dd>{Array.isArray(response) ? response.join(' · ') || 'No answer' : response.trim() || 'No answer'}</dd></div><div><dt>Answer</dt><dd>{Array.isArray(question.answer) ? question.answer.join(' · ') : question.answer || 'Source answer unavailable'}</dd></div></dl>{question.explanation ? <p className="exam-explanation">{question.explanation}</p> : <p className="exam-source-foot">The source does not include an explanation for this answer.</p>}{question.sourceExplanation && <details className="exam-source-explanation"><summary>Original source explanation</summary><p>{question.sourceExplanation}</p></details>}{question.evidence?.text && <blockquote><Bookmark size={14} />{question.evidence.text}</blockquote>}<button type="button" className="btn line" aria-expanded={evidenceId === question.id} aria-controls={`exam-evidence-${question.id}`} onClick={event => { evidenceTrigger.current = event.currentTarget; setEvidenceId(id => id === question.id ? '' : question.id); }}><LocateFixed size={15} />{question.evidence?.text || question.evidence?.paragraphId || sentenceId ? 'Locate evidence' : 'Read original text'}</button>{evidenceId === question.id && <QuestionEvidence question={question} response={response} passages={catalog.passages} section={catalog.sections.find(row => row.id === question.sectionId)} loading={loading} error={error} onRetry={reload} onClose={() => { setEvidenceId(''); evidenceTrigger.current?.focus(); }} />}<div className="exam-annotations"><label>Evidence for {questionLabel(question).toLowerCase()}<textarea disabled={saving} value={annotation.evidence} onChange={event => setNote(question.id, { evidence: event.target.value })} placeholder="Quote the passage or transcript that supports your answer…" /></label><label>Keywords & synonyms for {questionLabel(question).toLowerCase()}<input disabled={saving} value={annotation.keywords} onChange={event => setNote(question.id, { keywords: event.target.value })} placeholder="question wording → source wording" /></label></div>{!correct && <div className="exam-error-tag"><label>Error reason for {questionLabel(question).toLowerCase()}<SelectField disabled={saving} value={annotation.reason} onChange={event => setNote(question.id, { reason: event.target.value })}><option value="">Choose a reason</option>{['Missed paraphrase', 'Wrong detail', 'Word limit or spelling', 'Lost concentration', 'Not Given confused with False', 'Distractor or correction', 'Other'].map(reason => <option key={reason} value={reason}>{reason}</option>)}</SelectField></label></div>}{skill === 'listening' && <Link className="btn line" to={`/listening/intensive/${question.sectionId}${sentenceId ? `?sentence=${encodeURIComponent(sentenceId)}` : ''}`}><Headphones size={15} />{sentenceId ? 'Practise this sentence' : 'Practise this listening part'}</Link>}</article>; })}</div></section>;
+  return <section className="view active exam-review">
+<div className="exam-review-head">
+<div className="exam-back-links">
+<Link className="btn text back-link" to={`/${skill}`}>
+<ArrowLeft size={15} />Bank</Link>
+<Link className="btn text" to={`/${skill}/review`}>Review queue</Link>
+</div>
+<div className="exam-review-title">
+<span className="exam-eyebrow">{attempt.mode === 'mock' ? 'Full mock' : skill === 'reading' ? 'Passage practice' : 'Part practice'} · {new Date(attempt.completedAt || attempt.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+<h2>Practice results</h2>{attempt.mode === 'practice' && attempt.answerRevealed && <p className="exam-source-foot">Supported practice · answers were checked before submission.</p>}</div>
+<div className="exam-score">
+<strong aria-label="Attempt score">{score} <small>/ {total}</small>
+</strong>
+<span>{total ? Math.round(score / total * 100) : 0}% correct</span>
+</div>
+</div>
+<div className="exam-review-actions">
+<p>{wrong.length ? `${wrong.length} ${hasPooled ? 'answer group' : 'question'}${wrong.length === 1 ? '' : 's'} to review. Retrying clears the answers and review notes for the new attempt.` : 'All answers are correct. You can still add review notes.'}</p>{wrong.length > 0 && <button className="btn primary" onClick={retry}>
+<RotateCcw size={15} />Retry wrong answers</button>}<button className="btn line" disabled={saving || !dirty} onClick={() => void saveNotes()}>
+<Save size={15} />{saving ? 'Saving…' : 'Save review notes'}</button>
+</div>{saveError && <p role="alert" className="exam-notice">{saveError}</p>}<nav className="exam-part-tabs" aria-label="Result Parts">{attempt.sectionIds.map((id, i) => { const section = catalog.sections.find(row => row.id === id); return <button type="button" key={id} aria-pressed={sectionId === id} className={sectionId === id ? 'active' : ''} onClick={() => setSelectedSection(id)}>{skill === 'reading' ? 'Passage' : 'Part'} {section?.part || i + 1}</button>; })}</nav>{catalog.sections.some(row => row.id === sectionId) && <details className="exam-review-vocabulary"><summary>Vocabulary from this part</summary><PartVocabularyPanel key={`${owner}:${attempt.id}:${sectionId}`} catalog={catalog} attempt={attempt} sectionId={sectionId} /></details>}<ExamSessionHistory sessions={sessions.filter(row => row.mode === attempt.mode && row.sourceId === attempt.sourceId)} currentId={attempt.id} />
+<div className="exam-review-filter">
+<div className="exam-part-tabs" role="group" aria-label="Answers to review">
+<button aria-pressed={filter === 'wrong' && partWrong.length > 0} className={filter === 'wrong' && partWrong.length > 0 ? 'active' : ''} disabled={!partWrong.length} onClick={() => setFilter('wrong')}>{hasPooled ? 'Wrong answer groups' : 'Wrong answers'} ({partWrong.length})</button>
+<button aria-pressed={filter === 'all' || !partWrong.length} className={filter === 'all' || !partWrong.length ? 'active' : ''} onClick={() => setFilter('all')}>{hasPooled ? 'All answer groups' : 'All answers'} ({partRows.length})</button>
+</div>
+<span role="status">{saving ? 'Saving notes…' : dirty ? 'Unsaved review notes' : 'Review notes saved'}</span>
+</div>
+<div className={'exam-review-workspace' + (references.length ? ' has-reference' : '')}>
+    {references.length > 0 && <aside className="exam-review-reference" aria-label="Question reference">
+<header>
+<span className="exam-eyebrow">Question reference</span>
+<h3>Questions in context</h3>
+<p>Keep the question text beside your answers as you review.</p>
+</header>{references.map(question => <details key={question.id} open>
+<summary>{question.groupId ? 'Question group' : questionLabel(question)} · {QUESTION_TYPE_NAMES[question.type]}</summary>
+<ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} />
+</details>)}</aside>}
+    <div className="exam-review-list">{visibleRows.map(question => { const prompt = readingQuestionPrompt(question, questionRows, catalog.passages.filter(p => p.sectionId === question.sectionId).flatMap(p => p.paragraphs)); const response = attempt.responses[question.id] || ''; const correct = attempt.results?.[question.id] ?? gradeQuestion(question, response); const annotation = notes(question.id); const sentenceId = skill === 'listening' ? evidenceSentenceId(question, catalog.sections.find(section => section.id === question.sectionId)) : undefined; return <article id={`exam-review-${question.id}`} tabIndex={-1} className={`exam-review-card ${correct ? 'is-correct' : 'is-wrong'}`} key={question.id}>
+<header>
+<span className={`exam-number${questionSlotCount(question) > 1 ? " is-range" : ""}`}>{question.number ? questionNumberLabel(question) : '—'}</span>
+<span className="exam-eyebrow">{QUESTION_TYPE_NAMES[question.type]}</span>
+<strong>{correct ? 'Correct' : 'Review this answer'}{question.points && question.points > 1 ? ` · ${attempt.earnedPoints?.[question.id] || 0}/${question.points} points` : ''}</strong>
+</header>
+<h3>{prompt.slice(questionNumberPrefixLength(prompt, question.number, questionEndNumber(question))).replace(/in the text above/i, "in the question reference")}</h3>
+<ExamImage asset={catalog.assets.find(asset => asset.id === question.assetId && asset.kind === 'image')} label={`${questionLabel(question)} diagram`} />
+<dl>
+<div>
+<dt>Your response</dt>
+<dd>{Array.isArray(response) ? response.join(' · ') || 'No answer' : response.trim() || 'No answer'}</dd>
+</div>
+<div>
+<dt>Answer</dt>
+<dd>{Array.isArray(question.answer) ? question.answer.join(' · ') : question.answer || 'Source answer unavailable'}</dd>
+</div>
+</dl>
+<section className="exam-review-explanation" aria-label={'Answer explanation for ' + questionLabel(question).toLowerCase()}>
+<h4>Answer explanation</h4>{question.explanation && !/[\u3400-\u9fff]/.test(question.explanation) && question.explanation.trim() !== question.evidence?.text?.trim() ? <p className="exam-explanation">{question.explanation}</p> : (!question.explanation || /[\u3400-\u9fff]/.test(question.explanation)) && <p className="exam-source-foot">An English explanation is not available yet. Compare the answer with the passage or transcript evidence.</p>}{question.evidence?.text && <blockquote>
+<Bookmark size={14} aria-hidden="true" />
+<span>{question.evidence.text}</span>
+</blockquote>}</section>
+<button type="button" className="btn line" aria-expanded={evidenceId === question.id} aria-controls={`exam-evidence-${question.id}`} onClick={event => { evidenceTrigger.current = event.currentTarget; setEvidenceId(id => id === question.id ? '' : question.id); }}>
+<LocateFixed size={15} />{question.evidence?.text || question.evidence?.paragraphId || sentenceId ? 'Locate evidence' : 'Read original text'}</button>{evidenceId === question.id && <QuestionEvidence question={question} response={response} passages={catalog.passages} section={catalog.sections.find(row => row.id === question.sectionId)} loading={loading} error={error} onRetry={reload} onClose={() => { setEvidenceId(''); evidenceTrigger.current?.focus(); }} />}<section className="exam-review-notes">
+<h4>Your review notes</h4>
+<div className="exam-annotations">
+<label>Evidence for {questionLabel(question).toLowerCase()}<textarea disabled={saving} value={annotation.evidence} onChange={event => setNote(question.id, { evidence: event.target.value })} placeholder="Quote the passage or transcript that supports your answer…" />
+</label>
+<label>Keywords & synonyms for {questionLabel(question).toLowerCase()}<input disabled={saving} value={annotation.keywords} onChange={event => setNote(question.id, { keywords: event.target.value })} placeholder="question wording → source wording" />
+</label>
+</div>{!correct && <div className="exam-error-tag">
+<label>Error reason for {questionLabel(question).toLowerCase()}<SelectField disabled={saving} value={annotation.reason} onChange={event => setNote(question.id, { reason: event.target.value })}>
+<option value="">Choose a reason</option>{['Missed paraphrase', 'Wrong detail', 'Word limit or spelling', 'Lost concentration', 'Not Given confused with False', 'Distractor or correction', 'Other'].map(reason => <option key={reason} value={reason}>{reason}</option>)}</SelectField>
+</label>
+</div>}</section>{skill === 'listening' && <ExamStudyLink className="btn line" to={`/listening/intensive/${question.sectionId}${sentenceId ? `?sentence=${encodeURIComponent(sentenceId)}` : ''}`} returnHash={`#exam-review-${question.id}`}>
+<Headphones size={15} />{sentenceId ? 'Practise this sentence' : 'Practise this listening part'}</ExamStudyLink>}</article>; })}</div>
+</div>
+</section>;
 }
