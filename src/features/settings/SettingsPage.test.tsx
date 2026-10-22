@@ -55,6 +55,18 @@ test('settings use six groups and keep planning sources separate from self-direc
   expect(screen.queryByRole('spinbutton',{name:'Daily new words'})).not.toBeInTheDocument();
 });
 
+test('daily new-word goals and batch sizes can be changed and saved independently',async()=>{
+ setup('vocabulary');const user=userEvent.setup();
+ const goal=screen.getByRole('spinbutton',{name:'Daily new words'});
+ const batch=screen.getByRole('spinbutton',{name:'Learning batch size'});
+ expect(goal).toHaveValue(10);expect(batch).toHaveValue(10);
+ fireEvent.change(goal,{target:{value:'15'}});
+ fireEvent.change(batch,{target:{value:'5'}});
+ await user.click(screen.getByRole('button',{name:'Save settings'}));
+ expect(context.current.saveStudySettings).toHaveBeenCalledWith({planning:expect.objectContaining({newWordsPerDay:15}),vocabulary:{learningBatchSize:5}});
+ expect(screen.getByText(/Settings saved\./)).toBeInTheDocument();
+});
+
 test('refreshing conflicting settings retains changed fields and accepts untouched remote fields',()=>{
   const before={dailyMinutes:30,planning:{newWordsPerDay:10,carryoverPercent:30,wordbookOrder:['a','b']}};
   const draft={dailyMinutes:45,planning:{...before.planning,newWordsPerDay:12}};

@@ -12,6 +12,42 @@ vi.mock('../../storage/examCatalog',()=>({loadExamCatalog:vi.fn().mockResolvedVa
 beforeEach(()=>{vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(2026,9,17,12));mocks.state=emptyState();mocks.generate.mockReset().mockResolvedValue(true);mocks.change.mockReset().mockResolvedValue(true);mocks.start.mockReset().mockResolvedValue(true);mocks.bulk.mockReset().mockResolvedValue(true);mocks.state.plans=[{id:'task',dateKey:dateKey(new Date()),status:'pending',skill:'writing',title:'Chart',description:'Selected question',estimatedMinutes:20}];});
 afterEach(()=>{cleanup();vi.useRealTimers();});
 const mount=()=>render(<MemoryRouter><PlanningPage/></MemoryRouter>);
+
+test('day summary separates time estimates and the actual new-word allocation with a settings shortcut',async()=>{
+ Object.assign(mocks.state.settings,{dailyMinutes:90,days:[1,2,3,4,5,6,7]});
+ mocks.state.settings.planning.newWordsPerDay=15;
+ mocks.state.settings.vocabulary.learningBatchSize=10;
+ const vocabulary={id:'partial-batch',dateKey:dateKey(new Date()),status:'pending',skill:'vocabulary',origin:'manual',title:'Vocabulary - Learn 10 words',estimatedMinutes:30,target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',batchIndex:1,batchSize:10,cards:Array.from({length:7},(_,i)=>({entryId:`word-${i}`,senseId:'meaning'}))}};
+ mocks.state.plans=[vocabulary,{...mocks.state.plans[0],status:'completed'},...['skipped','held','archived'].map(id=>({...mocks.state.plans[0],id,estimatedMinutes:100,...(id==='skipped'?{status:'skipped'}:id==='held'?{onHold:true}:{archivedAt:'2026-10-16T12:00:00Z'})}))];
+ const {container}=mount();const day=within(container.querySelector('.study-day'));
+ const summary=day.getByRole('group',{name:'Daily plan summary'});
+ expect(summary).toHaveTextContent('Planned time50 / 90 min40 min free');
+ expect(summary).toHaveTextContent('Completed20 min30 min remaining');
+ expect(summary).toHaveTextContent('New words7 / 158 below daily goal');
+ expect(day.getByRole('heading',{name:'Vocabulary - Learn 7 words'})).toBeInTheDocument();
+ expect(day.getByRole('button',{name:'Task actions: Vocabulary - Learn 7 words'})).toBeInTheDocument();
+ expect(screen.getByRole('link',{name:'Adjust vocabulary plan'})).toHaveAttribute('href','/settings/vocabulary');
+ expect(screen.getByText('15/day')).toBeInTheDocument();
+ expect(screen.getByText('Up to 10 words/batch')).toBeInTheDocument();
+ expect(screen.queryByText(/fewer than target \(budget or source availability\)/)).not.toBeInTheDocument();
+ await userEvent.click(screen.getByText('How daily targets work'));
+ expect(screen.getByText(/Time for reviews and available new words can reduce the actual allocation/)).toBeVisible();
+});
+
+test('manual rest-day tasks show extra time without a false new-word deficit',()=>{
+ mocks.state.settings.days=[];
+ const {container}=mount();const summary=within(container.querySelector('.study-day')).getByRole('group',{name:'Daily plan summary'});
+ expect(summary).toHaveTextContent('Planned time20 / 0 min20 min extra');
+ expect(summary).toHaveTextContent('No daily goal on rest days');
+ expect(summary).not.toHaveTextContent(/below daily goal/);
+});
+
+test('a zero new-word goal is presented as paused automatic learning',()=>{
+ mocks.state.settings.days=[1,2,3,4,5,6,7];mocks.state.settings.planning.newWordsPerDay=0;
+ const {container}=mount();const summary=within(container.querySelector('.study-day')).getByRole('group',{name:'Daily plan summary'});
+ expect(summary).toHaveTextContent('Automatic learning paused');
+ expect(summary).not.toHaveTextContent(/below daily goal/);
+});
 async function taskAction(name){
   await userEvent.click(screen.getByRole('button',{name:'Task actions: Chart'}));
   await userEvent.click(screen.getByRole('menuitem',{name}));

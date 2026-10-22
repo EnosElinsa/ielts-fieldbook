@@ -10,7 +10,7 @@ import { AccountDataBoundary } from '../../components/AccountDataBoundary';
 
 import { dateKey, addLocalDays } from '../../domain/utils';
 import { calendarDays, studyBudget, compareStudyPlans } from '../../lib/planTemplates';
-import { studyTargetSummary } from '../../lib/planTargets';
+import { studyPlanTitle, studyTargetSummary } from '../../lib/planTargets';
 import { TaskStartButton, useStudySchedule } from './StudySchedule';
 import '../../styles/planning.css';
 import { useVocabularyPosition } from '../vocabulary/vocabularyNavigation';
@@ -34,6 +34,8 @@ function PlanningCalendar(){
   useEffect(()=>{if(!targetId||linkedTask)return;let active=true;fb.ensurePlanningRows([targetId]).then(state=>{if(active&&!state.plans.some(plan=>plan.id===targetId))setTargetError('This task is unavailable. Check its link or refresh planning.');}).catch(cause=>{if(active)setTargetError(cause.message);});return()=>{active=false;};},[targetId,Boolean(linkedTask),fb.ensurePlanningRows]);
   useEffect(()=>{const target=linkedTask;if(!target)return;setTargetError('');if(['completed','skipped'].includes(target.status))setTab('history');else if(target.dateKey<today||target.onHold)setTab('waiting');else{setTab('schedule');setAnchor(target.dateKey);}},[location.hash,Boolean(linkedTask)]);
   const focus=fb.state.plans.filter(plan=>plan.dateKey===today&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status)).sort((a,b)=>(a.status==='in_progress'?-1:0)-(b.status==='in_progress'?-1:0)||compareStudyPlans(a,b))[0];
+  const newWordGoal=studyBudget(fb.state.settings,today).planning.newWordsPerDay;
+  const learningBatchSize=fb.state.settings.vocabulary?.learningBatchSize||10;
   return <section className="view active study-planning"><header className="study-page-head"><div><p className="kicker">Next seven days</p><h2>Planning</h2><p>{fb.state.settings.dailyMinutes || 30} min per study day</p></div><div className="btn-row"><Link className="btn line" to="/settings/schedule"><Settings2 size={16}/>Plan settings</Link><Link className="btn line" to="/today"><ArrowLeft size={16}/>Today</Link></div></header>
     {schedule.error&&<div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
     {targetError&&<p role="alert">{targetError}</p>}
@@ -42,7 +44,7 @@ function PlanningCalendar(){
     {tab==='history'&&<TaskCollection tasks={history} kind="history" renderTask={plan=><PlanTask plan={plan}/>}/>}
     {schedule.saving&&<InlineLoadingState message="Updating your schedule…" />}
     {tab==='schedule'&&<>
-    {focus&&<aside className="study-focus"><div><p className="kicker">Today's focus</p><strong>{focus.title}</strong><p>{focus.status==='in_progress'?'Continue your saved task':'Next in your schedule'} · {focus.estimatedMinutes} min estimated</p></div><TaskStartButton plan={focus}/></aside>}
+    {focus&&<aside className="study-focus"><div><p className="kicker">Today's focus</p><strong>{studyPlanTitle(focus)}</strong><p>{focus.status==='in_progress'?'Continue your saved task':'Next in your schedule'} · {focus.estimatedMinutes} min estimated</p></div><TaskStartButton plan={focus}/></aside>}
     <nav className="study-date-navigation" aria-label="Schedule dates">
       <p className="study-date-range" aria-live="polite" aria-atomic="true">{dateRange}</p>
       <div className="study-date-controls">
@@ -51,13 +53,29 @@ function PlanningCalendar(){
         <button type="button" className="btn line study-week-arrow" aria-label="Next week" title="Next week" onClick={()=>setAnchor(dateKey(addLocalDays(new Date(`${anchor}T12:00:00`),7)))}><ChevronRight size={18}/></button>
       </div>
     </nav>
+    <div className="study-plan-targets">
+      <p><span>New-word goal: <strong>{newWordGoal?`${newWordGoal}/day`:'Paused'}</strong></span><span>Up to {learningBatchSize} {learningBatchSize===1?'word':'words'}/batch</span><Link to="/settings/vocabulary">Adjust vocabulary plan</Link></p>
+      <details><summary>How daily targets work</summary><p>The daily goal and batch size are separate settings. Time for reviews and available new words can reduce the actual allocation. A final batch may be smaller. Set the daily goal to 0 to pause automatic new-word tasks. Changing settings replans untouched automatic tasks; started and manually arranged tasks keep their selected words. Times below are task estimates, not tracked study time.</p></details>
+    </div>
     <div className="study-calendar" aria-busy={schedule.saving}>{days.map(day=>{
       const tasks=fb.state.plans.filter(plan=>plan.dateKey===day&&!plan.onHold&&!plan.archivedAt).sort(compareStudyPlans);
       const used=tasks.filter(plan=>plan.status!=='skipped').reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0);
       const dayBudget=studyBudget(fb.state.settings,day),budget=dayBudget.daily;
       const newWords=tasks.filter(plan=>plan.status!=='skipped'&&plan.target?.mode==='learning-batch').reduce((sum,plan)=>sum+(plan.target.cards?.length||plan.target.entryIds?.length||plan.quantity||plan.target.batchSize||0),0);
       const completed=tasks.filter(plan=>plan.status==='completed').reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0);
-      return <section className={`study-day${day===today?' is-today':''}`} key={day}><header><h3>{day===today?'Today':new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{weekday:'long'})}<span>{new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</span></h3><small className={used>budget?'study-over-budget':''}>Allocated {used} / {budget} min{used>budget?` · +${used-budget} extra`:budget?` · ${Math.max(0,budget-used)} left`: ' · Rest day'}</small><span className="study-day-estimates">Pending estimate {used-completed} min · Completed estimate {completed} min</span><span className="study-day-estimates">New words {newWords} / {budget ? dayBudget.planning.newWordsPerDay : 0}{budget && newWords < dayBudget.planning.newWordsPerDay ? ` · ${dayBudget.planning.newWordsPerDay-newWords} fewer than target (budget or source availability)` : ""}</span><button type="button" className="btn line study-add-task" disabled={schedule.saving} onClick={()=>setEditor({mode:'add',dateKey:day})}><Plus size={15}/>Add task</button></header>{tasks.length?<div className="study-task-list">{tasks.map(plan=><PlanTask key={plan.id} plan={plan}/>)}</div>:schedule.saving&&budget?<CardSkeleton/>:<p className="study-rest-day">{budget?'No tasks yet. Add a task or adjust your plan settings.':'Rest day'}</p>}</section>;
+      const goal=dayBudget.planning.newWordsPerDay;
+      return <section className={`study-day${day===today?' is-today':''}`} key={day}>
+        <header>
+          <h3>{day===today?'Today':new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{weekday:'long'})}<span>{new Date(`${day}T00:00:00`).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</span></h3>
+          <dl className="study-day-stats" role="group" aria-label="Daily plan summary">
+            <div><dt>Planned time</dt><dd className={used>budget?'study-over-budget':''}>{used} <span>/ {budget} min</span><small>{used>budget?`${used-budget} min extra`:budget?`${budget-used} min free`:'No time budget'}</small></dd></div>
+            <div><dt>Completed</dt><dd>{completed} <span>min</span><small>{used-completed} min remaining</small></dd></div>
+            <div><dt>New words</dt><dd>{newWords}{budget>0&&goal>0&&<span> / {goal}</span>}<small>{!budget?'No daily goal on rest days':!goal?'Automatic learning paused':newWords<goal?`${goal-newWords} below daily goal`:newWords===goal?'Daily goal allocated':`${newWords-goal} above daily goal`}</small></dd></div>
+          </dl>
+          <button type="button" className="btn line study-add-task" disabled={schedule.saving} onClick={()=>setEditor({mode:'add',dateKey:day})}><Plus size={15}/>Add task</button>
+        </header>
+        {tasks.length?<div className="study-task-list">{tasks.map(plan=><PlanTask key={plan.id} plan={plan}/>)}</div>:schedule.saving&&budget?<CardSkeleton/>:<p className="study-rest-day">{budget?'No tasks yet. Add a task or adjust your plan settings.':'Rest day'}</p>}
+      </section>;
     })}</div></>}
     {editor&&<TaskEditor key={`${accountId()}:${editor.mode}:${editor.dateKey}`} {...editor} onClose={()=>setEditor(null)}/>}
   </section>;
@@ -69,7 +87,7 @@ function PlanTask({plan}){
   async function change(action){setSaving(true);setError('');let feedback='';try{if(await fb.changePlan(plan.id,action,{onError:message=>{feedback=message;}}))setDialog(null);else setError(feedback||'Your task could not be saved. Retry the change.');}catch(cause){setError(cause instanceof Error?cause.message:'Your task could not be saved.');}finally{setSaving(false);}}
   return <article id={`task-${plan.id}`} tabIndex={-1} className={`study-task ${plan.status}`}>
     <div className="study-task-meta"><span className={`study-skill study-skill-${plan.skill||'writing'}`}>{plan.skill || 'Practice'}</span><span><Clock3 size={14}/>{plan.estimatedMinutes || fb.state.settings.dailyMinutes} min</span>{plan.dateKey<dateKey(new Date())&&<span>Due {plan.dateKey}</span>}</div>
-    <h4>{plan.title}</h4>
+    <h4>{studyPlanTitle(plan)}</h4>
     {plan.originalDateKey&&<p className="study-task-rescheduled">Originally {plan.originalDateKey} · Rescheduled to {plan.dateKey}</p>}
     {plan.skipReason&&<p className="study-task-reason">{({"merged-review":"System: merged into current review planning","bulk-skip":"Skipped in backlog","user-skipped":"Skipped by you","no-longer-due":"Currently no review needed"})[plan.skipReason]}</p>}
     {plan.onHold&&<p className="study-task-reason">On hold · excluded from automatic scheduling</p>}
@@ -80,7 +98,7 @@ function PlanTask({plan}){
     <footer><span className="study-task-status">{completed&&<Check size={14}/>} {({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status}{plan.origin==='manual'?' · User arranged':' · System arranged'}</span><div className="study-task-tools">{plan.status==='skipped'?<button type="button" className="btn line" disabled={saving} onClick={()=>{setError('');setDialog('restore');}}><RotateCcw size={16}/>Restore task</button>:<>
       {!plan.onHold&&<TaskStartButton plan={plan}/>}
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild><button type="button" className="btn line study-task-menu" aria-label={`Task actions: ${plan.title}`} disabled={saving}><MoreHorizontal size={18}/></button></DropdownMenu.Trigger>
+        <DropdownMenu.Trigger asChild><button type="button" className="btn line study-task-menu" aria-label={`Task actions: ${studyPlanTitle(plan)}`} disabled={saving}><MoreHorizontal size={18}/></button></DropdownMenu.Trigger>
         <DropdownMenu.Portal><DropdownMenu.Content className="dropdown-content study-task-actions" align="end" sideOffset={6} collisionPadding={12}>
           <DropdownMenu.Label className="dropdown-label">Task actions</DropdownMenu.Label>
           {[

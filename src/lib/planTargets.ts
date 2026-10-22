@@ -80,12 +80,20 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
         if (overlaps) { state.plans = state.plans.filter((row: StudyPlan) => row !== plan); continue; }
         if (batch.cards.length > plan.estimatedMinutes) throw new Error('The loaded learning batch needs more study time. Refresh your plan.');
         plan.estimatedMinutes = batch.cards.length;
-        plan.title = `Vocabulary - Learn ${batch.cards.length} words`;
       }
       Object.assign(target,{cards:batch.selection.cards,assessmentMode:batch.mode,...(exact?{binding:'frozen',entryIds:exactIds}:{})});
       plan.quantity=batch.cards.length;
+      plan.title=studyPlanTitle(plan);
     }
   }
+}
+
+export function studyPlanTitle(plan: Pick<StudyPlan, 'title' | 'target'> & {quantity?: number}): string {
+  const target=plan.target;
+  if(target?.type!=='vocabulary'||target.mode!=='learning-batch')return plan.title;
+  const count=target.cards?.length||target.entryIds?.length||plan.quantity;
+  if(count)return `Vocabulary - Learn ${count} ${count===1?'word':'words'}`;
+  return target.batchSize ? `Vocabulary - Learn up to ${target.batchSize} ${target.batchSize===1?'word':'words'}` : 'Vocabulary - Learning batch';
 }
 
 export function studyTargetSummary(plan: any): string {
@@ -98,6 +106,7 @@ export function studyTargetSummary(plan: any): string {
   if (target.type==='section') return `${plan.targetLabel || target.sectionId || ''} · ${target.questionIds?.length || plan.quantity || 0} questions`;
   if (target.type==='vocabulary') {
     const count=target.cards?.length || target.entryIds?.length || plan.quantity || target.batchSize || 0;
+    if(target.mode==='learning-batch'&&!target.cards?.length&&!target.entryIds?.length&&!plan.quantity)return `Batch ${(target.batchIndex||0)+1} · Up to ${count} ${count===1?'word':'words'}`;
     return `${target.mode==='learning-batch'?`Batch ${(target.batchIndex||0)+1}`:'Review'} · ${count} ${count===1?'prompt':'prompts'}`;
   }
   if (target.type==='intensive') return '1 listening sentence';

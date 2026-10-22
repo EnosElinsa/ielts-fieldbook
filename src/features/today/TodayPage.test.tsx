@@ -15,6 +15,14 @@ afterEach(()=>{cleanup();vi.restoreAllMocks();vi.useRealTimers();});
 const plan=(id,skill,status='pending',day=dateKey(new Date()))=>({id,skill,kind:`${skill}-practice`,status,dateKey:day,title:`${skill} task`,description:'Selected practice',estimatedMinutes:20,completion:{description:'Submit the selected section.'}});
 const renderPage=()=>render(<MemoryRouter><TodayPage/></MemoryRouter>);
 
+test('existing partial learning batches display their actual count in the next task and daily list',async()=>{
+ mocks.state.plans=[{...plan('partial','vocabulary'),title:'Vocabulary - Learn 10 words',target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',batchSize:10,cards:Array.from({length:7},(_,i)=>({entryId:`word-${i}`,senseId:'meaning'}))}}];
+ renderPage();
+ expect(await screen.findByRole('heading',{name:'Vocabulary - Learn 7 words'})).toBeInTheDocument();
+ expect(screen.getAllByText('Vocabulary - Learn 7 words')).toHaveLength(2);
+ expect(screen.queryByText('Vocabulary - Learn 10 words')).not.toBeInTheDocument();
+});
+
 test('one next task is unified and does not depend on the active skill',async()=>{
   mocks.state.plans=[plan('listen','listening')];mocks.skill='writing';renderPage();
   await screen.findByRole('heading',{name:'listening task'});
