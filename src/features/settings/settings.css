@@ -150,3 +150,8 @@
 .settings-source-list{list-style:none;padding:0;display:grid;gap:12px;margin-top:16px}
 .settings-source-list li{display:flex;align-items:center;flex-wrap:wrap;gap:12px;border:1px solid var(--rule);border-radius:10px;padding:12px}
 .settings-source-list li>span{flex:1;min-width:140px;overflow-wrap:anywhere}
+
+.settings-input-help{display:block;color:var(--muted);font-size:12px;font-weight:400;line-height:1.7;margin:0}
+.settings-help>p{font-size:12px;line-height:1.8;color:var(--muted);margin:10px 0 0}
+.settings-preserved-learning{padding:14px 0;border-top:1px solid var(--rule)}
+.settings-preserved-learning>p{margin-top:8px}

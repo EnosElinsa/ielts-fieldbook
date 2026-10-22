@@ -4,6 +4,17 @@ import { emptyState } from '../../domain';
 import { ensureUnifiedPlans } from '../../lib/planTemplates';
 import { settingsPlanPreview } from './settingsDraft';
 
+test('raising the batch limit reports a saved seven-word task as preserved without changing its identities',()=>{
+ const state=emptyState();state.settings.days=[1,2,3,4,5,6,7];state.settings.dailyMinutes=90;
+ const saved={id:'saved-seven',dateKey:'2026-10-14',title:'Vocabulary - Learn 10 words',origin:'automatic',status:'pending',skill:'vocabulary',kind:'vocabulary',estimatedMinutes:30,target:{type:'vocabulary',mode:'learning-batch',binding:'frozen',batchSize:10,cards:Array.from({length:7},(_,i)=>({entryId:`word-${i}`,senseId:'sense'}))}};
+ state.plans=[saved];const before=structuredClone(state);
+ const preview=settingsPlanPreview(state.settings,{vocabulary:{learningBatchSize:20}},state.plans,'2026-10-14',state);
+ expect(preview.preservedLearning).toEqual([saved]);
+ expect(preview.affected).not.toContainEqual(saved);
+ expect(preview.scheduled).toContainEqual(saved);
+ expect(state).toEqual(before);
+});
+
 test('settings preview matches regeneration without changing the current schedule or protected work',()=>{
   const now=new Date('2026-10-14T12:00:00');const state=emptyState();
   state.settings.days=[1,2,3,4,5,6,7];ensureUnifiedPlans(state,undefined,now);

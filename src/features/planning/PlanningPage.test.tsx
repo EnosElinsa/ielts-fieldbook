@@ -13,10 +13,10 @@ beforeEach(()=>{vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(20
 afterEach(()=>{cleanup();vi.useRealTimers();});
 const mount=()=>render(<MemoryRouter><PlanningPage/></MemoryRouter>);
 
-test('day summary separates time estimates and the actual new-word allocation with a settings shortcut',async()=>{
+test('day summary explains saved word selections and keeps configuration in Settings',async()=>{
  Object.assign(mocks.state.settings,{dailyMinutes:90,days:[1,2,3,4,5,6,7]});
  mocks.state.settings.planning.newWordsPerDay=15;
- mocks.state.settings.vocabulary.learningBatchSize=10;
+ mocks.state.settings.vocabulary.learningBatchSize=20;
  const vocabulary={id:'partial-batch',dateKey:dateKey(new Date()),status:'pending',skill:'vocabulary',origin:'manual',title:'Vocabulary - Learn 10 words',estimatedMinutes:30,target:{type:'vocabulary',mode:'learning-batch',assessmentMode:'definition',batchIndex:1,batchSize:10,cards:Array.from({length:7},(_,i)=>({entryId:`word-${i}`,senseId:'meaning'}))}};
  mocks.state.plans=[vocabulary,{...mocks.state.plans[0],status:'completed'},...['skipped','held','archived'].map(id=>({...mocks.state.plans[0],id,estimatedMinutes:100,...(id==='skipped'?{status:'skipped'}:id==='held'?{onHold:true}:{archivedAt:'2026-10-16T12:00:00Z'})}))];
  const {container}=mount();const day=within(container.querySelector('.study-day'));
@@ -26,12 +26,15 @@ test('day summary separates time estimates and the actual new-word allocation wi
  expect(summary).toHaveTextContent('New words7 / 158 below daily goal');
  expect(day.getByRole('heading',{name:'Vocabulary - Learn 7 words'})).toBeInTheDocument();
  expect(day.getByRole('button',{name:'Task actions: Vocabulary - Learn 7 words'})).toBeInTheDocument();
- expect(screen.getByRole('link',{name:'Adjust vocabulary plan'})).toHaveAttribute('href','/settings/vocabulary');
- expect(screen.getByText('15/day')).toBeInTheDocument();
- expect(screen.getByText('Up to 10 words/batch')).toBeInTheDocument();
- expect(screen.queryByText(/fewer than target \(budget or source availability\)/)).not.toBeInTheDocument();
- await userEvent.click(screen.getByText('How daily targets work'));
- expect(screen.getByText(/Time for reviews and available new words can reduce the actual allocation/)).toBeVisible();
+ expect(screen.queryByRole('link',{name:'Adjust vocabulary plan'})).not.toBeInTheDocument();
+ expect(screen.queryByRole('link',{name:'Plan settings'})).not.toBeInTheDocument();
+ await userEvent.click(day.getByText('Why 7 words?'));
+ expect(day.getByText(/saved selection of 7 words/)).toBeVisible();
+ expect(day.getByText(/up to 20 words per new batch/)).toBeVisible();
+ await userEvent.click(day.getByRole('button',{name:'Task actions: Vocabulary - Learn 7 words'}));
+ await userEvent.click(screen.getByRole('menuitem',{name:'Edit duration'}));
+ expect(within(screen.getByRole('dialog')).getByText('Vocabulary - Learn 7 words')).toBeInTheDocument();
+ expect(within(screen.getByRole('dialog')).queryByText('Vocabulary - Learn 10 words')).not.toBeInTheDocument();
 });
 
 test('manual rest-day tasks show extra time without a false new-word deficit',()=>{

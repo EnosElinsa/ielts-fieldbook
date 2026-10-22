@@ -21,6 +21,20 @@ test('existing partial learning batches display their actual count in the next t
  expect(await screen.findByRole('heading',{name:'Vocabulary - Learn 7 words'})).toBeInTheDocument();
  expect(screen.getAllByText('Vocabulary - Learn 7 words')).toHaveLength(2);
  expect(screen.queryByText('Vocabulary - Learn 10 words')).not.toBeInTheDocument();
+ await userEvent.click(screen.getByText('Why 7 words?'));
+ expect(screen.getByText(/saved selection of 7 words/)).toBeVisible();
+});
+
+test('held and archived tasks cannot appear as next work, inflate today or return as previous work',()=>{
+ mocks.state.plans=[plan('current','reading'),...['held','archived'].flatMap(kind=>[0,1,2].map(offset=>({...plan(`${kind}-${offset}`,kind==='held'?'listening':'speaking',offset===0?'in_progress':'pending',offset===0?dateKey(new Date()):offset===1?'2020-01-01':'2099-01-01'),...(kind==='held'?{onHold:true}:{archivedAt:'2026-10-16'})})))];
+ mocks.state.activePlanId='held-0';
+ const {container}=renderPage();
+ expect(container.querySelector('.study-next')).toHaveAttribute('data-plan-id','current');
+ expect(container.querySelector('.study-summary')).toHaveTextContent('20 / 30 min planned');
+ expect(container.querySelector('.study-summary')).toHaveTextContent('of 1 task');
+ expect(screen.queryByText('listening task')).not.toBeInTheDocument();
+ expect(screen.queryByText('speaking task')).not.toBeInTheDocument();
+ expect(screen.queryByRole('region',{name:'Continue previous tasks'})).not.toBeInTheDocument();
 });
 
 test('one next task is unified and does not depend on the active skill',async()=>{

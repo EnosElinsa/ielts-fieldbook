@@ -107,6 +107,7 @@ export function studyTargetSummary(plan: any): string {
   if (target.type==='vocabulary') {
     const count=target.cards?.length || target.entryIds?.length || plan.quantity || target.batchSize || 0;
     if(target.mode==='learning-batch'&&!target.cards?.length&&!target.entryIds?.length&&!plan.quantity)return `Batch ${(target.batchIndex||0)+1} · Up to ${count} ${count===1?'word':'words'}`;
+    if(target.mode==='learning-batch')return `Batch ${(target.batchIndex||0)+1} · ${count} selected ${count===1?'word':'words'}`;
     return `${target.mode==='learning-batch'?`Batch ${(target.batchIndex||0)+1}`:'Review'} · ${count} ${count===1?'prompt':'prompts'}`;
   }
   if (target.type==='intensive') return '1 listening sentence';

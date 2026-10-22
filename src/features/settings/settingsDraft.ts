@@ -43,6 +43,8 @@ export function settingsPlanPreview(settings: Record<string, any>, changes: Reco
   const nextPlans=new Map(draft.plans.map((plan: any)=>[plan.id,plan]));
   const affected=rebuild?plans.filter(plan=>!sameSetting(plan,nextPlans.get(plan.id))):[];
   const days=calendarDays(now);
-  const totals=Object.fromEntries(['writing','speaking','reading','listening','vocabulary'].map(skill=>[skill,generated.filter(plan=>plan.skill===skill&&plan.status!=='skipped').reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0)]));
-  return {rebuild,affected,generated,days,totals};
+  const scheduled=generated.filter(plan=>plan.status!=='skipped'&&!plan.onHold&&!plan.archivedAt);
+  const preservedLearning=scheduled.filter(plan=>['pending','in_progress'].includes(plan.status)&&plan.target?.type==='vocabulary'&&plan.target.mode==='learning-batch'&&(plan.target.cards?.length||plan.target.entryIds?.length)&&sameSetting(plan,plans.find(previous=>previous.id===plan.id)));
+  const totals=Object.fromEntries(['writing','speaking','reading','listening','vocabulary'].map(skill=>[skill,scheduled.filter(plan=>plan.skill===skill).reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0)]));
+  return {rebuild,affected,generated,scheduled,preservedLearning,days,totals};
 }
