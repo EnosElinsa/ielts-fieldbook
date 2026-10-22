@@ -12,6 +12,7 @@ import { isAssessedReviewMode, vocabularyReviewTask } from './vocabularyReviewTa
 import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 import { vocabularyGroupProgress, getLearnedVocabularyIds } from '../domain/vocabulary/progress';
 import { dayBudget, normalizePlanning } from '../domain/planningPreferences';
+import { studyPlanTitle } from './planTargets';
 import { TASK_PRACTICES } from './planningTaskOptions';
 import { planningEvidenceView } from '../domain/planningEvidence';
 
@@ -718,7 +719,7 @@ export function previewBacklogChange(state,action,now=new Date()) {
   const changedIds=[...new Set([...selectedIds,...beforeById.keys(),...afterById.keys()])].filter(id=>selectedIds.has(id)||JSON.stringify(beforeById.get(id))!==JSON.stringify(afterById.get(id)));
   const changes=changedIds.map(id=>{
     const before=beforeById.get(id),after=afterById.get(id),plan=after||before;
-    return {id,title:plan.title,previousTitle:before?.title,selected:selectedIds.has(id),changeType:!before?'added':!after?'removed':JSON.stringify(before)===JSON.stringify(after)?'unchanged':'updated',from:before?.dateKey||'',to:after?.dateKey||'',fromMinutes:before?.estimatedMinutes||0,toMinutes:after?.estimatedMinutes||0,status:plan.status,onHold:plan.onHold,archived:Boolean(plan.archivedAt),reason:plan.waitingReason,requirementsChanged:Boolean(before&&after&&JSON.stringify([before.target,before.completion])!==JSON.stringify([after.target,after.completion])),waiting:Boolean(after&&after.dateKey<today&&!['skipped','completed'].includes(after.status))};
+    return {id,title:studyPlanTitle(plan),previousTitle:before?studyPlanTitle(before):undefined,selected:selectedIds.has(id),changeType:!before?'added':!after?'removed':JSON.stringify(before)===JSON.stringify(after)?'unchanged':'updated',from:before?.dateKey||'',to:after?.dateKey||'',fromMinutes:before?.estimatedMinutes||0,toMinutes:after?.estimatedMinutes||0,status:plan.status,onHold:plan.onHold,archived:Boolean(plan.archivedAt),reason:plan.waitingReason,requirementsChanged:Boolean(before&&after&&JSON.stringify([before.target,before.completion])!==JSON.stringify([after.target,after.completion])),waiting:Boolean(after&&after.dateKey<today&&!['skipped','completed'].includes(after.status))};
   });
   return {snapshot:backlogSnapshot(state,now),createdAt:new Date(now).toISOString(),action,plans:draft.plans,activePlanId:draft.activePlanId,changes};
 }
@@ -786,7 +787,7 @@ export function manualStudyTask(state, action) {
     const target=action.bookId&&action.unitId ? {type:'vocabulary',mode:'learning-batch',assessmentMode:['audio','production'].includes(state.settings.vocabulary?.mode)?'definition':state.settings.vocabulary?.mode||'dictation',bookId:action.bookId,unitId:action.unitId,batchIndex:Number(action.batchIndex)||0,batchSize:state.settings.vocabulary?.learningBatchSize||10,cards:[]} : nextLearningTarget(state);
     if(action.batchIndex!==undefined&&(!Number.isInteger(action.batchIndex)||action.batchIndex<0))throw new Error('Choose a valid batch number.');
     if(!target)throw new Error('Enrol in a wordbook before adding a learning batch.');
-    return {skill,kind:'vocabulary',title:`Vocabulary - Learn ${target.batchSize} words`,description:'Learn the selected batch, then submit recall answers.',estimatedMinutes:minutes,target,deskMode:target.assessmentMode,completion:{type:'assessment',description:'Submit the exact learning batch assessment.'}};
+    return {skill,kind:'vocabulary',title:studyPlanTitle({title:'Vocabulary - Learning batch',target}),description:'Learn the selected batch, then submit recall answers.',estimatedMinutes:minutes,target,deskMode:target.assessmentMode,completion:{type:'assessment',description:'Submit the exact learning batch assessment.'}};
   }
   if(practice==='writing-mock'||practice==='speaking-mock') {
     const exact=practice==='writing-mock'?60:15;

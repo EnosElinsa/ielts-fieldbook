@@ -199,7 +199,7 @@ export function SettingsPage() {
         {category === 'vocabulary' && <>
           <PlanningSettings draft={draft} update={update} section="vocabulary"/>
           <VocabularySourceSettings draft={draft} update={update}/>
-          <SettingsSection title="Learning batches" description="Choose how many new words to learn in each batch."><div className="settings-planning-grid"><label className="field">Learning batch size<input aria-label="Learning batch size" type="number" min={1} max={50} value={draft.vocabulary.learningBatchSize || ''} onChange={event => vocabulary({ learningBatchSize: Number(event.target.value) })} /></label></div></SettingsSection>
+          <SettingsSection title="Learning batches" description="Set the maximum words per learning task, separate from your daily new-word goal. A final batch or limited study time may produce fewer words."><div className="settings-planning-grid"><label className="field">Learning batch size<input aria-label="Learning batch size" type="number" min={1} max={50} value={draft.vocabulary.learningBatchSize || ''} onChange={event => vocabulary({ learningBatchSize: Number(event.target.value) })} /></label></div></SettingsSection>
         </>}
         {category === 'practice' && <SettingsSection title="Practice defaults" description="Used for practice you start yourself. Planned tasks keep their assigned mode and question count."><div className="form">
           {preferenceSelect('Default mode', 'mode', VOCABULARY_PRACTICE_MODES)}

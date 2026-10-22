@@ -23,7 +23,7 @@ export function PlanningSettings({draft,update,section='schedule'}:{draft:Settin
     <details className="settings-help settings-reference"><summary>Vocabulary review order</summary><p>The planner uses this fixed order. Each review task shows its reason.</p><ol><li>Confirmed mistakes</li><li>Recovery practice</li><li>Due reviews</li><li>Foundation gaps</li><li>Spaced consolidation</li></ol></details>
   </>;
   if(section==='vocabulary')return <>
-    <SettingsSection title="New-word target" description="Set a daily goal. Use 0 to pause new learning; shorter study days may include fewer words."><div className="settings-planning-grid">
+    <SettingsSection title="New-word target" description="Set your daily new-word goal, separate from the size of each batch. Use 0 to pause automatic new learning; time for reviews and available new words may reduce the actual allocation."><div className="settings-planning-grid">
       <label className="field">Daily new words<input aria-label="Daily new words" type="number" min={0} max={100} value={config.newWordsPerDay} onChange={event=>change({newWordsPerDay:Number(event.target.value)})}/></label>
     </div></SettingsSection>
     <SettingsSection title="Vocabulary time" description="Reserve time for new words and reviews. Unused vocabulary time goes to your other modules."><div className="settings-planning-grid">

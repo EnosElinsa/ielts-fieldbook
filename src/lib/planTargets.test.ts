@@ -1,7 +1,9 @@
 import { expect, test, vi } from 'vitest';
-import { bindStudyPlanTargets, studyTargetSummary } from './planTargets';
+import { bindStudyPlanTargets, studyPlanTitle, studyTargetSummary } from './planTargets';
 import { mutateStudyPlan } from './planTemplates';
 import { emptyState } from '../domain/state';
+import { addVocabularyItem } from '../domain/vocabulary';
+import { VOCABULARY_CATALOG } from '../domain/vocabulary/catalog';
 
 test('binds concrete source targets before starting, limits question quantity and preserves protected work',async()=>{
   const state={plans:[
@@ -71,4 +73,29 @@ test('replacing a bound speaking mock removes all frozen scope and progress befo
 test('review summary names actual prompts with singular and plural counts',()=>{
  expect(studyTargetSummary({target:{type:'vocabulary',mode:'due-review',binding:'dynamic',cards:[],batchSize:1}})).toBe('Review · 1 prompt');
  expect(studyTargetSummary({target:{type:'vocabulary',mode:'due-review',binding:'dynamic',cards:[],batchSize:2}})).toBe('Review · 2 prompts');
+});
+
+test('learning titles use the bound count while prospective batches show a maximum',()=>{
+ const target={type:'vocabulary',mode:'learning-batch',batchSize:10,batchIndex:1,cards:[]} as const;
+ const plan={title:'Vocabulary - Learn 10 words',target};
+ expect(studyPlanTitle({...plan,target:{...target,cards:Array.from({length:7},(_,i)=>({entryId:`word-${i}`,senseId:'meaning'}))}} as any)).toBe('Vocabulary - Learn 7 words');
+ expect(studyPlanTitle({...plan,target:{...target,entryIds:['one']}} as any)).toBe('Vocabulary - Learn 1 word');
+ expect(studyPlanTitle({...plan,quantity:4} as any)).toBe('Vocabulary - Learn 4 words');
+ expect(studyPlanTitle(plan as any)).toBe('Vocabulary - Learn up to 10 words');
+ expect(studyTargetSummary(plan)).toBe('Batch 2 · Up to 10 words');
+ expect(studyPlanTitle({title:'My review',target:{...target,mode:'due-review'}} as any)).toBe('My review');
+});
+
+test('binding a short manual learning batch corrects its title without changing the chosen duration',async()=>{
+ const state:any=emptyState();
+ const entries=Array.from({length:7},(_,i)=>addVocabularyItem(state,{term:`partialword${i}`,meaning:`Meaning ${i}.`}).item!);
+ const group={id:'partial-learning-group',bookId:'partial-learning-book',kind:'group',order:1,entryIds:entries.map(entry=>entry.id)};
+ VOCABULARY_CATALOG.units.push(group as any);
+ try {
+  const plan={id:'partial',status:'pending',origin:'manual',title:'Vocabulary - Learn 10 words',estimatedMinutes:30,target:{type:'vocabulary',mode:'learning-batch',bookId:group.bookId,unitId:group.id,batchIndex:0,batchSize:10,assessmentMode:'definition',cards:[]}};
+  state.plans=[plan as any];
+  await bindStudyPlanTargets(state,{vocabulary:async()=>{}} as any);
+  expect(plan).toMatchObject({title:'Vocabulary - Learn 7 words',estimatedMinutes:30,quantity:7});
+  expect(plan.target.cards).toHaveLength(7);
+ } finally { VOCABULARY_CATALOG.units.splice(VOCABULARY_CATALOG.units.indexOf(group as any),1); }
 });
