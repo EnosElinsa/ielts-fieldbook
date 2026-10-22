@@ -11,6 +11,8 @@ import { loadExamCatalog, loadExamSections } from '../../storage/examCatalog';
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { accountId } from '../../storage/remote';
 import { dateKey as todayKey } from '../../domain/utils';
+import { studyPlanTitle } from '../../lib/planTargets';
+import { LearningTaskDetails } from './LearningTaskDetails';
 const capital=value=>value[0].toUpperCase()+value.slice(1);
 const titles={add:'Add task',replace:'Replace task',resize:'Edit duration',reschedule:'Reschedule task',duplicate:'Duplicate task',restore:'Restore task'};
 
@@ -36,7 +38,7 @@ export function TaskEditor({mode,plan,dateKey,onClose}) {
       if(skill==='vocabulary') {
         await fb.loadVocabularyCatalog?.();
         const enrolled=new Set(fb.state.wordbookEnrollments?.map(row=>row.bookId));
-        return VOCABULARY_CATALOG.units.filter(row=>enrolled.has(row.bookId)&&row.kind!=='chapter').map(row=>({id:row.id,bookId:row.bookId,label:row.title,batches:Math.max(1,Math.ceil((row.entryIds?.length||row.totalSourceWords||10)/(fb.state.settings.vocabulary?.learningBatchSize||10)))}));
+        return VOCABULARY_CATALOG.units.filter(row=>enrolled.has(row.bookId)&&row.kind!=='chapter').map(row=>({id:row.id,bookId:row.bookId,label:`${VOCABULARY_CATALOG.books.find(book=>book.id===row.bookId)?.title||row.bookId} / ${row.title}`,batches:Math.max(1,Math.ceil((row.entryIds?.length||row.totalSourceWords||10)/(fb.state.settings.vocabulary?.learningBatchSize||10)))}));
       }
       const catalog=await loadExamCatalog(skill,undefined,{force:retry>0});
       return catalog.sections.filter(row=>row.skill===skill&&row.status==='ready').map(row=>({id:row.id,label:`${catalog.papers.find(p=>p.id===row.paperId)?.title||row.title} / ${skill==='reading'?'Passage':'Part'} ${row.part}`}));
@@ -74,7 +76,7 @@ export function TaskEditor({mode,plan,dateKey,onClose}) {
     catch(cause){if(accountId()===owner)setError(cause.message||'Your task could not be saved.');}
     finally{if(accountId()===owner)setSaving(false);}
   }
-  return <ModalFrame open onClose={onClose} title={titles[mode]} header={plan?.title||'Build your study day'} size={editing?'md':'sm'} busy={saving} footer={<><button className="btn line" disabled={saving} onClick={onClose}>Cancel</button><button className="btn primary" disabled={saving||!date||(over>0&&!allowOverBudget)||Boolean(preview.error)||editing&&loading} onClick={()=>void save()}>{saving?'Saving...':'Save change'}</button></>}>
+  return <ModalFrame open onClose={onClose} title={titles[mode]} header={plan?studyPlanTitle(plan):'Build your study day'} size={editing?'md':'sm'} busy={saving} footer={<><button className="btn line" disabled={saving} onClick={onClose}>Cancel</button><button className="btn primary" disabled={saving||!date||(over>0&&!allowOverBudget)||Boolean(preview.error)||editing&&loading} onClick={()=>void save()}>{saving?'Saving...':'Save change'}</button></>}>
     <fieldset className="study-edit-controls task-editor" disabled={saving}>
       {editing&&<><div className="task-editor-grid"><div className="study-edit-field"><span>Skill</span><FilterMenu label="Skill" value={skill} disabled={saving} onChange={value=>{setSkill(value);setPractice(value==='vocabulary'?'learning-batch':'recommended');reset();}} options={Object.keys(TASK_PRACTICES).map(value=>({value,label:capital(value)}))}/></div>
       <label className="study-edit-field">Practice type<SelectField aria-label="Practice type" value={practice} options={options} disabled={saving} onValueChange={value=>{setPractice(value);reset();const minimum=options.find(row=>row.value===value)?.minimum||1;if(value.endsWith('-mock'))setMinutes(minimum);else if(minutes<minimum)setMinutes(minimum);}}/></label></div></>}
@@ -92,7 +94,7 @@ export function TaskEditor({mode,plan,dateKey,onClose}) {
       <section className={`task-budget${over?' is-over':''}`} aria-label="Task budget"><p>Daily budget <strong>{budget} min</strong></p><dl><div><dt>Other tasks</dt><dd>{used} min</dd></div><div><dt>After this change</dt><dd>{used+duration} min</dd></div><div><dt>{over?'Extra time':'Remaining'}</dt><dd>{over||Math.max(0,budget-used-duration)} min</dd></div></dl>
         {over>0&&<label className="check-field task-overage-confirm"><input type="checkbox" checked={allowOverBudget} onChange={event=>setAllowOverBudget(event.target.checked)}/>Keep extra {over} minutes on this day</label>}
       </section>
-      {preview.task&&<section className="task-preview"><h3>{editing?preview.task.title:'Completion condition'}</h3><p>{preview.task.completion?.description||'Save the selected practice result.'}</p><small>{editing?'This task will be kept when automatic plans are rebuilt.':'The chosen material and progress are preserved.'}</small></section>}
+      {preview.task&&<section className="task-preview"><h3>{editing?studyPlanTitle(preview.task):'Completion condition'}</h3><p>{preview.task.completion?.description||'Save the selected practice result.'}</p><small>{editing?'This task will be kept when automatic plans are rebuilt.':'The chosen material and progress are preserved.'}</small><LearningTaskDetails plan={preview.task} batchSize={fb.state.settings.vocabulary?.learningBatchSize||10}/></section>}
       {preview.error&&<p className="study-alert" role="alert">{preview.error}</p>}{error&&<p className="study-alert" role="alert">{error}</p>}
     </fieldset>
   </ModalFrame>;

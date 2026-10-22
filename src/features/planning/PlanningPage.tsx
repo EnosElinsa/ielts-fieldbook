@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Link, useLocation } from 'react-router-dom';
-import { CalendarClock, Clock3, Replace, RotateCcw, SkipForward, ArrowLeft, Check, Plus, Copy, SlidersHorizontal, ArrowUp, ArrowDown, Settings2, MoreHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CalendarClock, Clock3, Replace, RotateCcw, SkipForward, ArrowLeft, Check, Plus, Copy, SlidersHorizontal, ArrowUp, ArrowDown, MoreHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { AccountDataBoundary } from '../../components/AccountDataBoundary';
 
@@ -17,6 +17,7 @@ import { useVocabularyPosition } from '../vocabulary/vocabularyNavigation';
 import { TaskEditor } from './TaskEditor';
 import { accountId } from '../../storage/remote';
 import { TaskCollection } from './TaskCollection';
+import { LearningTaskDetails } from './LearningTaskDetails';
 
 export function PlanningPage(){return <AccountDataBoundary modules={['planning','vocabularyCore']} vocabularyEntryIds={[]}><PlanningCalendar/></AccountDataBoundary>;}
 
@@ -34,9 +35,7 @@ function PlanningCalendar(){
   useEffect(()=>{if(!targetId||linkedTask)return;let active=true;fb.ensurePlanningRows([targetId]).then(state=>{if(active&&!state.plans.some(plan=>plan.id===targetId))setTargetError('This task is unavailable. Check its link or refresh planning.');}).catch(cause=>{if(active)setTargetError(cause.message);});return()=>{active=false;};},[targetId,Boolean(linkedTask),fb.ensurePlanningRows]);
   useEffect(()=>{const target=linkedTask;if(!target)return;setTargetError('');if(['completed','skipped'].includes(target.status))setTab('history');else if(target.dateKey<today||target.onHold)setTab('waiting');else{setTab('schedule');setAnchor(target.dateKey);}},[location.hash,Boolean(linkedTask)]);
   const focus=fb.state.plans.filter(plan=>plan.dateKey===today&&!plan.onHold&&!plan.archivedAt&&['pending','in_progress'].includes(plan.status)).sort((a,b)=>(a.status==='in_progress'?-1:0)-(b.status==='in_progress'?-1:0)||compareStudyPlans(a,b))[0];
-  const newWordGoal=studyBudget(fb.state.settings,today).planning.newWordsPerDay;
-  const learningBatchSize=fb.state.settings.vocabulary?.learningBatchSize||10;
-  return <section className="view active study-planning"><header className="study-page-head"><div><p className="kicker">Next seven days</p><h2>Planning</h2><p>{fb.state.settings.dailyMinutes || 30} min per study day</p></div><div className="btn-row"><Link className="btn line" to="/settings/schedule"><Settings2 size={16}/>Plan settings</Link><Link className="btn line" to="/today"><ArrowLeft size={16}/>Today</Link></div></header>
+  return <section className="view active study-planning"><header className="study-page-head"><div><p className="kicker">Next seven days</p><h2>Planning</h2><p>{fb.state.settings.dailyMinutes || 30} min per study day</p></div><Link className="btn line" to="/today"><ArrowLeft size={16}/>Today</Link></header>
     {schedule.error&&<div className="study-alert" role="alert"><span>{schedule.error}</span><button className="btn line" disabled={schedule.saving} onClick={()=>void schedule.refresh()}>Retry plan</button></div>}
     {targetError&&<p role="alert">{targetError}</p>}
     <nav className="study-tabs" aria-label="Planning views">{[['schedule','Schedule'],['waiting',`Waiting · ${overdue.length}`],['history','History']].map(([value,label])=><button type="button" className="btn line" aria-pressed={tab===value} key={value} onClick={()=>setTab(value)}>{label}</button>)}</nav>
@@ -53,10 +52,6 @@ function PlanningCalendar(){
         <button type="button" className="btn line study-week-arrow" aria-label="Next week" title="Next week" onClick={()=>setAnchor(dateKey(addLocalDays(new Date(`${anchor}T12:00:00`),7)))}><ChevronRight size={18}/></button>
       </div>
     </nav>
-    <div className="study-plan-targets">
-      <p><span>New-word goal: <strong>{newWordGoal?`${newWordGoal}/day`:'Paused'}</strong></span><span>Up to {learningBatchSize} {learningBatchSize===1?'word':'words'}/batch</span><Link to="/settings/vocabulary">Adjust vocabulary plan</Link></p>
-      <details><summary>How daily targets work</summary><p>The daily goal and batch size are separate settings. Time for reviews and available new words can reduce the actual allocation. A final batch may be smaller. Set the daily goal to 0 to pause automatic new-word tasks. Changing settings replans untouched automatic tasks; started and manually arranged tasks keep their selected words. Times below are task estimates, not tracked study time.</p></details>
-    </div>
     <div className="study-calendar" aria-busy={schedule.saving}>{days.map(day=>{
       const tasks=fb.state.plans.filter(plan=>plan.dateKey===day&&!plan.onHold&&!plan.archivedAt).sort(compareStudyPlans);
       const used=tasks.filter(plan=>plan.status!=='skipped').reduce((sum,plan)=>sum+Number(plan.estimatedMinutes||0),0);
@@ -94,6 +89,7 @@ function PlanTask({plan}){
     {plan.waitingReason&&<p className="study-task-reason">{plan.waitingReason}</p>}
     {plan.reviewReason&&<p className="study-task-reason">Review reason: {({error:'Confirmed mistake',recovery:'Mistake recovery',due:'Scheduled review is due',missing:'Build a missing skill',spaced:'Spaced consolidation'})[plan.reviewReason]||plan.reviewReason}</p>}
     <p className="study-task-material">{studyTargetSummary(plan)}</p>
+    <LearningTaskDetails plan={plan} batchSize={fb.state.settings.vocabulary?.learningBatchSize||10}/>
     {plan.completion?.description&&<p className="study-completion-condition"><strong>Complete when</strong><span>{plan.completion.description}</span></p>}
     <footer><span className="study-task-status">{completed&&<Check size={14}/>} {({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status}{plan.origin==='manual'?' · User arranged':' · System arranged'}</span><div className="study-task-tools">{plan.status==='skipped'?<button type="button" className="btn line" disabled={saving} onClick={()=>{setError('');setDialog('restore');}}><RotateCcw size={16}/>Restore task</button>:<>
       {!plan.onHold&&<TaskStartButton plan={plan}/>}

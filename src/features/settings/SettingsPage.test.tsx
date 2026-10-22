@@ -67,6 +67,23 @@ test('daily new-word goals and batch sizes can be changed and saved independentl
  expect(screen.getByText(/Settings saved\./)).toBeInTheDocument();
 });
 
+test('learning limits share one panel and explain a larger batch limit without raising the daily goal',()=>{
+ setup('vocabulary');
+ const goal=screen.getByRole('spinbutton',{name:'Daily new words'});
+ const batch=screen.getByRole('spinbutton',{name:'Learning batch size'});
+ expect(goal.closest('.settings-group')).toBe(batch.closest('.settings-group'));
+ fireEvent.change(batch,{target:{value:'20'}});
+ expect(goal).toHaveValue(10);
+ expect(screen.getByRole('status',{name:'Learning limit example'})).toHaveTextContent('A full 10-word day uses 1 batch of 10 words.');
+ fireEvent.change(batch,{target:{value:'25'}});
+ expect(goal).toHaveValue(10);
+ expect(screen.getByRole('status',{name:'Learning limit example'})).toHaveTextContent('1 batch of 10 words');
+ fireEvent.change(goal,{target:{value:'50'}});
+ expect(screen.getByRole('status',{name:'Learning limit example'})).toHaveTextContent('2 batches of up to 25 words');
+ fireEvent.change(goal,{target:{value:'0'}});
+ expect(screen.getByRole('status',{name:'Learning limit example'})).toHaveTextContent('Automatic new-word learning is paused');
+});
+
 test('refreshing conflicting settings retains changed fields and accepts untouched remote fields',()=>{
   const before={dailyMinutes:30,planning:{newWordsPerDay:10,carryoverPercent:30,wordbookOrder:['a','b']}};
   const draft={dailyMinutes:45,planning:{...before.planning,newWordsPerDay:12}};
