@@ -477,12 +477,34 @@ test('recent work prioritises unfinished attempts and retains source and retry n
   const recent = within(screen.getByRole('complementary', { name: 'Your recent work' }));
   const links = recent.getAllByRole('link');
   expect(links).toHaveLength(4);
-  expect(links[0]).toHaveTextContent('Cambridge 8 / Test 1');
+  expect(links[0]).toHaveTextContent('Cambridge 8 · Test 1 · Passage 1');
   expect(links[0]).toHaveTextContent('The city garden');
   expect(links[0]).toHaveTextContent('Paused');
   expect(new URL(links[0].getAttribute('href')!, 'https://example.org').searchParams.get('retry')).toBe('old retry');
   expect(links[1]).toHaveAttribute('href', '/reading/review/done3');
   expect(screen.getByRole('link', { name: 'Review mistakes' })).toHaveAttribute('href', '/reading/review');
+});
+test('a part row shows its latest completed score', async () => {
+  mocks.fb.state.examAttempts = [
+    { id: 'older', skill: 'reading', sectionIds: ['section'], mode: 'practice', status: 'completed', score: 1, total: 2, updatedAt: '2026-10-02T08:00:00.000Z' },
+    { id: 'newer', skill: 'reading', sectionIds: ['section'], mode: 'practice', status: 'completed', score: 2, total: 2, updatedAt: '2026-10-05T08:00:00.000Z' },
+  ];
+  render(<MemoryRouter><ExamBankPage skill="reading" /></MemoryRouter>);
+  const row = (await screen.findByRole('link', { name: 'Practise passage 1' })).closest('li')!;
+  expect(row).toHaveTextContent('Latest score 2 / 2');
+  expect(within(row).queryByText('Not practised')).not.toBeInTheDocument();
+  expect(within(row).getByRole('link', { name: 'Practise passage 1' })).toHaveTextContent(/^Practise$/);
+});
+test('recent work names the book, test and part of a practice attempt once', async () => {
+  mocks.catalog.papers[0] = { ...mocks.catalog.papers[0], book: 12, test: 3, title: 'Cambridge IELTS 12 · Test 3' };
+  Object.assign(mocks.catalog.sections[0], { skill: 'listening', title: 'Part 1' });
+  mocks.fb.state.examAttempts = [{ id: 'done', skill: 'listening', sectionIds: ['section'], mode: 'practice', status: 'completed', score: 8, total: 10, updatedAt: '2026-10-13T08:00:00.000Z' }];
+  render(<MemoryRouter><ExamBankPage skill="listening" /></MemoryRouter>);
+  const [link] = within(await screen.findByRole('complementary', { name: 'Your recent work' })).getAllByRole('link');
+  expect(link).toHaveTextContent('Cambridge 12 · Test 3 · Part 1');
+  expect(link).toHaveTextContent('8 / 10 marks · Saved Tue 13 Oct');
+  expect(link.textContent!.match(/Part practice/g)).toHaveLength(1);
+  expect(screen.getByRole('heading', { level: 4, name: 'Part 1' })).toBeInTheDocument();
 });
 test('listening intensive bank mode opens the sentence workbench directly', async () => { mocks.catalog.sections[0].skill = 'listening'; render(<MemoryRouter initialEntries={['/listening?mode=intensive']}><ExamBankPage skill="listening" /></MemoryRouter>); expect(await screen.findByRole('link', { name: 'Open intensive part 1' })).toHaveAttribute('href', '/listening/intensive/section'); expect(screen.getByRole('link', { name: /Practise part 1/ })).toHaveAttribute('href', '/listening/section'); });
 test('an empty listening bank hides the filters and retries the catalog request', async () => {

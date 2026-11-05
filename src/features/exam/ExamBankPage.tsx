@@ -11,8 +11,15 @@ import { ExamSessionHistory } from './ExamSessionHistory';
 import { recoveredExamSessions } from './sessionRecovery';
 import { accountId } from '../../storage/remote';
 import { examSessionUrl, unfinishedExamSession } from '../../domain/exam/sessions';
+import { dateKey } from '../../domain/utils';
+import { formatDateKey, plural } from '../../lib/format';
 
 const PAPERS_PER_PAGE = 8;
+// Imported titles are usually "Part 1" or "Cambridge IELTS 8 · Test 1"; the row and card already show those words.
+const genericSectionTitle = (title: string, label: string, part: number) => title.trim().toLowerCase() === `${label} ${part}`.toLowerCase();
+const paperNamesItself = (paper: { title: string; book: number; test: number }) => new RegExp(`\\b${paper.book}\\b.*\\btest\\s*${paper.test}\\b`, 'i').test(paper.title);
+const latestCompleted = (history: ExamAttempt[]) => history.filter(attempt => attempt.status === 'completed').sort((a, b) => String(b.completedAt || b.updatedAt || '').localeCompare(String(a.completedAt || a.updatedAt || '')))[0];
+const savedOn = (value?: string) => value && !Number.isNaN(Date.parse(value)) ? ` · Saved ${formatDateKey(dateKey(value))}` : '';
 
 export function ExamBankPage({ skill }: { skill: ExamSkill }) {
   const fb = useFieldbook();
@@ -98,27 +105,41 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
       <FilterMenu label="Practice status" value={status} onChange={value => update('status', value)} options={[{ value: 'all', label: 'Any status' }, { value: 'ready', label: 'Ready' }, { value: 'incomplete', label: 'Source incomplete' }, { value: 'new', label: 'Not practised' }, { value: 'practised', label: 'Practised' }, { value: 'favorites', label: 'Favourites' }]} />
     </div>}
     {saveError && <div role="alert" className="exam-notice">{saveError} {failedFavorite && <button className="btn line" disabled={savingFavorite} onClick={() => void toggleFavorite(failedFavorite.id, failedFavorite.wanted)}>Retry favourite save</button>}</div>}
-    {recent.length > 0 && <aside className="exam-recent" aria-label="Your recent work"><span className="exam-eyebrow">Your recent work</span>{recent.map(attempt => { const section = catalog.sections.find(row => row.id === attempt.sectionIds[0]); const paper = catalog.papers.find(row => row.id === (attempt.mode === 'mock' ? attempt.sourceId : section?.paperId)); return <Link key={attempt.id} to={examSessionUrl(attempt)}>
-      <span className="exam-eyebrow">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : `${skill} · saved practice`}</span><strong>{attempt.mode === 'mock' ? 'Full mock' : section?.title || `${sectionLabel} practice`}</strong>
-      <span className="exam-recent-meta">{attempt.mode === 'mock' ? 'Full mock' : `${sectionLabel} practice`} · {attempt.status === 'completed' ? `${attempt.score ?? '—'} / ${attempt.total ?? '—'} marks` : attempt.status === 'paused' ? 'Paused' : 'In progress'}</span><b>{attempt.status === 'completed' ? 'Review' : 'Resume'} <ArrowRight size={14} /></b>
-    </Link>; })}</aside>}
+    {recent.length > 0 && <aside className="exam-recent" aria-label="Your recent work"><span className="exam-eyebrow">Your recent work</span><div className="exam-recent-list">{recent.map(attempt => { const section = catalog.sections.find(row => row.id === attempt.sectionIds[0]); const paper = catalog.papers.find(row => row.id === (attempt.mode === 'mock' ? attempt.sourceId : section?.paperId)); const mock = attempt.mode === 'mock'; return <Link key={attempt.id} to={examSessionUrl(attempt)}>
+      <span className="exam-eyebrow">{paper ? [`Cambridge ${paper.book}`, `Test ${paper.test}`, !mock && section ? `${sectionLabel} ${section.part}` : ''].filter(Boolean).join(' · ') : skill === 'reading' ? 'Reading' : 'Listening'}</span><strong>{mock ? 'Full mock' : section && !genericSectionTitle(section.title, sectionLabel, section.part) ? section.title : `${sectionLabel} practice`}</strong>
+      <span className="exam-recent-meta">{attempt.status === 'completed' ? `${attempt.score ?? '—'} / ${attempt.total ?? '—'} marks` : attempt.status === 'paused' ? 'Paused' : 'In progress'}{savedOn(attempt.updatedAt)}</span><b>{attempt.status === 'completed' ? 'Review' : 'Resume'} <ArrowRight size={14} /></b>
+    </Link>; })}</div></aside>}
     {loading ? <PageLoadingState variant="bank" message="Loading questions…" onRetry={reload} /> : error && !hasCatalogSections ? <StateMessage kind="error" message={error} onRetry={reload} /> : !hasCatalogSections && hasFilters ? <StateMessage title={`No ${skill} questions match these filters`} message="Clear the filters to see every book."><button type="button" className="btn line" onClick={clearFilters}>Clear filters</button></StateMessage> : !hasCatalogSections ? <StateMessage title={`${skill === 'reading' ? 'Reading' : 'Listening'} questions are unavailable`} message="Check your connection, then retry." onRetry={reload} /> : <>
       {error && <StateMessage kind="error" message={error} onRetry={reload} />}
-      <div className="exam-results-bar" ref={results}><span role="status">{matchingPapers.length} test{matchingPapers.length === 1 ? '' : 's'} · {sections.length} {sectionLabel.toLowerCase()}{sections.length === 1 ? '' : 's'}</span>{hasFilters && <button className="btn text" onClick={clearFilters}>Clear filters</button>}</div>
+      <div className="exam-results-bar" ref={results}><span role="status">{plural(matchingPapers.length, 'test')} · {plural(sections.length, sectionLabel.toLowerCase())}</span>{hasFilters && <button className="btn text" onClick={clearFilters}>Clear filters</button>}</div>
       {sections.length === 0 ? <StateMessage message="No sections match these filters." /> : <div className="exam-paper-list">{visiblePapers.map(paper => {
         const all = catalog.sections.filter(section => section.paperId === paper.id && section.skill === skill);
         const complete = all.length === (skill === 'reading' ? 3 : 4) && all.every(section => section.status === 'ready' && section.questionCount > 0);
         const mockHistory = attempts.filter(attempt => attempt.mode === 'mock' && attempt.sourceId === paper.id);
         const pendingMock = mockHistory.find(attempt => unfinishedExamSession(attempt) && !attempt.planId && !attempt.retryOfAttemptId);
         return <article className="exam-paper" key={paper.id}>
-          <header><div><span className="exam-eyebrow">Cambridge {paper.book} / Test {paper.test}</span><h3>{paper.title}</h3></div>{complete ? <div className="btn-row"><Link className="btn line" to={pendingMock ? examSessionUrl(pendingMock) : `/${skill}/mock/${paper.id}`}>{pendingMock ? 'Resume mock' : 'Full mock'} <ArrowRight size={15} /></Link>{pendingMock && <Link className="btn line" to={`/${skill}/mock/${paper.id}?new=1`}>New mock session</Link>}</div> : <button className="btn line" disabled aria-label="Full mock unavailable">Full mock unavailable</button>}</header>
+          <header><div className="exam-paper-title">{!paperNamesItself(paper) && <span className="exam-eyebrow">Cambridge {paper.book} · Test {paper.test}</span>}<h3>{paper.title}</h3></div>{complete ? <div className="exam-paper-actions"><Link className="btn line" to={pendingMock ? examSessionUrl(pendingMock) : `/${skill}/mock/${paper.id}`}>{pendingMock ? 'Resume mock' : 'Full mock'} <ArrowRight size={15} /></Link>{pendingMock && <Link className="btn text" to={`/${skill}/mock/${paper.id}?new=1`}>New mock session</Link>}</div> : <button className="btn line" disabled aria-label="Full mock unavailable">Full mock unavailable</button>}</header>
           <ExamSessionHistory sessions={mockHistory} />
-          <div className={`exam-section-grid exam-section-grid-${skill}`}>{sections.filter(section => section.paperId === paper.id).sort((a, b) => a.part - b.part).map(section => { const history = attempts.filter(attempt => attempt.mode === 'practice' && attempt.sectionIds.includes(section.id)); const pending = history.find(attempt => unfinishedExamSession(attempt) && !attempt.planId && !attempt.retryOfAttemptId); return <div className="exam-section-card" key={section.id}>
-            <div className="exam-section-top"><span className="pill blue">{sectionLabel} {section.part}</span><button className="btn text icon-btn" aria-label={`${favorites.has(section.id) ? 'Remove' : 'Add'} favourite: ${section.title}`} aria-pressed={favorites.has(section.id)} disabled={savingFavorite} onClick={() => void toggleFavorite(section.id)}><Star size={17} fill={favorites.has(section.id) ? 'currentColor' : 'none'} /></button></div>
-            <h4>{section.title}</h4><p>{section.questionCount} questions · {section.questionTypes.map(value => QUESTION_TYPE_NAMES[value]).join(' · ')}</p>
-            {section.status === 'ready' ? <div className="btn-row"><Link className="btn primary" to={pending ? examSessionUrl(pending) : `/${skill}/${encodeURIComponent(section.id)}`}>{pending ? 'Resume session' : `Practise ${sectionLabel.toLowerCase()} ${section.part}`} <ArrowRight size={15} /></Link>{pending && <Link className="btn line" to={`/${skill}/${encodeURIComponent(section.id)}?new=1`}>New session</Link>}{skill === 'listening' && <Link className="btn line" to={`/listening/intensive/${section.id}`}>Open intensive part {section.part}</Link>}</div> : <div className="exam-source-status">Source incomplete · practice unavailable</div>}
-            <ExamSessionHistory sessions={history} />
-          </div>; })}</div>
+          <ul className="exam-part-rows">{sections.filter(section => section.paperId === paper.id).sort((a, b) => a.part - b.part).map(section => {
+            const history = attempts.filter(attempt => attempt.mode === 'practice' && attempt.sectionIds.includes(section.id));
+            const pending = history.find(attempt => unfinishedExamSession(attempt) && !attempt.planId && !attempt.retryOfAttemptId);
+            const latest = pending ? undefined : latestCompleted(history);
+            const titled = !genericSectionTitle(section.title, sectionLabel, section.part);
+            return <li className="exam-part-row" key={section.id}>
+              <div className="exam-part-name">{titled && <span className="pill blue">{sectionLabel} {section.part}</span>}<h4>{titled ? section.title : `${sectionLabel} ${section.part}`}</h4></div>
+              <p className="exam-part-meta">{[plural(section.questionCount, 'question'), ...section.questionTypes.map(value => QUESTION_TYPE_NAMES[value])].join(' · ')}</p>
+              <div className="exam-part-actions">
+                {pending ? <span className="exam-part-status is-active">{pending.status === 'paused' ? 'Paused' : 'In progress'}</span> : latest ? <span className="exam-part-status is-scored"><span className="sr-only">Latest score </span>{latest.score ?? '—'} / {latest.total ?? '—'}</span> : <span className="exam-part-status">Not practised</span>}
+                <button className="btn text icon-btn exam-part-favourite" aria-label={`${favorites.has(section.id) ? 'Remove' : 'Add'} favourite: ${section.title}`} aria-pressed={favorites.has(section.id)} disabled={savingFavorite} onClick={() => void toggleFavorite(section.id)}><Star size={17} fill={favorites.has(section.id) ? 'currentColor' : 'none'} /></button>
+                {section.status === 'ready' ? <>
+                  {pending && <Link className="btn text" to={`/${skill}/${encodeURIComponent(section.id)}?new=1`}>New session</Link>}
+                  {skill === 'listening' && <Link className="btn text" aria-label={`Open intensive part ${section.part}`} to={`/listening/intensive/${section.id}`}>Intensive</Link>}
+                  <Link className="btn primary" aria-label={pending ? 'Resume session' : `Practise ${sectionLabel.toLowerCase()} ${section.part}`} to={pending ? examSessionUrl(pending) : `/${skill}/${encodeURIComponent(section.id)}`}>{pending ? 'Resume' : 'Practise'} <ArrowRight size={15} /></Link>
+                </> : <span className="exam-source-status">Source incomplete · practice unavailable</span>}
+              </div>
+              <ExamSessionHistory sessions={history} />
+            </li>;
+          })}</ul>
           {!complete && <p className="exam-source-foot">A full mock requires {skill === 'reading' ? 'all passages and question materials' : 'all parts and audio recordings'}.</p>}
         </article>;
       })}</div>}
