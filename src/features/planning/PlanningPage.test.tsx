@@ -162,6 +162,18 @@ test('a legacy task without an estimate says so and adds no planned time',()=>{
  expect(container.querySelector('.study-focus')).toHaveTextContent('Next in your schedule · No time estimate');
 });
 
+test('a rescheduled task reads Moved from Mon 12 Oct and keeps its details closed',()=>{
+ Object.assign(mocks.state.plans[0],{originalDateKey:'2026-10-12',origin:'manual',completion:{description:'Save a response for this question.'}});
+ const {container}=mount();const task=container.querySelector('#task-task');
+ expect(task).toHaveTextContent('Moved from Mon 12 Oct');
+ expect(task).toHaveTextContent('Added by you');
+ expect(task).not.toHaveTextContent(/Originally|Rescheduled to|System arranged|User arranged/);
+ const details=task.querySelector('details.study-task-details');
+ expect(details).not.toHaveAttribute('open');
+ expect(within(details).getByText('Details')).toBeInTheDocument();
+ expect(details).toHaveTextContent('Done when Save a response for this question.');
+});
+
 test('planned task retains a stable focus anchor for practice returns',async()=>{
   const view=mount();await screen.findAllByRole('button',{name:'Start'});
   expect(view.container.querySelector('#task-task')).toHaveAttribute('tabindex','-1');

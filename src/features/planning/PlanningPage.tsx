@@ -86,18 +86,27 @@ function PlanTask({plan}){
   const fb=useFieldbook();const [dialog,setDialog]=useState(null);const [saving,setSaving]=useState(false);const [error,setError]=useState('');
   const completed=plan.status==='completed';
   async function change(action){setSaving(true);setError('');let feedback='';try{if(await fb.changePlan(plan.id,action,{onError:message=>{feedback=message;}}))setDialog(null);else setError(feedback||'Your task could not be saved. Retry the change.');}catch(cause){setError(cause instanceof Error?cause.message:'Your task could not be saved.');}finally{setSaving(false);}}
-  return <article id={`task-${plan.id}`} tabIndex={-1} className={`study-task ${plan.status}`}>
-    <div className="study-task-meta"><span className={`study-skill study-skill-${planSkill(plan)}`}>{planSkill(plan)}</span><span><Clock3 size={14}/>{planMinutesLabel(plan)}</span>{plan.dateKey<dateKey(new Date())&&<span>Due {formatDateKey(plan.dateKey)}</span>}</div>
-    <h4>{studyPlanTitle(plan)}</h4>
-    {plan.originalDateKey&&<p className="study-task-rescheduled">Originally {formatDateKey(plan.originalDateKey)} · Rescheduled to {formatDateKey(plan.dateKey)}</p>}
-    {plan.skipReason&&<p className="study-task-reason">{({"merged-review":"System: merged into current review planning","bulk-skip":"Skipped in backlog","user-skipped":"Skipped by you","no-longer-due":"Currently no review needed"})[plan.skipReason]}</p>}
-    {plan.onHold&&<p className="study-task-reason">On hold · excluded from automatic scheduling</p>}
-    {plan.waitingReason&&<p className="study-task-reason">{plan.waitingReason}</p>}
-    {plan.reviewReason&&<p className="study-task-reason">Review reason: {({error:'Confirmed mistake',recovery:'Mistake recovery',due:'Scheduled review is due',missing:'Build a missing skill',spaced:'Spaced consolidation'})[plan.reviewReason]||plan.reviewReason}</p>}
-    <p className="study-task-material">{studyTargetSummary(plan)}</p>
-    <LearningTaskDetails plan={plan} batchSize={fb.state.settings.vocabulary?.learningBatchSize||10}/>
-    {plan.completion?.description&&<p className="study-completion-condition"><strong>Complete when</strong><span>{plan.completion.description}</span></p>}
-    <footer><span className="study-task-status">{completed&&<Check size={14}/>} {({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status}{plan.origin==='manual'?' · User arranged':' · System arranged'}</span><div className="study-task-tools">{plan.status==='skipped'?<button type="button" className="btn line" disabled={saving} onClick={()=>{setError('');setDialog('restore');}}><RotateCcw size={16}/>Restore task</button>:<>
+  const skill=planSkill(plan);const material=studyTargetSummary(plan);
+  const status=plan.onHold&&plan.status!=='completed'?'On hold':({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status;
+  const reasons=[
+    plan.skipReason&&({"merged-review":"Merged into current review planning","bulk-skip":"Skipped in backlog","user-skipped":"Skipped by you","no-longer-due":"No review needed any more"})[plan.skipReason],
+    plan.onHold&&'Held tasks stay out of automatic scheduling.',
+    plan.waitingReason,
+    plan.reviewReason&&`Review reason: ${({error:'Confirmed mistake',recovery:'Mistake recovery',due:'Scheduled review is due',missing:'Build a missing skill',spaced:'Spaced consolidation'})[plan.reviewReason]||plan.reviewReason}`,
+  ].filter(Boolean);
+  const hasDetails=Boolean(material||plan.completion?.description||reasons.length);
+  return <article id={`task-${plan.id}`} tabIndex={-1} className={`study-task study-plan-task ${plan.status}`}>
+    <div className="study-plan-task-body">
+      <h4>{studyPlanTitle(plan)}</h4>
+      <p className="study-task-meta"><span className={`study-skill study-skill-${skill}`}>{skill}</span><span><Clock3 size={14}/>{planMinutesLabel(plan)}</span><span className="study-task-status">{completed&&<Check size={14}/>}{status}</span>{plan.dateKey<dateKey(new Date())&&<span>Due {formatDateKey(plan.dateKey)}</span>}{plan.originalDateKey&&plan.originalDateKey!==plan.dateKey&&<span>Moved from {formatDateKey(plan.originalDateKey)}</span>}{plan.origin==='manual'&&<span>Added by you</span>}</p>
+      <LearningTaskDetails plan={plan} batchSize={fb.state.settings.vocabulary?.learningBatchSize||10}/>
+      {hasDetails&&<details className="study-task-details"><summary>Details</summary>
+        {material&&<p className="study-task-material">{material}</p>}
+        {plan.completion?.description&&<p className="study-completion-condition"><strong>Done when</strong> {plan.completion.description}</p>}
+        {reasons.map(reason=><p className="study-task-reason" key={reason}>{reason}</p>)}
+      </details>}
+    </div>
+    <div className="study-task-tools">{plan.status==='skipped'?<button type="button" className="btn line" disabled={saving} onClick={()=>{setError('');setDialog('restore');}}><RotateCcw size={16}/>Restore task</button>:<>
       {!plan.onHold&&<TaskStartButton plan={plan}/>}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild><button type="button" className="btn line study-task-menu" aria-label={`Task actions: ${studyPlanTitle(plan)}`} disabled={saving}><MoreHorizontal size={18}/></button></DropdownMenu.Trigger>
@@ -117,7 +126,7 @@ function PlanTask({plan}){
           <DropdownMenu.Item className="dropdown-item study-task-skip" disabled={completed} onSelect={()=>void change({type:'skip'})}><SkipForward size={16}/>Skip task</DropdownMenu.Item>
         </DropdownMenu.Content></DropdownMenu.Portal>
       </DropdownMenu.Root>
-    </>}</div></footer>
+    </>}</div>
     {error&&!dialog&&<p className="study-alert" role="alert">{error}</p>}
     {dialog&&<TaskEditor key={`${accountId()}:${plan.id}:${dialog}`} mode={dialog} plan={plan} dateKey={plan.dateKey} onClose={()=>setDialog(null)}/>}
 
