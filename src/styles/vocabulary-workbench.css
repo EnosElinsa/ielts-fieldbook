@@ -234,7 +234,7 @@
   padding: 10px 12px;
   border: 1px solid var(--rule);
   border-radius: 6px;
-  background: var(--paper);
+  background: var(--surface-soft);
   color: var(--ink);
 }
 .vocabulary-picker-search input:focus {
@@ -495,9 +495,9 @@
   user-select: none;
 }
 .practice-answer-correct {
-  color: var(--green, #26785d);
+  color: var(--success);
   text-decoration: underline;
-  text-decoration-color: var(--green, #26785d);
+  text-decoration-color: var(--success);
   text-underline-offset: 3px;
 }
 .practice-answer-required {

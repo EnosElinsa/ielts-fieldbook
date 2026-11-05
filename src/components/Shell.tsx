@@ -9,7 +9,7 @@ import { NavIcons, Toast } from './ui';
 import { useAuthUser } from '../auth/useAuthUser';
 import { AccountMark } from '../features/account/AccountMark';
 import { SaveFailure } from './SaveFailure';
-import { ArrowRight, Search, PanelLeftClose, PanelLeftOpen, Upload } from 'lucide-react';
+import { ArrowRight, Search, PanelLeftClose, PanelLeftOpen, Upload, UserRound } from 'lucide-react';
 import { IconButton } from './IconButton';
 import { AccountMenu, CommandSearch, MobileNavigation } from './WorkbenchNavigation';
 import { ModalFrame } from './ModalFrame';
@@ -83,7 +83,7 @@ function chromeFor(pathname: string, activeSkill: string, deskName: string, topi
   if (pathname.startsWith('/speak/topics/')) return { kicker: 'Speaking topic', title: topicName || 'Speaking topic' };
   if (pathname === '/write/questions') return { kicker: 'Writing bank', title: 'Writing questions' };
   if (pathname === '/write' || pathname.startsWith('/write?')) return { kicker: 'Writing', title: deskName || 'Writing' };
-  if (pathname === '/speak/questions') return { kicker: 'Speaking bank', title: 'Sep–Dec topics' };
+  if (pathname === '/speak/questions') return { kicker: 'Speaking bank', title: 'Speaking questions' };
   if (pathname === '/stories') return { kicker: 'Stories', title: 'Your stories' };
   if (pathname === '/speak') return { kicker: 'Practice', title: topicName || 'Speaking practice' };
   if (pathname.startsWith('/review')) return { kicker: 'Review', title: speaking ? 'Attempts and scores' : 'Essays and scores' };
@@ -116,6 +116,7 @@ export function Shell() {
   const speaking = module === 'speaking';
   const secondaryLinks = studyLinks[module] || [];
   const vocabularyOwnHeading = location.pathname.startsWith('/vocabulary');
+  const ownHeading = /^\/(today)?$/.test(location.pathname) || location.pathname === '/planning' || /^\/(reading|listening)(\/review)?$/.test(location.pathname);
   const streak = !fb.moduleStatus || fb.moduleStatus.productive === 'ready' && fb.moduleStatus.receptive === 'ready' ? studyStreak(fb.state) : null;
   // Filters and answer edits stay still; changing the reviewed skill is a new view.
   const transitionKey = location.pathname + (location.pathname === '/review' ? `:${new URLSearchParams(location.search).get('skill') || fb.activeSkill}` : location.pathname === '/progress' ? `:${new URLSearchParams(location.search).get('category') || fb.activeSkill}` : '');
@@ -147,12 +148,6 @@ export function Shell() {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
         setSearchOpen((current) => !current);
-      }
-      if (event.key === 'Escape') {
-        if (fb.backupMenuOpen) {
-          fb.setBackupMenuOpen(false);
-          return;
-        }
       }
     };
     document.addEventListener('keydown', onKey);
@@ -265,48 +260,17 @@ export function Shell() {
         </aside></Tooltip.Provider>
         <main className="main">
           <header className="top">
-            {!vocabularyOwnHeading ? <div className="page-title" key={`${chrome.kicker}-${chrome.title}`}>
+            {vocabularyOwnHeading ? <div className="page-title page-title-compact"><p className="kicker">Vocabulary</p></div> : ownHeading ? <div className="page-title page-title-compact" key={`${chrome.kicker}-${chrome.title}`}>
+              <p className="kicker">{chrome.kicker}</p>
+              <h1 className="sr-only">{chrome.title}</h1>
+            </div> : <div className="page-title" key={`${chrome.kicker}-${chrome.title}`}>
               <p className="kicker">{chrome.kicker}</p>
               <h1 className="title">{chrome.title}</h1>
-            </div> : <div className="page-title page-title-compact"><p className="kicker">Vocabulary</p></div>}
+            </div>}
             <div className="actions">
               <IconButton label="Search workspace" onClick={() => setSearchOpen(true)}><Search size={18} /></IconButton>
               <AccountMenu user={accountUser} onImportBackup={() => backupInput.current?.click()} onExportBackup={exportBackup} onLegal={setLegalView} />
-              <button className="btn text legacy-header-action" type="button" onClick={() => navigateWithPracticeGuard('/settings', () => navigate('/settings'))}>
-                Settings
-              </button>
-              <div className="menu legacy-header-action">
-                <button
-                  className="btn text"
-                  type="button"
-                  aria-expanded={fb.backupMenuOpen}
-                  aria-controls="backupMenu"
-                  onClick={() => fb.setBackupMenuOpen((open) => !open)}
-                >
-                  Backup
-                </button>
-                <div className="menu-pop" id="backupMenu" hidden={!fb.backupMenuOpen}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      fb.setBackupMenuOpen(false);
-                      void exportBackup();
-                    }}
-                  >
-                    Export backup
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      fb.setBackupMenuOpen(false);
-                      backupInput.current?.click();
-                    }}
-                  >
-                    Import backup
-                  </button>
-                </div>
-              </div>
-              {!['vocabulary', 'account', 'settings', 'planning', 'reading', 'listening'].includes(module) && !['reading','listening'].includes(fb.activeSkill) ? <button className="btn primary import-score" type="button" onClick={() => fb.openFeedbackImport()}>
+              {!['vocabulary', 'account', 'settings', 'planning', 'reading', 'listening'].includes(module) ? <button className="btn primary import-score" type="button" onClick={() => fb.openFeedbackImport()}>
                 <Upload size={16} />Import score
               </button> : null}
               <input
@@ -332,7 +296,7 @@ export function Shell() {
         </main>
       </div>
       <MobileNavigation onMore={() => setMoreOpen(true)} onSelectModule={resumeModule} />
-      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}{workspaceModules.filter(link => ['planning', 'progress', 'settings'].includes(link.id)).map(link => <button type="button" key={link.id} className={module === link.id ? 'active' : undefined} onClick={() => { setMoreOpen(false); resumeModule(link.id); }}><link.Icon size={20} />{link.label}</button>)}<button type="button" onClick={() => goFromMore('/settings/account')}>Account</button></div></div></ModalFrame>
+      <ModalFrame open={moreOpen} onClose={() => setMoreOpen(false)} title="More" header="Your workspace"><div className="more-modal">{secondaryLinks.length > 0 && <p className="eyebrow">{workspaceModules.find(link => link.id === module)?.label} study</p>}<div className="mobile-more-links">{secondaryLinks.map((link) => <button type="button" key={link.to} className={studyLinkActive(link.to, location.pathname, location.search, module) ? 'active' : undefined} onClick={() => goFromMore(link.to)}>{link.icon}{link.label}</button>)}{workspaceModules.filter(link => ['planning', 'progress', 'settings'].includes(link.id)).map(link => <button type="button" key={link.id} className={module === link.id ? 'active' : undefined} onClick={() => { setMoreOpen(false); resumeModule(link.id); }}><link.Icon size={20} />{link.label}</button>)}<button type="button" onClick={() => goFromMore('/settings/account')}><UserRound size={20} />Account</button></div></div></ModalFrame>
       {searchOpen && <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <PageErrorBoundary resetKey={`${accountId()}:${fb.modal}:${legalView}`} onDismiss={() => { fb.closeModal(); setLegalView(null); }}>
       <Suspense fallback={<PageLoadingState message="Opening dialog…" />}>

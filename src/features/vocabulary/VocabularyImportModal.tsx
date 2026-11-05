@@ -154,8 +154,10 @@ export function VocabularyImportModal() {
       }}
     >
       <div className="modal vocabulary-modal">
+        <h3 aria-hidden="true">Import vocabulary</h3>
+        <p>Choose a CSV file or paste its contents, then preview before importing.</p>
         <div className="vocabulary-import-file">
-          <label htmlFor="vocabulary-import-file">CSV vocabulary file</label>
+          <label htmlFor="vocabulary-import-file" className="vocabulary-import-label">CSV vocabulary file</label>
           <input
             ref={fileInput}
             id="vocabulary-import-file"
@@ -167,7 +169,7 @@ export function VocabularyImportModal() {
           />
           <div className="vocabulary-file-picker"><button type="button" className="btn line" disabled={saving} onClick={()=>fileInput.current?.click()}><Upload size={15}/>{text ? 'Change file' : 'Choose file'}</button><span aria-live="polite">{text ? filename : 'No file selected'}</span></div>
         </div>
-        <label htmlFor="vocabulary-import-text">CSV contents</label>
+        <label htmlFor="vocabulary-import-text" className="vocabulary-import-label">CSV contents</label>
         <textarea
           id="vocabulary-import-text"
           className="vocabulary-import-text"

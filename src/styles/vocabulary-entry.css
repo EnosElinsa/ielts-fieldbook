@@ -4,7 +4,7 @@
   padding: 20px;
   border: 1px solid var(--rule);
   border-radius: 12px;
-  background: var(--paper);
+  background: var(--sheet);
 }
 .vocabulary-learning-progress > h3 { margin: 0 0 20px; }
 .vocabulary-progress-overview { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 28px; align-items: start; }
@@ -142,7 +142,7 @@
 }
 .vocabulary-source-locations a[aria-current="page"] {
   border-color: var(--blue);
-  background: var(--blue-soft, var(--paper));
+  background: var(--soft-blue);
 }
 .vocabulary-source-locations .pill {
   flex-shrink: 0;

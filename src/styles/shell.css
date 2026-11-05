@@ -10,10 +10,6 @@
 .nav-icon{display:grid;place-items:center}
 .nav-icon svg{display:block;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .nav a{font-size:13px}
-.menu{position:relative}
-.menu-pop{position:absolute;right:0;top:calc(100% + 8px);z-index:6;min-width:168px;padding:6px;background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--shadow);display:grid}
-.menu-pop button{border:0;background:transparent;text-align:left;padding:10px 12px;font-size:13px;font-weight:700;color:var(--ink)}
-.menu-pop button:hover{background:var(--soft-blue)}
 .skill-short{display:inline-block;max-width:0;opacity:0;overflow:hidden;vertical-align:bottom;transition:max-width .34s cubic-bezier(.22,1,.36,1),opacity .2s ease}
 .nav-label,.rail-toggle-label,.skill-long{display:inline-block;max-width:148px;overflow:hidden;white-space:nowrap;vertical-align:bottom;transition:max-width .34s cubic-bezier(.22,1,.36,1),opacity .2s ease}
 .mark-name,.mark-sub{max-width:220px;overflow:hidden;white-space:nowrap;transition:max-width .34s cubic-bezier(.22,1,.36,1),opacity .2s ease}

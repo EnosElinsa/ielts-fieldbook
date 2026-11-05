@@ -143,7 +143,6 @@ function useFieldbookValue() {
   const [editingStoryId, setEditingStoryId] = useState(null);
   const [storyPresetTopicIds, setStoryPresetTopicIds] = useState([]);
   const [checklistToastNeeded, setChecklistToastNeeded] = useState(false);
-  const [backupMenuOpen, setBackupMenuOpen] = useState(false);
   const [booted, setBooted] = useState(false);
   const [saveFailed, setSaveFailed] = useState(false);
   const [saveFailureMessage, setSaveFailureMessage] = useState('');
@@ -2003,8 +2002,6 @@ function useFieldbookValue() {
       setRevealedVocabulary,
       checklistToastNeeded,
       setChecklistToastNeeded,
-      backupMenuOpen,
-      setBackupMenuOpen,
       setWritingDraft,
       setSpeakingDraft,
       startPlan,
@@ -2090,7 +2087,6 @@ function useFieldbookValue() {
       ensurePlanningRows,
       activeSkill,
       vocabularyCatalogRevision,
-      backupMenuOpen,
       booted,
       checklistToastNeeded,
       chooseQuestion,
