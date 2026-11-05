@@ -964,7 +964,7 @@ test('bank discovers unsynced local sessions and groups same-passage history', a
   const resume = await screen.findByRole('link', { name: 'Resume session' });
   expect(resume).toHaveAttribute('href', expect.stringContaining(`attempt=${id}`));
   expect(screen.getByRole('link', { name: 'New session' })).toHaveAttribute('href', '/reading/section?new=1');
-  await userEvent.setup().click(screen.getByText('0 completed · 1 unfinished sessions'));
+  await userEvent.setup().click(screen.getByText('0 completed · 1 unfinished session'));
   expect(screen.getByRole('link', { name: `Resume session ${id}` })).toBeVisible();
 });
 

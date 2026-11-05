@@ -10,6 +10,7 @@ import {
 import { ArrowRight, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useFieldbook } from "../../context/FieldbookContext";
 import { FilterMenu } from "../../components/ui";
+import { formatDateTime } from "../../lib/format";
 import {
   addVocabularyItem,
   removeVocabularyItem,
@@ -69,10 +70,7 @@ const label = (value: string) =>
   value.replace(/^./, (char) => char.toUpperCase());
 const eventDate = (at: string | null | undefined) =>
   at && Number.isFinite(Date.parse(at))
-    ? new Date(at).toLocaleString("en-GB", {
-        dateStyle: "short",
-        timeStyle: "short",
-      })
+    ? formatDateTime(at)
     : "Date unavailable";
 export function VocabularyEntryPage() {
   const fb = useFieldbook();

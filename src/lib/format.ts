@@ -34,6 +34,18 @@ export function formatDate(value, withTime) {
   );
 }
 
+export function formatDateTime(value) {
+  return formatDate(value, true);
+}
+
+export function formatCount(n) {
+  return Number(n || 0).toLocaleString('en-US');
+}
+
+export function plural(n, one, many = `${one}s`) {
+  return `${formatCount(n)} ${Number(n) === 1 ? one : many}`;
+}
+
 export function formatAccountDate(value) {
   if (!value) return '—';
   const date = new Date(value);

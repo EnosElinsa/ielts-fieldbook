@@ -2,7 +2,7 @@
 import { useMemo } from 'react';
 import { useWorkspacePageState } from '../../lib/workspacePageState';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { formatDate } from '../../lib/format';
+import { formatDate, plural } from '../../lib/format';
 import { Empty } from '../../components/ui';
 import { FilterMenu } from '../../components/ui';
 import { ArrowUpRight, Pencil, Plus, Trash2 } from 'lucide-react';
@@ -76,7 +76,7 @@ export function StoriesPage() {
               <article className="story-card" key={story.id}>
                 <div className="story-card-head">
                   <div>
-                    <span className="pill blue">Fits {(story.topicIds || []).length} topics</span>
+                    <span className="pill blue">Fits {plural((story.topicIds || []).length, 'topic')}</span>
                     <h4 className="story-term">{story.title || 'Untitled story'}</h4>
                     <p className="story-meaning">{storySummary(story) || 'No notes yet'}</p>
                   </div>

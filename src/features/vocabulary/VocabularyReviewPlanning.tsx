@@ -10,6 +10,7 @@ import { modeLabel } from './practicePresentation';
 import type { VocabularyPracticeController } from './useVocabularyPracticeController';
 import type { StudyPlan } from '../../domain/plans';
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
+import { formatDateKey } from '../../lib/format';
 
 function reviewRange(plan:StudyPlan){
  const target=plan.target;if(target.type!=='vocabulary')return '';
@@ -22,7 +23,7 @@ function reviewRange(plan:StudyPlan){
 export function PlannedReviewList(){
  const fb=useFieldbook();
  const tasks=((fb.state.plans||[]) as StudyPlan[]).filter(plan=>plan.skill==='vocabulary'&&plan.target?.type==='vocabulary'&&plan.target.mode==='due-review'&&!plan.archivedAt&&!plan.onHold&&['pending','in_progress'].includes(plan.status)).sort((a,b)=>a.dateKey.localeCompare(b.dateKey));
- return <section className="practice-planned-list" aria-label="Planned review"><header><h3>Planned review</h3><p>Each session follows one task's assigned mode and complete question list.</p></header>{tasks.length?<div>{tasks.map(plan=><article key={plan.id}><div><span className="vocabulary-eyebrow">{plan.origin==='manual'?'User arranged':'System arranged'} · {plan.dateKey}</span><h4>{plan.title}</h4><p>{plan.target.type==='vocabulary'?modeLabel(plan.target.assessmentMode):''} · {plan.target.type==='vocabulary'&&plan.target.binding==='frozen'?`${plan.target.cards.length} fixed questions · ${new Set(plan.target.cards.map(ref=>ref.entryId)).size} words`:`Up to ${plan.quantity||plan.estimatedMinutes} questions selected at start`}</p><p>{reviewRange(plan)}</p><p>{plan.completion?.description}</p></div><TaskStartButton plan={plan}/></article>)}</div>:<p>No planned reviews. Start a self-directed session or arrange one below.</p>}</section>;
+ return <section className="practice-planned-list" aria-label="Planned review"><header><h3>Planned review</h3><p>Each session follows one task's assigned mode and complete question list.</p></header>{tasks.length?<div>{tasks.map(plan=><article key={plan.id}><div><span className="vocabulary-eyebrow">{plan.origin==='manual'?'User arranged':'System arranged'} · {formatDateKey(plan.dateKey)}</span><h4>{plan.title}</h4><p>{plan.target.type==='vocabulary'?modeLabel(plan.target.assessmentMode):''} · {plan.target.type==='vocabulary'&&plan.target.binding==='frozen'?`${plan.target.cards.length} fixed questions · ${new Set(plan.target.cards.map(ref=>ref.entryId)).size} words`:`Up to ${plan.quantity||plan.estimatedMinutes} questions selected at start`}</p><p>{reviewRange(plan)}</p><p>{plan.completion?.description}</p></div><TaskStartButton plan={plan}/></article>)}</div>:<p>No planned reviews. Start a self-directed session or arrange one below.</p>}</section>;
 }
 
 export function ScheduleVocabularyReview({controller:c}:{controller:VocabularyPracticeController}){
