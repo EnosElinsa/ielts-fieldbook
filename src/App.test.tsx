@@ -68,6 +68,15 @@ vi.mock('./storage', async () => {
           questions: [],
           part3: [],
         },
+        {
+          id: 's2',
+          part: 2,
+          title: 'Feeling bored',
+          cueCard: 'Describe a time you felt bored',
+          bullets: [],
+          questions: [],
+          part3: [],
+        },
       ],
       settings: {
         examDate: '',
@@ -230,6 +239,21 @@ describe('Fieldbook UI', () => {
     await user.click(within(rail).getByRole('link', { name: 'Today' }));
     await screen.findAllByRole('heading', { level: 2, name: 'Today' });
     expect(screen.getByRole('button', { name: 'Import score' })).toBeTruthy();
+  });
+
+  it('titles a speaking topic page by the topic in its URL while another topic is selected', async () => {
+    renderAt('/speak/topics/s2');
+    await waitFor(() => expect(document.title.startsWith('Feeling bored · ')).toBe(true));
+    expect(screen.getByRole('heading', { level: 1, name: 'Feeling bored' })).toBeTruthy();
+    expect(screen.queryByRole('heading', { level: 1, name: 'A memorable trip' })).toBeNull();
+  });
+
+  it('exam sub-pages use a compact header with a specific page title', async () => {
+    renderAt('/listening/intensive/part1');
+    await waitFor(() => expect(document.title).toBe('Intensive listening · IELTS Fieldbook'));
+    const header = document.querySelector('header.top') as HTMLElement;
+    expect(header.querySelector('.page-title-compact .kicker')?.textContent).toBe('Listening');
+    expect(within(header).getByRole('heading', { level: 1, name: 'Intensive listening' }).className).toBe('sr-only');
   });
 
   it('listening sidebar and mobile More contain only Questions and Review study entries', async () => {

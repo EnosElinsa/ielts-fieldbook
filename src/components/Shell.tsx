@@ -72,9 +72,27 @@ const studyLinks = {
   ],
 };
 
+const EXAM_PATH = /^\/(reading|listening)(?:\/|$)/;
+
+function examTitle(pathname: string, name: string) {
+  const [, , section = '', detail = ''] = pathname.split('/');
+  if (!section) return name;
+  if (section === 'review') return detail ? `${name} result` : `${name} review`;
+  if (section === 'source') return `${name} source`;
+  if (section === 'mock') return `${name} mock test`;
+  if (section === 'intensive') return 'Intensive listening';
+  return `${name} practice`;
+}
+
+function pathTopicId(pathname: string) {
+  if (!pathname.startsWith('/speak/topics/')) return '';
+  const value = pathname.slice('/speak/topics/'.length).split('/')[0];
+  try { return decodeURIComponent(value); } catch { return value; }
+}
+
 function chromeFor(pathname: string, activeSkill: string, deskName: string, topicName: string, search = '') {
-  if (pathname.startsWith('/reading')) return {kicker:'Reading',title:pathname.includes('/review')?'Reading review':'Reading'};
-  if (pathname.startsWith('/listening')) return {kicker:'Listening',title:pathname.includes('/intensive')?'Intensive listening':pathname.includes('/review')?'Listening review':'Listening'};
+  const exam = pathname.match(EXAM_PATH);
+  if (exam) { const name = exam[1] === 'reading' ? 'Reading' : 'Listening'; return { kicker: name, title: examTitle(pathname, name) }; }
   const reviewSkill = new URLSearchParams(search).get('skill');
   const effectiveSkill = reviewSkill === 'speaking' || reviewSkill === 'writing' ? reviewSkill : activeSkill;
   const speaking = effectiveSkill === 'speaking';
@@ -116,12 +134,14 @@ export function Shell() {
   const speaking = module === 'speaking';
   const secondaryLinks = studyLinks[module] || [];
   const vocabularyOwnHeading = location.pathname.startsWith('/vocabulary');
-  const ownHeading = /^\/(today)?$/.test(location.pathname) || location.pathname === '/planning' || /^\/(reading|listening)(\/review)?$/.test(location.pathname);
+  const ownHeading = /^\/(today)?$/.test(location.pathname) || location.pathname === '/planning' || EXAM_PATH.test(location.pathname);
   const streak = !fb.moduleStatus || fb.moduleStatus.productive === 'ready' && fb.moduleStatus.receptive === 'ready' ? studyStreak(fb.state) : null;
   // Filters and answer edits stay still; changing the reviewed skill is a new view.
   const transitionKey = location.pathname + (location.pathname === '/review' ? `:${new URLSearchParams(location.search).get('skill') || fb.activeSkill}` : location.pathname === '/progress' ? `:${new URLSearchParams(location.search).get('category') || fb.activeSkill}` : '');
-  const deskName = displayName(fb.selectedQuestion?.name) || 'Writing';
-  const topicName = fb.selectedTopic?.title || 'Speaking practice';
+  // The built-in fallback question would flash its raw name before the bank loads.
+  const deskName = (!fb.bankStatus || fb.bankStatus.writing === 'ready' ? displayName(fb.selectedQuestion?.name) : '') || 'Writing';
+  const topicId = pathTopicId(location.pathname);
+  const topicName = topicId ? (fb.state.speakingTopics || []).find((topic) => String(topic.id) === topicId)?.title || 'Speaking topic' : fb.selectedTopic?.title || 'Speaking practice';
   const chrome = useMemo(
     () => chromeFor(location.pathname, fb.activeSkill, deskName, topicName, location.search),
     [location.pathname, location.search, fb.activeSkill, deskName, topicName],

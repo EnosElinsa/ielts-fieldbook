@@ -20,6 +20,8 @@ test('search routes reading and listening through skill selection', async () => 
 test('mobile navigation gives listening and reading direct guarded entry points', async () => {
   render(<MemoryRouter><MobileNavigation onMore={() => {}} /></MemoryRouter>);
   const user = userEvent.setup();
+  expect(screen.getByRole('button', { name: 'Listening' })).toHaveTextContent(/^Listen$/);
+  expect(screen.getByRole('link', { name: 'Vocabulary' })).toHaveTextContent(/^Vocab$/);
   await user.click(screen.getByRole('button', { name: 'Listening' }));
   expect(fb.setSkill).toHaveBeenCalledWith('listening', '/listening');
   await user.click(screen.getByRole('button', { name: 'Reading' }));

@@ -75,6 +75,8 @@ export function CommandSearch({ open, onClose }: { open: boolean; onClose: () =>
   </div></ModalFrame>;
 }
 
+const MOBILE_LABELS = { listening: 'Listen', reading: 'Read', writing: 'Write', speaking: 'Speak', vocabulary: 'Vocab' };
+
 export function MobileNavigation({ onMore, onSelectModule }: { onMore: () => void; onSelectModule?: (id: string) => void }) {
   const fb = useFieldbook();
   const { pathname, search } = useLocation();
@@ -86,7 +88,7 @@ export function MobileNavigation({ onMore, onSelectModule }: { onMore: () => voi
     navigateWithPracticeGuard(to, () => ['writing', 'speaking', 'reading', 'listening'].includes(id) ? fb.setSkill(id, to) : navigate(to));
   };
   return <nav className="mobile-navigation" aria-label="Main navigation">
-    {workspaceModules.filter(link => !['progress', 'planning', 'settings'].includes(link.id)).map(({ id, to, label, Icon }) => id === 'today' || id === 'vocabulary' ? <Link key={id} to={to} aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} aria-label={label} data-practice-navigation onClick={event => { if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); select(id, to); }}><Icon size={20} /><span>{label === 'Vocabulary' ? 'Vocab' : label}</span></Link> : <button key={id} type="button" aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} onClick={() => select(id, to)}><Icon size={20} /><span>{label}</span></button>)}
+    {workspaceModules.filter(link => !['progress', 'planning', 'settings'].includes(link.id)).map(({ id, to, label, Icon }) => id === 'today' || id === 'vocabulary' ? <Link key={id} to={to} aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} aria-label={label} data-practice-navigation onClick={event => { if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); select(id, to); }}><Icon size={20} /><span>{MOBILE_LABELS[id] || label}</span></Link> : <button key={id} type="button" aria-label={label} aria-current={activeModule === id ? 'page' : undefined} className={activeModule === id ? 'active' : undefined} onClick={() => select(id, to)}><Icon size={20} /><span>{MOBILE_LABELS[id] || label}</span></button>)}
     <button type="button" className={['progress', 'planning', 'settings', 'account'].includes(activeModule) ? 'active' : undefined} aria-current={['progress', 'planning', 'settings', 'account'].includes(activeModule) ? 'page' : undefined} onClick={onMore}><MoreHorizontal size={20} /><span>More</span></button>
   </nav>;
 }

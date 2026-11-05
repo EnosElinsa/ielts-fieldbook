@@ -5,7 +5,7 @@ import { useFieldbook } from '../../context/FieldbookContext';
 import { formatDate, plural } from '../../lib/format';
 import { Empty } from '../../components/ui';
 import { FilterMenu } from '../../components/ui';
-import { ArrowUpRight, Pencil, Plus, Trash2 } from 'lucide-react';
+import { ArrowRight, Pencil, Plus, Trash2 } from 'lucide-react';
 import { useConfirmationDialog } from '../../components/useConfirmationDialog';
 import { accountId } from '../../storage/remote';
 
@@ -84,7 +84,7 @@ export function StoriesPage() {
                 {story.event ? <p className="story-example">{story.event}</p> : null}
                 <div className="story-tags">
                   {names.map((name, index) => (
-                    <button type="button" className="story-topic-link" key={`${name}-${index}`} onClick={() => fb.startSpeakingPractice(story.topicIds[index], '2', story.id)}>{name}<ArrowUpRight size={13} /></button>
+                    <button type="button" className="story-topic-link" key={`${name}-${index}`} onClick={() => fb.startSpeakingPractice(story.topicIds[index], '2', story.id)}>{name}<ArrowRight size={13} /></button>
                   ))}
                 </div>
                 <div className="story-card-foot">
@@ -104,7 +104,7 @@ export function StoriesPage() {
                         fb.startSpeakingPractice(topicId, '2', story.id);
                       }}
                     >
-                      Practise <ArrowUpRight size={15} />
+                      Practise <ArrowRight size={15} />
                     </button>
                     <button
                       className="btn line"

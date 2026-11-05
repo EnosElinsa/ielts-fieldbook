@@ -4,7 +4,7 @@ import { reconstructAssessmentMarkdown, isBandScore } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { formatDate, vocabularyLabels, markdownLines, sessionSkill } from '../../lib/format';
 import { SessionAudioPlayer } from '../../components/SessionAudioPlayer';
-import { ArrowUpRight, Download, ArrowLeft, RotateCcw } from 'lucide-react';
+import { ArrowRight, Download, ArrowLeft, RotateCcw } from 'lucide-react';
 import { exportAttemptRequest } from './assessmentRequest';
 
 function Lines({ text }: { text: string }) {
@@ -30,7 +30,7 @@ export function AssessmentDetailPage() {
         <div className="empty">
           <p>Score not found.</p>
           <Link className="btn line" to="/review">
-            ← Back to review
+            <ArrowLeft size={16} aria-hidden="true" />Back to review
           </Link>
         </div>
       </section>
@@ -246,9 +246,9 @@ export function AssessmentDetailPage() {
                   <p>Nothing recorded.</p>
                 )}
               </div>
-              {session ? <button type="button" className="btn primary" onClick={() => void fb.startTargetedPractice(session)}>Start targeted practice <ArrowUpRight size={16} /></button> : null}
+              {session ? <button type="button" className="btn primary" onClick={() => void fb.startTargetedPractice(session)}>Start targeted practice <ArrowRight size={16} /></button> : null}
             </section>
-            {session && latestRewrite ? <section className="assessment-section"><h4>Your progress on this task</h4><div className="rewrite-comparison"><div><h5>Original attempt</h5><small>{formatDate(session.date, true)} · {session.words} words</small><pre>{session.essay}</pre></div><div><h5>Your latest {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</h5><small>{formatDate(latestRewrite.date, true)} · {latestRewrite.words} words</small><pre>{latestRewrite.essay}</pre>{latestRewrite.assessmentId ? <Link className="btn line" to={`/review/${latestRewrite.assessmentId}`}>View new feedback <ArrowUpRight size={15} /></Link> : <div className="history-actions"><button className="btn line" onClick={() => void exportAttemptRequest(fb, latestRewrite)}><Download size={16} />Request feedback for {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</button><button className="btn line" onClick={() => fb.openFeedbackImport()}>Import feedback</button></div>}</div></div></section> : null}
+            {session && latestRewrite ? <section className="assessment-section"><h4>Your progress on this task</h4><div className="rewrite-comparison"><div><h5>Original attempt</h5><small>{formatDate(session.date, true)} · {session.words} words</small><pre>{session.essay}</pre></div><div><h5>Your latest {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</h5><small>{formatDate(latestRewrite.date, true)} · {latestRewrite.words} words</small><pre>{latestRewrite.essay}</pre>{latestRewrite.assessmentId ? <Link className="btn line" to={`/review/${latestRewrite.assessmentId}`}>View new feedback <ArrowRight size={15} /></Link> : <div className="history-actions"><button className="btn line" onClick={() => void exportAttemptRequest(fb, latestRewrite)}><Download size={16} />Request feedback for {skillAttr === 'speaking' ? 'retake' : 'rewrite'}</button><button className="btn line" onClick={() => fb.openFeedbackImport()}>Import feedback</button></div>}</div></div></section> : null}
           </article>
           <aside className="assessment-aside">
             <section>

@@ -2,7 +2,7 @@
 import { useWorkspacePageState } from '../../lib/workspacePageState';
 import { useState } from 'react';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
-import { Copy, Download, FileInput, ArrowUpRight, RotateCcw } from 'lucide-react';
+import { Copy, Download, FileInput, ArrowRight, RotateCcw } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { isBandScore } from '../../domain';
 import { attemptLabel, displayName, formatDate, sessionSkill } from '../../lib/format';
@@ -172,7 +172,7 @@ export function ReviewPage() {
                   {error.next ? ` · Next: ${error.next}` : ''}
                 </small>
                 <div className="history-actions">
-                  {error.sourceSessionId && fb.state.sessions.some((session) => session.id === error.sourceSessionId) ? <button className="btn primary" type="button" onClick={() => fb.startTargetedPractice(fb.state.sessions.find((session) => session.id === error.sourceSessionId), error.id)}>Practise this <ArrowUpRight size={15} /></button> : null}
+                  {error.sourceSessionId && fb.state.sessions.some((session) => session.id === error.sourceSessionId) ? <button className="btn primary" type="button" onClick={() => fb.startTargetedPractice(fb.state.sessions.find((session) => session.id === error.sourceSessionId), error.id)}>Practise this <ArrowRight size={15} /></button> : null}
                   <button
                     className="btn line"
                     type="button"

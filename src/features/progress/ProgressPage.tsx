@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { ArrowRight, ArrowUpRight, CheckCheck, FileCheck2, PenLine } from 'lucide-react';
+import { ArrowRight, CheckCheck, FileCheck2, PenLine, Repeat2 } from 'lucide-react';
 import { criterionBands, criterionLabel, criterionSeries, numericOveralls } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { formatDate, formatDateKey, plural, sessionSkill } from '../../lib/format';
@@ -71,7 +71,7 @@ export function ProgressPage() {
       </div>
       {skill === 'vocabulary' ? <VocabularyProgressPage embedded since={since} /> : receptive ? <ExamProgressPanel skill={skill} since={since} /> : <>
       <div className="progress-metrics">
-        {[{ label: 'Practice attempts', value: sessions.length, icon: PenLine }, { label: 'Feedback received', value: assessments.length, icon: FileCheck2 }, { label: 'Rewrites & retakes', value: rewrites.length, icon: CheckCheck }, { label: 'Feedback followed by practice', value: completedLoops, icon: ArrowUpRight }].map(({ label, value, icon: Icon }) => <div className="progress-metric" key={label}><Icon size={18} /><strong>{value}</strong><span>{label}</span></div>)}
+        {[{ label: 'Practice attempts', value: sessions.length, icon: PenLine }, { label: 'Feedback received', value: assessments.length, icon: FileCheck2 }, { label: 'Rewrites & retakes', value: rewrites.length, icon: CheckCheck }, { label: 'Feedback followed by practice', value: completedLoops, icon: Repeat2 }].map(({ label, value, icon: Icon }) => <div className="progress-metric" key={label}><Icon size={18} /><strong>{value}</strong><span>{label}</span></div>)}
       </div>
       <div className="progress-score-section">
         <div className="section-head"><div><h3>Band trend</h3><p>{plural(scores.length, 'comparable sample')}{hasTarget ? ` · Target ${target}` : ''}</p></div></div>

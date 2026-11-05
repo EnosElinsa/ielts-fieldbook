@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import { speakingCoverage } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { useSpeakingSample, SpeakingSampleStatus } from './useSpeakingSample';
@@ -99,7 +100,7 @@ export function SpeakingTopicPage() {
       <section className="view active">
         <Empty message="The speaking bank did not load." />
         <Link className="btn line" to="/speak/questions">
-          ← Back to questions
+          <ArrowLeft size={16} aria-hidden="true" />Back to questions
         </Link>
       </section>
     );
@@ -117,7 +118,7 @@ export function SpeakingTopicPage() {
           {topic.incomplete ? ' · incomplete' : ''}
         </p>
         <Link className="btn line" to="/speak/questions">
-          ← Back to questions
+          <ArrowLeft size={16} aria-hidden="true" />Back to questions
         </Link>
       </div>
       <div className="split">

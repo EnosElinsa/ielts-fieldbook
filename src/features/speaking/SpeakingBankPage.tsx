@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useMemo, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Star, List, LayoutGrid, ArrowUpRight } from 'lucide-react';
+import { Star, List, LayoutGrid, ArrowRight } from 'lucide-react';
 import { speakingCoverage } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { coverageClass, coverageLabel } from '../../lib/format';
@@ -144,7 +144,7 @@ export function SpeakingBankPage() {
                               navigate(`/speak/topics/${topic.id}`);
                             }}
                           >
-                            Open <ArrowUpRight size={15} />
+                            Open <ArrowRight size={15} />
                           </button>
                         </div>
                       </article>
