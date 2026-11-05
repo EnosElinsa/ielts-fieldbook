@@ -978,7 +978,7 @@ test("raw evidence without a review retains response, verification, result and d
     historyView.getByText("Verification: Self-reported"),
   ).toBeInTheDocument();
   expect(historyView.getAllByText("Result: Pending")).toHaveLength(2);
-  expect(historyView.getByText(/10\/10\/2026/)).toBeInTheDocument();
+  expect(historyView.getByText(/^10 Oct, \d{2}:\d{2}$/)).toBeInTheDocument();
   expect(
     historyView.getByText("My earlier meaning answer."),
   ).toBeInTheDocument();

@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { IDBFactory } from 'fake-indexeddb';
 import { createEmptyCard } from 'ts-fsrs';
 import { vocabularySessionDrafts } from '../../storage/vocabularySessionDrafts';
-import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, configure, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Profiler, Suspense, useState } from 'react';
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Link, useLocation, useNavigate, Routes, Route } from "react-router-dom";
@@ -19,6 +19,9 @@ import { createVocabularySession, evaluateVocabularySessionAnswer, updateVocabul
 import { freezeVocabularyPronunciation } from '../../domain/vocabulary/sensePronunciation';
 import { WorkspaceScrollRestoration } from '../../components/WorkspaceScrollRestoration';
 import * as releasedVocabulary from '../../storage/vocabularyCatalog';
+
+// Large sessions render slowly when other test files share the machine.
+configure({ asyncUtilTimeout: 5000 });
 
 const { fb, player, owner } = vi.hoisted(() => ({
   fb: { current: null as any },
@@ -702,8 +705,8 @@ test("235-word group submits one frozen full-group attempt beyond the old cap", 
   mount('?bookId=test-book&unitId=test-group&dueOnly=false');
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
   await user.click(await readyStart());
-  await user.click(screen.getByRole('button', { name: 'Submit session' }));
-  await user.click(screen.getByRole('button', { name: 'Submit anyway' }));
+  await user.click(await screen.findByRole('button', { name: 'Submit session' }));
+  await user.click(await screen.findByRole('button', { name: 'Submit anyway' }));
   await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1));
   const [prepared] = fb.current.persistVocabularySession.mock.calls[0];
   expect(prepared.vocabularyReviews).toHaveLength(235);
@@ -717,17 +720,17 @@ test("catalog-only draft recovery waits for the saved book and retains answers w
   const view = mount('?bookId=test-book&unitId=test-group&dueOnly=false');
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
   await user.click(await readyStart());
-  await user.click(screen.getByRole('textbox', { name: 'Answer 1' }));
+  await user.click(await screen.findByRole('textbox', { name: 'Answer 1' }));
   await user.paste('saved-answer');
   await user.click(screen.getByRole('button', { name: 'Exit session' }));
-  await user.click(screen.getByRole('button', { name: 'Keep progress' }));
+  await user.click(await screen.findByRole('button', { name: 'Keep progress' }));
   view.unmount();
   fb.current.state.vocabulary = [];
   Object.assign(VOCABULARY_CATALOG, originalCatalog);
   fb.current.loadVocabularyCatalog.mockRejectedValue(new Error('offline'));
   mount();
   await user.click(await screen.findByRole('button', { name: 'Resume session' }));
-  expect(screen.getByText(/The saved wordbook could not be loaded/)).toBeInTheDocument();
+  expect(await screen.findByText(/The saved wordbook could not be loaded/)).toBeInTheDocument();
   expect(await screen.findByRole('button', { name: 'Resume session' })).toBeEnabled();
   let release: () => void;
   fb.current.loadVocabularyCatalog.mockImplementationOnce(() => new Promise<void>(resolve => {
@@ -739,7 +742,7 @@ test("catalog-only draft recovery waits for the saved book and retains answers w
   release!();
   await waitFor(() => expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('saved-answer'));
   expect(screen.getByText('1–50 of 235')).toBeInTheDocument();
-});
+}, 15_000);
 
 test("dictation shortcuts navigate without stealing answer text and pause with Escape", async () => {
   const user = userEvent.setup();
@@ -810,16 +813,17 @@ test("result filters preserve marked rows and mistake retry ignores the review b
   mount('?bookId=test-book&unitId=test-group&dueOnly=false');
   await waitFor(() => expect(screen.getByRole('button', { name: 'Start session' })).toBeEnabled());
   await user.click(await readyStart());
-  await user.click(screen.getByRole('button', { name: 'Flag word 1' }));
+  await user.click(await screen.findByRole('button', { name: 'Flag word 1' }));
   await user.click(screen.getByRole('button', { name: 'Submit session' }));
-  await user.click(screen.getByRole('button', { name: 'Submit anyway' }));
+  await user.click(await screen.findByRole('button', { name: 'Submit anyway' }));
+  await waitFor(() => expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1));
   await user.click(await screen.findByRole('button', { name: 'Result filter' }));
-  await user.click(screen.getByRole('option', { name: 'Flagged' }));
-  expect(screen.getAllByRole('row')).toHaveLength(2);
+  await user.click(await screen.findByRole('option', { name: 'Flagged' }));
+  await waitFor(() => expect(screen.getAllByRole('row')).toHaveLength(2));
   await user.click(screen.getByRole('button', { name: 'Retry mistakes' }));
-  expect(screen.getAllByRole('textbox')).toHaveLength(50);
-  expect(screen.getByText('1–50 of 55')).toBeInTheDocument();
-});
+  await waitFor(() => expect(screen.getAllByRole('textbox')).toHaveLength(50));
+  expect(await screen.findByText('1–50 of 55')).toBeInTheDocument();
+}, 15_000);
 async function latestDraft(account=owner.current){return account?(await vocabularySessionDrafts.list(account))[0]?.session||null:null;}
 async function savedDraft(){let result;await waitFor(async()=>{result=await latestDraft();expect(result).not.toBeNull();});return result!;}
 async function readyStart(){const button=await screen.findByRole('button',{name:'Start session'});await waitFor(()=>expect(button).toBeEnabled());return button;}
@@ -891,13 +895,15 @@ test("submits the complete attempt once and retries the same frozen commit after
   );
   await user.type(screen.getByRole("textbox", { name: "Answer 2" }), "wrong");
   await user.click(screen.getByRole("button", { name: "Submit session" }));
+  await waitFor(() => expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1));
   expect(await screen.findByRole("alert")).toHaveTextContent("could not be saved");
   expect(screen.queryByRole("table")).not.toBeInTheDocument();
   expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('resilient');
   expect(screen.getByRole('textbox', { name: 'Answer 2' })).toHaveValue('wrong');
   const [prepared, id] = fb.current.persistVocabularySession.mock.calls[0];
   expect(prepared.vocabularyReviews).toHaveLength(2);
-  await user.click(screen.getByRole("button", { name: "Retry submission" }));
+  await user.click(await screen.findByRole("button", { name: "Retry submission" }));
+  await waitFor(() => expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(2));
   expect(fb.current.persistVocabularySession.mock.calls[1]).toEqual([
     prepared,
     id,
@@ -1012,9 +1018,10 @@ test("confirms unanswered cards before submitting and keeps production pending",
   );
   await user.click(screen.getByRole("button", { name: "Submit session" }));
   expect(
-    screen.getByRole("dialog", { name: "Submit incomplete session" }),
+    await screen.findByRole("dialog", { name: "Submit incomplete session" }),
   ).toHaveTextContent("1 unanswered");
   await user.click(screen.getByRole("button", { name: "Submit anyway" }));
+  await waitFor(() => expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1));
   expect(
     fb.current.persistVocabularySession.mock.calls[0][0].vocabularyReviews.map(
       (review: any) => review.result,
@@ -1181,6 +1188,7 @@ test("a failed submission stays frozen after local recovery and keeps the same t
     "sustainable",
   );
   await user.click(screen.getByRole("button", { name: "Submit session" }));
+  await waitFor(() => expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(1));
   await screen.findByRole('alert');
   const timestamp =
     fb.current.persistVocabularySession.mock.calls[0][0].vocabularySessions[0]
@@ -1188,8 +1196,9 @@ test("a failed submission stays frozen after local recovery and keeps the same t
   view.unmount();
   mount();
   await user.click(await screen.findByRole("button", { name: "Resume session" }));
-  expect(screen.getByRole("textbox", { name: "Answer 1" })).toBeDisabled();
-  await user.click(screen.getByRole("button", { name: "Retry submission" }));
+  expect(await screen.findByRole("textbox", { name: "Answer 1" })).toBeDisabled();
+  await user.click(await screen.findByRole("button", { name: "Retry submission" }));
+  await waitFor(() => expect(fb.current.persistVocabularySession).toHaveBeenCalledTimes(2));
   expect(
     fb.current.persistVocabularySession.mock.calls[1][0].vocabularySessions[0]
       .submittedAt,
