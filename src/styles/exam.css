@@ -70,10 +70,6 @@
 .exam-review-title { flex: 1; }
 
 /* Practice shortcuts and a spacious review workbench. */
-.exam-shortcuts { padding: 12px 18px; border-bottom: 1px solid var(--rule); color: var(--muted); font-size: 13px; }
-.exam-shortcuts summary { cursor: pointer; color: var(--ink); width: fit-content; }
-.exam-shortcuts ul { display: flex; flex-wrap: wrap; gap: 12px 28px; padding: 0; list-style: none; line-height: 1.8; }
-.exam-shortcuts kbd { font: 11px 'DM Mono',monospace; border: 1px solid var(--rule); background: var(--surface-soft); border-radius: 4px; padding: 3px 5px; color: var(--ink); }
 .exam-review { max-width: 1440px; width: 100%; }
 .exam-review-vocabulary { margin: 18px 0; border: 1px solid var(--rule); border-radius: 10px; padding: 14px 18px; background: var(--sheet); }
 .exam-review-vocabulary > summary { cursor: pointer; font-size: 13px; color: var(--muted); }
@@ -117,7 +113,6 @@
   .exam-review-reference,.exam-review-workspace .exam-review-card { padding: 18px; }
   .exam-review-workspace .exam-review-card dl { grid-template-columns: minmax(0,1fr); gap: 10px; }
   .exam-review-workspace .exam-review-card > header strong { flex-basis: 100%; padding-left: 38px; }
-  .exam-shortcuts ul { display: grid; gap: 10px; }
 }
 .exam-review-actions>p { flex: 1; }
 @media(max-width:740px) {
@@ -198,8 +193,6 @@
 .exam-bank .icon-btn { min-width: 40px; min-height: 40px; }
 .exam-bank .icon-btn[aria-pressed=true] { color: var(--gold); background: color-mix(in srgb,var(--gold) 12%,var(--sheet)); }
 .exam-question-workspace { min-width: 0; border: 1px solid var(--rule); border-radius: 8px; background: var(--sheet); }
-.exam-question-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--rule); border-radius: 8px 8px 0 0; background: var(--surface-soft); }
-.exam-question-toolbar h3 { margin: 0; color: var(--ink); font: 600 15px/1.5 Manrope,Arial,sans-serif; }
 .exam-layout-controls { display: inline-flex; gap: 3px; padding: 3px; border: 1px solid var(--rule); border-radius: 8px; background: var(--sheet); }
 .exam-layout-option { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 36px; padding: 7px 11px; border: 1px solid transparent; border-radius: 5px; background: transparent; color: var(--muted); font-size: 12px; font-weight: 600; cursor: pointer; }
 .exam-layout-option svg { flex: none; }
@@ -219,7 +212,6 @@
   .exam-layout-option { min-height: 44px; }
 }
 @media(max-width:560px) {
-  .exam-question-toolbar { padding: 12px; gap: 8px; }
   .exam-layout-controls { width: 100%; }
   .exam-layout-option { flex: 1; min-width: 0; min-height: 44px; padding-inline: 6px; gap: 5px; }
 }
@@ -367,11 +359,6 @@
 .exam-evidence-highlight { background: var(--soft-blue); color: var(--ink); box-shadow: 0 2px 0 var(--blue); border-radius: 2px; padding: 1px 0; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 [data-evidence-block]:focus { outline: none; }
 [data-evidence-block]:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
-.exam-session-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; background: var(--surface-soft); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 16px; margin: 16px 0; }
-.exam-session-bar > div:first-child { display: grid; gap: 5px; flex: 1 1 240px; }
-.exam-session-bar strong { font-size: 13px; }
-.exam-session-bar span { font-size: 12px; color: var(--muted); line-height: 1.6; }
-.exam-session-bar .btn-row { flex-wrap: wrap; gap: 8px; }
 .exam-session-history { border-top: 1px solid var(--rule); margin-top: 14px; padding-top: 10px; }
 .exam-session-history > summary { cursor: pointer; color: var(--blue); font-size: 12px; line-height: 1.6; padding: 6px 0; }
 .exam-session-history p { font-size: 12px; color: var(--muted); min-height: 0; }
@@ -382,7 +369,6 @@
 @media(max-width:560px) {
   .exam-review-evidence > header { padding: 10px; gap: 6px; }
   .exam-review-evidence-text { padding: 12px; max-height: 50vh; }
-  .exam-session-bar { padding: 12px; }
 }
 @media(max-width:740px) {
   .exam-group-matching .exam-heading-answer { grid-template-columns: 24px minmax(0,1fr) 64px 44px; }
@@ -520,4 +506,53 @@
   .exam-recent-list { display: flex; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; margin-inline: -18px; padding: 0 18px 6px; scroll-padding-inline: 18px; }
   .exam-recent-list > a { flex: 0 0 min(76%, 260px); scroll-snap-align: start; }
   .exam-recent-list > a:hover { transform: none; }
+}
+
+/* Practice workspace: one toolbar above the questions, a full-width mock start sheet. */
+.exam-workspace-title { flex: 1; min-width: 0; }
+.exam-session-status { margin: 2px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.exam-practice-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0; padding: 8px; border: 1px solid var(--rule); border-radius: 10px; background: var(--sheet); }
+.exam-practice-toolbar .exam-part-tabs { padding-right: 4px; }
+.exam-toolbar-end { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.exam-practice-toolbar .exam-layout-option { min-width: 36px; padding: 7px; }
+.exam-more-actions { width: 38px; padding: 8px; }
+.exam-session-actions .exam-discard-action { color: var(--red); }
+.exam-practice-toolbar + .exam-layout-feedback { margin: -6px 0 12px; }
+.exam-practice-recording .exam-source-audio { margin-top: 6px; padding: 6px 10px; }
+.exam-previous-sessions { margin-top: 20px; }
+.exam-previous-sessions h3 { margin: 0; font: 600 14px/1.5 Manrope,Arial,sans-serif; }
+.exam-previous-sessions .exam-session-history { margin-top: 6px; }
+.exam-shortcut-list { display: grid; margin: 0; padding: 0; list-style: none; font-size: 13px; }
+.exam-shortcut-list li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px 16px; padding: 10px 0; border-top: 1px solid var(--rule); }
+.exam-shortcut-list li:first-child { border-top: 0; }
+.exam-shortcut-list kbd { padding: 3px 6px; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface-soft); color: var(--ink); font: 11px 'DM Mono',monospace; }
+/* Notes stay one tap away but recede until their answer is in use or holds notes. */
+.exam-notes-toggle:not([aria-expanded="true"],:hover,:focus-visible,.exam-map-toggle):not(:has(.exam-note-dot)) { opacity: .45; transition: opacity 140ms; }
+:is(.exam-inline-answer,.exam-question):focus-within .exam-notes-toggle { opacity: 1; }
+.exam-workspace .exam-start { display: grid; gap: 20px; max-width: none; margin: 20px 0 0; padding: 28px; border-radius: 12px; text-align: left; }
+.exam-workspace .exam-start h3 { margin: 6px 0 8px; font: 650 22px/1.4 Manrope,Arial,sans-serif; }
+.exam-workspace .exam-start p { max-width: 70ch; margin: 0; font-size: 14px; }
+.exam-start-summary { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); margin: 0; border: 1px solid var(--rule); border-radius: 10px; }
+.exam-start-summary > div { padding: 14px 16px; }
+.exam-start-summary > div + div { border-left: 1px solid var(--rule); }
+.exam-start-summary dt { color: var(--muted); font-size: 12px; }
+.exam-start-summary dd { margin: 4px 0 0; color: var(--ink); font: 650 22px/1.3 Manrope,Arial,sans-serif; font-variant-numeric: tabular-nums; }
+.exam-start-parts { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.exam-start-parts li { display: grid; gap: 4px; padding: 12px 14px; border-radius: 8px; background: var(--surface-soft); color: var(--muted); font-size: 13px; line-height: 1.5; }
+.exam-start-parts strong { color: var(--ink); font-size: 14px; }
+.exam-workspace .exam-start > .btn { justify-self: start; min-height: 44px; }
+@media(max-width:740px) {
+  .exam-practice-toolbar { gap: 6px; padding: 6px; }
+  .exam-practice-toolbar .btn,.exam-practice-toolbar .exam-layout-option,.exam-more-actions { min-height: 44px; }
+  .exam-more-actions,.exam-practice-toolbar .exam-layout-option { min-width: 44px; }
+  .exam-practice-toolbar .exam-layout-controls { width: auto; }
+  .exam-practice-toolbar .exam-layout-option { flex: 0 0 auto; }
+  .exam-workspace .exam-start { padding: 18px; gap: 16px; }
+  .exam-start-summary > div { padding: 12px; }
+  .exam-start-summary dd { font-size: 18px; }
+}
+@media(max-width:560px) {
+  /* Pause and Method notes keep their names for assistive technology; phones show the icons. */
+  .exam-practice-toolbar .exam-tool-label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .exam-practice-toolbar .btn:has(.exam-tool-label) { min-width: 44px; padding-inline: 10px; }
 }

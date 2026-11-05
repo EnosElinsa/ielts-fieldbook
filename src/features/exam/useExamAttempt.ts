@@ -2,11 +2,16 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { createExamAttempt, gradeAttempt } from '../../domain/exam';
-import type { ExamAttempt, ExamCatalog, ExamSkill } from '../../domain/exam/types';
+import type { ExamAsset, ExamAttempt, ExamCatalog, ExamSkill } from '../../domain/exam/types';
 import { accountId } from '../../storage/remote';
 import { readExamRecoveries } from '../../storage/examRecovery';
 import { mergeExamSessions, unfinishedExamSession } from '../../domain/exam/sessions';
 import { checkpointExamSession, clearSessionCheckpoint } from './sessionRecovery';
+
+/** Reading mocks last an hour; listening mocks last the recordings plus two minutes to check answers. */
+export function mockTimeLimitSeconds(skill: ExamSkill, assets: ExamAsset[]) {
+  return skill === 'reading' ? 3600 : Math.ceil(assets.filter(asset => asset.kind === 'audio').reduce((sum, asset) => sum + (asset.duration || 0), 0)) + 120;
+}
 
 export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practice' | 'mock', catalog: ExamCatalog, requestedId?: string | null, retryId?: string | null, planId?: string | null, newSession = false) {
   const fb = useFieldbook(); const navigate = useNavigate(); const owner = accountId();
@@ -66,7 +71,7 @@ export function useExamAttempt(skill: ExamSkill, sourceId: string, mode: 'practi
     next.sourceId = sourceId;
     if (retryId) next.retryOfAttemptId = retryId;
     if (planId) { next.planId = planId; next.questionSnapshot = structuredClone(catalog.questions); }
-    if (mode === 'mock') { next.timeLimitSeconds = skill === 'reading' ? 3600 : Math.ceil(catalog.assets.filter(asset => asset.kind === 'audio').reduce((sum, asset) => sum + (asset.duration || 0), 0)) + 120; next.hintsEnabled = false; }
+    if (mode === 'mock') { next.timeLimitSeconds = mockTimeLimitSeconds(skill, catalog.assets); next.hintsEnabled = false; }
     ref.current = next; setAttempt(next); setClock(0); practiceTick.current = Date.now(); checkpointExamSession(owner, key, next);
   };
   useEffect(() => {

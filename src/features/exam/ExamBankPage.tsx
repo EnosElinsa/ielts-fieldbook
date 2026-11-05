@@ -5,7 +5,7 @@ import { Star, ArrowRight, RotateCcw } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { FilterMenu } from '../../components/ui';
 import type { ExamAttempt, ExamSkill, QuestionType } from '../../domain/exam/types';
-import { QUESTION_TYPE_NAMES, useExamCatalog } from './useExamCatalog';
+import { genericSectionTitle, QUESTION_TYPE_NAMES, useExamCatalog } from './useExamCatalog';
 import '../../styles/exam.css';
 import { ExamSessionHistory } from './ExamSessionHistory';
 import { recoveredExamSessions } from './sessionRecovery';
@@ -15,8 +15,7 @@ import { dateKey } from '../../domain/utils';
 import { formatDateKey, plural } from '../../lib/format';
 
 const PAPERS_PER_PAGE = 8;
-// Imported titles are usually "Part 1" or "Cambridge IELTS 8 · Test 1"; the row and card already show those words.
-const genericSectionTitle = (title: string, label: string, part: number) => title.trim().toLowerCase() === `${label} ${part}`.toLowerCase();
+// Imported paper titles usually read "Cambridge IELTS 8 · Test 1"; the eyebrow would repeat them.
 const paperNamesItself = (paper: { title: string; book: number; test: number }) => new RegExp(`\\b${paper.book}\\b.*\\btest\\s*${paper.test}\\b`, 'i').test(paper.title);
 const latestCompleted = (history: ExamAttempt[]) => history.filter(attempt => attempt.status === 'completed').sort((a, b) => String(b.completedAt || b.updatedAt || '').localeCompare(String(a.completedAt || a.updatedAt || '')))[0];
 const savedOn = (value?: string) => value && !Number.isNaN(Date.parse(value)) ? ` · Saved ${formatDateKey(dateKey(value))}` : '';

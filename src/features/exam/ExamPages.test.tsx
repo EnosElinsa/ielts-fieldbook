@@ -24,6 +24,8 @@ const catalog: ExamCatalog = { schemaVersion: 1, papers: [{ id: 'paper', book: 8
 function Location() { return <output aria-label="URL">{useLocation().pathname}</output>; }
 function SearchLocation() { return <output aria-label="Search URL">{useLocation().search}</output>; }
 function FullLocation() { const location = useLocation(); return <output aria-label="Full URL">{location.pathname + location.search + location.hash}</output>; }
+async function openSessionActions(user = userEvent.setup()) { await user.click(screen.getByRole('button', { name: 'More session actions' })); return screen.findByRole('menu'); }
+async function sessionAction(name: string, user = userEvent.setup()) { await openSessionActions(user); await user.click(await screen.findByRole('menuitem', { name })); }
 function practice(path = '/reading/section') { return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="/reading" element={<ExamBankPage skill="reading" />} /><Route path="/reading/:sectionId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/mock/:paperId" element={<ExamPracticePage skill="reading" />} /><Route path="/reading/review/:attemptId" element={<ExamReviewPage skill="reading" />} /></Routes><Location /></MemoryRouter>); }
 beforeEach(() => { clearReadCache(); mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); sessionStorage.clear(); const state = { examAttempts: [], intensiveSessions: [], settings: { favoriteExamSectionIds: [] } }; mocks.fb = { state, stateRef: { current: state }, ensureAccountModule: vi.fn().mockResolvedValue(undefined), persistNow: vi.fn(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; }), toast: vi.fn() }; });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.useRealTimers(); });
@@ -159,7 +161,8 @@ test.each(['reading', 'listening'] as const)('%s sessions never reveal answers b
   expect(screen.queryByRole('button', { name: /Check answer/ })).not.toBeInTheDocument();
   expect(screen.queryByText('Hidden answer explanation')).not.toBeInTheDocument();
   expect(screen.queryByText('Hidden answer evidence')).not.toBeInTheDocument();
-  expect(screen.getByRole('button', { name: 'Discard session' })).toBeEnabled();
+  await openSessionActions();
+  expect(screen.getByRole('menuitem', { name: 'Discard session' })).not.toHaveAttribute('data-disabled');
 });
 
 test('map answers can open the source beside the current answer and return without losing it', async () => {
@@ -536,6 +539,27 @@ test('an empty catalog under a book filter keeps the filters and offers Clear fi
 test('practice submission stays on the page on save failure and retries the same attempt', async () => { mocks.fb.persistNow.mockResolvedValueOnce(false); practice(); const user = userEvent.setup(); await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), '1990'); await user.click(screen.getByRole('radio', { name: 'FALSE' })); await user.click(screen.getByRole('button', { name: 'Submit answers' })); expect(await screen.findByRole('alert')).toHaveTextContent('Could not save'); expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/section'); const firstId = mocks.fb.persistNow.mock.calls[0][0].examAttempts[0].id; await user.click(screen.getByRole('button', { name: 'Retry submission' })); await waitFor(() => expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/review/')); expect(mocks.fb.persistNow.mock.calls[1][0].examAttempts[0].id).toBe(firstId); expect(await screen.findByLabelText('Attempt score')).toHaveTextContent('2 / 2'); });
 test('practice recovers answers after leaving without carrying them into another account', async () => { const view = practice(); const user = userEvent.setup(); await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), '1990'); view.unmount(); const resumed = practice(); expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue('1990'); resumed.unmount(); mocks.owner = 'two'; practice(); expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue(''); });
 test('mock begins explicitly and never exposes method hints or per-question checks', async () => { mocks.catalog.sections = [1, 2, 3].map(part => ({ ...catalog.sections[0], id: part === 1 ? 'section' : `section${part}`, part })); mocks.catalog.questions = [1, 2, 3].flatMap(part => catalog.questions.map(question => ({ ...question, id: `${question.id}-${part}`, sectionId: part === 1 ? 'section' : `section${part}` }))); mocks.catalog.passages = mocks.catalog.sections.map((section: any) => ({ ...catalog.passages[0], id: `p-${section.id}`, sectionId: section.id })); mocks.catalog.sections.forEach((section: any) => section.questionCount = 2); practice('/reading/mock/paper'); expect(await screen.findByRole('button', { name: 'Start mock' })).toBeInTheDocument(); expect(screen.queryByText('Locate · prove · paraphrase')).not.toBeInTheDocument(); await userEvent.setup().click(screen.getByRole('button', { name: 'Start mock' })); expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toBeInTheDocument(); expect(screen.queryByRole('button', { name: 'Check answer 1' })).not.toBeInTheDocument(); });
+test('listening practice renders one Answer 1 textbox', async () => {
+  mocks.catalog.sections[0].skill = 'listening';
+  const stimulusHtml = `<p>${Array.from({ length: 10 }, (_, index) => `Item [${index + 1} ____]`).join(' ')}</p>`;
+  mocks.catalog.questions = Array.from({ length: 10 }, (_, index) => ({ ...catalog.questions[0], id: `q${index + 1}`, number: index + 1, skill: 'listening', groupId: 'notes', stimulusHtml }));
+  mocks.catalog.assets = [{ id: 'audio', sectionId: 'section', paperId: 'paper', kind: 'audio', storagePath: 'audio.mp3', sourceUrl: '', duration: 300, provenance }];
+  render(<MemoryRouter initialEntries={['/listening/section']}><Routes><Route path="/listening/:sectionId" element={<ExamPracticePage skill="listening" />} /></Routes></MemoryRouter>);
+  expect(await screen.findAllByRole('textbox', { name: 'Answer 1' })).toHaveLength(1);
+  expect(screen.getAllByRole('textbox', { name: /^Answer \d+$/ })).toHaveLength(10);
+});
+test('a listening mock shows its time limit and parts before start', async () => {
+  mocks.catalog.sections = [1, 2, 3, 4].map(part => ({ ...catalog.sections[0], id: `listen${part}`, skill: 'listening', part, title: `Part ${part}`, questionCount: 10 }));
+  mocks.catalog.questions = mocks.catalog.sections.map((section: any, index: number) => ({ ...catalog.questions[0], id: `lq${index}`, number: index * 10 + 1, skill: 'listening', sectionId: section.id }));
+  mocks.catalog.assets = mocks.catalog.sections.map((section: any) => ({ id: `audio-${section.id}`, sectionId: section.id, paperId: 'paper', kind: 'audio', storagePath: 'audio.mp3', sourceUrl: '', duration: 450, provenance }));
+  render(<MemoryRouter initialEntries={['/listening/mock/paper']}><Routes><Route path="/listening/mock/:paperId" element={<ExamPracticePage skill="listening" />} /></Routes></MemoryRouter>);
+  expect(await screen.findByRole('button', { name: 'Start mock' })).toBeInTheDocument();
+  expect(screen.getByRole('timer')).toHaveTextContent('32:00');
+  expect(screen.getByText('32:00', { selector: 'dd' })).toBeInTheDocument();
+  const parts = within(screen.getByRole('list', { name: 'Parts in this test' })).getAllByRole('listitem');
+  expect(parts).toHaveLength(4);
+  expect(within(parts[0]).getByText('10 questions · 07:30 recording')).toBeInTheDocument();
+});
 test('wrong-only retry starts with blank answers and evidence and grades only the retry questions', async () => { mocks.fb.state.examAttempts = [{ id: 'previous', skill: 'reading', sourceId: 'section', sectionIds: ['section'], mode: 'practice', status: 'completed', responses: { q1: '1990', q2: 'TRUE' }, results: { q1: true, q2: false }, evidence: { q2: 'Old proof' }, keywords: {}, errorReasons: {}, score: 1, total: 2, startedAt: '2026-01-01', updatedAt: '2026-01-01', elapsedSeconds: 0, hintsEnabled: true }]; practice('/reading/section?retry=previous'); await screen.findByRole('radio', { name: 'FALSE' }); expect(screen.queryByRole('textbox', { name: 'Answer 1' })).not.toBeInTheDocument(); await userEvent.setup().click(screen.getByRole('button', { name: 'Evidence & paraphrase for question 2' })); expect(screen.getByRole('textbox', { name: 'Evidence for question 2' })).toHaveValue(''); await userEvent.setup().click(screen.getByRole('radio', { name: 'FALSE' })); await userEvent.setup().click(screen.getByRole('button', { name: 'Submit answers' })); expect(await screen.findByRole('alert')).toHaveTextContent('Add fresh passage evidence for question 2'); expect(screen.getByLabelText('URL')).toHaveTextContent('/reading/section'); expect(screen.getByRole('radio', { name: 'FALSE' })).toBeChecked(); await userEvent.setup().type(screen.getByRole('textbox', { name: 'Evidence for question 2' }), 'The garden opened in 1990.'); await userEvent.setup().click(screen.getByRole('button', { name: 'Submit answers' })); expect(await screen.findByLabelText('Attempt score')).toHaveTextContent('1 / 1'); });
 test('review preserves the submitted question snapshot when the live source changes', async () => { mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', sourceId: 'section', sectionIds: ['section'], mode: 'practice', status: 'completed', responses: { q1: '1990' }, results: { q1: true }, questionSnapshot: [catalog.questions[0]], evidence: {}, keywords: {}, errorReasons: {}, score: 1, total: 1, startedAt: '2026-01-01', updatedAt: '2026-01-01', elapsedSeconds: 0, hintsEnabled: true }]; mocks.catalog.questions[0].answer = '2000'; practice('/reading/review/saved'); expect(await screen.findByRole('heading', { name: 'The garden opened in _____.' })).toBeInTheDocument(); expect(screen.queryByText('2000')).not.toBeInTheDocument(); expect(screen.getAllByText('1990')).toHaveLength(2); });
 test('source stimulus keeps tables and numbered gaps while stripping active HTML', () => { const { container } = render(<ExamStimulus html={'<table><tr><td colspan="2" onclick="alert(1)">Opened #####-1-#####<br>Source note</td></tr></table><script>steal()</script><iframe src="https://example.org"></iframe><p><a href="javascript:alert(1)">Safe text</a></p>'} />); expect(screen.getByRole('cell')).toHaveTextContent('Opened 〔1〕'); expect(screen.getByRole('cell')).toHaveAttribute('colspan', '2'); expect(container.querySelector('script,iframe,a,[onclick]')).toBeNull(); expect(screen.getByText('Safe text')).toBeInTheDocument(); expect(container.querySelector('br')).not.toBeNull(); });
@@ -632,10 +656,9 @@ test('source simplification preserves real stems, missing-gap scaffolds, diagram
 test('layout switching preserves the attempt and responses while showing real question material', async () => {
   practice();
   fireEvent.change(await screen.findByRole('textbox', { name: 'Answer 1' }), { target: { value: '1990' } });
-  const workspace = screen.getByRole('region', { name: 'Questions and answers' });
-  const layout = within(workspace).getByRole('group', { name: 'Question layout' });
-  expect(within(layout).getByRole('button', { name: 'Integrated view' })).toHaveTextContent('With questions');
-  expect(within(layout).getByRole('button', { name: 'Split view' })).toHaveTextContent('Separate panel');
+  const layout = within(screen.getByRole('toolbar', { name: 'Practice tools' })).getByRole('group', { name: 'Question layout' });
+  expect(within(layout).getByRole('button', { name: 'Integrated view' })).toHaveAttribute('title', 'Keep each answer with its question');
+  expect(within(layout).getByRole('button', { name: 'Split view' })).toHaveAttribute('title', 'Show answers in a separate panel');
   expect(within(layout).getByRole('button', { name: 'Integrated view' })).toHaveAttribute('aria-pressed', 'true');
   const original = mocks.recovery.get('one:reading:practice:section').id;
   await userEvent.setup().click(screen.getByRole('button', { name: 'Split view' }));
@@ -930,7 +953,7 @@ test('new sessions for the same passage keep independent recoveries and resume t
   const user = userEvent.setup(); const view = practice();
   await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), 'first answer');
   const first = structuredClone(mocks.recovery.get('one:reading:practice:section'));
-  await user.click(screen.getByRole('button', { name: 'New session' }));
+  await sessionAction('New session', user);
   await user.click(screen.getByRole('button', { name: 'Start new session' }));
   await waitFor(() => expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue(''));
   const second = mocks.recovery.get('one:reading:practice:section');
@@ -952,10 +975,10 @@ test('discard is confirmed, keeps other sessions, and cannot resurrect the disca
   const user = userEvent.setup(); const view = practice();
   await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), 'unfinished');
   const id = mocks.recovery.get('one:reading:practice:section').id;
-  await user.click(screen.getByRole('button', { name: 'Discard session' }));
+  await sessionAction('Discard session', user);
   await user.click(screen.getByRole('button', { name: 'Cancel' }));
   expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('unfinished');
-  await user.click(screen.getByRole('button', { name: 'Discard session' }));
+  await sessionAction('Discard session', user);
   await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Discard session' }));
   await waitFor(() => expect(mocks.fb.stateRef.current.examAttempts.find((a: any) => a.id === id)?.status).toBe('discarded'));
   expect(mocks.fb.stateRef.current.examAttempts.find((a: any) => a.id === 'saved')?.status).toBe('completed');
@@ -972,13 +995,13 @@ test('failed discard keeps answers available after remount and can be retried', 
   await user.type(await screen.findByRole('textbox', { name: 'Answer 1' }), 'kept-answer');
   const id = mocks.recovery.get('one:reading:practice:section').id;
   mocks.fb.persistNow.mockImplementationOnce(async (draft: any) => { mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return false; });
-  await user.click(screen.getByRole('button', { name: 'Discard session' }));
+  await sessionAction('Discard session', user);
   await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Discard session' }));
   expect(await screen.findByRole('alert')).toHaveTextContent('Could not discard');
   expect(screen.getByRole('textbox', { name: 'Answer 1' })).toHaveValue('kept-answer');
   view.unmount(); practice(`/reading/section?attempt=${id}`);
   expect(await screen.findByRole('textbox', { name: 'Answer 1' })).toHaveValue('kept-answer');
-  await user.click(screen.getByRole('button', { name: 'Discard session' }));
+  await sessionAction('Discard session', user);
   await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Discard session' }));
   await waitFor(() => expect(mocks.fb.stateRef.current.examAttempts.find((a: any) => a.id === id)?.status).toBe('discarded'));
 });
@@ -1022,7 +1045,7 @@ test('starting another listening session resets audio while preserving the previ
   const audio = container.querySelector('audio')!;
   await waitFor(() => expect(audio).toHaveAttribute('src', '/audio.mp3'));
   audio.currentTime = 25; fireEvent.timeUpdate(audio);
-  await userEvent.setup().click(screen.getByRole('button', { name: 'New session' }));
+  await sessionAction('New session');
   await userEvent.setup().click(screen.getByRole('button', { name: 'Start new session' }));
   await waitFor(() => expect(container.querySelector('audio')).not.toBe(audio));
   expect(container.querySelector('audio')?.currentTime).toBe(0);
@@ -1042,7 +1065,7 @@ test('discard waits for an in-flight autosave so the stale active revision canno
     mocks.fb.stateRef.current = draft; mocks.fb.state = draft; commits.push(draft.examAttempts.find((a: any) => a.id === id).status); return true;
   });
   await waitFor(() => expect(mocks.fb.persistNow).toHaveBeenCalledTimes(1), { timeout: 2500 });
-  await user.click(screen.getByRole('button', { name: 'Discard session' }));
+  await sessionAction('Discard session', user);
   await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Discard session' }));
   expect(mocks.fb.persistNow).toHaveBeenCalledTimes(1);
   await act(async () => resolveSave(true));

@@ -56,4 +56,6 @@ export function useExamAsset(asset?: ExamAsset) {
   return { url: urlState.key === key ? urlState.url : cachedUrl(), error, reload: () => setRevision(value => value + 1) };
 }
 export const QUESTION_TYPE_NAMES = { gap: 'Gap completion', single: 'Multiple choice', multiple: 'Choose multiple', 'true-false': 'True / False / Not Given', 'yes-no': 'Yes / No / Not Given', matching: 'Matching', heading: 'Matching headings', map: 'Map / diagram labels', flow: 'Flow-chart completion', summary: 'Summary completion' };
+/** Imported section titles are usually just "Part 1" or "Passage 1", which the label beside them already says. */
+export function genericSectionTitle(title: string, label: string, part: number) { return title.trim().toLowerCase() === `${label} ${part}`.toLowerCase(); }
 export function examClock(seconds: number) { const safe = Math.max(0, Math.floor(seconds)); return `${Math.floor(safe / 60).toString().padStart(2, '0')}:${(safe % 60).toString().padStart(2, '0')}`; }
