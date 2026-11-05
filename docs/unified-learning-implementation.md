@@ -56,6 +56,8 @@ Ignored evidence: local/unified-dictionary/release-proposal/applied-receipt.json
 
 ## Verification evidence
 
+> Note (2026-11-04): the raw .log files and the ci-eighth-eleventh-attempt2 CI archive under local/unified-testing/ were deleted during local cleanup. The JSON evidence files named below remain; log names are kept as historical references.
+
 The247-suite acceptance below belongs to runtime release1d008119. The scoped-loading/fourth-content continuation has a fresh249-suite run:11,191 passed,0failed,1optional skipped (local/unified-testing/full-fourth-release-confirmed.json). Its build also type-checks new test fixtures; explicit StudyPlan annotations and complete fixture contracts were corrected after that run,with targeted checks repeated. Production build,identity compatibility and bundle budgets passed. All4,418 older dist resource hashes remain identical,covering1,143,969,737bytes. Fresh combined browser and production publication evidence is recorded in the continuation section when complete.
 
 Fresh whole suite:247 suites,10,260 passed,0 failed,1 optional skipped check (the archived-directory fixture requires LEGACY_VOCABULARY_RESOURCE_DIRECTORY). The separate release gate compares all4,418 pre-release immutable resource URLs and bytes. Evidence:local/unified-testing/full-final-confirmed.json. Targeted regressions also covered131 remaining-failure checks,172 planning-summary checks,32 optional-withdrawal checks,and169 dictionary/material checks. The older first full run exposed the outdated festival collocation quota;the final run verifies its explicit independently sourced inapplicable decision instead.

@@ -1,4 +1,6 @@
-# Vocabulary learning improvements
+# Vocabulary review log
+
+This log collects dated learning-content deliveries and the batch review records that were separate files until 2026-11-04.
 
 Current unified delivery and remaining work are tracked in [the implementation ledger](unified-learning-implementation.md). Runtime0531eaf and test/documentation follow-upe6ef247 are deployed through Cloudflare Git integration with52,152source senses,9,551complete reviews and42,601pending. This combined eighth-through-eleventh continuation adds2,255complete reviews through2,656independently accepted exact variants;75whole-variant holds remain unresolved. Earlier holds remain in the complete queue. Independent classification review covers1,675exact variants and installs551metadata amendments;reading-note type and quotation age do not assign Specialist or Historical. Two separately approved default-only selections promote act and bombard's verb meanings while preserving source/course/personal contracts. Neither supplement adds full-review credit. Local acceptance passes250suites/17,934checks. All21production browser flows,4/200saved-word loading profiles and5,976historical production resource hashes pass. The deterministic-resource test retains every assertion with the same45-second allowance as its complete-build hook;the focused15checks and final four CI shards/build/audit all pass (run39556006976). Source collection,automatic checks and candidate preparation do not count as semantic approval. At the user's request,this batch ends after publication;no next content package is started.
 
@@ -27,7 +29,7 @@ The next collocation queue now has a reusable collection/preparation path in [th
 
 The previous collocation follow-up integrates 248 scoped field repairs, restores 49 real meanings under seven source headings and separates latest as a generic superlative from its actual recency adjective. Eight defaults and twelve topic selections are corrected while distinct course teaching is retained. At that release, the complete dictionary had **4,262 reviewed / 47,846 pending among 52,108 records**. Current learning then had 3,449 variants with collocations or reading cues and 1,307 with distinction notes. The 248 partial field repairs were additional work, not 248 all-field semantic approvals. These are historical counts; current progress is reported above.
 
-The [fragment review](vocabulary-fragment-learning-review.md) previously accounted for all 513 original current-learning fragment signals in one release: 312 valid examples retained, 199 lexical examples rewritten and two source directories repaired by restoring actual meanings. At that release, the dictionary had 4,204 reviewed / 47,855 pending among 52,059 records, with 3,194 current learning variants having collocations or reading cues and 1,051 having distinction notes. Dated sections below document earlier releases.
+The [fragment review](#vocabulary-fragment-learning-review) previously accounted for all 513 original current-learning fragment signals in one release: 312 valid examples retained, 199 lexical examples rewritten and two source directories repaired by restoring actual meanings. At that release, the dictionary had 4,204 reviewed / 47,855 pending among 52,059 records, with 3,194 current learning variants having collocations or reading cues and 1,051 having distinction notes. Dated sections below document earlier releases.
 
 Exact-content retain-example receipts prevent the same valid short examples from returning to the pending fragment queue; receipts cannot hide other issue types or grant all-field semantic approval. The latest source-identity issue is addressed by retaining separate meanings and selecting the real recency source ID. Continue through the full current-learning collocation inventory, separating uncertain reference senses and combining compatible changes before release. No model API authoring or automated semantic approval is implemented, and optional questions/diagrams remain governed by teaching value.
 
@@ -37,7 +39,7 @@ Planned vocabulary completion requires the task's exact entry/sense set, its ass
 
 The session saver previously returned success before its separate plan write finished and discarded errors from that write. It now awaits the queued plan update; a failure retains recovery and reports that the review is saved while the task update needs retry. Retrying uses the same immutable session ID. Opening Planning also reconciles saved, explicitly linked submissions through the existing refresh path. Unrelated reviews cannot complete a task solely because they contain the same number of words.
 
-Frozen task normalization previously produced a new target array on every answer edit, invalidating the review-queue cache. Keep it stable by account plans and plan ID, and restrict initial queue construction to the task's actual entries. This addresses the planned-review path missed by the earlier standalone-input measurements. See [the actual scheduling rules](vocabulary-planning-behaviour.md).
+Frozen task normalization previously produced a new target array on every answer edit, invalidating the review-queue cache. Keep it stable by account plans and plan ID, and restrict initial queue construction to the task's actual entries. This addresses the planned-review path missed by the earlier standalone-input measurements. See [the actual scheduling rules](vocabulary-learning-rules.md#vocabulary-planning-behaviour).
 
 Rendered validation uses synthetic accounts at 1440 px and 390 px: a 30-prompt submission with 24 correct and six incorrect completes its task; a deliberately failed plan write retains recovery, then replays the same session ID once and completes after retry. Seven changed default meanings render at both widths without overflow or application errors. With 200 saved words, 30 planned prompts and 4× CPU throttling in Chromium, before-input to the next frame falls from approximately 84 ms median / 141 ms maximum to 22 ms / 43 ms. These controlled measurements do not represent every device or the user's private account. Historical resource verification retains all 3,990 previous URLs byte-for-byte.
 
@@ -45,27 +47,27 @@ Rendered validation uses synthetic accounts at 1440 px and 390 px: a 30-prompt s
 
 The [execution priority](vocabulary-bulk-workflow.md#execution-priority--2026-10-20) now separates corpus-wide mechanical repairs, source-backed current-learning authoring and ambiguous reference work. Packages target 200–1,000 items when evidence permits; releases combine compatible work. Optional diagrams/questions do not gate an example repair. Browser checks follow changed default/group/practice/media risks and representative layouts instead of replaying every text edit at four widths. Full source, identity, resource and final CI checks remain. This is an execution policy, not a claim that model generation or semantic approval has been automated.
 
-The [current-learning archaic-text review](vocabulary-archaic-learning-review.md) processes all 100 visible archaic-example signals in one content release. It adds 127 source-bound reviews, restores 13 lexical children, corrects 17 defaults and adds 23 contextual questions. Nineteen older, regional or specialised readings are explicitly typed rather than presented as ordinary modern examples. Current learning archaic signals reach zero; collocation/reading-cue coverage rises to 2,683 variants and distinction notes to 537. The complete ledger remains active at 3,633 reviewed and 48,389 pending among 52,022 preserved/restored records. At that release, 513 fragment signals and all other pending meanings still required review; the current whole-queue delivery above now accounts for those fragment signals. Existing diagrams remain unchanged; the source renderer now retains explicit synonym-template explanations needed by restored meanings.
+The [current-learning archaic-text review](#vocabulary-archaic-learning-review) processes all 100 visible archaic-example signals in one content release. It adds 127 source-bound reviews, restores 13 lexical children, corrects 17 defaults and adds 23 contextual questions. Nineteen older, regional or specialised readings are explicitly typed rather than presented as ordinary modern examples. Current learning archaic signals reach zero; collocation/reading-cue coverage rises to 2,683 variants and distinction notes to 537. The complete ledger remains active at 3,633 reviewed and 48,389 pending among 52,022 preserved/restored records. At that release, 513 fragment signals and all other pending meanings still required review; the current whole-queue delivery above now accounts for those fragment signals. Existing diagrams remain unchanged; the source renderer now retains explicit synonym-template explanations needed by restored meanings.
 
-The [focused repair workflow](vocabulary-focused-candidates.md) removes a production bottleneck: an example-only repair no longer requires new definitions, collocations or distinctions. Revision-backed preparation accepts an explicit field selection; candidate validation retains source/display fingerprints and all default/group scopes, then produces a merge preview without modifying content. Empty or ineffective patches, mixed formats, stale identities and approval claims remain rejected. Definition/POS changes require review of retained teaching and external diagram/pronunciation bindings. The original complete-candidate format remains supported.
+The [focused repair workflow](#vocabulary-focused-candidates) removes a production bottleneck: an example-only repair no longer requires new definitions, collocations or distinctions. Revision-backed preparation accepts an explicit field selection; candidate validation retains source/display fingerprints and all default/group scopes, then produces a merge preview without modifying content. Empty or ineffective patches, mixed formats, stale identities and approval claims remain rejected. Definition/POS changes require review of retained teaching and external diagram/pronunciation bindings. The original complete-candidate format remains supported.
 
 At the focused-tooling release, the quality report separated 614 current-learning content-review signals from enrichment opportunities, with 48,503 dictionary records pending. The 100-item archaic queue yielded 63 exact source matches, 37 manual matches and no automatically publishable modern examples. The current authored review above has now processed that queue; at the archaic release, counts were 514 content-review signals and 48,389 dictionary records pending. Content-review signals take priority over group reuse and missing optional fields, but remain screening evidence rather than proven linguistic defects. Model-generated candidates and automated semantic review remain unimplemented; the tooling alone grants no editorial coverage or semantic approval.
 
-The [current-learning sweep](vocabulary-remaining-learning-review.md) resolves the remaining 101 truncated-example signals in one cross-word issue queue. Its 127 source-bound reviews include 21 restored lexical children and three corrected source directories; eight defaults now select useful actual meanings. The ledger reaches 3,506 reviewed among 52,009 records, with 48,503 pending. Current learning variants have zero truncation signals, 2,584 with collocations and 437 with distinction notes. Twenty new contextual tasks and twelve explicitly typed reading notes are added. Existing diagrams, pronunciation bindings, personal content and frozen history stay intact. Other quality queues and the complete semantic review are still unfinished; a cleared automatic signal is not blanket approval.
+The [current-learning sweep](#vocabulary-remaining-learning-review) resolves the remaining 101 truncated-example signals in one cross-word issue queue. Its 127 source-bound reviews include 21 restored lexical children and three corrected source directories; eight defaults now select useful actual meanings. The ledger reaches 3,506 reviewed among 52,009 records, with 48,503 pending. Current learning variants have zero truncation signals, 2,584 with collocations and 437 with distinction notes. Twenty new contextual tasks and twelve explicitly typed reading notes are added. Existing diagrams, pronunciation bindings, personal content and frozen history stay intact. Other quality queues and the complete semantic review are still unfinished; a cleared automatic signal is not blanket approval.
 
-The [source-backed candidate workflow](vocabulary-bulk-workflow.md#prepare-source-backed-drafts-together) now prepares a whole exported package from cached revision pages. It retains exact source/display fingerprints, isolates child and adjacent examples, and leaves unsupported or ambiguous matches explicit. The initial 199-item truncation run found 131 exact matches and four usable direct source-example suggestions; structural matching did not grant semantic approval. The [authored follow-up](vocabulary-truncated-learning-review.md) adds 98 exact reviews across 98 words and 25 construction/meaning questions, taking the ledger to 3,379 reviewed with 48,609 pending. Current truncation signals fall from 199 to 101; collocation/comparison coverage rises by 98 variants each. No diagrams, restored identities or pronunciation bindings change.
+The [source-backed candidate workflow](vocabulary-bulk-workflow.md#prepare-source-backed-drafts-together) now prepares a whole exported package from cached revision pages. It retains exact source/display fingerprints, isolates child and adjacent examples, and leaves unsupported or ambiguous matches explicit. The initial 199-item truncation run found 131 exact matches and four usable direct source-example suggestions; structural matching did not grant semantic approval. The [authored follow-up](#vocabulary-truncated-learning-review) adds 98 exact reviews across 98 words and 25 construction/meaning questions, taking the ledger to 3,379 reviewed with 48,609 pending. Current truncation signals fall from 199 to 101; collocation/comparison coverage rises by 98 variants each. No diagrams, restored identities or pronunciation bindings change.
 
 The initial [bulk workflow](vocabulary-bulk-workflow.md) implements a complete quality scan, issue-specific work packages of up to 1,000 exact content variants, and candidate structural validation. The [generated report](vocabulary-quality-report.md) separates current default/group learning gaps from the complete dictionary backlog. It uses the actual runtime learning-context and exercise resolvers, retaining different teaching text under a shared sense ID. Candidate validation never marks content semantically reviewed or writes the ledger. The initial delivery did not generate candidates; source-backed draft preparation is added by the follow-up above. Model-generated teaching content and the remaining semantic/content work are still pending. The paused reduce/decrease/decline draft has not been published.
 
-The first issue-based content sweep resolves all 30 missing displayed examples found in the current default/group coverage scan. The [visible-example review](vocabulary-visible-example-review.md) adds 31 exact dictionary reviews, 29 questions and two reading notes, including an ordinary cooking default for pan and a sourced logistics definition for packing list. The ledger becomes 3,281 reviewed with 48,707 pending. The report's 9,095 learning variants now all have displayed example text or a reading note; this availability figure does not establish semantic review of all 9,095. Further collocation, distinction and quotation-review queues remain open.
+The first issue-based content sweep resolves all 30 missing displayed examples found in the current default/group coverage scan. The [visible-example review](#vocabulary-visible-example-review) adds 31 exact dictionary reviews, 29 questions and two reading notes, including an ordinary cooking default for pan and a sourced logistics definition for packing list. The ledger becomes 3,281 reviewed with 48,707 pending. The report's 9,095 learning variants now all have displayed example text or a reading note; this availability figure does not establish semantic review of all 9,095. Further collocation, distinction and quotation-review queues remain open.
 
 ## Current shared-rule delivery — 2026-10-19
 
-Content work after this shared-rule release targets actual learning gaps across words. The [core study content review](vocabulary-core-study-content-review.md) covers 21 exact meanings in deadline, essential, feedback, assignment, survey, article, council, environment, budget, equipment, copy and discount. It replaces unsuitable default quotations/fragments, adds natural examples and collocations, and provides 21 meaning/construction questions. Copy and discount gain usable default sentence gaps. No new diagrams or restored source identities are added. The content ledger becomes 3,231 reviewed with 48,757 pending; the unpublished round50 draft remains separate. The figures in the shared-rule release record below describe its earlier unchanged content baseline.
+Content work after this shared-rule release targets actual learning gaps across words. The [core study content review](#vocabulary-core-study-content-review) covers 21 exact meanings in deadline, essential, feedback, assignment, survey, article, council, environment, budget, equipment, copy and discount. It replaces unsuitable default quotations/fragments, adds natural examples and collocations, and provides 21 meaning/construction questions. Copy and discount gain usable default sentence gaps. No new diagrams or restored source identities are added. The content ledger becomes 3,231 reviewed with 48,757 pending; the unpublished round50 draft remains separate. The figures in the shared-rule release record below describe its earlier unchanged content baseline.
 
-The [discount/survey meaning and pronunciation review](vocabulary-stress-meanings-review.md) follows up that observed audio gap: 24 exact bindings, four verified-source recordings, five groups and 19 further text reviews are added. The nominal discount recording is not reused for other verbs; unresolved technical uses stay unbound. Survey retains its source-listed stress variants. The ledger is now 3,250 reviewed with 48,738 pending. The preceding core-study review remains an account of its original text-only scope.
+The [discount/survey meaning and pronunciation review](#vocabulary-stress-meanings-review) follows up that observed audio gap: 24 exact bindings, four verified-source recordings, five groups and 19 further text reviews are added. The nominal discount recording is not reused for other verbs; unresolved technical uses stay unbound. Survey retains its source-listed stress variants. The ledger is now 3,250 reviewed with 48,738 pending. The preceding core-study review remains an account of its original text-only scope.
 
-The [practice interface review](vocabulary-practice-interface-review.md) addresses the reported repetitive meaning panels, unclear historical duplicate rows and synchronous draft writes while typing. Progress expands only for the selected meaning; saved meanings become direct switching links, and secondary adjustment/rule controls stay collapsed. Historical results retain both questions and their grades with explicit meaning numbering.
+The [practice interface review](#vocabulary-practice-interface-review) addresses the reported repetitive meaning panels, unclear historical duplicate rows and synchronous draft writes while typing. Progress expands only for the selected meaning; saved meanings become direct switching links, and secondary adjustment/rule controls stay collapsed. Historical results retain both questions and their grades with explicit meaning numbering.
 
 The user approved common-meaning learning cards, complete dictionary reference and selective visual presentation. This delivery changes shared components rather than adding another dictionary batch. Entry details, group learning and dictionary previews now keep the definition, matching example and collocations visible, with usage, distinctions and lexical relations under `Usage and meaning notes`. Repeated explanation text is suppressed. Fallback examples must match sense ID, definition and POS; missing material is stated explicitly.
 
@@ -149,7 +151,7 @@ Local verification passes 6,880 tests with one conditional skip, compilation, pr
 
 Meaning-bound playback is implemented in [the exact reader](../src/domain/vocabulary/sensePronunciation.ts), [the retained registry](../src/domain/vocabulary/sensePronunciations.json), [the playback controller](../src/features/vocabulary/playback.ts) and [session freezing](../src/domain/vocabulary/session.ts). Details, group learning, group lists, saved words and mistakes pass the displayed meaning. Lead's metal-treatment verbs use /led/, separate from its guide verbs; minute's meeting-record verbs retain the time reading. Names, source grouping headings and misspelling references receive no inherited binding. Personal or changed definitions and parts of speech cannot acquire a public match. The generic entry IPA is hidden for guarded homographs. Same-entry meaning changes stop old audio and clear stale controls.
 
-Missing or failed matching recordings cannot automatically become a different reading through device speech. The learner can explicitly choose another recording of the same meaning or a device voice labelled reading unverified. New sessions, saved results and retries retain their selected reading and original accent through immutable registry IDs, including an explicitly frozen no-match. Draft and commit validation reject swapped/invalid IDs. Legacy snapshots retain entry-level playback and disclose that a meaning match was not saved; their grades and old playback preferences are not reinterpreted. Playing a suggestion writes no assessment, scheduling or recovery data. [The pronunciation audit](vocabulary-pronunciation-audit.md) records all six fixed lexical sources, recording licenses, the exclusion of the phrase a minute, and the network-verification boundary.
+Missing or failed matching recordings cannot automatically become a different reading through device speech. The learner can explicitly choose another recording of the same meaning or a device voice labelled reading unverified. New sessions, saved results and retries retain their selected reading and original accent through immutable registry IDs, including an explicitly frozen no-match. Draft and commit validation reject swapped/invalid IDs. Legacy snapshots retain entry-level playback and disclose that a meaning match was not saved; their grades and old playback preferences are not reinterpreted. Playing a suggestion writes no assessment, scheduling or recovery data. [The pronunciation audit](#vocabulary-pronunciation-audit) records all six fixed lexical sources, recording licenses, the exclusion of the phrase a minute, and the network-verification boundary.
 
 Local verification passes 6,931 tests with one conditional skip across 192 files, compilation, production build, the complete dictionary audit, identity/SQL checks and bundle budgets. All 2,506 existing dictionary resources remain byte-identical. Chrome validates 74 rendered states across 1440/light, 1440/dark, 390/dark and 320/light, including 48 real-decoded selected-recording assertions, four deliberately unavailable recording states and four complete dictation pause-refresh-resume-submit-result-retry journeys. Audio bytes are retrieved and hash-checked originals or source-listed Commons derivatives served at their exact selected URLs; these checks do not claim remote availability or a listening review. Synthetic accounts intercept persistence writes. Four screenshots were visually reviewed, and all 108 rebuilt JS/CSS asset hashes equal the browser-tested build. Exact-commit deployment and matching production assets remain required release evidence.
 
@@ -364,3 +366,658 @@ An isolated local-production-build trace now compares synthetic accounts with fo
 The remaining scope in this table is not complete. Before changing recommendation behavior, use synthetic accounts covering due, wrong-word, edited-meaning, archived-word and incomplete-content states. Compare completed useful sessions and successful delayed retrieval, rather than counting page views as learning.
 
 Browser validation of single-word review must wait for catalogue readiness rather than equate Start session button visibility with availability. The preparation state above is implemented; validate it with delayed catalogue responses, failed loads and a genuinely unsupported reading-note cloze.
+
+## Batch review records
+
+<a id="vocabulary-archaic-learning-review"></a>
+
+### Current-learning archaic-text review
+
+This release handles the entire 100-item current-learning archaic-example queue across words. It adds 127 source-bound editorial records: 97 existing lexical meanings, three source directories, 13 restored lexical children and 14 separate meanings selected for new defaults. Seventeen defaults change in total. The preceding 3,506 ledger records and all earlier correction/default/source records remain intact.
+
+#### Exact meanings and sources
+
+The cached revision pages give 63 exact preparer matches and 37 manual cases. Manual review checks sense identifiers, dates, taxonomy templates, inline grammatical labels and source inflection templates without modifying original dictionary records. Commence is bound to the intransitive source line, not the identically worded transitive line. Amazing's verb form remains a participle/gerund; its adjective default comes from a different source record. Germany keeps its case-sensitive source page and its broad historical national scope.
+
+The 111 existing-source lexical/default candidates pass structural checks before integration; structural validation still grants zero automatic publication approvals. A final grammatical clarification distinguishes commence's intransitive definition from the independently preserved transitive record. Final tests and runtime checks cover the integrated content, rather than treating that earlier candidate check as semantic proof.
+
+Gravity, notorious and subtle initially displayed source headings. They now retain those headings as Meaning group references and restore all three, two and seven direct lexical children of their respective first directories. Gravity additionally restores the gravitational-attraction meaning under its physical directory. The remaining physical directory and other unreviewed directories remain in the complete inventory.
+
+The source renderer now preserves the term and explanation in a `synonym of` template with an explicit translation/gloss parameter. Otherwise gravity's main attraction explanation and subtle's historical narrow-ship explanation would be lost. A regression first reproduced that loss and then passed with the explanation and following independent clause preserved. Every restored record retains the exact source line, revision URL and original parent fingerprint.
+
+#### Learning content
+
+Every reviewed lexical meaning has an example or explicitly typed reading explanation, collocations/reading cues and distinctions. Nineteen records are reading notes. Regional gang meaning go, mail meaning a bag, textile list, genealogical stem, and older subtle meanings are explained without manufacturing awkward contemporary examples. The noun scold is described as a disparaging, often gendered reading use rather than endorsed as a neutral description.
+
+Narrow distinctions remain explicit: mortality as being subject to death differs from a mortality rate; a cucumber plant differs from its edible fruit; a natural fountain differs from an ornamental water feature. Corn's broad regional cereal meaning and maize meaning remain separate. Forest and woods have no universal size boundary. Bronze compositions vary, and a woodwind flute need not be made of wood.
+
+Defaults now use an enumerated list, physical postal mail, an associated gang, a plant stem, broad classical music, the feeling of panic, an ornamental fountain, the adjective amazing, the rebuking verb scold, a worldly sophisticate, cucumber as food, a brief intransitive glance, a variety of items, maize/corn, gravitational attraction, a bad reputation for notorious, and a barely noticeable movement for subtle. All earlier meanings remain accessible; explicit group meaning selections and personal edits retain their own identities.
+
+Twenty-three contextual questions distinguish constructions, word forms or meanings with a supported unique answer. They include ashamed/shameful, human/humane, amazing/amazed, mortality/morality, scold/scald and the distinction between a root and an underground stem. Interchangeable synonyms do not become arbitrarily graded alternatives. The 854 existing exact-bound diagrams remain unchanged; this release does not add diagrams merely to fill a field.
+
+The new sophisticate noun default uses /səˈfɪstɪkət/, while the independently retained verb uses /səˈfɪstɪkeɪt/. Two exact bindings, two groups and three attributed recording rows extend the immutable pronunciation registry. The fixed English source section supplies a Southern England noun/adjective recording and UK/US verb recordings; it supplies no US noun recording. A US noun request must expose the missing match rather than play the verb. Both UK original WAV files were retrieved and SHA-1 checked; the US verb is source-verified but remains network-unverified after unsuccessful retrieval. This is provenance and byte verification, not a listening review. Earlier registry rows and frozen/legacy session behavior remain intact.
+
+#### Coverage and verification
+
+The complete ledger reaches 3,633 reviewed records among 52,022 raw/restored records, with 48,389 pending. Restored sources rise from 655 to 668; all 51,354 raw dictionary records remain preserved. Current learning has zero archaic-example signals, 2,683 variants with collocations/reading cues and 537 with distinction notes. The remaining 513 fragment signals still require examination; they are not all proven defects. Clearing the archaic queue is not semantic approval of every learning variant or the full dictionary.
+
+Release checks cover source/review accounting, actual learning-context behaviour, exclusion of directories and reading notes from inappropriate new practice, personal-note preservation, the full test/build/identity/bundle checks, retention of all 3,310 prior resource files, and rendered detail/default/practice flows at four layouts. Exact-commit CI, Cloudflare Git deployment and production checks follow the commit. Runtime evidence is recorded outside committed teaching data.
+
+The local full suite before the late pronunciation extension passes 8,085 tests with one conditional skip across 210 files. The final extension passes 113 targeted content/pronunciation/playback/session/retry/draft checks across seven files; the final commit also requires full CI. Rendered scope covers all restored children, all changed defaults and all new contextual questions on desktop, with representative reading-note, default and practice states on the remaining three layouts. A separate pronunciation flow checks both real UK WAV decoders, the missing US noun match and frozen pause/resume/retry/legacy behavior at all four layouts. Browser-state totals are operational evidence, not semantic review totals.
+
+Local rendered verification passes 149 content states, including 32 distinction journeys and seven sentence-gap submissions, plus 32 pronunciation states with eight decoded clips and four frozen-session journeys. This replaces the planned 684 repeated content states with risk-based coverage; it does not reduce the full data/source/resource checks or the final commit's complete CI suite. Production repeats the same rendered scope after Git deployment.
+
+<a id="vocabulary-core-study-content-review"></a>
+
+### Core study content review — 2026-10-19
+
+This review addresses observed learning-card gaps across 12 words and 21 exact meanings. It does not complete the other meanings of these words or publish the preserved round50 draft. All imported source records and IDs remain unchanged.
+
+The common cards now use short, independently authored examples, collocations, usage notes and a contextual distinction question. Copy and discount receive usable headword sentence gaps. Feedback and equipment explain ordinary uncountable use instead of displaying the extraction fragment `usually`. Assignment and survey prefer the student-task and respondent-study meanings on standalone entry pages. Authored source/group meanings keep their own identities and examples.
+
+No new diagram is required for these language distinctions. Existing visual presentation rules continue to apply. No shape-count or field-completeness check is treated as evidence of learning value or language accuracy.
+
+This is a text/exercise review, with no new pronunciation bindings. Browser inspection found that discount's noun still uses the entry-level pronunciation display; its noun/verb stress contrast and matched recordings remain a separate tracked review. Existing sense-pronunciation bindings are unchanged.
+
+#### Reviewed identities and fixed sources
+
+Each selected raw sense was matched by exact original definition and part of speech to one English gloss in the cited source revision. The ledger fingerprints the complete original sense; the supplement retains that original separately from the authored learning text.
+
+| Word | Reviewed source sense IDs (suffix after `kaikki:`) | Source revision | Learning focus |
+| --- | --- | --- | --- |
+| deadline | a541cd5a83d8ebff08 | [92132574](https://en.wiktionary.org/w/index.php?title=deadline&oldid=92132574) | Final permitted submission time; meet/miss a deadline. |
+| essential | 7c95583dfa4ff01514 | [93513959](https://en.wiktionary.org/w/index.php?title=essential&oldid=93513959) | Necessity, with a modern example replacing the default poem. |
+| feedback | a228205c0dbe3f4e63 | [93570057](https://en.wiktionary.org/w/index.php?title=feedback&oldid=93570057) | Comments on work; normally uncountable in this use. |
+| assignment | d001f9fbce92236138, 972845ca1807c9a747 | [91970510](https://en.wiktionary.org/w/index.php?title=assignment&oldid=91970510) | Allocating work versus a student task; assignments versus homework. |
+| survey | 828041b20d3ff09acf, 58e6bd082054859eeb, ae4427a1ea68c95495, 84c4e501a6bc8681da | [93468666](https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666) | Overview, respondent study, questionnaire and asking respondents questions. |
+| article | 51fde7909a602da5fe, 5327746118ce8e10cf | [93045264](https://en.wiktionary.org/w/index.php?title=article&oldid=93045264) | A piece of writing versus a grammatical article. |
+| council | af522fc5fc9b051a89 | [93569176](https://en.wiktionary.org/w/index.php?title=council&oldid=93569176) | A governing/representative body; council versus counsel. |
+| environment | 8c74df2a3f4aadff30, e561324756c4d5522b | [93548034](https://en.wiktionary.org/w/index.php?title=environment&oldid=93548034) | Surrounding conditions versus the natural world. |
+| budget | 4b5d55fbe9da7fe5b2, a9b7f0c71fcf15cefb | [92810394](https://en.wiktionary.org/w/index.php?title=budget&oldid=92810394) | Available funds versus a financial plan; planned versus actual spending. |
+| equipment | 8d82739194a584c438 | [93589550](https://en.wiktionary.org/w/index.php?title=equipment&oldid=93589550) | Tools/items; pieces of equipment in ordinary modern English. |
+| copy | 8ebccf79b5c10f20cd | [93140524](https://en.wiktionary.org/w/index.php?title=copy&oldid=93140524) | Duplicate versus original; a countable copy/copies. |
+| discount | d9dfbbdde5eccbbc0b, d741a2ffee17dc9a2d, 0f0c4d9616b9da6402 | [93072753](https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753) | Selling at a reduced price, the reduction itself and disregarding information. |
+
+Feedback and equipment are marked `en-noun|-|s` in their sources, so the learning notes say normally uncountable in the stated ordinary use. They do not claim that every plural in older or specialist writing is impossible. The equipment source itself preserves Longfellow's plural equipments.
+
+Questions ask about an explicit meaning or ordinary construction. They do not declare interchangeable synonyms uniquely wrong. Each of the 21 questions has two distinct options, an explanation and its own exact sense identity. New examples demonstrate the selected meaning and permit a sentence gap without inventing a morphological binding for a different example.
+
+#### Boundaries and retained state
+
+The editorial ledger advances from 3,210 to 3,231 reviewed meanings; 48,757 of the current 51,988 meanings remain pending. All 21 classifications are authored general learning priorities. This count does not include automated candidates, earlier default-only patches or source lines not examined here. There are no new restored records or diagrams.
+
+The fixed pages also expose unimported source children, including council's UK local-authority use, assignment's sex-categorisation child, and copy's genetics and advertising children plus its radio acknowledgement. They require later independent reconciliation and attribution; this partial learning review does not silently count them as covered. The current imported/restored inventory is not a claim that those pages have no further lexical content.
+
+`resourceCoreStudyContentBaseline.json` reverses only this delivery's corrections/defaults when rebuilding previous releases. Previously published teaching snapshots are retained for recognising untouched saved content. Personal replacements and frozen sessions keep their existing contracts. Source-specific group material is not rewritten into these general examples.
+
+Browser validation exposed a second update boundary: an explicit standalone meaning could fall back to a group binding, then incorrectly be treated as if that group had been requested. Discount's noun therefore retained a group's swimming-lesson example and skipped its new review. Context-specific preservation now requires the requested book and unit to match that binding. Explicit standalone selection receives the exact-sense review; a matching group and an edited personal example retain their own text. The regression reproduced the old behavior before the fix, and the 53 context/core-content tests passed after it.
+
+Eight regressions first reproduced the old poem, default-selection mismatch, unavailable copy/discount gaps and incomplete countability notes. A ninth reproduced the saved equipment default being mistaken for a personal edit: its previously published full snapshot is now recognised, while a learner's edited usage note remains intact. The focused readiness, dictionary review, priority and content suites passed 4,301 tests before that additional regression; the final complete validation is recorded below.
+
+#### Resource generation
+
+The first full regression exposed a deterministic-resource rebuild exceeding its existing 15-second deadline. Profiling showed repeated serialization of unchanged nested JSON records across retained releases. The generator now caches those immutable fragments within each independent build. Measured generation fell from about 11.6 seconds to 8–9 seconds on the local machine; the deterministic rebuild regression passed in 9.8 seconds. The deadline and historical releases remain unchanged. Every one of the 2,676 generated resource URLs and SHA-256 values matches the unoptimized result, including all 2,566 previously published resources. A native JSON byte regression also checks the emitted manifest, discovery index, group and entry/teaching packs. This is build-time work and does not claim faster browser hydration.
+
+Complete regression, build and browser/release results are recorded in the delivery evidence; field presence alone does not certify content quality or memory improvement.
+
+#### Final local validation
+
+The final tree includes the preceding planning-recovery release (`67ef2e7`). All 202 test files pass: 7,330 tests pass and one conditional test is skipped. Type checking, production build, dictionary audit, compact/public identity checks, neutral-identity SQL and bundle budgets pass. Four serial Chrome layouts (1440/light, 1440/dark, 390/dark and 320/light) pass 140 states with no console errors or unexpected horizontal overflow. They cover all 21 reviewed meaning cards, notes, common/all dictionary search, a source-specific assignment example, four actual submissions and returns to the exact practiced sense. Synthetic accounts intercept persistence writes. Representative desktop and mobile captures were visually inspected. Production assets and the same browser flows are verified separately against the released commit.
+
+<a id="vocabulary-focused-candidates"></a>
+
+### Focused vocabulary repairs
+
+Repairing one example should not require rewriting a definition or inventing collocations and distinctions. Focused candidates carry only intended field changes, bound to the same source and displayed-content fingerprints as complete candidates. The complete dictionary objective, source records, personal content and frozen sessions are unaffected by this offline authoring tool.
+
+#### Prepare a whole issue queue
+
+Use [whole-queue collection and preparation](vocabulary-bulk-workflow.md#collect-and-prepare-an-entire-issue-queue) for complete issue inventories. `vocabulary:prepare -- --all` produces the entire job in one invocation, shares source parsing and protects existing authoring directories. The bounded example below remains available for focused investigation.
+
+```powershell
+npm run vocabulary:quality
+npm run vocabulary:quality -- --export --scope learning --issue archaic-example --limit 1000 --output local/vocabulary-work/archaic-work.json
+npm run vocabulary:prepare -- --work local/vocabulary-work/archaic-work.json --sources local/vocabulary-work/source-responses.json --fields example --output local/vocabulary-work/archaic-focused.json
+```
+
+Reuse the revision responses already collected for the queue. `--fields` accepts a comma-separated selection from `definition`, `example`, `pos`, `usage`, `register`, `collocations`, `distinctions`, `exampleKind`, `learningPriority` and `distinctionTask`. Unknown, duplicate and empty selections fail. Omitting the option preserves the original complete-draft format.
+
+In focused mode, each `draft` has identity fields, a reference URL and a `changes` object. Only a direct, exact-meaning source example can seed a requested example; missing or ambiguous source matches remain unresolved. Other requested fields start from current values or explicit empty placeholders. `missingFields` lists only requested fields without material, and `unchangedFields` identifies retained values that still need authoring. Optional fields outside the selection do not become compulsory tasks.
+
+Preparation is not model generation or semantic approval. Edit and verify the drafts, then extract those draft objects as an array or JSONL. The outer source-preparation wrapper is not a candidate submission.
+
+#### Submit only the repair
+
+```json
+{
+  "workItemId": "copy from the work item",
+  "sourceHash": "copy from the work item, including null when applicable",
+  "displayHash": "copy from the work item",
+  "referenceUrl": "https://en.wiktionary.org/w/index.php?title=bank&oldid=12345",
+  "changes": {
+    "example": "We walked along the river bank."
+  }
+}
+```
+
+```powershell
+npm run vocabulary:quality -- --candidates local/vocabulary-work/focused-candidates.jsonl --output local/vocabulary-work/focused-validation.json
+```
+
+Do not repeat teaching fields at the root alongside `changes`. Omitted fields remain in the existing displayed snapshot. Submitted fields must be valid; empty arrays, nulls and blank strings do not silently erase earlier content. At least one field must actually change. IDs, sources, licenses and approval status are not editable fields.
+
+The returned `focusedPreviews` retain entry/sense identities, fingerprints, reference URL and every applicable default/group scope. Each preview includes actual `changedFields`, `reviewFields`, the merged `sense`, and separate editorial `metadata`. Arrays and tasks are copied so editing a preview cannot mutate its input report. Reading-note and learning-priority metadata do not leak into the lexical snapshot.
+
+Changing a definition or part of speech expands `reviewFields` to all teaching fields and the external diagram/pronunciation bindings. A retained example, distinction, task or media binding must still fit that meaning; preserving it is not approving it. The preview does not fetch or update those external registries. An example-only change normally limits the field-editing work to the example. The reviewer must still verify its exact meaning, register and source evidence. A course meaning cannot borrow a different same-ID variant's fingerprint or be integrated as a global source correction.
+
+Definition edits must stay within the bound source meaning. Correcting a default selection uses the separately reviewed target sense and default registration; replacing another sense's text cannot stand in for selecting that meaning.
+
+#### Release reviewed content
+
+All candidates return `readyForPublication: 0`. A structurally valid focused candidate still requires semantic review. These commands do not write teaching files, source dictionaries or the editorial ledger, and do not change learner data. Explicitly reviewed integration must preserve source-specific teaching, personal edits and frozen history under the existing release checks.
+
+The quality report now separates content-review signals from enrichment opportunities. Content-review signals appear first even when another word has more group reuse. Missing collocations, comparisons or a particular exercise remain visible opportunities; they are not compulsory fields for every meaning. All dictionary pending counts and raw issue counts remain present. Neither a cleared signal nor this tooling change increases reviewed semantic coverage by itself.
+
+<a id="vocabulary-fragment-learning-review"></a>
+
+### Current-learning fragment review
+
+The complete 513-item `example-fragment-signal` queue from snapshot `49941667ae91f03fed8efe5e4fccc3776cfbc8b2c3fc99fcfcdeef59f5aaa710` is accounted for in one content release. This is an issue-based sweep across words, rather than a release for each small set of words or their entire rare-sense inventories.
+
+#### Content decisions
+
+Of the 513 original records, 511 are lexical meanings. Their 312 valid examples are retained and 199 examples are rewritten. The other two records are source directories for **descend** and **turn**: their identities remain available, their actual children are restored, and the directories cannot become practice questions. Valid phrases, dialogues and short examples are not expanded merely to satisfy a punctuation heuristic.
+
+The release adds 571 source-bound editorial records: the 511 lexical records, 21 separately reviewed existing default targets, 37 restored children, and two source directories. The restored meanings comprise 20 for **descend**, 11 for **turn**, and six for **decade**, including the ordinary ten-year meaning. Nested technical meanings keep their source scope and are not presented as interchangeable everyday readings.
+
+Twenty-four default selections now open on useful actual meanings: academic, allowance, crush, despair, deteriorate, digest, digital, disposal, equation, evolve, gender, kin, liner, litter, loom, regular, scheme, shutter, strand, subsistence, wreath, descend, turn and decade. For example, **digital** opens on computer technology, **regular** on repeated intervals, **scheme** on a plan or programme, and **shutter** on a window panel. Other source meanings remain available.
+
+The teaching material adds collocations and meaning distinctions, 17 contextual distinction questions and 26 explicitly typed reading notes. **Shoot** now distinguishes launching a projectile from firing a weapon; **adverb** includes an actual example sentence. Form references and specialist or sensitive readings are checked against their precise source meanings. No diagrams are added: an optional visual should explain something that text alone leaves unclear.
+
+#### Avoid repeated work
+
+`exampleReviewDecisions.json` records 312 explicit `retain-valid-example` decisions. Each binds the work-item identity, entry and sense identities, source fingerprint and entire displayed-content fingerprint to an HTTPS reference and rationale. A decision suppresses only `example-fragment-signal` for that exact variant. Unknown fields, duplicates, stale fingerprints and decisions without the applicable raw signal fail validation.
+
+The quality report exposes both raw and pending signals. There are still 310 raw fragment signals in current learning; the other two retained variants are now reference meanings after changing the defaults for kin and regular. The 312 decisions account for all retained examples without hiding other issues. Changed material invalidates an old decision, and a topic variant sharing a sense ID cannot inherit it. A retain-example decision alone neither reviews the other fields nor changes the dictionary ledger. The new ledger entries above come from the separate source-bound editorial review.
+
+Source matching and candidate checks remain structural evidence. There is no model API authoring service or automated semantic approval. Full-candidate and focused-candidate validation leave zero candidates automatically ready for publication.
+
+#### Compatibility
+
+Previous corrections, defaults, source evidence, ledger rows, diagrams and topic rows remain intact. New defaults and one technology-topic override are appended. The turn topic selects its restored rotation meaning, so it remains available for dictation instead of selecting the old source directory.
+
+Historical public topic baselines include overridden rows. This lets current public teaching text update while recognising older public versions and preserving intentional personal edits. The resource reversal baseline removes only the new topic override when reconstructing older releases. Existing source identities, personal content, frozen sessions, pronunciation bindings and previously published resource bytes are retained.
+
+The growing historical resource corpus also exposed a build bottleneck. Resource generation now retains UTF-8 buffers and decodes individual files on demand; development responses and Vite output use the same bytes directly. A local diagnostic build of the 3,990-file, approximately 980 MiB corpus completed within a 4 GiB heap limit. At the end of that diagnostic, JavaScript heap usage was approximately 82 MiB, compared with 4,455 MiB in the prior string-based build with an 8 GiB limit. These are end-of-run measurements, not peak-memory claims; retained bytes still consume process memory. The existing resource tests check historical URLs, JSON bytes and content hashes. Manifest lookup in those tests now reads manifest keys first instead of decoding the complete corpus into an array.
+
+#### Current scope and follow-up
+
+The dictionary now contains **52,059 records: 4,204 reviewed and 47,855 pending**. All 7,021 catalogue words have a resolved learning meaning. The 9,089 current learning variants have displayed examples or typed reading notes; 3,194 have collocations or reading cues, 1,051 have distinction notes, and 304 support distinction questions. Those availability counts do not imply semantic approval of every variant.
+
+The current learning fragment queue has zero pending items. Missing, truncated and archaic current-learning example signals also remain zero. One current-learning duplicate-gloss signal for **latest** still needs source-identity investigation. Missing collocations and distinctions are enrichment opportunities, not mandatory fields for every source record. The complete 47,855-record dictionary review remains open.
+
+The next current-learning collocation inventory has been exported in full: 5,895 exact variants in six processing packages, all still requiring authoring and review. Investigate the remaining duplicate-gloss issue, then prioritise useful meaning-specific constructions, resolve uncertain source matches separately, and accumulate compatible changes before the next release. Package boundaries do not create release boundaries. Do not fabricate comparisons, questions or diagrams merely to improve coverage totals. Use the [bulk workflow](vocabulary-bulk-workflow.md) and its exact-content decisions to avoid redoing resolved work.
+
+#### Verification
+
+The serial local pipeline passes 8,738 tests across 212 files, with one conditional external-archive test skipped. Type checks, production build, dictionary/quality audits, identity/SQL checks and bundle budgets pass. Independently, all 3,566 files from the preceding release retain their SHA-256 hashes; the new build adds 424 files. Earlier corrections, defaults, source evidence, editorial records, diagrams and topic rows remain exact prefixes, and pronunciation data is unchanged.
+
+Rendered checks cover 157 states at 1440px light/dark, 390px dark and 320px light. All 24 changed defaults, 37 restored meanings and 17 new distinction tasks are checked on desktop; other layouts exercise representative meanings and practice. The checks include 26 distinction submission/return journeys, five sentence-gap submissions, source-directory practice exclusion and four turn technology-context dictation setups. Synthetic accounts and intercepted writes protect live account data. No page/console errors, failed network responses or horizontal overflow are observed. Browser plugin not available; the existing Playwright runtime is used. These rendered checks establish delivery and interaction behavior, separately from semantic content review.
+
+<a id="vocabulary-learning-redesign-proposal"></a>
+
+### 词汇学习方案调整提案
+
+2026-10-19 · 用户已批准，共享规则已实现并完成本地验收；部署结果另记发布证据。
+
+#### 已实施的共享规则
+
+单词详情、词组学习和词典预览共用图式展示规则与补充说明组件。释义、例句和核心搭配直接显示，用法、辨析和词汇关系收进可展开的说明；相同说明去重。候补例句必须同时匹配义项 ID、释义和词性，不能借用邻近义项的内容。缺例句时说明尚未添加，不自动生成或改写个人资料。
+
+已人工确认适合直接展示的 27 种数量、空间、结构或过程图对应 29 个精确绑定；其余 825 个已有图式绑定通过 View diagram 按需加载，不预留图栏。框和箭头的数量不参与判断。已有图片和严格匹配的实物示意保留原有行为；所有旧图式仍可访问。
+
+词典初始选择优先采用已标注的常用义项。唯一常用义项已经显示在主卡时，词典说明这一情况并保留 All meanings，不把剩余专业或历史义项自动提升成学习推荐。未分类内容的旧学习笔记回退也排除明确的专业、历史、专名及查阅引用记录。加载完成后才显示筛选数量，避免冷加载时出现误导性的临时零值。个人选义、搜索、稳定编号和完整词典仍可使用。
+
+本地完整验证：196 个测试文件、7,198 项通过及 1 项条件跳过；编译、生产构建、词典审计、身份/SQL 和包体检查通过。四个既定布局的 68 个浏览器状态通过，包括无图布局、展开/关闭/换义项、常用/全部筛选及精确义项练习往返；浏览器使用合成账户并拦截持久化写入。2,566 个历史资源与 854 个图式渲染结果保持字节一致。
+
+本次没有新增词典批次或改变 3,210 已校订、48,778 待处理的内容账目，也没有测量记忆收益。以下保留方案依据与后续内容建设方向；其中内容样例仍只是样例。
+
+建议把建设目标从“逐词补齐全部义项与图式”调整为“让学习者理解并用对当前需要的义项”。完整词典继续承担查阅功能，学习内容有明确的选择和质量标准。本提案不将原有全量校订目标标记为完成。
+
+#### 为什么需要换方法
+
+线上第 49 批累计校订 3,210 条，词典共有 51,988 条记录。这个分母包含专业、历史、地域和专名等记录，不适合作为 IELTS 学习体验的完成指标。准确校订有价值，但要求每次处理一个词的全部义项，会持续挤占常用内容和学习流程的改进。
+
+用户本次截图中的 succeed-sequence、succeed-office、succeed-follow 等，把例句拆成两个框再加箭头，下面又用长说明复述和限定。多数学习信息仍依赖文字。complete-logic 与 complete-complexity 的关系在专业语境里可以成立，但不因此值得优先制作成 IELTS 学习图。
+
+调整前的实现会在选中义项有绑定图式时显示图式，内容旁还可能同时展示例句、用法、搭配和辨析。于是“做出了图”容易变成“应当展示图”，并造成重复。现有按义项绑定、分包加载、错因推荐和间隔复习仍可继续使用。
+
+这里依据截图与代码判断制作和展示方式，没有进行新一轮全站浏览，也没有测量新方案的记忆效果。
+
+#### 可选方案与建议
+
+| 方案 | 优点 | 代价与边界 |
+| --- | --- | --- |
+| **常用义项学习卡＋完整词典查阅（推荐）** | 复用已有资料和练习系统；优先解决实际学习需要；内容和展示可统一处理 | 仍需审核核心例句和题目；不再承诺先把整部词典逐条做成教材 |
+| 接入成熟的学习词典资料服务 | 可减少基础释义和例句的自建工作 | 需确认 API、授权、费用和覆盖范围；不能直接抓取商业词典作为本站内容；仍需映射现有义项身份 |
+| 打开页面时即时生成解释与练习 | 覆盖快、可针对上下文生成 | 正确性和反馈不稳定，产生延迟与费用；不能直接取代可核验的释义、评分答案和历史快照 |
+
+推荐第一种作为产品结构；第二种可作为今后的内容来源。模型适合离线起草、发现缺项和辅助审校，不把实时生成结果直接当作正式题目或正确答案。
+
+#### 学习者实际看到什么
+
+默认优先显示当前语境相关、已经确认适合学习的常用义项；专业、历史等内容放在明确的查阅入口。保留“全部义项”与搜索。已有的个人选择继续可见，不因默认排序被替换。缺少优先级依据的记录保持未分类，不靠模型猜测词频或根据旧例句推断过时。
+
+一张学习卡只要求：清楚的义项说明、一条与该义项匹配的自然例句、必要的核心搭配，以及一个可用的下一步练习。辨析和图式按需出现，不要求每条填满所有栏目或支持全部六种练习。用法、辨析与图注合并去重，详细来源可以展开。
+
+以下是拟展示的内容样例，英文界面沿用现有产品语言；这些文字尚未写入正式词典。
+
+| succeed 的学习内容 | 样例与关键区别 |
+| --- | --- |
+| Achieve a goal · succeed in doing something | They succeeded in reducing waste. 重点是目标达成，核心结构是 in + doing。 |
+| Take over a role · succeed someone as something | Lee succeeded Kim as chair. 重点是接任；这句话不评价 Lee 任职表现。 |
+| 更多用法 | succeed to the throne 等保留具体语境和来源标签，通过查阅入口访问，不与普通“取得成功”混成同一张卡。 |
+
+这两个常用义项无需两张箭头图。更有用的是一道短题：在 “Lee succeeded Kim as chair.” 中选择 “achieved a goal / took over a role”，提交后解释该结构。题目评估实际选中的义项，不能把结果计入另一个义项的掌握记录。
+
+complete 优先区分 complete a course 的“完成”与 a complete set 的“齐全”。调查行业的 complete 名词和数学专业义项仍可查阅，不在默认学习路径逐一制作练习或图式。
+
+#### 图式改成有选择的辅助材料
+
+采用一个明确标准：画面应让学习者直接看出文字之外需要理解的关系或细节。能认出实体、看出位置、比较数量、观察过程或区分相近结构，才有配图理由。
+
+| 内容类型 | 建议呈现 |
+| --- | --- |
+| 接任职位、提出建议、取得成功等一般抽象用法 | 例句、搭配和必要的语境对比；无需默认配图 |
+| 百分比与百分点、距离差缩小、空间方位 | 有明确数量或位置关系的图，标注与选中义项一致 |
+| 实物、身体部位、结构部件 | 准确且有合适授权的图片或教学图；不以装饰图补数量 |
+| 特定数学、法律或历史用法 | 默认作为查阅资料；有清楚的学习需求时再制作解释与练习 |
+
+新展示规则应一次应用于共享组件：没有必要的图就使用正常文字布局，不留空白图框；旧图默认作为可展开的补充资料，经过确认有帮助的图才推荐展示。未评审不等于没有价值，旧图与历史资源继续保留。不能通过“框的数量”等外观规则自动判断教学价值。
+
+#### 怎样减少反复逐词施工
+
+先完成共享的卡片、可选图式和内容就绪规则，使已有资料共同受益；不再为每个义项新写一段专属图形代码。复用已有例句、题目与展示组件，只有确实存在特殊教学需求才增加专门组件。
+
+后续内容按“实际使用需要＋明确缺项”排队：学习者已保存的词、最近错题、当前主题和已确认的常用义项优先。一次处理同一种内容问题，例如检查现有核心例句是否匹配义项、搭配是否自然、练习是否真的可启动，而不是处理四个词就连同冷门义项重新走一套制作发布流程。
+
+离线起草采用统一内容字段；自动检查负责发现缺项、身份不匹配、未绑定出处和明显重复。语言准确性、干扰项是否唯一错误以及图形是否有教学价值仍要审校，不能用字段齐全冒充内容正确。查阅义项缺少学习例句时明确说明用途，不借用相邻义项例句，不强行生成题目；现有可用的释义回忆练习仍可提供。
+
+验证与发布围绕一次完整的产品改进组织。编辑过程中运行相关检查，候选版本完成后串行执行必要的完整回归、构建、历史资源保留与代表页面验证。保留确定性验证，不通过放宽超时、删除旧版本或少验已知风险来换速度。
+
+#### 首次落地的范围与验收
+
+第一项交付是共享展示规则和内容模板，适用于已有内容。用 succeed、complete、acquire、obtain、gain、earn、raise、rise 检查常见抽象用法、同近义区分、数量变化与搭配；这八个词是验收样本，不是开启下一轮八词补图。
+
+验收需要同时满足：
+
+- 普通常用义项容易找到，全部词典义项仍可查阅；个人选择和原文上下文保持准确。
+- 无图页面布局完整；默认内容不再把例句与图注重复展示。
+- 样本能够从选义项、查看例句、进入匹配练习到返回反馈走通；缺少某种练习时给出可用选项。
+- 练习、发音和反馈保留原有精确义项匹配；个人编辑、冻结题目、历史结果及复习日期保持原有契约。
+- 四个既定布局无溢出；旧图、旧资源与历史访问继续可用。
+
+学习收益通过实际使用反馈与已有练习记录判断，重点看义项误选、练习启动问题和后续提取表现；不以新增图式数、校订总数或页面浏览量宣称记忆改善。暂不为此新增一套分析平台。
+
+当前第 50 批未提交、未推送、未部署。已写的准确释义、例句和来源证据保留，后续可迁入新结构；重复图式无需继续作为默认学习展示。用户已经批准并实施本页上方记录的共享规则；后续按明确的学习缺项组织内容工作。
+
+<a id="vocabulary-practice-interface-review"></a>
+
+### Practice input and meaning hierarchy
+
+The reported screenshots show two different saved meanings of catastrophic as separate rows in an old planned dictation result. Current ordinary dictation and newly selected plans already limit repeated words; frozen planned selections preserve their exact original questions. Historical rows now identify Meaning 1 of 2 and Meaning 2 of 2 and explain that the saved session tested separate meanings. Every repeated word also resolves its displayed definition and Details destination by the saved sense ID, including older ordinary sessions: previously those rows could both resolve to the same current default meaning. Results, grades, schedules and evidence are not merged or deleted to simplify the display.
+
+Word details now reserve expanded progress for the selected meaning. Other saved meanings are compact links that select their own notes and progress. The duplicate word-class headings disappear from this list. Additional dictionary meanings remain accessible in their existing separate lookup section; a single additional meaning does not need search or part-of-speech controls. The generic A dictionary meaning of this word provenance panel is omitted. Personal-note and source-specific provenance remains available.
+
+Learning progress separates the next action from the selected meaning's state and four skill summaries. Desktop uses two columns and narrow screens stack the sections. Manual familiarity adjustment and counting rules are secondary disclosures. Usage remains independently tracked, and the rules continue to be available without repeating them beneath every meaning.
+
+#### Input latency
+
+The prior input handler synchronously validated, normalised, cloned and serialised the entire frozen session into localStorage on every letter. A synthetic 30-card local production-build trace recorded 27 complete draft writes for one 27-event typing sequence, with each stored draft around 66.5 thousand characters. This is avoidable main-thread work; it is not evidence of network latency or a claim that the local machine reproduces the learner's exact delay.
+
+Answers and the active in-memory session still update immediately. Only draft persistence waits for 250 ms of typing inactivity. Blur, navigation between answers, hiding/leaving the page, unmounting and explicit session transitions flush the current answer. Account changes and discarding cancel queued writes. Successful submission clears the draft and cancels queued work, preventing an old timer from resurrecting it. Validation of stored and submitted content is retained.
+
+The matching final-build trace records one idle save instead of 27 per-letter saves, with both 30-word and 200-word synthetic accounts. Local median beforeinput-to-next-frame samples are 4.2 and 3.9 ms after the change, versus 6.1 and 4.6 ms before. Maximum samples are 10.1 and 13.7 ms after, versus 13.2 and 6.3 ms before. Frame timings vary; these local samples support removing synchronous persistence from typing but do not quantify latency on the learner's device or establish a universal speedup.
+
+Regression tests exercise immediate input, no per-letter writes, pagehide recovery, discard cancellation, selected-only progress, exact saved-meaning links, small dictionary controls and unchanged duplicate historical results. Browser measurements, screenshots and release checks are kept outside committed product sources.
+
+#### Validation
+
+A full local run passed 7,376 tests with one conditional skip across 203 files. After the final repeated-row meaning-resolution adjustment, both affected UI suites passed all 144 tests. Compilation, the production build, dictionary audit, compact identity verification, identity/SQL checks and bundle budgets pass.
+
+The production build passes 204 Chrome states across 1440/light, 1440/dark, 390/dark and 320/light using synthetic accounts and intercepted persistence. Checks include distinct legacy meaning labels and destinations, selected-only progress, dictionary controls, all 26 discount/survey meanings, 48 contextual exercise submissions and returns, 16 real audio decodes, and four type/pause/reload/resume/submit/retry journeys. Every checked state has meaningful content, correct page identity, no framework overlay, no console errors and no unexpected horizontal overflow. Desktop and mobile screenshots were inspected. Browser plugin not available; bundled Playwright and installed Chrome provide the validation.
+
+<a id="vocabulary-pronunciation-audit"></a>
+
+### Selected-meaning pronunciation audit
+
+#### Current-learning extension — 2026-10-20
+
+Changing the sophisticate default from a verb to a noun requires its own pronunciation binding. [Wiktionary revision 93723724](https://en.wiktionary.org/w/index.php?title=sophisticate&oldid=93723724) explicitly separates verbs /səˈfɪstɪkeɪt/ from adjectives/nouns /səˈfɪstɪkət/. Two reviewed meanings receive exact definition/POS bindings. Other meanings of this protected word require their own review before acquiring a match.
+
+The verb group retains Southern England and US recordings. The noun/adjective group has a Southern England recording only; its US IPA does not establish a US recording. A US noun request exposes the missing match without borrowing the verb or automatically speaking an ambiguous headword. Commons description revisions [748884893](https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-sophisticate-verb.wav&oldid=748884893) and [1287432509](https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-sophisticate-adj.wav&oldid=1287432509) credit Vealhurl under CC BY-SA 4.0; [978588842](https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Qwertygiy-sophisticate.wav&oldid=978588842) credits Qwertygiy under CC0. The registry retains the original file timestamps, SHA-1 values and fixed source markup.
+
+Both UK original WAV files were retrieved and match their Commons SHA-1 values. The US verb retrieval was unsuccessful and remains explicitly network-unverified. No listening review or permanent remote availability is claimed. All preceding registry objects remain intact; totals are 21 groups, 23 recordings and 202 exact bindings. Targeted tests cover distinct noun/verb readings, missing US noun audio, exact frozen bindings and legacy session behavior.
+
+The initial pronunciation delivery binds 155 current public meanings of six reviewed homographs to 12 pronunciation groups and 15 attributed recordings. It does not claim dictionary-wide audio review. Matching uses the exact entry, term, sense ID, definition and POS in [the append-only registry](../src/domain/vocabulary/sensePronunciations.json). A POS substring, title or accent flag cannot establish a meaning match.
+
+#### Batch 48 extension
+
+All initial registry objects remain immutable. The choose/decide/determine/resolve content review adds 21 exact resolve bindings in two groups: 20 ordinary meanings have a matched US recording; the valid alternative spelling of re-solve has reviewed IPA and no recording. Totals are 176 bindings, 14 groups and 16 recordings, with matched recordings for 175 meanings.
+
+[Resolve revision 93532916](https://en.wiktionary.org/w/index.php?title=resolve&oldid=93532916) places ordinary verbs and nouns under etymology 1, with /z/, and explicitly associates En-us-resolve.ogg with US pronunciation. Etymology 2 is an alternative spelling of re-solve, not a misspelling. [Re-solve revision 81308222](https://en.wiktionary.org/w/index.php?title=re-solve&oldid=81308222) supplies UK /ɹiːˈsɒlv/ and US /ɹiˈsɑlv/. Its binding does not borrow the ordinary /z/ recording. The ordinary UK accent also has no reviewed recording in this delivery.
+
+[Commons revision 1229159070](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-resolve.ogg&oldid=1229159070) credits Dvortygirl under [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/). The original file timestamp is 2007-03-13T09:27:59Z and its retrieved 14,449 bytes match source SHA-1 20b8d20f1e97a5b1be81fde442bea5ab45b1078e. The clip is not edited. Source markup and provenance establish the lexical reading; no listening-review claim is made. Frozen sessions keep their retained binding or legacy behavior through the unchanged reader, playback controller and session code.
+
+#### Lexical evidence
+
+The English section of each fixed Wiktionary revision was read to establish pronunciation scope, including etymology and noun/verb boundaries. Explicit audio markup establishes the accent and the group; it is not a listening review. Wiktionary contributors supply the quoted markup and IPA under CC BY-SA 4.0.
+
+| Term | Fixed revision | Scope and boundary | Exact meanings |
+| --- | --- | --- | --- |
+| record | [93533916](https://en.wiktionary.org/w/index.php?title=record&oldid=93533916) | Etymology 1 nouns/adjective have initial stress; etymology 2 verbs have final stress. The capitalized surname is excluded. | 15 |
+| present | [93012855](https://en.wiktionary.org/w/index.php?title=present&oldid=93012855) | The source explicitly separates adjective/noun and verb recordings. Past-of-presend has its own pronunciation and is not bound. The omegaverse verb belongs to etymology 2. Southern England recordings retain the regional evidence within UK. | 34 |
+| lead | [93517137](https://en.wiktionary.org/w/index.php?title=lead&oldid=93517137) | Etymology 1 metal nouns AND metal-treatment/printing verbs use /lɛd/. Etymology 2 guidance/advance nouns, verbs and adjectives use /liːd/. Names, misspellings, source headings and phrase references are excluded. | 62 |
+| object | [93417662](https://en.wiktionary.org/w/index.php?title=object&oldid=93417662) | Pronunciation explicitly separates initial-stress nouns and final-stress verbs. | 11 |
+| subject | [93156090](https://en.wiktionary.org/w/index.php?title=subject&oldid=93156090) | Etymologies 1 and 2 adjectives/nouns have initial stress; etymology 3 verbs have final stress. | 17 |
+| minute | [93600887](https://en.wiktionary.org/w/index.php?title=minute&oldid=93600887) | Etymology 1 time-related nouns and the minutes-writing verbs use /ˈmɪnɪt/; etymology 2 adjectives have final stress and the source's alternative vowels. The UK phrase recording a minute is excluded from single-word dictation. | 16 |
+
+The US counterpart exists for every initial-release group. UK recordings are bound for both present readings and lead's metal group only. Other UK requests expose a missing match instead of borrowing US or synthesizing an ambiguous headword. Unreviewed wind and bow are guarded but receive no invented binding. Other terms retain the existing entry-level behavior; no broader coverage is implied.
+
+#### Recording provenance
+
+Each row retains the Commons description revision, original file timestamp and SHA-1, explicit source audio markup, author and license. The registry separates editorial reading verification from network availability. Existing 16 media shards and historical dictionary resources are unchanged.
+
+| Recording | Commons description revision | Author | License |
+| --- | --- | --- | --- |
+| En-us-record-noun.ogg | [1229158038](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-record-noun.ogg&oldid=1229158038) | Dvortygirl | [Public domain](https://commons.wikimedia.org/wiki/Template:PD-self) |
+| En-us-record-verb.ogg | [1157854568](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-record-verb.ogg&oldid=1157854568) | Dvortygirl | [Public domain](https://commons.wikimedia.org/wiki/Template:PD-self) |
+| En-us-present-adjective.ogg | [1229153874](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-present-adjective.ogg&oldid=1229153874) | Dvortygirl | [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/) |
+| LL-Q1860 (eng)-Vealhurl-present.wav | [1127979008](https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-present.wav&oldid=1127979008) | Speaker: Vealhurl Recorder: Vealhurl | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| En-us-present-verb1.ogg | [1229153878](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-present-verb1.ogg&oldid=1229153878) | Dvortygirl | [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/) |
+| LL-Q1860 (eng)-Vealhurl-present2.wav | [1127979009](https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Vealhurl-present2.wav&oldid=1127979009) | Speaker: Vealhurl Recorder: Vealhurl | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| En-us-lead-metal.oga | [1229142014](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-lead-metal.oga&oldid=1229142014) | Dvortygirl (credited in the Commons file description) | [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/) |
+| LL-Q1860 (eng)-Tesco250-lead.wav | [1248064085](https://commons.wikimedia.org/w/index.php?title=File%3ALL-Q1860%20(eng)-Tesco250-lead.wav&oldid=1248064085) | Speaker: Tesco250 Recorder: Tesco250 | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
+| En-us-lead-guide.oga | [927115899](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-lead-guide.oga&oldid=927115899) | Dvortygirl (credited in the Commons file description) | [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/) |
+| En-us-object-noun.ogg | [1229147999](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-object-noun.ogg&oldid=1229147999) | Dvortygirl | [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/) |
+| En-us-object-verb.ogg | [1229148007](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-object-verb.ogg&oldid=1229148007) | Dvortygirl | [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/) |
+| En-us-subject-noun.ogg | [1074092722](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-subject-noun.ogg&oldid=1074092722) | Dvortygirl | [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/) |
+| En-us-subject-verb.ogg | [941747536](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-subject-verb.ogg&oldid=941747536) | Dvortygirl | [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/) |
+| En-us-minute-noun.ogg | [1155983583](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-minute-noun.ogg&oldid=1155983583) | Dvortygirl | [Public domain](https://commons.wikimedia.org/wiki/Template:PD-self) |
+| En-us-minute-adjective.ogg | [974722523](https://commons.wikimedia.org/w/index.php?title=File%3AEn-us-minute-adjective.ogg&oldid=974722523) | Dvortygirl | [Public domain](https://commons.wikimedia.org/wiki/Template:PD-self) |
+
+Original bytes were obtained and hash-checked for 12 recordings. Commons-provided MP3 derivatives were obtained for lead-guide and subject-verb, with their separate playback hashes retained alongside the original SHA-1 and source-provided derivative relation. The original and MP3 object-verb URLs returned HTTP 429 during verification; that candidate remains network-unverified and the app exposes playback failure without silently changing its reading. Remote availability can change. Browser checks must distinguish real decoded retrieved clips from this deliberately exercised unavailable state.
+
+#### Session and interface contract
+
+Current details, group learning, group word lists, saved words and mistakes pass the displayed meaning to playback. Missing and learner-edited meanings cannot inherit a binding. Entry-level IPA is hidden for guarded homographs; displayed IPA belongs to the selected group. Changing that meaning stops old playback and rejects late completion. Explicit alternatives must belong to the same meaning, and explicit device speech is labelled reading unverified.
+
+New sessions freeze the binding ID or a null no-match; both requested accents remain those of the same retained registry row. Drafts, submission, saved results, resume and retry retain it. Invalid or swapped binding references are rejected. Never edit or remove a released binding/group/recording row: add a new immutable ID and retain the old row for saved sessions. This preserves the intended recording identity, not permanent availability of an external service.
+
+Legacy drafts/results/retries retain entry-level playback and disclose that a meaning match was not saved; they do not acquire a retrospective verified match. New frozen results use their original accent; legacy results retain their existing current-preference behavior. Viewing, playing and changing the audio option create no grade or recovery evidence. An audio-loop activity is recorded only after successful playback, as before. Historical grades, tasks, source references and spaced recovery rules remain unchanged.
+
+<a id="vocabulary-remaining-learning-review"></a>
+
+### Current-learning example sweep
+
+This release finishes the current 101-item truncated-example queue across words, rather than selecting another few words and reviewing all their rare senses first. It adds 127 independent source-bound reviews: 98 existing lexical meanings, three source directories, 21 restored children and five additional general meanings used for corrected defaults. Eight entries receive new defaults. All 3,379 earlier reviews, 4,864 earlier corrections, 350 earlier defaults, 854 diagrams and 634 restored source records remain unchanged.
+
+#### Source reconciliation
+
+The work package retains original and displayed-content fingerprints. The existing source preparer supplied 33 exact matches and 68 manual matches. The 98 lexical candidates are checked structurally against that pre-change report, without publication approval. Their sources are the cached case-sensitive MediaWiki pages and revision URLs already collected for the complete queue.
+
+Manual reconciliation checks metadata templates, source wording changes, spelling/inflection references and taxonomic names against the original record. Unsupported templates are not globally removed to manufacture automatic matches. For example, oculist's current source explicitly lists ophthalmologist and optometrist; the older imported wording remains preserved. Bible's record comes from the lowercase bible source page and describes a case variant. Organisation, organiser, specialised, despatch, co-operative and theatre remain valid variants, rather than spelling-error references.
+
+Attend, mercury and thesis were learning source-directory headings instead of individual meanings. Their headings now remain readable as meaning groups and cannot generate new practice. All 11, five and five direct lexical children of their respective first source directories are restored with original parent fingerprints, exact source lines, case-sensitive revision URLs and attribution. Their other directories remain in the complete pending inventory; this release does not claim to finish those words' full dictionaries.
+
+The audit now accepts ordinary source labels before an explicit top-level non-gloss directory. Tests still reject nested headings, plain lexical definitions, text preceding the directory, missing children and mismatched revisions. No heuristic based on a gloss saying “Senses relating to” supplies approval.
+
+#### Teaching changes
+
+The default attend meaning is presence at an event; mercury starts with the chemical element; thesis starts with a degree document. Physician starts with the broad medical-doctor meaning, embassy with the diplomatic mission, cell with the biological unit, engineer with the general engineering role and office with the workplace. All former meanings remain accessible, and personal primary meanings take precedence.
+
+Cell's hermit-dwelling meaning has complete notes but remains unclassified rather than entering the everyday filter. Its biological default has explicit general priority. The focused regression and four-layout filter check verify that the dwelling stays available under All meanings while the common view prioritises the biological meaning. Further default-selection candidates remain in the work queue; these eight changes do not establish that every headword starts with its best learning meaning.
+
+The authored notes distinguish genetic from hereditary, outdoor from outdoors, copper from brass, seed as planting material from a botanical seed, a wheel from a tyre, and a supported thesis from its supporting argument. Twenty contextual tasks assess specific distinctions or constructions. They do not invent a unique answer when synonyms are interchangeable.
+
+Narrow meanings retain their scope: Roman decimation concerns every tenth person; ridge concerns an animal's back; patent includes legal grants beyond inventions; recession can mean physical withdrawal. Dock's folk-medicine source wording is retained without presenting it as evidence of treatment efficacy. Historical medicinal mercury and alchemical mercury are explicitly reading material. Aboriginal and manly receive guidance about cultural assumptions and stereotypes. Twelve records use typed reading notes; they do not become sentence-gap exercises.
+
+No diagrams are added merely to fill a field. Existing exact diagrams and pronunciation bindings remain intact.
+
+#### Accounting and verification
+
+The dictionary ledger reaches 3,506 reviews among 52,009 preserved/restored records; 48,503 remain pending. The preserved raw inventory is still 51,354 records; restored source meanings rise to 655. Counts include source directories separately from lexical meanings and do not imply semantic approval of unreviewed records.
+
+The actual default/group learning resolver is used to recompute visible coverage. A zero truncated-example signal means this detectable queue is cleared, not that every example is semantically verified. Fragment, archaic-text, collocation, distinction and remaining reference queues continue independently. Release verification includes targeted regressions, the full suite/build/audits, byte retention for all 3,050 prior resources, four-layout rendered checks and exact-commit CI/Cloudflare Git deployment. Final runtime evidence is retained outside committed content.
+
+Local pre-release evidence: 7,910 full-suite passes and one conditional skip across 208 files. The final one-record priority adjustment then passes 200 focused tests across four files, followed by a fresh build and all audits. Rendered checks cover 636 states, 80 distinction submission/return journeys and 16 sentence-gap submissions across 1440/light, 1440/dark, 390/dark and 320/light. The final priority/filter check adds 12 states across those layouts. Synthetic accounts intercept persistence writes. All 3,050 preceding resource files remain byte-identical, with 260 additional files and 3,310 total. Exact-commit CI and production validation follow the commit; local timings and screenshots are not a semantic review of pending content.
+
+<a id="vocabulary-stress-meanings-review"></a>
+
+### Discount and survey: meaning and pronunciation review
+
+All 26 imported meanings were reconciled by exact original gloss and part of speech against discount revision [93072753](https://en.wiktionary.org/w/index.php?title=discount&oldid=93072753) and survey revision [93468666](https://en.wiktionary.org/w/index.php?title=survey&oldid=93468666). Discount's transitive label is an organisational heading, not a missing lexical sense. The checked revisions contain no additional unmatched lexical children for these two entries.
+
+This delivery adds 19 reviews: nine discount meanings and ten survey meanings. The preceding seven reviewed meanings and both defaults retain their text. Twelve new questions have contextual answers; seven explicitly typed reading explanations do not generate sentence gaps. No diagrams are added. The ledger advances to 3,250 reviewed and 48,738 pending among 51,988 records. This does not complete the dictionary-wide goal.
+
+Discount separates retail price reductions, rare deductions, advancing money against bills, anticipating events, the monetary interest deduction and its rate, a literary disadvantage, transactional-analysis terminology and discount retailers. A £1,000 bill advanced at £970 has a £30 deduction; it supplies no annual rate without a term and convention. The unrelated imported antonym surcharge is removed from the new non-retail noun supplements. Rare is not relabelled obsolete.
+
+Survey separates physical inspection, the land-measuring operation, the resulting measured plan, historical farm letting on a lease for lives, a US customs collection district, attentive viewing, examination, property inspection, geometric land measurement and manorial administration. A farm letting is not an outright sale. Manorial royalties means estate rights here, not publishing payments. Old citations do not automatically establish obsolete usage or a current administrative unit.
+
+#### Professional terminology
+
+The two imported transactional-analysis glosses oversimplify discounting as prioritising one's feelings over reality. The revised reading guidance uses the narrower, directly supported communication sense: a response disregards the contents of another person's communication. The original imported records remain separately retained.
+
+The professional source is ITAA's [Core Concepts](https://itaaworld.com/wp-admin/itaa-forms/ITAA_TA_Core_Concepts_2000_English_3_2024.pdf), page 3, linked by its [About TA](https://itaaworld.com/about-ta/) page. The passage explicitly describes a discount transaction as disregarding a transactional stimulus. ITAA's [Summary of TA Concepts](https://membersarea.itaaworld.com/sites/default/files/itaa-pdfs/about-ta/ITAA%20English%20Summary%20of%20TA%20Concept%202005.pdf) also describes people and feelings being discounted. These readings are not a diagnosis or a claim to cover every theoretical definition of discounting. The original 1975 paper was identified through its DOI but its full text was unavailable and was not used as read evidence.
+
+#### Pronunciation scope
+
+Twenty-four exact bindings are appended, preserving all 176 previous bindings, 14 groups and 16 recordings. The new totals are 200 bindings, 19 groups and 20 recordings. Of these, 195 meanings have a scoped recording and five have reviewed IPA only. The two revised transactional-analysis meanings have no binding because their precise pronunciation scope is unresolved; both remain protected from entry-level fallback.
+
+| Group | Source scope | Recording |
+| --- | --- | --- |
+| discount nominal | Noun and adjective, first stress | US Dvortygirl recording |
+| discount other verbs | Source's other verb senses, first stress | IPA only; the nominal recording is not borrowed |
+| discount disregard | Disregard verb, second stress | Southern England Vealhurl recording |
+| survey noun | Source-labelled noun pronunciation, including retained stress variants | Southern England Vealhurl noun recording |
+| survey verb | Source-labelled verb pronunciation, including retained stress variants | Southern England Vealhurl verb recording |
+
+Survey is not taught as an absolute noun/verb stress rule. Both initial- and final-stress variants are retained where listed in the fixed source. The four original Commons audio files were downloaded and their SHA-1 checked. Registry rows retain exact file revision, author, licence, timestamp, canonical URL and hashes. Dvortygirl's file is CC BY-SA 3.0; Vealhurl's files are CC BY-SA 4.0. Browser decoding verifies playback mechanics, not a listening assessment or permanent external availability.
+
+Bindings require the exact entry, term, sense ID, definition and part of speech. Personal replacements remain unbound. Missing accents offer explicit alternatives. A frozen missing match stays missing; legacy sessions do not retroactively acquire a meaning match. The new resource reversal baseline removes only this delivery's 19 corrections when rebuilding previously published resources.
+
+Validation covers all 26 meanings and all 12 new contextual questions in four desktop/mobile layouts. The four original recordings decode through the real product player in every layout. A survey dictation journey preserves the selected reading across pause, refresh, resume, submission and retry; legacy history retains its unverified meaning-match state. The shared interface validation is documented in the [practice interface review](#vocabulary-practice-interface-review). All 2,676 previously published resources retain their URLs and byte hashes; 26 new resources bring the total to 2,702. All 854 previous diagram renderings and all previous 176 pronunciation bindings, 14 groups and 16 recordings remain identical.
+
+<a id="vocabulary-truncated-learning-review"></a>
+
+### Truncated learning-example review
+
+The issue-based scan found 199 current learning variants with an excerpt/truncation marker. These markers are review signals; they do not make every historical quotation linguistically incorrect. One saved-source operation queried 199 case-sensitive Wiktionary titles in five requests. The new offline candidate preparer matched 131 exact original definitions and parts of speech, leaving 68 manual matches. Four matched records offered directly attached, structurally usable source examples; they remained unapproved candidates.
+
+This delivery authors complete modern learning text for **98 exact meanings across 98 words**, including examples, collocations and sense-specific comparisons. It adds **25 construction or meaning exercises** and no diagrams or restored source IDs. The editorial ledger reaches **3,379 reviewed / 48,609 pending / 51,988 total**. All previous ledger records, personal edits, source-specific lessons, pronunciation bindings and frozen history remain intact. Sources and previous public resources retain their original bytes.
+
+The current learning truncated-example signal falls from **199 to 101**. Collocation coverage rises from 2,388 to 2,486 variants, comparison coverage from 238 to 336, sentence-gap support from 7,596 to 7,629, and distinction-question support from 220 to 245. There are still 9,095 distinct current learning variants and 16,296 default/group contexts. These figures describe availability, not proof that all other content has been semantically reviewed.
+
+#### Meaning and construction corrections
+
+Postpone uses a noun or an -ing form; remind names the person before a to-infinitive. Depart from identifies the starting point and depart for identifies a destination. A transparent object may be visible; smooth describes texture, so a curved sphere may be smooth; an irregular verb is not an incorrect verb. Mainland is relative to the islands being discussed and need not denote another continent. Temporary possession does not establish ownership, a declining population has not necessarily become extinct, and a fraction does not by itself specify an exact numerical proportion.
+
+Subgroup's everyday part-of-a-group meaning remains separate from the mathematical convention that a subgroup may be the entire group. This is checked against [MathWorld: Subgroup](https://mathworld.wolfram.com/Subgroup.html), which distinguishes a proper subgroup. Lung's rewritten definition describes oxygen passing into blood, rather than saying the organ controls breathing; see [NHLBI: How the Lungs Work](https://www.nhlbi.nih.gov/health/lungs). The psychologist/psychiatrist comparison is supported by the [Royal College of Psychiatrists](https://www.rcpsych.ac.uk/mental-health/treatments-and-wellbeing/what-to-expect-of-your-psychiatrist-in-the-uk), reached from the NHS psychiatry page, which identifies a psychiatrist as medically qualified. The American Psychiatric Association page was unavailable and is not claimed as verified evidence.
+
+Some exact source meanings remain narrower than an everyday default: trailer's follower meaning, pronounce's formal declaration and sideways as an adjective keep their own IDs. This release does not silently switch to the film preview, sound-production verb or adverb. Assort, pacific and reside receive formal/uncommon wording guidance; sportsman is explicitly male-specific. Beggar and slum receive neutral-use guidance without inferring a person's character from poverty or housing.
+
+#### Source bindings
+
+Each row below matched one preserved original gloss and POS to a case-sensitive revision page. Authored text is Fieldbook editorial content, not a quotation from that page. Source hashes and all four text-review areas are recorded in the existing dictionary ledger. The ignored source evidence artifact also retains the exact matched wikitext line and previous displayed-content fingerprint.
+
+| Word | Preserved sense | Revision-bound source |
+| --- | --- | --- |
+| charity | kaikki:3c8fdf130e021433e7 | [source](https://en.wiktionary.org/w/index.php?title=charity&oldid=93618346) |
+| mental | kaikki:2302fbc18b8762cc55 | [source](https://en.wiktionary.org/w/index.php?title=mental&oldid=93648851) |
+| and | kaikki:7e31145226ef121309 | [source](https://en.wiktionary.org/w/index.php?title=and&oldid=93676631) |
+| bandage | kaikki:8894cf27002f19e409 | [source](https://en.wiktionary.org/w/index.php?title=bandage&oldid=93421746) |
+| discomfort | kaikki:806e3e8e1ec5c002ef | [source](https://en.wiktionary.org/w/index.php?title=discomfort&oldid=93533729) |
+| irrigation | kaikki:ffdb907c5c910eeec6 | [source](https://en.wiktionary.org/w/index.php?title=irrigation&oldid=90118710) |
+| landscape | kaikki:bd42786b79b31f865e | [source](https://en.wiktionary.org/w/index.php?title=landscape&oldid=93603286) |
+| lung | kaikki:00b82d8d861cc33374 | [source](https://en.wiktionary.org/w/index.php?title=lung&oldid=93658772) |
+| ownership | kaikki:4e86da5e174a9445e4 | [source](https://en.wiktionary.org/w/index.php?title=ownership&oldid=91036063) |
+| picture | kaikki:2a4f58f537c2809f63 | [source](https://en.wiktionary.org/w/index.php?title=picture&oldid=93714476) |
+| resource | kaikki:47c07be2b5d539f4eb | [source](https://en.wiktionary.org/w/index.php?title=resource&oldid=93546029) |
+| southwest | kaikki:aad7b05d9849379427 | [source](https://en.wiktionary.org/w/index.php?title=southwest&oldid=92966811) |
+| tube | kaikki:9dc310433d6d176d9b | [source](https://en.wiktionary.org/w/index.php?title=tube&oldid=93729502) |
+| van | kaikki:72ca59b37a1745d1ea | [source](https://en.wiktionary.org/w/index.php?title=van&oldid=93732869) |
+| assort | kaikki:e4f1aa0b919ab5341f | [source](https://en.wiktionary.org/w/index.php?title=assort&oldid=91978157) |
+| backpack | kaikki:cb45ac9095f65d325c | [source](https://en.wiktionary.org/w/index.php?title=backpack&oldid=93678778) |
+| beach | kaikki:4948b87050851d07fa | [source](https://en.wiktionary.org/w/index.php?title=beach&oldid=93739533) |
+| beggar | kaikki:d0f72db6718c476c14 | [source](https://en.wiktionary.org/w/index.php?title=beggar&oldid=93607336) |
+| bias | kaikki:d6394c059d8e06af3b | [source](https://en.wiktionary.org/w/index.php?title=bias&oldid=93680310) |
+| breed | kaikki:56b1d80453a5c1fe8e | [source](https://en.wiktionary.org/w/index.php?title=breed&oldid=93681977) |
+| corridor | kaikki:4a6daf54e246b6ac7b | [source](https://en.wiktionary.org/w/index.php?title=corridor&oldid=91549112) |
+| dean | kaikki:727362a60ef715b729 | [source](https://en.wiktionary.org/w/index.php?title=dean&oldid=92961718) |
+| deficiency | kaikki:1affc08c8db3b78111 | [source](https://en.wiktionary.org/w/index.php?title=deficiency&oldid=93531056) |
+| driver | kaikki:ea36c205df14493741 | [source](https://en.wiktionary.org/w/index.php?title=driver&oldid=93690793) |
+| exclude | kaikki:62e9b57b3da7b16108 | [source](https://en.wiktionary.org/w/index.php?title=exclude&oldid=93536790) |
+| glimpse | kaikki:5ef5478976a0864161 | [source](https://en.wiktionary.org/w/index.php?title=glimpse&oldid=93514120) |
+| hazardous | kaikki:99c3cc65853325b1ed | [source](https://en.wiktionary.org/w/index.php?title=hazardous&oldid=93598256) |
+| immense | kaikki:def100d54a6139aeb1 | [source](https://en.wiktionary.org/w/index.php?title=immense&oldid=93701047) |
+| intelligent | kaikki:c9a2c7a826459ee17c | [source](https://en.wiktionary.org/w/index.php?title=intelligent&oldid=93338347) |
+| irregular | kaikki:8caf0de3ab525e0b46 | [source](https://en.wiktionary.org/w/index.php?title=irregular&oldid=93136229) |
+| nutrition | kaikki:13dec217abf941eaa0 | [source](https://en.wiktionary.org/w/index.php?title=nutrition&oldid=93598742) |
+| proclaim | kaikki:cb7b9d8f7c70ef9c45 | [source](https://en.wiktionary.org/w/index.php?title=proclaim&oldid=89811164) |
+| psychologist | kaikki:32bf641c3b82da14a1 | [source](https://en.wiktionary.org/w/index.php?title=psychologist&oldid=93546690) |
+| railway station | kaikki:2e5292b8ba5521c86a | [source](https://en.wiktionary.org/w/index.php?title=railway%20station&oldid=91794798) |
+| royal | kaikki:28b704d68d7b914a27 | [source](https://en.wiktionary.org/w/index.php?title=royal&oldid=93719943) |
+| secondly | kaikki:9b2c50199848192e8b | [source](https://en.wiktionary.org/w/index.php?title=secondly&oldid=93148136) |
+| see | kaikki:4e7b3292129ee6bf84 | [source](https://en.wiktionary.org/w/index.php?title=see&oldid=93739152) |
+| sideways | kaikki:d16727d7286a75e773 | [source](https://en.wiktionary.org/w/index.php?title=sideways&oldid=91638996) |
+| sportsman | kaikki:84df9d6d81dc2c60d6 | [source](https://en.wiktionary.org/w/index.php?title=sportsman&oldid=93724298) |
+| toil | kaikki:c592317d062c98c343 | [source](https://en.wiktionary.org/w/index.php?title=toil&oldid=93728446) |
+| trailer | kaikki:2299444bb4c83c5073 | [source](https://en.wiktionary.org/w/index.php?title=trailer&oldid=93583000) |
+| transit | kaikki:f2cfb3d56b821b2e76 | [source](https://en.wiktionary.org/w/index.php?title=transit&oldid=93005500) |
+| writing | kaikki:4861a7f296a469ddb9 | [source](https://en.wiktionary.org/w/index.php?title=writing&oldid=93567111) |
+| analyze | kaikki:c4e462f8ecffd6d1e3 | [source](https://en.wiktionary.org/w/index.php?title=analyze&oldid=93543525) |
+| anthropologist | kaikki:9bc44a602d521ee883 | [source](https://en.wiktionary.org/w/index.php?title=anthropologist&oldid=93602811) |
+| astound | kaikki:73ad240552e98540ab | [source](https://en.wiktionary.org/w/index.php?title=astound&oldid=93678061) |
+| captive | kaikki:8dfadc15fb5ea75067 | [source](https://en.wiktionary.org/w/index.php?title=captive&oldid=93473643) |
+| come | kaikki:2ea8f08bec8229f0aa | [source](https://en.wiktionary.org/w/index.php?title=come&oldid=93685712) |
+| commentary | kaikki:694e107119526a78b0 | [source](https://en.wiktionary.org/w/index.php?title=commentary&oldid=92412858) |
+| community | kaikki:371922564ce79ccb49 | [source](https://en.wiktionary.org/w/index.php?title=community&oldid=93536818) |
+| continent | kaikki:78222c3b1edd22ac40 | [source](https://en.wiktionary.org/w/index.php?title=continent&oldid=93686339) |
+| deduce | kaikki:7a25f300257e815af4 | [source](https://en.wiktionary.org/w/index.php?title=deduce&oldid=93599476) |
+| delegation | kaikki:dcbfba9cbd60793778 | [source](https://en.wiktionary.org/w/index.php?title=delegation&oldid=91533406) |
+| depart | kaikki:3ea6360611bc5bdf12 | [source](https://en.wiktionary.org/w/index.php?title=depart&oldid=93688947) |
+| desert | kaikki:be9a01e35685a6a0dd | [source](https://en.wiktionary.org/w/index.php?title=desert&oldid=93689102) |
+| eaves | kaikki:a0ee6f5752220bfd04 | [source](https://en.wiktionary.org/w/index.php?title=eaves&oldid=92132978) |
+| emerge | kaikki:9d723997cf98a898b2 | [source](https://en.wiktionary.org/w/index.php?title=emerge&oldid=93074681) |
+| error | kaikki:a480d975404d2f0085 | [source](https://en.wiktionary.org/w/index.php?title=error&oldid=93692588) |
+| expose | kaikki:7e98e62029b96a69a6 | [source](https://en.wiktionary.org/w/index.php?title=expose&oldid=93693169) |
+| extinction | kaikki:cf2db2816f8ff20540 | [source](https://en.wiktionary.org/w/index.php?title=extinction&oldid=93557091) |
+| fraction | kaikki:ab598b772945af1a8f | [source](https://en.wiktionary.org/w/index.php?title=fraction&oldid=92081390) |
+| guardian | kaikki:ed3c3d930faac9341b | [source](https://en.wiktionary.org/w/index.php?title=guardian&oldid=93458195) |
+| hairdressing | kaikki:4da35750cad2009190 | [source](https://en.wiktionary.org/w/index.php?title=hairdressing&oldid=89123167) |
+| inability | kaikki:b65555f096dac72668 | [source](https://en.wiktionary.org/w/index.php?title=inability&oldid=93523794) |
+| interference | kaikki:72611a94ae6b0eb14c | [source](https://en.wiktionary.org/w/index.php?title=interference&oldid=93338538) |
+| invisible | kaikki:df6e3c74f83bb4d08c | [source](https://en.wiktionary.org/w/index.php?title=invisible&oldid=93702445) |
+| island | kaikki:d1f6f920af40d4b837 | [source](https://en.wiktionary.org/w/index.php?title=island&oldid=93668663) |
+| labour | kaikki:474e6e749e5c321ad8 | [source](https://en.wiktionary.org/w/index.php?title=labour&oldid=93704073) |
+| lawn | kaikki:146a1e59e5360da370 | [source](https://en.wiktionary.org/w/index.php?title=lawn&oldid=93704484) |
+| mainland | kaikki:d9f30ceeaf0a598510 | [source](https://en.wiktionary.org/w/index.php?title=mainland&oldid=93662667) |
+| martial | kaikki:2ad236bcd6288f7e61 | [source](https://en.wiktionary.org/w/index.php?title=martial&oldid=93570335) |
+| negatively | kaikki:52bf2a2493d2531d44 | [source](https://en.wiktionary.org/w/index.php?title=negatively&oldid=93709527) |
+| noxious | kaikki:b271aeb6eab8caf462 | [source](https://en.wiktionary.org/w/index.php?title=noxious&oldid=93520440) |
+| pacific | kaikki:12a0711db0041001d6 | [source](https://en.wiktionary.org/w/index.php?title=pacific&oldid=93380095) |
+| pamphlet | kaikki:ef7de4edbf446a8a3b | [source](https://en.wiktionary.org/w/index.php?title=pamphlet&oldid=92166572) |
+| paramount | kaikki:dc82368fb929e2213b | [source](https://en.wiktionary.org/w/index.php?title=paramount&oldid=92144460) |
+| patriot | kaikki:b2ed10f42b72663e42 | [source](https://en.wiktionary.org/w/index.php?title=patriot&oldid=93096506) |
+| peer | kaikki:9d43dc55a068aa3aff | [source](https://en.wiktionary.org/w/index.php?title=peer&oldid=93713748) |
+| postpone | kaikki:59cdc07e31fd4a18f6 | [source](https://en.wiktionary.org/w/index.php?title=postpone&oldid=92915672) |
+| preview | kaikki:2559203bb290246329 | [source](https://en.wiktionary.org/w/index.php?title=preview&oldid=91977508) |
+| pronounce | kaikki:a3c8f0e4ed847ecdfa | [source](https://en.wiktionary.org/w/index.php?title=pronounce&oldid=93716620) |
+| rake | kaikki:d61f29d07cc443096f | [source](https://en.wiktionary.org/w/index.php?title=rake&oldid=93717953) |
+| reasonable | kaikki:dc474ba967752a6f91 | [source](https://en.wiktionary.org/w/index.php?title=reasonable&oldid=89985226) |
+| redundant | kaikki:d64a497ac66a4a8f76 | [source](https://en.wiktionary.org/w/index.php?title=redundant&oldid=93718545) |
+| remind | kaikki:d38e084f200819e939 | [source](https://en.wiktionary.org/w/index.php?title=remind&oldid=93483548) |
+| reside | kaikki:830d87e9077cf53dd6 | [source](https://en.wiktionary.org/w/index.php?title=reside&oldid=91722781) |
+| slum | kaikki:931ae96700113fb9a8 | [source](https://en.wiktionary.org/w/index.php?title=slum&oldid=93723085) |
+| smooth | kaikki:7129e5bfe8e6fb09a8 | [source](https://en.wiktionary.org/w/index.php?title=smooth&oldid=93723236) |
+| stern | kaikki:dc6dad932da6c48d5f | [source](https://en.wiktionary.org/w/index.php?title=stern&oldid=93109164) |
+| subgroup | kaikki:16eba8c103d1e0bf2f | [source](https://en.wiktionary.org/w/index.php?title=subgroup&oldid=93358709) |
+| swarm | kaikki:fa0f2ad77d304e96d3 | [source](https://en.wiktionary.org/w/index.php?title=swarm&oldid=93726289) |
+| swim | kaikki:dc8de1202a4ac7bde2 | [source](https://en.wiktionary.org/w/index.php?title=swim&oldid=93726399) |
+| tender | kaikki:022688d32c3e112471 | [source](https://en.wiktionary.org/w/index.php?title=tender&oldid=93727355) |
+| thaw | kaikki:bb44517a85c1200d95 | [source](https://en.wiktionary.org/w/index.php?title=thaw&oldid=92283439) |
+| unwelcome | kaikki:3289908f12bb4e7469 | [source](https://en.wiktionary.org/w/index.php?title=unwelcome&oldid=93732358) |
+| variation | kaikki:942ad5dab6dab4fdfb | [source](https://en.wiktionary.org/w/index.php?title=variation&oldid=93574810) |
+| version | kaikki:bd03dfa1184205b00c | [source](https://en.wiktionary.org/w/index.php?title=version&oldid=92757418) |
+| viaduct | kaikki:237a90cc7d525cfc74 | [source](https://en.wiktionary.org/w/index.php?title=viaduct&oldid=93115438) |
+
+
+#### Remaining work
+
+The other 101 current truncation signals and the complete 48,609-record dictionary backlog remain open. Revised/ambiguous source glosses, source directory headings and specialised or historical meanings require further evidence and focused authoring. Candidate preparation does not grant semantic approval or increase the ledger by itself. Missing diagrams are not a defect; visuals are selected for teaching value.
+
+<a id="vocabulary-visible-example-review"></a>
+
+### Visible learning-example backlog
+
+The complete bulk scan found 30 default learning variants with no displayed example: 28 held relation lists and two held citation-directory text in their source example field. Shared presentation already correctly avoided showing those as example sentences. This delivery supplies exact-meaning learning material for those 30 words and separately reviews the ordinary cooking sense of pan: 31 new dictionary reviews, 29 contextual distinction tasks and two explicitly typed reading notes. No diagrams or new source sense identities are added.
+
+The scan covers all 7,021 catalogue words, 9,205 memberships and 51,988 dictionary/source-restoration records using the existing runtime learning-context and exercise resolvers. Its pre-change result had 9,095 distinct learning variants, of which 30 lacked a displayed example. After this delivery all 9,095 have an example or reading note. This count measures availability, not the linguistic correctness of every remaining example. Truncated quotations, dated text, missing collocations and missing distinctions remain separate queues in the [quality report](vocabulary-quality-report.md).
+
+The editorial ledger reaches **3,281 reviewed / 48,707 pending / 51,988 total**. Existing reviews are preserved. This issue-based delivery does not claim that all meanings of these words, or the whole dictionary, are reviewed.
+
+#### Corrections and boundaries
+
+Packing list had imported only a logistics/transport label from a source definition-request template. Its replacement is checked against the International Trade Administration's [Packing List](https://www.trade.gov/packing-list): a package-by-package contents document with weights, measurements and goods. It is distinct from a personal holiday checklist. No mandatory customs outcome or universal legal requirement is inferred.
+
+Pan defaults to the independently sourced lowercase cooking noun. The Greek deity from the case-sensitive Pan page retains its original identity and a separate proper-name reading note. Intentional personal edits and frozen sessions keep their identities; the public default change does not merge the cooking vessel with the deity. Missionary's broad person-sent-on-a-mission meaning also receives a reading note, rather than an invented modern sentence exercise. The religion-specific source meaning is still separate.
+
+Accountants and criteria retain their plural identities. Criteria guidance uses the ordinary edited plural agreement without deleting the dictionary's separately recorded singular usages. Scissors is normally plural, while a pair of scissors takes singular pair agreement. Family room and living room can overlap; the new material does not force a false distinction between them. Synonyms are compared in a specified context, rather than promised to be substitutable everywhere. A broad spectrum of views does not assert equal frequencies; quantitative data does not prove accuracy; propaganda does not prove every statement false; stale does not establish food safety.
+
+Logogram is not taught as necessarily a picture of its meaning. Textile includes woven and nonwoven materials. The cannon material is lexical recognition of an artillery assembly, without an operating procedure. Exact original records are retained while the public learning supplements remove irrelevant or overly broad relation lists from these reviewed displays.
+
+#### Source reconciliation
+
+The 30 original selected records were checked against revision-bound English source sections. Twenty-four match the existing plain-gloss/POS renderer directly; five require explicit interpretation of source markup (two plural-of templates, one synonym-of template, barrel's named display parameter and cannon's bibliographic reference). Packing list is a definition-request placeholder, not an attested lexical definition; its replacement relies on the primary ITA document. The additional cooking-pan source matches its exact original gloss and POS. This is targeted meaning reconciliation, not a claim that every child meaning of these words was inventoried.
+
+Accountant revision [93661030](https://en.wiktionary.org/w/index.php?title=accountant&oldid=93661030), criterion revision [93558764](https://en.wiktionary.org/w/index.php?title=criterion&oldid=93558764) and print out revision [90924818](https://en.wiktionary.org/w/index.php?title=print%20out&oldid=90924818) independently support the expansions of the two plural forms and the phrasal-verb alias. Catalogue display case is resolved through lowercase dictionary index keys in the audit; case-sensitive source-page titles and original hashes remain unchanged.
+
+| Word | Original sense | Checked source |
+| --- | --- | --- |
+| Xerox | kaikki:9cd18fc84854d00400 | [92513544](https://en.wiktionary.org/w/index.php?title=xerox&oldid=92513544) |
+| accountants | kaikki:04a38ba1985d81ae7a | [90281540](https://en.wiktionary.org/w/index.php?title=accountants&oldid=90281540) |
+| barrel | kaikki:5be7000e16e53a2985 | [93679194](https://en.wiktionary.org/w/index.php?title=barrel&oldid=93679194) |
+| bead | kaikki:bd924e80a0f0b5eea4 | [93679419](https://en.wiktionary.org/w/index.php?title=bead&oldid=93679419) |
+| broom | kaikki:a7aafeea79673b83de | [93682171](https://en.wiktionary.org/w/index.php?title=broom&oldid=93682171) |
+| cannon | kaikki:d9764a6c8c73013f25 | [93683185](https://en.wiktionary.org/w/index.php?title=cannon&oldid=93683185) |
+| clause | kaikki:5704742f517616f009 | [93143193](https://en.wiktionary.org/w/index.php?title=clause&oldid=93143193) |
+| cosmetics | kaikki:4c33fa7b0056b145dc | [92693123](https://en.wiktionary.org/w/index.php?title=cosmetics&oldid=92693123) |
+| criteria | kaikki:8bffbc8dabb1f7b217 | [92202814](https://en.wiktionary.org/w/index.php?title=criteria&oldid=92202814) |
+| detergent | kaikki:e22773a2db594f0860 | [93520951](https://en.wiktionary.org/w/index.php?title=detergent&oldid=93520951) |
+| family room | kaikki:38034f47eeb6bd1126 | [91955213](https://en.wiktionary.org/w/index.php?title=family%20room&oldid=91955213) |
+| glue | kaikki:8996965d9b4b173e16 | [93697316](https://en.wiktionary.org/w/index.php?title=glue&oldid=93697316) |
+| incidentally | kaikki:4ea3829e13ea6e5fc3 | [90579170](https://en.wiktionary.org/w/index.php?title=incidentally&oldid=90579170) |
+| livestock | kaikki:5428d53289bbf8cbba | [93705322](https://en.wiktionary.org/w/index.php?title=livestock&oldid=93705322) |
+| living room | kaikki:a7d6779c67859068a0 | [93140024](https://en.wiktionary.org/w/index.php?title=living%20room&oldid=93140024) |
+| logogram | kaikki:4bccd78cdc62b5e19c | [90395201](https://en.wiktionary.org/w/index.php?title=logogram&oldid=90395201) |
+| masquerade | kaikki:6164538de9b7616c1f | [93437012](https://en.wiktionary.org/w/index.php?title=masquerade&oldid=93437012) |
+| missionary | kaikki:3cae8e16a0f6bcb5e3 | [92984304](https://en.wiktionary.org/w/index.php?title=missionary&oldid=92984304) |
+| motor | kaikki:f5c66df6e8ab70db71 | [93634712](https://en.wiktionary.org/w/index.php?title=motor&oldid=93634712) |
+| packing list | kaikki:be7e267b34fc509f7e | [ITA Packing List](https://www.trade.gov/packing-list) |
+| pan | kaikki:62e1772a61c6368e1d | [93543208](https://en.wiktionary.org/w/index.php?title=Pan&oldid=93543208) |
+| paraphrase | kaikki:a2564a53230c10b8fe | [92695859](https://en.wiktionary.org/w/index.php?title=paraphrase&oldid=92695859) |
+| print off | kaikki:459f0eaecab409294e | [90923352](https://en.wiktionary.org/w/index.php?title=print%20off&oldid=90923352) |
+| propaganda | kaikki:2f30d9092a95848a95 | [93646500](https://en.wiktionary.org/w/index.php?title=propaganda&oldid=93646500) |
+| quantitative | kaikki:3494a3377d9fd266dc | [90906987](https://en.wiktionary.org/w/index.php?title=quantitative&oldid=90906987) |
+| scissors | kaikki:a11b6eb43e68fe2be1 | [93478742](https://en.wiktionary.org/w/index.php?title=scissors&oldid=93478742) |
+| spectrum | kaikki:e7607679179d9571c2 | [93517779](https://en.wiktionary.org/w/index.php?title=spectrum&oldid=93517779) |
+| stale | kaikki:cc8b2a3683aa33da18 | [93724598](https://en.wiktionary.org/w/index.php?title=stale&oldid=93724598) |
+| synonym | kaikki:8deeede12e86aab151 | [93726508](https://en.wiktionary.org/w/index.php?title=synonym&oldid=93726508) |
+| textile | kaikki:46db63b19c0f7bf63f | [93132370](https://en.wiktionary.org/w/index.php?title=textile&oldid=93132370) |
+| pan | kaikki:06cf3f78c1c816bb8e | [93713118](https://en.wiktionary.org/w/index.php?title=pan&oldid=93713118) |
+
+#### Validation
+
+Regression tests first reproduced all 30 absent displayed examples, the incorrect pan default and the packing-list label-only definition. The new tests check exact notes, usable sentence gaps where appropriate, plural guidance, source casing and intentional personal-example protection. The bulk workflow has independent tests for full source coverage, distinct group variants under a shared ID, duplicate-gloss signals, stable exports, reading-note exclusions and stale/invalid candidate rejection.
+
+Required full-suite, build, editorial-audit, identity/SQL, bundle-budget, retained-resource and desktop/mobile browser checks run for this release. Exact-commit CI and Cloudflare Git deployment verification remain release gates; a report or a candidate check alone does not establish deployment or semantic completion.

@@ -1,7 +1,8 @@
 # Manual test fixes and source learning release
 
 Baseline: `b2584e7`. Approved scope: the twelve October 14 manual-test findings
-and the three deliveries in `docs/superpowers/plans/2026-10-14-manual-test-fixes.md`.
+and the three deliveries in the implementation plan (removed 2026-11-04; see git
+history).
 
 ## Delivered behavior
 

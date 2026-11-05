@@ -15,3 +15,11 @@ python scripts/audit-vocabulary-curriculum.py
 ```
 
 The media audit also needs its private cached Commons metadata. Run it after the content audit. Concise Markdown reports remain in `docs/`; fonts, dictionaries, media, catalogues, SQL migrations and tests remain source-controlled.
+
+Docs map:
+
+- [vocabulary-content.md](vocabulary-content.md): sources, licensing and import formats.
+- [vocabulary-learning-rules.md](vocabulary-learning-rules.md): learning, review and planning rules.
+- [vocabulary-bulk-workflow.md](vocabulary-bulk-workflow.md): dictionary review workflow, plan and parallel review.
+- [vocabulary-review-log.md](vocabulary-review-log.md): dated deliveries and batch reviews.
+- The six generated `vocabulary-*-audit.md` and `vocabulary-quality-report.md` files: regenerate them with the scripts; do not edit them by hand.
