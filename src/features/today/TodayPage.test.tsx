@@ -10,6 +10,7 @@ import { rememberVocabularyPosition } from '../vocabulary/vocabularyNavigation';
 
 const mocks=vi.hoisted(()=>({state:null,start:vi.fn(),generate:vi.fn(),skill:'writing'}));
 vi.mock('../../context/FieldbookContext',()=>({useFieldbook:()=>({state:mocks.state,activeSkill:mocks.skill,ensureUnifiedPlans:mocks.generate,startPlan:mocks.start})}));
+vi.mock('../exam/useExamCatalog',()=>({useExamCatalog:()=>({catalog:{papers:[{id:'paper',book:12,test:2}],sections:[{id:'section',paperId:'paper',part:3,skill:'listening'}]},loading:false,error:'',reload:vi.fn()})}));
 beforeEach(()=>{vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(2026,9,17,12));mocks.state=emptyState();mocks.start.mockReset().mockResolvedValue(true);mocks.generate.mockReset().mockResolvedValue(true);mocks.skill='writing';});
 afterEach(()=>{cleanup();vi.restoreAllMocks();vi.useRealTimers();});
 const plan=(id,skill,status='pending',day=dateKey(new Date()))=>({id,skill,kind:`${skill}-practice`,status,dateKey:day,title:`${skill} task`,description:'Selected practice',estimatedMinutes:20,completion:{description:'Submit the selected section.'}});
@@ -30,8 +31,9 @@ test('held and archived tasks cannot appear as next work, inflate today or retur
  mocks.state.activePlanId='held-0';
  const {container}=renderPage();
  expect(container.querySelector('.study-next')).toHaveAttribute('data-plan-id','current');
- expect(container.querySelector('.study-summary')).toHaveTextContent('20 / 30 min planned');
- expect(container.querySelector('.study-summary')).toHaveTextContent('of 1 task');
+ expect(container.querySelector('.study-summary')).toHaveTextContent('0 of 20 min done · 30 min budget');
+ expect(container.querySelector('.study-summary')).toHaveTextContent('0/1 task done');
+ expect(container.querySelector('.study-summary')).not.toHaveTextContent(/min planned|estimated/);
  expect(screen.queryByText('listening task')).not.toBeInTheDocument();
  expect(screen.queryByText('speaking task')).not.toBeInTheDocument();
  expect(screen.queryByRole('region',{name:'Continue previous tasks'})).not.toBeInTheDocument();
@@ -41,6 +43,8 @@ test('one next task is unified and does not depend on the active skill',async()=
   mocks.state.plans=[plan('listen','listening')];mocks.skill='writing';renderPage();
   await screen.findByRole('heading',{name:'listening task'});
   expect(screen.getAllByText(/20 min/)).toHaveLength(2);
+  expect(document.querySelector('.study-work-row.is-current')).toHaveTextContent('Up next');
+  expect(document.querySelector('.study-work-row.is-current')).not.toHaveTextContent('Shown above');
   await userEvent.click(screen.getByRole('button',{name:'Start'}));expect(mocks.start).toHaveBeenCalledWith('listen',{force:false,onError:expect.any(Function)});
 });
 test('resumes existing progress before overdue or new tasks',async()=>{
@@ -57,7 +61,9 @@ test('blocked source content remains retryable',async()=>{
 test('completion summary lists the skills with tasks today',async()=>{
   mocks.state.plans=[plan('read','reading','completed'),plan('vocab','vocabulary','completed')];const {container}=renderPage();
   await waitFor(()=>expect(mocks.generate).toHaveBeenCalled());
-  expect(screen.getByText('40 min estimated for completed tasks')).toBeInTheDocument();
+  expect(container.querySelector('.study-summary-total')).toHaveTextContent('2/2 tasks done');
+  expect(container.querySelector('.study-summary-minutes')).toHaveTextContent('40 of 40 min done · 30 min budget · 10 min over budget');
+  expect(container.querySelector('.study-summary .study-over-budget')).toHaveTextContent('10 min over budget');
   expect(screen.getAllByText('1 done')).toHaveLength(2);
   expect(screen.getByRole('heading',{name:'Today is complete'})).toBeInTheDocument();
   expect(container.querySelector('.study-summary')).not.toHaveTextContent(/writing/i);
@@ -117,9 +123,23 @@ test('future and completed active plans cannot displace today or an unfinished e
   mocks.state.activePlanId='future';mocks.state.plans=[plan('future','reading','in_progress','2099-01-01'),plan('today','speaking')];
   mocks.state.examAttempts=[{id:'attempt-old',status:'paused',skill:'listening',mode:'practice',sourceId:'paper',sectionIds:['section'],remainingSeconds:1200,updatedAt:'2020-01-01'}];
   const {container,rerender}=renderPage();expect(within(container.querySelector('.study-next')).getByRole('heading',{name:'speaking task'})).toBeInTheDocument();
-  expect(within(screen.getByRole('region',{name:'Continue previous tasks'})).getByRole('link',{name:'Resume'})).toHaveAttribute('href','/listening/section?attempt=attempt-old');
+  const previous=screen.getByRole('region',{name:'Continue previous tasks'});
+  expect(within(previous).getByRole('link',{name:'Resume'})).toHaveAttribute('href','/listening/section?attempt=attempt-old');
+  expect(within(previous).getByRole('heading',{name:'Resume Cambridge 12 · Test 2 · Part 3'})).toBeInTheDocument();
+  expect(previous).toHaveTextContent(/Saved \w{3} \d{1,2} \w{3} 20\d\d · 0 answers/);
+  expect(previous).not.toHaveTextContent(/min remaining|min left/);
   mocks.state.plans[0].status='completed';rerender(<MemoryRouter><TodayPage/></MemoryRouter>);
   expect(within(container.querySelector('.study-next')).getByRole('heading',{name:'speaking task'})).toBeInTheDocument();
+});
+
+test('a paused mock shows the time left on its clock and names its test',()=>{
+  mocks.state.plans=[plan('today','speaking')];
+  mocks.state.examAttempts=[{id:'mock-1',status:'paused',skill:'listening',mode:'mock',sourceId:'paper',sectionIds:['section'],timeLimitSeconds:1800,elapsedSeconds:600,responses:{q1:'river'},updatedAt:'2026-10-16T10:00:00Z'}];
+  renderPage();
+  const previous=screen.getByRole('region',{name:'Continue previous tasks'});
+  expect(within(previous).getByRole('heading',{name:'Resume Cambridge 12 · Test 2 mock'})).toBeInTheDocument();
+  expect(previous).toHaveTextContent('20 min left');
+  expect(within(previous).getByRole('link',{name:'Resume'})).toHaveAttribute('href','/listening/mock/paper?attempt=mock-1');
 });
 
 test('Today next task retains a stable focus anchor for practice returns',async()=>{
