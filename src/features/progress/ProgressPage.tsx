@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { ArrowUpRight, CheckCheck, FileCheck2, PenLine } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, CheckCheck, FileCheck2, PenLine } from 'lucide-react';
 import { criterionBands, criterionLabel, criterionSeries, numericOveralls } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { formatDate, sessionSkill } from '../../lib/format';
@@ -63,7 +63,7 @@ export function ProgressPage() {
   const statusNames = { pending: 'Not started', in_progress: 'In progress', completed: 'Completed', skipped: 'Skipped' };
   return (
     <section className="view active progress-view">
-      <div className="page-tools"><p>Practice results and imported feedback.</p><Link to={skill === 'vocabulary' ? '/vocabulary/review' : receptive ? `/${skill}` : `/review?skill=${skill}`} className="btn line">{skill === 'vocabulary' ? 'Review vocabulary' : receptive ? 'Open practice bank' : 'Review attempts'} <ArrowUpRight size={16} /></Link></div>
+      <div className="page-tools"><p>Practice results and imported feedback.</p><Link to={skill === 'vocabulary' ? '/vocabulary/review' : receptive ? `/${skill}` : `/review?skill=${skill}`} className="btn line">{skill === 'vocabulary' ? 'Review vocabulary' : receptive ? 'Open practice bank' : 'Review attempts'} <ArrowRight size={16} /></Link></div>
       <div className="toolbar">
         <FilterMenu label="Progress skill" value={skill} onChange={selectCategory} options={[{ value: 'listening', label: 'Listening' }, { value: 'reading', label: 'Reading' }, { value: 'writing', label: 'Writing' }, { value: 'speaking', label: 'Speaking' }, { value: 'vocabulary', label: 'Vocabulary' }]} />
         <FilterMenu label="Time range" value={range} onChange={value => update('range', value)} options={[{ value: '7', label: 'Last 7 days' }, { value: '30', label: 'Last 30 days' }, { value: '90', label: 'Last 90 days' }, { value: 'all', label: 'All time' }]} />

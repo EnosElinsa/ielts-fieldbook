@@ -89,20 +89,20 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
       {skill === 'reading' && <p>Reading passages and full mock tests.</p>}
       <div className="exam-bank-actions"><Link className="btn line" to={`/${skill}/review`}><RotateCcw size={15} />Review mistakes</Link></div>
     </div>
-    <div className="toolbar exam-toolbar">
+    {(loading || hasCatalogSections) && <div className="toolbar exam-toolbar">
       <input className="search" value={search} onChange={event => update('q', event.target.value)} aria-label={`Search ${skill} sections`} placeholder="Search a title, book or test…" />
       <FilterMenu label="Book" value={book} onChange={value => update('book', value)} options={[{ value: 'all', label: 'All books' }, ...Array.from({ length: 14 }, (_, index) => ({ value: String(index + 8), label: `Cambridge ${index + 8}` }))]} />
       <FilterMenu label="Test" value={test} onChange={value => update('test', value)} options={[{ value: 'all', label: 'All tests' }, ...[1, 2, 3, 4].map(value => ({ value: String(value), label: `Test ${value}` }))]} />
       <FilterMenu label={sectionLabel} value={part} onChange={value => update('part', value)} options={[{ value: 'all', label: `All ${sectionLabel.toLowerCase()}s` }, ...Array.from({ length: skill === 'reading' ? 3 : 4 }, (_, index) => ({ value: String(index + 1), label: `${sectionLabel} ${index + 1}` }))]} />
       <FilterMenu label="Question type" value={type} onChange={value => update('type', value)} options={[{ value: 'all', label: 'All question types' }, ...Object.entries(QUESTION_TYPE_NAMES).map(([value, label]) => ({ value, label }))]} />
       <FilterMenu label="Practice status" value={status} onChange={value => update('status', value)} options={[{ value: 'all', label: 'Any status' }, { value: 'ready', label: 'Ready' }, { value: 'incomplete', label: 'Source incomplete' }, { value: 'new', label: 'Not practised' }, { value: 'practised', label: 'Practised' }, { value: 'favorites', label: 'Favourites' }]} />
-    </div>
+    </div>}
     {saveError && <div role="alert" className="exam-notice">{saveError} {failedFavorite && <button className="btn line" disabled={savingFavorite} onClick={() => void toggleFavorite(failedFavorite.id, failedFavorite.wanted)}>Retry favourite save</button>}</div>}
     {recent.length > 0 && <aside className="exam-recent" aria-label="Your recent work"><span className="exam-eyebrow">Your recent work</span>{recent.map(attempt => { const section = catalog.sections.find(row => row.id === attempt.sectionIds[0]); const paper = catalog.papers.find(row => row.id === (attempt.mode === 'mock' ? attempt.sourceId : section?.paperId)); return <Link key={attempt.id} to={examSessionUrl(attempt)}>
       <span className="exam-eyebrow">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : `${skill} · saved practice`}</span><strong>{attempt.mode === 'mock' ? 'Full mock' : section?.title || `${sectionLabel} practice`}</strong>
       <span className="exam-recent-meta">{attempt.mode === 'mock' ? 'Full mock' : `${sectionLabel} practice`} · {attempt.status === 'completed' ? `${attempt.score ?? '—'} / ${attempt.total ?? '—'} marks` : attempt.status === 'paused' ? 'Paused' : 'In progress'}</span><b>{attempt.status === 'completed' ? 'Review' : 'Resume'} <ArrowRight size={14} /></b>
     </Link>; })}</aside>}
-    {loading ? <PageLoadingState variant="bank" message="Loading questions…" onRetry={reload} /> : error && !hasCatalogSections ? <StateMessage kind="error" message={error} onRetry={reload} /> : !hasCatalogSections ? <StateMessage title={`The ${skill} bank is not available yet.`} message="Questions are not available yet. Please try again later." /> : <>
+    {loading ? <PageLoadingState variant="bank" message="Loading questions…" onRetry={reload} /> : error && !hasCatalogSections ? <StateMessage kind="error" message={error} onRetry={reload} /> : !hasCatalogSections ? <StateMessage title={`${skill === 'reading' ? 'Reading' : 'Listening'} questions are unavailable`} message="Check your connection, then retry." onRetry={reload} /> : <>
       {error && <StateMessage kind="error" message={error} onRetry={reload} />}
       <div className="exam-results-bar" ref={results}><span role="status">{matchingPapers.length} test{matchingPapers.length === 1 ? '' : 's'} · {sections.length} {sectionLabel.toLowerCase()}{sections.length === 1 ? '' : 's'}</span>{hasFilters && <button className="btn text" onClick={clearFilters}>Clear filters</button>}</div>
       {sections.length === 0 ? <StateMessage message="No sections match these filters." /> : <div className="exam-paper-list">{visiblePapers.map(paper => {

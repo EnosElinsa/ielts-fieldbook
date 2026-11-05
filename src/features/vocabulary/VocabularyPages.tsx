@@ -741,7 +741,7 @@ export function VocabularyWordbooksPage() {
     {book ? <>
       <VocabularyBackLink fallback="/vocabulary/wordbooks"/>
       <div className="vocabulary-study-heading"><div><span className="vocabulary-eyebrow">Your wordbook</span><h3>{book.title}</h3><p>{wordbookDescription(book)}</p>
-        <p className="vocabulary-muted">{book.entryIds.length} words · {study.hierarchy.filter(unit => unit.kind === "chapter").length} chapters · {study.groups.length} groups</p>
+        <p className="vocabulary-muted">{book.entryIds.length.toLocaleString('en-US')} words · {study.hierarchy.filter(unit => unit.kind === "chapter").length} chapters · {study.groups.length} groups</p>
         <p>{study.studied.length}/{study.available.length} available groups studied</p>
       </div><div className="vocabulary-continue">
         {enrolled(book.id) ? study.next ? <><p className="vocabulary-group-path">{unitPath(book, study.next, study.hierarchy)}</p><Link className="btn primary" to={studyLink(study.next)}>{study.studied.length === study.available.length ? "Study again" : study.studied.length ? "Continue study" : "Start first group"}<ArrowRight size={16} /></Link><small>{study.next.studyEntryIds.length} words · Learn, then assess</small></> : study.studied.length ? <><p>All groups studied.</p><Link className="btn line" to={studyLink(study.available[0])}>Study again</Link></> : <p className="vocabulary-muted">{study.groups.some(group => group.entryIds.length) ? "All available words are archived. Restore a word to study this book." : "Study will be available when group content is loaded."}</p>
@@ -755,7 +755,7 @@ export function VocabularyWordbooksPage() {
       <div className="vocabulary-books">{books(fb.state).map(item => {
         const progress = bookStudy(fb.state, item.id);
         return <article className="vocabulary-book" key={item.id}><BookOpen size={22} /><h3>{item.title}</h3><p>{wordbookDescription(item)}</p>
-          <div className="vocabulary-muted">{item.entryIds.length} words · {progress.hierarchy.filter(unit => unit.kind === "chapter").length} chapters · {progress.groups.length} groups</div>
+          <div className="vocabulary-muted">{item.entryIds.length.toLocaleString('en-US')} words · {progress.hierarchy.filter(unit => unit.kind === "chapter").length} chapters · {progress.groups.length} groups</div>
           {enrolled(item.id) ? <div className="vocabulary-muted">{progress.studied.length}/{progress.available.length} groups studied</div> : null}
           <div className="actions"><Link className="btn line" to={`/vocabulary/wordbooks/${encodeURIComponent(item.id)}`}>Open chapters<ArrowRight size={15} /></Link>
             {!enrolled(item.id) ? <button type="button" className="btn primary" disabled={!item.entryIds.length || Boolean(joining) || catalogBusy} onClick={() => join(item.id)}><Plus size={15} />Add</button>

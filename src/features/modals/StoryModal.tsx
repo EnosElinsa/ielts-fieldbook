@@ -101,7 +101,7 @@ export function StoryModal() {
             <label htmlFor="storyPlace">Place</label>
             <input id="storyPlace" value={place} onChange={(e) => setPlace(e.target.value)} placeholder="School, a street, home" />
           </div>
-          <div className="field">
+          <div className="field full">
             <label htmlFor="storyTime">When</label>
             <input id="storyTime" value={time} onChange={(e) => setTime(e.target.value)} placeholder="Last summer, last week" />
           </div>

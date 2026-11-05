@@ -155,3 +155,4 @@
 .settings-help>p{font-size:12px;line-height:1.8;color:var(--muted);margin:10px 0 0}
 .settings-preserved-learning{padding:14px 0;border-top:1px solid var(--rule)}
 .settings-preserved-learning>p{margin-top:8px}
+.settings-fields .field>label{font:inherit;color:inherit}
