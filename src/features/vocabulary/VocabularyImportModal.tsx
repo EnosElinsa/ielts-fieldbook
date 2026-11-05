@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Eye, Upload } from "lucide-react";
 import { useFieldbook } from "../../context/FieldbookContext";
+import * as Dialog from "@radix-ui/react-dialog";
 import { ModalFrame } from "../../components/ModalFrame";
 import {
   mergeVocabularyImport,
@@ -155,7 +156,7 @@ export function VocabularyImportModal() {
     >
       <div className="modal vocabulary-modal">
         <h3 aria-hidden="true">Import vocabulary</h3>
-        <p>Choose a CSV file or paste its contents, then preview before importing.</p>
+        <Dialog.Description>Choose a CSV file or paste its contents, then preview before importing.</Dialog.Description>
         <div className="vocabulary-import-file">
           <label htmlFor="vocabulary-import-file" className="vocabulary-import-label">CSV vocabulary file</label>
           <input

@@ -48,6 +48,8 @@ export function dayLabel(value) {
 export function formatDateKey(key, today = new Date()) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(key || ''))) return String(key || '');
   const date = new Date(`${key}T00:00:00`);
+  const [year, month, day] = String(key).split('-').map(Number);
+  if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) return String(key);
   return `${date.toLocaleDateString('en-GB', { weekday: 'short' })} ${date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}${date.getFullYear() === today.getFullYear() ? '' : ` ${date.getFullYear()}`}`;
 }
 

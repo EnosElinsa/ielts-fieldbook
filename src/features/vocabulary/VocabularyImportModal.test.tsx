@@ -112,6 +112,7 @@ test("parser validation errors remain in the import dialog", async () => {
 
 test("public import accepts CSV and does not offer the legacy exporter", async () => {
   render(<VocabularyImportModal />);
+  expect(screen.getByRole('dialog', { name: 'Import vocabulary' })).toHaveAccessibleDescription('Choose a CSV file or paste its contents, then preview before importing.');
   expect(screen.getByLabelText('CSV vocabulary file')).toHaveAttribute('accept', '.csv,text/csv');
   expect(screen.queryByRole('link', { name: /exporter/i })).not.toBeInTheDocument();
   const user = userEvent.setup();

@@ -221,6 +221,17 @@ describe('Fieldbook UI', () => {
     expect(screen.getByRole('button', { name: 'Resume' })).toBeTruthy();
   });
 
+  it('shows Import score on Today after a visit to Reading', async () => {
+    const user = userEvent.setup();
+    renderAt('/reading');
+    const rail = document.querySelector('.rail') as HTMLElement;
+    expect(within(rail).getByRole('link', { name: 'Reading' }).getAttribute('aria-current')).toBe('page');
+    expect(screen.queryByRole('button', { name: 'Import score' })).toBeNull();
+    await user.click(within(rail).getByRole('link', { name: 'Today' }));
+    await screen.findAllByRole('heading', { level: 2, name: 'Today' });
+    expect(screen.getByRole('button', { name: 'Import score' })).toBeTruthy();
+  });
+
   it('listening sidebar and mobile More contain only Questions and Review study entries', async () => {
     renderAt('/listening/intensive/part1');
     const rail = document.querySelector('.rail') as HTMLElement;

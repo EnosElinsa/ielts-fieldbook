@@ -31,9 +31,9 @@ afterEach(() => {
 
 test('writing save dialog explains export and keeps both save buttons', async () => {
   render(<SaveModal />);
-  expect(
-    screen.getByText('Save your response, or export it for feedback and import the marked file when it is ready.'),
-  ).toBeInTheDocument();
+  expect(screen.getByRole('dialog', { name: 'Save practice' })).toHaveAccessibleDescription(
+    'Save your response, or export it for feedback and import the marked file when it is ready.',
+  );
   expect(screen.getByRole('button', { name: 'Save and export' }).className).toContain('primary');
   expect(screen.getByRole('button', { name: 'Save only' }).className).toContain('line');
   expect(screen.queryByRole('button', { name: 'Import score' })).not.toBeInTheDocument();

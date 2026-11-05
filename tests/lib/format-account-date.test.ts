@@ -19,4 +19,6 @@ test('plan date keys read as a short weekday and date, with the year only outsid
 
 test('a value that is not a plan date key is returned unchanged', () => {
   assert.equal(formatDateKey('bad'), 'bad');
+  assert.equal(formatDateKey('2026-13-40'), '2026-13-40');
+  assert.equal(formatDateKey('2026-02-30'), '2026-02-30');
 });

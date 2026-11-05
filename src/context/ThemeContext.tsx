@@ -8,6 +8,8 @@ export function applyTheme(theme: Theme) {
   const dark = theme === 'dark' || (theme === 'system' && window.matchMedia?.('(prefers-color-scheme: dark)').matches);
   document.documentElement.dataset.theme = dark ? 'dark' : 'light';
   document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+  // Mobile browser chrome follows the chosen theme, not only the OS preference in index.html.
+  document.querySelectorAll('meta[name="theme-color"]').forEach(meta => meta.setAttribute('content', dark ? '#18191c' : '#f6f7f9'));
 }
 
 export function initialTheme(): Theme {

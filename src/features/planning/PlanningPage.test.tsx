@@ -135,6 +135,13 @@ test('failed edit stays open and keeps the selected date for retry',async()=>{
   expect(screen.getByRole('dialog')).toBeInTheDocument();
 });
 
+test('the page has no link back to Today, and only the week navigation offers a Today button',()=>{
+ mount();
+ expect(screen.queryByRole('link',{name:/Today/})).not.toBeInTheDocument();
+ expect(within(screen.getByRole('navigation',{name:'Schedule dates'})).getByRole('button',{name:'Today'})).toBeInTheDocument();
+ expect(screen.getAllByRole('button',{name:'Add task'})).toHaveLength(7);
+});
+
 test('each day exposes creation and shows its budget before saving a manual task',async()=>{
  mount();await userEvent.click(screen.getAllByRole('button',{name:'Add task'})[0]);
  const dialog=screen.getByRole('dialog',{name:'Add task'});

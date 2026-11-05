@@ -89,7 +89,7 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
       {skill === 'reading' && <p>Reading passages and full mock tests.</p>}
       <div className="exam-bank-actions"><Link className="btn line" to={`/${skill}/review`}><RotateCcw size={15} />Review mistakes</Link></div>
     </div>
-    {(loading || hasCatalogSections) && <div className="toolbar exam-toolbar">
+    {(loading || hasCatalogSections || hasFilters) && <div className="toolbar exam-toolbar">
       <input className="search" value={search} onChange={event => update('q', event.target.value)} aria-label={`Search ${skill} sections`} placeholder="Search a title, book or test…" />
       <FilterMenu label="Book" value={book} onChange={value => update('book', value)} options={[{ value: 'all', label: 'All books' }, ...Array.from({ length: 14 }, (_, index) => ({ value: String(index + 8), label: `Cambridge ${index + 8}` }))]} />
       <FilterMenu label="Test" value={test} onChange={value => update('test', value)} options={[{ value: 'all', label: 'All tests' }, ...[1, 2, 3, 4].map(value => ({ value: String(value), label: `Test ${value}` }))]} />
@@ -102,7 +102,7 @@ export function ExamBankPage({ skill }: { skill: ExamSkill }) {
       <span className="exam-eyebrow">{paper ? `Cambridge ${paper.book} / Test ${paper.test}` : `${skill} · saved practice`}</span><strong>{attempt.mode === 'mock' ? 'Full mock' : section?.title || `${sectionLabel} practice`}</strong>
       <span className="exam-recent-meta">{attempt.mode === 'mock' ? 'Full mock' : `${sectionLabel} practice`} · {attempt.status === 'completed' ? `${attempt.score ?? '—'} / ${attempt.total ?? '—'} marks` : attempt.status === 'paused' ? 'Paused' : 'In progress'}</span><b>{attempt.status === 'completed' ? 'Review' : 'Resume'} <ArrowRight size={14} /></b>
     </Link>; })}</aside>}
-    {loading ? <PageLoadingState variant="bank" message="Loading questions…" onRetry={reload} /> : error && !hasCatalogSections ? <StateMessage kind="error" message={error} onRetry={reload} /> : !hasCatalogSections ? <StateMessage title={`${skill === 'reading' ? 'Reading' : 'Listening'} questions are unavailable`} message="Check your connection, then retry." onRetry={reload} /> : <>
+    {loading ? <PageLoadingState variant="bank" message="Loading questions…" onRetry={reload} /> : error && !hasCatalogSections ? <StateMessage kind="error" message={error} onRetry={reload} /> : !hasCatalogSections && hasFilters ? <StateMessage title={`No ${skill} questions match these filters`} message="Clear the filters to see every book."><button type="button" className="btn line" onClick={clearFilters}>Clear filters</button></StateMessage> : !hasCatalogSections ? <StateMessage title={`${skill === 'reading' ? 'Reading' : 'Listening'} questions are unavailable`} message="Check your connection, then retry." onRetry={reload} /> : <>
       {error && <StateMessage kind="error" message={error} onRetry={reload} />}
       <div className="exam-results-bar" ref={results}><span role="status">{matchingPapers.length} test{matchingPapers.length === 1 ? '' : 's'} · {sections.length} {sectionLabel.toLowerCase()}{sections.length === 1 ? '' : 's'}</span>{hasFilters && <button className="btn text" onClick={clearFilters}>Clear filters</button>}</div>
       {sections.length === 0 ? <StateMessage message="No sections match these filters." /> : <div className="exam-paper-list">{visiblePapers.map(paper => {

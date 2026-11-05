@@ -125,7 +125,7 @@
 .study-word-selection summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 .study-next>.study-word-selection{max-width:70ch}
 @media(max-width:640px){.study-word-selection summary{min-height:44px}}
-.study-setup label.field,.study-setup .field>label{font-size:13px;font-weight:600;color:var(--ink)}.study-setup .field input{font-size:15px}
+.study-setup label.field,.study-setup .field>label{font-size:13px;font-weight:600;color:var(--ink)}.study-setup .field input{font-size:15px;font-weight:400}
 .study-today-main.is-setup{grid-template-columns:minmax(0,1fr)}
 .study-summary-progress{display:block;width:100%;height:6px;margin:4px 0 14px;accent-color:var(--success)}
 .study-day.is-empty{padding:10px 0;gap:0}

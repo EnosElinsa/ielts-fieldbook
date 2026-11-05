@@ -2,6 +2,7 @@
 import { useMemo, useState } from 'react';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { migrateState } from '../../domain';
+import * as Dialog from '@radix-ui/react-dialog';
 import { ModalFrame } from '../../components/ModalFrame';
 import { SaveFailure } from '../../components/SaveFailure';
 
@@ -25,7 +26,7 @@ export function BackupModal() {
     <ModalFrame open={open} title="Import a backup" onClose={() => fb.closeModal()} busy={saving}>
       <div className="modal">
         <h3 aria-hidden="true">Import a backup</h3>
-        <p>Import study records into your account without deleting existing records.</p>
+        <Dialog.Description>Import study records into your account without deleting existing records.</Dialog.Description>
         <div className="panel">
           {preview ? (
             <>
