@@ -846,7 +846,7 @@ function savedReview() {
 test('review filters wrong answers, keeps local notes across navigation and clears recovery only after saving', async () => {
   savedReview(); const user = userEvent.setup(); const view = practice('/reading/review/saved');
   expect(screen.queryByRole('heading', { name: 'The garden opened in _____.' })).not.toBeInTheDocument();
-  expect(screen.getByRole('button', { name: 'Save review notes' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: 'Save review notes' })).toHaveClass('btn line');
   await user.type(screen.getByRole('textbox', { name: 'Evidence for question 2' }), 'Fresh proof');
   view.unmount(); practice('/reading/review/saved');
   expect(screen.getByRole('textbox', { name: 'Evidence for question 2' })).toHaveValue('Fresh proof');
@@ -854,9 +854,28 @@ test('review filters wrong answers, keeps local notes across navigation and clea
   await user.click(screen.getByRole('button', { name: 'All answers (2)' }));
   expect(screen.getByRole('heading', { name: 'The garden opened in _____.' })).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'Save review notes' }));
-  await waitFor(() => expect(screen.getByRole('button', { name: 'Save review notes' })).toBeDisabled());
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Save review notes' })).toHaveClass('btn line'));
   expect(mocks.fb.state.examAttempts[0].evidence.q2).toBe('Fresh proof');
   expect(mocks.recovery.has('one:review:saved')).toBe(false);
+});
+
+test('review notes stay folded until a learner adds them and saved notes keep them open', async () => {
+  savedReview(); mocks.fb.state.examAttempts[0].evidence = { q1: 'Saved proof' };
+  practice('/reading/review/saved');
+  await userEvent.setup().click(screen.getByRole('button', { name: 'All answers (2)' }));
+  const notes = (number: number) => screen.getByRole('textbox', { name: `Evidence for question ${number}` }).closest('details')!;
+  expect(notes(1)).toHaveAttribute('open');
+  expect(notes(2)).not.toHaveAttribute('open');
+  expect(screen.getByRole('textbox', { name: 'Evidence for question 2' })).not.toBeVisible();
+  await userEvent.setup().click(within(notes(2)).getByText('Add review notes'));
+  expect(screen.getByRole('textbox', { name: 'Evidence for question 2' })).toBeVisible();
+});
+
+test('an unknown result id explains the account boundary and links back to review', () => {
+  render(<MemoryRouter initialEntries={['/reading/review/missing']}><Routes><Route path='/reading/review/:attemptId' element={<ExamReviewPage skill='reading' />} /></Routes></MemoryRouter>);
+  expect(screen.getByText("This attempt isn't in your account")).toBeInTheDocument();
+  expect(screen.getByText('It may have been discarded or saved under another account.')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Back to reading review' })).toHaveAttribute('href', '/reading/review');
 });
 
 test('failed optimistic review-note saves remain retryable', async () => {

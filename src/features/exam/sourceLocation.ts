@@ -1,10 +1,10 @@
-import type { ExamPassage } from '../../domain/exam/types';
+import type { ExamPassage, ExamQuestion } from '../../domain/exam/types';
 import { readingParagraphs } from './ReadingPassage';
 
 const normalized = (text: string) => text.normalize('NFKC').replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ').trim().toLowerCase();
 
 /** Locate only a unique source block, falling back to a complete sentence when an imported quote differs. */
-export function findSourceBlock(container: HTMLElement, target: { block?: string; paragraph?: string | null; sentence?: string | null; quote?: string }, passages: ExamPassage[] = []) {
+export function findSourceBlock(container: HTMLElement, target: { block?: string; paragraph?: string | null; sentence?: string | null; quote?: string }, passages: ExamPassage[] = [], questions: Pick<ExamQuestion, 'id' | 'number'>[] = []) {
   const blocks = [...container.querySelectorAll<HTMLElement>('[data-source-block]')].filter(block => !block.closest('[hidden]'));
   const unique = (predicate: (block: HTMLElement) => boolean) => { const matches = blocks.filter(predicate); return matches.length === 1 ? matches[0] : undefined; };
   if (target.block) { const block = unique(row => row.dataset.sourceBlock === target.block); if (block) return block; }
@@ -32,7 +32,9 @@ export function findSourceBlock(container: HTMLElement, target: { block?: string
   if (target.block?.startsWith('question:')) {
     const questionId = target.block.slice('question:'.length);
     const question = [...container.querySelectorAll<HTMLElement>('[data-source-question]')].find(row => row.dataset.sourceQuestion === questionId);
-    const gaps = [...container.querySelectorAll<HTMLElement>('[data-exam-gap]')].filter(row => row.dataset.examGap === question?.dataset.sourceNumber);
+    // A gap answered inside shared material has no question card of its own; its number comes from the question list.
+    const number = question?.dataset.sourceNumber ?? questions.find(row => row.id === questionId)?.number?.toString();
+    const gaps = number ? [...container.querySelectorAll<HTMLElement>('[data-exam-gap]')].filter(row => row.dataset.examGap === number) : [];
     return gaps.length === 1 ? gaps[0] : question;
   }
 }

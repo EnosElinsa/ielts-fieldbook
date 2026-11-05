@@ -10,7 +10,7 @@ import { useExamAttempt } from './useExamAttempt';
 const mocks = vi.hoisted(() => ({ fb: null as any, catalog: null as any, owner: 'owner' }));
 vi.mock('../../storage/remote', () => ({ accountId: () => mocks.owner }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
-vi.mock('./useExamCatalog', () => ({ useExamCatalog: () => ({ loading: false, error: '', reload: vi.fn(), catalog: mocks.catalog }), useExamAsset: () => ({ url: '', error: '', reload: vi.fn() }) }));
+vi.mock('./useExamCatalog', async importOriginal => ({ ...await importOriginal<typeof import('./useExamCatalog')>(), useExamCatalog: () => ({ loading: false, error: '', reload: vi.fn(), catalog: mocks.catalog }), useExamAsset: () => ({ url: '', error: '', reload: vi.fn() }) }));
 const catalog = {
   sections: [{ id: 'part', skill: 'listening', part: 1, title: 'Listening Part 1', provenance: { sourceVersion: '1' }, sentences: [{ id: 'one', text: 'The destination is Wellington.', start: 0, end: 2 }, { id: 'two', text: 'The date is November.', start: 2, end: 5 }] }], passages: []
 };
@@ -58,6 +58,18 @@ test('a later inline question locates its numbered gap in the shared source', ()
   render(<MemoryRouter initialEntries={['/listening/source/part?block=question%3Aq2&question=q2']}><Routes><Route path="/listening/source/:sectionId" element={<ExamSourcePage skill="listening" />} /></Routes></MemoryRouter>);
   expect(document.activeElement).toHaveAttribute('data-exam-gap', '2');
   expect(document.activeElement?.closest('p')).toHaveTextContent('Date');
+});
+
+test('gaps answered inside shared notes add no number-only cards while sentence anchors still resolve', () => {
+  mocks.catalog.questions = [1, 2, 3].map(number => ({ id: `q${number}`, sectionId: 'part', skill: 'listening', number, type: 'gap', groupId: 'notes', prompt: `Question ${number} · Complete the marked gap in the text above.`, stimulusHtml: '<p>Destination [1 ____]</p><p>Date [2 ____]</p><p>Time [3 ____]</p>', provenance: { sourceVersion: '1' } }));
+  mocks.catalog.assets = [];
+  mocks.fb.state.examAttempts = [{ skill: 'listening', status: 'completed', sectionIds: ['part'] }];
+  const { container } = render(<MemoryRouter initialEntries={['/listening/source/part?sentence=two']}><Routes><Route path="/listening/source/:sectionId" element={<ExamSourcePage skill="listening" />} /></Routes></MemoryRouter>);
+  expect(container.querySelectorAll('.exam-source-questions article')).toHaveLength(0);
+  expect(container.querySelectorAll('[data-exam-gap]')).toHaveLength(3);
+  expect(document.activeElement).toHaveAttribute('data-source-block', 'sentence:two');
+  expect(container.querySelectorAll('.exam-transcript p')).toHaveLength(1);
+  expect(screen.getByRole('link', { name: 'Play sentence 2' })).toHaveAttribute('href', expect.stringContaining('sentence=two'));
 });
 
 test('comparison unlocks only the selected intensive sentence and its capture action', () => {

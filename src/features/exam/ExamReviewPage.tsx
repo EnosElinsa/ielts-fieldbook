@@ -2,7 +2,7 @@ import { ExamStudyLink } from './ExamNavigation';
 import { questionEndNumber, questionLabel, questionNumberLabel, questionSlotCount } from '../../domain/exam/questionSlots';
 import { SelectField } from '../../components/SelectField';
 import { PageLoadingState, StateMessage } from '../../components/AsyncState';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Link, useNavigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { ArrowLeft, RotateCcw, Bookmark, Headphones, Save, LocateFixed } from 'lucide-react';
 import type { ExamAttempt, ExamQuestion, ExamSkill } from '../../domain/exam/types';
@@ -21,6 +21,13 @@ import { recoveredExamSessions } from './sessionRecovery';
 import { evidenceSentenceId } from './evidenceLocation';
 import { QuestionEvidence } from './QuestionEvidence';
 import { readingQuestionPrompt } from './ReadingPassage';
+
+/** Note fields stay folded away until a learner adds notes; saved notes keep them open. */
+function ReviewNotes({ hasNotes, children }: { hasNotes: boolean; children: ReactNode }) {
+  const [open, setOpen] = useState(hasNotes);
+  useEffect(() => { if (hasNotes) setOpen(true); }, [hasNotes]);
+  return <details className="exam-review-notes" open={open} onToggle={event => setOpen(event.currentTarget.open)}><summary>{hasNotes ? 'Your review notes' : 'Add review notes'}</summary>{children}</details>;
+}
 
 export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
   const { attemptId } = useParams(); const navigate = useNavigate(); const fb = useFieldbook(); const attempt = (fb.state.examAttempts || []).find((row: ExamAttempt) => row.id === attemptId && row.skill === skill) as ExamAttempt | undefined;
@@ -63,7 +70,7 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
   if (!attempt) return <section className="view active">
 <Link className="btn text back-link" to={`/${skill}`}>
 <ArrowLeft size={15} />Back to bank</Link>
-<StateMessage title="Attempt not found." message="This account does not have a saved attempt with that id." />
+<StateMessage title="This attempt isn't in your account" message="It may have been discarded or saved under another account."><Link className="btn line" to={`/${skill}/review`}>Back to {skill} review</Link></StateMessage>
 </section>;
   if (attempt.status !== 'completed') return <section className="view active">
 <Link className="btn text back-link" to={`/${skill}`}>
@@ -126,8 +133,8 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
 </div>
 </div>
 <div className="exam-review-actions">
-<p>{wrong.length ? `${wrong.length} ${hasPooled ? 'answer group' : 'question'}${wrong.length === 1 ? '' : 's'} to review. Retrying clears the answers and review notes for the new attempt.` : 'All answers are correct. You can still add review notes.'}</p>{wrong.length > 0 && <button className="btn primary" onClick={retry}>
-<RotateCcw size={15} />Retry wrong answers</button>}<button className="btn line" disabled={saving || !dirty} onClick={() => void saveNotes()}>
+<p>{wrong.length ? `${wrong.length} ${hasPooled ? 'answer group' : 'question'}${wrong.length === 1 ? '' : 's'} to review. Retrying clears the answers and review notes for the new attempt.` : 'All answers are correct. You can still add review notes.'}</p>{wrong.length > 0 && <button className={dirty ? 'btn line' : 'btn primary'} onClick={retry}>
+<RotateCcw size={15} />Retry wrong answers</button>}<button className={dirty ? 'btn primary' : 'btn line'} disabled={saving} onClick={() => dirty ? void saveNotes() : fb.toast('Your review notes are already saved.')}>
 <Save size={15} />{saving ? 'Saving…' : 'Save review notes'}</button>
 </div>{saveError && <p role="alert" className="exam-notice">{saveError}</p>}<nav className="exam-part-tabs" aria-label="Result Parts">{attempt.sectionIds.map((id, i) => { const section = catalog.sections.find(row => row.id === id); return <button type="button" key={id} aria-pressed={sectionId === id} className={sectionId === id ? 'active' : ''} onClick={() => setSelectedSection(id)}>{skill === 'reading' ? 'Passage' : 'Part'} {section?.part || i + 1}</button>; })}</nav>{catalog.sections.some(row => row.id === sectionId) && <details className="exam-review-vocabulary"><summary>Vocabulary from this part</summary><PartVocabularyPanel key={`${owner}:${attempt.id}:${sectionId}`} catalog={catalog} attempt={attempt} sectionId={sectionId} /></details>}<ExamSessionHistory sessions={sessions.filter(row => row.mode === attempt.mode && row.sourceId === attempt.sourceId)} currentId={attempt.id} />
 <div className="exam-review-filter">
@@ -171,8 +178,7 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
 <span>{question.evidence.text}</span>
 </blockquote>}</section>
 <button type="button" className="btn line" aria-expanded={evidenceId === question.id} aria-controls={`exam-evidence-${question.id}`} onClick={event => { evidenceTrigger.current = event.currentTarget; setEvidenceId(id => id === question.id ? '' : question.id); }}>
-<LocateFixed size={15} />{question.evidence?.text || question.evidence?.paragraphId || sentenceId ? 'Locate evidence' : 'Read original text'}</button>{evidenceId === question.id && <QuestionEvidence question={question} response={response} passages={catalog.passages} section={catalog.sections.find(row => row.id === question.sectionId)} loading={loading} error={error} onRetry={reload} onClose={() => { setEvidenceId(''); evidenceTrigger.current?.focus(); }} />}<section className="exam-review-notes">
-<h4>Your review notes</h4>
+<LocateFixed size={15} />{question.evidence?.text || question.evidence?.paragraphId || sentenceId ? 'Locate evidence' : 'Read original text'}</button>{evidenceId === question.id && <QuestionEvidence question={question} response={response} passages={catalog.passages} section={catalog.sections.find(row => row.id === question.sectionId)} loading={loading} error={error} onRetry={reload} onClose={() => { setEvidenceId(''); evidenceTrigger.current?.focus(); }} />}<ReviewNotes hasNotes={Boolean(annotation.evidence.trim() || annotation.keywords.trim() || annotation.reason)}>
 <div className="exam-annotations">
 <label>Evidence for {questionLabel(question).toLowerCase()}<textarea disabled={saving} value={annotation.evidence} onChange={event => setNote(question.id, { evidence: event.target.value })} placeholder="Quote the passage or transcript that supports your answer…" />
 </label>
@@ -182,7 +188,7 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
 <label>Error reason for {questionLabel(question).toLowerCase()}<SelectField disabled={saving} value={annotation.reason} onChange={event => setNote(question.id, { reason: event.target.value })}>
 <option value="">Choose a reason</option>{['Missed paraphrase', 'Wrong detail', 'Word limit or spelling', 'Lost concentration', 'Not Given confused with False', 'Distractor or correction', 'Other'].map(reason => <option key={reason} value={reason}>{reason}</option>)}</SelectField>
 </label>
-</div>}</section>{skill === 'listening' && <ExamStudyLink className="btn line" to={`/listening/intensive/${question.sectionId}${sentenceId ? `?sentence=${encodeURIComponent(sentenceId)}` : ''}`} returnHash={`#exam-review-${question.id}`}>
+</div>}</ReviewNotes>{skill === 'listening' && <ExamStudyLink className="btn line" to={`/listening/intensive/${question.sectionId}${sentenceId ? `?sentence=${encodeURIComponent(sentenceId)}` : ''}`} returnHash={`#exam-review-${question.id}`}>
 <Headphones size={15} />{sentenceId ? 'Practise this sentence' : 'Practise this listening part'}</ExamStudyLink>}</article>; })}</div>
 </div>
 </section>;
