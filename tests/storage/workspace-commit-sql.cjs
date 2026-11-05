@@ -24,9 +24,15 @@ async function main() {
         grant select,insert,update,delete on public.${table} to authenticated;`);
     }
     const migrationDir = path.resolve(__dirname, '../../supabase/migrations');
-    for (const migration of ['20261010090000_unified_vocabulary.sql', '20261010170000_vocabulary_sessions.sql', '20261013120000_workspace_commits.sql', '20261013160000_neutral_vocabulary_identities.sql', '20261014120000_exam_annotations.sql', '20261020120000_planning_conflict_guards.sql', '20261020140000_planning_schedule_baseline.sql', '20261020220000_planning_history_pages.sql']) {
+    for (const migration of ['20261010090000_unified_vocabulary.sql', '20261010170000_vocabulary_sessions.sql', '20261013120000_workspace_commits.sql', '20261013160000_neutral_vocabulary_identities.sql', '20261014120000_exam_annotations.sql', '20261020120000_planning_conflict_guards.sql', '20261020140000_planning_schedule_baseline.sql', '20261020220000_planning_history_pages.sql', '20261105120000_planning_conflict_http_status.sql']) {
       await db.exec(fs.readFileSync(path.join(migrationDir, migration), 'utf8'));
     }
+    const conflictDefinition = async () => (await db.query("select pg_get_functiondef('public.commit_workspace_changes_neutral_rows(jsonb)'::regprocedure) as value")).rows[0].value;
+    const migratedDefinition = await conflictDefinition();
+    assert.equal(migratedDefinition.split("using errcode='PT409'").length - 1, 4);
+    assert.doesNotMatch(migratedDefinition, /40001/);
+    await db.exec(fs.readFileSync(path.join(migrationDir, '20261105120000_planning_conflict_http_status.sql'), 'utf8'));
+    assert.equal(await conflictDefinition(), migratedDefinition);
     const indexNames = (await db.query("select indexname from pg_indexes where schemaname='public' and indexname in ('wordbook_memberships_book_unit_id','wordbook_units_book_id','word_entries_term_id') order by indexname")).rows.map(row => row.indexname);
     assert.deepEqual(indexNames, ['word_entries_term_id','wordbook_memberships_book_unit_id','wordbook_units_book_id']);
     const account = '00000000-0000-0000-0000-000000000001';
@@ -35,6 +41,7 @@ async function main() {
     const diff = (id, payload = { id }) => ({ upserts: [{ id, payload }], deletes: [] });
     const commit = batch => db.query('select public.commit_workspace_changes($1::jsonb) as result', [JSON.stringify(batch)]);
     const count = async (table, id) => (await db.query(`select count(*)::int as n from public.${table} where id=$1`, [id])).rows[0].n;
+    const conflict = pattern => error => { assert.equal(error.code, 'PT409'); assert.match(error.message, pattern); return true; };
 
     const batch = { id: 'save-1', lists: { sessions: diff('session'), plans: diff('plan'), examAttempts: diff('exam') }, drafts: diff('question', { text: 'Response' }), profile: { settings: { activeSkill: 'reading' }, activePlanId: 'plan', reviewedAt: null } };
     assert.deepEqual((await commit(batch)).rows[0].result, { id: 'save-1', alreadyCommitted: false });
@@ -43,8 +50,8 @@ async function main() {
     const guarded={id:'guarded-task',lists:{plans:diff('guarded',{id:'guarded',status:'pending'})},baseline:{plans:{guarded:null},profile:profileBefore},profile:{settings:{activeSkill:'writing'},activePlanId:null,reviewedAt:null}};
     await commit(guarded);
     assert.equal((await commit(guarded)).rows[0].result.alreadyCommitted,true);
-    await assert.rejects(()=>commit({...guarded,id:'stale-task',profile:undefined}),/Planning baseline conflict/);
-    await assert.rejects(()=>commit({id:'stale-profile',lists:{sessions:diff('must-rollback')},profile:guarded.profile,baseline:{profile:profileBefore}}),/Planning baseline conflict/);
+    await assert.rejects(()=>commit({...guarded,id:'stale-task',profile:undefined}),conflict(/Planning baseline conflict/));
+    await assert.rejects(()=>commit({id:'stale-profile',lists:{sessions:diff('must-rollback')},profile:guarded.profile,baseline:{profile:profileBefore}}),conflict(/Planning baseline conflict/));
     assert.equal(await count('sessions','must-rollback'),0);
     assert.equal(await count('workspace_commit_receipts','stale-profile'),0);
     await commit({id:'restore-profile-after-guards',lists:{},profile:profileBefore});
@@ -54,7 +61,7 @@ async function main() {
     const firstDevice={id:'device-one',lists:{plans:diff('device-one-task')},baseline:{planSet,plans:{'device-one-task':null}}};
     await commit(firstDevice);
     assert.equal((await commit(firstDevice)).rows[0].result.alreadyCommitted,true);
-    await assert.rejects(()=>commit({id:'device-two',lists:{plans:diff('device-two-task')},baseline:{planSet,plans:{'device-two-task':null}}}),/schedule changed on another device/);
+    await assert.rejects(()=>commit({id:'device-two',lists:{plans:diff('device-two-task')},baseline:{planSet,plans:{'device-two-task':null}}}),conflict(/schedule changed on another device/));
     assert.equal(await count('plans','device-two-task'),0);
     assert.equal(await count('workspace_commit_receipts','device-two'),0);
     const annotation = { id: 'source-note', sourceId: 'section', skill: 'reading', quote: 'garden', note: 'initial' };
@@ -147,10 +154,10 @@ async function main() {
     const idsOnly=await historyPage({allIds:true,skippedOnly:true});assert.equal(idsOnly.ids.length,13);assert.deepEqual(idsOnly.plans,[]);
     const stamped={id:'compact-stamped-plan',lists:{plans:diff('stamp-task')},baseline:{planStamp:scoped.planStamp,plans:{'stamp-task':null}}};
     const ack=(await commit(stamped)).rows[0].result;assert.match(ack.planStamp,/^[a-f0-9]{32}$/);assert.notEqual(ack.planStamp,scoped.planStamp);
-    await assert.rejects(()=>commit({...stamped,id:'stale-compact-stamp'}),/schedule changed on another device/);
+    await assert.rejects(()=>commit({...stamped,id:'stale-compact-stamp'}),conflict(/schedule changed on another device/));
     await commit({id:'intervening-legacy-save',lists:{plans:diff('intervening-task')}});
     assert.deepEqual((await commit(stamped)).rows[0].result,{...ack,alreadyCommitted:true});
-    await assert.rejects(()=>commit({id:'stale-replay-stamp',lists:{plans:diff('must-not-exist')},baseline:{planStamp:ack.planStamp,plans:{'must-not-exist':null}}}),/schedule changed on another device/);
+    await assert.rejects(()=>commit({id:'stale-replay-stamp',lists:{plans:diff('must-not-exist')},baseline:{planStamp:ack.planStamp,plans:{'must-not-exist':null}}}),conflict(/schedule changed on another device/));
     assert.equal(await count('plans','must-not-exist'),0);
     await assert.rejects(() => db.exec("update workspace_commit_receipts set payload_hash='changed'"), /permission denied/);
 
@@ -163,7 +170,7 @@ async function main() {
     assert.equal(await count('sessions', 'session'), 1);
     await db.exec("set request.jwt.claim.sub='';");
     await assert.rejects(() => commit({ id: 'anonymous', lists: {} }), /Sign in/);
-    console.log('Workspace commit SQL checks passed: atomic rollback, replay conflicts, RLS isolation, immutable history, server timestamps, whitelist, catalog indexes.');
+    console.log('Workspace commit SQL checks passed: atomic rollback, replay conflicts, PT409 conflicts, RLS isolation, immutable history, server timestamps, whitelist, catalog indexes.');
   } finally {
     await db.close();
   }
