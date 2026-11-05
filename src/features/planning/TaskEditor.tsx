@@ -15,6 +15,7 @@ import { studyPlanTitle } from '../../lib/planTargets';
 import { LearningTaskDetails } from './LearningTaskDetails';
 const capital=value=>value[0].toUpperCase()+value.slice(1);
 const titles={add:'Add task',replace:'Replace task',resize:'Edit duration',reschedule:'Reschedule task',duplicate:'Duplicate task',restore:'Restore task'};
+const confirmLabels={add:'Add task',duplicate:'Add copy',reschedule:'Move task',restore:'Restore task',replace:'Replace task',resize:'Save duration'};
 
 export function TaskEditor({mode,plan,dateKey,onClose}) {
   const fb=useFieldbook();const owner=accountId();
@@ -76,7 +77,7 @@ export function TaskEditor({mode,plan,dateKey,onClose}) {
     catch(cause){if(accountId()===owner)setError(cause.message||'Your task could not be saved.');}
     finally{if(accountId()===owner)setSaving(false);}
   }
-  return <ModalFrame open onClose={onClose} title={titles[mode]} header={plan?studyPlanTitle(plan):'Build your study day'} size={editing?'md':'sm'} busy={saving} footer={<><button className="btn line" disabled={saving} onClick={onClose}>Cancel</button><button className="btn primary" disabled={saving||!date||(over>0&&!allowOverBudget)||Boolean(preview.error)||editing&&loading} onClick={()=>void save()}>{saving?'Saving...':'Save change'}</button></>}>
+  return <ModalFrame open onClose={onClose} title={titles[mode]} header={plan?studyPlanTitle(plan):'Build your study day'} size={editing?'md':'sm'} busy={saving} footer={<><button className="btn line" disabled={saving} onClick={onClose}>Cancel</button><button className="btn primary" disabled={saving||!date||(over>0&&!allowOverBudget)||Boolean(preview.error)||editing&&loading} onClick={()=>void save()}>{saving?'Saving...':confirmLabels[mode]||'Save change'}</button></>}>
     <fieldset className="study-edit-controls task-editor" disabled={saving}>
       {editing&&<><div className="task-editor-grid"><div className="study-edit-field"><span>Skill</span><FilterMenu label="Skill" value={skill} disabled={saving} onChange={value=>{setSkill(value);setPractice(value==='vocabulary'?'learning-batch':'recommended');reset();}} options={Object.keys(TASK_PRACTICES).map(value=>({value,label:capital(value)}))}/></div>
       <label className="study-edit-field">Practice type<SelectField aria-label="Practice type" value={practice} options={options} disabled={saving} onValueChange={value=>{setPractice(value);reset();const minimum=options.find(row=>row.value===value)?.minimum||1;if(value.endsWith('-mock'))setMinutes(minimum);else if(minutes<minimum)setMinutes(minimum);}}/></label></div></>}

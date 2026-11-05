@@ -9,7 +9,7 @@ import { useFieldbook } from '../../context/FieldbookContext';
 import { AccountDataBoundary } from '../../components/AccountDataBoundary';
 
 import { dateKey, addLocalDays } from '../../domain/utils';
-import { calendarDays, studyBudget, compareStudyPlans } from '../../lib/planTemplates';
+import { calendarDays, studyBudget, compareStudyPlans, planSkill, planMinutesLabel } from '../../lib/planTemplates';
 import { studyPlanTitle, studyTargetSummary } from '../../lib/planTargets';
 import { TaskStartButton, useStudySchedule } from './StudySchedule';
 import '../../styles/planning.css';
@@ -44,7 +44,7 @@ function PlanningCalendar(){
     {tab==='history'&&<TaskCollection tasks={history} kind="history" renderTask={plan=><PlanTask plan={plan}/>}/>}
     {schedule.saving&&<InlineLoadingState message="Updating your schedule…" />}
     {tab==='schedule'&&<>
-    {focus&&<aside className="study-focus"><div><p className="kicker">Today's focus</p><strong>{studyPlanTitle(focus)}</strong><p>{focus.status==='in_progress'?'Continue your saved task':'Next in your schedule'} · {focus.estimatedMinutes} min estimated</p></div><TaskStartButton plan={focus}/></aside>}
+    {focus&&<aside className="study-focus"><div><p className="kicker">Today's focus</p><strong>{studyPlanTitle(focus)}</strong><p>{focus.status==='in_progress'?'Continue your saved task':'Next in your schedule'} · {planMinutesLabel(focus)}</p></div><TaskStartButton plan={focus}/></aside>}
     <nav className="study-date-navigation" aria-label="Schedule dates">
       <p className="study-date-range" aria-live="polite" aria-atomic="true">{dateRange}</p>
       <div className="study-date-controls">
@@ -87,7 +87,7 @@ function PlanTask({plan}){
   const completed=plan.status==='completed';
   async function change(action){setSaving(true);setError('');let feedback='';try{if(await fb.changePlan(plan.id,action,{onError:message=>{feedback=message;}}))setDialog(null);else setError(feedback||'Your task could not be saved. Retry the change.');}catch(cause){setError(cause instanceof Error?cause.message:'Your task could not be saved.');}finally{setSaving(false);}}
   return <article id={`task-${plan.id}`} tabIndex={-1} className={`study-task ${plan.status}`}>
-    <div className="study-task-meta"><span className={`study-skill study-skill-${plan.skill||'writing'}`}>{plan.skill || 'Practice'}</span><span><Clock3 size={14}/>{plan.estimatedMinutes || fb.state.settings.dailyMinutes} min</span>{plan.dateKey<dateKey(new Date())&&<span>Due {formatDateKey(plan.dateKey)}</span>}</div>
+    <div className="study-task-meta"><span className={`study-skill study-skill-${planSkill(plan)}`}>{planSkill(plan)}</span><span><Clock3 size={14}/>{planMinutesLabel(plan)}</span>{plan.dateKey<dateKey(new Date())&&<span>Due {formatDateKey(plan.dateKey)}</span>}</div>
     <h4>{studyPlanTitle(plan)}</h4>
     {plan.originalDateKey&&<p className="study-task-rescheduled">Originally {formatDateKey(plan.originalDateKey)} · Rescheduled to {formatDateKey(plan.dateKey)}</p>}
     {plan.skipReason&&<p className="study-task-reason">{({"merged-review":"System: merged into current review planning","bulk-skip":"Skipped in backlog","user-skipped":"Skipped by you","no-longer-due":"Currently no review needed"})[plan.skipReason]}</p>}

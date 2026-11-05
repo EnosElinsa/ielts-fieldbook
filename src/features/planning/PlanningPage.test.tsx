@@ -93,19 +93,19 @@ test('replace and reschedule save explicit actions',async()=>{
   mount();await taskAction('Replace task');
   await userEvent.click(screen.getByRole('button',{name:'Skill'}));
   await userEvent.click(screen.getByRole('option',{name:'Listening'}));
-  await waitFor(()=>expect(screen.getByRole('button',{name:'Save change'})).toBeEnabled());
-  await userEvent.click(screen.getByRole('button',{name:'Save change'}));
+  await waitFor(()=>expect(within(screen.getByRole('dialog')).getByRole('button',{name:'Replace task'})).toBeEnabled());
+  await userEvent.click(within(screen.getByRole('dialog')).getByRole('button',{name:'Replace task'}));
   expect(mocks.change).toHaveBeenCalledWith('task',expect.objectContaining({type:'replace',skill:'listening',practice:'recommended',estimatedMinutes:20}),{onError:expect.any(Function)});
   await taskAction('Reschedule task');
   const dialog=screen.getByRole('dialog');expect(within(dialog).getByRole('button',{name:'Study date'})).toHaveTextContent(new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}));
-  await userEvent.click(within(dialog).getByRole('button',{name:'Save change'}));expect(mocks.change).toHaveBeenLastCalledWith('task',{type:'reschedule',dateKey:dateKey(new Date()),allowOverBudget:false},{onError:expect.any(Function)});
+  await userEvent.click(within(dialog).getByRole('button',{name:'Move task'}));expect(mocks.change).toHaveBeenLastCalledWith('task',{type:'reschedule',dateKey:dateKey(new Date()),allowOverBudget:false},{onError:expect.any(Function)});
 });
 test('the themed date picker saves its chosen date and cannot change during saving',async()=>{
   let finish; mocks.change.mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
   mount();await taskAction('Reschedule task');
   await userEvent.click(screen.getByRole('button',{name:'Study date'}));
   await userEvent.click(within(screen.getByRole('dialog',{name:'Study date'})).getByRole('button',{name:'Today'}));
-  await userEvent.click(screen.getByRole('button',{name:'Save change'}));
+  await userEvent.click(screen.getByRole('button',{name:'Move task'}));
   expect(screen.getByRole('button',{name:'Study date'})).toBeDisabled();
   expect(screen.getByRole('button',{name:'Close dialog'})).toBeDisabled();
   expect(mocks.change).toHaveBeenCalledWith('task',{type:'reschedule',dateKey:dateKey(new Date()),allowOverBudget:false},{onError:expect.any(Function)});
@@ -119,7 +119,7 @@ test('skill selection stays disabled while its replacement saves',async()=>{
   await userEvent.click(screen.getByRole('option',{name:'Speaking'}));
   await userEvent.click(screen.getByRole('combobox',{name:'Practice type'}));
   await userEvent.click(screen.getByRole('option',{name:'Speaking mock'}));
-  await userEvent.click(screen.getByRole('button',{name:'Save change'}));
+  await userEvent.click(within(screen.getByRole('dialog')).getByRole('button',{name:'Replace task'}));
   expect(screen.getByRole('button',{name:'Skill'})).toBeDisabled();
   expect(mocks.change).toHaveBeenCalledWith('task',expect.objectContaining({type:'replace',skill:'speaking',practice:'speaking-mock',estimatedMinutes:15}),{onError:expect.any(Function)});
   await act(async()=>finish(true));
@@ -127,11 +127,11 @@ test('skill selection stays disabled while its replacement saves',async()=>{
 test('skip and restore preserve explicit tasks',async()=>{
   const view=mount();await taskAction('Skip task');expect(mocks.change).toHaveBeenCalledWith('task',{type:'skip'},{onError:expect.any(Function)});
   mocks.state.plans[0].status='skipped';view.rerender(<MemoryRouter><PlanningPage/></MemoryRouter>);
-  await userEvent.click(screen.getByRole('button',{name:'History',exact:true}));await userEvent.click(screen.getByRole('button',{name:'Restore task'}));await userEvent.click(screen.getByRole('button',{name:'Save change'}));expect(mocks.change).toHaveBeenLastCalledWith('task',expect.objectContaining({type:'restore'}),{onError:expect.any(Function)});
+  await userEvent.click(screen.getByRole('button',{name:'History',exact:true}));await userEvent.click(screen.getByRole('button',{name:'Restore task'}));await userEvent.click(within(screen.getByRole('dialog')).getByRole('button',{name:'Restore task'}));expect(mocks.change).toHaveBeenLastCalledWith('task',expect.objectContaining({type:'restore'}),{onError:expect.any(Function)});
 });
 test('failed edit stays open and keeps the selected date for retry',async()=>{
   mocks.change.mockResolvedValueOnce(false);mount();await taskAction('Reschedule task');
-  await userEvent.click(screen.getByRole('button',{name:'Save change'}));expect(await screen.findByRole('alert')).toHaveTextContent('Your task could not be saved');
+  await userEvent.click(screen.getByRole('button',{name:'Move task'}));expect(await screen.findByRole('alert')).toHaveTextContent('Your task could not be saved');
   expect(screen.getByRole('dialog')).toBeInTheDocument();
 });
 
@@ -148,6 +148,18 @@ test('each day exposes creation and shows its budget before saving a manual task
  expect(within(dialog).getByRole('spinbutton',{name:'Task minutes'})).toBeInTheDocument();
  expect(within(dialog).getByText(/Daily budget/)).toBeInTheDocument();
  expect(within(dialog).getByRole('checkbox',{name:/Keep extra/})).toBeInTheDocument();
+ expect(within(dialog).getByRole('button',{name:'Add task'})).toBeInTheDocument();
+ expect(within(dialog).queryByRole('button',{name:'Save change'})).not.toBeInTheDocument();
+});
+
+test('a legacy task without an estimate says so and adds no planned time',()=>{
+ mocks.state.plans=[{id:'legacy',kind:'1',dateKey:dateKey(new Date()),status:'pending',title:'Legacy chart'}];
+ const {container}=mount();const day=within(container.querySelector('.study-day'));
+ const task=container.querySelector('#task-legacy');
+ expect(task).toHaveTextContent('No time estimate');
+ expect(task.querySelector('.study-skill')).toHaveTextContent(/^writing$/);
+ expect(day.getByRole('group',{name:'Daily plan summary'})).toHaveTextContent(/^Planned time0 \//);
+ expect(container.querySelector('.study-focus')).toHaveTextContent('Next in your schedule · No time estimate');
 });
 
 test('planned task retains a stable focus anchor for practice returns',async()=>{

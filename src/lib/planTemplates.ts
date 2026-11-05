@@ -403,6 +403,22 @@ export function planMatchesSkill(plan, activeSkill) {
   return !speakingKinds().includes(plan.kind);
 }
 
+const PLAN_SKILLS = ['writing', 'speaking', 'reading', 'listening', 'vocabulary'];
+
+/** The skill a task belongs to; legacy tasks without `skill` take it from their kind. */
+export function planSkill(plan) {
+  if (!plan) return 'writing';
+  if (plan.skill) return plan.skill;
+  if (plan.kind === 'vocabulary') return 'vocabulary';
+  return PLAN_SKILLS.find(skill => planMatchesSkill(plan, skill)) || 'writing';
+}
+
+/** Per-task time label; a task without an estimate counts 0 minutes and says so. */
+export function planMinutesLabel(plan) {
+  const minutes = Number(plan && plan.estimatedMinutes) || 0;
+  return minutes > 0 ? `${minutes} min` : 'No time estimate';
+}
+
 export function ensurePlans(state, activeSkill, persistIfChanged) {
   return ensureUnifiedPlans(state, persistIfChanged).filter(plan => planMatchesSkill(plan, activeSkill));
 }
