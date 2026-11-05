@@ -54,12 +54,18 @@ test('blocked source content remains retryable',async()=>{
   expect(await screen.findByRole('alert')).toHaveTextContent('The selected section is unavailable.');
   await userEvent.click(screen.getByRole('button',{name:'Retry task'}));expect(mocks.start).toHaveBeenCalledTimes(2);
 });
-test('completion summary includes every selected skill and vocabulary',async()=>{
-  mocks.state.plans=[plan('read','reading','completed'),plan('vocab','vocabulary','completed')];renderPage();
+test('completion summary lists the skills with tasks today',async()=>{
+  mocks.state.plans=[plan('read','reading','completed'),plan('vocab','vocabulary','completed')];const {container}=renderPage();
   await waitFor(()=>expect(mocks.generate).toHaveBeenCalled());
   expect(screen.getByText('40 min estimated for completed tasks')).toBeInTheDocument();
   expect(screen.getAllByText('1 done')).toHaveLength(2);
   expect(screen.getByRole('heading',{name:'Today is complete'})).toBeInTheDocument();
+  expect(container.querySelector('.study-summary')).not.toHaveTextContent(/writing/i);
+});
+test('a first-run learner sees the plan without an empty completion summary',async()=>{
+  mocks.state.plans=[plan('first','reading')];const {container}=renderPage();
+  expect(await screen.findByRole('heading',{name:'reading task'})).toBeInTheDocument();
+  expect(container.querySelector('.study-summary')).toBeNull();
 });
 test('plan persistence failure exposes a retry and never displays unsaved generated tasks',async()=>{
   mocks.generate.mockResolvedValueOnce(false);renderPage();
@@ -95,14 +101,14 @@ test('today progress takes priority over old work and previous tasks keep their 
   expect(mocks.start).toHaveBeenLastCalledWith('current',{force:false,onError:expect.any(Function)});
   const previous=screen.getByRole('region',{name:'Continue previous tasks'});
   const old=within(previous).getByRole('article');
-  expect(old).toHaveAttribute('data-plan-id','old');expect(old).toHaveTextContent('Due 2020-01-01');
+  expect(old).toHaveAttribute('data-plan-id','old');expect(old).toHaveTextContent('Due Wed 1 Jan 2020');
   await userEvent.click(within(old).getByRole('button',{name:'Resume'}));
   expect(mocks.start).toHaveBeenLastCalledWith('old',{force:false,onError:expect.any(Function)});
 });
 test('the active eligible task takes priority and its overdue detail resumes that exact plan',async()=>{
   mocks.state.activePlanId='chosen';mocks.state.plans=[plan('old','reading','in_progress','2020-01-01'),plan('today','speaking','in_progress'),plan('chosen','listening','in_progress','2020-01-02')];
   const {container}=renderPage();const next=container.querySelector('.study-next');
-  expect(next).toHaveAttribute('data-plan-id','chosen');expect(next).toHaveTextContent('Due 2020-01-02');
+  expect(next).toHaveAttribute('data-plan-id','chosen');expect(next).toHaveTextContent('Due Thu 2 Jan 2020');
   await userEvent.click(within(next).getByRole('button',{name:'Resume'}));
   expect(mocks.start).toHaveBeenLastCalledWith('chosen',{force:false,onError:expect.any(Function)});
   expect(screen.getByRole('region',{name:'Continue previous tasks'}).querySelector('[data-plan-id="chosen"]')).toBeNull();

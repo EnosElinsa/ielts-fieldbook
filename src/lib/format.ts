@@ -45,6 +45,12 @@ export function dayLabel(value) {
   return new Date(value).toLocaleDateString('en-GB', { month: 'short', day: 'numeric', weekday: 'short' });
 }
 
+export function formatDateKey(key, today = new Date()) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(key || ''))) return String(key || '');
+  const date = new Date(`${key}T00:00:00`);
+  return `${date.toLocaleDateString('en-GB', { weekday: 'short' })} ${date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}${date.getFullYear() === today.getFullYear() ? '' : ` ${date.getFullYear()}`}`;
+}
+
 export function formatClock(total) {
   const value = Math.max(0, Number(total) || 0);
   return `${String(Math.floor(value / 60)).padStart(2, '0')}:${String(value % 60).padStart(2, '0')}`;

@@ -58,7 +58,7 @@ async function taskAction(name){
 test('calendar includes seven days, rest days and overdue tasks',async()=>{
   mocks.state.plans.push({...mocks.state.plans[0],id:'overdue',dateKey:'2020-01-01',title:'Old task'});
   const {container}=mount();expect(container.querySelectorAll('.study-day')).toHaveLength(7);
-  expect(await screen.findAllByText('Rest day')).toHaveLength(1);expect(await screen.findAllByText('No tasks yet. Add a task or adjust your plan settings.')).toHaveLength(5);await userEvent.click(screen.getByRole('button',{name:/Waiting ·/}));expect(screen.getByRole('heading',{name:'Old task'})).toBeInTheDocument();
+  expect(await screen.findAllByText('Rest day')).toHaveLength(1);expect(await screen.findAllByText(/^No tasks yet ·/)).toHaveLength(5);await userEvent.click(screen.getByRole('button',{name:/Waiting ·/}));expect(screen.getByRole('heading',{name:'Old task'})).toBeInTheDocument();
 });
 test('the settings shortcut opens waiting tasks directly',async()=>{
   mocks.state.plans.push({...mocks.state.plans[0],id:'waiting',dateKey:'2020-01-01',title:'Waiting task'});
