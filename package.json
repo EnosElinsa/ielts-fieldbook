@@ -28,7 +28,6 @@
     "seed:vocabulary": "node scripts/seed-vocabulary.mjs",
     "enrich:vocabulary": "node scripts/enrich-vocabulary.mjs",
     "fetch:vocabulary-dictionary": "node scripts/fetch-open-vocabulary.mjs",
-    "deploy:pages": "npm run build && npx wrangler pages deploy dist --project-name ielts-fieldbook",
     "test": "vitest run",
     "vocabulary:quality": "vite-node scripts/audit-vocabulary-quality.ts",
     "vocabulary:prepare": "vite-node scripts/prepare-vocabulary-candidates.ts",
