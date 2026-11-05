@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { useFieldbook } from '../context/FieldbookContext';
-import { PageLoadingState, StateMessage } from './AsyncState';
+import { PageLoadingState, StateMessage, type LoadingVariant } from './AsyncState';
 import type { AccountModule } from '../storage/accountModules';
 import { accountId } from '../storage/remote';
 
@@ -33,11 +33,14 @@ export function useAccountRequirements({ modules = [], banks = [], vocabularyEnt
   return { ready, error: failure?.key === requirementKey ? failure.message : '', retry: () => setRevision(value => value + 1) };
 }
 
-export function AccountDataBoundary({ children, modules, banks, vocabularyEntryIds }: Requirements & { children: ReactNode }) {
+const GENERIC_LOAD_ERROR = 'Could not load study data.';
+
+export function AccountDataBoundary({ children, modules, banks, vocabularyEntryIds, variant = 'cards', area = 'study data' }: Requirements & { children: ReactNode; variant?: LoadingVariant; area?: string }) {
   const { ready, error, retry } = useAccountRequirements({modules,banks,vocabularyEntryIds});
   const fb = useFieldbook();
   const refreshError = error || (banks || []).map(bank => fb.bankErrors?.[bank]).find(Boolean);
-  if (!ready && refreshError) return <StateMessage kind="error" title="Study data could not be loaded" message={refreshError} onRetry={retry} />;
-  if (!ready) return <PageLoadingState message="Loading study data…" onRetry={retry} retryLabel="Retry study data" />;
+  const detail = refreshError && refreshError !== GENERIC_LOAD_ERROR ? refreshError : '';
+  if (!ready && refreshError) return <StateMessage kind="error" title={`Your ${area} could not load`} message={<>Check your connection, then retry. Work you already saved is safe.{detail ? <small className="async-state-detail">{detail}</small> : null}</>} onRetry={retry} retryLabel="Retry" />;
+  if (!ready) return <PageLoadingState message={`Loading your ${area}…`} variant={variant} onRetry={retry} retryLabel="Retry" />;
   return <>{refreshError && <p role="alert">{refreshError} <button className="btn text" onClick={retry}>Retry</button></p>}{children}</>;
 }

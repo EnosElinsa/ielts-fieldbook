@@ -20,7 +20,7 @@ import { TaskCollection } from './TaskCollection';
 import { LearningTaskDetails } from './LearningTaskDetails';
 import { formatDateKey } from '../../lib/format';
 
-export function PlanningPage(){return <AccountDataBoundary modules={['planning','vocabularyCore']} vocabularyEntryIds={[]}><PlanningCalendar/></AccountDataBoundary>;}
+export function PlanningPage(){return <AccountDataBoundary modules={['planning','vocabularyCore']} vocabularyEntryIds={[]} variant="list" area="study plan"><PlanningCalendar/></AccountDataBoundary>;}
 
 function PlanningCalendar(){
   const fb=useFieldbook();const schedule=useStudySchedule();const today=dateKey(new Date());const [anchor,setAnchor]=useState(today);const days=calendarDays(new Date(`${anchor}T12:00:00`));const [editor,setEditor]=useState(null);

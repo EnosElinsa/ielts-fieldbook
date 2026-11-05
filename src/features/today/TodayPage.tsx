@@ -17,7 +17,7 @@ import { LearningTaskDetails } from '../planning/LearningTaskDetails';
 import { formatDateKey } from '../../lib/format';
 
 export function TodayPage() {
-  return <AccountDataBoundary modules={['planning','vocabularyCore']} vocabularyEntryIds={[]}><UnifiedToday /></AccountDataBoundary>;
+  return <AccountDataBoundary modules={['planning','vocabularyCore']} vocabularyEntryIds={[]} variant="list" area="study plan"><UnifiedToday /></AccountDataBoundary>;
 }
 
 function UnifiedToday() {

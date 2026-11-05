@@ -1,8 +1,10 @@
 import { useEffect, useState, type ReactNode } from 'react';
 
+export type LoadingVariant = 'bank' | 'workbench' | 'cards' | 'document' | 'list' | 'form';
+
 type LoadingProps = {
   message?: string;
-  variant?: 'bank' | 'workbench' | 'cards' | 'document';
+  variant?: LoadingVariant;
   onRetry?: () => void;
   retryLabel?: string;
   className?: string;
@@ -33,6 +35,20 @@ function WorkbenchSkeleton() {
   </div></>;
 }
 
+function ListSkeleton({ rows }: { rows: number }) {
+  return <div className="async-skeleton-list">
+    {Array.from({ length: rows }, (_, index) => <div className="async-skeleton-row" key={index}><span className="async-skeleton-icon" /><div className="async-skeleton-row-copy"><span className="async-skeleton-line is-medium" /><span className="async-skeleton-line is-short" /></div><span className="async-skeleton-chip" /></div>)}
+  </div>;
+}
+
+function FormSkeleton({ fields }: { fields: number }) {
+  return <div className="async-skeleton-form">
+    <span className="async-skeleton-line is-heading" />
+    {Array.from({ length: fields }, (_, index) => <div className="async-skeleton-field" key={index}><span className="async-skeleton-line is-short" /><span className="async-skeleton-input" /></div>)}
+    <span className="async-skeleton-action" />
+  </div>;
+}
+
 function LoadingMark() { return <span className="async-loading-mark" aria-hidden="true"><span /></span>; }
 
 function LoadingState({ message = 'Loading…', variant = 'cards', onRetry, retryLabel = 'Retry loading', className = '', size }: LoadingProps & { size: 'page' | 'panel' | 'inline' }) {
@@ -55,9 +71,9 @@ function LoadingState({ message = 'Loading…', variant = 'cards', onRetry, retr
     {slow && canRetry ? <button type="button" className="btn line" onClick={retry}>{retryLabel}</button> : null}
   </span>;
   return <div className={`async-loading async-loading-${size} async-loading-${variant} ${className}`} aria-busy="true">
-    <div className="async-loading-status"><LoadingMark /><div className="async-loading-copy">{size === 'page' && <span className="async-loading-caption" aria-hidden="true">IELTS Fieldbook</span>}{status}</div>{slow && canRetry ? <button type="button" className="btn line" onClick={retry}>{retryLabel}</button> : null}</div>
+    <div className="async-loading-status"><LoadingMark /><div className="async-loading-copy">{status}</div>{slow && canRetry ? <button type="button" className="btn line" onClick={retry}>{retryLabel}</button> : null}</div>
     <div className={`async-skeleton-layout async-skeleton-${variant}`} aria-hidden="true">
-      {variant === 'workbench' ? <WorkbenchSkeleton /> : variant === 'document' ? <DocumentSkeleton compact={size === 'panel'} /> : Array.from({ length: variant === 'bank' ? 4 : size === 'panel' ? 2 : 3 }, (_, index) => <CardSkeleton key={index} />)}
+      {variant === 'workbench' ? <WorkbenchSkeleton /> : variant === 'document' ? <DocumentSkeleton compact={size === 'panel'} /> : variant === 'list' ? <ListSkeleton rows={size === 'panel' ? 3 : 6} /> : variant === 'form' ? <FormSkeleton fields={size === 'panel' ? 2 : 4} /> : Array.from({ length: variant === 'bank' ? 4 : size === 'panel' ? 2 : 3 }, (_, index) => <CardSkeleton key={index} />)}
     </div>
   </div>;
 }

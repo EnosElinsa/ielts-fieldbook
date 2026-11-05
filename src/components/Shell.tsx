@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { PageLoadingState } from './AsyncState';
+import { PageLoadingState, StateMessage } from './AsyncState';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { studyStreak } from '../domain';
@@ -35,19 +35,30 @@ const BackupModal = lazy(()=>import('../features/modals/BackupModal').then(m=>({
 const AssessmentImportModal = lazy(()=>import('../features/modals/AssessmentImportModal').then(m=>({default:m.AssessmentImportModal})));
 const LegalModal = lazy(()=>import('../features/modals/LegalModal').then(m=>({default:m.LegalModal})));
 
+/** The loading skeleton follows the layout of the page that replaces it. */
+function loadingLayout(pathname: string) {
+  if (/^\/(today|planning)?$/.test(pathname)) return 'list';
+  if (pathname === '/write' || pathname === '/speak') return 'workbench';
+  if (['/write/questions', '/speak/questions', '/stories'].includes(pathname) || pathname.startsWith('/vocabulary/wordbooks')) return 'bank';
+  if (pathname === '/review' || pathname.startsWith('/vocabulary/history') || pathname.startsWith('/vocabulary/words')) return 'list';
+  if (pathname.startsWith('/settings')) return 'form';
+  if (pathname.startsWith('/progress') || pathname.startsWith('/review/') || pathname.startsWith('/vocabulary/entry')) return 'document';
+  return 'cards';
+}
+
 function WorkspaceRoute() {
   const {pathname, search, key} = useLocation();
-  let modules = []; let banks = [];
-  if (pathname.startsWith('/vocabulary')) modules = [/^\/vocabulary\/(progress|import)(?:\/|$)/.test(pathname)?'vocabulary':'vocabularyCore'];
-  else if (/^\/(reading|listening)/.test(pathname)) modules = ['receptive'];
-  else if (pathname.startsWith('/progress')) modules = ['productive','vocabulary','receptive'];
-  else if (pathname.startsWith('/write')) { modules = ['productive']; banks = ['writing']; }
-  else if (pathname.startsWith('/speak')) { modules = ['productive']; banks = ['speaking']; }
-  else if (pathname.startsWith('/stories')) {modules=['productive'];banks=['speaking'];}
-  else if (pathname.startsWith('/review')) modules=['productive','vocabulary'];
-  else if (pathname.startsWith('/settings')) modules=['planning','vocabularyCore'];
+  let modules = []; let banks = []; let area = 'study data';
+  if (pathname.startsWith('/vocabulary')) { modules = [/^\/vocabulary\/(progress|import)(?:\/|$)/.test(pathname)?'vocabulary':'vocabularyCore']; area = 'vocabulary'; }
+  else if (/^\/(reading|listening)/.test(pathname)) { modules = ['receptive']; area = 'practice records'; }
+  else if (pathname.startsWith('/progress')) { modules = ['productive','vocabulary','receptive']; area = 'progress'; }
+  else if (pathname.startsWith('/write')) { modules = ['productive']; banks = ['writing']; area = 'writing records'; }
+  else if (pathname.startsWith('/speak')) { modules = ['productive']; banks = ['speaking']; area = 'speaking records'; }
+  else if (pathname.startsWith('/stories')) {modules=['productive'];banks=['speaking'];area='speaking records';}
+  else if (pathname.startsWith('/review')) {modules=['productive','vocabulary'];area='review records';}
+  else if (pathname.startsWith('/settings')) {modules=['planning','vocabularyCore'];area='settings';}
   const teachingScope=pathname.startsWith('/settings')||pathname.startsWith('/vocabulary/history')?[]:vocabularyTeachingScope(pathname,search);
-  return <PageErrorBoundary resetKey={`${accountId()}:${key}`}><AccountDataBoundary modules={modules} banks={banks} vocabularyEntryIds={teachingScope}><Outlet /></AccountDataBoundary></PageErrorBoundary>;
+  return <PageErrorBoundary resetKey={`${accountId()}:${key}`}><AccountDataBoundary modules={modules} banks={banks} vocabularyEntryIds={teachingScope} variant={loadingLayout(pathname)} area={area}><Outlet /></AccountDataBoundary></PageErrorBoundary>;
 }
 
 function RailHint({ label, enabled, children }) {
@@ -55,6 +66,8 @@ function RailHint({ label, enabled, children }) {
 }
 
 const RAIL_KEY = 'ielts-fieldbook-rail';
+// The boot failure text set by FieldbookContext; the error state already says the same thing.
+const WORKSPACE_LOAD_ERROR = 'Could not load your workspace. Check your connection and retry.';
 
 const studyLinks = {
   reading: [{to:'/reading',label:'Questions',icon:NavIcons.questions},{to:'/reading/review',label:'Review',icon:NavIcons.review}],
@@ -307,9 +320,10 @@ export function Shell() {
             </div>
           </header>
           <SaveFailure failed={fb.saveFailed && !location.pathname.startsWith('/settings')} message={fb.saveFailureMessage || undefined} saving={fb.saveStatus === 'saving'} onRetry={() => void fb.persistNow()} />
-          {fb.loadError ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
+          {fb.loadError && fb.booted ? <div className="recovery-banner" role="alert"><span>{fb.loadError}</span><button className="btn line" onClick={fb.retryLoad}>Retry</button></div> : null}
           {fb.recoveryDrafts ? <div className="recovery-banner" role="status"><span>Unsaved drafts from this browser are available.</span><button className="btn primary" onClick={() => fb.resolveDraftRecovery(true)}>Restore drafts</button><button className="btn line" onClick={() => fb.resolveDraftRecovery(false)}>Keep cloud drafts</button></div> : null}
-          {!fb.booted && !fb.loadError ? <PageLoadingState message="Loading workspace…" variant="bank" /> : null}
+          {fb.loadError && !fb.booted ? <StateMessage kind="error" title="Your workspace could not load" message={<>Check your connection, then retry. Work you already saved is safe.{fb.loadError !== WORKSPACE_LOAD_ERROR ? <small className="async-state-detail">{fb.loadError}</small> : null}</>} onRetry={fb.retryLoad} retryLabel="Retry" /> : null}
+          {!fb.booted && !fb.loadError ? <PageLoadingState message="Loading your workspace…" variant={loadingLayout(location.pathname)} /> : null}
           <PageTransition transitionKey={transitionKey} key={module === 'settings' ? 'settings' : location.pathname}>
             <WorkspaceScrollRestoration.Provider value={scrollRestoration}><Suspense fallback={<PageLoadingState message="Loading page…" />}>{fb.booted || fb.state.questions.length ? <WorkspaceRoute /> : null}</Suspense></WorkspaceScrollRestoration.Provider>
           </PageTransition>
@@ -320,7 +334,7 @@ export function Shell() {
       {searchOpen && <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <PageErrorBoundary resetKey={`${accountId()}:${fb.modal}:${legalView}`} onDismiss={() => { fb.closeModal(); setLegalView(null); }}>
       <Suspense fallback={<PageLoadingState message="Opening dialog…" />}>
-        {fb.modal === 'assessment' && <AssessmentImportModal />}
+        {fb.modal === 'assessment' && <AccountDataBoundary modules={['productive']}><AssessmentImportModal /></AccountDataBoundary>}
         {legalView && <LegalModal view={legalView} onClose={() => setLegalView(null)} />}
         {fb.modal === 'settings' && <SettingsModal />}
         {fb.modal === 'save' && <SaveModal />}

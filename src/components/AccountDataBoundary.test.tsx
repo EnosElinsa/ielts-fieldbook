@@ -1,4 +1,4 @@
-import { act, cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen, within } from '@testing-library/react';
 import { afterEach, expect, test, vi } from 'vitest';
 import { AccountDataBoundary } from './AccountDataBoundary';
 const m = vi.hoisted(() => ({status:'unloaded', booted:undefined as boolean | undefined,load:vi.fn(),bank:vi.fn()}));
@@ -66,6 +66,29 @@ test('late completion of a previous word cannot unlock the current word',async()
   expect(screen.queryByText('Current word')).toBeNull();
   await act(async()=>{finishes[1]();});
   expect(screen.getByText('Current word')).toBeTruthy();
+});
+
+test('a generic load failure names the area without repeating the title, and retry requests the module again',async()=>{
+  m.load.mockRejectedValueOnce(new Error('Could not load study data.')).mockImplementationOnce(()=>new Promise<void>(()=>{}));
+  render(<AccountDataBoundary modules={['productive']} area="writing records"><p>Writing desk</p></AccountDataBoundary>);
+  await act(async()=>{await Promise.resolve();});
+  const alert=screen.getByRole('alert');
+  expect(within(alert).getByRole('heading',{name:'Your writing records could not load'})).toBeTruthy();
+  expect(alert.textContent).toContain('Check your connection, then retry. Work you already saved is safe.');
+  expect(alert.textContent).not.toContain('Could not load study data.');
+  expect(alert.querySelector('small')).toBeNull();
+  await act(async()=>{screen.getByRole('button',{name:'Retry'}).click();});
+  expect(m.load).toHaveBeenCalledTimes(2);
+  expect(m.load).toHaveBeenLastCalledWith('productive');
+  expect(screen.getByRole('status').textContent).toContain('Loading your writing records…');
+});
+
+test('a specific load failure keeps its detail under the generic guidance',async()=>{
+  m.load.mockRejectedValueOnce(new Error('Speaking topics are unavailable.'));
+  render(<AccountDataBoundary modules={['productive']} area="speaking records"><p>Speaking desk</p></AccountDataBoundary>);
+  await act(async()=>{await Promise.resolve();});
+  expect(screen.getByRole('heading',{name:'Your speaking records could not load'})).toBeTruthy();
+  expect(screen.getByRole('alert').querySelector('small')?.textContent).toBe('Speaking topics are unavailable.');
 });
 
 test('a failed word scope retries its own teaching and can render after success',async()=>{

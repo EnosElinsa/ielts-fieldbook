@@ -15,6 +15,20 @@ test('a page announces one status while placeholders remain decorative', () => {
   expect(screen.queryByRole('button')).not.toBeInTheDocument();
 });
 
+test('page loading shows no brand caption', () => {
+  render(<PageLoadingState message="Loading your settings…" variant="form" />);
+  expect(screen.queryByText('IELTS Fieldbook')).not.toBeInTheDocument();
+});
+
+test.each([['list', '.async-skeleton-row', 6], ['form', '.async-skeleton-field', 4]] as const)('the %s skeleton is decorative and shaped like its page', (variant, part, count) => {
+  const { container } = render(<PageLoadingState variant={variant} message="Loading…" />);
+  const layout = container.querySelector(`.async-skeleton-${variant}`);
+  expect(layout).toHaveAttribute('aria-hidden', 'true');
+  expect(layout!.querySelectorAll(part)).toHaveLength(count);
+  expect(screen.getAllByRole('status')).toHaveLength(1);
+  expect(screen.queryByRole('button')).not.toBeInTheDocument();
+});
+
 test('a slow request offers its real retry after ten seconds and resets the delay on retry', () => {
   vi.useFakeTimers();
   const onRetry = vi.fn();
