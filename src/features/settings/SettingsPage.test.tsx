@@ -124,10 +124,25 @@ test('pending learning settings remain saveable from the account category', asyn
 
 test('weekly overrides and vocabulary allocation can be saved as actionable settings',async()=>{
  setup(); const user=userEvent.setup();
+ const overrides=screen.getByText('Customise individual days').closest('details');
+ expect(overrides).not.toHaveAttribute('open');
+ expect(overrides).toHaveTextContent('All study days use 30 min');
+ await user.click(screen.getByText('Customise individual days'));
+ expect(screen.getByRole('spinbutton',{name:'Mon study minutes'})).toBeVisible();
  fireEvent.change(screen.getByRole('spinbutton',{name:'Mon study minutes'}),{target:{value:'90'}});
+ expect(overrides).toHaveTextContent('1 day customised');
  fireEvent.change(screen.getByRole('spinbutton',{name:'Task block minutes'}),{target:{value:'25'}});
  await user.click(screen.getByRole('button',{name:'Save settings'}));
  expect(context.current.saveStudySettings.mock.calls[0][0].planning).toMatchObject({blockMinutes:25,week:{1:{minutes:90}}});
+});
+
+test('a customised day opens the individual-day settings by default',()=>{
+ context.current.state.settings.planning={week:{2:{minutes:45}}};
+ setup();
+ const overrides=screen.getByText('Customise individual days').closest('details');
+ expect(overrides).toHaveAttribute('open');
+ expect(overrides).toHaveTextContent('1 day customised');
+ expect(screen.getByRole('spinbutton',{name:'Tue study minutes'})).toHaveValue(45);
 });
 
 test('catch-up presets explain the daily minutes and save the selected limit',async()=>{

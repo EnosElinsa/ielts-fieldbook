@@ -5,6 +5,8 @@ import { useFieldbook } from '../../context/FieldbookContext';
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { Link } from 'react-router-dom';
 import { SettingsSection } from './SettingsSection';
+import { useState } from 'react';
+import { plural } from '../../lib/format';
 const capital=(value:string)=>value[0].toUpperCase()+value.slice(1);
 export function PlanningSettings({draft,update,section='schedule'}:{draft:SettingsDraft;update:(patch:Partial<SettingsDraft>)=>void;section?:'schedule'|'weights'|'overdue'|'vocabulary'}) {
   const config=draft.planning;
@@ -35,20 +37,27 @@ export function PlanningSettings({draft,update,section='schedule'}:{draft:Settin
     </div><p className="settings-value-explanation">{config.vocabularyMode==='ratio'?`${config.vocabularyPercent}% of a ${draft.dailyMinutes}-minute day is ${Math.round(draft.dailyMinutes*config.vocabularyPercent/100)} min for vocabulary.`:`Up to ${config.vocabularyMinutes} min per study day, within your daily time.`}</p></SettingsSection>
   </>;
   return <>
-    <SettingsSection title="Weekly template" description="Leave minutes blank to use your daily time. Set 0 for a rest day, or choose a focus for that day."><div className="settings-week-template">{['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((label,index)=>{
+    <SettingsSection title="Weekly template" description="Leave minutes blank to use your daily time. Set 0 for a rest day, or choose a focus for that day."><WeeklyTemplate draft={draft} change={change}/></SettingsSection>
+    <SettingsSection title="Task size" description="Split longer study days into manageable tasks across your selected modules."><div className="settings-planning-grid"><label className="field">Task block minutes<input aria-label="Task block minutes" type="number" min={10} max={90} value={config.blockMinutes} onChange={event=>change({blockMinutes:Number(event.target.value)})}/></label></div>
+      <div className="settings-task-options">
+        <label className="settings-toggle check-chip"><input type="checkbox" checked={config.multipleTasks} onChange={event=>change({multipleTasks:event.target.checked})}/>Split practice across multiple tasks</label>
+        <label className="settings-toggle check-chip"><input type="checkbox" checked={config.preferFullTasks} onChange={event=>change({preferFullTasks:event.target.checked})}/>Prefer full responses when time allows</label>
+      </div>
+    </SettingsSection>
+  </>;
+}
+
+function WeeklyTemplate({draft,change}:{draft:SettingsDraft;change:(patch:Partial<PlanningPreferences>)=>void}){
+  const config=draft.planning;
+  const customised=[1,2,3,4,5,6,7].filter(day=>{const row=config.week[day]||{};return row.minutes!==undefined&&row.minutes!==draft.dailyMinutes||Boolean(row.focus&&row.focus!=='balanced');}).length;
+  const [initiallyOpen]=useState(customised>0);
+  return <details className="settings-day-overrides" open={initiallyOpen}><summary>Customise individual days<span>{customised?`${plural(customised,'day')} customised`:`All study days use ${draft.dailyMinutes} min`}</span></summary><div className="settings-week-template">{['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((label,index)=>{
       const day=index+1;const row=config.week[day]||{};const enabled=draft.days.includes(day);
       const edit=(patch:Partial<typeof row>)=>change({week:{...config.week,[day]:{...row,...patch}}});
       return <div className={`settings-template-row${enabled?'':' is-disabled'}`} key={day}><span>{label}<small>{enabled?'Study':'Rest'}</small></span>
         <label className="field"><span>Minutes</span><input aria-label={`${label} study minutes`} type="number" min={0} max={180} disabled={!enabled} value={row.minutes??''} placeholder={String(draft.dailyMinutes)} onChange={event=>edit({minutes:event.target.value===''?undefined:Number(event.target.value)})}/></label>
         <label className="field"><span>Focus</span><SelectField aria-label={`${label} focus`} disabled={!enabled} value={row.focus||'balanced'} onValueChange={focus=>edit({focus:focus as typeof row.focus})} options={[{value:'balanced',label:'Use module balance'},...draft.skills.map(value=>({value,label:capital(value)}))]}/></label></div>;
-    })}</div></SettingsSection>
-    <SettingsSection title="Task size" description="Split longer study days into manageable tasks across your selected modules."><div className="settings-planning-grid"><label className="field">Task block minutes<input aria-label="Task block minutes" type="number" min={10} max={90} value={config.blockMinutes} onChange={event=>change({blockMinutes:Number(event.target.value)})}/></label></div>
-      <div className="settings-task-options">
-        <label className="settings-toggle check-field"><input type="checkbox" checked={config.multipleTasks} onChange={event=>change({multipleTasks:event.target.checked})}/>Split practice across multiple tasks</label>
-        <label className="settings-toggle check-field"><input type="checkbox" checked={config.preferFullTasks} onChange={event=>change({preferFullTasks:event.target.checked})}/>Prefer full responses when time allows</label>
-      </div>
-    </SettingsSection>
-  </>;
+    })}</div></details>;
 }
 
 export function VocabularySourceSettings({draft,update}:{draft:SettingsDraft;update:(patch:Partial<SettingsDraft>)=>void}){
@@ -59,6 +68,6 @@ export function VocabularySourceSettings({draft,update}:{draft:SettingsDraft;upd
   function move(index:number,delta:number){const order=[...ids];[order[index],order[index+delta]]=[order[index+delta],order[index]];change({wordbookOrder:order});}
   return <SettingsSection title="Automatic learning sources" description="New words come from your enrolled wordbooks. Words already learned in another book are excluded.">
     <label className="field">Wordbook selection<SelectField aria-label="Wordbook selection" value={config.wordbookMode} onValueChange={value=>change({wordbookMode:value as PlanningPreferences['wordbookMode']})} options={[{value:'ordered',label:'Finish books in order'},{value:'round-robin',label:'Rotate after each batch'}]}/></label>
-    {ids.length?<><p className="settings-field-help">Pausing a book stops new words from that book. Due reviews continue.</p><ol className="settings-source-list">{ids.map((id,index)=><li key={id}><span>{VOCABULARY_CATALOG.books.find(book=>book.id===id)?.title||id}</span><label className="check-field"><input type="checkbox" checked={config.pausedWordbooks.includes(id)} onChange={event=>change({pausedWordbooks:event.target.checked?[...config.pausedWordbooks,id]:config.pausedWordbooks.filter(value=>value!==id)})}/>Pause new words</label><div className="btn-row"><button type="button" className="btn line" disabled={!index} aria-label={`Move ${id} up`} onClick={()=>move(index,-1)}>↑</button><button type="button" className="btn line" disabled={index===ids.length-1} aria-label={`Move ${id} down`} onClick={()=>move(index,1)}>↓</button></div></li>)}</ol></>:<div className="settings-empty-source"><p>Enrol in a wordbook to start automatic new-word tasks.</p><Link className="btn line" to="/vocabulary/wordbooks">Browse wordbooks</Link></div>}
+    {ids.length?<><p className="settings-field-help">Pausing a book stops new words from that book. Due reviews continue.</p><ol className="settings-source-list">{ids.map((id,index)=><li key={id}><span>{VOCABULARY_CATALOG.books.find(book=>book.id===id)?.title||id}</span><label className="check-chip"><input type="checkbox" checked={config.pausedWordbooks.includes(id)} onChange={event=>change({pausedWordbooks:event.target.checked?[...config.pausedWordbooks,id]:config.pausedWordbooks.filter(value=>value!==id)})}/>Pause new words</label><div className="btn-row"><button type="button" className="btn line" disabled={!index} aria-label={`Move ${id} up`} onClick={()=>move(index,-1)}>↑</button><button type="button" className="btn line" disabled={index===ids.length-1} aria-label={`Move ${id} down`} onClick={()=>move(index,1)}>↓</button></div></li>)}</ol></>:<div className="settings-empty-source"><p>Enrol in a wordbook to start automatic new-word tasks.</p><Link className="btn line" to="/vocabulary/wordbooks">Browse wordbooks</Link></div>}
   </SettingsSection>;
 }

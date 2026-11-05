@@ -31,8 +31,11 @@ test('backup dialog describes a non-destructive import and previews the backup',
   const dialog = screen.getByRole('dialog', { name: 'Import a backup' });
   expect(dialog).toHaveAccessibleDescription('Import study records into your account without deleting existing records.');
   expect(within(dialog).getByText('https://fieldbook.example')).toBeInTheDocument();
-  for (const [label, count] of [['Attempts', '12'], ['Scores', '3'], ['Vocabulary', '1240'], ['Stories', '2'], ['Mistakes', '5'], ['Plans', '7']]) {
-    expect(within(dialog).getByText(`${label}:`, { exact: false }).querySelector('strong')).toHaveTextContent(count);
+  const counts = dialog.querySelector('dl.backup-counts') as HTMLElement;
+  expect(counts).toHaveAccessibleName('Records in this backup');
+  expect(dialog.querySelector('.panel')).toBeNull();
+  for (const [label, count] of [['Attempts', '12'], ['Scores', '3'], ['Vocabulary', '1,240'], ['Stories', '2'], ['Mistakes', '5'], ['Plans', '7']]) {
+    expect(within(counts).getByText(label).nextElementSibling).toHaveTextContent(count);
   }
   expect(within(dialog).getByRole('checkbox', { name: 'Also import study settings' })).not.toBeChecked();
 });

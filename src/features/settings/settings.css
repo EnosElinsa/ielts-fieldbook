@@ -156,3 +156,15 @@
 .settings-preserved-learning{padding:14px 0;border-top:1px solid var(--rule)}
 .settings-preserved-learning>p{margin-top:8px}
 .settings-fields .field>label{font:inherit;color:inherit}
+.settings-page .check-chip { justify-content: flex-start; padding: 0 14px; }
+.settings-page .check-chip::before { content: ""; flex: none; box-sizing: border-box; width: 14px; height: 14px; border: 1.5px solid var(--muted); border-radius: 3px; }
+.settings-page .check-chip:has(input:checked)::before { width: 14px; height: 8px; border-width: 0 0 2px 2px; border-color: currentColor; border-radius: 0; transform: translateY(-2px) rotate(-45deg); }
+.settings-day-overrides { border-top: 1px solid var(--rule); }
+.settings-day-overrides > summary { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; min-height: 44px; padding: 12px 0; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--ink); }
+.settings-day-overrides > summary > span { font-weight: 400; color: var(--muted); }
+.settings-day-overrides > .settings-week-template { padding-bottom: 8px; }
+.settings-day-overrides > summary { list-style: none; }
+.settings-day-overrides > summary::-webkit-details-marker { display: none; }
+.settings-day-overrides > summary::before { content: ""; flex: none; width: 6px; height: 6px; margin-right: 2px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); transition: transform .15s ease; }
+.settings-day-overrides[open] > summary::before { transform: rotate(45deg); }
+@media (min-width: 741px) { .settings-task-options { display: flex; flex-wrap: wrap; } }

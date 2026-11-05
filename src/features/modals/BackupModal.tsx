@@ -5,6 +5,9 @@ import { migrateState } from '../../domain';
 import * as Dialog from '@radix-ui/react-dialog';
 import { ModalFrame } from '../../components/ModalFrame';
 import { SaveFailure } from '../../components/SaveFailure';
+import { formatCount } from '../../lib/format';
+
+const COUNT_LABELS = [['sessions', 'Attempts'], ['assessments', 'Scores'], ['vocabulary', 'Vocabulary'], ['stories', 'Stories'], ['errors', 'Mistakes'], ['plans', 'Plans']];
 
 export function BackupModal() {
   const fb = useFieldbook();
@@ -27,37 +30,25 @@ export function BackupModal() {
       <div className="modal">
         <h3 aria-hidden="true">Import a backup</h3>
         <Dialog.Description>Import study records into your account without deleting existing records.</Dialog.Description>
-        <div className="panel">
-          {preview ? (
-            <>
-              {preview.origin ? (
-                <p>
-                  From: <strong>{preview.origin}</strong>
-                </p>
-              ) : null}
-              <p>
-                Attempts: <strong>{preview.counts.sessions}</strong>
+        {preview ? (
+          <>
+            {preview.origin ? (
+              <p className="backup-origin">
+                From <strong>{preview.origin}</strong>
               </p>
-              <p>
-                Scores: <strong>{preview.counts.assessments}</strong>
-              </p>
-              <p>
-                Vocabulary: <strong>{preview.counts.vocabulary}</strong>
-              </p>
-              <p>
-                Stories: <strong>{preview.counts.stories}</strong>
-              </p>
-              <p>
-                Mistakes: <strong>{preview.counts.errors}</strong>
-              </p>
-              <p>
-                Plans: <strong>{preview.counts.plans}</strong>
-              </p>
-            </>
-          ) : (
-            <p>Nothing to preview.</p>
-          )}
-        </div>
+            ) : null}
+            <dl className="backup-counts" aria-label="Records in this backup">
+              {COUNT_LABELS.map(([key, label]) => (
+                <div key={key}>
+                  <dt>{label}</dt>
+                  <dd>{formatCount(preview.counts[key])}</dd>
+                </div>
+              ))}
+            </dl>
+          </>
+        ) : (
+          <p>Nothing to preview.</p>
+        )}
         <label className="check-field import-settings">
           <input type="checkbox" disabled={saving} checked={importSettings} onChange={(e) => setImportSettings(e.target.checked)} />
           Also import study settings
