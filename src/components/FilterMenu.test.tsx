@@ -13,6 +13,12 @@ test('menu stays inside the viewport at the left edge and focuses the selected o
   expect(list.closest('[data-radix-popper-content-wrapper]')).toHaveStyle({position:'fixed'});
   await waitFor(()=>expect(screen.getByRole('option', {name:'Second'})).toHaveFocus());
 });
+test('an unknown value keeps a labelled trigger', () => {
+  render(<FilterMenu label="Book" value="99" options={[{value:'all',label:'All books'},{value:'8',label:'Cambridge 8'}]} onChange={vi.fn()} />);
+  expect(screen.getByRole('button', {name:'Book'})).toHaveTextContent('Book: 99');
+  fireEvent.click(screen.getByRole('button', {name:'Book'}));
+  expect(screen.getByRole('option', {name:'Book: 99'})).toHaveAttribute('aria-disabled', 'true');
+});
 test('keyboard handlers leave unrelated text editing alone and restore trigger focus on selection', async () => {
   const change=vi.fn();
   render(<><input aria-label="Notes" /><FilterMenu label="Mode" value="one" options={[{value:'one',label:'First'},{value:'two',label:'Second'}]} onChange={change}/></>);

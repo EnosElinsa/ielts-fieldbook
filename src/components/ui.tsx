@@ -6,7 +6,10 @@ export function FilterMenu({ label, value, options, onChange, disabled }: {
   label:string; value:string; options:{value:string;label:string;disabled?:boolean}[];
   onChange:(value:string)=>void; disabled?:boolean;
 }) {
-  return <div className="filter-menu"><SelectField aria-label={label} triggerRole="button" value={value} options={options} onValueChange={onChange} disabled={disabled}/></div>;
+  // A value from the URL that is not an option still names itself instead of leaving a blank trigger.
+  const unknown = value != null && value !== '' && !options.some(option => option.value === value);
+  const choices = unknown ? [...options, { value, label: `${label}: ${value}`, disabled: true }] : options;
+  return <div className="filter-menu"><SelectField aria-label={label} triggerRole="button" value={value} options={choices} onValueChange={onChange} disabled={disabled}/></div>;
 }
 
 function parseIso(value: string) {
