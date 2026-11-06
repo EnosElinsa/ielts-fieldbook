@@ -122,12 +122,29 @@ it('jumps directly to a sentence while preserving the current dictation', async 
   expect(screen.getByRole('link', { name: 'Listening practice' })).toHaveAttribute('href', '/listening/part');
 });
 
+it('only the active step section is open and sentence rows use status words', async () => {
+  mocks.fb.state.intensiveSessions = [{ ...createIntensiveSession('part', 's2'), stage: 1, listened: true }];
+  const user = userEvent.setup(); const { container } = open();
+  await screen.findByRole('textbox', { name: 'Sentence dictation' });
+  const sections = () => [...container.querySelectorAll<HTMLDetailsElement>('details.intensive-step')];
+  expect(sections()).toHaveLength(4);
+  expect(sections().map(section => section.open)).toEqual([true, false, false, false]);
+  expect(screen.getAllByRole('listitem').filter(item => item.closest('ol')?.getAttribute('aria-label') === 'Intensive listening method').map(item => item.textContent)).toEqual(['1Listen for the gist', '2Dictate and compare', '3Shadow and re-listen', '4Rate and schedule']);
+  expect(sections()[1]).toHaveTextContent('Available after step 1');
+  expect(screen.getByRole('button', { name: /^Sentence 1\s*Not started$/ })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /^Sentence 2\s*In progress$/ })).toBeInTheDocument();
+  expect(container.querySelector('.intensive-sentences')).not.toHaveTextContent('%');
+  await user.click(screen.getByRole('button', { name: 'Play test sentence' }));
+  await waitFor(() => expect(sections().map(section => section.open)).toEqual([false, true, false, false]));
+  expect(sections()[0]).toHaveTextContent('Done');
+});
+
 it('explains pending requirements and updates the completion checklist', async () => {
   const user = userEvent.setup(); open();
   const compare = await screen.findByRole('button', { name: 'Compare with transcript' });
   expect(compare).toHaveAccessibleDescription('Play this sentence to the end before comparing.');
   expect(screen.getByRole('button', { name: 'Record shadowing' })).toHaveAccessibleDescription('Compare your dictation with the transcript to unlock recording.');
-  expect(screen.getByRole('link', { name: 'Sentence dictation' })).toHaveAttribute('href', '#intensive-dictation');
+  expect(screen.getByRole('link', { name: 'Dictate and compare' })).toHaveAttribute('href', '#intensive-dictation');
   await user.click(await screen.findByRole('button', { name: 'Play test sentence' }));
   expect(compare).toHaveAccessibleDescription('Write your first attempt before comparing.');
   await user.type(screen.getByRole('textbox', { name: 'Sentence dictation' }), 'The train leaves at nine');
@@ -277,7 +294,7 @@ it('only the selected due sentence enters recall and untouched due sentences sur
   const savedFirst = mocks.fb.stateRef.current.intensiveSessions.find((row: any) => row.id === 'i1');
   expect(savedFirst).toEqual(first);
   expect(mocks.fb.stateRef.current.intensiveSessions.find((row: any) => row.id === 'i2').completedAt).toBeUndefined();
-  await userEvent.click(screen.getByRole('button', { name: /Sentence 1 100%/ }));
+  await userEvent.click(screen.getByRole('button', { name: /^Sentence 1\s*Due$/ }));
   expect(screen.getByRole('textbox', { name: 'Sentence dictation' })).toHaveValue('');
   await userEvent.click(screen.getByRole('button', { name: 'Save progress' }));
   const reviewingFirst = mocks.fb.stateRef.current.intensiveSessions.find((row: any) => row.id === 'i1');
@@ -310,7 +327,7 @@ it('completes shadowing and schedules only after a fresh blind replay, retaining
   expect(mocks.putAudio.mock.calls[0][0]).toBe(mocks.putAudio.mock.calls[1][0]);
   await user.click(screen.getByRole('button', { name: 'Hide transcript for blind re-listening' }));
   expect(screen.queryByRole('textbox', { name: 'Sentence dictation' })).not.toBeInTheDocument();
-  expect(screen.getByRole('link', { name: 'Sentence dictation' })).toHaveAttribute('href', '#intensive-player');
+  expect(screen.getByRole('link', { name: 'Dictate and compare' })).toHaveAttribute('href', '#intensive-player');
   await selectChoice(await screen.getByLabelText('Self rating'), '5 · Clear and fluent');
   await user.click(screen.getByRole('button', { name: 'Finish ongoing play' }));
   expect(screen.getByRole('button', { name: 'Finish and schedule review' })).toBeDisabled();

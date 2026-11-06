@@ -1,13 +1,13 @@
 import { SelectField } from '../../components/SelectField';
 import { InlineLoadingState, PageLoadingState, StateMessage } from '../../components/AsyncState';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { Check, Mic, Save, Square } from 'lucide-react';
 import { ExamBackLink } from './ExamNavigation';
 import { useFieldbook } from '../../context/FieldbookContext';
 import { RecordingPlayer, SessionAudioPlayer } from '../../components/SessionAudioPlayer';
 import { useConfirmationDialog } from '../../components/useConfirmationDialog';
-import { applyIntensiveStage, calculateDictationResult, createIntensiveSession, lcsDiff, sentenceProgress } from '../../domain/exam/intensive';
+import { applyIntensiveStage, calculateDictationResult, createIntensiveSession, lcsDiff } from '../../domain/exam/intensive';
 import type { ExamAsset, ExamAttempt, ExamCatalog, ExamSentence, IntensiveSession } from '../../domain/exam/types';
 import { hasActiveSourceMock } from '../../domain/exam/sourceAccess';
 import { loadExamSections, resolveExamAsset } from '../../storage/examCatalog';
@@ -22,6 +22,34 @@ import { examVocabularySeed } from './vocabularyCapture';
 import '../../styles/intensive.css';
 
 const stages = ['Blind listening', 'Sentence dictation', 'Compare and diagnose', 'Shadow and record', 'Listen without text', 'Delayed review'];
+// Four learner-facing steps cover the six method stages; sessions keep their domain stage numbers.
+const steps = [
+  { title: 'Listen for the gist', stages: [0] },
+  { title: 'Dictate and compare', stages: [1, 2] },
+  { title: 'Shadow and re-listen', stages: [3, 4] },
+  { title: 'Rate and schedule', stages: [5] },
+];
+type StepState = 'current' | 'done' | 'ready' | 'locked';
+/** The step that holds the next action. A compared sentence (stage 2) keeps its comparison open; stage 4 is reached only after the blind replay. */
+const activeStepFor = (stage: number) => stage >= 4 ? 4 : stage >= 3 ? 3 : stage >= 1 ? 2 : 1;
+/** The last step whose work is finished. */
+const finishedStepFor = (stage: number) => stage >= 6 ? 4 : stage >= 4 ? 3 : stage >= 2 ? 2 : stage >= 1 ? 1 : 0;
+function sentenceStatus(session?: IntensiveSession) {
+  if (session?.nextReviewAt && Date.parse(session.nextReviewAt) <= Date.now()) return { tone: 'due', label: 'Due' };
+  if (session?.completedAt) return { tone: 'done', label: 'Done' };
+  if (session && (session.stage > 0 || session.listened || session.transcriptInput?.trim() || session.gist?.trim())) return { tone: 'progress', label: 'In progress' };
+  return { tone: 'new', label: 'Not started' };
+}
+function IntensiveStep({ id, number, state, open, onOpenChange, children }: { id: string; number: number; state: StepState; open: boolean; onOpenChange: (open: boolean) => void; children: ReactNode }) {
+  return <details id={id} className={`panel intensive-step is-${state}`} open={open} onToggle={event => { if (event.currentTarget.open !== open) onOpenChange(event.currentTarget.open); }}>
+    <summary aria-disabled={state === 'locked' || undefined} onClick={event => { if (state === 'locked') event.preventDefault(); }}>
+      <span className="intensive-step-number" aria-hidden="true">{state === 'done' ? <Check size={13} /> : number}</span>
+      <h2>{steps[number - 1].title}</h2>
+      <span className="intensive-step-state">{state === 'done' ? 'Done' : state === 'current' ? 'Current step' : state === 'ready' ? 'Ready' : `Available after step ${number - 1}`}</span>
+    </summary>
+    <div className="intensive-step-body">{children}</div>
+  </details>;
+}
 const reasons = ['Connected speech', 'Weak forms', 'Vocabulary', 'Spelling', 'Attention', 'Sound changes'];
 const stamp = () => new Date().toISOString();
 type SessionMap = Record<string, IntensiveSession>;
@@ -159,6 +187,8 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
   const [audioReady, setAudioReady] = useState(false);
   const [blindReplayRequest, setBlindReplayRequest] = useState(0);
   const blindReplayStarted = useRef(false);
+  const [advancedStep, setAdvancedStep] = useState(0);
+  const [openSteps, setOpenSteps] = useState<number[]>([]);
   const recoveryKey = `intensive:${sectionId}`;
   const mounted = useRef(true);
   const saveQueue = useRef<Promise<boolean>>(Promise.resolve(true));
@@ -227,7 +257,10 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
     void resolveExamAsset(asset).then(url => { if (active && accountId() === owner) setAudioUrl(url); }).catch(error => { if (active && accountId() === owner) setAudioError(error instanceof Error ? error.message : 'Audio is unavailable.'); });
     return () => { active = false; };
   }, [asset, owner, assetRetry]);
-  useEffect(() => { setBlind(false); setBlindReplayRequest(0); blindReplayStarted.current = false; setStatus(''); setSaveError(''); }, [sentence?.id]);
+  useEffect(() => { setBlind(false); setBlindReplayRequest(0); blindReplayStarted.current = false; setStatus(''); setSaveError(''); setAdvancedStep(0); }, [sentence?.id]);
+  const activeStep = Math.max(activeStepFor(session?.stage ?? 0), advancedStep);
+  // Only the step in progress opens on its own; finished steps stay one click away.
+  useEffect(() => { setOpenSteps([activeStep]); }, [activeStep, sentence?.id]);
   useEffect(() => { if(blind&&blindReplayRequest>0)audioPlayer.current?.replay(); }, [blind,blindReplayRequest]);
 
   function enterRecall(sentenceId: string) {
@@ -328,15 +361,19 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
     { label: 'Blind replay completed', done: Boolean(session.blindReplayDone) },
     { label: 'Self rating selected', done: Boolean(session.selfRating) },
   ] : [];
-  const stageTargets = ['intensive-player', blind ? 'intensive-player' : 'intensive-dictation', blind ? 'intensive-player' : 'intensive-dictation', 'intensive-shadow', 'intensive-shadow', 'intensive-review'];
+  const stepTargets = ['intensive-player', blind ? 'intensive-player' : 'intensive-dictation', 'intensive-shadow', 'intensive-review'];
+  const finishedStep = session ? finishedStepFor(session.stage) : 0;
+  const stepState = (number: number): StepState => number <= finishedStep ? 'done' : number === activeStep ? 'current' : number === finishedStep + 1 ? 'ready' : 'locked';
+  const stepProps = (number: number) => ({ number, state: stepState(number), open: openSteps.includes(number), onOpenChange: (open: boolean) => setOpenSteps(current => open ? [...new Set([...current, number])] : current.filter(step => step !== number)) });
+  const hiddenWhileBlind = <p className="intensive-action-hint">Hidden while you re-listen without the transcript.</p>;
 
   return <section className="intensive-workbench">
     <header className="intensive-header"><div>{backLink}<h2>{catalog.papers.find(paper => paper.id === section.paperId)?.title || 'Listening'} · {section.title}</h2><div className="intensive-progress"><p>{completedCount} / {section.sentences.length} sentences completed</p>{status && <span className={`intensive-save-status ${status === 'Progress saved.' ? 'is-saved' : ''}`} role="status">{status}</span>}</div></div><button className="btn line" disabled={saving || !sentence} onClick={() => void save()}><Save size={16} />{saving ? 'Saving…' : 'Save progress'}</button></header>
-    <ol className="intensive-stages" aria-label="Intensive listening method">{stages.map((label, step) => { const done = session && (session.stage === 6 || step < session.stage); const content = <><span className="intensive-stage-number" aria-hidden="true">{done ? <Check size={13} /> : step + 1}</span><span className="intensive-stage-label">{label}</span></>; return <li key={label} className={done ? 'done' : ''}>{sentence ? <a href={`#${stageTargets[step]}`} aria-current={session?.stage === step ? 'step' : undefined}>{content}</a> : <div>{content}</div>}</li>; })}</ol>
+    <ol className="intensive-stages" aria-label="Intensive listening method">{steps.map((step, stepIndex) => { const number = stepIndex + 1; const state = stepState(number); const content = <><span className="intensive-stage-number" aria-hidden="true">{state === 'done' ? <Check size={13} /> : number}</span><span className="intensive-stage-label">{step.title}</span></>; return <li key={step.title} className={state === 'done' ? 'done' : ''} title={step.stages.map(stage => stages[stage]).join(' · ')}>{sentence ? <a href={`#${stepTargets[stepIndex]}`} aria-current={activeStep === number ? 'step' : undefined} onClick={() => { if (state !== 'locked') setOpenSteps(current => [...new Set([...current, number])]); }}>{content}</a> : <div>{content}</div>}</li>; })}</ol>
     {saveError ? <p role="alert" className="audio-error">{saveError}</p> : null}
     {!section.sentences.length ? <div className="panel"><h2>Transcript unavailable</h2><p>This section has no imported sentence transcript yet. Full-track listening is available when audio has been imported; dictation comparison and sentence loops need the source transcript and timing.</p>{audioUrl ? <RecordingPlayer src={audioUrl} label="Full listening track" /> : <p role="status">{audioError || 'Listening audio unavailable.'}</p>}</div> : null}
     {sentence && session ? <div className="intensive-layout">
-      <aside ref={sentencesPanel} className="panel intensive-sentences"><h2>Sentences</h2>{section.sentences.map((row, rowIndex) => <button key={row.id} className={`intensive-sentence ${rowIndex === index ? 'active' : ''}`} aria-current={rowIndex === index ? 'step' : undefined} onClick={() => choose(rowIndex)}><span>Sentence {rowIndex + 1}</span><span>{sentenceProgress(sessions[row.id])}%{sessions[row.id]?.nextReviewAt && new Date(sessions[row.id].nextReviewAt!) <= new Date() ? ' · Due' : ''}</span></button>)}<p className="file-hint">Return to weak sentences after a delay, then practise without the transcript first.</p></aside>
+      <aside ref={sentencesPanel} className="panel intensive-sentences"><h2>Sentences</h2>{section.sentences.map((row, rowIndex) => { const rowStatus = sentenceStatus(sessions[row.id]); return <button key={row.id} className={`intensive-sentence ${rowIndex === index ? 'active' : ''}`} aria-current={rowIndex === index ? 'step' : undefined} onClick={() => choose(rowIndex)}><span>Sentence {rowIndex + 1}</span><span className={`intensive-sentence-status is-${rowStatus.tone}`}><span className="intensive-status-dot" aria-hidden="true" />{rowStatus.label}</span></button>; })}<p className="file-hint">Return to weak sentences after a delay, then practise without the transcript first.</p></aside>
       <div className="intensive-main">
         <IntensivePlayerPanel><div className="intensive-player-heading"><h2>Sentence {index + 1} / {section.sentences.length}</h2><SelectField aria-label="Jump to sentence" value={index} onChange={event => choose(Number(event.target.value))}>{section.sentences.map((row, rowIndex) => <option key={row.id} value={rowIndex}>Sentence {rowIndex + 1}</option>)}</SelectField></div>
           {!sentence.text.trim() ? <p role="status">Transcript unavailable for this sentence.</p> : null}
@@ -347,19 +384,20 @@ function IntensiveWorkbench({ sectionId, owner, fb }: { sectionId: string; owner
           <p className="file-hint">{session.replayCount} plays · {session.listened ? 'Blind listening completed' : 'Listen once before comparing'}</p>
           <details className="intensive-timing"><summary>Correct sentence A/B timing</summary><p>Use the seconds from the source recording. Changes apply to your learning record.</p><div className="intensive-actions"><label>A (seconds)<input aria-label="Sentence start seconds" type="number" min="0" step="0.1" value={start ?? ''} onChange={event => { const value = event.target.value === '' ? undefined : Number(event.target.value); change(row => ({ ...row, correctedStart: value })); }} /></label><label>B (seconds)<input aria-label="Sentence end seconds" type="number" min="0" step="0.1" value={end ?? ''} onChange={event => { const value = event.target.value === '' ? undefined : Number(event.target.value); change(row => ({ ...row, correctedEnd: value })); }} /></label></div>{start !== undefined && end !== undefined && end <= start ? <p role="alert">B must be later than A.</p> : null}</details>
         </div>
-        {!blind ? <details className="panel intensive-step intensive-gist"><summary>1 · Main idea or situation</summary><p>Understand the situation before transcribing. Keep a short note if it helps.</p><label htmlFor="listening-gist">Main idea or situation</label><textarea id="listening-gist" value={session.gist} onChange={event => change(value => ({ ...value, gist: event.target.value }))} placeholder="Who is speaking? What is happening?" rows={2} /></details> : null}
-        {!blind ? <div id="intensive-dictation" className="panel intensive-step"><h2>2 · Dictate, compare, diagnose</h2><p>Type what you hear. Keep uncertain gaps visible, then compare once you have tried.</p><label htmlFor="sentence-dictation">Sentence dictation</label><textarea id="sentence-dictation" value={session.transcriptInput} onChange={event => change(value => ({ ...value, transcriptInput: event.target.value, dictationResult: 'pending' }))} rows={3} disabled={session.stage === 6} placeholder="Write what you hear; use … for uncertain words." />
+        <IntensiveStep id="intensive-gist" {...stepProps(1)}>{blind ? hiddenWhileBlind : <><p>Play the sentence once without the transcript and understand the situation before you write. Keep a short note if it helps.</p><label htmlFor="listening-gist">Main idea or situation</label><textarea id="listening-gist" value={session.gist} onChange={event => change(value => ({ ...value, gist: event.target.value }))} placeholder="Who is speaking? What is happening?" rows={2} /></>}</IntensiveStep>
+        <IntensiveStep id="intensive-dictation" {...stepProps(2)}>{blind ? hiddenWhileBlind : <><p>Type what you hear. Keep uncertain gaps visible, then compare once you have tried.</p><label htmlFor="sentence-dictation">Sentence dictation</label><textarea id="sentence-dictation" value={session.transcriptInput} onChange={event => change(value => ({ ...value, transcriptInput: event.target.value, dictationResult: 'pending' }))} rows={3} disabled={session.stage === 6} placeholder="Write what you hear; use … for uncertain words." />
           <button className="btn primary" aria-describedby="intensive-compare-hint" disabled={saving || !session.listened || !session.transcriptInput.trim() || !sentence.text.trim() || blind} onClick={() => { change(value => applyIntensiveStage({ ...value, dictationResult: calculateDictationResult(value.transcriptInput, sentence.text) }, 'reveal')); void save(); }}>Compare with transcript</button>
           <p id="intensive-compare-hint" className="intensive-action-hint">{!session.listened ? 'Play this sentence to the end before comparing.' : !session.transcriptInput.trim() ? 'Write your first attempt before comparing.' : !sentence.text.trim() ? 'The source transcript is unavailable for comparison.' : 'Compare your attempt, then mark why you missed a word.'}</p>
           {session.revealed && !blind && session.dictationResult !== 'pending' ? <div className="dictation-comparison"><p className="dictation-text">{lcsDiff(session.transcriptInput, sentence.text).map((token, tokenIndex) => <span key={tokenIndex} className={`dictation-${token.kind}`}>{token.text} </span>)}</p><p className="file-hint"><span className="dictation-missing">Missing words</span> · <span className="dictation-extra">Extra words</span> · Result: {session.dictationResult}</p><SourceAnnotations key={`${owner}:${sectionId}:${sentence.id}`} sourceId={sectionId} skill="listening" mock={activeMock} allowedBlockIds={[`sentence:${sentence.id}`]} onVocabulary={captureVocabulary}><div className="intensive-source-transcript"><h3>Original transcript</h3><p><AnnotatedText blockId={`sentence:${sentence.id}`} text={sentence.text} version={section.provenance.contentHash || section.provenance.sourceVersion} /></p></div></SourceAnnotations><fieldset><legend>Why did you miss it?</legend>{reasons.map(reason => <label key={reason}><input type="checkbox" checked={session.errorReasons.includes(reason)} onChange={() => change(value => ({ ...value, errorReasons: value.errorReasons.includes(reason) ? value.errorReasons.filter(row => row !== reason) : [...value.errorReasons, reason] }))} />{reason}</label>)}</fieldset></div> : null}
-        </div> : null}
-        <div id="intensive-shadow" className="panel intensive-step"><h2>3 · Shadow, record, listen again</h2><ShadowingRecorder key={`${owner}:${sentence.id}`} owner={owner} sectionId={sectionId} sentenceId={sentence.id} enabled={session.stage >= 2} audioId={session.shadowingAudioId} onSaved={recordingSaved} />
+          {session.stage === 2 && activeStep === 2 ? <div className="intensive-actions"><button className="btn primary" onClick={() => setAdvancedStep(3)}>Continue to shadowing</button></div> : null}
+        </>}</IntensiveStep>
+        <IntensiveStep id="intensive-shadow" {...stepProps(3)}><ShadowingRecorder key={`${owner}:${sentence.id}`} owner={owner} sectionId={sectionId} sentenceId={sentence.id} enabled={session.stage >= 2} audioId={session.shadowingAudioId} onSaved={recordingSaved} />
           <div className="intensive-actions"><button className="btn primary" aria-describedby="intensive-blind-hint" disabled={session.stage < 3 || !audioUrl || !audioReady || !hasTiming} onClick={() => { audioPlayer.current?.stop(); change(value => ({ ...value, revealed: false, blindReplayDone: false })); blindReplayStarted.current=false; setBlind(true); setBlindReplayRequest(value=>value+1); }}>Play original blind</button><button className="btn line" aria-describedby="intensive-blind-hint" disabled={session.stage < 3 || !audioUrl || blind} aria-pressed={blind} onClick={() => { audioPlayer.current?.stop(); change(value => ({ ...value, revealed: false, blindReplayDone: false })); blindReplayStarted.current = false; setBlind(true); }}>Hide transcript for blind re-listening</button></div><p id="intensive-blind-hint" className="intensive-action-hint" role={blind ? 'status' : undefined}>{blind ? 'Transcript hidden. Play the whole sentence without pausing or seeking before finishing.' : session.stage < 3 ? 'Save your shadowing recording before blind re-listening.' : !audioUrl || !audioReady ? 'Wait for the source recording to load.' : !hasTiming ? 'Set valid sentence A/B timing before blind re-listening.' : 'Play original blind hides the transcript and plays this sentence from the beginning.'}</p>
-        </div>
-        <div id="intensive-review" className="panel intensive-step"><h2>4 · Rate and schedule</h2><p>Rate your understanding and shadowing after the blind replay. Weak sentences return sooner.</p><label htmlFor="intensive-rating">Self rating</label><SelectField id="intensive-rating" value={session.selfRating || ''} onChange={event => change(value => ({ ...value, selfRating: Number(event.target.value) as IntensiveSession['selfRating'] }))}><option value="">Choose a rating</option>{[1, 2, 3, 4, 5].map(rating => <option key={rating} value={rating}>{rating} · {['Need help', 'Difficult', 'Some gaps', 'Mostly clear', 'Clear and fluent'][rating - 1]}</option>)}</SelectField><ul className="intensive-checklist" aria-label="Sentence completion checklist">{checklist.map(item => <li key={item.label} className={item.done ? 'is-done' : ''}><span aria-hidden="true">{item.done ? <Check size={13} /> : '○'}</span>{item.label}<span className="sr-only">{item.done ? ' · Complete' : ' · Pending'}</span></li>)}</ul><div className="intensive-actions"><button className="btn primary" disabled={saving || completionSaved || !session.blindReplayDone || !session.shadowingAudioId || !session.selfRating || session.dictationResult === 'pending'} onClick={() => { if (!session.completedAt) change(value => applyIntensiveStage(value, 'complete')); void save(); }}>{saving && session.completedAt ? 'Saving review…' : completionSaved ? 'Review scheduled' : session.completedAt ? 'Retry scheduling review' : 'Finish and schedule review'}</button>{completionSaved ? <button className="btn line" onClick={() => { change(value => applyIntensiveStage(value, 'review')); setBlind(false); }}>Start blind review</button> : null}</div>
+        </IntensiveStep>
+        <IntensiveStep id="intensive-review" {...stepProps(4)}><p>Rate your understanding and shadowing after the blind replay. Weak sentences return sooner.</p><label htmlFor="intensive-rating">Self rating</label><SelectField id="intensive-rating" value={session.selfRating || ''} onChange={event => change(value => ({ ...value, selfRating: Number(event.target.value) as IntensiveSession['selfRating'] }))}><option value="">Choose a rating</option>{[1, 2, 3, 4, 5].map(rating => <option key={rating} value={rating}>{rating} · {['Need help', 'Difficult', 'Some gaps', 'Mostly clear', 'Clear and fluent'][rating - 1]}</option>)}</SelectField><ul className="intensive-checklist" aria-label="Sentence completion checklist">{checklist.map(item => <li key={item.label} className={item.done ? 'is-done' : ''}><span aria-hidden="true">{item.done ? <Check size={13} /> : '○'}</span>{item.label}<span className="sr-only">{item.done ? ' · Complete' : ' · Pending'}</span></li>)}</ul><div className="intensive-actions"><button className="btn primary" disabled={saving || completionSaved || !session.blindReplayDone || !session.shadowingAudioId || !session.selfRating || session.dictationResult === 'pending'} onClick={() => { if (!session.completedAt) change(value => applyIntensiveStage(value, 'complete')); void save(); }}>{saving && session.completedAt ? 'Saving review…' : completionSaved ? 'Review scheduled' : session.completedAt ? 'Retry scheduling review' : 'Finish and schedule review'}</button>{completionSaved ? <button className="btn line" onClick={() => { change(value => applyIntensiveStage(value, 'review')); setBlind(false); }}>Start blind review</button> : null}</div>
           {session.nextReviewAt ? <p role="status">Next review: {new Date(session.nextReviewAt).toLocaleDateString()} · {!completionSaved && session.completedAt ? 'Pending save' : new Date(session.nextReviewAt) <= new Date() ? 'Due now' : 'Scheduled'}</p> : null}
           {session.stage >= 2 && !blind && session.reviewHistory?.length ? <details><summary>Previous completed cycles</summary>{session.reviewHistory.map((cycle, cycleIndex) => <div key={cycleIndex}><p>{cycle.completedAt ? new Date(cycle.completedAt).toLocaleDateString() : 'Previous review'} · {cycle.dictationResult} · Rating {cycle.selfRating || '—'}</p>{cycle.shadowingAudioId ? <SessionAudioPlayer audioId={cycle.shadowingAudioId} label={`Previous shadowing ${cycleIndex + 1}`} /> : null}</div>)}</details> : null}
-        </div>
+        </IntensiveStep>
       </div>
     </div> : null}
   </section>;
