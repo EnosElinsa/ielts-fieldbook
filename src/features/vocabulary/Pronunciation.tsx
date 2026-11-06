@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { RotateCcw, Square, Volume2, VolumeX } from 'lucide-react';
 import { InlineLoadingState, StateMessage } from '../../components/AsyncState';
 import type { VocabularyEntry, VocabularySense } from '../../domain/vocabulary/types';
 import { getVocabularyMedia, type VocabularyAccent, type VocabularyRecording } from '../../domain/vocabulary/media';
@@ -14,6 +15,12 @@ export function playbackMessage(result: VocabularyPlaybackResult): string {
   if (result.reason === 'target-voice-unavailable') return `No ${result.accent?.toUpperCase()} voice is available on this device. Choose a matching voice in device settings or explicitly play another recording.`;
   if (result.reason === 'blocked') return 'Playback was blocked. Press Play again to retry.';
   return 'Playback unavailable. Press Play to retry.';
+}
+/** The IPA shown for a meaning: regional, then general, then the entry's own when the reading cannot differ. */
+export function pronunciationIpa(entry: VocabularyEntry, sense?: VocabularySense, accent: VocabularyAccent = 'uk', mode?: VocabularyPlaybackOptions['pronunciation']): string | undefined {
+  const pronunciation = getVocabularyPronunciation(entry, sense, mode);
+  const readingSensitive = getVocabularyPronunciation(entry, sense).required;
+  return pronunciation.group?.ipa[accent] || pronunciation.group?.ipa.general || (!readingSensitive ? entry.pronunciation?.ipa : undefined);
 }
 export function Pronunciation({ entry, sense: selectedSense, accent = 'uk', options = {}, compact = false, onMedia }: { entry: VocabularyEntry; sense?: VocabularySense | null; accent?: VocabularyAccent; options?: VocabularyPlaybackOptions; compact?: boolean; onMedia?: (recordings: VocabularyRecording[]) => void }) {
   const sense = selectedSense === null ? undefined : selectedSense || entry.senses?.[0];
@@ -60,8 +67,7 @@ export function Pronunciation({ entry, sense: selectedSense, accent = 'uk', opti
     : message;
   const recovery = Boolean(playback && !playback.ok && playback.reason !== 'cancelled' || others.some(recording => recording.url === activeAction) || activeAction?.startsWith('device:') || playback?.senseMatch === 'unverified');
   const regionalIpa = pronunciation.group?.ipa[accent];
-  const generalIpa = pronunciation.group?.ipa.general;
-  const ipa = regionalIpa || generalIpa || (!readingSensitive ? entry.pronunciation?.ipa : undefined);
+  const ipa = pronunciationIpa(entry, sense, accent, options.pronunciation);
   return <div className={`vocabulary-pronunciation${compact ? ' is-compact' : ''}`}>
     {ipa && !compact ? <span className="vocabulary-ipa">{pronunciation.group ? `${regionalIpa ? accent.toUpperCase() : 'IPA'} ${ipa}` : ipa}</span> : null}
     <div className="vocabulary-pronunciation-actions" role="group" aria-label="Word pronunciation">
@@ -70,7 +76,10 @@ export function Pronunciation({ entry, sense: selectedSense, accent = 'uk', opti
         const missing = pronunciation.required && !pronunciation.recordings.some(recording=>recording.accent===target);
         const retry = pronunciation.required ? pronunciation.recordings.find(recording=>recording.accent===target&&recording.status==='verified'&&recording.wordformConfirmed===true&&recording.availability==='failed') : undefined;
         const playing = activeAction === (retry?.url || action);
-        return <button key={target} className="btn line" type="button" aria-label={`${playing ? 'Stop' : 'Play'} ${target.toUpperCase()} pronunciation of ${entry.term}`} onClick={() => void play(retry, target)}>{playing ? 'Stop' : missing ? `${target.toUpperCase()} · No matched audio` : retry ? `Retry · ${target.toUpperCase()} audio` : compact ? `Play ${target.toUpperCase()}` : target === 'uk' ? 'Listen · UK' : 'Listen · US'}</button>;
+        const text = playing ? 'Stop' : missing ? `${target.toUpperCase()} · No matched audio` : retry ? `Retry · ${target.toUpperCase()} audio` : compact ? `Play ${target.toUpperCase()}` : target === 'uk' ? 'Listen · UK' : 'Listen · US';
+        // Compact lists use a 44 px icon button; the visible state moves to the tooltip.
+        const icon = playing ? <Square size={14} aria-hidden="true" /> : missing ? <VolumeX size={18} aria-hidden="true" /> : retry ? <RotateCcw size={16} aria-hidden="true" /> : <Volume2 size={18} aria-hidden="true" />;
+        return <button key={target} className={`btn line${compact ? ' vocabulary-play-button' : ''}`} type="button" title={compact ? text : undefined} aria-label={`${playing ? 'Stop' : 'Play'} ${target.toUpperCase()} pronunciation of ${entry.term}`} onClick={() => void play(retry, target)}>{compact ? icon : text}</button>;
       })}
     </div>
     {pronunciation.legacy && readingSensitive ? <span className="vocabulary-pronunciation-note">Meaning match was not saved for this session.</span> : null}

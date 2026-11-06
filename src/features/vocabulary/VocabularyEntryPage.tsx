@@ -7,7 +7,9 @@ import {
   useNavigate,
   useParams,
   } from "react-router-dom";
-import { ArrowRight, Pencil, RotateCcw, Trash2 } from "lucide-react";
+import { ArrowRight, ChevronDown, Pencil, RotateCcw, Trash2 } from "lucide-react";
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { modeLabel } from './practicePresentation';
 import { useFieldbook } from "../../context/FieldbookContext";
 import { FilterMenu } from "../../components/ui";
 import { formatDateTime } from "../../lib/format";
@@ -200,6 +202,8 @@ export function VocabularyEntryPage() {
   const nextPractice = useMemo(() => entry && primary && status === 'ready'
     ? getVocabularyNextPractice(state,entry,{...context,senseId:primary.id}) : undefined,
   [state,entry,primary,status,bookId,unitId,validGroup,practiceClock]);
+  // Modes that can be practised now; the primary action keeps the saved practice preference.
+  const practiceModes = nextPractice?.status === 'ready' ? [nextPractice.mode, ...nextPractice.alternatives] : [];
   useEffect(() => {
     if (!nextPractice?.nextChangeAt) return;
     const refresh = () => setPracticeClock(value => value + 1);
@@ -556,6 +560,26 @@ export function VocabularyEntryPage() {
                 <ArrowRight size={16} />
               </Link>
             ) : null}
+            {primary && !entry.tags.includes("archived") && !isVocabularyPracticeReference(entry.id, primary) && practiceModes.length ? (
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild>
+                  <button type="button" className="btn line vocabulary-practice-modes" disabled={saving || savingPractice}>
+                    Choose a mode<ChevronDown size={15} aria-hidden="true" />
+                  </button>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Portal>
+                  <DropdownMenu.Content className="dropdown-content" align="start" sideOffset={6} collisionPadding={12}>
+                    <DropdownMenu.Label className="dropdown-label">Practise this meaning</DropdownMenu.Label>
+                    {practiceModes.map(mode => (
+                      <DropdownMenu.Item key={mode} className="dropdown-item" onSelect={() => {
+                        if (dictionaryPreview) void practiseDictionaryMeaning(mode);
+                        else navigate(practiceUrl(entry.id, primary.id, context, origin, mode), { state: vocabularyForwardState(location) });
+                      }}>{modeLabel(mode)}{mode === nextPractice?.mode ? <span className="dropdown-hint">Suggested</span> : null}</DropdownMenu.Item>
+                    ))}
+                  </DropdownMenu.Content>
+                </DropdownMenu.Portal>
+              </DropdownMenu.Root>
+            ) : null}
             {primary && isVocabularySpellingReference(entry.id, primary) ? <p className="vocabulary-muted">Spelling reference · Choose a valid meaning below to practise this word.</p> : null}
             {primary && isVocabularyMeaningGroup(entry.id, primary) ? <p className="vocabulary-muted">Meaning group · Choose a specific meaning below to practise this word.</p> : null}
             {primary && isVocabularyUsageReference(entry.id, primary) ? <p className="vocabulary-muted">Usage reference · This note lists phrases. Choose a specific meaning below to practise.</p> : null}
@@ -648,15 +672,18 @@ export function VocabularyEntryPage() {
                   <h4>
                       Progress for this meaning
                   </h4>
-                  <div className="vocabulary-mastery-status">
-                    <strong>{label(mastery.effective)}</strong>
-                    <span className="pill">
-                      {mastery.manual ? "Manual" : "Automatic"}
-                    </span>
+                  <dl className="vocabulary-mastery-status">
+                    <div>
+                      <dt>Familiarity</dt>
+                      <dd><strong>{label(mastery.effective)}</strong>{mastery.manual ? " · set by you" : " · automatic"}</dd>
+                    </div>
                     {mastery.manual ? (
-                      <span>System estimate: {label(mastery.automatic)}</span>
+                      <div>
+                        <dt>System estimate</dt>
+                        <dd>{label(mastery.automatic)}</dd>
+                      </div>
                     ) : null}
-                  </div>
+                  </dl>
                   {saved ? (
                     <details className="vocabulary-mastery-adjustment">
                       <summary>Adjust familiarity</summary>

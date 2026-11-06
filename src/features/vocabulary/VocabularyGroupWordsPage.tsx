@@ -15,7 +15,9 @@ import { getVocabularyMastery } from "../../domain/vocabulary/mastery";
 import type { VocabularyStore } from "../../domain/vocabulary/types";
 import { normalizeVocabularyPreferences } from "../../domain/vocabulary/preferences";
 import { VocabularyNavigation } from "./VocabularyPages";
-import { Pronunciation } from "./Pronunciation";
+import { Pronunciation, pronunciationIpa } from "./Pronunciation";
+
+const masteryLabel = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 import {
   entryUrl,
   groupPath,
@@ -143,16 +145,17 @@ export function VocabularyGroupWordsPage() {
               <span role="columnheader">Word</span>
               <span role="columnheader">Meaning in this group</span>
               <span role="columnheader">Learning status</span>
-              <span role="columnheader">Details</span>
+              <span role="columnheader"><span className="sr-only">Pronunciation</span></span>
             </div>
             {shown.map((row) => {
               const focus = `group-word-${row.entry.id}`;
               const archived = row.entry.tags.includes("archived");
-              const mastery = getVocabularyMastery(state, row.entry.id, row.resolved.sense?.id);
-              const familiarity = mastery.effective;
+              const sense = row.resolved.sense || undefined;
+              const mastery = getVocabularyMastery(state, row.entry.id, sense?.id);
+              const ipa = pronunciationIpa(row.entry, sense, preferences.accent);
               const url = entryUrl(
                 row.entry.id,
-                { bookId, unitId, senseId: row.resolved.sense?.id },
+                { bookId, unitId, senseId: sense?.id },
                 origin,
               );
               return (
@@ -164,7 +167,8 @@ export function VocabularyGroupWordsPage() {
                   <span role="cell" className="vocabulary-word-index">
                     {row.index}
                   </span>
-                  <div role="cell">
+                  <div role="cell" className="vocabulary-group-word-term">
+                    {/* The term link covers the row, so the whole row opens the word details. */}
                     <Link
                       id={focus}
                       className="vocabulary-term"
@@ -173,20 +177,12 @@ export function VocabularyGroupWordsPage() {
                     >
                       {row.entry.term}
                     </Link>
-                    <Pronunciation
-                      compact
-                      entry={row.entry}
-                      sense={row.resolved.sense || null}
-                      accent={preferences.accent}
-                    />
+                    {ipa ? <span className="vocabulary-ipa-inline">{ipa}</span> : null}
                   </div>
-                  <div role="cell">
-                    <small className="vocabulary-muted">
-                      {row.resolved.sense?.pos}
-                    </small>
+                  <div role="cell" className="vocabulary-group-word-meaning">
                     <p>
-                      {row.resolved.sense?.definition ||
-                        "Definition not available yet"}
+                      {sense?.pos ? <small>{sense.pos}</small> : null}
+                      {sense?.definition || "Definition not available yet"}
                     </p>
                   </div>
                   <div role="cell" className="vocabulary-group-word-status">
@@ -197,16 +193,17 @@ export function VocabularyGroupWordsPage() {
                           ? "Assessed"
                           : "Not started"}
                     </span>
-                    <small>Mastery: {familiarity}{mastery.manual ? " · Manual" : ""}</small>
+                    {mastery.effective !== "new" || mastery.manual ? (
+                      <small>{masteryLabel(mastery.effective)}{mastery.manual ? " · set by you" : ""}</small>
+                    ) : null}
                   </div>
-                  <div role="cell">
-                    <Link
-                      to={url}
-                      onClick={() => rememberVocabularyPosition(origin, focus)}
-                    >
-                      Details
-                      <ArrowRight size={12} />
-                    </Link>
+                  <div role="cell" className="vocabulary-group-word-play">
+                    <Pronunciation
+                      compact
+                      entry={row.entry}
+                      sense={row.resolved.sense || null}
+                      accent={preferences.accent}
+                    />
                   </div>
                 </div>
               );

@@ -389,6 +389,20 @@ test('my words follows browser history and clamps invalid page numbers', async (
   expect(screen.getByRole('link', { name: 'one' })).toBeInTheDocument();
 });
 
+test('my words selects rows through 44 px check chips and labels familiarity you set in one place', () => {
+  fixture();
+  fb.current.state.vocabularyStates = [{ id: 'one-state', entryId: 'one', senseId: 'sense', manualStatus: 'mastered', statusSource: 'manual', dimensions: {}, cards: {}, wrong: { active: false, modes: {} }, reviewCount: 0 }];
+  render(<MemoryRouter initialEntries={['/vocabulary/words']}><VocabularyWordsPage /></MemoryRouter>);
+  const box = screen.getByRole('checkbox', { name: 'Select one' });
+  expect(box.closest('label')).toHaveClass('check-chip');
+  expect(screen.getByRole('checkbox', { name: 'Select visible' }).closest('label')).toHaveClass('check-chip');
+  fireEvent.click(box);
+  expect(screen.getByText('1 selected')).toBeInTheDocument();
+  const row = box.closest('[role="listitem"]') as HTMLElement;
+  expect(within(row).getByText('Mastered · set by you')).toBeInTheDocument();
+  expect(within(row).getByRole('button', { name: 'Play UK pronunciation of one' })).toHaveClass('vocabulary-play-button');
+});
+
 test('changing word pages clears the selection and failed bulk saves offer a retry', async () => {
   fixture(); const template = fb.current.state.vocabulary[0];
   fb.current.state.vocabulary = Array.from({ length: 101 }, (_, index) => ({ ...template, id: `word-${index}`, term: `word${index}` }));

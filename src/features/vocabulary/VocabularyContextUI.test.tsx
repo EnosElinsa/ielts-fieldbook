@@ -1187,8 +1187,8 @@ test("automatic mastery and manual override are distinct, restoring automatic on
   ];
   mocks.fb.persistNow.mockResolvedValue(true);
   mount(`/vocabulary/entry/${raw.id}?bookId=ielts-vocabulary&unitId=ielts-vocabulary-chapter-12-group-02`);
-  expect(screen.getByText("System estimate: New")).toBeInTheDocument();
-  expect(screen.getByText("Manual")).toBeInTheDocument();
+  expect(screen.getByText("System estimate").nextElementSibling).toHaveTextContent("New");
+  expect(screen.getByText("Familiarity").nextElementSibling).toHaveTextContent("Mastered · set by you");
   const before = JSON.stringify(mocks.fb.state);
   await userEvent
     .setup()

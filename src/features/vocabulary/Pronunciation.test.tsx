@@ -27,6 +27,15 @@ describe('pronunciation controls', () => {
    expect(screen.getByRole('status').textContent).toContain('could not play');
   } finally { lookup.mockRestore(); }
  });
+ test('compact controls are icon buttons that keep their accessible name and show the action as a tooltip',async()=>{
+  state.load.mockResolvedValue({recordings:[]});
+  render(<Pronunciation compact entry={entry}/>);
+  const button=screen.getByRole('button',{name:'Play UK pronunciation of vegetable'});
+  expect(button.classList.contains('vocabulary-play-button')).toBe(true);
+  expect(button.getAttribute('title')).toBe('Play UK');
+  expect(button.textContent).toBe('');
+  expect(button.querySelector('svg')).not.toBeNull();
+ });
  test('a source transcription without a regional label is not presented as UK or US',async()=>{
   const lookup=vi.spyOn(sensePronunciation,'getVocabularyPronunciation').mockReturnValue({required:true,recordings:[],group:{id:'general-reading',term:'refuse',scope:'fuse again',sourceUrl:'https://example.org/revision',ipa:{general:'/ɹiːˈfjuːz/'},audioMarkup:[],recordings:{}}});
   try {

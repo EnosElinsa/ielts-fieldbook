@@ -309,21 +309,70 @@
   width: 100%;
   border: 1px solid var(--rule);
   border-radius: 8px;
-  overflow: hidden;
 }
 .vocabulary-group-word-row,
 .vocabulary-group-word-head {
   display: grid;
-  grid-template-columns: 36px minmax(160px, 0.8fr) minmax(250px, 1.5fr) minmax(
-      115px,
-      0.6fr
-    ) 72px;
-  gap: 16px;
-  align-items: start;
-  padding: 14px 18px;
+  grid-template-columns: 36px minmax(150px, 0.8fr) minmax(240px, 1.6fr) minmax(
+      110px,
+      0.55fr
+    ) 44px;
+  gap: 14px;
+  align-items: center;
+  padding: 8px 14px;
   border-bottom: 1px solid var(--rule);
 }
+.vocabulary-group-word-row {
+  position: relative;
+}
+.vocabulary-group-word-row:hover {
+  background: var(--surface-hover);
+}
+/* The term link stretches over the row; the play button sits above it. */
+.vocabulary-group-word-term .vocabulary-term::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.vocabulary-group-word-term .vocabulary-term:focus-visible {
+  outline: none;
+}
+.vocabulary-group-word-term .vocabulary-term:focus-visible::after {
+  outline: 2px solid var(--blue);
+  outline-offset: -2px;
+  border-radius: 6px;
+}
+.vocabulary-group-word-term {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  min-width: 0;
+}
+.vocabulary-ipa-inline {
+  color: var(--muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+/* A short meaning: two lines here, the full meaning on the word's details page. */
+.vocabulary-group-word-meaning p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  line-height: 1.45;
+}
+.vocabulary-group-word-meaning p small {
+  margin-right: 6px;
+  color: var(--muted);
+  font-size: 11px;
+  font-style: italic;
+}
+.vocabulary-group-word-play .vocabulary-pronunciation.is-compact {
+  margin-top: 0;
+}
 .vocabulary-group-word-head {
+  border-radius: 8px 8px 0 0;
   background: var(--sheet);
   font-size: 11px;
   color: var(--muted);
@@ -333,22 +382,18 @@
   border-bottom: 0;
 }
 .vocabulary-group-word-row p {
-  margin: 5px 0 0;
+  margin: 0;
   font-size: 13px;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 .vocabulary-group-word-row .vocabulary-term {
   font-size: 15px;
 }
-.vocabulary-group-word-row > div:last-child a {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-}
 .vocabulary-group-word-status {
-  display: grid;
-  gap: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
 }
 .vocabulary-group-word-status small,
 .vocabulary-word-index {
@@ -448,6 +493,52 @@
   font-size: 10px;
   padding: 3px 7px;
 }
+.vocabulary-pronunciation.is-compact .vocabulary-play-button {
+  position: relative;
+  z-index: 1;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  color: var(--blue);
+}
+/* In word tables the play cell is 44 px wide: playback notes open as a small panel under the button. */
+.vocabulary-word-play,
+.vocabulary-group-word-play {
+  position: relative;
+}
+.vocabulary-word-play .vocabulary-pronunciation.is-compact,
+.vocabulary-group-word-play .vocabulary-pronunciation.is-compact {
+  display: block;
+}
+.vocabulary-word-play .vocabulary-pronunciation.is-compact [role="status"],
+.vocabulary-word-play .vocabulary-audio-recovery,
+.vocabulary-word-play .vocabulary-pronunciation-note,
+.vocabulary-group-word-play .vocabulary-pronunciation.is-compact [role="status"],
+.vocabulary-group-word-play .vocabulary-audio-recovery,
+.vocabulary-group-word-play .vocabulary-pronunciation-note {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 2;
+  width: max-content;
+  max-width: min(260px, 70vw);
+  max-height: none;
+  padding: 6px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--sheet);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.12);
+  white-space: normal;
+  font-size: 11px;
+  line-height: 1.45;
+}
+.vocabulary-word-play .vocabulary-audio-recovery,
+.vocabulary-group-word-play .vocabulary-audio-recovery {
+  display: grid;
+  gap: 6px;
+}
 .vocabulary-pronunciation.is-compact [role="status"] {
   max-width: 200px;
   max-height: 30px;
@@ -527,19 +618,33 @@
     display: none;
   }
   .vocabulary-group-word-row {
-    grid-template-columns: 24px minmax(0, 1fr);
-    gap: 8px;
-    padding: 16px;
+    grid-template-columns: 24px minmax(0, 1fr) 44px;
+    gap: 4px 8px;
+    align-items: start;
+    gap: 2px 8px;
+    padding: 8px 8px 8px 12px;
   }
-  .vocabulary-group-word-row > div:nth-child(3),
-  .vocabulary-group-word-row > div:nth-child(4),
-  .vocabulary-group-word-row > div:last-child {
+  .vocabulary-group-word-row > .vocabulary-word-index {
+    grid-column: 1;
+    grid-row: 1;
+    padding-top: 3px;
+  }
+  .vocabulary-group-word-term {
     grid-column: 2;
+    grid-row: 1;
+  }
+  .vocabulary-group-word-meaning {
+    grid-column: 2;
+    grid-row: 2;
   }
   .vocabulary-group-word-status {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    grid-column: 2;
+    grid-row: 3;
+  }
+  .vocabulary-group-word-play {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+    align-self: center;
   }
   .vocabulary-pagination {
     gap: 8px;

@@ -527,7 +527,7 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
       {filtered.length ? (
         <>
           <div className="vocabulary-selection">
-            <label>
+            <label className="check-chip">
               <input
                 type="checkbox"
                 checked={visibleEntries.every((entry) => selected.has(entry.id))}
@@ -560,62 +560,67 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
               </>
             ) : null}
           </div>
-          <div className="vocabulary-table" role="list">
-            {visibleEntries.map((entry) => (
+          <div className="vocabulary-word-head" aria-hidden="true"><span /><span>Word</span><span>Meaning</span><span>Familiarity</span><span /><span /></div>
+          <div className="vocabulary-table vocabulary-word-list" role="list">
+            {visibleEntries.map((entry) => {
+              const sense = resolveVocabularyLearningContext(entry).sense;
+              const mastery = getVocabularyMastery(fb.state, entry.id);
+              const wrong = learning(fb.state, entry.id).some((item) => item.wrong?.active);
+              // Below 741 px the default "New · automatic" status is implied and not repeated on every row.
+              const plain = mastery.effective === "new" && !mastery.manual && !wrong;
+              return (
               <article
-                className="vocabulary-row"
+                className="vocabulary-word-row"
                 role="listitem"
                 key={entry.id}
               >
-                <input
-                  type="checkbox"
-                  aria-label={`Select ${entry.term}`}
-                  checked={selected.has(entry.id)}
-                  onChange={(event) =>
-                    setSelected((current) => {
-                      const next = new Set(current);
-                      event.target.checked
-                        ? next.add(entry.id)
-                        : next.delete(entry.id);
-                      return next;
-                    })
-                  }
-                />
-                <div className="vocabulary-row-main">
+                <label className="check-chip vocabulary-row-select">
+                  <input
+                    type="checkbox"
+                    aria-label={`Select ${entry.term}`}
+                    checked={selected.has(entry.id)}
+                    onChange={(event) =>
+                      setSelected((current) => {
+                        const next = new Set(current);
+                        event.target.checked
+                          ? next.add(entry.id)
+                          : next.delete(entry.id);
+                        return next;
+                      })
+                    }
+                  />
+                </label>
+                <div className="vocabulary-word-term">
                   <Link
                     id={`vocabulary-word-${entry.id}`} onClick={() => rememberReturn(entry.id)} to={`/vocabulary/entry/${entry.id}?returnTo=${encodeURIComponent(location.pathname + location.search)}`}
                     className="vocabulary-term"
                   >
                     {entry.term}
                   </Link>
-                  <p>
-                    {resolveVocabularyLearningContext(entry).sense?.definition || 'Definition not available yet'}
-                  </p>
-                  <Pronunciation compact entry={entry} sense={resolveVocabularyLearningContext(entry).sense || null} accent={normalizeVocabularyPreferences(fb.state.settings?.vocabulary).accent} />
                 </div>
-                <div className="vocabulary-row-meta">
+                <p className="vocabulary-word-meaning">
+                  {sense?.pos ? <small>{sense.pos}</small> : null}
+                  {sense?.definition || 'Definition not available yet'}
+                </p>
+                <div className={`vocabulary-word-status${plain ? " is-plain" : ""}`}>
                   <span
-                    className={`pill ${statusOf(fb.state, entry.id) === "mastered" ? "green" : ""}`}
+                    className={`pill ${mastery.effective === "mastered" ? "green" : ""}`}
+                    title={mastery.manual ? `System estimate: ${label(mastery.automatic)}` : undefined}
                   >
-                    {label(manualOf(fb.state, entry.id))}
+                    {label(mastery.effective)}{mastery.manual ? " · set by you" : ""}
                   </span>
-                  <span className="vocabulary-muted">
-                    {getVocabularyMastery(fb.state, entry.id).manual ? `Manual · System: ${label(getVocabularyMastery(fb.state, entry.id).automatic)}` : 'Automatic'}
-                  </span>
-                  {learning(fb.state, entry.id).some(
-                    (item) => item.wrong?.active,
-                  ) ? (
-                    <Link className="pill red" to="/vocabulary/wrong">
+                  {wrong ? (
+                    <Link className="vocabulary-wrong-link" to="/vocabulary/wrong">
                       Wrong word
                     </Link>
                   ) : null}
-                  {!resolveVocabularyLearningContext(entry).sense?.definition ? (
-                    <span className="vocabulary-muted">Definition unavailable</span>
-                  ) : null}
+                </div>
+                <div className="vocabulary-word-play">
+                  <Pronunciation compact entry={entry} sense={sense || null} accent={normalizeVocabularyPreferences(fb.state.settings?.vocabulary).accent} />
                 </div>
                 <button
                   type="button"
-                  className="icon-button"
+                  className="icon-button vocabulary-word-edit"
                   aria-label={`Edit ${entry.term}`}
                   title="Edit vocabulary"
                   onClick={() => editEntry(fb, entry)}
@@ -623,9 +628,10 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
                   <Pencil size={16} />
                 </button>
               </article>
-            ))}
+              );
+            })}
           </div>
-          {filtered.length > 100 ? <div className="vocabulary-selection"><button type="button" className="btn line" disabled={page === 0} onClick={() => setPage(page-1)}><ArrowLeft size={15}/>Previous</button><span>{page*100+1}-{Math.min((page+1)*100,filtered.length)} of {filtered.length}</span><button type="button" className="btn line" disabled={(page+1)*100>=filtered.length} onClick={() => setPage(page+1)}>Next<ArrowRight size={15}/></button></div> : null}
+          {filtered.length > 100 ? <div className="vocabulary-selection"><button type="button" className="btn line" disabled={page === 0} onClick={() => setPage(page-1)}><ArrowLeft size={15}/>Previous</button><span>{formatCount(page*100+1)}–{formatCount(Math.min((page+1)*100,filtered.length))} of {formatCount(filtered.length)}</span><button type="button" className="btn line" disabled={(page+1)*100>=filtered.length} onClick={() => setPage(page+1)}>Next<ArrowRight size={15}/></button></div> : null}
         </>
       ) : (
         <StateMessage

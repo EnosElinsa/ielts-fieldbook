@@ -54,7 +54,7 @@ test('exact planned learning browses only its frozen words and retains the origi
   mount(`${path}?planId=exact-plan&batch=1&batchSize=10&sense=other-sense-11&selectedEntryIds=${encodeURIComponent(JSON.stringify(['word-2']))}`);
   await screen.findByRole('heading',{name:'Word 11'});
   expect(screen.getByText('Meaning 11')).toBeInTheDocument();
-  expect(screen.getByLabelText('Group progress')).toHaveTextContent('Assessment: In progress');
+  expect(screen.getByLabelText('Group progress')).toHaveTextContent('Assessment in progress');
   fireEvent.click(screen.getByRole('button',{name:'Next word'}));
   await screen.findByRole('heading',{name:'Word 3'});
   fireEvent.click(screen.getByRole('button',{name:'Next word'}));
@@ -169,7 +169,7 @@ test('a fully viewed final batch presents completion instead of dead end navigat
   expect(screen.getByRole('link', { name: 'Start dictation · 1 word' })).toBeInTheDocument();
   expect(screen.getByRole('progressbar', { name: 'Words viewed in this batch' })).toHaveAttribute('value', '1');
   expect(screen.getByText('1 word viewed. Ready to test your recall?')).toBeInTheDocument();
-  expect(screen.getByText('Assessment: Not started')).toBeInTheDocument();
+  expect(screen.getByText('Not assessed yet')).toBeInTheDocument();
 });
 
 test('a supplementary dictionary diagram opens inside the learning copy without reserving an illustration column', async () => {
@@ -312,7 +312,7 @@ test('learns a source-ordered batch, keeps theme truthful and separates browsing
   expect(screen.getByText('Wordbook / Confirmed theme / Group 1')).toBeInTheDocument();
   expect(screen.getByText('Batch 1 of 2 · Words 1–10')).toBeInTheDocument();
   expect(screen.getByText('Viewed 0 / 12')).toBeInTheDocument();
-  expect(screen.getByText('Assessment: Not started')).toBeInTheDocument();
+  expect(screen.getByText('Not assessed yet')).toBeInTheDocument();
   expect(screen.queryByText('Meronym: stock animal')).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole('button',{name:'Whole group · 12 words'}));
   expect(screen.getByRole('link',{name:'Start dictation · 12 words'})).toHaveAttribute('href',expect.stringContaining('mode=dictation'));
@@ -344,7 +344,7 @@ test('failed save retains position and retries without claiming completion or ch
   expect(screen.getByRole('heading',{name:'Word 2'})).toBeInTheDocument();
   expect(await screen.findByRole('alert')).toHaveTextContent('Progress could not be saved');
   expect(screen.queryByText('Progress saved')).not.toBeInTheDocument();
-  expect(screen.getByText('Assessment: Not started')).toBeInTheDocument();
+  expect(screen.getByText('Not assessed yet')).toBeInTheDocument();
   await userEvent.setup().click(screen.getByRole('button',{name:'Retry save'}));
   expect(mocks.fb.saveVocabularyLearning).toHaveBeenCalledTimes(2);
   await screen.findByText('Progress saved');
@@ -422,13 +422,13 @@ test('loading errors retry and archived-only groups have a useful next step',asy
   expect(screen.getByRole('link',{name:'View group words'})).toBeInTheDocument();
 });
 
-test('manual familiarity alone is not an assessment and specialist modes show available subsets',async()=>{
+test('manual mastery counts as mastered in the strip but is not an assessment, and specialist modes show available subsets',async()=>{
   mocks.fb.state.vocabularyStates=[{entryId:'word-1',senseId:'sense-1',manualStatus:'mastered',statusSource:'manual',dimensions:{},wrong:{active:false,modes:{}},cards:{}}];
   (VOCABULARY_CATALOG.entries[1] as any).senses[0].source='Personal note';
   (VOCABULARY_CATALOG.entries[1] as any).senses[0].example='Example 2 is a useful sentence.';
   mount();await screen.findByRole('heading',{name:'Word 1'});
-  expect(screen.getByText('Assessment: Not started')).toBeInTheDocument();
-  expect(screen.getByText('System mastered 0 / 12')).toBeInTheDocument();
+  expect(screen.getByText('Not assessed yet')).toBeInTheDocument();
+  expect(screen.getByText('Mastered 1 / 12 · 1 set by you')).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button',{name:'Whole group · 12 words'}));
   expect(screen.getByRole('link',{name:'Start dictation · 12 words'})).toBeInTheDocument();
   expect(screen.queryByRole('option',{name:'Sentence gaps'})).not.toBeInTheDocument();
