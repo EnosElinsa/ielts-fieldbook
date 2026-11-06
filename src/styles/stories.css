@@ -9,8 +9,11 @@
 .story-tags, .vocabulary-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 11px; }
 .story-card-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 8px; border-top: 1px solid var(--rule); margin-top: 13px; padding-top: 11px; }
 .story-meta { font-size: 12px; line-height: 1.7; color: var(--muted); }
-.story-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.story-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .story-actions .btn { font-size: 12px; min-height: 36px; }
+.story-actions .story-icon-action { width: 38px; min-width: 38px; color: var(--muted); }
+.story-actions .story-icon-action:hover { color: var(--ink); }
+.story-actions .story-delete:hover { color: var(--red); }
 .story-modal { width: min(650px, 100%); max-height: calc(100vh - 36px); overflow-y: auto; }
 .story-topic-link { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--rule); border-radius: 6px; padding: 5px 8px; background: var(--surface-soft); color: var(--muted); font-size: 12px; text-align: left; }
 .story-topic-link:hover { border-color: var(--blue); color: var(--blue); }
@@ -24,4 +27,8 @@
   .story-actions .btn { min-height: 44px; }
   .story-card-foot { display: block; }
   .story-actions { margin-top: 10px; }
+}
+@media (max-width: 740px) {
+  .story-topic-link { min-height: 44px; padding: 8px 12px; }
+  .story-actions .story-icon-action { width: 44px; min-width: 44px; min-height: 44px; }
 }

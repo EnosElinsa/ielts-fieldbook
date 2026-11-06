@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import { afterEach, expect, test, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
@@ -25,6 +25,13 @@ test('topic pagination spans Parts without losing matches and resets on filterin
   expect(screen.queryByText('No topics match.')).not.toBeInTheDocument();
   fireEvent.change(screen.getByRole('textbox', { name: 'Search speaking topics' }), { target: { value: 'Unmatched' } });
   expect(screen.getAllByText('No topics match.')).toHaveLength(1);
+});
+
+test('the bank summary is a row of count chips and the range uses an en dash', () => {
+  render(<MemoryRouter><SpeakingBankPage /></MemoryRouter>);
+  const chips = within(screen.getByRole('list', { name: 'Topic progress' })).getAllByRole('listitem').map(item => item.textContent);
+  expect(chips).toEqual(['25 topics', '25 not seen', '0 with a story', '0 practised', '0 marked']);
+  expect(screen.getAllByRole('status')[0]).toHaveTextContent('1–12 of 25');
 });
 
 test('search accepts a pasted topic with surrounding whitespace', () => {

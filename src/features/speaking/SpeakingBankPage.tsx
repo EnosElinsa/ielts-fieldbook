@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Star, List, LayoutGrid, ArrowRight } from 'lucide-react';
 import { speakingCoverage } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { coverageClass, coverageLabel } from '../../lib/format';
+import { coverageClass, coverageLabel, formatCount, plural } from '../../lib/format';
 import { Empty, FilterMenu } from '../../components/ui';
 import { BANK_PAGE_SIZE, BankPagination, bankPage } from '../../components/BankPagination';
 
@@ -68,10 +68,13 @@ export function SpeakingBankPage() {
   return (
     <section className="view active" ref={results}>
       <div className="page-tools">
-        <p>
-          {topics.length} topics. Not seen {counts.unseen}, has a story {counts.prepared}, practised{' '}
-          {counts.practiced}, marked {counts.assessed}.
-        </p>
+        <ul className="bank-counts" aria-label="Topic progress">
+          <li className="pill blue">{plural(topics.length, 'topic')}</li>
+          <li className="pill">{formatCount(counts.unseen)} not seen</li>
+          <li className="pill">{formatCount(counts.prepared)} with a story</li>
+          <li className="pill">{formatCount(counts.practiced)} practised</li>
+          <li className="pill">{formatCount(counts.assessed)} marked</li>
+        </ul>
       </div>
       <div className="toolbar">
         <input

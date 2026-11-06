@@ -7,6 +7,7 @@ import { Empty } from '../../components/ui';
 import { FilterMenu } from '../../components/ui';
 import { ArrowRight, Pencil, Plus, Trash2 } from 'lucide-react';
 import { useConfirmationDialog } from '../../components/useConfirmationDialog';
+import { IconButton } from '../../components/IconButton';
 import { accountId } from '../../storage/remote';
 
 function storySummary(story) {
@@ -91,7 +92,7 @@ export function StoriesPage() {
                   <span className="story-meta">{formatDate(story.updatedAt || story.createdAt)}</span>
                   <div className="story-actions">
                     <button
-                      className="btn line"
+                      className="btn primary"
                       type="button"
                       onClick={() => {
                         const topicId = (story.topicIds || [])[0];
@@ -106,20 +107,20 @@ export function StoriesPage() {
                     >
                       Practise <ArrowRight size={15} />
                     </button>
-                    <button
-                      className="btn line"
-                      type="button"
+                    <IconButton
+                      label={`Edit ${story.title || 'Untitled story'}`}
+                      className="story-icon-action"
                       onClick={() => {
                         fb.setEditingStoryId(story.id);
                         fb.setStoryPresetTopicIds([]);
                         fb.openModal('story');
                       }}
                     >
-                      <Pencil size={14} /> Edit
-                    </button>
-                    <button
-                      className="btn line"
-                      type="button"
+                      <Pencil size={16} aria-hidden="true" />
+                    </IconButton>
+                    <IconButton
+                      label={`Delete ${story.title || 'Untitled story'}`}
+                      className="story-icon-action story-delete"
                       onClick={async () => {
                         if (await confirm({ title: 'Delete this story?', description: story.title, confirmLabel: 'Delete story', destructive: true }) && accountId() === owner) {
                           const draft = structuredClone(fb.stateRef.current);
@@ -128,8 +129,8 @@ export function StoriesPage() {
                         }
                       }}
                     >
-                      <Trash2 size={14} /> Delete
-                    </button>
+                      <Trash2 size={16} aria-hidden="true" />
+                    </IconButton>
                   </div>
                 </div>
               </article>

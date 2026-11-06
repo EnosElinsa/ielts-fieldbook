@@ -147,7 +147,7 @@ export function Shell() {
   const speaking = module === 'speaking';
   const secondaryLinks = studyLinks[module] || [];
   const vocabularyOwnHeading = location.pathname.startsWith('/vocabulary');
-  const ownHeading = /^\/(today)?$/.test(location.pathname) || location.pathname === '/planning' || EXAM_PATH.test(location.pathname);
+  const ownHeading = /^\/(today)?$/.test(location.pathname) || location.pathname === '/planning' || EXAM_PATH.test(location.pathname) || location.pathname.startsWith('/speak/topics/');
   const streak = !fb.moduleStatus || fb.moduleStatus.productive === 'ready' && fb.moduleStatus.receptive === 'ready' ? studyStreak(fb.state) : null;
   // Filters and answer edits stay still; changing the reviewed skill is a new view.
   const transitionKey = location.pathname + (location.pathname === '/review' ? `:${new URLSearchParams(location.search).get('skill') || fb.activeSkill}` : location.pathname === '/progress' ? `:${new URLSearchParams(location.search).get('category') || fb.activeSkill}` : '');

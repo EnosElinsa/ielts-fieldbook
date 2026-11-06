@@ -112,20 +112,19 @@ export function SpeakingTopicPage() {
 
   return (
     <section className="view active">
-      <div className="page-tools">
-        <p>
-          {coverageLabel(statusValue)}
-          {topic.incomplete ? ' · incomplete' : ''}
-        </p>
+      <div className="page-tools topic-page-head">
+        <div className="page-title-row">
+          <h2>{topic.title}</h2>
+          <span className={`pill ${Number(topic.part) === 1 ? 'blue' : 'red'}`}>Part {topic.part}</span>
+          <span className={`pill ${coverageClass(statusValue)}`}>{coverageLabel(statusValue)}</span>
+          {topic.incomplete ? <span className="pill">Incomplete</span> : null}
+        </div>
         <Link className="btn line" to="/speak/questions">
           <ArrowLeft size={16} aria-hidden="true" />Back to questions
         </Link>
       </div>
       <div className="split">
         <div className="panel">
-          <span className={`pill ${Number(topic.part) === 1 ? 'blue' : 'red'}`}>Part {topic.part}</span>{' '}
-          <span className={`pill ${coverageClass(statusValue)}`}>{coverageLabel(statusValue)}</span>
-          {topic.incomplete ? <span className="pill"> Incomplete</span> : null}
           {Number(topic.part) === 1 ? (
             <ol className="prompt-body">
               {(topic.questions || []).map((item) => (
@@ -193,19 +192,20 @@ export function SpeakingTopicPage() {
           ) : (
             <div className="empty">No story for this topic yet.</div>
           )}
+          <div className="story-attach">
+          <span className="story-attach-label" aria-hidden="true">Linked story</span>
           <div className="topic-actions">
             <FilterMenu
-              label="Story to attach"
+              label="Linked story"
               value={attachStoryId}
               onChange={setAttachStoryId}
-              options={
-                (fb.state.stories || []).length
-                  ? (fb.state.stories || []).map((story) => ({
-                      value: story.id,
-                      label: story.title || 'Untitled story',
-                    }))
-                  : [{ value: '', label: 'No stories yet' }]
-              }
+              options={[
+                { value: '', label: (fb.state.stories || []).length ? 'No story linked' : 'No stories yet' },
+                ...(fb.state.stories || []).map((story) => ({
+                  value: story.id,
+                  label: story.title || 'Untitled story',
+                })),
+              ]}
             />
             <button
               className="btn line"
@@ -239,7 +239,8 @@ export function SpeakingTopicPage() {
               Write one for this topic
             </button>
           </div>
-          <h3 className="mt-22">Notes</h3>
+          </div>
+          <h3 className="topic-notes-title">Notes</h3>
           <textarea
             className="notes-area"
             placeholder="Notes for this question"
