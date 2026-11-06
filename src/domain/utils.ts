@@ -42,11 +42,20 @@ export function splitList(value) {
   return String(value || '').split(/[;,；，,]/).map(item => item.trim()).filter(Boolean);
 }
 
+export function clipAtWord(text, max) {
+  const value = String(text || '');
+  if (value.length <= max) return value;
+  const cut = value.slice(0, max);
+  const space = cut.lastIndexOf(' ');
+  const head = space > max / 3 ? cut.slice(0, space) : cut;
+  return `${head.replace(/[\s,;:–—-]+$/, '')}…`;
+}
+
 export function firstSentence(text) {
   const value = String(text || '').replace(/\s+/g, ' ').trim();
   if (!value) return '';
   const match = value.match(/^.+?[.!?。！？](?=\s|$)/);
-  return (match ? match[0] : value).slice(0, 140);
+  return clipAtWord(match ? match[0] : value, 140);
 }
 
 export function daysUntilExam(examDate, now) {

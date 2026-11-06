@@ -9,16 +9,16 @@ const { persistNow, flushDraftPersist, toast, saveState } = vi.hoisted(() => ({
   persistNow: vi.fn(),
   flushDraftPersist: vi.fn(() => null),
   toast: vi.fn(),
-  saveState: { status: undefined as string | undefined, owner: 'one' },
+  saveState: { status: undefined as string | undefined, owner: 'one', type: '2', extra: null as any },
 }));
 vi.mock('../../storage/remote', () => ({accountId: () => saveState.owner}));
 
 vi.mock('../../context/FieldbookContext', () => ({
   useFieldbook: () => {
-    const state = emptyState();
+    const state = { ...emptyState(), ...(saveState.extra || {}) };
     const selected = {
       id: '1',
-      type: '2',
+      type: saveState.type,
       name: 'Essay',
       prompt: 'Discuss.',
       image: '',
@@ -58,6 +58,36 @@ afterEach(() => {
   vi.useRealTimers();
   saveState.status = undefined;
   saveState.owner = 'one';
+  saveState.type = '2';
+  saveState.extra = null;
+});
+
+const task2Correction = {
+  sessions: [{ id: 's-task2', questionId: 'q-housing', skill: 'writing', type: '2', essay: 'Housing essay.', words: 2, date: '2026-10-03T09:00:00.000Z' }],
+  errors: [{ id: 'e1', code: 'TR-DEVELOP', text: 'Develop each reason with a clearer cause and result.', sourceSessionId: 's-task2', nextReviewAt: '2020-01-01T00:00:00.000Z' }],
+};
+
+test('a Task 1 desk does not show a correction from a Task 2 essay', () => {
+  saveState.type = '1';
+  saveState.extra = task2Correction;
+  render(<WritingDeskPage />);
+  expect(screen.queryByText(/Use this correction at least once/)).not.toBeInTheDocument();
+});
+
+test('a Task 2 desk shows the due Task 2 correction', () => {
+  saveState.extra = task2Correction;
+  render(<WritingDeskPage />);
+  expect(screen.getByText(/Use this correction at least once/)).toHaveTextContent('TR-DEVELOP · Develop each reason with a clearer cause and result.');
+});
+
+test('earlier attempts label their attempt number', () => {
+  saveState.extra = { sessions: [
+    { id: 'a1', questionId: '1', skill: 'writing', type: '2', essay: 'First.', words: 146, date: '2026-10-01T09:00:00.000Z' },
+    { id: 'a2', questionId: '1', skill: 'writing', type: '2', essay: 'Second.', words: 1, date: '2026-10-02T09:00:00.000Z', attemptKind: 'rewrite' },
+  ] };
+  render(<WritingDeskPage />);
+  expect(screen.getByText('Attempt 2 · 1 word · Rewrite')).toBeInTheDocument();
+  expect(screen.getByText('Attempt 1 · 146 words · First draft')).toBeInTheDocument();
 });
 
 test('workspace tabs support arrow keys with one tab stop', async () => {

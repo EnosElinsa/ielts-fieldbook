@@ -6,7 +6,7 @@ import { Expand, Minimize2, Undo2, Redo2, X, ZoomIn, Pause, Play, RotateCcw, Sav
 import { useDraftHistory } from './useDraftHistory';
 import { todaySession, composeEssay, writingSaveBlockers, writingWordSoftConfirm, normalizeSections, emptySections } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { attemptLabel, displayName, formatClock, formatDate, safeImage, typeName } from '../../lib/format';
+import { attemptLabel, displayName, formatClock, formatDate, plural, safeImage, typeName } from '../../lib/format';
 import { useWorkspaceDeskContext, useWorkspacePageState } from '../../lib/workspacePageState';
 import { accountId } from '../../storage/remote';
 import { useElapsedCountdown } from '../../lib/useElapsedCountdown';
@@ -75,7 +75,9 @@ export function WritingDeskPage() {
         ? 'Task 1: check the series, units, time, and the overall trend before you write.'
         : 'Task 2: answer every part, state your position, and develop two points with examples.',
   };
-  const correction = todaySession(fb.state, null, 'writing').steps.find((step) => step.id === 'correction');
+  const dueCorrection = todaySession(fb.state, null, 'writing').steps.find((step) => step.id === 'correction');
+  const correctionSource = dueCorrection ? fb.state.sessions.find((session) => session.id === fb.state.errors?.find((error) => error.id === dueCorrection.errorId)?.sourceSessionId) : null;
+  const correction = correctionSource && String(correctionSource.type) === String(selected.type) ? dueCorrection : null;
   const targetErrorIds = [...new Set([...(fb.state.drafts[selected.id]?.targetErrorIds || []), ...(correction?.errorId ? [correction.errorId] : [])])];
   const attempts = useMemo(
     () =>
@@ -210,11 +212,13 @@ export function WritingDeskPage() {
         <div className="mobile-desk-tabs" role="tablist" aria-label="Writing workspace">
           {['prompt', 'answer'].map((tab) => <button key={tab} id={`writing-tab-${tab}`} type="button" className={mobileTab === tab ? 'active' : ''} role="tab" tabIndex={mobileTab === tab ? 0 : -1} aria-selected={mobileTab === tab} aria-controls={`writing-${tab}`} onKeyDown={navigateTabs} onClick={() => setMobileTab(tab)}>{tab === 'prompt' ? 'Prompt' : 'Answer'}</button>)}
         </div>
-        <label className="split-control">Prompt width<input type="range" aria-label="Prompt panel width" min="30" max="55" value={split} onChange={(event) => { const value = Number(event.target.value); setSplit(value); try { localStorage.setItem('fieldbook.writingSplit', String(value)); } catch { /* Browser preference is optional. */ } }} /><span>{split}%</span></label>
       </div>
       <div className="desk-stack" style={{ '--prompt-share': `${split}fr`, '--answer-share': `${100 - split}fr` }}>
         <div className={`prompt${mobileTab === 'prompt' ? ' mobile-active' : ''}`} id="writing-prompt">
-          <span className="pill blue">{typeName(selected)}</span>
+          <div className="prompt-head">
+            <span className="pill blue">{typeName(selected)}</span>
+            <label className="split-control">Width<input type="range" aria-label="Prompt panel width" min="30" max="55" value={split} onChange={(event) => { const value = Number(event.target.value); setSplit(value); try { localStorage.setItem('fieldbook.writingSplit', String(value)); } catch { /* Browser preference is optional. */ } }} /><span>{split}%</span></label>
+          </div>
           <h3>{displayName(selected.name)}</h3>
           <WritingTaskPrompt prompt={selected.prompt} image={image} />
           <div className="prompt-tip">{tips[mode] || tips.full}</div>
@@ -276,7 +280,7 @@ export function WritingDeskPage() {
                     <div className="history-meta">
                       <span>{formatDate(session.date, true)}</span>
                       <span>
-                        {session.words} words · {attemptLabel(session)} · {attempts.length - index}
+                        Attempt {attempts.length - index} · {plural(session.words, 'word')} · {attemptLabel(session)}
                       </span>
                     </div>
                     <p>{session.essay}</p>

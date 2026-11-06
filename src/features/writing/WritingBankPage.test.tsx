@@ -54,6 +54,17 @@ test('question pagination preserves filters and resets when the search changes',
   expect(screen.getByRole('heading', { name: 'Question 25' })).toBeInTheDocument();
 });
 
+test('long prompts end at a word boundary and the range uses an en dash', () => {
+  const long = `${'The chart shows how households in five countries spent money on food, housing and transport between 1990 and 2020, and asks you to '.repeat(2)}make comparisons where relevant.`;
+  fieldbook.current.state.questions = Array.from({ length: 25 }, (_, index) => ({ id: `q${index + 1}`, name: `Question ${index + 1}`, prompt: index ? 'Discuss.' : long, type: '2', format: '' }));
+  render(<MemoryRouter><WritingBankPage /></MemoryRouter>);
+  const excerpt = screen.getAllByRole('article')[0].querySelector('p')!.textContent!;
+  expect(excerpt.endsWith('…')).toBe(true);
+  expect(excerpt.length).toBeLessThanOrEqual(176);
+  expect(long.startsWith(`${excerpt.slice(0, -1)} `)).toBe(true);
+  expect(screen.getAllByRole('status')[0]).toHaveTextContent('1–12 of 25');
+});
+
 test('search accepts a pasted topic with surrounding whitespace', () => {
   render(<MemoryRouter initialEntries={['/write/questions?q=%20Education%20']}><WritingBankPage /></MemoryRouter>);
   expect(screen.getByRole('heading', { name: 'Education' })).toBeInTheDocument();

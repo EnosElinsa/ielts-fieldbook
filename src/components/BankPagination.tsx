@@ -15,7 +15,7 @@ export function BankPagination({ total, page, onChange, label }: {
   if (!total) return null;
   const count = Math.ceil(total / BANK_PAGE_SIZE);
   return <nav className="bank-pagination" aria-label={label}>
-    <span role="status">{(page - 1) * BANK_PAGE_SIZE + 1}-{Math.min(total, page * BANK_PAGE_SIZE)} of {total}</span>
+    <span role="status">{(page - 1) * BANK_PAGE_SIZE + 1}–{Math.min(total, page * BANK_PAGE_SIZE)} of {total}</span>
     <div>
       <IconButton label="Previous page" disabled={page <= 1} onClick={() => onChange(page - 1)}><ChevronLeft size={18} /></IconButton>
       <span>Page {page} of {count}</span>

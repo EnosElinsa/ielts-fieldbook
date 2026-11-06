@@ -395,6 +395,12 @@ test('B1: rewrite hint uses the first sentence of nextExercise', () => {
     core.rewritePlanDescription({ nextExercise: 'Spend 5 minutes on a table. Then write the overview.' }, 'fallback'),
     'Spend 5 minutes on a table.',
   );
+  const long = 'Develop each reason in the body paragraphs with a specific example and explain the clearer cause and its effect on housing prices for young families in cities';
+  const cut = core.firstSentence(long);
+  assert.ok(cut.endsWith('…'));
+  assert.ok(cut.length <= 141);
+  assert.ok(long.startsWith(`${cut.slice(0, -1)} `));
+  assert.equal(core.firstSentence('Short and complete.'), 'Short and complete.');
   assert.equal(core.examPressure({ settings: { examDate: '2026-09-25' } }, '2026-09-19T00:00:00'), true);
   assert.equal(core.examPressure({ settings: { examDate: '2026-10-20' } }, '2026-09-19T00:00:00'), false);
 });

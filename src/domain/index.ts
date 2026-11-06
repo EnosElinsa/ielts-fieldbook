@@ -75,7 +75,7 @@ export {
   syncNearestPendingPlan,
 } from './plans';
 
-export { wordCount, dateKey, hashText, firstSentence } from './utils';
+export { wordCount, dateKey, hashText, firstSentence, clipAtWord } from './utils';
 
 export {
   composeEssay,

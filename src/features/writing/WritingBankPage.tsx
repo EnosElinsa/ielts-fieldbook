@@ -3,6 +3,7 @@ import { useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Star, List, LayoutGrid, PenLine } from 'lucide-react';
 import { useFieldbook } from '../../context/FieldbookContext';
+import { clipAtWord } from '../../domain';
 import { chartLabels, displayName, formatLabel, safeImage, typeName } from '../../lib/format';
 import { Empty, FilterMenu } from '../../components/ui';
 import { BANK_PAGE_SIZE, BankPagination, bankPage } from '../../components/BankPagination';
@@ -96,8 +97,7 @@ export function WritingBankPage() {
         {questions.length ? (
           visible.map((question) => {
             const image = safeImage(question.image);
-            const prompt =
-              question.prompt.length > 175 ? `${question.prompt.slice(0, 175)}…` : question.prompt;
+            const prompt = clipAtWord(question.prompt, 175);
             return (
               <article className="q-card" key={question.id}>
                 <div className="q-top">
