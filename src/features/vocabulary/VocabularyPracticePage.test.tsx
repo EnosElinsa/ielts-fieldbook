@@ -1298,6 +1298,7 @@ test("authored distinction choices grade the selected answer and show it in the 
   await user.click(screen.getByRole("radio", { name: "robust" }));
   expect(screen.queryByText("Correct")).not.toBeInTheDocument();
   await user.click(screen.getByRole("button", { name: "Submit session" }));
+  await waitFor(()=>expect(fb.current.persistVocabularySession).toHaveBeenCalled());
   const record =
     fb.current.persistVocabularySession.mock.calls[0][0].vocabularySessions[0];
   expect(record.results[0]).toEqual(
