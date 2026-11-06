@@ -202,6 +202,23 @@ test("progress keeps studied coverage separate from mastery and imported history
 });
 
 
+test("the wordbook card and Progress report the same word total while the bundled starter sample is still loaded", () => {
+  fixture();
+  VOCABULARY_CATALOG.units.push({ id: "starter", bookId: "book", title: "Editorial starter selection", kind: "starter", order: -1 } as any);
+  VOCABULARY_CATALOG.memberships.push({ entryId: "sample", bookId: "book", unitId: "starter", order: 0 } as any);
+  const view = render(<MemoryRouter initialEntries={["/vocabulary/wordbooks"]}><VocabularyWordbooksPage /></MemoryRouter>);
+  const card = screen.getByRole("heading", { name: "IELTS source book" }).closest("article")!;
+  expect(within(card).getByText("3 words · 1 chapter · 2 groups")).toBeInTheDocument();
+  view.unmount();
+  render(<MemoryRouter><VocabularyProgressPage /></MemoryRouter>);
+  expect(screen.getByText("Studied 0/3 words · 0/2 groups")).toBeInTheDocument();
+  expect(screen.getByText("Mastered 0/3 words")).toBeInTheDocument();
+  cleanup();
+  showBook();
+  expect(screen.getByText("3 words · 1 chapter · 2 groups")).toBeInTheDocument();
+  expect(screen.queryByText("Editorial starter selection")).not.toBeInTheDocument();
+});
+
 test("explicit unit sessions count answered production without treating pending verification as mastery", () => {
   fixture();
   fb.current.state.vocabularySessions = [submitted(["one", "two"], { mode: "production", filter: {}, selection: { kind: "unit", bookId: "book", unitId: "first" }, results: [{ entryId: "one", response: "A sentence.", result: "pending" }, { entryId: "two", response: "Another sentence.", result: "pending" }] })];

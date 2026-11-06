@@ -97,9 +97,14 @@
   font-size: 12px;
 }
 .vocabulary-workbench .vocabulary-chapter-chevron {
+  flex-shrink: 0;
   color: var(--muted);
-  font-size: 22px;
   transition: transform 0.15s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .vocabulary-workbench .vocabulary-chapter-chevron {
+    transition: none;
+  }
 }
 .vocabulary-workbench
   .vocabulary-study-chapter[open]

@@ -5,5 +5,7 @@
 .vocabulary-next-practice p{margin:8px 0 12px;font-size:13px;line-height:1.65;}
 .vocabulary-next-practice .btn{min-height:44px;max-width:100%;white-space:normal;}
 .vocabulary-next-practice summary{min-height:44px;padding:12px 0;cursor:pointer;font-size:13px;}
+.vocabulary-next-practice-why{margin-top:8px;}
+.vocabulary-next-practice-why p{margin:4px 0 10px;color:var(--muted);font-size:12px;}
 .vocabulary-next-practice-alternatives{display:flex;flex-wrap:wrap;gap:8px;}
 .vocabulary-next-practice summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}

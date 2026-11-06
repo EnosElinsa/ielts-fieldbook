@@ -152,7 +152,20 @@
   color: var(--muted);
 }
 .vocabulary-book .actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px;
+  max-width: none;
   margin-top: 18px;
+}
+.vocabulary-book .actions .btn {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+}
+.vocabulary-book .actions .pill {
+  white-space: nowrap;
 }
 .vocabulary-book-heading {
   border-bottom: 1px solid var(--rule);

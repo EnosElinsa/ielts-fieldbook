@@ -66,6 +66,20 @@ test('home shows confirmed-error guidance even when a different exercise has a d
  expect(store).toEqual(before);expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
 
+test('one reason stays visible while the error details sit in a closed Why this practice? disclosure',()=>{
+ const {entry}=saved(),store=mocks.fb.state;
+ const card=getVocabularyReviewQueue(store,{entryId:entry.id,senseId:'saved-direction',mode:'dictation',dueOnly:false})[0];
+ let session=updateVocabularySessionAnswer(createVocabularySession([card],'dictation',{}),card.id,'compas');session.submittedAt='2026-10-01T09:00:00Z';
+ Object.assign(store,buildVocabularySessionCommit(store,session,[card]).state);
+ show();
+ expect(within(panel()).getByText(/Your written answer did not match/).closest('details')).toBeNull();
+ const why=within(panel()).getByText('Why this practice?').closest('details')!;
+ expect(why).not.toHaveAttribute('open');
+ expect(within(why).getByText(/Last error:/)).toBeInTheDocument();
+ expect(within(why).getByText(/Recovery needs 3 correct retries in the failed mode/)).toBeInTheDocument();
+ expect(within(why).getByText(/Audio is word-level/)).toBeInTheDocument();
+});
+
 test('the existing due batch keeps the preferred supported mode',()=>{
  const {entry,learning}=saved();successes(entry.id,new Date(Date.now()-2*86400000).toISOString());due(learning,'definition');due(learning,'dictation');
  mocks.fb.state.settings={vocabulary:{mode:'dictation'}};show();

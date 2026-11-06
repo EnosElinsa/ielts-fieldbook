@@ -11,6 +11,7 @@ import {
   ArrowRight,
   BookOpen,
   Check,
+  ChevronDown,
   History,
   Pencil,
   Plus,
@@ -101,7 +102,10 @@ function units(state = {}) {
   });
 }
 function bookHierarchy(state, bookId) {
-  const rows = units(state).filter(unit => unit.bookId === bookId);
+  const bookUnits = units(state).filter(unit => unit.bookId === bookId);
+  // The bundled editorial starter only stands in for a book until its released groups are known.
+  const released = bookUnits.some(unit => unit.kind !== 'starter' && unit.kind !== 'chapter' && unit.entryIds.length);
+  const rows = released ? bookUnits.filter(unit => unit.kind !== 'starter') : bookUnits;
   const byParent = new Map();
   rows.forEach(unit => byParent.set(unit.parentId || '', [...(byParent.get(unit.parentId || '') || []), unit]));
   byParent.forEach(children => children.sort((a, b) => (a.order || 0) - (b.order || 0)));
@@ -125,6 +129,9 @@ function bookStudy(state, bookId) {
   const studiedIds = new Set(studied.flatMap(unit => unit.studyEntryIds));
   return { hierarchy, groups, available, studied, studiedIds, next: available.find(unit => !groupStudied(state, unit)) };
 }
+/** One word total for a wordbook: the unique entries across its study groups. */
+function wordbookEntryIds(study) { return new Set(study.groups.flatMap(unit => unit.entryIds)); }
+function wordbookWordCount(study) { return wordbookEntryIds(study).size; }
 function unitPath(book, unit, hierarchy) {
   const names = [unit.title]; const visited = new Set([unit.id]); let parent = unit.parentId;
   while (parent && !visited.has(parent)) {
@@ -714,7 +721,7 @@ export function VocabularyWordbooksPage() {
         {unit.entryIds.length ? <><p>{plural(unit.entryIds.length, 'word')} · {unit.studyEntryIds.length ? `${vocabularyGroupProgress(fb.state, unit)} · ${formatCount(mastered)} mastered` : "Archived · Excluded from study"}</p>{unit.archivedCount && unit.studyEntryIds.length ? <p className="vocabulary-muted">{formatCount(unit.archivedCount)} archived {unit.archivedCount === 1 ? "word" : "words"} excluded from study</p> : null}</>
           : <p className="vocabulary-muted">{unit.totalSourceWords ? `${plural(unit.totalSourceWords, 'source word')} | ` : ""}Content pending</p>}
       </div>
-      <div className="actions"><Link className="btn line" to={`/vocabulary/wordbooks/${encodeURIComponent(book.id)}/groups/${encodeURIComponent(unit.id)}/words`}>View words</Link>{unit.studyEntryIds.length && enrolled(book.id) ? <Link className="btn primary" to={studyLink(unit)} aria-label={`Learn words: ${unitPath(book, unit, study.hierarchy)}`}>Learn words<ArrowRight size={15} /></Link> : null}{unit.studyEntryIds.length && enrolled(book.id) ? <Link className="btn line" to={assessmentLink(unit)}>Start assessment</Link> : null}</div>
+      <div className="actions"><Link className="btn text" to={`/vocabulary/wordbooks/${encodeURIComponent(book.id)}/groups/${encodeURIComponent(unit.id)}/words`}>View words</Link>{unit.studyEntryIds.length && enrolled(book.id) ? <Link className="btn text" to={assessmentLink(unit)}>Start assessment</Link> : null}{unit.studyEntryIds.length && enrolled(book.id) ? <Link className="btn primary" to={studyLink(unit)} aria-label={`Learn words: ${unitPath(book, unit, study.hierarchy)}`}>Learn words<ArrowRight size={15} /></Link> : null}</div>
     </article>;
   };
   const chapter = (unit) => {
@@ -727,7 +734,7 @@ export function VocabularyWordbooksPage() {
     const nextInside = groups.some(group => group.id === study.next?.id);
     const next = groups.find(group => !groupStudied(fb.state, group));
     return <details className="vocabulary-study-chapter" id={`chapter-${encodeURIComponent(unit.id)}`} key={unit.id} open={nextInside || undefined}>
-      <summary><span><strong>{unit.title}</strong><small>{ids.size ? `${plural(ids.size, 'word')} · ${formatCount(completed)}/${formatCount(groups.length)} groups studied` : `${unit.totalSourceWords ? `${plural(unit.totalSourceWords, 'source word')} | ` : ""}Content pending`}</small></span><span className="vocabulary-chapter-chevron" aria-hidden="true">⌄</span></summary>
+      <summary><span><strong>{unit.title}</strong><small>{ids.size ? `${plural(ids.size, 'word')} · ${formatCount(completed)}/${formatCount(groups.length)} groups studied` : `${unit.totalSourceWords ? `${plural(unit.totalSourceWords, 'source word')} | ` : ""}Content pending`}</small></span><ChevronDown className="vocabulary-chapter-chevron" size={20} aria-hidden="true" /></summary>
       <div className="vocabulary-chapter-body">
         {next && enrolled(book.id) ? <Link className="btn text" to={studyLink(next)}>Continue chapter <ArrowRight size={15} /></Link> : null}
         {children.map(chapter)}
@@ -742,7 +749,7 @@ export function VocabularyWordbooksPage() {
     {book ? <>
       <VocabularyBackLink fallback="/vocabulary/wordbooks"/>
       <div className="vocabulary-study-heading"><div><span className="vocabulary-eyebrow">Your wordbook</span><h3>{book.title}</h3><p>{wordbookDescription(book)}</p>
-        <p className="vocabulary-muted">{plural(book.entryIds.length, 'word')} · {plural(study.hierarchy.filter(unit => unit.kind === "chapter").length, 'chapter')} · {plural(study.groups.length, 'group')}</p>
+        <p className="vocabulary-muted">{plural(wordbookWordCount(study), 'word')} · {plural(study.hierarchy.filter(unit => unit.kind === "chapter").length, 'chapter')} · {plural(study.groups.length, 'group')}</p>
         <p>{formatCount(study.studied.length)}/{formatCount(study.available.length)} available groups studied</p>
       </div><div className="vocabulary-continue">
         {enrolled(book.id) ? study.next ? <><p className="vocabulary-group-path">{unitPath(book, study.next, study.hierarchy)}</p><Link className="btn primary" to={studyLink(study.next)}>{study.studied.length === study.available.length ? "Study again" : study.studied.length ? "Continue study" : "Start first group"}<ArrowRight size={16} /></Link><small>{plural(study.next.studyEntryIds.length, 'word')} · Learn, then assess</small></> : study.studied.length ? <><p>All groups studied.</p><Link className="btn line" to={studyLink(study.available[0])}>Study again</Link></> : <p className="vocabulary-muted">{study.groups.some(group => group.entryIds.length) ? "All available words are archived. Restore a word to study this book." : "Study will be available when group content is loaded."}</p>
@@ -756,7 +763,7 @@ export function VocabularyWordbooksPage() {
       <div className="vocabulary-books">{books(fb.state).map(item => {
         const progress = bookStudy(fb.state, item.id);
         return <article className="vocabulary-book" key={item.id}><BookOpen size={22} /><h3>{item.title}</h3><p>{wordbookDescription(item)}</p>
-          <div className="vocabulary-muted">{plural(item.entryIds.length, 'word')} · {plural(progress.hierarchy.filter(unit => unit.kind === "chapter").length, 'chapter')} · {plural(progress.groups.length, 'group')}</div>
+          <div className="vocabulary-muted">{plural(wordbookWordCount(progress), 'word')} · {plural(progress.hierarchy.filter(unit => unit.kind === "chapter").length, 'chapter')} · {plural(progress.groups.length, 'group')}</div>
           {enrolled(item.id) ? <div className="vocabulary-muted">{formatCount(progress.studied.length)}/{formatCount(progress.available.length)} groups studied</div> : null}
           <div className="actions"><Link className="btn line" to={`/vocabulary/wordbooks/${encodeURIComponent(item.id)}`}>Open chapters<ArrowRight size={15} /></Link>
             {!enrolled(item.id) ? <button type="button" className="btn primary" disabled={!item.entryIds.length || Boolean(joining) || catalogBusy} onClick={() => join(item.id)}><Plus size={15} />Add</button>
@@ -1035,7 +1042,8 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
           .map((book) => {
             const progress = bookStudy(fb.state, book.id);
             const completed = progress.studiedIds.size;
-            const mastered = (book.entryIds || []).filter(
+            const words = wordbookEntryIds(progress);
+            const mastered = [...words].filter(
               (id) => statusOf(fb.state, id) === "mastered",
             ).length;
             return (
@@ -1044,10 +1052,10 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
                   {book.title}
                 </Link>
                 <span>
-                  Studied {formatCount(completed)}/{formatCount(book.entryIds.length)} words · {formatCount(progress.studied.length)}/{formatCount(progress.available.length)} groups
+                  Studied {formatCount(completed)}/{formatCount(words.size)} words · {formatCount(progress.studied.length)}/{formatCount(progress.available.length)} groups
                 </span>
                 <span>
-                  Mastered {formatCount(mastered)}/{formatCount(book.entryIds.length)} words
+                  Mastered {formatCount(mastered)}/{formatCount(words.size)} words
                 </span>
               </div>
             );
