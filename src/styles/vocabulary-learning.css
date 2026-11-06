@@ -101,13 +101,13 @@
  .vocabulary-learning-content .vocabulary-learning-visual { max-width:260px; margin-inline:auto; }
 }
 
-.vocabulary-learning-content.has-visual { grid-template-columns:minmax(0,1.4fr) minmax(180px,.8fr); }
+.vocabulary-learning-primary .vocabulary-learning-visual { margin: 20px auto 0; }
 /* Wide screens: meaning and example on the left, combinations and notes on the right. */
 @media (min-width:1100px) {
   .vocabulary-learning-heading, .vocabulary-learning-workspace { max-width: 1080px; }
-  .vocabulary-learning-content:not(.has-visual) .vocabulary-learning-copy { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:0 40px; align-items:start; }
-  .vocabulary-learning-content:not(.has-visual) .vocabulary-learning-secondary { padding-left:32px; border-left:1px solid var(--rule); }
-  .vocabulary-learning-content:not(.has-visual) .vocabulary-learning-secondary > :first-child { margin-top:0; }
+  .vocabulary-learning-copy { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:0 40px; align-items:start; }
+  .vocabulary-learning-secondary { padding-left:32px; border-left:1px solid var(--rule); }
+  .vocabulary-learning-secondary > :first-child { margin-top:0; }
 }
 .vocabulary-learning-provenance { margin:18px 0 8px; }
 @media(max-width:600px) { .vocabulary-learning-content.has-visual { display:flex; } }

@@ -1072,3 +1072,45 @@
   .practice-session-size { padding-bottom: 12px; }
   .practice-setup-details > h3 { margin-bottom: 14px; }
 }
+/* Compact narrow review: labels share rows with controls and actions share one row. */
+@media(max-width:700px) {
+  .vocabulary-practice-view .practice-setup-controls { gap: 8px; padding-bottom: 12px; }
+  .practice-setup-controls > .practice-field { display: grid; grid-template-columns: 86px minmax(0,1fr); gap: 8px; align-items: center; }
+  .practice-setup-controls .practice-field-label { margin: 0; }
+  .practice-setup-controls > .practice-field > .filter-menu { width: 100%; }
+  .practice-setup-controls > .practice-field > .filter-menu > button { min-height: 44px; }
+  .practice-setup-options .practice-configuration { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+  .practice-configuration > .practice-field:last-child { grid-column: 1 / -1; display: grid; grid-template-columns: 86px minmax(0,1fr); align-items: center; }
+  .practice-configuration > .practice-field > .filter-menu > button { padding-inline: 8px; font-size: 12px; }
+  .practice-size-controls { gap: 6px 10px; }
+  .practice-size-presets { gap: 4px; }
+  .practice-size-presets .btn { min-width: 44px; }
+  .practice-custom-size { gap: 6px; }
+  .practice-custom-size input { width: 62px; }
+  .practice-session-size { grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 6px; }
+  .practice-launch-actions { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+  .practice-launch-actions .practice-start { min-width: 0; width: 100%; font-size: 12px; padding-inline: 8px; }
+  .practice-launch-actions .practice-schedule-review > .btn { font-size: 12px; padding-inline: 8px; }
+  .practice-launch-actions:has(fieldset) { grid-template-columns: minmax(0,1fr); }
+  .vocabulary-practice-view .practice-session-card .practice-launch { padding: 12px 0 0; margin-top: 12px; }
+  .vocabulary-practice-view .practice-launch-content { gap: 6px; }
+  .practice-planned-list article { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; padding-block: 10px; }
+  .practice-planned-list article > div:first-child { grid-column: 1 / -1; grid-row: 1; }
+  .practice-planned-list article h4 { min-height: 44px; display: flex; align-items: center; padding-right: 86px; margin: 0; }
+  .practice-planned-list article p { margin: 2px 0; }
+  .practice-planned-list article .study-start-action { grid-column: 2; grid-row: 1; align-self: start; }
+  .practice-planned-list article .study-start-action .btn { min-height: 44px; }
+  .practice-recent .practice-history-row { padding-block: 8px; min-height: 44px; }
+  .practice-context { margin-bottom: 12px; }
+  .practice-review-help { margin-bottom: 8px; }
+  .practice-heading { margin-bottom: 18px; }
+  .practice-context > .btn { min-height: 44px; }
+  .practice-recent .practice-history-row > span:first-child { flex-direction: row; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; }
+  .practice-session-size > .practice-field-label { grid-column: 1; grid-row: 1; }
+  .practice-session-size .practice-size-controls { display: contents; }
+  .practice-session-size .practice-custom-size { grid-column: 2; grid-row: 1; }
+  .practice-session-size .practice-size-presets { grid-column: 1 / -1; grid-row: 2; }
+  .practice-session-size .practice-size-error { grid-column: 1 / -1; }
+}
+.practice-results tbody td > a { display: inline-flex; align-items: center; min-height: 44px; }
+.vocabulary-practice-view .practice-empty-link { min-height: 44px; }

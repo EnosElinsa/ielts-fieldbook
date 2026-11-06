@@ -24,6 +24,7 @@ import { resetAccountIdentity, setAccountIdentity } from '../../storage/accountI
 import {addVocabularyItem,getVocabularyReviewQueue} from '../../domain/vocabulary';
 import {buildVocabularySessionCommit,createVocabularySession,updateVocabularySessionAnswer} from '../../domain/vocabulary/session';
 import { freezeVocabularyPronunciation } from '../../domain/vocabulary/sensePronunciation';
+import { modeLabel } from './practicePresentation';
 const mocks = vi.hoisted(() => ({
   fb: null as any,
   player: { play: vi.fn(), stop: vi.fn() },
@@ -189,6 +190,29 @@ test('next practice waits for teaching before displaying a recommendation',async
   expect(screen.queryByRole('region',{name:'Next practice'})).not.toBeInTheDocument();
   await act(async()=>finish());
   expect(await screen.findByRole('region',{name:'Next practice'})).toBeInTheDocument();
+});
+
+test.each(['waiting','ready'])('the entry mode menu includes supported future-due modes when the recommendation is %s', async recommendation => {
+  const raw=structuredClone(core()),unitId='ielts-vocabulary-chapter-12-group-02';
+  const sense=resolveVocabularyLearningContext(raw,{bookId:book,unitId}).sense!;
+  mocks.fb.state.vocabulary=[raw];
+  const supported=[...new Set(getVocabularyReviewQueue(mocks.fb.state,{entryId:raw.id,senseId:sense.id,dueOnly:false}).map(card=>card.mode))];
+  expect(supported).toContain('dictation');
+  expect(supported).toContain('definition');
+  mocks.fb.state.vocabularyStates=[{id:'scheduled',entryId:raw.id,senseId:sense.id,dimensions:{},wrong:{active:false,modes:{}},cards:Object.fromEntries(supported.map(mode=>[mode,{due:new Date(Date.now()+(recommendation==='ready'&&mode==='definition'?-86400000:86400000)).toISOString()}]))}];
+  const origin=`/vocabulary/entry/${raw.id}?bookId=${book}&unitId=${unitId}&senseId=${encodeURIComponent(sense.id)}&returnTo=%2Fvocabulary%2Fwords`;
+  const before=structuredClone(mocks.fb.state);
+  mount(origin);
+  const panel=await screen.findByRole('region',{name:'Next practice'});
+  if(recommendation==='waiting') expect(panel).toHaveTextContent('Your next review is scheduled');
+  await userEvent.click(await screen.findByRole('button',{name:'Choose a mode'}));
+  for(const mode of supported) expect(screen.getByRole('menuitem',{name:new RegExp(modeLabel(mode))})).toBeInTheDocument();
+  await userEvent.click(screen.getByRole('menuitem',{name:/^Dictation/}));
+  expect(await screen.findByText('Practice setup')).toBeInTheDocument();
+  const route=new URL(screen.getByLabelText('Current route').textContent!,'https://test.test');
+  expect(Object.fromEntries(route.searchParams)).toMatchObject({entryId:raw.id,senseId:sense.id,bookId:book,unitId,returnTo:origin,mode:'dictation',dueOnly:'false'});
+  expect(mocks.fb.state).toEqual(before);
+  expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
 
 test('next practice saves only the explicitly requested dictionary meaning and opens its recommended mode',async()=>{

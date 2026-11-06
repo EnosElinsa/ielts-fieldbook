@@ -7,6 +7,8 @@ import { readFileSync } from 'node:fs';
 import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { VocabularyGroupLearnPage } from './VocabularyGroupLearnPage';
 import { buildLearningBatch } from '../../domain/vocabulary/learningBatch';
+import { resolveVocabularyLearningContext } from '../../domain/vocabulary/context';
+import { getVocabularyVisualPresentation } from '../../domain/vocabulary/visualPresentation';
 
 const mocks = vi.hoisted(() => ({ fb: null as any, owner: 'account-one' as string | null, onCardReady: undefined as (() => void) | undefined }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
@@ -187,6 +189,20 @@ test('a supplementary dictionary diagram opens inside the learning copy without 
   expect(screen.getByText('a commercial bank', { exact: true })).toBeInTheDocument();
   fireEvent.click(screen.getByText('Usage and meaning notes'));
   expect(screen.getByRole('heading', { name: 'Compare meanings' })).toBeInTheDocument();
+});
+
+test('an inline learning illustration stays with the meaning and example, leaving notes in the secondary column', async () => {
+  const released=JSON.parse(readFileSync('public/vocabulary-catalog.json','utf8'));
+  Object.assign(VOCABULARY_CATALOG,released);
+  const entry=released.entries.find((entry:any)=>getVocabularyVisualPresentation(resolveVocabularyLearningContext(entry))==='inline');
+  expect(entry).toBeDefined();
+  const member=released.memberships.find((row:any)=>row.entryId===entry.id);
+  const sense=resolveVocabularyLearningContext(entry).sense!;
+  mount(`/vocabulary/wordbooks/${member.bookId}/groups/${member.unitId}/learn?word=${entry.id}&sense=${encodeURIComponent(sense.id)}`);
+  await screen.findByRole('heading',{name:entry.term});
+  expect(document.querySelector('.vocabulary-learning-primary .vocabulary-learning-visual')).not.toBeNull();
+  expect(document.querySelector('.vocabulary-learning-secondary .vocabulary-learning-visual')).toBeNull();
+  expect(document.querySelector('#learning-meaning')).toHaveClass('has-visual');
 });
 
 test('recall first hides the answer until revealed and resets for each word without recording evidence', async () => {

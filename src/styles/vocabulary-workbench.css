@@ -328,20 +328,6 @@
 .vocabulary-group-word-row:hover {
   background: var(--surface-hover);
 }
-/* The term link stretches over the row; the play button sits above it. */
-.vocabulary-group-word-term .vocabulary-term::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-.vocabulary-group-word-term .vocabulary-term:focus-visible {
-  outline: none;
-}
-.vocabulary-group-word-term .vocabulary-term:focus-visible::after {
-  outline: 2px solid var(--blue);
-  outline-offset: -2px;
-  border-radius: 6px;
-}
 .vocabulary-group-word-term {
   display: flex;
   align-items: baseline;
@@ -669,3 +655,7 @@
     max-width: 150px;
   }
 }
+.vocabulary-group-word-link { position: absolute; inset: 0; z-index: 1; border-radius: 6px; }
+.vocabulary-group-word-link:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+.vocabulary-group-word-row:hover .vocabulary-term { text-decoration: underline; }
+.vocabulary-group-word-play .vocabulary-play-button { z-index: 2; }

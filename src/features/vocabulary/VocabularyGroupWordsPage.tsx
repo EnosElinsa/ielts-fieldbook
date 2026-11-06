@@ -171,12 +171,13 @@ export function VocabularyGroupWordsPage() {
                     {/* The term link covers the row, so the whole row opens the word details. */}
                     <Link
                       id={focus}
-                      className="vocabulary-term"
+                      className="vocabulary-group-word-link"
                       to={url}
                       onClick={() => rememberVocabularyPosition(origin, focus)}
                     >
-                      {row.entry.term}
+                      <span className="sr-only">{row.entry.term}</span>
                     </Link>
+                    <span className="vocabulary-term" aria-hidden="true">{row.entry.term}</span>
                     {ipa ? <span className="vocabulary-ipa-inline">{ipa}</span> : null}
                   </div>
                   <div role="cell" className="vocabulary-group-word-meaning">

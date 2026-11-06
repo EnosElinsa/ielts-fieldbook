@@ -739,3 +739,9 @@
   .vocabulary-history-row .vocabulary-history-summary { grid-column: 2; text-align: right; }
   .vocabulary-view .vocabulary-history-row > svg { grid-column: 3; grid-row: 1; }
 }
+/* Narrow lists keep 44 px controls while trimming repeated row padding. */
+@media(max-width:740px) {
+  .vocabulary-word-row { padding-block: 4px; }
+  .vocabulary-view .vocabulary-word-meaning { line-height: 1.45; }
+}
+.vocabulary-view .vocabulary-word-edit { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }

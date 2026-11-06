@@ -15,6 +15,7 @@ import { FilterMenu } from "../../components/ui";
 import { formatDateTime } from "../../lib/format";
 import {
   addVocabularyItem,
+  getVocabularyReviewQueue,
   removeVocabularyItem,
   setVocabularyManualStatus,
 } from "../../domain/vocabulary";
@@ -202,8 +203,14 @@ export function VocabularyEntryPage() {
   const nextPractice = useMemo(() => entry && primary && status === 'ready'
     ? getVocabularyNextPractice(state,entry,{...context,senseId:primary.id}) : undefined,
   [state,entry,primary,status,bookId,unitId,validGroup,practiceClock]);
-  // Modes that can be practised now; the primary action keeps the saved practice preference.
-  const practiceModes = nextPractice?.status === 'ready' ? [nextPractice.mode, ...nextPractice.alternatives] : [];
+  // Eligibility is independent of the review schedule: an entry can be practised before it is due.
+  const practiceModes = useMemo(() => {
+    if (!entry || !primary || status !== 'ready') return [];
+    const scoped = validGroup && !entry.sources.some(source => source.bookId === bookId && source.unitId === unitId)
+      ? { ...entry, sources: [...entry.sources, { type: 'wordbook' as const, id: `${bookId}:${unitId}:${entry.id}`, bookId: bookId!, unitId: unitId! }] }
+      : entry;
+    return [...new Set(getVocabularyReviewQueue({ ...state, vocabulary: [scoped] }, { ...context, entryId: entry.id, senseId: primary.id, dueOnly: false }).map(card => card.mode))];
+  }, [state, entry, primary, status, bookId, unitId, validGroup]);
   useEffect(() => {
     if (!nextPractice?.nextChangeAt) return;
     const refresh = () => setPracticeClock(value => value + 1);
