@@ -49,6 +49,7 @@ test('standalone vocabulary ranges include the entire first local day and exclud
       { id: 'future', entryId: 'two', mode: 'definition', result: 'success', occurredAt: new Date(2026, 9, 15).toISOString() },
     ];
     const view = render(<MemoryRouter initialEntries={['/vocabulary/progress?range=7']}><VocabularyProgressPage /></MemoryRouter>);
+    fireEvent.click(screen.getByText('Recent practice results'));
     const results = view.container.querySelector('.vocabulary-evidence');
     expect(results).not.toBeNull();
     expect(within(results as HTMLElement).getByRole('link', { name: 'one' })).toBeInTheDocument();
@@ -74,6 +75,8 @@ test('vocabulary progress applies the date range while preserving the current wo
     { id: 'undated', entryId: 'three', mode: 'dictation', imported: true, result: 'success', occurredAt: null, updatedAt: '2026-10-12' },
   ];
   const view = render(<MemoryRouter><VocabularyProgressPage embedded since={Date.parse('2026-10-06')} /></MemoryRouter>);
+  fireEvent.click(screen.getByText('Recent practice results'));
+  fireEvent.click(screen.getByText('Familiarity', {selector:'summary h3'}));
   const results = view.container.querySelector('.vocabulary-evidence')!;
   expect(within(results as HTMLElement).getByRole('link', { name: 'one' })).toBeInTheDocument();
   expect(within(results as HTMLElement).queryByRole('link', { name: 'two' })).not.toBeInTheDocument();
@@ -83,6 +86,26 @@ test('vocabulary progress applies the date range while preserving the current wo
   view.rerender(<MemoryRouter><VocabularyProgressPage embedded since={0} /></MemoryRouter>);
   expect(screen.getByText('Source date unavailable')).toBeInTheDocument();
   expect(within(view.container.querySelector('.vocabulary-evidence') as HTMLElement).getAllByRole('link')).toHaveLength(3);
+});
+
+test('vocabulary progress leads with summary and book coverage, then discloses ten recent results', () => {
+  fixture();
+  fb.current.state.vocabularyReviews=Array.from({length:12},(_,index)=>({id:`result-${index}`,entryId:index%2?'one':'two',mode:'definition',result:index<6?'success':index<10?'failure':'pending',occurredAt:new Date(2026,9,index+1,12).toISOString()}));
+  const view=render(<MemoryRouter><VocabularyProgressPage embedded since={0}/></MemoryRouter>);
+  const summary=view.container.querySelector('.vocabulary-stats')!;
+  expect(within(summary as HTMLElement).getByText('Practice results').nextElementSibling).toHaveTextContent('12');
+  expect(within(summary as HTMLElement).getByText('Words practised').nextElementSibling).toHaveTextContent('2');
+  expect(within(summary as HTMLElement).getByText('Success rate').nextElementSibling).toHaveTextContent('60%');
+  const details=[...view.container.querySelectorAll('.vocabulary-progress-detail')];
+  expect(details).toHaveLength(3);
+  details.forEach(detail=>expect(detail).not.toHaveAttribute('open'));
+  const book=screen.getByRole('progressbar',{name:'IELTS source book studied words'});
+  expect(book).toHaveAttribute('max','3');
+  expect(book).toHaveAttribute('value','0');
+  expect(book.compareDocumentPosition(details[0]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  fireEvent.click(screen.getByText('Recent practice results'));
+  expect(within(view.container.querySelector('.vocabulary-evidence') as HTMLElement).getAllByRole('link')).toHaveLength(10);
+  expect(screen.getByRole('link',{name:'View vocabulary history'})).toHaveAttribute('href','/vocabulary/history');
 });
 
 test('empty vocabulary keeps the add and filtered recovery actions', () => {

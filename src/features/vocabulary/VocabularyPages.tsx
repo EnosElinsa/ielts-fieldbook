@@ -963,19 +963,54 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
   const entries = fb.state.vocabulary || [];
   const evidence = fb.state.vocabularyEvidence || [];
   const results = getVocabularyPracticeResults(fb.state, since);
+  const assessed = results.filter(row => ['success', 'failure', 'partial'].includes(row.result));
+  const successRate = assessed.length ? Math.round(assessed.filter(row => row.result === 'success').length / assessed.length * 100) : 0;
   return (
     <VocabularyLayout embedded={embedded}>
       <div className="page-tools">
         <h2>{embedded ? 'Vocabulary activity' : 'Vocabulary progress'}</h2>
         {!embedded ? <FilterMenu label="Time range" value={range} onChange={value => setParams(current => { const next = new URLSearchParams(current); next.set('range', value); return next; }, { replace: true })} options={[{ value: '7', label: 'Last 7 days' }, { value: '30', label: 'Last 30 days' }, { value: '90', label: 'Last 90 days' }, { value: 'all', label: 'All time' }]} /> : null}
       </div>
-      <VocabularyStats values={[["Practice results", results.length], ["Words practised", new Set(results.map(row => row.entryId)).size], ["Successful results", results.filter(row => row.result === 'success').length], ["Needs practice", results.filter(row => ['failure', 'partial'].includes(row.result)).length]]} />
+      <VocabularyStats values={[["Practice results", results.length], ["Words practised", new Set(results.map(row => row.entryId)).size], ["Success rate", `${successRate}%`], ["Due cards", getDueVocabularyReviewQueue(fb.state).length]]} />
+      <h3 className="vocabulary-section-title">Wordbook progress · All time</h3>
+      <p className="vocabulary-muted">Studied counts submitted answers, including mistakes. Mastered tracks spaced meaning, listening and spelling successes; usage is separate.</p>
+      <div className="vocabulary-table">
+        {books(fb.state)
+          .filter((book) =>
+            (fb.state.wordbookEnrollments || []).some(
+              (item) => item.bookId === book.id,
+            ),
+          )
+          .map((book) => {
+            const progress = bookStudy(fb.state, book.id);
+            const completed = progress.studiedIds.size;
+            const words = wordbookEntryIds(progress);
+            const mastered = [...words].filter(
+              (id) => statusOf(fb.state, id) === "mastered",
+            ).length;
+            return (
+              <div className="vocabulary-unit vocabulary-book-progress" key={book.id}>
+                <Link to={`/vocabulary/wordbooks?bookId=${book.id}`}>
+                  {book.title}
+                </Link>
+                <span>
+                  Studied {formatCount(completed)}/{formatCount(words.size)} words · {formatCount(progress.studied.length)}/{formatCount(progress.available.length)} groups
+                </span>
+                <span>
+                  Mastered {formatCount(mastered)}/{formatCount(words.size)} words
+                </span>
+                <progress aria-label={`${book.title} studied words`} max={Math.max(1, words.size)} value={Math.min(completed, words.size)} />
+              </div>
+            );
+          })}
+      </div>
+      <details className="vocabulary-progress-detail">
+        <summary><h3>Familiarity</h3></summary>
       <h3 className="vocabulary-section-title">Current vocabulary · All time</h3>
       <VocabularyStats
         values={[
           ["Entries", entries.length],
           ["Mastered words", entries.filter(entry => statusOf(fb.state, entry.id) === "mastered").length],
-          ["Due cards", getDueVocabularyReviewQueue(fb.state).length],
           ["Words to retry", getActiveWrongWords(fb.state).length],
           [
             "Awaiting verification",
@@ -987,7 +1022,6 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
         ]}
       />
       <p className="vocabulary-muted">Current totals across all time. Due cards include review modes for words you have already studied.</p>
-      <h3 className="vocabulary-section-title">Familiarity</h3>
       <div className="vocabulary-status-breakdown">
         {STATUS.map((status) => (
           <div key={status}>
@@ -1002,7 +1036,10 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
           </div>
         ))}
       </div>
-      <h3 className="vocabulary-section-title">Learning dimensions · All time</h3>
+        <p className="vocabulary-muted">Success rate counts assessed results in this range. Results awaiting feedback are excluded.</p>
+      </details>
+      <details className="vocabulary-progress-detail">
+        <summary><h3>Learning dimensions · All time</h3></summary>
       <div className="vocabulary-progress-table">
         <div className="vocabulary-progress-head">
           <span>Dimension</span>
@@ -1036,41 +1073,12 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
           );
         })}
       </div>
-      <h3 className="vocabulary-section-title">Wordbook progress · All time</h3>
-      <p className="vocabulary-muted">Studied counts submitted answers, including mistakes. Mastered tracks spaced meaning, listening and spelling successes; usage is separate.</p>
-      <div className="vocabulary-table">
-        {books(fb.state)
-          .filter((book) =>
-            (fb.state.wordbookEnrollments || []).some(
-              (item) => item.bookId === book.id,
-            ),
-          )
-          .map((book) => {
-            const progress = bookStudy(fb.state, book.id);
-            const completed = progress.studiedIds.size;
-            const words = wordbookEntryIds(progress);
-            const mastered = [...words].filter(
-              (id) => statusOf(fb.state, id) === "mastered",
-            ).length;
-            return (
-              <div className="vocabulary-unit" key={book.id}>
-                <Link to={`/vocabulary/wordbooks?bookId=${book.id}`}>
-                  {book.title}
-                </Link>
-                <span>
-                  Studied {formatCount(completed)}/{formatCount(words.size)} words · {formatCount(progress.studied.length)}/{formatCount(progress.available.length)} groups
-                </span>
-                <span>
-                  Mastered {formatCount(mastered)}/{formatCount(words.size)} words
-                </span>
-              </div>
-            );
-          })}
-      </div>
-      <h3 className="vocabulary-section-title">Recent practice results</h3>
+      </details>
+      <details className="vocabulary-progress-detail">
+        <summary><h3>Recent practice results</h3></summary>
       {results.length ? (
         <div className="vocabulary-evidence">
-          {results.slice(0, 20)
+          {results.slice(0, 10)
             .map((item, index) => (
               <div key={item.id || index}>
                 <Link to={`/vocabulary/entry/${item.entryId}`}>
@@ -1086,6 +1094,8 @@ export function VocabularyProgressPage({ since: selectedSince, embedded = false 
       ) : (
         <StateMessage message="No vocabulary practice results in this range." />
       )}
+        <Link className="btn line" to="/vocabulary/history">View vocabulary history</Link>
+      </details>
     </VocabularyLayout>
   );
 }
