@@ -16,16 +16,24 @@ beforeEach(() => {
 });
 afterEach(cleanup);
 
+test('a single history page omits pagination', () => {
+  fixture();
+  fb.current.state.vocabularySessions=[submitted(['one'])];
+  render(<MemoryRouter><VocabularyHistoryPage/></MemoryRouter>);
+  expect(screen.getByRole('link',{name:/Dictation.*Travel/})).toBeInTheDocument();
+  expect(screen.queryByRole('navigation',{name:'Vocabulary history pages'})).not.toBeInTheDocument();
+});
+
 test('history loads metadata by page and source and retains a failed page for retry',async()=>{
   const row={id:'page-one',mode:'dictation',submittedAt:'2026-10-20T12:00:00Z',summary:{total:3,correct:2,incorrect:1},sourceSnapshot:{origin:'manual'},planId:'manual-task'};
   fb.current.loadVocabularyHistoryPage=vi.fn().mockResolvedValueOnce({rows:[row],total:21}).mockRejectedValueOnce(new Error('offline')).mockResolvedValue({rows:[{...row,id:'page-two'}],total:21});
   render(<MemoryRouter><VocabularyHistoryPage/></MemoryRouter>);
-  expect(await screen.findByText('User arranged',{selector:'small'})).toBeInTheDocument();
+  expect(await screen.findByText(/User arranged/,{selector:'.vocabulary-history-main > span'})).toBeInTheDocument();
   expect(fb.current.loadVocabularyHistoryPage).toHaveBeenCalledWith({source:'all',offset:0,limit:20});
   fireEvent.click(screen.getByRole('button',{name:'Next page'}));
   expect(await screen.findByText(/History could not be loaded/)).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button',{name:'Retry loading'}));
-  expect(await screen.findByText('Page 2 of 2 · 21 sessions · 20 per page')).toBeInTheDocument();
+  expect(await screen.findByText('Page 2 of 2 · 21 sessions')).toBeInTheDocument();
   fireEvent.click(screen.getByRole('combobox',{name:'Session source'}));
   fireEvent.click(screen.getByRole('option',{name:'User arranged'}));
   await waitFor(()=>expect(fb.current.loadVocabularyHistoryPage).toHaveBeenLastCalledWith({source:'manual',offset:0,limit:20}));

@@ -145,6 +145,7 @@ export function VocabularyPracticeResults({ controller, results }: {
         meaning={{term:followUp.row.term,definition:followUp.row.definition}}
         to={mode=>practiceUrl(followUp.row.entryId,followUp.row.senseId,followUp.current.context,resultReturnTo,mode)}/> : null}
       <div className="practice-result-controls">
+        <span className="practice-result-filter-label">Filter results</span>
         <FilterMenu label="Result filter" value={resultFilter} onChange={setResultFilter} options={[
           { value: 'all', label: 'All results' }, { value: 'incorrect', label: 'Incorrect' },
           { value: 'unanswered', label: 'Unanswered' }, { value: 'pending', label: 'Awaiting feedback' }, { value: 'flagged', label: 'Flagged' },
@@ -188,12 +189,11 @@ export function VocabularyPracticeResults({ controller, results }: {
                   {row.prompt && results.mode !== 'dictation' ? <small className="practice-result-context">{row.prompt}</small> : null}
                 </th>
                 <td className="practice-response-column" data-label="Your response">
-                  <span className="practice-cell-label" aria-hidden="true">Your response</span>
                   {row.response ? <>{diff?<VocabularyAnswerDiff response={row.response} expected={expected} side="actual"/>:row.response}</> : (
                     <span className="practice-unanswered">Unanswered</span>
                   )}
                 </td>
-                <td className="practice-expected-column" data-label="Expected answer"><span className="practice-cell-label" aria-hidden="true">Expected answer</span><>{diff?<VocabularyAnswerDiff response={row.response} expected={expected} side="expected"/>:row.expectedAnswer}</>{diff && expected !== row.expectedAnswer ? <details className="practice-saved-answers"><summary>Saved accepted answers</summary><span>{row.expectedAnswer}</span></details> : null}</td>
+                <td className="practice-expected-column" data-label="Expected answer"><>{diff?<VocabularyAnswerDiff response={row.response} expected={expected} side="expected"/>:row.expectedAnswer}</>{diff && expected !== row.expectedAnswer ? <details className="practice-saved-answers"><summary>Saved accepted answers</summary><span>{row.expectedAnswer}</span></details> : null}</td>
                 <td data-label="Result">
                   <span
                     className={`practice-result-badge is-${row.result}`}

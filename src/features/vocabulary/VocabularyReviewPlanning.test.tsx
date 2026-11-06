@@ -15,7 +15,7 @@ test('scheduled review saves the themed date and word selection, locking both wh
   mocks.changePlan.mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
   const controller={mode:'dictation',dueOnly:false,wrongOnly:false,filter:{},customCardIds:null,queue:[{entryId:'word',senseId:'meaning'}],preferences:{sessionSize:10,order:'source'}} as unknown as VocabularyPracticeController;
   render(<ScheduleVocabularyReview controller={controller}/>);
-  await userEvent.click(screen.getByRole('button',{name:'Arrange this review for a date'}));
+  await userEvent.click(screen.getByRole('button',{name:'Arrange for a date'}));
   await userEvent.click(screen.getByRole('button',{name:'Study date'}));
   const today=new Date(),chosen=new Date(today.getFullYear(),today.getMonth(),today.getDate()===1?2:1);
   await userEvent.click(screen.getByRole('button',{name:`${chosen.getDate()} ${chosen.toLocaleDateString('en-GB',{month:'long'})} ${chosen.getFullYear()}`}));

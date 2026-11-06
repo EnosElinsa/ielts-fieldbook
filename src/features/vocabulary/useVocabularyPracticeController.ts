@@ -439,9 +439,9 @@ export function useVocabularyPracticeController() {
     const ids = VOCABULARY_CATALOG.memberships.filter(item => item.bookId === unit.bookId && item.unitId === unit.id).map(item => item.entryId);
     return vocabularyGroupProgress(fb.state, { ...unit, studyEntryIds: ids }) !== 'Studied';
   }) : null;
-  const recent = useMemo(() => ((fb.state.vocabularySessions || []) as SessionLog[])
-    .slice(-5)
-    .reverse().map(presentVocabularySession), [fb.state.vocabularySessions]);
+  const recent = useMemo(() => [...((fb.state.vocabularySessions || []) as SessionLog[])]
+    .sort((a, b) => Date.parse(b.submittedAt || b.startedAt) - Date.parse(a.submittedAt || a.startedAt))
+    .slice(0, 5).map(presentVocabularySession), [fb.state.vocabularySessions]);
 
   useEffect(() => {
     if (sessionRef.current || savingRef.current) return;

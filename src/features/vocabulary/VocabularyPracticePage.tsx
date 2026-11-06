@@ -7,11 +7,11 @@ import { VocabularyPracticeSession } from "./VocabularyPracticeSession";
 import { VocabularyPracticeResults } from "./VocabularyPracticeResults";
 import { useVocabularyPracticeController } from "./useVocabularyPracticeController";
 import "../../styles/vocabulary-practice.css";
-import { VocabularyBackLink, vocabularyForwardState } from './VocabularyRouteLink';
+import { VocabularyBackLink, VocabularyLink, vocabularyForwardState } from './VocabularyRouteLink';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { navigateWithPracticeGuard } from '../../lib/practiceNavigation';
 import { useVocabularyPosition } from './vocabularyNavigation';
-import { PanelLoadingState } from '../../components/AsyncState';
+import { PanelLoadingState, StateMessage } from '../../components/AsyncState';
 import { useState } from 'react';
 
 export function VocabularyPracticePage() {
@@ -26,6 +26,7 @@ export function VocabularyPracticePage() {
   const navigate = useNavigate();
   const resultRequested = /^\/vocabulary\/history\//.test(location.pathname) || Boolean(new URLSearchParams(location.search).get('sessionId'));
   const showSetup = !session && !results && !resultRequested;
+  const unavailableSession = resultRequested && error === 'This saved session is unavailable for this account.';
   useVocabularyPosition(location.pathname + location.search + location.hash, controller.catalogReady && showSetup);
   return (
     <section className="view active vocabulary-view vocabulary-practice-view">
@@ -56,7 +57,7 @@ export function VocabularyPracticePage() {
           ) : null}
         </div>
       </header>
-      {error ? (
+      {unavailableSession ? <StateMessage title="This session isn't in your account"><VocabularyLink className="btn line" to="/vocabulary/history">Back to history</VocabularyLink></StateMessage> : error ? (
         <div className="practice-error" role="alert">
           <span>{error}</span>
           {submissionPending ? (

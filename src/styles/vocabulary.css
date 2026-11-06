@@ -704,3 +704,17 @@
 .vocabulary-capture-context p{margin:6px 0 0;color:var(--muted)}
 .vocabulary-history-source{display:grid;gap:8px;max-width:280px;margin:20px 0;font-size:12px;color:var(--muted)}.vocabulary-history-source .select-field{width:100%;padding:10px;border:1px solid var(--rule);border-radius:8px;background:var(--sheet);color:var(--ink);font:inherit}
 .vocabulary-import-label{display:block;flex-basis:100%;font-size:13px;font-weight:600;margin:0 0 8px}
+.vocabulary-history-tools { flex-wrap: wrap; align-items: center; }
+.vocabulary-history-tools h2 { margin-right: auto; }
+.vocabulary-history-tools .vocabulary-history-source { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0; max-width: none; }
+.vocabulary-history-tools .vocabulary-history-source .select-field { width: auto; }
+.vocabulary-history-main > strong { font-size: 14px; line-height: 1.5; }
+.vocabulary-view .vocabulary-history-row { align-items: center; gap: 16px; padding-block: 14px; }
+@media(max-width:600px) {
+  .vocabulary-history-pagination { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .vocabulary-history-pagination > span { grid-column: 1 / -1; grid-row: 1; text-align: center; }
+  .vocabulary-history-pagination .btn { justify-content: center; }
+  .vocabulary-view .vocabulary-history-row { grid-template-columns: minmax(0,1fr) minmax(100px,.7fr) auto; gap: 10px; }
+  .vocabulary-history-row .vocabulary-history-summary { grid-column: 2; text-align: right; }
+  .vocabulary-view .vocabulary-history-row > svg { grid-column: 3; grid-row: 1; }
+}

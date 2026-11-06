@@ -9,6 +9,7 @@ import { MemoryRouter, Link, useLocation, useNavigate, Routes, Route } from "rea
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { VocabularyPracticePage } from "./VocabularyPracticePage";
+import { dateLabel } from './practicePresentation';
 import { completeVocabularyPlan } from '../../domain/plans';
 import { getVocabularyReviewQueue, type VocabularyEntry } from "../../domain/vocabulary";
 import * as vocabularyDomain from '../../domain/vocabulary';
@@ -86,6 +87,27 @@ beforeEach(() => {
   };
 });
 const originalCatalog = { books: [...VOCABULARY_CATALOG.books], units: [...VOCABULARY_CATALOG.units], entries: [...VOCABULARY_CATALOG.entries], memberships: [...VOCABULARY_CATALOG.memberships] };
+
+test('recent sessions list the newest first without changing stored order', async () => {
+  const dates = [new Date(2026,9,10,21,36), new Date(2026,9,12,15,34), new Date(2026,9,14,11,22), new Date(2026,9,12,13,52), new Date(2026,9,10,20,16)].map(date=>date.toISOString());
+  fb.current.state.vocabularySessions = dates.map((submittedAt,index)=>({id:`recent-${index}`,mode:'dictation',status:'submitted',filter:{},results:[],summary:{total:0,correct:0,incorrect:0,pending:0},startedAt:submittedAt,submittedAt}));
+  const view = mount();
+  await readyStart();
+  const datesShown = [...view.container.querySelectorAll('.practice-recent .practice-history-row small')].map(node=>node.textContent);
+  expect(datesShown).toEqual([2,1,3,0,4].map(index=>dateLabel(dates[index])));
+  expect(fb.current.state.vocabularySessions.map((row:any)=>row.id)).toEqual([0,1,2,3,4].map(index=>`recent-${index}`));
+  expect(view.container.querySelector('.practice-review-help')).not.toHaveAttribute('open');
+  const card = screen.getByRole('region',{name:'Session'});
+  expect(card).toContainElement(screen.getByRole('button',{name:'Start session'}));
+  expect(card).toContainElement(screen.getByRole('button',{name:'Arrange for a date'}));
+});
+
+test('recent sessions use the start date when no submission date is stored and keep only five', async () => {
+  fb.current.state.vocabularySessions = Array.from({length:6},(_,index)=>({id:`recent-${index}`,mode:'dictation',status:'submitted',filter:{},results:[],summary:{total:0,correct:0,incorrect:0,pending:0},startedAt:new Date(2026,9,index+1,12).toISOString()}));
+  const view=mount();
+  await readyStart();
+  expect([...view.container.querySelectorAll('.practice-recent .practice-history-row small')].map(node=>node.textContent)).toEqual([6,5,4,3,2].map(day=>dateLabel(new Date(2026,9,day,12).toISOString())));
+});
 
 test('typing in a frozen planned review does not rebuild its review queue', async () => {
   fb.current.state.settings.vocabulary = { autoPlay: false, layout: 'list' };

@@ -715,7 +715,6 @@
 }
 .practice-results .practice-response-column { background: color-mix(in srgb, var(--rule) 18%, var(--sheet)); }
 .practice-results .practice-expected-column { background: color-mix(in srgb, var(--soft-blue) 45%, var(--sheet)); border-left: 1px solid var(--rule); }
-.practice-cell-label { display: block; margin-bottom: 7px; font-size: 9px; font-weight: 600; color: var(--muted); }
 .practice-answer-difference { background: var(--soft-red); color: var(--ink); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
 .practice-result-explanation { display: block; margin-top: 7px; color: var(--muted); line-height: 1.5; }
 .practice-results .practice-results-actions { flex-wrap: wrap; gap: 9px; }
@@ -894,6 +893,7 @@
   .practice-results tbody tr { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
   .practice-results tbody th { grid-column: 1 / -1; min-width: 0; }
   .practice-results tbody td { padding: 12px; min-width: 0; }
+  .practice-results td[data-label]::before { content: attr(data-label); display: block; margin-bottom: 7px; font-size: 10px; font-weight: 600; color: var(--muted); }
   .practice-results tbody th > small { max-width: none; }
   .practice-results tbody td:nth-last-child(-n+2) { border-bottom: 0; }
   .practice-result-summary { justify-content: space-between; gap: 12px; }
@@ -1046,3 +1046,29 @@
 .practice-planned-list article:last-child { padding-bottom: 0; }
 @media(max-width:700px){.practice-setup-options .practice-configuration{grid-template-columns:1fr;gap:18px}.practice-planned-list article{align-items:stretch;flex-direction:column}.practice-planned-list,.practice-schedule-review,.practice-custom-selection,.practice-task-outcome,.vocabulary-practice-view section.practice-setup-details{padding:16px}.practice-resume .actions{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.practice-layout-toggle .btn,.practice-size-presets .btn{transition:none}}
+/* The options and launch actions belong to a single session card. */
+.practice-review-help { margin: 0 0 16px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.practice-review-help summary { cursor: pointer; display: flex; align-items: center; min-height: 44px; color: var(--ink); font-weight: 600; }
+.practice-review-help summary::before { content: '+'; margin-right: 8px; }
+.practice-review-help[open] summary::before { content: '−'; }
+.practice-review-help p { margin: 8px 0; }
+.practice-session-card .practice-launch { border: 0; border-radius: 0; border-top: 1px solid var(--rule); margin-top: 16px; padding: 16px 0 0; background: transparent; }
+.practice-launch-actions { grid-column: 2; grid-row: 1 / 4; display: grid; gap: 8px; align-content: start; max-width: 340px; }
+.practice-launch-actions .practice-start { min-height: 44px; }
+.practice-launch-actions .practice-schedule-review { border: 0; border-radius: 0; padding: 0; margin: 0; background: transparent; }
+.practice-launch-actions .practice-schedule-review > .btn { width: 100%; min-height: 44px; justify-content: center; }
+.practice-planned-list { margin: 12px 0 16px; border-radius: 8px; padding: 16px 20px; }
+.practice-planned-list article { gap: 12px; padding: 12px 0; }
+.practice-planned-list article h4 { margin: 0 0 5px; font-size: 14px; }
+.practice-planned-list article p { font-size: 12px; line-height: 1.5; }
+.practice-planned-list > p { font-size: 12px; margin-bottom: 0; color: var(--muted); }
+.practice-result-summary dd, .practice-result-controls > span { font-family: 'Manrope', sans-serif; }
+.practice-result-controls > .practice-result-filter-label { color: var(--ink); font-weight: 600; }
+@media(max-width:700px) {
+  .practice-launch-actions { grid-column: 1; grid-row: auto; width: 100%; max-width: none; margin-top: 4px; }
+  .practice-planned-list article { flex-direction: row; align-items: center; }
+  .practice-planned-list article > .btn { flex-shrink: 0; }
+  .practice-setup-options .practice-configuration { gap: 12px; }
+  .practice-session-size { padding-bottom: 12px; }
+  .practice-setup-details > h3 { margin-bottom: 14px; }
+}

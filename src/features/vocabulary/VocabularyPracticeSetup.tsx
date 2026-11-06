@@ -71,7 +71,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
           <h3>{study ? selectedBook?.title || 'Choose a wordbook' : focused?.entry.term || queue[0]?.entry.term || 'Practise this word'}</h3>
           <p>{study ? [chapter?.title, selectedUnit?.title].filter(Boolean).join(' / ') || 'Choose a group below to begin.' : !catalogReady ? preparing ? 'Loading your selected meaning…' : 'Retry loading to see your selected meaning.' : selectedMeaning?.definition || 'This selected meaning is unavailable.'}</p>
         </> : !locked ? <p>Review due words, retry mistakes, or build a custom review.</p> : null}
-        {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
+        {mode === 'dictation' && !batchOptions ? <p>British and American spellings are both accepted.</p> : null}
         {mode === 'production' ? <p>Your sentences are saved for review. A self-rating does not verify correct usage.</p> : null}
         {!locked && wrongOnly && (study || explicitEntry) ? <p>Mistake recovery needs 3 correct retries in the same mode, with at least 24 hours between the first and last.</p> : null}
         {!locked && explicitEntry && dueOnly ? <button type="button" className="btn line" onClick={()=>controller.setReviewPreset('custom')} aria-label="Remove due filter">Due for review · Remove filter</button> : null}
@@ -81,8 +81,13 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
         {controller.planFailure === 'no-longer-due' ? <p role="status">These words are no longer due. This task was skipped without marking it complete.</p> : null}
         {controller.planFailure === 'stale-target' ? <p role="alert">This planned task is no longer available. Return to Planning and retry.</p> : null}
         {controller.plannedReview && catalogReady && !studyReady && !controller.planFailure ? <p role="alert">The planned review could not be prepared. Your task has not been completed.</p> : null}
-        {!locked ? <Link to={study ? '/vocabulary/review' : '/vocabulary/wordbooks'}>{study ? 'Switch to vocabulary review' : 'Study a complete wordbook group'} <ArrowRight size={14} /></Link> : null}
+        {!locked ? <Link className="btn line" to={study ? '/vocabulary/review' : '/vocabulary/wordbooks'}>{study ? 'Switch to vocabulary review' : 'Study a complete wordbook group'} <ArrowRight size={14} /></Link> : null}
       </div>
+      {batchOptions ? <details className="practice-review-help"><summary>How review works</summary>
+        <p>Each planned session follows one task's assigned mode and complete question list. Submit every planned answer to complete the task; mistakes stay in your review schedule.</p>
+        <p>{wrongOnly?'Words to retry includes unresolved mistakes in this mode, even before their due date. Recovery requires three correct attempts spanning at least 24 hours.':dueOnly?'Due for review includes meanings whose saved schedule for this mode is due. Submitting assessed answers creates or updates that schedule.':'Choose saved or learned words and meanings for this session.'}</p>
+        {mode === 'dictation' ? <p>British and American spellings are both accepted.</p> : null}
+      </details> : null}
       {locked ? <section className="practice-planned-task" aria-label="Planned task">
         <span className="practice-locked-label">Locked planned task</span>
         <dl>
@@ -123,8 +128,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
       </>}
       {controller.modeNotice ? <p role="status">{controller.modeNotice}</p> : null}
       {!locked&&!study&&!explicitEntry&&<>{bookId!=='all'&&<div className="practice-field"><span className="practice-field-label">Group</span><button type="button" className="btn line" onClick={()=>setPickerOpen(true)}>{selectedUnit?.title||'All groups'}</button></div>}{!dueOnly&&!wrongOnly&&<CustomVocabularySelection controller={controller}/>}</>}
-      {!locked&&!study&&!explicitEntry&&<p className="practice-range-help">{wrongOnly?'Words to retry includes unresolved mistakes in this mode, even before their due date. Recovery requires three correct attempts spanning at least 24 hours.':dueOnly?'Due for review includes meanings whose saved schedule for this mode is due. Submitting assessed answers creates or updates that schedule.':'Choose saved or learned words and meanings for this session.'}</p>}
-      <section className="practice-setup-details" aria-label="Session options"><h3>Session options</h3>
+      <section className="practice-setup-details practice-session-card" aria-label="Session"><h3>Session</h3>
       <div className="practice-setup-options">
         <div className="practice-configuration">
           {batchOptions ?
@@ -205,7 +209,6 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
           </div></div>
         </div>
       </div>
-      </section>
       {catalogStatus.status === 'loading' && study ? <PanelLoadingState message="Loading the complete wordbook…" onRetry={retryCatalog} retryLabel="Retry catalog" /> : null}
       {catalogStatus.status === 'error' ? <StateMessage kind="error" message="The wordbook could not be loaded." onRetry={retryCatalog} retryLabel="Retry catalog" /> : null}
       {study && !controller.batchRequest && catalogReady && unitQueue && selectedUnit ? <div className="practice-eligibility" role="status">
@@ -232,11 +235,12 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
           {!locked && !study && controller.filter.scheduledOnly ? <p className="vocabulary-muted">Only saved meanings with an existing review schedule are included.</p> : null}
           {fallbackMode ? <button type="button" className="btn line" onClick={() => changeMode(fallbackMode)}>Try {modeLabel(fallbackMode)}</button> : null}
           {study && catalogReady && !controller.batchRequest && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? <p role="status">{specialist ? <>{controller.unitQueue.eligibleWords} of {controller.unitQueue.totalWords} words have a {modeLabel(mode).toLowerCase()} exercise. This optional practice covers these words only. Choose Dictation to study the complete group.</> : <>Some words are unavailable for this mode. Reload the wordbook or choose Dictation to study the complete group.</>}</p> : null}
-          <ReviewStartButton controller={controller} disabled={!controller.localDrafts.ready || !queue.length || batchOptions&&!validSize || !studyReady || Boolean(study && !controller.batchRequest && !specialist && unitQueue?.unavailableWords)} label={study && specialist && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? 'Start specialist subset' : 'Start session'}/>
+          <div className="practice-launch-actions"><ReviewStartButton controller={controller} disabled={!controller.localDrafts.ready || !queue.length || batchOptions&&!validSize || !studyReady || Boolean(study && !controller.batchRequest && !specialist && unitQueue?.unavailableWords)} label={study && specialist && controller.unitQueue && controller.unitQueue.unavailableWords > 0 ? 'Start specialist subset' : 'Start session'}/>
+          {batchOptions ? <ScheduleVocabularyReview controller={controller}/> : null}</div>
           {!locked&&!study&&<p>{preferences.sessionSize} requested · {launchCount} available questions · {new Set(queue.slice(0,launchCount).map(card=>card.entryId)).size} words</p>}
           {!locked && catalogReady && !queue.length ? (
             <Link
-              className="practice-empty-link"
+              className="btn line practice-empty-link"
               to="/vocabulary/wordbooks"
             >
               Explore wordbooks
@@ -245,7 +249,7 @@ export function VocabularyPracticeSetup({ controller }: { controller: Vocabulary
           ) : null}
         </div>
       </div>
-      {!locked&&!study&&!explicitEntry&&<ScheduleVocabularyReview controller={controller}/>}
+      </section>
       {recent.length ? (
         <section className="practice-recent">
           <h3>Recent sessions</h3>
