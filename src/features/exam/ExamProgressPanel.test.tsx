@@ -16,3 +16,12 @@ test('reading accuracy covers the complete selected range and excludes future at
   expect(screen.getAllByRole('link', { name: 'Review attempt' })).toHaveLength(2);
   expect(Array.from(document.querySelectorAll('.week-bar strong')).filter(row => row.textContent === '6/10')).toHaveLength(2);
 });
+test('attempt history shows study time in minutes and the panel adds no second bank link', () => {
+  mock.state.examAttempts = [[480, 'a'], [20, 'b'], [0, 'c']].map(([seconds, id]) => ({ id, skill: 'listening', mode: 'practice', status: 'completed', startedAt: '2026-10-13', completedAt: '2026-10-13', total: 10, score: 6, elapsedSeconds: seconds }));
+  render(<MemoryRouter><ExamProgressPanel skill="listening" /></MemoryRouter>);
+  const times = Array.from(document.querySelectorAll('.progress-section table tbody tr')).map(row => row.children[3].textContent);
+  expect(times.sort()).toEqual(['1 min', '8 min', '—']);
+  expect(screen.queryByRole('link', { name: /Open listening bank/ })).not.toBeInTheDocument();
+  expect(screen.getByText('View')).not.toHaveClass('exam-eyebrow');
+  expect(screen.getByRole('combobox', { name: 'Answer support' })).toBeInTheDocument();
+});
