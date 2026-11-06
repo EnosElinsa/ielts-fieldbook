@@ -5,4 +5,8 @@
 @media(max-width:768px){.progress-view .vocabulary-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.progress-view .vocabulary-stats>div{min-width:0;padding:10px 14px;margin:0;border-bottom:1px solid var(--rule)}.progress-view .vocabulary-stats>div:nth-child(2n){border-right:0}.progress-view .vocabulary-stats dt{line-height:1.5;overflow-wrap:anywhere}.progress-view .vocabulary-stats>div:last-child{border-bottom:1px solid var(--rule)}}
 .week-bar{grid-template-columns:minmax(74px,auto) minmax(0,1fr) auto}.week-bar>span{max-width:108px;overflow-wrap:anywhere}.week-bar>strong{font-variant-numeric:tabular-nums;text-align:right}
 
-.exam-progress-filters{justify-content:flex-start;gap:12px 20px}.exam-progress-filter{display:flex;align-items:center;gap:8px}.exam-progress-filter label{font:500 13px/1.4 Manrope,Arial,sans-serif;color:var(--muted);white-space:nowrap}
+.exam-progress-panel > .section-head { flex-wrap: wrap; gap: 16px; }
+.exam-progress-filters { justify-content: flex-start; flex-wrap: wrap; gap: 12px 20px; min-width: 0; max-width: 100%; }
+.exam-progress-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; max-width: 100%; }
+.exam-progress-filter label { font: 500 13px/1.4 Manrope,Arial,sans-serif; color: var(--muted); }
+.exam-progress-filter .select-field { min-height: 44px; }

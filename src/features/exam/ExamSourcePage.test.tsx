@@ -101,6 +101,24 @@ test('a submitted part exposes its full source without creating another attempt'
   expect(mocks.fb.persistNow).not.toHaveBeenCalled();
 });
 
+test('sentence play popups fit the viewport on hover and keyboard focus without changing their destination', () => {
+  mocks.fb.state.examAttempts = [{ skill: 'listening', status: 'completed', sectionIds: ['part'] }];
+  view();
+  const link = screen.getByRole('link', { name: 'Play sentence 2' });
+  const sentence = link.closest<HTMLElement>('.exam-source-sentence')!;
+  Object.defineProperty(document.documentElement, 'clientWidth', { configurable: true, value: 390 });
+  vi.spyOn(sentence, 'getClientRects').mockReturnValue([{ left: 378, top: 100, bottom: 130 } as DOMRect] as unknown as DOMRectList);
+  vi.spyOn(link, 'getBoundingClientRect').mockReturnValue({ width: 58, height: 44 } as DOMRect);
+  fireEvent.pointerEnter(sentence);
+  expect(link).toHaveStyle({ left: '320px', top: '56px' });
+  vi.mocked(sentence.getClientRects).mockReturnValue([{ left: 4, top: 20, bottom: 50 } as DOMRect] as unknown as DOMRectList);
+  act(() => link.focus());
+  expect(link).toHaveStyle({ left: '12px', top: '12px' });
+  expect(link).toHaveAttribute('href', '/listening/intensive/part?sentence=two&returnTo=%2Flistening%2Fsource%2Fpart');
+  act(() => link.blur());
+  Reflect.deleteProperty(document.documentElement, 'clientWidth');
+});
+
 test('hiding an eligible sentence closes its stale vocabulary toolbar and note modal', () => {
   const session = { ...createIntensiveSession('part', 'one'), stage: 2, revealed: true, dictationResult: 'correct' };
   mocks.fb.state.intensiveSessions = [session];

@@ -168,3 +168,11 @@
 .settings-day-overrides > summary::before { content: ""; flex: none; width: 6px; height: 6px; margin-right: 2px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); transition: transform .15s ease; }
 .settings-day-overrides[open] > summary::before { transform: rotate(45deg); }
 @media (min-width: 741px) { .settings-task-options { display: flex; flex-wrap: wrap; } }
+@media (min-width: 1101px) {
+  .settings-fields:has(.settings-schedule) { gap: 14px; }
+  .settings-fields:has(.settings-schedule) .settings-group { padding: 20px; }
+  .settings-fields:has(.settings-schedule) .settings-group-heading { margin-bottom: 12px; }
+  .settings-schedule .settings-time-controls { grid-template-columns: minmax(0, 1fr) 160px; align-items: end; }
+  .settings-schedule .settings-time-controls > .settings-segment { align-self: end; }
+  .settings-fields:has(.settings-schedule) .settings-weight-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}

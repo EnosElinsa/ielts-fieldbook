@@ -28,6 +28,19 @@ function transcriptParagraphs(sentences: ExamSentence[]) {
   }, []);
 }
 
+function positionSentencePlay(sentence: HTMLElement, pointerY?: number) {
+  const link = sentence.querySelector<HTMLElement>('.exam-sentence-play');
+  if (!link) return;
+  const fragments = Array.from(sentence.getClientRects());
+  const anchor = fragments.find(rect => pointerY !== undefined && rect.top <= pointerY && rect.bottom >= pointerY)
+    || fragments.find(rect => rect.bottom > 0 && rect.top < window.innerHeight) || sentence.getBoundingClientRect();
+  const popup = link.getBoundingClientRect();
+  const width = Math.max(44, popup.width);
+  const height = Math.max(44, popup.height);
+  link.style.left = `${Math.max(12, Math.min(anchor.left, document.documentElement.clientWidth - width - 12))}px`;
+  link.style.top = `${Math.max(12, Math.min(anchor.top - height, window.innerHeight - height - 12))}px`;
+}
+
 export function ExamSourcePage({ skill }: { skill: ExamSkill }) {
   const { sectionId = '' } = useParams();
   const [params] = useSearchParams();
@@ -50,6 +63,12 @@ export function ExamSourcePage({ skill }: { skill: ExamSkill }) {
   const localMocks = section?.paperId ? readExamRecoveries<ExamAttempt>(accountId(), `${skill}:mock:${section.paperId}`).filter(attempt => attempt.sourceId === section.paperId) : [];
   const activeMock = hasActiveSourceMock(sectionId, skill, [...localMocks, ...(fb.state.examAttempts || [])]);
   const materialBlockIds = useMemo(() => questions.flatMap((question, index) => [`question:${question.id}`, ...(question.stimulusHtml && (!question.groupId || questions[index - 1]?.groupId !== question.groupId) ? examStimulusBlockIds(question.stimulusHtml, `stimulus:${question.groupId || question.id}`) : [])]), [catalog, sectionId, skill]);
+  useEffect(() => {
+    const reposition = () => container.current?.querySelectorAll<HTMLElement>('.exam-source-sentence:hover, .exam-source-sentence:focus-within').forEach(sentence => positionSentencePlay(sentence));
+    window.addEventListener('resize', reposition);
+    document.addEventListener('scroll', reposition, true);
+    return () => { window.removeEventListener('resize', reposition); document.removeEventListener('scroll', reposition, true); };
+  }, []);
   useEffect(() => {
     if (!section || !container.current) return;
     container.current.querySelectorAll('[data-located]').forEach(block => block.removeAttribute('data-located'));
@@ -97,7 +116,7 @@ export function ExamSourcePage({ skill }: { skill: ExamSkill }) {
             </article>}
           </Fragment>;
         })}</details>}
-        {skill === 'reading' ? passages.map(passage => <ReadingPassage key={passage.id} passage={passage} sourceView />) : visibleSentences.length > 0 && <div className="exam-transcript">{transcriptParagraphs(visibleSentences).map(group => <p key={group[0].id}>{group.map(sentence => { const number = section.sentences.indexOf(sentence) + 1; return <Fragment key={sentence.id}><span className="exam-source-sentence"><ExamStudyLink className="exam-sentence-play" title={`Play sentence ${number}`} aria-label={`Play sentence ${number}`} to={`/listening/intensive/${encodeURIComponent(sectionId)}?sentence=${encodeURIComponent(sentence.id)}`}><Headphones size={13} aria-hidden="true" />{number}</ExamStudyLink><AnnotatedText blockId={`sentence:${sentence.id}`} text={sentence.text} version={version} /></span>{' '}</Fragment>; })}</p>)}</div>}
+        {skill === 'reading' ? passages.map(passage => <ReadingPassage key={passage.id} passage={passage} sourceView />) : visibleSentences.length > 0 && <div className="exam-transcript">{transcriptParagraphs(visibleSentences).map(group => <p key={group[0].id}>{group.map(sentence => { const number = section.sentences.indexOf(sentence) + 1; return <Fragment key={sentence.id}><span className="exam-source-sentence" onPointerEnter={event => positionSentencePlay(event.currentTarget, event.clientY)} onFocus={event => { if ((event.target as HTMLElement).closest('.exam-sentence-play')) event.currentTarget.scrollIntoView?.({ block: 'nearest' }); positionSentencePlay(event.currentTarget); }}><ExamStudyLink className="exam-sentence-play" title={`Play sentence ${number}`} aria-label={`Play sentence ${number}`} to={`/listening/intensive/${encodeURIComponent(sectionId)}?sentence=${encodeURIComponent(sentence.id)}`}><Headphones size={13} aria-hidden="true" />{number}</ExamStudyLink><AnnotatedText blockId={`sentence:${sentence.id}`} text={sentence.text} version={version} /></span>{' '}</Fragment>; })}</p>)}</div>}
         {skill === 'listening' && section.sentences.length > visibleSentences.length && <StateMessage title="Transcript hidden." message="Submit this listening part to view the full transcript, or compare an intensive sentence to unlock its text." />}
         {skill === 'listening' && !section.sentences.length && <StateMessage title="Transcript unavailable." message="The source does not include a transcript for this part." />}
       </div>
