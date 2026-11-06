@@ -171,4 +171,6 @@ Validation: the full suite passed 228 files / 18,038 tests with one conditional 
 
 Measured at 390px, populated Planning decreased from 9,592 to 4,931px; the listening bank from 11,355 to 4,769px; Review from 4,011 to 2,262px; group words from 10,944 to 5,640px; My words from 19,976 to 9,320px; review setup from 2,677 to 1,779px. Desktop Schedule decreased from 2,720 to 1,778px. These comparisons use the same frozen synthetic content, not individual account data.
 
+Final review follow-up resets intensive step guidance for same-sentence manual restart and due recall, and gives mobile Review band links 44px targets; 49 covering tests and eight focused Review checks passed, with the 390px dark Review height remaining 2,262px.
+
 Browser checks use intercepted synthetic Supabase accounts and the local Chromium harness because the Browser plugin is unavailable. They validate rendered layouts and interactions; real account persistence, original audio quality and other browser engines remain outside this round. Failed-request fan-out and large-account vocabulary loading (S3/A3), source spacing in imported reading content (X4), and historical dictionary examples (A8 content) remain documented follow-up work. This round changes A8's layout only and makes no remote data writes.

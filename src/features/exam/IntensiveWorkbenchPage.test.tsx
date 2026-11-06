@@ -26,6 +26,10 @@ function NavigationProbe() {
   const location = useLocation(); const navigate = useNavigate();
   return <><output aria-label="Sentence URL">{location.search}</output><button onClick={() => navigate(-1)}>Browser back</button></>;
 }
+function RecallProbe() {
+  const location = useLocation(); const navigate = useNavigate();
+  return <button onClick={() => navigate(`${location.pathname}?sentence=s1&recall=due`)}>Revisit current sentence</button>;
+}
 beforeEach(() => {
   mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); mocks.putAudio.mockReset().mockResolvedValue(undefined);
   const state = { intensiveSessions: [] };
@@ -339,4 +343,57 @@ it('completes shadowing and schedules only after a fresh blind replay, retaining
   expect(session.stage).toBe(6);
   expect(session.shadowingAudioId).toBeTruthy();
   expect(session.nextReviewAt).toBeTruthy();
+});
+
+it.each(['manual restart', 'due recall'])('restarts same-sentence guidance after explicit shadowing advancement: %s', async path => {
+  Object.defineProperty(navigator, 'mediaDevices', { configurable: true, value: { getUserMedia: vi.fn().mockResolvedValue({ getTracks: () => [{ stop: vi.fn() }] }) } });
+  vi.stubGlobal('MediaRecorder', class {
+    state = 'inactive'; mimeType = 'audio/webm';
+    ondataavailable: ((event: { data: Blob }) => void) | null = null;
+    onstop: (() => void) | null = null;
+    start() { this.state = 'recording'; }
+    stop() { this.state = 'inactive'; this.ondataavailable?.({ data: new Blob(['audio'], { type: 'audio/webm' }) }); this.onstop?.(); }
+  });
+  const user = userEvent.setup();
+  const { container } = render(<MemoryRouter initialEntries={['/?sentence=s1']}><IntensiveWorkbenchPage sectionId="part" /><RecallProbe /></MemoryRouter>);
+  const sections = () => [...container.querySelectorAll<HTMLDetailsElement>('details.intensive-step')];
+  const expectStep = async (step: number) => {
+    await waitFor(() => expect(sections().map(section => section.open)).toEqual([1, 2, 3, 4].map(number => number === step)));
+    expect(container.querySelector('.intensive-stages [aria-current="step"]')).toHaveTextContent(['Listen for the gist', 'Dictate and compare', 'Shadow and re-listen', 'Rate and schedule'][step - 1]);
+  };
+  await user.click(await screen.findByRole('button', { name: 'Play test sentence' }));
+  await user.type(screen.getByRole('textbox', { name: 'Sentence dictation' }), 'The train leaves at nine.');
+  await user.click(screen.getByRole('button', { name: 'Compare with transcript' }));
+  await expectStep(2);
+  await user.click(screen.getByRole('button', { name: 'Continue to shadowing' }));
+  await expectStep(3);
+  await user.click(screen.getByRole('button', { name: 'Record shadowing' }));
+  await user.click(await screen.findByRole('button', { name: 'Stop recording' }));
+  await user.click(await screen.findByRole('button', { name: 'Save shadowing recording' }));
+  await screen.findByText('Saved recording');
+  await user.click(screen.getByRole('button', { name: 'Hide transcript for blind re-listening' }));
+  await user.click(screen.getByRole('button', { name: 'Play test sentence' }));
+  await selectChoice(screen.getByLabelText('Self rating'), '5 · Clear and fluent');
+  await user.click(screen.getByRole('button', { name: 'Finish and schedule review' }));
+  expect(await screen.findByRole('button', { name: 'Review scheduled' })).toBeDisabled();
+  const completed = structuredClone(mocks.fb.stateRef.current.intensiveSessions[0]);
+  expect(completed.stage).toBe(6);
+  if (path === 'manual restart') await user.click(screen.getByRole('button', { name: 'Start blind review' }));
+  else {
+    vi.spyOn(Date, 'now').mockReturnValue(Date.parse(completed.nextReviewAt) + 1);
+    await user.click(screen.getByRole('button', { name: 'Revisit current sentence' }));
+  }
+  await expectStep(1);
+  expect(sections()[0]).toHaveClass('is-current');
+  expect(screen.getByLabelText('Main idea or situation')).toHaveValue('');
+  expect(screen.getByLabelText('Sentence dictation')).toHaveValue('');
+  expect(screen.getByRole('button', { name: 'Record shadowing' })).toBeDisabled();
+  expect(mocks.recovery.get('one:intensive:part').s1.reviewHistory[0]).toMatchObject({ completedAt: completed.completedAt, shadowingAudioId: completed.shadowingAudioId, dictationResult: completed.dictationResult });
+  await user.click(screen.getByRole('button', { name: 'Play test sentence' }));
+  await expectStep(2);
+  expect(sections()[1]).toHaveClass('is-current');
+  await user.type(screen.getByLabelText('Sentence dictation'), 'The train leaves at nine.');
+  await user.click(screen.getByRole('button', { name: 'Compare with transcript' }));
+  await expectStep(2);
+  expect(screen.getByRole('button', { name: 'Continue to shadowing' })).toBeInTheDocument();
 });
