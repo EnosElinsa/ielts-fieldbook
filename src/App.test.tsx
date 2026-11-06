@@ -393,12 +393,11 @@ Write only the overview next time.
     await user.upload(fileInput, file);
 
     await screen.findByRole('link', { name: 'Back to review' });
-    expect(screen.getByText(/Overall 5\.5/i)).toBeTruthy();
+    expect(document.querySelector('.feedback-band strong')?.textContent).toBe('5.5');
     await user.click(screen.getByRole('link', { name: 'Back to review' }));
     await waitFor(() => {
-      expect(screen.getAllByText(/Linked/i).length).toBeGreaterThan(0);
-      expect(screen.getByText(/Marked/i)).toBeTruthy();
-      expect(screen.getByText(/Overall 5\.5/i)).toBeTruthy();
+      expect(screen.getByRole('link', { name: /^Band 5\.5/ })).toBeTruthy();
+      expect(screen.getByRole('link', { name: 'Open feedback' })).toBeTruthy();
     });
   }, 30000);
 });

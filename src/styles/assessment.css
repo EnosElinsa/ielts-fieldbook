@@ -7,9 +7,10 @@
 .assessment-main,.assessment-aside{background:var(--sheet);border:1px solid var(--rule);padding:22px}
 .assessment-main>.assessment-summary{font-size:15px;line-height:1.75;color:#4f5f66}
 .assessment-main>.assessment-summary p{margin:0}
-.assessment-aside{position:sticky;top:18px}
+.assessment-aside{position:static}
 .assessment-aside h4{font:600 17px 'Source Serif 4',serif;margin:0 0 9px}
-.assessment-aside .history-copy{margin:0;max-height:56vh;overflow:auto}
+.assessment-aside .history-copy{margin:0;max-height:none;overflow:visible}
+.edit-table .edit-tag{white-space:nowrap}
 .assessment-page .criteria-grid{margin:14px 0 0}
 .assessment-page .assessment-section:first-of-type{margin-top:21px}
 .assessment-page .assessment-section p,.assessment-page .assessment-section li{font-size:15px;line-height:1.75}

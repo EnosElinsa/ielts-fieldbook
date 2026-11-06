@@ -2,7 +2,8 @@
 import { Link, useParams } from 'react-router-dom';
 import { reconstructAssessmentMarkdown, isBandScore } from '../../domain';
 import { useFieldbook } from '../../context/FieldbookContext';
-import { formatDate, vocabularyLabels, markdownLines, sessionSkill } from '../../lib/format';
+import { displayName, formatDate, vocabularyLabels, markdownLines, sessionSkill } from '../../lib/format';
+import { StateMessage } from '../../components/AsyncState';
 import { SessionAudioPlayer } from '../../components/SessionAudioPlayer';
 import { ArrowRight, Download, ArrowLeft, RotateCcw } from 'lucide-react';
 import { exportAttemptRequest } from './assessmentRequest';
@@ -27,12 +28,11 @@ export function AssessmentDetailPage() {
   if (!assessment) {
     return (
       <section className="view active">
-        <div className="empty">
-          <p>Score not found.</p>
+        <StateMessage title="This score report isn't in your account" message="It may have been deleted or saved under another account.">
           <Link className="btn line" to="/review">
             <ArrowLeft size={16} aria-hidden="true" />Back to review
           </Link>
-        </div>
+        </StateMessage>
       </section>
     );
   }
@@ -57,18 +57,13 @@ export function AssessmentDetailPage() {
     <section className="view active">
       <div className="assessment-page">
         <div className="page-tools">
-          <p>
-            {hasOverall
-              ? `Overall ${assessment.overall}${estimated ? ' · estimated, no audio' : ''} · `
-              : ''}
-            {formatDate(assessment.date, true)}
-          </p>
+          <p>{formatDate(assessment.date, true)}</p>
           <Link className="btn line" to={`/review?skill=${skillAttr}`}>
             <ArrowLeft size={16} /> Back to review
           </Link>
         </div>
         <div className="feedback-overview">
-          <div><span className="feedback-eyebrow">{skillAttr === 'speaking' ? 'Speaking feedback' : 'Writing feedback'}</span><h2>{session ? session.name : assessment.task || 'Assessment'}</h2><p>{['overview', 'outline', 'compare', 'body'].includes(assessment.practiceMode) ? 'Focused exercise' : assessment.task || ''}{estimated ? ' · Pronunciation unscored' : ''}</p></div>
+          <div><span className="feedback-eyebrow">{skillAttr === 'speaking' ? 'Speaking feedback' : 'Writing feedback'}</span><h2>{session ? displayName(session.name) : assessment.task || 'Assessment'}</h2><p>{['overview', 'outline', 'compare', 'body'].includes(assessment.practiceMode) ? 'Focused exercise' : assessment.task || ''}{estimated ? ' · Pronunciation unscored' : ''}</p></div>
           <div className="feedback-band"><strong>{hasOverall ? assessment.overall : '—'}</strong><span>{hasOverall ? 'Overall band' : 'Exercise feedback'}</span></div>
           <div className="actions"><button type="button" className="btn line" onClick={() => fb.downloadFile(assessment.filename || `assessment-${assessment.id}.md`, assessment.rawText || reconstructAssessmentMarkdown(assessment), 'text/markdown')}><Download size={16} /> Feedback</button>{session ? <button type="button" className="btn primary" onClick={() => void fb.startTargetedPractice(session)}><RotateCcw size={16} /> {skillAttr === 'speaking' ? 'Try again' : 'Rewrite'}</button> : null}</div>
         </div>
@@ -140,7 +135,7 @@ export function AssessmentDetailPage() {
                             <td>{row.revised}</td>
                             <td>{row.reason}</td>
                             <td>
-                              <span className="pill red">{row.tag}</span>
+                              <span className="pill red edit-tag">{row.tag}</span>
                             </td>
                             <td>
                               <button
