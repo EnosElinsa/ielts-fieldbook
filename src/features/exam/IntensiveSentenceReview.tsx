@@ -42,9 +42,10 @@ export function IntensiveSentenceReview({ owner, session, sentence, audioUrl, au
     update(next); setSaving(true); setError('');
     let ok = false;
     try { ok = await onSave({ reviewedAt: next.reviewedAt, selfRating: next.selfRating! }); } catch { ok = false; }
+    if (ok) clearExamRecovery(owner, key);
     if (!mounted.current) return;
     setSaving(false); savingRef.current = false;
-    if (ok) { clearExamRecovery(owner, key); setSaved(true); }
+    if (ok) setSaved(true);
     else setError('Could not save this review. Your rating is kept on this device; retry saving.');
   }
   return <section className="panel intensive-listening-review" aria-label="Sentence listening review">

@@ -71,3 +71,18 @@ test('a failed save survives reopening and retries the same review instead of cr
   expect(await screen.findByText('Review saved')).toBeInTheDocument();
   expect(mocks.recovery.size).toBe(0);
 });
+
+test('a successful save clears its retry draft even after leaving the page', async () => {
+  let finish: (saved: boolean) => void = () => {};
+  const onSave = vi.fn(() => new Promise<boolean>(resolve => { finish = resolve; }));
+  const user = userEvent.setup(); const view = open({ onSave });
+  await user.click(screen.getByRole('button', { name: 'Start listening review' }));
+  await user.click(screen.getByRole('button', { name: 'Play test audio' }));
+  await user.click(screen.getByRole('button', { name: 'Finish test audio' }));
+  const { selectChoice } = await import('../../../tests/selectChoice');
+  await selectChoice(screen.getByLabelText('How much did you understand?'), '4 · Mostly clear');
+  await user.click(screen.getByRole('button', { name: 'Save review and schedule next' }));
+  view.unmount();
+  await act(async () => finish(true));
+  expect(mocks.recovery.size).toBe(0);
+});
