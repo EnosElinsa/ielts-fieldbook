@@ -21,6 +21,21 @@ test('a due intensive plan requires its selected sentence to finish', () => {
   state.intensiveSessions[0].sentenceId = 's1';
   expect(completeReceptivePlanIfMatched(state)?.linkedSessionId).toBe('intensive');
 });
+
+test('a listening check completes only its own due-review plan and retains the initial practice date', () => {
+  const state = base('listening-intensive');
+  const plan = state.plans[0]; plan.sentenceId = 's1';
+  plan.target = { type: 'intensive', reviewMode: 'listening-check', sectionId: 'part', sentenceId: 's1' };
+  const row = { id: 'intensive', planId: 'original', sectionId: 'part', sentenceId: 's1', completedAt: '2026-10-01T00:00:00Z', stage: 6, listeningReviews: [{ reviewedAt: completedAt, selfRating: 4, nextReviewAt: '2026-10-15', planId: 'other' }] };
+  state.intensiveSessions = [row];
+  expect(completeReceptivePlanIfMatched(state)).toBeNull();
+  row.listeningReviews[0].planId = plan.id;
+  row.stage = 4; // Older completed records can lack the current final-stage number.
+  expect(completeReceptivePlanIfMatched(state)).toMatchObject({ linkedSessionId: row.id, completedAt });
+  expect(row.completedAt).toBe('2026-10-01T00:00:00Z');
+  plan.status = 'in_progress'; delete plan.target.reviewMode;
+  expect(completeReceptivePlanIfMatched(state)).toBeNull();
+});
 test('resuming an older active attempt can complete a newly started practice plan', () => {
   const state = base('reading-practice');
   state.examAttempts = [{ id: 'resumed', skill: 'reading', status: 'completed', startedAt: '2026-10-10T10:00:00Z', completedAt, sectionIds: ['part'] }];

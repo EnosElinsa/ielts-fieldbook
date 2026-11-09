@@ -1,4 +1,4 @@
-import type { IntensiveSession } from './types';
+import type { IntensiveListeningReview, IntensiveSession } from './types';
 
 export type DictationToken = { text: string; kind: 'same' | 'missing' | 'extra' };
 const words = (text: string) => text.trim().split(/\s+/).filter(Boolean);
@@ -42,6 +42,15 @@ export function createIntensiveSession(sectionId: string, sentenceId: string, no
 export function nextIntensiveReview(result: IntensiveSession['dictationResult'], rating: number, now = new Date().toISOString()): string {
   const days = result === 'wrong' || result === 'pending' || rating <= 2 ? 1 : result === 'partial' || rating === 3 ? 2 : rating === 4 ? 4 : 7;
   return new Date(new Date(now).getTime() + days * 86_400_000).toISOString();
+}
+
+/** A listening check supplies new recall evidence, never another dictation or recording. */
+export function recordIntensiveListeningReview(session: IntensiveSession, review: Omit<IntensiveListeningReview, 'nextReviewAt'>): IntensiveSession {
+  if (!session.completedAt || !Number.isFinite(Date.parse(review.reviewedAt)) || ![1, 2, 3, 4, 5].includes(review.selfRating)) return session;
+  const history = session.listeningReviews || [];
+  if (history.some(row => Date.parse(row.reviewedAt) >= Date.parse(review.reviewedAt))) return session;
+  const nextReviewAt = nextIntensiveReview('correct', review.selfRating, review.reviewedAt);
+  return { ...session, nextReviewAt, updatedAt: review.reviewedAt, listeningReviews: [...history, { ...review, nextReviewAt }] };
 }
 
 export type IntensiveAction = 'listened' | 'reveal' | 'shadowed' | 'blind-replayed' | 'complete' | 'review';

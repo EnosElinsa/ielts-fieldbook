@@ -63,7 +63,14 @@ function completeBoundReceptivePlan(state: CompletionState, plan: Record<string,
   const exactPlan = (row: Record<string,any>) => !plan.target || row.planId === plan.id;
   let linked: { id: string; completedAt?: string } | undefined;
   if (plan.kind === 'listening-intensive') {
-    linked = state.intensiveSessions?.find(row => row.stage === 6 && exactPlan(row) && afterStart(row.completedAt) && (!plan.sectionId || row.sectionId === plan.sectionId) && (!plan.sentenceId || row.sentenceId === plan.sentenceId));
+    for (const row of state.intensiveSessions || []) {
+      if (plan.sectionId && row.sectionId !== plan.sectionId || plan.sentenceId && row.sentenceId !== plan.sentenceId) continue;
+      if (row.stage === 6 && exactPlan(row) && afterStart(row.completedAt)) { linked = row; break; }
+      if (row.completedAt && (plan.target?.reviewMode === 'listening-check' || plan.driver === `intensive:${row.id}`)) {
+        const check = row.listeningReviews?.find(check => afterStart(check.reviewedAt) && (!plan.target || check.planId === plan.id));
+        if (check) { linked = { ...row, completedAt: check.reviewedAt }; break; }
+      }
+    }
     if (linked) {
       const sentence = linked as IntensiveSession;
       plan.sectionId = sentence.sectionId;

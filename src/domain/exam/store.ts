@@ -1,6 +1,6 @@
 import { makeId } from '../utils';
 import { normalizeExamAnnotations } from './annotations';
-import type { ExamAttempt, ExamQuestion, ExamSection, ExamStore, IntensiveSession } from './types';
+import type { ExamAttempt, ExamQuestion, ExamSection, ExamStore, IntensiveListeningReview, IntensiveSession } from './types';
 
 export function createExamAttempt(sections: ExamSection[], questions: ExamQuestion[], mode: ExamAttempt['mode'], now = new Date().toISOString()): ExamAttempt {
   if (!sections.length) throw new Error('Select at least one exam section.');
@@ -41,6 +41,7 @@ export function normalizeExamStore(input: unknown): ExamStore {
     replayCount: Math.max(0, number(row.replayCount)), listened: Boolean(row.listened), revealed: Boolean(row.revealed),
     dictationResult: ['correct', 'partial', 'wrong', 'pending'].includes(row.dictationResult) ? row.dictationResult : 'pending',
     errorReasons: strings(row.errorReasons), updatedAt: row.updatedAt || '', speed: Math.max(0.25, Math.min(2, number(row.speed, 1))), loop: Boolean(row.loop),
+    ...(row.listeningReviews !== undefined ? { listeningReviews: Array.isArray(row.listeningReviews) ? row.listeningReviews.filter((review: IntensiveListeningReview) => review && Number.isFinite(Date.parse(review.reviewedAt)) && Number.isFinite(Date.parse(review.nextReviewAt)) && [1, 2, 3, 4, 5].includes(review.selfRating)) : [] } : {}),
   } as IntensiveSession));
   return { examAttempts, intensiveSessions, examAnnotations: normalizeExamAnnotations(source.examAnnotations) };
 }

@@ -8,6 +8,7 @@ import { IntensiveWorkbenchPage } from './IntensiveWorkbenchPage';
 import type { ExamCatalog } from '../../domain/exam/types';
 import { createIntensiveSession } from '../../domain/exam/intensive';
 import { useExamAttempt } from './useExamAttempt';
+import { completeReceptivePlanIfMatched } from '../../lib/receptivePlans';
 
 const mocks = vi.hoisted(() => ({ owner: 'one', fb: null as any, catalog: null as any, recovery: new Map(), putAudio: vi.fn().mockResolvedValue(undefined) }));
 vi.mock('../../context/FieldbookContext', () => ({ useFieldbook: () => mocks.fb }));
@@ -33,7 +34,7 @@ function RecallProbe() {
 beforeEach(() => {
   mocks.catalog = structuredClone(catalog); mocks.owner = 'one'; mocks.recovery.clear(); mocks.putAudio.mockReset().mockResolvedValue(undefined);
   const state = { intensiveSessions: [] };
-  mocks.fb = { state, stateRef: { current: state }, setEditingVocabularyId: vi.fn(), setVocabularySeed: vi.fn(), openModal: vi.fn(), persistNow: vi.fn(async (draft: any) => { mocks.fb.state = draft; mocks.fb.stateRef.current = draft; return true; }) };
+  mocks.fb = { state, stateRef: { current: state }, setState: vi.fn((next: any) => { mocks.fb.state = next; }), setEditingVocabularyId: vi.fn(), setVocabularySeed: vi.fn(), openModal: vi.fn(), persistNow: vi.fn(async (draft: any) => { mocks.fb.state = draft; mocks.fb.stateRef.current = draft; return true; }) };
   const NativeURL = globalThis.URL;
   vi.stubGlobal('URL', Object.assign(NativeURL, { createObjectURL: () => 'blob:recording', revokeObjectURL: vi.fn() }));
 });
@@ -75,14 +76,14 @@ it('keeps a failed completion pending across reopening and retries the same sche
   mocks.fb.state.intensiveSessions = [ready];
   mocks.fb.persistNow.mockImplementationOnce(async (draft: any) => { mocks.fb.state = draft; mocks.fb.stateRef.current = draft; return false; });
   const user = userEvent.setup(); const view = open();
-  await user.click(await screen.findByRole('button', { name: 'Finish and schedule review' }));
+  await user.click(await screen.findByRole('button', { name: 'Finish practice' }));
   expect(await screen.findByRole('alert')).toHaveTextContent('Could not save');
   expect(screen.queryByRole('button', { name: 'Review scheduled' })).not.toBeInTheDocument();
   expect(screen.queryByRole('button', { name: 'Start blind review' })).not.toBeInTheDocument();
   const cycle = mocks.recovery.get('one:intensive:part').s1;
   view.unmount(); open();
-  await user.click(await screen.findByRole('button', { name: 'Retry scheduling review' }));
-  expect(await screen.findByRole('button', { name: 'Review scheduled' })).toBeDisabled();
+  await user.click(await screen.findByRole('button', { name: 'Retry saving practice' }));
+  expect(await screen.findByRole('heading', { name: 'Practice complete' })).toBeInTheDocument();
   expect(mocks.fb.state.intensiveSessions[0].completedAt).toBe(cycle.completedAt);
   expect(mocks.fb.state.intensiveSessions[0].nextReviewAt).toBe(cycle.nextReviewAt);
 });
@@ -100,18 +101,60 @@ it('serializes saves while switching sentences so a later draft cannot be overwr
   await waitFor(() => expect(mocks.fb.state.intensiveSessions.find((row: any) => row.sentenceId === 's2')?.transcriptInput).toBe('second'));
 });
 
+it('finishes saving a listening review before sentence navigation can queue an older snapshot', async () => {
+  const previous = { ...createIntensiveSession('part', 's1'), stage: 6, completedAt: '2020-01-01', nextReviewAt: '2020-01-02', transcriptInput: 'Saved dictation', shadowingAudioId: 'saved-audio' };
+  mocks.fb.state.intensiveSessions = [previous];
+  let finish: () => void = () => {};
+  mocks.fb.persistNow.mockImplementationOnce((draft: any) => new Promise<boolean>(resolve => { finish = () => { mocks.fb.state = draft; mocks.fb.stateRef.current = draft; resolve(true); }; }));
+  const user = userEvent.setup(); open();
+  await user.click(await screen.findByRole('button', { name: 'Start listening review' }));
+  await user.click(screen.getByRole('button', { name: 'Play test sentence' }));
+  await selectChoice(screen.getByLabelText('How much did you understand?'), '5 · Clear and fluent');
+  await user.click(screen.getByRole('button', { name: 'Save review and schedule next' }));
+  const next = screen.getByRole('button', { name: /^Sentence 2/ });
+  expect(next).toBeDisabled();
+  await user.click(next);
+  expect(mocks.fb.persistNow).toHaveBeenCalledTimes(1);
+  finish();
+  expect(await screen.findByText('Review saved')).toBeInTheDocument();
+  await user.click(next);
+  expect(await screen.findByRole('heading', { name: 'Sentence 2 / 2' })).toBeInTheDocument();
+  await waitFor(() => expect(mocks.fb.persistNow).toHaveBeenCalledTimes(2));
+  expect(mocks.fb.stateRef.current.intensiveSessions[0]).toMatchObject({ completedAt: previous.completedAt, transcriptInput: previous.transcriptInput, shadowingAudioId: previous.shadowingAudioId, listeningReviews: [{ selfRating: 5 }] });
+});
+
+it('a failed listening-review save rolls back optimistic scheduling and task completion before cancellation', async () => {
+  const previous = { ...createIntensiveSession('part', 's1'), stage: 6, completedAt: '2020-01-01', nextReviewAt: '2020-01-02' };
+  const plan = { id: 'review-plan', kind: 'listening-intensive', sectionId: 'part', sentenceId: 's1', status: 'in_progress', startedAt: '2026-01-01', target: { type: 'intensive', reviewMode: 'listening-check' } };
+  Object.assign(mocks.fb.state, { intensiveSessions: [previous], plans: [plan], activePlanId: plan.id });
+  mocks.fb.persistNow.mockImplementationOnce(async (draft: any) => { completeReceptivePlanIfMatched(draft); mocks.fb.state = draft; mocks.fb.stateRef.current = draft; return false; });
+  const user = userEvent.setup(); const view = open('/?sentence=s1&planId=review-plan');
+  await user.click(await screen.findByRole('button', { name: 'Start listening review' }));
+  await user.click(screen.getByRole('button', { name: 'Play test sentence' }));
+  await selectChoice(screen.getByLabelText('How much did you understand?'), '5 · Clear and fluent');
+  await user.click(screen.getByRole('button', { name: 'Save review and schedule next' }));
+  await screen.findByRole('button', { name: 'Retry saving review' });
+  expect(mocks.fb.stateRef.current.intensiveSessions).toEqual([previous]);
+  expect(mocks.fb.stateRef.current.plans).toEqual([plan]);
+  expect(mocks.fb.stateRef.current.activePlanId).toBe(plan.id);
+  await user.click(screen.getByRole('button', { name: 'Cancel review' }));
+  view.unmount(); open('/?sentence=s1');
+  expect(await screen.findByRole('heading', { name: 'Listening review due' })).toBeInTheDocument();
+});
+
 it('keeps saved due sentences eligible for blind recall when another sentence has an unsaved draft', async () => {
   const completed = { ...createIntensiveSession('part', 's1'), stage: 6, listened: true, revealed: true, transcriptInput: 'old answer', dictationResult: 'correct' as const, shadowingAudioId: 'recording', completedAt: '2026-01-01', nextReviewAt: '2099-01-01' };
   mocks.fb.state.intensiveSessions = [completed];
   const user = userEvent.setup(); const view = open();
-  await selectChoice(await screen.findByLabelText('Jump to sentence'), 'Sentence 2');
+  await user.click(await screen.findByRole('button', { name: /^Sentence 2\s*Not started$/ }));
   await user.type(screen.getByLabelText('Sentence dictation'), 'unsaved second sentence');
   view.unmount();
   // Time passes while the draft for the other sentence remains local.
   mocks.fb.state.intensiveSessions[0].nextReviewAt = '2026-01-02';
   mocks.recovery.get('one:intensive:part').s1.nextReviewAt = '2026-01-02';
   open('/?sentence=s1');
-  expect(await screen.findByLabelText('Sentence dictation')).toHaveValue('');
+  expect(await screen.findByRole('heading', { name: 'Listening review due' })).toBeInTheDocument();
+  expect(screen.queryByLabelText('Sentence dictation')).not.toBeInTheDocument();
   expect(screen.queryByText('old answer')).not.toBeInTheDocument();
 });
 
@@ -133,7 +176,7 @@ it('only the active step section is open and sentence rows use status words', as
   const sections = () => [...container.querySelectorAll<HTMLDetailsElement>('details.intensive-step')];
   expect(sections()).toHaveLength(4);
   expect(sections().map(section => section.open)).toEqual([true, false, false, false]);
-  expect(screen.getAllByRole('listitem').filter(item => item.closest('ol')?.getAttribute('aria-label') === 'Intensive listening method').map(item => item.textContent)).toEqual(['1Listen for the gist', '2Dictate and compare', '3Shadow and re-listen', '4Rate and schedule']);
+  expect(screen.getAllByRole('listitem').filter(item => item.closest('ol')?.getAttribute('aria-label') === 'Intensive listening method').map(item => item.textContent)).toEqual(['1Listen for the gist', '2Dictate and compare', '3Shadow and re-listen', '4Rate and finish']);
   expect(sections()[1]).toHaveTextContent('Available after step 1');
   expect(screen.getByRole('button', { name: /^Sentence 1\s*Not started$/ })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /^Sentence 2\s*In progress$/ })).toBeInTheDocument();
@@ -271,7 +314,7 @@ it('recovers a denied microphone without marking the shadowing step complete', a
   await user.click(screen.getByRole('button', { name: 'Record shadowing' }));
   expect(await screen.findByRole('alert')).toHaveTextContent('Microphone');
   expect(screen.getByRole('button', { name: 'Record shadowing' })).toBeEnabled();
-  expect(screen.getByRole('button', { name: 'Finish and schedule review' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: 'Finish practice' })).toBeDisabled();
 });
 
 it('does not reveal another account’s state after a save changes account', async () => {
@@ -281,29 +324,28 @@ it('does not reveal another account’s state after a save changes account', asy
   await user.click(screen.getByRole('button', { name: 'Save progress' }));
   await waitFor(() => expect(screen.queryByText('Progress saved.')).not.toBeInTheDocument());
 });
-it('a due sentence opens with blank recall instead of displaying the previous answer', async () => {
+it('a due sentence offers a short listening review without clearing its saved practice', async () => {
   mocks.fb.state.intensiveSessions = [{ id: 'i1', sectionId: 'part', sentenceId: 's1', stage: 6, gist: 'old gist', transcriptInput: 'The train leaves at nine', errorReasons: [], dictationResult: 'correct', completedAt: '2020-01-01', nextReviewAt: '2020-01-02', updatedAt: '2020-01-01', speed: 1, loop: false, selfRating: 5, shadowingAudioId: 'old', replayCount: 1, listened: true, revealed: false }];
+  const before = structuredClone(mocks.fb.state.intensiveSessions[0]);
   open();
-  expect(await screen.findByRole('textbox', { name: 'Sentence dictation' })).toHaveValue('');
-  expect(screen.getByLabelText('Main idea or situation')).toHaveValue('');
+  expect(await screen.findByRole('heading', { name: 'Listening review due' })).toBeInTheDocument();
+  expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+  expect(mocks.fb.state.intensiveSessions[0]).toEqual(before);
+  expect(mocks.recovery.has('one:intensive:part')).toBe(false);
   expect(screen.queryByText('Saved recording')).not.toBeInTheDocument();
 });
-it('only the selected due sentence enters recall and untouched due sentences survive progress saves', async () => {
-  const first = { id: 'i1', sectionId: 'part', sentenceId: 's1', stage: 6, gist: 'old gist', transcriptInput: 'The train leaves at nine', errorReasons: [], dictationResult: 'correct', completedAt: '2020-01-01', nextReviewAt: '2020-01-02', updatedAt: '2020-01-01', speed: 1, loop: false, selfRating: 5, shadowingAudioId: 'old-1', replayCount: 1, listened: true, revealed: false };
-  const second = { ...first, id: 'i2', sentenceId: 's2', transcriptInput: 'Please bring your ticket', shadowingAudioId: 'old-2' };
+it('viewing due sentences preserves both completions when progress is saved', async () => {
+  const first = { ...createIntensiveSession('part', 's1'), stage: 6, completedAt: '2020-01-01', nextReviewAt: '2020-01-02', transcriptInput: 'The train leaves at nine.', shadowingAudioId: 'old-1' };
+  const second = { ...first, id: 'i2', sentenceId: 's2', transcriptInput: 'Please bring your ticket.', shadowingAudioId: 'old-2' };
   mocks.fb.state.intensiveSessions = [first, second];
   open('/?sentence=s2');
-  expect(await screen.findByRole('textbox', { name: 'Sentence dictation' })).toHaveValue('');
+  await screen.findByRole('heading', { name: 'Listening review due' });
   await userEvent.click(screen.getByRole('button', { name: 'Save progress' }));
-  const savedFirst = mocks.fb.stateRef.current.intensiveSessions.find((row: any) => row.id === 'i1');
-  expect(savedFirst).toEqual(first);
-  expect(mocks.fb.stateRef.current.intensiveSessions.find((row: any) => row.id === 'i2').completedAt).toBeUndefined();
+  expect(mocks.fb.stateRef.current.intensiveSessions).toEqual([first, second]);
   await userEvent.click(screen.getByRole('button', { name: /^Sentence 1\s*Due$/ }));
-  expect(screen.getByRole('textbox', { name: 'Sentence dictation' })).toHaveValue('');
+  expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   await userEvent.click(screen.getByRole('button', { name: 'Save progress' }));
-  const reviewingFirst = mocks.fb.stateRef.current.intensiveSessions.find((row: any) => row.id === 'i1');
-  expect(reviewingFirst.completedAt).toBeUndefined();
-  expect(reviewingFirst.reviewHistory[0].shadowingAudioId).toBe('old-1');
+  expect(mocks.fb.stateRef.current.intensiveSessions).toEqual([first, second]);
 });
 
 it('completes shadowing and schedules only after a fresh blind replay, retaining a failed upload', async () => {
@@ -334,18 +376,18 @@ it('completes shadowing and schedules only after a fresh blind replay, retaining
   expect(screen.getByRole('link', { name: 'Dictate and compare' })).toHaveAttribute('href', '#intensive-player');
   await selectChoice(await screen.getByLabelText('Self rating'), '5 · Clear and fluent');
   await user.click(screen.getByRole('button', { name: 'Finish ongoing play' }));
-  expect(screen.getByRole('button', { name: 'Finish and schedule review' })).toBeDisabled();
+  expect(screen.getByRole('button', { name: 'Finish practice' })).toBeDisabled();
   await user.click(screen.getByRole('button', { name: 'Play test sentence' }));
-  await user.click(screen.getByRole('button', { name: 'Finish and schedule review' }));
+  await user.click(screen.getByRole('button', { name: 'Finish practice' }));
   expect(await screen.findByText(/Next review:/)).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: 'Review scheduled' })).toBeDisabled();
+  expect(screen.getByRole('heading', { name: 'Practice complete' })).toBeInTheDocument();
   const session = mocks.fb.stateRef.current.intensiveSessions[0];
   expect(session.stage).toBe(6);
   expect(session.shadowingAudioId).toBeTruthy();
   expect(session.nextReviewAt).toBeTruthy();
 });
 
-it.each(['manual restart', 'due recall'])('restarts same-sentence guidance after explicit shadowing advancement: %s', async path => {
+it('restarts full practice only after an explicit choice during a listening review', async () => {
   Object.defineProperty(navigator, 'mediaDevices', { configurable: true, value: { getUserMedia: vi.fn().mockResolvedValue({ getTracks: () => [{ stop: vi.fn() }] }) } });
   vi.stubGlobal('MediaRecorder', class {
     state = 'inactive'; mimeType = 'audio/webm';
@@ -359,7 +401,7 @@ it.each(['manual restart', 'due recall'])('restarts same-sentence guidance after
   const sections = () => [...container.querySelectorAll<HTMLDetailsElement>('details.intensive-step')];
   const expectStep = async (step: number) => {
     await waitFor(() => expect(sections().map(section => section.open)).toEqual([1, 2, 3, 4].map(number => number === step)));
-    expect(container.querySelector('.intensive-stages [aria-current="step"]')).toHaveTextContent(['Listen for the gist', 'Dictate and compare', 'Shadow and re-listen', 'Rate and schedule'][step - 1]);
+    expect(container.querySelector('.intensive-stages [aria-current="step"]')).toHaveTextContent(['Listen for the gist', 'Dictate and compare', 'Shadow and re-listen', 'Rate and finish'][step - 1]);
   };
   await user.click(await screen.findByRole('button', { name: 'Play test sentence' }));
   await user.type(screen.getByRole('textbox', { name: 'Sentence dictation' }), 'The train leaves at nine.');
@@ -374,15 +416,16 @@ it.each(['manual restart', 'due recall'])('restarts same-sentence guidance after
   await user.click(screen.getByRole('button', { name: 'Hide transcript for blind re-listening' }));
   await user.click(screen.getByRole('button', { name: 'Play test sentence' }));
   await selectChoice(screen.getByLabelText('Self rating'), '5 · Clear and fluent');
-  await user.click(screen.getByRole('button', { name: 'Finish and schedule review' }));
-  expect(await screen.findByRole('button', { name: 'Review scheduled' })).toBeDisabled();
+  await user.click(screen.getByRole('button', { name: 'Finish practice' }));
+  expect(await screen.findByRole('heading', { name: 'Practice complete' })).toBeInTheDocument();
   const completed = structuredClone(mocks.fb.stateRef.current.intensiveSessions[0]);
   expect(completed.stage).toBe(6);
-  if (path === 'manual restart') await user.click(screen.getByRole('button', { name: 'Start blind review' }));
-  else {
-    vi.spyOn(Date, 'now').mockReturnValue(Date.parse(completed.nextReviewAt) + 1);
-    await user.click(screen.getByRole('button', { name: 'Revisit current sentence' }));
-  }
+  vi.spyOn(Date, 'now').mockReturnValue(Date.parse(completed.nextReviewAt) + 1);
+  await user.click(screen.getByRole('button', { name: 'Revisit current sentence' }));
+  await user.click(await screen.findByRole('button', { name: 'Start listening review' }));
+  await user.click(screen.getByRole('button', { name: 'Play test sentence' }));
+  await user.click(screen.getByText('Need more practice?'));
+  await user.click(screen.getByRole('button', { name: 'Practise dictation and shadowing again' }));
   await expectStep(1);
   expect(sections()[0]).toHaveClass('is-current');
   expect(screen.getByLabelText('Main idea or situation')).toHaveValue('');

@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { IntensiveWorkbenchPage } from './IntensiveWorkbenchPage';
+import { createIntensiveSession } from '../../domain/exam/intensive';
 
 const mocks=vi.hoisted(()=>({owner:'one',fb:null as any,recovery:new Map(),events:{} as Record<string,(...args:any[])=>void>,create:vi.fn(),putAudio:vi.fn(),pending:vi.fn()}));
 vi.mock('../../context/FieldbookContext',()=>({useFieldbook:()=>mocks.fb}));
@@ -19,13 +20,40 @@ vi.mock('../../components/SessionAudioPlayer',()=>({RecordingPlayer:()=> <p>Reco
 const open=()=>render(<MemoryRouter><IntensiveWorkbenchPage sectionId="part"/></MemoryRouter>);
 beforeEach(()=>{
   mocks.owner='one';mocks.recovery.clear();mocks.events={};mocks.pending.mockReset().mockResolvedValue(true);mocks.putAudio.mockReset().mockResolvedValue(undefined);
-  const state={intensiveSessions:[]};mocks.fb={state,stateRef:{current:state},persistNow:vi.fn(async(draft:any)=>{mocks.fb.state=draft;mocks.fb.stateRef.current=draft;return true;})};
+  const state={intensiveSessions:[]};mocks.fb={state,stateRef:{current:state},setState:vi.fn((next:any)=>{mocks.fb.state=next;}),persistNow:vi.fn(async(draft:any)=>{mocks.fb.state=draft;mocks.fb.stateRef.current=draft;return true;})};
   mocks.create.mockReset().mockImplementation(()=>({on:(name:string,handler:any)=>{mocks.events[name]=handler;},load:vi.fn(async()=>{mocks.events.ready?.(20);}),destroy:vi.fn(),getDuration:()=>20,setOptions:vi.fn(),setPlaybackRate:vi.fn(),isSeeking:()=>false,setTime:vi.fn((seconds:number)=>{mocks.events.seeking?.(seconds);mocks.events.timeupdate?.(seconds);}),pause:vi.fn(()=>mocks.events.pause?.()),play:vi.fn(async()=>{mocks.events.play?.();})}));
   const tracks=[{stop:vi.fn()}];Object.defineProperty(navigator,'mediaDevices',{configurable:true,value:{getUserMedia:vi.fn().mockResolvedValue({getTracks:()=>tracks})}});
   vi.stubGlobal('MediaRecorder',class {state='inactive';mimeType='audio/webm';ondataavailable:any;onstop:any;start(){this.state='recording';}stop(){this.state='inactive';this.ondataavailable?.({data:new Blob(['actual chunks'],{type:'audio/webm'})});this.onstop?.();}});
   const NativeURL=globalThis.URL;vi.stubGlobal('URL',class extends NativeURL {static createObjectURL(){return 'blob:shadowing';}static revokeObjectURL(){}});
 });
 afterEach(()=>{cleanup();vi.restoreAllMocks();vi.unstubAllGlobals();});
+
+it('short review uses a full fresh audio pass, retries failed saves and preserves practice evidence', async () => {
+  const previous = { ...createIntensiveSession('part', 's1', '2020-01-01'), stage: 6, completedAt: '2020-01-01', nextReviewAt: '2020-01-02', dictationResult: 'partial' as const, transcriptInput: 'Saved dictation', shadowingAudioId: 'saved-audio', selfRating: 4 as const };
+  mocks.fb.state.intensiveSessions = [previous];
+  mocks.fb.persistNow.mockResolvedValueOnce(false);
+  const user = userEvent.setup(); open();
+  await user.click(await screen.findByRole('button', { name: 'Start listening review' }));
+  const rating = screen.getByRole('combobox', { name: 'How much did you understand?' });
+  const save = screen.getByRole('button', { name: 'Save review and schedule next' });
+  expect(rating).toBeDisabled(); expect(save).toBeDisabled();
+  await user.click(await screen.findByRole('button', { name: 'Play audio' }));
+  act(() => { mocks.events.timeupdate(1); mocks.events.pause(); mocks.events.timeupdate(3); });
+  expect(rating).toBeDisabled();
+  await user.click(screen.getByRole('button', { name: 'Replay sentence' }));
+  act(() => { mocks.events.timeupdate(1); mocks.events.timeupdate(2); mocks.events.timeupdate(3); });
+  expect(rating).toBeEnabled();
+  await selectChoice(rating, '5 · Clear and fluent');
+  await user.click(save);
+  expect((await screen.findAllByRole('alert')).map(row => row.textContent).join(' ')).toContain('kept on this device');
+  expect(screen.queryByText('Review saved')).not.toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Retry saving review' }));
+  expect(await screen.findByText('Review saved')).toBeInTheDocument();
+  const saved = mocks.fb.stateRef.current.intensiveSessions[0];
+  expect(saved).toMatchObject({ completedAt: previous.completedAt, transcriptInput: previous.transcriptInput, shadowingAudioId: previous.shadowingAudioId, selfRating: 4, dictationResult: 'partial' });
+  expect(saved.listeningReviews).toHaveLength(1);
+  expect(saved.listeningReviews[0].selfRating).toBe(5);
+});
 async function prepareShadowing(user:ReturnType<typeof userEvent.setup>){
   await user.click(await screen.findByRole('button',{name:'Replay sentence'}));
   act(()=>{mocks.events.timeupdate(1);mocks.events.timeupdate(2);mocks.events.timeupdate(3);});
@@ -44,21 +72,21 @@ it('step three plays the original with the same player and earns an actual sched
   expect(screen.queryByLabelText('Main idea or situation')).not.toBeInTheDocument();
   expect(mocks.create).toHaveBeenCalledTimes(createCount);
   await selectChoice(await screen.getByLabelText('Self rating'), '5 · Clear and fluent');
-  const finish=screen.getByRole('button',{name:'Finish and schedule review'});expect(finish).toBeDisabled();
+  const finish=screen.getByRole('button',{name:'Finish practice'});expect(finish).toBeDisabled();
   act(()=>{mocks.events.timeupdate(1);mocks.events.timeupdate(2);});expect(finish).toBeDisabled();
   act(()=>mocks.events.timeupdate(3));expect(finish).toBeEnabled();
-  await user.click(finish);expect(await screen.findByRole('button',{name:'Review scheduled'})).toBeDisabled();
+  await user.click(finish);expect(await screen.findByRole('heading',{name:'Practice complete'})).toBeInTheDocument();
   const completed=mocks.fb.stateRef.current.intensiveSessions[0];expect(completed.stage).toBe(6);expect(completed.shadowingAudioId).toMatch(/^intensive-/);expect(completed.completedAt).toBeTruthy();expect(completed.nextReviewAt).toBeTruthy();
 });
 it('a paused or sought blind replay cannot finish, but a fresh complete replay can',async()=>{
   const user=userEvent.setup();open();await prepareShadowing(user);await selectChoice(await screen.getByLabelText('Self rating'), '5 · Clear and fluent');
   await user.click(screen.getByRole('button',{name:'Play original blind'}));
   act(()=>{mocks.events.timeupdate(1);mocks.events.pause();mocks.events.play();mocks.events.timeupdate(3);});
-  expect(screen.getByRole('button',{name:'Finish and schedule review'})).toBeDisabled();
+  expect(screen.getByRole('button',{name:'Finish practice'})).toBeDisabled();
   await user.click(screen.getByRole('button',{name:'Play original blind'}));
-  act(()=>{mocks.events.seeking(3);mocks.events.timeupdate(3);});expect(screen.getByRole('button',{name:'Finish and schedule review'})).toBeDisabled();
+  act(()=>{mocks.events.seeking(3);mocks.events.timeupdate(3);});expect(screen.getByRole('button',{name:'Finish practice'})).toBeDisabled();
   await user.click(screen.getByRole('button',{name:'Play original blind'}));
-  act(()=>{mocks.events.timeupdate(1);mocks.events.timeupdate(2);mocks.events.timeupdate(3);});expect(screen.getByRole('button',{name:'Finish and schedule review'})).toBeEnabled();
+  act(()=>{mocks.events.timeupdate(1);mocks.events.timeupdate(2);mocks.events.timeupdate(3);});expect(screen.getByRole('button',{name:'Finish practice'})).toBeEnabled();
 });
 it('switching sentences during delayed microphone permission stops the old stream and does not record into the new sentence',async()=>{
   let allow:any;const stop=vi.fn();const start=vi.fn();

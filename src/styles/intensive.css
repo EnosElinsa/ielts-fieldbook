@@ -177,3 +177,11 @@
 @media(max-width:700px) { .intensive-step-state { font-size: 11px; } }
 .intensive-sentence { flex-wrap: wrap; align-items: center; row-gap: 2px; }
 .intensive-sentence > span:first-child { white-space: nowrap; }
+.intensive-listening-review { line-height: 1.6; }
+.intensive-listening-review > p { max-width: 70ch; }
+.intensive-listening-review > label { display: block; margin-top: 20px; }
+.intensive-listening-review > label .select-field { display: flex; max-width: 280px; margin-top: 8px; }
+.intensive-listening-review .btn { min-height: 44px; }
+.intensive-listening-review > details { margin-top: 24px; border-top: 1px solid var(--rule); padding-top: 16px; }
+.intensive-listening-review > details > summary { min-height: 44px; cursor: pointer; }
+.intensive-next-review { padding: 12px 14px; background: var(--soft-green); border-radius: 6px; }

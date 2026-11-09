@@ -39,7 +39,7 @@ export type PlanTarget =
   | { type: 'question'; skill: 'writing' | 'speaking'; questionId: string | null; part?: string; mode: string; prompts?: { promptKey: string; promptText: string; promptIndex: number; part: string }[] }
   | { type: 'section'; skill: 'reading' | 'listening'; sectionId: string | null; mode: 'practice' | 'mock'; questionIds?: string[] }
   | { type: 'exam-review'; skill: 'reading' | 'listening'; attemptId: string }
-  | { type: 'intensive'; skill: 'listening'; sectionId: string; sentenceId: string }
+  | { type: 'intensive'; skill: 'listening'; sectionId: string; sentenceId: string; reviewMode?: 'listening-check' }
   | { type: 'error-review'; errorIds: string[] }
   | { type: 'vocabulary'; binding?: 'dynamic' | 'frozen'; mode: 'learning-batch' | 'due-review'; assessmentMode: string; bookId?: string; unitId?: string; batchIndex?: number; batchSize?: number; selectionPolicy?: 'exact'; entryIds?: string[]; reviewType?:'due'|'wrong'|'custom';reviewFilter?:import('./vocabulary/types').ReviewQueueFilter;reviewReason?:string;questionOrder?:'source'|'random'|'due';selectedMeanings?:{entryId:string;senseId:string}[];cards: {entryId:string; senseId:string}[] };
 export type StudyPlan = {
