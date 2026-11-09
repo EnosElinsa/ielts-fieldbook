@@ -174,3 +174,9 @@ Measured at 390px, populated Planning decreased from 9,592 to 4,931px; the liste
 Final review follow-up resets intensive step guidance for same-sentence manual restart and due recall, and gives mobile Review band links 44px targets; 49 covering tests and eight focused Review checks passed, with the 390px dark Review height remaining 2,262px.
 
 Browser checks use intercepted synthetic Supabase accounts and the local Chromium harness because the Browser plugin is unavailable. They validate rendered layouts and interactions; real account persistence, original audio quality and other browser engines remain outside this round. Failed-request fan-out and large-account vocabulary loading (S3/A3), source spacing in imported reading content (X4), and historical dictionary examples (A8 content) remain documented follow-up work. This round changes A8's layout only and makes no remote data writes.
+
+## Today backlog follow-up — November 8
+
+The previous-task heading and View all action now share a wrapping header with a 16px gap before the cards. The action uses the shared secondary button style and a 44px target. Today’s mobile task and resume actions also have 44px targets. Both backlog links open Planning’s Waiting view directly; the obsolete backlog hash opened the schedule instead.
+
+Validation: 41 Today/Planning tests passed, including the corrected navigation contract. Production build, bundle budgets and whitespace checks passed. Chromium verified ten desktop/mobile states at 1440/390/320px in light/dark themes, covering 74 waiting tasks plus a paused exam, three tasks, resume-only and no previous work. Both links reached the selected Waiting view; keyboard focus, header/card spacing, mobile target sizes, console health and document width passed. Browser traffic used synthetic intercepted Supabase data.

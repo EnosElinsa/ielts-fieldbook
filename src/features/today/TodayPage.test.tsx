@@ -50,7 +50,7 @@ test('one next task is unified and does not depend on the active skill',async()=
 test('resumes existing progress before overdue or new tasks',async()=>{
   mocks.state.plans=[plan('overdue','reading','pending','2020-01-01'),plan('resume','speaking','in_progress')];renderPage();
   await userEvent.click(screen.getByRole('button',{name:'Resume'}));expect(mocks.start).toHaveBeenCalledWith('resume',{force:false,onError:expect.any(Function)});
-  expect(screen.getByRole('link',{name:'1 overdue task'})).toHaveAttribute('href','/planning#planning-backlog');
+  expect(screen.getByRole('link',{name:'1 overdue task'})).toHaveAttribute('href','/planning?view=waiting');
 });
 test('blocked source content remains retryable',async()=>{
   mocks.state.plans=[plan('reading','reading')];mocks.start.mockRejectedValueOnce(new Error('The selected section is unavailable.'));
@@ -163,5 +163,6 @@ test('completed overdue return targets retain their exact Today anchor without a
  expect(view.container.querySelector('#task-old-completed')).toHaveAttribute('tabindex','-1');
  await waitFor(()=>expect(view.container.querySelector('#task-old-completed')).toHaveFocus());
  expect(view.container.querySelectorAll('.study-previous .study-task').length).toBeLessThanOrEqual(4);
- expect(screen.getByRole('link',{name:/40 overdue tasks/})).toHaveAttribute('href','/planning#planning-backlog');
+ expect(screen.getByRole('link',{name:/40 overdue tasks/})).toHaveAttribute('href','/planning?view=waiting');
+ expect(screen.getByRole('link',{name:'View all 40 waiting tasks'})).toHaveAttribute('href','/planning?view=waiting');
 });
