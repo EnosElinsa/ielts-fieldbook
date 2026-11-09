@@ -3,3 +3,4 @@
 .recording-player .recording-waveform-slot{isolation:isolate}
 .recording-player .waveform{position:relative;z-index:0}
 .recording-waveform-status{z-index:1}
+.recording-player .recording-transport:not([hidden]){display:grid;gap:8px;min-width:0}

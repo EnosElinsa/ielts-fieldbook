@@ -33,6 +33,9 @@
 .vocabulary-learning-meaning-preview { font-size:13px; font-weight:400; line-height:1.5; overflow-wrap:anywhere; }
 .vocabulary-learning-meanings [aria-pressed="true"] { background: var(--blue); color: white; border-color: var(--blue); }
 .vocabulary-learning-selected-practice { margin-top: 16px; }
+.vocabulary-learning-recommendation { margin: 20px 0; padding: 18px; background: var(--soft-blue); border: 1px solid var(--rule); border-radius: 8px; }
+.vocabulary-learning-recommendation p { max-width: 68ch; line-height: 1.6; }
+.vocabulary-learning-recommendation > p:first-of-type { color: var(--muted); font-size: 12px; }
 .vocabulary-learning-selected-practice p { font-size: 12px; line-height: 1.6; max-width: 65ch; }
 .vocabulary-learning-definition { margin: 24px 0 10px; }
 .vocabulary-learning-definition small { color: var(--muted); }

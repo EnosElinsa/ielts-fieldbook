@@ -224,10 +224,15 @@ describe('Fieldbook UI', () => {
   });
 
   it('renders Today', async () => {
-    renderAt('/');
-    await screen.findAllByRole('heading', { level: 2, name: 'Today' });
-    expect(screen.getAllByRole('heading', { level: 2, name: 'Today' })[0]).toBeTruthy();
-    expect(screen.getByRole('button', { name: 'Resume' })).toBeTruthy();
+    // The fixture's task belongs to this study day, independent of the run date.
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-09-25T12:00:00'));
+    try {
+      renderAt('/');
+      await screen.findAllByRole('heading', { level: 2, name: 'Today' });
+      expect(screen.getAllByRole('heading', { level: 2, name: 'Today' })[0]).toBeTruthy();
+      expect(await screen.findByRole('button', { name: 'Resume' })).toBeTruthy();
+    } finally { vi.useRealTimers(); }
   });
 
   it('shows Import score on Today after a visit to Reading', async () => {

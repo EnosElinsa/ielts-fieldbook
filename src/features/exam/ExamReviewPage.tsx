@@ -21,6 +21,7 @@ import { recoveredExamSessions } from './sessionRecovery';
 import { evidenceSentenceId } from './evidenceLocation';
 import { QuestionEvidence } from './QuestionEvidence';
 import { readingQuestionPrompt } from './ReadingPassage';
+import { questionReviewContent } from './questionReview';
 
 /** Note fields stay folded away until a learner adds notes; saved notes keep them open. */
 function ReviewNotes({ hasNotes, children }: { hasNotes: boolean; children: ReactNode }) {
@@ -154,7 +155,7 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
 <summary>{question.groupId ? 'Question group' : questionLabel(question)} · {QUESTION_TYPE_NAMES[question.type]}</summary>
 <ExamStimulus html={question.stimulusHtml!} assets={catalog.assets} />
 </details>)}</aside>}
-    <div className="exam-review-list">{visibleRows.map(question => { const prompt = readingQuestionPrompt(question, questionRows, catalog.passages.filter(p => p.sectionId === question.sectionId).flatMap(p => p.paragraphs)); const response = attempt.responses[question.id] || ''; const correct = attempt.results?.[question.id] ?? gradeQuestion(question, response); const annotation = notes(question.id); const sentenceId = skill === 'listening' ? evidenceSentenceId(question, catalog.sections.find(section => section.id === question.sectionId)) : undefined; return <article id={`exam-review-${question.id}`} tabIndex={-1} className={`exam-review-card ${correct ? 'is-correct' : 'is-wrong'}`} key={question.id}>
+    <div className="exam-review-list">{visibleRows.map(question => { const prompt = readingQuestionPrompt(question, questionRows, catalog.passages.filter(p => p.sectionId === question.sectionId).flatMap(p => p.paragraphs)); const review = questionReviewContent(question); const response = attempt.responses[question.id] || ''; const correct = attempt.results?.[question.id] ?? gradeQuestion(question, response); const annotation = notes(question.id); const sentenceId = skill === 'listening' ? evidenceSentenceId(question, catalog.sections.find(section => section.id === question.sectionId)) : undefined; return <article id={`exam-review-${question.id}`} tabIndex={-1} className={`exam-review-card ${correct ? 'is-correct' : 'is-wrong'}`} key={question.id}>
 <header>
 <span className={`exam-number${questionSlotCount(question) > 1 ? " is-range" : ""}`}>{question.number ? questionNumberLabel(question) : '—'}</span>
 <span className="exam-eyebrow">{QUESTION_TYPE_NAMES[question.type]}</span>
@@ -173,9 +174,9 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
 </div>
 </dl>
 <section className="exam-review-explanation" aria-label={'Answer explanation for ' + questionLabel(question).toLowerCase()}>
-<h4>Answer explanation</h4>{question.explanation && !/[\u3400-\u9fff]/.test(question.explanation) && question.explanation.trim() !== question.evidence?.text?.trim() ? <p className="exam-explanation">{question.explanation}</p> : (!question.explanation || /[\u3400-\u9fff]/.test(question.explanation)) && <p className="exam-source-foot">An English explanation is not available yet. Compare the answer with the passage or transcript evidence.</p>}{question.evidence?.text && <blockquote>
+<h4>{review.title}</h4><p className="exam-explanation">{review.explanation}</p>{review.evidence && <blockquote>
 <Bookmark size={14} aria-hidden="true" />
-<span>{question.evidence.text}</span>
+<span>{review.evidence}</span>
 </blockquote>}</section>
 <button type="button" className="btn line" aria-expanded={evidenceId === question.id} aria-controls={`exam-evidence-${question.id}`} onClick={event => { evidenceTrigger.current = event.currentTarget; setEvidenceId(id => id === question.id ? '' : question.id); }}>
 <LocateFixed size={15} />{question.evidence?.text || question.evidence?.paragraphId || sentenceId ? 'Locate evidence' : 'Read original text'}</button>{evidenceId === question.id && <QuestionEvidence question={question} response={response} passages={catalog.passages} section={catalog.sections.find(row => row.id === question.sectionId)} loading={loading} error={error} onRetry={reload} onClose={() => { setEvidenceId(''); evidenceTrigger.current?.focus(); }} />}<ReviewNotes hasNotes={Boolean(annotation.evidence.trim() || annotation.keywords.trim() || annotation.reason)}>

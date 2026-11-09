@@ -33,3 +33,11 @@ test('obsolete listening sentence IDs resolve to the matching real transcript, e
   expect(locateQuestionEvidence(question, [], section).status).toBe('exact');
   expect(evidenceSentenceId(question, section)).toBe('actual');
 });
+
+test('an imported source-sentence label does not prevent an exact transcript match', () => {
+  const quote = 'Threads detach from synthetic clothing during washing.';
+  const q = { id: 'q', skill: 'listening', sectionId: 's', evidence: { text: `出题句：\n${quote}` } } as ExamQuestion;
+  const section = { id: 's', sentences: [{ id: 'actual', text: quote }] } as ExamSection;
+  expect(locateQuestionEvidence(q, [], section)).toEqual({ status: 'exact', ranges: { 'sentence:actual': [{ start: 0, end: quote.length }] } });
+  expect(evidenceSentenceId(q, section)).toBe('actual');
+});

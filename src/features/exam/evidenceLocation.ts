@@ -1,5 +1,6 @@
 import type { ExamPassage, ExamQuestion, ExamSection } from '../../domain/exam/types';
 import { readingParagraphs } from './ReadingPassage';
+import { sourceEvidenceText } from './questionReview';
 
 export type EvidenceRange = { start: number; end: number };
 export type EvidenceLocation = { ranges: Record<string, EvidenceRange[]>; status: 'exact' | 'partial' | 'paragraph' | 'missing' };
@@ -38,7 +39,8 @@ function matchQuote(blocks: Block[], quote: string) {
 }
 
 export function locateQuestionEvidence(question: ExamQuestion, passages: ExamPassage[], section?: ExamSection): EvidenceLocation {
-  const reference = question.evidence?.paragraphId || question.evidence?.text?.match(/^\s*(?:Paragraph\s+([A-Z])\b|\[([A-Z])\])/i)?.slice(1).find(Boolean);
+  const evidence = sourceEvidenceText(question.evidence?.text);
+  const reference = question.evidence?.paragraphId || evidence.match(/^\s*(?:Paragraph\s+([A-Z])\b|\[([A-Z])\])/i)?.slice(1).find(Boolean);
   const groups = passages.filter(passage => passage.sectionId === question.sectionId).flatMap(passage => readingParagraphs(passage.paragraphs).map(group => ({
     label: group.label,
     blocks: group.fragments.map((fragment, index) => ({ id: `passage:${passage.id}:${fragment.id}`, text: fragment.text.slice(index === 0 ? group.prefixLength || 0 : 0), offset: index === 0 ? group.prefixLength || 0 : 0 })),
@@ -48,7 +50,7 @@ export function locateQuestionEvidence(question: ExamQuestion, passages: ExamPas
   const sentenceId = question.evidence?.sentenceId || section?.sentences.find(sentence => sentence.questionIds?.includes(question.id))?.id;
   const sentences = section?.sentences || [];
   const blocks: Block[] = question.skill === 'reading' ? (referenced.length === 1 ? referenced : groups).flatMap(group => group.blocks) : sentences.map(sentence => ({ id: `sentence:${sentence.id}`, text: sentence.text }));
-  const importedQuote = (question.evidence?.text || '').replace(/^\s*\[[A-Z]\]\s*/i, '').trim();
+  const importedQuote = evidence.replace(/^\s*\[[A-Z]\]\s*/i, '').trim();
   const quote = question.skill === 'listening' ? importedQuote.replace(/(?:^|\n)[A-Z][A-Z \t]{0,24}:\s*/g, ' ').trim() : importedQuote;
   if (quote && !/^Paragraph\s+[A-Z]$/i.test(quote)) {
     const full = matchQuote(blocks, quote);

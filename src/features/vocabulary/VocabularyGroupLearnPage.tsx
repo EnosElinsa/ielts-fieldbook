@@ -189,16 +189,24 @@ export function VocabularyGroupLearnPage() {
     sync.current?.update({ viewedEntryIds:nextViewed, currentEntryId:nextId, updatedAt:new Date().toISOString() }, markViewed ? 800 : 2500);
   }
 
-  const batchSenseId=currentBatch?.selection.cards.find(ref=>ref.entryId===word?.entry.id)?.senseId;
+  const batchSenseId=(boundPlan?.target.cards || currentBatch?.selection.cards)?.find(ref=>ref.entryId===word?.entry.id)?.senseId;
   const selectedSenseId = boundPlan ? batchSenseId : params.get('sense') || batchSenseId;
-  const selectedSense = word?.resolved.curriculum?.senses.find(sense=>sense.id===selectedSenseId) || word?.resolved.sense;
+  // Older tasks can retain a dictionary meaning outside today's teaching choices.
+  const activeResolved = word && selectedSenseId ? resolveVocabularyLearningContext(word.entry, { bookId, unitId, senseId: selectedSenseId }) : word?.resolved;
+  const selectedSense = activeResolved?.sense;
   const learningCardKey = `${owner}:${bookId}:${unitId}:${word?.entry.id}:${selectedSense?.id}`;
   const meaningVisible = !recallFirst || revealedKey === learningCardKey;
   useLayoutEffect(() => { setRevealedKey(''); }, [learningCardKey]);
-  const activeResolved=word && selectedSense ? resolveVocabularyLearningContext(word.entry,{bookId,unitId,senseId:selectedSense.id}) : word?.resolved;
   const visualPresentation = activeResolved ? getVocabularyVisualPresentation(activeResolved) : 'none';
   const hasVisual = visualPresentation === 'inline';
   const presentation = selectedSense ? vocabularySensePresentation(selectedSense) : undefined;
+  const recommendedSense = boundPlan && selectedSense && word?.resolved.sense?.id !== selectedSense.id ? word?.resolved.sense : undefined;
+  const recommendation = recommendedSense ? vocabularySensePresentation(recommendedSense) : undefined;
+  const recommendationUrl = word && recommendedSense ? `${location.pathname}?${new URLSearchParams({
+    word: word.entry.id, sense: recommendedSense.id, batch: '0', batchSize: '1',
+    batchCards: JSON.stringify([{ entryId: word.entry.id, senseId: recommendedSense.id }]),
+    selectedEntryIds: JSON.stringify([word.entry.id]), returnTo: origin,
+  })}` : undefined;
   const publicEntry = word ? catalogVocabularyEntry(word.entry.id) : undefined;
   const publicSense = publicEntry && selectedSense ? resolveVocabularyLearningContext(publicEntry, { bookId, unitId, senseId:selectedSense.id }).sense : undefined;
   const reviewedNotes = Boolean(word && selectedSense && hasVocabularyReadinessNotes(word.entry.id, selectedSense));
@@ -234,9 +242,15 @@ export function VocabularyGroupLearnPage() {
           </div>
           <h3 id="learning-word" tabIndex={-1}>{word.entry.term}</h3>
           <Pronunciation entry={word.entry} sense={selectedSense || null} accent={preferences.accent}/>
+          {recommendation && recommendationUrl ? <section className="vocabulary-learning-recommendation" aria-label="Current recommended meaning">
+            <h4>Current recommended meaning</h4>
+            <p>This task was saved with a different meaning. Separate study does not complete this older task.</p>
+            {meaningVisible ? <><p>{recommendation.definition}</p>{recommendation.example ? <p><strong>Example:</strong> {recommendation.example}</p> : null}</> : null}
+            <Link className="btn primary" to={recommendationUrl}>Learn the recommended meaning<ArrowRight size={14}/></Link>
+          </section> : null}
           {word.resolved.curriculum && word.resolved.curriculum.senses.length>1 ? <section className="vocabulary-learning-meaning-picker" aria-label="Meanings to learn"><p>{boundPlan?'This task uses the selected meaning. Other meanings keep their own review progress.':'Choose the meaning to study. Each meaning keeps its own review progress.'}</p><div className="vocabulary-learning-meanings">{word.resolved.curriculum.senses.map((sense,i)=><button className="btn line" key={sense.id} aria-pressed={selectedSense?.id===sense.id} disabled={Boolean(params.get('planId'))} onClick={()=>{const next=new URLSearchParams(params);next.set('sense',sense.id);if(currentBatch)next.set('batchCards',JSON.stringify(currentBatch.selection.cards.map(ref=>ref.entryId===word.entry.id?{...ref,senseId:sense.id}:ref)));setParams(next,{replace:true, state: location.state});}}><span className="vocabulary-learning-meaning-label">Meaning {i+1} · {sense.pos}{selectedSense?.id===sense.id?<Check size={14} aria-label="Selected"/>:null}</span>{meaningVisible?<span className="vocabulary-learning-meaning-preview">{vocabularySensePresentation(sense).definition}</span>:null}</button>)}</div></section> : null}
           {!meaningVisible ? <div className="vocabulary-learning-reveal"><p>Recall the meaning and think of a sentence before checking.</p><button className="btn primary" aria-controls="learning-meaning" onClick={() => { setRevealedKey(learningCardKey); requestAnimationFrame(() => document.getElementById('learning-meaning')?.focus({ preventScroll:true })); }}>Reveal meaning<ArrowRight size={15}/></button></div> : null}
-          {meaningVisible ? <div id="learning-meaning" tabIndex={-1} className={`vocabulary-learning-content${hasVisual ? ' has-visual' : ''}`}><div className="vocabulary-learning-copy"><div className="vocabulary-learning-primary"><div className="vocabulary-learning-definition"><small>{selectedSense?.pos || 'Meaning'}</small><p>{presentation?.definition || 'Definition not available yet'}</p></div>
+          {meaningVisible ? <div id="learning-meaning" tabIndex={-1} className={`vocabulary-learning-content${hasVisual ? ' has-visual' : ''}`}><div className="vocabulary-learning-copy"><div className="vocabulary-learning-primary"><div className="vocabulary-learning-definition"><small>{recommendation ? 'Assigned meaning for this task · ' : ''}{selectedSense?.pos || 'Meaning'}</small><p>{presentation?.definition || 'Definition not available yet'}</p></div>
 
           {presentation?.example ? <div className="vocabulary-learning-example"><h4>Example</h4><p>{presentation.example}</p></div> : null}
           {hasVisual && activeResolved ? <VocabularyLearningVisual resolved={activeResolved} /> : null}

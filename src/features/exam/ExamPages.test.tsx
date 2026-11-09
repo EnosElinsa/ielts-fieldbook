@@ -339,16 +339,38 @@ test.each(['reading', 'listening'] as const)('%s shortcuts move between answers 
   expect(await screen.findByRole('dialog', { name: 'Submit with unanswered questions?' })).toBeVisible();
 });
 
-test('review shares question material and keeps Chinese explanations out of the English interface', async () => {
+test('review shares question material and shows clean source evidence when imported explanations are Chinese', async () => {
   const stimulusHtml = '<p>Applicant details: [1 ____] and [2 ____]</p>';
-  const questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, groupId: 'form', stimulusHtml, explanation: '中文解析', sourceExplanation: '来源解析' }));
+  const questions = [1, 2].map(number => ({ ...catalog.questions[0], id: `q${number}`, number, groupId: 'form', stimulusHtml, explanation: '中文解析', sourceExplanation: '来源解析', evidence: { text: '出题句：\nThe garden opened in 1990.' } }));
   mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', mode: 'practice', status: 'completed', sourceId: 'paper', sectionIds: ['section'], questionSnapshot: questions, responses: {}, results: { q1: false, q2: false }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-10-14', startedAt: '2026-10-14' }];
   const { container } = practice('/reading/review/saved');
   expect(await screen.findByRole('complementary', { name: 'Question reference' })).toBeVisible();
   expect(container.querySelectorAll('.exam-stimulus')).toHaveLength(1);
   expect(screen.queryByText('中文解析')).not.toBeInTheDocument();
   expect(screen.queryByText('来源解析')).not.toBeInTheDocument();
-  expect(screen.getAllByText(/An English explanation is not available yet/)).toHaveLength(2);
+  expect(screen.queryAllByText(/An English explanation is not available yet/)).toHaveLength(0);
+  expect(container.querySelectorAll('blockquote')).toHaveLength(2);
+  for (const quote of container.querySelectorAll('blockquote')) expect(quote.textContent).toBe('The garden opened in 1990.');
+});
+
+test('a saved listening result explains the accepted source word and locates evidence without imported labels', async () => {
+  const quote = "Threads and microfibres detach from synthetic clothing every time they're put in a washing machine";
+  const question = { ...catalog.questions[0], id: 'microplastics', skill: 'listening' as const, number: 31, prompt: 'Fibres from some ____ during washing.', answer: 'clothing', explanation: `出题句：\n${quote}`, evidence: { text: `出题句：\n${quote}`, sentenceId: 'sentence-one' } };
+  mocks.catalog.questions = [question];
+  mocks.catalog.sections[0] = { ...mocks.catalog.sections[0], skill: 'listening', sentences: [{ id: 'sentence-one', text: quote + '.', start: 0, end: 10, alignment: 'source', questionIds: [question.id] }] };
+  mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'listening', mode: 'practice', status: 'completed', sourceId: 'paper', sectionIds: ['section'], questionSnapshot: [question], responses: { microplastics: 'clothes' }, results: { microplastics: false }, evidence: {}, keywords: {}, errorReasons: {}, updatedAt: '2026-11-08', startedAt: '2026-11-08' }];
+  const frozen = structuredClone(mocks.fb.state.examAttempts[0]);
+  render(<MemoryRouter initialEntries={['/listening/review/saved']}><Routes><Route path="/listening/review/:attemptId" element={<ExamReviewPage skill="listening" />} /></Routes></MemoryRouter>);
+  const explanation = await screen.findByRole('region', { name: 'Answer explanation for question 31' });
+  expect(explanation).not.toHaveTextContent(/[\u3400-\u9fff]/);
+  expect(explanation).not.toHaveTextContent(/not available yet/);
+  expect(explanation.querySelector('p')).toHaveTextContent(/transcript.*clothing/i);
+  expect(explanation.querySelector('blockquote')).toHaveTextContent(quote);
+  await userEvent.click(screen.getByRole('button', { name: 'Locate evidence' }));
+  const evidence = await screen.findByRole('region', { name: 'Source evidence for question 31' });
+  expect(evidence).toHaveTextContent('The evidence is highlighted in the original text.');
+  expect(evidence.querySelector('[data-evidence-highlight]')).toHaveTextContent(quote);
+  expect(mocks.fb.state.examAttempts[0]).toEqual(frozen);
 });
 
 test('review to intensive and back restores this attempt, question, filters and unsaved notes', async () => {
