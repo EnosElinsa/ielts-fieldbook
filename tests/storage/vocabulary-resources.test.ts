@@ -120,7 +120,9 @@ test('manifest and group packs preserve the released membership order and comple
     expect(teaching.teaching).toEqual(pack.teaching);
     expect(teaching.memberships).toEqual(members);
   }
-});
+// This checks the complete released corpus, not a runtime performance budget.
+// CI repeatedly exceeded five seconds; keep every assertion with a bounded allowance.
+}, 15_000);
 
 test('deployment headers revalidate discovery indexes and cache hashed packs immutably', () => {
   const generated = release;
