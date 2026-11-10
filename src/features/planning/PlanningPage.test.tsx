@@ -174,6 +174,13 @@ test('a rescheduled task reads Moved from Mon 12 Oct and keeps its details close
  expect(details).toHaveTextContent('Done when Save a response for this question.');
 });
 
+test('listening task details explain that completion and accuracy are separate for existing plans',()=>{
+ Object.assign(mocks.state.plans[0],{skill:'listening',kind:'listening-practice',target:{type:'section',skill:'listening',sectionId:'part',mode:'practice'},completion:{description:'Submit the selected section.'}});
+ const {container}=mount();
+ expect(container.querySelector('#task-task .study-completion-condition')).toHaveTextContent('Submit and save');
+ expect(container.querySelector('#task-task .study-completion-condition')).toHaveTextContent('Accuracy is tracked separately');
+});
+
 test('planned task retains a stable focus anchor for practice returns',async()=>{
   const view=mount();await screen.findAllByRole('button',{name:'Start'});
   expect(view.container.querySelector('#task-task')).toHaveAttribute('tabindex','-1');

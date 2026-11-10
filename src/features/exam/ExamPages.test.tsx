@@ -865,6 +865,51 @@ function savedReview() {
   mocks.fb.state.examAttempts = [{ id: 'saved', skill: 'reading', sourceId: 'section', sectionIds: ['section'], mode: 'practice', status: 'completed', responses: { q1: '1990', q2: 'TRUE' }, results: { q1: true, q2: false }, questionSnapshot: structuredClone(mocks.catalog.questions), evidence: {}, keywords: {}, errorReasons: {}, score: 1, total: 2, startedAt: '2026-01-01', updatedAt: '2026-01-01', elapsedSeconds: 0, hintsEnabled: true }];
 }
 
+test('a perfect listening result needs no review save until notes actually change', async () => {
+  savedReview(); const row = mocks.fb.state.examAttempts[0];
+  Object.assign(row, { skill: 'listening', score: 2, results: { q1: true, q2: true } });
+  render(<MemoryRouter initialEntries={['/listening/review/saved']}><Routes><Route path="/listening/review/:attemptId" element={<ExamReviewPage skill="listening" />} /></Routes></MemoryRouter>);
+  const user = userEvent.setup();
+  const save = await screen.findByRole('button', { name: 'Save review notes' });
+  expect(save).toBeDisabled();
+  expect(screen.queryByText('Review notes saved')).not.toBeInTheDocument();
+  expect(screen.getByText('No changes to save')).toBeInTheDocument();
+  expect(screen.getByText(/A practice task finishes at any score/)).toBeInTheDocument();
+  await user.click(save); expect(mocks.fb.persistNow).not.toHaveBeenCalled(); expect(mocks.fb.toast).not.toHaveBeenCalled();
+  await user.click(within(document.getElementById('exam-review-q1')!).getByText('Add review notes'));
+  await user.type(screen.getByRole('textbox', { name: 'Evidence for question 1' }), 'My optional note');
+  expect(save).toBeEnabled();
+  expect(save.parentElement).toContainElement(screen.getByText('Unsaved review notes'));
+  await user.click(save);
+  await waitFor(() => expect(save).toBeDisabled());
+  expect(save.parentElement).toContainElement(screen.getByText('Review notes saved'));
+  expect(mocks.fb.toast).not.toHaveBeenCalled();
+});
+
+test('a bound listening mistake review explains its requirement and saves reasons without changing the score', async () => {
+  savedReview(); const row = mocks.fb.state.examAttempts[0];
+  Object.assign(row, { skill: 'listening', score: 0, results: { q1: false, q2: false }, planId: 'previous-review' });
+  mocks.fb.state.plans = [
+    { id: 'previous-review', kind: 'listening-review', status: 'completed', target: { type: 'exam-review', skill: 'listening', attemptId: row.id } },
+    { id: 'mistake-review', kind: 'listening-review', status: 'in_progress', target: { type: 'exam-review', skill: 'listening', attemptId: row.id } },
+  ];
+  mocks.fb.persistNow.mockImplementationOnce(async (draft: any) => { draft.plans.find((plan: any) => plan.id === 'mistake-review').status = 'completed'; mocks.fb.stateRef.current = draft; mocks.fb.state = draft; return true; });
+  render(<MemoryRouter initialEntries={['/listening/review/saved?planId=mistake-review']}><Routes><Route path="/listening/review/:attemptId" element={<ExamReviewPage skill="listening" />} /></Routes></MemoryRouter>);
+  expect(await screen.findByText('Save an error reason for every wrong answer. Retrying for a higher score is optional.')).toBeInTheDocument();
+  expect(screen.getByText('Review task needs notes')).toBeInTheDocument();
+  const user = userEvent.setup();
+  for (const number of [1, 2]) {
+    await user.click(within(document.getElementById(`exam-review-q${number}`)!).getByText('Add review notes'));
+    await user.click(screen.getByRole('combobox', { name: `Error reason for question ${number}` }));
+    await user.click(screen.getByRole('option', { name: 'Wrong detail' }));
+  }
+  await user.click(screen.getByRole('button', { name: 'Save review notes' }));
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Save review notes' })).toBeDisabled());
+  expect(screen.getByText('Mistake review task completed. Your original score is unchanged.')).toBeInTheDocument();
+  expect(mocks.fb.state.examAttempts[0]).toMatchObject({ planId: 'mistake-review', score: 0, errorReasons: { q1: 'Wrong detail', q2: 'Wrong detail' } });
+  expect(mocks.fb.state.examAttempts[0].evidence).toEqual({ q1: '', q2: '' });
+});
+
 test('review filters wrong answers, keeps local notes across navigation and clears recovery only after saving', async () => {
   savedReview(); const user = userEvent.setup(); const view = practice('/reading/review/saved');
   expect(screen.queryByRole('heading', { name: 'The garden opened in _____.' })).not.toBeInTheDocument();

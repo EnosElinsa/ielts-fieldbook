@@ -12,6 +12,7 @@ import { VOCABULARY_CATALOG } from '../../domain/vocabulary/catalog';
 import { accountId } from '../../storage/remote';
 import { dateKey as todayKey } from '../../domain/utils';
 import { studyPlanTitle } from '../../lib/planTargets';
+import { receptivePlanCompletionDescription } from '../../lib/receptivePlans';
 import { LearningTaskDetails } from './LearningTaskDetails';
 const capital=value=>value[0].toUpperCase()+value.slice(1);
 const titles={add:'Add task',replace:'Replace task',resize:'Edit duration',reschedule:'Reschedule task',duplicate:'Duplicate task',restore:'Restore task'};
@@ -95,7 +96,7 @@ export function TaskEditor({mode,plan,dateKey,onClose}) {
       <section className={`task-budget${over?' is-over':''}`} aria-label="Task budget"><p>Daily budget <strong>{budget} min</strong></p><dl><div><dt>Other tasks</dt><dd>{used} min</dd></div><div><dt>After this change</dt><dd>{used+duration} min</dd></div><div><dt>{over?'Extra time':'Remaining'}</dt><dd>{over||Math.max(0,budget-used-duration)} min</dd></div></dl>
         {over>0&&<label className="check-field task-overage-confirm"><input type="checkbox" checked={allowOverBudget} onChange={event=>setAllowOverBudget(event.target.checked)}/>Keep extra {over} minutes on this day</label>}
       </section>
-      {preview.task&&<section className="task-preview"><h3>{editing?studyPlanTitle(preview.task):'Completion condition'}</h3><p>{preview.task.completion?.description||'Save the selected practice result.'}</p><small>{editing?'This task will be kept when automatic plans are rebuilt.':'The chosen material and progress are preserved.'}</small><LearningTaskDetails plan={preview.task} batchSize={fb.state.settings.vocabulary?.learningBatchSize||10}/></section>}
+      {preview.task&&<section className="task-preview"><h3>{editing?studyPlanTitle(preview.task):'Completion condition'}</h3><p>{receptivePlanCompletionDescription(preview.task)||'Save the selected practice result.'}</p><small>{editing?'This task will be kept when automatic plans are rebuilt.':'The chosen material and progress are preserved.'}</small><LearningTaskDetails plan={preview.task} batchSize={fb.state.settings.vocabulary?.learningBatchSize||10}/></section>}
       {preview.error&&<p className="study-alert" role="alert">{preview.error}</p>}{error&&<p className="study-alert" role="alert">{error}</p>}
     </fieldset>
   </ModalFrame>;

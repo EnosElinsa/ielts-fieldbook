@@ -41,6 +41,25 @@ test('resuming an older active attempt can complete a newly started practice pla
   state.examAttempts = [{ id: 'resumed', skill: 'reading', status: 'completed', startedAt: '2026-10-10T10:00:00Z', completedAt, sectionIds: ['part'] }];
   expect(completeReceptivePlanIfMatched(state)?.linkedSessionId).toBe('resumed');
 });
+
+test('a linked listening practice completes at zero accuracy without review notes', () => {
+  const state = base('listening-practice');
+  state.plans[0].target = { type: 'section', skill: 'listening', sectionId: 'part', mode: 'practice', questionIds: ['q1', 'q2'] };
+  state.examAttempts = [{ id: 'attempt', planId: 'plan', skill: 'listening', mode: 'practice', status: 'completed', sectionIds: ['part'], questionSnapshot: [{ id: 'q1' }, { id: 'q2' }], responses: { q1: 'wrong', q2: 'wrong' }, results: { q1: false, q2: false }, score: 0, errorReasons: {}, completedAt }];
+  expect(completeReceptivePlanIfMatched(state)).toMatchObject({ status: 'completed', linkedSessionId: 'attempt' });
+});
+
+test('a listening review needs a saved reason for each mistake and does not require a correct retry', () => {
+  const state = base('listening-review'); const plan = state.plans[0];
+  plan.attemptId = 'attempt'; plan.target = { type: 'exam-review', skill: 'listening', attemptId: 'attempt' };
+  state.examAttempts = [{ id: 'attempt', planId: 'plan', skill: 'listening', status: 'completed', completedAt: '2026-10-10', updatedAt: completedAt, results: { q1: false, q2: false }, score: 0, evidence: {}, keywords: {}, errorReasons: {} }];
+  const before = structuredClone(state);
+  state.examAttempts[0].errorReasons.q1 = 'Wrong detail';
+  expect(completeReceptivePlanIfMatched(state, before)).toBeNull();
+  state.examAttempts[0].errorReasons.q2 = 'Lost concentration';
+  expect(completeReceptivePlanIfMatched(state, before)).toMatchObject({ status: 'completed', linkedSessionId: 'attempt' });
+  expect(state.examAttempts[0].score).toBe(0);
+});
 test('review completes only when proof and diagnosis are saved for the target attempt', () => {
   const state = base('reading-review'); state.plans[0].attemptId = 'exam';
   state.examAttempts = [{ id: 'exam', skill: 'reading', status: 'completed', results: { q1: false }, evidence: { q1: '' }, errorReasons: {} }];

@@ -11,6 +11,7 @@ import { AccountDataBoundary } from '../../components/AccountDataBoundary';
 import { dateKey, addLocalDays } from '../../domain/utils';
 import { calendarDays, studyBudget, compareStudyPlans, planSkill, planMinutesLabel } from '../../lib/planTemplates';
 import { studyPlanTitle, studyTargetSummary } from '../../lib/planTargets';
+import { receptivePlanCompletionDescription } from '../../lib/receptivePlans';
 import { TaskStartButton, useStudySchedule } from './StudySchedule';
 import '../../styles/planning.css';
 import { useVocabularyPosition } from '../vocabulary/vocabularyNavigation';
@@ -87,6 +88,7 @@ function PlanTask({plan}){
   const completed=plan.status==='completed';
   async function change(action){setSaving(true);setError('');let feedback='';try{if(await fb.changePlan(plan.id,action,{onError:message=>{feedback=message;}}))setDialog(null);else setError(feedback||'Your task could not be saved. Retry the change.');}catch(cause){setError(cause instanceof Error?cause.message:'Your task could not be saved.');}finally{setSaving(false);}}
   const skill=planSkill(plan);const material=studyTargetSummary(plan);
+  const completionDescription=receptivePlanCompletionDescription(plan);
   const status=plan.onHold&&plan.status!=='completed'?'On hold':({pending:'Not started',in_progress:'In progress',completed:'Completed',skipped:'Skipped'})[plan.status] || plan.status;
   const reasons=[
     plan.skipReason&&({"merged-review":"Merged into current review planning","bulk-skip":"Skipped in backlog","user-skipped":"Skipped by you","no-longer-due":"No review needed any more"})[plan.skipReason],
@@ -94,7 +96,7 @@ function PlanTask({plan}){
     plan.waitingReason,
     plan.reviewReason&&`Review reason: ${({error:'Confirmed mistake',recovery:'Mistake recovery',due:'Scheduled review is due',missing:'Build a missing skill',spaced:'Spaced consolidation'})[plan.reviewReason]||plan.reviewReason}`,
   ].filter(Boolean);
-  const hasDetails=Boolean(material||plan.completion?.description||reasons.length);
+  const hasDetails=Boolean(material||completionDescription||reasons.length);
   return <article id={`task-${plan.id}`} tabIndex={-1} className={`study-task study-plan-task ${plan.status}`}>
     <div className="study-plan-task-body">
       <h4>{studyPlanTitle(plan)}</h4>
@@ -102,7 +104,7 @@ function PlanTask({plan}){
       <LearningTaskDetails plan={plan} batchSize={fb.state.settings.vocabulary?.learningBatchSize||10}/>
       {hasDetails&&<details className="study-task-details"><summary>Details</summary>
         {material&&<p className="study-task-material">{material}</p>}
-        {plan.completion?.description&&<p className="study-completion-condition"><strong>Done when</strong> {plan.completion.description}</p>}
+        {completionDescription&&<p className="study-completion-condition"><strong>Done when</strong> {completionDescription}</p>}
         {reasons.map(reason=><p className="study-task-reason" key={reason}>{reason}</p>)}
       </details>}
     </div>

@@ -1,6 +1,17 @@
 import type { ExamAttempt, IntensiveSession, ExamSkill } from '../domain/exam/types';
 import { dateKey } from '../domain/utils';
 
+/** Explain the actual completion rule, including for plans saved before this wording. */
+export function receptivePlanCompletionDescription(plan: Record<string, any>): string {
+  if (plan.kind === 'listening-intensive') return plan.target?.reviewMode === 'listening-check' || String(plan.driver || '').startsWith('intensive:')
+    ? 'Listen to the whole sentence without the transcript, rate your understanding, and save the review.'
+    : 'Finish dictation, comparison, shadowing, blind replay and self-rating, then save. A perfect score is not required.';
+  if (plan.kind === 'listening-review') return 'Save an error reason for every wrong answer. Retrying for a higher score is optional.';
+  if (plan.kind === 'reading-review') return 'Save passage evidence and an error reason for every wrong answer. Retrying for a higher score is optional.';
+  if (/^(listening|reading)-(practice|mock)$/.test(plan.kind || '')) return 'Submit and save the selected practice. Accuracy is tracked separately; mistake review is a separate task.';
+  return plan.completion?.description || '';
+}
+
 export const receptivePlanTemplates = {
   reading: [
     {kind:'reading-practice',title:'Reading · Locate and prove',description:'Find the passage evidence and identify the paraphrase before you answer.',deskMode:'full'},

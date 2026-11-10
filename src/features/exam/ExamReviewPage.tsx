@@ -22,6 +22,7 @@ import { evidenceSentenceId } from './evidenceLocation';
 import { QuestionEvidence } from './QuestionEvidence';
 import { readingQuestionPrompt } from './ReadingPassage';
 import { questionReviewContent } from './questionReview';
+import { receptivePlanCompletionDescription } from '../../lib/receptivePlans';
 
 /** Note fields stay folded away until a learner adds notes; saved notes keep them open. */
 function ReviewNotes({ hasNotes, children }: { hasNotes: boolean; children: ReactNode }) {
@@ -49,7 +50,8 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
   const [filter, setFilter] = useWorkspacePageState<'all' | 'wrong'>(`exam-review:${skill}:${attemptId}:filter`, 'wrong', (value): value is 'all' | 'wrong' => value === 'all' || value === 'wrong');
 
   const [annotations, setAnnotations] = useState<Record<string, { evidence: string; keywords: string; reason: string }>>({}); const [saving, setSaving] = useState(false); const [saveError, setSaveError] = useState('');
-  useEffect(() => { generation.current += 1; setAnnotations(readExamRecovery<Record<string, { evidence: string; keywords: string; reason: string }>>(owner, recoveryKey) || {}); setSaving(false); setSaveError(''); }, [owner, attemptId, recoveryKey]);
+  const [savedThisVisit, setSavedThisVisit] = useState(false);
+  useEffect(() => { generation.current += 1; setAnnotations(readExamRecovery<Record<string, { evidence: string; keywords: string; reason: string }>>(owner, recoveryKey) || {}); setSaving(false); setSaveError(''); setSavedThisVisit(false); }, [owner, attemptId, recoveryKey]);
   const { catalog, loading, error, reload } = useExamCatalog(skill, undefined, attempt?.sectionIds || []);
   const questions = useMemo(() => attempt ? (attempt.questionSnapshot || catalog.questions.filter(question => attempt.questionTypes ? !!attempt.questionTypes[question.id] : attempt.sectionIds.includes(question.sectionId))).slice().sort((a, b) => a.number - b.number) : [], [catalog.questions, attempt]);
   const restoredAnchor = useRef('');
@@ -93,10 +95,14 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
   const hasPooled = questionRows.some(question => questionSlotCount(question) > 1);
   const references = visibleRows.filter((question, index) => question.stimulusHtml && (!question.groupId || visibleRows.findIndex(row => row.groupId === question.groupId) === index));
   const dirty = Object.keys(annotations).length > 0;
+  const hasSavedNotes = savedThisVisit || [attempt.evidence, attempt.keywords, attempt.errorReasons].some(fields => Object.values(fields || {}).some(value => value.trim()));
+  const reviewPlanId = params.get('planId') || attempt.planId;
+  const reviewPlan = ((fb.state.plans || []) as Record<string, any>[]).find(plan => plan.kind === `${skill}-review` && ['in_progress', 'completed'].includes(plan.status) && plan.id === reviewPlanId && (plan.target?.attemptId || plan.attemptId) === attempt.id);
+  const completionDescription = reviewPlan?.status === 'completed' ? 'Mistake review task completed. Your original score is unchanged.' : reviewPlan ? receptivePlanCompletionDescription(reviewPlan) : 'Practice saved. A practice task finishes at any score; mistake review is a separate task.';
   const notes = (questionId: string) => annotations[questionId] || { evidence: attempt.evidence?.[questionId] || '', keywords: attempt.keywords?.[questionId] || '', reason: attempt.errorReasons?.[questionId] || '' };
   const setNote = (questionId: string, change: Partial<{ evidence: string; keywords: string; reason: string }>) => { if (accountId() !== owner) return; const next = { ...annotations, [questionId]: { ...notes(questionId), ...change } }; writeExamRecovery(owner, recoveryKey, next); setAnnotations(next); };
   const saveNotes = async () => {
-    if (accountId() !== owner || saving) return;
+    if (accountId() !== owner || saving || !dirty) return;
     const requestGeneration = generation.current;
     const snapshot = JSON.stringify(annotations);
     setSaving(true); setSaveError('');
@@ -114,7 +120,7 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
     if (!mounted.current || accountId() !== owner || currentIdentity.current !== identity || generation.current !== requestGeneration) return;
     setSaving(false);
     if (!saved) setSaveError(`${feedback || 'Could not save review notes.'} Your edits remain here; retry saving.`);
-    else { if (JSON.stringify(readExamRecovery(owner, recoveryKey)) === snapshot) clearExamRecovery(owner, recoveryKey); setAnnotations({}); fb.toast('Review notes saved.'); }
+    else { if (JSON.stringify(readExamRecovery(owner, recoveryKey)) === snapshot) clearExamRecovery(owner, recoveryKey); setAnnotations({}); setSavedThisVisit(true); }
   };
   const retry = () => navigate(`/${skill}/${attempt.sectionIds[0]}?retry=${encodeURIComponent(attempt.id)}`);
   return <section className="view active exam-review">
@@ -134,16 +140,16 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
 </div>
 </div>
 <div className="exam-review-actions">
-<p>{wrong.length ? `${wrong.length} ${hasPooled ? 'answer group' : 'question'}${wrong.length === 1 ? '' : 's'} to review. Retrying clears the answers and review notes for the new attempt.` : 'All answers are correct. You can still add review notes.'}</p>{wrong.length > 0 && <button className={dirty ? 'btn line' : 'btn primary'} onClick={retry}>
-<RotateCcw size={15} />Retry wrong answers</button>}<button className={dirty ? 'btn primary' : 'btn line'} disabled={saving} onClick={() => dirty ? void saveNotes() : fb.toast('Your review notes are already saved.')}>
+<div className="exam-review-summary"><p>{wrong.length ? `${wrong.length} ${hasPooled ? 'answer group' : 'question'}${wrong.length === 1 ? '' : 's'} to review. Retrying starts a new attempt.` : 'All answers are correct. Review notes are optional.'}</p><p>{completionDescription}</p></div>{wrong.length > 0 && <button className={dirty ? 'btn line' : 'btn primary'} onClick={retry}>
+<RotateCcw size={15} />Retry wrong answers</button>}<div className="exam-review-save"><button className={dirty ? 'btn primary' : 'btn line'} disabled={saving || !dirty} onClick={() => void saveNotes()}>
 <Save size={15} />{saving ? 'Saving…' : 'Save review notes'}</button>
+<span role="status">{saving ? 'Saving notes…' : dirty ? 'Unsaved review notes' : hasSavedNotes ? 'Review notes saved' : reviewPlan ? 'Review task needs notes' : 'No changes to save'}</span></div>
 </div>{saveError && <p role="alert" className="exam-notice">{saveError}</p>}<nav className="exam-part-tabs" aria-label="Result Parts">{attempt.sectionIds.map((id, i) => { const section = catalog.sections.find(row => row.id === id); return <button type="button" key={id} aria-pressed={sectionId === id} className={sectionId === id ? 'active' : ''} onClick={() => setSelectedSection(id)}>{skill === 'reading' ? 'Passage' : 'Part'} {section?.part || i + 1}</button>; })}</nav>{catalog.sections.some(row => row.id === sectionId) && <details className="exam-review-vocabulary"><summary>Vocabulary from this part</summary><PartVocabularyPanel key={`${owner}:${attempt.id}:${sectionId}`} catalog={catalog} attempt={attempt} sectionId={sectionId} /></details>}<ExamSessionHistory sessions={sessions.filter(row => row.mode === attempt.mode && row.sourceId === attempt.sourceId)} currentId={attempt.id} />
 <div className="exam-review-filter">
 <div className="exam-part-tabs" role="group" aria-label="Answers to review">
 <button aria-pressed={filter === 'wrong' && partWrong.length > 0} className={filter === 'wrong' && partWrong.length > 0 ? 'active' : ''} disabled={!partWrong.length} onClick={() => setFilter('wrong')}>{hasPooled ? 'Wrong answer groups' : 'Wrong answers'} ({partWrong.length})</button>
 <button aria-pressed={filter === 'all' || !partWrong.length} className={filter === 'all' || !partWrong.length ? 'active' : ''} onClick={() => setFilter('all')}>{hasPooled ? 'All answer groups' : 'All answers'} ({partRows.length})</button>
 </div>
-<span role="status">{saving ? 'Saving notes…' : dirty ? 'Unsaved review notes' : 'Review notes saved'}</span>
 </div>
 <div className={'exam-review-workspace' + (references.length ? ' has-reference' : '')}>
     {references.length > 0 && <aside className="exam-review-reference" aria-label="Question reference">

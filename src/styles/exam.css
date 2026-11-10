@@ -555,6 +555,12 @@
 }
 
 /* Results: one face for the score, notes folded until needed. */
+.exam-review-summary { flex: 1; min-width: 0; }
+.exam-review-summary p { margin: 0; line-height: 1.7; }
+.exam-review-summary p + p { margin-top: 5px; }
+.exam-review-save { display: flex; flex-direction: column; align-items: stretch; gap: 6px; flex-shrink: 0; }
+.exam-review-save > span { color: var(--muted); font-size: 12px; text-align: center; }
+@media(max-width:740px) { .exam-review-summary { grid-column: 1/-1; } .exam-review-save { min-width: 0; } }
 .exam-review .exam-score strong { font-family: Manrope,Arial,sans-serif; font-weight: 650; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .exam-review .exam-score small { font-family: inherit; font-weight: 500; }
 .exam-review-notes > summary { display: flex; align-items: center; gap: 8px; width: fit-content; min-height: 40px; color: var(--blue); font-size: 13px; font-weight: 600; list-style: none; cursor: pointer; }
