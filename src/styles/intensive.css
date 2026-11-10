@@ -35,9 +35,22 @@
 .dictation-text { font-size: 1.08rem; line-height: 2; }
 .dictation-missing { color: var(--ink); background: color-mix(in srgb, var(--gold) 20%, var(--sheet)); border-bottom: 2px solid var(--gold); }
 .dictation-extra { color: var(--red); background: var(--soft-red); text-decoration: line-through; }
-.dictation-comparison fieldset { border: 0; padding: 10px 0; display: flex; gap: 14px; flex-wrap: wrap; }
-.dictation-comparison fieldset label { display: inline-flex; gap: 7px; align-items: center; }
-.dictation-comparison input[type="checkbox"] { width: auto; }
+.intensive-diagnosis, .intensive-diagnosis-group { min-width: 0; border: 0; padding: 0; margin: 0; }
+.intensive-diagnosis { margin-top: 20px; }
+.intensive-diagnosis > legend { font-size: 13px; font-weight: 600; }
+.intensive-diagnosis > .file-hint { margin: 6px 0 14px; }
+.intensive-diagnosis-groups { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.intensive-diagnosis-group > legend { padding: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.intensive-diagnosis-choice { display: flex; gap: 8px; align-items: flex-start; min-height: 44px; padding: 10px; margin-bottom: 6px; border: 1px solid var(--rule); border-radius: 8px; font-size: 12px; cursor: pointer; overflow-wrap: anywhere; }
+.intensive-diagnosis-choice:has(input:checked) { border-color: var(--blue); background: var(--soft-blue); }
+.intensive-diagnosis-choice input[type="checkbox"] { flex-shrink: 0; width: auto; margin-top: 2px; accent-color: var(--blue); }
+.intensive-diagnosis-other, .intensive-diagnosis-earlier { grid-column: 1 / -1; }
+.intensive-diagnosis-note-label { display: block; font-size: 12px; font-weight: 600; margin-top: 12px; }
+.intensive-diagnosis-other textarea { min-height: 88px; }
+.intensive-diagnosis-summary { margin: 12px 0; overflow-wrap: anywhere; }
+.intensive-diagnosis-summary p { margin: 4px 0; }
+.intensive-diagnosis-saved-note { white-space: pre-wrap; }
+.intensive-cycle-history { margin-top: 16px; border-top: 1px solid var(--rule); padding-top: 12px; }
 .intensive-timing { border-top: 1px solid var(--rule); padding-top: 12px; }
 .intensive-timing summary { cursor: pointer; }
 .intensive-timing input { max-width: 140px; display: block; margin-top: 5px; }
@@ -95,11 +108,6 @@
 .intensive-step textarea::placeholder { color: var(--muted); }
 .intensive-step textarea:focus-visible,.intensive-timing input:focus-visible { background: var(--sheet); outline: 2px solid var(--blue); outline-offset: 2px; }
 .intensive-workbench .intensive-action-hint { margin: 8px 0 0; font-size: 12px; line-height: 1.6; color: var(--muted); }
-.dictation-comparison fieldset { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
-.dictation-comparison legend { font-size: 12px; font-weight: 600; padding-bottom: 10px; }
-.dictation-comparison fieldset label { min-height: 42px; padding: 8px 10px; border: 1px solid var(--rule); border-radius: 8px; font-size: 12px; }
-.dictation-comparison fieldset label:has(input:checked) { border-color: var(--blue); background: var(--soft-blue); }
-.dictation-comparison input { accent-color: var(--blue); }
 .dictation-text { background: var(--surface-soft); padding: 14px; border-radius: 8px; overflow-wrap: anywhere; }
 .intensive-checklist { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; padding: 0; margin: 18px 0; list-style: none; }
 .intensive-checklist li { display: flex; gap: 7px; align-items: center; padding: 10px; border-radius: 8px; background: var(--surface-soft); color: var(--muted); font-size: 12px; }
@@ -109,6 +117,7 @@
   .intensive-step textarea { font-size: 16px; }
   .intensive-step .btn { min-height: 44px; white-space: normal; }
   .intensive-checklist { grid-template-columns: 1fr; }
+  .intensive-diagnosis-groups { grid-template-columns: 1fr; }
 }
 
 @media(max-width:700px) {

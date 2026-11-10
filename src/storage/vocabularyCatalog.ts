@@ -9,7 +9,7 @@ export type ReleasedVocabularyTeachingOptions = ReleasedVocabularyOptions & { al
 type Book = { id: string; [key: string]: unknown };
 type Unit = { id: string; bookId: string; entryIds: string[]; entryCount: number; archivedEntryIds?: string[]; resource?: string; teachingResource?: string; [key: string]: unknown };
 type Membership = { id: string; entryId: string; bookId: string; unitId: string; order: number; [key: string]: unknown };
-type Manifest = { version: number; books: Book[]; units: Unit[]; entryCount: number; entryShards: Record<string, string>; entryResources: Record<string, string>; entryTeachingResources: Record<string, string> };
+type Manifest = { version: number; books: Book[]; units: Unit[]; entryCount: number; entryShards: Record<string, string>; entryResources: Record<string, string>; entryTeachingResources: Record<string, string>; termIndexUrl?: string };
 type TeachingIndex = { version: number; bookIds: string[]; books: Book[]; units: Unit[]; groups: Record<string, string>; entryShards: Record<string, string>; entryTeachingResources: Record<string, string> };
 type Pack = { entries: VocabularyEntry[]; memberships: Membership[]; teaching: VocabularyTeachingData };
 type TeachingPack = Pick<Pack, 'teaching' | 'memberships'>;
@@ -181,4 +181,19 @@ export async function loadReleasedVocabulary(options: ReleasedVocabularyOptions 
   if ([...groupIds, ...requestedIds].some(id => !entries.has(id))) throw new Error('Vocabulary resource is missing requested entries.');
   if (group && [...groupIds].some(id => ![...memberships.values()].some(row => row.bookId === group.bookId && row.unitId === group.id && row.entryId === id))) throw new Error('Vocabulary resource is missing group memberships.');
   return { books, units, entries: [...entries.values()], memberships: [...memberships.values()] };
+}
+
+/** Resolve terms without loading whole wordbooks or depending on previously opened groups. */
+export async function lookupReleasedVocabularyTerms(terms: string[], options: { force?: boolean } = {}): Promise<VocabularyEntry[]> {
+  const manifest = await readManifest(options.force);
+  if (!manifest.termIndexUrl) throw new Error('Vocabulary lookup index is unavailable. Reload the page and retry.');
+  const index = await resource<Record<string, string[]>>(manifest.termIndexUrl, options.force);
+  if (!index || typeof index !== 'object' || Array.isArray(index)) throw new Error('Invalid vocabulary lookup index.');
+  const ids = [...new Set(terms.flatMap(term => {
+    const key = term.normalize('NFKC').toLocaleLowerCase('en').replace(/[‘’]/g, "'").trim().replace(/\s+/g, ' ');
+    const found = Object.hasOwn(index, key) ? index[key] : [];
+    if (!Array.isArray(found) || found.some(id => typeof id !== 'string' || !Object.hasOwn(manifest.entryShards, id))) throw new Error('Invalid vocabulary lookup entry.');
+    return found;
+  }))];
+  return ids.length ? (await loadReleasedVocabulary({ entryIds: ids, ...options })).entries : [];
 }

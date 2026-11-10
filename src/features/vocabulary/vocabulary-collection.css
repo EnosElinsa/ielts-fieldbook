@@ -1,0 +1,21 @@
+.vocabulary-collection { min-width: 0; }
+.vocabulary-collection-error { flex-basis: 100%; margin: 0; color: var(--red, var(--ink)); font-size: 13px; line-height: 1.6; }
+.vocabulary-collection-fields, .vocabulary-collection-matches { padding: 0; margin: 0; border: 0; min-width: 0; }
+.vocabulary-collection-fields > label, .vocabulary-collection-personal > label, .vocabulary-collection-advanced > label { display: grid; gap: 7px; font-size: 13px; font-weight: 600; }
+.vocabulary-collection input:not([type=radio]), .vocabulary-collection textarea, .vocabulary-collection select { width: 100%; min-width: 0; padding: 10px 12px; background: var(--sheet); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; font: inherit; font-weight: 400; }
+.vocabulary-collection textarea { resize: vertical; min-height: 72px; }
+.vocabulary-collection-source { margin-block: 10px 16px; }
+.vocabulary-collection summary { cursor: pointer; min-height: 44px; padding-block: 12px; font-size: 13px; }
+.vocabulary-collection-source blockquote { margin: 0; padding: 12px; background: var(--hover); border-left: 2px solid var(--rule); font-size: 13px; line-height: 1.7; max-height: 130px; overflow: auto; overflow-wrap: anywhere; }
+.vocabulary-collection-matches legend { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+.vocabulary-collection-match { display: flex; align-items: flex-start; gap: 10px; padding: 12px; border: 1px solid var(--rule); border-radius: 8px; margin-bottom: 8px; cursor: pointer; }
+.vocabulary-collection-match.is-selected { border-color: var(--blue); }
+.vocabulary-collection-match > input { flex: 0 0 auto; margin-top: 5px; }
+.vocabulary-collection-match > span { display: grid; gap: 6px; min-width: 0; font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
+.vocabulary-collection-match strong { font-size: 14px; font-weight: 500; }
+.vocabulary-collection-match small { color: var(--muted); }
+.vocabulary-collection-personal { display: grid; gap: 14px; margin-top: 16px; }
+.vocabulary-collection-advanced { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+.vocabulary-collection-pending, .vocabulary-collection-warning { padding: 10px 12px; border: 1px solid var(--rule); border-radius: 6px; color: var(--muted); font-size: 12px; line-height: 1.65; }
+.vocabulary-collection-suggestions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 12px 0; font-size: 12px; }
+@media(max-width:480px) { .vocabulary-collection-advanced { grid-template-columns: minmax(0,1fr); } .vocabulary-collection .btn { min-height: 44px; } }

@@ -56,9 +56,9 @@ export function recordIntensiveListeningReview(session: IntensiveSession, review
 export type IntensiveAction = 'listened' | 'reveal' | 'shadowed' | 'blind-replayed' | 'complete' | 'review';
 export function applyIntensiveStage(session: IntensiveSession, action: IntensiveAction, now = new Date().toISOString()): IntensiveSession {
   if (action === 'review') {
-    const { gist, transcriptInput, dictationResult, errorReasons, shadowingAudioId, selfRating, completedAt, nextReviewAt } = session;
-    const history = completedAt ? [...(session.reviewHistory || []), { gist, transcriptInput, dictationResult, errorReasons, shadowingAudioId, selfRating, completedAt, nextReviewAt }] : session.reviewHistory;
-    return { ...session, stage: 0, gist: '', transcriptInput: '', dictationResult: 'pending', errorReasons: [], shadowingAudioId: undefined, selfRating: undefined, listened: false, revealed: false, blindReplayDone: false, completedAt: undefined, reviewHistory: history, updatedAt: now };
+    const { gist, transcriptInput, dictationResult, errorReasons, errorNote, shadowingAudioId, selfRating, completedAt, nextReviewAt } = session;
+    const history = completedAt ? [...(session.reviewHistory || []), { gist, transcriptInput, dictationResult, errorReasons, ...(errorNote !== undefined ? { errorNote } : {}), shadowingAudioId, selfRating, completedAt, nextReviewAt }] : session.reviewHistory;
+    return { ...session, stage: 0, gist: '', transcriptInput: '', dictationResult: 'pending', errorReasons: [], errorNote: '', shadowingAudioId: undefined, selfRating: undefined, listened: false, revealed: false, blindReplayDone: false, completedAt: undefined, reviewHistory: history, updatedAt: now };
   }
   if (action === 'listened') return { ...session, listened: true, stage: Math.max(session.stage, 1), updatedAt: now };
   if (action === 'reveal' && session.listened && session.transcriptInput.trim()) return { ...session, revealed: true, stage: Math.max(session.stage, 2), updatedAt: now };

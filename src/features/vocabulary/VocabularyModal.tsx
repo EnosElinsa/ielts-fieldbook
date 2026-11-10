@@ -9,6 +9,7 @@ import {
   updateVocabularyItem,
 } from "../../domain/vocabulary";
 import "../../styles/vocabulary.css";
+import { VocabularyCollectionDialog } from './VocabularyCollectionDialog';
 
 export function VocabularyModal() {
   const fb = useFieldbook();
@@ -150,6 +151,7 @@ export function VocabularyModal() {
     ["synonyms", "Synonyms"],
     ["antonyms", "Antonyms"],
   ];
+  if (!editing) return <VocabularyCollectionDialog open={open} seed={fb.vocabularySeed} />;
   return (
     <ModalFrame
       open={open}

@@ -391,6 +391,94 @@ test("my words restores searchable route filters without overview entryways", ()
   expect(screen.queryByRole('link',{name:/Study wordbooks/})).not.toBeInTheDocument();
   expect(screen.getByRole('link',{name:'one'})).toHaveAttribute('href',expect.stringContaining('returnTo='));
 });
+
+test('my words marks missing definitions as pending using saved senses and keeps Edit available', () => {
+  fixture();
+  const [pending, ready, mixed] = fb.current.state.vocabulary;
+  Object.assign(pending, { meaning: 'An old summary', senses: [{ ...pending.senses[0], definition: '  \n  ' }], enrichmentPending: false });
+  ready.enrichmentPending = true;
+  Object.assign(mixed, { senses: [{ ...mixed.senses[0], id: 'blank', definition: '' }, { ...mixed.senses[0], id: 'defined', definition: 'A saved second meaning.' }], enrichmentPending: true });
+  fb.current.setEditingVocabularyId = vi.fn();
+  fb.current.setVocabularySeed = vi.fn();
+  render(<MemoryRouter initialEntries={['/vocabulary/words']}><VocabularyWordsPage /></MemoryRouter>);
+
+  const pendingRow = screen.getByRole('link', { name: 'one' }).closest('[role="listitem"]') as HTMLElement;
+  expect(within(pendingRow).getByText('Pending definition')).toBeInTheDocument();
+  expect(within(pendingRow).getByText('Use Edit to add a meaning before practice.')).toBeInTheDocument();
+  expect(screen.getAllByText('Pending definition')).toHaveLength(1);
+  expect(screen.getByText('A saved second meaning.')).toBeInTheDocument();
+  fireEvent.click(within(pendingRow).getByRole('button', { name: 'Edit one' }));
+  expect(fb.current.setEditingVocabularyId).toHaveBeenCalledWith('one');
+  expect(fb.current.setVocabularySeed).toHaveBeenCalledWith(pending);
+  expect(fb.current.openModal).toHaveBeenCalledWith('vocabulary');
+});
+
+test('my words restores pending-definition and source filters through browser history', () => {
+  fixture();
+  const [pending, ready, otherSource] = fb.current.state.vocabulary;
+  Object.assign(pending, { senses: [], sources: [{ type: 'reading', id: 'reading-pending' }] });
+  ready.sources = [{ type: 'reading', id: 'reading-ready' }];
+  otherSource.senses = [{ ...otherSource.senses[0], definition: '' }];
+  render(<MemoryRouter initialEntries={['/vocabulary/words?source=reading&readiness=pending']}><VocabularyWordsPage /><WordRouteControls /></MemoryRouter>);
+
+  expect(screen.getByRole('button', { name: 'Practice readiness' })).toHaveTextContent('Pending definition');
+  expect(screen.getByRole('button', { name: 'Source' })).toHaveTextContent('Reading');
+  const word = screen.getByRole('link', { name: 'one' });
+  const target = new URL(word.getAttribute('href')!, 'https://fieldbook.invalid');
+  expect(target.searchParams.get('returnTo')).toBe('/vocabulary/words?source=reading&readiness=pending');
+  expect(screen.queryByRole('link', { name: 'two' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'three' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Open second filter' }));
+  expect(screen.getByRole('button', { name: 'Practice readiness' })).toHaveTextContent('All words');
+  expect(screen.getByRole('link', { name: 'two' })).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Browser back' }));
+  expect(screen.getByRole('button', { name: 'Practice readiness' })).toHaveTextContent('Pending definition');
+  expect(screen.getByRole('link', { name: 'one' })).toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'two' })).not.toBeInTheDocument();
+});
+
+test('changing practice readiness resets page and selection while preserving source filters', () => {
+  fixture();
+  const template = fb.current.state.vocabulary[0];
+  fb.current.state.vocabulary = [
+    ...Array.from({ length: 101 }, (_, index) => ({ ...template, id: `word-${index}`, term: `word${index}`, sources: [{ type: 'reading', id: `reading-${index}` }], enrichmentPending: true })),
+    { ...template, id: 'pending', term: 'unfinished', senses: [], sources: [{ type: 'reading', id: 'reading-pending' }], enrichmentPending: false },
+    { ...template, id: 'other', term: 'other', senses: [], sources: [{ type: 'listening', id: 'listening-pending' }] },
+  ];
+  render(<MemoryRouter initialEntries={['/vocabulary/words?source=reading&page=1&marker=keep']}><VocabularyWordsPage /><WordRouteControls /></MemoryRouter>);
+  fireEvent.click(screen.getByRole('checkbox', { name: 'Select word100' }));
+  expect(screen.getByText('1 selected')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Practice readiness' }));
+  fireEvent.click(screen.getByRole('option', { name: 'Pending definition' }));
+  expect(screen.getByRole('link', { name: 'unfinished' })).toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'other' })).not.toBeInTheDocument();
+  expect(screen.queryByText('1 selected')).not.toBeInTheDocument();
+  expect(screen.getByLabelText('Words URL')).toHaveTextContent('source=reading');
+  expect(screen.getByLabelText('Words URL')).toHaveTextContent('readiness=pending');
+  expect(screen.getByLabelText('Words URL')).toHaveTextContent('marker=keep');
+  expect(screen.getByLabelText('Words URL')).not.toHaveTextContent('page=');
+  fireEvent.click(screen.getByRole('button', { name: 'Practice readiness' }));
+  fireEvent.click(screen.getByRole('option', { name: 'Ready to practise' }));
+  expect(screen.getByRole('link', { name: 'word0' })).toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'unfinished' })).not.toBeInTheDocument();
+  expect(screen.getByLabelText('Words URL')).toHaveTextContent('readiness=ready');
+  fireEvent.click(screen.getByRole('button', { name: 'Practice readiness' }));
+  fireEvent.click(screen.getByRole('option', { name: 'All words' }));
+  expect(screen.getByLabelText('Words URL')).not.toHaveTextContent('readiness=');
+});
+
+test('clear word filters resets practice readiness and preserves unrelated URL state', () => {
+  fixture();
+  render(<MemoryRouter initialEntries={['/vocabulary/words?search=missing&status=mastered&source=reading&skill=reading&readiness=pending&page=1&marker=keep']}><VocabularyWordsPage /><WordRouteControls /></MemoryRouter>);
+  expect(screen.getByText('No vocabulary matches these filters.')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Clear filters' }));
+  expect(screen.getByRole('button', { name: 'Practice readiness' })).toHaveTextContent('All words');
+  expect(screen.getByRole('checkbox', { name: 'Select one' })).toBeInTheDocument();
+  expect(screen.getByRole('checkbox', { name: 'Select two' })).toBeInTheDocument();
+  expect(screen.getByRole('checkbox', { name: 'Select three' })).toBeInTheDocument();
+  expect(screen.getByLabelText('Words URL')).toHaveTextContent(/^\?marker=keep$/);
+});
+
 test("history links submitted sessions to independent result routes", () => {
   fixture(); fb.current.state.vocabularySessions=[submitted(['one'])];
   render(<MemoryRouter><VocabularyHistoryPage/></MemoryRouter>);

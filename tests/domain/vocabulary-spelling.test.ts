@@ -16,7 +16,7 @@ test.each([
 ])('dictation accepts regional spellings: %s / %s', (uk, us) => {
   expect(matchesDictationSpelling(uk, us)).toBe(true);
   expect(matchesDictationSpelling(us, uk)).toBe(true);
-  const state = fresh(); addVocabularyItem(state, { term: uk });
+  const state = fresh(); addVocabularyItem(state, { term: uk, meaning: 'A term used in this spelling exercise.' });
   expect(evaluateVocabularySessionAnswer(getVocabularyReviewQueue(state, { mode: 'dictation', dueOnly: false })[0], us).result).toBe('success');
 });
 test.each([['colour', 'colur'], ['metre', 'metro'], ['organ', 'orgon'], ['price', 'prize'], ['advice', 'advise'], ['colour', 'colors'], ['shopping centre', 'shopping centers'], ['grey', ''], ['humorous', 'humourous']])('rejects genuine spelling or form errors: %s / %s', (word, response) => {

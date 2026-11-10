@@ -59,6 +59,7 @@ import { resolveRegionalSpellingWrongWords } from '../domain/vocabulary/regional
 import { vocabularyLists, setVocabularyManualStatus, normalizeAnswer } from '../domain/vocabulary';
 import type { VocabularyEntry, VocabularySkill, VocabularySource } from '../domain/vocabulary';
 import { vocabularySourceKey } from '../domain/vocabulary/sources';
+import { collectVocabularyChoice } from '../domain/vocabulary/collection';
 import { normalizeVocabularyPreferences } from '../domain/vocabulary/preferences';
 import { clearVocabularyDraft, readVocabularyDraft } from '../storage/vocabularyDrafts';
 import { ensurePlans, ensureUnifiedPlans, inferredDeskMode, planMatchesSkill, planningSettingsKey, mutateStudyPlan, applyBacklogPreview, compareStudyPlans } from '../lib/planTemplates';
@@ -663,6 +664,16 @@ function useFieldbookValue() {
           if (index < 0) current.push(structuredClone(item));
           else if (JSON.stringify(current[index]) === prior.get(id)) current[index] = structuredClone(item);
         });
+        // A collected definition may become the primary meaning of a pending word.
+        // Preserve a later user reorder, while applying the committed order otherwise.
+        if (field === 'senses') {
+          const previousOrder = before.map(identity);
+          const liveOrder = current.filter(item => prior.has(identity(item))).map(identity);
+          if (JSON.stringify(liveOrder) === JSON.stringify(previousOrder)) {
+            const order = new Map(value.map((item, index) => [identity(item), index]));
+            current.sort((a, b) => (order.get(identity(a)) ?? value.length) - (order.get(identity(b)) ?? value.length));
+          }
+        }
         return;
       }
       if (JSON.stringify(row[field]) === change.before[field]) row[field] = structuredClone(value);
@@ -746,6 +757,17 @@ function useFieldbookValue() {
       const result = addVocabularyItem(next, frozen);
       if (!result.item) return null;
       return [{key:'vocabulary',id:result.item.id,fields:['senses','sources','updatedAt']}, ...next.vocabularyStates.filter(row=>row.entryId===result.item.id).map(row=>({key:'vocabularyStates',id:row.id,fields:[]}))];
+    }, options);
+  }, [commitVocabularyFields]);
+
+  const collectVocabularyEntry = useCallback((input, options?) => {
+    const frozen = structuredClone(input);
+    return commitVocabularyFields(next => {
+      const existingStates = new Set(next.vocabularyStates.map(row => row.id));
+      const result = collectVocabularyChoice(next, frozen);
+      if (!result.item) return null;
+      return [{key:'vocabulary',id:result.item.id,fields:['senses','sources','tags','meaning','example','enrichmentPending','updatedAt']},
+        ...next.vocabularyStates.filter(row=>row.entryId===result.item.id && !existingStates.has(row.id)).map(row=>({key:'vocabularyStates',id:row.id,fields:[]}))];
     }, options);
   }, [commitVocabularyFields]);
 
@@ -2049,6 +2071,7 @@ function useFieldbookValue() {
       saveVocabularyLearning,
       saveVocabularyStatus,
       saveVocabularyEntry,
+      collectVocabularyEntry,
       saveVocabularyStatuses,
       saveVocabularyPreferences,
       saveStudySettings,
@@ -2074,6 +2097,7 @@ function useFieldbookValue() {
     }),
     [
       activeDeskMode,
+      collectVocabularyEntry,
       moduleStatus,
       bankStatus,
       bankErrors,

@@ -23,6 +23,7 @@ import { QuestionEvidence } from './QuestionEvidence';
 import { readingQuestionPrompt } from './ReadingPassage';
 import { questionReviewContent } from './questionReview';
 import { receptivePlanCompletionDescription } from '../../lib/receptivePlans';
+import { ExamAcceptedAnswer } from './ExamAcceptedAnswer';
 
 /** Note fields stay folded away until a learner adds notes; saved notes keep them open. */
 function ReviewNotes({ hasNotes, children }: { hasNotes: boolean; children: ReactNode }) {
@@ -174,10 +175,7 @@ export function ExamReviewPage({ skill }: { skill: ExamSkill }) {
 <dt>Your response</dt>
 <dd>{Array.isArray(response) ? response.join(' · ') || 'No answer' : response.trim() || 'No answer'}</dd>
 </div>
-<div>
-<dt>Answer</dt>
-<dd>{Array.isArray(question.answer) ? question.answer.join(' · ') : question.answer || 'Source answer unavailable'}</dd>
-</div>
+<ExamAcceptedAnswer question={question} />
 </dl>
 <section className="exam-review-explanation" aria-label={'Answer explanation for ' + questionLabel(question).toLowerCase()}>
 <h4>{review.title}</h4><p className="exam-explanation">{review.explanation}</p>{review.evidence && <blockquote>

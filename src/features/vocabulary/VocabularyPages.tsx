@@ -44,6 +44,7 @@ import { progressRangeStart } from '../progress/practiceActivity';
 import "../../styles/vocabulary.css";
 import "../../styles/vocabulary-workbench.css";
 import '../../styles/vocabulary-home.css';
+import '../../styles/vocabulary-collection-list.css';
 import { isRegionalSpellingDifference } from '../../domain/vocabulary/spelling';
 import { formatCount, plural } from '../../lib/format';
 import { getVocabularyMastery } from '../../domain/vocabulary/mastery';
@@ -169,6 +170,7 @@ function editEntry(fb, entry = null) {
   fb.setVocabularySeed(entry || {});
   fb.openModal("vocabulary");
 }
+const savedDefinitionSense = entry => (entry.senses || []).find(sense => sense.definition?.trim());
 function dateLabel(value) {
   return value && !Number.isNaN(new Date(value).getTime())
     ? new Date(value).toLocaleDateString("en-GB", {
@@ -364,6 +366,7 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
   const status = wordParams.get('status') || 'all';
   const source = wordParams.get('source') || 'all';
   const skill = wordParams.get('skill') || 'all';
+  const readiness = wordParams.get('readiness') || 'all';
   const requestedPage = Number(wordParams.get('page') || 0);
   const [selected, setSelected] = useState(new Set());
   const [bulk, setBulk] = useState('familiar');
@@ -381,6 +384,7 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
   const setStatus = value => updateFilter('status', value);
   const setSource = value => updateFilter('source', value);
   const setSkill = value => updateFilter('skill', value);
+  const setReadiness = value => updateFilter('readiness', value);
   const rememberReturn = entryId => rememberVocabularyPosition(location.pathname + location.search, `vocabulary-word-${entryId}`);
   const entries = (fb.state.vocabulary || []).filter(
     (entry) => !(entry.tags || []).includes("archived"),
@@ -388,6 +392,7 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
   const filtered = useMemo(
     () =>
       entries.filter((entry) => {
+        const ready = Boolean(savedDefinitionSense(entry));
         const text = [
           entry.term,
           entry.meaning,
@@ -398,6 +403,7 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
           .toLowerCase();
         return (
           text.includes(search.toLowerCase().trim()) &&
+          (readiness === 'all' || readiness === 'ready' && ready || readiness === 'pending' && !ready) &&
           (status === "all" || manualOf(fb.state, entry.id) === status) &&
           (source === "all" ||
             (entry.sources || []).some((item) => item.type === source)) &&
@@ -407,9 +413,9 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
             ))
         );
       }),
-    [entries, fb.state.vocabularyStates, search, status, source, skill],
+    [entries, fb.state.vocabularyStates, search, status, source, skill, readiness],
   );
-  const filterKey = [search,status,source,skill].join('|');
+  const filterKey = [search,status,source,skill,readiness].join('|');
   const maxPage = Math.max(0, Math.ceil(filtered.length / 100) - 1);
   const page = Math.min(maxPage, Number.isInteger(requestedPage) && requestedPage >= 0 ? requestedPage : 0);
   const setPage = value => setWordParams(current => { const next = new URLSearchParams(current); next.set('page', String(Math.max(0, Math.min(maxPage, value)))); return next; }, {replace:true,state:location.state});
@@ -483,6 +489,16 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
           placeholder="Search vocabulary"
           value={search}
           onChange={(event) => setSearch(event.target.value)}
+        />
+        <SelectField
+          label="Practice readiness"
+          value={readiness}
+          onChange={setReadiness}
+          options={[
+            { value: 'all', label: 'All words' },
+            { value: 'ready', label: 'Ready to practise' },
+            { value: 'pending', label: 'Pending definition' },
+          ]}
         />
         <SelectField
           label="Familiarity"
@@ -563,7 +579,10 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
           <div className="vocabulary-word-head" aria-hidden="true"><span /><span>Word</span><span>Meaning</span><span>Familiarity</span><span /><span /></div>
           <div className="vocabulary-table vocabulary-word-list" role="list">
             {visibleEntries.map((entry) => {
-              const sense = resolveVocabularyLearningContext(entry).sense;
+              const definedSense = savedDefinitionSense(entry);
+              const pendingDefinition = !definedSense;
+              const resolvedSense = resolveVocabularyLearningContext(entry).sense;
+              const sense = resolvedSense?.definition?.trim() ? resolvedSense : definedSense || resolvedSense;
               const mastery = getVocabularyMastery(fb.state, entry.id);
               const wrong = learning(fb.state, entry.id).some((item) => item.wrong?.active);
               // Below 741 px the default "New · automatic" status is implied and not repeated on every row.
@@ -598,9 +617,14 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
                     {entry.term}
                   </Link>
                 </div>
-                <p className="vocabulary-word-meaning">
-                  {sense?.pos ? <small>{sense.pos}</small> : null}
-                  {sense?.definition || 'Definition not available yet'}
+                <p className={`vocabulary-word-meaning${pendingDefinition ? ' is-pending' : ''}`}>
+                  {pendingDefinition ? <>
+                    <span className="vocabulary-word-pending">Pending definition</span>
+                    <span id={`vocabulary-definition-help-${entry.id}`}>Use Edit to add a meaning before practice.</span>
+                  </> : <>
+                    {sense?.pos ? <small>{sense.pos}</small> : null}
+                    {sense.definition}
+                  </>}
                 </p>
                 <div className={`vocabulary-word-status${plain ? " is-plain" : ""}`}>
                   <span
@@ -622,7 +646,8 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
                   type="button"
                   className="icon-button vocabulary-word-edit"
                   aria-label={`Edit ${entry.term}`}
-                  title="Edit vocabulary"
+                  aria-describedby={pendingDefinition ? `vocabulary-definition-help-${entry.id}` : undefined}
+                  title={pendingDefinition ? 'Add a meaning before practice' : 'Edit vocabulary'}
                   onClick={() => editEntry(fb, entry)}
                 >
                   <Pencil size={16} />
@@ -644,7 +669,7 @@ function VocabularyWordsView({ wordsOnly = true } = {}) {
           <button type="button" className="btn line" onClick={() => {
             if (!entries.length) editEntry(fb);
             else {
-              setWordParams(current => { const next = new URLSearchParams(current); ['search','status','source','skill','page'].forEach(key => next.delete(key)); return next; }, { replace: true, state: location.state });
+              setWordParams(current => { const next = new URLSearchParams(current); ['search','status','source','skill','readiness','page'].forEach(key => next.delete(key)); return next; }, { replace: true, state: location.state });
             }
           }}>{entries.length ? "Clear filters" : "Add vocabulary"}</button>
         </StateMessage>

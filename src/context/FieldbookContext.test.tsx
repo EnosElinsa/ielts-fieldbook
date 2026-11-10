@@ -1018,6 +1018,53 @@ test('provider preserves same-word exam occurrences after sequential collection 
   expect(fieldbook.state.vocabularyEvidence).toEqual([]);
 });
 
+test('linked collection is durable, retryable and preserves personal meanings and learning evidence', async () => {
+  const sense = { id: 'storage', definition: 'My personal meaning.', example: '', pos: 'noun' };
+  const entry = addVocabularyItem(mocks.initial, { id: 'locker', term: 'locker', senses: [sense], tags: ['archived'] }).item;
+  mocks.initial.vocabularyStates[0].reviewCount = 4;
+  const previousLearning = structuredClone(mocks.initial.vocabularyStates);
+  await mount('/listening');
+  const choice = { term: 'locker', entry, sense: { ...sense, definition: 'Public definition.', example: 'Public example.' }, sources: [{ type: 'listening', id: 'part', exam: { sectionId: 'part', sentenceId: 'one', quote: 'lockers', start: 0, end: 7 } }] };
+  mocks.saveState.mockResolvedValueOnce(false);
+  const onError = vi.fn();
+  await act(async () => { expect(await fieldbook.collectVocabularyEntry(choice, { onError })).toBe(false); });
+  expect(fieldbook.state.vocabulary[0].tags).toContain('archived');
+  expect(fieldbook.state.vocabulary[0].sources).toHaveLength(1);
+  await act(async () => { expect(await fieldbook.collectVocabularyEntry(choice)).toBe(true); });
+  expect(fieldbook.state.vocabulary[0].senses).toEqual([expect.objectContaining(sense)]);
+  expect(fieldbook.state.vocabulary[0].tags).not.toContain('archived');
+  expect(fieldbook.state.vocabulary[0].sources).toContainEqual(expect.objectContaining({ senseId: sense.id, exam: choice.sources[0].exam }));
+  expect(fieldbook.state.vocabularyStates).toEqual(previousLearning);
+  expect(mocks.saveState.mock.calls.at(-1)[2].collections).toEqual(['vocabulary']);
+  await act(async () => { expect(await fieldbook.persistNow()).toBe(true); });
+  expect(mocks.saveState.mock.calls.at(-1)[0].vocabulary[0].sources).toHaveLength(2);
+  expect(fieldbook.state.vocabularyEvidence).toEqual([]);
+});
+
+test('a delayed linked collection preserves edits and assessment updates made during saving', async () => {
+  const entry = addVocabularyItem(mocks.initial, { term: 'locker', meaning: 'An original meaning.' }).item;
+  await mount();
+  const pending = defer(); mocks.saveState.mockReturnValueOnce(pending.promise);
+  let saving;
+  await act(async () => { saving = fieldbook.collectVocabularyEntry({ term: 'locker', entry, sense: { id: 'ship', definition: 'A compartment on a ship.', example: '', pos: 'noun' }, sources: [{ type: 'listening', id: 'part' }] }); await Promise.resolve(); });
+  await act(async () => { fieldbook.persist(draft => { draft.vocabulary[0].senses[0].definition = 'A newer personal note.'; draft.vocabularyStates[0].reviewCount = 5; }); await Promise.resolve(); });
+  await act(async () => { pending.resolve(true); expect(await saving).toBe(true); });
+  await waitFor(() => expect(mocks.saveState).toHaveBeenCalledTimes(2));
+  expect(fieldbook.state.vocabulary[0].senses.map(row => row.definition)).toEqual(['A newer personal note.', 'A compartment on a ship.']);
+  expect(fieldbook.state.vocabularyStates[0].reviewCount).toBe(5);
+  expect(mocks.saveState.mock.calls.at(-1)[0].vocabulary[0].senses).toHaveLength(2);
+});
+
+test('a linked definition becomes the primary meaning of a pending word through save and replay', async () => {
+  const entry = addVocabularyItem(mocks.initial, { term: 'locker' }).item;
+  await mount();
+  const sense = { id: 'public-storage', definition: 'A lockable compartment.', example: 'Use a locker.', pos: 'noun' };
+  await act(async () => { expect(await fieldbook.collectVocabularyEntry({ term: entry.term, sense, sources: [{ type: 'personal', id: 'manual' }] })).toBe(true); });
+  expect(fieldbook.state.vocabulary[0].senses[0]).toMatchObject(sense);
+  await act(async () => { expect(await fieldbook.persistNow()).toBe(true); });
+  expect(mocks.saveState.mock.calls.at(-1)[0].vocabulary[0].senses[0]).toMatchObject(sense);
+});
+
 test('a real dictionary hull sense stays reviewable from its exact Part after provider save and replay', async () => {
   const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
   const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.hull}`, 'utf8'));

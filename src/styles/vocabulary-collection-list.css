@@ -1,0 +1,11 @@
+/* Pending meanings stay visible beside their existing edit action at every width. */
+.vocabulary-word-list .vocabulary-word-meaning.is-pending {
+  display: block;
+  overflow: visible;
+}
+.vocabulary-word-list .vocabulary-word-pending {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--ink);
+  font-weight: 600;
+}

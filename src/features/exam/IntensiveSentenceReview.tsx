@@ -6,6 +6,7 @@ import { StateMessage } from '../../components/AsyncState';
 import type { ExamSentence, IntensiveListeningReview, IntensiveSession } from '../../domain/exam/types';
 import { readExamRecovery, writeExamRecovery, clearExamRecovery } from '../../storage/examRecovery';
 import { IntensiveAudio } from './IntensiveAudio';
+import { IntensiveDiagnosisSummary } from './IntensiveDiagnosis';
 
 type Review = Omit<IntensiveListeningReview, 'nextReviewAt'>;
 type Draft = { started: boolean; listened?: boolean; selfRating?: Review['selfRating']; reviewedAt?: string; revealed?: boolean };
@@ -60,7 +61,7 @@ export function IntensiveSentenceReview({ owner, session, sentence, audioUrl, au
         {due && !complete ? <button className="btn primary" disabled={busy} onClick={() => { setSaved(false); pass.current = false; update({ started: true }); }}>Start listening review</button> : null}
       </div>
       <p className="intensive-action-hint">Listening reviews keep your previous dictation and recording. New dictation and shadowing are optional.</p>
-      <details open={historyOpen} onToggle={event => setHistoryOpen(event.currentTarget.open)}><summary>Previous practice and reviews</summary>{historyOpen ? <><p>{session.transcriptInput}</p>{session.shadowingAudioId ? <SessionAudioPlayer audioId={session.shadowingAudioId} label="Saved shadowing" /> : null}{session.listeningReviews?.map(row => <p key={row.reviewedAt}>{date(row.reviewedAt)} · Listening understanding {row.selfRating}/5</p>)}<button className="btn line" disabled={busy} onClick={() => { clearExamRecovery(owner, key); onRestart(); }}>Practise dictation and shadowing again</button></> : null}</details>
+      <details open={historyOpen} onToggle={event => setHistoryOpen(event.currentTarget.open)}><summary>Previous practice and reviews</summary>{historyOpen ? <><p>{session.transcriptInput}</p><IntensiveDiagnosisSummary diagnosis={session} />{session.shadowingAudioId ? <SessionAudioPlayer audioId={session.shadowingAudioId} label="Saved shadowing" /> : null}{session.reviewHistory?.map((cycle, index) => <div className="intensive-cycle-history" key={index}><p>{cycle.completedAt ? date(cycle.completedAt) : 'Previous practice'} · {cycle.dictationResult}</p><IntensiveDiagnosisSummary diagnosis={cycle} /></div>)}{session.listeningReviews?.map(row => <p key={row.reviewedAt}>{date(row.reviewedAt)} · Listening understanding {row.selfRating}/5</p>)}<button className="btn line" disabled={busy} onClick={() => { clearExamRecovery(owner, key); onRestart(); }}>Practise dictation and shadowing again</button></> : null}</details>
     </> : <>
       <p>Play the whole sentence without the transcript. Then rate how much you understood; no typing or new recording is required.</p>
       {audioUrl ? <IntensiveAudio src={audioUrl} scope={`listening-review:${sentence.id}`} start={start} end={end} full={!hasTiming} speed={speed} loop={loop} previousDisabled nextDisabled onPrevious={() => {}} onNext={() => {}} onSpeedChange={setSpeed} onLoopChange={setLoop} onReplay={() => { pass.current = true; }} onPlaybackInvalidated={() => { pass.current = false; }} onSentenceEnd={() => { if (pass.current && hasTiming) { pass.current = false; update({ ...draft!, listened: true }); } }} /> : <StateMessage message={audioError || 'Loading sentence audio…'} onRetry={onRetryAudio} retryLabel="Retry audio" />}

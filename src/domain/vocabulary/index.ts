@@ -247,6 +247,7 @@ export function recordVocabularyReview(state: VocabularyStore, input: { entryId:
 }
 
 function supportsMode(entry: VocabularyEntry, sense: VocabularySense, mode: VocabularyMode) {
+  if (!sense.definition.trim()) return false;
   if (isVocabularyPracticeReference(entry.id, sense)) return false;
   if (mode === 'definition') return Boolean(sense.definition);
   if (mode === 'cloze' || mode === 'synonym') return Boolean(learningTask(entry, sense, mode));

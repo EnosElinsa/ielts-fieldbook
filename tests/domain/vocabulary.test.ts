@@ -86,10 +86,11 @@ describe('unified vocabulary', () => {
     expect(state.vocabularyStates[0].dimensions.meaning.successes).toBe(1);
   });
 
-  test('missing enrichment prevents definition and cloze tasks but allows dictation', () => {
-    const state = fresh(); vocabulary.addVocabularyItem(state, { term: 'unspecified' });
-    expect(vocabulary.getVocabularyReviewQueue(state, { mode: 'definition', dueOnly: false })).toHaveLength(0);
-    expect(vocabulary.getVocabularyReviewQueue(state, { mode: 'cloze', dueOnly: false })).toHaveLength(0);
+  test('a pending definition excludes every practice mode until it is completed', () => {
+    const state = fresh(); const entry = vocabulary.addVocabularyItem(state, { term: 'unspecified' }).item;
+    expect(vocabulary.getVocabularyReviewQueue(state, { dueOnly: false })).toHaveLength(0);
+    vocabulary.updateVocabularyItem(state, entry.id, { meaning: 'Not stated or identified.' });
+    expect(vocabulary.getVocabularyReviewQueue(state, { mode: 'definition', dueOnly: false })).toHaveLength(1);
     expect(vocabulary.getVocabularyReviewQueue(state, { mode: 'dictation', dueOnly: false })).toHaveLength(1);
   });
 

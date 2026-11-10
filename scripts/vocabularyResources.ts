@@ -50,7 +50,7 @@ export function buildVocabularyResources(root: string) {
   };
   const cache: ResourceBuildCache = { baselines: new WeakMap(), emissions: new Map(), serialized: new WeakMap() };
   const catalog = (entries: Catalog, content: VocabularyTeachingData) => buildResourceCatalog(entries, content, cache);
-  const generated = catalog(source, teaching);
+  const generated = buildResourceCatalog(source, teaching, cache, true);
   // Reverse each published correction batch in order to preserve its exact URLs and bytes.
   const retainedDictionaryCatalogs = [];
   let beforeDictionaryExpansion = teaching;
@@ -163,7 +163,7 @@ function resourceRowIndex<T>(items: T[], identity: (row: T) => string) {
   };
 }
 
-function buildResourceCatalog(source: Catalog, teaching: VocabularyTeachingData, cache: ResourceBuildCache) {
+function buildResourceCatalog(source: Catalog, teaching: VocabularyTeachingData, cache: ResourceBuildCache, includeTermIndex = false) {
   const baselineFields = new Set(['id', 'definition', 'example', 'pos', 'collocations', 'usage', 'synonyms', 'antonyms', 'distinctions', 'distinctionTask', 'wordFamily', 'register', 'source']);
   const resources = new VocabularyResourceFiles();
   const emit = (name: string, value: unknown) => {
@@ -243,8 +243,20 @@ function buildResourceCatalog(source: Catalog, teaching: VocabularyTeachingData,
   }
   const teachingIndex = { version: 1, bookIds: source.books.map(book => book.id), books: source.books, units, groups: Object.fromEntries(units.filter(unit => unit.teachingResource).map(unit => [JSON.stringify([unit.bookId, unit.id]), unit.teachingResource!])), entryShards, entryTeachingResources };
   const teachingIndexUrl = emit('teaching-index', teachingIndex);
-  const manifest = { version: 1, books: source.books, units, entryCount: source.entries.length, entryShards, entryResources, entryTeachingResources };
-  const manifestUrl = emit('manifest', manifest);
+  const previousManifest = { version: 1, books: source.books, units, entryCount: source.entries.length, entryShards, entryResources, entryTeachingResources };
+  // Older open clients keep using this exact manifest and its content-addressed URL.
+  const previousManifestUrl = emit('manifest', previousManifest);
+  let termIndexUrl: string | undefined;
+  if (includeTermIndex) {
+    const terms: Record<string, string[]> = {};
+    for (const entry of source.entries) {
+      const term = entry.term.normalize('NFKC').toLocaleLowerCase('en').replace(/[‘’]/g, "'").trim().replace(/\s+/g, ' ');
+      (terms[term] ||= []).push(entry.id);
+    }
+    termIndexUrl = emit('term-index', terms);
+  }
+  const manifest = { ...previousManifest, ...(termIndexUrl ? { termIndexUrl } : {}) };
+  const manifestUrl = termIndexUrl ? emit('manifest', manifest) : previousManifestUrl;
   return { manifest, resources, manifestUrl, teachingIndex, teachingIndexUrl };
 }
 
