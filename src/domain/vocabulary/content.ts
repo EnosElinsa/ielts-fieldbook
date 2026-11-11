@@ -143,6 +143,31 @@ export function hasVocabularySenseEdits(sense: VocabularySense, baselines: (Voca
    Object.hasOwn(item,field) && comparableSenseValue(item[field]) === comparableSenseValue(sense[field]))
  ));
 }
+
+/** Older dictionary imports materialised absent fields as empty values. Restore
+ * only an exact importer snapshot with recorded import provenance, for display.
+ * Personal notes and edits to any imported field remain independent. */
+export function restoreVocabularyDictionaryImport(entry: VocabularyEntry): VocabularyEntry {
+ const imported = entry.sources?.some(source => {
+  if (!/^dictionary account public-dictionary; source word(?: |$)/.test(source.context || '')) return false;
+  try { const key: unknown = JSON.parse(source.id); return Array.isArray(key) && key[0] === 'dictionary' && key[1] === 'public-dictionary'; }
+  catch { return false; }
+ });
+ if (!imported) return entry;
+ const senses = entry.senses.map(sense => {
+  const known = [...catalogVocabularySenses(entry.id).filter(row => row.id === sense.id), ...vocabularyReadinessBaselines(entry.id,sense.id), ...vocabularyCurriculumBaselines(entry.id,sense.id)];
+  const original = known.find(row => {
+   const baseline: VocabularySense = { id:row.id, definition:row.definition, example:row.example, pos:row.pos,
+    usage:row.usage || '', collocations:row.collocations || [], synonyms:row.synonyms || [], antonyms:row.antonyms || [], distinctions:row.distinctions || [] };
+   return !hasVocabularySenseEdits(sense,[baseline]);
+  });
+  if (!original) return sense;
+  const restored = { ...sense };
+  for (const field of editableSenseFields) delete (restored as unknown as Record<string,unknown>)[field];
+  return { ...restored, ...original };
+ });
+ return { ...entry, senses };
+}
 function existingReviewedEntry(entry: VocabularyEntry): VocabularyEntry {
  if (!entry.id.startsWith('vocab:') && !entry.id.startsWith('guixue:') && !entry.senses.some(sense => sense.source?.includes('Kaikki') || sense.source === 'Fieldbook editorial')) return entry;
  const item = reviewed[entry.term.toLowerCase()];
@@ -179,6 +204,7 @@ export function catalogVocabularySenses(id:string):VocabularySense[] {
  return catalogVocabularyEntry(id)?.senses || vocabularyTeaching.senseBaselines[id] || [];
 }
 export function reviewedEntry(entry:VocabularyEntry):VocabularyEntry {
+ entry=restoreVocabularyDictionaryImport(entry);
  const existing=existingReviewedEntry(entry);
  const originals=catalogVocabularySenses(entry.id);
  const canonical=(learningSenses as Record<string,VocabularySense>)[entry.term.toLowerCase()];

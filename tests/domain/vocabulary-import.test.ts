@@ -80,4 +80,13 @@ describe('vocabulary migration', () => {
     expect(state.vocabularyEvidence).toHaveLength(0);
     expect(state.vocabulary[0].enrichmentPending).toBe(false);
   });
+  it('preserves missing dictionary fields while accepting legacy null lists', () => {
+    const sense = { id: 'dictionary:1', definition: 'Introducing new ideas.', source: 'Kaikki.org English Wiktionary export', license: 'CC-BY-SA-4.0' };
+    const batch = parseVocabularyImport({ schemaVersion: 1, provider: 'dictionary', entries: [
+      { term: 'innovative', senses: [sense, { ...sense, id: 'dictionary:2', synonyms: null, antonyms: [], collocations: null, distinctions: null }] },
+    ] });
+    const [missing, legacy] = batch.records[0].senses;
+    for (const field of ['usage', 'synonyms', 'antonyms', 'collocations', 'distinctions']) expect(Object.hasOwn(missing, field)).toBe(false);
+    for (const field of ['synonyms', 'antonyms', 'collocations', 'distinctions']) expect(legacy[field]).toEqual([]);
+  });
 });

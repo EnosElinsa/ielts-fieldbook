@@ -178,8 +178,7 @@ export function SettingsPage() {
       </div>)}
     </nav>
     <div className="settings-content">
-      {returnTo || location.state?.vocabularyReturn ? <VocabularyBackLink/> : null}
-      <header className="settings-section-heading"><div><h2>{categories.find(([id]) => id === category)?.[1]}</h2><p>{categoryDescriptions[category || 'target']}</p></div>{dirty&&<span className="settings-draft-status">Unsaved changes</span>}</header>
+      <header className="settings-section-heading"><div className="settings-heading-copy"><h2>{categories.find(([id]) => id === category)?.[1]}</h2><p>{categoryDescriptions[category || 'target']}</p></div>{(returnTo || location.state?.vocabularyReturn || dirty) && <div className="settings-heading-actions">{returnTo || location.state?.vocabularyReturn ? <VocabularyBackLink className="btn text settings-return-link"/> : null}{dirty&&<span className="settings-draft-status">Unsaved changes</span>}</div>}</header>
       <fieldset className="settings-fields" disabled={saving}>
         {category === 'target' && <SettingsSection title="Exam target" description="Both fields are optional. You can add or change them later."><div className="form">
           <div className="field"><label htmlFor="settings-exam">Exam date (optional)</label><DateField id="settings-exam" label="Exam date" value={draft.examDate} onChange={(examDate: string) => update({ examDate })} /></div>
@@ -207,18 +206,18 @@ export function SettingsPage() {
           {preferenceSelect('Feedback', 'feedback', [{ value: 'end', label: 'After submission' }, { value: 'immediate', label: 'After each answer' }])}
           {preferenceSelect('Order', 'order', [{ value: 'source', label: 'Source order' }, { value: 'due', label: 'Due date' }, { value: 'random', label: 'Shuffle' }])}
           <div className="field"><span>Layout</span><div className="settings-segment" role="group" aria-label="Practice layout">{(['list', 'cards'] as const).map(layout => <button type="button" key={layout} aria-pressed={draft.vocabulary.layout === layout} onClick={() => vocabulary({ layout })}>{layout === 'list' ? <List size={17} /> : <Square size={17} />}{layout === 'list' ? 'List' : 'Focus'}</button>)}</div></div>
-          <label className="settings-toggle check-chip"><input type="checkbox" checked={draft.vocabulary.autoAdvance} onChange={event => vocabulary({ autoAdvance: event.target.checked })} />Advance with Enter</label>
+          <div className="field"><span>Keyboard</span><label className="settings-toggle"><input type="checkbox" checked={draft.vocabulary.autoAdvance} onChange={event => vocabulary({ autoAdvance: event.target.checked })} />Advance with Enter</label></div>
         </div></SettingsSection>}
         {category === 'practice' && <>
           <SettingsSection title="Audio playback" description="These preferences apply during practice and are saved to your account.">
           <div className="form">
             {preferenceSelect('Accent', 'accent', [{ value: 'uk', label: 'British English' }, { value: 'us', label: 'American English' }])}
             {preferenceSelect('Playback speed', 'speechRate', choices([0.6, 0.8, 1, 1.2, 1.5], 'x'))}
-            {preferenceSelect('Repeat', 'repeatCount', choices([1, 2, 3, 5], ' times'))}
-            {preferenceSelect('Repeat gap', 'repeatGapMs', [0, 500, 800, 1000, 1500, 2000, 3000].map(value => ({ value, label: `${value / 1000} seconds` })))}
-            {preferenceSelect('Audio loop gap', 'audioGapMs', [0, 500, 1000, 1500, 2000, 3000, 5000].map(value => ({ value, label: `${value / 1000} seconds` })))}
+            {preferenceSelect('Repeat', 'repeatCount', [1, 2, 3, 5].map(value => ({ value, label: `${value} ${value === 1 ? 'time' : 'times'}` })))}
+            {preferenceSelect('Repeat gap', 'repeatGapMs', [0, 500, 800, 1000, 1500, 2000, 3000].map(value => ({ value, label: `${value / 1000} ${value === 1000 ? 'second' : 'seconds'}` })))}
+            {preferenceSelect('Audio loop gap', 'audioGapMs', [0, 500, 1000, 1500, 2000, 3000, 5000].map(value => ({ value, label: `${value / 1000} ${value === 1000 ? 'second' : 'seconds'}` })))}
             <label className="field">Volume {Math.round(draft.vocabulary.volume * 100)}%<input aria-label="Volume" type="range" min={0} max={1} step={0.05} value={draft.vocabulary.volume} onChange={event => vocabulary({ volume: Number(event.target.value) })} /></label>
-            {(['autoPlay', 'audioExamples'] as const).map(key => <label className="settings-toggle check-chip" key={key}><input type="checkbox" checked={draft.vocabulary[key]} onChange={event => vocabulary({ [key]: event.target.checked })} />{key === 'autoPlay' ? 'Autoplay' : 'Examples in audio loop'}</label>)}
+            {(['autoPlay', 'audioExamples'] as const).map(key => <label className="settings-toggle" key={key}><input type="checkbox" checked={draft.vocabulary[key]} onChange={event => vocabulary({ [key]: event.target.checked })} />{key === 'autoPlay' ? 'Autoplay' : 'Examples in audio loop'}</label>)}
           </div></SettingsSection><DeviceVoicePreferences disabled={saving} />
         </>}
         {category === 'workspace' && <>

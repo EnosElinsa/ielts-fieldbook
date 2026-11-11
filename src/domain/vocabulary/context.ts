@@ -1,5 +1,5 @@
 import { vocabularyTeaching, vocabularyTeachingRevision, type VocabularyContentScope } from './runtimeData';
-import { catalogVocabularyEntry, catalogVocabularySenses, hasVocabularySenseEdits, reviewedEntry, VOCABULARY_CONTENT_VERSION } from './content';
+import { catalogVocabularyEntry, catalogVocabularySenses, hasVocabularySenseEdits, restoreVocabularyDictionaryImport, reviewedEntry, VOCABULARY_CONTENT_VERSION } from './content';
 import { applyVocabularyContentVariant, hasVocabularyReadinessDefault, markVocabularyContentScope, supplementVocabularySense, vocabularyReadinessBaselines } from './readiness';
 import { vocabularyCurriculum, vocabularyCurriculumBaselines, type VocabularyCurriculum } from './curriculum';
 import type { VocabularyEntry, VocabularySense } from './types';
@@ -38,6 +38,7 @@ function key(value: { bookId?: string; unitId?: string; entryId: string }) {
 
 /** Pure display/task resolver. Explicit sense wins; group bindings never change learner data. */
 export function resolveVocabularyLearningContext(entry: VocabularyEntry, request: VocabularyContextRequest = {}): ResolvedVocabularyLearningContext {
+  entry = restoreVocabularyDictionaryImport(entry);
   request = normalizeVocabularyScope(request);
   ensureContexts();
   const route:VocabularyContentScope=request.bookId && request.unitId?{kind:'group',bookId:request.bookId,unitId:request.unitId}:request.senseId?{kind:'dictionary-source'}:{kind:'default'};

@@ -609,7 +609,12 @@ test('reading and due listening plans open their own workspaces and save linked 
   mocks.initial.plans = [{ id: 'reading-plan', kind: 'reading-practice', status: 'pending' }, { id: 'listening-plan', kind: 'listening-intensive', status: 'pending', sectionId: 'part', sentenceId: 'sentence' }];
   await mount();
   await act(async () => { await fieldbook.startPlan('reading-plan'); });
-  expect(currentPath).toBe('/reading/part?planId=reading-plan&questions=%5B%22q%22%5D');
+  const readingPath = currentPath;
+  const readingUrl = new URL(currentPath, 'https://fieldbook.local');
+  expect(readingUrl.pathname).toBe('/reading/part');
+  expect(readingUrl.searchParams.get('planId')).toBe('reading-plan');
+  expect(readingUrl.searchParams.get('questions')).toBe('["q"]');
+  expect(readingUrl.searchParams.get('returnTo')).toBe('/#task-reading-plan');
   expect(fieldbook.state.settings.activeSkill).toBe('reading');
   const now = new Date().toISOString();
   await act(async () => {
@@ -621,7 +626,11 @@ test('reading and due listening plans open their own workspaces and save linked 
   expect(fieldbook.state.activePlanId).toBeNull();
   mocks.examSectionsRead.mockResolvedValue({sections:[{id:'part',skill:'listening',status:'ready',sentences:[{id:'sentence'}]}],questions:[{id:'q',sectionId:'part'}]});
   await act(async () => { await fieldbook.startPlan('listening-plan'); });
-  expect(currentPath).toBe('/listening/intensive/part?sentence=sentence&planId=listening-plan');
+  const listeningUrl = new URL(currentPath, 'https://fieldbook.local');
+  expect(listeningUrl.pathname).toBe('/listening/intensive/part');
+  expect(listeningUrl.searchParams.get('sentence')).toBe('sentence');
+  expect(listeningUrl.searchParams.get('planId')).toBe('listening-plan');
+  expect(listeningUrl.searchParams.get('returnTo')).toBe(readingPath);
   expect(fieldbook.state.settings.activeSkill).toBe('listening');
   await act(async () => {
     const draft = structuredClone(fieldbook.stateRef.current);
@@ -629,6 +638,27 @@ test('reading and due listening plans open their own workspaces and save linked 
     await fieldbook.persistNow(draft);
   });
   expect(fieldbook.state.plans.find(plan => plan.id === 'listening-plan')).toMatchObject({ status: 'completed', linkedSessionId: 'intensive' });
+});
+
+test.each(['reading','listening'])('starting a %s plan keeps the Planning view and task anchor in its return URL', async skill => {
+  const id = `${skill}-planned-origin`;
+  mocks.initial.plans = [{ id, kind: `${skill}-practice`, skill, status: 'pending' }];
+  mocks.examSectionsRead.mockResolvedValue({sections:[{id:'part',skill,status:'ready'}],questions:[{id:'q',sectionId:'part'}]});
+  await mount('/planning?view=waiting');
+  await act(async () => { await fieldbook.startPlan(id); });
+  const destination = new URL(currentPath, 'https://fieldbook.local');
+  expect(destination.pathname).toBe(`/${skill}/part`);
+  expect(destination.searchParams.get('returnTo')).toBe(`/planning?view=waiting#task-${id}`);
+});
+
+test('opening a completed Listening plan retains Planning as its results return destination', async () => {
+  mocks.initial.plans = [{ id:'done-listening', kind:'listening-practice', skill:'listening', status:'completed', linkedSessionId:'saved-attempt' }];
+  await mount('/planning?view=history');
+  await act(async () => { await fieldbook.startPlan('done-listening'); });
+  const destination = new URL(currentPath, 'https://fieldbook.local');
+  expect(destination.pathname).toBe('/listening/review/saved-attempt');
+  expect(destination.searchParams.get('planId')).toBe('done-listening');
+  expect(destination.searchParams.get('returnTo')).toBe('/planning?view=history#task-done-listening');
 });
 
 test('hydration persists proven regional wrong corrections and keeps failed-save recovery', async () => {

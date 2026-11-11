@@ -1579670,5 +1579670,3696 @@
         }
       ]
     }
+  },
+  {
+    "entryId": "ve-4b4b510a",
+    "senseId": "kaikki:3ecae9445c2f2654ca",
+    "example": "The Earth's lithosphere includes the crust and the rigid uppermost mantle.",
+    "originalSense": {
+      "id": "kaikki:3ecae9445c2f2654ca",
+      "definition": "The rigid, mechanically strong, outer layer of the Earth, which is divided into twelve major tectonic plates.",
+      "example": "Holonyms: Earth, earth",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "chemical lithosphere",
+        "lithospheric",
+        "mechanical lithosphere",
+        "rheological lithosphere",
+        "seismic lithosphere",
+        "thermal lithosphere"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/lithosphere#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The rigid, mechanically strong, outer layer of the Earth, which is divided into twelve major tectonic plates.",
+        "example": "Holonyms: Earth, earth",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-659615a7",
+    "senseId": "kaikki:0341954dbb9900ca72",
+    "example": "Water contains the elements hydrogen and oxygen.",
+    "originalSense": {
+      "id": "kaikki:0341954dbb9900ca72",
+      "definition": "The chemical element (symbol O) with an atomic number of 8 and relative atomic mass of 15.9994. It is a colorless and odorless gas. Sometimes called elemental oxygen to distinguish it from molecular oxygen.",
+      "example": "Holonyms: dioxygen, O₂, oxygen (loose sense)",
+      "pos": "noun",
+      "synonyms": [
+        "sourstuff",
+        "E948[packaging gas]]>"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "alkargen",
+        "anoxic",
+        "antioxygen",
+        "atmospheric oxygen",
+        "biochemical oxygen demand",
+        "biological oxygen demand",
+        "carbogen",
+        "carbon-nitrogen-oxygen cycle",
+        "chemical oxygen generator",
+        "dioxin",
+        "dioxindol",
+        "dioxygen",
+        "gox",
+        "heliox",
+        "hyperbaric oxygen chamber",
+        "hypoxia",
+        "linoxin",
+        "liquid oxygen",
+        "lox",
+        "loxygen",
+        "molecular oxygen",
+        "nitrox",
+        "nonoxygen",
+        "nox",
+        "octaoxygen",
+        "organooxygen",
+        "oxamidine",
+        "oxo-",
+        "oxy-",
+        "oxygen-16"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/oxygen#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The chemical element (symbol O) with an atomic number of 8 and relative atomic mass of 15.9994. It is a colorless and odorless gas. Sometimes called elemental oxygen to distinguish it from molecular oxygen.",
+        "example": "Holonyms: dioxygen, O₂, oxygen (loose sense)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-7166ff4c",
+    "senseId": "kaikki:8ddc7cd843ee009f88",
+    "example": "The farmer attached a plough to the tractor before preparing the field.",
+    "originalSense": {
+      "id": "kaikki:8ddc7cd843ee009f88",
+      "definition": "A device pulled through the ground in order to break it open into furrows for planting.",
+      "example": "Meronyms: ploughshare, plowshare, share, moldboard, mouldboard, coulter, colter, jointer, chisel, ploughbeam, beam, ploughstaff, staff, hake",
+      "pos": "noun",
+      "synonyms": [
+        "sull"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "ard plough",
+        "breastplough",
+        "fire-plough",
+        "gangplough",
+        "ice plough",
+        "mine plough",
+        "mole plough",
+        "mouldboard plough",
+        "plough-alms",
+        "plough-bote",
+        "ploughbote",
+        "ploughboy",
+        "ploughgirl",
+        "ploughhead",
+        "ploughhorse",
+        "plough iron",
+        "plough jockey",
+        "ploughland",
+        "ploughless",
+        "ploughlike",
+        "ploughman",
+        "plough paddle",
+        "ploughpan",
+        "ploughperson",
+        "ploughpoint",
+        "ploughshare",
+        "plough stop",
+        "ploughtail",
+        "plough-tree",
+        "ploughwise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/plough#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A device pulled through the ground in order to break it open into furrows for planting.",
+        "example": "Meronyms: ploughshare, plowshare, share, moldboard, mouldboard, coulter, colter, jointer, chisel, ploughbeam, beam, ploughstaff, staff, hake",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-a5168ed3",
+    "senseId": "kaikki:4523e115645f6d1385",
+    "example": "The seedlings need several hours of sunlight each day.",
+    "originalSense": {
+      "id": "kaikki:4523e115645f6d1385",
+      "definition": "All the electromagnetic radiation given off by the Sun; especially, that in the visible spectrum and that bathes the Earth.",
+      "example": "Meronym: sunbeams",
+      "pos": "noun",
+      "synonyms": [
+        "daylight",
+        "daylight",
+        "sun",
+        "sunshine"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "Port Sunlight",
+        "synchro-sunlight",
+        "sunlight is the best disinfectant"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sunlight#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "All the electromagnetic radiation given off by the Sun; especially, that in the visible spectrum and that bathes the Earth.",
+        "example": "Meronym: sunbeams",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-58d7b33",
+    "senseId": "kaikki:bcf1182212a2d7ac5e",
+    "example": "The new rules must not infringe the rights of local residents.",
+    "originalSense": {
+      "id": "kaikki:bcf1182212a2d7ac5e",
+      "definition": "To break or violate a treaty, a law, a right, etc.",
+      "example": "Near-synonyms: flout, infract",
+      "pos": "verb",
+      "synonyms": [
+        "flout",
+        "infract"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "infringeable",
+        "infringed",
+        "infringee",
+        "infringement",
+        "infringer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/infringe#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "To break or violate a treaty, a law, a right, etc.",
+        "example": "Near-synonyms: flout, infract",
+        "pos": "verb"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-b66e652",
+    "senseId": "kaikki:23c63f723a649f86e5",
+    "example": "A whale surfaced beside the research boat.",
+    "originalSense": {
+      "id": "kaikki:23c63f723a649f86e5",
+      "definition": "Any large cetacean, usually with the exclusion of dolphins and porpoises.",
+      "example": "Near-synonym: baleen (obsolete sense)",
+      "pos": "noun",
+      "synonyms": [
+        "baleen"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "Arctic whale",
+        "baleen whale",
+        "beached whale",
+        "beaked whale",
+        "belly of the whale",
+        "Belly of the Whale",
+        "beluga whale",
+        "black whale",
+        "blue whale",
+        "bone whale",
+        "bottlenose whale",
+        "bowhead whale",
+        "Bryde's whale",
+        "caaing whale",
+        "ca'ing whale",
+        "desert whale",
+        "Eden's whale",
+        "fail whale",
+        "false killer whale",
+        "finback whale",
+        "fin whale",
+        "flue whale",
+        "gray whale",
+        "grey whale",
+        "great whale",
+        "Greenland whale",
+        "have a whale of a time",
+        "humpback whale",
+        "ice whale",
+        "Jupiter whale"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/whale#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "Any large cetacean, usually with the exclusion of dolphins and porpoises.",
+        "example": "Near-synonym: baleen (obsolete sense)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-a680a04",
+    "senseId": "kaikki:bb2f27420ec6652e4b",
+    "example": "A small mouse ran beneath the kitchen cupboard.",
+    "originalSense": {
+      "id": "kaikki:bb2f27420ec6652e4b",
+      "definition": "Any mammal of the many rodent families (especially Muridae) that have a small body and a long tail.",
+      "example": "Near-synonyms: murine, murid, vole (all parasynonymous with this broad sense)",
+      "pos": "noun",
+      "synonyms": [
+        "murine",
+        "murid",
+        "vole"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "broadly",
+      "register": "broadly",
+      "wordFamily": [
+        "a cat in gloves catches no mice",
+        "anonymouse",
+        "antimouse",
+        "Arctic mouse-ear",
+        "are you a man or a mouse",
+        "Baker's small-toothed harvest mouse",
+        "bastard big-footed mouse",
+        "bean-mouse",
+        "big-footed mouse",
+        "bit by a barn mouse",
+        "brush-furred mouse",
+        "brush-tailed mouse",
+        "cat-and-mouse",
+        "cat and mouse",
+        "churchmouse",
+        "city mouse",
+        "clit mouse",
+        "cotton mouse",
+        "Count Branicki's mouse",
+        "country mouse",
+        "creepmouse",
+        "Darling Downs hopping mouse",
+        "demouse",
+        "desert mouse",
+        "Doogie mouse",
+        "dormouse",
+        "dust mouse",
+        "fieldmouse",
+        "flindermouse",
+        "flittermouse"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/mouse#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "Any mammal of the many rodent families (especially Muridae) that have a small body and a long tail.",
+        "example": "Near-synonyms: murine, murid, vole (all parasynonymous with this broad sense)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-7c6ea02c",
+    "senseId": "kaikki:e49dffbc21e48c524f",
+    "example": "A single gene can influence the colour of a flower.",
+    "originalSense": {
+      "id": "kaikki:e49dffbc21e48c524f",
+      "definition": "A theoretical unit of heredity of living organisms which may take several values and (in principle) predetermines a precise trait of an organism's form (phenotype), such as hair color.",
+      "example": "Near-synonym: cistron (often synonymous)",
+      "pos": "noun",
+      "synonyms": [
+        "cistron"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "algeny",
+        "Angelina Jolie gene",
+        "antigene",
+        "aristogene",
+        "atrogene",
+        "cene",
+        "cisgene",
+        "control gene",
+        "cream gene",
+        "cytogene",
+        "eigengene",
+        "electrochemogene",
+        "electrogene",
+        "endogene",
+        "gene-altered",
+        "gene bank",
+        "gene cassette",
+        "genechip",
+        "gene complex",
+        "gene drive",
+        "gene-engineered",
+        "gene expression",
+        "gene family",
+        "geneflow",
+        "gene flow",
+        "gene frequency",
+        "gene gun",
+        "geneless",
+        "genelet",
+        "genelike"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/gene#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A theoretical unit of heredity of living organisms which may take several values and (in principle) predetermines a precise trait of an organism's form (phenotype), such as hair color.",
+        "example": "Near-synonym: cistron (often synonymous)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-31e499eb",
+    "senseId": "kaikki:971046dd7dca5743d2",
+    "example": "Draw a triangle with three equal sides.",
+    "originalSense": {
+      "id": "kaikki:971046dd7dca5743d2",
+      "definition": "A polygon with three sides and three angles.",
+      "example": "Meronyms: angle, side, cathetus, leg, hypotenuse; see also Thesaurus:polygon",
+      "pos": "noun",
+      "synonyms": [
+        "threeside",
+        "trigon"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "abracadabrangle",
+        "acute-angled triangle",
+        "acute triangle",
+        "anal triangle",
+        "anterior triangle",
+        "anti-triangle",
+        "Bermuda Triangle",
+        "Bézier triangle",
+        "Bir Tawil Triangle",
+        "black triangle",
+        "blue triangle",
+        "body triangle",
+        "Brocard triangle",
+        "Calot's triangle",
+        "Cape triangle",
+        "carotid triangle",
+        "circular triangle",
+        "color triangle",
+        "colour triangle",
+        "combustion triangle",
+        "cyclic triangle",
+        "cystohepatic triangle",
+        "danger triangle",
+        "danger triangle of the face",
+        "devil's triangle",
+        "Devil's Triangle",
+        "disclosure triangle",
+        "drama triangle",
+        "equilateral triangle",
+        "eternal triangle"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/triangle#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A polygon with three sides and three angles.",
+        "example": "Meronyms: angle, side, cathetus, leg, hypotenuse; see also Thesaurus:polygon",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-3dfface0",
+    "senseId": "kaikki:605fe5605845a71019",
+    "example": "The project schedule shows when each stage of construction will begin.",
+    "originalSense": {
+      "id": "kaikki:605fe5605845a71019",
+      "definition": "A procedural plan, usually but not necessarily tabular in nature, indicating a sequence of operations and the planned times at which those operations are to occur.",
+      "example": "Near-synonyms: timeline, timetable",
+      "pos": "noun",
+      "synonyms": [
+        "timeline",
+        "timetable"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "ahead of schedule",
+        "behind schedule",
+        "fee schedule",
+        "General Schedule",
+        "Keeling schedule",
+        "on schedule",
+        "payment schedule",
+        "scheduleless",
+        "sleep schedule",
+        "subschedule",
+        "vesting schedule"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/schedule#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A procedural plan, usually but not necessarily tabular in nature, indicating a sequence of operations and the planned times at which those operations are to occur.",
+        "example": "Near-synonyms: timeline, timetable",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-718a28c9",
+    "senseId": "kaikki:30f15561da3bb449c3",
+    "example": "The report provides a summary account of the survey results.",
+    "originalSense": {
+      "id": "kaikki:30f15561da3bb449c3",
+      "definition": "Concise, brief, or presented in a condensed form; presenting information in such a form.",
+      "example": "Near-synonym: abstractive",
+      "pos": "adj",
+      "synonyms": [
+        "summative",
+        "summarizing[participial adjective|part. adj.]]>",
+        "abstractive"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "summarily",
+        "summariness",
+        "summary court-martial",
+        "summary dismissal"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/summary#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "Concise, brief, or presented in a condensed form; presenting information in such a form.",
+        "example": "Near-synonym: abstractive",
+        "pos": "adj"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-8351a1c3",
+    "senseId": "kaikki:9dfc4759204aa53968",
+    "example": "Advances in technology have made factory machinery more efficient.",
+    "originalSense": {
+      "id": "kaikki:9dfc4759204aa53968",
+      "definition": "The combined application of science and art in practical ways in industry, as for example in designing new machines.",
+      "example": "Meronyms: (contextually meronymous) art, applied science, industrial arts",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "aerotechnology",
+        "agrotechnology",
+        "anti-technology",
+        "antitechnology",
+        "appropriate technology",
+        "assisted reproductive technology",
+        "assistive technology",
+        "astrotechnology",
+        "biotechnology",
+        "bulk technology",
+        "chief technology officer",
+        "city technology college",
+        "cryotechnology",
+        "cybertechnology",
+        "cytotechnology",
+        "Czechnology",
+        "ecotechnology",
+        "electrotechnology",
+        "femtotechnology",
+        "geotechnology",
+        "gerontechnology",
+        "grief technology",
+        "high technology",
+        "histotechnology",
+        "hydrotechnology",
+        "information and communications technology",
+        "information technology",
+        "information technology bubble",
+        "institute of technology",
+        "language technology"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/technology#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The combined application of science and art in practical ways in industry, as for example in designing new machines.",
+        "example": "Meronyms: (contextually meronymous) art, applied science, industrial arts",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-42d9912d",
+    "senseId": "kaikki:6137786aee5d762baa",
+    "example": "The engineers need to devise a cheaper way to store energy.",
+    "originalSense": {
+      "id": "kaikki:6137786aee5d762baa",
+      "definition": "To use one’s intellect to plan or design (something).",
+      "example": "Near-synonyms: lay, set, design, plan, create",
+      "pos": "verb",
+      "synonyms": [
+        "lay",
+        "set",
+        "design",
+        "plan",
+        "create"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "devisable",
+        "devisal",
+        "devisee",
+        "give, devise, and bequeath",
+        "redevise"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/devise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "To use one’s intellect to plan or design (something).",
+        "example": "Near-synonyms: lay, set, design, plan, create",
+        "pos": "verb"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-7c6afc65",
+    "senseId": "kaikki:99729e79b19b8eff37",
+    "example": "The needle on the dial showed that the pressure was rising.",
+    "originalSense": {
+      "id": "kaikki:99729e79b19b8eff37",
+      "definition": "A graduated, circular scale over which a needle moves to show a measurement (such as speed).",
+      "example": "Holonyms: (often holonymous) instrument, gauge",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dial#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A graduated, circular scale over which a needle moves to show a measurement (such as speed).",
+        "example": "Holonyms: (often holonymous) instrument, gauge",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-bb399c8b",
+    "senseId": "kaikki:f24bbfa0d19ebcf92b",
+    "example": "The team tested a prototype before manufacturing the final product.",
+    "originalSense": {
+      "id": "kaikki:f24bbfa0d19ebcf92b",
+      "definition": "An original form or object which is a basis for other forms or objects (particularly manufactured items), or for its generalizations and models.",
+      "example": "Near-synonym: archetype (sometimes synonymous)",
+      "pos": "noun",
+      "synonyms": [
+        "archetype",
+        "exemplar"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "pretotype",
+        "prototypable",
+        "prototypal",
+        "prototype-based",
+        "prototype-based language",
+        "prototype-based programming",
+        "prototype-based scripting language",
+        "prototype extension",
+        "prototype-oriented",
+        "prototype-oriented programming",
+        "prototype pattern",
+        "prototype theory",
+        "prototypic",
+        "prototypical",
+        "prototypicality",
+        "prototypically",
+        "prototyping"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prototype#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "An original form or object which is a basis for other forms or objects (particularly manufactured items), or for its generalizations and models.",
+        "example": "Near-synonym: archetype (sometimes synonymous)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-a2175ab",
+    "senseId": "kaikki:d3a4ad6b9073736dd1",
+    "example": "The builders will alter the layout to create a larger kitchen.",
+    "originalSense": {
+      "id": "kaikki:d3a4ad6b9073736dd1",
+      "definition": "To change the form or structure of.",
+      "example": "Near-synonym: tweak",
+      "pos": "verb",
+      "synonyms": [
+        "tweak"
+      ],
+      "antonyms": [
+        "preserve",
+        "leave alone",
+        "leave be",
+        "let alone",
+        "let be"
+      ],
+      "collocations": [],
+      "usage": "ambitransitive",
+      "register": "ambitransitive",
+      "wordFamily": [
+        "alterability",
+        "alterable",
+        "alterably",
+        "alterative",
+        "alter-ego",
+        "alterer",
+        "alter-globalist",
+        "alter-globalization",
+        "alteringly",
+        "alter or change",
+        "mind-altering",
+        "misalter",
+        "prealter",
+        "realter",
+        "unalter",
+        "unaltering"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/alter#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "To change the form or structure of.",
+        "example": "Near-synonym: tweak",
+        "pos": "verb"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-bcb21d98",
+    "senseId": "kaikki:47cb89f620ae350f01",
+    "example": "Religion shapes many of the community's ceremonies and daily customs.",
+    "originalSense": {
+      "id": "kaikki:47cb89f620ae350f01",
+      "definition": "Belief in a spiritual or metaphysical reality (often including at least one deity), accompanied by practices or rituals pertaining to the belief.",
+      "example": "Holonyms: cosmology, ontology, epistemology, philosophy",
+      "pos": "noun",
+      "synonyms": [
+        "theism",
+        "faith",
+        "belief"
+      ],
+      "antonyms": [
+        "nonreligion",
+        "nonreligiousness",
+        "nonbelief",
+        "unbelief",
+        "irreligion",
+        "irreligiousness",
+        "atheism",
+        "antitheism",
+        "antireligion",
+        "antireligiousness"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "American civil religion",
+        "antireligion",
+        "conreligion",
+        "counterreligion",
+        "find religion",
+        "freedom of religion",
+        "get religion",
+        "irreligious",
+        "lip religion",
+        "misreligion",
+        "natural religion",
+        "neo-religion",
+        "nonreligion",
+        "overreligion",
+        "parareligion",
+        "protoreligion",
+        "pseudoreligion",
+        "religicide",
+        "religiofascist",
+        "religofascist",
+        "religionary",
+        "religionism",
+        "religionist",
+        "religionistic",
+        "religionization",
+        "religionize",
+        "religionless",
+        "religionlike",
+        "religion of peace",
+        "religion of piss"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/religion#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "Belief in a spiritual or metaphysical reality (often including at least one deity), accompanied by practices or rituals pertaining to the belief.",
+        "example": "Holonyms: cosmology, ontology, epistemology, philosophy",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-694c3ab8",
+    "senseId": "kaikki:3982a6a4830049c131",
+    "example": "New industries brought jobs and prosperity to the region.",
+    "originalSense": {
+      "id": "kaikki:3982a6a4830049c131",
+      "definition": "The condition of being prosperous: having good fortune and a fortune.",
+      "example": "Near-synonym: thriving",
+      "pos": "noun",
+      "synonyms": [
+        "prosperousness",
+        "abundance",
+        "affluence",
+        "cheese",
+        "ease",
+        "fortune",
+        "substance",
+        "Mammon",
+        "opulence",
+        "plenty",
+        "richdom",
+        "riches",
+        "wealth",
+        "thriving"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/prosperity#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The condition of being prosperous: having good fortune and a fortune.",
+        "example": "Near-synonym: thriving",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-7c70c09a",
+    "senseId": "kaikki:4dcfcb0f54153529bf",
+    "example": "We set up camp beside the lake and slept in two tents.",
+    "originalSense": {
+      "id": "kaikki:4dcfcb0f54153529bf",
+      "definition": "An outdoor place acting as temporary accommodation in tents or other simple structures.",
+      "example": "Near-synonyms: campsite, campground, encampment",
+      "pos": "noun",
+      "synonyms": [
+        "campsite",
+        "campground",
+        "encampment"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "autocamp",
+        "auto camp",
+        "band camp",
+        "BarCamp",
+        "base camp",
+        "boot camp",
+        "Bovington Camp",
+        "break camp",
+        "Bulford Camp",
+        "Bullcamp",
+        "bushcamp",
+        "Camp 1",
+        "Camp 3",
+        "Camp 7",
+        "Camp 8",
+        "Camp Aguinaldo",
+        "camp-ball",
+        "camp bed",
+        "Camp Blessing",
+        "camp collar",
+        "campcraft",
+        "Camp Creek",
+        "Camp David",
+        "Camp Douglas",
+        "Camp Downes",
+        "camper",
+        "campery",
+        "campestral",
+        "camp fever",
+        "camp fire"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/camp#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "An outdoor place acting as temporary accommodation in tents or other simple structures.",
+        "example": "Near-synonyms: campsite, campground, encampment",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-2fefbc97",
+    "senseId": "kaikki:90da2e9832181485f4",
+    "example": "Put the milk in the refrigerator to keep it fresh.",
+    "originalSense": {
+      "id": "kaikki:90da2e9832181485f4",
+      "definition": "A household or commercial appliance used for keeping food fresh using refrigeration.",
+      "example": "Meronyms: condenser, crisper, door, evaporator, meat keeper",
+      "pos": "noun",
+      "synonyms": [
+        "fridge",
+        "icebox"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "absorption refrigerator",
+        "Einstein refrigerator",
+        "Einstein-Szilárd refrigerator",
+        "fridge",
+        "in the refrigerator",
+        "kegerator",
+        "microrefrigerator",
+        "minirefrigerator",
+        "nanorefrigerator",
+        "refrig",
+        "refrigerator-freezer",
+        "refrigeratorful",
+        "refrigeratorlike",
+        "refrigerator magnet",
+        "refrigerator mom",
+        "refrigerator mother",
+        "refrigerator pie",
+        "refrigerator truck",
+        "walk-in refrigerator"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/refrigerator#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A household or commercial appliance used for keeping food fresh using refrigeration.",
+        "example": "Meronyms: condenser, crisper, door, evaporator, meat keeper",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-568d795a",
+    "senseId": "kaikki:3c57d384741e0a9f90",
+    "example": "They lived in luxury in a spacious house with a private pool.",
+    "originalSense": {
+      "id": "kaikki:3c57d384741e0a9f90",
+      "definition": "Very wealthy and comfortable surroundings; the state of being that they create.",
+      "example": "Near-synonyms: splendor, grandeur, grandness, decadence",
+      "pos": "noun",
+      "synonyms": [
+        "luxuriousness",
+        "luxe",
+        "splendor",
+        "grandeur",
+        "grandness",
+        "decadence"
+      ],
+      "antonyms": [
+        "austerity",
+        "spartanness",
+        "penury",
+        "poverty"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "antiluxury",
+        "hard luxury",
+        "lap of luxury",
+        "luxurist",
+        "luxury belief",
+        "luxury box",
+        "luxury good",
+        "luxury tax",
+        "nonluxury",
+        "quiet luxury",
+        "semiluxury",
+        "soft luxury",
+        "superluxury",
+        "ultraluxury",
+        "unluxury"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/luxury#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "Very wealthy and comfortable surroundings; the state of being that they create.",
+        "example": "Near-synonyms: splendor, grandeur, grandness, decadence",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-a468936",
+    "senseId": "kaikki:0154eb13926abe21e9",
+    "example": "The farmers stored the harvested grain in a dry barn.",
+    "originalSense": {
+      "id": "kaikki:0154eb13926abe21e9",
+      "definition": "The harvested seeds of various grass food crops, especially wheat, maize, rye, barley, and rice.",
+      "example": "Near-synonym: corn (broad sense, maize and others)",
+      "pos": "noun",
+      "synonyms": [
+        "cereal",
+        "corn"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "against the grain",
+        "ancient grain",
+        "Angoumois grain moth",
+        "argyrophilic grain disease",
+        "brewers' spent grains",
+        "distillers' grains",
+        "end grain",
+        "feedgrain",
+        "feed grain",
+        "felt grain",
+        "fine-grain",
+        "foodgrain",
+        "go against the grain",
+        "grainage",
+        "grain beetle",
+        "grain boundary",
+        "grain corn",
+        "grain elevator",
+        "grain engulfment",
+        "grain entrapment",
+        "grainfall",
+        "grainfield",
+        "grainflow",
+        "grainish",
+        "grain itch",
+        "grainland",
+        "grainless",
+        "grainlike",
+        "grainline",
+        "grain moon"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/grain#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The harvested seeds of various grass food crops, especially wheat, maize, rye, barley, and rice.",
+        "example": "Near-synonym: corn (broad sense, maize and others)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-7c79876f",
+    "senseId": "kaikki:c738624005cbef37dc",
+    "example": "Add a little salt to the soup before serving it.",
+    "originalSense": {
+      "id": "kaikki:c738624005cbef37dc",
+      "definition": "A common substance, chemically consisting mainly of sodium chloride (NaCl), used extensively as a food ingredient, seasoning, condiment, and preservative.",
+      "example": "Near-synonyms: table salt, rock salt, road salt",
+      "pos": "noun",
+      "synonyms": [
+        "common salt",
+        "table salt",
+        "rock salt",
+        "road salt"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "add salt to injury",
+        "antisalt",
+        "besalted",
+        "bisalt",
+        "black salt",
+        "blacksalter",
+        "bread and salt",
+        "cerebral salt-wasting syndrome",
+        "hydrosalt",
+        "kitchen salt",
+        "lay salt on someone's tail",
+        "nonsalt",
+        "old salt",
+        "oversalt",
+        "oxysalt",
+        "pepper and salt",
+        "persalt",
+        "polysalt",
+        "protosalt",
+        "resalt",
+        "salt and chilli chips",
+        "salt and pepper chips",
+        "salt-and-pepper noise",
+        "saltbox",
+        "saltbush",
+        "saltcat",
+        "salt cave",
+        "Salt Coates",
+        "salt coffee",
+        "salt daddy"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/salt#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A common substance, chemically consisting mainly of sodium chloride (NaCl), used extensively as a food ingredient, seasoning, condiment, and preservative.",
+        "example": "Near-synonyms: table salt, rock salt, road salt",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-ba00a1a",
+    "senseId": "kaikki:1f1d91b7127f29486a",
+    "example": "The equipment is kept in a secure store beside the workshop.",
+    "originalSense": {
+      "id": "kaikki:1f1d91b7127f29486a",
+      "definition": "A place where items may be accumulated or routinely kept.",
+      "example": "Near-synonyms: storeroom, stockroom, warehouse, magazine (archaic)",
+      "pos": "noun",
+      "synonyms": [
+        "storeroom",
+        "stockroom",
+        "warehouse",
+        "magazine"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "storage"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/store#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A place where items may be accumulated or routinely kept.",
+        "example": "Near-synonyms: storeroom, stockroom, warehouse, magazine (archaic)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-b878fa0",
+    "senseId": "kaikki:3a717980e50a371239",
+    "example": "He used a saw to cut the wooden board in half.",
+    "originalSense": {
+      "id": "kaikki:3a717980e50a371239",
+      "definition": "A tool used for cutting hard substances, in particular wood or metal.",
+      "example": "Meronyms: sawtooth < sawblade",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "usually",
+      "register": "usually",
+      "wordFamily": [
+        "saw-stool",
+        "saw-trestle",
+        "saw doctor",
+        "saw-edged",
+        "saw file",
+        "saw gin",
+        "saw palmetto",
+        "saw set",
+        "saw wrest",
+        "sawback",
+        "sawblade",
+        "sawbones",
+        "sawbuck",
+        "sawgrass",
+        "sawhorse",
+        "sawist",
+        "sawlog",
+        "sawman",
+        "sawmill",
+        "sawpit",
+        "saw-scaled viper",
+        "saw stroke",
+        "saw-whet owl",
+        "sawtooth",
+        "saw-tooth",
+        "saw-toothed",
+        "sawyer"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/saw#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A tool used for cutting hard substances, in particular wood or metal.",
+        "example": "Meronyms: sawtooth < sawblade",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-1b1d2a28",
+    "senseId": "kaikki:fe9c9e69d107f20682",
+    "example": "Turn left at the intersection of King Street and Market Road.",
+    "originalSense": {
+      "id": "kaikki:fe9c9e69d107f20682",
+      "definition": "The junction of two (or more) paths, streets, highways, or other thoroughfares.",
+      "example": "Near-synonym: crossroads",
+      "pos": "noun",
+      "synonyms": [
+        "crossroads",
+        "crossroads"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "cointersection",
+        "intersection syndrome",
+        "nonintersection",
+        "pseudointersection",
+        "seagull intersection",
+        "T-intersection",
+        "Y-intersection"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/intersection#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The junction of two (or more) paths, streets, highways, or other thoroughfares.",
+        "example": "Near-synonym: crossroads",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-128c44a",
+    "senseId": "kaikki:ed5bdd603afa464acd",
+    "example": "The council plans to implement the new recycling scheme in April.",
+    "originalSense": {
+      "id": "kaikki:ed5bdd603afa464acd",
+      "definition": "To bring about; to put into practice; to carry out.",
+      "example": "Near-synonyms: realize, actualize, materialize; embody; accomplish",
+      "pos": "verb",
+      "synonyms": [
+        "execute",
+        "realize",
+        "actualize",
+        "materialize",
+        "embody",
+        "accomplish"
+      ],
+      "antonyms": [
+        "disrealize"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "implementability",
+        "implementable",
+        "implemental",
+        "implementation",
+        "implementer",
+        "implementiferous",
+        "implementor",
+        "misimplement",
+        "nonimplement",
+        "nonimplemented",
+        "reimplement",
+        "unimplementability",
+        "unimplemented"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/implement#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "To bring about; to put into practice; to carry out.",
+        "example": "Near-synonyms: realize, actualize, materialize; embody; accomplish",
+        "pos": "verb"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-7153c701",
+    "senseId": "kaikki:ac621c212b10f25933",
+    "example": "The berries contain a poison that can cause serious illness if eaten.",
+    "originalSense": {
+      "id": "kaikki:ac621c212b10f25933",
+      "definition": "A substance that is harmful or lethal to a living organism when ingested.",
+      "example": "Near-synonym: (loosely) venom",
+      "pos": "noun",
+      "synonyms": [
+        "atter",
+        "bane",
+        "contaminant",
+        "pollutant",
+        "toxin"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "antipoison",
+        "arrow poison",
+        "arrow-poison frog",
+        "berry poison",
+        "box poison",
+        "bullock poison",
+        "bushman poison",
+        "bushman's poison",
+        "Champion Bay poison",
+        "Circean poison",
+        "cluster poison",
+        "counterpoison",
+        "crinkle-leaved poison",
+        "crow poison",
+        "dew poison",
+        "Durban poison",
+        "eastern poison ivy",
+        "empoison",
+        "fish poison tree",
+        "Gilbernine poison",
+        "granite poison",
+        "heart-leaved poison",
+        "Hill River poison",
+        "Hook Point poison",
+        "horned poison",
+        "Hottentot's poison bush",
+        "Hutt River poison",
+        "impoison",
+        "kite-leaved poison",
+        "mallet poison"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/poison#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A substance that is harmful or lethal to a living organism when ingested.",
+        "example": "Near-synonym: (loosely) venom",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-5c197189",
+    "senseId": "kaikki:6a7248cac4710d53e5",
+    "example": "He called himself a coward for being afraid to speak up.",
+    "originalSense": {
+      "id": "kaikki:6a7248cac4710d53e5",
+      "definition": "A person who lacks courage.",
+      "example": "Near-synonyms: big baby, baby",
+      "pos": "noun",
+      "synonyms": [
+        "chicken",
+        "pullet",
+        "scaredy pants",
+        "yellowbelly",
+        "big baby",
+        "baby",
+        "bottler",
+        "caitiff",
+        "candy-ass",
+        "candy-arse",
+        "coistril",
+        "coward",
+        "chicken",
+        "chicken liver",
+        "chickenshit",
+        "cocktail",
+        "cowardy custard",
+        "craven",
+        "dog",
+        "fraidy cat",
+        "funker",
+        "gutless wonder",
+        "invertebrate",
+        "jessie",
+        "lizard",
+        "milquetoast",
+        "nancy",
+        "niddering",
+        "nidering",
+        "nidget",
+        "niding",
+        "nithing",
+        "piece of crap",
+        "piece of shit",
+        "pisspants",
+        "poltroon",
+        "pullet",
+        "punk",
+        "pussy",
+        "pussyhole",
+        "quiche-eater",
+        "quakebreech",
+        "quakebuttock",
+        "recreant",
+        "scaredy cat",
+        "scaredy pants",
+        "shithouse",
+        "sissy",
+        "slag",
+        "sluggard",
+        "snool",
+        "sook",
+        "weak sister",
+        "wheyface",
+        "yellow belly",
+        "yellow back"
+      ],
+      "antonyms": [
+        "hero"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/coward#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A person who lacks courage.",
+        "example": "Near-synonyms: big baby, baby",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-24fac235",
+    "senseId": "kaikki:ad93a5d2fc8ed651a9",
+    "example": "Ask your supervisor to approve the change to your working hours.",
+    "originalSense": {
+      "id": "kaikki:ad93a5d2fc8ed651a9",
+      "definition": "A person with the official task of overseeing the work of a person or group, or of other operations and activities.",
+      "example": "Near-synonyms: superintendent, manager, boss, executive, overseer",
+      "pos": "noun",
+      "synonyms": [
+        "superintendent",
+        "manager",
+        "boss",
+        "executive",
+        "overseer"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "cosupervisor",
+        "hypervisor",
+        "script supervisor",
+        "supervisoress",
+        "supervisorship",
+        "undersupervisor"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/supervisor#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A person with the official task of overseeing the work of a person or group, or of other operations and activities.",
+        "example": "Near-synonyms: superintendent, manager, boss, executive, overseer",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-7e9514de",
+    "senseId": "kaikki:a11896b9df2cc31f4d",
+    "example": "The medical team managed to revive the runner after she fainted.",
+    "originalSense": {
+      "id": "kaikki:a11896b9df2cc31f4d",
+      "definition": "To cause (a person or animal) to recover from a faint; to cause (a person or animal) to return to a state of consciousness.",
+      "example": "Near-synonym: rescue",
+      "pos": "verb",
+      "synonyms": [
+        "rescue"
+      ],
+      "antonyms": [
+        "deanimate",
+        "devitalize",
+        "devive"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "revivability",
+        "revivable",
+        "revival",
+        "revived",
+        "revivement",
+        "reviver",
+        "revivor",
+        "reviving",
+        "revivingly",
+        "unrevivable",
+        "unrevived"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/revive#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "To cause (a person or animal) to recover from a faint; to cause (a person or animal) to return to a state of consciousness.",
+        "example": "Near-synonym: rescue",
+        "pos": "verb"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-b876329",
+    "senseId": "kaikki:bf61a81b3f1ffd1fd3",
+    "example": "A truck arrived to tow the broken car to a garage.",
+    "originalSense": {
+      "id": "kaikki:bf61a81b3f1ffd1fd3",
+      "definition": "To pull something behind one, such as by using a line, chain, or tongue.",
+      "example": "Near-synonyms: draw, haul, pull, trail",
+      "pos": "verb",
+      "synonyms": [
+        "draw",
+        "haul",
+        "pull",
+        "trail"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "aerotow",
+        "betow",
+        "heretog",
+        "towable",
+        "towage",
+        "towaway",
+        "towback",
+        "towball",
+        "towboat",
+        "towbody",
+        "towee",
+        "tower",
+        "towfish",
+        "towline",
+        "towmaster",
+        "townet",
+        "towpath",
+        "towrope",
+        "towship",
+        "towtruck",
+        "untowed",
+        "wantoe"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/tow#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "To pull something behind one, such as by using a line, chain, or tongue.",
+        "example": "Near-synonyms: draw, haul, pull, trail",
+        "pos": "verb"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-b399898a",
+    "senseId": "kaikki:577518e75e5e65fa1f",
+    "example": "The figures in this chart correspond to those in the final report.",
+    "originalSense": {
+      "id": "kaikki:577518e75e5e65fa1f",
+      "definition": "To be equivalent or similar in character, quantity, quality, origin, structure, function etc.",
+      "example": "Coordinate term: equate",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "correspondence",
+        "correspondent",
+        "voicespond"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/correspond#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "To be equivalent or similar in character, quantity, quality, origin, structure, function etc.",
+        "example": "Coordinate term: equate",
+        "pos": "verb"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-6686265b",
+    "senseId": "kaikki:578f5d3028f7bba0e9",
+    "example": "The cyclist suffered severe trauma to his leg in the collision.",
+    "originalSense": {
+      "id": "kaikki:578f5d3028f7bba0e9",
+      "definition": "Any injury to the body of a living thing.",
+      "example": "Near-synonyms: insult (contextually synonymous); see also Thesaurus:injury",
+      "pos": "noun",
+      "synonyms": [
+        "insult",
+        "injury",
+        "wound",
+        "scath",
+        "scathe",
+        "lesion",
+        "dere"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "atelectrauma",
+        "barotrauma",
+        "biotrauma",
+        "dialytrauma",
+        "geotrauma",
+        "macrotrauma",
+        "microtrauma",
+        "monotrauma",
+        "multitrauma",
+        "myotrauma",
+        "neurotrauma",
+        "nontrauma",
+        "oxytrauma",
+        "phonotrauma",
+        "polytrauma",
+        "posttrauma",
+        "psychotrauma",
+        "rape trauma syndrome",
+        "rheotrauma",
+        "shock trauma",
+        "suspension trauma",
+        "trauma bond",
+        "trauma bonding",
+        "trauma centre",
+        "traumacore",
+        "trauma dump",
+        "trauma dumping",
+        "trauma-focused cognitive behavioral therapy",
+        "trauma focused cognitive behavioral therapy",
+        "trauma focused cognitive behavioural therapy"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trauma#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "Any injury to the body of a living thing.",
+        "example": "Near-synonyms: insult (contextually synonymous); see also Thesaurus:injury",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-46e1aacc",
+    "senseId": "kaikki:ae1e96971e8b3878f9",
+    "example": "The school encourages tolerance of different religious beliefs.",
+    "originalSense": {
+      "id": "kaikki:ae1e96971e8b3878f9",
+      "definition": "The ability or practice of tolerating; an acceptance of or patience with the beliefs, opinions or practices of others; a lack of bigotry.",
+      "example": "Near-synonym: forbearance",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [
+        "intolerance"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "aerotolerance",
+        "autotolerance",
+        "barotolerance",
+        "Byzantine fault tolerance",
+        "chaotolerance",
+        "chronotolerance",
+        "crosstolerance",
+        "cryotolerance",
+        "halotolerance",
+        "heterotolerance",
+        "homotolerance",
+        "house of tolerance",
+        "hypertolerance",
+        "immunotolerance",
+        "nontolerance",
+        "osmotolerance",
+        "paradox of tolerance",
+        "phototolerance",
+        "pseudotolerance",
+        "psychrotolerance",
+        "radiotolerance",
+        "thermotolerance",
+        "tolerance break",
+        "trypanotolerance",
+        "xenotolerance",
+        "xerotolerance",
+        "zero tolerance"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/tolerance#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The ability or practice of tolerating; an acceptance of or patience with the beliefs, opinions or practices of others; a lack of bigotry.",
+        "example": "Near-synonym: forbearance",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-9c6487c",
+    "senseId": "kaikki:4380c6e9fa80b10624",
+    "example": "The nurse makes daily visits to check on the patient.",
+    "originalSense": {
+      "id": "kaikki:4380c6e9fa80b10624",
+      "definition": "That occurs or attends every day, or at least every working day.",
+      "example": "Near-synonyms: circadianly, diurnally",
+      "pos": "adj",
+      "synonyms": [
+        "circadianly",
+        "diurnally"
+      ],
+      "antonyms": [
+        "ahemeral"
+      ],
+      "collocations": [],
+      "usage": "not-comparable",
+      "register": "not-comparable",
+      "wordFamily": [
+        "bidaily",
+        "dailily",
+        "dailiness",
+        "daily-able",
+        "daily average revenue trades",
+        "daily beater",
+        "daily bread",
+        "daily-breader",
+        "daily devotional",
+        "daily double",
+        "daily drive",
+        "daily grind",
+        "daily life",
+        "daily necessities",
+        "daily strip",
+        "Daily Tele",
+        "daily torpor",
+        "interdaily",
+        "intradaily",
+        "multidaily",
+        "nondaily",
+        "non-daily",
+        "on a daily basis",
+        "on the daily",
+        "President's Daily Briefing",
+        "Saturdaily",
+        "semidaily",
+        "semi-daily",
+        "subdaily",
+        "Sundaily"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/daily#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "That occurs or attends every day, or at least every working day.",
+        "example": "Near-synonyms: circadianly, diurnally",
+        "pos": "adj"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-c7576967",
+    "senseId": "kaikki:5b43ca0796c5a516f3",
+    "example": "The bridge was built more than a century ago.",
+    "originalSense": {
+      "id": "kaikki:5b43ca0796c5a516f3",
+      "definition": "A period of one hundred consecutive years; often specifically a numbered period with conventional start and end dates, e.g., the twentieth century, which stretches from (strictly) 1901 through 2000, or (informally) 1900 through 1999. The first century AD was from 1 to 100.",
+      "example": "Holonyms: kiloannum, kiloyear, millennium < terasecond < mega-annum, megayear < petasecond < giga-annum, gigayear < exasecond < zettasecond < yottasecond < ronnasecond < quettasecond",
+      "pos": "noun",
+      "synonyms": [
+        "age",
+        "centennium",
+        "yearhundred",
+        "centenary"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "American Century",
+        "centurial",
+        "centuried",
+        "centuries-long",
+        "century break",
+        "century egg",
+        "centuryful",
+        "centurylong",
+        "century of humiliation",
+        "century plant",
+        "century year",
+        "half a century",
+        "half-century",
+        "light century",
+        "long eighteenth century",
+        "long nineteenth century",
+        "microcentury",
+        "mid-century",
+        "midcentury",
+        "mid-century modern",
+        "multicentury",
+        "nanocentury",
+        "of the century",
+        "quarter-century",
+        "semicentury",
+        "sesquicentury",
+        "short 20th century",
+        "short twentieth century",
+        "triple century",
+        "turn of the century"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/century#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A period of one hundred consecutive years; often specifically a numbered period with conventional start and end dates, e.g., the twentieth century, which stretches from (strictly) 1901 through 2000, or (informally) 1900 through 1999. The first century AD was from 1 to 100.",
+        "example": "Holonyms: kiloannum, kiloyear, millennium < terasecond < mega-annum, megayear < petasecond < giga-annum, gigayear < exasecond < zettasecond < yottasecond < ronnasecond < quettasecond",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-2d7a4a49",
+    "senseId": "kaikki:0a3fb72a55f23791ff",
+    "example": "The city has a population of one million.",
+    "originalSense": {
+      "id": "kaikki:0a3fb72a55f23791ff",
+      "definition": "The cardinal number 1 000 000: 10⁶; a thousand thousand (1,000²).",
+      "example": "Near-synonyms: mega-, M-",
+      "pos": "num",
+      "synonyms": [
+        "mega-",
+        "mul:M-"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "centimillion",
+        "decamillion",
+        "hectomillion",
+        "hundred million",
+        "like a million bucks",
+        "like a million dollars",
+        "like a million pounds",
+        "megamillion",
+        "millionaire",
+        "million and one",
+        "millionary",
+        "million city",
+        "million-dollar",
+        "million-dollar question",
+        "million dollar question",
+        "millioned",
+        "millionennium",
+        "millionfold",
+        "Milliongate",
+        "millionheiress",
+        "millionism",
+        "millionist",
+        "millionize",
+        "million million",
+        "millionocracy",
+        "millionth",
+        "millionty",
+        "multi-million",
+        "multimillion",
+        "never in a million years"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/million#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The cardinal number 1 000 000: 10⁶; a thousand thousand (1,000²).",
+        "example": "Near-synonyms: mega-, M-",
+        "pos": "num"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-ea625b55",
+    "senseId": "kaikki:0bfe6dad062f12db44",
+    "example": "The train stopped unexpectedly between two stations.",
+    "originalSense": {
+      "id": "kaikki:0bfe6dad062f12db44",
+      "definition": "In an unexpected manner.",
+      "example": "Near-synonyms: against expectations, against all odds, surprisingly",
+      "pos": "adv",
+      "synonyms": [
+        "against expectations",
+        "against all odds",
+        "surprisingly"
+      ],
+      "antonyms": [
+        "expectedly"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/unexpectedly#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "In an unexpected manner.",
+        "example": "Near-synonyms: against expectations, against all odds, surprisingly",
+        "pos": "adv"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-9dea089",
+    "senseId": "kaikki:5e8a3772d995091582",
+    "example": "The two boxes are equal in weight.",
+    "originalSense": {
+      "id": "kaikki:5e8a3772d995091582",
+      "definition": "The same in one or more respects.",
+      "example": "Near-synonyms: equivalent; see also Thesaurus:equal",
+      "pos": "adj",
+      "synonyms": [
+        "equivalent"
+      ],
+      "antonyms": [
+        "unequal"
+      ],
+      "collocations": [],
+      "usage": "not-comparable, usually",
+      "register": "not-comparable, usually",
+      "wordFamily": [
+        "balanced"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/equal#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The same in one or more respects.",
+        "example": "Near-synonyms: equivalent; see also Thesaurus:equal",
+        "pos": "adj"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-a8d9e2f",
+    "senseId": "kaikki:6e3bc9346e67147f6e",
+    "example": "The chick hatched from its egg this morning.",
+    "originalSense": {
+      "id": "kaikki:6e3bc9346e67147f6e",
+      "definition": "A young bird.",
+      "example": "Near-synonyms: nestling, fledgling",
+      "pos": "noun",
+      "synonyms": [
+        "nestling",
+        "fledgling"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "AFChick",
+        "biker chick",
+        "checkout chick",
+        "chickatrice",
+        "chickboy",
+        "chick boy",
+        "chick bronchitis",
+        "chick car",
+        "chickdom",
+        "chick flick",
+        "chickfriend",
+        "chickhood",
+        "chickie",
+        "chickification",
+        "chickless",
+        "chicklet",
+        "chicklike",
+        "chickling",
+        "chick lit",
+        "chick magnet",
+        "chicksploitation",
+        "chickweed",
+        "chick with a dick",
+        "chicky",
+        "chix0r",
+        "dabchick",
+        "lunachick",
+        "peachick",
+        "side chick",
+        "squab chick"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/chick#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A young bird.",
+        "example": "Near-synonyms: nestling, fledgling",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-a8b66d9",
+    "senseId": "kaikki:ed601054c35c6e7e30",
+    "example": "The curtains are made from thick cotton cloth.",
+    "originalSense": {
+      "id": "kaikki:ed601054c35c6e7e30",
+      "definition": "A fabric, usually made of woven, knitted, or felted fibres or filaments, such as used in dressing, decorating, cleaning or other practical use. Sometimes, woven fabric specifically.",
+      "example": "Near-synonyms: (not always differentiated) fabric, material (fabric sense), textile; see also Thesaurus:fabric",
+      "pos": "noun",
+      "synonyms": [
+        "fabric",
+        "material",
+        "textile",
+        "fabric",
+        "cloth",
+        "textile",
+        "material",
+        "stuff"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [
+        "Aida cloth",
+        "airplane cloth",
+        "altar cloth",
+        "altar-cloth",
+        "American cloth",
+        "backcloth",
+        "back-cloth",
+        "back-cloth star",
+        "barkcloth",
+        "barmcloth",
+        "bolting cloth",
+        "book-cloth",
+        "brattice cloth",
+        "breechcloth",
+        "breech-cloth",
+        "broadcloth",
+        "cerecloth",
+        "charcloth",
+        "cheesecloth",
+        "chincloth",
+        "clothback",
+        "clothbound",
+        "cloth cap",
+        "cloth-eared",
+        "cloth-ears",
+        "clothed",
+        "cloth hall",
+        "clothhead",
+        "clothier",
+        "clothify"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cloth#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A fabric, usually made of woven, knitted, or felted fibres or filaments, such as used in dressing, decorating, cleaning or other practical use. Sometimes, woven fabric specifically.",
+        "example": "Near-synonyms: (not always differentiated) fabric, material (fabric sense), textile; see also Thesaurus:fabric",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-83bf3482",
+    "senseId": "kaikki:b3f020065f4870e7dd",
+    "example": "She used her computer to organise the survey data.",
+    "originalSense": {
+      "id": "kaikki:b3f020065f4870e7dd",
+      "definition": "A programmable electronic device that performs mathematical calculations and logical operations, especially one that can process, store and retrieve large amounts of data very quickly; now especially, a small one for personal or home use employed for manipulating text or graphics, accessing the Internet, or playing games or media.",
+      "example": "Meronyms: processor, microprocessor, CPU",
+      "pos": "noun",
+      "synonyms": [
+        "'puter",
+        "box"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "anticomputer",
+        "compucondria",
+        "compunications",
+        "compusex",
+        "computeracy",
+        "computer-aided design",
+        "computer-aided translation",
+        "computer architecture",
+        "computerate",
+        "computerbased",
+        "computer-based",
+        "computer-based teaching",
+        "computer chess",
+        "computer chip",
+        "computercide",
+        "computer code",
+        "computer conferencing",
+        "computer-controlled timing",
+        "computer core",
+        "computer dating",
+        "computerdom",
+        "computer duster",
+        "computer engineer",
+        "computer engineering",
+        "computerese",
+        "computeresque",
+        "computerette",
+        "computerful",
+        "computer game",
+        "Computergate"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/computer#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A programmable electronic device that performs mathematical calculations and logical operations, especially one that can process, store and retrieve large amounts of data very quickly; now especially, a small one for personal or home use employed for manipulating text or graphics, accessing the Internet, or playing games or media.",
+        "example": "Meronyms: processor, microprocessor, CPU",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-285c5316",
+    "senseId": "kaikki:130678679f95dd6b7c",
+    "example": "The repairs should be finished in a fortnight.",
+    "originalSense": {
+      "id": "kaikki:130678679f95dd6b7c",
+      "definition": "A period of 2 weeks.",
+      "example": "Holonyms: month < year < gigasecond < century < kiloannum, kiloyear, millennium < terasecond < mega-annum, megayear < petasecond < giga-annum, gigayear < exasecond < zettasecond < yottasecond < ronnasecond < quettasecond",
+      "pos": "noun",
+      "synonyms": [
+        "halfmonth"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Commonwealth, Ireland, UK, dated",
+      "register": "Commonwealth, Ireland, UK, dated",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/fortnight#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A period of 2 weeks.",
+        "example": "Holonyms: month < year < gigasecond < century < kiloannum, kiloyear, millennium < terasecond < mega-annum, megayear < petasecond < giga-annum, gigayear < exasecond < zettasecond < yottasecond < ronnasecond < quettasecond",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-f9d053b",
+    "senseId": "kaikki:c8a8fe2128d7fccec7",
+    "example": "New Year's Day is a holiday celebrated in many countries.",
+    "originalSense": {
+      "id": "kaikki:c8a8fe2128d7fccec7",
+      "definition": "A day on which a religious event or secular celebration is traditionally observed.",
+      "example": "Near-synonyms: holy day, feast day, festival (feast day sense)",
+      "pos": "noun",
+      "synonyms": [
+        "holy day",
+        "feast day",
+        "festival"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "alcoholiday",
+        "all holiday",
+        "antiholiday",
+        "bank holiday",
+        "Bank Holiday",
+        "blindman's holiday",
+        "blind man's holiday",
+        "busman's holiday",
+        "drug holiday",
+        "enjoy your holiday",
+        "go on holiday",
+        "half-holiday",
+        "Hallmark holiday",
+        "hallmark holiday",
+        "happy holidays",
+        "high days and holidays",
+        "High Holidays",
+        "holidate",
+        "Holiday",
+        "holiday camp",
+        "holidayer",
+        "holiday fic",
+        "holidayfic",
+        "holiday heart",
+        "holiday heart syndrome",
+        "holiday home",
+        "holidayism",
+        "holiday let",
+        "holiday-maker",
+        "holidaymaker"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/holiday#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A day on which a religious event or secular celebration is traditionally observed.",
+        "example": "Near-synonyms: holy day, feast day, festival (feast day sense)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-7c713665",
+    "senseId": "kaikki:f8bf9df6f604513a0b",
+    "example": "The journey takes an hour by train.",
+    "originalSense": {
+      "id": "kaikki:f8bf9df6f604513a0b",
+      "definition": "A unit of time of one twenty-fourth of a day (sixty minutes).",
+      "example": "Holonyms: day < week < megasecond < fortnight < month < year < gigasecond < century < kiloannum, kiloyear, millennium < terasecond < mega-annum, megayear < petasecond < giga-annum, gigayear < exasecond < zettasecond < yottasecond < ronnasecond < quettasecond",
+      "pos": "noun",
+      "synonyms": [
+        "stound",
+        "microcentury"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "11th hour",
+        "12-hour clock",
+        "24-hour clock",
+        "24-hour day",
+        "24-hour flu",
+        "amateur hour",
+        "ampere-hour",
+        "amp-hour",
+        "birth hour",
+        "block hour",
+        "blue hour",
+        "bottom of the hour",
+        "by-hour",
+        "canonical hour",
+        "clock hour",
+        "common hour",
+        "convict hour",
+        "credit hour",
+        "devil's hour",
+        "dinner hour",
+        "dinner-hour",
+        "eleventh hour",
+        "eleventh-hour",
+        "engine hour",
+        "equal hour",
+        "equinoctial hour",
+        "every hour God sends",
+        "evil hour",
+        "F-Hour",
+        "finest hour"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/hour#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A unit of time of one twenty-fourth of a day (sixty minutes).",
+        "example": "Holonyms: day < week < megasecond < fortnight < month < year < gigasecond < century < kiloannum, kiloyear, millennium < terasecond < mega-annum, megayear < petasecond < giga-annum, gigayear < exasecond < zettasecond < yottasecond < ronnasecond < quettasecond",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-97cc0ff3",
+    "senseId": "kaikki:60d0eeb84ec950a0d3",
+    "example": "The technician measured the tiny parts with great precision.",
+    "originalSense": {
+      "id": "kaikki:60d0eeb84ec950a0d3",
+      "definition": "The state of being precise or exact; especially, both exact and accurate.",
+      "example": "Near-synonyms: exactitude, exactness; accuracy",
+      "pos": "noun",
+      "synonyms": [
+        "exactitude",
+        "exactness",
+        "accuracy"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "broadly",
+      "register": "broadly, countable, uncountable",
+      "wordFamily": [
+        "arbitrary-precision",
+        "arbitrary-precision arithmetic",
+        "double-precision",
+        "double precision",
+        "high-precision",
+        "hyperprecision",
+        "imprecision",
+        "multiprecision",
+        "non-precision approach",
+        "overprecision",
+        "precision agriculture",
+        "precisional",
+        "precision approach",
+        "precision dice",
+        "precision die",
+        "precision F-strike",
+        "precisionism",
+        "precisionist",
+        "precisionize",
+        "precision medicine",
+        "pseudoprecision",
+        "quadruple-precision",
+        "single-precision",
+        "ultraprecision",
+        "underprecision"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/precision#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The state of being precise or exact; especially, both exact and accurate.",
+        "example": "Near-synonyms: exactitude, exactness; accuracy",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-aea5caa1",
+    "senseId": "kaikki:3398bae03c89b558ca",
+    "example": "The study examines the relationship between sleep and memory.",
+    "originalSense": {
+      "id": "kaikki:3398bae03c89b558ca",
+      "definition": "A connection or association; the condition of being related.",
+      "example": "Near-synonym: alliance",
+      "pos": "noun",
+      "synonyms": [
+        "alliance"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "antirelationship",
+        "blood relationship",
+        "brolationship",
+        "customer relationship",
+        "cyberrelationship",
+        "entity-relationship diagram",
+        "entity relationship diagram",
+        "entity-relationship model",
+        "e-relationship",
+        "fakeship",
+        "flirtationship",
+        "interrelationship",
+        "intrarelationship",
+        "isolationship",
+        "legal relationship",
+        "long-distance relationship",
+        "new relationship energy",
+        "nonrelationship",
+        "open relationship",
+        "rebound relationship",
+        "relationship anarchy",
+        "relationshipless",
+        "relationshiply",
+        "relationshipper",
+        "relationshipping",
+        "relationshippy",
+        "relationship status",
+        "relationshipwise",
+        "relationshit",
+        "relationshopping"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/relationship#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A connection or association; the condition of being related.",
+        "example": "Near-synonym: alliance",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-927d681a",
+    "senseId": "kaikki:168df5e5498d7b41f0",
+    "example": "Each participant completed a short questionnaire after the workshop.",
+    "originalSense": {
+      "id": "kaikki:168df5e5498d7b41f0",
+      "definition": "One who participates.",
+      "example": "Near-synonyms: entrant, partaker",
+      "pos": "noun",
+      "synonyms": [
+        "participator",
+        "entrant",
+        "partaker"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "healthy participant effect",
+        "participant evolution",
+        "participant observation",
+        "participant observer",
+        "participant-observer",
+        "spaceflight participant",
+        "speech act participant"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/participant#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "One who participates.",
+        "example": "Near-synonyms: entrant, partaker",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-54d26c5c",
+    "senseId": "kaikki:e07871cc43e795ef25",
+    "example": "Stir the salt into the water until it dissolves to form a clear solution.",
+    "originalSense": {
+      "id": "kaikki:e07871cc43e795ef25",
+      "definition": "A homogeneous mixture, which may be liquid, gas or solid, formed by dissolving one or more substances.",
+      "example": "Meronyms: solvent, solute",
+      "pos": "noun",
+      "synonyms": [],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "physical",
+      "register": "countable, physical, uncountable",
+      "wordFamily": [
+        "backsolution",
+        "banana solution",
+        "band-aid solution",
+        "Beckmann solution",
+        "Benedict's solution",
+        "buffer solution",
+        "Carrel-Dakin solution",
+        "Clerici solution",
+        "corner solution",
+        "Crone's solution",
+        "cryosolution",
+        "Dakin's solution",
+        "Dobell's solution",
+        "eigensolution",
+        "exsolution",
+        "Fehling's solution",
+        "final solution",
+        "Final Solution",
+        "firing solution",
+        "Fowler's solution",
+        "Hartmann's solution",
+        "Hoagland solution",
+        "ideal solution",
+        "Kirkwood-Buff solution theory",
+        "Knop's solution",
+        "Krebs-Henseleit solution",
+        "Labarraque's solution",
+        "Lugol's solution",
+        "Melzer's solution",
+        "model solution"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/solution#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A homogeneous mixture, which may be liquid, gas or solid, formed by dissolving one or more substances.",
+        "example": "Meronyms: solvent, solute",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-37cbe1c0",
+    "senseId": "kaikki:38d83ab42625ed7b09",
+    "example": "The design combines a trinity of wood, stone and glass.",
+    "originalSense": {
+      "id": "kaikki:38d83ab42625ed7b09",
+      "definition": "A group or set of three people or things; three things combined into one.",
+      "example": "Near-synonyms: threesome, triad, trio, trine, troika, triumvirate; see also Thesaurus:trio",
+      "pos": "noun",
+      "synonyms": [
+        "threesome",
+        "triad",
+        "trio",
+        "trine",
+        "troika",
+        "triumvirate",
+        "leash",
+        "tern",
+        "ternary",
+        "ternion",
+        "threeness",
+        "threesome",
+        "triad",
+        "trinary",
+        "trine",
+        "trinity",
+        "trio",
+        "triplet",
+        "troika"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "Emo Trinity",
+        "emo trinity",
+        "herb trinity",
+        "holy trinity",
+        "impossible trinity",
+        "nontrinitarian",
+        "nontrinitarianism",
+        "quadrinity",
+        "Texas trinity",
+        "trinitarian",
+        "trinitize",
+        "Trinity",
+        "trinityhood",
+        "Trinity term",
+        "triniunity",
+        "unholy trinity"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/trinity#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A group or set of three people or things; three things combined into one.",
+        "example": "Near-synonyms: threesome, triad, trio, trine, troika, triumvirate; see also Thesaurus:trio",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-7c776519",
+    "senseId": "kaikki:84eb579defa22027db",
+    "example": "I will be away for a week, from Monday to Sunday.",
+    "originalSense": {
+      "id": "kaikki:84eb579defa22027db",
+      "definition": "Any period of seven consecutive days.",
+      "example": "Holonyms: megasecond < fortnight < month < year < gigasecond < century < kiloannum, kiloyear, millennium < terasecond < mega-annum, megayear < petasecond < giga-annum, gigayear < exasecond < zettasecond < yottasecond < ronnasecond < quettasecond",
+      "pos": "noun",
+      "synonyms": [
+        "sevennight",
+        "sennight",
+        "hebdomad"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "boxing week",
+        "bull week",
+        "bush week",
+        "coasties week",
+        "dead week",
+        "Ember week",
+        "fashion week",
+        "finals week",
+        "five-day week",
+        "four-day week",
+        "freshers' week",
+        "frosh week",
+        "Golden Week",
+        "hell week",
+        "Holy Week",
+        "leap week",
+        "leavers week",
+        "mid-week",
+        "midweek",
+        "noughth week",
+        "0th week",
+        "orientation week",
+        "prophetic week",
+        "rag week",
+        "reading week",
+        "red week",
+        "revision week",
+        "schoolies week",
+        "school week",
+        "shark week"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/week#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "Any period of seven consecutive days.",
+        "example": "Holonyms: megasecond < fortnight < month < year < gigasecond < century < kiloannum, kiloyear, millennium < terasecond < mega-annum, megayear < petasecond < giga-annum, gigayear < exasecond < zettasecond < yottasecond < ronnasecond < quettasecond",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-aceedab0",
+    "senseId": "kaikki:80c78d999e904ba32a",
+    "example": "The museum displays examples of regional architecture.",
+    "originalSense": {
+      "id": "kaikki:80c78d999e904ba32a",
+      "definition": "Of, or pertaining to, a specific region or district.",
+      "example": "Near-synonyms: intraregional, locoregional",
+      "pos": "adj",
+      "synonyms": [
+        "diatopic",
+        "intraregional",
+        "locoregional"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "not-comparable",
+      "register": "not-comparable",
+      "wordFamily": [
+        "aregional",
+        "bioregional",
+        "biregional",
+        "Capital Regional District",
+        "complex regional pain syndrome",
+        "ecoregional",
+        "extraregional",
+        "georegional",
+        "interregional",
+        "inter-regional",
+        "intraregional",
+        "macroregional",
+        "megaregional",
+        "microregional",
+        "midregional",
+        "multiregional",
+        "nonregional",
+        "panregional",
+        "regional converter",
+        "regional county municipality",
+        "regional economics",
+        "regional insourcing",
+        "regionalise",
+        "regionalism",
+        "regionalist",
+        "regionality",
+        "regionalize",
+        "regional jet",
+        "regional lockout",
+        "regionally"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/regional#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "Of, or pertaining to, a specific region or district.",
+        "example": "Near-synonyms: intraregional, locoregional",
+        "pos": "adj"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-6fc0a80e",
+    "senseId": "kaikki:048724806cde023b0f",
+    "example": "His explanation for the missing records was unconvincing.",
+    "originalSense": {
+      "id": "kaikki:048724806cde023b0f",
+      "definition": "not convincing, plausible or believable",
+      "example": "Near-synonym: uncompelling",
+      "pos": "adj",
+      "synonyms": [
+        "flimsy",
+        "limp",
+        "tenuous",
+        "uncompelling"
+      ],
+      "antonyms": [
+        "convincing",
+        "compelling"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/unconvincing#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "not convincing, plausible or believable",
+        "example": "Near-synonym: uncompelling",
+        "pos": "adj"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-c016708f",
+    "senseId": "kaikki:ad0603100f62b6cf3f",
+    "example": "The archivist searched the card index to find the old photograph.",
+    "originalSense": {
+      "id": "kaikki:ad0603100f62b6cf3f",
+      "definition": "Any index formed with index cards, as was common in many businesses before the microcomputer revolution.",
+      "example": "Near-synonym: card catalogue",
+      "pos": "noun",
+      "synonyms": [
+        "card catalogue"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/card_index#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "Any index formed with index cards, as was common in many businesses before the microcomputer revolution.",
+        "example": "Near-synonym: card catalogue",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-b1d46ab3",
+    "senseId": "kaikki:e13572007939201967",
+    "example": "The city council voted to improve local bus services.",
+    "originalSense": {
+      "id": "kaikki:e13572007939201967",
+      "definition": "A governing body of people elected to oversee management of a city and represent the interests of residents.",
+      "example": "Near-synonyms: town council, municipal council, common council, select council, consulate (obsolete), capitoulate (historical, Toulouse)",
+      "pos": "noun",
+      "synonyms": [
+        "town council",
+        "municipal council",
+        "common council",
+        "select council",
+        "consulate",
+        "capitoulate"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/city_council#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A governing body of people elected to oversee management of a city and represent the interests of residents.",
+        "example": "Near-synonyms: town council, municipal council, common council, select council, consulate (obsolete), capitoulate (historical, Toulouse)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-2a5a17fd",
+    "senseId": "kaikki:4a3a6a39e8bcb5c05f",
+    "example": "She dressed as an astronaut for the costume party.",
+    "originalSense": {
+      "id": "kaikki:4a3a6a39e8bcb5c05f",
+      "definition": "A social gathering of people wearing disguises or costumes, and amusing themselves with dancing, conversation, or other diversions.",
+      "example": "Near-synonym: masquerade",
+      "pos": "noun",
+      "synonyms": [
+        "masquerade"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/costume_party#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A social gathering of people wearing disguises or costumes, and amusing themselves with dancing, conversation, or other diversions.",
+        "example": "Near-synonym: masquerade",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-d4272cf9",
+    "senseId": "kaikki:c754bd501449dd039a",
+    "example": "I work the day shift, from eight in the morning until four in the afternoon.",
+    "originalSense": {
+      "id": "kaikki:c754bd501449dd039a",
+      "definition": "A regularly scheduled period of work during daylight hours, especially 8AM to 4PM; sometimes a 12-hour shift, such as 6AM to 6PM.",
+      "example": "Near-synonym: first shift (often synonymous)",
+      "pos": "noun",
+      "synonyms": [
+        "first shift"
+      ],
+      "antonyms": [
+        "night shift",
+        "graveyard shift"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/day_shift#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A regularly scheduled period of work during daylight hours, especially 8AM to 4PM; sometimes a 12-hour shift, such as 6AM to 6PM.",
+        "example": "Near-synonym: first shift (often synonymous)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-5cbf86e5",
+    "senseId": "kaikki:f730e30f802545d32f",
+    "example": "The house at the end of the street is for sale.",
+    "originalSense": {
+      "id": "kaikki:f730e30f802545d32f",
+      "definition": "Being offered for purchase.",
+      "example": "Near-synonym: on the market",
+      "pos": "prep_phrase",
+      "synonyms": [
+        "on the market"
+      ],
+      "antonyms": [
+        "NFS",
+        "off the market"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/for_sale#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "Being offered for purchase.",
+        "example": "Near-synonym: on the market",
+        "pos": "prep_phrase"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-83057616",
+    "senseId": "kaikki:256cd9b8570c3ac4c1",
+    "example": "The scholarship helped her continue into higher education after secondary school.",
+    "originalSense": {
+      "id": "kaikki:256cd9b8570c3ac4c1",
+      "definition": "Education beyond a level viewed as basic, such as any beyond universal government-funded secondary education.",
+      "example": "Holonym: education",
+      "pos": "noun",
+      "synonyms": [
+        "further education",
+        "higher learning",
+        "tertiary education",
+        "tertiary-level education"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/higher_education#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "Education beyond a level viewed as basic, such as any beyond universal government-funded secondary education.",
+        "example": "Holonym: education",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-89530e73",
+    "senseId": "kaikki:8aa7f42ec5d2e72bf8",
+    "example": "The life cycle of a butterfly includes an egg, a caterpillar, a pupa and an adult.",
+    "originalSense": {
+      "id": "kaikki:8aa7f42ec5d2e72bf8",
+      "definition": "The course of stages through which an organism passes from fertilized zygote until maturity, reproduction, and death.",
+      "example": "Meronym: life forms",
+      "pos": "noun",
+      "synonyms": [
+        "biological life"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/life_cycle#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The course of stages through which an organism passes from fertilized zygote until maturity, reproduction, and death.",
+        "example": "Meronym: life forms",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-dba8c1f9",
+    "senseId": "kaikki:fa532fe44a65aa0f33",
+    "example": "The nurse starts her night shift at ten in the evening.",
+    "originalSense": {
+      "id": "kaikki:fa532fe44a65aa0f33",
+      "definition": "A regularly scheduled period of work, during evening or night hours.",
+      "example": "Near-synonym: graveyard shift (sometimes coordinate)",
+      "pos": "noun",
+      "synonyms": [
+        "graveyard shift"
+      ],
+      "antonyms": [
+        "day shift"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "nightshifter"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/night_shift#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A regularly scheduled period of work, during evening or night hours.",
+        "example": "Near-synonym: graveyard shift (sometimes coordinate)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-db3d6047",
+    "senseId": "kaikki:42be11ec91a4a6e9dc",
+    "example": "My doctor gave me a sick note to explain my absence from work.",
+    "originalSense": {
+      "id": "kaikki:42be11ec91a4a6e9dc",
+      "definition": "A doctor's note that certifies that the patient is ill, and therefore unable to go to work, school, etc.",
+      "example": "Near-synonyms: excuse (US), aegrotat",
+      "pos": "noun",
+      "synonyms": [
+        "excuse",
+        "aegrotat"
+      ],
+      "antonyms": [
+        "fit note"
+      ],
+      "collocations": [],
+      "usage": "UK",
+      "register": "UK",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/sick_note#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A doctor's note that certifies that the patient is ill, and therefore unable to go to work, school, etc.",
+        "example": "Near-synonyms: excuse (US), aegrotat",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-e5aa1cbc",
+    "senseId": "kaikki:a4e4e9f807b2e0f618",
+    "example": "She wrote the interview questions in her notebook.",
+    "originalSense": {
+      "id": "kaikki:a4e4e9f807b2e0f618",
+      "definition": "A book (physical or digital) in which notes or memoranda are written.",
+      "example": "Near-synonyms: notepad, rough book, writing pad, logbook, journal",
+      "pos": "noun",
+      "synonyms": [
+        "by-book",
+        "notepad",
+        "rough book",
+        "writing pad",
+        "logbook",
+        "journal"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "composition notebook",
+        "desknote",
+        "MacBook",
+        "notebinder",
+        "notebooker",
+        "notebookful",
+        "notebookish",
+        "notebookless",
+        "notebooklike",
+        "subnotebook"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/notebook#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A book (physical or digital) in which notes or memoranda are written.",
+        "example": "Near-synonyms: notepad, rough book, writing pad, logbook, journal",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-b9e87df",
+    "senseId": "kaikki:e788f5f4c64d2c3a63",
+    "example": "Driving through deep floodwater is risky.",
+    "originalSense": {
+      "id": "kaikki:e788f5f4c64d2c3a63",
+      "definition": "Dangerous; involving risks.",
+      "example": "Near-synonyms: hazardous, dangerous, perilous, unsafe, daredevil",
+      "pos": "adj",
+      "synonyms": [
+        "risksome",
+        "chancy",
+        "venturesome",
+        "touch-and-go",
+        "adventurous",
+        "hazardous",
+        "dangerous",
+        "perilous",
+        "unsafe",
+        "daredevil"
+      ],
+      "antonyms": [
+        "riskless",
+        "risk-free",
+        "riskproof",
+        "unrisky",
+        "nonrisky",
+        "safe",
+        "secure"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [
+        "nonrisky",
+        "riskily",
+        "riskiness",
+        "ultrarisky",
+        "unrisky"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/risky#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "Dangerous; involving risks.",
+        "example": "Near-synonyms: hazardous, dangerous, perilous, unsafe, daredevil",
+        "pos": "adj"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-105fb47a",
+    "senseId": "kaikki:decede32ed0b6cae4f",
+    "example": "We left the car in the parking lot outside the station.",
+    "originalSense": {
+      "id": "kaikki:decede32ed0b6cae4f",
+      "definition": "A designated area, usually outdoors and divided into marked spaces, intended for the temporary parking of motor vehicles.",
+      "example": "Meronyms: parking space, parking spot, parking place",
+      "pos": "noun",
+      "synonyms": [
+        "parking area"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Canada, Malaysia, Philippines, US",
+      "register": "Canada, Malaysia, Philippines, US",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/parking_lot#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A designated area, usually outdoors and divided into marked spaces, intended for the temporary parking of motor vehicles.",
+        "example": "Meronyms: parking space, parking spot, parking place",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-fc53bcbf",
+    "senseId": "kaikki:f8051555f08437f5f1",
+    "example": "We had a three-hour layover between flights in Dubai.",
+    "originalSense": {
+      "id": "kaikki:f8051555f08437f5f1",
+      "definition": "A break between stages of a journey.",
+      "example": "Near-synonyms: stopover, stayover (both sometimes synonymous)",
+      "pos": "noun",
+      "synonyms": [
+        "lie-over",
+        "stopover",
+        "stayover"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "Australia, Canada, New-Zealand, Philippines, US",
+      "register": "Australia, Canada, New-Zealand, Philippines, US",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/layover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A break between stages of a journey.",
+        "example": "Near-synonyms: stopover, stayover (both sometimes synonymous)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-ed4a1153",
+    "senseId": "kaikki:7d4e11ec68ce9619d0",
+    "example": "Our flight to Sydney includes a short stopover in Singapore.",
+    "originalSense": {
+      "id": "kaikki:7d4e11ec68ce9619d0",
+      "definition": "A short interruption in a journey or the place visited during such an interruption.",
+      "example": "Near-synonyms: stayover, layover, lie-over (all sometimes synonymous)",
+      "pos": "noun",
+      "synonyms": [
+        "stayover",
+        "layover",
+        "lie-over"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/stopover#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A short interruption in a journey or the place visited during such an interruption.",
+        "example": "Near-synonyms: stayover, layover, lie-over (all sometimes synonymous)",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-b623649",
+    "senseId": "kaikki:8a2103ef5d114f1d70",
+    "example": "Cardiff is the capital of Wales.",
+    "originalSense": {
+      "id": "kaikki:8a2103ef5d114f1d70",
+      "definition": "One of the four constituent countries of the United Kingdom, formerly a principality.",
+      "example": "Meronyms: North Wales, South Wales; see also Category:Places in Wales",
+      "pos": "name",
+      "synonyms": [
+        "The Principality"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "countable, uncountable",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/Wales#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "One of the four constituent countries of the United Kingdom, formerly a principality.",
+        "example": "Meronyms: North Wales, South Wales; see also Category:Places in Wales",
+        "pos": "name"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-42ee828b",
+    "senseId": "kaikki:e8e1ad2da0a657eb91",
+    "example": "Use the photocopier to make two copies of the application form.",
+    "originalSense": {
+      "id": "kaikki:e8e1ad2da0a657eb91",
+      "definition": "A machine which reproduces documents by photographing the original over a glass plate and printing duplicates.",
+      "example": "Near-synonyms: (all broadly synonymous) xerox machine, xerographer, xerox, photostat, laser copier",
+      "pos": "noun",
+      "synonyms": [
+        "photoduplicator",
+        "xerox machine",
+        "xerographer",
+        "xerox",
+        "photostat",
+        "laser copier"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/photocopier#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A machine which reproduces documents by photographing the original over a glass plate and printing duplicates.",
+        "example": "Near-synonyms: (all broadly synonymous) xerox machine, xerographer, xerox, photostat, laser copier",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-662a728",
+    "senseId": "kaikki:5eebebbef549aeb756",
+    "example": "The volunteers will hand out maps to visitors at the entrance.",
+    "originalSense": {
+      "id": "kaikki:5eebebbef549aeb756",
+      "definition": "To distribute; to give out, either by hand or as if so (figuratively).",
+      "example": "Near-synonyms: give out, pass out, send out",
+      "pos": "verb",
+      "synonyms": [
+        "give out",
+        "pass out",
+        "send out"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/hand_out#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "To distribute; to give out, either by hand or as if so (figuratively).",
+        "example": "Near-synonyms: give out, pass out, send out",
+        "pos": "verb"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-f84220c4",
+    "senseId": "kaikki:d514ead9be8f21c77b",
+    "example": "The rain may turn into snow as the temperature falls.",
+    "originalSense": {
+      "id": "kaikki:d514ead9be8f21c77b",
+      "definition": "To become.",
+      "example": "Near-synonyms: (intransitive) get, turn, go, come, fall, grow, wax; (reflexive) make [oneself], make [oneself] into",
+      "pos": "verb",
+      "synonyms": [
+        "turn to",
+        "convert",
+        "change",
+        "transform",
+        "get",
+        "turn",
+        "go",
+        "come",
+        "fall",
+        "grow",
+        "wax",
+        "make",
+        "make into",
+        "become"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "intransitive",
+      "wordFamily": [
+        "you can't turn a hoe into a housewife"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/turn_into#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "To become.",
+        "example": "Near-synonyms: (intransitive) get, turn, go, come, fall, grow, wax; (reflexive) make [oneself], make [oneself] into",
+        "pos": "verb"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-e1ce83ad",
+    "senseId": "kaikki:cfe2159d06b126d97e",
+    "example": "The project aims to eradicate the invasive plant from the island.",
+    "originalSense": {
+      "id": "kaikki:cfe2159d06b126d97e",
+      "definition": "To destroy completely; to reduce to nothing radically; to put an end to.",
+      "example": "Near-synonyms: delete, erase",
+      "pos": "verb",
+      "synonyms": [],
+      "antonyms": [
+        "encourage",
+        "foster",
+        "introduce",
+        "protect",
+        "radicate"
+      ],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "eradicant",
+        "eradicator"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/eradicate#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "To destroy completely; to reduce to nothing radically; to put an end to.",
+        "example": "Near-synonyms: delete, erase",
+        "pos": "verb"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-d80e6bf3",
+    "senseId": "kaikki:5b40ed803f9c810c53",
+    "example": "The hairdresser trimmed my hair and suggested a new style.",
+    "originalSense": {
+      "id": "kaikki:5b40ed803f9c810c53",
+      "definition": "A person who cuts or styles hair as an occupation or profession.",
+      "example": "Near-synonyms: barber; beautician, aesthetician, esthetician",
+      "pos": "noun",
+      "synonyms": [
+        "friseur",
+        "hairstylist",
+        "barber",
+        "beautician",
+        "aesthetician",
+        "esthetician"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/hairdresser#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "A person who cuts or styles hair as an occupation or profession.",
+        "example": "Near-synonyms: barber; beautician, aesthetician, esthetician",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-7abc0d0c",
+    "senseId": "kaikki:af502f852c5e8f4be0",
+    "example": "Most of the shops and banks are in the town centre.",
+    "originalSense": {
+      "id": "kaikki:af502f852c5e8f4be0",
+      "definition": "The main commercial or business area of a town, containing the principal shops, banks, restaurants and public traffic hub.",
+      "example": "Near-synonyms: city centre, city center",
+      "pos": "noun",
+      "synonyms": [
+        "central business district",
+        "downtown",
+        "city centre",
+        "city center"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "UK",
+      "register": "UK",
+      "wordFamily": [],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/town_centre#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The main commercial or business area of a town, containing the principal shops, banks, restaurants and public traffic hub.",
+        "example": "Near-synonyms: city centre, city center",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-56db77b1",
+    "senseId": "kaikki:64cf866043bcf9b6e2",
+    "example": "Excavation of the foundations began after the site was cleared.",
+    "originalSense": {
+      "id": "kaikki:64cf866043bcf9b6e2",
+      "definition": "The act of excavating, or of making hollow, by cutting, scooping, or digging out a part of a solid mass.",
+      "example": "Near-synonyms: hollowing out, hollowing",
+      "pos": "noun",
+      "synonyms": [
+        "hollowing out",
+        "hollowing"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "uncountable",
+      "wordFamily": [
+        "excavational",
+        "excavationist",
+        "excavation unit",
+        "nonexcavation",
+        "reexcavation",
+        "re-excavation",
+        "sub-excavation"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/excavation#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "The act of excavating, or of making hollow, by cutting, scooping, or digging out a part of a solid mass.",
+        "example": "Near-synonyms: hollowing out, hollowing",
+        "pos": "noun"
+      }
+    ]
+  },
+  {
+    "entryId": "ve-83c0adb9",
+    "senseId": "kaikki:1f868c970ab9f3cc9c",
+    "example": "The study area will comprise six coastal towns.",
+    "originalSense": {
+      "id": "kaikki:1f868c970ab9f3cc9c",
+      "definition": "To be made up of; to consist of (especially a comprehensive list of parts).",
+      "example": "Near-synonyms: subsume, contain, include, embrace, comprehend",
+      "pos": "verb",
+      "synonyms": [
+        "subsume",
+        "contain",
+        "include",
+        "embrace",
+        "comprehend"
+      ],
+      "antonyms": [],
+      "collocations": [],
+      "usage": "",
+      "register": "transitive",
+      "wordFamily": [
+        "comprisable",
+        "comprisal"
+      ],
+      "source": "English Wiktionary via Kaikki.org",
+      "attribution": "English Wiktionary contributors",
+      "sourceUrl": "https://en.wiktionary.org/wiki/comprise#English",
+      "license": "CC-BY-SA-4.0"
+    },
+    "contentScope": [
+      {
+        "definition": "To be made up of; to consist of (especially a comprehensive list of parts).",
+        "example": "Near-synonyms: subsume, contain, include, embrace, comprehend",
+        "pos": "verb"
+      }
+    ]
   }
 ]

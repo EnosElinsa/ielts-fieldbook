@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { clearReadCache } from '../../src/lib/readCache';
 import { resetAccountIdentity, setAccountIdentity } from '../../src/storage/accountIdentity';
+import laki from '../../src/features/exam/fixtures/cambridge-18-listening-evidence.json';
 const mock = vi.hoisted(() => ({ configured: false, calls: [] as string[], rows: {} as Record<string, { id: string; payload: Record<string, unknown> }[]>, fail: false, signedCalls: 0 }));
 vi.mock('../../src/lib/supabase', () => ({ supabaseConfigured: () => mock.configured, getSupabase: () => ({
   from: (table: string) => ({ select: () => {
@@ -15,6 +16,19 @@ vi.mock('../../src/lib/supabase', () => ({ supabaseConfigured: () => mock.config
 beforeEach(() => { clearReadCache(); resetAccountIdentity(); mock.configured = false; mock.calls = []; mock.rows = {}; mock.fail = false; mock.signedCalls = 0; vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
 afterEach(() => { vi.useRealTimers(); });
 const metadata = { schemaVersion: 1, papers: [{ id: 'p', book: 0, title: 'Original demo' }], sections: [{ id: 's', paperId: 'p', skill: 'reading', status: 'ready', sentences: [] }], passages: [], questions: [], assets: [] };
+
+test.each([false, true])('published transcripts remove imported analysis controls without changing IDs, timings or stored data (remote: %s)', async configured => {
+  const section = structuredClone(laki.section);
+  const before = structuredClone(section);
+  mock.configured = configured;
+  mock.rows = { exam_sections: [{ id: section.id, payload: section }], exam_papers: [{ id: section.paperId, payload: { id: section.paperId } }] };
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({ ...metadata, sections: [section] }) }));
+  const { loadExamSections } = await import('../../src/storage/examCatalog');
+  const loaded = (await loadExamSections([section.id])).sections[0];
+  expect(loaded.sentences.some(sentence => sentence.text.includes('Q解析'))).toBe(false);
+  expect(loaded.sentences).toEqual(before.sentences.map(sentence => ({ ...sentence, text: sentence.text.replace(/\s*Q解析/g, '') })));
+  expect(section).toEqual(before);
+});
 
 test('unconfigured metadata does not load material and selected local sections load lazily', async () => {
   const fetcher = vi.fn().mockResolvedValueOnce({ ok: true, json: async () => metadata }).mockResolvedValueOnce({ ok: true, json: async () => ({ ...metadata, questions: [{ id: 'q', sectionId: 's' }] }) });

@@ -459,7 +459,7 @@ export function skillTask(state, skill, minutes, sequence = 0, useEvidence = tru
   if (skill === 'writing') {
     const task2 = state.settings.focus === 'task2' || state.settings.focus !== 'task1' && sequence % 2 === 1;
     const full = minutes >= (task2 ? 40 : 20);
-    template = {kind:task2?'2':'1',title:full?`Task ${task2?'2':'1'} - Timed writing`:task2?'Task 2 - Position and support':'Task 1 - Chart overview',description:full?'Complete the response and save your attempt.':task2?'Write your position and two supporting points.':'Write the introduction and overview.',deskMode:full?'timed':task2?'outline':'overview'};
+    template = {kind:task2?'2':'1',title:full?`Writing · Task ${task2?'2':'1'} · Timed writing`:task2?'Writing · Task 2 · Position and support':'Writing · Task 1 · Chart overview',description:full?'Complete the response and save your attempt.':task2?'Write your position and two supporting points.':'Write the introduction and overview.',deskMode:full?'timed':task2?'outline':'overview'};
   } else if (skill === 'speaking') {
     const part = state.settings.speakingFocus === 'part2' ? '2' : state.settings.speakingFocus === 'part1' ? '1' : String(sequence % 3 + 1);
     template = {kind:`speaking-p${part}`,title:`Speaking - Part ${part}`,description:'Record your response and save the attempt.',deskMode:'full'};

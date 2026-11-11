@@ -74,6 +74,7 @@ import { isAssessedReviewMode } from '../lib/vocabularyReviewTask';
 import { vocabularyLearningSource } from '../domain/vocabulary/learningSource';
 import { isVocabularySessionSelection } from '../domain/vocabulary/selection';
 import { vocabularyForwardState } from '../features/vocabulary/VocabularyRouteLink';
+import { safeExamReturn, withExamReturn } from '../lib/examNavigation';
 import { safeVocabularyReturn, rememberVocabularyPosition } from '../features/vocabulary/vocabularyNavigation';
 import { buildLearningBatch } from '../domain/vocabulary/learningBatch';
 import { completeReceptivePlanIfMatched, receptivePlanPath } from '../lib/receptivePlans';
@@ -1517,9 +1518,17 @@ function useFieldbookValue() {
     let dynamicReviewCapacity: number | undefined;
     let plan=structuredClone(stateRef.current.plans.find(row=>row.id===planId));
     if(!plan)throw new Error('Task is unavailable. Reload your plan.');
+    const skill=plan.skill || (String(plan.kind).startsWith('reading')?'reading':String(plan.kind).startsWith('listening')?'listening':String(plan.kind).startsWith('speaking')||plan.kind==='stories'?'speaking':plan.kind==='vocabulary'?'vocabulary':'writing');
+    const openExamTask = (path: string) => {
+      const origin = safeExamReturn(accountLocation.pathname + accountLocation.search + sourceHash, `/${skill}`);
+      const destination = new URL(withExamReturn(path, origin), 'https://fieldbook.local');
+      destination.searchParams.set('planId', planId);
+      navigate(destination.pathname + destination.search + destination.hash, {state:{examReturn:{owner,url:origin,sourceUrl:accountLocation.pathname + accountLocation.search + accountLocation.hash,index:sourceHistoryIndex}}});
+    };
     if(plan.status==='skipped')throw new Error('Restore this task before starting it.');
     if(plan.status==='completed'){
       if(plan.kind==='vocabulary'&&plan.linkedSessionId)openVocabularyTask(`/vocabulary/history/${encodeURIComponent(plan.linkedSessionId)}?${new URLSearchParams({returnTo:sourceUrl})}`);
+      else if ((skill === 'reading' || skill === 'listening') && plan.linkedSessionId) openExamTask(plan.kind === 'listening-intensive' ? receptivePlanPath(plan, skill) : `/${skill}/review/${encodeURIComponent(plan.linkedSessionId)}`);
       else legacyStartPlan(planId);
       return true;
     }
@@ -1529,7 +1538,6 @@ function useFieldbookValue() {
       if(!stateRef.current.stories.length){navigate('/stories');return true;}
       legacyStartPlan(planId);return true;
     }
-    const skill=plan.skill || (String(plan.kind).startsWith('reading')?'reading':String(plan.kind).startsWith('listening')?'listening':String(plan.kind).startsWith('speaking')||plan.kind==='stories'?'speaking':plan.kind==='vocabulary'?'vocabulary':'writing');
     const initial=JSON.stringify(plan);
     await ensureAccountModule(skill==='vocabulary'?'vocabularyCore':['reading','listening'].includes(skill)?'receptive':'productive');
     let target=plan.target;
@@ -1665,7 +1673,7 @@ function useFieldbookValue() {
         openVocabularyTask(`/vocabulary/wordbooks/${encodeURIComponent(target.bookId)}/groups/${encodeURIComponent(target.unitId)}/learn?${params}`);
       } else openVocabularyTask(`/vocabulary/review?${params}`);
     } else if(skill==='reading'||skill==='listening'){
-      const path=receptivePlanPath({...plan,target},skill);const params=new URLSearchParams({planId});if(target.questionIds)params.set('questions',JSON.stringify(target.questionIds));navigate(`${path}${path.includes('?')?'&':'?'}${params}`);
+      const path=receptivePlanPath({...plan,target},skill);const params=new URLSearchParams({planId});if(target.questionIds)params.set('questions',JSON.stringify(target.questionIds));openExamTask(`${path}${path.includes('?')?'&':'?'}${params}`);
     } else if(plan.kind==='review')navigate('/review');
     else if(skill==='speaking') {startSpeakingPractice(plan.questionId,target.part,plan.storyId); const nextPrompt = target.prompts?.find(prompt => !(plan.completedPromptKeys || []).includes(prompt.promptKey)) || target.prompts?.[0]; setQuestionIndex(Math.max(0, target.prompts?.indexOf(nextPrompt) || 0)); setSpeakingDraft(plan.questionId,{...nextPrompt,practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});}
     else {chooseQuestion(plan.questionId);const existing=normalizeDraft(stateRef.current.drafts[plan.questionId]);setWritingDraft(plan.questionId,existing.text,{practiceMode:target.mode,targetErrorIds:plan.targetErrorIds||[]});navigate('/write');}

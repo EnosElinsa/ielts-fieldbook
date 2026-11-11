@@ -88,8 +88,12 @@ export async function bindStudyPlanTargets(state: any, sources: Sources) {
   }
 }
 
-export function studyPlanTitle(plan: Pick<StudyPlan, 'title' | 'target'> & {quantity?: number}): string {
+export function studyPlanTitle(plan: Pick<StudyPlan, 'title' | 'target'> & {quantity?: number; kind?: StudyPlan['kind']; skill?: StudyPlan['skill']}): string {
   const target=plan.target;
+  const writing = target?.type === 'question' && target.skill === 'writing' || plan.skill === 'writing' || ['1','2'].includes(plan.kind || '');
+  // Match shipped labels only: a learner's own task name remains their own.
+  const generatedWriting = writing && String(plan.title || '').match(/^Task ([12]) (?:-|·) (Position and support|Chart overview|Timed writing|Read the chart|Plan|Compare|Body|Overview|Timed|Use the correction)$/);
+  if (generatedWriting) return `Writing · Task ${generatedWriting[1]} · ${generatedWriting[2]}`;
   if(target?.type!=='vocabulary'||target.mode!=='learning-batch')return plan.title;
   const count=target.cards?.length||target.entryIds?.length||plan.quantity;
   if(count)return `Vocabulary - Learn ${count} ${count===1?'word':'words'}`;

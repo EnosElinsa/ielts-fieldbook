@@ -42,15 +42,18 @@ export function DictionarySenses({
   const [revision, setRevision] = useState(0);
   const retryDictionary = () => { resetDictionaryCache(); setRevision(value => value + 1); };
   const [saving, setSaving] = useState<string | null>(null);
-  const [showAll, setShowAll] = useState(false);
+  const requestedAll = params.get('meanings') === 'all';
+  const [showAll, setShowAll] = useState(requestedAll);
+  const [expanded, setExpanded] = useState(requestedAll);
   const [query, setQuery] = useState('');
   const [posFilter, setPosFilter] = useState('');
   const searchId = useId();
   useEffect(() => {
-    setShowAll(false);
+    setShowAll(requestedAll);
+    setExpanded(requestedAll);
     setQuery('');
     setPosFilter('');
-  }, [entry.term, entry.id, revision]);
+  }, [entry.term, entry.id, revision, requestedAll]);
   useEffect(() => {
     let active = true;
     setLoaded([]);
@@ -204,7 +207,7 @@ export function DictionarySenses({
   // Loaded meanings already displayed elsewhere need no empty secondary section.
   if (!loading && !error && loaded.length > 0 && senses.length === 0) return null;
   return (
-    <details className="vocabulary-secondary vocabulary-dictionary">
+    <details id="vocabulary-dictionary" className="vocabulary-secondary vocabulary-dictionary" open={expanded} onToggle={event=>setExpanded(event.currentTarget.open)}>
       <summary>
         Other dictionary meanings{!loading ? ` (${senses.length})` : ""}
       </summary>

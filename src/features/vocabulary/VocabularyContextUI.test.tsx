@@ -127,6 +127,19 @@ function mount(path: string) {
 const book = "ielts-vocabulary";
 const core = () => release.entries.find((entry: any) => entry.term === "core");
 
+test('the all-meanings link opens the dictionary with every meaning selected', async () => {
+  const index = JSON.parse(readFileSync('public/dictionary/index.json', 'utf8'));
+  const dictionary = JSON.parse(readFileSync(`public/dictionary/${index.bound}`, 'utf8'));
+  const word = release.entries.find((entry: any) => entry.term === 'bound');
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => ({ ok:true, json:async()=>url.endsWith('index.json') ? { bound:'aa.json' } : dictionary })));
+  mount(`/vocabulary/entry/${word.id}?meanings=all#vocabulary-dictionary`);
+  const summary = await screen.findByText(/Other dictionary meanings \(\d+\)/);
+  expect(summary.closest('details')).toHaveAttribute('open');
+  expect(await screen.findByRole('button', { name:/^All meanings \(/ })).toHaveAttribute('aria-pressed', 'true');
+  await userEvent.click(summary);
+  expect(summary.closest('details')).not.toHaveAttribute('open');
+});
+
 test('word details show progress only for the selected meaning and a compact route to other saved meanings', async () => {
   const raw = structuredClone(release.entries.find((entry: any) => entry.term === 'catastrophic'));
   mocks.fb.state.vocabulary = [raw];
